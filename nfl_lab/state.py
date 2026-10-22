@@ -107,16 +107,33 @@ def capture(root,rows,clock=now_utc):
 
 def append_outcomes(root,observations):
     with writer(root):
-        def semantic_key(row):return digest({k:v for k,v in row.items() if k!="observed_at"})
-        existing={semantic_key(r) for r in records(root,"outcomes")}
+        def version_key(row):return digest({k:v for k,v in row.items() if k!="observed_at"})
+        def content_key(row):
+            # Feed/status hashes identify entire snapshots, not a change to this
+            # player-game target. Keep its first receipt and source-body hash.
+            value=row.get("actual")
+            if value is not None:value=int(value) if float(value).is_integer() else float(value)
+            return digest({"player_id":row["player_id"],"game_id":row["game_id"],"target":row["target"],
+                           "participation_state":row["participation_state"],"actual":value,"source":row.get("source"),
+                           "scoring_id":row.get("scoring_id"),"period":row.get("period")})
+        existing_versions=set();existing_content=set()
+        for old in records(root,"outcomes"):
+            existing_versions.add(version_key(old));existing_content.add(content_key(old))
         added=0
         for row in observations:
             if row["participation_state"] not in ["played","DNP","unknown"]:raise ValueError("bad participation")
             if row["participation_state"]!="played" and row.get("actual") is not None:raise ValueError("nonparticipant numeric outcome")
             if row.get("actual") is not None and (isinstance(row["actual"],bool) or not math.isfinite(row["actual"])):raise ValueError("invalid outcome")
             if not row.get("source_sha256") or not row.get("observed_at"):raise ValueError("unattributed outcome")
-            key=semantic_key(row)
-            if key not in existing:save(root,"outcomes",row);added+=1;existing.add(key)
+            version=version_key(row);content=content_key(row)
+            # A real publication clock can order corrections/reversions even
+            # when values repeat or versions arrive out of order. Preserve all
+            # distinct known-clock evidence under the existing version rule.
+            known_clock=bool(row.get("source_timestamp"))
+            duplicate=version in existing_versions if known_clock else content in existing_content
+            if not duplicate:
+                save(root,"outcomes",row);added+=1
+                existing_versions.add(version);existing_content.add(content)
         return {"appended":added}
 
 
