@@ -200,7 +200,9 @@ def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, s
         atomic_checkpoint(output/"campaign.json",report)
         return report
     except BaseException as exc:
-        if active is not None:
+        # A signal can arrive after a completed trial was appended while its
+        # progress checkpoint is being flushed. Preserve that completed trial.
+        if active is not None and not any(all(t.get(k)==v for k,v in active.items()) for t in metadata):
             checkpoint({**active,"state":"INTERRUPTED","error_type":type(exc).__name__,"error":str(exc)})
         atomic_checkpoint(output/"trials.json",metadata)
         atomic_checkpoint(output/"campaign.json",{"attempt_id":attempt,"output":str(output),"state":"INTERRUPTED" if isinstance(exc,SystemExit) else "FAILED","phase":phase,"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"error_type":type(exc).__name__,"error":str(exc),"promoted":[],**timing})

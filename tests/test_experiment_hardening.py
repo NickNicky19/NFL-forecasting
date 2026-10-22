@@ -96,3 +96,25 @@ def test_preflight_exception_is_preserved_without_raw_features(tmp_path):
     assert len(receipts)==1
     assert receipts[0]["state"]=="FAILED"
     assert receipts[0]["trials"]==[]
+
+
+def test_signal_after_completed_trial_keeps_completed_checkpoint(tmp_path,monkeypatch):
+    from nfl_lab.experiment import atomic_checkpoint
+    config,_,cache=setup_inputs(tmp_path)
+    monkeypatch.setattr("nfl_lab.models.fit_predict",predictions)
+    interrupted=[False]
+    def checkpoint(path,value):
+        if path.name=="progress.json" and value.get("completed_trials")==1 and not interrupted[0]:
+            interrupted[0]=True
+            raise ExperimentTerminated(signal.SIGTERM)
+        atomic_checkpoint(path,value)
+    monkeypatch.setattr("nfl_lab.experiment.atomic_checkpoint",checkpoint)
+    with pytest.raises(ExperimentTerminated):
+        run_experiment(tmp_path,cache,tmp_path/"state",config)
+    receipt=next(records(tmp_path/"state","training"))
+    assert receipt["state"]=="INTERRUPTED"
+    assert [t["state"] for t in receipt["trials"]]==["EVALUATED"]
+    output=next((tmp_path/"runs"/config["registration_id"]).iterdir())
+    files=list((output/"trial-checkpoints").glob("*.json"))
+    assert len(files)==1
+    assert json.loads(files[0].read_text())["state"]=="EVALUATED"
