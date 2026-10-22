@@ -1,0 +1,50 @@
+{
+  "registration_id": "archive-lab-week6-v1-2026-10-22",
+  "registered_before_new_fits_and_lab_comparison": true,
+  "evidence_scope": "NEW retrospective reconstruction; 2022-2025 and 2026 Week 6 already exposed; no untouched historical confirmation",
+  "archive": {
+    "season": 2026,
+    "week": 6,
+    "receipt_sha256": "de8531889cbbc39591f390824c0d61e166a93a8a075331eb523ee2bbaa24db80",
+    "common_forecast_cutoff_utc": "2026-10-18T10:48:59Z",
+    "population": "every original archived row; invalid bindings, absent probabilities and unsupported targets retained with explicit reasons",
+    "baseline_points": ["raw_sleeper", "pinned_website"],
+    "timing": "original local pregame capture; remote publication and provider original source publication unverified"
+  },
+  "method_selection_source": {
+    "path": "reports/initial-campaign/selected.json",
+    "sha256": "dced613eb3e09a30d3f23c495df7182a6033805f448932331efb4fa057d3f813",
+    "rule": "freeze the existing development-selected method per target, add recent and pooled; no selection or tuning from Week 6 comparisons"
+  },
+  "selected_methods": {
+    "pass_yd": "tree", "pass_td": "tree", "pass_cmp": "tree", "pass_att": "tree", "pass_int": "tree",
+    "rush_yd": "tree", "rush_att": "tree", "rec": "ridge_without_opponent",
+    "rec_yd": "ridge_without_team", "rush_rec_yd": "ridge_without_opponent"
+  },
+  "controls": ["recent", "pooled"],
+  "unsupported": {
+    "anytime_td": "archive expected counts are not probabilities; original probability binding unavailable; no scoring invented",
+    "fantasy_ppr": "exact lab training outcomes unsupported; retain baseline rows and abstain lab forecasts"
+  },
+  "training": {
+    "seasons": [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+    "maximum_2026_history_week": 5,
+    "fit_cutoff": "all training labels outcome_available_utc strictly before common archive cutoff, which precedes every included game",
+    "feature_builder": "unchanged nfl_lab.features.build_features; target outcomes stripped before inference",
+    "availability": "current-vintage reconstructed history; assumed kickoff + 7 days; no claim of authenticated historical source availability",
+    "identity": "exact cached Sleeper/GSIS binding only; ambiguous/unlinked players use explicit position-prior cold starts; never name-match",
+    "game_binding": "archive game/team/kickoff/capture clocks must match completed ESPN schedule; available NFLverse schedule tuples cross-checked",
+    "new_artifacts": "no later-trained fitted artifact reused"
+  },
+  "budgets": {"maximum_fits": 30, "absolute_fit_ceiling": 36, "maximum_fit_seconds": 300, "threads": 2, "bootstrap_replicates": 500},
+  "evaluation": {
+    "numeric_primary": "mae", "secondary": ["rmse", "bias", "fallback_frequency", "coverage"],
+    "bias": "prediction minus outcome",
+    "matching": "same archived player/game/target and identical actuals; report pairwise and five-method common support, preserve all source-eligible rows",
+    "uncertainty": "paired game-cluster MAE differences descriptive; one-week cluster inference unavailable; no independence claim across targets",
+    "missingness": "missing rare counts and exact PPR remain missing; played zero and DNP/unknown remain distinct",
+    "forbidden": "no Week 8+ outcomes, method tuning, original pooled-YPA reproduction claim, frozen rec-window writes, deployment or promotion"
+  },
+  "publication": "aggregate derived report and code/config only; raw sources and row-level forecasts/outcomes remain local ignored artifacts",
+  "promotion": "disabled; one exposed week is descriptive and cannot qualify production"
+}
