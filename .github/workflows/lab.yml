@@ -42,6 +42,7 @@ jobs:
       - name: Install exact tested dependencies
         run: python -m pip install -r requirements.lock -e '.[test]'
       - name: Acceptance tests
+        id: acceptance
         run: python -m pytest -q
       - name: Determine cadence
         id: cadence
@@ -59,26 +60,50 @@ jobs:
           print(result)
           PY
       - name: Restore derived evidence state
-        if: steps.cadence.outputs.due == 'true'
+        if: steps.cadence.outcome == 'success'
         run: |
           mkdir -p state
           if git show-ref --verify --quiet refs/remotes/origin/lab-state; then
             git archive origin/lab-state state | tar -x
           fi
       - name: Capture and grade
+        id: daily
         if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode != 'replay'
         run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
       - name: Bounded weekly experiments
+        id: training
         if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
         run: |
           timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
           timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
       - name: Replay immutable records
+        id: replay
         if: steps.cadence.outputs.due == 'true'
         run: python -m nfl_lab.cli replay
       - name: Persist only lab-derived forecasts and corrections
-        if: always() && steps.cadence.outputs.due == 'true'
+        if: always() && steps.cadence.outcome == 'success'
+        env:
+          ACCEPTANCE_OUTCOME: ${{ steps.acceptance.outcome }}
+          DAILY_OUTCOME: ${{ steps.daily.outcome }}
+          TRAINING_OUTCOME: ${{ steps.training.outcome }}
+          REPLAY_OUTCOME: ${{ steps.replay.outcome }}
         run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          from nfl_lab.state import now_utc,save
+          save(Path('state'),'operations',{
+              'schema_version':'lab-hosted-operation-v1',
+              'run_id':os.environ['GITHUB_RUN_ID'],
+              'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],
+              'event':os.environ['GITHUB_EVENT_NAME'],
+              'source_commit':os.environ['GITHUB_SHA'],
+              'observed_at':now_utc().isoformat(),
+              'cadence':json.loads(Path('cadence-result.json').read_text()),
+              'step_outcomes':{k:os.environ.get(k) for k in ['ACCEPTANCE_OUTCOME','DAILY_OUTCOME','TRAINING_OUTCOME','REPLAY_OUTCOME']},
+              'scope':'workflow environment attestation; verify run identity/conclusion through GitHub Actions API'
+          })
+          PY
           python tools/persist_state.py
       - name: Upload derived health reports
         if: always()

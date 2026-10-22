@@ -24,6 +24,13 @@ scheduled job outside the Chicago morning window is skipped. Neither case
 creates a backdated forecast. Manual recovery uses the existing workflow and
 the same frozen-opportunity rules.
 
+Every invocation with a valid cadence decision also persists a small operations
+receipt, including skipped slots and failed training steps. It binds the GitHub
+run ID/attempt, event, source commit, observed decision and step outcomes. These
+are workflow attestations; the Actions API independently establishes the run
+identity/conclusion. A future scheduled event can therefore leave durable proof
+without an always-running assistant or another scheduler.
+
 Raw HTTP bodies are cached once per source within an execution workspace and
 versions are retained locally. Standard hosted runners are ephemeral: a later
 runner may need to download them again. The lab does not publish raw bodies in
