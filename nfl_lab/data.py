@@ -158,7 +158,7 @@ def _download(raw: Path, name: str, url: str, *, optional: bool = False,
     raise RuntimeError(f"Required NFL source unavailable: {result}")
 
 
-def acquire_history(cache: Path, seasons: list[int]) -> dict:
+def acquire_history(cache: Path, seasons: list[int], *, active_season: int | None = None) -> dict:
     """Acquire history and daily mutable updates; return hashes, rights and clocks."""
     started = time.monotonic()
     cache = Path(cache)
@@ -175,7 +175,7 @@ def acquire_history(cache: Path, seasons: list[int]) -> dict:
         ("ngs_release.json", "https://api.github.com/repos/nflverse/nflverse-data/releases/tags/nextgen_stats", True, True),
     ]
     for year in seasons:
-        mutable = year == current_year
+        mutable = year == (active_season if active_season is not None else current_year)
         jobs += [(f"stats_player_week_{year}.parquet", f"{BASE}/stats_player/stats_player_week_{year}.parquet", False, mutable),
                  (f"roster_weekly_{year}.parquet", f"{BASE}/weekly_rosters/roster_weekly_{year}.parquet", False, mutable),
                  (f"snap_counts_{year}.parquet", f"{BASE}/snap_counts/snap_counts_{year}.parquet", True, mutable)]

@@ -36,6 +36,15 @@ def test_resource_limit_preserves_evidence(tmp_path):
     assert not list(tmp_path.rglob("*.gz"))
 
 
+def test_interrupted_publication_never_creates_truncated_record(tmp_path,monkeypatch):
+    import nfl_lab.state as state
+    def fail(*a,**kw):raise OSError("interrupted before atomic publication")
+    monkeypatch.setattr(state.os,"link",fail)
+    with pytest.raises(OSError):save(tmp_path,"forecasts",{"rows":[]})
+    assert not list(tmp_path.rglob("*.json.gz"))
+    assert list(records(tmp_path,"forecasts"))==[]
+
+
 def observation(value,state="played",**extra):
     return dict(player_id="p",game_id="g",target="rec",actual=value,participation_state=state,source="test",source_sha256=str(value)+state,observed_at=NOW.isoformat(),source_timestamp=None,**extra)
 
@@ -44,6 +53,8 @@ def test_unknown_zero_dnp_distinct_and_retry(tmp_path):
     o=observation(0)
     assert append_outcomes(tmp_path,[o])["appended"]==1
     assert append_outcomes(tmp_path,[o])["appended"]==0
+    later=dict(o,observed_at=(NOW+timedelta(days=1)).isoformat())
+    assert append_outcomes(tmp_path,[later])["appended"]==0
     assert resolved_outcomes(tmp_path)[("p","g","rec")]["actual"]==0
     append_outcomes(tmp_path,[observation(None,"DNP")])
     assert resolved_outcomes(tmp_path)[("p","g","rec")]["state"]=="unresolved_participation_conflict"

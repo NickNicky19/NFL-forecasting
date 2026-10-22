@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,13 +51,24 @@ def records(root,kind):
 def save(root,kind,doc,max_bytes=200*1024*1024):
     root=Path(root);body=canonical(doc);key=digest(doc);path=root/kind/f"{key}.json.gz"
     if path.exists():return key
-    size=sum(p.stat().st_size for p in root.rglob("*.json.gz"))
+    size=sum(p.stat().st_size for p in root.rglob("*") if p.is_file() and p.name!=".writer.lock")
     compressed=gzip.compress(body,mtime=0)
     if size+len(compressed)>max_bytes:raise RuntimeError("durable evidence cap reached; no evidence deleted")
     path.parent.mkdir(parents=True,exist_ok=True)
-    # O_EXCL means a retry never overwrites an original.
-    fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o644)
-    with os.fdopen(fd,"wb") as f:f.write(compressed);f.flush();os.fsync(f.fileno())
+    # Publish a complete fsynced file atomically. Interrupted temporary files
+    # never match the immutable-record glob, and link refuses replacement.
+    temporary=None
+    try:
+        with tempfile.NamedTemporaryFile(dir=path.parent,prefix=".pending-",delete=False) as f:
+            temporary=Path(f.name);f.write(compressed);f.flush();os.fsync(f.fileno())
+        try:os.link(temporary,path)
+        except FileExistsError:
+            if gzip.decompress(path.read_bytes())!=body:raise ValueError("conflicting immutable record")
+        directory=os.open(path.parent,os.O_RDONLY)
+        try:os.fsync(directory)
+        finally:os.close(directory)
+    finally:
+        if temporary is not None:temporary.unlink(missing_ok=True)
     return key
 
 
@@ -95,14 +107,15 @@ def capture(root,rows,clock=now_utc):
 
 def append_outcomes(root,observations):
     with writer(root):
-        existing={digest(r) for r in records(root,"outcomes")}
+        def semantic_key(row):return digest({k:v for k,v in row.items() if k!="observed_at"})
+        existing={semantic_key(r) for r in records(root,"outcomes")}
         added=0
         for row in observations:
             if row["participation_state"] not in ["played","DNP","unknown"]:raise ValueError("bad participation")
             if row["participation_state"]!="played" and row.get("actual") is not None:raise ValueError("nonparticipant numeric outcome")
             if row.get("actual") is not None and (isinstance(row["actual"],bool) or not math.isfinite(row["actual"])):raise ValueError("invalid outcome")
             if not row.get("source_sha256") or not row.get("observed_at"):raise ValueError("unattributed outcome")
-            key=digest(row)
+            key=semantic_key(row)
             if key not in existing:save(root,"outcomes",row);added+=1;existing.add(key)
         return {"appended":added}
 

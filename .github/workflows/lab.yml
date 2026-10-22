@@ -89,7 +89,9 @@ jobs:
           path: |
             *-result.json
             runs/daily.json
-            runs/lab-v1-2026-10-22/summary.json
-            runs/lab-v1-2026-10-22/campaign.json
+            runs/lab-v1-2026-10-22/**/summary.json
+            runs/lab-v1-2026-10-22/**/campaign.json
+            runs/lab-v1-2026-10-22/**/manifest.json
+            runs/lab-v1-2026-10-22/**/trials.json
           retention-days: 14
           if-no-files-found: ignore

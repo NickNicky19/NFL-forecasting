@@ -59,5 +59,13 @@ scoring identity, model/config/code/input hashes, kickoff and issue clocks,
 conditional played mean/distribution, participation probability, and fallback.
 Recorded source publication clocks remain unknown where the provider does not
 supply them. Compatible component means add; quantiles require joint samples.
+New scalar shadow comparisons include development-selected challengers beside
+recent/pooled controls. Model artifacts are immutable finite JSON with learned
+parameters, full trees, environment/code hashes, replay and local rollback; see
+[the consumer contract](docs/passing-and-model-engine.md). Exact PPR remains
+unsupported where components are missing. Marginal passing coherence failures
+are retained in [the initial results](reports/initial-campaign/README.md);
+those packages are not ready for joint integration. No candidate is promoted.
+
 Integer push mass needs an actual saved line; absent odds never block football
 forecasts, and this lab makes no EV or financial settlement claims.

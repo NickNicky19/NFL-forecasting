@@ -35,3 +35,9 @@ def test_paired_uses_identical_outcomes():
     assert s["paired_n"]==9 and s["interval"]==[-1,-1]
     frame=pd.DataFrame(rows);frame.loc[0,"actual"]=0
     with pytest.raises(ValueError,match="mismatch"):paired_week_interval(frame,"recent","ridge")
+
+
+def test_binary_primary_interval_is_brier():
+    rows=pd.DataFrame([dict(season=2024,week=1,game_id="g",player_id="p",target="anytime_td",actual=1,mean=p,method=m,participation_state="played") for m,p in [("recent",.1),("ridge",.4)]])
+    s=paired_week_interval(rows,"recent","ridge")
+    assert s["primary_metric"]=="brier" and s["primary_delta"]==pytest.approx(-.45)

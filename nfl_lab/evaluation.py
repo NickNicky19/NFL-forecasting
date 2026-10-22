@@ -4,6 +4,9 @@ from __future__ import annotations
 import json
 import time
 import traceback
+import uuid
+import warnings
+from datetime import datetime,timezone
 from pathlib import Path
 
 import numpy as np
@@ -62,7 +65,7 @@ def probability_scores(y, mean, scale, family):
             "push_mass": None, "push_mass_semantics": "requires an actually recorded integer line"}
 
 
-def summarize(rows: pd.DataFrame) -> dict:
+def summarize(rows: pd.DataFrame,include_distribution=True) -> dict:
     observed = rows["participation_state"].eq("played") & pd.to_numeric(rows["actual"],errors="coerce").notna()
     scored = rows.loc[observed & pd.to_numeric(rows["mean"], errors="coerce").notna()]
     out = {"population_rows": len(rows), "supported_played_outcomes": int(observed.sum()),
@@ -78,10 +81,10 @@ def summarize(rows: pd.DataFrame) -> dict:
                    unique_weeks=int(scored[["season","week"]].drop_duplicates().shape[0]),
                    played_zero_rows=int(scored.actual.eq(0).sum()))
         # Only actual distributions qualify; archived points do not inherit one.
-        dist = scored.loc[scored.scale.notna() & scored.family.notna()]
+        dist = scored.loc[scored.scale.notna() & scored.family.notna()] if include_distribution else scored.iloc[:0]
         for family, group in dist.groupby("family"):
             out[family] = probability_scores(group.actual,group["mean"],group.scale,family)
-        if len(scored) and scored.family.eq("bernoulli").all():
+        if include_distribution and len(scored) and scored.family.eq("bernoulli").all():
             out["calibration"] = []
             for b in range(10):
                 g=scored.loc[(scored["mean"]>=b/10)&((scored["mean"]<(b+1)/10) if b<9 else (scored["mean"]<=1))]
@@ -101,9 +104,11 @@ def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, see
     b=good.loc[good.method.eq(challenger),keys+["mean","actual"]]
     m=a.merge(b,on=keys,suffixes=("_a","_b"),validate="one_to_one")
     if not np.allclose(m.actual_a,m.actual_b): raise ValueError("paired outcome mismatch")
-    m["delta"]=(m.mean_b-m.actual_b).abs()-(m.mean_a-m.actual_a).abs()
+    binary=set(rows.target.dropna().unique())=={"anytime_td"}
+    metric="brier" if binary else "mae"
+    m["delta"]=(m.mean_b-m.actual_b)**2-(m.mean_a-m.actual_a)**2 if binary else (m.mean_b-m.actual_b).abs()-(m.mean_a-m.actual_a).abs()
     g=m.groupby(["season","week"]).delta.agg(["sum","count"])
-    out={"paired_n":len(m),"weeks":len(g),"mae_delta":float(m.delta.mean()) if len(m) else None,
+    out={"paired_n":len(m),"weeks":len(g),"primary_metric":metric,"primary_delta":float(m.delta.mean()) if len(m) else None,
          "interpretation":"historical_reconstruction_exploratory; no independent confirmation",
          "simultaneous_confidence":1-.05/12}
     if len(g)<8:
@@ -119,7 +124,13 @@ def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, see
 
 def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, seasons=None):
     from .models import fit_predict
-    output.mkdir(parents=True,exist_ok=True)
+    from .state import digest,source_tree_digest
+    parent=output
+    attempt=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")+"-"+uuid.uuid4().hex[:8]
+    output=parent/attempt
+    output.mkdir(parents=True,exist_ok=False)
+    manifest={"attempt_id":attempt,"registration":config,"registration_sha256":digest(config),"started_at":datetime.now(timezone.utc).isoformat(),"feature_attrs":features.attrs,"source_tree_sha256":source_tree_digest(Path.cwd())}
+    (output/"manifest.json").write_text(json.dumps(manifest,indent=2,default=str,allow_nan=False))
     start=time.monotonic(); metadata=[]; allrows=[]; budget=config["budgets"]["max_training_seconds"]
     methods=methods or config["candidate_families"]
     if len(methods)>config["budgets"]["candidate_configurations_per_category"]: raise ValueError("search budget exceeded")
@@ -136,8 +147,11 @@ def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, s
                 if time.monotonic()-start>=budget:
                     metadata.append({"season":season,"target":target,"method":method,"state":"NOT_RUN_BUDGET_EXHAUSTED"});continue
                 began=time.monotonic()
+                with (output/"trial-events.jsonl").open("a") as log:log.write(json.dumps({"event":"STARTED","season":season,"target":target,"method":method,"at":datetime.now(timezone.utc).isoformat()})+"\n")
                 try:
-                    pred=fit_predict(train,test,target,method)
+                    with warnings.catch_warnings(record=True) as captured_warnings:
+                        warnings.simplefilter("always")
+                        pred=fit_predict(train,test,target,method)
                     r=test[["season","week","game_id","player_id","team","opponent","position","kickoff_utc","participation_state"]].copy()
                     r["actual"]=test[target];r["target"]=target;r["method"]=method
                     for col in ["mean","scale","family","p10","p50","p90","p_participation","fallback"]:r[col]=pred[col]
@@ -145,25 +159,18 @@ def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, s
                     r["evidence"]="current_vintage_historical_reconstruction"
                     path=output/f"{season}-{target}-{method}.parquet";r.to_parquet(path,index=False)
                     allrows.append(r)
-                    metadata.append({"season":season,"target":target,"method":method,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"score":summarize(r)})
+                    metadata.append({"season":season,"target":target,"method":method,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"warnings":[str(w.message) for w in captured_warnings],"score":summarize(r)})
                 except Exception as exc:
                     metadata.append({"season":season,"target":target,"method":method,"state":"FAILED","seconds":time.monotonic()-began,"error":str(exc),"traceback":traceback.format_exc()})
                 (output/"trials.json").write_text(json.dumps(metadata,indent=2,default=str,allow_nan=False))
+                with (output/"trial-events.jsonl").open("a") as log:log.write(json.dumps({"event":"COMPLETED","trial":metadata[-1]},default=str,allow_nan=False)+"\n")
+    (output/"trials.json").write_text(json.dumps(metadata,indent=2,default=str,allow_nan=False))
     if allrows:
         rows=pd.concat(allrows,ignore_index=True)
         rows.to_parquet(output/"rows.parquet",index=False)
-        summaries=[];groups=[];paired=[]
-        for (split,target,method),g in rows.groupby(["split","target","method"]):
-            summaries.append({"split":split,"target":target,"method":method,**summarize(g)})
-            for dimension in ["position","player_id","team","opponent"]:
-                for value,sub in g.groupby(dimension):
-                    groups.append({"split":split,"target":target,"method":method,"dimension":dimension,"value":value,"interpretation":"exploratory_unshrunk_no_selection",**summarize(sub)})
-        for (split,target),g in rows.groupby(["split","target"]):
-            for method in methods:
-                if method!="recent": paired.append({"split":split,"target":target,"method":method,**paired_week_interval(g,"recent",method)})
-        (output/"summary.json").write_text(json.dumps(summaries,indent=2,allow_nan=False))
-        (output/"subgroups.json").write_text(json.dumps(groups,allow_nan=False))
-        (output/"paired.json").write_text(json.dumps(paired,indent=2,allow_nan=False))
-    report={"registration":config["registration_id"],"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim"}
+        del rows,allrows
+        from .reporting import finish_reports
+        finish_reports(output)
+    report={"registration":config["registration_id"],"attempt_id":attempt,"output":str(output),"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim"}
     (output/"campaign.json").write_text(json.dumps(report,indent=2))
     return report

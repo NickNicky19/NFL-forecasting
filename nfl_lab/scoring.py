@@ -83,7 +83,7 @@ def anytime_td_outcome(stats: Mapping[str, Any], *, participation: str = "played
     """
     if population not in {"conditional_on_playing", "all_player"}:
         raise ValueError("unknown_population")
-    if participation == "dnp":
+    if participation.lower() == "dnp":
         return 0 if population == "all_player" else None
     if participation != "played":
         return None

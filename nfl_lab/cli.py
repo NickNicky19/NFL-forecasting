@@ -26,6 +26,12 @@ def main():
         receipt=acquire_history(cache,seasons);history=load_history(cache,seasons)
         frame=build_features(history);(cache/"processed").mkdir(exist_ok=True)
         frame.to_parquet(cache/"processed/features.parquet",index=False)
+        feature_file=cache/"processed/features.parquet"
+        feature_sha=hashlib.file_digest(feature_file.open("rb"),"sha256").hexdigest()
+        feature_manifest={"feature_sha256":feature_sha,"acquisition":receipt,"feature_profile":frame.attrs,"vintage":"reconstructed_current_vintage"}
+        manifests=cache/"processed/feature_manifests";manifests.mkdir(exist_ok=True)
+        manifest_file=manifests/(feature_sha+".json")
+        if not manifest_file.exists():manifest_file.write_text(json.dumps(feature_manifest,indent=2,default=str,allow_nan=False))
         result={"rows":len(frame),"source_receipt":receipt,"feature_columns":[c for c in frame if c.startswith("f_")]}
     elif args.command=="experiment":
         import pandas as pd
@@ -33,16 +39,30 @@ def main():
         p=cache/"processed/features.parquet"
         if not p.exists():raise RuntimeError("run acquire first")
         features=pd.read_parquet(p)
+        features.attrs["feature_file_sha256"]=hashlib.file_digest(p.open("rb"),"sha256").hexdigest()
+        manifest_path=cache/"processed/feature_manifests"/(features.attrs["feature_file_sha256"]+".json")
+        features.attrs["source_snapshot_binding"]=json.loads(manifest_path.read_text()) if manifest_path.exists() else {"state":"legacy feature checksum captured; prematched acquisition snapshot absent; no fabricated source binding"}
         result=campaign(features,root/"runs"/config["registration_id"],config,args.methods.split(",") if args.methods else None)
+        attempt=Path(result["output"])
+        derived={"schema_version":"lab-training-run-v1","registration":config,"result":result,
+                 "trials":json.loads((attempt/"trials.json").read_text()) if (attempt/"trials.json").exists() else [],
+                 "manifest":json.loads((attempt/"manifest.json").read_text()),
+                 "row_level_outputs":"local ignored only; row hash binds this derived aggregate"}
+        for name in ["selected","paired","coherence","summary"]:
+            path=attempt/(name+".json")
+            if path.exists():derived[name]=json.loads(path.read_text())
+        save(state,"training",derived)
     elif args.command=="daily":
         from .live import daily
         result=daily(root,cache,state,seasons,args.methods.split(",") if args.methods else None)
     elif args.command=="replay":
+        from .prospective import score_saved
         forecasts=0
         for batch in records(state,"forecasts"):
             for row in batch["rows"]:validate_forecast(row);forecasts+=1
         outcomes=resolved_outcomes(state)
-        result={"forecasts_validated":forecasts,"outcomes":len(outcomes),"unresolved_conflicts":sum(r["state"].startswith("unresolved") for r in outcomes.values()),"receipt_integrity":"PASS"}
+        result={"forecasts_validated":forecasts,"outcomes":len(outcomes),"unresolved_conflicts":sum(r["state"].startswith("unresolved") for r in outcomes.values()),"receipt_integrity":"PASS","scorecard":score_saved(state)}
+        save(state,"scorecards",result)
     else:
         if not args.publication_commit:raise ValueError("publication commit required")
         observed=now_utc();docs=list(records(state,"forecasts"));prior={r["batch"] for r in records(state,"publication")}
