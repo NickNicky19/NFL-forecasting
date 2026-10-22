@@ -25,6 +25,37 @@ def _clock(value):
     return stamp.tz_convert("UTC")
 
 
+def _build_grading_lookups(context: dict) -> dict:
+    """Index immutable context identities once; values retain source row positions."""
+    history, identity = context["history"], context["identity"]
+    schedule, players, sleepers = {}, {}, {}
+    columns = ["season", "week", "team", "opponent", "player_id", "game_id"]
+    clocks = pd.to_datetime(history.kickoff_utc, utc=True).astype("int64").to_numpy()
+    for position, row in enumerate(history[columns].itertuples(index=False, name=None)):
+        season, week, team, opponent, pid, game_id = row
+        key = (season, week, team, opponent, int(clocks[position]))
+        if pd.notna(game_id):
+            schedule.setdefault(key, set()).add(game_id)
+        player_key = key + (pid,)
+        players[player_key] = position if player_key not in players else None
+    for position, sid in enumerate(identity.sleeper_id):
+        if pd.notna(sid):
+            sleepers.setdefault(str(sid), []).append(position)
+    return {"schedule": schedule, "players": players, "sleepers": sleepers,
+            "signature": (id(history), history.shape, id(identity), identity.shape)}
+
+
+def _grading_lookups(context: dict, use_cache: bool) -> dict:
+    signature = (id(context["history"]), context["history"].shape,
+                 id(context["identity"]), context["identity"].shape)
+    cached = context.get("_grading_lookups")
+    if not use_cache or cached is None or cached["signature"] != signature:
+        cached = _build_grading_lookups(context)
+        if use_cache:
+            context["_grading_lookups"] = cached
+    return cached
+
+
 def load_cached_grading_context(cache: Path, seasons: list[int]) -> dict:
     """Verify cached bytes, then use the existing offline shared loaders.
 
@@ -58,12 +89,14 @@ def load_cached_grading_context(cache: Path, seasons: list[int]) -> dict:
         receipts[name] = receipt
     history = load_history(cache, seasons)
     identity = load_identity(cache)
-    return {"history": history, "identity": identity, "receipts": receipts,
-            "seasons": seasons, "verified_utc": _utc_now(), "vintage": VINTAGE}
+    context = {"history": history, "identity": identity, "receipts": receipts,
+               "seasons": seasons, "verified_utc": _utc_now(), "vintage": VINTAGE}
+    _grading_lookups(context, True)
+    return context
 
 
 def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
-                           status_receipt: dict | None = None) -> dict:
+                           status_receipt: dict | None = None, *, use_lookup_cache: bool = True) -> dict:
     """Return a supplemental value only with exact identity and final-game binding.
 
     ``completed_game`` uses the caller/provider game ID, kickoff, home/away and
@@ -99,6 +132,7 @@ def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
     target = forecast.get("target")
     if target not in TARGETS:
         return gap("unsupported_target")
+    lookups = _grading_lookups(context, use_lookup_cache)
     pid = forecast.get("player_id")
     binding = "frozen_exact_gsis"
     if isinstance(pid, str) and pid.startswith("sleeper:"):
@@ -106,7 +140,9 @@ def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
         if not sid or (forecast.get("sleeper_id") is not None and str(forecast["sleeper_id"]) != sid):
             return gap("conflicting_frozen_sleeper_identity")
         identity = context["identity"]
-        matches = identity[identity.sleeper_id.astype("string").eq(sid) & identity.identity_status.eq("source_exact_binding")]
+        positions = lookups["sleepers"].get(sid, [])
+        candidates = identity.iloc[positions]
+        matches = candidates[candidates.sleeper_id.astype("string").eq(sid) & candidates.identity_status.eq("source_exact_binding")]
         if len(matches) != 1:
             return gap("missing_or_ambiguous_authenticated_sleeper_gsis_binding")
         pid = matches.iloc[0].player_id
@@ -118,22 +154,24 @@ def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
         season, week = int(forecast["season"]), int(forecast["week"])
     except (KeyError, TypeError, ValueError):
         return gap("missing_period")
-    period = history[(history.season == season) & (history.week == week)]
-    same_schedule = period[(period.team == forecast.get("team")) & (period.opponent == forecast.get("opponent")) &
-                           pd.to_datetime(period.kickoff_utc, utc=True).eq(kickoff)]
-    game_ids = same_schedule.game_id.dropna().unique()
+    schedule_key = (season, week, forecast.get("team"), forecast.get("opponent"), kickoff.value)
+    game_ids = lookups["schedule"].get(schedule_key, set())
     if len(game_ids) != 1:
         return gap("missing_or_ambiguous_exact_nflverse_schedule_tuple")
-    rows = same_schedule[same_schedule.player_id.eq(pid)]
-    if len(rows) != 1:
+    position = lookups["players"].get(schedule_key + (pid,))
+    if position is None:
         return gap("missing_or_ambiguous_player_game")
-    row = rows.iloc[0]
+    row = history.iloc[position]
+    # Context source identities are immutable; callers replacing frames/adding
+    # rows rebuild automatically. Recheck selected source identities as well.
+    if (row.season, row.week, row.team, row.opponent, _clock(row.kickoff_utc).value, row.player_id) != schedule_key + (pid,) or row.game_id not in game_ids:
+        return gap("cached_source_identity_changed; rebuild_context")
     if pd.notna(row.get("is_home")):
         expected_home = row.team if bool(row.is_home) else row.opponent
         expected_away = row.opponent if bool(row.is_home) else row.team
         if completed_game.get("home") != expected_home or completed_game.get("away") != expected_away:
             return gap("completed_home_away_binding_mismatch")
-    result.update({"canonical_game_id": str(game_ids[0]), "canonical_player_id": pid,
+    result.update({"canonical_game_id": str(next(iter(game_ids))), "canonical_player_id": pid,
                    "identity_binding": binding, "participation_state": row.participation_state,
                    "participation_evidence": row.get("participation_evidence"),
                    "schedule_binding": {"season": season, "week": week, "team": forecast["team"],

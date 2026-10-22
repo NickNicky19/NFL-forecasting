@@ -108,8 +108,8 @@ def test_context_verifies_all_cached_receipts_before_offline_shared_loaders(tmp_
         (raw / (name + ".receipt.json")).write_text(json.dumps({"sha256": hashlib.sha256(body).hexdigest(),
             "retrieved_utc": "2026-10-20T12:00:00Z", "status": "acquired"}))
     calls = []
-    monkeypatch.setattr("nfl_lab.grading_sources.load_history", lambda *args: calls.append("history") or pd.DataFrame())
-    monkeypatch.setattr("nfl_lab.grading_sources.load_identity", lambda *args: calls.append("identity") or pd.DataFrame())
+    monkeypatch.setattr("nfl_lab.grading_sources.load_history", lambda *args: calls.append("history") or fixtures()[0]["history"])
+    monkeypatch.setattr("nfl_lab.grading_sources.load_identity", lambda *args: calls.append("identity") or fixtures()[0]["identity"])
     context = load_cached_grading_context(tmp_path, [2026])
     assert calls == ["history", "identity"] and len(context["receipts"]) == 4
     (raw / "stats_player_week_2026.parquet").write_bytes(b"tampered")
@@ -117,3 +117,37 @@ def test_context_verifies_all_cached_receipts_before_offline_shared_loaders(tmp_
     with pytest.raises(ValueError, match="integrity failure"):
         load_cached_grading_context(tmp_path, [2026])
     assert calls == []
+
+
+def test_cached_and_uncached_match_and_repeated_queries_build_once(monkeypatch):
+    import nfl_lab.grading_sources as module
+    context, forecast, game = fixtures()
+    original = module._build_grading_lookups
+    builds = []
+    def counted(context):
+        builds.append(True)
+        return original(context)
+    monkeypatch.setattr(module, "_build_grading_lookups", counted)
+    for target in ["rec", "rec_yd", "rush_yd", "rush_rec_yd", "anytime_td", "fantasy_ppr"]:
+        cached = cached_nflverse_outcome(context, {**forecast, "target": target}, game)
+        assert cached == cached_nflverse_outcome(context, {**forecast, "target": target}, game)
+    assert len(builds) == 1
+    for target in ["rec", "rec_yd", "rush_yd", "rush_rec_yd", "anytime_td", "fantasy_ppr"]:
+        assert cached_nflverse_outcome(context, {**forecast, "target": target}, game) == cached_nflverse_outcome(
+            context, {**forecast, "target": target}, game, use_lookup_cache=False)
+
+
+def test_duplicate_player_rows_and_replaced_identity_frames_invalidate_cache():
+    context, forecast, game = fixtures()
+    assert cached_nflverse_outcome(context, forecast, game)["actual"] == 0
+    context["history"] = pd.concat([context["history"], context["history"]], ignore_index=True)
+    cached = cached_nflverse_outcome(context, forecast, game)
+    assert cached["gap_reason"] == "missing_or_ambiguous_player_game"
+    assert cached == cached_nflverse_outcome(context, forecast, game, use_lookup_cache=False)
+    context, forecast, game = fixtures()
+    forecast["player_id"] = "sleeper:123"
+    assert cached_nflverse_outcome(context, forecast, game)["actual"] == 0
+    context["identity"] = pd.concat([context["identity"], context["identity"]], ignore_index=True)
+    cached = cached_nflverse_outcome(context, forecast, game)
+    assert cached["actual"] is None
+    assert cached == cached_nflverse_outcome(context, forecast, game, use_lookup_cache=False)
