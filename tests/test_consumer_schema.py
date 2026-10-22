@@ -7,12 +7,16 @@ import jsonschema
 import pytest
 
 from nfl_lab.scoring import PPR_COMPONENTS,ppr_points
+from nfl_lab.consumer import consumer_forecast
 
 
 def test_schema_signed_yards_missing_identity_and_event_support():
     schema=json.loads(Path('schemas/forecast-v1.json').read_text())
     row={"player_id":"00-1","sleeper_id":"1","game_id":"espn:1","team":"A","opponent":"B","target":"rush_yd","period":"full_game","model_id":"m","scoring_id":"nfl-full-game-v1","model_config_sha256":"a"*64,"input_sha256":"b"*64,"code_sha256":"c"*64,"kickoff_utc":"2026-10-23T00:15:00Z","issued_at":"2026-10-22T12:00:00Z","mean":-2.5,"fallback":None,"prediction_functional":"conditional_played_mean"}
     jsonschema.validate(row,schema)
+    legacy=copy.copy(row);legacy["kickoff_utc"]="2026-10-23 00:15:00+00:00"
+    assert consumer_forecast(legacy)["kickoff_utc"]=="2026-10-23T00:15:00+00:00"
+    assert legacy["kickoff_utc"]=="2026-10-23 00:15:00+00:00"
     bad=copy.copy(row);bad["target"]="rec"
     with pytest.raises(jsonschema.ValidationError):jsonschema.validate(bad,schema)
     bad=copy.copy(row);bad.pop("sleeper_id")

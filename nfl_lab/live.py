@@ -39,7 +39,7 @@ def schedule_games(doc):
     return games
 
 
-def future_population(players,games,season,week):
+def future_population(players,games,season,week,*,identity_by_sleeper=None,frozen_by_game_sleeper=None):
     by_team={}
     for g in games:
         for own,opp in [("home","away"),("away","home")]:by_team[g[own]]={**g,"team":g[own],"opponent":g[opp],"is_home":own=="home"}
@@ -49,9 +49,14 @@ def future_population(players,games,season,week):
         if team not in by_team or pos not in SKILL or p.get("active") is False:continue
         g=by_team[team]
         # An unlinked player retains a stable, explicit namespace and pooled fallback.
-        pid=p.get("gsis_id") or "sleeper:"+sid
+        direct=p.get("gsis_id");crosswalk=(identity_by_sleeper or {}).get(str(sid))
+        pid=direct or crosswalk or "sleeper:"+sid
+        binding="sleeper_gsis" if direct else "nflverse_exact_id_crosswalk" if crosswalk else "unlinked_cold_start"
+        if direct and crosswalk and direct!=crosswalk:pid="sleeper:"+sid;binding="conflicting_identity_cold_start"
+        frozen=(frozen_by_game_sleeper or {}).get((g["game_id"],str(sid)))
+        if frozen:pid=frozen;binding="frozen_first_sleeper_binding"
         rows.append({"season":int(season),"week":int(week),"game_id":g["game_id"],"player_id":pid,
-                     "sleeper_id":str(sid),"player_name":p.get("full_name") or p.get("last_name") or pid,
+                     "sleeper_id":str(sid),"identity_binding":binding,"player_name":p.get("full_name") or p.get("last_name") or pid,
                      "position":pos,"team":team,"opponent":g["opponent"],"is_home":g["is_home"],
                      "kickoff_utc":g["kickoff_utc"],"outcome_available_utc":pd.NaT,"participation_state":"unknown",
                      "injury_status_observed":p.get("injury_status"),"population_eligibility":"current_active_flag_skill_roster; not game-day eligibility proof"})
@@ -63,6 +68,7 @@ def future_population(players,games,season,week):
 
 def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     from .data import TARGETS, acquire_history,load_history
+    from .data import load_identity
     from .features import build_features
     from .models import fit_predict
     from .scoring import SCORING_VERSION
@@ -104,7 +110,17 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
         report={"state":"GRADING_ONLY_NO_FUTURE_GAMES","grading":grade,"missed_started_games":missed_games,"history_limit":history_limit}
         save(state,"health",{**report,"observed_at":now_utc().isoformat()})
         return report
-    live=future_population(players,future_games,year,week)
+    registry=load_identity(cache)
+    exact=registry.loc[registry.identity_status.eq("source_exact_binding") & registry.sleeper_id.notna()]
+    mapping={str(r.sleeper_id):str(r.player_id) for r in exact.itertuples()}
+    frozen={}
+    for batch in records(state,"forecasts"):
+        for r in batch["rows"]:
+            if r.get("sleeper_id"):
+                key=(r["game_id"],r["sleeper_id"])
+                if key in frozen and frozen[key]!=r["player_id"]:raise ValueError("conflicting frozen canonical identities")
+                frozen[key]=r["player_id"]
+    live=future_population(players,future_games,year,week,identity_by_sleeper=mapping,frozen_by_game_sleeper=frozen)
     if live.empty:raise ValueError("no eligible future roster population")
     for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
     live["cutoff_utc"]=feature_cutoff.isoformat()
@@ -122,24 +138,45 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     feature_columns=[c for c in test if c.startswith("f_")]+["player_id","game_id","team","opponent","cutoff_utc"]
     feature_sha=hashlib.sha256(pd.util.hash_pandas_object(test[feature_columns],index=True).values.tobytes()).hexdigest()
     input_sha=digest({"sources":hashes,"feature_cutoff":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha});code_sha=initial_code_sha;out=[];abstentions=[]
+    input_manifest_sha=save(state,"input_manifests",{"schema_version":"lab-input-manifest-v1","input_sha256":input_sha,
+        "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,"code_sha256":code_sha,
+        "source_hashes":hashes,"history_acquisition":acquisition,"live_receipts":{"state":status_receipt,"players":player_receipt,"schedule":board_receipt},
+        "feature_columns":feature_columns,"schedule_population":games,"population_rows":len(test),
+        "timing_scope":"current responses observed before featurecutoff; historical windows reconstructed; provider publication clocks unknown",
+        "scope":"this intake only; no retroactive binding to existing frozen forecasts"})
+    existing={tuple(r[k] for k in ["player_id","game_id","target","model_id"]) for batch in records(state,"forecasts") for r in batch["rows"]}
+    already_frozen=0;artifact_replays=0
     for target in TARGETS:
         target_methods=list(dict.fromkeys(methods+([selected[target]] if target in selected else [])))
         for method in target_methods:
+            model_id="lab-v1.1-"+method
+            needed=np.array([(str(r.player_id),str(r.game_id),target,model_id) not in existing for r in test.itertuples()],dtype=bool)
+            already_frozen+=int((~needed).sum())
+            if not needed.any():continue
+            forecast_test=test.loc[needed]
             artifact=Path(state)/"models"/input_sha/f"{target}-{method}.json"
             if sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
-            pred=fit_predict(train,test,target,method,artifact_path=artifact)
+            pred=fit_predict(train,forecast_test,target,method,artifact_path=artifact)
+            from .model_artifacts import predict_artifact
+            replay=predict_artifact(artifact,forecast_test,input_manifest={"source_qualified":True,"availability_verified":True,"input_sha256":input_sha,
+                      "qualification_scope":"current source responses observed before feature_cutoff; historical source clocks remain reconstructed"})
+            for col in ["mean","scale","p10","p50","p90","p_participation"]:
+                if not np.allclose(pred[col].to_numpy(float),replay[col].to_numpy(float),rtol=1e-10,atol=1e-9,equal_nan=True):raise ValueError(f"real input artifact replay mismatch:{target}/{method}/{col}")
+            if pred.fallback.fillna("").tolist()!=replay.fallback.fillna("").tolist():raise ValueError("real input artifact fallback replay mismatch")
+            artifact_replays+=1
             artifact_sha=hashlib.sha256(artifact.read_bytes()).hexdigest()
             for ix,p in pred.iterrows():
                 r=test.loc[ix]
                 if pd.isna(p["mean"]):abstentions.append({"target":target,"method":method,"reason":str(p.fallback)});continue
-                row={"player_id":str(r.player_id),"sleeper_id":str(r.sleeper_id),"game_id":str(r.game_id),"team":str(r.team),"opponent":str(r.opponent),
+                row={"player_id":str(r.player_id),"sleeper_id":str(r.sleeper_id),"identity_binding":str(r.identity_binding),"game_id":str(r.game_id),"team":str(r.team),"opponent":str(r.opponent),
                      "season":year,"week":week,"position":str(r.position),"target":target,"period":"full_game",
-                     "model_id":"lab-v1.1-"+method,"model_state":"UNQUALIFIED_SHADOW","model_config_sha256":digest(pred.attrs),
+                     "model_id":model_id,"model_state":"UNQUALIFIED_SHADOW","model_config_sha256":digest(pred.attrs),
                      "fitted_artifact_sha256":artifact_sha,"fitted_artifact_path":str(artifact.relative_to(state)),
                      "scoring_id":SCORING_VERSION if target=="fantasy_ppr" else "nfl-full-game-v1",
-                     "kickoff_utc":str(r.kickoff_utc),"input_sha256":input_sha,"code_sha256":code_sha,
+                     "kickoff_utc":utc(r.kickoff_utc).isoformat(),"input_sha256":input_sha,"code_sha256":code_sha,
                      "source_hashes":hashes,"source_timestamp":None,"mean":float(p["mean"]),
                      "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,
+                     "input_manifest_sha256":input_manifest_sha,
                      "prediction_functional":"conditional_played_mean","family":str(p.family),
                      "scale":float(p.scale) if pd.notna(p.scale) else None,"p_participation":float(p.p_participation) if pd.notna(p.p_participation) else None,
                      "fallback":str(p.fallback) if pd.notna(p.fallback) else None,
@@ -154,6 +191,7 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     report={"started_at":began.isoformat(),"completed_at":now_utc().isoformat(),"season":year,"week":week,
             "schedule_games":len(games),"population_rows":len(test),"capture":result,"grading":grade,
             "history_limit":history_limit,"missed_started_games":missed_games,
+            "already_frozen_opportunities":already_frozen,"real_input_artifact_replays_passed":artifact_replays,
             "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,
             "abstentions":pd.Series([r["target"]+":"+r["reason"] for r in abstentions],dtype=str).value_counts().to_dict(),
             "provider_projection_private_cache_sha256":projection_receipt["sha256"],"future_confirmation":"PENDING",

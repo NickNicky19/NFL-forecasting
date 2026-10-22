@@ -1,0 +1,1008 @@
+{
+  "registration": {
+    "registration_id": "ngs-context-reconstruction-v1-2026-10-22",
+    "registered_before_context_fits": true,
+    "purpose": "Bounded incremental NGS ablation; descriptive development only",
+    "development_season": 2023,
+    "training_seasons": [
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "sources_ngs_seasons": [
+      2022,
+      2023
+    ],
+    "feature_groups": [
+      "base97",
+      "base97_plus_strictly_prior_NGS"
+    ],
+    "baseline": "reuse unchanged initial2023 ridge rows and fixed feature matrix SHA ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297",
+    "challenger": "same fixed ridge/logistic configuration with priorNGS; no hyperparameter search",
+    "targets": [
+      "pass_yd",
+      "pass_td",
+      "pass_cmp",
+      "pass_att",
+      "pass_int",
+      "rush_yd",
+      "rush_att",
+      "rec",
+      "rec_yd",
+      "rush_rec_yd",
+      "anytime_td"
+    ],
+    "budgets": {
+      "configurations_per_category": 2,
+      "new_fits_per_category": 1,
+      "fit_seconds": 300,
+      "threads": 2,
+      "raw_acquisition_bytes": 5242880
+    },
+    "primary_metrics": {
+      "numeric": "mae",
+      "anytime_td": "brier"
+    },
+    "promotion": "disabled;2022-24 are already exposed; no new untouched historical validation claim",
+    "availability": "current-vintage public aggregate reconstruction; assumed kickoff+7d and source stale limit; not authenticated historic publication",
+    "prospective_activation": "disabled until supported current source coverage and separately frozen inference contract",
+    "source_gaps": "no invented injury/news/routes/weather/scheme inputs; unavailable authenticated versions recorded explicitly"
+  },
+  "manifest": {
+    "registration_sha256": "8954ff2290bb1cdb4da9f28a7703b69251c05ee9c4892ecb5aabdc3b5de67dfb",
+    "base_features_sha256": "ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297",
+    "source_tree_sha256": "871c8ffd46c07685d486526ca53cddcbc8e95325107322298db0fca61875f356",
+    "ngs_feature_columns": [
+      "f_ngs_passing_avg_time_to_throw_mean3",
+      "f_ngs_passing_avg_time_to_throw_n3",
+      "f_ngs_passing_avg_intended_air_yards_mean3",
+      "f_ngs_passing_avg_intended_air_yards_n3",
+      "f_ngs_passing_aggressiveness_mean3",
+      "f_ngs_passing_aggressiveness_n3",
+      "f_ngs_passing_expected_completion_percentage_mean3",
+      "f_ngs_passing_expected_completion_percentage_n3",
+      "f_ngs_passing_completion_percentage_above_expectation_mean3",
+      "f_ngs_passing_completion_percentage_above_expectation_n3",
+      "f_ngs_receiving_avg_cushion_mean3",
+      "f_ngs_receiving_avg_cushion_n3",
+      "f_ngs_receiving_avg_separation_mean3",
+      "f_ngs_receiving_avg_separation_n3",
+      "f_ngs_receiving_avg_intended_air_yards_mean3",
+      "f_ngs_receiving_avg_intended_air_yards_n3",
+      "f_ngs_receiving_avg_yac_above_expectation_mean3",
+      "f_ngs_receiving_avg_yac_above_expectation_n3",
+      "f_ngs_rushing_efficiency_mean3",
+      "f_ngs_rushing_efficiency_n3",
+      "f_ngs_rushing_percent_attempts_gte_eight_defenders_mean3",
+      "f_ngs_rushing_percent_attempts_gte_eight_defenders_n3",
+      "f_ngs_rushing_avg_time_to_los_mean3",
+      "f_ngs_rushing_avg_time_to_los_n3",
+      "f_ngs_rushing_rush_yards_over_expected_per_att_mean3",
+      "f_ngs_rushing_rush_yards_over_expected_per_att_n3",
+      "f_ngs_rushing_rush_pct_over_expected_mean3",
+      "f_ngs_rushing_rush_pct_over_expected_n3"
+    ],
+    "source_profile": {
+      "context_profile": {
+        "adapter": "optional-context-ngs-v1",
+        "rows": 62752,
+        "numeric_features": 28,
+        "window": "3 earlier eligible roster games; missing NGS consumes slots",
+        "max_age_days": 60,
+        "base_features_changed": false,
+        "time_semantics": "strictly prior, assumed 7day lag, reconstructed history only"
+      }
+    }
+  },
+  "elapsed_seconds": 14.057757488999414,
+  "future_confirmation": "not read",
+  "promotion": [],
+  "new_prospective_activation": false,
+  "interpretation": "already exposed development only; incremental inputs need not improve loss; current NGS unavailable",
+  "results": [
+    {
+      "target": "pass_yd",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 10.196688424883295,
+      "ngs_loss": 10.196251335177912,
+      "relative_gain": 4.286584890794865e-05,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 10.196688424883295,
+          "rmse": 28.759931424745904,
+          "bias": -0.9833570885757886,
+          "p95_absolute_error": 68.19885983016464,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5505,
+          "normal": {
+            "crps": 7.350099810842606,
+            "log_score": 3.203930766212754,
+            "interval_80_coverage": 0.9160861817592743,
+            "lower_tail_frequency": 0.018791511420703063,
+            "upper_tail_frequency": 0.06512230682002268,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 10.196251335177912,
+          "rmse": 28.85019087448805,
+          "bias": -1.044491431759826,
+          "p95_absolute_error": 69.2507112801581,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5505,
+          "normal": {
+            "crps": 7.356302296869938,
+            "log_score": 3.2008695534718083,
+            "interval_80_coverage": 0.9149522112425077,
+            "lower_tail_frequency": 0.02105945245423619,
+            "upper_tail_frequency": 0.06398833630325612,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "pass_td",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 0.09751296363548977,
+      "ngs_loss": 0.09835781360427519,
+      "relative_gain": -0.008663975919586748,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.09751296363548977,
+          "rmse": 0.3370458663007214,
+          "bias": 0.011528448542413718,
+          "p95_absolute_error": 0.6759619562912572,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5709,
+          "negbin": {
+            "crps": 0.05965929269404718,
+            "log_score": null,
+            "infinite_log_losses": 6,
+            "interval_80_coverage": 0.9925481937469626,
+            "lower_tail_frequency": 0.0,
+            "upper_tail_frequency": 0.007451806253037421,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.09835781360427519,
+          "rmse": 0.33640564401740697,
+          "bias": 0.008091407776881268,
+          "p95_absolute_error": 0.6547874042430694,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5709,
+          "negbin": {
+            "crps": 0.059550180241047836,
+            "log_score": null,
+            "infinite_log_losses": 5,
+            "interval_80_coverage": 0.9927101895350721,
+            "lower_tail_frequency": 0.0,
+            "upper_tail_frequency": 0.007289810464927912,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "pass_cmp",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 0.7259208224813263,
+      "ngs_loss": 0.7348252196668063,
+      "relative_gain": -0.012266347664533389,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.7259208224813263,
+          "rmse": 2.43919969881343,
+          "bias": 0.0750581469697536,
+          "p95_absolute_error": 5.55897139551305,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5505,
+          "negbin": {
+            "crps": 0.49740208976485484,
+            "log_score": null,
+            "infinite_log_losses": 10,
+            "interval_80_coverage": 0.9711647497165073,
+            "lower_tail_frequency": 0.017657540903936498,
+            "upper_tail_frequency": 0.011177709379556132,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.7348252196668063,
+          "rmse": 2.4538699656296363,
+          "bias": 0.06299075799117906,
+          "p95_absolute_error": 5.837013107921932,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5505,
+          "negbin": {
+            "crps": 0.5025240692127501,
+            "log_score": null,
+            "infinite_log_losses": 9,
+            "interval_80_coverage": 0.9695447918354123,
+            "lower_tail_frequency": 0.017495545115826988,
+            "upper_tail_frequency": 0.012959663048760733,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "pass_att",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 1.0645179765767756,
+      "ngs_loss": 1.077678071900162,
+      "relative_gain": -0.01236249233263861,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.0645179765767756,
+          "rmse": 3.612012650724072,
+          "bias": 0.1287108149965499,
+          "p95_absolute_error": 8.04535427969046,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5479,
+          "negbin": {
+            "crps": 0.7427714674104264,
+            "log_score": null,
+            "infinite_log_losses": 22,
+            "interval_80_coverage": 0.9676008423780982,
+            "lower_tail_frequency": 0.01717155353960797,
+            "upper_tail_frequency": 0.01522760408229386,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.077678071900162,
+          "rmse": 3.6231883903114936,
+          "bias": 0.11250468329822712,
+          "p95_absolute_error": 8.157600449233545,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5479,
+          "negbin": {
+            "crps": 0.7477337800395836,
+            "log_score": null,
+            "infinite_log_losses": 20,
+            "interval_80_coverage": 0.9677628381662077,
+            "lower_tail_frequency": 0.016523570387169933,
+            "upper_tail_frequency": 0.015713591446622387,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "pass_int",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 0.08493328461878648,
+      "ngs_loss": 0.08571388222402442,
+      "relative_gain": -0.00919071490925568,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.08493328461878648,
+          "rmse": 0.279934849132277,
+          "bias": 0.00909032110871685,
+          "p95_absolute_error": 0.6676564342336886,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5859,
+          "negbin": {
+            "crps": 0.04613418985600795,
+            "log_score": null,
+            "infinite_log_losses": 1,
+            "interval_80_coverage": 0.9933581726875101,
+            "lower_tail_frequency": 0.0,
+            "upper_tail_frequency": 0.0066418273124898754,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.08571388222402442,
+          "rmse": 0.28073333672218453,
+          "bias": 0.007978647161693194,
+          "p95_absolute_error": 0.6255016642005674,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5859,
+          "negbin": {
+            "crps": 0.04627703223320971,
+            "log_score": null,
+            "infinite_log_losses": 1,
+            "interval_80_coverage": 0.9931961768994007,
+            "lower_tail_frequency": 0.0,
+            "upper_tail_frequency": 0.006803823100599384,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "rush_yd",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 7.930309401896623,
+      "ngs_loss": 7.955581591665343,
+      "relative_gain": -0.0031867848387700866,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 7.930309401896623,
+          "rmse": 15.256432438551187,
+          "bias": 0.48257335333476986,
+          "p95_absolute_error": 33.17434021262116,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 3879,
+          "normal": {
+            "crps": 5.998776274716121,
+            "log_score": 3.5276869943090374,
+            "interval_80_coverage": 0.9175441438522598,
+            "lower_tail_frequency": 0.025271342945083427,
+            "upper_tail_frequency": 0.05718451320265673,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 7.955581591665343,
+          "rmse": 15.304685354433325,
+          "bias": 0.42803780367090777,
+          "p95_absolute_error": 33.40034679005919,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 3879,
+          "normal": {
+            "crps": 6.022677676318428,
+            "log_score": 3.530936298534535,
+            "interval_80_coverage": 0.9149522112425077,
+            "lower_tail_frequency": 0.027377288190507047,
+            "upper_tail_frequency": 0.05767050056698526,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "rush_att",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 1.3397770258998307,
+      "ngs_loss": 1.3293526863727665,
+      "relative_gain": 0.0077806525455703796,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.3397770258998307,
+          "rmse": 2.6569408622343476,
+          "bias": 0.04792851644917389,
+          "p95_absolute_error": 5.928397844505017,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 3809,
+          "negbin": {
+            "crps": 0.9118854555592169,
+            "log_score": null,
+            "infinite_log_losses": 96,
+            "interval_80_coverage": 0.9050704681678277,
+            "lower_tail_frequency": 0.029645229224040174,
+            "upper_tail_frequency": 0.06528430260813219,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.3293526863727665,
+          "rmse": 2.656125664615385,
+          "bias": 0.05482771992116159,
+          "p95_absolute_error": 5.978221302893592,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 3809,
+          "negbin": {
+            "crps": 0.9095767291998466,
+            "log_score": null,
+            "infinite_log_losses": 120,
+            "interval_80_coverage": 0.903612506074842,
+            "lower_tail_frequency": 0.029807225012149684,
+            "upper_tail_frequency": 0.06658026891300826,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "rec",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 1.161633511110404,
+      "ngs_loss": 1.1612499575852506,
+      "relative_gain": 0.00033018462491380123,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.161633511110404,
+          "rmse": 1.6651783115641272,
+          "bias": -0.026391843311720453,
+          "p95_absolute_error": 3.4850167654973467,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 2042,
+          "negbin": {
+            "crps": 0.7933874397731189,
+            "log_score": null,
+            "infinite_log_losses": 8,
+            "interval_80_coverage": 0.9168961606998218,
+            "lower_tail_frequency": 0.016847561963388952,
+            "upper_tail_frequency": 0.06625627733678924,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 1.1612499575852506,
+          "rmse": 1.6646807151232246,
+          "bias": -0.02871164579553728,
+          "p95_absolute_error": 3.4733362839546755,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 2042,
+          "negbin": {
+            "crps": 0.7932467155681202,
+            "log_score": null,
+            "infinite_log_losses": 9,
+            "interval_80_coverage": 0.9159241859711648,
+            "lower_tail_frequency": 0.017009557751498462,
+            "upper_tail_frequency": 0.06706625627733678,
+            "crps_tail_truncation_cdf": 1e-08,
+            "push_mass": null,
+            "push_mass_semantics": "requires an actually recorded integer line"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "rec_yd",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 15.281329395703949,
+      "ngs_loss": 15.299871290431218,
+      "relative_gain": -0.0012133692198586974,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 15.281329395703949,
+          "rmse": 23.225278283398097,
+          "bias": -0.7539403278552069,
+          "p95_absolute_error": 48.326248613817775,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 2076,
+          "normal": {
+            "crps": 11.413743952575594,
+            "log_score": 4.33524384817601,
+            "interval_80_coverage": 0.8642475295642313,
+            "lower_tail_frequency": 0.035963064960311035,
+            "upper_tail_frequency": 0.09978940547545764,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 15.299871290431218,
+          "rmse": 23.26525182249683,
+          "bias": -0.7740399533310249,
+          "p95_absolute_error": 48.55595987104921,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 2076,
+          "normal": {
+            "crps": 11.427899919628862,
+            "log_score": 4.335856985471784,
+            "interval_80_coverage": 0.8655434958691074,
+            "lower_tail_frequency": 0.03515308601976349,
+            "upper_tail_frequency": 0.09930341811112911,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "rush_rec_yd",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "mae",
+      "base_loss": 19.887711688245847,
+      "ngs_loss": 19.892404383076723,
+      "relative_gain": -0.0002359595163303463,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 19.887711688245847,
+          "rmse": 27.955107428632388,
+          "bias": -0.2713669745203822,
+          "p95_absolute_error": 56.713615144450415,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 1055,
+          "normal": {
+            "crps": 14.698731019170111,
+            "log_score": 4.6971276183855,
+            "interval_80_coverage": 0.8567957233111939,
+            "lower_tail_frequency": 0.04309087963712944,
+            "upper_tail_frequency": 0.10011339705167666,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 19.892404383076723,
+          "rmse": 28.02257085308502,
+          "bias": -0.34600214966008425,
+          "p95_absolute_error": 56.540547123856385,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 1055,
+          "normal": {
+            "crps": 14.726657354059077,
+            "log_score": 4.699301965062204,
+            "interval_80_coverage": 0.8533938117608942,
+            "lower_tail_frequency": 0.04568281224688158,
+            "upper_tail_frequency": 0.1009233759922242,
+            "push_mass": 0.0,
+            "push_mass_semantics": "continuous_distribution_only; integer-yard discretization not supplied"
+          },
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": []
+    },
+    {
+      "target": "anytime_td",
+      "state": "EVALUATED_DEVELOPMENT_ONLY",
+      "primary_metric": "brier",
+      "base_loss": 0.13216844363277802,
+      "ngs_loss": 0.13240861621498984,
+      "relative_gain": -0.001817170389621309,
+      "scores": {
+        "base": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.2645746258108444,
+          "rmse": 0.36354978150561174,
+          "bias": -0.004391216281630969,
+          "p95_absolute_error": 0.8362693765228572,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5063,
+          "bernoulli": {
+            "brier": 0.13216844363277802,
+            "log_score": 0.4230152205095557,
+            "infinite_log_losses": 0,
+            "crps": 0.13216844363277802
+          },
+          "calibration": [
+            {
+              "lower": 0.0,
+              "n": 1864,
+              "mean_probability": 0.07123999193190202,
+              "event_rate": 0.07457081545064377
+            },
+            {
+              "lower": 0.1,
+              "n": 2257,
+              "mean_probability": 0.14418123995979973,
+              "event_rate": 0.13557820115197164
+            },
+            {
+              "lower": 0.2,
+              "n": 1185,
+              "mean_probability": 0.24358706217820764,
+              "event_rate": 0.2523206751054852
+            },
+            {
+              "lower": 0.3,
+              "n": 581,
+              "mean_probability": 0.34322685168027034,
+              "event_rate": 0.37521514629948366
+            },
+            {
+              "lower": 0.4,
+              "n": 204,
+              "mean_probability": 0.4407065981964328,
+              "event_rate": 0.4950980392156863
+            },
+            {
+              "lower": 0.5,
+              "n": 56,
+              "mean_probability": 0.5376048633469016,
+              "event_rate": 0.5178571428571429
+            },
+            {
+              "lower": 0.6,
+              "n": 25,
+              "mean_probability": 0.6355256584692027,
+              "event_rate": 0.68
+            },
+            {
+              "lower": 0.7,
+              "n": 1,
+              "mean_probability": 0.7209889945166439,
+              "event_rate": 1.0
+            },
+            {
+              "lower": 0.8,
+              "n": 0,
+              "mean_probability": null,
+              "event_rate": null
+            },
+            {
+              "lower": 0.9,
+              "n": 0,
+              "mean_probability": null,
+              "event_rate": null
+            }
+          ],
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        },
+        "plus_ngs": {
+          "population_rows": 9020,
+          "supported_played_outcomes": 6173,
+          "scored_rows": 6173,
+          "dnp": 1149,
+          "unknown_participation": 500,
+          "played_missing_statistic": 1198,
+          "fallback_rows": 0,
+          "selected_line_performance": "unavailable_no_recorded_offers",
+          "mae": 0.2636366211783614,
+          "rmse": 0.36387994753076164,
+          "bias": -0.005138896253167736,
+          "p95_absolute_error": 0.8434247927731197,
+          "unique_games": 285,
+          "unique_players": 588,
+          "unique_weeks": 22,
+          "played_zero_rows": 5063,
+          "bernoulli": {
+            "brier": 0.13240861621498984,
+            "log_score": 0.4239084108783461,
+            "infinite_log_losses": 0,
+            "crps": 0.13240861621498984
+          },
+          "calibration": [
+            {
+              "lower": 0.0,
+              "n": 1856,
+              "mean_probability": 0.0713687781089498,
+              "event_rate": 0.0738146551724138
+            },
+            {
+              "lower": 0.1,
+              "n": 2366,
+              "mean_probability": 0.14390880624258337,
+              "event_rate": 0.1386306001690617
+            },
+            {
+              "lower": 0.2,
+              "n": 1117,
+              "mean_probability": 0.24337187153284504,
+              "event_rate": 0.25962399283795884
+            },
+            {
+              "lower": 0.3,
+              "n": 512,
+              "mean_probability": 0.34246691414301444,
+              "event_rate": 0.37109375
+            },
+            {
+              "lower": 0.4,
+              "n": 220,
+              "mean_probability": 0.44473446200018124,
+              "event_rate": 0.4772727272727273
+            },
+            {
+              "lower": 0.5,
+              "n": 57,
+              "mean_probability": 0.5379375689712728,
+              "event_rate": 0.5789473684210527
+            },
+            {
+              "lower": 0.6,
+              "n": 35,
+              "mean_probability": 0.6396838169948698,
+              "event_rate": 0.5428571428571428
+            },
+            {
+              "lower": 0.7,
+              "n": 10,
+              "mean_probability": 0.7246508479398233,
+              "event_rate": 0.8
+            },
+            {
+              "lower": 0.8,
+              "n": 0,
+              "mean_probability": null,
+              "event_rate": null
+            },
+            {
+              "lower": 0.9,
+              "n": 0,
+              "mean_probability": null,
+              "event_rate": null
+            }
+          ],
+          "participation_brier": 0.09768752196706718,
+          "participation_n": 8520
+        }
+      },
+      "warnings": [
+        "lbfgs failed to converge after 150 iteration(s) (status=1):\nSTOP: TOTAL NO. OF ITERATIONS REACHED LIMIT\n\nIncrease the number of iterations to improve the convergence (max_iter=150).\nYou might also want to scale the data as shown in:\n    https://scikit-learn.org/stable/modules/preprocessing.html\nPlease also refer to the documentation for alternative solver options:\n    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+      ]
+    }
+  ]
+}

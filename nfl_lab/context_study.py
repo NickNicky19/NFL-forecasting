@@ -31,7 +31,8 @@ def run(root:Path,cache:Path):
     base_columns=[c for c in features if c.startswith("f_")]
     pd.testing.assert_frame_equal(features[base_columns],augmented[base_columns])
     manifest={"registration_sha256":digest(config),"base_features_sha256":checksum,"source_tree_sha256":source_tree_digest(root),
-              "ngs_feature_columns":[c for c in augmented if c.startswith("f_ngs_")],"source_profile":augmented.attrs}
+              "ngs_feature_columns":[c for c in augmented if c.startswith("f_ngs_")],"source_profile":augmented.attrs,
+              "ngs_sources":ngs.attrs.get("manifest"),"ngs_source_manifest_canonical_sha256":digest(ngs.attrs.get("manifest"))}
     (output/"manifest.json").write_text(json.dumps(manifest,indent=2,default=str,allow_nan=False))
     year=config["development_season"];test=augmented.loc[augmented.season.eq(year)]
     first=pd.to_datetime(test.kickoff_utc,utc=True).min()
@@ -62,6 +63,7 @@ def run(root:Path,cache:Path):
                             "parameters":pred.attrs,"warnings":[str(w.message) for w in captured]})
         except Exception as exc:results.append({"target":target,"state":"FAILED","error":repr(exc)})
         (output/"trials.json").write_text(json.dumps(results,indent=2,allow_nan=False))
+    (output/"trials.json").write_text(json.dumps(results,indent=2,allow_nan=False))
     report={"registration":config,"manifest":manifest,"elapsed_seconds":time.monotonic()-started,"results":results,
             "future_confirmation":"not read","promotion":[],"new_prospective_activation":False,
             "interpretation":"already exposed development only; incremental inputs need not improve loss; current NGS unavailable"}

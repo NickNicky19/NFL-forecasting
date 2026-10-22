@@ -2,7 +2,8 @@
 
 This module is a separate input candidate for a new registered ablation. It does
 not change `data.py`, `features.py`, frozen models, campaign definitions or base
-feature values. No models were fitted and no predictive gain is claimed.
+feature values. No models were fitted during the adapter's source check. A later
+separately registered development study is described below; no candidate is qualified.
 
 ## NGS records and features
 
@@ -52,8 +53,8 @@ aggregate rows and 19 unmatched schedule rows, and found no unknown GSIS IDs.
 For 18,128 history rows, 6,274 had at least one prior NGS mean; source loading and
 feature generation took 3.114 seconds. Exact source hashes, individual exclusions
 and unavailable assets are in ignored `context_ngs_manifest.json` and
-`context_ngs_profile.json`. These are coverage/correctness observations and have
-not been used to fit, select or qualify a model.
+`context_ngs_profile.json`. These were coverage/correctness observations before
+the separately registered development study.
 
 The available archive does not supply recent 2025–2026 aggregates. These old
 inputs therefore cannot fill current forecasts under the sixty-day rule.
@@ -108,3 +109,19 @@ need explicit permitted structured sources, predeclared transformations and
 separate ablations. Authentic historical news/injury snapshots, forecast weather,
 routes, premium tracking and private playbooks remain unavailable here. This
 adapter does not establish those mechanisms or fill them with invented claims.
+
+## Subsequent bounded development study, 2026-10-22
+
+`config/context-study.json` was committed before fitting. Eleven new fixed
+ridge/logistic fits added prior NGS features and reused unchanged 2023 ridge
+controls from the initial campaign. All 6,173 paired outcomes per target and
+the base97 feature values were checked for exact agreement. Training used
+2019–2022; evaluation used already exposed 2023 development only. No new 2024
+testing or future confirmation was used.
+
+Only three primary losses improved: rushing attempts 0.7781%, receptions
+0.0330%, and passing yards 0.00429%. The other eight targets worsened. These
+small descriptive changes do not qualify or activate an NGS challenger.
+Current NGS coverage remains unavailable. New fits took14.06 seconds; all
+results, parameters, warnings and failed-status slots are retained privately,
+with reviewed derived aggregates in `reports/ngs-context-study/`.

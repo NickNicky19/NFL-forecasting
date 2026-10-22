@@ -12,7 +12,7 @@ on:
         default: daily
   push:
     branches: [main]
-    paths: ['nfl_lab/**', 'tests/**', 'config/**', 'pyproject.toml', '.github/workflows/lab.yml']
+    paths: ['nfl_lab/**', 'tests/**', 'config/**', 'schemas/**', 'pyproject.toml', '.github/workflows/lab.yml']
 
 permissions:
   contents: write
@@ -50,14 +50,13 @@ jobs:
           MODE: ${{ inputs.mode }}
         run: |
           python - <<'PY'
-          import datetime,os,zoneinfo
-          now=datetime.datetime.now(zoneinfo.ZoneInfo('America/Chicago'))
-          scheduled=os.environ['EVENT']=='schedule'
-          due=not scheduled or (now.hour==8 and now.minute>=36 and now.minute<=56)
-          mode=os.environ['MODE'] or ('train' if now.weekday()==6 else 'daily')
+          import json,os
+          from nfl_lab.cadence import decision
+          result=decision(os.environ['EVENT'],os.environ['MODE'] or None)
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
-              f.write(f'due={str(due).lower()}\nmode={mode}\n')
-          print({'observed_chicago':now.isoformat(),'due':due,'mode':mode,'late_schedule_policy':'skip; never backdate'})
+              f.write(f'due={str(result["due"]).lower()}\nmode={result["mode"]}\n')
+          with open('cadence-result.json','w') as f:json.dump(result,f,indent=2)
+          print(result)
           PY
       - name: Restore derived evidence state
         if: steps.cadence.outputs.due == 'true'

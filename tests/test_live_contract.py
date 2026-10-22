@@ -24,3 +24,15 @@ def test_sparse_unlinked_player_never_disappears_or_name_matches():
     p=future_population(players,schedule_games(board()),2026,7)
     assert set(p.player_id)=={"sleeper:1","00-1"}
     assert set(p.participation_state)=={"unknown"}
+
+
+def test_exact_registry_binding_and_frozen_first_identity():
+    p={"1":{"position":"QB","team":"WAS","active":True,"gsis_id":None}}
+    games=schedule_games(board())
+    out=future_population(p,games,2026,7,identity_by_sleeper={"1":"00-1"})
+    assert out.iloc[0].player_id=="00-1"
+    out=future_population(p,games,2026,7,identity_by_sleeper={"1":"00-1"},frozen_by_game_sleeper={("espn:1","1"):"sleeper:1"})
+    assert out.iloc[0].player_id=="sleeper:1"
+    p["1"]["gsis_id"]="00-conflict"
+    out=future_population(p,games,2026,7,identity_by_sleeper={"1":"00-1"})
+    assert out.iloc[0].identity_binding=="conflicting_identity_cold_start"
