@@ -1,0 +1,1679 @@
+{
+  "audit_version": "frozen-combined-yard-audit-v1",
+  "bias_definition": "prediction_minus_actual",
+  "campaign": "lab-v1-2026-10-22",
+  "evidence": "already_exposed_current_vintage_historical_reconstruction_descriptive_only",
+  "intervals": "separate paired whole-season-week and whole-game bootstraps; 500 replicates each; seed20261022; Bonferroni12 simultaneous99.5833% within each cluster analysis; finite-bootstrap tails exploratory; no joint inferential claim across cluster analyses",
+  "methods": [
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": -0.3417286262192915,
+        "mae": 19.741449312920636,
+        "n": 6214,
+        "rmse": 27.605149713312503
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.34172862621922395,
+        "mae": 19.74144931292065,
+        "n": 6214,
+        "rmse": 27.605149713312542
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.2318147330224747e-11,
+        "mean_absolute_discrepancy": 1.3169313540907348e-12,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "distributional",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": -0.3417286262192915,
+        "mae": 19.741449312920636,
+        "n": 6214,
+        "rmse": 27.605149713312503
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.34172862621922395,
+        "mae": 19.74144931292065,
+        "n": 6214,
+        "rmse": 27.605149713312542
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -6.755707104844078e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.2588738613896e-13,
+            1.0991053843922775e-14
+          ],
+          "mae": [
+            -1.0536503237490677e-13,
+            7.039056754308987e-14
+          ],
+          "rmse": [
+            -1.3444060679527563e-13,
+            7.049176057686671e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -6.755707104844078e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.0706804153957746e-13,
+            -1.8862738810555915e-14
+          ],
+          "mae": [
+            -1.0333595688684461e-13,
+            7.967179881247319e-14
+          ],
+          "rmse": [
+            -1.490733462598352e-13,
+            8.853658547044087e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": 0.524498893438695,
+        "mae": 20.994143354632357,
+        "n": 6214,
+        "rmse": 28.33626753135808
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": 0.5244988934387288,
+        "mae": 20.994143354632385,
+        "n": 6214,
+        "rmse": 28.3362675313581
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 1522,
+        "rec": 1522,
+        "rush": 1522
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 1.1162626378791174e-11,
+        "mean_absolute_discrepancy": 6.584982682590458e-13,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "ensemble",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": 0.524498893438695,
+        "mae": 20.994143354632357,
+        "n": 6214,
+        "rmse": 28.33626753135808
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": 0.5244988934387288,
+        "mae": 20.994143354632385,
+        "n": 6214,
+        "rmse": 28.3362675313581
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -3.375077994860476e-14,
+          "mae": -2.842170943040401e-14,
+          "rmse": -2.1316282072803006e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -6.273909589345803e-14,
+            5.593401226370519e-15
+          ],
+          "mae": [
+            -7.533415889777636e-14,
+            2.5658491576085895e-14
+          ],
+          "rmse": [
+            -6.750155989720952e-14,
+            5.684341886080802e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -3.375077994860476e-14,
+          "mae": -2.842170943040401e-14,
+          "rmse": -2.1316282072803006e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -5.351041481083635e-14,
+            -9.480431334394827e-15
+          ],
+          "mae": [
+            -8.561882295079198e-14,
+            3.153116711186662e-14
+          ],
+          "rmse": [
+            -8.867721372022667e-14,
+            4.6044649574620686e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 9000,
+      "component_natural_coverage_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "direct_missing_forecasts": 9000,
+      "direct_natural_coverage_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": null,
+        "mean_absolute_discrepancy": null,
+        "supported_compatible_forecast_rows": 0
+      },
+      "method": "pinned_website",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "paired_coverage_of_population": 0.0,
+      "paired_coverage_of_supported_played": 0.0,
+      "paired_direct_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 0,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": null,
+        "family_size": 12,
+        "intervals": null,
+        "paired_n": 0,
+        "reason": "no_supported_paired_rows",
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 0
+      },
+      "paired_scored_rows": 0,
+      "paired_unique_games": 0,
+      "paired_unique_weeks": 0,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 0,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": null,
+        "family_size": 12,
+        "intervals": null,
+        "paired_n": 0,
+        "reason": "no_supported_paired_rows",
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 0
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": 1.5906895827348098,
+        "mae": 22.199645841123285,
+        "n": 6214,
+        "rmse": 29.225136990240163
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": 1.5906895827348106,
+        "mae": 22.199645841123285,
+        "n": 6214,
+        "rmse": 29.225136990240163
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 831,
+        "rec": 831,
+        "rush": 831
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.842170943040401e-14,
+        "mean_absolute_discrepancy": 2.2224691223174077e-15,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "pooled",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": 1.5906895827348098,
+        "mae": 22.199645841123285,
+        "n": 6214,
+        "rmse": 29.225136990240163
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": 1.5906895827348106,
+        "mae": 22.199645841123285,
+        "n": 6214,
+        "rmse": 29.225136990240163
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -8.881784197001252e-16,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -2.309817318374005e-15,
+            0.0
+          ],
+          "mae": [
+            0.0,
+            9.427530872328325e-15
+          ],
+          "rmse": [
+            -7.105427357601002e-15,
+            1.0517512786615677e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -8.881784197001252e-16,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.8253310378413723e-15,
+            -2.603180060364465e-16
+          ],
+          "mae": [
+            -5.347331195993941e-15,
+            2.5330685823756824e-15
+          ],
+          "rmse": [
+            -3.552713678800501e-15,
+            0.0
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 9000,
+      "component_natural_coverage_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "direct_missing_forecasts": 9000,
+      "direct_natural_coverage_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": null,
+        "mean_absolute_discrepancy": null,
+        "supported_compatible_forecast_rows": 0
+      },
+      "method": "raw_sleeper",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "paired_coverage_of_population": 0.0,
+      "paired_coverage_of_supported_played": 0.0,
+      "paired_direct_metrics": {
+        "bias": null,
+        "mae": null,
+        "n": 0,
+        "rmse": null
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 0,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": null,
+        "family_size": 12,
+        "intervals": null,
+        "paired_n": 0,
+        "reason": "no_supported_paired_rows",
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 0
+      },
+      "paired_scored_rows": 0,
+      "paired_unique_games": 0,
+      "paired_unique_weeks": 0,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 0,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": null,
+        "family_size": 12,
+        "intervals": null,
+        "paired_n": 0,
+        "reason": "no_supported_paired_rows",
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 0
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": 1.4266477372917117,
+        "mae": 23.03375196624806,
+        "n": 6214,
+        "rmse": 30.283340383814608
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": 1.426647737291712,
+        "mae": 23.03375196624806,
+        "n": 6214,
+        "rmse": 30.283340383814608
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 1522,
+        "rec": 1522,
+        "rush": 1522
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.842170943040401e-14,
+        "mean_absolute_discrepancy": 2.058501517391657e-15,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "recent",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": 1.4266477372917117,
+        "mae": 23.03375196624806,
+        "n": 6214,
+        "rmse": 30.283340383814608
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": 1.426647737291712,
+        "mae": 23.03375196624806,
+        "n": 6214,
+        "rmse": 30.283340383814608
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -2.220446049250313e-16,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.173982523427666e-15,
+            5.852691641863664e-16
+          ],
+          "mae": [
+            -4.686974304719782e-15,
+            4.734244221851184e-15
+          ],
+          "rmse": [
+            -3.552713678800501e-15,
+            7.105427357601002e-15
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -2.220446049250313e-16,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.0468632498994293e-15,
+            0.0
+          ],
+          "mae": [
+            0.0,
+            9.086769896475123e-15
+          ],
+          "rmse": [
+            0.0,
+            7.105427357601002e-15
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": -0.3417286262192915,
+        "mae": 19.741449312920636,
+        "n": 6214,
+        "rmse": 27.605149713312503
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.34172862621922395,
+        "mae": 19.74144931292065,
+        "n": 6214,
+        "rmse": 27.605149713312542
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.2318147330224747e-11,
+        "mean_absolute_discrepancy": 1.3169313540907348e-12,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "ridge",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": -0.3417286262192915,
+        "mae": 19.741449312920636,
+        "n": 6214,
+        "rmse": 27.605149713312503
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.34172862621922395,
+        "mae": 19.74144931292065,
+        "n": 6214,
+        "rmse": 27.605149713312542
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -6.755707104844078e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.2588738613896e-13,
+            1.0991053843922775e-14
+          ],
+          "mae": [
+            -1.0536503237490677e-13,
+            7.039056754308987e-14
+          ],
+          "rmse": [
+            -1.3444060679527563e-13,
+            7.049176057686671e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -6.755707104844078e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.0706804153957746e-13,
+            -1.8862738810555915e-14
+          ],
+          "mae": [
+            -1.0333595688684461e-13,
+            7.967179881247319e-14
+          ],
+          "rmse": [
+            -1.490733462598352e-13,
+            8.853658547044087e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": -0.4294045059763387,
+        "mae": 19.69871489380392,
+        "n": 6214,
+        "rmse": 27.57192978544722
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.4294045059762612,
+        "mae": 19.698714893803935,
+        "n": 6214,
+        "rmse": 27.57192978544726
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.212630079156952e-11,
+        "mean_absolute_discrepancy": 1.3207041879878843e-12,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "ridge_without_opponent",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": -0.4294045059763387,
+        "mae": 19.69871489380392,
+        "n": 6214,
+        "rmse": 27.57192978544722
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.4294045059762612,
+        "mae": 19.698714893803935,
+        "n": 6214,
+        "rmse": 27.57192978544726
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -7.754907827006718e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.4027323737091516e-13,
+            7.986494918444817e-15
+          ],
+          "mae": [
+            -8.373071408729535e-14,
+            7.521301294808015e-14
+          ],
+          "rmse": [
+            -1.3799332047407613e-13,
+            7.049176057686671e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -7.754907827006718e-14,
+          "mae": -1.4210854715202004e-14,
+          "rmse": -3.907985046680551e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.1635372478503486e-13,
+            -2.7857926831644844e-14
+          ],
+          "mae": [
+            -1.2148546981355992e-13,
+            8.647555352167787e-14
+          ],
+          "rmse": [
+            -1.526260599386357e-13,
+            8.86772137202267e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": -0.528838947903568,
+        "mae": 19.681314086216155,
+        "n": 6214,
+        "rmse": 27.610265310279782
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.5288389479034264,
+        "mae": 19.681314086216197,
+        "n": 6214,
+        "rmse": 27.610265310279825
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 2.206235194535111e-11,
+        "mean_absolute_discrepancy": 1.2803436829263622e-12,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "ridge_without_team",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": -0.528838947903568,
+        "mae": 19.681314086216155,
+        "n": 6214,
+        "rmse": 27.610265310279782
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.5288389479034264,
+        "mae": 19.681314086216197,
+        "n": 6214,
+        "rmse": 27.610265310279825
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -1.4155343563970746e-13,
+          "mae": -4.263256414560601e-14,
+          "rmse": -4.263256414560601e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -2.186557096795139e-13,
+            -5.742980430004074e-14
+          ],
+          "mae": [
+            -1.297200201143676e-13,
+            4.195229999853951e-14
+          ],
+          "rmse": [
+            -1.3827457697364783e-13,
+            6.750155989720952e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": -1.4155343563970746e-13,
+          "mae": -4.263256414560601e-14,
+          "rmse": -4.263256414560601e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.9465244885580467e-13,
+            -7.392434071090959e-14
+          ],
+          "mae": [
+            -1.410185524248421e-13,
+            6.228754776039574e-14
+          ],
+          "rmse": [
+            -1.597314872962367e-13,
+            9.180804264966972e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": -0.058734426985690494,
+        "mae": 21.931289040505792,
+        "n": 6214,
+        "rmse": 29.608682613517143
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.058734426985712525,
+        "mae": 21.931289040505764,
+        "n": 6214,
+        "rmse": 29.60868261351712
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 1.0395240224170266e-11,
+        "mean_absolute_discrepancy": 6.664197095397463e-13,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "ridge_without_workload",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": -0.058734426985690494,
+        "mae": 21.931289040505792,
+        "n": 6214,
+        "rmse": 29.608682613517143
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.058734426985712525,
+        "mae": 21.931289040505764,
+        "n": 6214,
+        "rmse": 29.60868261351712
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 2.203098814490545e-14,
+          "mae": 2.842170943040401e-14,
+          "rmse": 2.1316282072803006e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -1.1366839112365664e-14,
+            5.570719174087816e-14
+          ],
+          "mae": [
+            -2.3025631033410492e-14,
+            7.430884299182297e-14
+          ],
+          "rmse": [
+            -1.051751278661565e-14,
+            6.394884621840902e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 2.203098814490545e-14,
+          "mae": 2.842170943040401e-14,
+          "rmse": 2.1316282072803006e-14
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -2.383380604313179e-15,
+            4.237543722575371e-14
+          ],
+          "mae": [
+            -4.174803686552108e-15,
+            5.5943719784811744e-14
+          ],
+          "rmse": [
+            -1.407022646541615e-14,
+            4.618527782440651e-14
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": 0.012282190307105308,
+        "mae": 20.058495862736272,
+        "n": 6214,
+        "rmse": 27.82660435712759
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": -0.0008586870643114967,
+        "mae": 20.12663780863855,
+        "n": 6214,
+        "rmse": 27.80121623557
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 6976,
+        "discrepancies_gt_1e_9": 9000,
+        "maximum_absolute_discrepancy": 16.46089311106921,
+        "mean_absolute_discrepancy": 2.5678668401644473,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "tree",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": 0.012282190307105308,
+        "mae": 20.058495862736272,
+        "n": 6214,
+        "rmse": 27.82660435712759
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": -0.0008586870643114967,
+        "mae": 20.12663780863855,
+        "n": 6214,
+        "rmse": 27.80121623557
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 0.013140877371416806,
+          "mae": -0.06814194590227629,
+          "rmse": 0.025388121557590182
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -0.07370629177467936,
+            0.09889363413325558
+          ],
+          "mae": [
+            -0.17005793657252666,
+            0.018307291629879277
+          ],
+          "rmse": [
+            -0.08651348142607466,
+            0.11512806544715065
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 0.013140877371416806,
+          "mae": -0.06814194590227629,
+          "rmse": 0.025388121557590182
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            -0.08726813970834589,
+            0.13859851017331912
+          ],
+          "mae": [
+            -0.14014160710963464,
+            0.009437733307973237
+          ],
+          "rmse": [
+            -0.08801693377698032,
+            0.14370350890526973
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    },
+    {
+      "aligned_three_rows": 9000,
+      "combined_outcome_component_mismatches": 0,
+      "complete_source_component_outcomes": 6214,
+      "component_missing_forecasts": 0,
+      "component_natural_coverage_metrics": {
+        "bias": 1.3548050889016512,
+        "mae": 23.0113895135002,
+        "n": 6214,
+        "rmse": 30.211074440850837
+      },
+      "direct_missing_forecasts": 0,
+      "direct_natural_coverage_metrics": {
+        "bias": 1.3548050889016512,
+        "mae": 23.0113895135002,
+        "n": 6214,
+        "rmse": 30.211074440850837
+      },
+      "direct_participation_counts": {
+        "DNP": 1121,
+        "played": 7365,
+        "unknown": 514
+      },
+      "fallback_rows": {
+        "direct": 0,
+        "rec": 0,
+        "rush": 0
+      },
+      "identity_incompatible_rows": 0,
+      "mean_coherence": {
+        "discrepancies_gt_1_yard": 0,
+        "discrepancies_gt_1e_9": 0,
+        "maximum_absolute_discrepancy": 0.0,
+        "mean_absolute_discrepancy": 0.0,
+        "supported_compatible_forecast_rows": 9000
+      },
+      "method": "workload",
+      "missing_source_component_outcomes": 2786,
+      "paired_component_sum_metrics": {
+        "bias": 1.3548050889016512,
+        "mae": 23.0113895135002,
+        "n": 6214,
+        "rmse": 30.211074440850837
+      },
+      "paired_coverage_of_population": 0.6904444444444444,
+      "paired_coverage_of_supported_played": 1.0,
+      "paired_direct_metrics": {
+        "bias": 1.3548050889016512,
+        "mae": 23.0113895135002,
+        "n": 6214,
+        "rmse": 30.211074440850837
+      },
+      "paired_game_uncertainty": {
+        "cluster_unit": "game",
+        "clusters": 285,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 0.0,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            0.0,
+            0.0
+          ],
+          "mae": [
+            0.0,
+            0.0
+          ],
+          "rmse": [
+            0.0,
+            0.0
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "paired_scored_rows": 6214,
+      "paired_unique_games": 285,
+      "paired_unique_weeks": 22,
+      "paired_week_uncertainty": {
+        "cluster_unit": "week",
+        "clusters": 22,
+        "confidence": 0.9958333333333333,
+        "delta_direction": "component_sum_minus_direct",
+        "deltas": {
+          "bias": 0.0,
+          "mae": 0.0,
+          "rmse": 0.0
+        },
+        "family_size": 12,
+        "intervals": {
+          "bias": [
+            0.0,
+            0.0
+          ],
+          "mae": [
+            0.0,
+            0.0
+          ],
+          "rmse": [
+            0.0,
+            0.0
+          ]
+        },
+        "paired_n": 6214,
+        "replicates": 500,
+        "seed": 20261022,
+        "week_clusters": 22
+      },
+      "participation_probability_incompatible_or_missing_rows": 0,
+      "participation_state_incompatible_rows": 0,
+      "played_missing_source_component_outcomes": 1151,
+      "played_supported_compatible_outcomes": 6214,
+      "population": "conditional_on_playing; supplied allskill rows including postseason",
+      "population_rows_union": 9000,
+      "season": 2024,
+      "source_rows": {
+        "direct": 9000,
+        "rec": 9000,
+        "rush": 9000
+      },
+      "unmatched_rows": 0
+    }
+  ],
+  "operation": "read_frozen_rows_no_fit_no_model_selection_no_promotion",
+  "point_functional": "conditional means; means add, quantiles not added",
+  "season": 2024,
+  "source_component_check": "Each frozen combined actual checked against frozen rushing actual plus receiving actual; byte pins do not independently authenticate provider values.",
+  "source_files": [
+    {
+      "bytes": 423349,
+      "filename": "2024-rush_rec_yd-distributional.parquet",
+      "sha256": "c48d0580cc92b90800485482a410990fe58af3a9634cdda9cf25714274f396d7"
+    },
+    {
+      "bytes": 421761,
+      "filename": "2024-rush_yd-distributional.parquet",
+      "sha256": "41c046549f17d849126c6b89c7d08dd8cc9ea76d767ea128d84dcf32b9316480"
+    },
+    {
+      "bytes": 423201,
+      "filename": "2024-rec_yd-distributional.parquet",
+      "sha256": "c16b63a8bd5df06520d1de055d5310b1c844adfa85f18b4460448973a453fd09"
+    },
+    {
+      "bytes": 424771,
+      "filename": "2024-rush_rec_yd-ensemble.parquet",
+      "sha256": "76ca185dfe43cff296896086e17b59e0c4d6c5d8d6823176110224755f4d6f63"
+    },
+    {
+      "bytes": 423183,
+      "filename": "2024-rush_yd-ensemble.parquet",
+      "sha256": "ee6cf9dc04b6a9ddc5caaba5590658e8ca7330439903cb3256fa9f78273f13fb"
+    },
+    {
+      "bytes": 424623,
+      "filename": "2024-rec_yd-ensemble.parquet",
+      "sha256": "ac69ba7f86770628130935c3be9ab590c29959f79d193678d5f69618b2c5116a"
+    },
+    {
+      "bytes": 69868,
+      "filename": "2024-rush_rec_yd-pinned_website.parquet",
+      "sha256": "f9b07b57a9ed3d0c92d526a0d9e1297caf02040edc6a0ac4ba450030dbb5f0af"
+    },
+    {
+      "bytes": 68280,
+      "filename": "2024-rush_yd-pinned_website.parquet",
+      "sha256": "e599e3dbcf343a7bad04ce7381353a00c8082e74bed5c388612356214dcf9bda"
+    },
+    {
+      "bytes": 69720,
+      "filename": "2024-rec_yd-pinned_website.parquet",
+      "sha256": "1f68515c216723792a1f0199b5f77f54f7f5062db56573f6799d997b09251777"
+    },
+    {
+      "bytes": 212384,
+      "filename": "2024-rush_rec_yd-pooled.parquet",
+      "sha256": "82cc01d784ace356223bb69bb5b6e0df99c1106aaf70f3dd7cd8ec2f697d0a1c"
+    },
+    {
+      "bytes": 174572,
+      "filename": "2024-rush_yd-pooled.parquet",
+      "sha256": "0ee0f1dd6210fc6230a3919cab4f50f4995b3b9a27ccebf73ab5d39487ee2a48"
+    },
+    {
+      "bytes": 192075,
+      "filename": "2024-rec_yd-pooled.parquet",
+      "sha256": "5425cf3d0bdc8a9b321b809d30594545a8d959dd5ac3ade546d05067749df442"
+    },
+    {
+      "bytes": 69853,
+      "filename": "2024-rush_rec_yd-raw_sleeper.parquet",
+      "sha256": "dad9644fc1a9b29aa161964f401e510ad58bb1951b8648a39fe0cd03dbc7f241"
+    },
+    {
+      "bytes": 68265,
+      "filename": "2024-rush_yd-raw_sleeper.parquet",
+      "sha256": "08750fcf899d57da79a888491e98f2bd14b362299dfe422c986cc030ab85517d"
+    },
+    {
+      "bytes": 69705,
+      "filename": "2024-rec_yd-raw_sleeper.parquet",
+      "sha256": "20550beb51c93018eb10d34dabd58268d17e11189912bc121f05195052ac87d5"
+    },
+    {
+      "bytes": 158629,
+      "filename": "2024-rush_rec_yd-recent.parquet",
+      "sha256": "3216ef68937b6ae95c703f187a11182211519f58d0e5a133f57d424048516caf"
+    },
+    {
+      "bytes": 136279,
+      "filename": "2024-rush_yd-recent.parquet",
+      "sha256": "d6264a54e75c5b4740eab8d78dff891471044ed67e2e66148cddfdcd438fc932"
+    },
+    {
+      "bytes": 147316,
+      "filename": "2024-rec_yd-recent.parquet",
+      "sha256": "897500b318449b966e211e7e48aa456c59bcd33a2d1bec10ac952b19434c29ad"
+    },
+    {
+      "bytes": 423304,
+      "filename": "2024-rush_rec_yd-ridge.parquet",
+      "sha256": "b10a5237b68f42e59f9f7c9482064ec94d3e7e2783dc0414100a9b6d5b89c978"
+    },
+    {
+      "bytes": 421716,
+      "filename": "2024-rush_yd-ridge.parquet",
+      "sha256": "231b5f7ca8bf85b0fc9166c310d6c81c3ac74407f073e7b781c32e587e4ea60d"
+    },
+    {
+      "bytes": 423156,
+      "filename": "2024-rec_yd-ridge.parquet",
+      "sha256": "57babf3075261785cbbd02ff8a0bb80c29e211aaa51c10b9f29ecd868ea13e95"
+    },
+    {
+      "bytes": 423389,
+      "filename": "2024-rush_rec_yd-ridge_without_opponent.parquet",
+      "sha256": "9ba649e10bc6e51e7617ba9acdacc41b1f7c9ede4d8aef0d7ba1ea003b8978d0"
+    },
+    {
+      "bytes": 421801,
+      "filename": "2024-rush_yd-ridge_without_opponent.parquet",
+      "sha256": "b44a21822e11e05c96658e1aebac10f204f94d1752218415f151bbc26025414d"
+    },
+    {
+      "bytes": 423241,
+      "filename": "2024-rec_yd-ridge_without_opponent.parquet",
+      "sha256": "4879a608b50e4cc661e393c1d3d721044ec464eea9ed138d4c369be394c836ab"
+    },
+    {
+      "bytes": 423369,
+      "filename": "2024-rush_rec_yd-ridge_without_team.parquet",
+      "sha256": "20e46237cf19daff1ceca040d862ea062cd12573c77f8e412c1dfd432d7e8412"
+    },
+    {
+      "bytes": 421781,
+      "filename": "2024-rush_yd-ridge_without_team.parquet",
+      "sha256": "f0e79ee6e5fab886d12285a389d46d638affe88e9b24c5be65299678c41a337a"
+    },
+    {
+      "bytes": 423221,
+      "filename": "2024-rec_yd-ridge_without_team.parquet",
+      "sha256": "dca674c4416f863f814fc2f3cbf6ba1a432975f4febfcf613660b059abf0d013"
+    },
+    {
+      "bytes": 422429,
+      "filename": "2024-rush_rec_yd-ridge_without_workload.parquet",
+      "sha256": "13e01eacf7bf2c251f82a013375dc483f1a22c719d4648197aea00e8b5048ee4"
+    },
+    {
+      "bytes": 420841,
+      "filename": "2024-rush_yd-ridge_without_workload.parquet",
+      "sha256": "9ebf052bacf3513c1a5d19166ffc866590bec022c3e20714ff6bc850c01aa7b8"
+    },
+    {
+      "bytes": 422281,
+      "filename": "2024-rec_yd-ridge_without_workload.parquet",
+      "sha256": "9b64e5f6ab5c6f80e014e05ade26c3c1076c140f372cd6faac7ec015f255a6e7"
+    },
+    {
+      "bytes": 306463,
+      "filename": "2024-rush_rec_yd-tree.parquet",
+      "sha256": "a75608703f7dbe3ef50d8c6b350513e6c0d3c504d3a56b7b8a39082448122d05"
+    },
+    {
+      "bytes": 209923,
+      "filename": "2024-rush_yd-tree.parquet",
+      "sha256": "4b45c3e3734b84a78fe778d24549aa76ab148a899699fc03d9b35296ca59c769"
+    },
+    {
+      "bytes": 302203,
+      "filename": "2024-rec_yd-tree.parquet",
+      "sha256": "59ddc5fecd53ceda3af1068523bc5bcd7db7aa52f55d35c53d6ac49b7f698145"
+    },
+    {
+      "bytes": 263855,
+      "filename": "2024-rush_rec_yd-workload.parquet",
+      "sha256": "cb73f57551e1ef13c5e7aec6bccb8dc7cbe796b00a469d2476830e4122852816"
+    },
+    {
+      "bytes": 177935,
+      "filename": "2024-rush_yd-workload.parquet",
+      "sha256": "470fe1dd0b368506fc6833da6d1ccb66ac5f4cd5cb7d577c73590ba9920143cf"
+    },
+    {
+      "bytes": 223377,
+      "filename": "2024-rec_yd-workload.parquet",
+      "sha256": "5249ff0c176ecf1a57c4c5f89c2b12c85e747f517d40c164fa867e3e7964c84a"
+    }
+  ]
+}
