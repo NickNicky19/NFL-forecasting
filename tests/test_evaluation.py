@@ -22,6 +22,8 @@ def test_count_support_and_zero_mass():
     s=probability_scores([0,1],[.1,1],[1,2],"negbin")
     assert s["crps"]>=0 and s["log_score"]>=0
     with pytest.raises(ValueError):probability_scores([.5],[1],[2],"negbin")
+    zero=probability_scores([0],[0],[0],"negbin")
+    assert zero["crps"]==0 and zero["log_score"]==0
 
 
 def test_paired_uses_identical_outcomes():

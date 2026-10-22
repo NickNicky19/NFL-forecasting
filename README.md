@@ -55,7 +55,8 @@ website rollback is needed because this lab never deploys it. Old external resea
 execution stays active until a verified handover establishes ownership and durability.
 
 The interface exports player/game/team/opponent/target, full-game period and
-scoring identity, model/config/code/input hashes, kickoff and issue clocks,+conditional played mean/distribution, participation probability, and fallback.
+scoring identity, model/config/code/input hashes, kickoff and issue clocks,
+conditional played mean/distribution, participation probability, and fallback.
 Recorded source publication clocks remain unknown where the provider does not
 supply them. Compatible component means add; quantiles require joint samples.
 Integer push mass needs an actual saved line; absent odds never block football

@@ -24,7 +24,7 @@ def probability_scores(y, mean, scale, family):
                 "log_score": float(np.mean(loss)) if np.isfinite(loss).all() else None,
                 "infinite_log_losses": int(np.isinf(loss).sum()),
                 "crps": float(np.mean((m-y)**2))}
-    if np.any(s <= 0) or not np.isfinite(s).all():
+    if np.any(s < 0) or not np.isfinite(s).all() or (family == "normal" and np.any(s == 0)):
         raise ValueError("invalid distribution standard deviation")
     if family == "normal":
         z = (y-m)/s
@@ -69,7 +69,7 @@ def summarize(rows: pd.DataFrame) -> dict:
            "scored_rows": len(scored), "dnp": int(rows.participation_state.eq("DNP").sum()),
            "unknown_participation": int(rows.participation_state.eq("unknown").sum()),
            "played_missing_statistic": int((rows.participation_state.eq("played") & ~observed).sum()),
-           "fallback_rows": int(rows.fallback.notna().sum()), "selected_line_performance": "unavailable_no_recorded_offers"}
+           "fallback_rows": int(rows.fallback.fillna("").ne("").sum()), "selected_line_performance": "unavailable_no_recorded_offers"}
     if len(scored):
         e = scored["mean"].astype(float)-scored.actual.astype(float)
         out.update(mae=float(e.abs().mean()),rmse=float(np.sqrt(np.mean(e*e))),bias=float(e.mean()),

@@ -80,6 +80,8 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     live=future_population(players,games,year,week)
     for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
     live["cutoff_utc"]=began.isoformat()
+    live["outcome_available_utc"]=pd.to_datetime(live.kickoff_utc,utc=True)+pd.Timedelta(days=7)
+    if "cutoff_utc" not in history:history["cutoff_utc"]=history.kickoff_utc
     # Source history uses GSIS, allowing exact matches and explicit unlinked cold starts.
     joined=pd.concat([history,live],ignore_index=True)
     features=build_features(joined)
