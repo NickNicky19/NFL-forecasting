@@ -122,55 +122,84 @@ def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, see
     return out
 
 
-def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, seasons=None):
+REPORTING_RESERVE_SECONDS = 180.0
+
+
+def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, seasons=None, *, attempt_callback=None):
     from .models import fit_predict
     from .state import digest,source_tree_digest
-    parent=output
+    from .experiment import atomic_checkpoint
     attempt=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")+"-"+uuid.uuid4().hex[:8]
-    output=parent/attempt
+    output=Path(output)/attempt
     output.mkdir(parents=True,exist_ok=False)
-    manifest={"attempt_id":attempt,"registration":config,"registration_sha256":digest(config),"started_at":datetime.now(timezone.utc).isoformat(),"feature_attrs":features.attrs,"source_tree_sha256":source_tree_digest(Path.cwd())}
-    (output/"manifest.json").write_text(json.dumps(manifest,indent=2,default=str,allow_nan=False))
-    start=time.monotonic(); metadata=[]; allrows=[]; budget=config["budgets"]["max_training_seconds"]
-    methods=methods or config["candidate_families"]
-    if len(methods)>config["budgets"]["candidate_configurations_per_category"]: raise ValueError("search budget exceeded")
-    seasons=seasons or [2022,2023,2024]
-    for season in seasons:
-        test=features.loc[features.season.eq(season)]
-        if test.empty: continue
-        first=pd.to_datetime(test.kickoff_utc,utc=True).min()
-        train=features.loc[(features.season<season)&(pd.to_datetime(features.kickoff_utc,utc=True)<first)]
-        if "outcome_available_utc" in train:
-            train=train.loc[pd.to_datetime(train.outcome_available_utc,utc=True)<first]
-        for target in config["targets"]:
-            for method in methods:
-                if time.monotonic()-start>=budget:
-                    metadata.append({"season":season,"target":target,"method":method,"state":"NOT_RUN_BUDGET_EXHAUSTED"});continue
-                began=time.monotonic()
-                with (output/"trial-events.jsonl").open("a") as log:log.write(json.dumps({"event":"STARTED","season":season,"target":target,"method":method,"at":datetime.now(timezone.utc).isoformat()})+"\n")
-                try:
-                    with warnings.catch_warnings(record=True) as captured_warnings:
-                        warnings.simplefilter("always")
-                        pred=fit_predict(train,test,target,method)
-                    r=test[["season","week","game_id","player_id","team","opponent","position","kickoff_utc","participation_state"]].copy()
-                    r["actual"]=test[target];r["target"]=target;r["method"]=method
-                    for col in ["mean","scale","family","p10","p50","p90","p_participation","fallback"]:r[col]=pred[col]
-                    r["split"]="validation" if season in config["seasons"]["validation"] else "development"
-                    r["evidence"]="current_vintage_historical_reconstruction"
-                    path=output/f"{season}-{target}-{method}.parquet";r.to_parquet(path,index=False)
-                    allrows.append(r)
-                    metadata.append({"season":season,"target":target,"method":method,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"warnings":[str(w.message) for w in captured_warnings],"score":summarize(r)})
-                except Exception as exc:
-                    metadata.append({"season":season,"target":target,"method":method,"state":"FAILED","seconds":time.monotonic()-began,"error":str(exc),"traceback":traceback.format_exc()})
-                (output/"trials.json").write_text(json.dumps(metadata,indent=2,default=str,allow_nan=False))
-                with (output/"trial-events.jsonl").open("a") as log:log.write(json.dumps({"event":"COMPLETED","trial":metadata[-1]},default=str,allow_nan=False)+"\n")
-    (output/"trials.json").write_text(json.dumps(metadata,indent=2,default=str,allow_nan=False))
-    if allrows:
-        rows=pd.concat(allrows,ignore_index=True)
-        rows.to_parquet(output/"rows.parquet",index=False)
-        del rows,allrows
-        from .reporting import finish_reports
-        finish_reports(output)
-    report={"registration":config["registration_id"],"attempt_id":attempt,"output":str(output),"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim"}
-    (output/"campaign.json").write_text(json.dumps(report,indent=2))
-    return report
+    if attempt_callback is not None:attempt_callback(output)
+    start=time.monotonic();metadata=[];allrows=[];active=None;phase="initializing"
+    budget=float(config["budgets"]["max_training_seconds"])
+    if not np.isfinite(budget) or budget<0:raise ValueError("invalid execution budget")
+    reserve=min(REPORTING_RESERVE_SECONDS,budget*.15)
+    fit_budget=budget-reserve
+    timing={"total_budget_seconds":budget,"fit_launch_budget_seconds":fit_budget,"reporting_reserve_seconds":reserve,
+            "enforcement":"no new trial after fit-launch budget; existing external total timeout unchanged"}
+    def checkpoint(trial):
+        metadata.append(trial)
+        key=f"{trial['season']}-{trial['target']}-{trial['method']}"
+        atomic_checkpoint(output/"trial-checkpoints"/(key+".json"),trial)
+        with (output/"trial-events.jsonl").open("a") as log:
+            log.write(json.dumps({"event":"CHECKPOINTED","season":trial["season"],"target":trial["target"],"method":trial["method"],"state":trial["state"]},allow_nan=False)+"\n")
+            log.flush()
+        atomic_checkpoint(output/"progress.json",{"attempt_id":attempt,"phase":phase,"completed_trials":len(metadata),
+                          "active_trial":None,"elapsed_seconds":time.monotonic()-start,**timing})
+    try:
+        manifest={"attempt_id":attempt,"registration":config,"registration_sha256":digest(config),"started_at":datetime.now(timezone.utc).isoformat(),"feature_attrs":features.attrs,"source_tree_sha256":source_tree_digest(Path.cwd()),"execution_timing":timing}
+        atomic_checkpoint(output/"manifest.json",manifest)
+        methods=methods or config["candidate_families"]
+        if len(methods)>config["budgets"]["candidate_configurations_per_category"]:raise ValueError("search budget exceeded")
+        seasons=seasons or [2022,2023,2024]
+        phase="fitting"
+        for season in seasons:
+            test=features.loc[features.season.eq(season)]
+            if test.empty:continue
+            first=pd.to_datetime(test.kickoff_utc,utc=True).min()
+            train=features.loc[(features.season<season)&(pd.to_datetime(features.kickoff_utc,utc=True)<first)]
+            if "outcome_available_utc" in train:
+                train=train.loc[pd.to_datetime(train.outcome_available_utc,utc=True)<first]
+            for target in config["targets"]:
+                for method in methods:
+                    if time.monotonic()-start>=fit_budget:
+                        checkpoint({"season":season,"target":target,"method":method,"state":"NOT_RUN_BUDGET_EXHAUSTED","reason":"reporting_reserve_preserved"});continue
+                    began=time.monotonic();active={"season":season,"target":target,"method":method}
+                    atomic_checkpoint(output/"progress.json",{"attempt_id":attempt,"phase":phase,"completed_trials":len(metadata),"active_trial":active,"elapsed_seconds":began-start,**timing})
+                    with (output/"trial-events.jsonl").open("a") as log:log.write(json.dumps({"event":"STARTED",**active,"at":datetime.now(timezone.utc).isoformat()})+"\n")
+                    try:
+                        with warnings.catch_warnings(record=True) as captured_warnings:
+                            warnings.simplefilter("always")
+                            pred=fit_predict(train,test,target,method)
+                        r=test[["season","week","game_id","player_id","team","opponent","position","kickoff_utc","participation_state"]].copy()
+                        r["actual"]=test[target];r["target"]=target;r["method"]=method
+                        for col in ["mean","scale","family","p10","p50","p90","p_participation","fallback"]:r[col]=pred[col]
+                        r["split"]="validation" if season in config["seasons"]["validation"] else "development"
+                        r["evidence"]="current_vintage_historical_reconstruction"
+                        path=output/f"{season}-{target}-{method}.parquet";r.to_parquet(path,index=False)
+                        allrows.append(r)
+                        trial={**active,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"warnings":[str(w.message) for w in captured_warnings],"score":summarize(r)}
+                    except Exception as exc:
+                        trial={**active,"state":"FAILED","seconds":time.monotonic()-began,"error":str(exc),"traceback":traceback.format_exc()}
+                    checkpoint(trial);active=None
+        atomic_checkpoint(output/"trials.json",metadata)
+        phase="reporting"
+        atomic_checkpoint(output/"progress.json",{"attempt_id":attempt,"phase":phase,"completed_trials":len(metadata),"active_trial":None,"elapsed_seconds":time.monotonic()-start,**timing})
+        if allrows:
+            rows=pd.concat(allrows,ignore_index=True)
+            rows.to_parquet(output/"rows.parquet",index=False)
+            del rows,allrows
+            from .reporting import finish_reports
+            finish_reports(output)
+        report={"registration":config["registration_id"],"attempt_id":attempt,"output":str(output),"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"budget_skips":sum(x["state"]=="NOT_RUN_BUDGET_EXHAUSTED" for x in metadata),"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim","state":"COMPLETED",**timing}
+        atomic_checkpoint(output/"campaign.json",report)
+        return report
+    except BaseException as exc:
+        if active is not None:
+            checkpoint({**active,"state":"INTERRUPTED","error_type":type(exc).__name__,"error":str(exc)})
+        atomic_checkpoint(output/"trials.json",metadata)
+        atomic_checkpoint(output/"campaign.json",{"attempt_id":attempt,"output":str(output),"state":"INTERRUPTED" if isinstance(exc,SystemExit) else "FAILED","phase":phase,"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"error_type":type(exc).__name__,"error":str(exc),"promoted":[],**timing})
+        raise

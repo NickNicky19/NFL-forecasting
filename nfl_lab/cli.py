@@ -34,24 +34,8 @@ def main():
         if not manifest_file.exists():manifest_file.write_text(json.dumps(feature_manifest,indent=2,default=str,allow_nan=False))
         result={"rows":len(frame),"source_receipt":receipt,"feature_columns":[c for c in frame if c.startswith("f_")]}
     elif args.command=="experiment":
-        import pandas as pd
-        from .evaluation import campaign
-        p=cache/"processed/features.parquet"
-        if not p.exists():raise RuntimeError("run acquire first")
-        features=pd.read_parquet(p)
-        features.attrs["feature_file_sha256"]=hashlib.file_digest(p.open("rb"),"sha256").hexdigest()
-        manifest_path=cache/"processed/feature_manifests"/(features.attrs["feature_file_sha256"]+".json")
-        features.attrs["source_snapshot_binding"]=json.loads(manifest_path.read_text()) if manifest_path.exists() else {"state":"legacy feature checksum captured; prematched acquisition snapshot absent; no fabricated source binding"}
-        result=campaign(features,root/"runs"/config["registration_id"],config,args.methods.split(",") if args.methods else None)
-        attempt=Path(result["output"])
-        derived={"schema_version":"lab-training-run-v1","registration":config,"result":result,
-                 "trials":json.loads((attempt/"trials.json").read_text()) if (attempt/"trials.json").exists() else [],
-                 "manifest":json.loads((attempt/"manifest.json").read_text()),
-                 "row_level_outputs":"local ignored only; row hash binds this derived aggregate"}
-        for name in ["selected","paired","coherence","summary"]:
-            path=attempt/(name+".json")
-            if path.exists():derived[name]=json.loads(path.read_text())
-        save(state,"training",derived)
+        from .experiment import run_experiment
+        result=run_experiment(root,cache,state,config,args.methods.split(",") if args.methods else None)
     elif args.command=="daily":
         from .live import daily
         result=daily(root,cache,state,seasons,args.methods.split(",") if args.methods else None)
