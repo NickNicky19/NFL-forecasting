@@ -162,13 +162,22 @@ def load_identity(cache: Path) -> pd.DataFrame:
         mappings.append(roster.rename(columns={"gsis_id": "player_id"}))
     if mappings:
         mapping = pd.concat(mappings).dropna(subset=["player_id", "sleeper_id"])
-        # A source conflict is not silently resolved by latest-current identity.
-        if (mapping.groupby("player_id").sleeper_id.nunique() > 1).any():
-            raise ValueError("conflicting GSIS/Sleeper identity crosswalk")
+        # Historical source errors can affect both directions. Quarantine all
+        # participants in an ambiguous binding, preserving candidates/evidence.
+        bad_players = set(mapping.groupby("player_id").sleeper_id.nunique().loc[lambda s: s > 1].index)
+        bad_sleepers = set(mapping.groupby("sleeper_id").player_id.nunique().loc[lambda s: s > 1].index)
+        bad_players.update(mapping.loc[mapping.sleeper_id.isin(bad_sleepers), "player_id"])
+        candidates = mapping.groupby("player_id").sleeper_id.agg(lambda s: "|".join(sorted(set(str(x) for x in s))))
         mapping = mapping.sort_values(["season", "week"]).drop_duplicates("player_id", keep="last")
-        players = players.merge(mapping[["player_id", "sleeper_id"]], on="player_id", how="outer", validate="one_to_one")
+        mapping["sleeper_id_candidates"] = mapping.player_id.map(candidates)
+        mapping["identity_status"] = np.where(mapping.player_id.isin(bad_players), "ambiguous_source_binding", "source_exact_binding")
+        mapping.loc[mapping.player_id.isin(bad_players), "sleeper_id"] = None
+        players = players.merge(mapping[["player_id", "sleeper_id", "identity_status", "sleeper_id_candidates"]], on="player_id", how="outer", validate="one_to_one")
+        players["identity_status"] = players.identity_status.fillna("no_sleeper_binding")
     else:
         players["sleeper_id"] = None
+        players["identity_status"] = "no_sleeper_binding"
+        players["sleeper_id_candidates"] = None
     return players
 
 

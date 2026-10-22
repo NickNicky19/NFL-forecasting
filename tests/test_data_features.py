@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from nfl_lab.data import STAT_MAP, TARGETS, _download, _require, fetch_cached_json, load_history
+from nfl_lab.data import STAT_MAP, TARGETS, _download, _require, fetch_cached_json, load_history, load_identity
 from nfl_lab.features import build_features
 
 
@@ -158,3 +158,17 @@ def test_source_cache_restart_uses_hash_without_network(tmp_path, monkeypatch):
     assert actual["retrieved_utc"] == receipt["retrieved_utc"]
     with pytest.raises(ValueError, match="filename"):
         fetch_cached_json(tmp_path, "../escape.json", receipt["url"])
+
+
+def test_ambiguous_identity_is_quarantined_without_blocking_other_players(tmp_path):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    pd.DataFrame({"gsis_id": ["a", "b", "c"], "pfr_id": ["pa", "pb", "pc"],
+                  "display_name": ["A", "B", "C"]}).to_parquet(raw / "players.parquet")
+    pd.DataFrame({"gsis_id": ["a", "a", "b", "c"], "sleeper_id": ["1", "2", "2", "3"],
+                  "season": [2023] * 4, "week": [1, 2, 1, 1]}).to_parquet(raw / "roster_weekly_2023.parquet")
+    identity = load_identity(tmp_path).set_index("player_id")
+    assert identity.loc[["a", "b"], "sleeper_id"].isna().all()
+    assert identity.loc[["a", "b"], "identity_status"].eq("ambiguous_source_binding").all()
+    assert identity.loc["a", "sleeper_id_candidates"] == "1|2"
+    assert identity.loc["c", "sleeper_id"] == "3"

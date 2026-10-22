@@ -22,7 +22,8 @@ Additional outputs include `rec_tgt`, `rush_td`, `rec_td`, snap counts,
 participation evidence, roster status, home/away, full-team statistical totals,
 `outcome_available_utc`, `historical_publication_utc` and `history_vintage`.
 `load_identity(cache)` exposes exact GSIS/PFR/Sleeper source bindings; conflicting
-GSIS/Sleeper mappings fail rather than using player names.
+GSIS/Sleeper mappings are quarantined to null bindings with explicit status and
+candidate IDs rather than using player names or choosing one silently.
 
 The population includes offensive QB/RB/FB/WR/TE active and explicit inactive
 weekly roster rows plus observed statistical/snap participants. Pure reserve
