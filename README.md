@@ -25,6 +25,13 @@ tested primary loss and remains inactive. New website comparisons use
 [hash-bound pregame capture](docs/website-baseline-comparisons.md), without
 backfilling old forecasts.
 
+The [resumed methods work](reports/methods-resumption-20261022/README.md) adds
+a bounded historical passing-efficiency comparison and a portable
+[opt-in passing-yard adapter](docs/research-passing.md). It matches the prior
+37 saved opportunity points technically, including fallbacks. The larger
+historical comparison favors the pooled-yard control over both efficiency
+variants. Neither result changes a default or qualifies a website replacement.
+
 ```sh
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock -e '.[test]'

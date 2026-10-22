@@ -1,0 +1,37 @@
+{
+  "context": {
+    "player_id": "synthetic",
+    "game_id": "future",
+    "team": "A",
+    "opponent": "B",
+    "season": 2000,
+    "season_type": "REG",
+    "week": 5,
+    "period": "full_game_with_ot",
+    "cutoff_at": "2000-10-22T12:00:00Z",
+    "kickoff_at": "2000-10-22T17:00:00Z",
+    "projection_observed_at": "2000-10-22T11:00:00Z",
+    "website_yards": 40.5,
+    "website_attempts": 20.5,
+    "baseline_receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "projection_source_ref": "fictional-original"
+  },
+  "opportunities": {
+    "reference": "fictional-schedule",
+    "payload": "{\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"through_week\": 4, \"weeks\": [{\"week\": 1, \"state\": \"game\", \"game_id\": \"g1\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-01T17:00:00Z\", \"completed\": true, \"final_observed_at\": \"2000-10-01T23:00:00Z\"}, {\"week\": 2, \"state\": \"game\", \"game_id\": \"g2\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-02T17:00:00Z\", \"completed\": true, \"final_observed_at\": \"2000-10-02T23:00:00Z\"}, {\"week\": 3, \"state\": \"game\", \"game_id\": \"g3\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-03T17:00:00Z\", \"completed\": true, \"final_observed_at\": \"2000-10-03T23:00:00Z\"}, {\"week\": 4, \"state\": \"game\", \"game_id\": \"g4\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-04T17:00:00Z\", \"completed\": true, \"final_observed_at\": \"2000-10-04T23:00:00Z\"}]}",
+    "observed_at": "2000-10-21T12:00:00Z",
+    "time_basis": "pre_cutoff_capture"
+  },
+  "statistics": {
+    "reference": "fictional-stats",
+    "payload": "{\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"records\": [{\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"week\": 1, \"game_id\": \"g1\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-01T17:00:00Z\", \"pass_att\": 10, \"pass_yd\": 50, \"participation\": \"played\", \"stats_observed_at\": \"2000-10-01T23:10:00Z\", \"source_ref\": \"fictional-stats\"}, {\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"week\": 2, \"game_id\": \"g2\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-02T17:00:00Z\", \"pass_att\": 2, \"pass_yd\": 20, \"participation\": \"played\", \"stats_observed_at\": \"2000-10-02T23:10:00Z\", \"source_ref\": \"fictional-stats\"}, {\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"week\": 3, \"game_id\": \"g3\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-03T17:00:00Z\", \"pass_att\": 4, \"pass_yd\": 12, \"participation\": \"played\", \"stats_observed_at\": \"2000-10-03T23:10:00Z\", \"source_ref\": \"fictional-stats\"}, {\"player_id\": \"synthetic\", \"season\": 2000, \"season_type\": \"REG\", \"period\": \"full_game_with_ot\", \"week\": 4, \"game_id\": \"g4\", \"team\": \"A\", \"opponent\": \"C\", \"kickoff_at\": \"2000-10-04T17:00:00Z\", \"pass_att\": 10, \"pass_yd\": 60, \"participation\": \"played\", \"stats_observed_at\": \"2000-10-04T23:10:00Z\", \"source_ref\": \"fictional-stats\"}]}",
+    "observed_at": "2000-10-21T12:00:00Z",
+    "time_basis": "pre_cutoff_capture"
+  },
+  "projection": {
+    "reference": "fictional-original",
+    "payload": "{\"player_id\": \"synthetic\", \"game_id\": \"future\", \"team\": \"A\", \"opponent\": \"B\", \"season\": 2000, \"season_type\": \"REG\", \"week\": 5, \"period\": \"full_game_with_ot\", \"cutoff_at\": \"2000-10-22T12:00:00Z\", \"kickoff_at\": \"2000-10-22T17:00:00Z\", \"projection_observed_at\": \"2000-10-22T11:00:00Z\", \"website_yards\": 40.5, \"website_attempts\": 20.5, \"baseline_receipt_sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"projection_source_ref\": \"fictional-original\", \"attempts_origin\": \"same_receipt_unchanged_website\"}",
+    "observed_at": "2000-10-22T11:00:00Z",
+    "time_basis": "pre_cutoff_capture"
+  }
+}
