@@ -26,9 +26,11 @@ unsupported. Statistics snapshots captured before kickoff or after the grading
 context's clock are rejected. Independent completion establishes the game state;
 the source's final-publication clock remains unverified.
 
-Use this source only when the primary saved outcome or participation is
-unsupported. The helper does not choose a winner between conflicting providers,
-establish correction precedence or append repeated known outcomes. Original
+The live adapter retains independently qualified observations from both
+providers, including supported zeros missing from the sparse primary source.
+The helper does not choose a winner between conflicting providers or establish
+correction precedence. Conflicts remain quarantined; unchanged target content
+is deduplicated by the shared outcome writer. Original
 retrieval clocks, source SHA-256 values, stale status, refresh errors, exact
 bindings and gap reasons are retained. `source_timestamp` remains null: HTTP
 file vintage and retrieval do not establish football-statistic publication or

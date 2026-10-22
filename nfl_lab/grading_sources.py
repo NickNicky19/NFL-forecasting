@@ -135,6 +135,14 @@ def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
     lookups = _grading_lookups(context, use_lookup_cache)
     pid = forecast.get("player_id")
     binding = "frozen_exact_gsis"
+    if forecast.get("identity_binding")=="conflicting_identity_cold_start":
+        return gap("conflicting_frozen_provider_identity")
+    if isinstance(pid,str) and GSIS.fullmatch(pid) and forecast.get("sleeper_id") is not None:
+        sid=str(forecast["sleeper_id"])
+        candidates=context["identity"].iloc[lookups["sleepers"].get(sid,[])]
+        exact=candidates[candidates.sleeper_id.astype("string").eq(sid) & candidates.identity_status.eq("source_exact_binding")]
+        if len(exact)>1 or (len(exact)==1 and exact.iloc[0].player_id!=pid):
+            return gap("conflicting_frozen_gsis_sleeper_binding")
     if isinstance(pid, str) and pid.startswith("sleeper:"):
         sid = pid.split(":", 1)[1]
         if not sid or (forecast.get("sleeper_id") is not None and str(forecast["sleeper_id"]) != sid):

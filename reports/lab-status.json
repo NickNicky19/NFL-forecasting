@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-22T13:45:25Z",
+  "as_of_utc": "2026-10-22T14:25:00Z",
   "scope": "NFL lab only; website read-only",
   "reproduction": "original pooled-YPA challenger unrecovered; baseline-only n27 arithmetic reproduced",
   "historical_vintage": "current-vintage reconstruction, not authentic historical pregame availability",
@@ -14,11 +14,21 @@
     "installed": true,
     "hosted_capture": "verified",
     "hosted_retry": "verified",
-    "hosted_weekly_training": "first run timeout124; fixed reporting reserve/interruption receipts, hosted retry pending",
-    "scheduled_event": "13:36UTC event not observed as of13:45:25; success not claimed",
+    "hosted_weekly_training": {
+      "campaign": "verifiedcompleted",
+      "registered_trials": 432,
+      "evaluated": 426,
+      "budget_skips": 6,
+      "elapsed_seconds": 1119.04728163,
+      "budget_seconds": 1200,
+      "run_id": 39791493637,
+      "outer_actions_conclusion": "pendingAPIreadback"
+    },
+    "scheduled_event": "13:36UTC delivery not observed during declaredwindow; workflowactive, actual scheduledsuccess unverified",
     "postgame_future_outcomes": "pending",
     "correction_policy": "append-only; unknown-publication-order conflicts quarantined",
-    "old_research_task": "observed already disabled, no next run; read-only lookup, not disabled by this lab"
+    "old_research_task": "observed already disabled, no next run; read-only lookup, not disabled by this lab",
+    "future_run_receipts": "installed+hostedverified; actualevent/mode/cadence+stepoutcomes durablysaved"
   },
   "targets": [
     {
@@ -33,7 +43,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.130024992691454,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "pass_td",
@@ -47,7 +58,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.08254470364375963,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "pass_cmp",
@@ -61,7 +73,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.11114918117292628,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "pass_att",
@@ -75,7 +88,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.10402197807980948,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "pass_int",
@@ -89,7 +103,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.03814224142375338,
       "validation_bias_gate": false,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "rush_yd",
@@ -103,7 +118,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.11917043308024931,
       "validation_bias_gate": false,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "rush_att",
@@ -117,7 +133,8 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.1617713431601012,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "rec",
@@ -131,7 +148,8 @@
       "development_selected_method": "ridge_without_opponent",
       "validation_relative_primary_gain": 0.13245720160928973,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "rec_yd",
@@ -145,7 +163,8 @@
       "development_selected_method": "ridge_without_team",
       "validation_relative_primary_gain": 0.12374861214534497,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "rush_rec_yd",
@@ -159,7 +178,8 @@
       "development_selected_method": "ridge_without_opponent",
       "validation_relative_primary_gain": 0.1447891371466984,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "fantasy_ppr",
@@ -173,7 +193,8 @@
       "development_selected_method": null,
       "validation_relative_primary_gain": null,
       "validation_bias_gate": null,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     },
     {
       "target": "anytime_td",
@@ -187,7 +208,23 @@
       "development_selected_method": "tree",
       "validation_relative_primary_gain": 0.06050796814249935,
       "validation_bias_gate": true,
-      "promotion": null
+      "promotion": null,
+      "REPRODUCED": "newlabcandidate replayverified; originalchallengerreproduction notclaimed"
     }
+  ],
+  "tests": {
+    "full_local": 256,
+    "seconds": 14.49,
+    "real_artifact_inference_replay_rows": 24288,
+    "exposed_grading_audit_queries": 5436
+  },
+  "limitations": [
+    "no candidate promoted; prospectiveconfirmationpending",
+    "exactPPR crosswalk incomplete; forecastsabstain",
+    "originalpooledYPAchallenger unrecovered, not reproduced",
+    "currentvintagehistorical reconstruction; conservative7daylag retained inlivefeatures",
+    "capture supports regularNFLseason; postseasonissuance not verified",
+    "sourceidentitydisputes and unorderablecorrections remainquarantined",
+    "private raw snapshots/historicalrows not redistributed; hostedrawcaches ephemeral"
   ]
 }

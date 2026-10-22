@@ -43,7 +43,9 @@ statistical event or positive snap count establishes `played`; explicit weekly
 statistical rows alone yield `unknown`. Snap-only played rows keep missing
 outcomes. Known played zeros stay zero. DNP missing outcomes are not imputed.
 Anytime TD is the binary event of at least one rushing or receiving touchdown.
-Both components must be observed. Combined yards requires both yardage components.
+The historical NFLverse derivation requires both components. The live scorer
+can establish a positive event from one recorded positive component; a zero
+requires both. Combined yards requires both yardage components.
 
 `fantasy_ppr` is null because nflverse totals do not provide an authenticated
 crosswalk for every pinned website Sleeper scoring component and defensive
@@ -70,6 +72,9 @@ the latest assumed outcome clock used, including league adjustments. All
 historic data are current-vintage reconstructions. Roster publication clocks and
 historical revisions are unverified; these tables cannot substantiate a
 prospective forecast or a historically authentic pregame source population.
+Live features currently retain that conservative seven-day policy as well;
+it can omit recent statistics already present in a current intake. A separately
+tested availability policy is needed before attributing gains to using them.
 
 Acquisition receipts include exact URL, bytes, SHA-256, retrieval time, HTTP
 Last-Modified/ETag when present, source transition, rights and optional group
@@ -78,8 +83,10 @@ rights remain separate. Raw sources and row-level derived history/features stay
 ignored locally; this lab has no raw redistribution authorization. Review any
 public derived export separately.
 
-NGS assets were verified through the public release inventory, but NGS features
-are not enabled. News, injuries, routes, coaching/scheme, private tracking and
-authentic forecast weather are not implemented. Their absence is explicit in
+NGS assets were verified through the public release inventory and tested in a
+separate finite ablation; NGS features are not enabled. Timestamped public news
+observations have an optional adapter. News/injury numeric effects, routes,
+coaching/scheme, private tracking and authentic forecast-weather features are
+not enabled. Their absence is explicit in
 the acquisition/feature manifests. Optional snap-count source gaps do not stop
 supported statistics or turn missing rows into DNP.

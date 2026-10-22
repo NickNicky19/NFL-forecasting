@@ -79,3 +79,18 @@ def test_distinct_scoring_bindings_are_not_collapsed(tmp_path):
 def test_distinct_integer_values_are_not_collapsed_by_float_rounding(tmp_path):
     assert append_outcomes(tmp_path,[observation(2**53),observation(2**53+1)])=={"appended":2}
     assert resolved_outcomes(tmp_path)[KEY]["state"]=="unresolved_numeric_conflict"
+
+
+def test_unclocked_repeated_old_value_still_blocks_known_clock_resolution(tmp_path):
+    a=dict(observation(1),source_timestamp="2026-10-22T01:00:00Z")
+    b=dict(observation(2),source_timestamp="2026-10-22T02:00:00Z")
+    append_outcomes(tmp_path,[a,b])
+    assert resolved_outcomes(tmp_path)[KEY]["actual"]==2
+    assert append_outcomes(tmp_path,[observation(1)])=={"appended":1}
+    assert resolved_outcomes(tmp_path)[KEY]["state"]=="unresolved_numeric_conflict"
+
+
+def test_identity_quarantine_is_not_deduplicated_into_old_missing_record(tmp_path):
+    append_outcomes(tmp_path,[observation(None),observation(2)])
+    assert append_outcomes(tmp_path,[dict(observation(None),identity_quarantined=True)])=={'appended':1}
+    assert resolved_outcomes(tmp_path)[KEY]['state']=='unresolved_identity_conflict'

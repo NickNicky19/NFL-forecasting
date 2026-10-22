@@ -65,6 +65,15 @@ def test_frozen_sleeper_namespace_requires_unique_authenticated_exact_binding():
     assert cached_nflverse_outcome(context, forecast, game)["gap_reason"] == "conflicting_frozen_sleeper_identity"
 
 
+def test_conflicting_frozen_provider_ids_never_choose_a_provider():
+    context,forecast,game=fixtures()
+    context['identity'].loc[0,'player_id']='00-0099999'
+    assert cached_nflverse_outcome(context,forecast,game)['gap_reason']=='conflicting_frozen_gsis_sleeper_binding'
+    context,forecast,game=fixtures()
+    forecast.update(player_id='sleeper:123',identity_binding='conflicting_identity_cold_start')
+    assert cached_nflverse_outcome(context,forecast,game)['gap_reason']=='conflicting_frozen_provider_identity'
+
+
 @pytest.mark.parametrize("change", [
     {"final": False}, {"final": "true"}, {"game_id": "espn:different"},
     {"kickoff_utc": "2026-10-18T18:00:00Z"}, {"home": "OTHER"}, {"home": "A", "away": "B"}, {"week": 7}])

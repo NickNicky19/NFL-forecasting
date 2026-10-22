@@ -115,10 +115,12 @@ def append_outcomes(root,observations):
             if value is not None:value=int(value) if float(value).is_integer() else float(value)
             return digest({"player_id":row["player_id"],"game_id":row["game_id"],"target":row["target"],
                            "participation_state":row["participation_state"],"actual":value,"source":row.get("source"),
+                           "identity_quarantined":bool(row.get("identity_quarantined")),
                            "scoring_id":row.get("scoring_id"),"period":row.get("period")})
-        existing_versions=set();existing_content=set()
+        existing_versions=set();existing_unknown_content=set()
         for old in records(root,"outcomes"):
-            existing_versions.add(version_key(old));existing_content.add(content_key(old))
+            existing_versions.add(version_key(old))
+            if not old.get("source_timestamp"):existing_unknown_content.add(content_key(old))
         added=0
         for row in observations:
             if row["participation_state"] not in ["played","DNP","unknown"]:raise ValueError("bad participation")
@@ -130,10 +132,11 @@ def append_outcomes(root,observations):
             # when values repeat or versions arrive out of order. Preserve all
             # distinct known-clock evidence under the existing version rule.
             known_clock=bool(row.get("source_timestamp"))
-            duplicate=version in existing_versions if known_clock else content in existing_content
+            duplicate=version in existing_versions if known_clock else content in existing_unknown_content
             if not duplicate:
                 save(root,"outcomes",row);added+=1
-                existing_versions.add(version);existing_content.add(content)
+                existing_versions.add(version)
+                if not known_clock:existing_unknown_content.add(content)
         return {"appended":added}
 
 
@@ -142,6 +145,8 @@ def resolved_outcomes(root):
     for r in records(root,"outcomes"):by.setdefault((r["player_id"],r["game_id"],r["target"]),[]).append(r)
     out={}
     for key,rs in by.items():
+        if any(r.get("identity_quarantined") for r in rs):
+            out[key]={"state":"unresolved_identity_conflict","actual":None};continue
         terminal=[r for r in rs if r["participation_state"] in ["played","DNP"]]
         played={r["participation_state"] for r in terminal}
         values={r["actual"] for r in terminal if r.get("actual") is not None}

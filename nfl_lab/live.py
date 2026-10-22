@@ -205,20 +205,30 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
 
 def grade_saved(state,cache,players):
     from .scoring import stat_value
-    # Optional exact scoring function is integrated after category-owner acceptance.
-    opportunities={}
+    from .grading_sources import load_cached_grading_context,cached_nflverse_outcome
+    opportunities={};identity_conflicts=set();frozen_ids_by_sleeper={}
     for batch in records(state,"forecasts"):
-        for r in batch["rows"]:opportunities[(r["player_id"],r["game_id"],r["target"])]=r
+        for r in batch["rows"]:
+            opportunities[(r["player_id"],r["game_id"],r["target"])]=r
+            if r.get("identity_binding")=="conflicting_identity_cold_start":identity_conflicts.add((r["player_id"],r["game_id"]))
+            if r.get("sleeper_id"):
+                frozen_ids_by_sleeper.setdefault((r["game_id"],r["sleeper_id"]),set()).add(r["player_id"])
+    for (game_id,_),ids in frozen_ids_by_sleeper.items():
+        if len(ids)>1:identity_conflicts.update((pid,game_id) for pid in ids)
+    opportunities={k:({**r,"identity_binding":"conflicting_identity_cold_start"} if (r["player_id"],r["game_id"]) in identity_conflicts else r) for k,r in opportunities.items()}
     periods=sorted({(r["season"],r["week"]) for r in opportunities.values()})
     candidates={}
     for sid,p in players.items():candidates.setdefault(p.get("gsis_id") or "sleeper:"+str(sid),set()).add(str(sid))
     identity={pid:next(iter(ids)) for pid,ids in candidates.items() if len(ids)==1}
-    obs=[];checked=0
+    obs=[];checked=0;context=None;supplement_limit=None;supplement_gaps={};supplement_supported=0
     for season,week in periods:
         if all(utc(r["kickoff_utc"])>=now_utc() for r in opportunities.values() if (r["season"],r["week"])==(season,week)):continue
         board,br=fetch(cache,f"grade-schedule-{season}-{week}",f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week={week}&dates={season}")
         if board.get("week",{}).get("number")!=week or board.get("season",{}).get("year")!=season:raise ValueError("grade schedule period mismatch")
         finals={g["game_id"]:g for g in schedule_games(board) if g["final"] and utc(g["kickoff_utc"])<now_utc()}
+        if finals and context is None and supplement_limit is None:
+            try:context=load_cached_grading_context(cache,sorted({s for s,_ in periods}))
+            except (OSError,RuntimeError,ValueError,KeyError) as exc:supplement_limit=type(exc).__name__+": "+str(exc)[:500]
         stats,sr=fetch(cache,f"stats-{season}-{week}",f"https://api.sleeper.app/stats/nfl/{season}/{week}?season_type=regular")
         entries={str(s["player_id"]):s for s in stats} if isinstance(stats,list) else stats
         for key,r in opportunities.items():
@@ -242,6 +252,36 @@ def grade_saved(state,cache,players):
                         "participation_state":"played" if played else "unknown","source":"sleeper-stats-nfl",
                         "source_sha256":sr["sha256"],"status_sha256":br["sha256"],"source_timestamp":None,
                         "observed_at":sr["retrieved_utc"],"finality":"independent ESPN completed flag; full-week proof not asserted"})
+            if r.get("identity_binding")=="conflicting_identity_cold_start":
+                obs[-1].update(actual=None,participation_state="unknown",identity_quarantined=True,
+                               identity_gap="conflicting_frozen_provider_identity")
+            if context is not None:
+                supplemental=cached_nflverse_outcome(context,r,{**game,"season":season,"week":week},br)
+                if supplemental.get("supplement_status")=="supported":supplement_supported+=1
+                else:
+                    reason=supplemental.get("gap_reason","unknown")
+                    supplement_gaps[reason]=supplement_gaps.get(reason,0)+1
+                    if reason in {"conflicting_frozen_provider_identity","conflicting_frozen_gsis_sleeper_binding"}:
+                        # Preserve the raw receipt privately; an unbound value
+                        # must not grade a different canonical player.
+                        obs[-1].update(actual=None,participation_state="unknown",identity_quarantined=True,
+                                       identity_gap=reason,identity_registry_sha256=digest({k:v["sha256"] for k,v in context["receipts"].items()}))
+                # Unsupported bindings do not create unproven observations.
+                # Valid missing/DNP observations remain explicit, without zeros.
+                if supplemental.get("source_sha256") and supplemental.get("observed_at"):
+                    obs.append(supplemental)
     result=append_outcomes(state,obs)
-    return {**result,"opportunities_checked":checked,"pending_outcomes":len(opportunities)-checked,
+    from .state import resolved_outcomes
+    resolved=resolved_outcomes(state);coverage={"supported_played":0,"known_DNP":0,"missing_played_statistic":0,"unknown_or_unobserved":0,"conflicts":0}
+    for key in opportunities:
+        outcome=resolved.get(key,{"state":"unknown","actual":None})
+        if outcome["state"] in ["played","played_corrected"]:
+            coverage["supported_played" if outcome.get("actual") is not None else "missing_played_statistic"]+=1
+        elif outcome["state"]=="DNP":coverage["known_DNP"]+=1
+        elif outcome["state"].startswith("unresolved"):coverage["conflicts"]+=1
+        else:coverage["unknown_or_unobserved"]+=1
+    pending=len(opportunities)-coverage["supported_played"]-coverage["known_DNP"]
+    return {**result,"opportunities_checked":checked,"pending_outcomes":pending,
+            "pending_final_game_opportunities":len(opportunities)-checked,"outcome_coverage":coverage,
+            "nflverse_supported":supplement_supported,"nflverse_gaps":supplement_gaps,"nflverse_limit":supplement_limit,
             "corrections":"append-only; conflicting unknown-publication-clock values quarantined"}
