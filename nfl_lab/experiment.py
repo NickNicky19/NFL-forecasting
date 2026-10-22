@@ -11,7 +11,7 @@ import tempfile
 import threading
 import uuid
 
-from .state import save
+from .state import records, save
 
 
 class ExperimentTerminated(SystemExit):
@@ -111,7 +111,12 @@ def run_experiment(root, cache, state, config, methods=None):
         except BaseException as error:
             if not terminal_saved:
                 try:
-                    save(state, "training", _receipt(config, attempt, result, error, execution_id))
+                    # A signal may arrive after the immutable save committed
+                    # but before its success flag was assigned. First receipt
+                    # for this execution remains authoritative.
+                    committed=any(r.get("execution_id")==execution_id for r in records(state,"training"))
+                    if not committed:
+                        save(state, "training", _receipt(config, attempt, result, error, execution_id))
                 except BaseException as preservation_error:
                     error.add_note(f"Terminal receipt preservation also failed: {preservation_error}")
             raise

@@ -118,3 +118,22 @@ def test_signal_after_completed_trial_keeps_completed_checkpoint(tmp_path,monkey
     files=list((output/"trial-checkpoints").glob("*.json"))
     assert len(files)==1
     assert json.loads(files[0].read_text())["state"]=="EVALUATED"
+
+
+def test_signal_after_terminal_commit_does_not_append_second_receipt(tmp_path,monkeypatch):
+    from nfl_lab.state import save
+    config,_,cache=setup_inputs(tmp_path)
+    monkeypatch.setattr("nfl_lab.models.fit_predict",predictions)
+    monkeypatch.setattr("nfl_lab.reporting.finish_reports",lambda output:None)
+    calls=[]
+    def signal_after_commit(*args,**kwargs):
+        key=save(*args,**kwargs)
+        calls.append(key)
+        if len(calls)==1:os.kill(os.getpid(),signal.SIGTERM)
+        return key
+    monkeypatch.setattr("nfl_lab.experiment.save",signal_after_commit)
+    with pytest.raises(ExperimentTerminated):
+        run_experiment(tmp_path,cache,tmp_path/"state",config)
+    receipts=list(records(tmp_path/"state","training"))
+    assert len(calls)==len(receipts)==1
+    assert receipts[0]["state"]=="COMPLETED"
