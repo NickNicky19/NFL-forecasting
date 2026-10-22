@@ -43,14 +43,62 @@ def _sha(path: Path) -> str:
     return h.hexdigest()
 
 
-def _download(raw: Path, name: str, url: str, *, optional: bool = False) -> dict:
-    """Bounded HTTP, atomic writes, integrity-checked reuse, no credentials."""
+def _archive_version(raw: Path, path: Path, metadata: Path) -> dict:
+    """Preserve the exact body and receipt in a content-addressed pair directory."""
+    body_sha = _sha(path)
+    receipt_bytes = metadata.read_bytes()
+    receipt_sha = hashlib.sha256(receipt_bytes).hexdigest()
+    directory = raw / "versions" / body_sha / receipt_sha
+    directory.mkdir(parents=True, exist_ok=True)
+    archived_body = directory / path.name
+    archived_receipt = directory / metadata.name
+    if not archived_body.exists():
+        archived_body.write_bytes(path.read_bytes())
+    if not archived_receipt.exists():
+        archived_receipt.write_bytes(receipt_bytes)
+    return {"body": str(archived_body.relative_to(raw)), "receipt": str(archived_receipt.relative_to(raw)),
+            "sha256": body_sha, "receipt_sha256": receipt_sha}
+
+
+def _download(raw: Path, name: str, url: str, *, optional: bool = False,
+              refresh_daily: bool = False) -> dict:
+    """Bounded HTTP with immutable reuse or one mutable refresh per UTC day.
+
+    Failed refreshes preserve the original retrieval clock and bytes, return an
+    explicit stale receipt, and are not retried again that UTC day. The next UTC
+    day permits another bounded attempt. Callers choose whether stale inputs
+    satisfy their forecast cutoff requirements.
+    """
+    raw = Path(raw)
+    raw.mkdir(parents=True, exist_ok=True)
     path = raw / name
     metadata = raw / (name + ".receipt.json")
+    attempted_at = _utc_now()
+    today = attempted_at[:10]
+    cached_receipt = None
+    old_metadata_bytes = None
+    archived = None
+    receipt = {}
+    if metadata.exists():
+        old_metadata_bytes = metadata.read_bytes()
+        try:
+            receipt = json.loads(old_metadata_bytes)
+        except (ValueError, UnicodeDecodeError):
+            receipt = {}
     if path.exists() and metadata.exists():
-        receipt = json.loads(metadata.read_text())
         if receipt.get("sha256") == _sha(path) and receipt.get("url") == url:
+            cached_receipt = receipt
+            if not refresh_daily or str(receipt.get("retrieved_utc", ""))[:10] >= today:
+                return {**receipt, "cache_reused": True}
+            if str(receipt.get("last_refresh_attempt_utc", ""))[:10] == today:
+                return {**receipt, "cache_reused": True}
+        # Archive before either body or receipt can be replaced, including a
+        # failed-refresh receipt or a hash-invalid source needing repair.
+        archived = _archive_version(raw, path, metadata)
+    elif refresh_daily and receipt.get("status") == "unavailable" and receipt.get("url") == url and str(receipt.get("checked_utc", ""))[:10] == today:
+        if optional:
             return {**receipt, "cache_reused": True}
+        raise RuntimeError(f"Required NFL source unavailable (cached daily failure): {receipt}")
     error = None
     for attempt in range(3):
         temporary = raw / (name + ".partial")
@@ -66,22 +114,44 @@ def _download(raw: Path, name: str, url: str, *, optional: bool = False) -> dict
                         if count > MAX_BYTES:
                             raise ValueError("source exceeds 50 MiB limit")
                         out.write(chunk)
-                temporary.replace(path)
-                receipt = {"name": name, "url": url, "bytes": count, "sha256": _sha(path),
+                receipt = {"name": name, "url": url, "bytes": count, "sha256": _sha(temporary),
                            "retrieved_utc": _utc_now(), "http_last_modified": response.headers.get("Last-Modified"),
                            "etag": response.headers.get("ETag"), "cache_reused": False,
                            "original_publication_utc": None, "status": "acquired",
                            "vintage": VINTAGE, "raw_redistribution": "not authorized by this lab"}
-                metadata.write_text(json.dumps(receipt, indent=2) + "\n")
+                receipt["refresh_policy"] = "once_per_utc_day" if refresh_daily else "immutable_named_snapshot"
+                if refresh_daily:
+                    receipt["last_refresh_attempt_utc"] = attempted_at
+                if archived:
+                    receipt["previous_version"] = archived
+                metadata_temporary = raw / (name + ".receipt.partial")
+                metadata_temporary.write_text(json.dumps(receipt, indent=2) + "\n")
+                temporary.replace(path)
+                metadata_temporary.replace(metadata)
                 return receipt
         except (requests.RequestException, ValueError, OSError) as exc:
             error = f"{type(exc).__name__}: {str(exc)[:300]}"
             temporary.unlink(missing_ok=True)
+            (raw / (name + ".receipt.partial")).unlink(missing_ok=True)
+            if cached_receipt and archived:
+                # Restore the pair if a filesystem error occurred after body
+                # replacement but before its receipt could be committed.
+                if not path.exists() or _sha(path) != cached_receipt["sha256"]:
+                    path.write_bytes((raw / archived["body"]).read_bytes())
+                if old_metadata_bytes is not None:
+                    metadata.write_bytes(old_metadata_bytes)
             if isinstance(exc, requests.HTTPError) and exc.response is not None and exc.response.status_code in (400, 401, 403, 404):
                 break
             if attempt < 2:
                 time.sleep(0.5 * (attempt + 1))
-    result = {"name": name, "url": url, "status": "unavailable", "error": error, "checked_utc": _utc_now()}
+    if cached_receipt is not None:
+        result = {**cached_receipt, "status": "stale_cache", "stale": True,
+                  "cache_reused": True, "refresh_error": error,
+                  "last_refresh_attempt_utc": attempted_at, "previous_version": archived,
+                  "refresh_policy": "once_per_utc_day"}
+        metadata.write_text(json.dumps(result, indent=2) + "\n")
+        return result
+    result = {"name": name, "url": url, "status": "unavailable", "error": error, "checked_utc": attempted_at}
     metadata.write_text(json.dumps(result, indent=2) + "\n")
     if optional:
         return result
@@ -89,7 +159,7 @@ def _download(raw: Path, name: str, url: str, *, optional: bool = False) -> dict
 
 
 def acquire_history(cache: Path, seasons: list[int]) -> dict:
-    """Acquire once into ``cache/raw``; return source hashes, rights and clocks."""
+    """Acquire history and daily mutable updates; return hashes, rights and clocks."""
     started = time.monotonic()
     cache = Path(cache)
     raw = cache / "raw"
@@ -97,25 +167,29 @@ def acquire_history(cache: Path, seasons: list[int]) -> dict:
     seasons = sorted(set(int(y) for y in seasons))
     if not seasons or any(y < 2012 or y > datetime.now().year for y in seasons):
         raise ValueError("seasons must be supported NFL years, 2012 through current year")
+    current_year = int(_utc_now()[:4])
     jobs = [
-        ("schedules.csv", "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv", False),
-        ("players.parquet", f"{BASE}/players/players.parquet", False),
-        ("nflverse_LICENSE.md", "https://raw.githubusercontent.com/nflverse/nflverse-data/main/LICENSE.md", False),
-        ("ngs_release.json", "https://api.github.com/repos/nflverse/nflverse-data/releases/tags/nextgen_stats", True),
+        ("schedules.csv", "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv", False, True),
+        ("players.parquet", f"{BASE}/players/players.parquet", False, True),
+        ("nflverse_LICENSE.md", "https://raw.githubusercontent.com/nflverse/nflverse-data/main/LICENSE.md", False, False),
+        ("ngs_release.json", "https://api.github.com/repos/nflverse/nflverse-data/releases/tags/nextgen_stats", True, True),
     ]
     for year in seasons:
-        jobs += [(f"stats_player_week_{year}.parquet", f"{BASE}/stats_player/stats_player_week_{year}.parquet", False),
-                 (f"roster_weekly_{year}.parquet", f"{BASE}/weekly_rosters/roster_weekly_{year}.parquet", False),
-                 (f"snap_counts_{year}.parquet", f"{BASE}/snap_counts/snap_counts_{year}.parquet", True)]
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        receipts = list(pool.map(lambda x: _download(raw, x[0], x[1], optional=x[2]), jobs))
+        mutable = year == current_year
+        jobs += [(f"stats_player_week_{year}.parquet", f"{BASE}/stats_player/stats_player_week_{year}.parquet", False, mutable),
+                 (f"roster_weekly_{year}.parquet", f"{BASE}/weekly_rosters/roster_weekly_{year}.parquet", False, mutable),
+                 (f"snap_counts_{year}.parquet", f"{BASE}/snap_counts/snap_counts_{year}.parquet", True, mutable)]
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        receipts = list(pool.map(lambda x: _download(raw, x[0], x[1], optional=x[2], refresh_daily=x[3]), jobs))
     ngs = next(r for r in receipts if r["name"] == "ngs_release.json")
     ngs_assets = []
-    if ngs["status"] == "acquired":
+    if ngs["status"] in ("acquired", "stale_cache"):
         ngs_assets = [a["name"] for a in json.loads((raw / "ngs_release.json").read_text()).get("assets", [])
                       if a["name"].endswith(".csv.gz") and any(f"_{y}_" in a["name"] for y in seasons)]
     receipt = {"adapter_version": "nflverse-history-v1", "seasons": seasons,
                "created_utc": _utc_now(), "elapsed_seconds": round(time.monotonic() - started, 3),
+               "refresh_policy": "current UTC-year stats/rosters/snaps and schedules/players/NGS inventory refresh once per UTC day; earlier season files remain fixed",
+               "stale_sources": [r["name"] for r in receipts if r.get("stale")],
                "vintage": VINTAGE, "availability_policy": "outcome_available_utc=kickoff+7 days (assumed, not authenticated)",
                "rights": {"hosting_repository_license": "CC-BY-4.0", "license_source": "nflverse_LICENSE.md",
                           "upstream_caveat": "PFR snap counts, NFL NGS and other upstream material retain their own rights; hosting license is not a blanket upstream grant",

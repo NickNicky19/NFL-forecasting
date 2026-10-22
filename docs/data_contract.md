@@ -4,6 +4,16 @@
 HTTP acquisition with three bounded attempts, a 50 MiB per-source limit,
 timeouts, atomic writes and SHA-256 verified cache reuse. `cache` is shared at
 `/workspace/NFL-forecasting/data`; source files and receipts live in `raw/`.
+Acquisition uses two concurrent HTTP workers. Current UTC-year statistics,
+weekly rosters and snap counts, plus schedules, players and the NGS inventory,
+refresh at most once per UTC day. Historical season files retain the campaign's
+fixed current-vintage version. Before a mutable body or receipt is replaced,
+its exact bytes are preserved under `raw/versions/<body-sha>/<receipt-sha>/`.
+Failed daily refreshes retain the old body, SHA and original `retrieved_utc`;
+the returned and persisted receipt has `status=stale_cache`, `stale=true`,
+`refresh_error` and `last_refresh_attempt_utc`. A repeated invocation that day
+reuses that explicit stale result; the next day permits another bounded attempt.
+Freshness/cutoff acceptance remains the forecast consumer's responsibility.
 `fetch_cached_json(cache, name, url)` reuses the same cache for named immutable
 or date-specific captures. Original retrieval times survive restarts.
 
