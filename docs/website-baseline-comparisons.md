@@ -48,10 +48,11 @@ exploratory; these comparisons do not automatically promote any model.
 
 Sources are cached once per immutable version within a workspace. Grading
 deduplicates recovery of a source within the run, limits new recovery launches
-to 120 seconds/128 snapshots and bounds accepted source processing to 512 MiB.
+to 120 seconds/128 snapshots and bounds source JSON reads to 512 MiB, including
+failed validation attempts. Cached failures count toward the attempt limit.
 Existing HTTP timeouts/retries and the workflow job limit still apply. Budget
 skips are explicit and cannot masquerade as full coverage. Private derived row
-files have a 256 MiB retention threshold; evidence is not deleted to fit a new
+files have a 256 MiB cap including incoming serialized bytes; evidence is not deleted to fit a new
 run. The durable derived-state cap remains 200 MiB.
 
 The initial 24,288 forecasts predate this protocol and receive no retroactive

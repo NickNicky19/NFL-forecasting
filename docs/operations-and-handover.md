@@ -47,6 +47,10 @@ grades and replays off-slot runs without issuing forecasts. On-time morning
 delivery remains unverified. Reading administrative Actions settings returned
 HTTP 403; no access restriction was bypassed. The later observed delivery means
 an owner settings check is no longer needed to establish scheduler delivery.
+The subsequent source `b42cb97` passed hosted daily run `39831698045` and
+grading-only recovery run `39831748968`. The latter skipped capture and training,
+then successfully graded, replayed and persisted. Both retained the original
+24,288 forecast rows; all 8,096 unique player/game/target outcomes remain pending.
 
 Raw HTTP bodies are cached once per source within an execution workspace and
 versions are retained locally. Standard hosted runners are ephemeral: a later

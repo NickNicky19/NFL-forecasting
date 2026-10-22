@@ -1,19 +1,19 @@
 {
   "schema_version": "lab-hosted-verification-v1",
-  "observed_at": "2026-10-22T14:49:58.916628+00:00",
-  "state_commit": "29d417ce10c0c5653641054979990b851028e7a3",
+  "observed_at": "2026-10-22T18:32:50.215420+00:00",
+  "state_commit": "9481fe1a5067d0365b0ea9841c4bbecff8fb6a23",
   "immutable_state_record_counts_verified": {
     "publication": 1,
     "forecasts": 1,
-    "operations": 4,
+    "operations": 7,
     "persistence": 1,
-    "health": 11,
+    "health": 13,
     "training": 1,
-    "input_manifests": 10,
-    "scorecards": 2
+    "input_manifests": 11,
+    "scorecards": 3
   },
-  "model_artifact_files": 55,
-  "state_bytes": 3113356,
+  "model_artifact_files": 57,
+  "state_bytes": 3128500,
   "batch": "7323a06f4715fdb910bb1ce87549867b9e29dc7d94ebde6e2c58e1dbfa9aafc0",
   "forecast_rows": 24288,
   "unique_forecast_keys": 24288,
@@ -31,8 +31,8 @@
     "unverified_code": 0
   },
   "outcome_observations": 0,
-  "latest_health_sha256": "c88bf7f7d687256dff0424631a59deb30aa2adb4489b533d5610dc0289007fe4",
-  "latest_health_clock": "2026-10-22T14:47:04.564621+00:00",
+  "latest_health_sha256": "3746f50aa177338ebb14a9c4b3e4afb0565ae31a0216da9fadbc761aebe77e4a",
+  "latest_health_clock": "2026-10-22T18:31:19.541521+00:00",
   "latest_grading_coverage": {
     "conflicts": 0,
     "known_DNP": 0,
@@ -124,6 +124,73 @@
         "REPLAY_OUTCOME": "success",
         "TRAINING_OUTCOME": "skipped"
       }
+    },
+    {
+      "cadence": {
+        "due": false,
+        "mode": "daily",
+        "observed_chicago": "2026-10-22T13:08:23.784328-05:00",
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"
+      },
+      "event": "schedule",
+      "observed_at": "2026-10-22T18:08:23.873535+00:00",
+      "run_attempt": "1",
+      "run_id": "39828619104",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "c2c9e9d77a3d275c9f84b150ab3ce96681414bc6",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "skipped",
+        "REPLAY_OUTCOME": "skipped",
+        "TRAINING_OUTCOME": "skipped"
+      }
+    },
+    {
+      "cadence": {
+        "due": true,
+        "mode": "daily",
+        "observed_chicago": "2026-10-22T13:29:22.242541-05:00",
+        "pregame_issuance_allowed": true,
+        "reason": "DUE"
+      },
+      "event": "push",
+      "observed_at": "2026-10-22T18:30:14.782098+00:00",
+      "run_attempt": "1",
+      "run_id": "39831698045",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "b42cb970cfdae476fc03ed43323037d39ffb33a7",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "success",
+        "GRADING_OUTCOME": "skipped",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "skipped"
+      }
+    },
+    {
+      "cadence": {
+        "due": true,
+        "mode": "grade",
+        "observed_chicago": "2026-10-22T13:31:17.864601-05:00",
+        "pregame_issuance_allowed": false,
+        "reason": "DUE"
+      },
+      "event": "workflow_dispatch",
+      "observed_at": "2026-10-22T18:31:23.314641+00:00",
+      "run_attempt": "1",
+      "run_id": "39831748968",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "b42cb970cfdae476fc03ed43323037d39ffb33a7",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "skipped",
+        "GRADING_OUTCOME": "success",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "skipped"
+      }
     }
   ],
   "independent_github_checks": [
@@ -159,27 +226,115 @@
         "Upload derived health reports"
       ],
       "verification_endpoint": "GitHub Actions job API"
+    },
+    {
+      "run_id": 39831698045,
+      "check_suite_id": 107957511166,
+      "check_run_id": 120009205789,
+      "source_commit": "b42cb970cfdae476fc03ed43323037d39ffb33a7",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_by": "2026-10-22T18:30:24Z",
+      "verified_steps": [
+        "acceptance",
+        "daily",
+        "replay",
+        "persist",
+        "health upload"
+      ],
+      "verification_endpoint": "GitHub Actions run and job APIs"
+    },
+    {
+      "run_id": 39831748968,
+      "check_suite_id": 107957669507,
+      "check_run_id": 120010243785,
+      "source_commit": "b42cb970cfdae476fc03ed43323037d39ffb33a7",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_by": "2026-10-22T18:31:33Z",
+      "verified_steps": [
+        "acceptance",
+        "grading only",
+        "replay",
+        "persist",
+        "health upload"
+      ],
+      "verified_skips": [
+        "capture",
+        "training"
+      ],
+      "verification_endpoint": "GitHub Actions run and job APIs"
     }
   ],
   "schedule_verification": {
-    "observed_scheduled_events": 0,
-    "query_scope": "GitHub Actions runs, branch main, event schedule",
-    "morning_due_window": "2026-10-22T13:36:00Z through 13:56:59Z",
-    "state": "UNVERIFIED_DELIVERY",
-    "administrative_settings_read": "403 Resource not accessible by integration; no cause inferred",
-    "queried_at": "2026-10-22T14:45:12.745021+00:00"
+    "observed_scheduled_events": 1,
+    "run_id": 39828619104,
+    "job_id": 119998482760,
+    "state": "DELAYED_DELIVERY_VERIFIED_SAFE_ISSUANCE_SKIP",
+    "created_at": "2026-10-22T18:07:32Z",
+    "on_time_delivery_verified": false,
+    "report": "reports/scheduled-delivery-2026-10-22.json",
+    "administrative_settings_read": "403 known limit; later observed delivery means owner settings check no longer needed",
+    "queried_at": "2026-10-22T18:32:50.215420+00:00"
   },
   "limits": [
     "Checks API establishes these job conclusions; stale Actions run-list views are retained as a documented API discrepancy.",
     "This verifies derived state and technical execution; no future football accuracy is established.",
     "Model inference parity was independently checked on a separate real-input fixture; this audit counts artifacts and does not repeat training."
   ],
-  "model_artifact_checksum_checks": 55,
+  "model_artifact_checksum_checks": 57,
   "model_artifact_checksum_scope": "Payload and config integrity only; no environment override or repeated inference claim.",
   "latest_hosted_retry": {
     "new_forecasts": 0,
-    "already_frozen_opportunities": 24288,
-    "pending_outcomes": 8096
+    "current_population_frozen_opportunities": 24189,
+    "total_unchanged_forecast_rows": 24288,
+    "pending_outcomes": 8096,
+    "current_intake_players": 733,
+    "original_retained_players": 736
   },
-  "log_download_limit": "Job-log download redirect returned HTTP403; not retried or bypassed. Job API and immutable Git receipts verify execution; no downloaded-log test-count claim."
+  "log_download_limit": "Job-log download redirect returned HTTP403; not retried or bypassed. Job API and immutable Git receipts verify execution; no downloaded-log test-count claim.",
+  "prospective_website_source": {
+    "bound": 0,
+    "build_age_minutes": 34.08385011666667,
+    "commit": "a57b529862a6ea84b57eae77758cf3a95714a3b9",
+    "exclusions": {},
+    "generated_at": "2026-10-22T17:55:26Z",
+    "observed_at": "2026-10-22T18:29:31.031007+00:00",
+    "offered_points": 3857,
+    "qualified_points": 3857,
+    "state": "NO_NEW_LAB_FORECASTS_NO_BASELINE_BACKFILL",
+    "paired_capture_qualified": false,
+    "website_binding_records": 0,
+    "old_rows_backfilled": 0
+  },
+  "grade_only_recovery": {
+    "run_id": 39831748968,
+    "operation": {
+      "cadence": {
+        "due": true,
+        "mode": "grade",
+        "observed_chicago": "2026-10-22T13:31:17.864601-05:00",
+        "pregame_issuance_allowed": false,
+        "reason": "DUE"
+      },
+      "event": "workflow_dispatch",
+      "observed_at": "2026-10-22T18:31:23.314641+00:00",
+      "run_attempt": "1",
+      "run_id": "39831748968",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "b42cb970cfdae476fc03ed43323037d39ffb33a7",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "skipped",
+        "GRADING_OUTCOME": "success",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "skipped"
+      }
+    },
+    "state": "GRADING_ONLY_NO_PREGAME_ISSUANCE",
+    "no_new_forecasts": true,
+    "future_outcomes": 0,
+    "limitation": "Fresh grading-only runners do not acquire NFLverse history; primary Sleeper plus any qualified cached NFLverse only."
+  }
 }
