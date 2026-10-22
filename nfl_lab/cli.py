@@ -45,7 +45,8 @@ def main():
         for batch in records(state,"forecasts"):
             for row in batch["rows"]:validate_forecast(row);forecasts+=1
         outcomes=resolved_outcomes(state)
-        result={"forecasts_validated":forecasts,"outcomes":len(outcomes),"unresolved_conflicts":sum(r["state"].startswith("unresolved") for r in outcomes.values()),"receipt_integrity":"PASS","scorecard":score_saved(state)}
+        from .website_baselines import score_saved_website
+        result={"forecasts_validated":forecasts,"outcomes":len(outcomes),"unresolved_conflicts":sum(r["state"].startswith("unresolved") for r in outcomes.values()),"receipt_integrity":"PASS","scorecard":score_saved(state),"website_comparison":score_saved_website(state,cache)}
         save(state,"scorecards",result)
     else:
         if not args.publication_commit:raise ValueError("publication commit required")
@@ -58,7 +59,9 @@ def main():
             save(state,"publication",{"batch":key,"commit":args.publication_commit,"observed_remote_readback_at":observed.isoformat(),
                  "timely_rows":timely,"late_rows":len(batch["rows"])-timely,"scope":"remote commit readback; input provider publication clocks remain unknown"})
             verified+=timely;late+=len(batch["rows"])-timely
-        result={"publication_verified_rows":verified,"late_rows":late}
+        from .website_baselines import record_website_publication
+        website_snapshots=record_website_publication(state,args.publication_commit,observed)
+        result={"publication_verified_rows":verified,"late_rows":late,"website_snapshots_publication_checked":website_snapshots}
     print(json.dumps(result,indent=2,default=str,allow_nan=False))
 
 

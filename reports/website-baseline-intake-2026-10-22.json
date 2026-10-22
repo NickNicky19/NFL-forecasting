@@ -1,0 +1,148 @@
+{
+  "study": "website-baseline-intake-v1",
+  "capture": {
+    "state": "READY",
+    "commit": "a57b529862a6ea84b57eae77758cf3a95714a3b9",
+    "observed_at": "2026-10-22T17:57:57.257238+00:00",
+    "generated_at": "2026-10-22T17:55:26Z",
+    "build_age_minutes": 2.5209539666666667,
+    "offered_points": 3857,
+    "qualified_points": 3857,
+    "exclusions": {}
+  },
+  "source_binding": {
+    "commit": "a57b529862a6ea84b57eae77758cf3a95714a3b9",
+    "tree_sha": "9f763bca8d6eed00b9a16f3423c7f6cee095f97f",
+    "blob_ids": {
+      "board": "4fca69746a485cbc6ad6001c58bac462fde9cc3c",
+      "meta": "8827f4fa95149eac2072094f15c9ab1ba0715ca1"
+    },
+    "body_sha256": {
+      "tree": "8015750448dec8346f60edf68a21df8d19d1b8c84e25aca5b34745cd10462bc8",
+      "board": "85c648c87526cab765205ed307f6964c775c273cb1271b90eb1db51455580527",
+      "meta": "566dbc9a7bb3f56d34b14dc2508a72e4ab5e19c56a1277d6775a8eb878af9d3b"
+    },
+    "source_receipts": {
+      "tree": {
+        "name": "tree.json",
+        "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/git/trees/9f763bca8d6eed00b9a16f3423c7f6cee095f97f?recursive=1",
+        "bytes": 162285,
+        "sha256": "8015750448dec8346f60edf68a21df8d19d1b8c84e25aca5b34745cd10462bc8",
+        "retrieved_utc": "2026-10-22T17:56:47.038561+00:00",
+        "http_last_modified": "Thu, 22 Oct 2026 17:55:56 GMT",
+        "etag": "W/\"74966ae410cfec60f6fde674c1fb807a3b3e30d514d76eee7b4aa259eb251d2c\"",
+        "cache_reused": true,
+        "original_publication_utc": null,
+        "status": "acquired",
+        "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+        "raw_redistribution": "not authorized by this lab",
+        "refresh_policy": "immutable_named_snapshot"
+      },
+      "board": {
+        "name": "board.json",
+        "url": "https://raw.githubusercontent.com/NickNicky19/nicks-expert-nfl-picks/a57b529862a6ea84b57eae77758cf3a95714a3b9/output/data/week.json",
+        "bytes": 1812206,
+        "sha256": "85c648c87526cab765205ed307f6964c775c273cb1271b90eb1db51455580527",
+        "retrieved_utc": "2026-10-22T17:56:47.616029+00:00",
+        "http_last_modified": null,
+        "etag": "W/\"5fa73b1c69d24acfdde1a5a756bc2b3f884d2b5a8c466892c68836aa637e7f5d\"",
+        "cache_reused": true,
+        "original_publication_utc": null,
+        "status": "acquired",
+        "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+        "raw_redistribution": "not authorized by this lab",
+        "refresh_policy": "immutable_named_snapshot"
+      },
+      "meta": {
+        "name": "meta.json",
+        "url": "https://raw.githubusercontent.com/NickNicky19/nicks-expert-nfl-picks/a57b529862a6ea84b57eae77758cf3a95714a3b9/output/data/meta.json",
+        "bytes": 62,
+        "sha256": "566dbc9a7bb3f56d34b14dc2508a72e4ab5e19c56a1277d6775a8eb878af9d3b",
+        "retrieved_utc": "2026-10-22T17:56:48.072013+00:00",
+        "http_last_modified": null,
+        "etag": "W/\"51580bd424f3a80259e8aa92658e40cc143a0d51cfdf4e567a5bde8dae2213b4\"",
+        "cache_reused": true,
+        "original_publication_utc": null,
+        "status": "acquired",
+        "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+        "raw_redistribution": "not authorized by this lab",
+        "refresh_policy": "immutable_named_snapshot"
+      }
+    },
+    "policy": {
+      "registration_id": "website-paired-capture-v1-2026-10-22",
+      "registered_at": "2026-10-22T17:44:20.764087+00:00",
+      "scope": "New paired baseline observations only; never backfill old lab opportunities or frozen rec-half experiment",
+      "repo": "NickNicky19/nicks-expert-nfl-picks",
+      "reference_commit": "c8120e3cb26a908b8d5a99329b0f28ae49473ea1",
+      "branch": "main",
+      "board_path": "output/data/week.json",
+      "meta_path": "output/data/meta.json",
+      "engine_blobs": {
+        "pull/build.py": "e691985174387ed0dc6ecdda1f35b55c1012499c",
+        "pull/matchup.py": "3753d8e252513785dd1b9cf573f7d2616462945e",
+        "pull/scoring.py": "0c532e695e7abefc2203f95344218ffc07bb4c0f",
+        "pull/books.py": "406c24755aa9823311c01e3116662845854cf393",
+        "pull/gamemodel.py": "9c94d3889402c702e6a7ad1d239ea8f4d22b2cdf",
+        "pull/sources.py": "99b9029acf9a046a590589f001d99b242cc5576f",
+        "pull/news.py": "b29edaa0cfe1df29c3ee4741d63225ab43fa8249"
+      },
+      "max_build_age_minutes": 120,
+      "max_json_bytes": 5242880,
+      "capture_policy": "Observe immutable website board and matching metadata before each NEW lab row feature cutoff; persist hash-bound row references before kickoff; no later-retry backfill",
+      "durability": "Lab stores only source/row digests, identities, clocks and remote publication receipts. Grading recovers same immutable upstream blob or abstains; no upstream retention guarantee.",
+      "numeric_semantics": {
+        "raw_sleeper": "Literal website prop.proj; rounded site-extracted point, not full precision original feed",
+        "pinned_website": "Literal prop.adj; historical-average fallback remains website-only",
+        "anytime_td": "Literal site td_chance only when finite nonnegative proj exists; website probability, not native raw Sleeper probability",
+        "fantasy_ppr": "Website display baseline only; exact lab outcomes still require all pinned components"
+      },
+      "evaluation": {
+        "primary_numeric": "MAE",
+        "primary_anytime_td": "Brier",
+        "secondary": [
+          "RMSE",
+          "bias",
+          "coverage",
+          "calibration",
+          "game/week paired uncertainty"
+        ],
+        "supported_population": "Same canonical lab player/game/target/period/scoring identity with verified timely receipts; unknown/DNP/missing stats separate",
+        "selected_lines": "Not captured by this protocol; no hit-rate/EV claim",
+        "promotion": "none; existing prospective confirmation gates unchanged",
+        "comparison_family_size": 240,
+        "comparison_family_definition": "Up to 10 numeric model families x 12 targets x 2 baselines; both game/week diagnostics exploratory; no qualification across adaptive repeated looks"
+      },
+      "budgets": {
+        "new_source_requests_per_daily_workspace": 4,
+        "max_request_attempts": 3,
+        "model_fits": 0,
+        "max_bootstrap_replicates": 500
+      },
+      "raw_redistribution": false
+    },
+    "policy_sha256": "a1507409b7bd9c74f0bfb05a15e60779cc5c028dd2a83e30d55e812475119312",
+    "observed_at": "2026-10-22T17:57:57.257238+00:00",
+    "generated_at": "2026-10-22T17:55:26Z",
+    "season": 2026,
+    "week": 7,
+    "branch_receipt": {
+      "name": "main.json",
+      "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/branches/main",
+      "bytes": 4196,
+      "sha256": "3a1ed5ef8b993a9eeb3d82ee2650be858a7cc42f251610542a193d397536bee8",
+      "retrieved_utc": "2026-10-22T17:56:46.344389+00:00",
+      "http_last_modified": null,
+      "etag": "W/\"d74fa6e1ada951da9a2ec506eb5451c705495499ce8116e2520c4e6487d5a78e\"",
+      "cache_reused": true,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab",
+      "refresh_policy": "immutable_named_snapshot"
+    }
+  },
+  "numeric_points_exported": 0,
+  "forecast_rows_backfilled": 0,
+  "scope": "Real read-only source intake. Preparation is not a paired capture; existing lab rows remain untouched."
+}

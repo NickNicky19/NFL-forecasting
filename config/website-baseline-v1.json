@@ -38,13 +38,19 @@
     ],
     "supported_population": "Same canonical lab player/game/target/period/scoring identity with verified timely receipts; unknown/DNP/missing stats separate",
     "selected_lines": "Not captured by this protocol; no hit-rate/EV claim",
-    "promotion": "none; existing prospective confirmation gates unchanged"
+    "promotion": "none; existing prospective confirmation gates unchanged",
+    "comparison_family_size": 240,
+    "comparison_family_definition": "Up to 10 numeric model families x 12 targets x 2 baselines; both game/week diagnostics exploratory; no qualification across adaptive repeated looks"
   },
   "budgets": {
-    "new_source_requests_per_daily_workspace": 4,
     "max_request_attempts": 3,
     "model_fits": 0,
-    "max_bootstrap_replicates": 500
+    "max_bootstrap_replicates": 500,
+    "new_capture_source_requests_per_daily_workspace": 4,
+    "grading_max_unique_snapshots": 128,
+    "grading_max_source_bytes": 536870912,
+    "grading_source_launch_seconds": 120,
+    "private_derived_rows_retention_bytes": 268435456
   },
   "raw_redistribution": false
 }

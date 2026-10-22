@@ -98,7 +98,9 @@ def summarize(rows: pd.DataFrame,include_distribution=True) -> dict:
     return out
 
 
-def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, seed=20261022, replicates=500):
+def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, seed=20261022, replicates=500, *, cluster="week", family_size=12):
+    if cluster not in {"week","game"} or not 1<=replicates<=500 or family_size<1:
+        raise ValueError("invalid bounded paired uncertainty configuration")
     keys=["season","week","game_id","player_id","target"]
     good=rows.loc[rows.participation_state.eq("played") & rows.actual.notna() & rows["mean"].notna()]
     a=good.loc[good.method.eq(baseline),keys+["mean","actual"]]
@@ -108,18 +110,18 @@ def paired_week_interval(rows: pd.DataFrame, baseline: str, challenger: str, see
     binary=set(rows.target.dropna().unique())=={"anytime_td"}
     metric="brier" if binary else "mae"
     m["delta"]=(m.mean_b-m.actual_b)**2-(m.mean_a-m.actual_a)**2 if binary else (m.mean_b-m.actual_b).abs()-(m.mean_a-m.actual_a).abs()
-    g=m.groupby(["season","week"]).delta.agg(["sum","count"])
-    out={"paired_n":len(m),"weeks":len(g),"primary_metric":metric,"primary_delta":float(m.delta.mean()) if len(m) else None,
+    g=m.groupby(["season","week"] if cluster=="week" else ["season","game_id"]).delta.agg(["sum","count"])
+    out={"paired_n":len(m),"weeks":len(m[["season","week"]].drop_duplicates()),"cluster_unit":cluster,"clusters":len(g),"primary_metric":metric,"primary_delta":float(m.delta.mean()) if len(m) else None,
          "interpretation":"historical_reconstruction_exploratory; no independent confirmation",
-         "simultaneous_confidence":1-.05/12}
+         "simultaneous_confidence":1-.05/family_size}
     if len(g)<8:
-        return dict(out,interval=None,reason="fewer_than_8_week_clusters")
+        return dict(out,interval=None,reason=f"fewer_than_8_{cluster}_clusters")
     rng=np.random.default_rng(seed)
     ix=rng.integers(0,len(g),size=(replicates,len(g)))
     sums=g["sum"].to_numpy()[ix].sum(axis=1);counts=g["count"].to_numpy()[ix].sum(axis=1)
-    q=.05/12/2
+    q=.05/family_size/2
     out["interval"]=np.quantile(sums/counts,[q,1-q]).tolist()
-    out["multiplicity_limit"]="12_targets_only; configuration search remains exploratory; no promotion"
+    out["multiplicity_limit"]="12_targets_only; configuration search remains exploratory; no promotion" if family_size==12 else f"{family_size} registered comparisons; finite bootstrap tails and adaptive repeated looks remain exploratory; no promotion"
     return out
 
 

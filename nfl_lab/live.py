@@ -101,6 +101,13 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
         history=load_history(cache,seasons)
     stale_sources=acquisition.get("stale_sources",[])
     if stale_sources:history_limit={"fallback":history_limit,"stale_sources":stale_sources}
+    website_prepared=None;website_intake={"state":"NOT_ATTEMPTED"}
+    try:
+        from .website_baselines import prepare_website_snapshot
+        website_prepared=prepare_website_snapshot(root,cache,games,year,week)
+        website_intake=website_prepared["report"]
+    except (OSError,RuntimeError,ValueError,KeyError,TypeError) as exc:
+        website_intake={"state":"OPTIONAL_BASELINE_UNAVAILABLE","reason":type(exc).__name__+": "+str(exc)[:300]}
     feature_cutoff=now_utc() # all source responses used here were received by this clock
     history=history.loc[pd.to_datetime(history.kickoff_utc,utc=True)<feature_cutoff].copy()
     future_games=[g for g in games if utc(g["kickoff_utc"])>feature_cutoff]
@@ -185,6 +192,12 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
                 out.append(row)
     if source_tree_digest(root)!=initial_code_sha:raise RuntimeError("source changed during live calculation; no forecast issuance")
     result=capture(state,out)
+    if website_prepared is not None:
+        try:
+            from .website_baselines import capture_website_bindings
+            website_intake=capture_website_bindings(state,website_prepared,result["batch"])
+        except (OSError,RuntimeError,ValueError,KeyError,TypeError) as exc:
+            website_intake={"state":"OPTIONAL_BASELINE_BINDING_FAILED","reason":type(exc).__name__+": "+str(exc)[:300]}
     # Archived provider projections are privately cached, never published as a raw feed.
     _,projection_receipt=fetch(cache,f"projections-{year}-{week}",f"https://api.sleeper.app/projections/nfl/{year}/{week}?season_type=regular")
     grade=grade_saved(state,cache,players)
@@ -195,6 +208,7 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
             "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,
             "abstentions":pd.Series([r["target"]+":"+r["reason"] for r in abstentions],dtype=str).value_counts().to_dict(),
             "provider_projection_private_cache_sha256":projection_receipt["sha256"],"future_confirmation":"PENDING",
+            "website_comparator_intake":website_intake,
             "baseline_comparison":"raw provider cached privately; paired score requires exact saved player/game/cutoff binding",
             "recording_scope":"new lab shadow; not rec-half-adjustment-v1"}
     (Path(root)/"runs").mkdir(exist_ok=True)
