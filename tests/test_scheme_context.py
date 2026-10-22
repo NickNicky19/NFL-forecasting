@@ -84,6 +84,7 @@ def test_missing_intervening_game_consumes_slot_without_older_backfill():
 
 def test_prior_rates_pool_supported_exposures_instead_of_averaging_game_ratios():
     features, schedule, pbp = fixture()
+    pbp["qb_dropback"] = pbp.qb_dropback.astype(float)
     own = pbp.posteam.eq("A")
     pbp.loc[own & pbp.game_id.eq("g3"), "qb_dropback"] = 1
     pbp.loc[own & pbp.game_id.eq("g4"), "qb_dropback"] = [0., np.nan, np.nan]

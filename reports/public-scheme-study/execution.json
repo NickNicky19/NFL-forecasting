@@ -1,0 +1,54 @@
+{
+  "registration_commit": "b27d03aa1b8f41479ffac7c28787bf065c91680e",
+  "implementation_before_fits_commit": "7c44a65b6fbc6620070887fd5259fcdf788666c0",
+  "local_attempt": "20261022T180720270792",
+  "fit_budget_marker": {
+    "output": "20261022T180720270792",
+    "registration_sha256": "cabb779e2273d80407a2e7385484e3195027dfa28c2fdd14ac5157b389a4a8ae",
+    "started_at": "2026-10-22T18:07:22.644888+00:00",
+    "new_fits_limit": 11
+  },
+  "reviewed_aggregate_report_sha256": "8e3c7ce6b0b322a4289ed307500b2535cd71ecccd368baf49392c0e6cbbdb34d",
+  "original_manifest_sha256": "8c1ee6d9f692fb8c4b99f48a72790b0f9d3a11bf3ed62c17cc7b4489a17f2530",
+  "original_trials_sha256": "abf5271a4d62d07c3d9fbf3894c6fa470c7232c76643b09b5d42fee940eb08be",
+  "actual_fit_calls": 11,
+  "actual_fit_loop_seconds": 17.526597346000926,
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "executable": "/workspace/nfl-venv/bin/python",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "scipy": "1.17.0",
+      "scikit-learn": "1.8.0",
+      "pyarrow": "23.0.1",
+      "threadpoolctl": "3.6.0"
+    },
+    "command_scoped_thread_limits": {
+      "OPENBLAS_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    }
+  },
+  "fit_failures": 0,
+  "warnings": {
+    "anytime_td": [
+      "lbfgs failed to converge after 150 iteration(s) (status=1):\nSTOP: TOTAL NO. OF ITERATIONS REACHED LIMIT\n\nIncrease the number of iterations to improve the convergence (max_iter=150).\nYou might also want to scale the data as shown in:\n    https://scikit-learn.org/stable/modules/preprocessing.html\nPlease also refer to the documentation for alternative solver options:\n    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+    ]
+  },
+  "unavailable_inputs": [
+    "authentic historical forecast weather",
+    "routes/personnel/coverage counts",
+    "private gameplans",
+    "authenticated injury/news snapshots"
+  ],
+  "source_read_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "public_export_review": "Aggregated numerical fits, coefficient/configuration metadata, source receipts/hashes and metrics only; no raw play/player-game rows or GSIS IDs."
+}
