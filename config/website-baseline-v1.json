@@ -1,0 +1,50 @@
+{
+  "registration_id": "website-paired-capture-v1-2026-10-22",
+  "registered_at": "2026-10-22T17:44:20.764087+00:00",
+  "scope": "New paired baseline observations only; never backfill old lab opportunities or frozen rec-half experiment",
+  "repo": "NickNicky19/nicks-expert-nfl-picks",
+  "reference_commit": "c8120e3cb26a908b8d5a99329b0f28ae49473ea1",
+  "branch": "main",
+  "board_path": "output/data/week.json",
+  "meta_path": "output/data/meta.json",
+  "engine_blobs": {
+    "pull/build.py": "e691985174387ed0dc6ecdda1f35b55c1012499c",
+    "pull/matchup.py": "3753d8e252513785dd1b9cf573f7d2616462945e",
+    "pull/scoring.py": "0c532e695e7abefc2203f95344218ffc07bb4c0f",
+    "pull/books.py": "406c24755aa9823311c01e3116662845854cf393",
+    "pull/gamemodel.py": "9c94d3889402c702e6a7ad1d239ea8f4d22b2cdf",
+    "pull/sources.py": "99b9029acf9a046a590589f001d99b242cc5576f",
+    "pull/news.py": "b29edaa0cfe1df29c3ee4741d63225ab43fa8249"
+  },
+  "max_build_age_minutes": 120,
+  "max_json_bytes": 5242880,
+  "capture_policy": "Observe immutable website board and matching metadata before each NEW lab row feature cutoff; persist hash-bound row references before kickoff; no later-retry backfill",
+  "durability": "Lab stores only source/row digests, identities, clocks and remote publication receipts. Grading recovers same immutable upstream blob or abstains; no upstream retention guarantee.",
+  "numeric_semantics": {
+    "raw_sleeper": "Literal website prop.proj; rounded site-extracted point, not full precision original feed",
+    "pinned_website": "Literal prop.adj; historical-average fallback remains website-only",
+    "anytime_td": "Literal site td_chance only when finite nonnegative proj exists; website probability, not native raw Sleeper probability",
+    "fantasy_ppr": "Website display baseline only; exact lab outcomes still require all pinned components"
+  },
+  "evaluation": {
+    "primary_numeric": "MAE",
+    "primary_anytime_td": "Brier",
+    "secondary": [
+      "RMSE",
+      "bias",
+      "coverage",
+      "calibration",
+      "game/week paired uncertainty"
+    ],
+    "supported_population": "Same canonical lab player/game/target/period/scoring identity with verified timely receipts; unknown/DNP/missing stats separate",
+    "selected_lines": "Not captured by this protocol; no hit-rate/EV claim",
+    "promotion": "none; existing prospective confirmation gates unchanged"
+  },
+  "budgets": {
+    "new_source_requests_per_daily_workspace": 4,
+    "max_request_attempts": 3,
+    "model_fits": 0,
+    "max_bootstrap_replicates": 500
+  },
+  "raw_redistribution": false
+}
