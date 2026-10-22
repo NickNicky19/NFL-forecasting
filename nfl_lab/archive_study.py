@@ -138,6 +138,9 @@ def paired_comparison(rows,baseline,challenger,replicates=500):
 def run(root,cache):
     root,cache=Path(root),Path(cache)
     config_path=root/"config/archive-lab-comparison-v1.json";config=json.loads(config_path.read_text())
+    # Forward-only budget guard: a completed registration is replayed from its
+    # saved rows, never refitted merely because the entry point is invoked again.
+    assert_unused_registration(root,config["registration_id"])
     output=root/"runs"/config["registration_id"]/now_utc().strftime("%Y%m%dT%H%M%S%f")
     output.mkdir(parents=True,exist_ok=False);atomic_checkpoint(output/"registration.json",config)
     started=time.monotonic();trials=[];issued=[];fits=0
@@ -232,6 +235,16 @@ def run(root,cache):
         except BaseException as error:
             report.update(state="FAILED_OR_INTERRUPTED",error=repr(error),elapsed_seconds=time.monotonic()-started,fits_attempted=fits,trials=trials)
             atomic_checkpoint(output/"failure.json",report);raise
+
+
+def assert_unused_registration(root,registration_id):
+    root=Path(root)
+    candidates=list((root/"runs"/registration_id).glob("*/report.json"))
+    candidates.extend((root/"reports").glob("*/report.json"))
+    for path in candidates:
+        saved=json.loads(path.read_text())
+        if saved.get("registration",{}).get("registration_id")==registration_id and saved.get("state")=="COMPLETED":
+            raise ValueError("registered archive fit budget already consumed; replay existing saved rows")
 
 
 if __name__=="__main__":
