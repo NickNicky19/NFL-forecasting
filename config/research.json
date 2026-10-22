@@ -4,14 +4,106 @@
   "scope": "NFL",
   "requested_agent_model": "gpt-6.1-sol",
   "requested_reasoning_effort": "xhigh",
-  "seasons": {"train": [2019, 2020, 2021], "development": [2022, 2023], "validation": [2024], "exposed_descriptive": [2025]},
-  "confirmation": {"kind": "prospective_only", "earliest_season": 2026, "earliest_week": 8, "minimum_weeks": 8, "minimum_games": 80, "minimum_category_rows": 500, "status": "pending_outcomes"},
-  "budgets": {"candidate_configurations_per_category": 12, "max_training_seconds": 1200, "max_threads": 2, "max_bootstrap_replicates": 500, "weekly_training_minutes": 20, "max_acquisition_bytes": 536870912, "max_request_attempts": 3},
-  "metrics": {"continuous_primary": "mae", "count_primary": "mae", "binary_primary": "brier", "distribution_primary": "crps", "secondary": ["rmse", "bias", "log_score", "interval_coverage", "tail_error", "push_mass", "calibration"], "bias_definition": "prediction_minus_outcome", "uncertainty_cluster": "week"},
-  "promotion": {"minimum_relative_primary_gain": 0.02, "paired_week_ci_upper_less_than": 0, "max_absolute_bias_increase": 0.0, "coverage_regression_allowed": false, "requires_validation": true, "requires_untouched_confirmation": true, "requires_schema_replay_fallback_rollback_tests": true, "website_integration": "owner_decision"},
-  "cutoffs": {"forecast_freeze": "before_each_game_kickoff", "historical_data": "reconstructed_current_vintage_exposed", "statistics_lag_days": 7, "unknown_availability": "exclude_from_cutoff_features"},
-  "targets": ["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd", "fantasy_ppr", "anytime_td"],
-  "candidate_families": ["recent", "pooled", "raw_sleeper", "pinned_website", "workload", "ridge", "tree", "distributional", "ensemble", "ridge_without_opponent", "ridge_without_workload", "ridge_without_team"],
+  "seasons": {
+    "train": [
+      2019,
+      2020,
+      2021
+    ],
+    "development": [
+      2022,
+      2023
+    ],
+    "validation": [
+      2024
+    ],
+    "exposed_descriptive": [
+      2025
+    ]
+  },
+  "confirmation": {
+    "kind": "prospective_only",
+    "earliest_season": 2026,
+    "earliest_week": 8,
+    "minimum_weeks": 8,
+    "minimum_games": 80,
+    "minimum_category_rows": 500,
+    "status": "pending_outcomes"
+  },
+  "budgets": {
+    "candidate_configurations_per_category": 12,
+    "max_training_seconds": 1200,
+    "max_threads": 2,
+    "max_bootstrap_replicates": 500,
+    "weekly_training_minutes": 20,
+    "max_acquisition_bytes": 536870912,
+    "max_request_attempts": 3
+  },
+  "metrics": {
+    "continuous_primary": "mae",
+    "count_primary": "mae",
+    "binary_primary": "brier",
+    "distribution_primary": "crps",
+    "secondary": [
+      "rmse",
+      "bias",
+      "log_score",
+      "interval_coverage",
+      "tail_error",
+      "push_mass",
+      "calibration"
+    ],
+    "bias_definition": "prediction_minus_outcome",
+    "uncertainty_cluster": "week"
+  },
+  "promotion": {
+    "minimum_relative_primary_gain": 0.02,
+    "paired_week_ci_upper_less_than": 0,
+    "max_absolute_bias_increase": 0.0,
+    "coverage_regression_allowed": false,
+    "requires_validation": true,
+    "requires_untouched_confirmation": true,
+    "requires_schema_replay_fallback_rollback_tests": true,
+    "website_integration": "owner_decision"
+  },
+  "cutoffs": {
+    "forecast_freeze": "before_each_game_kickoff",
+    "historical_data": "reconstructed_current_vintage_exposed",
+    "statistics_lag_days": 7,
+    "unknown_availability": "exclude_from_cutoff_features"
+  },
+  "targets": [
+    "pass_yd",
+    "pass_td",
+    "pass_cmp",
+    "pass_att",
+    "pass_int",
+    "rush_yd",
+    "rush_att",
+    "rec",
+    "rec_yd",
+    "rush_rec_yd",
+    "fantasy_ppr",
+    "anytime_td"
+  ],
+  "candidate_families": [
+    "recent",
+    "pooled",
+    "raw_sleeper",
+    "pinned_website",
+    "workload",
+    "ridge",
+    "tree",
+    "distributional",
+    "ensemble",
+    "ridge_without_opponent",
+    "ridge_without_workload",
+    "ridge_without_team"
+  ],
   "raw_baselines": "Only score archived pregame rows with verified cutoff; never regenerate and label as archived.",
-  "frozen_evidence": {"pooled_ypa": "unrecovered_not_reproduced; owner reports n27/13 games, gain and worse bias; mixed attempts/completions and failures retained", "rec-half-adjustment-v1": "registration and Weeks7-14 unavailable; do not restart, backfill, modify, or claim reproduced", "combined_yards": "independent evaluation required"}
+  "frozen_evidence": {
+    "pooled_ypa": "unrecovered_not_reproduced; owner reports n27/13 games, gain and worse bias; mixed attempts/completions and failures retained",
+    "rec-half-adjustment-v1": "original registration recovered pinned blob8add98; preserved config/preserved-rec-half-registration.json; no second recorder or restart",
+    "combined_yards": "independent evaluation required"
+  }
 }

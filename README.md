@@ -1,2 +1,62 @@
-# NFL-forecasting
-NFL forecasting
+# NFL forecasting research lab
+
+This repository runs NFL research and pregame shadow forecasts. Its candidates
+are unqualified until the registered validation and later confirmation gates
+pass. The production website is a pinned read-only reference; its owner decides
+integration. No paid feeds, odds keys, LLM API calls or website writes are used.
+
+Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
+[the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
+The attached review package and raw source bodies are kept outside public Git.
+
+```sh
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.lock -e '.[test]'
+.venv/bin/python -m pytest -q
+.venv/bin/python -m nfl_lab.cli acquire
+.venv/bin/python -m nfl_lab.cli experiment
+.venv/bin/python -m nfl_lab.cli daily
+.venv/bin/python -m nfl_lab.cli replay
+```
+
+One loader and feature builder serve all twelve targets. Player identities use
+GSIS; unlinked live players retain an explicit Sleeper namespace and cold-start
+fallback rather than disappearing. Historical population uses weekly skill
+rosters plus observed participants; missing box scores do not establish DNP.
+Scores distinguish played zero, missing statistics, DNP, and unknown participation.
+
+The historical campaign uses expanding-season fits, development2022–23 and
+validation2024. Features use earlier available observations; the assumed seven-day
+historical availability lag is not proof of authentic pregame data.2025 is
+already exposed. New confirmation is prospective only,2026 Week8 onward; the
+frozen receptions experiment keeps its separate original Weeks7–14 window.
+No tiny-sample result or replay qualifies a model for promotion.
+
+The single [Actions workflow](.github/workflows/lab.yml) targets08:36 Chicago,
+with a Sunday bounded training campaign. Standard public-repository runners
+provide the intended no-additional-cost execution. Jobs do not call the website
+updater. Actual schedule execution, hosted runs, publication and future grading
+have separate evidence states in the ledger; installed YAML alone proves none.
+Delays outside the morning window skip issuance, and every forecast is checked
+against its actual kickoff. No historical forecast is backdated.
+
+Only this lab's derived forecasts, correction observations, hashes and publication
+receipts enter the `lab-state` branch. Raw input caches and detailed historical
+rows remain ignored locally. Health artifacts expire after14 days. Derived state
+has a200MiB cap that stops writes while preserving evidence; jobs have bounded
+HTTP retries, timeouts, compute and one writer. An owner storage decision is
+needed if evidence reaches that cap. No separate ChatGPT scheduler is installed.
+
+To stop new lab issuance, disable this repository's `NFL research lab` workflow.
+To roll back code, revert the relevant lab commit and rerun acceptance tests.
+Retain `lab-state` and all old experiment IDs; do not reset or edit frozen records.
+Restore a prior candidate config only under a new model version. No production
+website rollback is needed because this lab never deploys it. Old external research
+execution stays active until a verified handover establishes ownership and durability.
+
+The interface exports player/game/team/opponent/target, full-game period and
+scoring identity, model/config/code/input hashes, kickoff and issue clocks,+conditional played mean/distribution, participation probability, and fallback.
+Recorded source publication clocks remain unknown where the provider does not
+supply them. Compatible component means add; quantiles require joint samples.
+Integer push mass needs an actual saved line; absent odds never block football
+forecasts, and this lab makes no EV or financial settlement claims.

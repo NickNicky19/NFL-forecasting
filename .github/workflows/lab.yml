@@ -1,0 +1,95 @@
+name: NFL research lab
+
+on:
+  schedule:
+    # One scheduler. Both UTC offsets are gated to08:36 America/Chicago below.
+    - cron: '36 13,14 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [daily, train, replay]
+        default: daily
+  push:
+    branches: [main]
+    paths: ['nfl_lab/**', 'tests/**', 'config/**', 'pyproject.toml', '.github/workflows/lab.yml']
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: nfl-lab-single-writer
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install exact tested dependencies
+        run: python -m pip install -r requirements.lock -e '.[test]'
+      - name: Acceptance tests
+        run: python -m pytest -q
+      - name: Determine cadence
+        id: cadence
+        env:
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          python - <<'PY'
+          import datetime,os,zoneinfo
+          now=datetime.datetime.now(zoneinfo.ZoneInfo('America/Chicago'))
+          scheduled=os.environ['EVENT']=='schedule'
+          due=not scheduled or (now.hour==8 and now.minute>=36 and now.minute<=56)
+          mode=os.environ['MODE'] or ('train' if now.weekday()==6 else 'daily')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'due={str(due).lower()}\nmode={mode}\n')
+          print({'observed_chicago':now.isoformat(),'due':due,'mode':mode,'late_schedule_policy':'skip; never backdate'})
+          PY
+      - name: Restore derived evidence state
+        if: steps.cadence.outputs.due == 'true'
+        run: |
+          mkdir -p state
+          if git show-ref --verify --quiet refs/remotes/origin/lab-state; then
+            git archive origin/lab-state state | tar -x
+          fi
+      - name: Capture and grade
+        if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode != 'replay'
+        run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
+      - name: Bounded weekly experiments
+        if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
+        run: |
+          timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
+          timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
+      - name: Replay immutable records
+        if: steps.cadence.outputs.due == 'true'
+        run: python -m nfl_lab.cli replay
+      - name: Persist only lab-derived forecasts and corrections
+        if: always() && steps.cadence.outputs.due == 'true'
+        run: |
+          python tools/persist_state.py
+      - name: Upload derived health reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-health-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            *-result.json
+            runs/daily.json
+            runs/lab-v1-2026-10-22/summary.json
+            runs/lab-v1-2026-10-22/campaign.json
+          retention-days: 14
+          if-no-files-found: ignore
