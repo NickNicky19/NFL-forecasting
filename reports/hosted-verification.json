@@ -1,0 +1,141 @@
+{
+  "schema_version": "lab-hosted-verification-v1",
+  "observed_at": "2026-10-22T14:40:24.520384+00:00",
+  "state_commit": "ea8d651498ccc18a88d473a8a796d5e58613e5c4",
+  "immutable_state_record_counts_verified": {
+    "publication": 1,
+    "forecasts": 1,
+    "operations": 3,
+    "persistence": 1,
+    "health": 10,
+    "training": 1,
+    "input_manifests": 9,
+    "scorecards": 2
+  },
+  "model_artifact_files": 53,
+  "state_bytes": 3100354,
+  "batch": "7323a06f4715fdb910bb1ce87549867b9e29dc7d94ebde6e2c58e1dbfa9aafc0",
+  "forecast_rows": 24288,
+  "unique_forecast_keys": 24288,
+  "unique_player_game_targets": 8096,
+  "players": 736,
+  "games": 14,
+  "earliest_kickoff_utc": "2026-10-23 00:15:00+00:00",
+  "forecast_counts": {
+    "local_only": 0,
+    "late": 0,
+    "unknown": 0,
+    "pending": 24288,
+    "conflicts": 0,
+    "timely_public_forecasts": 24288,
+    "unverified_code": 0
+  },
+  "outcome_observations": 0,
+  "latest_health_sha256": "a2b628e736e4c74344bc04e39cb73df62f8488aaa73d9a3b41667f7e303e81f2",
+  "latest_health_clock": "2026-10-22T14:27:20.460829+00:00",
+  "latest_grading_coverage": {
+    "conflicts": 0,
+    "known_DNP": 0,
+    "missing_played_statistic": 0,
+    "supported_played": 0,
+    "unknown_or_unobserved": 8096
+  },
+  "latest_operations": [
+    {
+      "cadence": {
+        "due": true,
+        "mode": "daily",
+        "observed_chicago": "2026-10-22T08:58:03.125507-05:00",
+        "reason": "DUE"
+      },
+      "event": "push",
+      "observed_at": "2026-10-22T13:58:53.825784+00:00",
+      "run_attempt": "1",
+      "run_id": "39791470123",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "901c084bfa7a0092a70e7b0fb34cf3b301c09051",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "success",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "skipped"
+      }
+    },
+    {
+      "cadence": {
+        "due": true,
+        "mode": "train",
+        "observed_chicago": "2026-10-22T08:59:51.452644-05:00",
+        "reason": "DUE"
+      },
+      "event": "workflow_dispatch",
+      "observed_at": "2026-10-22T14:19:47.000495+00:00",
+      "run_attempt": "1",
+      "run_id": "39791493637",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "901c084bfa7a0092a70e7b0fb34cf3b301c09051",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "success",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "success"
+      }
+    },
+    {
+      "cadence": {
+        "due": true,
+        "mode": "daily",
+        "observed_chicago": "2026-10-22T09:26:35.599689-05:00",
+        "reason": "DUE"
+      },
+      "event": "push",
+      "observed_at": "2026-10-22T14:27:24.167302+00:00",
+      "run_attempt": "1",
+      "run_id": "39795596765",
+      "schema_version": "lab-hosted-operation-v1",
+      "scope": "workflow environment attestation; verify run identity/conclusion through GitHub Actions API",
+      "source_commit": "2e0128a84d60d2480fbc2e252cb4c445b0916c9a",
+      "step_outcomes": {
+        "ACCEPTANCE_OUTCOME": "success",
+        "DAILY_OUTCOME": "success",
+        "REPLAY_OUTCOME": "success",
+        "TRAINING_OUTCOME": "skipped"
+      }
+    }
+  ],
+  "independent_github_checks": [
+    {
+      "run_id": 39791493637,
+      "check_suite_id": 107842873579,
+      "check_run_id": 119869298850,
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-10-22T14:19:54Z"
+    },
+    {
+      "run_id": 39795596765,
+      "check_suite_id": 107855049055,
+      "check_run_id": 119882032663,
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-10-22T14:27:30Z"
+    }
+  ],
+  "schedule_verification": {
+    "observed_scheduled_events": 0,
+    "query_scope": "GitHub Actions runs, branch main, event schedule",
+    "morning_due_window": "2026-10-22T13:36:00Z through 13:56:59Z",
+    "state": "UNVERIFIED_DELIVERY",
+    "administrative_settings_read": "403 Resource not accessible by integration; no cause inferred",
+    "queried_at": "2026-10-22T14:45:12.745021+00:00"
+  },
+  "limits": [
+    "Checks API establishes these job conclusions; stale Actions run-list views are retained as a documented API discrepancy.",
+    "This verifies derived state and technical execution; no future football accuracy is established.",
+    "Model inference parity was independently checked on a separate real-input fixture; this audit counts artifacts and does not repeat training."
+  ],
+  "model_artifact_checksum_checks": 53,
+  "model_artifact_checksum_scope": "Payload and config integrity only; no environment override or repeated inference claim."
+}

@@ -31,6 +31,18 @@ are workflow attestations; the Actions API independently establishes the run
 identity/conclusion. A future scheduled event can therefore leave durable proof
 without an always-running assistant or another scheduler.
 
+The initial hosted capture and retries succeeded. A manual hosted training run
+completed within its 1,200-second budget, evaluating 426 of 432 registered trials
+and explicitly skipping six when the fit budget expired. The earlier timeout
+remains recorded. The Checks API independently confirms training run
+`39791493637` and capture run `39795596765` succeeded; the Actions run listing
+temporarily returned stale queued/in-progress states. See
+`reports/hosted-verification.json` for the bound state commit and receipts.
+Neither the expected October 22 morning scheduled delivery nor a subsequent
+scheduled event has been observed. This is an unverified scheduler delivery,
+not proof of a specific account setting. Reading administrative Actions settings
+returned HTTP 403; no access restriction was bypassed.
+
 Raw HTTP bodies are cached once per source within an execution workspace and
 versions are retained locally. Standard hosted runners are ephemeral: a later
 runner may need to download them again. The lab does not publish raw bodies in

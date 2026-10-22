@@ -9,6 +9,12 @@ Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
 [the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
 The attached review package and raw source bodies are kept outside public Git.
 
+Current evidence: [category status](reports/lab-status.json),
+[historical comparisons](reports/initial-campaign/README.md), and
+[hosted verification](reports/hosted-verification.json). Hosted capture, retries
+and bounded training have succeeded. Actual scheduled delivery is still
+unverified; no future confirmation outcome or qualified winner is claimed.
+
 ```sh
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock -e '.[test]'

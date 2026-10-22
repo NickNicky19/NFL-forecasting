@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-22T14:25:00Z",
+  "as_of_utc": "2026-10-22T14:45:12.745021+00:00",
   "scope": "NFL lab only; website read-only",
   "reproduction": "original pooled-YPA challenger unrecovered; baseline-only n27 arithmetic reproduced",
   "historical_vintage": "current-vintage reconstruction, not authentic historical pregame availability",
@@ -15,20 +15,21 @@
     "hosted_capture": "verified",
     "hosted_retry": "verified",
     "hosted_weekly_training": {
-      "campaign": "verifiedcompleted",
+      "campaign": "verified completed",
       "registered_trials": 432,
       "evaluated": 426,
       "budget_skips": 6,
       "elapsed_seconds": 1119.04728163,
       "budget_seconds": 1200,
       "run_id": 39791493637,
-      "outer_actions_conclusion": "pendingAPIreadback"
+      "outer_actions_conclusion": "Checks API: completed success at 2026-10-22T14:19:54Z; Actions run-list was stale"
     },
-    "scheduled_event": "13:36UTC delivery not observed during declaredwindow; workflowactive, actual scheduledsuccess unverified",
+    "scheduled_event": "No scheduled event observed through 2026-10-22T14:45:12.745021+00:00; actual delivery remains unverified",
     "postgame_future_outcomes": "pending",
     "correction_policy": "append-only; unknown-publication-order conflicts quarantined",
     "old_research_task": "observed already disabled, no next run; read-only lookup, not disabled by this lab",
-    "future_run_receipts": "installed+hostedverified; actualevent/mode/cadence+stepoutcomes durablysaved"
+    "future_run_receipts": "installed+hostedverified; actualevent/mode/cadence+stepoutcomes durablysaved",
+    "hosted_capture_latest_verified_run": 39795596765
   },
   "targets": [
     {
@@ -213,10 +214,13 @@
     }
   ],
   "tests": {
-    "full_local": 256,
-    "seconds": 14.49,
+    "full_local": 279,
+    "seconds": 19.49,
     "real_artifact_inference_replay_rows": 24288,
-    "exposed_grading_audit_queries": 5436
+    "exposed_grading_audit_queries": 5436,
+    "latest_reporting_focused": 26,
+    "latest_reporting_focused_seconds": 4.45,
+    "independent_reporting_review": "26 passed; three adversarial reproductions fixed; no remaining material blocker"
   },
   "limitations": [
     "no candidate promoted; prospectiveconfirmationpending",
@@ -226,5 +230,7 @@
     "capture supports regularNFLseason; postseasonissuance not verified",
     "sourceidentitydisputes and unorderablecorrections remainquarantined",
     "private raw snapshots/historicalrows not redistributed; hostedrawcaches ephemeral"
-  ]
+  ],
+  "reporting_comparison_contract": "Unique EVALUATED evidence for every planned fold; matched season/week/game/player/target/outcome scoring support; full pair count; unsupported/partial results retained without winner claims",
+  "hosted_verification_report": "reports/hosted-verification.json"
 }
