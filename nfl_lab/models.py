@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import re
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -183,7 +184,7 @@ def _history_summary(train: pd.DataFrame, frame: pd.DataFrame, target: str, wind
     return means, counts
 
 
-def _recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior: _Prior, position_priors: dict[str, _Prior], *, window: int = 3, fitting: bool = False) -> tuple[np.ndarray, np.ndarray]:
+def _recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior: _Prior, position_priors: dict[str, _Prior], *, window: int = 3, fitting: bool = False, state: dict | None = None) -> tuple[np.ndarray, np.ndarray]:
     prior, _ = _prior_vectors(frame, global_prior, position_priors)
     mean = _numeric(frame, f"f_player_{target}_mean{window}")
     count = _numeric(frame, f"f_player_{target}_n{window}")
@@ -195,6 +196,11 @@ def _recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior:
     elif target == "anytime_td":
         valid_feature &= (mean >= 0) & (mean <= 1)
     provided = f"f_player_{target}_mean{window}" in frame and f"f_player_{target}_n{window}" in frame
+    if state is not None:
+        state.update(kind="recent", target=target, window=window,
+                     global_prior=vars(global_prior), position_priors={p: vars(value) for p, value in position_priors.items()},
+                     required_summary_columns=[f"f_player_{target}_mean{window}", f"f_player_{target}_n{window}"],
+                     qualified_summary_columns_present=provided)
     # An explicitly empty/unknown qualified window cannot be silently extended
     # farther into the past to find favorable supported games.
     if provided:
@@ -212,7 +218,7 @@ def _recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior:
     return prediction, reason.astype(object)
 
 
-def _component_recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, *, fitting: bool) -> np.ndarray:
+def _component_recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, *, fitting: bool, state: dict | None = None) -> np.ndarray:
     values = _numeric(train, target)
     played = _strings(train, "participation_state") == "played"
     valid = played & np.isfinite(values)
@@ -220,21 +226,25 @@ def _component_recent(train: pd.DataFrame, frame: pd.DataFrame, target: str, *, 
         valid &= (values >= 0) & (values == np.floor(values))
     supported = train.loc[valid]
     if not len(supported):
+        if state is not None:
+            state.update(kind="unavailable")
         return np.full(len(frame), np.nan)
     gp, pp = _priors(supported, target)
     # frame may be a different subset than supported; fitting's rolling indexing
     # is valid only for the same frame. Source-provided lag features still work.
     if fitting and len(supported) != len(frame):
-        return _recent(supported, frame, target, gp, pp, fitting=False)[0]
-    return _recent(supported, frame, target, gp, pp, fitting=fitting)[0]
+        return _recent(supported, frame, target, gp, pp, fitting=False, state=state)[0]
+    return _recent(supported, frame, target, gp, pp, fitting=fitting, state=state)[0]
 
 
-def _pooled_rate(train: pd.DataFrame, frame: pd.DataFrame, numerator: str, denominator: str, feature: str | None, *, bounded: bool = False) -> np.ndarray:
+def _pooled_rate(train: pd.DataFrame, frame: pd.DataFrame, numerator: str, denominator: str, feature: str | None, *, bounded: bool = False, state: dict | None = None) -> np.ndarray:
     num, den = _numeric(train, numerator), _numeric(train, denominator)
     valid = np.isfinite(num) & np.isfinite(den) & (den > 0)
     if bounded:
         valid &= (num >= 0) & (num <= den)
     if not valid.any():
+        if state is not None:
+            state.update(kind="unavailable")
         return np.full(len(frame), np.nan)
     gp = float(num[valid].sum() / den[valid].sum())
     positions = _strings(train, "position")
@@ -242,6 +252,9 @@ def _pooled_rate(train: pd.DataFrame, frame: pd.DataFrame, numerator: str, denom
     for position in np.unique(positions[valid]):
         rows = valid & (positions == position)
         lookup[str(position)] = (float(num[rows].sum()) + 30 * gp) / (float(den[rows].sum()) + 30)
+    if state is not None:
+        state.update(kind="pooled_rate", numerator=numerator, denominator=denominator,
+                     feature=feature, bounded=bounded, global_rate=gp, position_rates=lookup)
     prior = np.array([lookup.get(str(p), gp) for p in _strings(frame, "position")])
     rate = _numeric(frame, feature) if feature else np.full(len(frame), np.nan)
     # A ratio of compatible lagged totals/means is used only when both exist.
@@ -259,8 +272,12 @@ def _pooled_rate(train: pd.DataFrame, frame: pd.DataFrame, numerator: str, denom
     return np.clip(result, 0, 1) if bounded else result
 
 
-def _workload(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior: _Prior, position_priors: dict[str, _Prior], *, fitting: bool = False) -> tuple[np.ndarray, np.ndarray]:
-    baseline, reason = _recent(train, frame, target, global_prior, position_priors, fitting=fitting)
+def _workload(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prior: _Prior, position_priors: dict[str, _Prior], *, fitting: bool = False, state: dict | None = None) -> tuple[np.ndarray, np.ndarray]:
+    baseline_state = {} if state is not None else None
+    baseline, reason = _recent(train, frame, target, global_prior, position_priors, fitting=fitting, state=baseline_state)
+    candidate_state: dict = {"kind": "unavailable"}
+    if state is not None:
+        state.update(kind="workload", target=target, baseline=baseline_state, candidate=candidate_state)
     exposure_name: str | None = None
     rate_feature: str | None = None
     bounded = False
@@ -276,8 +293,10 @@ def _workload(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prio
         exposure_name = "rush_att"
         rate_feature = "f_player_rush_ypa3"
     if exposure_name:
-        exposure = _component_recent(train, frame, exposure_name, fitting=fitting)
-        rate = _pooled_rate(train, frame, target, exposure_name, rate_feature, bounded=bounded)
+        exposure_state, rate_state = {}, {}
+        exposure = _component_recent(train, frame, exposure_name, fitting=fitting, state=exposure_state if state is not None else None)
+        rate = _pooled_rate(train, frame, target, exposure_name, rate_feature, bounded=bounded, state=rate_state if state is not None else None)
+        candidate_state.update(kind="exposure_rate", exposure=exposure_state, rate=rate_state)
         candidate = exposure * rate
     elif target in {"pass_att", "rush_att"}:
         team_feature = f"f_team_{target}_mean3"
@@ -291,6 +310,7 @@ def _workload(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prio
             for p in np.unique(pos[valid]):
                 rows = valid & (pos == p)
                 shares[str(p)] = (float(y[rows].sum()) + 90 * global_share) / (float(train_volume[rows].sum()) + 90)
+            candidate_state.update(kind="team_share", target=target, global_share=global_share, position_shares=shares)
             prior_share = np.array([shares.get(str(p), global_share) for p in _strings(frame, "position")])
             player_volume = _numeric(frame, f"f_player_{target}_mean3")
             n = _numeric(frame, f"f_player_{target}_n3")
@@ -303,14 +323,19 @@ def _workload(train: pd.DataFrame, frame: pd.DataFrame, target: str, global_prio
     elif target == "rush_rec_yd":
         # This is a new compatible mean-sum candidate, not a quantile sum.
         components = []
+        component_states = []
         for component in ("rush_yd", "rec_yd"):
             vals = _numeric(train, component)
             valid = np.isfinite(vals)
             if not valid.any():
                 components.append(np.full(len(frame), np.nan))
+                component_states.append({"kind": "unavailable"})
                 continue
             gp, pp = _priors(train.loc[valid], component)
-            components.append(_workload(train.loc[valid], frame, component, gp, pp, fitting=False)[0])
+            component_state = {}
+            components.append(_workload(train.loc[valid], frame, component, gp, pp, fitting=False, state=component_state if state is not None else None)[0])
+            component_states.append(component_state)
+        candidate_state.update(kind="mean_sum", components=component_states)
         candidate = components[0] + components[1]
     else:
         # Exact PPR needs its scoring adapter. Binary probabilities use the
@@ -368,19 +393,27 @@ class _Design:
                 "transformed_columns": self.names, "standardized_feature_clip": [-8, 8]}
 
 
-def _ml(train: pd.DataFrame, test: pd.DataFrame, target: str, method: str, global_prior: _Prior, position_priors: dict[str, _Prior]) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
-    baseline_test, baseline_reason = _recent(train, test, target, global_prior, position_priors)
+def _ml(train: pd.DataFrame, test: pd.DataFrame, target: str, method: str, global_prior: _Prior, position_priors: dict[str, _Prior], *, state: dict | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
+    baseline_state = {} if state is not None else None
+    baseline_test, baseline_reason = _recent(train, test, target, global_prior, position_priors, state=baseline_state)
     baseline_train, _ = _recent(train, train, target, global_prior, position_priors, fitting=True)
     design = _Design(train, test, method)
     audit = design.audit()
+    if state is not None:
+        state.update(kind="ml", target=target, method=method, baseline=baseline_state, design=audit.copy(), fit_status="not_fitted")
+        state["design"]["categorical_order"] = list(design.categorical)
     x, xt, y = design.transform(train), design.transform(test), _numeric(train, target)
     if len(train) < 20 or x.shape[1] == 0:
         audit["fit_status"] = "insufficient_supported_training_or_features"
+        if state is not None:
+            state.update(fit_status=audit["fit_status"])
         return baseline_test, baseline_train, np.full(len(test), "insufficient_fit:" , dtype=object) + baseline_reason, audit
     try:
         if target == "anytime_td":
             if len(np.unique(y)) < 2:
                 audit["fit_status"] = "single_binary_class_position_prior"
+                if state is not None:
+                    state.update(fit_status=audit["fit_status"])
                 return baseline_test, baseline_train, np.full(len(test), "single_binary_class", dtype=object), audit
             if method == "tree":
                 model = ExtraTreesRegressor(n_estimators=24, max_depth=6, min_samples_leaf=30, max_features=0.8, random_state=SEED, n_jobs=2)
@@ -420,26 +453,36 @@ def _ml(train: pd.DataFrame, test: pd.DataFrame, target: str, method: str, globa
             audit["intercept"] = np.asarray(model.intercept_).tolist()
         if hasattr(model, "feature_importances_"):
             audit["feature_importances"] = model.feature_importances_.tolist()
+        if state is not None:
+            from .model_artifacts import estimator_state
+            state.update(fit_status="fitted", estimator=estimator_state(model),
+                         count_mean_bounds=audit.get("count_mean_bounds"))
         return prediction, fitted, reason, audit
     except (ValueError, FloatingPointError, OverflowError) as error:
         audit["fit_status"] = "failed_with_recorded_fallback"
         audit["fit_error"] = f"{type(error).__name__}: {error}"
+        if state is not None:
+            state.update(fit_status=audit["fit_status"], fit_error=audit["fit_error"])
         return baseline_test, baseline_train, np.full(len(test), "fit_failed:", dtype=object) + baseline_reason, audit
 
 
-def _participation(train: pd.DataFrame, test: pd.DataFrame) -> tuple[np.ndarray, dict[str, Any]]:
-    state = _strings(train, "participation_state")
-    known = np.isin(state, ["played", "DNP"])
-    audit = {"known_training_rows": int(known.sum()), "played_rows": int((state == "played").sum()), "DNP_rows": int((state == "DNP").sum()), "unknown_rows": int((~known).sum())}
+def _participation(train: pd.DataFrame, test: pd.DataFrame, *, state: dict | None = None) -> tuple[np.ndarray, dict[str, Any]]:
+    labels = _strings(train, "participation_state")
+    known = np.isin(labels, ["played", "DNP"])
+    audit = {"known_training_rows": int(known.sum()), "played_rows": int((labels == "played").sum()), "DNP_rows": int((labels == "DNP").sum()), "unknown_rows": int((~known).sum())}
     if not known.any():
+        if state is not None:
+            state.update(kind="unavailable")
         return np.full(len(test), np.nan), audit
-    y = (state == "played").astype(float)
+    y = (labels == "played").astype(float)
     gp = float((y[known].sum() + 1) / (known.sum() + 2))
     positions = _strings(train, "position")
     lookup = {}
     for position in np.unique(positions[known]):
         rows = known & (positions == position)
         lookup[str(position)] = float((y[rows].sum() + 8 * gp) / (rows.sum() + 8))
+    if state is not None:
+        state.update(kind="participation", global_rate=gp, position_rates=lookup)
     prior = np.array([lookup.get(str(p), gp) for p in _strings(test, "position")])
     rate, count = _numeric(test, "f_player_play_rate8"), _numeric(test, "f_player_known_participation_n8")
     valid = np.isfinite(rate) & np.isfinite(count) & (rate >= 0) & (rate <= 1) & (count > 0)
@@ -513,7 +556,7 @@ def _archived(test: pd.DataFrame, target: str, method: str) -> tuple[np.ndarray,
     return np.where(valid, value, np.nan), np.where(valid, "", "no_authentic_pregame_baseline_binding").astype(object)
 
 
-def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: str) -> pd.DataFrame:
+def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: str, *, artifact_path: Path | str | None = None) -> pd.DataFrame:
     """Fit one preregistered candidate and return forecasts indexed like ``test``.
 
     Required outcome support is an explicit ``participation_state == 'played'``
@@ -531,8 +574,12 @@ def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: st
         raise ValueError(f"unsupported target: {target}")
     if method not in METHODS:
         raise ValueError(f"unregistered candidate: {method}")
+    if artifact_path is not None and (Path(artifact_path).exists() or Path(artifact_path).is_symlink()):
+        raise FileExistsError(f"immutable model artifact already exists: {artifact_path}")
+    inference_state: dict | None = {"kind": "unavailable"} if artifact_path is not None else None
+    participation_state: dict | None = {} if artifact_path is not None else None
     earlier, time_audit = _temporal_training(train, test)
-    participation, participation_audit = _participation(earlier, test)
+    participation, participation_audit = _participation(earlier, test, state=participation_state)
     y = _numeric(earlier, target)
     valid = (_strings(earlier, "participation_state") == "played") & _support(y, target)
     supported = earlier.loc[valid].copy()
@@ -549,6 +596,8 @@ def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: st
     if method in {"raw_sleeper", "pinned_website"}:
         mean, reason = _archived(test, target, method)
         audit["distribution_status"] = "authentic point only; no invented conditional distribution"
+        if inference_state is not None:
+            inference_state.update(kind="archived", method=method, target=target)
     elif len(supported):
         gp, pp = _priors(supported, target)
         audit["position_priors"] = {p: vars(prior) for p, prior in pp.items()}
@@ -556,21 +605,24 @@ def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: st
         if method in {"recent", "pooled", "workload"}:
             fn = _workload if method == "workload" else _recent
             kwargs = {"window": 8} if method == "pooled" else {}
-            mean, reason = fn(supported, test, target, gp, pp, **kwargs)
+            mean, reason = fn(supported, test, target, gp, pp, state=inference_state, **kwargs)
             fitted, _ = fn(supported, supported, target, gp, pp, fitting=True, **kwargs)
         elif method == "ensemble":
-            ridge, fit_ridge, ridge_reason, ml_audit = _ml(supported, test, target, "ridge", gp, pp)
-            workload, workload_reason = _workload(supported, test, target, gp, pp)
+            ridge_state, workload_state, recent_state = {}, {}, {}
+            ridge, fit_ridge, ridge_reason, ml_audit = _ml(supported, test, target, "ridge", gp, pp, state=ridge_state if inference_state is not None else None)
+            workload, workload_reason = _workload(supported, test, target, gp, pp, state=workload_state if inference_state is not None else None)
             fit_workload, _ = _workload(supported, supported, target, gp, pp, fitting=True)
-            recent, recent_reason = _recent(supported, test, target, gp, pp)
+            recent, recent_reason = _recent(supported, test, target, gp, pp, state=recent_state if inference_state is not None else None)
             fit_recent, _ = _recent(supported, supported, target, gp, pp, fitting=True)
             mean = .5 * ridge + .25 * workload + .25 * recent
             fitted = .5 * fit_ridge + .25 * fit_workload + .25 * fit_recent
             reason = np.array([";".join(sorted({str(r) for r in row if r})) for row in zip(ridge_reason, workload_reason, recent_reason)], dtype=object)
             audit["fitted_model"] = ml_audit
             audit["ensemble_weights"] = {"ridge": .5, "workload": .25, "recent": .25}
+            if inference_state is not None:
+                inference_state.update(kind="ensemble", weights=[.5, .25, .25], components=[ridge_state, workload_state, recent_state])
         else:
-            mean, fitted, reason, ml_audit = _ml(supported, test, target, method, gp, pp)
+            mean, fitted, reason, ml_audit = _ml(supported, test, target, method, gp, pp, state=inference_state)
             audit["fitted_model"] = ml_audit
         if target == "anytime_td":
             mean = np.clip(mean, 0, 1)
@@ -587,6 +639,9 @@ def fit_predict(train: pd.DataFrame, test: pd.DataFrame, target: str, method: st
     audit["fallback_rows"] = int(np.sum(reason != ""))
     audit["abstention_rows"] = int(np.sum(~np.isfinite(mean)))
     result.attrs.update(audit)
+    if artifact_path is not None:
+        from .model_artifacts import export_artifact
+        export_artifact(artifact_path, inference_state, participation_state, audit, test)
     return result
 
 

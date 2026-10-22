@@ -89,3 +89,61 @@ specified priors and projected attempts. It cannot inherit any of those original
 reproduction claims or insert the new attempts candidate into the original
 website-attempts formula. The original pooled-YPA/completion comparisons remain
 unrecovered, not reproduced, and pending independent later confirmation.
+
+## Fitted artifacts and consumer replay
+
+The optional keyword `fit_predict(..., artifact_path=Path("model.json"))`
+exports the fitted state from that same fit without changing the default
+predictions, candidate settings, or search budget. Files are immutable and
+written atomically; an existing destination raises instead of being overwritten.
+The finite JSON payload contains coefficients or every learned tree node,
+feature preprocessing, position priors, workload rate/share parameters,
+participation rates, conditional dispersion, training audit/configuration,
+SHA256 hashes of the inference code/configuration, and the exact Python and
+dependency versions. Its `environment.requirements_lock` list can be used to
+restore those packages. It contains no raw training rows, player history rows,
+Python pickle, or executable model payload.
+
+`nfl_lab.model_artifacts.predict_artifact(path, features, input_manifest=...)`
+performs inference from frozen state. It never fits a model, accesses training
+history, or chooses another configuration. Normal, count, binary, workload,
+ensemble and declared prior/fit-failure fallbacks are replayed. Invalid or
+all-missing qualified histories retain their original prior fallback. Legacy
+calls lacking the history-summary columns can consult old training history in
+the default API; an export of that path is explicitly marked unreplayable.
+This prevents an artifact from pretending to reproduce unavailable inputs.
+
+The input manifest must attest `source_qualified: true` and
+`availability_verified: true`, and provide the SHA256 `input_sha256` binding
+the caller's source/feature manifest. Those assertions require actual source
+qualification outside this module; they are not independently established by
+an arbitrary boolean or checksum. Features must match the artifact's required
+column schema. Missing numeric values are supported; missing required columns,
+text/infinite numeric values, missing identities and late source cutoffs fail
+explicitly. Test labels and target participation outcomes are not inputs.
+Feature construction/provenance and actual pre-kickoff persistence remain the
+source and capture adapters' responsibilities.
+
+A standalone consumer is available without the training dataset:
+
+```bash
+python -m nfl_lab.model_artifacts model.json features.parquet input-manifest.json predictions.json
+```
+
+The consumer verifies payload integrity, model identity, full learned tree
+structure, code hashes and the environment lock before inference. Point and
+distribution outputs match the fitting API within floating-point summation
+precision. The local lab helpers `activate_artifact`, `predict_active_artifact`
+and `rollback_artifact` maintain an atomic active/previous pointer to immutable
+files. Rollback verifies the prior file before changing the pointer; a missing
+or corrupt prior leaves the active model intact. Code/environment mismatches
+are rejected and require restoring the recorded inference release as well.
+These helpers operate only on the caller's local lab paths and do not deploy
+or modify the website.
+
+Synthetic contract tests cover learned-tree/linear replay, all registered
+methods, count/Bernoulli distributions, all-missing/failed/unfitted fallbacks,
+source-schema rejection, immutable exports, checksum/code/environment failures,
+process-independent consumer output, restart and verified local rollback.
+They establish software replay behavior, not calibrated intervals or future
+forecasting superiority. Existing exposed experiment results are unchanged.
