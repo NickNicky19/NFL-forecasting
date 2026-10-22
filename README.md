@@ -51,8 +51,9 @@ To stop new lab issuance, disable this repository's `NFL research lab` workflow.
 To roll back code, revert the relevant lab commit and rerun acceptance tests.
 Retain `lab-state` and all old experiment IDs; do not reset or edit frozen records.
 Restore a prior candidate config only under a new model version. No production
-website rollback is needed because this lab never deploys it. Old external research
-execution stays active until a verified handover establishes ownership and durability.
+website rollback is needed because this lab never deploys it. A read-only lookup
+found the old external NFL research task already disabled; this lab did not change
+it. Frozen experiment ownership is preserved separately.
 
 The interface exports player/game/team/opponent/target, full-game period and
 scoring identity, model/config/code/input hashes, kickoff and issue clocks,
