@@ -124,7 +124,9 @@ def acquire_history(cache: Path, seasons: list[int]) -> dict:
                "source_transition": "legacy player_stats/player_stats_2025.parquet returned HTTP 404; using stats_player/stats_player_week_YYYY.parquet for all seasons with explicit schema crosswalk",
                "optional_groups": {
                    "snaps": "used where gsis/PFR crosswalk exists; absent rows do not establish DNP",
-                   "ngs": {"state": "available_not_feature_enabled" if ngs_assets else "unavailable", "assets": ngs_assets},
+                   "ngs": {"state": "available_not_feature_enabled" if ngs_assets else "unavailable", "assets": ngs_assets,
+                           "missing_assets": [f"ngs_{year}_{kind}.csv.gz" for year in seasons for kind in ("passing", "receiving", "rushing")
+                                              if f"ngs_{year}_{kind}.csv.gz" not in ngs_assets]},
                    "news_injuries_routes_tracking_weather_forecasts": "unavailable with authenticated historic pregame clocks; not used",
                    "venue_rest": "schedule home/away and days since previous team game; no realized weather used"}}
     (raw / "acquisition.json").write_text(json.dumps(receipt, indent=2) + "\n")
