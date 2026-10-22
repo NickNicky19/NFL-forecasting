@@ -13,6 +13,8 @@ def validation_report(tmp_path,change):
     for method in ["recent","ridge"]:
         rows=pd.DataFrame({"season":2024,"week":1,"game_id":["2024-a","2024-b"],"player_id":["a","b"],"team":"T","opponent":"O","position":"WR","target":"rec","method":method,"split":"validation","participation_state":"played","actual":[1.,2.],"mean":[1.,2.] if method=="ridge" else [2.,3.],"scale":1.,"family":"normal","p_participation":.9,"fallback":""})
         if change=="keys" and method=="ridge":rows.loc[1,"game_id"]="2024-substituted"
+        if change=="week" and method=="ridge":rows["week"]=2
+        if change=="missing_week" and method=="ridge":rows["week"]=float("nan")
         if change=="outcomes" and method=="ridge":rows.loc[1,"actual"]=3.
         if change=="duplicate":rows=pd.concat([rows,rows.iloc[-1:]],ignore_index=True)
         if change=="missing_key" and method=="ridge":rows.loc[1,"player_id"]=None
@@ -23,7 +25,7 @@ def validation_report(tmp_path,change):
     (tmp_path/"trials.json").write_text(json.dumps(trials))
 
 
-@pytest.mark.parametrize("change",["keys","outcomes","duplicate","missing_key","unequal_count"])
+@pytest.mark.parametrize("change",["keys","outcomes","duplicate","missing_key","unequal_count","week","missing_week"])
 def test_invalid_validation_support_retains_metrics_without_gain_or_pairing(tmp_path,monkeypatch,change):
     validation_report(tmp_path,change)
     original_trials=(tmp_path/"trials.json").read_bytes()
@@ -57,6 +59,14 @@ def test_fair_validation_keeps_matched_gain_and_pairing(tmp_path):
     assert selected["paired_n"]==2
     assert selected["validation_support"]["recent"]["scored_key_actual_sha256"]==selected["validation_support"]["candidate"]["scored_key_actual_sha256"]
     assert len(json.loads((tmp_path/"paired.json").read_text()))==1
+
+
+def test_pairing_must_cover_declared_scored_support(tmp_path,monkeypatch):
+    validation_report(tmp_path,"fair")
+    monkeypatch.setattr("nfl_lab.reporting.paired_week_interval",lambda *a,**k:{"paired_n":0,"weeks":0})
+    with pytest.raises(ValueError,match="pairing does not cover"):
+        finish_reports(tmp_path)
+    assert not (tmp_path/"selected.json").exists()
 
 
 @pytest.mark.parametrize("state",["FAILED","NOT_RUN_BUDGET_EXHAUSTED","missing"])

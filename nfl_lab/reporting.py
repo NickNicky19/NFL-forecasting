@@ -14,19 +14,20 @@ from .evaluation import paired_week_interval,summarize
 
 def _development_support(rows,good):
     """Order-independent compact support binding, computed during the group read."""
-    keys=["season","game_id","player_id","target"]
+    keys=["season","week","game_id","player_id","target"]
     supported=rows.loc[good,keys+["actual"]].copy()
     # Normalize numerical outcomes so an integer and its equal float match.
     supported["actual"]=pd.to_numeric(supported["actual"],errors="raise").astype("float64")
     for name in ["game_id","player_id","target"]:supported[name]=supported[name].astype("string")
     supported["season"]=pd.to_numeric(supported["season"],errors="raise").astype("int64")
+    supported["week"]=pd.to_numeric(supported["week"],errors="raise").astype("Int64")
     hashed=pd.util.hash_pandas_object(supported,index=False).to_numpy(dtype="uint64")
     hashed.sort()
     return {"seasons":sorted(int(y) for y in rows.season.unique()),"scored_rows":len(supported),
             "duplicate_keys":int(rows.duplicated(keys,keep=False).sum()),
             "missing_keys":int(rows[keys].isna().any(axis=1).sum()),
             "scored_key_actual_sha256":hashlib.sha256(hashed.astype("<u8",copy=False).tobytes()).hexdigest(),
-            "digest_semantics":"SHA256 of sorted pandas row hashes over season/game/player/target/float64 actual; not source authentication"}
+            "digest_semantics":"SHA256 of sorted pandas row hashes over season/week/game/player/target/float64 actual; not source authentication"}
 
 
 def _trial_evidence(trials,target,method,seasons):
@@ -142,6 +143,8 @@ def finish_reports(output:Path):
                              "state":"VALIDATION_INELIGIBLE_COVERAGE",**eligibility_details,**coverage});continue
         interval_rows=pd.concat([pd.read_parquet(p) for year in planned_validation for m in {"recent",chosen} for p in output.glob(f"{year}-{target}-{m}.parquet")],ignore_index=True)
         interval=paired_week_interval(interval_rows,"recent",chosen)
+        if interval["paired_n"]!=candidate["scored_rows"]:
+            raise ValueError("validation pairing does not cover declared scored support")
         paired.append({"target":target,"method":chosen,**interval})
         relative=(loss(base)-loss(candidate))/loss(base) if loss(base)>0 else None
         selected.append({"target":target,"development_selected_method":chosen,"primary_metric":primary,"validation_recent":loss(base),"validation_candidate":loss(candidate),"relative_primary_gain":relative,"validation_recent_bias":base.get("bias"),"validation_candidate_bias":candidate.get("bias"),"bias_gate":abs(candidate.get("bias",0))<=abs(base.get("bias",0)),"paired_n":interval["paired_n"],"weeks":interval["weeks"],"state":"EXPLORATORY_HISTORICAL_ONLY_CONFIRMATION_PENDING",**eligibility_details,**coverage})
