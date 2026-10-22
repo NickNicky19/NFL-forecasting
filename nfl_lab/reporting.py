@@ -29,14 +29,27 @@ def _development_support(rows,good):
             "digest_semantics":"SHA256 of sorted pandas row hashes over season/game/player/target/float64 actual; not source authentication"}
 
 
-def _development_eligibility(dev,methods,seasons):
+def _trial_evidence(trials,target,method,seasons):
+    folds={season:[] for season in seasons}
+    for trial in trials:
+        if trial["target"]==target and trial["method"]==method and trial["season"] in folds:
+            folds[trial["season"]].append(trial["state"])
+    return {"eligible":all(states==["EVALUATED"] for states in folds.values()),
+            "fold_states":{str(year):states for year,states in folds.items()},
+            "duplicate_fold_entries":sorted(year for year,states in folds.items() if len(states)>1)}
+
+
+def _development_eligibility(dev,methods,seasons,trials,target):
     by_method={s["method"]:s for s in dev}
     methods=sorted(set(methods)|{"recent"})
     checks=[];pending=False;unfair=False
     baseline=by_method.get("recent",{}).get("development_support")
     for method in methods:
         support=by_method.get(method,{}).get("development_support")
-        if support is None or support["seasons"]!=seasons:
+        evidence=_trial_evidence(trials,target,method,seasons)
+        if evidence["duplicate_fold_entries"]:
+            state="INELIGIBLE_COVERAGE";unfair=True
+        elif not evidence["eligible"] or support is None or support["seasons"]!=seasons:
             state="DEVELOPMENT_PENDING";pending=True
         elif support["duplicate_keys"] or support["missing_keys"]:
             state="INELIGIBLE_COVERAGE";unfair=True
@@ -47,9 +60,23 @@ def _development_eligibility(dev,methods,seasons):
               support["scored_key_actual_sha256"]!=baseline["scored_key_actual_sha256"]):
             state="INELIGIBLE_COVERAGE";unfair=True
         else:state="ELIGIBLE"
-        checks.append({"method":method,"state":state,"available_seasons":support["seasons"] if support else []})
+        checks.append({"method":method,"state":state,"available_seasons":support["seasons"] if support else [],"trial_evidence":evidence})
     return {"state":"DEVELOPMENT_PENDING" if pending else "INELIGIBLE_COVERAGE" if unfair else "ELIGIBLE",
             "planned_development_seasons":seasons,"development_eligibility":checks}
+
+
+def _validation_coverage(base,candidate,trials,target,chosen,seasons):
+    recent=base["validation_support"];challenger=candidate["validation_support"]
+    evidence={"recent":_trial_evidence(trials,target,"recent",seasons),
+              "candidate":_trial_evidence(trials,target,chosen,seasons)}
+    matched=(not recent["duplicate_keys"] and not challenger["duplicate_keys"] and
+             not recent["missing_keys"] and not challenger["missing_keys"] and
+             recent["seasons"]==seasons and challenger["seasons"]==seasons and
+             evidence["recent"]["eligible"] and evidence["candidate"]["eligible"] and
+             recent["scored_rows"]==challenger["scored_rows"] and
+             recent["scored_key_actual_sha256"]==challenger["scored_key_actual_sha256"])
+    return {"coverage_unchanged":bool(matched),
+            "validation_support":{"recent":recent,"candidate":challenger},"validation_trial_evidence":evidence}
 
 
 def finish_reports(output:Path):
@@ -59,6 +86,7 @@ def finish_reports(output:Path):
     manifest=json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     registration=manifest.get("registration",{})
     planned_seasons=sorted(set(registration.get("seasons",{}).get("development") or [2022,2023]))
+    planned_validation=sorted(set(registration.get("seasons",{}).get("validation") or [2024]))
     registered_methods=manifest.get("methods") or registration.get("candidate_families")
     combinations=sorted({(r["target"],r["method"]) for r in trials if r["state"]=="EVALUATED"})
     summaries=[];subgroups=[]
@@ -70,7 +98,7 @@ def finish_reports(output:Path):
             summary={"split":split,"target":target,"method":method,**summarize(g)}
             summary["historical_scope"]="all supplied skill player-game rows; regular+postseason; no selected lines"
             good=g.participation_state.eq("played") & g.actual.notna() & g["mean"].notna()
-            if split=="development":summary["development_support"]=_development_support(g,good)
+            if split in ["development","validation"]:summary[split+"_support"]=_development_support(g,good)
             summaries.append(summary)
             work=g.copy();work["scored"]=good.astype(int);work["missing_stat"]=g.participation_state.eq("played")&g.actual.isna()
             work["dnp"]=g.participation_state.eq("DNP");work["unknown"]=g.participation_state.eq("unknown")
@@ -96,7 +124,7 @@ def finish_reports(output:Path):
             selected.append({"target":target,"state":"NO_SUPPORTED_COMPARISON"});continue
         methods=registered_methods or {r["method"] for r in trials if r["target"]==target}
         methods=[m for m in methods if m not in ["raw_sleeper","pinned_website"]]
-        eligibility=_development_eligibility(development,methods,planned_seasons)
+        eligibility=_development_eligibility(development,methods,planned_seasons,trials,target)
         if eligibility["state"]!="ELIGIBLE":
             selected.append({"target":target,**eligibility});continue
         if not dev:selected.append({"target":target,"state":"NO_SUPPORTED_COMPARISON"});continue
@@ -106,11 +134,17 @@ def finish_reports(output:Path):
         candidate=next((s for s in summaries if s["split"]=="validation" and s["target"]==target and s["method"]==chosen),None)
         if base is None or candidate is None or loss(base) is None or loss(candidate) is None:
             selected.append({"target":target,"development_selected_method":chosen,"state":"VALIDATION_PENDING_OR_NOT_RUN",**eligibility_details});continue
-        interval_rows=pd.concat([pd.read_parquet(p) for m in {"recent",chosen} for p in output.glob(f"2024-{target}-{m}.parquet")],ignore_index=True)
+        coverage=_validation_coverage(base,candidate,trials,target,chosen,planned_validation)
+        if not coverage["coverage_unchanged"]:
+            selected.append({"target":target,"development_selected_method":chosen,"primary_metric":primary,
+                             "validation_recent":loss(base),"validation_candidate":loss(candidate),
+                             "validation_recent_bias":base.get("bias"),"validation_candidate_bias":candidate.get("bias"),
+                             "state":"VALIDATION_INELIGIBLE_COVERAGE",**eligibility_details,**coverage});continue
+        interval_rows=pd.concat([pd.read_parquet(p) for year in planned_validation for m in {"recent",chosen} for p in output.glob(f"{year}-{target}-{m}.parquet")],ignore_index=True)
         interval=paired_week_interval(interval_rows,"recent",chosen)
         paired.append({"target":target,"method":chosen,**interval})
         relative=(loss(base)-loss(candidate))/loss(base) if loss(base)>0 else None
-        selected.append({"target":target,"development_selected_method":chosen,"primary_metric":primary,"validation_recent":loss(base),"validation_candidate":loss(candidate),"relative_primary_gain":relative,"validation_recent_bias":base.get("bias"),"validation_candidate_bias":candidate.get("bias"),"bias_gate":abs(candidate.get("bias",0))<=abs(base.get("bias",0)),"coverage_unchanged":candidate["scored_rows"]==base["scored_rows"],"paired_n":interval["paired_n"],"weeks":interval["weeks"],"state":"EXPLORATORY_HISTORICAL_ONLY_CONFIRMATION_PENDING",**eligibility_details})
+        selected.append({"target":target,"development_selected_method":chosen,"primary_metric":primary,"validation_recent":loss(base),"validation_candidate":loss(candidate),"relative_primary_gain":relative,"validation_recent_bias":base.get("bias"),"validation_candidate_bias":candidate.get("bias"),"bias_gate":abs(candidate.get("bias",0))<=abs(base.get("bias",0)),"paired_n":interval["paired_n"],"weeks":interval["weeks"],"state":"EXPLORATORY_HISTORICAL_ONLY_CONFIRMATION_PENDING",**eligibility_details,**coverage})
     for method in sorted({m for _,m in combinations}):
         a=output/f"2024-pass_att-{method}.parquet";b=output/f"2024-pass_cmp-{method}.parquet"
         if a.exists() and b.exists():
