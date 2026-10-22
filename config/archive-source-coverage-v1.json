@@ -1,0 +1,43 @@
+{
+  "registration_id": "archive-source-coverage-v1-2026-10-22",
+  "registered_before_expanded_support_evaluation": true,
+  "purpose": "Separate zero-fit outcome-source coverage variant for the already-exposed Week 6 archive; preserve the original sparse-source comparison unchanged",
+  "frozen_predictions": {
+    "study": "archive-lab-week6-v1-2026-10-22",
+    "rows_sha256": "db5bb699ec590f849c13312fde778eda71d0a4e529bad843384089e37dc7052d",
+    "original_report_sha256": "e9e15c55f4f1edf9dcc22740454df3f790251bd5f8a059fd876f4bf04241dcaa",
+    "original_new_fits": 30,
+    "protocol_deviation": "Carry forward selected cold-context inference deviation; no retrospective prior substitution"
+  },
+  "period": {"season": 2026, "week": 6},
+  "targets": ["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd"],
+  "methods": ["raw_sleeper", "pinned_website", "lab_recent", "lab_pooled", "lab_selected"],
+  "sources": {
+    "sleeper": "Preserve per-target actual/participation from frozen rows; missing fields remain unknown, never infer zeros",
+    "nflverse": "Existing cached 2026 Week 6 statistics through common grading_sources.load_cached_grading_context/cached_nflverse_outcome",
+    "statistics_sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd",
+    "status_sha256": "90430edd5f0fb73213334a5ebbd0fa790867c052321d8892cf3a999acb6ed4fa",
+    "identity": "Exact frozen archive Sleeper/GSIS and independent ESPN final game/team/kickoff bindings; ambiguous identities stay unsupported",
+    "vintage": "Current reconstructed source vintage; source original publication and historical availability unverified; no Week 8+ outcomes"
+  },
+  "resolution": {
+    "equal_values": "One outcome, dual-source agreement",
+    "sleeper_missing_nflverse_supported": "Qualified explicit NFLverse values may expand this separate variant; explicit dense zeros are supported outcomes",
+    "nflverse_missing_sleeper_supported": "Retain supported original value with source gap recorded",
+    "numeric_disagreement": "Quarantine both; no source winner or fabricated correction order",
+    "participation_disagreement": "Known played versus DNP conflict quarantines the target outcome",
+    "counts": "Finite nonnegative integer outcomes only; missing values are not zeros",
+    "yards": "Signed finite yardage preserved",
+    "unsupported": "Exact PPR unsupported and archived anytime probabilities unbound; no invented scoring"
+  },
+  "evaluation": {
+    "numeric_primary": "mae",
+    "secondary": ["rmse", "bias", "coverage", "explicit_zero_count", "source_conflicts"],
+    "matching": "Same resolved actual and archived identity for every compared prediction; pairwise plus five-method common support",
+    "uncertainty": "Existing paired week evaluator and descriptive game bootstrap, 500 replicates; one exposed week cannot qualify production",
+    "selection": "Frozen methods only; no fit, tuning, prediction change or method selection"
+  },
+  "budgets": {"new_fits": 0, "evaluation_seconds": 30, "outer_timeout_seconds": 120, "bootstrap_replicates": 500},
+  "preservation": "Original predictions, row files, report bytes, metrics and fit count remain unchanged. New local variant rows and public derived aggregate report are separately named and hashed.",
+  "promotion": "disabled; original protocol deviation and one-week/exposed-data limitations remain"
+}

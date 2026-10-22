@@ -1,0 +1,31 @@
+{
+  "schema": "archive-study-protocol-deviation-v1",
+  "study": "archive-lab-week6-v1-2026-10-22",
+  "status": "INELIGIBLE_PROTOCOL_DEVIATION",
+  "registered_requirement": "Ambiguous/unlinked players use explicit position-prior cold starts (config/archive-lab-comparison-v1.json training.identity).",
+  "executed_behavior": "All 9 numeric cold rows for lab_selected used fitted tree/ridge context inference with available context and training-only imputation, rather than pure position priors. The identity_cold_start fallback prefix did not enforce that prior policy.",
+  "affected_counts": {
+    "cold_archive_category_rows": 13,
+    "unique_cold_player_games": 3,
+    "numeric_cold_archive_rows": 9,
+    "numeric_selected_protocol_deviations": 9,
+    "numeric_selected_equal_to_saved_position_prior": 0,
+    "numeric_recent_equal_to_saved_position_prior": 9,
+    "numeric_pooled_equal_to_saved_position_prior": 9,
+    "unsupported_cold_archive_rows": {"fantasy_ppr": 3, "anytime_td": 1},
+    "numeric_cold_rows_by_target": {"rec": 3, "rec_yd": 3, "rush_att": 1, "rush_rec_yd": 1, "rush_yd": 1}
+  },
+  "qualification": "Original scores remain descriptive executed results with this deviation; no protocol-compliance, source-qualification or promotion claim is established for the selected cold rows.",
+  "preservation": {
+    "original_report_sha256": "e9e15c55f4f1edf9dcc22740454df3f790251bd5f8a059fd876f4bf04241dcaa",
+    "original_rows_sha256": "db5bb699ec590f849c13312fde778eda71d0a4e529bad843384089e37dc7052d",
+    "original_trials_sha256": "3f8a950d266917ef959bb92e02646571bf5edb97c44461cc10ab69321763b70a",
+    "original_new_fits": 30,
+    "additional_fits": 0,
+    "prediction_changes": 0,
+    "metric_changes": 0,
+    "rows_dropped": 0
+  },
+  "repair_policy": "Retain executed rows and artifacts. No rerun, tuning sensitivity, retrospective prior substitution or correction of original metrics. A changed inference policy requires a separate future version and preregistration.",
+  "promotion": []
+}
