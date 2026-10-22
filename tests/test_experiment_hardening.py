@@ -42,6 +42,9 @@ def test_reporting_reserve_preserves_total_budget_and_checkpoints_every_skip(tmp
     trials=json.loads((output/"trials.json").read_text())
     assert [r["state"] for r in trials]==["EVALUATED","NOT_RUN_BUDGET_EXHAUSTED","NOT_RUN_BUDGET_EXHAUSTED"]
     assert len(list((output/"trial-checkpoints").glob("*.json")))==3
+    assert len(trials[0]["row_file_sha256"])==64
+    assert trials[0]["forecast_rows"]==1
+    assert len(result["rows_sha256"])==64
     assert not (tmp_path/"state").exists()
 
 

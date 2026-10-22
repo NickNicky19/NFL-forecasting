@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import time
 import traceback
 import uuid
@@ -181,7 +182,7 @@ def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, s
                         r["evidence"]="current_vintage_historical_reconstruction"
                         path=output/f"{season}-{target}-{method}.parquet";r.to_parquet(path,index=False)
                         allrows.append(r)
-                        trial={**active,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"warnings":[str(w.message) for w in captured_warnings],"score":summarize(r)}
+                        trial={**active,"state":"EVALUATED","seconds":time.monotonic()-began,"parameters":pred.attrs,"warnings":[str(w.message) for w in captured_warnings],"score":summarize(r),"forecast_rows":len(r),"row_file_sha256":hashlib.file_digest(path.open("rb"),"sha256").hexdigest()}
                     except Exception as exc:
                         trial={**active,"state":"FAILED","seconds":time.monotonic()-began,"error":str(exc),"traceback":traceback.format_exc()}
                     checkpoint(trial);active=None
@@ -194,7 +195,8 @@ def campaign(features: pd.DataFrame, output: Path, config: dict, methods=None, s
             del rows,allrows
             from .reporting import finish_reports
             finish_reports(output)
-        report={"registration":config["registration_id"],"attempt_id":attempt,"output":str(output),"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"budget_skips":sum(x["state"]=="NOT_RUN_BUDGET_EXHAUSTED" for x in metadata),"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim","state":"COMPLETED",**timing}
+        row_path=output/"rows.parquet"
+        report={"registration":config["registration_id"],"attempt_id":attempt,"output":str(output),"elapsed_seconds":time.monotonic()-start,"trials":len(metadata),"failed":sum(x["state"]=="FAILED" for x in metadata),"budget_skips":sum(x["state"]=="NOT_RUN_BUDGET_EXHAUSTED" for x in metadata),"rows_sha256":hashlib.file_digest(row_path.open("rb"),"sha256").hexdigest() if row_path.exists() else None,"confirmation":"PENDING_FUTURE_OUTCOMES","promoted":[],"historical_exposure":"2022-2024 now exposed;2025 already exposed; no historical confirmation claim","state":"COMPLETED",**timing}
         atomic_checkpoint(output/"campaign.json",report)
         return report
     except BaseException as exc:
