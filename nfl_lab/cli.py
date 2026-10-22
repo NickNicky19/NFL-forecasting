@@ -10,7 +10,7 @@ from .state import digest, now_utc, records, resolved_outcomes, save, utc, valid
 
 def main():
     parser=argparse.ArgumentParser(description="Bounded NFL lab; no odds or production website writes")
-    parser.add_argument("command",choices=["acquire","experiment","daily","replay","publication"])
+    parser.add_argument("command",choices=["acquire","experiment","daily","grade","replay","publication"])
     parser.add_argument("--root",type=Path,default=Path.cwd())
     parser.add_argument("--cache",type=Path)
     parser.add_argument("--state",type=Path)
@@ -39,6 +39,9 @@ def main():
     elif args.command=="daily":
         from .live import daily
         result=daily(root,cache,state,seasons,args.methods.split(",") if args.methods else None)
+    elif args.command=="grade":
+        from .live import grade_only
+        result=grade_only(state,cache)
     elif args.command=="replay":
         from .prospective import score_saved
         forecasts=0

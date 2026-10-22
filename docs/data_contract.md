@@ -50,6 +50,9 @@ requires both. Combined yards requires both yardage components.
 `fantasy_ppr` is null because nflverse totals do not provide an authenticated
 crosswalk for every pinned website Sleeper scoring component and defensive
 fumble-recovery adjustment. The generic provider PPR total is not substituted.
+The [component audit](ppr-component-coverage.md) qualifies twelve common NFLverse
+components, including all-phase lost fumbles, but leaves six rare credit bridges
+unqualified. Sparse Sleeper omissions do not establish explicit zeros.
 
 `build_features(history) -> pandas.DataFrame` preserves original rows and index
 and adds numeric `f_` columns. Player windows are the last three/eight eligible

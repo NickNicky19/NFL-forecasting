@@ -9,7 +9,8 @@ def decision(event:str,mode:str|None=None,now:datetime|None=None):
     local=now.astimezone(ZoneInfo("America/Chicago"))
     scheduled=event=="schedule"
     due=not scheduled or (local.hour==8 and 36<=local.minute<=56)
-    chosen=mode or ("train" if scheduled and local.weekday()==6 else "daily")
-    if chosen not in ["daily","train","replay"]:raise ValueError("unknown cadence mode")
+    chosen=mode or ("grade" if scheduled and not due else "train" if scheduled and local.weekday()==6 else "daily")
+    if chosen not in ["daily","train","replay","grade"]:raise ValueError("unknown cadence mode")
     return {"observed_chicago":local.isoformat(),"due":due,"mode":chosen,
+            "pregame_issuance_allowed":bool(due and chosen in ["daily","train"]),
             "reason":"DUE" if due else "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"}

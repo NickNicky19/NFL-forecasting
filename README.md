@@ -12,8 +12,18 @@ The attached review package and raw source bodies are kept outside public Git.
 Current evidence: [category status](reports/lab-status.json),
 [historical comparisons](reports/initial-campaign/README.md), and
 [hosted verification](reports/hosted-verification.json). Hosted capture, retries
-and bounded training have succeeded. Actual scheduled delivery is still
-unverified; no future confirmation outcome or qualified winner is claimed.
+and bounded training have succeeded. An actual delayed scheduled delivery safely
+skipped issuance; on-time morning delivery remains unverified. No future
+confirmation outcome or qualified winner is claimed.
+
+The [matched website comparison](reports/archive-source-coverage-v1/README.md)
+has mixed results after expanded verified outcome coverage: four category losses
+improve and six worsen. This exposed single-week study is descriptive and has a
+retained cold-context protocol deviation. The separate
+[public scheme ablation](reports/public-scheme-study/README.md) worsened every
+tested primary loss and remains inactive. New website comparisons use
+[hash-bound pregame capture](docs/website-baseline-comparisons.md), without
+backfilling old forecasts.
 
 ```sh
 python -m venv .venv

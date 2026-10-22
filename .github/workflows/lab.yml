@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, replay]
+        options: [daily, train, grade, replay]
         default: daily
   push:
     branches: [main]
@@ -68,8 +68,12 @@ jobs:
           fi
       - name: Capture and grade
         id: daily
-        if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode != 'replay'
+        if: steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
         run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
+      - name: Grade recorded games without pregame issuance
+        id: grading
+        if: steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
+        run: timeout 300 python -m nfl_lab.cli grade > grading-result.json
       - name: Bounded weekly experiments
         id: training
         if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
@@ -78,13 +82,14 @@ jobs:
           timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
       - name: Replay immutable records
         id: replay
-        if: steps.cadence.outputs.due == 'true'
+        if: steps.cadence.outcome == 'success'
         run: python -m nfl_lab.cli replay
       - name: Persist only lab-derived forecasts and corrections
         if: always() && steps.cadence.outcome == 'success'
         env:
           ACCEPTANCE_OUTCOME: ${{ steps.acceptance.outcome }}
           DAILY_OUTCOME: ${{ steps.daily.outcome }}
+          GRADING_OUTCOME: ${{ steps.grading.outcome }}
           TRAINING_OUTCOME: ${{ steps.training.outcome }}
           REPLAY_OUTCOME: ${{ steps.replay.outcome }}
         run: |
@@ -100,7 +105,7 @@ jobs:
               'source_commit':os.environ['GITHUB_SHA'],
               'observed_at':now_utc().isoformat(),
               'cadence':json.loads(Path('cadence-result.json').read_text()),
-              'step_outcomes':{k:os.environ.get(k) for k in ['ACCEPTANCE_OUTCOME','DAILY_OUTCOME','TRAINING_OUTCOME','REPLAY_OUTCOME']},
+              'step_outcomes':{k:os.environ.get(k) for k in ['ACCEPTANCE_OUTCOME','DAILY_OUTCOME','GRADING_OUTCOME','TRAINING_OUTCOME','REPLAY_OUTCOME']},
               'scope':'workflow environment attestation; verify run identity/conclusion through GitHub Actions API'
           })
           PY

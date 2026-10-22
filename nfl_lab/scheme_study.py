@@ -44,6 +44,9 @@ def _validate_population(baseline: pd.DataFrame, current: pd.DataFrame) -> None:
 def run(root: Path, cache: Path, baseline_root: Path | None = None) -> tuple[dict, Path]:
     root, cache = Path(root), Path(cache)
     baseline_root = root if baseline_root is None else Path(baseline_root)
+    # The public receipt survives fresh checkouts that lack ignored run markers.
+    if (root / "reports/public-scheme-study/execution.json").exists():
+        raise ValueError("scheme_registered_fit_budget_already_attempted")
     registration_path = root / "config/scheme-study.json"
     config = json.loads(registration_path.read_text())
     committed = subprocess.run(["git", "show", "HEAD:config/scheme-study.json"], cwd=root,

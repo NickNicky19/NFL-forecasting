@@ -7,9 +7,12 @@ immutable upstream bytes; an unavailable source is an abstention.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import math
+import os
 import re
+import tempfile
 import time
 from collections import Counter
 from pathlib import Path
@@ -19,11 +22,21 @@ import pandas as pd
 
 from .data import TARGETS, _download
 from .evaluation import paired_week_interval, summarize
+from .scoring import SCORING_VERSION
 from .state import digest, now_utc, records, resolved_outcomes, save, utc, writer
 
 REPO = "NickNicky19/nicks-expert-nfl-picks"
 COUNTS = {"pass_td", "pass_cmp", "pass_att", "pass_int", "rush_att", "rec"}
 HEX40 = re.compile(r"[0-9a-f]{40}\Z")
+ENGINE_BLOBS = {
+    "pull/build.py": "e691985174387ed0dc6ecdda1f35b55c1012499c",
+    "pull/matchup.py": "3753d8e252513785dd1b9cf573f7d2616462945e",
+    "pull/scoring.py": "0c532e695e7abefc2203f95344218ffc07bb4c0f",
+    "pull/books.py": "406c24755aa9823311c01e3116662845854cf393",
+    "pull/gamemodel.py": "9c94d3889402c702e6a7ad1d239ea8f4d22b2cdf",
+    "pull/sources.py": "99b9029acf9a046a590589f001d99b242cc5576f",
+    "pull/news.py": "b29edaa0cfe1df29c3ee4741d63225ab43fa8249",
+}
 
 
 def _json(body):
@@ -41,11 +54,13 @@ def _json(body):
     return json.loads(body, object_pairs_hook=pairs, parse_constant=invalid)
 
 
-def _read(directory, name, url, policy, downloader):
+def _read(directory, name, url, policy, downloader, on_read=None):
     receipt = downloader(directory, name, url)
-    body = (directory / name).read_bytes()
-    if len(body) > policy["max_json_bytes"]:
+    path=directory/name
+    if path.stat().st_size > policy["max_json_bytes"]:
         raise ValueError("website JSON exceeds acceptance limit")
+    body = path.read_bytes()
+    if on_read is not None:on_read(len(body))
     if receipt.get("sha256") != hashlib.sha256(body).hexdigest():
         raise ValueError("website source checksum mismatch")
     return _json(body), receipt, body
@@ -53,22 +68,31 @@ def _read(directory, name, url, policy, downloader):
 
 def _policy(root):
     policy = json.loads((Path(root) / "config/website-baseline-v1.json").read_text())
+    _validate_policy(policy)
+    return policy
+
+
+def _validate_policy(policy):
     if policy["repo"] != REPO or policy["branch"] != "main":
         raise ValueError("unsupported website repository")
     if policy["board_path"] != "output/data/week.json" or policy["meta_path"] != "output/data/meta.json":
         raise ValueError("unsupported website source paths")
     if not 0 < policy["max_build_age_minutes"] <= 120:
         raise ValueError("unsupported website freshness policy")
-    return policy
+    if policy["engine_blobs"] != ENGINE_BLOBS:
+        raise ValueError("website engine policy differs from registered v1")
+    if type(policy["max_json_bytes"]) is not int or not 0 < policy["max_json_bytes"] <= 5*1024*1024:
+        raise ValueError("unsupported website JSON acceptance budget")
 
 
-def _snapshot(cache, policy, commit, tree_sha, downloader):
+def _snapshot(cache, policy, commit, tree_sha, downloader, on_read=None):
+    _validate_policy(policy)
     if not HEX40.fullmatch(commit) or not HEX40.fullmatch(tree_sha):
         raise ValueError("invalid immutable website commit/tree")
     directory = Path(cache) / "raw/website_snapshots" / commit
     directory.mkdir(parents=True, exist_ok=True)
     tree, tr, _ = _read(directory, "tree.json",
-        f"https://api.github.com/repos/{REPO}/git/trees/{tree_sha}?recursive=1", policy, downloader)
+        f"https://api.github.com/repos/{REPO}/git/trees/{tree_sha}?recursive=1", policy, downloader, on_read)
     if tree.get("sha") != tree_sha or tree.get("truncated") is not False:
         raise ValueError("incomplete website source tree")
     paths = {}
@@ -86,7 +110,7 @@ def _snapshot(cache, policy, commit, tree_sha, downloader):
         if entry.get("type") != "blob" or entry.get("mode") not in {"100644", "100755"}:
             raise ValueError("website data is absent or not a regular blob")
         doc, receipt, body = _read(directory, label + ".json",
-            f"https://raw.githubusercontent.com/{REPO}/{commit}/{path}", policy, downloader)
+            f"https://raw.githubusercontent.com/{REPO}/{commit}/{path}", policy, downloader, on_read)
         git_blob = hashlib.sha1(b"blob " + str(len(body)).encode() + b"\0" + body).hexdigest()
         if git_blob != entry["sha"]:
             raise ValueError("website blob differs from pinned tree")
@@ -104,6 +128,17 @@ def _finite(value):
         return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
     except OverflowError:
         return False
+
+
+def _lab_scope(row, header):
+    return (row.get("target") in TARGETS and row.get("period") == "full_game"
+        and type(row.get("season")) is int and type(row.get("week")) is int
+        and (row["season"], row["week"]) == (header["season"], header["week"])
+        and row.get("scoring_id") == (SCORING_VERSION if row["target"] == "fantasy_ppr" else "nfl-full-game-v1"))
+
+
+def _point_matches_lab(point, row):
+    return all(point.get(k) == row.get(k) for k in ["game_id", "sleeper_id", "target", "team", "opponent", "position"]) and utc(point["kickoff_utc"]) == utc(row["kickoff_utc"])
 
 
 def _points(board):
@@ -202,6 +237,8 @@ def capture_website_bindings(state, prepared, lab_batch, *, clock=now_utc):
     for row in batches[0]["rows"]:
         if row.get("code_integrity") != "pre_post_source_digest_required":
             raise ValueError("unqualified lab code cannot acquire website baseline")
+        if not _lab_scope(row, header):
+            excluded["unsupported_lab_period_season_week_or_scoring"] += 1; continue
         if utc(row["feature_cutoff_utc"]) > utc(row["issued_at"]):
             excluded["invalid_lab_cutoff_after_issuance"] += 1; continue
         if utc(header["observed_at"]) > utc(row["feature_cutoff_utc"]) or utc(header["generated_at"]) > utc(row["feature_cutoff_utc"]):
@@ -212,7 +249,7 @@ def capture_website_bindings(state, prepared, lab_batch, *, clock=now_utc):
             point = points.get((row["game_id"], row["sleeper_id"], row["target"], method))
             if not point:
                 excluded["website_point_unavailable"] += 1; continue
-            if (point["team"], point["opponent"], point["position"], utc(point["kickoff_utc"])) != (row["team"], row["opponent"], row["position"], utc(row["kickoff_utc"])):
+            if not _point_matches_lab(point, row):
                 excluded["lab_source_identity_mismatch"] += 1; continue
             bindings.append({k: v for k, v in point.items() if k != "value"} | {
                 "value_sha256": digest({"target": point["target"], "method": method, "value": point["value"]}),
@@ -263,9 +300,12 @@ def score_saved_website(state, cache, *, downloader=_download):
     lab_persist = {p["batch"]: p for p in records(state, "persistence")}
     lab_public = {p["batch"]: p for p in records(state, "publication")}
     needed = {s["lab_batch"] for s in snapshots}
-    lab = {digest(row): row for batch in records(state, "forecasts") if digest(batch) in needed for row in batch["rows"]}
+    lab = {digest(batch): {digest(row): row for row in batch["rows"]} for batch in records(state, "forecasts") if digest(batch) in needed}
     outcomes = resolved_outcomes(state); coverage = Counter(); rows = []; limits = []
-    recovered_points = {}; started = time.monotonic(); processed_bytes = 0
+    recovered_points = {}; failed_sources = {}; attempted_sources = set(); started = time.monotonic(); processed_bytes = 0
+    def charge_source_bytes(size):
+        nonlocal processed_bytes
+        processed_bytes += size
     for snapshot in snapshots:
         header = snapshot["header"]; key = digest(snapshot)
         if key not in persistence or key not in publication or snapshot["lab_batch"] not in lab_persist or snapshot["lab_batch"] not in lab_public:
@@ -275,26 +315,36 @@ def score_saved_website(state, cache, *, downloader=_download):
                 coverage[outcomes.get((b["lab_player_id"], b["game_id"], b["target"]), {}).get("state", "pending")] += 1
             continue
         source_key = (header["commit"], header["tree_sha"], header["policy_sha256"])
-        if source_key not in recovered_points and (len(recovered_points) >= 128 or time.monotonic()-started >= 120 or processed_bytes >= 497*1024*1024):
+        if source_key in failed_sources:
+            coverage["immutable_upstream_unavailable_or_invalid"] += len(snapshot["rows"])
+            limits.append(failed_sources[source_key]); continue
+        if source_key not in attempted_sources and (len(attempted_sources) >= 128 or time.monotonic()-started >= 120 or processed_bytes >= 497*1024*1024):
             coverage["rehydration_budget_pending"] += len(snapshot["rows"]); continue
+        attempted_sources.add(source_key)
         try:
             policy = header["policy"]
             if policy["repo"] != REPO or digest(policy) != header["policy_sha256"]:
                 raise ValueError("website policy binding mismatch")
             if source_key not in recovered_points:
-                board, recovered = _snapshot(cache, policy, header["commit"], header["tree_sha"], downloader)
-                processed_bytes += sum((Path(cache)/"raw/website_snapshots"/header["commit"]/(label+".json")).stat().st_size for label in ["tree","board","meta"])
-                recovered_points[source_key] = (recovered, _points(board))
-            recovered, points = recovered_points[source_key]
+                board, recovered = _snapshot(cache, policy, header["commit"], header["tree_sha"], downloader, charge_source_bytes)
+                recovered_points[source_key] = (recovered, _points(board), (board["season"], board["week"], board["generated_at"]))
+            recovered, points, recovered_period = recovered_points[source_key]
             if recovered["body_sha256"] != header["body_sha256"] or recovered["blob_ids"] != header["blob_ids"]:
                 raise ValueError("website immutable bytes differ from pregame binding")
+            if recovered_period != (header["season"], header["week"], header["generated_at"]):
+                raise ValueError("website recovered period or generation clock mismatch")
         except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
             coverage["immutable_upstream_unavailable_or_invalid"] += len(snapshot["rows"])
-            limits.append(type(exc).__name__ + ": " + str(exc)[:200]); continue
+            error = type(exc).__name__ + ": " + str(exc)[:200]
+            if source_key not in recovered_points:
+                failed_sources[source_key] = error
+            limits.append(error); continue
         for binding in snapshot["rows"]:
-            row = lab.get(binding["lab_forecast_sha256"])
+            row = lab.get(snapshot["lab_batch"], {}).get(binding["lab_forecast_sha256"])
             if not row:
                 coverage["lab_row_unavailable"] += 1; continue
+            if not _lab_scope(row, header) or row.get("code_integrity") != "pre_post_source_digest_required" or any(binding.get(k) != row.get(k) for k in ["season", "week", "period", "scoring_id", "game_id", "sleeper_id", "target", "team", "opponent", "position"]):
+                coverage["unsupported_lab_period_season_week_or_scoring"] += 1; continue
             kickoff = utc(row["kickoff_utc"])
             clocks = [persistence[key]["completed_at"], publication[key]["observed_remote_readback_at"],
                       lab_persist[snapshot["lab_batch"]]["completed_at"], lab_public[snapshot["lab_batch"]]["observed_remote_readback_at"]]
@@ -304,7 +354,7 @@ def score_saved_website(state, cache, *, downloader=_download):
                 or (utc(row["feature_cutoff_utc"]) - utc(header["generated_at"])).total_seconds() > policy["max_build_age_minutes"]*60):
                 coverage["late_or_after_original_cutoff"] += 1; continue
             point = points.get((binding["game_id"], binding["sleeper_id"], binding["target"], binding["method"]))
-            if not point or point["source_prop_sha256"] != binding["source_prop_sha256"] or digest({"target": point["target"], "method": point["method"], "value": point["value"]}) != binding["value_sha256"]:
+            if not point or not _point_matches_lab(point, row) or point["source_prop_sha256"] != binding["source_prop_sha256"] or digest({"target": point["target"], "method": point["method"], "value": point["value"]}) != binding["value_sha256"]:
                 coverage["point_binding_mismatch"] += 1; continue
             outcome = outcomes.get((row["player_id"], row["game_id"], row["target"]))
             state_name = outcome["state"] if outcome else "pending"
@@ -332,17 +382,25 @@ def score_saved_website(state, cache, *, downloader=_download):
         row_hash = digest([{k: r[k] for k in ["lab_model_id", "baseline_method", "method", "player_id", "game_id", "target", "actual", "mean"]} for r in rows])
         destination = private / (row_hash + ".parquet")
         if not destination.exists():
-            if sum(p.stat().st_size for p in private.glob("*.parquet")) > 256*1024*1024:
+            buffer = io.BytesIO(); frame.to_parquet(buffer, index=False); body = buffer.getvalue()
+            if sum(p.stat().st_size for p in private.glob("*.parquet")) + len(body) > 256*1024*1024:
                 limits.append("Private comparison row retention cap reached; no evidence deleted.")
             else:
-                frame.to_parquet(destination, index=False)
+                temporary = None
+                try:
+                    with tempfile.NamedTemporaryFile(dir=private, prefix=".pending-", delete=False) as f:
+                        temporary = Path(f.name); f.write(body); f.flush(); os.fsync(f.fileno())
+                    try:os.link(temporary, destination)
+                    except FileExistsError:pass
+                finally:
+                    if temporary is not None:temporary.unlink(missing_ok=True)
     report = {"schema_version": "website-paired-scorecard-v1", "state": "SCORED" if rows else "PENDING_OR_UNSUPPORTED",
               "paired_rows": len(rows) // 2, "coverage": dict(coverage), "summaries": summaries, "paired": paired,
               "limits": sorted(set(limits)), "promoted": [],
               "scope": "Same original lab rows and cutoff; strict timely hash bindings; no selected-line or EV claim. Confirmation gates remain separate."}
     if coverage["rehydration_budget_pending"]:
         report["state"] = "PARTIAL_REHYDRATION_BUDGET_PENDING"
-    report["resource_profile"] = {"unique_snapshots_recovered": len(recovered_points), "source_bytes_processed": processed_bytes,
+    report["resource_profile"] = {"unique_snapshots_attempted": len(attempted_sources), "unique_snapshots_recovered": len(recovered_points), "source_bytes_processed": processed_bytes,
                                   "seconds": time.monotonic()-started, "budget": "128 snapshots, 512MiB including last bounded snapshot, 120s launch cutoff; shared HTTP retries/timeouts unchanged"}
     save(state, "website_comparisons", report)
     return report

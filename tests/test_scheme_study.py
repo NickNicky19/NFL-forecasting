@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from nfl_lab.scheme_study import _validate_population
+from nfl_lab.scheme_study import _validate_population, run
 
 
 def fixture():
@@ -39,3 +39,11 @@ def test_preregistered_scope_and_fit_budget_are_fixed():
     assert registration["budgets"]["threads"] == 2
     assert "fantasy_ppr" not in registration["targets"]
     assert registration["base_features_sha256"] == "ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297"
+
+
+def test_public_completed_receipt_blocks_refits_before_reading_data(tmp_path):
+    report = tmp_path / "reports/public-scheme-study/execution.json"
+    report.parent.mkdir(parents=True)
+    report.write_text("{}")
+    with pytest.raises(ValueError, match="fit_budget_already_attempted"):
+        run(tmp_path, tmp_path / "nonexistent_cache")

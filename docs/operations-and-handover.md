@@ -15,12 +15,14 @@ state without becoming a second official forecast recorder.
 | `python -m nfl_lab.cli acquire` | Cached, versioned permitted history and features | Source receipts and feature-file SHA |
 | `python -m nfl_lab.cli experiment` | Fixed, finite registered comparisons | Unique attempt, all trial states, local row files and aggregate reports |
 | `python -m nfl_lab.cli daily` | Freeze eligible future opportunities; grade supported completed games | Forecast, persistence, source-manifest, model and health records |
+| `python -m nfl_lab.cli grade` | Grade recorded games without pregame issuance or fitting | Append-only outcome observations and grading health |
 | `python -m nfl_lab.cli replay` | Validate immutable records and score available outcomes | Integrity result, pending and conflict counts, separate confirmation cohort |
 
 The hosted workflow restores `lab-state` before it runs. It persists derived
 state through a single writer and verifies remote readback after publication.
 GitHub's queue is bounded; an older pending job can be superseded. A delayed
-scheduled job outside the Chicago morning window is skipped. Neither case
+scheduled job outside the Chicago morning window skips issuance and training,
+then grades recorded games and replays evidence. Neither case
 creates a backdated forecast. Manual recovery uses the existing workflow and
 the same frozen-opportunity rules.
 
@@ -38,10 +40,13 @@ remains recorded. The Checks API independently confirms training run
 `39791493637` and capture run `39795596765` succeeded; the Actions run listing
 temporarily returned stale queued/in-progress states. See
 `reports/hosted-verification.json` for the bound state commit and receipts.
-Neither the expected October 22 morning scheduled delivery nor a subsequent
-scheduled event has been observed. This is an unverified scheduler delivery,
-not proof of a specific account setting. Reading administrative Actions settings
-returned HTTP 403; no access restriction was bypassed.
+An actual scheduled event, run `39828619104`, arrived at 18:07:32Z on October 22,
+outside the morning window. Its older source safely skipped issuance, training
+and replay and persisted the missed-slot receipt. The revised recovery path
+grades and replays off-slot runs without issuing forecasts. On-time morning
+delivery remains unverified. Reading administrative Actions settings returned
+HTTP 403; no access restriction was bypassed. The later observed delivery means
+an owner settings check is no longer needed to establish scheduler delivery.
 
 Raw HTTP bodies are cached once per source within an execution workspace and
 versions are retained locally. Standard hosted runners are ephemeral: a later
@@ -50,6 +55,9 @@ Git, Actions artifacts or caches to obtain cross-run persistence. Detailed
 historical rows remain in the ignored research workspace; hosted durable
 training receipts bind their hashes and retain trial parameters and summaries.
 Those receipts alone cannot restore an unavailable historical raw snapshot.
+Grading-only fresh runners use primary Sleeper outcomes and any already cached
+qualified NFLverse outcomes. They do not acquire the historical cache, so sparse
+Sleeper fields may remain missing until a normal daily acquisition runs.
 
 ## State and resource limits
 

@@ -52,13 +52,14 @@ def fixture(tmp_path, *, target="pass_yd", raw=205., adjusted=213., chance=.4):
     return root, cache, state, games, board, changes, download
 
 
-def lab_batch(state, games, *, target="pass_yd", cutoff=None, mean=210.):
+def lab_batch(state, games, *, target="pass_yd", cutoff=None, mean=210., overrides=None):
     row = {"player_id": "00-1", "sleeper_id": "s1", "game_id": "espn:1", "team": "WAS", "opponent": "NYG",
         "position": "QB", "season": 2026, "week": 7, "target": target, "period": "full_game", "model_id": "lab-v1.1-tree",
         "scoring_id": "nfl-full-game-v1", "input_sha256": "a" * 64, "code_sha256": "b" * 64,
         "kickoff_utc": games[0]["kickoff_utc"], "mean": mean, "fallback": "", "family": "normal", "scale": 10.,
         "p_participation": .9, "feature_cutoff_utc": (cutoff or NOW + timedelta(minutes=1)).isoformat(),
         "code_integrity": "pre_post_source_digest_required"}
+    row.update(overrides or {})
     issued = max(NOW + timedelta(minutes=2), datetime.fromisoformat(row["feature_cutoff_utc"]) + timedelta(minutes=1))
     return capture(state, [row], clock=lambda: issued)["batch"]
 
@@ -226,3 +227,36 @@ def test_source_cannot_acquire_binding_when_clock_precedes_lab_persistence(tmp_p
     f = fixture(tmp_path); p = prepared(f); batch = lab_batch(f[2], f[3])
     with pytest.raises(ValueError, match="precedes original lab persistence"):
         capture_website_bindings(f[2], p, batch, clock=lambda: NOW + timedelta(minutes=1))
+
+
+@pytest.mark.parametrize("changed",[{"period":"first_half"},{"scoring_id":"custom-scoring-v9"},{"season":2025},{"week":6}])
+def test_forecast_scope_cannot_be_relabelled_as_website_full_game(tmp_path,changed):
+    f=fixture(tmp_path);p=prepared(f);batch=lab_batch(f[2],f[3],overrides=changed)
+    result=capture_website_bindings(f[2],p,batch,clock=lambda:NOW+timedelta(minutes=3))
+    assert result["bound"]==0
+    assert result["binding_exclusions"]["unsupported_lab_period_season_week_or_scoring"]==1
+
+
+def test_failed_upstream_recovery_is_cached_and_counts_against_attempt_budget(tmp_path):
+    f=fixture(tmp_path);batch,_=bind(f);publish(f[2],batch);outcome(f[2])
+    original=next(records(f[2],"website_bindings"));second=json.loads(json.dumps(original));second["extra_receipt"]="second"
+    key=save(f[2],"website_bindings",second)
+    save(f[2],"website_persistence",{"snapshot":key,"completed_at":(NOW+timedelta(minutes=3)).isoformat()})
+    record_website_publication(f[2],"d"*40,NOW+timedelta(minutes=4))
+    attempts=[]
+    def unavailable(*args,**kwargs):
+        attempts.append(1);raise RuntimeError("source unavailable")
+    report=score_saved_website(f[2],f[1],downloader=unavailable)
+    assert len(attempts)==1 and report["paired_rows"]==0
+    assert report["resource_profile"]["unique_snapshots_attempted"]==1
+    assert report["coverage"]["immutable_upstream_unavailable_or_invalid"]==4
+
+
+def test_private_row_cap_includes_incoming_parquet_bytes(tmp_path):
+    f=fixture(tmp_path);batch,_=bind(f);publish(f[2],batch);outcome(f[2])
+    directory=f[0]/"runs/website-comparison";directory.mkdir(parents=True)
+    with (directory/"existing.parquet").open("wb") as stream:stream.truncate(256*1024*1024)
+    report=score_saved_website(f[2],f[1],downloader=f[6])
+    assert len(list(directory.glob("*.parquet")))==1
+    assert report["paired_rows"]==2
+    assert "Private comparison row retention cap reached; no evidence deleted." in report["limits"]

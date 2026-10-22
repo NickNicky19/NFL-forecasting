@@ -217,6 +217,20 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     return report
 
 
+def grade_only(state,cache):
+    """Delayed/offseason operation: grade saved games, never issue forecasts."""
+    player_limit=None
+    try:
+        players,_=fetch(cache,"players","https://api.sleeper.app/v1/players/nfl")
+    except (OSError,RuntimeError,ValueError) as exc:
+        # Existing frozen Sleeper IDs remain usable; no name lookup is invented.
+        players={};player_limit=type(exc).__name__+": "+str(exc)[:300]
+    result={"state":"GRADING_ONLY_NO_PREGAME_ISSUANCE","grading":grade_saved(state,cache,players),
+            "player_source_limit":player_limit,"observed_at":now_utc().isoformat()}
+    save(state,"health",result)
+    return result
+
+
 def grade_saved(state,cache,players):
     from .scoring import stat_value
     from .grading_sources import load_cached_grading_context,cached_nflverse_outcome
