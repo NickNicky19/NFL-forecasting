@@ -1,0 +1,18 @@
+{
+  "registration_id": "ngs-context-reconstruction-v1-2026-10-22",
+  "registered_before_context_fits": true,
+  "purpose": "Bounded incremental NGS ablation; descriptive development only",
+  "development_season": 2023,
+  "training_seasons": [2019, 2020, 2021, 2022],
+  "sources_ngs_seasons": [2022, 2023],
+  "feature_groups": ["base97", "base97_plus_strictly_prior_NGS"],
+  "baseline": "reuse unchanged initial2023 ridge rows and fixed feature matrix SHA ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297",
+  "challenger": "same fixed ridge/logistic configuration with priorNGS; no hyperparameter search",
+  "targets": ["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd", "anytime_td"],
+  "budgets": {"configurations_per_category": 2, "new_fits_per_category": 1, "fit_seconds": 300, "threads": 2, "raw_acquisition_bytes": 5242880},
+  "primary_metrics": {"numeric": "mae", "anytime_td": "brier"},
+  "promotion": "disabled;2022-24 are already exposed; no new untouched historical validation claim",
+  "availability": "current-vintage public aggregate reconstruction; assumed kickoff+7d and source stale limit; not authenticated historic publication",
+  "prospective_activation": "disabled until supported current source coverage and separately frozen inference contract",
+  "source_gaps": "no invented injury/news/routes/weather/scheme inputs; unavailable authenticated versions recorded explicitly"
+}
