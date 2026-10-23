@@ -69,20 +69,20 @@ jobs:
       - name: Capture and grade
         id: daily
         if: steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
-        run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
-      - name: Grade recorded games without pregame issuance
-        id: grading
-        if: steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
-        run: timeout 300 python -m nfl_lab.cli grade > grading-result.json
+        run: timeout 540 python -m nfl_lab.cli daily --source-policy config/operational-source-policy-v1.json > daily-result.json
       - name: Bounded weekly experiments
         id: training
         if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
         run: |
-          timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
-          timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
+          timeout 180 python -m nfl_lab.cli acquire --source-policy config/operational-source-policy-v1.json > acquire-result.json
+          timeout 720 python -m nfl_lab.cli experiment --source-policy config/operational-source-policy-v1.json > experiment-result.json
+      - name: Grade recorded games without pregame issuance
+        id: grading
+        if: always() && steps.acceptance.outcome == 'success' && steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade' || steps.daily.outcome == 'failure' || steps.training.outcome == 'failure')
+        run: timeout 180 python -m nfl_lab.cli grade --source-policy config/operational-source-policy-v1.json > grading-result.json
       - name: Replay immutable records
         id: replay
-        if: steps.cadence.outcome == 'success'
+        if: always() && steps.acceptance.outcome == 'success' && steps.cadence.outcome == 'success'
         run: python -m nfl_lab.cli replay
       - name: Persist only lab-derived forecasts and corrections
         if: always() && steps.cadence.outcome == 'success'
