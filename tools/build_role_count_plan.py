@@ -255,6 +255,17 @@ def build_plan(parent: dict, freeze: dict, integration_root: Path, packet: Path)
         if current["sha256"] != binding["sha256"]:
             raise ValueError("retained shared source/model/evaluator code changed: " + current["path"])
     prereqs = {b["path"]: b for b in parent["prerequisite_bindings"]}
+    # The later H3 contract legitimately updated dependency declarations.
+    # Preserve the parent registry as evidence, but authenticate the manifest
+    # actually used by this new study instead of inheriting its stale digest.
+    environment_path = integration_root / "pyproject.toml"
+    prior_environment = copy.deepcopy(prereqs.get(str(environment_path)))
+    prereqs[str(environment_path)] = bind(environment_path)
+    plan["environment_manifest_version"] = {
+        "prior_study_binding": prior_environment,
+        "current_study_binding": copy.deepcopy(prereqs[str(environment_path)]),
+        "reason": "Existing H3 point-contract dependency declarations; no package installation or change to frozen parent evidence",
+    }
     for path in [Path(__file__).resolve(), PARENT_ROOT / "RUN_01/forecast-freeze.json",
                  packet / "source-owner/SOURCE_AUDIT.json", packet / "source-owner/EXACT_PPR_BLOCK.json"]:
         prereqs[str(path)] = bind(path)
@@ -283,7 +294,9 @@ def build_plan(parent: dict, freeze: dict, integration_root: Path, packet: Path)
     plan["actual_workers"] = {
         "integrator": "/root", "shared_source": "/root/all12_source_owner",
         "shared_model_evaluator": "/root/role_boosting_implementer",
-        "separate_read_only_reviewer": "/root/role_study_reviewer",
+        "preliminary_design_reviewer": "/root/role_study_reviewer",
+        "separate_read_only_reviewer": "/root/role_study_final_reviewer",
+        "explicit_accepted_worker_spawn_arguments": {"model": "gpt-6.1-sol", "reasoning_effort": "xhigh", "backend_attestation": False},
         "maximum_concurrent_including_root": 4,
         "actual_runtime_model_setting": "Not independently exposed to source builder; no inference from requested settings.",
         "all12_prior_category_owner_contracts": "Retained byte-equivalent JSON subtrees in parent registry; no category contract or primary role changes.",
