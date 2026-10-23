@@ -1,0 +1,81 @@
+{
+  "CPU_seconds_self": 0.0,
+  "checks": {
+    "66_identified_and_one_orphan": true,
+    "67_raw_records_reconcile": true,
+    "all_state_and_receipt_pins": true,
+    "config_digest_exact": true,
+    "full_union_reconciles": true,
+    "input_manifests_match_reviewed_config": true,
+    "model_settings_unattested": true,
+    "no_HTTP": true,
+    "no_labels_or_football_scores": true,
+    "observed_resources_within_bounds": true,
+    "one_joint_missing_position_identity": true,
+    "projection_digest_is_reference_only": true,
+    "reference_after_decode": true,
+    "reference_before_decode": true,
+    "reference_manifest_has_both_phases": true,
+    "sampling_limit_disclosed": true,
+    "single_consumed_invocation": true,
+    "successful_sequential_phases": true,
+    "unchanged_resource_bounds": true,
+    "unmatched_coverage_visible": true
+  },
+  "files": {
+    "JOB_CONSUMED.json": {
+      "SHA256": "9b5f8594c122b9ed30ae25a5fd7fa8d8f5e68d5b969144c34afb5e0aa22e621f",
+      "bytes": 389
+    },
+    "JOB_FINISHED.json": {
+      "SHA256": "0090aca311a5422980a063306cec7836d079af8c655ef6817a9303557c5fe4ea",
+      "bytes": 1666
+    },
+    "PREREQUISITE_CONSUMED.json": {
+      "SHA256": "758dfd675cf6946e67b8c99d53f8f6ac76104f065c9af40d594c6d8a9fa6ca3f",
+      "bytes": 197
+    },
+    "PREREQUISITE_FINISHED.json": {
+      "SHA256": "02a8f3776bd5aa62b2091bb2502765d35ddcf89619c9f8185025b1e030e5feba",
+      "bytes": 254
+    },
+    "aggregate.json": {
+      "SHA256": "5c2a423f993d25c20c0e54c124352111c96eff60718228f0b423475e854aec9b",
+      "bytes": 2179
+    },
+    "reference-validation.json": {
+      "SHA256": "6fd743c9584b03142e27b7d3e2239de305672176d56704393c83703f11ed96d1",
+      "bytes": 19913
+    }
+  },
+  "findings": {
+    "known_player_union": 97,
+    "new_labels_fits_scores_HTTP": 0,
+    "offered_unmatched_to_raw": 11,
+    "offered_without_raw_or_witness": 5,
+    "plus_orphan_units": 98,
+    "quarantined_missing_identity": 1,
+    "raw_records": 67,
+    "same_orphan_missing_position": 1,
+    "unique_identified_raw_players": 66,
+    "witness_unmatched_to_raw": 26
+  },
+  "limitations": [
+    "Counts reconcile within saved aggregates; private full inventory/union values were not independently decoded or reproduced.",
+    "Raw projection SHA authenticated as recorded manifest pointer only; no original/source/private parquet reread.",
+    "Resource values before supervisor receipt write; sampled RSS can miss transients and individual peaks are not simultaneous sums.",
+    "No participation/DNP/zero-stat/PPR/historical availability qualification or forecasting improvement.",
+    "Original failed strict join and prior attempts remain unchanged."
+  ],
+  "max_RSS_bytes": 10092544,
+  "resources_before_supervisor_receipt_write": {
+    "combined_CPU_seconds_before_receipt_write": 23.018921000000002,
+    "combined_RSS_peak_sampled_bytes": 165859328,
+    "maximum_individual_child_ru_maxrss_bytes": 146366464,
+    "supervisor_individual_ru_maxrss_bytes": 114167808,
+    "wall_seconds_before_receipt_write": 22.45184543600044
+  },
+  "scope": "Saved aggregate/manifests/receipts only; no original raw/primitive requery, private identity inventory or parquet values opened, tests or reexecution.",
+  "state": "RAW_ORPHAN_CONTEXT_V1_SAVED_AGGREGATE_METADATA_ACCEPTED",
+  "wall_seconds": 0.0005544439991354011
+}

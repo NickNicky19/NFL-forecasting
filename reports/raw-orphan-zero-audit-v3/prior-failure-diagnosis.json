@@ -1,0 +1,24 @@
+{
+  "bootstrap_stdout_SHA256": "4ed2c12b50bf4526b4a3c5cbba8cc50914a67526877fc34cacf4657e746ae1c4",
+  "confirmed": [
+    "Bootstrap completed successfully, returncode0 and fixed STORAGE_BOOTSTRAP_COMPLETE message; it queried no source.",
+    "Supervisor recorded RuntimeError within run_phase, generic SUPERVISOR_FAILURE_NO_RETRY, with no source phase or audit output namespace.",
+    "No resource stop reason; observed8.725162031wall/8.948599CPU/136208384sampledRSS were below existing limits.",
+    "The caught exception message/stage was discarded, so the exact underlying RuntimeError cannot be recovered from saved logs.",
+    "Original v2 remains FAILED/consumed; candidate-zero counts remain unknown;0labels applied."
+  ],
+  "receipt_SHA256": "f6ebe6c62a3947794b946ff2941d4f731034dd9a01f7bef6564babc02c7bc7e5",
+  "scope": "Saved bootstrap logs/receipt and runner static code only; no source/private primitive values, tests, retries, sampling experiments, CAS writes, model reads or forecasts.",
+  "smallest_new_version_proposal": [
+    "Preserve v2; create a separately versioned guard/namespace and preregister any new invocation.",
+    "Add fixed stage/reason codes to sampler and run_phase failures, recording no source values or raw exception text.",
+    "Reuse the previously accepted verifier child-state pattern: exact child PID/startticks/Pid; require positiveRSS for live states; authenticatedZ/X may have zero resident memory; disappearance accepted only with confirmed original-child exit.",
+    "Timeout and supervisor remain strict positiveRSS; malformed/reused/live-unobservable PIDs still fail closed; no descendant-discovery fallback.",
+    "Keep all wall/CPU/RSS safety caps, post-reap highwater checks, source-after-successful-bootstrap gate, network/process/PDEATHSIG, attempted-output cap and global CAS controls unchanged.",
+    "One separately authorized fictional transition-contract check before any new real run; no testing or reexecution performed here."
+  ],
+  "state": "RAW_ORPHAN_ZERO_AUDIT_V2_SAVED_FAILURE_STATIC_DIAGNOSIS",
+  "stderr_empty": true,
+  "unconfirmed_hypothesis": "A short child-exit transition in strict explicitPID/RSS sampling is plausible, but has not been reproduced or established. Other RuntimeError branches remain possible.",
+  "underlying_cause": "UNKNOWN_FROM_SAVED_EVIDENCE"
+}

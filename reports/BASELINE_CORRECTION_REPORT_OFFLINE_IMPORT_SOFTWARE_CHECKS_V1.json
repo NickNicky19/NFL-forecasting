@@ -1,0 +1,57 @@
+{
+  "CPU_seconds_before_receipt_write": 4.089041536,
+  "CPU_wall_caps_seconds": 30,
+  "HTTP_source_model_semantic_reads_fits_scores_child_processes": 0,
+  "RSS_cap_bytes": 268435456,
+  "RSS_scope": "single process; known highwater and traced checks, not kernel-enforced continuous RSS",
+  "actual_backend_settings": "UNATTESTED",
+  "automatic_retries": 0,
+  "bindings": {
+    "config/baseline-correction-report-offline-import-software-v1.json": {
+      "bytes": 2119,
+      "sha256": "3a3e903a80f2086ced70ecd68f6b8ee9ab603cae0a33add378f9e45fa1abdc1f"
+    },
+    "tests/test_offline_report_imports_v1.py": {
+      "bytes": 1745,
+      "sha256": "61e02c3c3f75eeb8b007463b084ac445317d4ec1a2d285739697b6a1db797ee3"
+    },
+    "tools/baseline_correction_report_run_v2.py": {
+      "bytes": 4778,
+      "sha256": "eaefc06c13d8511e60fac84e13e943309231e128ec16732f2449fa1eda712af6"
+    },
+    "tools/baseline_correction_report_supervisor_v2.py": {
+      "bytes": 5713,
+      "sha256": "6d34cbe4dbf6926510b6f1cbb5ae848febc8242cdeb27c03d1fa7620ec552391"
+    },
+    "tools/baseline_correction_report_v2.py": {
+      "bytes": 16316,
+      "sha256": "21fe661a8a51da46662f02255a41cf513f86a239e7e3999682658294e1bfdaad"
+    },
+    "tools/freeze_baseline_correction_report_v2.py": {
+      "bytes": 5551,
+      "sha256": "22a86bd25ddc78bc3a5478b54f0e36c6c8a7d8f4bb1a1a82624696488352aefe"
+    },
+    "tools/offline_report_imports_v1.py": {
+      "bytes": 709,
+      "sha256": "12b0cbd3e7ad075ae91e58de1317f54b15919cd8a75cd0e081ac0695503ce91c"
+    }
+  },
+  "counts": {
+    "denied_effects": 0,
+    "lines": 5740381,
+    "resource_checks": 28702
+  },
+  "errors": 0,
+  "exception": null,
+  "failures": 0,
+  "invocations": 1,
+  "numerical_threads": 1,
+  "process_ru_maxrss_bytes": 172851200,
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "Extra High",
+  "schema_version": "baseline-correction-report-offline-import-checks-v1",
+  "state": "PASS",
+  "tests_run": 2,
+  "unittest_log": "test_original_dependency_import_and_empty_guard_only (new_offline_import_guard_contracts.OfflineImportChecks.test_original_dependency_import_and_empty_guard_only) ... ok\ntest_restore_and_skip_optional_probe_mock (new_offline_import_guard_contracts.OfflineImportChecks.test_restore_and_skip_optional_probe_mock) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 3.992s\n\nOK\n",
+  "wall_seconds_before_receipt_write": 4.094774138000503
+}

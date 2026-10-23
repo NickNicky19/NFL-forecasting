@@ -34,6 +34,15 @@ minimum losses selected on these exposed years give only five small gains
 not website-relative or prospective improvements. All settings and failures are
 retained in [the full screen](../reports/direct-booster-screen-v1/README.md).
 
+The two conservative intercept/context corrections have also completed their
+chronological saved-row comparison: 44 fit attempts, eleven scored categories,
+exact PPR blocked, and no development nominees. Five primary CDF-relative cells
+improve, nine worsen and eight are unchanged; the largest gain is 0.5515% in
+passing-TD MSE. The [complete comparison](../reports/baseline-correction-report-v3/README.md)
+passed independent cached-row arithmetic. Original scientific CPU and reporting
+retention failures remain preserved. These are exposed historical tests, not
+prospective or website-relative improvements.
+
 Proposed product assignment: count means use Poisson training objectives and
 MSE primarily; signed-yard point challengers use median/MAE objectives; anytime
 TD uses a genuine binary probability and Brier primarily. Also report MAE,

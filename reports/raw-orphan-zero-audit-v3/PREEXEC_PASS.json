@@ -1,0 +1,173 @@
+{
+  "CPU_seconds_self": 0.169140102,
+  "actual_command_after_root_GO": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "60s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/raw_orphan_zero_audit_execute_v3.py",
+    "--freeze",
+    "/workspace/nfl-methods-integration/config/raw-orphan-zero-audit-execution-v3.json",
+    "--freeze-sha256",
+    "f258c584edf82b73ade6f4ea40167906d550d06206bef37761ac785db0c8f110"
+  ],
+  "checks": {
+    "accepted_sampler_digest": true,
+    "accepted_sampler_process_usage": true,
+    "accepted_sampler_require": true,
+    "accepted_sampler_required_usage": true,
+    "fresh_v3_supervisor_and_unconsumed_core": true,
+    "frozen_software_17": true,
+    "frozen_software_18": true,
+    "frozen_software_19": true,
+    "frozen_software_20": true,
+    "frozen_software_21": true,
+    "frozen_software_22": true,
+    "frozen_software_23": true,
+    "new_runner_digest": true,
+    "no_exception_text": true,
+    "old_numeric_core_and_config_unchanged": true,
+    "old_v2_failure_preserved_no_source": true,
+    "one12fictional_PASS": true,
+    "same_caps_and_output": true,
+    "unchanged_function_bootstrap": true,
+    "unchanged_function_preflight": true,
+    "unchanged_function_process_stat": true,
+    "unchanged_function_storage_for": true,
+    "unchanged_function_supervisor": true,
+    "unchanged_function_worker": true
+  },
+  "commit": "07b5bb6",
+  "conditions": [
+    "Separate root GO and serialized CAS writer before first numeric query.",
+    "Recheck fresh supervisor and unused core output immediately before invocation.",
+    "Preserve any V3 failure; no automatic retry."
+  ],
+  "findings": [
+    "Root copied accepted V4 sampler functions byte-exactly; only authenticated known child gets Z/X zero-RSS exception; live worker/timeout/supervisor stay strict.",
+    "Unchanged core/config and original19-column/67inventory/97union+orphan candidate-only audit contract retained.",
+    "V2 failure and consumed supervisor preserved; original numeric output absent, no source query has run.",
+    "New executor/supervisor namespace, same60CPU/wall256MiB/240MiBstop/1MiB limits and all existing guards.",
+    "Safe stage/function/line diagnostics added; exact V2 failure cause remains unknown, not claimed fixed or reproduced.",
+    "Twelve new fictional contracts reused; no tests, source/primitive/context values, model, fit, CAS or HTTP execution by reviewer."
+  ],
+  "max_RSS_bytes": 13799424,
+  "pins": [
+    {
+      "SHA256": "f258c584edf82b73ade6f4ea40167906d550d06206bef37761ac785db0c8f110",
+      "bytes": 3026,
+      "path": "/workspace/nfl-methods-integration/config/raw-orphan-zero-audit-execution-v3.json"
+    },
+    {
+      "SHA256": "5d62d59a4f9e28af7f9269e348127bb6476e67e700f696190f8cdaad306ac76e",
+      "bytes": 5778,
+      "path": "/workspace/nfl-methods-integration/config/raw-orphan-zero-audit-v2.json"
+    },
+    {
+      "SHA256": "0477bd08e36700f27b7d9c356f51fabf1b623a9f63e792581f3a5f6071d177de",
+      "bytes": 26674,
+      "path": "/workspace/nfl-methods-integration/tools/raw_orphan_zero_audit_execute_v3.py"
+    },
+    {
+      "SHA256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "bytes": 30894944,
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12"
+    },
+    {
+      "SHA256": "6ca1891dfc0b05d7680770c2884c0391b92467c7bb6500a5c84677e6481739f1",
+      "bytes": 47984,
+      "path": "/usr/bin/timeout"
+    },
+    {
+      "SHA256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json"
+    },
+    {
+      "SHA256": "52464fac42e301974952e2beb50f7fb13d74df9320e67673b1c4b39eeb9c4571",
+      "bytes": 18740,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/raw_orphan_zero_audit.py"
+    },
+    {
+      "SHA256": "0b80039325a4ad7a3fa5e14656e3c68d52b0f1bf9040bedf48521c5ade9a106c",
+      "bytes": 16194,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/raw_orphan_context.py"
+    },
+    {
+      "SHA256": "56511f54aa6717f6d102e11c55b566568a773d9003b8a90779e313c98dfe77d4",
+      "bytes": 26886,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/ftn_zero_join.py"
+    },
+    {
+      "SHA256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad",
+      "bytes": 32004,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/operational_storage.py"
+    },
+    {
+      "SHA256": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb",
+      "bytes": 3912,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/owned_reference_batch.py"
+    },
+    {
+      "SHA256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+      "bytes": 23272,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json"
+    },
+    {
+      "SHA256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1",
+      "bytes": 849243,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/sources/stats_player_week_2024.parquet"
+    },
+    {
+      "SHA256": "4b5946f063050df232973b387c6ef0e61c536a32bc03a35c016a8a3f8de492c0",
+      "bytes": 9381,
+      "path": "/workspace/website-methods-research/resumed/ftn-participation-appearance-pilot-v1-20261023/capture/private/projected.parquet"
+    },
+    {
+      "SHA256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+      "bytes": 5070165,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet"
+    },
+    {
+      "SHA256": "24d62b47e17fe936407d2cd7dc7d8d2f2a86244a3487211132d4df7c8798ca4f",
+      "bytes": 148121,
+      "path": "/workspace/website-methods-research/resumed/direct-booster-screen-v1-20261023/forecast-freeze.json"
+    },
+    {
+      "SHA256": "a0a5e05d00b653d8e93683a7078df6cd50b772855c061b14911fbea13bbee04f",
+      "bytes": 577808,
+      "path": "/workspace/website-methods-research/resumed/direct-booster-screen-v1-20261023/private/queries/2024.parquet"
+    },
+    {
+      "SHA256": "5c2a423f993d25c20c0e54c124352111c96eff60718228f0b423475e854aec9b",
+      "bytes": 2179,
+      "path": "/workspace/website-methods-research/resumed/raw-orphan-context-v1-20261023/aggregate.json"
+    },
+    {
+      "SHA256": "177299ab42acf4bdb1751831ce3e4f46fe8af951c9113f622d07dab0634e0ead",
+      "bytes": 29209,
+      "path": "/workspace/website-methods-research/resumed/raw-orphan-context-v1-20261023/private/raw-record-inventory.json"
+    },
+    {
+      "SHA256": "13b3503812e7ac260433ddec162b1c80d260a7b023a6063489cef89f41b169e7",
+      "bytes": 21766,
+      "path": "/workspace/website-methods-research/resumed/raw-orphan-context-v1-20261023/private/known-player-union.json"
+    },
+    {
+      "SHA256": "0090aca311a5422980a063306cec7836d079af8c655ef6817a9303557c5fe4ea",
+      "bytes": 1666,
+      "path": "/workspace/website-methods-research/resumed/raw-orphan-context-v1-supervisor-20261023/JOB_FINISHED.json"
+    }
+  ],
+  "state": "RAW_ORPHAN_ZERO_AUDIT_EXECUTOR_V3_STATIC_FINAL_PIN_PREEXEC_PASS",
+  "wall_seconds": 0.17255240499798674
+}

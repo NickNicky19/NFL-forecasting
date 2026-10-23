@@ -1,0 +1,36 @@
+{
+  "actual_NFL_context_source_or_model_semantic_reads": 0,
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "60s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/tmp/run-raw-orphan-context-software-v1.py"
+  ],
+  "environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "execution_GO_for_source_job": false,
+  "harness": {
+    "bytes": 5135,
+    "path": "/tmp/run-raw-orphan-context-software-v1.py",
+    "sha256": "69b57b99e7e547c2ace40caccfbea858d4193cb23fd088719f9f00056045e63d",
+    "source": "\"\"\"One bounded fictional-only invocation; no source/model/network/process access.\"\"\"\nimport hashlib\nimport importlib.util\nimport io\nimport json\nimport os\nfrom pathlib import Path\nimport resource\nimport signal\nimport sys\nimport time\nimport unittest\n\nROOT=Path('/workspace/nfl-raw-orphan-context-v1')\nRECEIPT=Path('/tmp/raw-orphan-context-v1-software-checks.json')\nif RECEIPT.exists():\n    raise SystemExit('single invocation receipt already exists; no retry')\nFILES=('nfl_lab/raw_orphan_context.py','tools/raw_orphan_context_execute_v1.py',\n       'tests/test_raw_orphan_context.py','config/raw-orphan-context-v1.json',\n       'config/raw-orphan-context-execution-v1.json')\nbindings={name:{'sha256':hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),\n                'bytes':(ROOT/name).stat().st_size} for name in FILES}\nthreads=('OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS','VECLIB_MAXIMUM_THREADS')\nif any(os.environ.get(x)!='1' for x in threads) or not sys.dont_write_bytecode:\n    raise SystemExit('one-thread Python -B required')\nresource.setrlimit(resource.RLIMIT_CPU,(60,60))\nstart=time.monotonic(); cpu_start=time.process_time(); rss_limit=268435456\ncounts={'lines':0,'resource_checks':0,'denied_effects':0}\ndef budget():\n    counts['resource_checks']+=1\n    if (time.monotonic()-start>=58 or time.process_time()-cpu_start>=58\n            or resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024>rss_limit):\n        raise RuntimeError('finite software-check resource bound exceeded')\ndef trace(frame,event,arg):\n    if event=='line':\n        counts['lines']+=1\n        if counts['lines']%200==0: budget()\n    return trace\n\ndef stop(signum,frame): raise TimeoutError('finite software-check wall bound')\nsignal.signal(signal.SIGALRM,stop); signal.setitimer(signal.ITIMER_REAL,59)\nforbidden={'numpy','pandas','pyarrow','sklearn','joblib','xgboost','lightgbm','catboost',\n           'nfl_lab.ftn_zero_join','nfl_lab.operational_storage','nfl_lab.owned_reference_batch'}\ndef audit(event,args):\n    denied=(event.startswith('socket.') or event.startswith('subprocess.')\n        or event in {'os.system','os.fork','os.forkpty','os.posix_spawn','os.exec','pty.spawn'})\n    if event=='import' and args and (args[0] in forbidden or args[0].split('.')[0] in forbidden): denied=True\n    if event=='open' and args and isinstance(args[0],(str,bytes,os.PathLike)):\n        path=os.fsdecode(args[0])\n        if '/workspace/website-methods-research/' in path or path.endswith(('.parquet','.joblib','.pickle','.pkl')):\n            denied=True\n    if denied:\n        counts['denied_effects']+=1\n        raise RuntimeError('forbidden source/model/network/process effect')\nsys.addaudithook(audit); sys.path.insert(0,str(ROOT)); sys.settrace(trace)\nresult=None; error=None; stream=io.StringIO()\ntry:\n    spec=importlib.util.spec_from_file_location('fictional_raw_orphan_contracts',ROOT/'tests/test_raw_orphan_context.py')\n    module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)\n    suite=unittest.defaultTestLoader.loadTestsFromModule(module)\n    if suite.countTestCases()!=22: raise RuntimeError('exact22 new fictional checks required')\n    result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)\n    budget()\nexcept BaseException as exc:\n    error={'type':type(exc).__name__,'message':str(exc)}\nfinally:\n    sys.settrace(None); signal.setitimer(signal.ITIMER_REAL,0)\n    budget_wall=time.monotonic()-start; budget_cpu=time.process_time()-cpu_start\n    peak=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024\n    success=result is not None and result.wasSuccessful() and error is None and counts['denied_effects']==0 and peak<=rss_limit\n    receipt={'schema_version':'raw-orphan-context-fictional-checks-v1','state':'PASS' if success else 'FAILED',\n        'invocations':1,'automatic_retries':0,'tests_run':None if result is None else result.testsRun,\n        'failures':None if result is None else len(result.failures),'errors':None if result is None else len(result.errors),\n        'wall_seconds_before_receipt_write':budget_wall,'CPU_seconds_before_receipt_write':budget_cpu,\n        'process_ru_maxrss_bytes':peak,'RSS_cap_bytes':rss_limit,'numerical_threads':1,\n        'RSS_scope':'single process; known highwater and traced checks, not kernel-enforced continuous RSS',\n        'CPU_wall_caps_seconds':60,'HTTP_source_model_semantic_reads_fits_scores_child_processes':0,\n        'counts':counts,'bindings':bindings,'exception':error,'unittest_log':stream.getvalue(),\n        'requested_model':'GPT-6.1 Sol','requested_reasoning_effort':'Extra High','actual_backend_settings':'UNATTESTED'}\n    RECEIPT.write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\\n')\n    print(json.dumps({key:receipt[key] for key in ('state','tests_run','failures','errors','wall_seconds_before_receipt_write','CPU_seconds_before_receipt_write','process_ru_maxrss_bytes','exception')}))\n    print('receipt_sha256',hashlib.sha256(RECEIPT.read_bytes()).hexdigest(),'bytes',RECEIPT.stat().st_size)\n    if not success: print(stream.getvalue())\nraise SystemExit(0 if success else 1)\n"
+  },
+  "invocations": 1,
+  "receipt": {
+    "bytes": 5366,
+    "path": "reports/RAW_ORPHAN_CONTEXT_SOFTWARE_CHECKS_V1.json",
+    "sha256": "0b9972d8612f3e754bc75bb55a07386e36e36b35ac4efadca7a3229abaa61432"
+  },
+  "root": "/workspace/nfl-raw-orphan-context-v1",
+  "schema_version": "raw-orphan-context-software-invocation-v1",
+  "state": "EXECUTED_ONCE_PASS",
+  "unchanged_test_suites_rerun": 0
+}

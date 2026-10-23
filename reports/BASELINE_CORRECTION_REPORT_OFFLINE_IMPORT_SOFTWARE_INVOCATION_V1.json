@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "30s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/tmp/check-baseline-correction-offline-import-v1.py"
+  ],
+  "environment": {
+    "ARROW_IO_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OMP_THREAD_LIMIT": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "harness": {
+    "bytes": 5412,
+    "path": "/tmp/check-baseline-correction-offline-import-v1.py",
+    "sha256": "a03bf4a68ff99d6185073ce78be19d9eff1184bd20752ff74405b2eced995858",
+    "source": "\"\"\"One bounded fictional-only invocation; no source/model/network/process access.\"\"\"\nimport hashlib\nimport importlib.util\nimport io\nimport json\nimport os\nfrom pathlib import Path\nimport resource\nimport signal\nimport sys\nimport time\nimport unittest\n\nROOT=Path('/workspace/nfl-baseline-correction-report-v2')\nRECEIPT=Path('/tmp/baseline-correction-report-offline-import-software-v1.json')\nif RECEIPT.exists():\n    raise SystemExit('single invocation receipt already exists; no retry')\nFILES=('tools/offline_report_imports_v1.py', 'tools/baseline_correction_report_run_v2.py', 'tools/baseline_correction_report_supervisor_v2.py', 'tools/freeze_baseline_correction_report_v2.py', 'tools/baseline_correction_report_v2.py', 'tests/test_offline_report_imports_v1.py', 'config/baseline-correction-report-offline-import-software-v1.json')\nbindings={name:{'sha256':hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),\n                'bytes':(ROOT/name).stat().st_size} for name in FILES}\nthreads=('OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS','VECLIB_MAXIMUM_THREADS')\nif any(os.environ.get(x)!='1' for x in threads) or not sys.dont_write_bytecode:\n    raise SystemExit('one-thread Python -B required')\nCONSUMED=Path('/tmp/baseline-correction-report-offline-import-software-v1-CONSUMED.json')\nif CONSUMED.exists(): raise SystemExit('software budget consumed; no retry')\nCONSUMED.write_text(json.dumps({'invocations':1,'automatic_retries':0,'scope':'fictional_only'})+'\\n')\nresource.setrlimit(resource.RLIMIT_CPU,(30,30))\nstart=time.monotonic(); cpu_start=time.process_time(); rss_limit=268435456\ncounts={'lines':0,'resource_checks':0,'denied_effects':0}\ndef budget():\n    counts['resource_checks']+=1\n    if (time.monotonic()-start>=28 or time.process_time()-cpu_start>=28\n            or resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024>rss_limit):\n        raise RuntimeError('finite software-check resource bound exceeded')\ndef trace(frame,event,arg):\n    if event=='line':\n        counts['lines']+=1\n        if counts['lines']%200==0: budget()\n    return trace\n\ndef stop(signum,frame): raise TimeoutError('finite software-check wall bound')\nsignal.signal(signal.SIGALRM,stop); signal.setitimer(signal.ITIMER_REAL,29)\nforbidden=set()\ndef audit(event,args):\n    denied=(event.startswith('socket.') or event.startswith('subprocess.')\n        or event in {'os.system','os.fork','os.forkpty','os.posix_spawn','os.exec','pty.spawn'})\n    if event=='import' and args and (args[0] in forbidden or args[0].split('.')[0] in forbidden): denied=True\n    if event=='open' and args and isinstance(args[0],(str,bytes,os.PathLike)):\n        path=os.fsdecode(args[0])\n        if '/workspace/website-methods-research/' in path or path.endswith(('.parquet','.joblib','.pickle','.pkl')):\n            denied=True\n    if denied:\n        counts['denied_effects']+=1\n        raise RuntimeError('forbidden source/model/network/process effect')\nsys.addaudithook(audit); sys.path.insert(0,str(ROOT)); sys.settrace(trace)\nresult=None; error=None; stream=io.StringIO()\ntry:\n    spec=importlib.util.spec_from_file_location('new_offline_import_guard_contracts',ROOT/'tests/test_offline_report_imports_v1.py')\n    module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)\n    suite=unittest.defaultTestLoader.loadTestsFromModule(module)\n    if suite.countTestCases()!=2: raise RuntimeError('exact2 new fictional checks required')\n    result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)\n    budget()\nexcept BaseException as exc:\n    error={'type':type(exc).__name__,'message':str(exc)}\nfinally:\n    sys.settrace(None); signal.setitimer(signal.ITIMER_REAL,0)\n    budget_wall=time.monotonic()-start; budget_cpu=time.process_time()-cpu_start\n    peak=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024\n    success=result is not None and result.wasSuccessful() and error is None and counts['denied_effects']==0 and peak<=rss_limit\n    receipt={'schema_version':'baseline-correction-report-offline-import-checks-v1','state':'PASS' if success else 'FAILED',\n        'invocations':1,'automatic_retries':0,'tests_run':None if result is None else result.testsRun,\n        'failures':None if result is None else len(result.failures),'errors':None if result is None else len(result.errors),\n        'wall_seconds_before_receipt_write':budget_wall,'CPU_seconds_before_receipt_write':budget_cpu,\n        'process_ru_maxrss_bytes':peak,'RSS_cap_bytes':rss_limit,'numerical_threads':1,\n        'RSS_scope':'single process; known highwater and traced checks, not kernel-enforced continuous RSS',\n        'CPU_wall_caps_seconds':30,'HTTP_source_model_semantic_reads_fits_scores_child_processes':0,\n        'counts':counts,'bindings':bindings,'exception':error,'unittest_log':stream.getvalue(),\n        'requested_model':'GPT-6.1 Sol','requested_reasoning_effort':'Extra High','actual_backend_settings':'UNATTESTED'}\n    RECEIPT.write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\\n')\n    print(json.dumps({key:receipt[key] for key in ('state','tests_run','failures','errors','wall_seconds_before_receipt_write','CPU_seconds_before_receipt_write','process_ru_maxrss_bytes','exception')}))\n    print('receipt_sha256',hashlib.sha256(RECEIPT.read_bytes()).hexdigest(),'bytes',RECEIPT.stat().st_size)\n    if not success: print(stream.getvalue())\nraise SystemExit(0 if success else 1)\n"
+  },
+  "invocations": 1,
+  "old_software_aggregate": "FAILED_UNCHANGED",
+  "old_ten_test_bodies_rerun": 0,
+  "receipt_sha256": "daa3b300d3cd0fcd1cb20ebdce6e9590a0ab2db5f1f058c6a8b97734d230a282",
+  "schema_version": "baseline-correction-report-offline-import-invocation-v1",
+  "state": "PASS_TWO_NEW_IMPORT_CHECKS_ONLY"
+}
