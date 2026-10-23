@@ -230,6 +230,7 @@ def _run_reference_learning(root, cache, state, policy, methods, *, storage):
     from .operational_sources import load_source_policy
     from .operational_models import (VERSION, methods_for_policy, frame_hash, model_binding,
                                       fit_operational_reference, predict_operational_artifact, check_operational_storage)
+    from .reference_runtime import StateBoundStorage
     from .state import digest, utc
     policy = load_source_policy(policy)
     methods = methods_for_policy(methods)
@@ -261,6 +262,7 @@ def _run_reference_learning(root, cache, state, policy, methods, *, storage):
             input_sha = digest({"feature_sha256": document["feature_sha256"],
                                 "source_binding": document["source_binding"], "query_sha256": frame_hash(query)})
             binding = model_binding(policy, document["operational_manifest"], train, query, input_sha)
+            model_storage = StateBoundStorage(storage, state)
             namespace = digest(binding)
             budget = policy["operational_routing"]["weekly_reference_budget"]
             limit = min(22, int(budget["max_supported_packages"]))
@@ -276,11 +278,9 @@ def _run_reference_learning(root, cache, state, policy, methods, *, storage):
                     if len(packages) >= limit or time.monotonic() - started >= wall_limit:
                         raise RuntimeError("fixed reference package/wall budget exhausted")
                     artifact = Path(state) / "models" / VERSION / "weekly" / namespace / f"{target}-{method}.json"
-                    if sum(path.stat().st_size for path in Path(state).rglob("*") if path.is_file()) > 195 * 1024 * 1024:
-                        raise RuntimeError("derived state nearing 200MiB cap; no evidence removed")
-                    pred = fit_operational_reference(train, query, target, method, artifact_path=artifact, binding=binding, storage=storage)
+                    pred = fit_operational_reference(train, query, target, method, artifact_path=artifact, binding=binding, storage=model_storage)
                     check_operational_storage(cache, policy, state=state)
-                    replay = predict_operational_artifact(artifact, query, binding=binding, storage=storage)
+                    replay = predict_operational_artifact(artifact, query, binding=binding, storage=model_storage)
                     for column in ("mean", "scale", "p10", "p50", "p90", "p_participation"):
                         if not np.allclose(pred[column], replay[column], rtol=1e-10, atol=1e-9, equal_nan=True):
                             raise ValueError("fixed reference artifact replay mismatch")

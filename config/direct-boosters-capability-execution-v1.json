@@ -1,0 +1,36 @@
+{
+  "actual_network_install_fit_invocations_at_freeze": 0,
+  "base_executable": "/workspace/nfl-venv/bin/python",
+  "base_purelib": "/workspace/nfl-venv/lib/python3.12/site-packages",
+  "base_python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "base_versions": {
+    "joblib": "1.5.3",
+    "matplotlib": "3.10.8",
+    "numpy": "2.3.5",
+    "packaging": "26.3",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "six": "1.17.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "external_launcher": "/usr/bin/timeout --signal=KILL --kill-after=1s 240s /workspace/nfl-venv/bin/python tools/direct_boosters_supervisor.py --freeze config/direct-boosters-capability-execution-v1.json --freeze-sha256 <exact config SHA256>",
+  "initial_packages": [
+    "xgboost-cpu",
+    "lightgbm",
+    "catboost"
+  ],
+  "metadata_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "numerical_threads": 2,
+  "output": "/workspace/website-methods-research/resumed/direct-boosters-capability-v1-20261023",
+  "registration_policy_sha256": "311e661b7cacca1983a52c60cafacacbd31e3d82ec94482577519f4deb54a6f9",
+  "runner_sha256": "ff56cec39a8cf66cbb4d1450a68f58b5fe290e270d39dc2aaa99ef1ffc92d2f7",
+  "schema_version": "direct-booster-capability-execution-v1",
+  "selection": "highest non-yanked compatible stable wheel, deterministic tag-rank/filename tie break; no model-dependent version selection",
+  "software": "/workspace/nfl-direct-boosters-software-v1",
+  "storage_code_sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad",
+  "storage_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "supervisor_sha256": "f0ec41e790e215f446a7e6a488c8e3856365e5870d413657ce8209dd30e1bb3c",
+  "timeout_executable": "/usr/bin/timeout",
+  "timeout_sha256": "6ca1891dfc0b05d7680770c2884c0391b92467c7bb6500a5c84677e6481739f1"
+}

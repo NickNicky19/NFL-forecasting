@@ -1,0 +1,65 @@
+{
+  "actual_screen_invocations_at_template": 0,
+  "assembly_base_git": "c78ed971ac75330bbefc0fd604babb0014f5268d",
+  "bindings": [],
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "code_root": "/workspace/nfl-direct-booster-screen-v1",
+  "environment": {
+    "executable": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "file_bindings": [],
+    "inventory_path": "/workspace/website-methods-research/resumed/direct-boosters-capability-v1-20261023/environment-inventory.json",
+    "inventory_sha256": "598c9d2987c89275e3319e0a560e746cd12e7c4047b4dd3cda85230dd0d564a3",
+    "packages": {
+      "catboost": "1.2.10",
+      "graphviz": "0.21",
+      "joblib": "1.5.3",
+      "lightgbm": "4.7.0",
+      "narwhals": "2.27.1",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "plotly": "7.1.0",
+      "pyarrow": "23.0.1",
+      "requests": "2.34.2",
+      "scikit-learn": "1.8.0",
+      "scipy": "1.17.0",
+      "threadpoolctl": "3.6.0",
+      "xgboost-cpu": "3.4.1"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "output": "/workspace/website-methods-research/resumed/direct-booster-screen-v1-20261023",
+  "plan_path": "/workspace/nfl-direct-booster-screen-v1/config/direct-booster-screen-v1.json",
+  "plan_sha256": "ROOT_MUST_SUPPLY_FINAL_REVIEWED_CONFIG_SHA256",
+  "required_external_launcher": "/usr/bin/timeout --signal=KILL --kill-after=1s 1500s /workspace/nfl-direct-boosters-venv/bin/python tools/direct_booster_screen_supervisor.py --freeze <ROOT_REVIEWED_FREEZE> --freeze-sha256 <EXACT_SHA256>",
+  "schema_version": "direct-booster-screen-execution-v1",
+  "seal": {
+    "integrator": "ROOT_MUST_SEAL",
+    "reviewer": "REVIEWER_MUST_ACCEPT_EXACT_BYTES"
+  },
+  "source_coupled_code_files_matched": 11,
+  "source_manifest_metadata_sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+  "state": "TEMPLATE_NOT_EXECUTABLE",
+  "template_note": "No invocation permitted. Root must copy final accepted module/config, freeze all code/input/environment files and independently review/seal actual full binding payload.",
+  "timeout": {
+    "path": "/usr/bin/timeout",
+    "sha256": "6ca1891dfc0b05d7680770c2884c0391b92467c7bb6500a5c84677e6481739f1"
+  },
+  "tools": {
+    "freezer": {
+      "path": "/workspace/nfl-direct-booster-screen-v1/tools/freeze_direct_booster_screen.py",
+      "sha256": "09202eb7630978630374b8a0f41a96f45d37bf83e8340bf54dad96ba8c0eef52"
+    },
+    "guard": {
+      "path": "/workspace/nfl-direct-booster-screen-v1/tools/direct_booster_screen_guard.py",
+      "sha256": "e2cf6edb00fdd2ee8504dc9f167d6fa36750566c7c0523f77d43b6d1eac8b5bf"
+    },
+    "run": {
+      "path": "/workspace/nfl-direct-booster-screen-v1/tools/direct_booster_screen_run.py",
+      "sha256": "36108b6d3704c03005da9e6e6d1fe097c3f64be148b05055d9ac0519b8790995"
+    },
+    "supervisor": {
+      "path": "/workspace/nfl-direct-booster-screen-v1/tools/direct_booster_screen_supervisor.py",
+      "sha256": "e448a978d0f95a12df160245f11f99db93d7a09a47446e0df496b765ff30e819"
+    }
+  }
+}

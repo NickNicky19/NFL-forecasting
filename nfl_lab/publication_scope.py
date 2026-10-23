@@ -5,6 +5,8 @@ operation and does not grant content-publication permission.
 """
 from __future__ import annotations
 
+from contextlib import nullcontext
+from copy import deepcopy
 import gzip
 import hashlib
 import io
@@ -14,9 +16,10 @@ import re
 import stat
 import subprocess
 
-from .state import digest, records, save, utc, writer
+from .state import canonical, digest, records, save, utc, writer
 
 SCHEMA = "lab-publication-scope-v1"
+SCOPE_RECORDS = "publication_scopes"
 MAX_BYTES = 200 * 1024 * 1024
 COMMIT = re.compile(r"[0-9a-f]{40}", re.ASCII)
 SHA256 = re.compile(r"[0-9a-f]{64}", re.ASCII)
@@ -127,19 +130,101 @@ def verify_committed_scope(root, state, *, commit, scope, policy_sha256=None, st
     return selected
 
 
+def _saved_scope(path, expected_policy_sha256):
+    """Decode one bounded immutable original; CAS hard links remain legal."""
+    _regular(path)
+    before = path.stat()
+    if before.st_size > MAX_BYTES:
+        raise ValueError("saved publication scope compressed size exceeds bound")
+    with path.open("rb") as stream:
+        compressed = stream.read(MAX_BYTES + 1)
+    if len(compressed) != before.st_size:
+        raise ValueError("saved publication scope changed during read")
+    with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as stream:
+        body = stream.read(MAX_BYTES + 1)
+    if len(body) > MAX_BYTES:
+        raise ValueError("saved publication scope decoded size exceeds bound")
+    envelope = json.loads(body)
+    if not isinstance(envelope, dict) or set(envelope) != {
+            "schema_version", "commit", "verified_remote_commit", "policy_sha256", "files"}:
+        raise ValueError("saved original full publication scope required")
+    expected = scope_document(envelope["commit"], envelope["files"],
+                              verified_remote_commit=envelope["verified_remote_commit"],
+                              policy_sha256=expected_policy_sha256)
+    if envelope != expected or body != canonical(envelope):
+        raise ValueError("saved publication scope schema/policy/canonical mismatch")
+    scope_sha = digest(envelope)
+    if path.name != scope_sha + ".json.gz":
+        raise ValueError("saved publication scope digest/path mismatch")
+    _regular(path)
+    after = path.stat()
+    if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns) != (
+            after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns):
+        raise ValueError("saved publication scope changed during read")
+    return scope_sha, envelope, len(body), len(compressed)
+
+
+def saved_scope_evidence(state, expected_policy_sha256):
+    """Return copied original envelopes only; never infer missing evidence.
+
+    This metadata reader checks paths, bytes and canonical identities, not CAS
+    ownership or remote publication. The caller retains the existing storage
+    integrity boundary; owned CAS aliases legitimately have multiple hard links.
+    The qualifier rechecks committed file/record proof before using an envelope.
+    """
+    # This API feeds the qualified views, which require a source-policy version.
+    if (not isinstance(expected_policy_sha256, str)
+            or SHA256.fullmatch(expected_policy_sha256) is None):
+        raise ValueError("saved publication scopes require explicit policy SHA256")
+    state = Path(state)
+    if ".." in state.parts:
+        raise ValueError("saved publication scope parent traversal forbidden")
+    directory = state / SCOPE_RECORDS
+    if any(p.is_symlink() for p in (directory, *directory.parents)):
+        raise ValueError("saved publication scope cannot use symlinks")
+    if not directory.exists():
+        return {}
+    if not directory.is_dir():
+        raise ValueError("saved publication scope directory required")
+    result, decoded, compressed = {}, 0, 0
+    for path in sorted(directory.glob("*.json.gz")):
+        key, envelope, body_size, file_size = _saved_scope(path, expected_policy_sha256)
+        decoded += body_size; compressed += file_size
+        if max(decoded, compressed) > MAX_BYTES:
+            raise ValueError("saved publication scope inventory exceeds bound")
+        result[key] = deepcopy(envelope)
+    return result
+
+
 def record_scoped_publication(root, state, *, commit, scope, observed,
                               policy_sha256=None, storage=None):
     """Validate the entire scope before appending any timing receipt."""
     observed = utc(observed)
-    with writer(state):
+    scope = deepcopy(scope)
+    if storage is not None:
+        from .operational_io import operational_io
+    with (operational_io(storage) if storage is not None else nullcontext()), writer(state):
         selected = verify_committed_scope(root, state, commit=commit, scope=scope,
                                          policy_sha256=policy_sha256, storage=storage)
-        prior = {r["batch"] for r in records(state, "publication") if r.get("publication_scope_schema") == SCHEMA}
-        website_prior = {r["snapshot"] for r in records(state, "website_publication") if r.get("publication_scope_schema") == SCHEMA}
-        verified = late = snapshots = 0
         scope_sha = digest(scope)
+        publications = list(records(state, "publication"))
+        website_publications = list(records(state, "website_publication"))
+        witness = Path(state) / SCOPE_RECORDS / (scope_sha + ".json.gz")
+        if not witness.exists() and any(
+                r.get("publication_scope_schema") == SCHEMA and r.get("publication_scope_sha256") == scope_sha
+                for r in (*publications, *website_publications)):
+            raise ValueError("missing original witness cannot retrospectively qualify an old receipt; publish a new scope")
+        # The exact supplied envelope must be durable before any timing claim.
+        if save(state, SCOPE_RECORDS, scope) != scope_sha:
+            raise ValueError("saved publication scope identity mismatch")
+        saved = _saved_scope(witness, policy_sha256)
+        if saved[0] != scope_sha or saved[1] != scope:
+            raise ValueError("saved publication scope differs from original")
+        prior = {(r["batch"], r.get("publication_scope_sha256")) for r in publications if r.get("publication_scope_schema") == SCHEMA}
+        website_prior = {(r["snapshot"], r.get("publication_scope_sha256")) for r in website_publications if r.get("publication_scope_schema") == SCHEMA}
+        verified = late = snapshots = 0
         for kind, key, document, evidence in selected:
-            if key in (prior if kind == "forecasts" else website_prior):
+            if (key, scope_sha) in (prior if kind == "forecasts" else website_prior):
                 continue
             timely = sum(utc(row["kickoff_utc"]) > observed for row in document["rows"])
             receipt = {"commit": commit, "observed_remote_readback_at": observed.isoformat(),

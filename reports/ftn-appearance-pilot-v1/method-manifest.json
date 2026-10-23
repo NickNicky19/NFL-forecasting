@@ -1,0 +1,93 @@
+{
+  "asset": {
+    "asset_id": 289570938,
+    "bytes": 4644767,
+    "document_commit_root_association": "UNRESOLVED as recorded in participation-substitutes-v1.md",
+    "name": "pbp_participation_2024.parquet",
+    "original_upstream_publication_utc": null,
+    "release_id": 71636554,
+    "retrospective_not_authenticated_pregame_available": true,
+    "sha256": "5e8cf1f6a11bb2be573c3db1533c28a5658907302d1ad45ca769a4ca35890d7c",
+    "size_and_catalog_digest_independently_verified_before_Parquet_decode": true,
+    "source_attribution": "FTN Data via nflverse",
+    "source_license_declaration": "CC-BY-SA-4.0",
+    "source_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp_participation/pbp_participation_2024.parquet"
+  },
+  "environment": {
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "pyarrow": "23.0.1",
+      "requests": "2.34.2",
+      "urllib3": "2.8.0"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "frozen_limits": {
+    "CPU_seconds": 60,
+    "HTTP_including_manual_redirects": 3,
+    "combined_RSS_bytes": 268435456,
+    "incoming_body_bytes": 33554432,
+    "numerical_threads": 1,
+    "retries": 0,
+    "shared_private_quota_bytes": 536870912,
+    "wall_seconds": 60
+  },
+  "launcher": {
+    "additional_network_enabled": true,
+    "exact_python": "Python -B matching frozen environment",
+    "external_hard_timeout_seconds": 60,
+    "numeric_environment": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "tool_sandbox_permissions": "with_additional_permissions"
+  },
+  "policy": {
+    "repository_path": "config/ftn-participation-appearance-pilot-v1.json",
+    "sha256": "88745a729241e30a23aaba34d3893735360b5665e3519ed76c7c25a15c0c1284"
+  },
+  "private_catalog_result_sha256": "dcb9a6db63b33615307384473a02c48c78300ab2bdda039c08d81ca4d3f05d50",
+  "private_catalog_sha256": "c7dcb74b1d7723346af5b191e7ad0476c2838b2f3bef75fb23f7d501c173b8e7",
+  "private_execution_freeze_sha256": "831b0a19f9dcb9abfa025957e218dc2950cfa6cf2267a0cf468a9751719f1ad6",
+  "private_freeze_export": "Not copied: contains private absolute input/output bindings. This manifest records its exact hash and reviewed software/environment identities, not a replacement execution freeze.",
+  "private_projection": {
+    "bytes": 9381,
+    "exported": false,
+    "sha256": "4b5946f063050df232973b387c6ef0e61c536a32bc03a35c016a8a3f8de492c0"
+  },
+  "publication_or_scheduler_activation": false,
+  "raw_source_projection_catalog_or_player_rows_exported": false,
+  "runner": {
+    "exact_executed_source": true,
+    "repository_path": "reports/ftn-appearance-pilot-v1/run.py",
+    "sha256": "aad8f00eee0461bde584239a5beb464fd63ebd87b5351829052bb0baad7e561e"
+  },
+  "schema_version": "ftn-appearance-pilot-method-manifest-v1",
+  "scope": {
+    "approved_columns": [
+      "nflverse_game_id",
+      "play_id",
+      "players_on_play",
+      "offense_players",
+      "defense_players",
+      "n_offense",
+      "n_defense"
+    ],
+    "batch_rows": 512,
+    "finite_list_recognizers": [
+      "Arrow list of canonical GSIS strings",
+      "explicit JSON array of canonical GSIS strings",
+      "exact semicolon-separated canonical GSIS strings"
+    ],
+    "fixed_game": "2024_01_BAL_KC",
+    "maximum_rows": 10000,
+    "no_ID_normalization_or_join": true
+  },
+  "unchanged_source_storage_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "unchanged_storage_code_sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad"
+}

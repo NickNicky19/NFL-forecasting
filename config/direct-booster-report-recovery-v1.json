@@ -1,0 +1,30 @@
+{
+  "registration_id": "direct-booster-report-recovery-v1-20261023",
+  "scope": "Pure reporting continuation from already frozen scored rows of the terminal FAILED original direct-booster screen. No new football observations, forecasts, fits, source-label reads, predictive-law calls or selection. Preserve the original failure and all spent work.",
+  "original_output": "/workspace/website-methods-research/resumed/direct-booster-screen-v1-20261023",
+  "output": "/workspace/website-methods-research/resumed/direct-booster-report-recovery-v1-20261023",
+  "required_inputs": {
+    "forecast-freeze.json": "24d62b47e17fe936407d2cd7dc7d8d2f2a86244a3487211132d4df7c8798ca4f",
+    "scored-freeze.json": "c9ba966c6310abc8edaa41bfd0fa529689fd74300fa5e2da5a4aedf508d5bf82",
+    "screen-supervisor-completion.json": "051f2fd5b599602fd812f02238f019e723b89f7ba3e34b9b03ba5f873996aa43",
+    "original_control_scored_freeze": "d222f6bd22db1e34590ef49645d1bb0a7512f4cb210499005df950b414627ad2",
+    "original_execution_freeze": "a8b258d68ee6e00707d770d6949e1559d1008fbf3d47bb8e4931b22080a3cec0",
+    "original_science_config": "ecef55bea20f0303442ef101c435e70a84388923635fdb22e61b1d516c03ca83"
+  },
+  "budgets": {
+    "invocations": 1,
+    "wall_seconds": 600,
+    "CPU_seconds": 600,
+    "combined_RSS_bytes": 2147483648,
+    "numerical_threads": 2,
+    "HTTP": 0,
+    "fits_predictions_predictive_law_calls_source_label_reads": 0,
+    "automatic_retries": 0,
+    "new_retained_bytes": 67108864,
+    "shared_retention_bytes": 536870912
+  },
+  "method": "Reuse the unchanged direct_booster_screen.target_report/subgroup_rows, shared evaluator and owned_reference_batch. Authenticate inputs once at entry and exit, cache the 165 original control files, aggregate the 192 frozen scored files, and checkpoint each completed target. No source feature/outcome table read, model unpickle or inference. Count means use saved CDF mean and primary MSE; signed-yard median points use primary MAE; anytime TD uses original event probabilities and Brier. Keep the original secondary metrics, nominal bootstrap, nomination rules, candidate multiplicity and exposed historical lane unchanged.",
+  "coverage": "Retain all 216 slots: 192 completed scored files, six original technical FAILED XGBoost anytime-TD cells, and 18 exact-PPR BLOCKED slots. Partial/failed method-year cells cannot become complete nominees. No change to original model, source policy, frozen outputs or science configuration.",
+  "execution": "Require independently reviewed exact executable/config/environment/input freeze and explicit root GO before the sole invocation. Deny network and child fitting/inference paths; monitor whole-job CPU/RSS/wall. New namespace only. Record any resource-accounting limitation, failure or exhausted budget. Do not quietly extend or restart.",
+  "decision": "Development comparison only, not future confirmation, prospective accuracy, promotion or release readiness. The original screen remains FAILED even if this reporting continuation completes. Root alone writes the execution ledger. Public transfer requires independent content review."
+}
