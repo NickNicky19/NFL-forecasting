@@ -126,6 +126,10 @@ def main():
 def persist(root,state,*,storage=None,policy_path=None,files=None):
     if not list(state.rglob("*.json.gz")):
         print("No derived state to persist");return
+    if storage is None:
+        files=publication_files(state)
+    elif files is None:
+        raise RuntimeError("v2 publication requires its exact reviewed file map")
     branch="lab-state"
     if storage is None:
         staging=tempfile.TemporaryDirectory(prefix="nfl-lab-state-")
@@ -159,10 +163,14 @@ def persist(root,state,*,storage=None,policy_path=None,files=None):
             git("push","origin",f"HEAD:refs/heads/{branch}",cwd=target)
             observed=git("ls-remote","origin",f"refs/heads/{branch}",capture=True).split()[0]
             if observed!=commit:raise RuntimeError("remote state readback mismatch")
-            publication=[sys.executable,"-m","nfl_lab.cli","publication","--state",str(state),"--publication-commit",commit]
+            from nfl_lab.publication_scope import scope_document
+            from nfl_lab.operational_sources import load_source_policy
+            policy_sha=load_source_policy(policy_path)["_policy_sha256"] if storage is not None else None
+            scope=scope_document(commit,files,verified_remote_commit=observed,policy_sha256=policy_sha)
+            publication=[sys.executable,"-m","nfl_lab.cli","publication","--root",str(root),"--state",str(state),"--publication-commit",commit,"--publication-scope-stdin"]
             if storage is not None:
                 publication += ["--source-policy",str(policy_path),"--output","runs/operational-v2/publication-result.json"]
-            subprocess.run(publication,check=True)
+            subprocess.run(publication,check=True,input=json.dumps(scope),text=True)
             if storage is not None:
                 print("Reviewed state published; new local publication-timing receipts await the next exact content review")
                 return

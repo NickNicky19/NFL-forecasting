@@ -3,6 +3,7 @@ from __future__ import annotations
 from contextlib import nullcontext
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from .state import digest, now_utc, records, resolved_outcomes, save, utc, validate_forecast
@@ -18,6 +19,7 @@ def main():
     parser.add_argument("--methods")
     parser.add_argument("--source-policy",type=Path,help="Explicit permitted operational source policy; required for current operations")
     parser.add_argument("--publication-commit")
+    parser.add_argument("--publication-scope-stdin",action="store_true",help="Read the exact verified publisher file scope from stdin")
     parser.add_argument("--output",type=Path,help="Quota-managed aggregate receipt inside the registered runs directory")
     args=parser.parse_args();root=args.root.resolve();cache=args.cache or root/"data";state=args.state or root/"state"
     if args.command in {"acquire","experiment","daily","grade"} and args.source_policy is None:
@@ -79,18 +81,18 @@ def _execute(args,root,cache,state,source_policy,seasons,config):
         save(state,"scorecards",result)
     else:
         if not args.publication_commit:raise ValueError("publication commit required")
-        observed=now_utc();docs=list(records(state,"forecasts"));prior={r["batch"] for r in records(state,"publication")}
-        verified=0;late=0
-        for batch in docs:
-            key=digest(batch)
-            if key in prior:continue
-            timely=sum(utc(r["kickoff_utc"])>observed for r in batch["rows"])
-            save(state,"publication",{"batch":key,"commit":args.publication_commit,"observed_remote_readback_at":observed.isoformat(),
-                 "timely_rows":timely,"late_rows":len(batch["rows"])-timely,"scope":"remote commit readback; input provider publication clocks remain unknown"})
-            verified+=timely;late+=len(batch["rows"])-timely
-        from .website_baselines import record_website_publication
-        website_snapshots=record_website_publication(state,args.publication_commit,observed)
-        result={"publication_verified_rows":verified,"late_rows":late,"website_snapshots_publication_checked":website_snapshots}
+        if not args.publication_scope_stdin:raise ValueError("explicit committed publication scope required")
+        from .publication_scope import record_scoped_publication, MAX_BYTES
+        from .operational_io import active_storage
+        raw=sys.stdin.read(MAX_BYTES+1)
+        if len(raw)>MAX_BYTES:raise ValueError("publication scope exceeds bounded metadata size")
+        scope=json.loads(raw)
+        policy_sha=None
+        if source_policy is not None:
+            from .operational_sources import load_source_policy
+            policy_sha=load_source_policy(source_policy)["_policy_sha256"]
+        result=record_scoped_publication(root,state,commit=args.publication_commit,scope=scope,
+                                        observed=now_utc(),policy_sha256=policy_sha,storage=active_storage())
     encoded=json.dumps(result,indent=2,default=str,allow_nan=False)
     if args.output is not None:
         from .operational_io import active_storage
