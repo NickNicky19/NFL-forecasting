@@ -9,7 +9,6 @@ from __future__ import annotations
 import hashlib
 import io
 import json
-import shutil
 import tempfile
 import time
 from pathlib import Path
@@ -19,9 +18,11 @@ import pandas as pd
 import pyarrow.parquet as pq
 
 from . import data, features, permitted_source_features as permitted
+from .operational_storage import OperationalStorage
+from .operational_io import operational_io
 
-VERSION = "permitted-operational-nfl-history-v1"
-POLICY_ID = "permitted-operational-nfl-history-v1-20261023"
+VERSION = "permitted-operational-nfl-history-v2"
+POLICY_ID = "permitted-operational-nfl-history-v2-20261023"
 SCHEDULE_COLUMNS = ["game_id", "season", "week", "game_type", "gameday", "gametime", "away_team", "home_team"]
 SOURCE_SPECS = {
     "schedules": ("schedules.csv", "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv"),
@@ -30,7 +31,8 @@ SOURCE_SPECS = {
     "rosters": ("roster_weekly_{season}.parquet", f"{data.BASE}/weekly_rosters/roster_weekly_{{season}}.parquet"),
     "license": ("nflverse_LICENSE.md", "https://raw.githubusercontent.com/nflverse/nflverse-data/main/LICENSE.md"),
 }
-CODE_FILES = ("operational_sources.py", "data.py", "features.py", "permitted_source_features.py", "rb_readiness.py")
+CODE_FILES = ("operational_sources.py", "data.py", "features.py", "permitted_source_features.py", "rb_readiness.py", "operational_storage.py", "operational_io.py",
+              "operational_models.py", "live.py", "experiment.py", "cli.py")
 
 
 def _json(value: object) -> bytes:
@@ -107,7 +109,7 @@ def _request(seasons: list[int], policy: dict, asof: object, allowed_periods: di
 
 
 def _base(cache: Path, policy: dict) -> Path:
-    return Path(cache) / "operational-source-v1" / policy["_policy_sha256"]
+    return Path(cache) / "operational-source-v2" / policy["_policy_sha256"]
 
 
 def _asof_name(request: dict) -> str:
@@ -140,15 +142,6 @@ def _read_receipt(path: Path, expected_url: str) -> dict:
         raise ValueError("non-whitelisted source URL: " + path.name)
     _stamp(receipt["retrieved_utc"])
     return receipt
-
-
-def _size(directory: Path) -> int:
-    return sum(path.stat().st_size for path in directory.rglob("*") if path.is_file()) if directory.exists() else 0
-
-
-def _retention(base: Path, limit: int) -> None:
-    if _size(base) > limit:
-        raise ValueError("operational private retention budget exceeded; prior artifacts preserved")
 
 
 def _columns(path: Path) -> set[str]:
@@ -246,10 +239,13 @@ def _snapshot_digest(manifest: dict) -> str:
     return _digest({key: value for key, value in manifest.items() if key not in {"snapshot_sha256", "namespace", "manifest_sha256"}})
 
 
-def _verify(namespace: Path, request: dict | None = None) -> dict:
+def _verify(namespace: Path, request: dict | None = None, *, storage: OperationalStorage) -> dict:
     _no_links(namespace)
     manifest_path = namespace / "source-manifest.json"
+    storage.validate_reference(manifest_path)
     manifest = json.loads(manifest_path.read_text())
+    if manifest.get("adapter_version") != VERSION:
+        raise ValueError("v2 operational source manifest required; v1 replay requires its Git pin")
     if manifest.get("snapshot_sha256") != _snapshot_digest(manifest):
         raise ValueError("operational snapshot manifest digest mismatch")
     if request is not None and manifest["request"] != request:
@@ -264,19 +260,23 @@ def _verify(namespace: Path, request: dict | None = None) -> dict:
         raise ValueError("forbidden/unexpected original source artifact")
     for name, spec in expected.items():
         path = namespace / "sources" / name
+        storage.validate_reference(path)
+        storage.validate_reference(path.with_name(name + ".receipt.json"))
         receipt = _read_receipt(path, spec["url"])
         if receipt != manifest["source_receipts"][name] or data._sha(path.with_name(name + ".receipt.json")) != manifest["sources"][name]["receipt_sha256"]:
             raise ValueError("original receipt binding changed: " + name)
     for relative, sha in manifest["artifact_sha256s"].items():
         path = namespace / relative
         _no_links(path)
+        storage.validate_reference(path, expected_sha256=sha)
         if data._sha(path) != sha:
             raise ValueError("operational derived artifact changed: " + relative)
     return {**manifest, "namespace": str(namespace.resolve()), "manifest_sha256": data._sha(manifest_path)}
 
 
 def acquire_operational_history(cache: Path, seasons: list[int], policy: Path | str | dict, asof: object,
-                                *, source_cache: Path | None = None, allowed_periods: dict | None = None) -> dict:
+                                *, source_cache: Path | None = None, allowed_periods: dict | None = None,
+                                state: Path | None = None, storage: OperationalStorage | None = None) -> dict:
     """Create one immutable request snapshot, or verify and reuse its exact bytes.
 
     ``source_cache`` adopts only verified named raw files without modifying that
@@ -284,6 +284,14 @@ def acquire_operational_history(cache: Path, seasons: list[int], policy: Path | 
     namespace and uses the existing bounded downloader, never legacy acquisition.
     ``allowed_periods`` can narrow acceptance reads, including protected weeks.
     """
+    normalized = load_source_policy(policy)
+    storage = storage or OperationalStorage(cache, normalized, state=state)
+    with operational_io(storage):
+        return _acquire_operational_history(cache, seasons, normalized, asof,
+            source_cache=source_cache, allowed_periods=allowed_periods, storage=storage)
+
+
+def _acquire_operational_history(cache, seasons, policy, asof, *, source_cache, allowed_periods, storage):
     started = time.monotonic()
     normalized = load_source_policy(policy)
     request = _request(seasons, normalized, asof, allowed_periods)
@@ -292,98 +300,101 @@ def acquire_operational_history(cache: Path, seasons: list[int], policy: Path | 
     request_id = _digest(request)
     binding = base / "requests" / (request_id + ".json")
     if binding.exists():
-        return _verify(base / json.loads(binding.read_text())["namespace"], request)
+        storage.validate_reference(binding)
+        return _verify(base / json.loads(binding.read_text())["namespace"], request, storage=storage)
     base.mkdir(parents=True, exist_ok=True)
     limit = int(normalized["namespaces"]["private_retention_bytes"])
     if limit <= 0 or limit > 512 * 1024 * 1024:
         raise ValueError("invalid private retention budget")
-    _retention(base, limit)
     stage = Path(tempfile.mkdtemp(prefix=".staging-", dir=base))
-    try:
-        sources = stage / "sources"
-        sources.mkdir()
-        receipts, source_proof = {}, {}
-        specs = _names(request["seasons"])
-        if source_cache is None:
-            adoption_raw = base / "daily" / request["asof_utc"][:10] / "raw"
-            _no_links(adoption_raw)
+    with storage.capture_writes(roots=[stage]):
+        try:
+            sources = stage / "sources"
+            sources.mkdir()
+            receipts, source_proof = {}, {}
+            specs = _names(request["seasons"])
+            if source_cache is None:
+                adoption_raw = base / "daily" / request["asof_utc"][:10] / "raw"
+                _no_links(adoption_raw)
+                for name, spec in specs.items():
+                    data._download(adoption_raw, name, spec["url"], refresh_daily=False)
+                    storage.import_file(adoption_raw / name, adoption_raw / name)
+                    storage.import_file(adoption_raw / (name + ".receipt.json"), adoption_raw / (name + ".receipt.json"))
+            else:
+                adoption_raw = Path(source_cache) / "raw"
+            total = 0
             for name, spec in specs.items():
-                data._download(adoption_raw, name, spec["url"], refresh_daily=False)
-                _retention(base, limit)
-        else:
-            adoption_raw = Path(source_cache) / "raw"
-        total = 0
-        for name, spec in specs.items():
-            path = adoption_raw / name
-            receipt = _read_receipt(path, spec["url"])
-            if source_cache is not None and _stamp(receipt["retrieved_utc"]) > _stamp(request["asof_utc"]):
-                raise ValueError("source receipt retrieved after supplied actual asof")
-            total += path.stat().st_size
-            if path.stat().st_size > data.MAX_BYTES or total > 512 * 1024 * 1024:
-                raise ValueError("operational acquisition byte budget exceeded")
-            shutil.copyfile(path, sources / name)
-            shutil.copyfile(path.with_name(name + ".receipt.json"), sources / (name + ".receipt.json"))
-            if data._sha(sources / name) != receipt["sha256"]:
-                raise ValueError("source changed during immutable copy")
-            receipts[name] = receipt
-            source_proof[name] = {"sha256": receipt["sha256"], "receipt_sha256": data._sha(sources / (name + ".receipt.json")), "bytes": (sources / name).stat().st_size}
-            _retention(base, limit)
-        subsets, stats = _subsets(stage, request)
-        # Shared normalization can only see this audited finite raw whitelist.
-        raw_names = {p.name for p in (stage / "raw").iterdir()}
-        expected_raw = {"schedules.csv", "players.parquet"} | {f"{kind}_{y}.parquet" for y in request["seasons"] for kind in ("stats_player_week", "roster_weekly")}
-        if raw_names != expected_raw:
-            raise ValueError("forbidden/unexpected raw artifact before shared normalizer")
-        history, qualification = permitted.qualify_history(data.load_history(stage, request["seasons"]), stats)
-        team_proof = stats[["season", "week", "team"]].copy()
-        team_proof["team"] = data._team(team_proof.team)
-        team_proof["_physical"] = permitted.physical_event_evidence(stats).to_numpy()
-        positive_teams = team_proof.groupby(["season", "week", "team"])._physical.any()
-        team_keys = pd.MultiIndex.from_frame(history[["season", "week", "team"]])
-        team_supported = positive_teams.reindex(team_keys, fill_value=False).to_numpy()
-        history.loc[~team_supported, ["team_stat_" + col for col in features.TEAM_STATS]] = np.nan
-        qualification["team_context_rows_masked_without_physical_evidence"] = int((~team_supported).sum())
-        qualification["roster_status_counts"] = {"missing" if pd.isna(key) else str(key): int(value)
-                                                  for key, value in qualification["roster_status_counts"].items()}
-        # Replace the private unqualified intermediate before publishing a view.
-        history.attrs.clear()
-        history_path = stage / "processed" / "history.parquet"
-        history.to_parquet(history_path, index=False)
-        (stage / "processed" / "history_profile.json").unlink()
-        identity = data.load_identity(stage)
-        identity.attrs.clear()
-        identity_path = stage / "processed" / "identity.parquet"
-        identity.to_parquet(identity_path, index=False)
-        artifacts = {"subset-manifest.json": data._sha(stage / "subset-manifest.json"),
-                     "processed/history.parquet": data._sha(history_path), "processed/identity.parquet": data._sha(identity_path)}
-        artifacts.update({item["path"]: item["sha256"] for item in subsets["files"].values()})
-        manifest = {"adapter_version": VERSION, "request": request, "policy_sha256": request["policy_sha256"],
-                    "canonical_policy_sha256": request["canonical_policy_sha256"], "code_sha256s": request["code_sha256s"],
-                    "asof_utc": request["asof_utc"], "seasons": request["seasons"], "allowed_periods": request["allowed_periods"],
-                    "effective_periods": subsets["allowed_periods"], "source_receipts": receipts, "sources": source_proof,
-                    "source_observed_max_utc": max(_stamp(r["retrieved_utc"]) for r in receipts.values()).isoformat(),
-                    "artifact_sha256s": artifacts, "qualified_history_sha256": artifacts["processed/history.parquet"],
-                    "training_view_sha256": artifacts["processed/history.parquet"], "history_frame_sha256": _frame_sha(history),
-                    "qualification": qualification, "vintage": data.VINTAGE,
-                    "availability": "strict kickoff+7days before asof and feature cutoff; assumed historical publication only",
-                    "participation_probability": "unavailable: sufficient-positive panel has no complete nonappearance denominator",
-                    "exact_ppr": "blocked_incomplete_component_contract", "elapsed_seconds": round(time.monotonic() - started, 6)}
-        snapshot = _snapshot_digest(manifest)
-        manifest["snapshot_sha256"] = snapshot
-        (stage / "source-manifest.json").write_bytes(_json(manifest))
-        destination = base / _asof_name(request) / snapshot
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        _retention(base, limit)
-        stage.rename(destination)
-        verified = _verify(destination, request)
-        binding.parent.mkdir(exist_ok=True)
-        binding.write_bytes(_json({"namespace": str(destination.relative_to(base)), "snapshot_sha256": snapshot}))
-        return verified
-    except Exception as exc:
-        # Failed stages remain private evidence and cannot resolve as snapshots.
-        if stage.exists():
-            (stage / "FAILURE.json").write_bytes(_json({"request": request, "exception": type(exc).__name__, "message": str(exc)[:500]}))
-        raise
+                path = adoption_raw / name
+                receipt = _read_receipt(path, spec["url"])
+                if source_cache is not None and _stamp(receipt["retrieved_utc"]) > _stamp(request["asof_utc"]):
+                    raise ValueError("source receipt retrieved after supplied actual asof")
+                total += path.stat().st_size
+                if path.stat().st_size > data.MAX_BYTES or total > 512 * 1024 * 1024:
+                    raise ValueError("operational acquisition byte budget exceeded")
+                storage.import_file(path, sources / name, expected_sha256=receipt["sha256"])
+                storage.import_file(path.with_name(name + ".receipt.json"), sources / (name + ".receipt.json"))
+                if data._sha(sources / name) != receipt["sha256"]:
+                    raise ValueError("source changed during immutable copy")
+                receipts[name] = receipt
+                source_proof[name] = {"sha256": receipt["sha256"], "receipt_sha256": data._sha(sources / (name + ".receipt.json")), "bytes": (sources / name).stat().st_size}
+            subsets, stats = _subsets(stage, request)
+            # Shared normalization can only see this audited finite raw whitelist.
+            raw_names = {p.name for p in (stage / "raw").iterdir()}
+            expected_raw = {"schedules.csv", "players.parquet"} | {f"{kind}_{y}.parquet" for y in request["seasons"] for kind in ("stats_player_week", "roster_weekly")}
+            if raw_names != expected_raw:
+                raise ValueError("forbidden/unexpected raw artifact before shared normalizer")
+            history, qualification = permitted.qualify_history(data.load_history(stage, request["seasons"]), stats)
+            team_proof = stats[["season", "week", "team"]].copy()
+            team_proof["team"] = data._team(team_proof.team)
+            team_proof["_physical"] = permitted.physical_event_evidence(stats).to_numpy()
+            positive_teams = team_proof.groupby(["season", "week", "team"])._physical.any()
+            team_keys = pd.MultiIndex.from_frame(history[["season", "week", "team"]])
+            team_supported = positive_teams.reindex(team_keys, fill_value=False).to_numpy()
+            history.loc[~team_supported, ["team_stat_" + col for col in features.TEAM_STATS]] = np.nan
+            qualification["team_context_rows_masked_without_physical_evidence"] = int((~team_supported).sum())
+            qualification["roster_status_counts"] = {"missing" if pd.isna(key) else str(key): int(value)
+                                                      for key, value in qualification["roster_status_counts"].items()}
+            # Replace the private unqualified intermediate before publishing a view.
+            history.attrs.clear()
+            history_path = stage / "processed" / "history.parquet"
+            history.to_parquet(history_path, index=False)
+            (stage / "processed" / "history_profile.json").unlink()
+            identity = data.load_identity(stage)
+            identity.attrs.clear()
+            identity_path = stage / "processed" / "identity.parquet"
+            identity.to_parquet(identity_path, index=False)
+            artifacts = {"subset-manifest.json": data._sha(stage / "subset-manifest.json"),
+                         "processed/history.parquet": data._sha(history_path), "processed/identity.parquet": data._sha(identity_path)}
+            artifacts.update({item["path"]: item["sha256"] for item in subsets["files"].values()})
+            manifest = {"adapter_version": VERSION, "request": request, "policy_sha256": request["policy_sha256"],
+                        "canonical_policy_sha256": request["canonical_policy_sha256"], "code_sha256s": request["code_sha256s"],
+                        "asof_utc": request["asof_utc"], "seasons": request["seasons"], "allowed_periods": request["allowed_periods"],
+                        "effective_periods": subsets["allowed_periods"], "source_receipts": receipts, "sources": source_proof,
+                        "source_observed_max_utc": max(_stamp(r["retrieved_utc"]) for r in receipts.values()).isoformat(),
+                        "artifact_sha256s": artifacts, "qualified_history_sha256": artifacts["processed/history.parquet"],
+                        "training_view_sha256": artifacts["processed/history.parquet"], "history_frame_sha256": _frame_sha(history),
+                        "qualification": qualification, "vintage": data.VINTAGE,
+                        "availability": "strict kickoff+7days before asof and feature cutoff; assumed historical publication only",
+                        "participation_probability": "unavailable: sufficient-positive panel has no complete nonappearance denominator",
+                        "exact_ppr": "blocked_incomplete_component_contract", "elapsed_seconds": round(time.monotonic() - started, 6)}
+            snapshot = _snapshot_digest(manifest)
+            manifest["snapshot_sha256"] = snapshot
+            (stage / "source-manifest.json").write_bytes(_json(manifest))
+            destination = base / _asof_name(request) / snapshot
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            stage.rename(destination)
+            verified = _verify(destination, request, storage=storage)
+            binding.parent.mkdir(exist_ok=True)
+            binding.write_bytes(_json({"namespace": str(destination.relative_to(base)), "snapshot_sha256": snapshot}))
+            return verified
+        except Exception as exc:
+            # Failed stages remain private evidence and cannot resolve as snapshots.
+            if stage.exists():
+                try:
+                    storage.write_bytes(stage / "FAILURE.json", _json({"request": request, "exception": type(exc).__name__, "message": str(exc)[:500]}))
+                except Exception as marker_error:
+                    exc.add_note("Failure marker could not be persisted: " + str(marker_error))
+            raise
 
 
 def resolve_operational_snapshot(cache: Path, seasons: list[int], policy: Path | str | dict, asof: object,
@@ -392,8 +403,10 @@ def resolve_operational_snapshot(cache: Path, seasons: list[int], policy: Path |
     normalized = load_source_policy(policy)
     request = _request(seasons, normalized, asof, allowed_periods)
     base = _base(cache, normalized)
+    storage = OperationalStorage(cache, normalized)
     candidates = []
     for binding in (base / "requests").glob("*.json"):
+        storage.validate_reference(binding)
         namespace = base / json.loads(binding.read_text())["namespace"]
         manifest = json.loads((namespace / "source-manifest.json").read_text())
         other = manifest["request"]
@@ -409,7 +422,7 @@ def resolve_operational_snapshot(cache: Path, seasons: list[int], policy: Path |
             candidates.append((_stamp(other["asof_utc"]), namespace))
     if not candidates:
         raise FileNotFoundError("no matching permitted operational snapshot; legacy fallback forbidden")
-    return _verify(max(candidates, key=lambda item: item[0])[1])
+    return _verify(max(candidates, key=lambda item: item[0])[1], storage=storage)
 
 
 def _load_manifest(cache: Path, seasons: list[int], policy: Path | str | dict, asof: object,
@@ -419,10 +432,12 @@ def _load_manifest(cache: Path, seasons: list[int], policy: Path | str | dict, a
     normalized = load_source_policy(policy)
     request = _request(seasons, normalized, asof, allowed_periods)
     base = _base(cache, normalized)
+    storage = OperationalStorage(cache, normalized)
     binding = base / "requests" / (_digest(request) + ".json")
     if not binding.exists():
         raise FileNotFoundError("exact permitted operational snapshot missing; acquisition must be explicit")
-    return _verify(base / json.loads(binding.read_text())["namespace"], request)
+    storage.validate_reference(binding)
+    return _verify(base / json.loads(binding.read_text())["namespace"], request, storage=storage)
 
 
 def load_operational_history(cache: Path, seasons: list[int], policy: Path | str | dict, asof: object,

@@ -389,14 +389,20 @@ def score_saved_website(state, cache, *, downloader=_download):
             if sum(p.stat().st_size for p in private.glob("*.parquet")) + len(body) > 256*1024*1024:
                 limits.append("Private comparison row retention cap reached; no evidence deleted.")
             else:
-                temporary = None
-                try:
-                    with tempfile.NamedTemporaryFile(dir=private, prefix=".pending-", delete=False) as f:
-                        temporary = Path(f.name); f.write(body); f.flush(); os.fsync(f.fileno())
-                    try:os.link(temporary, destination)
+                from .operational_io import active_storage
+                storage = active_storage()
+                if storage is not None:
+                    try:storage.write_bytes(destination, body, replace=False)
                     except FileExistsError:pass
-                finally:
-                    if temporary is not None:temporary.unlink(missing_ok=True)
+                else:
+                    temporary = None
+                    try:
+                        with tempfile.NamedTemporaryFile(dir=private, prefix=".pending-", delete=False) as f:
+                            temporary = Path(f.name); f.write(body); f.flush(); os.fsync(f.fileno())
+                        try:os.link(temporary, destination)
+                        except FileExistsError:pass
+                    finally:
+                        if temporary is not None:temporary.unlink(missing_ok=True)
     report = {"schema_version": "website-paired-scorecard-v1", "state": "SCORED" if rows else "PENDING_OR_UNSUPPORTED",
               "paired_rows": len(rows) // 2, "coverage": dict(coverage), "summaries": summaries, "paired": paired,
               "limits": sorted(set(limits)), "promoted": [],

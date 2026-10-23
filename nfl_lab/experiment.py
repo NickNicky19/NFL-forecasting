@@ -13,6 +13,8 @@ import time
 import uuid
 
 from .state import records, save
+from .operational_io import operational_io
+from .operational_storage import OperationalStorage
 
 
 class ExperimentTerminated(SystemExit):
@@ -127,33 +129,39 @@ def run_experiment(root, cache, state, config, methods=None, *, source_policy=No
 
 def acquire_operational_features(cache, seasons, policy, asof, *, state=None):
     """Persist a new isolated feature snapshot and a small replaceable pointer."""
+    from .operational_sources import load_source_policy
+    policy = load_source_policy(policy)
+    storage = OperationalStorage(cache, policy, state=state)
+    with operational_io(storage):
+        return _acquire_operational_features(cache, seasons, policy, asof, state=state, storage=storage)
+
+
+def _acquire_operational_features(cache, seasons, policy, asof, *, state, storage):
     from .operational_sources import (load_source_policy, acquire_operational_history,
                                       load_operational_history, build_operational_features)
     from .operational_models import source_binding, frame_hash, check_operational_storage
     from .state import digest
     policy = load_source_policy(policy)
     check_operational_storage(cache, policy, state=state)
-    acquisition = acquire_operational_history(cache, seasons, policy, asof)
+    acquisition = acquire_operational_history(cache, seasons, policy, asof, state=state, storage=storage)
     check_operational_storage(cache, policy, state=state)
     history = load_operational_history(cache, seasons, policy, asof)
     features = build_operational_features(history, policy=policy).reset_index(drop=True)
     manifest = history.attrs["operational_manifest"]
     binding = source_binding(policy, manifest)
-    directory = Path(cache) / "processed/operational-source-v1" / policy["_policy_sha256"]
+    directory = Path(cache) / "processed/operational-source-v2" / policy["_policy_sha256"]
     directory.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=".features-", dir=directory) as temporary:
-        provisional = Path(temporary) / "features.parquet"
-        features.to_parquet(provisional, index=False)
-        check_operational_storage(cache, policy, state=state, reserve_bytes=provisional.stat().st_size)
-        feature_sha = hashlib.sha256(provisional.read_bytes()).hexdigest()
-        snapshot = directory / "snapshots" / feature_sha
-        snapshot.mkdir(parents=True, exist_ok=True)
-        destination = snapshot / "features.parquet"
-        if not destination.exists():
-            os.link(provisional, destination)
-        if hashlib.sha256(destination.read_bytes()).hexdigest() != feature_sha:
-            raise ValueError("immutable operational features changed")
-    document = {"schema_version": "operational-feature-snapshot-v1", "feature_sha256": feature_sha,
+    import io
+    body = io.BytesIO()
+    features.to_parquet(body, index=False)
+    encoded = body.getvalue()
+    feature_sha = hashlib.sha256(encoded).hexdigest()
+    snapshot = directory / "snapshots" / feature_sha
+    destination = snapshot / "features.parquet"
+    if not destination.exists():
+        storage.write_bytes(destination, encoded, replace=False)
+    storage.validate_reference(destination, expected_sha256=feature_sha)
+    document = {"schema_version": "operational-feature-snapshot-v2", "feature_sha256": feature_sha,
                 "feature_values_sha256": frame_hash(features), "source_binding": binding,
                 "operational_manifest": manifest, "seasons": sorted(set(seasons)),
                 "asof_utc": str(asof), "rows": len(features)}
@@ -162,10 +170,10 @@ def acquire_operational_features(cache, seasons, policy, asof, *, state=None):
         if json.loads(manifest_path.read_text()) != document:
             raise ValueError("immutable operational feature manifest collision")
     else:
-        from .model_artifacts import _atomic_json
-        _atomic_json(manifest_path, document, replace=False)
-    atomic_checkpoint(directory / "current.json", {"feature_sha256": feature_sha,
-                      "manifest_sha256": digest(document)})
+        storage.atomic_json(manifest_path, document, replace=False)
+    with storage.capture_writes(roots=[directory / "current.json"]):
+        storage.atomic_json(directory / "current.json", {"feature_sha256": feature_sha,
+                          "manifest_sha256": digest(document)}, replace=True)
     check_operational_storage(cache, policy, state=state)
     return {"rows": len(features), "source_receipt": acquisition,
             "feature_sha256": feature_sha, "source_binding": binding,
@@ -178,19 +186,25 @@ def load_operational_features(cache, policy):
     from .operational_models import source_binding, frame_hash
     from .state import digest
     policy = load_source_policy(policy)
-    directory = Path(cache) / "processed/operational-source-v1" / policy["_policy_sha256"]
+    directory = Path(cache) / "processed/operational-source-v2" / policy["_policy_sha256"]
+    storage = OperationalStorage(cache, policy)
+    storage.validate_reference(directory / "current.json")
     pointer = json.loads((directory / "current.json").read_text())
     feature_sha = pointer["feature_sha256"]
     if not isinstance(feature_sha, str) or len(feature_sha) != 64 or any(c not in "0123456789abcdef" for c in feature_sha):
         raise ValueError("invalid operational feature snapshot identity")
     snapshot = directory / "snapshots" / feature_sha
+    storage.validate_reference(snapshot / "manifest.json")
     document = json.loads((snapshot / "manifest.json").read_text())
+    if document.get("schema_version") != "operational-feature-snapshot-v2":
+        raise ValueError("v2 operational feature snapshot required")
     if digest(document) != pointer["manifest_sha256"] or document["feature_sha256"] != feature_sha:
         raise ValueError("operational feature manifest integrity failure")
     binding = source_binding(policy, document["operational_manifest"])
     if binding != document["source_binding"]:
         raise ValueError("operational feature policy/source/code binding mismatch")
     feature_path = snapshot / "features.parquet"
+    storage.validate_reference(feature_path, expected_sha256=feature_sha)
     if hashlib.sha256(feature_path.read_bytes()).hexdigest() != feature_sha:
         raise ValueError("operational feature bytes changed")
     features = pd.read_parquet(feature_path)
@@ -202,6 +216,14 @@ def load_operational_features(cache, policy):
 
 def run_reference_learning(root, cache, state, policy, methods=None):
     """Refresh at most 22 fixed references. This path has no accuracy scoring."""
+    from .operational_sources import load_source_policy
+    policy = load_source_policy(policy)
+    storage = OperationalStorage(cache, policy, state=state)
+    with operational_io(storage, run_root=Path(root) / "runs"):
+        return _run_reference_learning(root, cache, state, policy, methods, storage=storage)
+
+
+def _run_reference_learning(root, cache, state, policy, methods, *, storage):
     import numpy as np
     import pandas as pd
     from .models import TARGETS, _support
@@ -256,9 +278,9 @@ def run_reference_learning(root, cache, state, policy, methods=None):
                     artifact = Path(state) / "models" / VERSION / "weekly" / namespace / f"{target}-{method}.json"
                     if sum(path.stat().st_size for path in Path(state).rglob("*") if path.is_file()) > 195 * 1024 * 1024:
                         raise RuntimeError("derived state nearing 200MiB cap; no evidence removed")
-                    pred = fit_operational_reference(train, query, target, method, artifact_path=artifact, binding=binding)
+                    pred = fit_operational_reference(train, query, target, method, artifact_path=artifact, binding=binding, storage=storage)
                     check_operational_storage(cache, policy, state=state)
-                    replay = predict_operational_artifact(artifact, query, binding=binding)
+                    replay = predict_operational_artifact(artifact, query, binding=binding, storage=storage)
                     for column in ("mean", "scale", "p10", "p50", "p90", "p_participation"):
                         if not np.allclose(pred[column], replay[column], rtol=1e-10, atol=1e-9, equal_nan=True):
                             raise ValueError("fixed reference artifact replay mismatch")
@@ -276,7 +298,7 @@ def run_reference_learning(root, cache, state, policy, methods=None):
             error = caught
             raise
         finally:
-            save(state, "training", {"schema_version": "operational-reference-refresh-v1", "execution_id": execution_id,
+            save(state, "training", {"schema_version": "operational-reference-refresh-v2", "execution_id": execution_id,
                  "policy_sha256": policy["_policy_sha256"], "state": "INTERRUPTED" if isinstance(error, ExperimentTerminated) else "FAILED" if error else "COMPLETED",
                  "result": result, "packages": packages, "wall_seconds": time.monotonic() - started,
                  "error": {"type": type(error).__name__, "message": str(error)[:500]} if error else None,

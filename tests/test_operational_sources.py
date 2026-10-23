@@ -26,7 +26,8 @@ def policy_fixture():
                         for kind, (name, url) in source.SOURCE_SPECS.items()},
             "history": {"season_type": "REG", "statistics_lag_days": 7,
                         "parquet_predicates": {"statistics_season_type": "season_type == REG", "roster_season_type": "game_type == REG"}},
-            "namespaces": {"private_retention_bytes": 64 * 1024 * 1024}}
+            "namespaces": {"private_retention_bytes": 64 * 1024 * 1024},
+            "storage": {"version": "operational-storage-v2", "limit_bytes": 64 * 1024 * 1024}}
 
 
 def source_fixture(directory):
@@ -182,8 +183,11 @@ def test_transformed_body_and_original_receipts_have_distinct_bindings(packet):
     subset = json.loads((Path(manifest["namespace"]) / "subset-manifest.json").read_text())
     name = "stats_player_week_2026.parquet"
     assert subset["files"][name]["sha256"] != manifest["source_receipts"][name]["sha256"]
-    (Path(manifest["namespace"]) / "raw" / name).write_bytes(b"mutated derived view")
-    with pytest.raises(ValueError, match="derived artifact changed"):
+    raw = Path(manifest["namespace"]) / "raw"
+    replacement = raw / "replacement"
+    replacement.write_bytes(b"mutated derived view")
+    replacement.replace(raw / name)
+    with pytest.raises(ValueError, match="reference|blob|hash"):
         load(packet)
 
 
@@ -279,7 +283,7 @@ def test_symlink_adoption_and_retention_fail_closed(tmp_path):
                                            source_cache=alias, allowed_periods=PERIODS)
     policy = policy_fixture()
     policy["namespaces"]["private_retention_bytes"] = 1
-    with pytest.raises(ValueError, match="retention budget"):
+    with pytest.raises(RuntimeError, match="quota|byte"):
         source.acquire_operational_history(tmp_path / "small", [2026], policy, ASOF,
                                            source_cache=old, allowed_periods=PERIODS)
 
@@ -344,3 +348,31 @@ def test_grade_latest_accepts_larger_verified_season_panel(tmp_path):
     assert set(context.season) == {2025, 2026}
     with pytest.raises(FileNotFoundError):
         source.resolve_operational_snapshot(cache, [2026], policy, "2026-10-24T12:00Z", allowed_periods={2026: [1, 2]})
+
+
+def test_v2_owned_body_subset_dedup_preserves_distinct_receipt_clocks(packet):
+    from nfl_lab.operational_storage import OperationalStorage
+    cache, old, policy, first = packet
+    for receipt_path in (old / "raw").glob("*.receipt.json"):
+        receipt = json.loads(receipt_path.read_text())
+        receipt["retrieved_utc"] = "2026-10-22T11:00:00Z"
+        receipt_path.write_text(json.dumps(receipt))
+    second = source.acquire_operational_history(cache, [2026], policy,
+        "2026-10-23T11:59:59.999999Z", source_cache=old, allowed_periods=PERIODS)
+    a, b = Path(first["namespace"]), Path(second["namespace"])
+    name = "stats_player_week_2026.parquet"
+    for relative in ["sources/" + name, "raw/" + name, "processed/history.parquet"]:
+        assert (a / relative).stat().st_ino == (b / relative).stat().st_ino
+        assert (a / relative).stat().st_ino != (old / "raw" / name).stat().st_ino
+    assert first["source_receipts"][name]["retrieved_utc"] == "2026-10-22T09:00:00Z"
+    assert second["source_receipts"][name]["retrieved_utc"] == "2026-10-22T11:00:00Z"
+    assert (a / ("sources/" + name + ".receipt.json")).stat().st_ino != (b / ("sources/" + name + ".receipt.json")).stat().st_ino
+    usage = OperationalStorage(cache, source.load_source_policy(policy)).snapshot()
+    assert usage["logical_referenced_bytes"] > usage["physical_bytes"]
+
+
+def test_v2_rejects_v1_policy_before_cache_access():
+    policy = policy_fixture()
+    policy["policy_id"] = "permitted-operational-nfl-history-v1-20261023"
+    with pytest.raises(ValueError, match="unsupported operational source policy"):
+        source.load_source_policy(policy)

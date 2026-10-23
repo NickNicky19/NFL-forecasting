@@ -10,16 +10,26 @@ import numpy as np
 import pandas as pd
 
 from .state import append_outcomes, capture, digest, now_utc, records, save, source_tree_digest, utc
+from .operational_io import active_storage, operational_io, quota_downloader
+from .operational_storage import OperationalStorage
 
 TEAMS={"WSH":"WAS","LA":"LAR","SD":"LAC","OAK":"LV"}
 SKILL={"QB","RB","WR","TE","FB"}
 
 
-def fetch(cache,name,url,day=None):
+def fetch(cache,name,url,day=None,*,storage=None):
     from .data import _download
     stamp=day or now_utc().date().isoformat()
-    raw=Path(cache)/"raw"/"live"/stamp;raw.mkdir(parents=True,exist_ok=True)
-    receipt=_download(raw,name+".json",url)
+    storage=storage or active_storage()
+    raw=(storage.live_root/stamp if storage is not None else Path(cache)/"raw"/"live"/stamp)
+    raw.mkdir(parents=True,exist_ok=True)
+    if storage is None:
+        receipt=_download(raw,name+".json",url)
+    else:
+        with operational_io(storage):
+            receipt=_download(raw,name+".json",url)
+            storage.import_file(raw/(name+".json"),raw/(name+".json"),expected_sha256=receipt["sha256"])
+            storage.import_file(raw/(name+".json.receipt.json"),raw/(name+".json.receipt.json"))
     return json.loads((raw/(name+".json")).read_text()),receipt
 
 
@@ -70,22 +80,24 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sourc
     """A permitted-source failure abstains from issuance and retains grading."""
     if source_policy is None:
         return _daily(root,cache,state,seasons,methods)
-    prior_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))
-    try:
-        from .operational_sources import load_source_policy
-        policy=load_source_policy(source_policy)
-        return _daily(root,cache,state,seasons,methods,source_policy=policy)
-    except Exception as error:
-        # No legacy history retry and no partial forecast capture on this path.
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage,run_root=Path(root)/"runs"):
+        prior_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))
         try:
-            grading=grade_only(state,cache,source_policy=source_policy)["grading"]
-        except Exception as grading_error:
-            grading={"state":"GRADING_FAILED", "error":type(grading_error).__name__+": "+str(grading_error)[:500]}
-        captured_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))-prior_rows
-        report={"state":"PERMITTED_OPERATION_FAILED_AFTER_ISSUANCE" if captured_rows else "PERMITTED_SOURCE_ISSUANCE_ABSTAINED", "error":type(error).__name__+": "+str(error)[:500],
-                "grading":grading,"observed_at":now_utc().isoformat(),"new_forecasts":captured_rows}
-        save(state,"health",report)
-        return report
+            return _daily(root,cache,state,seasons,methods,source_policy=policy)
+        except Exception as error:
+            # No legacy history retry and no partial forecast capture on this path.
+            try:
+                grading=grade_only(state,cache,source_policy=policy)["grading"]
+            except Exception as grading_error:
+                grading={"state":"GRADING_FAILED", "error":type(grading_error).__name__+": "+str(grading_error)[:500]}
+            captured_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))-prior_rows
+            report={"state":"PERMITTED_OPERATION_FAILED_AFTER_ISSUANCE" if captured_rows else "PERMITTED_SOURCE_ISSUANCE_ABSTAINED", "error":type(error).__name__+": "+str(error)[:500],
+                    "grading":grading,"observed_at":now_utc().isoformat(),"new_forecasts":captured_rows}
+            save(state,"health",report)
+            return report
 
 
 def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,source_policy=None):
@@ -121,7 +133,7 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
         check_operational_storage(cache,source_policy,state=state)
         history_asof=now_utc()
         active_seasons=sorted(set(seasons+[year]))
-        acquisition=acquire_operational_history(cache,active_seasons,source_policy,history_asof)
+        acquisition=acquire_operational_history(cache,active_seasons,source_policy,history_asof,state=state,storage=active_storage())
         check_operational_storage(cache,source_policy,state=state)
         history=load_operational_history(cache,active_seasons,source_policy,history_asof)
     else:
@@ -139,7 +151,9 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
     website_prepared=None;website_intake={"state":"NOT_ATTEMPTED"}
     try:
         from .website_baselines import prepare_website_snapshot
-        website_prepared=prepare_website_snapshot(root,cache,games,year,week)
+        storage=active_storage()
+        baseline_cache=storage.live_root/"website-baselines" if storage is not None else cache
+        website_prepared=prepare_website_snapshot(root,baseline_cache,games,year,week,**({"downloader":quota_downloader(storage)} if storage is not None else {}))
         website_intake=website_prepared["report"]
     except (OSError,RuntimeError,ValueError,KeyError,TypeError) as exc:
         website_intake={"state":"OPTIONAL_BASELINE_UNAVAILABLE","reason":type(exc).__name__+": "+str(exc)[:300]}
@@ -221,9 +235,9 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
             if sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
             if source_policy is not None:
                 binding=model_binding(source_policy,operational_manifest,train,forecast_test,input_sha)
-                pred=fit_operational_reference(train,forecast_test,target,method,artifact_path=artifact,binding=binding)
+                pred=fit_operational_reference(train,forecast_test,target,method,artifact_path=artifact,binding=binding,storage=active_storage())
                 check_operational_storage(cache,source_policy,state=state)
-                replay=predict_operational_artifact(artifact,forecast_test,binding=binding)
+                replay=predict_operational_artifact(artifact,forecast_test,binding=binding,storage=active_storage())
             else:
                 pred=fit_predict(train,forecast_test,target,method,artifact_path=artifact)
                 from .model_artifacts import predict_artifact
@@ -276,13 +290,29 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
             "baseline_comparison":"raw provider cached privately; paired score requires exact saved player/game/cutoff binding",
             "recording_scope":"new lab shadow; not rec-half-adjustment-v1"}
     (Path(root)/"runs").mkdir(exist_ok=True)
-    (Path(root)/"runs"/"daily.json").write_text(json.dumps(report,indent=2,allow_nan=False))
+    report_path=Path(root)/"runs"/"daily.json"
+    storage=active_storage()
+    if storage is None:
+        report_path.write_text(json.dumps(report,indent=2,allow_nan=False))
+    else:
+        with storage.capture_writes(roots=[report_path]):
+            storage.write_text(report_path,json.dumps(report,indent=2,allow_nan=False),replace=True)
     save(state,"health",{**report,"observed_at":now_utc().isoformat()})
     return report
 
 
 def grade_only(state,cache,*,source_policy=None):
     """Delayed/offseason operation: grade saved games, never issue forecasts."""
+    if source_policy is None:
+        return _grade_only(state,cache)
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage):
+        return _grade_only(state,cache,source_policy=policy)
+
+
+def _grade_only(state,cache,*,source_policy=None):
     player_limit=None
     try:
         players,_=fetch(cache,"players","https://api.sleeper.app/v1/players/nfl")
@@ -296,6 +326,16 @@ def grade_only(state,cache,*,source_policy=None):
 
 
 def grade_saved(state,cache,players,*,source_policy=None):
+    if source_policy is None:
+        return _grade_saved(state,cache,players)
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage):
+        return _grade_saved(state,cache,players,source_policy=policy)
+
+
+def _grade_saved(state,cache,players,*,source_policy=None):
     from .scoring import stat_value
     from .grading_sources import load_cached_grading_context,cached_nflverse_outcome
     opportunities={};identity_conflicts=set();frozen_ids_by_sleeper={}
