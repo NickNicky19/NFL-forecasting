@@ -12,9 +12,10 @@ The attached review package and raw source bodies are kept outside public Git.
 For the full recorded research history, formulas, data versions, gains, losses
 and missing/private artifacts, start with the [research index](reports/RESEARCH_INDEX.md).
 
-The [proposed ongoing adaptive-research goal](GOAL_PROPOSAL_2026-10-23.txt)
-defines cross-season learning, news qualification and per-category release
-readiness. It is a proposal, not an activation or change to current authority.
+The owner adopted the [ongoing operating goal](RESEARCH_GOAL.txt) on 2026-10-23.
+It covers cross-season learning, qualified news, bounded recovery and per-category
+release readiness. The longer [goal proposal](GOAL_PROPOSAL_2026-10-23.txt) remains
+background rationale; frozen registrations and website release ownership remain in force.
 
 Latest bounded research: [role and count comparison](reports/role-count-boosting-v1/README.md) completes 136 estimator fits, 88 supported forecast packages and all 48 primary slots, including four exact-PPR blocks. Both prespecified arms improve five Week 6 primary errors and worsen six against the saved website. Historical carry improvements repair an earlier failed model but still lose stronger controls. The original reporting failure and separate zero-fit recovery remain recorded. [Current twelve-category state](reports/role-count-boosting-v1/category-status.json). No candidate is promoted.
 
