@@ -75,6 +75,12 @@ now executed successfully and verified 585/681 historical identity matches.
 No new features or predictions were generated with the corrected IDs. The
 22-package replay and its fallback counts above retain their original inputs.
 
+Later addendum: the [separately versioned corrected-input replay](../canonical-query-reference-v1/README.md)
+has now passed. It rebuilt query features once, retained the original failure,
+and verified all 22 packages under the unchanged protocol. Recent usable history
+rose to 478/681 broad roster rows. The earlier outputs and counts above remain
+unchanged; neither packet measured forecasting accuracy.
+
 The training source still lacks a complete participant/played-zero denominator.
 Participation probability remains unavailable. Signed yardage and supported
 count zeros remain valid; unknown participation and missing fields remain unknown.

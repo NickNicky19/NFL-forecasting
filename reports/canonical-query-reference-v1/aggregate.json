@@ -1,0 +1,496 @@
+{
+  "broad_roster_not_category_eligibility": true,
+  "coverage_by_position": [
+    {
+      "by_position": {
+        "FB": {
+          "missing": 4,
+          "rows": 9,
+          "sparse": 4,
+          "warm": 1
+        },
+        "QB": {
+          "missing": 52,
+          "rows": 96,
+          "sparse": 17,
+          "warm": 27
+        },
+        "RB": {
+          "missing": 36,
+          "rows": 156,
+          "sparse": 42,
+          "warm": 78
+        },
+        "TE": {
+          "missing": 51,
+          "rows": 162,
+          "sparse": 64,
+          "warm": 47
+        },
+        "WR": {
+          "missing": 60,
+          "rows": 258,
+          "sparse": 84,
+          "warm": 114
+        }
+      },
+      "method": "recent",
+      "missing": 203,
+      "sparse": 211,
+      "target": "pass_yd",
+      "warm": 267
+    },
+    {
+      "by_position": {
+        "FB": {
+          "missing": 4,
+          "rows": 9,
+          "sparse": 5,
+          "warm": 0
+        },
+        "QB": {
+          "missing": 33,
+          "rows": 96,
+          "sparse": 46,
+          "warm": 17
+        },
+        "RB": {
+          "missing": 26,
+          "rows": 156,
+          "sparse": 90,
+          "warm": 40
+        },
+        "TE": {
+          "missing": 39,
+          "rows": 162,
+          "sparse": 102,
+          "warm": 21
+        },
+        "WR": {
+          "missing": 50,
+          "rows": 258,
+          "sparse": 154,
+          "warm": 54
+        }
+      },
+      "method": "pooled",
+      "missing": 152,
+      "sparse": 397,
+      "target": "pass_yd",
+      "warm": 132
+    }
+  ],
+  "evidence_lane": "REAL_DATA_SOFTWARE_AND_INPUT_ACCEPTANCE_NOT_ACCURACY",
+  "feature_columns": 97,
+  "feature_freeze_sha256": "cd023fdb03e69c8122cd851685f25b551545cdd4f5cce17df39b1c9005740696",
+  "feature_input_policy_sha256": "7b61f28d7dcafb3f371ee398b999243a1824f591d677bf2930d56a45cd4fd286",
+  "feature_lineage_sha256": "9fc59c3033c3f907780e231259fc055f88975c99b224040cbc6063ec129ee122",
+  "feature_parity": {
+    "all_nonplayer_features_exact_rows": 681,
+    "serialization_replay": "EXACT",
+    "unchanged_ID_rows_all97features_exact": 150
+  },
+  "feature_work": {
+    "V2_peak_combined_RSS_bytes": 829550592,
+    "combined_V1_V2_CPU_seconds": 38.822051,
+    "combined_V1_V2_wall_seconds": 38.05431941399979,
+    "failed_v1_builder_calls": 0,
+    "failed_v1_invocations": 1,
+    "output_placeholder_rule": "kickoff+7days assumed_not_observed; nooutcome/publication assertion",
+    "raw_future_placeholders_still_null": 681,
+    "v1_failure": "ValueError: canonical cutoff/kickoff/availability clocks required;681futureNULLplaceholders are legitimatelyunknown",
+    "v2_builder_calls": 1,
+    "v2_invocations": 1
+  },
+  "historical_identity_matches": 585,
+  "input_revision_registration_id": "canonical-query-reference-v1-20261023",
+  "limitations": [
+    "All681queryrows are a broad provider-active skill roster; not verified category/game-day eligibility.",
+    "Historycoverage gain is not pointforecast or probability accuracy evidence.",
+    "Independent complete participation/played-zero evidence remains unavailable; Pplay stays unknown.",
+    "Current-vintage reconstructed seven-day history availability is not independently verified upstream publication timing.",
+    "Exact18component websitePPR labels remain unqualified.",
+    "Reference count/yard dispersion based on trainingresiduals is not established calibration.",
+    "Existing scientific category decisions and genuinelyfuture confirmation gates are unchanged."
+  ],
+  "models_or_rows_published": false,
+  "new_HTTP_attempts": 0,
+  "new_accuracy_scores": 0,
+  "new_confirmation_observations": 0,
+  "new_official_forecasts": 0,
+  "old_query_features_and_all_original_inputs_unchanged": true,
+  "previous_reference_coverage": {
+    "pooled": {
+      "prior": 594,
+      "sparse": 60,
+      "warm": 27
+    },
+    "recent": {
+      "prior": 602,
+      "sparse": 33,
+      "warm": 46
+    }
+  },
+  "promotion": "NONE",
+  "query_feature_file_sha256": "b1177b04b549a3b9b3ae7ae4afa4f589a5d31f2b759a4042021bd1af35d37225",
+  "query_games": 13,
+  "query_history_coverage": [
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "pass_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "pass_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "pass_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "pass_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "pass_cmp"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "pass_cmp"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "pass_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "pass_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "pass_int"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "pass_int"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "rush_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "rush_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "rush_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "rush_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "rec"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "rec"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "rush_rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "rush_rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 203,
+        "sparse": 211,
+        "warm": 267
+      },
+      "fallback_counts": {
+        "": 478,
+        "position_prior": 203
+      },
+      "method": "recent",
+      "target": "anytime_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 152,
+        "sparse": 397,
+        "warm": 132
+      },
+      "fallback_counts": {
+        "": 529,
+        "position_prior": 152
+      },
+      "method": "pooled",
+      "target": "anytime_td"
+    }
+  ],
+  "query_rows": 681,
+  "reference_work": {
+    "blocked_exact_PPR_slots": 2,
+    "negative_checks": [
+      {
+        "case": "changed_query",
+        "exception": "ArtifactError",
+        "state": "EXPECTED_REJECTION"
+      },
+      {
+        "case": "changed_source_binding",
+        "exception": "ArtifactError",
+        "state": "EXPECTED_REJECTION"
+      },
+      {
+        "case": "corrupt_wrapper",
+        "exception": "ArtifactError",
+        "state": "EXPECTED_REJECTION"
+      },
+      {
+        "case": "wrong_target_method",
+        "exception": "ArtifactError",
+        "state": "EXPECTED_REJECTION"
+      }
+    ],
+    "outer_CPU_seconds": 82.61132200000002,
+    "outer_peak_combined_RSS_bytes": 772431872,
+    "outer_wall_seconds": 79.55118789000016,
+    "packages": 22,
+    "phases": [
+      "first_fit",
+      "same_process_replay",
+      "existing_artifact_reuse",
+      "fresh_process_replay",
+      "independent_reference"
+    ],
+    "shared_limit_bytes": 536870912,
+    "shared_unique_file_bytes_at_receipt": 35917402,
+    "state": "NONISSUED_REFERENCE_ACCEPTANCE_PASSED",
+    "supported_training_rows_each_package": 42219,
+    "training_rows": 62388,
+    "usage": {
+      "CPU_seconds": 78.376778,
+      "RSS_accounting": "maximum single-process high-water; outer supervisor enforces combined process tree",
+      "estimator_fits": 0,
+      "max_RSS_bytes": 641044480,
+      "query_forecast_route_budget_charges": 78315,
+      "reference_parameter_fits": 22,
+      "successfully_returned_query_row_incidences": 75591,
+      "wall_seconds": 76.35053938800002
+    }
+  },
+  "registration_sha256": "01818a110ce6c5153991f86edae3fec1ac51d0c60c88b16e0ff0c0a7ac67fdc2",
+  "runtime_freeze_sha256": "e53b3bd8e136251bba937cc33c76d609e3bd2b0d3d1afb602b8dc33c596448a0",
+  "schema_version": "canonical-query-reference-acceptance-v1",
+  "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "source_snapshot_sha256": "06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af",
+  "timing": {
+    "feature_asof": "2026-10-23T11:27:49.536081+00:00",
+    "feature_derivation_completed": "2026-10-23T14:18:24.603519+00:00",
+    "feature_derivation_started": "2026-10-23T14:17:53.653084+00:00",
+    "issued": false,
+    "reference_completion": "2026-10-23T14:33:18.945988+00:00"
+  },
+  "unchanged_parameter_and_saved_forecast_comparison": {
+    "meaning": "Saved parameter/output consistency only. Fullnewquery changes expectedfromcorrectidentity histories; no NFL accuracy measured.",
+    "new_inference_fits_accuracy_scores": 0,
+    "package_count": 22,
+    "saved_row_comparisons": 3300,
+    "state": "FROZEN_PARAMETER_AND_UNCHANGED_QUERY_COMPARISON_PASSED"
+  }
+}

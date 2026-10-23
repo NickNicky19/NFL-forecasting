@@ -21,6 +21,7 @@ into `main`. The website repository remains a read-only reference.
 | What is the adopted ongoing goal and latest source prerequisite? | [Active goal](../RESEARCH_GOAL.txt), [player-context software/cache checkpoint](player-context-intake-v1/README.md); no new accuracy claim |
 | What is the operational source-repair state? | [V1 source acceptance](operational-source-repair-v1/README.md), [v2 strict storage and value parity](OPERATIONAL_STORAGE_V2.md), [22-package real-data reference replay](reference-runtime-v2/README.md); identity/population qualification and hosted activation remain pending |
 | What caused the high reference fallback, and what was repaired? | [Exact cached identity adapter](query-identity-v1/README.md): historical identity matches 90→585/681 in a new private metadata version; no forecast accuracy claim or old-output changes |
+| Did corrected identities reach features and forecasts? | [Corrected feature and 22-package replay acceptance](canonical-query-reference-v1/README.md): usable recent history 79→478/681 broad roster rows, all five routes agree; no new accuracy score or issued forecasts |
 | How is the owner's independent audit being used? | [Audit intake, priorities and verified optional joint-helper repair](INDEPENDENT_AUDIT_INTAKE_20261023.md); no new accuracy evidence |
 
 ## Every recorded numerical study packet
