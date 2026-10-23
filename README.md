@@ -9,6 +9,8 @@ Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
 [the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
 The attached review package and raw source bodies are kept outside public Git.
 
+Latest bounded research: [direct original-website CDF comparison](reports/website-direct-leaf-cdf-v1/README.md) covers all twelve categories, with eleven scored and exact PPR blocked. Both fixed panels and website blends are retained. The exposed single-week gains are descriptive; no replacement is promoted.
+
 Current evidence: [category status](reports/lab-status.json),
 [historical comparisons](reports/initial-campaign/README.md), and
 [hosted verification](reports/hosted-verification.json). Hosted capture, retries
