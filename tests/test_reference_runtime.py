@@ -174,6 +174,31 @@ def test_fresh_child_real_subprocess_only_saved_query_and_artifact(tmp_path):
     assert len(records) == 1
     actual = pd.DataFrame(records[0]["rows"], columns=records[0]["columns"], index=records[0]["index"])
     runtime._same(expected, actual)
+    # Unrelated workspace data remains denied even though it is outside every
+    # protected root. Inject the read at a real guarded inference callsite.
+    import tempfile
+    probe = ("from pathlib import Path; import sys; "
+        "from nfl_lab import reference_runtime as r, operational_models as op; "
+        "original=op.frame_hash; "
+        "op.frame_hash=lambda q: (Path(sys.argv[2]).read_text(), original(q))[1]; "
+        "r._fresh_child(sys.argv[1])")
+    with tempfile.TemporaryDirectory(prefix=".fictional-read-guard-", dir=Path(__file__).resolve().parents[1]) as directory:
+        unrelated = Path(directory) / "outcomes.json"
+        unrelated.write_text('{"fictional": true}')
+        (Path(directory) / "traversal").mkdir()
+        for attempted in (unrelated, Path(directory) / "traversal" / ".." / unrelated.name):
+            denied = subprocess.run([sys.executable, "-B", "-c", probe, str(context_path), str(attempted)],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+            assert denied.returncode != 0
+            assert b"outside exact data and trusted runtime allowlist" in denied.stderr
+    dns_probe = ("import sys,socket; from nfl_lab import reference_runtime as r, operational_models as op; "
+        "original=op.frame_hash; "
+        "op.frame_hash=lambda q: (socket.getaddrinfo('fictional.invalid',80),original(q))[1]; "
+        "r._fresh_child(sys.argv[1])")
+    denied = subprocess.run([sys.executable, "-B", "-c", dns_probe, str(context_path)],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+    assert denied.returncode != 0
+    assert b"network access is forbidden" in denied.stderr
     # A forbidden training path used as query is rejected by the child audit.
     context["query_path"] = str(training.parent / "nonexistent" / ".." / training.name)
     context["query_file_sha256"] = runtime._sha(training)

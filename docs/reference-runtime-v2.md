@@ -28,7 +28,10 @@ adds an exact serialized logical state check, including provisional plus final
 model bytes and idempotent same-byte reuse. Every output and fresh-child pipe
 chunk is persisted through the same global writer. The child writes only stdout;
 it verifies retained query/artifact/binding/code hashes and the strict content
-contract, blocks fitting/source loaders and source/training paths, and calls
+contract, blocks fitting/source loaders and source/training/outcome paths, and
+allows reads only of its exact context/query/artifact files, repository Python
+code and actual Python library/runtime metadata/zoneinfo roots. Paths are
+resolved before comparison, all socket audit events are rejected, and it calls
 only the frozen inference loader. It does not construct global storage because
 that scanner would reread source blobs. The parent has verified blob ownership.
 

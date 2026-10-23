@@ -198,9 +198,26 @@ def _fresh_child(context_path):
     import pandas as pd
     from . import operational_models as operational, operational_sources as sources, experiment, state
     from .model_artifacts import predict_artifact
-    context = json.loads(Path(context_path).read_text())
+    import importlib.util
+    import sysconfig
+    context_path = Path(context_path).resolve()
+    context = json.loads(context_path.read_text())
     protected = [Path(p).resolve() for p in context["forbidden_roots"]]
+    allowed_data = {context_path, Path(context["query_path"]).resolve(),
+                    *(Path(p["artifact_path"]).resolve() for p in context["packages"])}
+    code_root = Path(__file__).resolve().parent
+    source_code = {p.resolve() for p in code_root.glob("*.py") if p.is_file()}
+    allowed_code = source_code | {Path(importlib.util.cache_from_source(str(p))).resolve() for p in source_code}
+    python_paths = sysconfig.get_paths()
+    runtime_roots = {Path(python_paths[name]).resolve() for name in
+                     ("stdlib", "platstdlib", "purelib", "platlib") if Path(python_paths[name]).is_dir()}
+    # Use the interpreter compiled zoneinfo locations. PYTHONTZPATH cannot
+    # expand trusted reads into an arbitrary workspace data directory.
+    zoneinfo_paths = (sysconfig.get_config_var("TZPATH") or "").split(os.pathsep)
+    runtime_roots.update(Path(p).resolve() for p in zoneinfo_paths if p and Path(p).is_dir())
     def audit(event, arguments):
+        if event.startswith("socket."):
+            raise AssertionError("fresh replay network access is forbidden")
         if event != "open" or isinstance(arguments[0], int):
             return
         path, mode, flags = arguments[:3]
@@ -210,6 +227,9 @@ def _fresh_child(context_path):
             resolved = Path(os.fsdecode(path)).resolve()
             if any(resolved == root or root in resolved.parents for root in protected):
                 raise AssertionError("fresh replay cannot read source or training values")
+            if (resolved not in allowed_data and resolved not in allowed_code
+                    and not any(resolved == root or root in resolved.parents for root in runtime_roots)):
+                raise AssertionError("fresh replay read outside exact data and trusted runtime allowlist")
     sys.addaudithook(audit)
     def forbidden(*args, **kwargs):
         raise AssertionError("fresh replay cannot load source/training values")
