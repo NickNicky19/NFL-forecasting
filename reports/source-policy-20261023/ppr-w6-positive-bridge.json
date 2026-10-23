@@ -1,0 +1,170 @@
+{
+  "probe": "original-offered-W6-positive-event-bridge-v1",
+  "planned_original_PPR_opportunities": 396,
+  "coverage": {
+    "sleeper_identity_context_match": 364,
+    "exact_weekly_player_team_opponent_binding": 285,
+    "missing_or_ambiguous_exact_weekly_binding": 79,
+    "missing_sleeper_observation": 32
+  },
+  "all_planned_rows_retained": true,
+  "Sleeper_all18_explicit_qualified": 0,
+  "explicit_missing_component_counts": {
+    "pass_yd": 337,
+    "pass_td": 341,
+    "pass_int": 349,
+    "pass_2pt": 362,
+    "rush_yd": 273,
+    "rush_td": 349,
+    "rush_2pt": 364,
+    "rec_td": 330,
+    "rec_2pt": 361,
+    "fum_lost": 352,
+    "st_td": 364,
+    "st_fum_rec": 363,
+    "st_ff": 364,
+    "fum_rec_td": 364,
+    "idp_blk_kick": 363,
+    "idp_fum_rec": 364,
+    "rec": 183,
+    "rec_yd": 185
+  },
+  "positive_bridge_checks": {
+    "pass_2pt": {
+      "NFL_positive_proposed_rows": 2,
+      "Sleeper_explicit_positive_matched": 2
+    },
+    "rush_2pt": {},
+    "rec_2pt": {
+      "NFL_positive_proposed_rows": 3,
+      "Sleeper_explicit_positive_matched": 3
+    },
+    "st_td": {},
+    "st_fum_rec": {
+      "NFL_positive_proposed_rows": 2,
+      "Sleeper_explicit_positive_matched": 1,
+      "Sleeper_key_omitted_despite_NFL_positive_proposal": 1
+    },
+    "st_ff": {},
+    "fum_rec_td": {},
+    "idp_blk_kick": {
+      "NFL_positive_proposed_rows": 1,
+      "Sleeper_explicit_positive_matched": 1
+    },
+    "idp_fum_rec": {
+      "NFL_positive_proposed_rows": 2,
+      "Sleeper_key_omitted_despite_NFL_positive_proposal": 2
+    }
+  },
+  "W6_PBP_rows": 2538,
+  "W6_PBP_games": 14,
+  "live_W6_rows": 2205,
+  "PBP_read_predicate": [
+    [
+      "season",
+      "==",
+      2026
+    ],
+    [
+      "week",
+      "==",
+      6
+    ],
+    [
+      "season_type",
+      "==",
+      "REG"
+    ]
+  ],
+  "PBP_columns_read": [
+    "season",
+    "week",
+    "season_type",
+    "game_id",
+    "play_id",
+    "play_type",
+    "play_deleted",
+    "special_teams_play",
+    "fumble",
+    "fumble_lost",
+    "fumble_forced",
+    "fumble_out_of_bounds",
+    "touchdown",
+    "return_touchdown",
+    "td_player_id",
+    "td_team",
+    "pass_attempt",
+    "rush_attempt",
+    "two_point_attempt",
+    "two_point_conv_result",
+    "passer_player_id",
+    "rusher_player_id",
+    "receiver_player_id",
+    "fumble_recovery_1_team",
+    "fumble_recovery_1_player_id",
+    "fumble_recovery_2_team",
+    "fumble_recovery_2_player_id",
+    "forced_fumble_player_1_player_id",
+    "forced_fumble_player_2_player_id",
+    "blocked_player_id",
+    "punt_blocked",
+    "field_goal_result",
+    "extra_point_result",
+    "posteam",
+    "defteam"
+  ],
+  "future_confirmation_outcomes_opened": false,
+  "source_receipts": {
+    "ppr_bridge_20261023_pbp2026.parquet": {
+      "name": "ppr_bridge_20261023_pbp2026.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.parquet",
+      "bytes": 6998248,
+      "sha256": "947b1cfa02fbcfb554609ec3517bc4f186b2cf6a6fa0e53aa2fb9ec94214d0da",
+      "retrieved_utc": "2026-10-23T04:35:37.650524+00:00",
+      "http_last_modified": "Thu, 22 Oct 2026 15:03:34 GMT",
+      "etag": "\"0x8DF304DA4BA4DD5\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab",
+      "refresh_policy": "immutable_named_snapshot"
+    },
+    "archive-stats-2026-6.json": {
+      "name": "archive-stats-2026-6.json",
+      "url": "https://api.sleeper.app/stats/nfl/2026/6?season_type=regular",
+      "bytes": 1917991,
+      "sha256": "018d48affdf4baf350f400fb78e2a8716b603beb37ca7262c04ca5a6161fbd91",
+      "retrieved_utc": "2026-10-22T12:37:02.616877+00:00",
+      "http_last_modified": null,
+      "etag": "W/\"0c86dc189b1841be5c2f978b7b7926b1\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab",
+      "refresh_policy": "immutable_named_snapshot"
+    },
+    "stats_player_week_2026.parquet": {
+      "name": "stats_player_week_2026.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.parquet",
+      "bytes": 386908,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd",
+      "retrieved_utc": "2026-10-22T12:21:26.243302+00:00",
+      "http_last_modified": "Thu, 22 Oct 2026 09:13:04 GMT",
+      "etag": "\"0x8DF301CAE32978D\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    }
+  },
+  "probe_sha256": "6549fc77ed86ffdf416b2eb9133aa4ab1ea7a13feb65bbc8bfcf124bc004abf0",
+  "qualified_exact_subset_rows": 0,
+  "result": "BLOCKED; positive NFL event agreement does not qualify all-phase Sleeper credits or omitted-event zeros. No event-absence cherry filter or new label was created.",
+  "conditional_exception": "idp_fum_rec only changes arithmetic when fum_rec_td is nonzero, but no justified zero for fum_rec_td or other rare omitted components is established. Strict pinned scorer unchanged.",
+  "rights": "nflverse public local retention only; raw rows private; no PFRsnap input",
+  "clocks": "postgame current-vintage source retrieval/release clocks retained; original publication/correction order unknown",
+  "models_fits_predictions_errors": 0
+}
