@@ -85,3 +85,9 @@ Real reference fitting and inference still require the separately frozen
 22-package runtime and review. Hosted execution, missed schedules, rollover,
 rollback and content approval remain future acceptance work. The website and
 its scheduler remain read-only references.
+
+The separately frozen reference runtime adds the strict aggregate parameter
+review described in [reference-artifact-v2.md](reference-artifact-v2.md).
+Its pure manifest generator selects only explicitly reviewed derived reference
+JSON files with exact hashes. Passing software checks alone does not record
+root content acceptance or publish any file.
