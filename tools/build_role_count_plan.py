@@ -247,7 +247,8 @@ def build_plan(parent: dict, freeze: dict, integration_root: Path, packet: Path)
     )
     old_names = [Path(b["path"]).name for b in parent["code_bindings"]]
     code_paths = [integration_root / "nfl_lab" / name for name in old_names]
-    code_paths += [integration_root / "nfl_lab/role_boosting.py", integration_root / "nfl_lab/role_boosting_campaign.py", config_path]
+    code_paths += [integration_root / "nfl_lab/role_boosting.py", integration_root / "nfl_lab/role_boosting_campaign.py",
+                   integration_root / "nfl_lab/role_boosting_export.py", integration_root / "nfl_lab/website_cdf_export.py", config_path]
     plan["code_bindings"] = [bind(p) for p in code_paths]
     for binding in parent["code_bindings"]:
         current = next(x for x in plan["code_bindings"] if Path(x["path"]).name == Path(binding["path"]).name)
@@ -257,7 +258,7 @@ def build_plan(parent: dict, freeze: dict, integration_root: Path, packet: Path)
     for path in [Path(__file__).resolve(), PARENT_ROOT / "RUN_01/forecast-freeze.json",
                  packet / "source-owner/SOURCE_AUDIT.json", packet / "source-owner/EXACT_PPR_BLOCK.json"]:
         prereqs[str(path)] = bind(path)
-    for name in ["test_role_boosting.py", "test_role_boosting_campaign.py"]:
+    for name in ["test_role_boosting.py", "test_role_boosting_campaign.py", "test_role_boosting_export.py"]:
         path = integration_root / "tests" / name
         if path.is_file():
             prereqs[str(path)] = bind(path)
