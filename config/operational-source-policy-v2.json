@@ -1,0 +1,193 @@
+{
+  "policy_id": "permitted-operational-nfl-history-v2-20261023",
+  "scope": "Storage-only successor to v1: strict shared prewrite quota and owned immutable deduplication. Same source qualification, feature values and reference algorithms. No predictive experiment or activation.",
+  "sources": {
+    "schedules": {
+      "name": "schedules.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "columns": [
+        "game_id",
+        "season",
+        "week",
+        "game_type",
+        "gameday",
+        "gametime",
+        "away_team",
+        "home_team"
+      ],
+      "exclude_all_result_columns": true
+    },
+    "players": {
+      "name": "players.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.parquet",
+      "purpose": "Exact source identity only; no PFR-derived participation or snap features"
+    },
+    "statistics": {
+      "name": "stats_player_week_{season}.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_{season}.parquet",
+      "kind": "official NFL action/statistic credits"
+    },
+    "rosters": {
+      "name": "roster_weekly_{season}.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_{season}.parquet",
+      "purpose": "Opportunity membership only; ACT/INA is not game participation"
+    },
+    "license": {
+      "name": "nflverse_LICENSE.md",
+      "url": "https://raw.githubusercontent.com/nflverse/nflverse-data/main/LICENSE.md",
+      "purpose": "Hosting license receipt, not a blanket upstream grant"
+    }
+  },
+  "excluded_source_families": [
+    "PFR snap counts",
+    "PFR-derived participation/features/priors/residuals",
+    "NGS/news/weather in this operational source variant",
+    "odds",
+    "legacy processed feature tables",
+    "old trained model artifacts"
+  ],
+  "history": {
+    "season_type": "REG",
+    "statistics_lag_days": 7,
+    "prior_filter_rule": "Read schedule metadata only. Include a season/week only when every scheduled REG game in that week has kickoff+7days strictly before supplied actual asof. Push exact OR season/week/game_type filters into stats and roster parquet reads BEFORE statistic values are loaded. Keep schedule metadata for identity/future population separately; never scores.",
+    "source_seasons": "Explicit supported input seasons, 2012 through supplied NFL active season; active season may differ from UTC year in January.",
+    "protected_confirmation": "During software/cache acceptance read at most2026Weeks1-5; no2026W8+ outcomes while tuning. Future operational use of earlier weeks is allowed only under this frozen source/training policy after availability/cutoff gates, never hyperparameter selection.",
+    "participation": "Reuse unchanged qualify_history: supported positive physical official event establishes playing; zero-only/missing/ACT/INA rows stay unknown and remain rolling slots. Separate existing supported final-provider DNP grading may be retained.",
+    "scoring": "Signed yardage and supported count zeros preserved; missing fields not zero. Exact website PPR remains blocked without full label contract.",
+    "publication_times": "Known local receipt clocks retained. Historical availability kickoff+7days is an explicit reconstruction assumption, not authenticated upstream publication.",
+    "participation_probability": "Unavailable: this sufficient-positive playing panel has no complete DNP/nonappearance denominator. Emitted forecasts and new reference artifacts must have participation unavailable, not a near-one selected-population probability.",
+    "parquet_predicates": {
+      "statistics_season_type": "season_type == REG",
+      "roster_season_type": "game_type == REG",
+      "week_filter": "OR of exact allowed season/week pairs computed from schedule metadata before reading statistical columns"
+    }
+  },
+  "namespaces": {
+    "base": "cache/operational-source-v2/<policy_sha256>/<actual_asof_namespace>/<source_snapshot_sha256>/",
+    "isolation": "Owned immutable SHA256 blobs with verified hardlink aliases; external legacy originals copied, never linked or modified. V1 frozen namespaces remain read-only.",
+    "identity": "V2 policy+storage/source/routing/shared helper code+original receipts+subset filters/hashes+qualified values bind all new artifacts. Reject v1 artifacts on v2 routes.",
+    "private_retention_bytes": 536870912,
+    "raw_public_redistribution": false
+  },
+  "operational_routing": {
+    "existing_scheduler_only": true,
+    "commands": [
+      "daily",
+      "acquire",
+      "experiment",
+      "grade"
+    ],
+    "source_policy": "Explicit --source-policy config/operational-source-policy-v2.json; source/reference versions v2, existing scheduler only; historical v1 replay via Git a8ddbf9e9d1c7360e0942877fa9183533604f091.",
+    "methods": [
+      "recent",
+      "pooled"
+    ],
+    "selected_challengers": false,
+    "weekly_search": "No repeat of consumed historical campaign/search. Weekly learning deterministically refreshes only fixed recent/pooled reference parameters on earlier qualified input versions, at most22 supported packages, no new accuracy scoring, no selected.json or default-model promotion. Original research campaign/config stays frozen for historical replay.",
+    "failure": "Affected new issuance/training abstains with explicit failure; preserve earlier immutable forecasts and continue grading/replay. Never fall back to forbidden legacy loader.",
+    "grading": "Primary saved Sleeper final/correction contract unchanged. Supplemental NFL cache fallback uses the same permitted source policy; no new snap source reads. Do not rewrite prior corrections.",
+    "frozen_records": "rec-half source/registration/Weeks7-14 remain separately owned, no recorder/backfill/restart. Original RB protocol and PPR gates unchanged.",
+    "weekly_reference_budget": {
+      "max_supported_packages": 22,
+      "max_wall_seconds": 1200,
+      "threads": 2,
+      "model_methods": [
+        "recent",
+        "pooled"
+      ],
+      "new_hyperparameter_searches": 0,
+      "new_accuracy_scores": 0
+    }
+  },
+  "budgets": {
+    "implementation_workers": 2,
+    "concurrent_agents_including_integrator": 4,
+    "software": {
+      "max_combined_wall_seconds": 900,
+      "max_combined_CPU_seconds": 1500,
+      "max_RSS_bytes": 2147483648,
+      "threads": 2,
+      "quota_owner_test_wall_seconds": 180,
+      "routing_owner_test_wall_seconds": 180,
+      "root_acceptance_wall_seconds": 300
+    },
+    "cache_acceptance": {
+      "invocations": 1,
+      "new_HTTP_attempts": 0,
+      "max_wall_seconds": 300,
+      "max_CPU_seconds": 300,
+      "max_RSS_bytes": 2147483648,
+      "max_private_bytes": 536870912,
+      "threads": 2,
+      "allowed_seasons": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "max_2026_week": 5,
+      "new_real_fits": 0,
+      "new_model_predictions": 0,
+      "new_accuracy_scores": 0,
+      "input_inventory": "/workspace/website-methods-research/resumed/operational-source-repair-20261023/CACHE_INPUT_INVENTORY.json",
+      "inventory_sha256": "aea755792e9903ff6f17a8934e4f7319214444990610c02d7b6ee8e46dde9951",
+      "feature_query_metadata_sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8",
+      "acceptance": "One bounded invocation: same cutoff source/history/query values bitwise equal to accepted v1 parquet frames after attrs removed; identical-asof idempotency and nearby earlier-asof unchanged-body dedup; all writes inside cap, no originals changed. Original cutoff 2026-10-23T11:27:49.536081+00:00 and minus1microsecond; no later/protected reads. Zero model fits/predictions/scores."
+    },
+    "later_reference_runtime": "Must separately freeze exact code/input/query versions and a bounded22-package recent/pooled verification before any real reference fitting/inference. Actual hosted run requires accepted code/checks; no website run. This plan alone does not claim activation.",
+    "network_acquisition": "No new HTTP in local acceptance. Operational acquisition reuses existing bounded downloader at most3attempts/URL,2threads,512MiBtotal bodies and dailyonce refresh. Wire a hard outer daily/weekly job cap; retain failures.",
+    "technical_repairs": "At most one separately registered zero-fit cache acceptance repair within unspent cumulative limits; preserve original failure marker. Import-only capability preflight before consuming invocation."
+  },
+  "unchanged_frozen_files": [
+    "nfl_lab/data.py",
+    "nfl_lab/features.py",
+    "nfl_lab/permitted_source_features.py",
+    "config/research.json",
+    "config/preserved-rec-half-registration.json",
+    "all original reports/model/forecast artifacts",
+    "nfl_lab/models.py",
+    "nfl_lab/model_artifacts.py",
+    "nfl_lab/evaluation.py"
+  ],
+  "expected_new_module": "nfl_lab/operational_storage.py",
+  "software_acceptance": [
+    "No PFR file request/read even if poisoned snap file exists in old cache",
+    "Before-stat-read filters and no protected outcome reads",
+    "Explicit played-zero/missing/DNP/unknown and signed yard semantics",
+    "No legacy selected methods/model cache reuse in policy path",
+    "All operational commands and grading failure/retry/idempotency/replay paths use source policy",
+    "Training view/code/source hashes bound and frozen input files unchanged",
+    "Season rollover Januaryactiveyear vs UTCyear and REG/Post behavior",
+    "Single scheduler/resource/retention controls and website unchanged",
+    "Exact before-write rejection for body/chunk/atomic peak/concurrent writers and no external hardlink mutation",
+    "Every operational write route uses shared managed quota including state/model/private runs/baseline cache/failure paths",
+    "Owned immutable same-body aliases share inode while distinct receipts retain true clocks",
+    "Frozen v1 helper/code/evidence unchanged; source/history/feature value parity"
+  ],
+  "public_export": "Reviewed code/fictional tests/config plus derived aggregate receipts/hashes only; no raw sources/player rows/model weights.",
+  "evidence_lane": "Software acceptance and current-vintage source reconstruction only; zero new independent-confirmation samples.",
+  "output_directory": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023",
+  "publication_note": "Storage code/config/fictional tests and derived aggregate acceptance only. No weights/raw/player rows. Separate frozen22 runtime and hosted acceptance still required; no readiness or accuracy claim.",
+  "storage": {
+    "version": "operational-storage-v2",
+    "control_root": "<cache>/operational-storage-v2",
+    "source_root": "<cache>/operational-source-v2",
+    "feature_root": "<cache>/processed/operational-source-v2",
+    "live_root": "<cache>/operational-live-v2",
+    "state_root": "supplied state directory, all files including preexisting bytes counted; preserve originals",
+    "model_root": "<state>/models/permitted-operational-reference-v2",
+    "additional_roots": "Explicit caller-registered operational run receipts and optional local website-baseline intake cache. All operational write destinations must be registered before use.",
+    "limit_bytes": 536870912,
+    "accounting": "Sum st_size once per unique (device,inode) across registered roots, including control metadata, owned blobs, hardlink aliases, staging, partials, model temporaries, receipts and all supplied state records. Report logical referenced bytes separately; this is unique-file byte accounting, not filesystem block allocation.",
+    "concurrency": "One canonical cache-owned global flock and persisted root registry; reject conflicting owners, symlinks, escapes and unaccounted external hardlinks. Reserve before every incoming serialized body/chunk and hold lock through publish. Account atomic replacement old+incoming peak.",
+    "writes": "Exact serialized bytes preflight. Scoped Path.write_bytes/write_text/open(wb) chunk writer and DataFrame parquet/csv capture only registered managed roots; frozen helper bytes unchanged. Scoped state.save/model atomic serializer adapters must use quota primitives including failure/offseason/grade/prefetch paths. Unsupported writable open modes fail closed except known zero-byte locks.",
+    "immutability": "Published blobs/aliases immutable and hash-verified; no writes through linked inode. Copy external originals into owned store before aliasing; never chmod legacy originals. Mutable unpublished staging may atomically replace via known bytes; retained blobs still count.",
+    "retention": "No automatic deletion/expiry/GC in this version. Reuse identical body/subset bytes; preserve distinct authentic receipt clocks. All retained/orphan bytes count. If finite cap cannot fit, abstain affected writes; retain existing evidence. No promise infinite vintages fit finite storage.",
+    "legacy": "Accepted v1 source/feature packet and other frozen caches outside registered roots stay immutable and excluded. Any preexisting files under a supplied registered state/run root are counted, never removed.",
+    "derived_state": "Existing state.save 200MiB evidence limit remains in addition to global 512MiB; no weakening. Failure metadata also needs capacity; inability to save a marker must surface as an error, never claim persistence."
+  }
+}
