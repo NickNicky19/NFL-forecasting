@@ -235,6 +235,9 @@ def capture_website_bindings(state, prepared, lab_batch, *, clock=now_utc):
         raise ValueError("website binding requires exactly one new immutable lab batch")
     header = prepared["header"]; points = prepared["_private_points"]; bindings = []; excluded = Counter()
     for row in batches[0]["rows"]:
+        from .recorded_research import FUNCTIONAL
+        if row.get("prediction_functional")==FUNCTIONAL:
+            excluded["research_point_comparator_binding_not_implemented"] += 1; continue
         if row.get("code_integrity") != "pre_post_source_digest_required":
             raise ValueError("unqualified lab code cannot acquire website baseline")
         if not _lab_scope(row, header):
