@@ -1,5 +1,6 @@
 """Fictional software acceptance; no real NFL inputs or accuracy evidence."""
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -192,13 +193,23 @@ def test_daily_snapshot_refresh_preserves_frozen_opportunities_and_nfl_season(tm
     original_hash = models.frame_hash(train)
     requests = []
     snapshots = [0]
+    identity = pd.DataFrame({"player_id": ["00-0030001"], "sleeper_id": ["123"], "identity_status": ["source_exact_binding"]})
+    identity_storage = OperationalStorage(tmp_path / "cache", policy, state=tmp_path / "state")
+    identity_namespace = identity_storage.register_root(tmp_path / "fictional-identity")
+    identity_path = identity_namespace / "processed/identity.parquet"
+    identity_storage.write_dataframe(identity, identity_path, index=False)
+    def current_manifest():
+        result = manifest(policy, "b" if snapshots[0] == 1 else "f")
+        result.update(namespace=str(identity_namespace), artifact_sha256s={
+            "processed/identity.parquet": hashlib.sha256(identity_path.read_bytes()).hexdigest()})
+        return result
     def acquire(cache, seasons, policy, asof, **kwargs):
         requests.append(seasons)
         snapshots[0] += 1
         return {"state": "fictional"}
     def history_load(*args):
         frame = train.copy()
-        frame.attrs["operational_manifest"] = manifest(policy, "b" if snapshots[0] == 1 else "f")
+        frame.attrs["operational_manifest"] = current_manifest()
         return frame
     def build(history, *, policy, queries=None):
         assert models.frame_hash(history) == original_hash
@@ -212,9 +223,16 @@ def test_daily_snapshot_refresh_preserves_frozen_opportunities_and_nfl_season(tm
     source.acquire_operational_history = acquire
     source.load_operational_history = history_load
     source.build_operational_features = build
-    source.load_operational_identity = lambda *args: pd.DataFrame({"player_id": ["00-0030001"], "sleeper_id": ["123"], "identity_status": ["source_exact_binding"]})
+    def identity_load(*args):
+        frame = identity.copy()
+        frame.attrs["operational_manifest"] = current_manifest()
+        return frame
+    source.load_operational_identity = identity_load
     calls = []
     def fake_fit(train, query, target, method, *, artifact_path, binding, storage):
+        from nfl_lab.reference_runtime import StateBoundStorage
+        assert isinstance(storage, StateBoundStorage)
+        assert storage.state == (tmp_path / "state").absolute()
         calls.append((target, method))
         artifact_path.parent.mkdir(parents=True, exist_ok=True)
         artifact_path.write_text("fictional reference package")

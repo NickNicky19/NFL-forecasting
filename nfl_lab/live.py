@@ -172,8 +172,10 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
         registry=load_operational_identity(cache,active_seasons,source_policy,history_asof)
     else:
         registry=load_identity(cache)
-    exact=registry.loc[registry.identity_status.eq("source_exact_binding") & registry.sleeper_id.notna()]
-    mapping={str(r.sleeper_id):str(r.player_id) for r in exact.itertuples()}
+    mapping={}
+    if source_policy is None:
+        exact=registry.loc[registry.identity_status.eq("source_exact_binding") & registry.sleeper_id.notna()]
+        mapping={str(r.sleeper_id):str(r.player_id) for r in exact.itertuples()}
     frozen={}
     for batch in records(state,"forecasts"):
         for r in batch["rows"]:
@@ -183,9 +185,23 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
                 frozen[key]=r["player_id"]
     live=future_population(players,future_games,year,week,identity_by_sleeper=mapping,frozen_by_game_sleeper=frozen)
     if live.empty:raise ValueError("no eligible future roster population")
-    for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
     live["cutoff_utc"]=feature_cutoff.isoformat()
     live["outcome_available_utc"]=pd.to_datetime(live.kickoff_utc,utc=True)+pd.Timedelta(days=7)
+    if source_policy is not None:
+        from .hosted_reference_adapter import adapt_live_identities, code_hashes as identity_code_hashes, PROVENANCE
+        from .reference_runtime import StateBoundStorage
+        identity_manifest=registry.attrs.get("operational_manifest",{})
+        history_manifest=history.attrs["operational_manifest"]
+        if (identity_manifest.get("snapshot_sha256")!=history_manifest.get("snapshot_sha256")
+                or identity_manifest.get("namespace")!=history_manifest.get("namespace")):
+            raise ValueError("daily identity and history must share the exact qualified snapshot")
+        identity_sha=identity_manifest["artifact_sha256s"]["processed/identity.parquet"]
+        identity_path=Path(identity_manifest["namespace"])/"processed/identity.parquet"
+        active_storage().validate_reference(identity_path,expected_sha256=identity_sha)
+        live,identity_receipt=adapt_live_identities(live,registry,identity_sha256=identity_sha,frozen_by_game_sleeper=frozen)
+        identity_codes=identity_code_hashes()
+        model_storage=StateBoundStorage(active_storage(),state)
+    for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
     if source_policy is None and "cutoff_utc" not in history:history["cutoff_utc"]=history.kickoff_utc
     # Source history uses GSIS, allowing exact matches and explicit unlinked cold starts.
     if source_policy is not None:
@@ -206,17 +222,20 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
     if source_policy is not None:
         from .operational_models import source_binding,model_binding,fit_operational_reference,predict_operational_artifact,VERSION
         source_contract=source_binding(source_policy,operational_manifest)
-        operational_model_version=digest({"policy_sha256":source_contract["policy_sha256"],"code_sha256":source_contract["code_sha256"]})
+        operational_model_version=digest({"policy_sha256":source_contract["policy_sha256"],"code_sha256":source_contract["code_sha256"],
+                                         "identity_adapter_code_sha256":identity_codes})
         hashes.update(source_policy=source_policy["_policy_sha256"],training_view=operational_manifest["training_view_sha256"],
-                      operational_binding=digest(source_contract))
+                      operational_binding=digest(source_contract),identity_source=identity_sha,
+                      identity_resolution=digest(identity_receipt),identity_adapter_code=digest(identity_codes))
     feature_columns=[c for c in test if c.startswith("f_")]+["player_id","game_id","team","opponent","cutoff_utc"]
+    if source_policy is not None:feature_columns+=list(PROVENANCE)
     feature_sha=hashlib.sha256(pd.util.hash_pandas_object(test[feature_columns],index=True).values.tobytes()).hexdigest()
     input_sha=digest({"sources":hashes,"feature_cutoff":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha});code_sha=initial_code_sha;out=[];abstentions=[]
     input_manifest_sha=save(state,"input_manifests",{"schema_version":"lab-input-manifest-v1","input_sha256":input_sha,
         "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,"code_sha256":code_sha,
         "source_hashes":hashes,"history_acquisition":acquisition,"live_receipts":{"state":status_receipt,"players":player_receipt,"schedule":board_receipt},
         "feature_columns":feature_columns,"schedule_population":games,"population_rows":len(test),
-        **({"operational_manifest":operational_manifest} if source_policy is not None else {}),
+        **({"operational_manifest":operational_manifest,"identity_resolution":identity_receipt,"identity_adapter_code_sha256":identity_codes} if source_policy is not None else {}),
         "timing_scope":"current responses observed before featurecutoff; historical windows reconstructed; provider publication clocks unknown",
         "scope":"this intake only; no retroactive binding to existing frozen forecasts"})
     existing={tuple(r[k] for k in ["player_id","game_id","target","model_id"]) for batch in records(state,"forecasts") for r in batch["rows"]}
@@ -232,12 +251,12 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
             if not needed.any():continue
             forecast_test=test.loc[needed]
             artifact=Path(state)/"models"/input_sha/f"{target}-{method}.json" if source_policy is None else Path(state)/"models"/VERSION/hashes["operational_binding"]/input_sha/f"{target}-{method}.json"
-            if sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
+            if source_policy is None and sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
             if source_policy is not None:
                 binding=model_binding(source_policy,operational_manifest,train,forecast_test,input_sha)
-                pred=fit_operational_reference(train,forecast_test,target,method,artifact_path=artifact,binding=binding,storage=active_storage())
+                pred=fit_operational_reference(train,forecast_test,target,method,artifact_path=artifact,binding=binding,storage=model_storage)
                 check_operational_storage(cache,source_policy,state=state)
-                replay=predict_operational_artifact(artifact,forecast_test,binding=binding,storage=active_storage())
+                replay=predict_operational_artifact(artifact,forecast_test,binding=binding,storage=model_storage)
             else:
                 pred=fit_predict(train,forecast_test,target,method,artifact_path=artifact)
                 from .model_artifacts import predict_artifact
@@ -267,6 +286,7 @@ def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sour
                      "coherence_scope":"conditional scalar marginal; cross-target joint integration not established"}
                 if source_policy is not None:
                     row.update(operational_source_binding=binding,participation_probability_status="unavailable_positive_event_panel")
+                    row.update({name:str(getattr(r,name)) for name in PROVENANCE})
                 out.append(row)
     if source_tree_digest(root)!=initial_code_sha:raise RuntimeError("source changed during live calculation; no forecast issuance")
     result=capture(state,out)
