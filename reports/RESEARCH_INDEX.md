@@ -12,8 +12,8 @@ into `main`. The website repository remains a read-only reference.
 
 | Question | Record |
 |---|---|
-| What is the latest state of all twelve categories? | [Latest report](role-count-boosting-v1/README.md), [category matrix](role-count-boosting-v1/category-status.json) |
-| How much better or worse was every latest comparison? | [All 48 primary slots](role-count-boosting-v1/aggregate-report.md), [complete numeric results](role-count-boosting-v1/aggregate-report.json) |
+| What is the latest state of all twelve categories? | [Source-matched historical benchmark](source-matched-base-v1/README.md), [twelve-category matrix](source-matched-base-v1/category-status.json); [earlier website comparison](role-count-boosting-v1/README.md) remains separate |
+| How much better or worse was every latest comparison? | [Source-matched table](source-matched-base-v1/aggregate-report.md), [complete numerical results](source-matched-base-v1/aggregate-report.json); historical raw/SITE are unavailable for this panel |
 | What happened across the whole execution? | [Single execution ledger](../execution/ledger.jsonl) |
 | Which original artifacts were recovered or remain missing? | [Evidence inventory](../execution/evidence-inventory.json) |
 | Where are all study packets? | [Reports directory](.) |
@@ -49,6 +49,7 @@ gives N/A. Numeric MAE and TD Brier are different units.
 | Absolute-error boosting | Fixed HGB, two panels, 88 fits; historical 2022–24 plus Week 6; fixed secondary 50/50 SITE blends | Mixed gains and material failures. Carry points collapse to zero for 99 warm Week 6 RB contexts; SITE MAE worsens 134.80%. Historical RB rushing yards/carries also worsen. No version was promoted. New source packet differs from older CDF training. | [All-target report](median-boosting-v1/README.md), [full results](median-boosting-v1/aggregate-report.json), [source policy](source-policy-20261023/README.md) |
 | Recorded prop-threshold study | Thirteen already-frozen point variants on saved provider-fed thresholds; zero fits or new model predictions | 604 original lines, 585 supported outcomes, 13 games/one exposed week. All 156 method-target slots and losses retained. Point direction is not an over/under probability. Not another point-model validation sample. | [Report](recorded-thresholds-v1/README.md), [all-target matrix](recorded-thresholds-v1/category-status.json), [full results](recorded-thresholds-v1/aggregate-report.json) |
 | Count objective and role partition study | Six Poisson count objectives, separate role estimators, two fixed arms; 136 fits; same source as prior HGB | Both arms improve five Week 6 primary errors, worsen six, and block PPR. Across 44 available historical/Week 6 primary contrasts: 14 improve, six unchanged, 24 adverse. Carry failure is repaired but both arms still lose SITE. Original failed reporting and zero-fit repair remain explicit. | [Latest report](role-count-boosting-v1/README.md), [all 48 slots](role-count-boosting-v1/aggregate-report.md), [full results](role-count-boosting-v1/aggregate-report.json), [independent review](role-count-boosting-v1/review-receipt.json) |
+| Source-matched base benchmark | Existing CDF, absolute-error HGB, count A, role B, recent and pooled refitted on identical permitted REG inputs; 168 estimator attempts/66 references; exposed 2022–24 | CDF has lower primary error than HGB on ten of eleven scored categories; combined yards is 0.0277% worse. Many differences are small, some intervals cross zero and secondary bias/tails worsen. Historical raw/SITE unavailable; PPR blocked. Original time stop, binary endpoint report failure and separate analytic diagnostic view are retained. No prospective gain or promotion. | [Report](source-matched-base-v1/README.md), [all comparisons](source-matched-base-v1/aggregate-report.md), [full results](source-matched-base-v1/aggregate-report.json), [exact execution wrappers](source-matched-base-v1/execution-code/README.md) |
 
 ### Original evidence and proposals that are not completed new studies
 
@@ -146,9 +147,9 @@ renaming a formula, report or software test as original NFL evidence.
 review receipts document engineering checks. Test counts, replay success and
 runtime measurements are not additional predictive observations.
 
-## Meaning of the latest five improved categories
+## Meaning of the earlier five improved website-relative categories
 
-The latest five are retrospective leads from one exposed Week 6. Historical
+Those five are retrospective leads from one exposed Week 6. Historical
 passing-TD/interception gains reverse against old HGB, some bias/tail metrics
 worsen, and the passing-yard result is an existing byte alias. These findings
 do not establish a qualified five-model replacement package. Categories can
@@ -156,3 +157,11 @@ qualify independently under their applicable gates. Later confirmation,
 operational input timing and consumer/replay/fallback acceptance remain
 separate requirements. No method is claimed globally best; no website change
 or deployment is performed by creating this index.
+
+The later source-matched benchmark addresses the audit's source-comparability
+concern. It does not add another website comparison or future confirmation.
+Its complete target matrix preserves all six methods, N/A comparators, losing
+combined-yard result, separate mean/median scores and partial participation
+coverage. The independent numerical review reused the same cached NFL rows;
+arithmetic agreement adds no new games. Player/team/opponent subgroup execution
+remains pending an efficiency prerequisite under its original finite budget.
