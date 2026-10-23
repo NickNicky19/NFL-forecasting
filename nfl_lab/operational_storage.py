@@ -59,6 +59,10 @@ def _no_symlinks(path):
             raise StorageIntegrityError("symlink path is forbidden: " + str(item))
 
 
+def _walk_error(error):
+    raise StorageIntegrityError("cannot inspect every managed file or root owner") from error
+
+
 def _stamp(info):
     return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
 
@@ -179,7 +183,7 @@ class OperationalStorage:
             _no_symlinks(root)
             markers = [parent / _OWNER for parent in root.parents]
             if root.exists():
-                markers.extend(Path(directory) / _OWNER for directory, _, files in os.walk(root, followlinks=False)
+                markers.extend(Path(directory) / _OWNER for directory, _, files in os.walk(root, followlinks=False, onerror=_walk_error)
                                if _OWNER in files)
             for owner in markers:
                 _no_symlinks(owner)
@@ -264,7 +268,7 @@ class OperationalStorage:
                 continue
             if not root.is_dir():
                 raise StorageIntegrityError("managed root must be a directory")
-            for directory, names, files in os.walk(root, followlinks=False):
+            for directory, names, files in os.walk(root, followlinks=False, onerror=_walk_error):
                 for name in names + files:
                     path = Path(directory) / name
                     info = path.lstat()

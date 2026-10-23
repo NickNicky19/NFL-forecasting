@@ -294,6 +294,23 @@ def test_registry_corruption_and_global_lock_replacement_rejected(tmp_path):
         store(tmp_path)
 
 
+@pytest.mark.parametrize("operation", ["snapshot", "register"])
+def test_unreadable_descendants_cannot_be_omitted_from_accounting(tmp_path, monkeypatch, operation):
+    storage = store(tmp_path)
+    root = storage.source_root if operation == "snapshot" else tmp_path / "new-run"
+    blocked = root / "unreadable"
+    blocked.mkdir(parents=True)
+    (blocked / "retained").write_bytes(b"must-always-be-counted")
+    original = os.scandir
+    def unreadable(path):
+        if Path(path) == blocked:
+            raise PermissionError("fictional unreadable managed descendant")
+        return original(path)
+    monkeypatch.setattr(os, "scandir", unreadable)
+    with pytest.raises(StorageIntegrityError, match="cannot inspect every"):
+        storage.snapshot() if operation == "snapshot" else storage.register_root(root)
+
+
 def test_capture_path_and_dataframe_serialization_exact_and_scoped(tmp_path):
     storage = store(tmp_path)
     frame = pd.DataFrame({"fictional": [1, None], "label": ["alpha", "beta"]})
