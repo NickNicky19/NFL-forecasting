@@ -1,0 +1,82 @@
+{
+  "registration_id": "player-context-intake-qualification-v1-20261023",
+  "registered_before_source_profiling": true,
+  "scope": "Prospective input capture and software qualification, no forecast accuracy study, fitting, prediction or numerical injury adjustment",
+  "targets": [
+    "pass_yd",
+    "pass_td",
+    "pass_cmp",
+    "pass_att",
+    "pass_int",
+    "rush_yd",
+    "rush_att",
+    "rec",
+    "rec_yd",
+    "rush_rec_yd",
+    "fantasy_ppr",
+    "anytime_td"
+  ],
+  "sources": [
+    {
+      "id": "sleeper_nfl_players",
+      "url": "https://api.sleeper.app/v1/players/nfl",
+      "role": "Current structured player/team/position/status/injury metadata. All provider records retained privately; roster/injury flags are not game participation or confirmed DNP."
+    },
+    {
+      "id": "espn_nfl_public_news",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=50",
+      "role": "Public feed excerpts/categories and publication/update clocks only; no premium article body, status inference or entity claim from mention alone."
+    }
+  ],
+  "source_budgets": {
+    "max_new_HTTP_attempts": 4,
+    "max_attempts_per_URL": 2,
+    "max_response_body_bytes_total": 33554432,
+    "max_source_command_wall_seconds": 120,
+    "max_source_command_CPU_seconds": 60,
+    "max_source_memory_bytes": 536870912,
+    "max_private_packet_bytes": 67108864,
+    "threads": 2,
+    "no_automatic_retry_after_consumption": true
+  },
+  "software_budgets": {
+    "max_test_wall_seconds": 180,
+    "max_test_CPU_seconds": 240,
+    "max_threads": 2,
+    "max_RSS_bytes": 1073741824,
+    "new_real_data_fits": 0,
+    "new_model_predictions": 0
+  },
+  "source_profile_metrics": [
+    "body and receipt hashes/bytes/exact retrieval clocks",
+    "provider field presence/null/empty/known-value counts",
+    "source identity consistency and collision counts",
+    "skill-role and all-provider coverage",
+    "news article/exact-athlete-mention counts and clock validity",
+    "source-publication unknowns and limits"
+  ],
+  "scope_guards": [
+    "No NFL outcome/statistic reads for future confirmation",
+    "No read of PFR snap files or processed features",
+    "No forecast or model changes; exact PPR and original RB contract blocks unchanged",
+    "No inference that missing injury means healthy or out means game-specific DNP",
+    "No article-category mention relabeled as subject of injury claim",
+    "Historical injury_start_date/news_updated never becomes local publication or availability evidence",
+    "Immutable source snapshots; local observed-by clocks are not authenticated upstream publication",
+    "New opt-in module only; no second collector/scheduler/writer or default activation"
+  ],
+  "expected_module": "nfl_lab/player_context.py",
+  "expected_software_behavior": [
+    "Verify source body SHA against trusted manifest and preserve exact null/missing states",
+    "First-observed/retrieved/capture ordering and cutoff/freshness fail closed",
+    "Strict exact source IDs, no name joins; conflicting GSIS/team identities quarantine or abstain",
+    "As-of selection uses exact captured versions; no backfill or overwriting prior source",
+    "News remains explicitly unqualified interpretation/mention until separate labeled extraction study",
+    "Frozen/fallback query opportunities remain intact; all12 target effects not asserted"
+  ],
+  "public_export": "Reviewed code, fictional fixtures, source identities/hashes and aggregate coverage/state counts only. No raw texts, player rows, IDs or model weights.",
+  "output_directory": "/workspace/website-methods-research/resumed/availability-intake-20261023",
+  "new_forecasting_primary_scores": 0,
+  "new_confirmation_observations": 0,
+  "new_scheduler_or_activation": false
+}
