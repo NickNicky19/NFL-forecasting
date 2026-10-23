@@ -9,7 +9,9 @@ Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
 [the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
 The attached review package and raw source bodies are kept outside public Git.
 
-Latest bounded research: [fixed boosting and permitted-source comparison](reports/median-boosting-v1/README.md) completes88 fits across eleven supported categories, retains exact PPR as blocked, and preserves every mixed or failed result. No candidate is promoted; numeric stat-total error does not establish over/under probability accuracy.
+Latest bounded research: [recorded player-prop threshold comparison](reports/recorded-thresholds-v1/README.md) reuses thirteen fixed point variants on585 supported rows from604 original provider-fed lines. All twelve categories remain explicit and unqualified; directions are descriptive and numeric over/under probabilities remain unavailable. [Current category state](reports/recorded-thresholds-v1/category-status.json).
+
+Earlier bounded research: [fixed boosting and permitted-source comparison](reports/median-boosting-v1/README.md) completes88 fits across eleven supported categories, retains exact PPR as blocked, and preserves every mixed or failed result. No candidate is promoted; numeric stat-total error does not establish over/under probability accuracy.
 
 Earlier bounded research: [direct original-website CDF comparison](reports/website-direct-leaf-cdf-v1/README.md) covers all twelve categories, with eleven scored and exact PPR blocked. Both fixed panels and website blends are retained. The exposed single-week gains are descriptive; no replacement is promoted.
 
