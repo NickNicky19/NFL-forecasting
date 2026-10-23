@@ -8,6 +8,16 @@ in integration checkout `8bbbfa507538ccdfa13cc6084e4dc0162255ad74`.
 No private source, model or forecast rows were opened; no tests, fits, network
 requests or hosted executions were performed for this note.
 
+Later software follow-up: [daily identity/state guard](hosted-reference-adapter-v1.md)
+and [exact publication scope](publication-scope-v1.md) were implemented after
+the frozen benchmark completed. Their combined 192 checks plus 115 relevant
+schema/leakage/scoring/replay checks passed using fictional inputs. The findings
+below describe the inspected `8bbbfa5` snapshot; daily identity/state and
+publication scope now have those software repairs. Weekly exact state guarding,
+qualified publication consumers, new source/runtime assembly, actual reviewed
+state exports and hosted acceptance remain pending. No scheduler/default/site
+change or hosted operation was performed by integrating these repairs.
+
 ## Accepted evidence and its boundary
 
 The canonical packet retained 681 roster opportunities in 13 games, built 97
