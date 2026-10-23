@@ -19,7 +19,8 @@ into `main`. The website repository remains a read-only reference.
 | Where are all study packets? | [Reports directory](.) |
 | What rules govern research and promotion? | [Execution specification](../EXECUTION_SPEC.md), [lab registration](../config/research.json), each study's separate frozen registration |
 | What is the adopted ongoing goal and latest source prerequisite? | [Active goal](../RESEARCH_GOAL.txt), [player-context software/cache checkpoint](player-context-intake-v1/README.md); no new accuracy claim |
-| What is the operational source-repair state? | [Software and real-cache acceptance](operational-source-repair-v1/README.md); strict storage, reference replay and hosted activation remain pending |
+| What is the operational source-repair state? | [V1 source acceptance](operational-source-repair-v1/README.md), [v2 strict storage and value parity](OPERATIONAL_STORAGE_V2.md); reference runtime and hosted activation remain pending |
+| How is the owner's independent audit being used? | [Audit intake, priorities and verified optional joint-helper repair](INDEPENDENT_AUDIT_INTAKE_20261023.md); no new accuracy evidence |
 
 ## Every recorded numerical study packet
 
