@@ -70,6 +70,11 @@ normalization adds no mappings. This is a metadata repair opportunity, not an
 accuracy improvement. The separate [adapter registration](../../config/query-identity-v1.json)
 preserves every frozen input and forecast.
 
+Followup: that [separate adapter acceptance](../query-identity-v1/README.md) has
+now executed successfully and verified 585/681 historical identity matches.
+No new features or predictions were generated with the corrected IDs. The
+22-package replay and its fallback counts above retain their original inputs.
+
 The training source still lacks a complete participant/played-zero denominator.
 Participation probability remains unavailable. Signed yardage and supported
 count zeros remain valid; unknown participation and missing fields remain unknown.
