@@ -1,0 +1,21 @@
+{
+  "id": "joint-components-coherent-passing-v2-20261023",
+  "scope": "Repair optional unused simulator, not new NFL research",
+  "base_head": "08ad5bf",
+  "version": "empirical-copula-coherent-passing-components-new-v2",
+  "findings": "Independent read-only source review confirms all3external reported defects. No live caller found. Prior marginal studies unchanged.",
+  "contract": [
+    "Nonempty joint history requires canonical participation_state; strict earlier availability and played only; conflicting legacy state fails closed",
+    "Passing completions/TD/INT share mutually exclusive allocation, means require TD<=C and C+INT<=A",
+    "Passing yards require completion exposure; zero C implies zero ordinary passing yards; signed gains retained",
+    "No live wiring, NFL rows, fitting, accuracy scores or calibrated probability claims"
+  ],
+  "budget": {
+    "software_wall_seconds": 60,
+    "CPU_seconds": 120,
+    "RSS_bytes": 2147483648,
+    "threads": 2,
+    "new_HTTP_NFL_reads_fits_scores": 0
+  },
+  "review": "Separate read-only reviewer before integration; exact old v1 remains recoverable in Git."
+}
