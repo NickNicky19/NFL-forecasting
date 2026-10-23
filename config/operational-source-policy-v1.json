@@ -54,7 +54,13 @@
     "protected_confirmation": "During software/cache acceptance read at most2026Weeks1-5; no2026W8+ outcomes while tuning. Future operational use of earlier weeks is allowed only under this frozen source/training policy after availability/cutoff gates, never hyperparameter selection.",
     "participation": "Reuse unchanged qualify_history: supported positive physical official event establishes playing; zero-only/missing/ACT/INA rows stay unknown and remain rolling slots. Separate existing supported final-provider DNP grading may be retained.",
     "scoring": "Signed yardage and supported count zeros preserved; missing fields not zero. Exact website PPR remains blocked without full label contract.",
-    "publication_times": "Known local receipt clocks retained. Historical availability kickoff+7days is an explicit reconstruction assumption, not authenticated upstream publication."
+    "publication_times": "Known local receipt clocks retained. Historical availability kickoff+7days is an explicit reconstruction assumption, not authenticated upstream publication.",
+    "participation_probability": "Unavailable: this sufficient-positive playing panel has no complete DNP/nonappearance denominator. Emitted forecasts and new reference artifacts must have participation unavailable, not a near-one selected-population probability.",
+    "parquet_predicates": {
+      "statistics_season_type": "season_type == REG",
+      "roster_season_type": "game_type == REG",
+      "week_filter": "OR of exact allowed season/week pairs computed from schedule metadata before reading statistical columns"
+    }
   },
   "namespaces": {
     "base": "cache/operational-source-v1/<policy_sha256>/<actual_asof_namespace>/<source_snapshot_sha256>/",
@@ -77,10 +83,21 @@
       "pooled"
     ],
     "selected_challengers": false,
-    "weekly_search": "Original config/research.json finite candidate/search/split budget remains frozen. This packet executes no new weekly research campaign.",
+    "weekly_search": "No repeat of consumed historical campaign/search. Weekly learning deterministically refreshes only fixed recent/pooled reference parameters on earlier qualified input versions, at most22 supported packages, no new accuracy scoring, no selected.json or default-model promotion. Original research campaign/config stays frozen for historical replay.",
     "failure": "Affected new issuance/training abstains with explicit failure; preserve earlier immutable forecasts and continue grading/replay. Never fall back to forbidden legacy loader.",
     "grading": "Primary saved Sleeper final/correction contract unchanged. Supplemental NFL cache fallback uses the same permitted source policy; no new snap source reads. Do not rewrite prior corrections.",
-    "frozen_records": "rec-half source/registration/Weeks7-14 remain separately owned, no recorder/backfill/restart. Original RB protocol and PPR gates unchanged."
+    "frozen_records": "rec-half source/registration/Weeks7-14 remain separately owned, no recorder/backfill/restart. Original RB protocol and PPR gates unchanged.",
+    "weekly_reference_budget": {
+      "max_supported_packages": 22,
+      "max_wall_seconds": 1200,
+      "threads": 2,
+      "model_methods": [
+        "recent",
+        "pooled"
+      ],
+      "new_hyperparameter_searches": 0,
+      "new_accuracy_scores": 0
+    }
   },
   "budgets": {
     "implementation_workers": 2,
@@ -127,7 +144,10 @@
     "nfl_lab/permitted_source_features.py",
     "config/research.json",
     "config/preserved-rec-half-registration.json",
-    "all original reports/model/forecast artifacts"
+    "all original reports/model/forecast artifacts",
+    "nfl_lab/models.py",
+    "nfl_lab/model_artifacts.py",
+    "nfl_lab/evaluation.py"
   ],
   "expected_new_module": "nfl_lab/operational_sources.py",
   "software_acceptance": [
@@ -142,5 +162,6 @@
   ],
   "public_export": "Reviewed code/fictional tests/config plus derived aggregate receipts/hashes only; no raw sources/player rows/model weights.",
   "evidence_lane": "Software acceptance and current-vintage source reconstruction only; zero new independent-confirmation samples.",
-  "output_directory": "/workspace/website-methods-research/resumed/operational-source-repair-20261023"
+  "output_directory": "/workspace/website-methods-research/resumed/operational-source-repair-20261023",
+  "publication_note": "This zero-fit packet publishes code/config/aggregates/manifests only. Any later reference model publication requires a separate exact input/code/runtime freeze and derived-artifact content review; no raw source/player training rows."
 }
