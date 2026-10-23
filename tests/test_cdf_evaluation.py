@@ -89,3 +89,38 @@ def test_bernoulli_point_probability_not_median_drives_primary_brier():
     interval = paired_interval(candidate, control, "bernoulli", cluster="game")
     assert interval["primary_loss"] == "brier"
     assert interval["mean_delta_candidate_minus_control"] == pytest.approx(expected)
+
+
+def test_signed_yard_and_component_diagnostics_preserve_negative_cases():
+    train, test, category = fictional()
+    category["target"] = "rush_rec_yd"
+    category["support"] = "signed_integer"
+    for frame in [train, test]:
+        frame["rush_yd"] = -1.
+        frame["rec_yd"] = frame.pass_att.astype(float)
+        frame["rush_rec_yd"] = frame.rush_yd + frame.rec_yd
+    test.loc[test.index[0], ["rec_yd", "rush_rec_yd"]] = [0., -1.]
+    model = LeafCDFModel.fit(train, category, "base")
+    scored = score_frozen_rows(model, test, prediction_rows(model, test))
+    pd.testing.assert_frame_equal(scored, prediction_rows(model, test, score=True))
+    report = report_tables(scored, category)
+    negatives = [x for x in report["subgroups"] if x["dimension"] == "outcome_sign" and x["value"] == "negative"]
+    components = [x for x in report["subgroups"] if x["dimension"] == "component_sign" and x["value"] == "either_component_negative"]
+    assert negatives[0]["supported_played_outcomes"] >= 1
+    assert components[0]["supported_played_outcomes"] == len(test)
+
+
+def test_saved_binary_probability_zero_contrary_outcome_keeps_infinite_logloss():
+    train, test, category = fictional()
+    category["support"] = "bernoulli"
+    train["pass_att"] %= 2
+    test["pass_att"] = 1
+    candidate = prediction_rows(LeafCDFModel.fit(train, category, "base"), test, score=True)
+    saved = candidate.assign(method="pooled", family="bernoulli", mean=0.)
+    bound = bind_saved_control(saved, test, category, "pooled")
+    assert np.isposinf(bound.log_score).all()
+    summary = report_tables(bound, category)["summary"][0]["mean"]
+    assert summary["log_loss_status"] == "infinite"
+    assert summary["infinite_log_losses"] == len(test)
+    with pytest.raises(ValueError, match="outside"):
+        bind_saved_control(saved.assign(mean=1.1), test, category, "pooled")

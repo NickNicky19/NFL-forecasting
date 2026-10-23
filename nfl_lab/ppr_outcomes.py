@@ -23,7 +23,14 @@ ADAPTER_VERSION = "strict-planned-ppr-outcomes-v1"
 
 
 def _identity(row: Mapping) -> tuple:
-    missing = [key for key in IDENTITY_FIELDS if row.get(key) is None or str(row[key]).strip() == ""]
+    def invalid(value):
+        if value is None or str(value).strip() in {"", "<NA>", "NaT"}:
+            return True
+        if isinstance(value, Real):
+            return isinstance(value, bool) or not math.isfinite(float(value))
+        return not isinstance(value, str)
+
+    missing = [key for key in IDENTITY_FIELDS if invalid(row.get(key))]
     if missing:
         raise ValueError(f"PPR identity missing {missing}")
     # The shared identity registry owns aliases and namespace conversion.

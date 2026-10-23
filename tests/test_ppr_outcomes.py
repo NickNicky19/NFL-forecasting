@@ -94,3 +94,9 @@ def test_known_inactive_is_distinct_from_unknown_and_conflicting_play_evidence()
     row = run([planned()], [inactive])["rows"][0]
     assert row["participation_state"] == "conflicting" and row["exact_ppr"] is None
     assert row["qualification"] == "participation_evidence_conflict"
+
+
+@pytest.mark.parametrize("identity", [float("nan"), float("inf"), float("-inf")])
+def test_nonfinite_ppr_identities_never_match_and_qualify(identity):
+    with pytest.raises(ValueError, match="identity missing"):
+        run([planned(player_id=identity)], [observed(player_id=identity)])

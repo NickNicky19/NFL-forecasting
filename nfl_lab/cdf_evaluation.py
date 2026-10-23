@@ -41,6 +41,10 @@ def summarize(rows: pd.DataFrame, support: str) -> dict:
                       "p95_absolute_error": float(np.quantile(np.abs(e), .95)) if len(e) else None}
         if support == "bernoulli" and point == "mean":
             out[point]["brier"] = float(np.mean(e ** 2)) if len(e) else None
+            log = numeric(rows, "log_score")[good]
+            out[point]["natural_log_loss"] = float(log.mean()) if len(log) and np.isfinite(log).all() else None
+            out[point]["infinite_log_losses"] = int(np.isposinf(log).sum())
+            out[point]["log_loss_status"] = "infinite" if np.isposinf(log).any() else "finite" if len(log) and np.isfinite(log).all() else "unavailable"
     distribution = valid & np.isfinite(numeric(rows, "crps"))
     if distribution.any():
         group = rows.loc[distribution]
@@ -105,6 +109,14 @@ def bind_saved_control(saved: pd.DataFrame, offered: pd.DataFrame, category: dic
     result = saved.drop(columns=["median"], errors="ignore").copy()
     result["control_cutoff_binding"] = "exact_recorded_cutoff" if "cutoff_utc" in saved else "unrecorded_in_saved_control; original_clock_not_reconstructed_or_authenticated"
     result["primary_role"] = result.position.isin(category["primary_roles"])
+    history = offered[KEYS + ["f_player_games_prior"]] if "f_player_games_prior" in offered else offered[KEYS].assign(f_player_games_prior=np.nan)
+    history = result[KEYS].merge(history, on=KEYS, how="left", validate="one_to_one")
+    count = numeric(history, "f_player_games_prior")
+    result["history_state"] = np.where(~np.isfinite(count) | (count <= 0), "cold_or_unknown", "warm")
+    if category["target"] == "rush_rec_yd":
+        components = result[KEYS].merge(offered[KEYS + ["rush_yd", "rec_yd"]], on=KEYS, how="left", validate="one_to_one")
+        result["source_rush_yd"] = numeric(components, "rush_yd")
+        result["source_rec_yd"] = numeric(components, "rec_yd")
     actual = numeric(result, "actual")
     played = result.participation_state.eq("played").to_numpy()
     valid = valid_support(actual, category["support"])
@@ -114,6 +126,19 @@ def bind_saved_control(saved: pd.DataFrame, offered: pd.DataFrame, category: dic
     # Old mean-only points do not acquire a new median or distribution.
     for column in ["crps", "log_score", "cdf_actual_below", "cdf_actual", "brier"]:
         result[column] = np.nan
+    if category["support"] == "bernoulli":
+        # A saved Bernoulli probability defines its event law uniquely. No
+        # count-to-event conversion, clipping or new count law is introduced.
+        if "family" not in saved or not saved.family.eq("bernoulli").all():
+            raise ValueError("saved binary probability semantics unqualified")
+        probability = numeric(result, "mean")
+        if (np.isfinite(probability) & ((probability < 0) | (probability > 1))).any():
+            raise ValueError("saved binary probability outside [0,1]")
+        observed = played & valid & np.isfinite(probability)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            logs = -np.where(actual[observed] == 1, np.log(probability[observed]), np.log1p(-probability[observed]))
+        result.loc[observed, "log_score"] = logs
+        result.loc[observed, "brier"] = (probability[observed]-actual[observed])**2
     return result
 
 
@@ -169,8 +194,18 @@ def report_tables(rows: pd.DataFrame, category: dict):
         for population, subset in [("all_offered", data), ("primary_roles", data.loc[data.primary_role])]:
             summaries.append({"method": method, "population": population, **summarize(subset, category["support"])})
         work = data.copy()
+        actual = numeric(work, "actual")
+        supported = _observed(work, category["support"])
+        work["outcome_sign"] = np.where(~supported, "unscored", np.where(actual < 0, "negative", np.where(actual == 0, "zero", "positive")))
+        dimensions = ["position", "season", "period", "outcome_state", "outcome_sign", "fallback", "player_id", "team", "opponent"]
+        if "history_state" in work:
+            dimensions.append("history_state")
+        if category["target"] == "rush_rec_yd":
+            rush, rec = numeric(work, "source_rush_yd"), numeric(work, "source_rec_yd")
+            work["component_sign"] = np.where(~supported, "unscored", np.where((rush < 0) | (rec < 0), "either_component_negative", "neither_component_negative"))
+            dimensions.append("component_sign")
         work["period"] = work.season_type.astype(str) if "season_type" in work else np.where(numeric(work, "week") > np.where(numeric(work, "season") >= 2021, 18, 17), "postseason", "regular")
-        for dimension in ["position", "season", "period", "outcome_state", "fallback", "player_id", "team", "opponent"]:
+        for dimension in dimensions:
             for value, subset in work.groupby(dimension, dropna=False):
                 groups.append({"method": method, "dimension": dimension, "value": str(value), **summarize(subset, category["support"])})
     for method in ["leaf_cdf_base", "leaf_cdf_context"]:

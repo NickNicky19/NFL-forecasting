@@ -154,6 +154,24 @@ def test_nonmodeled_cold_and_unknown_roles_retained_as_explicit_prior():
         assert SupportPrior.fit(group.pass_att, "count") == model.priors[role]
 
 
+def test_whole_missing_history_field_uses_cold_prior():
+    train, test, category = fictional()
+    model = LeafCDFModel.fit(train, category, "base")
+    rows = prediction_rows(model, test.drop(columns="f_player_games_prior"))
+    assert rows.fallback.eq("cold_start_role_prior").all()
+    assert rows["mean"].eq(model.priors["QB"].mean).all()
+
+
+def test_missing_source_clock_is_only_permitted_for_cold_history():
+    from nfl_lab.cdf_engine import assert_clock_contract
+    _, test, _ = fictional()
+    test["feature_max_source_available_utc"] = pd.NaT
+    with pytest.raises(ValueError, match="warm history"):
+        assert_clock_contract(test)
+    test["f_player_games_prior"] = 0
+    assert_clock_contract(test)
+
+
 def test_chronology_removes_future_and_unknown_available_labels_and_rejects_feature_leak():
     train, test, _ = fictional()
     train.loc[0, "outcome_available_utc"] = test.cutoff_utc.min()

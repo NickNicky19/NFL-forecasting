@@ -84,3 +84,33 @@ def test_seal_rejects_plan_drift(tmp_path):
     registry.write_text(json.dumps(content))
     with pytest.raises(ValueError, match="differs from reviewed"):
         check_seal(registry)
+
+
+def test_all_blocked_cells_persist_before_aggregation(tmp_path, monkeypatch):
+    import nfl_lab.cdf_campaign as campaign
+    registry = {"state": "SEALED_ROOT_AND_REVIEWER", "categories": {"fantasy_ppr": {"state": "BLOCKED_LABEL_CONTRACT"}},
+        "seasons": [2022, 2023, 2024], "budgets": {"campaign_wall_seconds": 30, "campaign_cpu_seconds": 30,
+        "reporting_wall_reserve_seconds": 5, "maximum_candidate_fit_attempts": 6,
+        "private_output_bytes": 1000000, "memory_bytes": 100000000}}
+    source = tmp_path / "registry.json"
+    source.write_text(json.dumps(registry))
+    monkeypatch.setattr(campaign, "check_seal", lambda _: registry)
+
+    class FictionalAggregation:
+        returncode = 0
+
+        def __init__(self, arguments, **kwargs):
+            self.pid = 0
+            output = Path(arguments[-1])
+            statuses = json.loads((output / "attempts.json").read_text())
+            assert len(statuses) == 6
+            assert all(x["state"] == "BLOCKED_CATEGORY_CONTRACT" for x in statuses)
+            (output / "campaign-report.json").write_text(json.dumps({"attempts": statuses}))
+
+        def poll(self):
+            return self.returncode
+
+    monkeypatch.setattr(campaign.subprocess, "Popen", FictionalAggregation)
+    output = tmp_path / "outputs"
+    campaign.run(source, output)
+    assert len(json.loads((output / "attempts.json").read_text())) == 6

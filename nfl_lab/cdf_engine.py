@@ -88,6 +88,8 @@ def assert_clock_contract(frame: pd.DataFrame) -> None:
         raise ValueError("invalid cutoff/kickoff")
     if (source.notna() & (source >= cutoff)).any():
         raise ValueError("feature source is not strictly earlier than cutoff")
+    if (source.isna() & (numeric(frame, "f_player_games_prior") > 0)).any():
+        raise ValueError("warm history requires its source availability clock")
     if not frame.participation_state.isin(["played", "DNP", "unknown"]).all():
         raise ValueError("unrecognized participation state")
 
@@ -406,7 +408,7 @@ class LeafCDFModel:
             elif leaf_ids is None:
                 reason[:] = "insufficient_modeled_training_role_prior"
             else:
-                cold = (~np.isfinite(history[positions]) | (history[positions] <= 0)) if has_history_field else np.zeros(len(positions), dtype=bool)
+                cold = (~np.isfinite(history[positions]) | (history[positions] <= 0)) if has_history_field else np.ones(len(positions), dtype=bool)
                 reason[cold] = "cold_start_role_prior"
             if str(role) not in self.priors:
                 reason[:] = "global_prior_unknown_role"
@@ -451,6 +453,8 @@ def prediction_rows(model: LeafCDFModel, frame: pd.DataFrame, *, prior_only=Fals
     result["distribution"] = "empirical_leaf_plus_support_prior"
     result["conditional_on"] = "played"
     result["primary_role"] = result.position.isin(model.category["primary_roles"])
+    history = numeric(frame, "f_player_games_prior")
+    result["history_state"] = np.where(~np.isfinite(history) | (history <= 0), "cold_or_unknown", "warm")
     for col in ["mean", "median", "p10", "p90", "variance", "crps", "log_score", "cdf_actual_below", "cdf_actual", "brier"]:
         result[col] = np.nan
     result["fallback"] = "no_supported_played_training_outcomes"
@@ -462,6 +466,9 @@ def prediction_rows(model: LeafCDFModel, frame: pd.DataFrame, *, prior_only=Fals
     result["outcome_state"] = np.where(~played, result.participation_state,
                               np.where(~np.isfinite(actual), "played_missing_statistic",
                               np.where(~valid, "played_invalid_support", np.where(actual == 0, "played_zero", "played_nonzero"))))
+    if score and model.category["target"] == "rush_rec_yd":
+        result["source_rush_yd"] = numeric(frame, "rush_yd")
+        result["source_rec_yd"] = numeric(frame, "rec_yd")
     for positions, law, fallback in model.predict_batches(frame, prior_only=prior_only):
         result.iloc[positions, result.columns.get_loc("fallback")] = fallback
         if law is None:
@@ -493,6 +500,9 @@ def score_frozen_rows(model: LeafCDFModel, frame: pd.DataFrame, frozen: pd.DataF
     played = state == "played"
     valid = played & valid_support(actual, model.category["support"])
     result["actual"], result["participation_state"] = actual, state
+    if model.category["target"] == "rush_rec_yd":
+        result["source_rush_yd"] = numeric(frame, "rush_yd")
+        result["source_rec_yd"] = numeric(frame, "rec_yd")
     result["outcome_state"] = np.where(~played, state,
                               np.where(~np.isfinite(actual), "played_missing_statistic",
                               np.where(~valid, "played_invalid_support", np.where(actual == 0, "played_zero", "played_nonzero"))))

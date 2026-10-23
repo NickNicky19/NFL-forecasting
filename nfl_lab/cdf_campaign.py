@@ -258,6 +258,7 @@ def run(registry_path, output):
                 if "state" in status:
                     statuses.append(status)
                     event(log, status["state"], **{k: v for k, v in status.items() if k != "state"})
+                    write_json(output / "attempts.json", statuses)
                     continue
                 attempts += 1
                 trial = output / relative
@@ -305,6 +306,7 @@ def run(registry_path, output):
                 statuses.append(status)
                 event(log, status["state"], **{k: v for k, v in status.items() if k != "state"})
                 write_json(output / "attempts.json", statuses)
+    write_json(output / "attempts.json", statuses)
     event(log, "AGGREGATION_STARTED", fit_attempts=attempts, child_cpu_seconds=cpu_used)
     remaining_wall = max(0., budget["campaign_wall_seconds"]-(time.monotonic()-start))
     remaining_cpu = max(0., budget["campaign_cpu_seconds"]-cpu_used-(time.process_time()-parent_cpu_start))
