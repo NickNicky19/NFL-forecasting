@@ -11,6 +11,8 @@ The attached review package and raw source bodies are kept outside public Git.
 
 Latest bounded research: [recorded player-prop threshold comparison](reports/recorded-thresholds-v1/README.md) reuses thirteen fixed point variants on585 supported rows from604 original provider-fed lines. All twelve categories remain explicit and unqualified; directions are descriptive and numeric over/under probabilities remain unavailable. [Current category state](reports/recorded-thresholds-v1/category-status.json).
 
+Current implementation packet: [H3 point recording contract](reports/h3-recording-contract-v1/README.md) addresses accurate forecast semantics through the existing lab writer. Current website main still uses the original comparison's source formulas. This packet adds no football observations, live hook, activation or qualified replacement.
+
 Earlier bounded research: [fixed boosting and permitted-source comparison](reports/median-boosting-v1/README.md) completes88 fits across eleven supported categories, retains exact PPR as blocked, and preserves every mixed or failed result. No candidate is promoted; numeric stat-total error does not establish over/under probability accuracy.
 
 Earlier bounded research: [direct original-website CDF comparison](reports/website-direct-leaf-cdf-v1/README.md) covers all twelve categories, with eleven scored and exact PPR blocked. Both fixed panels and website blends are retained. The exposed single-week gains are descriptive; no replacement is promoted.
