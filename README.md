@@ -32,6 +32,14 @@ a bounded historical passing-efficiency comparison and a portable
 historical comparison favors the pooled-yard control over both efficiency
 variants. Neither result changes a default or qualifies a website replacement.
 
+The [archived website scorecard](reports/methods-resumption-20261022/website-comparison.md)
+shows six lower and five higher primary errors across the fixed indexed
+candidates; exact PPR lacks a qualified outcome comparison. A subsequent
+[RB rushing-efficiency test](reports/rushing-efficiency-v1/README.md) scores
+4,591 appearances across 54 season-weeks: H8 gains 0.82% against the pooled
+control, with worse bias and uncertainty spanning zero. It adds no new
+website-relative gain or default replacement.
+
 ```sh
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock -e '.[test]'
