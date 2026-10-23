@@ -1,0 +1,11 @@
+{
+  "target": "pass_yd",
+  "state": "DRAFT",
+  "outcome_contract": {"definition": "category owner supplies exact event/statistic contract", "source_fields": ["pass_yd"], "qualification": "current-vintage reconstructed source statistic; availability assumed, not authenticated"},
+  "support": "signed_integer",
+  "modeled_roles": ["QB"],
+  "primary_roles": ["QB"],
+  "panels": {"base": ["f_player_pass_yd_mean3", "f_player_pass_yd_n3"], "context": ["f_player_pass_yd_mean3", "f_player_pass_yd_n3", "f_opp_pass_yd_allowed_mean3"]},
+  "primary_metric": "median_mae",
+  "notes": ["All offered roles retained with explicit prior fallback; primary role and all-offered metrics both reported."]
+}
