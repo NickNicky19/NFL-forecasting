@@ -116,15 +116,25 @@
   "offline_v2_failure": {
     "HTTP": 0,
     "assessment": "NOT_PERFORMED",
+    "authenticated_outer_receipt_pre_finalization_metrics": {
+      "combined_CPU_seconds": 7.307128502,
+      "observed_wall_seconds_before_receipt": 7.210764814999493,
+      "poll_seconds": 0.01,
+      "sampled_combined_RSS_bytes": 105336832,
+      "scope": "Direct values from immutable outer receipt66be2af... before its own persistence/finalization."
+    },
     "child_max_RSS_bytes": 107401216,
-    "combined_CPU_seconds": 7.978796785,
     "failure_sha256": "dab65938450c3e20c33d73dfd79e067cd593212b5d29fcc6ad7caa19acc7a4bd",
     "outer_receipt_sha256": "66be2af1807b3bf2acb2c66e91a4299f17ec16c6dd4c6a7487e73f41dbf28f10",
+    "owner_reported_finalization_inclusive_tool_summary": {
+      "combined_CPU_seconds": 7.978796785,
+      "observed_wall_seconds": 7.884413605,
+      "sampled_combined_RSS_bytes": 105365504,
+      "scope": "Owner final tool summary including receipt/quota finalization; not a direct transfer of the earlier bound outer receipt."
+    },
     "reason": "Unnecessary assumed sibling response receipt was compared with the capture/result.json hash; this is not evidence of a bad captured body.",
-    "sampled_combined_RSS_bytes": 105365504,
     "source_body_bytes_read": 0,
-    "state": "FAILED_INCORRECT_EXTRA_RECEIPT_PATH_BINDING",
-    "supervisor_observed_wall_seconds": 7.884413605
+    "state": "FAILED_INCORRECT_EXTRA_RECEIPT_PATH_BINDING"
   },
   "publication_views_status": "PREPARED_OPT_IN_UNWIRED",
   "remaining": "Full scope persistence/versioned consumer+horizon wiring/source-runtime+hosted acceptance; independent appearance+zero semantics; PPR exact labels",
