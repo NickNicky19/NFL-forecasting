@@ -18,6 +18,7 @@ into `main`. The website repository remains a read-only reference.
 | Which original artifacts were recovered or remain missing? | [Evidence inventory](../execution/evidence-inventory.json) |
 | Where are all study packets? | [Reports directory](.) |
 | What rules govern research and promotion? | [Execution specification](../EXECUTION_SPEC.md), [lab registration](../config/research.json), each study's separate frozen registration |
+| What is the adopted ongoing goal and latest source prerequisite? | [Active goal](../RESEARCH_GOAL.txt), [player-context software/cache checkpoint](player-context-intake-v1/README.md); no new accuracy claim |
 
 ## Every recorded numerical study packet
 
