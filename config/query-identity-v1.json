@@ -1,0 +1,38 @@
+{
+  "registration_id": "source-qualified-query-identity-v1-20261023",
+  "scope": "One metadata-only, separately versioned exact identity adapter acceptance. No old query/forecast/history mutation, features, model fitting, inference, outcomes, accuracy scoring or issuance.",
+  "reason": "Frozen681row query has550Sleeper-namespace IDs and38outer-space GSIS IDs;90exact historical matches. Cached exact unambiguous mappings can resolve493prefix IDs; registry-qualified ASCII-space trimming can resolve38others. These are metadata coverage findings, not forecast gains.",
+  "inputs": {
+    "query_metadata_sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8",
+    "identity_parquet_sha256": "504eab204149ecd645e918c474cfa32dca78b2fc05f572cbafbb254e9b6dfffa",
+    "historical_feature_parquet_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+    "policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "data_access": "Query metadata JSON only; registry parquet columns player_id,sleeper_id,identity_status only; historical parquet player_id only. No target/statistic/PFR/name/sourcebody/forecastvalue reads. Verify exact bytes before selective decoding.",
+  "rules": [
+    "Preserve original immutable inputs and all681opportunities/order/clocks/context. Output is a new private version with original ID, canonical ID, resolution state, source hash and adapter version.",
+    "Exact text Sleeper prefix to unique source_exact_binding registry mapping only. No numeric coercion, name matching, leading-zero deletion or fuzzy identity inference.",
+    "Trim outer U+0020 spaces only when result is strict GSIS syntax and present in the pinned registry. No generic Unicode/tabs/embedded normalization.",
+    "Unresolved or ambiguous identity retains its original namespace and explicit reason; unknown history is not rookie/zero/DNP. Reject duplicate input player-games or canonical same-game collisions; never drop rows.",
+    "Validate registry text/schema/status/conflicts. No selecting among conflicting candidates, widening old frozen bindings, or claiming missing ambiguous candidates are resolved.",
+    "Deterministic same-input replay; bind output hashes/source/version. Software or metadata coverage acceptance is not forecast accuracy, issuance, feature timeliness or production integration."
+  ],
+  "budgets": {
+    "actual_metadata_acceptances": 1,
+    "max_wall_seconds": 120,
+    "max_CPU_seconds": 180,
+    "max_RSS_bytes": 536870912,
+    "threads": 2,
+    "new_HTTP_attempts": 0,
+    "fits": 0,
+    "model_inference": 0,
+    "accuracy_scores": 0,
+    "owner_fictional_software_wall_seconds": 90,
+    "root_integrated_fictional_wall_seconds": 180,
+    "private_shared_unique_file_limit_bytes": 536870912,
+    "automatic_real_acceptance_retries": 0
+  },
+  "ownership": "Integrator writes ledger and actual metadata acceptance through existing quota. Isolated adapter owner writes only new module/tests/doc. Independent reviewer read-only. Max4includingintegrator. Requested GPT6.1Sol/xhigh, record tool acceptance without backend attestation.",
+  "publication": "Code/config/tests/docs/aggregate-only. Canonical metadata rows, aliases and registry remain private. No workflow/default/website changes. A fresh future-input/runtime contract must adopt the adapter explicitly; old runtime remains unchanged.",
+  "next": "Qualify current eligible population and a fresh query feature version using this adapter before hosted issuance; no claim that metadata-match coverage guarantees usable history or improved error."
+}
