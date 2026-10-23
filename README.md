@@ -101,3 +101,15 @@ those packages are not ready for joint integration. No candidate is promoted.
 
 Integer push mass needs an actual saved line; absent odds never block football
 forecasts, and this lab makes no EV or financial settlement claims.
+
+## Empirical distribution research
+
+The [twelve-category leaf-CDF study](reports/all12-leaf-cdf-v1/README.md)
+completed 66 fixed historical fits across eleven supported targets. Exact PPR
+retains its blocked scoring-source contract. Both player-history and context
+panels, their mean/median errors, proper scores, adverse findings and coverage
+are retained. The new gains compare against saved pooled-history controls;
+they are separate from the one-week website scorecard and are not untouched
+confirmation. [Inference and recovery contracts](docs/EMPIRICAL_CDF_RESEARCH.md)
+describe explicit research use outside the operational registry. No new default,
+recorder or scheduler is activated.
