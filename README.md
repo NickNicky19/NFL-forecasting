@@ -9,7 +9,9 @@ Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
 [the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
 The attached review package and raw source bodies are kept outside public Git.
 
-Latest bounded research: [recorded player-prop threshold comparison](reports/recorded-thresholds-v1/README.md) reuses thirteen fixed point variants on585 supported rows from604 original provider-fed lines. All twelve categories remain explicit and unqualified; directions are descriptive and numeric over/under probabilities remain unavailable. [Current category state](reports/recorded-thresholds-v1/category-status.json).
+Latest bounded research: [role and count comparison](reports/role-count-boosting-v1/README.md) completes 136 estimator fits, 88 supported forecast packages and all 48 primary slots, including four exact-PPR blocks. Both prespecified arms improve five Week 6 primary errors and worsen six against the saved website. Historical carry improvements repair an earlier failed model but still lose stronger controls. The original reporting failure and separate zero-fit recovery remain recorded. [Current twelve-category state](reports/role-count-boosting-v1/category-status.json). No candidate is promoted.
+
+Earlier bounded research: [recorded player-prop threshold comparison](reports/recorded-thresholds-v1/README.md) reuses thirteen fixed point variants on585 supported rows from604 original provider-fed lines. All twelve categories remain explicit and unqualified; directions are descriptive and numeric over/under probabilities remain unavailable.
 
 Current implementation packet: [H3 point recording contract](reports/h3-recording-contract-v1/README.md) addresses accurate forecast semantics through the existing lab writer. Current website main still uses the original comparison's source formulas. This packet adds no football observations, live hook, activation or qualified replacement.
 

@@ -1,0 +1,224 @@
+{
+  "version": "exact-ppr-generator-followup-20261023",
+  "owner": "/root/category_fantasy_ppr_source",
+  "evidence": "New source implementation/documentation inspection, not a numerical NFL study",
+  "private_receipt_sha256": "033c63f9ae1c107edb5e4f50b983b6d39e90dc6ae0608b0c462c324f1e5da405",
+  "sources": [
+    {
+      "name": "nflreadr-tree",
+      "url": "https://api.github.com/repos/nflverse/nflreadr/git/trees/HEAD?recursive=1",
+      "git_blob": null,
+      "git_tree": "23f915a5be30415aeaa0c5c80cd23b2c69cda122",
+      "sha256_response": "ab3247a5520390df66af8370e61922612862be257319154fbdc9fb3937b3265f",
+      "sha256_decoded": null,
+      "bytes": 63035,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:18:23.943972+00:00",
+      "source_path": null
+    },
+    {
+      "name": "nflverse-pbp-tree",
+      "url": "https://api.github.com/repos/nflverse/nflverse-pbp/git/trees/HEAD?recursive=1",
+      "git_blob": null,
+      "git_tree": "cd7bfd9bbf9251529bf5e0283ae84f10e11e7d17",
+      "sha256_response": "c8906f318aad57f337a25885c6e66a6b08f4ecf551e98d48c6048171af942296",
+      "sha256_decoded": null,
+      "bytes": 31888,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:18:24.535006+00:00",
+      "source_path": null
+    },
+    {
+      "name": "load-stats",
+      "url": "https://api.github.com/repos/nflverse/nflreadr/git/blobs/5b261e420cf022db9b4e7cb183e7cb4b799b13d2",
+      "git_blob": "5b261e420cf022db9b4e7cb183e7cb4b799b13d2",
+      "git_tree": null,
+      "sha256_response": "26cd847b9123f90a2e3a33de76e486d9c30a34460d3350b758c1d47306a8eb1d",
+      "sha256_decoded": "cdb0012ec774d2416712d52dda316be99fd2facb5003f43d36cb70b5272633b1",
+      "bytes": 5738,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:18:48.573355+00:00",
+      "source_path": "nflreadr/R/load_stats.R"
+    },
+    {
+      "name": "update-stats",
+      "url": "https://api.github.com/repos/nflverse/nflverse-pbp/git/blobs/909ad1abbbecf5d80779b8fbeed6adba95fe3b74",
+      "git_blob": "909ad1abbbecf5d80779b8fbeed6adba95fe3b74",
+      "git_tree": null,
+      "sha256_response": "12dc791d9c5af6212a2f1641c163f9f4d705a79a106fa0d85ac8c0a5ddeae8be",
+      "sha256_decoded": "7f1e017de3c2c99bd140fa2d4d56788efe5b3ecce075c3cfdb7a4365a060ea45",
+      "bytes": 7024,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:18:48.917817+00:00",
+      "source_path": "nflverse-pbp/R/update_stats.R"
+    },
+    {
+      "name": "nflfastr-tree",
+      "url": "https://api.github.com/repos/nflverse/nflfastR/git/trees/HEAD?recursive=1",
+      "git_blob": null,
+      "git_tree": "701bbf38bc1c030ff9f1f4825a23191287d3903c",
+      "sha256_response": "193cf072c14bb52f2db1cf51a240f00e3b5c5867003ff3c9ff5dd7f263142dd2",
+      "sha256_decoded": null,
+      "bytes": 40871,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:19:13.633811+00:00",
+      "source_path": null
+    },
+    {
+      "name": "calculate-stats",
+      "url": "https://api.github.com/repos/nflverse/nflfastR/git/blobs/f367d0a4ba7d3a472351865467eba3a9c53a14f6",
+      "git_blob": "f367d0a4ba7d3a472351865467eba3a9c53a14f6",
+      "git_tree": null,
+      "sha256_response": "37fc2be8b971675702c9e01657504a13dfe3416507e30a64a7ce7975ece26957",
+      "sha256_decoded": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28",
+      "bytes": 41287,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:19:26.447673+00:00",
+      "source_path": "nflfastR/R/calculate_stats.R"
+    },
+    {
+      "name": "build-playstats",
+      "url": "https://api.github.com/repos/nflverse/nflfastR/git/blobs/80e495d237da350a1672ea68d7a6d4a72bd8f0f2",
+      "git_blob": "80e495d237da350a1672ea68d7a6d4a72bd8f0f2",
+      "git_tree": null,
+      "sha256_response": "5412b43ee946f7bd6677c58c2848a6c3a26a39b3783381f169e237467682167a",
+      "sha256_decoded": "a98674f5c54e29c3400812c8f97e1c760777d2312274ab0bae0bc7cd9cd6bf9d",
+      "bytes": 4846,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:19:46.440974+00:00",
+      "source_path": "nflfastR/R/build_playstats.R"
+    },
+    {
+      "name": "tidy-play-stats",
+      "url": "https://api.github.com/repos/nflverse/nflfastR/git/blobs/0c21d4d43fb653f8d39a2bc23fc52369a4a4bc84",
+      "git_blob": "0c21d4d43fb653f8d39a2bc23fc52369a4a4bc84",
+      "git_tree": null,
+      "sha256_response": "0f2224eb201881151c44aadcb6ad6dc5bb3cc179e3f57169d38599ad7073da8b",
+      "sha256_decoded": "45e070dcd061fbcfe1e381ccd742d27c4ed57687c053dee2d9527d5acd29e9d0",
+      "bytes": 73643,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:19:46.930288+00:00",
+      "source_path": "nflfastR/R/helper_tidy_play_stats.R"
+    },
+    {
+      "name": "sleeper-scoring-collection",
+      "url": "https://support.sleeper.com/en/collections/2293519-scoring",
+      "git_blob": null,
+      "git_tree": null,
+      "sha256_response": "dd4f603880a5fbbc4bcd926f59c0cc4f5c879d5daba13989f192b518d797b5f0",
+      "sha256_decoded": null,
+      "bytes": 78863,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:20:27.854193+00:00",
+      "source_path": null
+    },
+    {
+      "name": "sleeper-what-stacks",
+      "url": "https://support.sleeper.com/en/articles/3186339-what-stacks",
+      "git_blob": null,
+      "git_tree": null,
+      "sha256_response": "ad9a5fc02d6032c1ac38288b1f21fedec6c9766d9fb6b1553909634e976d0b27",
+      "sha256_decoded": null,
+      "bytes": 89418,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:21:01.672795+00:00",
+      "source_path": null
+    },
+    {
+      "name": "sleeper-points-breakdown",
+      "url": "https://support.sleeper.com/en/articles/4126744-how-can-i-see-my-player-s-points-breakdown",
+      "git_blob": null,
+      "git_tree": null,
+      "sha256_response": "200c7de3f4279542d32d378bff892ff1cc5daa741191f0299054f3d40c1aa56a",
+      "sha256_decoded": null,
+      "bytes": 80205,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:21:02.182880+00:00",
+      "source_path": null
+    },
+    {
+      "name": "sleeper-stat-corrections",
+      "url": "https://support.sleeper.com/en/articles/2441282-stat-corrections",
+      "git_blob": null,
+      "git_tree": null,
+      "sha256_response": "8b5da594b7206a26864fd24bcec2b63fe0836d8303e3218060a5611548542fad",
+      "sha256_decoded": null,
+      "bytes": 84609,
+      "http_status": 200,
+      "retrieved_utc": "2026-10-23T09:21:02.731640+00:00",
+      "source_path": null
+    }
+  ],
+  "findings": [
+    {
+      "source": "nflfastR/R/calculate_stats.R",
+      "git_blob": "f367d0a4ba7d3a472351865467eba3a9c53a14f6",
+      "lines": [
+        430,
+        443,
+        444,
+        445
+      ],
+      "finding": "Forced fumbles statID91 and blocked kicks IDs86-88 are counted without phase filters. This identifies implemented all-phase inputs, but not complete source inventory or exact Sleeper attribution."
+    },
+    {
+      "source": "nflfastR/R/calculate_stats.R",
+      "lines": [
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460
+      ],
+      "finding": "Recovery counts use IDs55/56 and59/60; recovery touchdowns also count lateral recipients58/62. Zero own/opponent recoveries alone cannot prove zero recovery TDs."
+    },
+    {
+      "source": "nflfastR/R/calculate_stats.R",
+      "lines": [
+        273,
+        274,
+        275
+      ],
+      "finding": "Groups existing play-stat inventory; computed zeros apply to present groups, not absent players or omitted fields."
+    },
+    {
+      "source": "stats_validate_pbp",
+      "lines": [
+        748,
+        782
+      ],
+      "finding": "Validation covers expected columns/seasons; no exhaustive event-inventory guarantee."
+    },
+    {
+      "source": "Sleeper Stat Corrections and What Stacks documentation",
+      "finding": "Allows temporarily missed stats and correction differences from NFL list; does not document omitted-key zeros or the idp_fum_rec/fum_rec_td joint credit rule."
+    },
+    {
+      "source": "nflfastR/R/calculate_stats.R special_teams_tds",
+      "finding": "Special-play touchdown ID formula is broader than ordinary kick/punt return IDs. Earlier dictionary wording alone is insufficient for provider equivalence."
+    }
+  ],
+  "remaining_dependency": "Exhaustive retained event/player inventory, explicit missing/zero semantics and exact provider attribution including the conditional recovery exception. Any new scoring panel requires separate registration.",
+  "decision": "Keep current eight exact-PPR model packages and four primary contrast slots blocked; no generic-PPR substitution or outcome-selected positive-event subset.",
+  "resources": {
+    "requests": 12,
+    "response_bytes": 601427,
+    "maximum_requests": 12,
+    "maximum_response_bytes": 2097152,
+    "maximum_wall_seconds": 180,
+    "last_HTTP_seconds": 159.35494756698608,
+    "finished_wall_seconds": 191.9279270172119,
+    "wall_cap_breach": "Final receipt bookkeeping exceeded180seconds; HTTP had already stopped. Breach retained; no retry or expanded acquisition."
+  },
+  "new_outcome_rows_read": 0,
+  "raw_game_event_requests": 0,
+  "new_fits": 0,
+  "new_predictions": 0,
+  "new_scores": 0,
+  "registered_study_changes": 0,
+  "rights": "Private publisher-code/documentation cache only, upstream rights retained; public derived findings and source identities only. Current access does not establish historical publication."
+}

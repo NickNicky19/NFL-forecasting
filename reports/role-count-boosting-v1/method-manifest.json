@@ -1,0 +1,137 @@
+{
+  "registration_id": "all12-role-count-boosting-v1-20261023",
+  "repair_registration_id": "role-count-reporting-repair-v1-20261023",
+  "state": "IMPLEMENTED_AND_EXPOSED_EVALUATED_NOT_QUALIFIED_OR_DEPLOYED",
+  "code_revision": "c45cf1f",
+  "inference": {
+    "new_model_class": "nfl_lab.role_boosting.RoleCountBoostingModel",
+    "prediction_rows": "nfl_lab.role_boosting.prediction_rows",
+    "input": "Inherited frozen base feature/category/identity/cutoff contract; numeric f_* features only at inference, no outcome columns. Training-only per-estimator imputation and role vocabulary; original supported earlier-training priors.",
+    "output": "Numeric point heuristic or real binary TD probability plus explicit prior/fallback reason. No numeric distribution, threshold probability or push mass.",
+    "parameters": {
+      "parameters": {
+        "max_iter": 150,
+        "learning_rate": 0.05,
+        "max_leaf_nodes": 15,
+        "max_depth": 3,
+        "min_samples_leaf": 30,
+        "l2_regularization": 10.0,
+        "random_state": 1702
+      },
+      "early_stopping": false,
+      "threads": 2,
+      "minimum_modeled_rows": 60,
+      "maximum_estimator_attempts": 136,
+      "count_loss": "poisson",
+      "count_link": "log",
+      "signed_loss": "absolute_error",
+      "binary_loss": "log_loss",
+      "private_values_exported": false,
+      "numeric_distribution": "none"
+    },
+    "source_contracts": [
+      {
+        "name": "training_features",
+        "sha256": "e4f325e577f40839f7029a3a65010a9517a067432247736ea3b220f67262adfc",
+        "bytes": 5130559
+      },
+      {
+        "name": "query_features",
+        "sha256": "2ec79b467c3d98634267695bfe3773f0fd5dcd002de5b0f2b3c402037af99763",
+        "bytes": 121392
+      },
+      {
+        "name": "opportunities",
+        "sha256": "f5080d9638e90b20c03a6938db611325b34d56017b4bd1b99e28a74f7837a9a1",
+        "bytes": 48291
+      },
+      {
+        "name": "outcomes",
+        "sha256": "9ddb5cfb72fda550dcc026c5cf1a8239208ab0a5b23e6ca462d961434b491b59",
+        "bytes": 47354
+      },
+      {
+        "name": "source_contract",
+        "sha256": "ef3083a77e0ac864e96de2af85faddc1e1d509129f202969e52e66f4554cc5f5",
+        "bytes": 4328
+      },
+      {
+        "name": "prior_registry",
+        "sha256": "8cfa3120bdf4713133a667c3ff480c445b65b43c81d1abe5bc3f06807814e345",
+        "bytes": 220981
+      },
+      {
+        "name": "website_registry",
+        "sha256": "4c6b5949f5e76b7ea6dd581ab6702fc5ff740c25d64d33577d080dbc9f5a8d55",
+        "bytes": 206724
+      },
+      {
+        "name": "parent_boosting_registry",
+        "sha256": "49ea230f4a54e523faed757f77239c17e1829c7ed7350d8b44f2025c425a9256",
+        "bytes": 289164
+      }
+    ],
+    "private_model_and_forecast_binding_sha256": "3f6cfbd0a0642dab128d861c43ee0d88d6814e8ad4af07e449c6fbd12eae9cf4",
+    "private_trained_packages": 48,
+    "byte_alias_packages": 40,
+    "blocked_packages": 8,
+    "estimator_fits": 136,
+    "model_rows_or_weights_published": false
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "scipy": "1.17.0",
+      "scikit-learn": "1.8.0",
+      "pyarrow": "23.0.1",
+      "joblib": "1.5.3",
+      "threadpoolctl": "3.6.0"
+    },
+    "threads": 2
+  },
+  "actual_agents": {
+    "integrator": "/root",
+    "root_model": "not independently exposed",
+    "shared_model_worker": "/root/role_boosting_implementer",
+    "shared_source_worker": "/root/all12_source_owner",
+    "report_repair_worker": "/root/role_reporting_repair",
+    "export_and_PPR_source_worker": "/root/category_fantasy_ppr_source",
+    "separate_read_only_reviewer": "/root/role_study_final_reviewer",
+    "explicit_worker_spawn_arguments": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "independent_backend_attestation": false
+    }
+  },
+  "code_sha256": {
+    "nfl_lab/role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "nfl_lab/role_boosting_campaign.py": "d4e31b8018b65e20856efc52fcaaa6735154fa04bf4563b73e79e3dabf4cd4de",
+    "nfl_lab/role_boosting_reporting_repair.py": "ea746f78c1a1c0a6a94e96b49bacaad8c1b6df00aff75c8a93c72d1f5f736603",
+    "nfl_lab/role_boosting_repair_export.py": "8aa0be494cbbf8823cbd69c2ba071862dbc66bd410ef951e32c39e85573dc8b4",
+    "config/role-count-research.json": "e55c49c3f53ec4460c766529cf6a479180bf6476c1b2cc1d8540282af229334c",
+    "config/role-count-reporting-repair.json": "ce87634cd7ad1201b1d0970f98adb7fbed07759e00fc75cdc4823f371f98d37e"
+  },
+  "report_provenance": {
+    "repair_registration_id": "role-count-reporting-repair-v1-20261023",
+    "source_registration_id": "all12-role-count-boosting-v1-20261023",
+    "original_state": "INCOMPLETE_RETAINED_NO_RESTART",
+    "original_fit_attempts_consumed": 136,
+    "original_score_pass_consumed": true,
+    "original_failed_report_attempts": 1,
+    "repair_report_attempts_consumed": 1,
+    "cumulative_report_attempts": 2,
+    "new_fits": 0,
+    "new_predictions": 0,
+    "new_independent_observations": 0,
+    "source_registry_sha256": "6a6012e7b0d98f7b2164c08fe471ce4726285a92ed611b593ee5368e1cdb52b1",
+    "source_freeze_sha256": "3f6cfbd0a0642dab128d861c43ee0d88d6814e8ad4af07e449c6fbd12eae9cf4",
+    "source_failed_completion_sha256": "ce4640f0e39f117dc7e049f80895c86794de913348c99444ca59aa10ef9eeed3",
+    "source_consumed_marker_sha256": "7c6d79ab8c2f20d60e86a0f55f8707b5015c5a5a2d22faef67649d30ccfeae31",
+    "key_repair": "existing normalize_keys on derived scored frames only"
+  },
+  "roll_back": "Existing defaults never changed. Discard opt-in research output to retain incumbent. Restore the bound previous package for research inference; do not alter frozen records. No production migration is installed.",
+  "integration_ready": false,
+  "next_contracts": "Authenticated operational inputs, later confirmation, schema/consumer/replay and failure behavior acceptance for any actually qualified candidate. Numeric research points must not enter a mean-only consumer as invented conditional means."
+}
