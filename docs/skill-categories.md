@@ -92,9 +92,13 @@ recovery of original earliest-common-timely source bindings.
 * `rush-rec-compatible-component-means-new-v1`: sum compatible means. The direct
   combined target must be scored independently on the same rows. Structural
   coherence does not establish predictive improvement.
-* `empirical-copula-opportunity-components-new-v1`: earlier complete training
+* `empirical-copula-coherent-passing-components-new-v2`: earlier complete training
   rows supply common opportunity ranks. Conditional binomial draws enforce
-  catches ≤ targets, completions ≤ attempts and scorer counts ≤ opportunity.
+  catches ≤ targets and scorer counts ≤ opportunity. Passing uses one
+  mutually exclusive allocation of touchdown completions, other completions,
+  interceptions and other incompletions: TD ≤ completions and
+  completions + interceptions ≤ attempts. Impossible marginal means fail.
+  Passing yards require completion exposure and are zero at zero completions.
   Signed yards are zero at zero workload; one participation draw applies to
   every component. Insufficient complete history explicitly falls back to an
   independent copula. Tied ranks are randomized across the entire tie interval
@@ -102,11 +106,19 @@ recovery of original earliest-common-timely source bindings.
 
 Nonempty dependence history must have `outcome_available_utc` and an aware
 `cutoff_utc`; only strict earlier availability enters. Known DNP/unknown rows
-are excluded from conditional dependence when participation is present. Common
+are excluded using required canonical `participation_state`; missing canonical
+columns or conflicting legacy state fail closed. Common
 history-vintage labels survive in sample metadata. A reconstructed availability
 assumption is not an authentic historical pregame capture. Joint means are
 Monte Carlo summaries, and normal component-sum intervals are moment
 approximations. Neither is a fitted/calibrated uncertainty result by itself.
+
+V2 repairs three defects reported in the October 23 owner-supplied external
+audit and confirmed by independent static review. V1 remains recoverable in
+Git; none of the standalone model scores are recomputed or replaced. The
+sampler has no live/weekly caller. This ordinary opportunity model is not a
+complete official unusual-play crediting model or a qualified exact-PPR model.
+No predictive or calibration improvement is established by its repair.
 
 ## Validation
 

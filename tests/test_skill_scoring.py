@@ -102,6 +102,7 @@ def test_joint_samples_are_reproducible_coherent_and_score_exact_ppr():
                             dict(means, rush_yd=-5, rec_yd=40),
                             dict(means, rush_yd=-7, rec_yd=30)])
     history["outcome_available_utc"] = "2000-01-01T00:00:00Z"
+    history["participation_state"] = "played"
     samples = sample_joint_components(means, history, draws=1000, seed=14,
                                       p_participation=.7, population="all_player", cutoff_utc="2000-02-01T00:00:00Z")
     repeated = sample_joint_components(means, history, draws=1000, seed=14,
@@ -125,6 +126,7 @@ def test_joint_samples_are_reproducible_coherent_and_score_exact_ppr():
 def test_joint_rare_ties_keep_marginal_means_and_no_missing_ppr_invention():
     history = pd.DataFrame({"rush_td": [0, 0, 0], "rec_td": [0, 0, 0]})
     history["outcome_available_utc"] = "2000-01-01T00:00:00Z"
+    history["participation_state"] = "played"
     samples = sample_joint_components({"rush_td": .3, "rec_td": .2}, history,
                                       draws=20000, seed=8, cutoff_utc="2000-02-01T00:00:00Z")
     assert samples.rush_td.mean() == pytest.approx(.3, abs=.02)
@@ -133,12 +135,14 @@ def test_joint_rare_ties_keep_marginal_means_and_no_missing_ppr_invention():
 
 def test_joint_dependence_never_uses_future_or_unknown_availability():
     history = pd.DataFrame({"rush_yd": [1., 3., 5.], "rec_yd": [2., 4., 6.],
-                            "outcome_available_utc": ["2000-01-01T00:00:00Z"] * 3})
+                            "outcome_available_utc": ["2000-01-01T00:00:00Z"] * 3,
+                            "participation_state": ["played"] * 3})
     means = {"rush_yd": 3., "rec_yd": 4.}
     expected = sample_joint_components(means, history, draws=50,
                                        cutoff_utc="2000-02-01T00:00:00Z")
     future = pd.DataFrame({"rush_yd": [1e9, 1e10], "rec_yd": [-1e9, -1e10],
-                           "outcome_available_utc": ["2000-02-01T00:00:00Z", None]})
+                           "outcome_available_utc": ["2000-02-01T00:00:00Z", None],
+                           "participation_state": ["unknown", "DNP"]})
     actual = sample_joint_components(means, pd.concat([history, future], ignore_index=True), draws=50,
                                      cutoff_utc="2000-02-01T00:00:00Z")
     pd.testing.assert_frame_equal(actual, expected)
