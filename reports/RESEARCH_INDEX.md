@@ -6,7 +6,7 @@ It does not claim to recover every artifact from an earlier chat.
 
 The latest published research is on branch `research/pooled-ypa-20261022` in
 [draft PR #1](https://github.com/NickNicky19/NFL-forecasting/pull/1), not merged
-into `main`. The website repository remains a read-only reference.
+into `main`. For frozen studies the website remains a reference; the owner's October 24 instruction separately authorizes provisional website integration through its normal protected writer workflow.
 
 ## Start here
 
@@ -186,3 +186,9 @@ remains pending an efficiency prerequisite under its original finite budget.
 [Completed all-category policy checkpoint](weekly-policy-checkpoint-v1/README.md) · [Exact aggregate losses and coverage](weekly-policy-checkpoint-v1/aggregate.json) · [Twelve-category scientific experiment matrix](weekly-policy-checkpoint-v1/scientific-matrix.json).
 
 P0–P4 replay completed for eleven targets over 2022–2024 REG, 54 weeks and 815 games; exact PPR remains blocked. LAB_CDF is the historical reference, not contemporaneous SITE/R0/raw. Results are exposed development; new provisional release and original scientific qualification remain separate. The fixed model can remain strongest; no deployment or prospective gain is claimed by this reporting checkpoint.
+
+## Actual initial pregame capture (2026-10-24)
+
+[All-twelve-category capture and release status](weekly-provisional-capture-v1/README.md) · [Machine-readable matrix](weekly-provisional-capture-v1/aggregate.json) · [Genuine hosted canary proof](private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json).
+
+Eighteen future-query procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 primary-role selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. The expanded historical run is active, with no result asserted here. Original scientific registrations remain unchanged.

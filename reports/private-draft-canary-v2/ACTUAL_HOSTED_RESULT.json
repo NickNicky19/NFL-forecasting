@@ -1,0 +1,269 @@
+{
+  "NFL_payload_bytes_uploaded": 0,
+  "binding": {
+    "browser_tag": "untagged-a06973eff0d22df1b7da",
+    "canary_asset_id": 671959793,
+    "canary_bytes": 117,
+    "canary_name": "canary-ca8090cde08331428a97805cc247de9ed6479aa38d5b2e0142ea111f62df23ca.txt",
+    "canary_sha256": "ca8090cde08331428a97805cc247de9ed6479aa38d5b2e0142ea111f62df23ca",
+    "config_sha256": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+    "origin_run_id": "40085895156",
+    "release_id": 422661769,
+    "repository": "NickNicky19/NFL-forecasting",
+    "runtime_id": "069fb200e34e624599aa916455de358a",
+    "schema_version": "weekly-private-draft-binding-v2",
+    "tag_name": "weekly-private-runtime-v2-069fb200e34e624599aa916455de358a"
+  },
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 120848637438,
+      "name": "private-draft-v2-write",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 120848638245,
+      "name": "lab",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 120848638372,
+      "name": "storage-probe-write",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 120848638485,
+      "name": "storage-probe-read",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 120848639089,
+      "name": "storage-probe-restore",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 120848686494,
+      "name": "private-draft-v2-read",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 120848718220,
+      "name": "private-draft-v2-qualify",
+      "status": "completed"
+    }
+  ],
+  "qualification": {
+    "HTTP_calls": 8,
+    "before_completed_at_utc": "2026-10-24T10:26:19.654749+00:00",
+    "before_process_identity": "470600fc2956ff7907e6c694e4e7c994a7c9f67dec32588d06560c401afe8095",
+    "before_proof": {
+      "HTTP_calls": 8,
+      "binding_sha256": "763d08e2d576434b3722ad942da9f807645f6ffa39d0650616fae80a11d1fa11",
+      "config_sha256": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+      "created_at_utc": "2026-10-24T10:26:19.654749+00:00",
+      "draft_before_after": true,
+      "exact_canary_readback": true,
+      "job": {
+        "api_job_id": 120848637438,
+        "event_name": "workflow_dispatch",
+        "execution_lane": "github_actions",
+        "job_id": "private-draft-v2-write",
+        "permission": "write",
+        "run_authenticated": true,
+        "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1",
+        "workflow_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd"
+      },
+      "operation": "pin",
+      "phase": "write_pin",
+      "process_identity": "470600fc2956ff7907e6c694e4e7c994a7c9f67dec32588d06560c401afe8095",
+      "repository": "NickNicky19/NFL-forecasting",
+      "run_attempt": 1,
+      "run_id": "40085895156",
+      "schema_version": "weekly-private-proof-v2.1",
+      "source_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd",
+      "started_at_utc": "2026-10-24T10:26:17.692066+00:00",
+      "transfer_bytes": 29486
+    },
+    "before_sha256": "5d4aeaab0d500bf4b4fdc1072fe44e1f45e365e675ab88eafac106855df5b8a6",
+    "binding_sha256": "763d08e2d576434b3722ad942da9f807645f6ffa39d0650616fae80a11d1fa11",
+    "config_sha256": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+    "created_at_utc": "2026-10-24T10:26:37.371523+00:00",
+    "engineering_boundary_v2": true,
+    "job": {
+      "api_job_id": 120848718220,
+      "event_name": "workflow_dispatch",
+      "execution_lane": "github_actions",
+      "job_id": "private-draft-v2-qualify",
+      "permission": "write",
+      "run_authenticated": true,
+      "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1",
+      "workflow_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd"
+    },
+    "operation": "qualify",
+    "phase": "qualified",
+    "process_identity": "38f685204793a37969f8dc27a5a351c8a34a7dcddade1c62efd582a63f648298",
+    "read_completed_at_utc": "2026-10-24T10:26:30.236765+00:00",
+    "read_process_identity": "01e0d4b5b65aea8caf9401b9ef54a1aa7fd67351622da55eff9d9f923d8cbd75",
+    "read_proof": {
+      "HTTP_calls": 19,
+      "all10_denied": true,
+      "before_sha256": "5d4aeaab0d500bf4b4fdc1072fe44e1f45e365e675ab88eafac106855df5b8a6",
+      "binding_sha256": "763d08e2d576434b3722ad942da9f807645f6ffa39d0650616fae80a11d1fa11",
+      "config_sha256": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+      "controls_passed": true,
+      "created_at_utc": "2026-10-24T10:26:30.236765+00:00",
+      "job": {
+        "api_job_id": 120848686494,
+        "event_name": "workflow_dispatch",
+        "execution_lane": "github_actions",
+        "job_id": "private-draft-v2-read",
+        "permission": "read",
+        "run_authenticated": true,
+        "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1",
+        "workflow_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd"
+      },
+      "operation": "boundary",
+      "phase": "read_boundary",
+      "process_identity": "01e0d4b5b65aea8caf9401b9ef54a1aa7fd67351622da55eff9d9f923d8cbd75",
+      "repository": "NickNicky19/NFL-forecasting",
+      "routes": [
+        {
+          "principal": "contents_read",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": true,
+          "retry_after_present": false,
+          "route": "release_metadata",
+          "sequence": "read_only",
+          "status": 403
+        },
+        {
+          "principal": "contents_read",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": true,
+          "retry_after_present": false,
+          "route": "asset_metadata",
+          "sequence": "read_only",
+          "status": 403
+        },
+        {
+          "principal": "contents_read",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": true,
+          "retry_after_present": false,
+          "route": "asset_list",
+          "sequence": "read_only",
+          "status": 403
+        },
+        {
+          "principal": "contents_read",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": true,
+          "retry_after_present": false,
+          "route": "api_octet",
+          "sequence": "read_only",
+          "status": 403
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": false,
+          "rate_remaining_nonzero": false,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "browser",
+          "sequence": "read_only",
+          "status": 404
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "release_metadata",
+          "sequence": "anonymous",
+          "status": 404
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "asset_metadata",
+          "sequence": "anonymous",
+          "status": 404
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "asset_list",
+          "sequence": "anonymous",
+          "status": 404
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": true,
+          "rate_remaining_nonzero": true,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "api_octet",
+          "sequence": "anonymous",
+          "status": 404
+        },
+        {
+          "principal": "anonymous",
+          "rate_header_present": false,
+          "rate_remaining_nonzero": false,
+          "request_failed": false,
+          "resource_permission_message_exact_match": false,
+          "retry_after_present": false,
+          "route": "browser",
+          "sequence": "anonymous",
+          "status": 404
+        }
+      ],
+      "run_attempt": 1,
+      "run_id": "40085895156",
+      "schema_version": "weekly-private-proof-v2.1",
+      "source_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd",
+      "started_at_utc": "2026-10-24T10:26:26.447874+00:00",
+      "transfer_bytes": 62000
+    },
+    "read_sha256": "6b2d876ee8e17967b9683d90d8534e2f5feba6d2a363f84000c4a0411cea095a",
+    "repository": "NickNicky19/NFL-forecasting",
+    "restricted_upload_authorized": false,
+    "run_attempt": 1,
+    "run_id": "40085895156",
+    "schema_version": "weekly-private-proof-v2.1",
+    "source_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd",
+    "started_at_utc": "2026-10-24T10:26:36.030233+00:00",
+    "strict_v1_unchanged": "INCONCLUSIVE",
+    "transfer_bytes": 33065
+  },
+  "run_id": 40085895156,
+  "schema_version": "weekly-private-canary-v2-actual-hosted-result",
+  "scope": "Engineering canary only; original v1 remains INCONCLUSIVE; source rights and restricted NFL persistence not claimed.",
+  "source_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd"
+}
