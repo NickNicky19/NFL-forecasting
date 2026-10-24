@@ -179,3 +179,10 @@ combined-yard result, separate mean/median scores and partial participation
 coverage. The independent numerical review reused the same cached NFL rows;
 arithmetic agreement adds no new games. Player/team/opponent subgroup execution
 remains pending an efficiency prerequisite under its original finite budget.
+
+
+## Weekly adaptive release checkpoint (2026-10-24)
+
+[Completed all-category policy checkpoint](weekly-policy-checkpoint-v1/README.md) · [Exact aggregate losses and coverage](weekly-policy-checkpoint-v1/aggregate.json) · [Twelve-category scientific experiment matrix](weekly-policy-checkpoint-v1/scientific-matrix.json).
+
+P0–P4 replay completed for eleven targets over 2022–2024 REG, 54 weeks and 815 games; exact PPR remains blocked. LAB_CDF is the historical reference, not contemporaneous SITE/R0/raw. Results are exposed development; new provisional release and original scientific qualification remain separate. The fixed model can remain strongest; no deployment or prospective gain is claimed by this reporting checkpoint.

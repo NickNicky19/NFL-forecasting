@@ -1,0 +1,3273 @@
+{
+  "as_of": "2026-10-24",
+  "categories": [
+    {
+      "P4_product": "point_blend: arithmetic average of median points; not an intended median or CDF mixture median",
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 174.0,
+        "lowest_policy": 169.05453978712802
+      },
+      "bias_prediction_minus_actual": {
+        "P0": -0.2841836734693878,
+        "lowest_policy": -0.2910038548485528
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P1": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P2": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P3": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P4": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 64,
+          "P1": 64,
+          "P2": 64,
+          "P3": 64,
+          "P4": 64
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 0,
+        "played_zero_counts": {
+          "P0": 110,
+          "P1": 110,
+          "P2": 110,
+          "P3": 110,
+          "P4": 110
+        },
+        "unknown_participation": 2131,
+        "unpaired": 2131
+      },
+      "fixed_catalog_losses": {
+        "CDF": 66.16173469387755,
+        "CatMedium": 66.62424218641726
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 0.062401886744334695,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.062401886744334695,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.062401886744334695,
+      "lowest_policy_loss": 66.12044852312579,
+      "metric": "point_mae",
+      "offered": 4091,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.01147864137833722,
+                1.0133524773377387
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                0.02502979135758482,
+                0.9224076771409615
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.5076776707386091
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                0.0,
+                0.1655217186891079
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -5.662646590709708e-05,
+                0.13007468454323845
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.054424322992692425
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.22255170372184105,
+                0.4749528711824529
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.24234559359222482,
+                0.48515808995372695
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.12325140030419783
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.4773573827592775,
+                0.3601178681526444
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.39924163520336237,
+                0.3156984626032981
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.04128617075176665
+        }
+      },
+      "primary_losses": {
+        "P0": 66.16173469387755,
+        "P1": 66.66941236461616,
+        "P2": 66.21615901687025,
+        "P3": 66.28498609418175,
+        "P4": 66.12044852312579
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 66.16173469387755,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 66.16173469387755,
+        "method": "CDF",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "pass_yd"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 1.9475123964507102,
+        "lowest_policy": 1.9475123964507102
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.06399342398722979,
+        "lowest_policy": 0.06399342398722979
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 668,
+            "scored": 1960,
+            "scored_played_zero": 668,
+            "unknown": 2131
+          },
+          "P1": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 668,
+            "scored": 1960,
+            "scored_played_zero": 668,
+            "unknown": 2131
+          },
+          "P2": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 668,
+            "scored": 1960,
+            "scored_played_zero": 668,
+            "unknown": 2131
+          },
+          "P3": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 668,
+            "scored": 1960,
+            "scored_played_zero": 668,
+            "unknown": 2131
+          },
+          "P4": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 668,
+            "scored": 1960,
+            "scored_played_zero": 668,
+            "unknown": 2131
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 64,
+          "P1": 64,
+          "P2": 64,
+          "P3": 64,
+          "P4": 64
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 0,
+        "played_zero_counts": {
+          "P0": 668,
+          "P1": 668,
+          "P2": 668,
+          "P3": 668,
+          "P4": 668
+        },
+        "unknown_participation": 2131,
+        "unpaired": 2131
+      },
+      "display_RMSE": {
+        "P0": 1.03355776964271,
+        "P1": 1.036737524144,
+        "P2": 1.0354725060104328,
+        "P3": 1.0344953058010933,
+        "P4": 1.0351656189627938
+      },
+      "fixed_catalog_losses": {
+        "CDF": 1.0682416631888132,
+        "CatMedium": 1.0978675843278256,
+        "Count_A": 1.075867896503746
+      },
+      "games": 815,
+      "lowest_observed_policy": "P0",
+      "lowest_policy_improvement_pct_vs_P0": 0.0,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": -0.554550318141463,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.0,
+      "lowest_policy_loss": 1.0682416631888132,
+      "metric": "point_mse",
+      "offered": 4091,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0017538680606090761,
+                0.015220807838905979
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.005454291426719985,
+                0.019959001298096374
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.006583030779417903
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0049930531318130794,
+                0.012292552142499557
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.004970596183104352,
+                0.013140475301669523
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.0039616475147129255
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.007029484291955762,
+                0.010421173066791063
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.0075805170572439,
+                0.01304447552637048
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.0019388745356844661
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.004729100375746106,
+                0.01182132000993822
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.005540412753504987,
+                0.01166053366661335
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.0033261954938107957
+        }
+      },
+      "primary_losses": {
+        "P0": 1.0682416631888132,
+        "P1": 1.074824693968231,
+        "P2": 1.072203310703526,
+        "P3": 1.0701805377244977,
+        "P4": 1.0715678586826238
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 1.0682416631888132,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 1.0623503956897387,
+        "method": "cdf_offset_context_v1",
+        "scope": "same-source primary-role REG2022\u201324 fixed frontier from prior public reports; correction not eligible in this replay catalog"
+      },
+      "target": "pass_td"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 14.132859309515261,
+        "lowest_policy": 14.132859309515261
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.17454015992463612,
+        "lowest_policy": 0.17454015992463612
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P1": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P2": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P3": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          },
+          "P4": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 110,
+            "scored": 1960,
+            "scored_played_zero": 110,
+            "unknown": 2131
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 64,
+          "P1": 64,
+          "P2": 64,
+          "P3": 64,
+          "P4": 64
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 0,
+        "played_zero_counts": {
+          "P0": 110,
+          "P1": 110,
+          "P2": 110,
+          "P3": 110,
+          "P4": 110
+        },
+        "unknown_participation": 2131,
+        "unpaired": 2131
+      },
+      "display_RMSE": {
+        "P0": 7.167660480012862,
+        "P1": 7.193306847212875,
+        "P2": 7.186430576725162,
+        "P3": 7.201874339130485,
+        "P4": 7.176164506806532
+      },
+      "fixed_catalog_losses": {
+        "CDF": 51.375356756738206,
+        "CatMedium": 52.71348328922937,
+        "Count_A": 52.341813923714774
+      },
+      "games": 815,
+      "lowest_observed_policy": "P0",
+      "lowest_policy_improvement_pct_vs_P0": 0.0,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.0,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.0,
+      "lowest_policy_loss": 51.375356756738206,
+      "metric": "point_mse",
+      "offered": 4091,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.24235835941119938,
+                1.0405112375634848
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.30487098192173484,
+                1.0409513473050633
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.36830664142142056
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.09665938318320419,
+                0.6561736546302152
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.19411118098035102,
+                0.7400868439932379
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.2694276773521543
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                0.003555400095792048,
+                0.9672013555595974
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.15831300802325016,
+                1.1282639215528754
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.49163723988794866
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.5060050864251161,
+                0.7053730370999232
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.44893569788008225,
+                0.7204209440144712
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.12198027201163174
+        }
+      },
+      "primary_losses": {
+        "P0": 51.375356756738206,
+        "P1": 51.743663398159626,
+        "P2": 51.644784434090354,
+        "P3": 51.86699399662615,
+        "P4": 51.49733702874983
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 51.375356756738206,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 51.375356756738206,
+        "method": "CDF",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "pass_cmp"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 21.68900286795597,
+        "lowest_policy": 21.184289533996132
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.4749922323989982,
+        "lowest_policy": -0.01742839054172721
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 79,
+            "scored": 1960,
+            "scored_played_zero": 79,
+            "unknown": 2131
+          },
+          "P1": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 79,
+            "scored": 1960,
+            "scored_played_zero": 79,
+            "unknown": 2131
+          },
+          "P2": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 79,
+            "scored": 1960,
+            "scored_played_zero": 79,
+            "unknown": 2131
+          },
+          "P3": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 79,
+            "scored": 1960,
+            "scored_played_zero": 79,
+            "unknown": 2131
+          },
+          "P4": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 79,
+            "scored": 1960,
+            "scored_played_zero": 79,
+            "unknown": 2131
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 64,
+          "P1": 64,
+          "P2": 64,
+          "P3": 64,
+          "P4": 64
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 0,
+        "played_zero_counts": {
+          "P0": 79,
+          "P1": 79,
+          "P2": 79,
+          "P3": 79,
+          "P4": 79
+        },
+        "unknown_participation": 2131,
+        "unpaired": 2131
+      },
+      "display_RMSE": {
+        "P0": 10.686764600414154,
+        "P1": 10.675367329001318,
+        "P2": 10.679426464575295,
+        "P3": 10.690622323547288,
+        "P4": 10.671259098516703
+      },
+      "fixed_catalog_losses": {
+        "CDF": 114.20693762466509,
+        "CatMedium": 115.62508141480838,
+        "Count_A": 116.61481832398924
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 0.28997089307999674,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.2624739613028061,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.28997089307999674,
+      "lowest_policy_loss": 113.87577074767553,
+      "metric": "point_mse",
+      "offered": 4091,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -2.535587463067604,
+                1.6875843306777483
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -2.158748420007594,
+                1.4199573579402973
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.24347001555635323
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -2.3132662312883348,
+                1.787522989513001
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -2.12414719106754,
+                1.5745601577467632
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.15678801239388512
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -1.9521740221000585,
+                1.9178793295301875
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -1.6283762562007642,
+                1.610430575652371
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.08246804006250551
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -1.8189998759459571,
+                1.1248162467230551
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -1.8422972698689835,
+                1.07106964756353
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.33116687698954783
+        }
+      },
+      "primary_losses": {
+        "P0": 114.20693762466509,
+        "P1": 113.96346760910873,
+        "P2": 114.0501496122712,
+        "P3": 114.2894056647276,
+        "P4": 113.87577074767553
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 114.20693762466509,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 114.17545157826838,
+        "method": "cdf_offset_intercept_v1",
+        "scope": "same-source primary-role REG2022\u201324 fixed frontier from prior public reports; correction not eligible in this replay catalog"
+      },
+      "target": "pass_att"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 1.462396146243062,
+        "lowest_policy": 1.462396146243062
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.012314889718827531,
+        "lowest_policy": 0.012314889718827531
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 1096,
+            "scored": 1960,
+            "scored_played_zero": 1096,
+            "unknown": 2131
+          },
+          "P1": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 1096,
+            "scored": 1960,
+            "scored_played_zero": 1096,
+            "unknown": 2131
+          },
+          "P2": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 1096,
+            "scored": 1960,
+            "scored_played_zero": 1096,
+            "unknown": 2131
+          },
+          "P3": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 1096,
+            "scored": 1960,
+            "scored_played_zero": 1096,
+            "unknown": 2131
+          },
+          "P4": {
+            "fallback": 64,
+            "forecast": 4091,
+            "offered": 4091,
+            "played_zero": 1096,
+            "scored": 1960,
+            "scored_played_zero": 1096,
+            "unknown": 2131
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 64,
+          "P1": 64,
+          "P2": 64,
+          "P3": 64,
+          "P4": 64
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 0,
+        "played_zero_counts": {
+          "P0": 1096,
+          "P1": 1096,
+          "P2": 1096,
+          "P3": 1096,
+          "P4": 1096
+        },
+        "unknown_participation": 2131,
+        "unpaired": 2131
+      },
+      "display_RMSE": {
+        "P0": 0.8240548119008836,
+        "P1": 0.8336939326433136,
+        "P2": 0.8250777235085838,
+        "P3": 0.8247011443006623,
+        "P4": 0.8267154868211716
+      },
+      "fixed_catalog_losses": {
+        "CDF": 0.6790663330170006,
+        "CatMedium": 0.7013015788602719,
+        "Count_A": 0.691930331746377
+      },
+      "games": 815,
+      "lowest_observed_policy": "P0",
+      "lowest_policy_improvement_pct_vs_P0": 0.0,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.0,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.0,
+      "lowest_policy_loss": 0.6790663330170006,
+      "metric": "point_mse",
+      "offered": 4091,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                0.007860128756911083,
+                0.025262277093382676
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                0.008308588543094367,
+                0.02331091287803682
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.015979240309273265
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0011749930550169893,
+                0.004680148895215782
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.0018295168433412673,
+                0.005280133272514503
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.001686916813106362
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.001986563767130523,
+                0.004451881496284402
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.003536262517761468,
+                0.0052209058346355
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.0010656443938212123
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0011717677448190597,
+                0.009991886140867058
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.0012200467301961007,
+                0.009998193093271419
+              ],
+              "level": 0.95,
+              "paired_rows": 1960,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.004392163132965942
+        }
+      },
+      "primary_losses": {
+        "P0": 0.6790663330170006,
+        "P1": 0.6950455733262739,
+        "P2": 0.680753249830107,
+        "P3": 0.6801319774108219,
+        "P4": 0.6834584961499667
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 0.6790663330170006,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 0.6790663330170006,
+        "method": "CDF",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "pass_int"
+    },
+    {
+      "P4_product": "point_blend: arithmetic average of median points; not an intended median or CDF mixture median",
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 62.0,
+        "lowest_policy": 62.0
+      },
+      "bias_prediction_minus_actual": {
+        "P0": -6.760640631856077,
+        "lowest_policy": -6.760640631856077
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 739,
+            "scored": 4558,
+            "scored_played_zero": 739,
+            "unknown": 1665
+          },
+          "P1": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 739,
+            "scored": 4558,
+            "scored_played_zero": 739,
+            "unknown": 1665
+          },
+          "P2": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 739,
+            "scored": 4558,
+            "scored_played_zero": 739,
+            "unknown": 1665
+          },
+          "P3": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 739,
+            "scored": 4558,
+            "scored_played_zero": 739,
+            "unknown": 1665
+          },
+          "P4": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 739,
+            "scored": 4558,
+            "scored_played_zero": 739,
+            "unknown": 1665
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 157,
+          "P1": 157,
+          "P2": 157,
+          "P3": 157,
+          "P4": 157
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 12,
+        "played_zero_counts": {
+          "P0": 739,
+          "P1": 739,
+          "P2": 739,
+          "P3": 739,
+          "P4": 739
+        },
+        "unknown_participation": 1665,
+        "unpaired": 1677
+      },
+      "fixed_catalog_losses": {
+        "CDF": 19.718955682316807,
+        "CatMedium": 19.826424396922995
+      },
+      "games": 815,
+      "lowest_observed_policy": "P0",
+      "lowest_policy_improvement_pct_vs_P0": 0.0,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.0,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.0,
+      "lowest_policy_loss": 19.718955682316807,
+      "metric": "point_mae",
+      "offered": 6235,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.01988954562019842,
+                0.05784970704926389
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.027326471529736985,
+                0.07205016447279426
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.020373250548594124
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.047044534187259714,
+                0.05629000181367468
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.04553348417489605,
+                0.04958978184677239
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.0019340105047071857
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.027027510171626877,
+                0.051945768015773795
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.033714830363481524,
+                0.05799158013618206
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.012096529832689733
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.020310172708255598,
+                0.07611915736364441
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.020928613458663203,
+                0.07328785331352594
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": 0.025122263428716533
+        }
+      },
+      "primary_losses": {
+        "P0": 19.718955682316807,
+        "P1": 19.739328932865398,
+        "P2": 19.720889692821515,
+        "P3": 19.731052212149496,
+        "P4": 19.74407794574552
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 4558,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 19.718955682316807,
+      "strongest_fixed_catalog_member": "CDF",
+      "strongest_fixed_previously_reported": {
+        "loss": 19.718955682316807,
+        "method": "CDF",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "rush_yd"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 9.99589289052102,
+        "lowest_policy": 10.086334702002153
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.1096327359609054,
+        "lowest_policy": 0.0995978661728613
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 682,
+            "scored": 4558,
+            "scored_played_zero": 682,
+            "unknown": 1665
+          },
+          "P1": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 682,
+            "scored": 4558,
+            "scored_played_zero": 682,
+            "unknown": 1665
+          },
+          "P2": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 682,
+            "scored": 4558,
+            "scored_played_zero": 682,
+            "unknown": 1665
+          },
+          "P3": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 682,
+            "scored": 4558,
+            "scored_played_zero": 682,
+            "unknown": 1665
+          },
+          "P4": {
+            "fallback": 157,
+            "forecast": 6235,
+            "offered": 6235,
+            "played_missing_or_unsupported": 12,
+            "played_zero": 682,
+            "scored": 4558,
+            "scored_played_zero": 682,
+            "unknown": 1665
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 157,
+          "P1": 157,
+          "P2": 157,
+          "P3": 157,
+          "P4": 157
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 12,
+        "played_zero_counts": {
+          "P0": 682,
+          "P1": 682,
+          "P2": 682,
+          "P3": 682,
+          "P4": 682
+        },
+        "unknown_participation": 1665,
+        "unpaired": 1677
+      },
+      "display_RMSE": {
+        "P0": 4.92876729114642,
+        "P1": 4.911590644338783,
+        "P2": 4.902572672433982,
+        "P3": 4.90598232559106,
+        "P4": 4.893726981749039
+      },
+      "fixed_catalog_losses": {
+        "CDF": 24.292747010274827,
+        "CatMedium": 24.046409592787207,
+        "Count_A": 24.024641840981808
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 1.4168148140294095,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.3166668189553004,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.3166668189553004,
+      "lowest_policy_loss": 23.948563771898566,
+      "metric": "point_mse",
+      "offered": 6235,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.3300652882398458,
+                0.008333674121994998
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.374816970840756,
+                0.03220709964547876
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.16902435271856375
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.46329470656038857,
+                -0.028161453956961548
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.4886952258100512,
+                -0.0271732832095607
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.2575282017783489
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.41041568140364665,
+                -0.04968420693600037
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.4238262100138024,
+                -0.01404001088421491
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.22408443126296418
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.4671763440361746,
+                -0.2081620973324592
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.48148395930467724,
+                -0.21155801391637588
+              ],
+              "level": 0.95,
+              "paired_rows": 4558,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.3441832383762593
+        }
+      },
+      "primary_losses": {
+        "P0": 24.292747010274827,
+        "P1": 24.12372265755626,
+        "P2": 24.035218808496477,
+        "P3": 24.06866257901186,
+        "P4": 23.948563771898566
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 4558,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 24.024641840981808,
+      "strongest_fixed_catalog_member": "Count_A",
+      "strongest_fixed_previously_reported": {
+        "loss": 24.024641840981808,
+        "method": "Count_A",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "rush_att"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 3.672778532962144,
+        "lowest_policy": 3.691717936237517
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.05326991814946986,
+        "lowest_policy": 0.032303097633354726
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3786,
+            "scored": 15251,
+            "scored_played_zero": 3786,
+            "unknown": 6229
+          },
+          "P1": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3786,
+            "scored": 15251,
+            "scored_played_zero": 3786,
+            "unknown": 6229
+          },
+          "P2": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3786,
+            "scored": 15251,
+            "scored_played_zero": 3786,
+            "unknown": 6229
+          },
+          "P3": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3786,
+            "scored": 15251,
+            "scored_played_zero": 3786,
+            "unknown": 6229
+          },
+          "P4": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3786,
+            "scored": 15251,
+            "scored_played_zero": 3786,
+            "unknown": 6229
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 545,
+          "P1": 545,
+          "P2": 545,
+          "P3": 545,
+          "P4": 545
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 24,
+        "played_zero_counts": {
+          "P0": 3786,
+          "P1": 3786,
+          "P2": 3786,
+          "P3": 3786,
+          "P4": 3786
+        },
+        "unknown_participation": 6229,
+        "unpaired": 6253
+      },
+      "display_RMSE": {
+        "P0": 1.8078167765550337,
+        "P1": 1.8020984280885983,
+        "P2": 1.8015706552706676,
+        "P3": 1.8023731228596294,
+        "P4": 1.8020915410705687
+      },
+      "fixed_catalog_losses": {
+        "CDF": 3.2682014975938323,
+        "CatMedium": 3.2672804867594083,
+        "Count_A": 3.2439191700973486
+      },
+      "games": 815,
+      "lowest_observed_policy": "P2",
+      "lowest_policy_improvement_pct_vs_P0": 0.6898189012534162,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": -0.05356655773214014,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": -0.05356655773214014,
+      "lowest_policy_loss": 3.245656825932383,
+      "metric": "point_mse",
+      "offered": 21504,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.03325982459585821,
+                -0.008775865591679397
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.032285566897293845,
+                -0.010025803771421284
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.020642753074434837
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.034135917793433564,
+                -0.012503261568682254
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.032338961012587694,
+                -0.012802501467192659
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.02254467166144925
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.03085311720712668,
+                -0.009494484501897082
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.030516286619836627,
+                -0.007800105608740565
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.019652623587059333
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0288176693663413,
+                -0.01233057007452733
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.028956709120674898,
+                -0.012460009741747448
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.020667575195735532
+        }
+      },
+      "primary_losses": {
+        "P0": 3.2682014975938323,
+        "P1": 3.247558744519397,
+        "P2": 3.245656825932383,
+        "P3": 3.2485488740067727,
+        "P4": 3.247533922398097
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 3.2439191700973486,
+      "strongest_fixed_catalog_member": "Count_A",
+      "strongest_fixed_previously_reported": {
+        "loss": 3.2439191700973486,
+        "method": "Count_A",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "rec"
+    },
+    {
+      "P4_product": "point_blend: arithmetic average of median points; not an intended median or CDF mixture median",
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 54.0,
+        "lowest_policy": 54.13794048354103
+      },
+      "bias_prediction_minus_actual": {
+        "P0": -5.756212707363452,
+        "lowest_policy": -5.600048822135725
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3884,
+            "scored": 15251,
+            "scored_played_zero": 3884,
+            "unknown": 6229
+          },
+          "P1": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3884,
+            "scored": 15251,
+            "scored_played_zero": 3884,
+            "unknown": 6229
+          },
+          "P2": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3884,
+            "scored": 15251,
+            "scored_played_zero": 3884,
+            "unknown": 6229
+          },
+          "P3": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3884,
+            "scored": 15251,
+            "scored_played_zero": 3884,
+            "unknown": 6229
+          },
+          "P4": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 3884,
+            "scored": 15251,
+            "scored_played_zero": 3884,
+            "unknown": 6229
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 545,
+          "P1": 545,
+          "P2": 545,
+          "P3": 545,
+          "P4": 545
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 24,
+        "played_zero_counts": {
+          "P0": 3884,
+          "P1": 3884,
+          "P2": 3884,
+          "P3": 3884,
+          "P4": 3884
+        },
+        "unknown_participation": 6229,
+        "unpaired": 6253
+      },
+      "fixed_catalog_losses": {
+        "CDF": 16.372434594452823,
+        "CatMedium": 16.343397995395673
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 0.18010533197413764,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.0027596991859630974,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.0027596991859630974,
+      "lowest_policy_loss": 16.342946966774235,
+      "metric": "point_mae",
+      "offered": 21504,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.04191342052190449,
+                0.005295878192464801
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.040543001857999424,
+                0.008183986111175523
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.01655318478775114
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.037723582262932355,
+                0.007425083294444056
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.04183273650747585,
+                0.012683451066185472
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.014691988313408386
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.044257008557920266,
+                0.0076029757050798145
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.048278046741367285,
+                0.01320268349861145
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.016805049975180335
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.04489925757566729,
+                -0.015056932254569597
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.04838396889424861,
+                -0.012705930227735964
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.029487627678587657
+        }
+      },
+      "primary_losses": {
+        "P0": 16.372434594452823,
+        "P1": 16.35588140966507,
+        "P2": 16.357742606139414,
+        "P3": 16.355629544477644,
+        "P4": 16.342946966774235
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 16.343397995395673,
+      "strongest_fixed_catalog_member": "CatMedium",
+      "strongest_fixed_previously_reported": {
+        "loss": 16.343397995395673,
+        "method": "CatMedium",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "rec_yd"
+    },
+    {
+      "P4_product": "point_blend: arithmetic average of median points; not an intended median or CDF mixture median",
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 64.0,
+        "lowest_policy": 64.04043304988016
+      },
+      "bias_prediction_minus_actual": {
+        "P0": -6.415382597862435,
+        "lowest_policy": -6.214534419780545
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 2519,
+            "scored": 15251,
+            "scored_played_zero": 2519,
+            "unknown": 6229
+          },
+          "P1": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 2519,
+            "scored": 15251,
+            "scored_played_zero": 2519,
+            "unknown": 6229
+          },
+          "P2": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 2519,
+            "scored": 15251,
+            "scored_played_zero": 2519,
+            "unknown": 6229
+          },
+          "P3": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 2519,
+            "scored": 15251,
+            "scored_played_zero": 2519,
+            "unknown": 6229
+          },
+          "P4": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 2519,
+            "scored": 15251,
+            "scored_played_zero": 2519,
+            "unknown": 6229
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 545,
+          "P1": 545,
+          "P2": 545,
+          "P3": 545,
+          "P4": 545
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 24,
+        "played_zero_counts": {
+          "P0": 2519,
+          "P1": 2519,
+          "P2": 2519,
+          "P3": 2519,
+          "P4": 2519
+        },
+        "unknown_participation": 6229,
+        "unpaired": 6253
+      },
+      "fixed_catalog_losses": {
+        "CDF": 21.025703232574912,
+        "CatMedium": 20.98392513503166
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 0.28341698159286605,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.08488552929237239,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.08488552929237239,
+      "lowest_policy_loss": 20.966112819114475,
+      "metric": "point_mae",
+      "offered": 21504,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.043099728061245644,
+                0.029120604295890206
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.041023021368533315,
+                0.033076851855730206
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.0037039737444009963
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.07173457407576726,
+                0.024200999603326417
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.06429186352754131,
+                0.022498967829401206
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.02222406133383131
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.08184176267795144,
+                0.024838893857768787
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.07493576490456319,
+                0.02172231132867789
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.029337926343091257
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.08803778253223091,
+                -0.03022330738946111
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.08682248541519699,
+                -0.031398310331745255
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.05959041346043987
+        }
+      },
+      "primary_losses": {
+        "P0": 21.025703232574912,
+        "P1": 21.021999258830512,
+        "P2": 21.003479171241082,
+        "P3": 20.99636530623182,
+        "P4": 20.966112819114475
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 20.98392513503166,
+      "strongest_fixed_catalog_member": "CatMedium",
+      "strongest_fixed_previously_reported": {
+        "loss": 20.98392513503166,
+        "method": "CatMedium",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "rush_rec_yd"
+    },
+    {
+      "REG_week_blocks": 54,
+      "absolute_error_p95": {
+        "P0": 0.8174045774866328,
+        "lowest_policy": 0.8204386944084447
+      },
+      "bias_prediction_minus_actual": {
+        "P0": 0.012781094948786804,
+        "lowest_policy": 0.01070594035051652
+      },
+      "coverage": {
+        "DNP": 0,
+        "P0_missing_point_rows": 0,
+        "abstention_counts": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "by_policy": {
+          "P0": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 12339,
+            "scored": 15251,
+            "scored_played_zero": 12339,
+            "unknown": 6229
+          },
+          "P1": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 12339,
+            "scored": 15251,
+            "scored_played_zero": 12339,
+            "unknown": 6229
+          },
+          "P2": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 12339,
+            "scored": 15251,
+            "scored_played_zero": 12339,
+            "unknown": 6229
+          },
+          "P3": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 12339,
+            "scored": 15251,
+            "scored_played_zero": 12339,
+            "unknown": 6229
+          },
+          "P4": {
+            "fallback": 545,
+            "forecast": 21504,
+            "offered": 21504,
+            "played_missing_or_unsupported": 24,
+            "played_zero": 12339,
+            "scored": 15251,
+            "scored_played_zero": 12339,
+            "unknown": 6229
+          }
+        },
+        "candidate_missing_point_rows": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "fallback_count_state": "RECOVERED_AUTHENTICATED_EXISTING_GRADE_COVERAGE",
+        "fallback_counts": {
+          "P0": 545,
+          "P1": 545,
+          "P2": 545,
+          "P3": 545,
+          "P4": 545
+        },
+        "missing_grade": 0,
+        "played_missing_or_unsupported": 24,
+        "played_zero_counts": {
+          "P0": 12339,
+          "P1": 12339,
+          "P2": 12339,
+          "P3": 12339,
+          "P4": 12339
+        },
+        "unknown_participation": 6229,
+        "unpaired": 6253
+      },
+      "fixed_catalog_losses": {
+        "CDF": 0.14096923634165753,
+        "CatMedium": 0.14076308980223012
+      },
+      "games": 815,
+      "lowest_observed_policy": "P4",
+      "lowest_policy_improvement_pct_vs_P0": 0.22857664720288817,
+      "lowest_policy_improvement_pct_vs_previously_reported_fixed": 0.08246211045306806,
+      "lowest_policy_improvement_pct_vs_strongest_fixed": 0.08246211045306806,
+      "lowest_policy_loss": 0.14064701358764026,
+      "metric": "brier",
+      "offered": 21504,
+      "paired_primary_comparisons": {
+        "P1": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.00036081646698809275,
+                0.0002014453685935301
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.00038151829406372244,
+                0.00027055050082943255
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -6.791846773181228e-05
+        },
+        "P2": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.00041547417938225117,
+                0.00016735925597357782
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.00040980542964263187,
+                0.00020499606190714934
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.00011099418702172665
+        },
+        "P3": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0005576587435151213,
+                8.769497222934861e-05
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.0005716009959256803,
+                0.00011388177008597405
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.00022606096844226251
+        },
+        "P4": {
+          "intervals": [
+            {
+              "cluster": "week",
+              "clusters": 54,
+              "generator": "PCG64",
+              "interval": [
+                -0.0005292620241852901,
+                -0.00013167085915263677
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            },
+            {
+              "cluster": "game",
+              "clusters": 815,
+              "generator": "PCG64",
+              "interval": [
+                -0.0005331968220503942,
+                -0.00010230973433062177
+              ],
+              "level": 0.95,
+              "paired_rows": 15251,
+              "percentile_method": "linear",
+              "replicates": 500,
+              "seed": 1703,
+              "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+              "state": "DESCRIPTIVE"
+            }
+          ],
+          "mean_delta_candidate_minus_P0": -0.00032222275401726214
+        }
+      },
+      "primary_losses": {
+        "P0": 0.14096923634165753,
+        "P1": 0.14090131787392574,
+        "P2": 0.1408582421546358,
+        "P3": 0.14074317537321526,
+        "P4": 0.14064701358764026
+      },
+      "prospective_games": 0,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "state": "COMPLETE_EXPOSED_HISTORICAL_RECONSTRUCTION",
+      "strongest_fixed_catalog_loss": 0.14076308980223012,
+      "strongest_fixed_catalog_member": "CatMedium",
+      "strongest_fixed_previously_reported": {
+        "loss": 0.14076308980223012,
+        "method": "CatMedium",
+        "scope": "strongest fixed replay-catalog member"
+      },
+      "target": "anytime_td"
+    },
+    {
+      "policies_scored": [],
+      "qualified_labels": 0,
+      "scientifically_qualified": false,
+      "state": "BLOCKED_EXACT_PPR_LABEL_CONTRACT",
+      "target": "fantasy_ppr"
+    }
+  ],
+  "completion": {
+    "continuation_CPU_seconds": 161.396173822,
+    "inner_wall_seconds": 161.1577359160001,
+    "lineage_CPU_allocation_ceiling": 780,
+    "lineage_wall_charge_ceiling": 525,
+    "manifest_and_completion": "Exact root-authenticated private metadata checked; private references/hashes withheld from public package",
+    "new_compact_categories": 4,
+    "old_categories_reused_without_recomputation": 7,
+    "old_failed_CPU_charge": 600,
+    "old_failed_wall_charge": 285,
+    "old_failure": "8MiB retention ceiling; prior seven category checkpoints retained unchanged",
+    "peak_RSS_bytes": 596279296,
+    "refunds_or_old_recomputation": false,
+    "retained_lineage_bytes": 7143668,
+    "state": "COMPLETE_DEVELOPMENT_REPLAY",
+    "supervisor_wall_seconds": 163.803648272
+  },
+  "evidence_lane": "current_vintage_availability_uncertain",
+  "future_fits_separate": {
+    "family_counts": {
+      "catboost_medium": 5,
+      "count_A": 2,
+      "leaf_cdf_base": 11
+    },
+    "historical_policy_replay_fits": 0,
+    "new_estimator_fits": 18,
+    "source": "Integrator authenticated successful V3/V4 FINISHED.slots, excluding failed-before-fit CatTD slot",
+    "state": "training and artifact restoration evidence only; no future accuracy outcomes or scientific qualification"
+  },
+  "historical_reference": "LAB_CDF; historical SITE/live_R0/raw unavailable",
+  "lifetime_estimator_attempts": {
+    "derivation": "previous authenticated1178 +18 newly reported future estimator fits; replay/bootstrap/priors/software tests add no estimator attempts",
+    "exact_total_known": false,
+    "lower_bound": 1196
+  },
+  "limitations": [
+    "Exposed reconstruction; original cached cutoffs equal kickoff only under reconstructed-kickoff horizon, not live original pregame",
+    "Weekly choice min schedule kickoff minus6h; replay label availability kickoff+48h, week completion last kickoff+48h, finality last kickoff+12h are explicit assumptions, not upstream publication/finality clocks",
+    "Current historical catalog frozen in2026; no prospective evidence",
+    "No contemporaneous historical SITE/live_R0/raw comparator; no full2026season website ranking",
+    "Corrections excluded from replay catalog because six jobs lack authentic generation/model witness; prior correction results remain separate",
+    "No numeric point is converted into a probability or distribution law; P4 yard average is not a median",
+    "No default, live selection, deployment or original scientific registration changed by report author"
+  ],
+  "policies": {
+    "P0": "fixed LAB_CDF reference",
+    "P1": "latest completed eligible graded week; current/reference/stable tie rule",
+    "P2": "season-cumulative comparable prior evidence; retain negative weeks",
+    "P3": "earlier-only nested choice of half-life1/4 weeks and margin0/.005; startup4/0",
+    "P4": "fixed equal weights over registered catalog; reference fallback for missing members; point blend or genuine Bernoulli probability mean"
+  },
+  "safe_aggregate_inputs": [
+    {
+      "bytes": 88600,
+      "label": "all11 policy aggregate",
+      "sha256": "22d6691dff2eb5bd36aef8fd1583f8954aa678af62aa0325bc33203af5269d11"
+    },
+    {
+      "bytes": 2362,
+      "label": "recovered fixed-control aggregate",
+      "sha256": "55370e1d802742edaeed140abe0762b63551c4a5a7107567d70fba518d038e2c"
+    },
+    {
+      "bytes": 13731,
+      "label": "authenticated existing grade-coverage aggregate",
+      "sha256": "4e55794921c002556bfe25e96e91bf48b62c7cbf92c26a9d6e7838ba18ee2c9d"
+    }
+  ],
+  "schema_version": "weekly-policy-public-aggregate-checkpoint-v1",
+  "scope": {
+    "HTTP": 0,
+    "all_categories": 12,
+    "fresh_confirmation_games": 0,
+    "games": 815,
+    "new_fits_in_replay": 0,
+    "season_type": "REG",
+    "seasons": [
+      2022,
+      2023,
+      2024
+    ],
+    "supported_categories": 11,
+    "week_blocks": 54,
+    "weekly_policy_results": 2970
+  },
+  "state": "COMPLETED_CHECKPOINT_NOT_PUBLICATION_OR_SELECTION",
+  "uncertainty": {
+    "comparisons": 44,
+    "conditioned_on": "frozen computed policy sequence; no refitting/reselection within bootstrap",
+    "interpretation": "nominal descriptive exposed-sample; neither familywise nor winner-selection adjusted",
+    "intervals": 88,
+    "level": 0.95,
+    "replicates": 500,
+    "seed": 1703,
+    "views_per_comparison": [
+      "week",
+      "game"
+    ]
+  }
+}
