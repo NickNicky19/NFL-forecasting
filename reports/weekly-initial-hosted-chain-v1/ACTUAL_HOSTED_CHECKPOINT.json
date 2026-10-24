@@ -1,0 +1,154 @@
+{
+  "actual_hosted": {
+    "at": "2026-10-24T14:49:15.832704+00:00",
+    "budget_charge": "Conservatively reserve full original600CPU/1200wall and18fit capacity; actual fits unknown, no completed artifacts attested",
+    "build_terminal_log_at": "2026-10-24T14:45:06.9731404Z",
+    "claim_asset_id": 672511497,
+    "claim_asset_name": "manifest-9fdae2c34732602c81155e7b6db0488043886ca45259f8c3560aa6787125ca72.json",
+    "claim_bytes": 995,
+    "claim_receipt_sha256": "123fe421ec291c344325860737cf0e4897ac16de27a860bacccf360782db228f",
+    "claimed_at": "2026-10-24T14:45:03.983264+00:00",
+    "event": "genuine_hosted_initial_claim_succeeded_build_failed_retained_v1",
+    "forecasts_issued": 0,
+    "job_id": 120901329041,
+    "next": "Add bounded safe failure telemetry; diagnose technical fault; a separately registered recovery/horizon is required before any new claim",
+    "private_model_forecast_checkpoint": "NOT_OBSERVED; downstream skipped",
+    "reason": "Outer exception emitted generic safe failure without phase/error code; exact fault and source/fit counters unavailable from actual retained logs",
+    "retry_same_registration": false,
+    "run_id": 40103844901,
+    "scientific_scores": 0,
+    "source_sha": "752a03b82be2ba73cf4798da2682c7c33568e0b8",
+    "state": "ONE_TIME_REGISTRATION_CONSUMED_BUILD_FAILED",
+    "website_deployed": false
+  },
+  "categories": {
+    "anytime_td": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "0.5 LAB_CDF + 0.5 CATBOOST_MEDIUM",
+      "product": "binary_probability",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "pass_att": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "pass_cmp": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "pass_int": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "pass_td": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "pass_yd": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_median",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "rec": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "COUNT_A",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "rec_yd": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "CATBOOST_MEDIUM",
+      "product": "point_median",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "rush_att": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "COUNT_A",
+      "product": "point_mean",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "rush_rec_yd": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "CATBOOST_MEDIUM",
+      "product": "point_median",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    },
+    "rush_yd": {
+      "actual_hosted_forecasts_supported": 0,
+      "historical_evidence": "EXPOSED_2022_2024_DEVELOPMENT_LAB_COMPARATOR_NOT_HISTORICAL_SITE",
+      "prepared_initial_model": "LAB_CDF",
+      "product": "point_median",
+      "release_status": "NOT_DEPLOYED",
+      "scientific_qualification": false
+    }
+  },
+  "completed_goal": false,
+  "exact_PPR": {
+    "does_not_block_other_categories": true,
+    "state": "LABEL_CONTRACT_BLOCKED_R0_RETAINED",
+    "target": "exact_website_offensive_PPR"
+  },
+  "frozen_scientific_registrations_changed": false,
+  "no_eight_week_prerequisite_added": true,
+  "observed_at": "2026-10-24T14:56:34.418618+00:00",
+  "remaining": [
+    "Diagnose actual runtime failure with safe stage and exception-code telemetry",
+    "A new explicit recovery registration and cutoff are required; old one-time claim remains consumed",
+    "Successful source/model/inference/private restore/export and actual public feed readback",
+    "Protected website integration, activation, deployed assets and visible forecast verification",
+    "Recurring weekly capture/grading/selection/publication handover and observed hosted executions"
+  ],
+  "schema_version": "weekly-initial-hosted-actual-checkpoint-v1",
+  "software": {
+    "V2_fictional_checks_passed": 30,
+    "counts_overlap_no_lifetime_sum": true,
+    "current_source_browser_checks_passed": 109,
+    "root_targeted_fictional_checks_passed": 132,
+    "software_is_not_predictive_or_hosted_success": true,
+    "software_report_sha256": "2a91fffc793091e1e3feca36cc6136f99f1d3d2bfb6499f0ed24c2cc8c3703f9",
+    "website_existing_python_passed": 76
+  },
+  "state": "HOSTED_INITIAL_BUILD_FAILED_NOT_DEPLOYED",
+  "website": {
+    "CI_conclusion": "success",
+    "CI_run": 40096456115,
+    "PR_status": "DRAFT_UNMERGED",
+    "prepared_V2_local_head": "e9c4527c29cb634a9c5053a11b6943a941992bef",
+    "prepared_V2_status": "REVIEWED_SOURCE_ONLY_NOT_PUSHED",
+    "provisional_forecast_deployment": false,
+    "published_consumer_head": "82b7bbd0362cc4125cdbae3a14c03ddd841f707f",
+    "pull_request": 3,
+    "reference_main_last_checked": "7156c6cf7f97eb25501a4f084e8060d6fe52e6bb",
+    "repository": "NickNicky19/nicks-expert-nfl-picks",
+    "selected_forecasts_visible": 0
+  }
+}
