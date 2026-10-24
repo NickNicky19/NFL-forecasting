@@ -1,0 +1,168 @@
+{
+  "activation": "NONE",
+  "actual_supervisor": {
+    "CPU_seconds": 16.086506,
+    "automatic_retries": 0,
+    "limit_reason": null,
+    "peak_combined_RSS_bytes": 222273536,
+    "returncode": 0,
+    "scope": "terms documentation only; zero game/PDF/player/model/score extraction",
+    "state": "COMPLETED",
+    "threads": 1,
+    "wall_scope": "supervisor-observed; external timeout60 enforces launcher-inclusive hard ceiling",
+    "wall_seconds": 14.947244933000547
+  },
+  "actual_terms_capture": {
+    "PDF": "NOT_REQUESTED",
+    "finished_utc": "2026-10-23T16:55:13.297130+00:00",
+    "game_page": "NOT_REQUESTED",
+    "receipt_hashes": {
+      "capture/PROBE_CONSUMED.json": "8aa31516c48aa7a927c9f02f58cfe378724a63ab76d930286318fcabdb10b736",
+      "capture/PROBE_FINISHED.json": "237f5f2b96a7fd19f66d9b0aeccd18a54e8a48d24d7ea9a826e4b214c89e733a",
+      "capture/result.json": "3223ea02ac786a874b86368b041a067040036744bdd234032437f3b537ebefbb",
+      "guard-v1a/SUPERVISOR_CONSUMED.json": "abd804b677d5f58a639f11350b309a0412e0185ff922cf2ec99aafd7eb4a43e3",
+      "guard-v1a/supervisor-completion.json": "58cce6ac8546b4ae2f0824192176101dd3ed1090a3d2ecc376ca50d0d3cc7095"
+    },
+    "rights": "UNKNOWN",
+    "schema_headings": "NOT_INSPECTED",
+    "state": "TERMINAL_RIGHTS_UNKNOWN",
+    "stop_reason": "TERMS_CAPTURED_RIGHTS_UNKNOWN",
+    "transactions": [
+      {
+        "body_complete": true,
+        "bytes": 0,
+        "capture_finished_utc": "2026-10-23T16:55:07.984091+00:00",
+        "capture_started_utc": "2026-10-23T16:55:07.304132+00:00",
+        "request_url": "https://www.nfl.com/legal/terms",
+        "retained_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status_code": 301,
+        "stop_reason": null,
+        "transaction": 1
+      },
+      {
+        "body_complete": true,
+        "bytes": 351280,
+        "capture_finished_utc": "2026-10-23T16:55:12.582884+00:00",
+        "capture_started_utc": "2026-10-23T16:55:09.776335+00:00",
+        "request_url": "https://www.nfl.com/legal/terms/",
+        "retained_bytes": 351280,
+        "sha256": "ae4f622e9524157641cef047a8b07b255564f85ee988f1dcefccdc038d57a559",
+        "status_code": 200,
+        "stop_reason": null,
+        "transaction": 2
+      }
+    ],
+    "usage": {
+      "CPU_seconds": 9.600406265,
+      "HTTP_transactions_attempted": 2,
+      "HTTP_transactions_consumed": 2,
+      "PDF_HTTP": 0,
+      "fits_predictions_player_stat_outcome_extractions_scores": 0,
+      "game_page_HTTP": 0,
+      "identity_encoded_and_decoded_body_bytes_received": 351280,
+      "peak_RSS_bytes": 117415936,
+      "wall_seconds": 10.313798684001085
+    }
+  },
+  "forecast_accuracy_evidence_added": 0,
+  "guardian_death_fictional": {
+    "PASS": true,
+    "actual_HTTP": 0,
+    "states": {
+      "timer": "Z",
+      "worker": "Z"
+    },
+    "test": "isolated_inner_timeout_survives_killed_guardian",
+    "wall_seconds": 0.5631846289998066
+  },
+  "manual_integrator_view_v3": {
+    "RSS_metric_scope": "Sum of supervisor maximum and largest reaped-child maximum, not a full process-tree peak bound: the intermediary timeout process can overlap. Raw tool label called it a conservative combined bound; corrected before publication. Combined live RSS monitor retained128MiB cap, no cap stop; actual sampled combined peak was not persisted.",
+    "assessment": {
+      "basis": "Retained terms Section1.3 restrict systematic retrieval/collection without express prior written consent. This lab has no such recorded consent. Public accessibility is insufficient.",
+      "decision": "NOT_CLEARED_FOR_NEW_COLLECTION",
+      "proposed_route": "Official NFL game-page/gamebook collection for participant ledger",
+      "scope": "Operational source decision for this proposed route only; no general conclusion about other permitted sources. No written-consent request or game/PDF acquisition initiated. Immutable capture rights remain UNKNOWN; no original source policy amended."
+    },
+    "combined_CPU_seconds": 0.12509499999999998,
+    "decoded_text_characters": 69055,
+    "executable_sha256": "941a1e9502b8df1f6f93931bdb6bf8cb068f843cd180b4439bf49099be54d78f",
+    "limits": {
+      "CPU_seconds": 10,
+      "HTTP": 0,
+      "combined_RSS_bytes": 134217728,
+      "private_excerpt_characters": 12000,
+      "threads": 1,
+      "wall_seconds": 10
+    },
+    "method": "Separately prerecord manual root stdlib-only cached legal text view; not an automatic retry of consumed wrappers. Exact original capture/result.json and body hashes required, no guessed sibling receipt.",
+    "new_football_rows_models_scores": 0,
+    "observed_wall_seconds": 0.06310539800142578,
+    "private_excerpts": "Viewed privately in tool output; not included in public reports. Original source body remains immutable/private.",
+    "public_raw_text": 0,
+    "state": "COMPLETED",
+    "sum_of_parent_max_and_reaped_child_max_RSS_bytes": 21958656
+  },
+  "offline_v1_failure": {
+    "CPU_seconds": null,
+    "HTTP": 0,
+    "RSS_bytes": null,
+    "assessment": "NOT_PERFORMED",
+    "observed_tool_execution_wall_seconds": 0.049483903,
+    "retained": "Root ledger preserves owner-reported failure; no output files created.",
+    "source_body_bytes_read": 0,
+    "state": "FAILED_IMPORT_RLIMIT_AS_NOT_RSS"
+  },
+  "offline_v2_failure": {
+    "HTTP": 0,
+    "assessment": "NOT_PERFORMED",
+    "authenticated_outer_receipt_pre_finalization_metrics": {
+      "combined_CPU_seconds": 7.307128502,
+      "observed_wall_seconds_before_receipt": 7.210764814999493,
+      "poll_seconds": 0.01,
+      "sampled_combined_RSS_bytes": 105336832,
+      "scope": "Direct values from immutable outer receipt66be2af... before its own persistence/finalization."
+    },
+    "child_max_RSS_bytes": 107401216,
+    "failure_sha256": "dab65938450c3e20c33d73dfd79e067cd593212b5d29fcc6ad7caa19acc7a4bd",
+    "outer_receipt_sha256": "66be2af1807b3bf2acb2c66e91a4299f17ec16c6dd4c6a7487e73f41dbf28f10",
+    "owner_reported_finalization_inclusive_tool_summary": {
+      "combined_CPU_seconds": 7.978796785,
+      "observed_wall_seconds": 7.884413605,
+      "sampled_combined_RSS_bytes": 105365504,
+      "scope": "Owner final tool summary including receipt/quota finalization; not a direct transfer of the earlier bound outer receipt."
+    },
+    "reason": "Unnecessary assumed sibling response receipt was compared with the capture/result.json hash; this is not evidence of a bad captured body.",
+    "source_body_bytes_read": 0,
+    "state": "FAILED_INCORRECT_EXTRA_RECEIPT_PATH_BINDING"
+  },
+  "publication_views_status": "PREPARED_OPT_IN_UNWIRED",
+  "remaining": "Full scope persistence/versioned consumer+horizon wiring/source-runtime+hosted acceptance; independent appearance+zero semantics; PPR exact labels",
+  "reviewer_postrun_managed_unique_bytes": 174518007,
+  "reviews": [
+    "PARTICIPATION_TERMS_PROBE_STATIC_PASS",
+    "PARTICIPATION_TERMS_V1A_PREEXEC_FREEZE_PASS",
+    "PARTICIPATION_TERMS_POSTRUN_INTEGRITY_PASS_RIGHTS_UNKNOWN",
+    "PUBLICATION_QUALIFICATION_VIEWS_STATIC_PASS"
+  ],
+  "root_probe_fictional": {
+    "CPU_seconds": 1.686742,
+    "actual_HTTP_NFL_data_models_scores": 0,
+    "output": "..................                                                       [100%]\n18 passed in 1.19s\n",
+    "peak_RSS_bytes": 116305920,
+    "returncode": 0,
+    "threads": 1,
+    "wall_seconds": 1.6912557449995802
+  },
+  "root_publication_fictional": {
+    "CPU_seconds": 5.1786460000000005,
+    "actual_HTTP_NFL_data_models_outcomes_scores": 0,
+    "output": "........................................................................ [ 88%]\n.........                                                                [100%]\n81 passed in 4.24s\n",
+    "peak_RSS_bytes": 181395456,
+    "returncode": 0,
+    "threads": 2,
+    "wall_seconds": 4.912862643999688
+  },
+  "schema": "audit-followup-software-source-receipt-v1",
+  "shared_limit_bytes": 536870912
+}

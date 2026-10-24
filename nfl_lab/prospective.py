@@ -6,7 +6,8 @@ from pathlib import Path
 import pandas as pd
 
 from .evaluation import summarize
-from .state import digest,records,resolved_outcomes,utc
+from .state import digest,records,resolved_outcomes,utc,validate_forecast
+from .recorded_research import FUNCTIONAL
 
 
 def score_saved(state:Path):
@@ -18,6 +19,8 @@ def score_saved(state:Path):
         key=digest(batch);persist=persistence.get(key);pub=publication.get(key)
         for r in batch["rows"]:
             if r.get("code_integrity")!="pre_post_source_digest_required":counts["unverified_code"]+=1;continue
+            validate_forecast(r)
+            point=r.get("prediction_functional")==FUNCTIONAL
             if not persist or not pub:counts["local_only"]+=1;continue
             kickoff=utc(r["kickoff_utc"])
             if utc(persist["completed_at"])>=kickoff or utc(pub["observed_remote_readback_at"])>=kickoff:
@@ -29,12 +32,14 @@ def score_saved(state:Path):
             participation="played" if outcome["state"] in ["played","played_corrected"] else "DNP" if outcome["state"]=="DNP" else "unknown"
             if participation=="unknown" and outcome["state"]!="pending":counts["unknown"]+=1
             rows.append({**r,"method":r["model_id"],"actual":outcome["actual"],"participation_state":participation,
-                         "cohort":"confirmation_window" if r["season"]>2026 or (r["season"]==2026 and r["week"]>=8) else "preconfirmation_shadow",
-                         "p10":None,"p50":None,"p90":None})
+                         "cohort":"unqualified_shadow_no_confirmation_registration" if point else "confirmation_window" if r["season"]>2026 or (r["season"]==2026 and r["week"]>=8) else "preconfirmation_shadow"})
     summaries=[]
     if rows:
         frame=pd.DataFrame(rows)
         for (model,target,cohort),g in frame.groupby(["model_id","target","cohort"]):
-            summaries.append({"model":model,"target":target,"cohort":cohort,"confirmation_state":"PENDING_REGISTERED_GATES",**summarize(g)})
+            point=cohort=="unqualified_shadow_no_confirmation_registration"
+            summaries.append({"model":model,"target":target,"cohort":cohort,
+                "confirmation_state":"UNREGISTERED_UNQUALIFIED_SHADOW" if point else "PENDING_REGISTERED_GATES",
+                **summarize(g,include_distribution=not point,value_column="point" if point else "mean")})
     return {"schema_version":"lab-prospective-scorecard-v1","timing_scope":"local write completion and remote commit readback both strictly before kickoff",
             "forecast_counts":counts,"categories":summaries,"promotion":[],"future_confirmation":"not qualified merely by software tests or initial outcomes"}

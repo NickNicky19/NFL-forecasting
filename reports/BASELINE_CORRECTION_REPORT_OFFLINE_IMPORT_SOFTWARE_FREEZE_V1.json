@@ -1,0 +1,54 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "30s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/tmp/check-baseline-correction-offline-import-v1.py"
+  ],
+  "config_sha256": "3a3e903a80f2086ced70ecd68f6b8ee9ab603cae0a33add378f9e45fa1abdc1f",
+  "files": {
+    "config/baseline-correction-report-offline-import-software-v1.json": {
+      "bytes": 2119,
+      "sha256": "3a3e903a80f2086ced70ecd68f6b8ee9ab603cae0a33add378f9e45fa1abdc1f"
+    },
+    "tests/test_offline_report_imports_v1.py": {
+      "bytes": 1745,
+      "sha256": "61e02c3c3f75eeb8b007463b084ac445317d4ec1a2d285739697b6a1db797ee3"
+    },
+    "tools/baseline_correction_report_run_v2.py": {
+      "bytes": 4778,
+      "sha256": "eaefc06c13d8511e60fac84e13e943309231e128ec16732f2449fa1eda712af6"
+    },
+    "tools/baseline_correction_report_supervisor_v2.py": {
+      "bytes": 5713,
+      "sha256": "6d34cbe4dbf6926510b6f1cbb5ae848febc8242cdeb27c03d1fa7620ec552391"
+    },
+    "tools/baseline_correction_report_v2.py": {
+      "bytes": 16316,
+      "sha256": "21fe661a8a51da46662f02255a41cf513f86a239e7e3999682658294e1bfdaad"
+    },
+    "tools/freeze_baseline_correction_report_v2.py": {
+      "bytes": 5551,
+      "sha256": "22a86bd25ddc78bc3a5478b54f0e36c6c8a7d8f4bb1a1a82624696488352aefe"
+    },
+    "tools/offline_report_imports_v1.py": {
+      "bytes": 709,
+      "sha256": "12b0cbd3e7ad075ae91e58de1317f54b15919cd8a75cd0e081ac0695503ce91c"
+    }
+  },
+  "runner": {
+    "bytes": 5412,
+    "path": "/tmp/check-baseline-correction-offline-import-v1.py",
+    "sha256": "a03bf4a68ff99d6185073ce78be19d9eff1184bd20752ff74405b2eced995858"
+  },
+  "state": "FROZEN_NOT_EXECUTED",
+  "unchanged_original_ten_test_bodies_executed": false,
+  "unsealed_actual_draft": {
+    "bytes": 5763914,
+    "path": "/tmp/baseline-correction-report-v2-offline-import-execution-template.json",
+    "sha256": "1dfd719fa21aab0bc6b731be8061b62368832738aa3f7c9c7bf670be4ed393aa"
+  },
+  "zero_denied_effects_required": true
+}

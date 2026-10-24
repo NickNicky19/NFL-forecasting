@@ -1,0 +1,113 @@
+{
+  "adapter_receipt": {
+    "adapter_version": "source-qualified-query-identity-v1",
+    "changed_player_ids": 531,
+    "dropped_rows": 0,
+    "evidence": "METADATA_IDENTITY_ONLY; no history availability, feature, forecast, issuance or accuracy claim",
+    "identity_source_sha256": "504eab204149ecd645e918c474cfa32dca78b2fc05f572cbafbb254e9b6dfffa",
+    "input_query_sha256": "106c522be19ff8a9afd1e0717a10f7f8d01a2874609a6d2ddc0ce7337f168222",
+    "input_rows": 681,
+    "output_query_sha256": "ddb2823596afa64857ee6bcc732c138a84b9435fc50912dd4f7ac77ecc5c950a",
+    "output_rows": 681,
+    "registry": {
+      "conflicted_gsis_ids": 0,
+      "conflicted_sleeper_ids": 0,
+      "identical_duplicate_rows": 0,
+      "quarantined_rows": 20370,
+      "quarantined_sleeper_ids": 0,
+      "rows": 24920,
+      "unusable_rows": 20370,
+      "usable_exact_sleeper_bindings": 4550,
+      "valid_gsis_ids": 18841
+    },
+    "registry_metadata_sha256": "6631e94f4b2bc4fd78934dbf22b63429a7843152d5aa8c1818a7cd0c2901304f",
+    "registry_verified_or_resolved_rows": 624,
+    "resolution_state_counts": {
+      "resolved_registry_ascii_space_gsis": 38,
+      "resolved_source_exact_sleeper": 493,
+      "unresolved_no_exact_sleeper_binding": 57,
+      "verified_registry_gsis": 93
+    },
+    "schema_version": "query-identity-resolution-receipt-v1",
+    "unresolved_or_unverified_rows": 57
+  },
+  "all12_scientific_decisions_unchanged": true,
+  "at": "2026-10-23T13:33:36.583289+00:00",
+  "canonical_rows_aliases_registry_source_bodies_published": false,
+  "claims": "Historical identity coverage only; usable history, forecast accuracy, participation, game-day eligibility and hosted readiness unestablished.",
+  "feature_rebuild_model_inference_with_new_IDs": "NOT_EXECUTED",
+  "freeze_sha256": "b662fcdb3352bd61bbbbefe8efb3701d07f9c0b4bf8c320d603450829ba8b55a",
+  "frozen_head": "acbae4bd40feb8142ac68878881a2be0f6a4099a",
+  "history_identity_matches_after": 585,
+  "history_identity_matches_before": 90,
+  "hosted_or_website_changes": "NONE",
+  "independent_review": {
+    "bindings_verified": 70,
+    "private_output_hash_verified_without_rows_decoded": true,
+    "reviewer": "/root/reference_independent_reviewer",
+    "reviewer_tests_inference_real_source_values": 0,
+    "states": [
+      "IDENTITY_POLICY_PREFLIGHT_PASS",
+      "IDENTITY_ADAPTER_STATIC_PASS",
+      "IDENTITY_RUNNER_SUPERVISOR_STATIC_PASS",
+      "IDENTITY_PREEXEC_FREEZE_PASS",
+      "IDENTITY_POSTRUN_RECEIPT_HASH_PASS"
+    ]
+  },
+  "new_fits_inference_HTTP_accuracy_issued_forecasts": 0,
+  "order_context_clocks_and_original_aliases_preserved": true,
+  "original_input_pins": {
+    "history": {
+      "bytes": 5070165,
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+    },
+    "identity": {
+      "bytes": 536303,
+      "sha256": "504eab204149ecd645e918c474cfa32dca78b2fc05f572cbafbb254e9b6dfffa"
+    },
+    "query_metadata": {
+      "bytes": 254865,
+      "sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8"
+    }
+  },
+  "original_inputs_unchanged": true,
+  "outer_usage": {
+    "CPU_seconds": 2.7621339999999996,
+    "limit_reason": null,
+    "peak_combined_RSS_bytes": 401600512,
+    "returncode": 0,
+    "state": "COMPLETED",
+    "threads": 2,
+    "wall_seconds": 2.33853550600179
+  },
+  "output_sha256": "35dc44aa8ef6fcbd56e1b5fc81c32eebbd048ce7532173949e1c7edd84965eb3",
+  "publication": "AGGREGATES_ONLY; canonical/private rows excluded",
+  "registration_sha256": "249dc80ee311ffad7b447ce071e2442f61537589c4d24e8f60f6b2ea88767f89",
+  "rows": 681,
+  "rows_without_historical_identity": 96,
+  "same_input_and_saved_output_replay": "EXACT",
+  "scheduled_games": 13,
+  "schema_version": "query-identity-public-aggregate-v1",
+  "single_process_max_RSS_bytes": 220864512,
+  "software": {
+    "new_fictional_tests": 40,
+    "overlap": "40new tests included in70root targeted checks; not additional NFL evidence. Earlier789root full-suite acceptance unchanged.",
+    "owner_cumulative_CPU_seconds": 3.637293,
+    "owner_cumulative_wall_seconds": 3.296157344,
+    "retained_failure": "Initial fictional initializer typo:27failed9passed beforefix; no real input reads or acceptance consumed.",
+    "root_CPU_seconds": 20.660656,
+    "root_single_child_max_RSS_bytes": 214458368,
+    "root_targeted_integrated_tests": 70,
+    "root_wall_seconds": 19.250110727007268
+  },
+  "source_missingness_caveat": "Unusable registry rows often lack a usable Sleeper binding; they are not omitted player-game outcomes. Cleared ambiguous aliases cannot be assigned to particular unresolved queries.",
+  "state": "METADATA_IDENTITY_ACCEPTANCE_PASSED",
+  "storage_at_supervisor_snapshot": {
+    "limit_bytes": 536870912,
+    "logical_referenced_bytes": 89679739,
+    "physical_bytes": 33492035,
+    "unique_inodes": 329
+  },
+  "supplement_sha256": "c11310b0ba968ef6977a6fda85e4b6380279a35b8a969c7bf3acc9b7c3652fbb",
+  "wall_seconds": 0.40500500200141687
+}

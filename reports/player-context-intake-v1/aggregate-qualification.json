@@ -1,0 +1,326 @@
+{
+  "all12_forecast_scientific_status_unchanged": true,
+  "all_provider_field_states": {
+    "active": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 12229
+    },
+    "espn_id": {
+      "absent": 32,
+      "empty": 0,
+      "null": 5461,
+      "value": 6736
+    },
+    "fantasy_positions": {
+      "absent": 0,
+      "empty": 0,
+      "null": 322,
+      "value": 11907
+    },
+    "gsis_id": {
+      "absent": 32,
+      "empty": 0,
+      "null": 8304,
+      "value": 3893
+    },
+    "injury_body_part": {
+      "absent": 32,
+      "empty": 0,
+      "null": 11426,
+      "value": 771
+    },
+    "injury_notes": {
+      "absent": 32,
+      "empty": 0,
+      "null": 12068,
+      "value": 129
+    },
+    "injury_practice_participation": {
+      "absent": 12229,
+      "empty": 0,
+      "null": 0,
+      "value": 0
+    },
+    "injury_practice_status": {
+      "absent": 12229,
+      "empty": 0,
+      "null": 0,
+      "value": 0
+    },
+    "injury_start_date": {
+      "absent": 32,
+      "empty": 0,
+      "null": 12197,
+      "value": 0
+    },
+    "injury_status": {
+      "absent": 0,
+      "empty": 1,
+      "null": 11380,
+      "value": 848
+    },
+    "news_updated": {
+      "absent": 32,
+      "empty": 0,
+      "null": 3942,
+      "value": 8255
+    },
+    "player_id": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 12229
+    },
+    "position": {
+      "absent": 0,
+      "empty": 0,
+      "null": 240,
+      "value": 11989
+    },
+    "status": {
+      "absent": 32,
+      "empty": 0,
+      "null": 13,
+      "value": 12184
+    },
+    "team": {
+      "absent": 0,
+      "empty": 0,
+      "null": 9460,
+      "value": 2769
+    }
+  },
+  "current_source_acquisition_qualified": false,
+  "espn_binding_rows": 3017,
+  "evidence_lane": "authenticated_cached_source_software_replay",
+  "identity_reasons": {
+    "gsis_bound_to_multiple_sleeper_ids": 2,
+    "invalid_source_gsis_id": 866
+  },
+  "identity_status": {
+    "quarantined": 868,
+    "source_exact_gsis": 3025,
+    "unlinked_cold_start": 8336
+  },
+  "invalid_espn_binding_tokens": 0,
+  "new_accuracy_scores": 0,
+  "new_confirmation_observations": 0,
+  "new_fits": 0,
+  "new_model_predictions": 0,
+  "news_articles": 50,
+  "news_canonical_clock_eligible_rows": 61,
+  "news_clock_status": {
+    "eligible_clocks": 61
+  },
+  "news_identity_status": {
+    "exact_id_category_mention": 14,
+    "no_athlete_category": 12,
+    "unbound_category_mention": 35
+  },
+  "news_rows": 61,
+  "numeric_effects_qualified_rows": 0,
+  "participation_states": {
+    "unknown": 12229
+  },
+  "players_all": 12229,
+  "players_skill_roles": 4154,
+  "positions": {
+    "ATH": 1,
+    "C": 215,
+    "CB": 1034,
+    "DB": 865,
+    "DE": 690,
+    "DEF": 32,
+    "DL": 306,
+    "DT": 646,
+    "FB": 112,
+    "FS": 145,
+    "G": 428,
+    "ILB": 129,
+    "K": 192,
+    "K/P": 1,
+    "LB": 1160,
+    "LS": 131,
+    "NT": 89,
+    "None": 240,
+    "OG": 52,
+    "OL": 607,
+    "OLB": 215,
+    "OT": 298,
+    "P": 152,
+    "QB": 474,
+    "RB": 936,
+    "S": 45,
+    "SS": 162,
+    "T": 240,
+    "TE": 842,
+    "WR": 1790
+  },
+  "probes": [
+    {
+      "cutoff": "2026-10-23T10:57:55.303060999+00:00",
+      "fallback_reason": "no_snapshot_before_cutoff",
+      "probe": "strictly_before_capture",
+      "source_id": "sleeper_nfl_players",
+      "status": "fallback"
+    },
+    {
+      "cutoff": "2026-10-23T10:57:55.303061+00:00",
+      "fallback_reason": "no_snapshot_before_cutoff",
+      "probe": "equal_capture",
+      "source_id": "sleeper_nfl_players",
+      "status": "fallback"
+    },
+    {
+      "cutoff": "2026-10-23T10:57:56.303061+00:00",
+      "fallback_reason": null,
+      "probe": "after_capture",
+      "source_id": "sleeper_nfl_players",
+      "status": "available_advisory"
+    },
+    {
+      "cutoff": "2026-10-24T12:21:24.999808+00:00",
+      "fallback_reason": null,
+      "probe": "exact_48h_vintage_boundary",
+      "source_id": "sleeper_nfl_players",
+      "status": "available_advisory"
+    },
+    {
+      "cutoff": "2026-10-24T12:21:24.999808001+00:00",
+      "fallback_reason": "source_snapshot_stale",
+      "probe": "past_48h_vintage_boundary",
+      "source_id": "sleeper_nfl_players",
+      "status": "fallback"
+    },
+    {
+      "fallback_reason": "source_player_absent",
+      "probe": "absent_source_query",
+      "query_kind": "software_probe_not_an_NFL_forecast",
+      "source_id": "sleeper_nfl_players",
+      "status": "fallback"
+    },
+    {
+      "fallback_reason": "query_team_conflict_or_unknown",
+      "probe": "conflicting_team_query",
+      "query_kind": "software_probe_not_an_NFL_forecast",
+      "source_id": "sleeper_nfl_players",
+      "status": "fallback"
+    },
+    {
+      "cutoff": "2026-10-23T10:57:56.032283+00:00",
+      "eligible_rows": 0,
+      "fallback_reason": "no_snapshot_before_cutoff",
+      "probe": "equal_capture",
+      "source_id": "espn_nfl_public_news"
+    },
+    {
+      "cutoff": "2026-10-23T10:57:57.032283+00:00",
+      "eligible_rows": 61,
+      "fallback_reason": null,
+      "probe": "after_capture",
+      "source_id": "espn_nfl_public_news"
+    },
+    {
+      "cutoff": "2026-10-24T12:51:47.397780001+00:00",
+      "eligible_rows": 0,
+      "fallback_reason": "source_snapshot_stale",
+      "probe": "past_48h_vintage_boundary",
+      "source_id": "espn_nfl_public_news"
+    }
+  ],
+  "scope_limit": "Source/schema/as-of qualification of authenticated cached inputs only, no injury extraction validation or forecast performance study.",
+  "skill_role_field_states": {
+    "active": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 4154
+    },
+    "espn_id": {
+      "absent": 0,
+      "empty": 0,
+      "null": 1852,
+      "value": 2302
+    },
+    "fantasy_positions": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 4154
+    },
+    "gsis_id": {
+      "absent": 0,
+      "empty": 0,
+      "null": 2850,
+      "value": 1304
+    },
+    "injury_body_part": {
+      "absent": 0,
+      "empty": 0,
+      "null": 3894,
+      "value": 260
+    },
+    "injury_notes": {
+      "absent": 0,
+      "empty": 0,
+      "null": 4103,
+      "value": 51
+    },
+    "injury_practice_participation": {
+      "absent": 4154,
+      "empty": 0,
+      "null": 0,
+      "value": 0
+    },
+    "injury_practice_status": {
+      "absent": 4154,
+      "empty": 0,
+      "null": 0,
+      "value": 0
+    },
+    "injury_start_date": {
+      "absent": 0,
+      "empty": 0,
+      "null": 4154,
+      "value": 0
+    },
+    "injury_status": {
+      "absent": 0,
+      "empty": 1,
+      "null": 3865,
+      "value": 288
+    },
+    "news_updated": {
+      "absent": 0,
+      "empty": 0,
+      "null": 1039,
+      "value": 3115
+    },
+    "player_id": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 4154
+    },
+    "position": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 4154
+    },
+    "status": {
+      "absent": 0,
+      "empty": 0,
+      "null": 0,
+      "value": 4154
+    },
+    "team": {
+      "absent": 0,
+      "empty": 0,
+      "null": 3311,
+      "value": 843
+    }
+  }
+}

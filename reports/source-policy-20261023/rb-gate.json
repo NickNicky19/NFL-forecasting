@@ -1,0 +1,143 @@
+{
+  "audit": "original-rb-2023-gate-v1",
+  "gate": "NOT_READY",
+  "models_or_scores_run": false,
+  "original_historical_role": "weekly depth_chart_position == RB; REG2023",
+  "games": 272,
+  "team_games": 544,
+  "all_fine_rb": {
+    "roster_game_listings": 2995,
+    "unique_players": 214,
+    "action_supported_appearances": 1434,
+    "positive_snap_appearances": 1590,
+    "supported_appearances": 1616,
+    "supported_positive_carries": 1282,
+    "supported_played_zero": 155,
+    "played_carries_unknown": 179,
+    "participation_unknown": 1379,
+    "explicit_zero_participation_unknown": 0,
+    "absent_stat_row": 1558,
+    "invalid_carries": 0,
+    "roster_status_counts": {
+      "ACT": 1660,
+      "DEV": 618,
+      "RES": 358,
+      "INA": 250,
+      "CUT": 70,
+      "RET": 34,
+      "TRD": 2,
+      "EXE": 2,
+      "TRC": 1
+    }
+  },
+  "active_fine_rb": {
+    "roster_game_listings": 1660,
+    "unique_players": 152,
+    "action_supported_appearances": 1434,
+    "positive_snap_appearances": 1590,
+    "supported_appearances": 1616,
+    "supported_positive_carries": 1282,
+    "supported_played_zero": 155,
+    "played_carries_unknown": 179,
+    "participation_unknown": 44,
+    "explicit_zero_participation_unknown": 0,
+    "absent_stat_row": 223,
+    "invalid_carries": 0,
+    "roster_status_counts": {
+      "ACT": 1660
+    }
+  },
+  "new_snap_supported_appearances": 182,
+  "stats_opponent_conflicts": 0,
+  "confirmed_game_specific_dnp": 0,
+  "dnp_basis": "weekly INA remains roster status; no complete game-specific all-phase appearance/DNP contract",
+  "full_participant_population_supported": false,
+  "absent_carry_zero_convention_supported": false,
+  "missing_prerequisite": "complete permitted all-phase appearance/nonappearance ledger plus official carry-zero contract for absent stat rows",
+  "2017_2018_expansion": "not acquired; original five-prior-year study remains blocked at2023gate",
+  "original_normalized_comparison": {
+    "sha256": "ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297",
+    "broader_rb_rows": 2133,
+    "participation_states": {
+      "played": 1835,
+      "DNP": 266,
+      "unknown": 32
+    },
+    "played_missing_carries": 296,
+    "certifies_original_gate": false
+  },
+  "sources": {
+    "stats_player_week_2023.parquet": {
+      "name": "stats_player_week_2023.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2023.parquet",
+      "bytes": 846050,
+      "sha256": "ac776fbd7c9fefdb4069b72304f4c5fa05ae417acd49f6e4e27be14b9d7a4bbc",
+      "retrieved_utc": "2026-10-22T12:16:44.970238+00:00",
+      "http_last_modified": "Thu, 13 Aug 2026 16:48:36 GMT",
+      "etag": "\"0x8DEF95AB824F351\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    },
+    "roster_weekly_2023.parquet": {
+      "name": "roster_weekly_2023.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_2023.parquet",
+      "bytes": 794392,
+      "sha256": "0fa5abf9b462a087ecb17f3268ed7233ce9935e95d77be94ad6bac66adf8e281",
+      "retrieved_utc": "2026-10-22T12:14:34.577108+00:00",
+      "http_last_modified": "Thu, 14 Mar 2024 07:17:51 GMT",
+      "etag": "\"0x8DC43F6DC3A6065\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    },
+    "snap_counts_2023.parquet": {
+      "name": "snap_counts_2023.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2023.parquet",
+      "bytes": 237882,
+      "sha256": "97873cab365dfb39286bc1de3ac772fa4b51f09cce52ae5f8317e006cc007f62",
+      "retrieved_utc": "2026-10-22T12:14:34.799910+00:00",
+      "http_last_modified": "Mon, 06 Oct 2025 06:51:17 GMT",
+      "etag": "\"0x8DE04A4BFE49AD9\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    },
+    "players.parquet": {
+      "name": "players.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.parquet",
+      "bytes": 3394602,
+      "sha256": "35383262b6e2f41b6cf446eef319f9b501a9daa767dfa4d91e9ae2d88d635fe3",
+      "retrieved_utc": "2026-10-22T12:14:31.765627+00:00",
+      "http_last_modified": "Wed, 21 Oct 2026 13:24:38 GMT",
+      "etag": "\"0x8DF2F76A863A6C5\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    },
+    "schedules.csv": {
+      "name": "schedules.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "bytes": 2186341,
+      "sha256": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7",
+      "retrieved_utc": "2026-10-22T12:14:31.546957+00:00",
+      "http_last_modified": null,
+      "etag": "W/\"3d98957a69dc0b164b7fde823497c0492d2c4e11194644f649d8013d2a365d17\"",
+      "cache_reused": false,
+      "original_publication_utc": null,
+      "status": "acquired",
+      "vintage": "current-vintage historical reconstruction; original pregame availability unverified",
+      "raw_redistribution": "not authorized by this lab"
+    }
+  },
+  "rights": "existing cached PFRsnap audit only; unresolved upstream AI/ML permission is not training clearance; no raw redistribution",
+  "clocks": "current-vintage reconstruction; original publication/local historical availability unknown"
+}

@@ -1,0 +1,14 @@
+{
+  "registration_id": "source-matched-report-recovery-v1-20261023",
+  "status": "Conditional technical recovery declared before the original job finishes. Execute only if it fails before SCORE_CONSUMED, preserving all original bytes and the failed resource receipt.",
+  "parent_policy_sha256": "7c834dff5515eab9384218a3144026ffe52933f79ffa70437a4eb9e1ae75324f",
+  "parent_freeze_sha256": "332a07b5aaeb9abbaf7d9147cad816325711753379d8cc76fe93889746693736",
+  "observed_blocker": "All 168 estimator attempts and 198 packages are frozen. Artifact verification repeatedly scans and hashes the entire quota store for each of 1407 references; no scoring has started. The original 1200-second limit remains in force.",
+  "validation_repair": "A new owned-reference batch helper must hold the existing global flock, refresh and perform a full unchanged quota scan before and after the batch, and apply every existing per-reference path, readonly, regular-file, expected SHA, CAS hash and inode ownership check. No inventory or integrity condition may be dropped. This removes redundant whole-store scans while writers are excluded.",
+  "eligibility": "Require original FAILED completion, complete immutable forecast freeze, 198 frozen/18 PPR-blocked slots and no parent SCORE_CONSUMED or scored files. If scoring started, abstain; this version cannot rescore partial work.",
+  "numerical_work": "No fitting, candidate changes, new features, sources or protected years. Use the parent's exact saved queries, models and forecasts. One first scoring phase for the previously frozen candidates, using unchanged evaluators and the original seed/metrics/roles. Count CDF law recomputation against the original cumulative 3M query/law ceiling. Fit and reference counters remain 168/66; model attempts cannot repeat.",
+  "output": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023",
+  "reporting": "Same target-local aggregate and private per-target paired-loss outputs. Retain all 216 statuses and the original failure. Historical raw/SITE remain unavailable; exposed development only. Report original, additional and total resources separately; never claim the original run passed its limit.",
+  "budgets": {"invocations": 1, "automatic_retries": 0, "new_estimator_fits": 0, "new_reference_fits": 0, "HTTP": 0, "max_additional_wall_seconds": 600, "max_additional_CPU_seconds": 900, "max_RSS_bytes": 2147483648, "threads": 2, "max_cumulative_query_or_law_rows": 3000000, "shared_unique_file_bytes": 536870912, "owner_fictional_test_wall_seconds": 120, "owner_fictional_test_CPU_seconds": 180, "root_fictional_test_wall_seconds": 180},
+  "review": "Freeze exact new helper, runner, code, dependencies and parent failure/output hashes before execution. Independent review must confirm validation equivalence and no repeated fit or scoring. No publication, promotion or website change follows from this plan."
+}

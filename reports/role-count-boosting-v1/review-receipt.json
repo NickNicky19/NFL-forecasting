@@ -1,0 +1,80 @@
+{
+  "reviewer": "/root/role_study_final_reviewer",
+  "decision": "PASS_NO_BLOCKING_NUMERICAL_EXPORT_PROSE_FINDINGS",
+  "accepted_at": "2026-10-23T09:35:32.878990+00:00",
+  "source_study_registration": "all12-role-count-boosting-v1-20261023",
+  "repair_registration": "role-count-reporting-repair-v1-20261023",
+  "scope": "Read-only independent arithmetic, frozen identity/coverage, source integrity, intervals, public aggregate transfer and final narrative acceptance. No predictive qualification.",
+  "input_hashes": {
+    "original_registry": "6a6012e7b0d98f7b2164c08fe471ce4726285a92ed611b593ee5368e1cdb52b1",
+    "original_forecast_freeze": "3f6cfbd0a0642dab128d861c43ee0d88d6814e8ad4af07e449c6fbd12eae9cf4",
+    "original_failed_completion": "ce4640f0e39f117dc7e049f80895c86794de913348c99444ca59aa10ef9eeed3",
+    "repair_plan": "6c04c7069cd9b59cae792fa6de53d1a19735da90b0557eb5ba9a486a7794071e",
+    "repair_registry": "c14a87b4e752fa467551c7a00c77daf35a00e915af3b37dcf8ba6f3762ae43d8",
+    "repair_completion": "1dbe4ae2eb755feada4f9c380e2b4284f1fca33cb0854b252033cf94592e1859",
+    "repair_report": "8152dd34c6ea68eef9f661b56459c6061cdebe3747b8957bfcb8c81711826d09"
+  },
+  "accepted_public_file_sha256": {
+    "aggregate-report.json": "1dda7cb2157f640db2bd75e5dd8aef9c098bf396c05ee2ccc3c619a5bc11da6a",
+    "aggregate-report.md": "ad6a58756eb047c3a1bc556822b48aebcba2a138da9e8e8d719377a69b8db065",
+    "hash-manifest.json": "8fb406914e9d4a1a0ad4b0e4a54961d2e52ead9a32e159a9856360e64f32603a",
+    "README.md": "0db1a4a318ca817ac0657f1c4e2bf4025f90df9e9e2d05ebc56e73b884624075",
+    "category-status.json": "8681d00834a39b97dea7ae8e8ea720f0f90f103fab8bda78f2eb2e8ccd0e0141",
+    "method-manifest.json": "894937e2df7ae9a4743db7c2e83850e3d138e85d33ea66743a00f88ed5412d5c"
+  },
+  "source_followup_sha256": {
+    "exact-ppr-schema-followup.json": "e15c4637a57fe766d7f0f6e599c8bf8155b8bfea9b70932f38322e30ddc6a690",
+    "exact-ppr-generator-followup.json": "eb4474a2605ef1b6420b628c8d86d32b2a657514486c8f0990d20a6aa971c62a"
+  },
+  "checks": {
+    "primary_comparisons": 44,
+    "historical_game_week_intervals": 44,
+    "package_slots": 96,
+    "primary_slots": 48,
+    "blocked_PPR_packages": 8,
+    "blocked_PPR_primary_slots": 4,
+    "unchanged_original_files": 1199,
+    "unchanged_frozen_bindings": 918,
+    "summary_checks": 110,
+    "paired_common_ablation_comparisons": 2706,
+    "control_cohort_checks": 3124,
+    "candidate_forecast_bitmatches": 88,
+    "byte_alias_packages": 40,
+    "arithmetic_scalar_checks": 132428,
+    "public_exact_numeric_transfers": 342451,
+    "coherence_summaries": 16,
+    "final_matrix_comparisons": 154,
+    "final_matrix_numeric_transfers": 5030,
+    "both_markdown_tables_verified": true
+  },
+  "arithmetic_verifier": {
+    "result_digest": "4afab32f90346653b79c1adab18fa9b6f9eab32a5450ebd0fe45489036a97289",
+    "successful_run_wall_seconds": 38.252,
+    "successful_run_cpu_seconds": 38.695,
+    "peak_RSS_bytes": 234192896,
+    "threads": 2,
+    "retained_issue": "Initial verifier expected one-sided common-cohort masking; corrected its expectation to original two-sided masking, then all checks passed. No producer or forecast changed."
+  },
+  "transfer_verifier": {
+    "wall_seconds": 1.38,
+    "cpu_seconds": 1.508,
+    "peak_RSS_bytes": 184348672,
+    "threads": 2
+  },
+  "prose_verifier": {
+    "wall_seconds": 0.1455,
+    "cpu_seconds": 0.1416,
+    "threads": 2
+  },
+  "reviewer_producer_or_model_calls": 0,
+  "reviewer_fit_or_prediction_calls": 0,
+  "reviewer_repository_writes": 0,
+  "new_football_observations": 0,
+  "qualified_replacements": [],
+  "all_periods_exposed": true,
+  "original_failure_retained": true,
+  "repair_new_fits": 0,
+  "cumulative_reporting_attempts": 2,
+  "PPR_source_probe_wall_cap_breach_retained": true,
+  "limitations": "Nominal descriptive historical intervals; one exposed Week6 for website-relative comparisons; current-vintage reconstructed features and assumed publication lag; no original upstream timing or production qualification."
+}

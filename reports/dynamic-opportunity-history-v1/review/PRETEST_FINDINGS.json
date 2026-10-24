@@ -1,0 +1,33 @@
+{
+  "accepted_boundaries": [
+    "Latest8 elapsed same-team/season/spell slots selected without older-game substitution; unknown/DNP/missing consume slots.",
+    "No primitive count access for unavailable calendar slots; all/missing source counts are not supported zeros.",
+    "Recorded proxies explicitly partial, at least one explicit count required, duplicates/invalid pairs block, no complete team allocation claim.",
+    "Original carry volume preserved including supported zero; separate target proxy feature named honestly and shared static requests bind same information.",
+    "Exactly one request/fallback retained per original offer; no filter/prior/model/forecast/scorer is called.",
+    "Actual source authentication, membership producer, NFL study and prospective confirmation remain unregistered/unexecuted."
+  ],
+  "core_bytes": 19315,
+  "core_sha256": "f8652184cab624dbb66a16cbef6738137271be703a8b2dd215c06ec15d01f97c",
+  "findings": [
+    {
+      "id": "MISSING_SEASON_SOURCE_HASH_MATCHES_NONE",
+      "issue": "Empty or season-incomplete statistics map allowed; absent row source hash can compare equal to absent mapping entry.",
+      "required_repair": "Require nonempty validated season map, present season entry and explicit valid exact source body hash."
+    },
+    {
+      "id": "PERIOD_CONTEXT_JOIN_INCOMPLETE",
+      "issue": "Original offer.week not compared with calendar; supplied qualified player-row week/REG can conflict without rejection.",
+      "required_repair": "Validate exact offer week/REG and player-row supplied week/REG metadata against selected calendar game."
+    },
+    {
+      "id": "GAME_ID_ALLOWS_MULTIPLE_RECIPROCAL_PAIRS",
+      "issue": "Calendar enforces reciprocal team sides but one game ID can map to four teams in two separate pairs.",
+      "required_repair": "Require exactly two distinct reciprocal teams per canonical game ID."
+    }
+  ],
+  "owner_commit": "ced85818850521475fe446438035aec6982f59a5",
+  "scope": "Source/docs/fictional test definitions and prepared metadata only. No imports/tests, NFL/source/model values, arithmeticfilter, forecasts, scoring, network or CAS writes.",
+  "state": "STATIC_PRETEST_FINDINGS_AWAITING_FOCUSED_REPAIR",
+  "unused_draft_sha256": "8ff0a087f7491e69ee6219d5de38984125de6f97a1d73dd1a707042297220a7b"
+}

@@ -1,0 +1,455 @@
+{
+  "advancement": "A development lead may be nominated only if pooledprimaryloss improves>=2% vsBOTH CDFandroleB, noannualprimaryregression>5%, no>2%absolute-bias orp95absolute-errorregression vsthosecontrols, and equal offered/support/forecastcoverage. These are newresearch-nomination checks only; oldscientific/promotiongates/futureconfirmation untouched. Otherwise mixed/retainedcontrol/inconclusive. No deployment/defaultswitch.",
+  "budgets": {
+    "actual_invocations": 1,
+    "automatic_retries": 0,
+    "max_CPU_seconds": 2400,
+    "max_HTTP_attempts": 0,
+    "max_RSS_bytes": 2147483648,
+    "max_bootstrap_replicates": 500,
+    "max_fit_attempts": 198,
+    "max_query_prediction_or_law_row_incidences": 2000000,
+    "max_reference_calls": 0,
+    "max_shared_retained_unique_file_bytes": 536870912,
+    "max_wall_seconds": 1500,
+    "per_estimator_CPU_seconds": 45,
+    "per_estimator_wall_seconds": 30,
+    "reporting_reserve_seconds": 180,
+    "root_fictional_software_CPU_seconds": 180,
+    "root_fictional_software_wall_seconds": 120,
+    "threads": 2
+  },
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "capability_installation": {
+    "bytes": 5746,
+    "path": "/workspace/website-methods-research/resumed/direct-boosters-capability-v1-20261023/installation.json",
+    "sha256": "ba4423d4b1bbd1fb67a4ef6f11b3cbff1b20748f7eda8dbdb423db9e96636967"
+  },
+  "category_contract": {
+    "bytes": 40385,
+    "path": "/workspace/nfl-methods-integration/reports/all12-leaf-cdf-v1/method-config.json",
+    "sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4"
+  },
+  "comparisons": "For each6candidate, five exactsame-row namedcontrols: CDF,countA,roleB,recent,pooled. Pooled2022-24primary and mandatoryannual/alloffered/primaryroles/MAE/MSE/RMSE/bias/p95largeerrors/coverage/fallback and binarylogloss/reliability. OriginalrawSleeper/SITE unavailable for these historicalrows, do notregenerate. No W6 or2025/2026semanticdata in this screen.",
+  "control_root": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023",
+  "control_scored_freeze": {
+    "bytes": 100310,
+    "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/scored-freeze.json",
+    "sha256": "d222f6bd22db1e34590ef49645d1bb0a7512f4cb210499005df950b414627ad2"
+  },
+  "input_features": {
+    "bytes": 5070165,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet",
+    "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+  },
+  "maximum_work": {
+    "blocked_exact_PPR_slots": 18,
+    "evaluation_blocks": 3,
+    "native_configurations": 6,
+    "new_feature_groups": 0,
+    "planned_slots": 216,
+    "supported_slots_and_maximum_estimators": 198,
+    "tuning_or_early_stopping": 0
+  },
+  "methods": [
+    "direct_xgboost_small",
+    "direct_xgboost_medium",
+    "direct_lightgbm_small",
+    "direct_lightgbm_medium",
+    "direct_catboost_small",
+    "direct_catboost_medium"
+  ],
+  "missingness": "ExactPPRblocked, notgenericproxy. Preserve supportedzero/countsupport/signedyards/DNP/unknown/missing. Queryinference neverreadslabelsorparticipation. Shared minimum60modeled and cold/nonmodeled/globalpriors; countfallbackmean, signedmedian,binaryp. Incompatiblelibraries/failedfits stayfailed without silentreplacement.",
+  "native_parameters": {
+    "catboost": {
+      "medium": {
+        "bernoulli": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 5,
+          "iterations": 128,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Logloss",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        },
+        "count": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 5,
+          "iterations": 128,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Poisson",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        },
+        "signed_integer": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 5,
+          "iterations": 128,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Quantile:alpha=0.5",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        }
+      },
+      "small": {
+        "bernoulli": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 3,
+          "iterations": 64,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Logloss",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        },
+        "count": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 3,
+          "iterations": 64,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Poisson",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        },
+        "signed_integer": {
+          "allow_writing_files": false,
+          "boosting_type": "Plain",
+          "bootstrap_type": "No",
+          "depth": 3,
+          "iterations": 64,
+          "l2_leaf_reg": 10.0,
+          "learning_rate": 0.05,
+          "loss_function": "Quantile:alpha=0.5",
+          "random_seed": 1753,
+          "random_strength": 0.0,
+          "rsm": 1.0,
+          "task_type": "CPU",
+          "thread_count": 2,
+          "use_best_model": false,
+          "verbose": false
+        }
+      }
+    },
+    "lightgbm": {
+      "medium": {
+        "bernoulli": {
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_samples": 30,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "num_leaves": 31,
+          "objective": "binary",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        },
+        "count": {
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_samples": 30,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "num_leaves": 31,
+          "objective": "poisson",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        },
+        "signed_integer": {
+          "alpha": 0.5,
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_samples": 30,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "num_leaves": 31,
+          "objective": "quantile",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        }
+      },
+      "small": {
+        "bernoulli": {
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_samples": 30,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "num_leaves": 7,
+          "objective": "binary",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        },
+        "count": {
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_samples": 30,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "num_leaves": 7,
+          "objective": "poisson",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        },
+        "signed_integer": {
+          "alpha": 0.5,
+          "colsample_bytree": 1.0,
+          "deterministic": true,
+          "force_col_wise": true,
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_samples": 30,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "num_leaves": 7,
+          "objective": "quantile",
+          "random_state": 1752,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "verbosity": -1
+        }
+      }
+    },
+    "xgboost": {
+      "medium": {
+        "bernoulli": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_weight": 30.0,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "objective": "binary:logistic",
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        },
+        "count": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_weight": 30.0,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "objective": "count:poisson",
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        },
+        "signed_integer": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 5,
+          "min_child_weight": 30.0,
+          "n_estimators": 128,
+          "n_jobs": 2,
+          "objective": "reg:quantileerror",
+          "quantile_alpha": 0.5,
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        }
+      },
+      "small": {
+        "bernoulli": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_weight": 30.0,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "objective": "binary:logistic",
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        },
+        "count": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_weight": 30.0,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "objective": "count:poisson",
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        },
+        "signed_integer": {
+          "colsample_bytree": 1.0,
+          "device": "cpu",
+          "learning_rate": 0.05,
+          "max_bin": 255,
+          "max_depth": 3,
+          "min_child_weight": 30.0,
+          "n_estimators": 64,
+          "n_jobs": 2,
+          "objective": "reg:quantileerror",
+          "quantile_alpha": 0.5,
+          "random_state": 1751,
+          "reg_alpha": 0.0,
+          "reg_lambda": 10.0,
+          "subsample": 1.0,
+          "tree_method": "hist",
+          "verbosity": 0
+        }
+      }
+    }
+  },
+  "operation": "One invocation, fixed year/target/library/complexity order. Charge attempt before nativeconstruction/fit; guardedwall/CPU/2threads. Same original query/training framehashes required. Save private model/audit/trainingbindings and allofferedforecasts before oneglobalfreeze; then read evaluationlabels once/year and original hashboundcontrolrows. No originalcontrolrefit/lawcall. Scoreonlyfrozennewrows; retainfailed/blocked/unrun/fallbackslots, no retry/selection deletion. Shared unchanged quota; no privateweights/rows public.",
+  "output": "/workspace/website-methods-research/resumed/direct-booster-screen-v1-20261023",
+  "partition_audits": {
+    "2022": {
+      "bytes": 6073,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/partitions/2022.json",
+      "sha256": "86b3407808daed2fe04d0a0c6505ae00bb9d3bf76a84815da081555d06cb1be9"
+    },
+    "2023": {
+      "bytes": 6073,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/partitions/2023.json",
+      "sha256": "2e70a757339d5f86451a6d7d365df48dc59eaf5c15c027ebda1aff5ae003ce79"
+    },
+    "2024": {
+      "bytes": 6073,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/partitions/2024.json",
+      "sha256": "bad266aa543a7df6f0f5476b67bfd6c0fa24cb6e054b9d32cf245c810afdd5f2"
+    }
+  },
+  "partitions": {
+    "evaluation_years": [
+      2022,
+      2023,
+      2024
+    ],
+    "exposure": "All2022-24 repeatedlyexposed;2024cannotbeindependentconfirmation. No2025/2026semanticrows read inthisjob.",
+    "query": "Beforeglobalfreeze, Parquetcolumnprojectiononlykeys/context/clocks/participationopportunityandf_features, noevaluationtarget/rawstatvalues; participationunknown. Arrowseasonpredicates beforevalues. Evaluationlabels readonlyafteroneglobalforecastfreeze.",
+    "training": "Earlierseasons only:2022<=2021;2023<=2022;2024<=2023, strict source kickoff/outcome_available beforeearliestquerycutoff. Original train starts2019."
+  },
+  "primary_metrics": {
+    "bernoulli": "Actualeventprobability;Brier,sharedbinarylogloss/reliabilitysecondary. No clippingcontrary0/1.",
+    "count": "NativePoisson-objective means; MSE, compare savedCDFmean/countA/roleB/recent/pooled points. No calibratedPoissonlaw asserted.",
+    "signed_integer": ".5quantile-objective point; MAE, compare savedCDFmedian and fixedpointcontrols. Signedyardsretained."
+  },
+  "registration_id": "direct-booster-screen-v1-20261023",
+  "reporting_integrity": "Use unchanged owned_reference_batch.validate_owned_references on completefrozennew/controlreference mapping atreportentry/exit; exactreadonlyCAS/hash/path/size/globalquota checks retained. Authenticatedreferencescachedbetweenbatches, no perfilefullstorescan. Explicitincluded/missingyears inpooledcells; anymissingrequiredyear disqualifiesresearchnomination. No change tooldhelpers orquota.",
+  "review": "Exact code/environment/input/config freeze plus independent preexecpass required before sole real invocation. Integratorledgeronly, existing4agents, no site/scheduler/dispatch or hostedactivation. RequestedGPT6.1SolExtraHigh,backendattestationunavailable.",
+  "role_population": "Takeprimary_roles/modeled_rolesfromfrozencategorycontract, neverchoosebyperformance. Allofferedrows retained; reportconditional-played primaryrole matchedaccuracy separatelyfromallofferedcoverage, supportedzeros/unknown/DNP/missing/nonmodeled/cold/sparse/fallbacks. QBpassing,RBrush,RBWRTEreception/receiving/combined/TDoriginalprimarycontracts preserved. ExactPPRblockedall18slots, no genericproviderpoints substitute.",
+  "scope": "Requested first-wave learner-only screen: XGBoost CPU/LightGBM/CatBoost,2fixedsettings each,3already-exposed chronologicalblocks. Existing permitted97features/training-onlydesign/roles/outcomequalification unchanged. No new football acquisition/features/predictionlaw or confirmation.",
+  "source_manifest": {
+    "bytes": 23272,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+    "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+  },
+  "source_policy": {
+    "bytes": 13487,
+    "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "uncertainty": "Fixed500PCG64seed1703whole-week/game pairedbootstrap95%linearpercentile at>=8clusters; exposed development diagnostics only, notmultiplicity-adjustedconfirmation. All6\u00d711searchesreported, no pvalue/optimality/promotionclaim.",
+  "versions": {
+    "catboost": "1.2.10",
+    "lightgbm": "4.7.0",
+    "xgboost": "3.4.1"
+  },
+  "zero_denominators": "Signedpercentgain N/A whencontrolprimaryloss=0; bothzero=tie, cannotmeet>=2%gain. Annual/absolute-bias/p95regression compares multiplicatively: control0 andcandidate0=tie; control0 andcandidate>0 fails. Missingvalues/gaps fail nomination; noepsilonclipping or inventedratios."
+}

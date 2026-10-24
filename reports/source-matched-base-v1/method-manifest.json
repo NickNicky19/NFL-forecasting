@@ -1,0 +1,732 @@
+{
+  "cache_source_manifest_sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+  "category_contract_sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
+  "code_identity_scope": "Frozen benchmark snapshot and exact later approved diagnostic adapter; current hosted/CLI software is a separate lane",
+  "code_sha256": {
+    "nfl_lab/bernoulli_diagnostics_v2.py": "6c686436648ac5f342bbd8c664f1b16b36245164775a458d6e808b55e4becc2f",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "nfl_lab/cdf_evaluation.py": "774ac9f9d37ff9c9201723504058b369a5a5c68906d366c6ebfee16d5363f076",
+    "nfl_lab/median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "nfl_lab/median_boosting_evaluation.py": "ecc6d873e8d475f702ea2d4d92a8c6c565d86107f1a88e37aeb92eb659d6e7bc",
+    "nfl_lab/model_artifacts.py": "9e3a3266e227695f158a68a39260ba1ad51c66f24ccc4a1f83c390604aad54f8",
+    "nfl_lab/models.py": "0672825fc5d08b882a31ec6906b0618b4766bbb7f38bd05baf791aab37ceccb1",
+    "nfl_lab/operational_models.py": "be5592454358bd8f0be2b25179c05e3be5c996e8279755335b015d5b2f69f810",
+    "nfl_lab/operational_sources.py": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+    "nfl_lab/role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "nfl_lab/role_boosting_campaign.py": "d4e31b8018b65e20856efc52fcaaa6735154fa04bf4563b73e79e3dabf4cd4de",
+    "nfl_lab/source_matched_reporting.py": "d338ddd8062bd29e8df4479b014720f93429e97d07b8f4b96d7e9ae157ee5b0e",
+    "nfl_lab/website_cdf_evaluation.py": "df9b6055cc3aad29dd35d64692cb0a0af29329d9944a44a481d73d22b3ef9050"
+  },
+  "diagnostic_adapter_commit": "b2e84f1c89f0da610576cd8da88f5dc4709532ef",
+  "diagnostic_derivative": {
+    "adapter_code_sha256": "6c686436648ac5f342bbd8c664f1b16b36245164775a458d6e808b55e4becc2f",
+    "policy_sha256": "72fb9c42f9d315b1241e0e6b7e48904427aeb20cfb9b5019f089a71f6541ecb0",
+    "preservation": "Every other column, probability/point/mean/brier, quantiles, variance, context/state, dtype/order and floating bits unchanged; raw rows and original invalid v1 failure retained",
+    "scope": "Only anytime_td leaf_cdf/role_prior below/at/CRPS/log diagnostics derive from exact frozen p and already scored supported played y; four fields only, six views",
+    "six_view_manifest_sha256": "f97c1f870948b0eb3ca5b711c77f4cdc00c58386ad2b4015a91addbdcac63818",
+    "validation": "Original strict helper unchanged; exact analytic Bernoulli identities and raw missingness masks enforced; no clipping/tolerance relaxation"
+  },
+  "evaluators": {
+    "bootstrap": {
+      "generator": "PCG64",
+      "minimum_clusters": 8,
+      "percentile_method": "linear",
+      "replicates": 500,
+      "seed": 1703
+    },
+    "cdf": "nfl_lab.cdf_evaluation.summarize",
+    "point": "nfl_lab.role_boosting_campaign.summary/point_pairs",
+    "reporting": "nfl_lab.source_matched_reporting.build_target_report",
+    "uncertainty": "Nominal exposed-sample whole-week/game intervals; no IID row bootstrap, multiplicity-adjusted qualification or new selection"
+  },
+  "fixed_methods": [
+    "leaf_cdf",
+    "median_hgb",
+    "count_A",
+    "role_B",
+    "recent",
+    "pooled"
+  ],
+  "historical_SITE": "N/A; no regenerated historical SITE forecasts",
+  "historical_feature_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+  "historical_raw_Sleeper": "N/A; no recorded compatible historical forecasts",
+  "implementations": {
+    "count_A": {
+      "class": "nfl_lab.role_boosting.RoleCountBoostingModel",
+      "count_link": "log",
+      "count_loss": "poisson",
+      "minimum_modeled_rows": 60,
+      "noncount_alias": "Exact NEW same-source median_hgb forecast, no independent fit",
+      "parameters": {
+        "early_stopping": false,
+        "l2_regularization": 10.0,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "max_iter": 150,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 30,
+        "random_state": 1702
+      },
+      "variant": "A"
+    },
+    "leaf_cdf": {
+      "cdf_mean": "Separate diagnostic, never substituted for numeric primary median",
+      "class": "nfl_lab.cdf_engine.LeafCDFModel",
+      "primary_point": "lower median for numeric targets, genuine event mean for anytime_td",
+      "prior": "Unchanged trained role/global full-support prior; empirical supported label atoms retained privately",
+      "prior_weight": 0.05,
+      "tree_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_estimators": 32,
+        "n_jobs": 2,
+        "random_state": 1701
+      }
+    },
+    "median_hgb": {
+      "binary_loss": "log_loss",
+      "class": "nfl_lab.median_boosting.MedianBoostingModel",
+      "minimum_modeled_rows": 60,
+      "numeric_loss": "absolute_error",
+      "parameters": {
+        "early_stopping": false,
+        "l2_regularization": 10.0,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "max_iter": 150,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 30,
+        "random_state": 1702
+      },
+      "semantics": "Numeric point heuristic, no claimed integer-law median/mean/distribution; genuine binary class1 probability without clipping",
+      "threads": 2
+    },
+    "pooled": {
+      "function": "nfl_lab.models.fit_predict",
+      "prior_strength": 5.0,
+      "semantics": "Exact saved reference point; no numeric forecast law promoted for evaluation",
+      "window": 8
+    },
+    "recent": {
+      "function": "nfl_lab.models.fit_predict",
+      "prior_strength": 3.0,
+      "semantics": "Exact saved reference point; no numeric forecast law promoted for evaluation",
+      "window": 3
+    },
+    "role_B": {
+      "all_zero_or_sparse_or_single_class": "Unchanged explicit trained prior fallback, no pseudo labels/epsilon optimizer",
+      "binary_loss": "log_loss",
+      "class": "nfl_lab.role_boosting.RoleCountBoostingModel",
+      "count_loss": "poisson",
+      "parameters": {
+        "early_stopping": false,
+        "l2_regularization": 10.0,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "max_iter": 150,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 30,
+        "random_state": 1702
+      },
+      "preprocessing": "Unchanged per-estimator training-role partition FixedDesign",
+      "priors": "Complete earlier supported played set before role partitioning",
+      "signed_loss": "absolute_error",
+      "singleton_passing_alias": "Exact same-source count_A forecast, no independent fit",
+      "variant": "B"
+    }
+  },
+  "parent_policy_sha256": "7c834dff5515eab9384218a3144026ffe52933f79ffa70437a4eb9e1ae75324f",
+  "privacy": {
+    "fitted_weights_training_bindings_empirical_supports_private": true,
+    "private_paired_losses_and_player_groups_private": true,
+    "raw_source_rows_features_queries_forecasts_outcomes_private": true
+  },
+  "promotion": "NONE",
+  "registration_id": "source-matched-base-benchmark-v1-20261023",
+  "resource_receipt_sha256": {
+    "first_score_recovery": "aa73eb43a26e012094798d7d893049528f620902d702f8bdff0f40772b4039cb",
+    "original_benchmark": "9fd5f44da6f7ce4cf0c6959e3f5db958f0c43ed2658eb7d5eb23d1f2ecbbd1e1",
+    "report_only_v2": "69855d1ecb92a34c00fae035113b3266818a3cbbf88f9afcfa44c9302364eb32"
+  },
+  "schema_version": "source-matched-base-method-manifest-v1",
+  "scientific_code_snapshot": "c78ed971ac75330bbefc0fd604babb0014f5268d",
+  "source_aggregate_sha256": "7e5a6a4ba7be0bd2df79f5ab75a983ba8bfd8325daa761ef9abee5afbbaa04b2",
+  "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "source_vintage": {
+    "kind": "current-vintage historical reconstruction",
+    "outcome_availability": "kickoff+7 days assumed, not authenticated original publication",
+    "protected_years": "2025/2026 not evaluation observations in this packet",
+    "scope": "REG only; positive physical-action participation qualifier, unknown rows retained; missing target values are not zeros",
+    "upstream_rights": "Existing permitted v2 source policy; PFR-derived training is excluded"
+  },
+  "state": "EXPOSED_EVALUATED_NOT_QUALIFIED_OR_DEPLOYED",
+  "training": {
+    "categories": {
+      "anytime_td": {
+        "base_panel": [
+          "f_player_anytime_td_mean3",
+          "f_player_anytime_td_n3",
+          "f_player_anytime_td_mean8",
+          "f_player_anytime_td_n8",
+          "f_player_rush_td_mean3",
+          "f_player_rush_td_n3",
+          "f_player_rush_td_mean8",
+          "f_player_rush_td_n8",
+          "f_player_rec_td_mean3",
+          "f_player_rec_td_n3",
+          "f_player_rec_td_mean8",
+          "f_player_rec_td_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "modeled_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "state": "READY",
+        "support": "bernoulli"
+      },
+      "fantasy_ppr": {
+        "base_panel": [],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "state": "BLOCKED_LABEL_CONTRACT",
+        "support": "fractional_ppr"
+      },
+      "pass_att": {
+        "base_panel": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "pass_cmp": {
+        "base_panel": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "pass_int": {
+        "base_panel": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "pass_td": {
+        "base_panel": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "pass_yd": {
+        "base_panel": [
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "state": "READY",
+        "support": "signed_integer"
+      },
+      "rec": {
+        "base_panel": [
+          "f_player_targets_mean3",
+          "f_player_targets_n3",
+          "f_player_targets_mean8",
+          "f_player_targets_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_rec_catch_rate3",
+          "f_player_rec_ypt3",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "rec_yd": {
+        "base_panel": [
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "state": "READY",
+        "support": "signed_integer"
+      },
+      "rush_att": {
+        "base_panel": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB"
+        ],
+        "state": "READY",
+        "support": "count"
+      },
+      "rush_rec_yd": {
+        "base_panel": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "state": "READY",
+        "support": "signed_integer"
+      },
+      "rush_yd": {
+        "base_panel": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB"
+        ],
+        "state": "READY",
+        "support": "signed_integer"
+      }
+    },
+    "clock_gate": "Every training kickoff and assumed outcome clock strictly before earliest held-out query cutoff",
+    "features": "Frozen base panel only; unchanged training-only FixedDesign numeric medians/missing indicators/position vocabulary and float32 design matrix",
+    "folds": {
+      "2022": "2019-2021 permitted earlier rows",
+      "2023": "2019-2022 permitted earlier rows",
+      "2024": "2019-2023 permitted earlier rows"
+    }
+  },
+  "work": {
+    "alias_semantics": "Aliases consume slots, not independent replications",
+    "alias_slots": 30,
+    "blocked_exact_ppr_slots": 18,
+    "estimator_attempts_consumed": 168,
+    "frozen_main_scored_packages": 198,
+    "frozen_prior_scored_packages": 33,
+    "learned_model_packages": 102,
+    "new_v2_fits_predictions_law_calls_HTTP_source_label_reads": 0,
+    "planned_annual_slots": 216,
+    "query_or_law_row_incidences": 2302608,
+    "reference_calls_consumed": 66
+  },
+  "years": [
+    2022,
+    2023,
+    2024
+  ]
+}

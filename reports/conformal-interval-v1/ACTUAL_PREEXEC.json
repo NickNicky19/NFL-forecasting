@@ -1,0 +1,2025 @@
+{
+  "CPU_seconds_before_receipt_write": 2.671507952,
+  "allowed_transition": {
+    "preexec_review": {
+      "from": "PENDING",
+      "to": "PASS"
+    }
+  },
+  "candidate": {
+    "bytes": 209962,
+    "path": "/tmp/conformal-interval-v1-execution-review.json",
+    "sha256": "72cce947ec7a08427e230de52a6c635be75ee27d6693f572c65145a5a79b8e91"
+  },
+  "checks": [
+    {
+      "PASS": true,
+      "check": "exact candidate SHA/bytes"
+    },
+    {
+      "PASS": true,
+      "check": "all183 distinct execution bindings"
+    },
+    {
+      "PASS": true,
+      "check": "all183 path/inode/mode/size/SHA pins authenticated"
+    },
+    {
+      "PASS": true,
+      "check": "exact seal/state; actual launch remains closed"
+    },
+    {
+      "PASS": true,
+      "check": "exact code root derives from actual guard path"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: python_binary"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: external_timeout"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: parent_environment"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: policy"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: sampler"
+    },
+    {
+      "PASS": true,
+      "check": "guard metadata fullmembership: libc"
+    },
+    {
+      "PASS": true,
+      "check": "guard exact registration/targets/alpha/two exposedblocks"
+    },
+    {
+      "PASS": true,
+      "check": "guard exact20radius300s512MiB16MiB600kpolicy"
+    },
+    {
+      "PASS": true,
+      "check": "guard exact outer resource/sideeffect limits"
+    },
+    {
+      "PASS": true,
+      "check": "full original environment parent/inventory retained"
+    },
+    {
+      "PASS": true,
+      "check": "guard original executable/version/binaryexact"
+    },
+    {
+      "PASS": true,
+      "check": "all14946 inherited environment path/inode/mode/size/SHA pins authenticated"
+    },
+    {
+      "PASS": true,
+      "check": "original complete environment inventory hash"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: attrs"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: catboost"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: certifi"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: charset-normalizer"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: contourpy"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: cycler"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: fonttools"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: graphviz"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: idna"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: joblib"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: jsonschema"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: jsonschema-specifications"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: kiwisolver"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: lightgbm"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: matplotlib"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: narwhals"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: numpy"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: packaging"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: pandas"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: pillow"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: plotly"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: pyarrow"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: pyparsing"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: python-dateutil"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: pytz"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: referencing"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: requests"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: rpds-py"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: scikit-learn"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: scipy"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: six"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: threadpoolctl"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: typing-extensions"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: tzdata"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: urllib3"
+    },
+    {
+      "PASS": true,
+      "check": "pinned installed package version: xgboost-cpu"
+    },
+    {
+      "PASS": true,
+      "check": "complete actual imported lab/helper bootstrap membership"
+    },
+    {
+      "PASS": true,
+      "check": "unchanged original evaluator binding: nfl_lab/cdf_engine.py"
+    },
+    {
+      "PASS": true,
+      "check": "unchanged original evaluator binding: nfl_lab/cdf_evaluation.py"
+    },
+    {
+      "PASS": true,
+      "check": "unchanged original evaluator binding: nfl_lab/source_matched_reporting.py"
+    },
+    {
+      "PASS": true,
+      "check": "exact reviewed pure/campaign/storage module: conformal_intervals.py"
+    },
+    {
+      "PASS": true,
+      "check": "exact reviewed pure/campaign/storage module: conformal_interval_campaign.py"
+    },
+    {
+      "PASS": true,
+      "check": "exact reviewed pure/campaign/storage module: operational_storage.py"
+    },
+    {
+      "PASS": true,
+      "check": "exact reviewed pure/campaign/storage module: owned_reference_batch.py"
+    },
+    {
+      "PASS": true,
+      "check": "exact corrected guard CPU/HWM/optional-period implementation"
+    },
+    {
+      "PASS": true,
+      "check": "sole accepted metadata receipt exact"
+    },
+    {
+      "PASS": true,
+      "check": "accepted metadata no semantic/model/calibration execution"
+    },
+    {
+      "PASS": true,
+      "check": "thirty CDF/three query/thirty train/three partition metadata exact"
+    },
+    {
+      "PASS": true,
+      "check": "all70 unique owned originals"
+    },
+    {
+      "PASS": true,
+      "check": "current owner registry/control/quota consistent"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: scored-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: scored-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: scored-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: forecast-freeze.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: source-manifest.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: source-manifest.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: source-manifest.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: rows.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2022.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2022.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2022.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2023.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2023.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2023.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2024.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2024.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2024.parquet"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: training-audit.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2022.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2022.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2022.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2023.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2023.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2023.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original full pin: 2024.json"
+    },
+    {
+      "PASS": true,
+      "check": "existing immutable owned/CAS inode: 2024.json"
+    },
+    {
+      "PASS": true,
+      "check": "owned original is within registered storage root: 2024.json"
+    },
+    {
+      "PASS": true,
+      "check": "no duplicate fixed metadata cells"
+    },
+    {
+      "PASS": true,
+      "check": "original query footer/population metadata 2022"
+    },
+    {
+      "PASS": true,
+      "check": "query9-clock/outcome-availability fields 2022"
+    },
+    {
+      "PASS": true,
+      "check": "original timezone-aware cutoff/kickoff/outcome clocks 2022"
+    },
+    {
+      "PASS": true,
+      "check": "exact earlier-only partition metadata 2022"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original query footer/population metadata 2023"
+    },
+    {
+      "PASS": true,
+      "check": "query9-clock/outcome-availability fields 2023"
+    },
+    {
+      "PASS": true,
+      "check": "original timezone-aware cutoff/kickoff/outcome clocks 2023"
+    },
+    {
+      "PASS": true,
+      "check": "exact earlier-only partition metadata 2023"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original query footer/population metadata 2024"
+    },
+    {
+      "PASS": true,
+      "check": "query9-clock/outcome-availability fields 2024"
+    },
+    {
+      "PASS": true,
+      "check": "original timezone-aware cutoff/kickoff/outcome clocks 2024"
+    },
+    {
+      "PASS": true,
+      "check": "exact earlier-only partition metadata 2024"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "complete original saved CDF footer 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "required prediction/label fields 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact context types and clocks before value join 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "optional period present both or absent both 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "earlier OOS training audit metadata 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "all33 forecasts/clocks plus30 postgate labels exact543312rowcap"
+    },
+    {
+      "PASS": true,
+      "check": "exact core provenance contract keys"
+    },
+    {
+      "PASS": true,
+      "check": "unchanged base/eligibility/exposed lane"
+    },
+    {
+      "PASS": true,
+      "check": "every core provenance digest has actual bound artifact"
+    },
+    {
+      "PASS": true,
+      "check": "original forecast/scored/query chain and no fatal forecast state"
+    },
+    {
+      "PASS": true,
+      "check": "original query belongs to frozen input chain 2022"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/rec"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2022/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original query belongs to frozen input chain 2023"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/rec"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2023/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original query belongs to frozen input chain 2024"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/pass_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/pass_td"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/pass_cmp"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/pass_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/pass_int"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/rush_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/rush_att"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/rec"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "original saved CDF belongs to scored freeze 2024/rush_rec_yd"
+    },
+    {
+      "PASS": true,
+      "check": "exact original category contract bound"
+    },
+    {
+      "PASS": true,
+      "check": "original primary roles/supports copied unchanged"
+    },
+    {
+      "PASS": true,
+      "check": "exact source policy membership not merely hash string"
+    },
+    {
+      "PASS": true,
+      "check": "fresh actual interval namespace absent/unconsumed"
+    },
+    {
+      "PASS": true,
+      "check": "sole actual new4 consumer terminal exact"
+    },
+    {
+      "PASS": true,
+      "check": "four new consumer software PASS only, no NFL validation"
+    },
+    {
+      "PASS": true,
+      "check": "exact future native300 argv with7caps2/noHOME"
+    },
+    {
+      "PASS": true,
+      "check": "fresh final actualPREEXEC receipt"
+    }
+  ],
+  "command_argv": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OPENBLAS_NUM_THREADS=2",
+    "OMP_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "VECLIB_MAXIMUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "300s",
+    "/workspace/nfl-direct-boosters-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/conformal_interval_guard_v1.py",
+    "--freeze",
+    "/workspace/website-methods-research/resumed/cdf-split-cqr-80-v1-20261024/CONFORMAL_INTERVAL_EXECUTION_FREEZE.json",
+    "--freeze-sha256",
+    "459832bc62fb01e2982a80e6343e87c2f9ebf930f489f1d0541c0bda460b8c47"
+  ],
+  "command_argv_SHA256": "268cd3a8b5718b360f4a7069bae188c0a1fa8f2464f17b9c42bdeae8bf4a664f",
+  "conditions": [
+    "Root must apply ONLY pending->PASS and import exact expected bytes using unchanged owned CAS admission. Independent owned readback and separately recorded single actual GO required.",
+    "Actual timing/identity/eligibility/sourcevalue checks, quota headroom and resource behavior remain runtime acceptance; metadata alone does not prove those data facts.",
+    "Preserve all failed dynamic trials and frozen programs; interval packet supplies exposed historical interval research only, no confirmation, promotion or website change."
+  ],
+  "consumer_software_receipt": {
+    "path": "/tmp/conformal-interval-consumer-software-v1-20261024/FINISHED.json",
+    "sha256": "646ff46fa8a3058267204298b510ce09f75d95ea52119d742ebace4766909955"
+  },
+  "counts": {
+    "environment_bindings": 14946,
+    "execution_bindings": 183,
+    "owned_input_metadata": 70,
+    "package_versions": 36,
+    "projectimports_NFL_semantic_rows_models_tests_calibration_resampling_CAS_network": 0
+  },
+  "expected_final_bytes": 209959,
+  "expected_final_sha256": "459832bc62fb01e2982a80e6343e87c2f9ebf930f489f1d0541c0bda460b8c47",
+  "owned_freeze_path": "/workspace/website-methods-research/resumed/cdf-split-cqr-80-v1-20261024/CONFORMAL_INTERVAL_EXECUTION_FREEZE.json",
+  "reviewer": "/root/resume_independent_reviewer",
+  "schema_version": "conformal-interval-v1-independent-actual-preexec",
+  "scope": "Exact code and metadata/hash/manifest/footer-metadata/ownership static acceptance only. All183 execution+14946 inherited file pins and36package versions authenticated. No projectimports/tests/original Parquet semantics/model parameters/base fits/predictions/calibration/labels/resampling/network/CAS writes.",
+  "self_highwater_bytes": 28676096,
+  "state": "STATIC_PREEXEC_PASS_ROOT_OWNED_TRANSFER_AND_EXPLICIT_GO_REQUIRED",
+  "static_assessments": [
+    "Mirrored every guard.load field: exact root/seal/policy/budgets/limits/Python-B/seven threadcaps, full parent environment and original package versions.",
+    "Native GNU300 executable+exactargv parent enforcement, early worker PDEATHSIG, no child/network/model routes, no_science/process-free threadpool guard retained.",
+    "Supervisor stdlib until childreap avoids duplicate pandas residency. Full reaped CPU floor and independent child/self HWM checks preserved; sampled combined peaks are not continuous maxima.",
+    "Strict hash-only exception covers original installed-package fixture bytes during authenticated pin traversal, restores in finally; parsers/unpicklers/model/science routes remain forbidden.",
+    "Prediction-only query/CDF projections, exact9 context/dtype/order/optionalperiod joins; outcome_available clock comes from original query chain. Row equality/actual clock values remain runtime checks, not claimed from footer metadata.",
+    "2022 labels calibrate2023; allten2023 radii/intervals persist before2023 label read, then fixed2023 calibration issues2024 before2024 labels. No2023 score can tune2024 radius.",
+    "Exact upper-order-statistic/nonnegative radius/countfloor/signed support and supported-played zero states preserved; original point/mean/median/p10/p90/fallbacks/laws unchanged.",
+    "All20 annual and10 pooled reports plus private player/position/team/opponent/history/fallback summaries reuse same cached rows. Missing/unknown/DNP remain coverage states; no sample inflation or subgroup qualification.",
+    "Same original _observed/_bootstrap500seed1703 game/week diagnostics; intervalscore/coverage/width only, no point accuracy/probability law or coverage guarantee.",
+    "Effective16MiB prewrite wrapper/global512MiB unchanged; pre-value conservative32B per planned intervalrow plus6MiBreserve checked, compact ordinal/bounds/status persisted, no raw feed redistribution."
+  ],
+  "wall_seconds_before_receipt_write": 2.674784246002673
+}

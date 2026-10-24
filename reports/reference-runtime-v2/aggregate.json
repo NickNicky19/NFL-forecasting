@@ -1,0 +1,546 @@
+{
+  "actual_frozen_code_head": "15d61f8f28df3c04b606f9abc0d1de4415f76681",
+  "binding_sha256": "a8d6f1f6193af9e12c084e280fc46dfeb8377c436941207b39d545a8a9b6fe4f",
+  "blocked_slots": 2,
+  "content_review": {
+    "final_aggregate_artifacts_accepted": 22,
+    "models_published": 0,
+    "private_exact_subset_manifest_sha256": "9bef54ef9164cb1516a4041633d9f816d2d66e685fbaa832dc1a226eb8484f67",
+    "provisional_core_models_CAS_raw_queries_rows_excluded": true,
+    "reviewed_files_map_sha256": "0ad06a9cb4c8b3534ac455d83d7a345a7ec9ed2e432fe7a056e769ba3546b111",
+    "reviewer": "/root/reference_independent_reviewer"
+  },
+  "coverage_by_position": {
+    "feature_prior_games_zero": 591,
+    "interpretation": "Incomplete matched history; genuine rookie/cold-start causes are not established.",
+    "order": [
+      "warm",
+      "sparse",
+      "prior_fallback"
+    ],
+    "pooled": {
+      "FB": [
+        0,
+        3,
+        6
+      ],
+      "QB": [
+        9,
+        12,
+        75
+      ],
+      "RB": [
+        5,
+        5,
+        146
+      ],
+      "TE": [
+        6,
+        23,
+        133
+      ],
+      "WR": [
+        7,
+        17,
+        234
+      ]
+    },
+    "recent": {
+      "FB": [
+        0,
+        3,
+        6
+      ],
+      "QB": [
+        12,
+        5,
+        79
+      ],
+      "RB": [
+        8,
+        2,
+        146
+      ],
+      "TE": [
+        11,
+        14,
+        137
+      ],
+      "WR": [
+        15,
+        9,
+        234
+      ]
+    },
+    "rows": {
+      "FB": 9,
+      "QB": 96,
+      "RB": 156,
+      "TE": 162,
+      "WR": 258
+    }
+  },
+  "environment": {
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "pyarrow": "23.0.1",
+      "pytest": "9.1.1",
+      "requests": "2.34.2",
+      "scikit-learn": "1.8.0",
+      "scipy": "1.17.0",
+      "threadpoolctl": "3.6.0"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "root_agent_backend_setting_exposed": false,
+    "threads": 2
+  },
+  "evidence_lane": "REAL_DATA_NONISSUED_RUNTIME_ACCEPTANCE",
+  "feature_cutoff_utc": "2026-10-23T11:27:49.536081+00:00",
+  "freeze_sha256": "ddf06b5f2d32ba95590aaf06f350468205185b94c223b394cf548fe38d8b4778",
+  "generated_at": "2026-10-23T13:10:43.944482+00:00",
+  "hosted_activation": "NOT_EXECUTED",
+  "identity_metadata_diagnosis": {
+    "CPU_seconds": 1.0,
+    "analyses": 1,
+    "available_history_slot_discrepancies": 0,
+    "crosswalk_followup": {
+      "CPU_seconds": 0.8,
+      "candidate_canonical_collisions": 0,
+      "claims": "Metadata coverage only; not usable history windows, prediction gain or new issued forecasts.",
+      "mapped_ids_with_history": 459,
+      "mapped_registry_only": 34,
+      "mapping_applied_to_frozen_inputs": false,
+      "numeric_normalization_additional_matches": 0,
+      "outer_ASCII_space_GSIS_IDs": 38,
+      "peak_RSS_MiB": 132.4,
+      "potential_historical_identity_coverage": 585,
+      "potential_without_history": 96,
+      "prefixed_IDs_exact_unique_mapping": 493,
+      "prefixed_ids_without_available_exact_mapping": 57,
+      "registry_ID_types": "Arrow string; 4550 nonnull Sleeper IDs are digit text",
+      "trimmed_history_matches": 36,
+      "trimmed_registry_matches": 38,
+      "wall_seconds": 0.644
+    },
+    "exact_history_matches": 90,
+    "historical_ID_namespace": "GSIS",
+    "historical_unique_players": 1625,
+    "mapping_applied": false,
+    "nonzero_prior_history_rows": 90,
+    "peak_RSS_MiB": 195.2,
+    "possible_unverified_string_format_matches": 36,
+    "query_ID_formats": {
+      "other": 38,
+      "sleeper_namespace": 550,
+      "strict_GSIS": 93
+    },
+    "target_values_fits_inference_new_scores_read_or_run": false,
+    "wall_seconds": 0.84,
+    "zero_prior_rows_without_exact_ID_match": 591
+  },
+  "input_files": {
+    "accepted_summary": {
+      "bytes": 59697,
+      "sha256": "c2e3ce38a667b083b68fa0bf5b573e9645d10bc37ad9b4849c93351d23f59c58"
+    },
+    "query_features": {
+      "bytes": 126570,
+      "sha256": "c14c85f3778c66359d4009dc34ba80f7075a12859417659bf6b1f5ef546ed8a5"
+    },
+    "query_metadata": {
+      "bytes": 254865,
+      "sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8"
+    },
+    "source_manifest": {
+      "bytes": 23272,
+      "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+    },
+    "training_features": {
+      "bytes": 5070165,
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+    }
+  },
+  "input_scope": {
+    "distinct_historical_games": 1950,
+    "feature_columns": 97,
+    "historical_rows": 62388,
+    "query_definition": "Broad future provider active-flag skill roster; not verified game-day or category-eligible participants.",
+    "query_games": 13,
+    "query_outcomes_known": false,
+    "query_rows": 681,
+    "supported_played_training_rows_per_package": 42219,
+    "unknown_and_missing_preserved": true
+  },
+  "negative_checks": [
+    {
+      "case": "changed_query",
+      "exception": "ArtifactError",
+      "state": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "changed_source_binding",
+      "exception": "ArtifactError",
+      "state": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "corrupt_wrapper",
+      "exception": "ArtifactError",
+      "state": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "wrong_target_method",
+      "exception": "ArtifactError",
+      "state": "EXPECTED_REJECTION"
+    }
+  ],
+  "new_HTTP_attempts": 0,
+  "new_accuracy_scores": 0,
+  "new_confirmation_observations": 0,
+  "new_official_forecasts": 0,
+  "package_count": 22,
+  "phases": [
+    "first_fit",
+    "same_process_replay",
+    "existing_artifact_reuse",
+    "fresh_process_replay",
+    "independent_reference"
+  ],
+  "query_coverage": [
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "pass_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "pass_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "pass_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "pass_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "pass_cmp"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "pass_cmp"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "pass_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "pass_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "pass_int"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "pass_int"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "rush_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "rush_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "rush_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "rush_att"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "rec"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "rec"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "rush_rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "rush_rec_yd"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 602,
+        "sparse": 33,
+        "warm": 46
+      },
+      "fallback_counts": {
+        "": 79,
+        "position_prior": 602
+      },
+      "method": "recent",
+      "target": "anytime_td"
+    },
+    {
+      "coverage": {
+        "cold_or_missing": 594,
+        "sparse": 60,
+        "warm": 27
+      },
+      "fallback_counts": {
+        "": 87,
+        "position_prior": 594
+      },
+      "method": "pooled",
+      "target": "anytime_td"
+    }
+  ],
+  "query_frame_sha256": "dd77fea10e58d73c9d23d8f59a126000bd404a831cf0014c2b034647938f1a40",
+  "registration_sha256": "a9a7fabfa80d0ebcefceeb4c848a17dcfe0e7838a21db1b7fa11d3cdae0a0518",
+  "remaining": [
+    "Qualify identity matching and current eligible population before hosted issuance.",
+    "Verified hosted schedule/retry/handover/rollover/fallback/rollback acceptance.",
+    "Source-matched CDF/HGB/count/role benchmark on exposed historical REG data.",
+    "Independent participant/played-zero evidence; exact PPR labels remain incomplete."
+  ],
+  "schema_version": "reference-runtime-public-aggregate-v2",
+  "scientific_qualification": "NONE; all12 decisions unchanged",
+  "software": {
+    "deselection": "Unchanged optional cached schema audit reads W6 outside this packet W1-5 boundary; earlier accepted result retained.",
+    "root_CPU_seconds": 84.127312,
+    "root_child_max_RSS_bytes": 373239808,
+    "root_deselected": 1,
+    "root_passed": 789,
+    "root_wall_seconds": 75.20821956099826,
+    "root_warnings": 2,
+    "threads": 2,
+    "warnings": "Two Python multiprocessing fork deprecation warnings in fictional concurrent storage test."
+  },
+  "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "state": "NONISSUED_REFERENCE_ACCEPTANCE_PASSED",
+  "storage_at_supervisor_snapshot": {
+    "limit_bytes": 536870912,
+    "logical_referenced_bytes": 88881211,
+    "physical_bytes": 33092682,
+    "unique_inodes": 318
+  },
+  "supplement_sha256": "761d0ce963341ae527e13b869bc21c86dabb6a420413134d5a001d284885d921",
+  "usage_inner": {
+    "CPU_seconds": 56.046438,
+    "RSS_accounting": "maximum single-process high-water; outer supervisor enforces combined process tree",
+    "estimator_fits": 0,
+    "max_RSS_bytes": 651677696,
+    "query_forecast_route_budget_charges": 78315,
+    "reference_parameter_fits": 22,
+    "successfully_returned_query_row_incidences": 75591,
+    "wall_seconds": 54.91673399800493
+  },
+  "usage_outer": {
+    "CPU_seconds": 65.373217,
+    "limit_reason": null,
+    "peak_combined_RSS_bytes": 797130752,
+    "returncode": 0,
+    "state": "COMPLETED",
+    "threads": 2,
+    "wall_seconds": 56.82781154999975
+  }
+}

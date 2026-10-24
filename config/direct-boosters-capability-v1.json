@@ -1,0 +1,26 @@
+{
+  "registration_id": "direct-booster-capability-v1-20261023",
+  "scope": "Install and verify CPU-only XGBoost, LightGBM and CatBoost in a separate environment before freezing a real-data six-pipeline screen. Software capability only, no NFL data, evaluation outcomes or accuracy claims.",
+  "environment": "/workspace/nfl-direct-boosters-venv",
+  "preserve": "Do not modify /workspace/nfl-venv, frozen source/code/model evidence or base numpy/pandas/scipy/scikit-learn/joblib/threadpoolctl versions. A separate --system-site-packages venv may inherit those exact versions. No GPU/CUDA/NCCL dependencies, paid services, keys or APIs.",
+  "packages": ["xgboost-cpu", "lightgbm", "catboost"],
+  "selection": "Use actual public PyPI metadata to choose the highest non-yanked CPU wheel compatible with this Python/platform and inherited base. Pin actual version, wheel URL/size/SHA256/license metadata before download. At most2 compatibility versions per library, never chosen using NFL performance. Only required absent CPU dependencies from declared METADATA may be added within caps; do not upgrade inherited base packages.",
+  "transport": "Public PyPI metadata and exact returned files.pythonhosted wheel URLs, no credentials/netrc or bypass. No automatic retry/implicit redirects. Cache once, verify actual advertised digest, retain failures/partial metadata. Local pip installation uses --no-index --no-deps exact verified wheel paths. Cache installation manifests privately under unchanged data quota; third-party software wheels/env have the separately stated software disk cap, not an exception for NFL evidence.",
+  "budgets": {
+    "invocations": 1,
+    "maximum_HTTP_transactions": 24,
+    "automatic_retries": 0,
+    "wheel_bytes": 536870912,
+    "metadata_bytes": 12582912,
+    "per_metadata_body_bytes": 2097152,
+    "software_environment_and_wheel_disk_bytes": 2147483648,
+    "wall_seconds": 240,
+    "CPU_seconds": 180,
+    "combined_RSS_bytes": 1073741824,
+    "numerical_threads": 2,
+    "fictional_fits": 9,
+    "actual_NFL_rows_fits_predictions_outcomes_or_scores": 0
+  },
+  "smoke": "At most3 deterministic fictional fits/library (count Poisson mean, signed .5 quantile, binary probability);8trees/depth2/seed1751/threads2, no validation selection/early stopping. Verify API/output shape/finite values/count nonnegativity/probability bounds/signed support, record actual prediction semantics. These are not NFL evidence or full distributions. Report missing/incompatible libraries once and continue independent available ones.",
+  "output": "Exact dependency/wheel/environment manifest, measured resources/HTTP/retained software bytes and concise compatibility report in isolated owner worktree. Do not write root execution ledger or research models. No production/default/scheduler/website/hosted change."
+}

@@ -1,0 +1,28 @@
+{
+  "registration_id": "source-matched-frozen-subgroups-v1-20261023",
+  "scope": "Supplemental descriptive aggregation, declared before the parent global forecast freeze and evaluation scoring. No new models, inference, sources, outcomes, selection or confirmation. Parent primary rules stay unchanged.",
+  "parent_policy_sha256": "7c834dff5515eab9384218a3144026ffe52933f79ffa70437a4eb9e1ae75324f",
+  "parent_actual_freeze_sha256": "332a07b5aaeb9abbaf7d9147cad816325711753379d8cc76fe93889746693736",
+  "inputs": "Only completed scored files under the parent's SCORED_ROWS_FROZEN manifest. Bind exact file hashes before aggregation. No source bodies, model parameters or 2025/2026 rows. Preserve failed, unrun and PPR slots.",
+  "population": "Pool exposed 2022-2024 rows from completed annual cells. Separate primary roles from all offered rows. Never pool targets or average annual errors. Preserve supported played zeros, signed yards, missing fields and unknown participation.",
+  "methods": ["leaf_cdf", "median_hgb", "count_A", "role_B", "recent", "pooled"],
+  "dimensions": ["player_id", "team", "opponent", "position", "history_state", "fallback", "outcome_state"],
+  "metrics": "Reuse role_boosting_campaign.summary and genuine binary log loss/reliability. Retain offered/scored counts, unique players/games/weeks, MAE/MSE/RMSE/bias/p90/p95/max, zero/negative/missing/fallback counts. CDF proper scores use existing scored law fields; never invent numeric HGB distributions or clip boundary probabilities.",
+  "interpretation": "Descriptive group results only. No rankings, winning player subsets, promotion or new candidate choices. Parent category game/week intervals remain the uncertainty reference; no extra intervals, IID resampling or player-level significance claims. Sparse groups stay explicit.",
+  "budgets": {
+    "invocations": 1,
+    "automatic_retries": 0,
+    "fits_predictions_HTTP_new_labels_search": 0,
+    "max_wall_seconds": 300,
+    "max_CPU_seconds": 450,
+    "max_RSS_bytes": 536870912,
+    "threads": 1,
+    "owner_fictional_test_wall_seconds": 120,
+    "owner_fictional_test_CPU_seconds": 180,
+    "root_fictional_test_wall_seconds": 120,
+    "max_shared_unique_file_bytes": 536870912
+  },
+  "memory": "Stream one target-method's completed annual files with narrow columns. Retain compact group aggregates only; no all-target row concatenation. Use the existing shared quota.",
+  "privacy": "Player groups and all source/forecast/scored/paired rows stay private. Public output may contain category/team/opponent/role/history/fallback aggregates and group coverage counts; no player IDs or individual player group metrics.",
+  "publication": "Independent read-only review of exact exports. No qualification, default, website or scheduler change. This adds no NFL observations. Freeze code and exact parent scored-file bindings before use."
+}

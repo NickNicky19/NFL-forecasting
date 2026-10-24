@@ -1,0 +1,10 @@
+{
+  "registration_id": "source-matched-report-recovery-v1-clarifications-20261023",
+  "parent_plan_sha256": "d5e040355be0dd07ea0af0c4182e4f7c1fcd386fd8277b52d6a3217dfc196e35",
+  "precision_correction": "The existing storage helper memoizes CAS body hashes by a full stat fingerprint. The measured repeated work is whole-store directory/stat/inode/quota validation and each selected reference digest; CAS bodies are rehashed when their fingerprints require it. Do not claim that every body was hashed 1407 times. Preserve this existing cache behavior.",
+  "observed_parent": {"state": "FAILED", "reason": "WALL_LIMIT", "wall_seconds": 1198.8151798130002, "CPU_seconds": 1269.298613, "peak_combined_RSS_bytes": 760012800, "frozen_packages": 198, "blocked_PPR_slots": 18, "estimator_attempts": 168, "reference_calls": 66, "query_or_law_rows": 1733424, "SCORE_CONSUMED": false, "scored_files": 0},
+  "original_forecast_freeze_sha256": "baa3ebf0d41202eb2ea41eb6a11ac9081f12c9b174e5bd8413914f3f7b9130f9",
+  "original_completion_sha256": "9fd5f44da6f7ce4cf0c6959e3f5db958f0c43ed2658eb7d5eb23d1f2ecbbd1e1",
+  "budget_semantics": "The original job failed and its limit is not raised. Recovery has a separate finite 600-wall/900-CPU reporting budget and performs zero fits. Report parent, recovery and total resource use separately. The cumulative inference/law ceiling remains the original 3M. No parent scoring phase occurred; recovery is the first numerical scoring pass.",
+  "versioning": "Keep all 82 original frozen code/input bindings unchanged through recovery. Add new modules instead of editing old storage, evaluator or source helpers. The isolated publication CLI fix must not be integrated until this old source chain has finished acceptance."
+}

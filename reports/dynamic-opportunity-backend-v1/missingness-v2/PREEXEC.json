@@ -1,0 +1,183 @@
+{
+  "accepted_semantics": [
+    "None/numeric IEEE NaN remain missing; raw finite never fills normalized missing and no missing value becomes zero.",
+    "Both present fields are validated even when the opposite side is missing; invalid or different finite counts remain rejected.",
+    "Explicit supported zero, played, DNP, unknown, identity/source pointers and elapsed slots remain separate and retained.",
+    "Raw NaN credit remains missing in the partial proxy; signed finite receiving yards/lateral zero-target credit remain legal.",
+    "Only source/helper version identifiers and missing-value handling change; original normalizer/qualifier/comparator/evaluator and six settings/54 packages stay unchanged."
+  ],
+  "checks": [
+    {
+      "check": "exact10rootbindings",
+      "pass_": true
+    },
+    {
+      "check": "pin:config/dynamic-opportunity-source-missingness-v2-software.json",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/__init__.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/dynamic_opportunity_core.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/dynamic_opportunity_history.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/dynamic_opportunity_source.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/dynamic_opportunity_source_helpers.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/dynamic_opportunity_study.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:nfl_lab/state.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:tests/test_dynamic_opportunity_source_missingness_v2.py",
+      "pass_": true
+    },
+    {
+      "check": "pin:tools/dynamic_opportunity_source_missingness_software_v2.py",
+      "pass_": true
+    },
+    {
+      "check": "exactPythonmetadata",
+      "pass_": true
+    },
+    {
+      "check": "exacttimeout",
+      "pass_": true
+    },
+    {
+      "check": "exactsoftwarebudget",
+      "pass_": true
+    },
+    {
+      "check": "all7caps2",
+      "pass_": true
+    },
+    {
+      "check": "rootregistrationpendingGO",
+      "pass_": true
+    },
+    {
+      "check": "freshoutputabsent",
+      "pass_": true
+    },
+    {
+      "check": "4NEWmethods_only",
+      "pass_": true
+    },
+    {
+      "check": "oneSHAplaceholder",
+      "pass_": true
+    },
+    {
+      "check": "exactnoHOMEargv",
+      "pass_": true
+    },
+    {
+      "check": "exactregisteredrecoveryenvelope",
+      "pass_": true
+    },
+    {
+      "check": "recoverycumulativeCPUwallbeloworiginal",
+      "pass_": true
+    },
+    {
+      "check": "priorreservationbudgetunchanged",
+      "pass_": true
+    },
+    {
+      "check": "combined48Miretentionunchanged",
+      "pass_": true
+    },
+    {
+      "check": "diagnosisidentity_only",
+      "pass_": true
+    }
+  ],
+  "command_argv": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OPENBLAS_NUM_THREADS=2",
+    "OMP_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "VECLIB_MAXIMUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "120s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/dynamic_opportunity_source_missingness_software_v2.py",
+    "--freeze",
+    "/tmp/dynamic-opportunity-source-missingness-v2-root-freeze.json",
+    "--freeze-sha256",
+    "dc8ce1ae84a6b453e9af072e37fdc7ff8d91f2193cca2a8d0144573bcb8c4753"
+  ],
+  "command_argv_sha256": "d598bb464b0d4fabdfde9e96bcfc9dde6482181f5a8ac62fed2ab8ce3b63757d",
+  "freeze": {
+    "bindings": 10,
+    "bytes": 5119,
+    "path": "/tmp/dynamic-opportunity-source-missingness-v2-root-freeze.json",
+    "sha256": "dc8ce1ae84a6b453e9af072e37fdc7ff8d91f2193cca2a8d0144573bcb8c4753"
+  },
+  "limitations": [
+    "Exactly four NEW fictional software methods only; no old suite or actual scientific recovery invocation authorized by this receipt.",
+    "The original owner-root text in the unchanged informational config remains owner metadata; authoritative registered freeze remaps actual root and all ten pins to integration.",
+    "Single-process highwater/traced limits and before-receipt interval, not continuous RSS certification.",
+    "Complete-environment reference, owned context aliases, remaining540s and combined campaign-quota guards still need exact later runtime review."
+  ],
+  "methods": [
+    "test_01_normalized_null_or_nan_keeps_played_slot_without_raw_fill",
+    "test_02_raw_missing_is_not_filled_and_explicit_zero_stays_supported",
+    "test_03_present_invalid_counts_and_finite_disagreements_still_reject",
+    "test_04_efficiency_missing_pairs_preserve_signed_yards_and_strict_conflicts"
+  ],
+  "recovery_envelope_static": {
+    "actual_recovery_code_not_yet_accepted": true,
+    "campaign_retention_bytes": 50331648,
+    "planned_remaining_prior_vectors": 13,
+    "previous_CPU_seconds": 45.684848418,
+    "previous_wall_seconds": 43.262377277998894,
+    "prior_reservations_spent": 2,
+    "remaining_CPU_seconds": 540,
+    "remaining_wall_seconds": 540,
+    "sha256": "126a065ffa2b1273b3a04a6d43ffd7a96fac3ffb6539b44d76185ebe358864c4"
+  },
+  "resources_before_receipt": {
+    "CPU_seconds": 0.089027948,
+    "ru_maxrss_bytes": 41811968,
+    "wall_seconds": 0.09296045899827732
+  },
+  "review_effects": {
+    "CAS_writes": 0,
+    "HTTP": 0,
+    "NFL_semantic_reads": 0,
+    "fits": 0,
+    "forecasts": 0,
+    "implementation_edits": 0,
+    "models": 0,
+    "project_imports": 0,
+    "scores": 0,
+    "tests": 0
+  },
+  "schema_version": "independent-source-missingness-v2-PREEXEC",
+  "state": "STATIC_PREEXEC_PASS_ROOT_SOFTWARE_GO_REQUIRED"
+}

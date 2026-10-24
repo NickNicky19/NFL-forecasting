@@ -1,0 +1,49 @@
+{
+  "CPU_seconds_before_receipt_write": 2.7016811560000003,
+  "CPU_wall_caps_seconds": 120,
+  "HTTP_source_model_semantic_reads_fits_scores_child_processes": 0,
+  "RSS_cap_bytes": 536870912,
+  "RSS_scope": "single process; known highwater and traced checks, not kernel-enforced continuous RSS",
+  "actual_backend_settings": "UNATTESTED",
+  "automatic_retries": 0,
+  "bindings": {
+    "config/raw-orphan-zero-audit-execution-v2.json": {
+      "bytes": 3026,
+      "sha256": "5a57b0374c8132c83f0955c3c1c43ac926df0a644b788d8214f0f3a6f99dfca9"
+    },
+    "config/raw-orphan-zero-audit-v2.json": {
+      "bytes": 5778,
+      "sha256": "5d62d59a4f9e28af7f9269e348127bb6476e67e700f696190f8cdaad306ac76e"
+    },
+    "nfl_lab/raw_orphan_zero_audit.py": {
+      "bytes": 18740,
+      "sha256": "52464fac42e301974952e2beb50f7fb13d74df9320e67673b1c4b39eeb9c4571"
+    },
+    "tests/test_raw_orphan_zero_audit.py": {
+      "bytes": 16151,
+      "sha256": "f682e15e1bab2fdedd759a0c8285b23768bc3074f72f364da4304f0d536d2bae"
+    },
+    "tools/raw_orphan_zero_audit_execute_v2.py": {
+      "bytes": 25660,
+      "sha256": "7264ecd2d43278a6aed8592aa5493bb19b711740e02740527a4ea3f5b1be8978"
+    }
+  },
+  "counts": {
+    "denied_effects": 0,
+    "lines": 7079662,
+    "resource_checks": 35399
+  },
+  "errors": 0,
+  "exception": null,
+  "failures": 0,
+  "invocations": 1,
+  "numerical_threads": 1,
+  "process_ru_maxrss_bytes": 101138432,
+  "requested_model": "GPT-6.1 Sol",
+  "requested_reasoning_effort": "Extra High",
+  "schema_version": "raw-orphan-zero-audit-fictional-checks-v2",
+  "state": "PASS",
+  "tests_run": 37,
+  "unittest_log": "test_duplicate_registration_keys_are_rejected (fictional_raw_orphan_zero_contracts.ExecutionChecks.test_duplicate_registration_keys_are_rejected) ... ok\ntest_sequential_guard_keeps_fail_closed_RSS_and_light_parent (fictional_raw_orphan_zero_contracts.ExecutionChecks.test_sequential_guard_keeps_fail_closed_RSS_and_light_parent) ... ok\ntest_unbound_registration_denies_before_reader_imports (fictional_raw_orphan_zero_contracts.ExecutionChecks.test_unbound_registration_denies_before_reader_imports) ... ok\ntest_all_original_population_roles_are_preserved (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_all_original_population_roles_are_preserved) ... ok\ntest_anytime_event_uses_only_rush_or_receive_counts (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_anytime_event_uses_only_rush_or_receive_counts) ... ok\ntest_anytime_positive_and_invalid_counts_are_not_zero (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_anytime_positive_and_invalid_counts_are_not_zero) ... ok\ntest_authentic_played_zero_candidate_requires_old_unknown (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_authentic_played_zero_candidate_requires_old_unknown) ... ok\ntest_boolean_count_is_invalid (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_boolean_count_is_invalid) ... ok\ntest_combined_missing_component_is_not_zero (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_combined_missing_component_is_not_zero) ... ok\ntest_combined_signed_cancellation_is_separate_derived_zero (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_combined_signed_cancellation_is_separate_derived_zero) ... ok\ntest_complete_67_97_plus_orphan_all_twelve_reconcile (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_complete_67_97_plus_orphan_all_twelve_reconcile) ... ok\ntest_duplicate_accepted_identity_is_not_selected (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_duplicate_accepted_identity_is_not_selected) ... ok\ntest_duplicates_are_ambiguous_with_no_row_choice (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_duplicates_are_ambiguous_with_no_row_choice) ... ok\ntest_every_original_raw_value_and_record_order_is_preserved (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_every_original_raw_value_and_record_order_is_preserved) ... ok\ntest_exact_PPR_blocked_for_every_known_player_and_orphan (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_exact_PPR_blocked_for_every_known_player_and_orphan) ... ok\ntest_existing_played_zero_is_not_counted_as_new_support (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_existing_played_zero_is_not_counted_as_new_support) ... ok\ntest_extra_primitive_or_missing_original_primitive_fails (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_extra_primitive_or_missing_original_primitive_fails) ... ok\ntest_inconsistent_support_metadata_stays_unresolved (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_inconsistent_support_metadata_stays_unresolved) ... ok\ntest_invalid_counts_keep_original_nonnegative_integer_support (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_invalid_counts_keep_original_nonnegative_integer_support) ... ok\ntest_malformed_nonnull_identity_or_context_still_fails (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_malformed_nonnull_identity_or_context_still_fails) ... ok\ntest_missing_accepted_metadata_does_not_invent_support (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_missing_accepted_metadata_does_not_invent_support) ... ok\ntest_missing_raw_match_is_not_zero_and_orphan_cannot_fill_it (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_missing_raw_match_is_not_zero_and_orphan_cannot_fill_it) ... ok\ntest_missing_raw_position_remains_separate_and_not_copied (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_missing_raw_position_remains_separate_and_not_copied) ... ok\ntest_nan_is_missing_and_infinity_is_invalid (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_nan_is_missing_and_infinity_is_invalid) ... ok\ntest_no_input_is_mutated (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_no_input_is_mutated) ... ok\ntest_null_target_is_missing_not_zero (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_null_target_is_missing_not_zero) ... ok\ntest_offered_accepted_context_conflict_blocks_new_support (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_offered_accepted_context_conflict_blocks_new_support) ... ok\ntest_original_arithmetic_functions_are_called_directly (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_original_arithmetic_functions_are_called_directly) ... ok\ntest_original_strict_helper_still_rejects_missing_identity (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_original_strict_helper_still_rejects_missing_identity) ... ok\ntest_original_structural_inventory_is_required_without_filters (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_original_structural_inventory_is_required_without_filters) ... ok\ntest_orphan_nonzero_primitives_never_supply_a_player_value (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_orphan_nonzero_primitives_never_supply_a_player_value) ... ok\ntest_public_aggregate_contains_only_counts_and_no_identifiers (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_public_aggregate_contains_only_counts_and_no_identifiers) ... ok\ntest_raw_offered_conflict_cannot_use_its_primitive (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_raw_offered_conflict_cannot_use_its_primitive) ... ok\ntest_signed_yardage_stays_legal (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_signed_yardage_stays_legal) ... ok\ntest_union_and_coverage_cannot_be_replaced_with_complete_cases (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_union_and_coverage_cannot_be_replaced_with_complete_cases) ... ok\ntest_unknown_offered_position_is_not_backfilled (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_unknown_offered_position_is_not_backfilled) ... ok\ntest_witness_absence_is_not_DNP_or_new_zero_support (fictional_raw_orphan_zero_contracts.ZeroSupportChecks.test_witness_absence_is_not_DNP_or_new_zero_support) ... ok\n\n----------------------------------------------------------------------\nRan 37 tests in 1.785s\n\nOK\n",
+  "wall_seconds_before_receipt_write": 2.70511118399736
+}

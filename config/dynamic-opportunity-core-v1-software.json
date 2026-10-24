@@ -1,0 +1,33 @@
+{
+  "registration_id": "dynamic-opportunity-core-v1-software-20261023",
+  "state": "SOFTWARE_PACKET_PREPARED_AWAIT_ROOT_GO",
+  "draft_design_commit": "060087421aee5ce8d05513dcf320edf6111d64b5",
+  "scope": "Pure deterministic arithmetic and strict JSON contracts only: train-only individual repeated-exposure prior, paired-count validation, smooth filter and bounded change-point mixture. No source adapter, real NFL semantic reads, model loads, acquisition, actual forecasting study, CAS writes or changes to existing frozen methods.",
+  "version": "dynamic-opportunity-core-v1-20261023",
+  "settings": [
+    {"id":"smooth-H2-k25","family":"smooth","H":2,"kappa":25,"q":0},
+    {"id":"smooth-H2-k100","family":"smooth","H":2,"kappa":100,"q":0},
+    {"id":"smooth-H8-k25","family":"smooth","H":8,"kappa":25,"q":0},
+    {"id":"smooth-H8-k100","family":"smooth","H":8,"kappa":100,"q":0},
+    {"id":"changepoint-H8-k100-q1of16","family":"changepoint","H":8,"kappa":100,"q":0.0625},
+    {"id":"changepoint-H8-k100-q1of4","family":"changepoint","H":8,"kappa":100,"q":0.25}
+  ],
+  "forecast_transition": "Explicit observation-free one-team-game-ahead transition after up to eight prior team-game slots. Smooth deviations decay once for the forecast game; change-point components split/reset once for the forecast game. At the initial history boundary reset/continuation are the identical prior, represented once exactly. Eight prior slots plus forecast transition require at most nine components, with no tail merge or trimming. Zero history remains the unchanged prior.",
+  "conditioning": "Conditional expected-count hypothesis only; internal beta-binomial weights are not a calibrated full-game count law, injury/playing probability or coherent joint player allocation.",
+  "caller_contract": "Exact latest eligible same-team/season/spell team-game selection is asserted by caller, never authenticated by core. Unknown/DNP/missing slots consume time and do not update counts. Positive qualified observed pairs need earlier availability; post-cutoff provided values reject. Team totals/rights/source/participation completeness require a future separately qualified adapter.",
+  "prior": "Earlier-season supported played rows only, before declared training cutoff; sum player counts divided by sum team exposure on those SAME individual rows. Repeated team denominators retained. Unknown rows not zero; invalid pair/identity/duplicate/clock rejects formation. Missing, nonpositive-denominator or boundary prior requires original CDF fallback, without epsilon/clipping.",
+  "budgets": {
+    "new_fictional_invocations": 1,
+    "maximum_new_checks": 40,
+    "wall_seconds": 120,
+    "CPU_seconds": 120,
+    "combined_RSS_bytes": 536870912,
+    "numerical_threads": 2,
+    "NFL_semantic_reads_model_loads_real_fits_predictions_HTTP_CAS": 0,
+    "worker_child_processes": 0,
+    "existing_suite_reruns": 0
+  },
+  "files": ["nfl_lab/dynamic_opportunity_core.py", "tests/test_dynamic_opportunity_core.py", "tools/dynamic_opportunity_core_software.py", "config/dynamic-opportunity-core-v1-software.json"],
+  "actual_dynamic_study": "UNREGISTERED_UNCONSUMED. Root ledger GO required before sole fictional invocation. Any future study must separately adopt this exact one-step-ahead version and source/evaluation registration. Original RB, rec-half and passing H3 rules unchanged.",
+  "actual_agent_settings": "Requested GPT-6.1 Sol Extra High; backend model/effort not independently attested."
+}

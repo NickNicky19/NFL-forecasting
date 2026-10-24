@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Explicit opt-in NFL research point; not the operational mean/issuance schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["method", "point", "state", "reason", "history_game_ids", "context", "calculated_at", "calculation_lane", "input_sha256", "source_sha256", "code_sha256", "point_semantics", "target", "qualified_for_default", "original_runner_reproduced", "recorded_pregame", "upstream_publication_verified", "uncertainty"],
+  "properties": {
+    "method": {"const": "website-held-attempts-h3-ypa-research-v1"},
+    "point": {"type": ["number", "null"]},
+    "state": {"enum": ["CANDIDATE_ARITHMETIC", "UNCHANGED_WEBSITE_FALLBACK", "ABSTAIN"]},
+    "reason": {"type": "string", "minLength": 1},
+    "history_game_ids": {"type": "array", "items": {"type": "string"}, "maxItems": 3},
+    "context": {"type": "object"},
+    "calculated_at": {"type": "string", "format": "date-time"},
+    "calculation_lane": {"enum": ["INVALID_CONTEXT_RESEARCH", "RETROSPECTIVE_ARITHMETIC", "AFTER_CUTOFF_UNRECORDED_ARITHMETIC", "PREGAME_UNRECORDED_ARITHMETIC"]},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "code_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_sha256": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+    "point_semantics": {"const": "fixed_opportunity_rate_point; mean_or_median_unverified"},
+    "target": {"const": "pass_yd"},
+    "qualified_for_default": {"const": false},
+    "original_runner_reproduced": {"const": false},
+    "recorded_pregame": {"const": false},
+    "upstream_publication_verified": {"const": false},
+    "uncertainty": {"type": "null"}
+  },
+  "allOf": [
+    {"if": {"properties": {"state": {"const": "ABSTAIN"}}}, "then": {"properties": {"point": {"type": "null"}}}, "else": {"properties": {"point": {"type": "number"}}}},
+    {"if": {"properties": {"state": {"const": "CANDIDATE_ARITHMETIC"}}}, "then": {"properties": {"history_game_ids": {"minItems": 3, "uniqueItems": true}}}}
+  ]
+}

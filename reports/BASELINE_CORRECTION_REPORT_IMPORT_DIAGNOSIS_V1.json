@@ -1,0 +1,75 @@
+{
+  "CPU_seconds_before_write": 4.291632858000001,
+  "blocked_events": [
+    {
+      "Python_code_frames": [
+        {
+          "code_filename": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py",
+          "function": "__init__",
+          "line": 233
+        },
+        {
+          "code_filename": "/workspace/nfl-venv/lib/python3.12/site-packages/urllib3/util/connection.py",
+          "function": "_has_ipv6",
+          "line": 126
+        },
+        {
+          "code_filename": "/workspace/nfl-venv/lib/python3.12/site-packages/urllib3/util/connection.py",
+          "function": "<module>",
+          "line": 137
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap>",
+          "function": "_call_with_frames_removed",
+          "line": 488
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap_external>",
+          "function": "exec_module",
+          "line": 999
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap>",
+          "function": "_load_unlocked",
+          "line": 935
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap>",
+          "function": "_find_and_load_unlocked",
+          "line": 1331
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap>",
+          "function": "_find_and_load",
+          "line": 1360
+        },
+        {
+          "code_filename": "/workspace/nfl-venv/lib/python3.12/site-packages/urllib3/util/__init__.py",
+          "function": "<module>",
+          "line": 4
+        },
+        {
+          "code_filename": "<frozen importlib._bootstrap>",
+          "function": "_call_with_frames_removed",
+          "line": 488
+        }
+      ],
+      "event": "socket.__new__",
+      "phase": "IMPORT_EXACT_FICTIONAL_MODULE_WITHOUT_TESTS"
+    }
+  ],
+  "completed_phases": [
+    "IMPORT_EXACT_FICTIONAL_MODULE_WITHOUT_TESTS",
+    "ENTER_EXIT_EMPTY_REPORT_ONLY_GUARD"
+  ],
+  "exception_type_and_phase_only": null,
+  "new_tests_fits_predictions_scores_NFL_semantic_model_network_worker_children_CAS": 0,
+  "no_arguments_raw_values_locals_or_source_lines_recorded": true,
+  "original_software_state": "FAILED_UNCHANGED",
+  "plan_sha256": "236bd6d7eec928c0e1e3494a882ca868a075b0660f623a4d8b04c35464e241d7",
+  "resource_checks": 11573,
+  "ru_maxrss_bytes": 172900352,
+  "schema_version": "baseline-correction-report-import-diagnostic-v1",
+  "state": "DIAGNOSTIC_COMPLETE",
+  "wall_seconds_before_write": 4.292803756001376
+}

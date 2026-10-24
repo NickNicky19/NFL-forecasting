@@ -1,0 +1,20 @@
+{
+  "method": "website-held-attempts-h3-ypa-research-v1",
+  "state": "IMPLEMENTED_UNQUALIFIED_RECONSTRUCTION",
+  "enabled_by_default": false,
+  "operational_capture": false,
+  "original_runner_reproduced": false,
+  "target": "pass_yd",
+  "season_type": "REG",
+  "period": "full_game_with_ot",
+  "formula": "unchanged_same_receipt_website_pass_att * sum(selected_H3_pass_yd) / sum(selected_H3_pass_att)",
+  "history": "Exactly three latest qualified current-team/current-season appearances; no replacement around unknown/missing/invalid appearances. DNP may skip, played zero stays, team or roster gap stops.",
+  "fallback": "Exact original website pass_yd; invalid original source/point/identity/cutoff => abstain. No offset, cap, floor, attempt challenger or window change.",
+  "point_semantics": "fixed_opportunity_rate_point; mean_or_median_unverified",
+  "primary_metric_for_existing_reconstruction": "MAE",
+  "optimizer_fits": 0,
+  "future_confirmation": "Not issued or registered by this inference package; applicable independent confirmation/promotion rules remain unchanged.",
+  "source_contract": "Caller-authenticated source documents with local pre-cutoff capture clocks. Integrity/sequence checks do not prove provider truth or upstream publication.",
+  "output_schema": "schemas/research-point-v1.json",
+  "provenance": "New portable implementation of the reviewed fixed_methods.py arithmetic recipe, SHA256 0f4bbc4a253f6fdebc1f861ba321209805a9609f50c88b97c3613165eb6cd2b6; not the missing original runner."
+}

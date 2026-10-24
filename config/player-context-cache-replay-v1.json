@@ -1,0 +1,66 @@
+{
+  "registration_id": "player-context-authenticated-cache-replay-v1-20261023",
+  "scope": "One cache-only real-source software qualification of the new opt-in context adapter. Not fresh acquisition, original pregame availability, a forecast experiment, model inference or an accuracy comparison.",
+  "original_source_trial": "player-context-intake-qualification-v1-20261023 remains FAILED: missing requests before HTTP, consumed cap preserved; no network retry.",
+  "original_failed_manifest_sha256": "a339dc35372e448fb1780d052692a752ab897964ac2673480a5854ebf757ee81",
+  "sources": [
+    {
+      "source_id": "sleeper_nfl_players",
+      "body_path": "/workspace/NFL-forecasting/data/raw/live/2026-10-22/players.json",
+      "sha256": "db9107e0b66ee874552fd59acee9423f68966f13e26e901bb196c180aa5eb149",
+      "body_bytes": 14663969,
+      "origin_receipt_sha256": "17ab3bbc3611532dc4680f1c0cbe201200c7ea5b5d0cf48667ad24da2c7cf768",
+      "source_vintage_at": "2026-10-22T12:21:24.999808+00:00"
+    },
+    {
+      "source_id": "espn_nfl_public_news",
+      "body_path": "/workspace/NFL-forecasting/data/raw/espn_nfl_news_2026-10-22.json",
+      "sha256": "2fb6d6d9de8fe1f74159b345e59d4c1d6229b8d2536c7946a14497b1f7a4f696",
+      "body_bytes": 200091,
+      "origin_receipt_sha256": "a84b28b6c8587b1f4f06dbd179df9c822e1502f29f51f87c854c431ffadb2481",
+      "source_vintage_at": "2026-10-22T12:51:47.397780+00:00"
+    }
+  ],
+  "wrapper_rules": [
+    "Verify original body and receipt hashes/bytes without altering original files.",
+    "Bind exact immutable origin receipt bytes and source vintage to each new wrapper/manifest.",
+    "All new wrapper clocks are actual replay-processing clocks; never replace missing original clocks or claim old eligibility.",
+    "Require freshness from original source vintage; later wrapping cannot rejuvenate stale input.",
+    "Availability no earlier than new wrapper capture; strict cutoff equality/future rejection.",
+    "Unknown upstream source publication remains unknown; news article publication/update checked against original source retrieval."
+  ],
+  "identity_rules": [
+    "Use exact intrinsic Sleeper/GSIS/ESPN bindings only; no name joins, no extra registry acquisition.",
+    "Record ambiguous/missing/conflicting IDs and teams explicitly.",
+    "Player status/injury metadata never establishes game-specific participation or DNP; no arbitrary injury effects.",
+    "Article categories are mentions, not injury-claim subjects or verified numerical features."
+  ],
+  "metrics": [
+    "All provider records and skill-role counts",
+    "Explicit absent/null/empty/value field states",
+    "Exact-ID coverage/collisions/quarantine",
+    "Article and mention provenance/clock/freshness/missingness states",
+    "Actual adapter selection eligibility before/equal/after wrapper capture and after fixed freshness horizons"
+  ],
+  "budgets": {
+    "new_HTTP_attempts": 0,
+    "source_wrapper_invocations": 1,
+    "max_wrapper_wall_seconds": 60,
+    "max_wrapper_CPU_seconds": 30,
+    "max_wrapper_RSS_bytes": 536870912,
+    "adapter_qualification_invocations": 1,
+    "max_adapter_wall_seconds": 120,
+    "max_adapter_CPU_seconds": 120,
+    "max_adapter_RSS_bytes": 1073741824,
+    "max_private_packet_bytes": 67108864,
+    "threads": 2,
+    "new_fits": 0,
+    "new_model_predictions": 0,
+    "new_accuracy_scores": 0
+  },
+  "software_budget": "Original new-module software-test budget remains180wall/240CPU seconds, max2threads/1GiB; no reset from this replay.",
+  "code_freeze": "Final source adapter code hash, manifest hash and this plan hash must be frozen before root's one actual-source adapter qualification. Review source-wrapper plan before wrapper/profiling.",
+  "target_effects": "All12 remain untested by this intake packet; prior numerical matrices unchanged. Exact-PPR/original-RB/rec-half blocks and registrations unchanged.",
+  "publication": "Reviewed code, fictional fixtures, hashes and aggregate coverage/state counts only; no source/player/article text rows or IDs.",
+  "output_directory": "/workspace/website-methods-research/resumed/availability-intake-20261023/CACHE_REPLAY_01"
+}

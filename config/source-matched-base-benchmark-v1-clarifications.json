@@ -1,0 +1,9 @@
+{
+  "supplements_policy_sha256": "7c834dff5515eab9384218a3144026ffe52933f79ffa70437a4eb9e1ae75324f",
+  "before_any_actual_fit_or_query_prediction": true,
+  "methods_metrics_partitions_and_budgets_unchanged": true,
+  "chronological_label_roles": "TRAIN-role reads for a later fold necessarily include exposed earlier-fold outcomes: 2023 training may use 2022 only after 2022 predictions freeze, and 2024 training may use 2023 only after 2023 predictions freeze. QUERY-role reads are target-free and participation unknown. EVALUATION/SCORING-role target reads wait for the global prediction/artifact freeze and one SCORE_CONSUMED receipt. Never claim that expanding chronological training did not read earlier outcomes.",
+  "resource_ownership": "One serial actual model job with at most two threads. Two isolated contributors implement orchestrator and pure reporting helper; they do no actual NFL/model work before root freeze. Root alone writes ledger and runs the real job. Owner fictional software ceilings apply separately; their cumulative resources and overlapping tests are reported.",
+  "query_incidences": "The three-million ceiling counts actual test-query prediction and recomputed CDF/law scoring requests, including prior-law forecasts. Alias references without model calls and saved-row comparisons are reported separately. Internal earlier-training fitted/residual arrays are parameter work, counted and reported separately, never NFL validation observations.",
+  "privacy": "All serialized joblibs, raw training bindings, empirical outcome supports, feature/query/forecast/scored/paired rows stay private under the existing shared quota. Public report contains aggregate cells, source hashes and limitations only. No new activation follows."
+}

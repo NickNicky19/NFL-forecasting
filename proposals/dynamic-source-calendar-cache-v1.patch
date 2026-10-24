@@ -1,0 +1,117 @@
+--- a/nfl_lab/dynamic_opportunity_source.py
++++ b/nfl_lab/dynamic_opportunity_source.py
+@@ -21,6 +21,7 @@
+ from .state import digest, utc
+ 
+ VERSION = "dynamic-opportunity-source-v2-20261024"
++CALENDAR_CACHE_VERSION = "dynamic-source-calendar-cache-v1-20261024"
+ YEARS = tuple(range(2019, 2025))
+ TASK_FIELDS = {"rush_att": ("carries", "rush_att"), "rec_tgt": ("targets", "rec_tgt")}
+ CALENDAR_COLUMNS = ("game_id", "season", "week", "game_type", "gameday", "gametime", "away_team", "home_team")
+@@ -124,7 +125,14 @@
+ def credit_rows(records, calendar, *, task, cutoff, statistics_sha256_by_season):
+     """Access a primitive only after its exact calendar availability gate."""
+     require(task in TASK_FIELDS, "declared task required")
+-    periods, _ = index_calendar(calendar)
++    return _credit_rows_indexed(records, index_calendar(calendar), task=task, cutoff=cutoff,
++        statistics_sha256_by_season=statistics_sha256_by_season)
++
++
++def _credit_rows_indexed(records, indexes, *, task, cutoff, statistics_sha256_by_season):
++    """Private one-call cache consumer; public entry always fully validates."""
++    require(task in TASK_FIELDS, "declared task required")
++    periods, _ = indexes
+     output, unassigned = [], []
+     raw_field = TASK_FIELDS[task][0]
+     for row in records:
+@@ -149,7 +157,13 @@
+ 
+ def membership_for_offer(offer, calendar, roster_records, *, membership_manifest_sha256):
+     """Only an explicit Week1 anchor; no inferred first entry or transaction."""
+-    periods, games = index_calendar(calendar)
++    return _membership_for_offer_indexed(offer, index_calendar(calendar), roster_records,
++        membership_manifest_sha256=membership_manifest_sha256)
++
++
++def _membership_for_offer_indexed(offer, indexes, roster_records, *, membership_manifest_sha256):
++    """Caller-owned batch indexes; every original per-offer check remains."""
++    periods, games = indexes
+     cutoff = utc(offer["cutoff_utc"])
+     player, team, year = offer["player_id"], offer["team"], offer["season"]
+     observed = defaultdict(list); orphan = 0
+@@ -193,7 +207,14 @@
+ def qualified_player_rows(raw_records, history_records, calendar, *, task, cutoff):
+     """Reuse the frozen permitted playing qualifier; never fill sparse fields."""
+     require(task in TASK_FIELDS, "declared task required")
+-    periods, _ = index_calendar(calendar)
++    return _qualified_player_rows_indexed(raw_records, history_records, index_calendar(calendar),
++        task=task, cutoff=cutoff)
++
++
++def _qualified_player_rows_indexed(raw_records, history_records, indexes, *, task, cutoff):
++    """Reuse only validated calendar structure; no cached qualification state."""
++    require(task in TASK_FIELDS, "declared task required")
++    periods, _ = indexes
+     raw = defaultdict(list)
+     for row in raw_records:
+         team = canonical_team(row["team"])
+@@ -353,6 +374,9 @@
+     """One common-cutoff batch; only the explicit new historical adapter runs."""
+     require(offers and len({utc(o["cutoff_utc"]) for o in offers}) == 1, "one nonempty common-cutoff batch required")
+     cutoff = offers[0]["cutoff_utc"]
++    # A private snapshot lives for this one common-cutoff call only. It is not
++    # shared across source versions, seasons, cutoffs or subsequent invocations.
++    calendar = deepcopy(calendar)
+     years = {g["season"] for g in calendar}
+     require(len(years) == 1 and {o["season"] for o in offers} == years, "one complete source-season calendar per request batch")
+     raw_records = [r for r in raw_records if r["season"] in years]
+@@ -363,25 +387,45 @@
+         records=[{k: row.get(k) for k in (*ROSTER_COLUMNS, "source_row_id", "source_body_sha256")} for row in roster_records],
+         availability="strict reconstructed kickoff+7days<query cutoff", boundary="explicit_week1_season_anchor_only")
+     binding = seal_source_binding(plan, calendar, membership_manifest)
++    indexes = index_calendar(calendar)
++    roster_by_player = defaultdict(list)
++    roster_index_usable = True
++    for row in roster_records:
++        # Preserve order, duplicates, null IDs, every team and every status.
++        # Team-keyed indexing would hide conflicts and is expressly forbidden.
++        try:
++            roster_by_player[row.get("gsis_id")].append(row)
++        except TypeError:
++            # An unindexable source identity uses the original full scan, not
++            # a dropped row, repaired ID or newly invented eligibility rule.
++            roster_index_usable = False
+     derived, members, audits = [], [], []
+     for offer in offers:
+-        spell, selected_members, audit = membership_for_offer(offer, calendar, roster_records,
++        selected_roster = roster_records
++        if roster_index_usable:
++            try:
++                selected_roster = roster_by_player.get(offer["player_id"], ())
++            except TypeError:
++                pass
++        spell, selected_members, audit = _membership_for_offer_indexed(offer, indexes,
++            selected_roster,
+             membership_manifest_sha256=binding["membership_manifest_sha256"])
+         derived.append({**offer, "spell": spell, "task": task})
+         members.extend(selected_members); audits.append(dict(offer_id=offer["offer_id"], **audit))
+     # Distinct offers for a player share the exact membership record, never
+     # inflate adapter multiplicity. Conflicting records remain separate.
+     unique_members = {digest(row): row for row in members}
+-    credits, unassigned = credit_rows(raw_records, calendar, task=task, cutoff=cutoff,
++    credits, unassigned = _credit_rows_indexed(raw_records, indexes, task=task, cutoff=cutoff,
+                                      statistics_sha256_by_season=binding["statistics_sha256_by_season"])
+-    players = qualified_player_rows(raw_records, history_records, calendar, task=task, cutoff=cutoff)
++    players = _qualified_player_rows_indexed(raw_records, history_records, indexes, task=task, cutoff=cutoff)
+     from .dynamic_opportunity_history import build_recorded_proxy_panel
+     from .dynamic_opportunity_history_replay_v2 import build_historical_offer_windows
+     panel = build_recorded_proxy_panel(calendar, credits, task=task, source_binding=binding,
+         asof_utc=cutoff, requested_player_ids=[o["player_id"] for o in offers])
+     result = build_historical_offer_windows(derived, calendar, list(unique_members.values()), players, panel,
+         task=task, source_binding=binding, replay_policy=replay_policy)
+-    result.update(producer_version=VERSION, membership_manifest_sha256=binding["membership_manifest_sha256"],
++    result.update(producer_version=VERSION, runtime_optimization_version=CALENDAR_CACHE_VERSION,
++                  membership_manifest_sha256=binding["membership_manifest_sha256"],
+                   producer_membership_audit=audits, unmapped_source_credit_rows=unassigned,
+                   source_binding=binding, no_new_sparse_zero_semantics=True)
+     return result

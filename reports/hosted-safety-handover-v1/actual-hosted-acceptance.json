@@ -1,0 +1,166 @@
+{
+  "schema_version": "hosted-safety-actual-acceptance-v1",
+  "evidence_lane": "ACTUAL_HOSTED_GUARD_ONLY_NO_FORECAST_CAPTURE",
+  "repository": "NickNicky19/NFL-forecasting",
+  "pull_request": 2,
+  "head": "16312015f881fde84c2ecdaa06c59b788151af71",
+  "merge_commit": "0c4d8a30ac8d893a599bdd7518fb33dca47e50cb",
+  "tree": "365e3d21fc749772b77f0de6f1b065043eb4604f",
+  "merge_method": "ordinary_merge_expected_head_no_force_no_admin",
+  "run": {
+    "id": 40027153318,
+    "url": "https://github.com/NickNicky19/NFL-forecasting/actions/runs/40027153318",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "failure",
+    "attempt": 1
+  },
+  "receipt_from_job_log": {
+    "acquisition_started": false,
+    "capture_started": false,
+    "exit_code": 78,
+    "new_fits_predictions": 0,
+    "observed_at": "2026-10-23T21:29:39.491403+00:00",
+    "reasons": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "PERMITTED_SOURCE_POLICY_FILE_ABSENT",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "repository": "NickNicky19/NFL-forecasting",
+    "run_attempt": "1",
+    "run_id": "40027153318",
+    "scheduler": "EXISTING_CRON_AND_SINGLE_WRITER_RETAINED",
+    "schema_version": "lab-hosted-safety-readiness-v1",
+    "scientific_confirmation": "NO_NEW_EVIDENCE",
+    "source_commit": "0c4d8a30ac8d893a599bdd7518fb33dca47e50cb",
+    "state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+    "state_publication_started": false
+  },
+  "job": {
+    "id": 120666104502,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Enforce source and publication handover safety",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 3
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 4
+      },
+      {
+        "name": "Install exact tested dependencies",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 5
+      },
+      {
+        "name": "Acceptance tests",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 6
+      },
+      {
+        "name": "Determine cadence",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 7
+      },
+      {
+        "name": "Restore derived evidence state",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 8
+      },
+      {
+        "name": "Capture and grade",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 9
+      },
+      {
+        "name": "Grade recorded games without pregame issuance",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 10
+      },
+      {
+        "name": "Bounded weekly experiments",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 11
+      },
+      {
+        "name": "Replay immutable records",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 12
+      },
+      {
+        "name": "Persist only lab-derived forecasts and corrections",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 13
+      },
+      {
+        "name": "Upload derived health reports",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14
+      },
+      {
+        "name": "Upload exact public-safe readiness receipt",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 30
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31
+      }
+    ]
+  },
+  "artifact": {
+    "id": 12533202096,
+    "name": "lab-readiness-40027153318-1",
+    "bytes": 647,
+    "zip_SHA256_from_job_log": "5f9d7ff4b861d412f7ba27140ed98432345adec8f259ca61ec92dd71ca5d1e1a",
+    "expires_at": "2026-11-06T21:29:39Z",
+    "files_uploaded_from_log": 1,
+    "downloaded_or_content_verified": false
+  },
+  "scope": "Existing scheduler and single-writer retained; zero acquisition/capture/fits/predictions/state publication. Only coarse readiness receipt uploaded. Artifact content not downloaded; receipt authenticated through hosted job log and exact source tree. No website changes, model promotion or qualified handover.",
+  "pending": [
+    "Owner decision for genuinely private cross-run storage",
+    "Qualified source/horizon/consumer/replay/fallback/rollback handover",
+    "Actual successful capture/grading/retry/idempotency/missed-schedule tests"
+  ],
+  "settings": {
+    "requested": "GPT-6.1 Sol Extra High",
+    "actual_backend": "UNATTESTED"
+  }
+}
