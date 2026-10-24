@@ -566,7 +566,7 @@ jobs:
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py produce --execute "${route_args[@]}"
   genuine-hosted-selected-restore-v1:
     needs: genuine-hosted-fixed-build-restore-v1
-    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1
+    if: ${{ !cancelled() && needs.genuine-hosted-fixed-build-restore-v1.result == 'success' && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     permissions:
@@ -613,7 +613,7 @@ jobs:
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py restore --execute "${route_args[@]}"
   genuine-hosted-selected-export-v1:
     needs: genuine-hosted-selected-restore-v1
-    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1
+    if: ${{ !cancelled() && needs.genuine-hosted-selected-restore-v1.result == 'success' && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
