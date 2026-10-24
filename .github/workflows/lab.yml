@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2]
         default: daily
   push:
     branches: [main]
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -233,3 +233,82 @@ jobs:
           else
             exit 1
           fi
+  private-draft-v2-write:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'private-draft-canary-v2' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      binding_json: ${{ steps.canary.outputs.binding_json }}
+      binding_sha256: ${{ steps.canary.outputs.binding_sha256 }}
+      before_json: ${{ steps.canary.outputs.before_json }}
+      before_sha256: ${{ steps.canary.outputs.before_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Initialize only one harmless draft and pin in a fresh process
+        id: canary
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          CANARY_MODE: ${{ inputs.mode }}
+        run: timeout --signal=KILL 360s python3 -I -B tools/private_draft_canary_v2.py write --execute
+  private-draft-v2-read:
+    needs: private-draft-v2-write
+    if: success() && github.event_name == 'workflow_dispatch' && inputs.mode == 'private-draft-canary-v2' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      read_json: ${{ steps.canary.outputs.read_json }}
+      read_sha256: ${{ steps.canary.outputs.read_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Check only the new harmless canary boundary
+        id: canary
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: read
+          CANARY_MODE: ${{ inputs.mode }}
+          CANARY_BINDING_JSON: ${{ needs.private-draft-v2-write.outputs.binding_json }}
+          CANARY_BINDING_SHA256: ${{ needs.private-draft-v2-write.outputs.binding_sha256 }}
+          CANARY_BEFORE_JSON: ${{ needs.private-draft-v2-write.outputs.before_json }}
+          CANARY_BEFORE_SHA256: ${{ needs.private-draft-v2-write.outputs.before_sha256 }}
+        run: timeout --signal=KILL 180s python3 -I -B tools/private_draft_canary_v2.py read --execute
+  private-draft-v2-qualify:
+    needs: [private-draft-v2-write, private-draft-v2-read]
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'private-draft-canary-v2' && github.run_attempt == 1 && needs.private-draft-v2-write.result == 'success' && needs.private-draft-v2-read.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Fresh write-token canary restoration and safe proof
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          CANARY_MODE: ${{ inputs.mode }}
+          CANARY_BINDING_JSON: ${{ needs.private-draft-v2-write.outputs.binding_json }}
+          CANARY_BINDING_SHA256: ${{ needs.private-draft-v2-write.outputs.binding_sha256 }}
+          CANARY_BEFORE_JSON: ${{ needs.private-draft-v2-write.outputs.before_json }}
+          CANARY_BEFORE_SHA256: ${{ needs.private-draft-v2-write.outputs.before_sha256 }}
+          CANARY_READ_JSON: ${{ needs.private-draft-v2-read.outputs.read_json }}
+          CANARY_READ_SHA256: ${{ needs.private-draft-v2-read.outputs.read_sha256 }}
+        run: timeout --signal=KILL 180s python3 -I -B tools/private_draft_canary_v2.py qualify --execute

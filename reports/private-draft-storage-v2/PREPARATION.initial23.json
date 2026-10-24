@@ -1,0 +1,94 @@
+{
+  "NFL_rows_or_models_decoded": 0,
+  "actual_HTTP": 0,
+  "actual_asset_uploads": 0,
+  "actual_backend": "UNATTESTED",
+  "base_commit": "3d720983977e364fcdce8ecb8394d58593b67137",
+  "credentials_read": 0,
+  "distinct_focused_methods": 23,
+  "earlier21_method_pass": {
+    "CPU_seconds_children": 0.145894,
+    "CPU_seconds_parent": 0.206979,
+    "errors": 0,
+    "failures": 0,
+    "largest_sequential_child_peak_RSS_bytes": 23064576,
+    "methods": 21,
+    "parent_peak_RSS_bytes": 30224384,
+    "scope": "in-memory fictional HTTP; actual separate Python restore subprocess; no credentials/NFL/network",
+    "state": "PASS",
+    "wall_seconds": 0.28534048100118525
+  },
+  "earlier21_method_receipt_sha256": "826c28225371f2783269025e93a576ea92ce22cd17b66222b726f146aea0284b",
+  "helper_provenance": {
+    "excluded": "old transport and empty ProxyHandler; original source untouched",
+    "retained_original_probe_source_sha256": "ce5b6e02ad63a13f1fcc70b549ba9079ea710791f4348f88a75dc68e55aa8946",
+    "unchanged_selected_definitions": [
+      "integer",
+      "fixture",
+      "NoRedirect",
+      "public_controls"
+    ]
+  },
+  "independent_static_review": "PENDING",
+  "known_limits": [
+    "existing single-writer workflow must be pinned; no cross-host transaction/CAS claim",
+    "only exact source-policy/payload-manifest rootGO may authorize restricted bytes; type/hash cannot infer rights or detect deliberate opaque mislabelling",
+    "ambiguous POST reservations/orphans remain counted and cannot be automatically retried",
+    "all actual canary/qualification/restore/readback/retention and producer operating checks remain unrun"
+  ],
+  "ledger_edits": 0,
+  "new_drafts": 0,
+  "old_v1_result": "INCONCLUSIVE_UNCHANGED",
+  "private_durability_qualified": false,
+  "requested_model": "GPT-6.1 Sol xhigh",
+  "restricted_source_scope_review": "PENDING",
+  "restricted_upload_authorized": false,
+  "root_actual_GO": "PENDING",
+  "runtime_v2_boundary": "UNRUN_NEW_RUNTIME_REQUIRED",
+  "schema_version": "weekly-private-draft-store-v2-preparation",
+  "source_sha256": {
+    "config/private-draft-storage-v2.json": "f3133154626997ecfb203dc6f0c111b327b5aae2ed820a6191646d2012741763",
+    "docs/weekly-adaptive-release-v1/PRIVATE_DRAFT_STORE_V2.md": "2f3f9f75229a2806bfa5a4bf67b080b1b5ce741e7c8da60d8be9e1e890c3b508",
+    "nfl_lab/private_draft_probe_helpers.py": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0",
+    "nfl_lab/private_draft_store.py": "a33498208c611dbacead134b8e46a36703a1c1d40197a531ae558cd7dc545483",
+    "schemas/private-draft-store-v2.json": "8ebca6a32150074816bf2d2215dfde51683c6020bede3fda95472b5aa06bc898",
+    "tests/test_private_draft_store_v2.py": "b87181fd8566d7cb22541c6b5d721e2cf69cfe630783c80a5392ad256f436fb3",
+    "tools/private_draft_store_v2.py": "439b0cf696b7bd7bbf99759b0b36094aab46fa220cc5aaf3943d9923dbd39b64"
+  },
+  "state": "IMPLEMENTED_FICTIONAL_PASS_ACTUAL_UNINVOKED",
+  "test_final": {
+    "CPU_seconds_children": 0.147112,
+    "CPU_seconds_parent": 0.22420600000000002,
+    "RSS_scope": "parent/largest sequential child high-water marks; not sampled simultaneous aggregate",
+    "environment": {
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux",
+      "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "errors": 0,
+    "failures": 0,
+    "largest_sequential_child_peak_RSS_bytes": 22908928,
+    "limits": {
+      "CPU_seconds": 60,
+      "address_space_bytes": 536870912,
+      "wall_seconds": 90
+    },
+    "methods": 23,
+    "parent_peak_RSS_bytes": 30347264,
+    "schema_version": "weekly-private-draft-store-v2-fictional-result",
+    "scope": "injected fictional transport; actual separate Python restore subprocess; zero credentials/HTTP/NFL/model decoding",
+    "source_sha256": {
+      "config/private-draft-storage-v2.json": "f3133154626997ecfb203dc6f0c111b327b5aae2ed820a6191646d2012741763",
+      "nfl_lab/private_draft_probe_helpers.py": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0",
+      "nfl_lab/private_draft_store.py": "a33498208c611dbacead134b8e46a36703a1c1d40197a531ae558cd7dc545483",
+      "schemas/private-draft-store-v2.json": "8ebca6a32150074816bf2d2215dfde51683c6020bede3fda95472b5aa06bc898",
+      "tests/test_private_draft_store_v2.py": "b87181fd8566d7cb22541c6b5d721e2cf69cfe630783c80a5392ad256f436fb3",
+      "tools/private_draft_store_v2.py": "439b0cf696b7bd7bbf99759b0b36094aab46fa220cc5aaf3943d9923dbd39b64"
+    },
+    "state": "PASS",
+    "wall_seconds": 0.3065608129982138
+  },
+  "test_final_receipt_sha256": "0fef0f01dfd6e352828243be9b8d26546b1a9d8904ae000be2c8e8c46b1cc72e",
+  "test_runs_overlap": true,
+  "workflow_guard_probe_scheduler_edits": 0
+}

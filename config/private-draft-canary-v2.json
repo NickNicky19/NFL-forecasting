@@ -1,0 +1,51 @@
+{
+  "CPU_seconds_per_CLI": 120,
+  "HTTP_calls_all_four_CLI_max": 160,
+  "HTTP_calls_per_CLI": 40,
+  "address_space_bytes_per_process": 536870912,
+  "approved_existing_workflow_sha256": "dd6492ebb83d22a65fdf3a7173d55ee042798ac7fbdab7a4deac4cf146870dfd",
+  "automatic_retry": false,
+  "driver_CPU_seconds_per_job": 120,
+  "job_timeout_minutes": {
+    "qualify": 4,
+    "read": 4,
+    "write": 8
+  },
+  "maximum_attempt": 1,
+  "mode": "private-draft-canary-v2",
+  "operations": {
+    "qualify": [
+      "qualify"
+    ],
+    "read": [
+      "boundary"
+    ],
+    "write": [
+      "initialize",
+      "pin"
+    ]
+  },
+  "phase_wall_seconds": {
+    "qualify": 180,
+    "read": 180,
+    "write": 360
+  },
+  "public_output_scope": "Harmless canonical canary binding + proof metadata only; no URL/body/token/NFL/payload path",
+  "publication_base": "8df7575230fce4c3498bd31042e5dfb775f247ac",
+  "restricted_payload_operations": [],
+  "root_dispatch_required": true,
+  "runtime_id": "069fb200e34e624599aa916455de358a",
+  "runtime_identity_derivation": "SHA256('NFLweeklyruntime20261024v2')[:32]",
+  "schema_version": "weekly-private-canary-driver-v2",
+  "scope": "ONE_NEW_DRAFT_AND_117_BYTE_CANARY_ONLY",
+  "source_sha256": {
+    ".github/workflows/lab.yml": "3b8a3c6c09d50b7bb9ce1ecb6b146b177ca21b42938ce713314f5b38859771af",
+    "config/private-draft-storage-v2.json": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+    "nfl_lab/__init__.py": "b83391a537342a00ccaab7b5dd1954457377109737617e9d4c61adee5912b899",
+    "nfl_lab/private_draft_probe_helpers.py": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+    "schemas/private-draft-store-v2.json": "e47823dd42a672738fa7aeddb4644e43eb0b1b60f95f4568b491113711725390",
+    "tools/private_draft_store_v2.py": "abb6330e881bdf872a3da89a135c76d3256952ee184f652b22d4b58457009487"
+  },
+  "wall_seconds_per_CLI": 180
+}
