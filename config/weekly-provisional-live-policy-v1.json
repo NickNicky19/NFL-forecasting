@@ -1,0 +1,209 @@
+{
+  "P2_comparator_stream": "live same-cutoff R0; never blend with historical LAB_CDF losses",
+  "TD_EQUAL_CDF_CAT": {
+    "gain_claim": "observed historical Brier .140647013588 vsCDF .140969236342; exposed development, not proven website gain",
+    "members": {
+      "CATBOOST_MEDIUM": 0.5,
+      "LAB_CDF": 0.5
+    },
+    "product": "binary_probability",
+    "unavailable_member": "use valid same-opportunity R0 probability at the unchanged member weight, otherwise abstain; never renormalize"
+  },
+  "actual_deployment": null,
+  "actual_pregame_candidate_capture": null,
+  "catalog_limit_per_category": 4,
+  "categories": [
+    {
+      "category": "pass_yd",
+      "initial_public_roles": [
+        "QB"
+      ],
+      "output": "point_median",
+      "primary_metric": "MAE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_td",
+      "initial_public_roles": [
+        "QB"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_cmp",
+      "initial_public_roles": [
+        "QB"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_att",
+      "initial_public_roles": [
+        "QB"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_int",
+      "initial_public_roles": [
+        "QB"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_yd",
+      "initial_public_roles": [
+        "RB"
+      ],
+      "output": "point_median",
+      "primary_metric": "MAE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "LAB_CDF",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_att",
+      "initial_public_roles": [
+        "RB"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "COUNT_A",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "rec",
+      "initial_public_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "output": "point_mean",
+      "primary_metric": "MSE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "COUNT_A",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "rec_yd",
+      "initial_public_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "output": "point_median",
+      "primary_metric": "MAE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "CATBOOST_MEDIUM",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_rec_yd",
+      "initial_public_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "output": "point_median",
+      "primary_metric": "MAE",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "CATBOOST_MEDIUM",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "anytime_td",
+      "initial_public_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "output": "binary_probability",
+      "primary_metric": "Brier",
+      "private_roles": "exact artifact.modeled_roles; all sparse/new/unknown-participation eligible identities retained",
+      "scientifically_qualified": false,
+      "selection_evidence": "2022\u201324 exposed source-matched historical reports; no original historical SITE/R0/raw comparator",
+      "startup_method_id": "TD_EQUAL_CDF_CAT",
+      "status": "STAGED_REQUIRES_CAPTURE_DURABILITY_AND_CONSUMER_ACCEPTANCE",
+      "website_relative_gain": null
+    },
+    {
+      "category": "fantasy_ppr",
+      "scientifically_qualified": false,
+      "startup_method_id": "R0_UNCHANGED",
+      "status": "BLOCKED_EXACT_LABEL_CONTRACT"
+    }
+  ],
+  "fallback": "same-opportunity correctly typed valid R0 if available before cutoff; otherwise supported frozen-model fallback or abstention with reason; never stale target-game point reuse as a fresh prediction",
+  "future_decision_deadline": "actual minimum kickoff in NFL-week declared slate minus21600seconds, using versioned source schedule; reschedules/new within-week horizons need distinct declared procedure",
+  "historical_public_report_commit": "adbd11e7d7aaa1756509eb02c621699ca1ea8678",
+  "initial_elapsed_game_handling": "NE\u2013CHI and every kickoff at/before input cutoff remain elapsed coverage, never backfilled",
+  "initial_first_remaining_kickoff_utc": "2026-10-25T13:30:00Z",
+  "initial_input_deadline_utc": "2026-10-24T12:00:00Z",
+  "initial_reference_freeze": "PENDING actual first-release deployed computation/deployment/visible bytes; 2026W6SITE is not liveR0",
+  "initial_slate_id": "2026-REG-W07-remaining-initial-v1",
+  "minimum_completed_weeks_for_provisional_choice": 0,
+  "owner_authority": "NFL WEEKLY ADAPTIVE RELEASE brief2026-10-24; normal repository controls and scientific registrations retained",
+  "participation": "DNP, supported played zero, missing statistic and unknown participation remain distinct; TD event conditioned on played, DNP/void separate",
+  "raw_provider": "retained separately where genuinely captured; no fabricated historical raw probabilities",
+  "registered_at_utc": "2026-10-24T09:13:38.243142+00:00",
+  "registration": "weekly-adaptive-provisional-live-v1",
+  "retirement": "no retirement from one negative week. Record reproducible defect, unsupported data, redundancy, sustained evidence or finite resource limit and retain every prior result/definition",
+  "scheduler_activation": "PENDING reviewed handover; no duplicate scheduler",
+  "schema_version": "weekly-provisional-live-policy-v1",
+  "scientific_gate": "Original H3/RB/rec-half and other registrations unchanged; provisional status does not pass their qualification gates",
+  "state": "REGISTERED_STAGED_NOT_ACTIVATED",
+  "switch_margin": 0.0,
+  "ties": "retain current if tied best, then R0, then stable method ID",
+  "training_refresh": "Weekly bounded idempotent refresh under the current frozen earlier-complete-seasons training procedure; new within-season label-fitting policies are separate versioned entrants. Rolling earlier player features refresh under the stated source availability rule. No duplicate identical fits.",
+  "verified_next_deadline_utc": "2026-10-29T18:15:00Z",
+  "weekly_selection": "P2 current-season cumulative underlying comparable earlier losses since genuine stream start, including all losing weeks; declared startup choices until usable common evidence"
+}

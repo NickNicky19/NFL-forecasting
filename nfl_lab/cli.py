@@ -18,21 +18,34 @@ def main():
     parser.add_argument("--seasons",default="2019,2020,2021,2022,2023,2024,2025")
     parser.add_argument("--methods")
     parser.add_argument("--source-policy",type=Path,help="Explicit permitted operational source policy; required for current operations")
+    parser.add_argument("--frozen-public-policy",action="store_true",help="Publication only: exact frozen e7 policy metadata, without source/model imports")
     parser.add_argument("--publication-commit")
     parser.add_argument("--publication-scope-stdin",action="store_true",help="Read the exact verified publisher file scope from stdin")
     parser.add_argument("--output",type=Path,help="Quota-managed aggregate receipt inside the registered runs directory")
+    parser.add_argument("--grading-plan",type=Path,help="Opt-in frozen weekly opportunity metadata; grade only")
+    parser.add_argument("--grading-plan-sha256")
     args=parser.parse_args();root=args.root.resolve();cache=args.cache or root/"data";state=args.state or root/"state"
+    if args.frozen_public_policy and (args.command!="publication" or args.source_policy is None):
+        parser.error("--frozen-public-policy requires publication and an explicit --source-policy")
+    if (bool(args.grading_plan)!=bool(args.grading_plan_sha256)
+            or args.grading_plan is not None and args.command!="grade"):
+        parser.error("--grading-plan requires grade and its exact physical SHA256")
     if args.command in {"acquire","experiment","daily","grade"} and args.source_policy is None:
         parser.error("current operations require --source-policy; historical study functions remain available for replay")
     source_policy=(args.source_policy if args.source_policy.is_absolute() else root/args.source_policy) if args.source_policy is not None else None
     seasons=[int(x) for x in args.seasons.split(",")]
     config=json.loads((root/"config/research.json").read_text())
     if source_policy is not None:
-        from .operational_sources import load_source_policy
+        if args.frozen_public_policy:
+            from .frozen_source_policy import load_frozen_source_policy as load_source_policy
+        else:
+            from .operational_sources import load_source_policy
         from .operational_storage import OperationalStorage
         from .operational_io import operational_io
         policy=load_source_policy(source_policy)
         storage=OperationalStorage(cache,policy,state=state)
+        if args.grading_plan is not None:
+            storage.weekly_grading_policy=dict(policy)  # The exact policy used to construct this active quota scope.
         scope=operational_io(storage,run_root=root/"runs")
     else:
         scope=nullcontext()
@@ -65,8 +78,12 @@ def _execute(args,root,cache,state,source_policy,seasons,config):
         if result.get("state") in {"PERMITTED_SOURCE_ISSUANCE_ABSTAINED","PERMITTED_OPERATION_FAILED_AFTER_ISSUANCE"}:
             exit_code=1
     elif args.command=="grade":
-        from .live import grade_only
-        result=grade_only(state,cache,source_policy=source_policy)
+        if getattr(args,"grading_plan",None) is not None:
+            from .weekly_grading import grade_from_plan
+            result=grade_from_plan(args.grading_plan,args.grading_plan_sha256,state,cache,source_policy=source_policy)
+        else:
+            from .live import grade_only
+            result=grade_only(state,cache,source_policy=source_policy)
     elif args.command=="replay":
         from .prospective import score_saved
         forecasts=0
@@ -89,7 +106,10 @@ def _execute(args,root,cache,state,source_policy,seasons,config):
         scope=json.loads(raw)
         policy_sha=None
         if source_policy is not None:
-            from .operational_sources import load_source_policy
+            if getattr(args,"frozen_public_policy",False):
+                from .frozen_source_policy import load_frozen_source_policy as load_source_policy
+            else:
+                from .operational_sources import load_source_policy
             policy_sha=load_source_policy(source_policy)["_policy_sha256"]
         result=record_scoped_publication(root,state,commit=args.publication_commit,scope=scope,
                                         observed=now_utc(),policy_sha256=policy_sha,storage=active_storage())

@@ -30,6 +30,26 @@ on:
         type: string
         required: false
         default: ''
+      inference_builder_go_json:
+        description: 'Canonical safe root approval for the reviewed metadata plan builder'
+        type: string
+        required: false
+        default: ''
+      inference_builder_go_sha256:
+        description: 'SHA256 of the exact metadata builder approval'
+        type: string
+        required: false
+        default: ''
+      public_release_go_json:
+        description: 'Canonical safe root registration for derived publication only'
+        type: string
+        required: false
+        default: ''
+      public_release_go_sha256:
+        description: 'SHA256 of the exact derived-publication registration'
+        type: string
+        required: false
+        default: ''
   push:
     branches: [main]
     paths: ['nfl_lab/**', 'tests/**', 'config/**', 'schemas/**', 'pyproject.toml', '.github/workflows/lab.yml']
@@ -427,16 +447,24 @@ jobs:
     needs: genuine-hosted-fixed-build-v1
     if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     permissions:
       contents: write
       actions: read
+    outputs:
+      selected_handoff_json: ${{ steps.selected-checkpoint.outputs.handoff_json }}
+      selected_handoff_sha256: ${{ steps.selected-checkpoint.outputs.handoff_sha256 }}
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       OMP_NUM_THREADS: '2'
+      OMP_THREAD_LIMIT: '2'
       OPENBLAS_NUM_THREADS: '2'
       MKL_NUM_THREADS: '2'
       NUMEXPR_NUM_THREADS: '2'
+      VECLIB_MAXIMUM_THREADS: '2'
+      MALLOC_ARENA_MAX: '2'
+      ARROW_DEFAULT_MEMORY_POOL: system
+      ARROW_IO_THREADS: '2'
       CHECKPOINT_MODE: ${{ inputs.mode }}
       CHECKPOINT_HANDOFF_JSON: ${{ needs.genuine-hosted-fixed-build-v1.outputs.checkpoint_handoff_json }}
       CHECKPOINT_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-v1.outputs.checkpoint_handoff_sha256 }}
@@ -456,3 +484,122 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: write
         run: timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py restore --execute
+      - name: Install the exact already tested future inference dependencies
+        run: python -m pip --disable-pip-version-check install --requirement requirements-hosted-fixed-build-v1.lock
+      - name: Generate the source and model bound initial inference plan
+        id: inference-plan
+        env:
+          STORE_PERMISSION: write
+          INITIAL_PLAN_BUILDER_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          INITIAL_PLAN_BUILDER_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+        run: timeout --signal=KILL 35s python -I -B tools/hosted_initial_plan_builder_v1.py --execute
+      - name: Issue current remaining slate forecasts using the existing frozen producer
+        env:
+          INITIAL_PLAN_SHA256: ${{ steps.inference-plan.outputs.plan_sha256 }}
+        run: |
+          timeout --signal=KILL --kill-after=1s 430s python -I -B tools/weekly_initial_remaining_v1.py \
+            --plan "$RUNNER_TEMP/genuine-hosted-fixed-build-restore-v1-$GITHUB_RUN_ID/initial-plan-builder-v1/PLAN.json" \
+            --plan-sha256 "$INITIAL_PLAN_SHA256" --execute
+      - name: Preserve every candidate and selected forecast in private storage
+        id: selected-checkpoint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          SELECTED_SNAPSHOT_MODE: ${{ inputs.mode }}
+        run: timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py produce --execute
+  genuine-hosted-selected-restore-v1:
+    needs: genuine-hosted-fixed-build-restore-v1
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      selected_handoff_json: ${{ steps.selected-restore.outputs.handoff_json }}
+      selected_handoff_sha256: ${{ steps.selected-restore.outputs.handoff_sha256 }}
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the original bounded opaque restoration dependencies
+        run: python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
+      - name: Restore the exact comparison snapshot and record the independent witness
+        id: selected-restore
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          SELECTED_SNAPSHOT_MODE: ${{ inputs.mode }}
+          SELECTED_SNAPSHOT_HANDOFF_JSON: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.selected_handoff_json }}
+          SELECTED_SNAPSHOT_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.selected_handoff_sha256 }}
+        run: timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py restore --execute
+  genuine-hosted-selected-export-v1:
+    needs: genuine-hosted-selected-restore-v1
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          # Normal credentials are used only by the existing reviewed lab-state publisher.
+          persist-credentials: true
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the original exact metadata and publication dependencies
+        run: python -m pip --disable-pip-version-check install --requirement requirements.lock
+      - name: Restore original evidence into the independent export job
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          SELECTED_SNAPSHOT_MODE: ${{ inputs.mode }}
+          SELECTED_SNAPSHOT_HANDOFF_JSON: ${{ needs.genuine-hosted-selected-restore-v1.outputs.selected_handoff_json }}
+          SELECTED_SNAPSHOT_HANDOFF_SHA256: ${{ needs.genuine-hosted-selected-restore-v1.outputs.selected_handoff_sha256 }}
+        run: timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py consume --execute
+      - name: Bind the registered current reference, rights and export plan
+        id: release-plan
+        env:
+          STORE_PERMISSION: write
+          PUBLIC_RELEASE_GO_JSON: ${{ inputs.public_release_go_json }}
+          PUBLIC_RELEASE_GO_SHA256: ${{ inputs.public_release_go_sha256 }}
+        run: timeout --signal=KILL 35s python -I -B tools/hosted_public_release_plan_v1.py --execute
+      - name: Verify actual independent jobs and export selected derived fields
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          PUBLIC_EXPORT_PLAN_SHA256: ${{ steps.release-plan.outputs.plan_sha256 }}
+        run: |
+          timeout --signal=KILL 50s python -I -B tools/export_weekly_public_feed_v1.py \
+            --plan "$RUNNER_TEMP/genuine-hosted-selected-export-v1-$GITHUB_RUN_ID/public-release-plan-v1/EXPORT_PLAN.json" \
+            --plan-sha256 "$PUBLIC_EXPORT_PLAN_SHA256"
+      - name: Fetch the current append-only derived state reference
+        run: git fetch --no-tags --depth=1 origin refs/heads/lab-state:refs/remotes/origin/lab-state
+      - name: Publish only the exact reviewed derived feed and genuine receipt
+        env:
+          PUBLIC_EXPORT_PLAN_SHA256: ${{ steps.release-plan.outputs.plan_sha256 }}
+        run: |
+          timeout --signal=KILL 120s python -I -B tools/persist_state.py \
+            --public-export-plan "$RUNNER_TEMP/genuine-hosted-selected-export-v1-$GITHUB_RUN_ID/public-release-plan-v1/EXPORT_PLAN.json" \
+            --public-export-plan-sha256 "$PUBLIC_EXPORT_PLAN_SHA256"

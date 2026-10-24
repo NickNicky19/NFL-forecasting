@@ -1,0 +1,82 @@
+"""Root-sealed native entry; no source/model action without explicit execution."""
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import resource
+import signal
+import sys
+import threading
+import time
+
+
+def main(*,backend_factory=None,plan_validator=None):
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--plan",type=Path,required=True);parser.add_argument("--plan-sha256",required=True)
+    parser.add_argument("--execute",action="store_true")
+    args=parser.parse_args();body=args.plan.read_bytes()
+    if hashlib.sha256(body).hexdigest()!=args.plan_sha256:raise ValueError("exact producer plan required")
+    plan=json.loads(body)
+    if not args.execute:
+        print(json.dumps(dict(state="PREPARATION_ONLY",execution=False,root_seal_required=True)))
+        return 0
+    if (plan.get("state")!="FROZEN_ROOT_REVIEWER_SEALED" or plan.get("execution_authorized") is not True
+        or plan.get("review",{}).get("status")!="PREEXEC_PASS" or plan["review"].get("integrator")!="/root"):
+        raise ValueError("unsealed preparation is not source/model/runtime authority")
+    root=Path(__file__).resolve().parents[1];sys.path.insert(0,str(root))
+    from nfl_lab.weekly_generic_producer import LIMITS,validate_plan,now_utc
+    validate_plan(plan,now=now_utc())
+    for name,value in plan["numerical_environment"].items():
+        if os.environ.get(name)!=value:raise ValueError("exact numerical environment required before imports")
+    started,cpu=time.monotonic(),time.process_time()
+    resource.setrlimit(resource.RLIMIT_CPU,(LIMITS["CPU_seconds"],)*2)
+    resource.setrlimit(resource.RLIMIT_AS,(LIMITS["address_space_bytes"],)*2)
+    def expired(*unused):raise TimeoutError("whole future producer wall allocation exhausted")
+    signal.signal(signal.SIGALRM,expired);signal.setitimer(signal.ITIMER_REAL,LIMITS["wall_seconds"])
+    def audit(event,unused):
+        if event.startswith(("socket.","subprocess.")) or event in {"os.fork","os.forkpty","os.exec","os.posix_spawn","os.system"}:
+            raise RuntimeError("this source-adoption producer forbids HTTP and children")
+    sys.addaudithook(audit)
+    from tools.weekly_current_query import pin
+    from tools.weekly_current_inference_capture import validate_interpreter_binding
+    for name,value in plan["code_pins"].items():pin(dict(path=str(root/name),sha256=value))
+    for key in ("source_policy","interpreter","libc","rss_sampler"):
+        pin(plan[key])
+    validate_interpreter_binding(plan)
+    if plan_validator is not None:
+        plan_validator(plan,now=now_utc())
+    spec=importlib.util.spec_from_file_location("generic_existing_pid_sampler",plan["rss_sampler"]["path"])
+    sampler=importlib.util.module_from_spec(spec);spec.loader.exec_module(sampler)
+    process=sampler.process_binding(os.getpid());stop=threading.Event()
+    memory=dict(samples=0,sampled_peak_bytes=0,highwater_bytes=0)
+    def check():
+        rss,_=sampler.required_usage([process]);peak=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024
+        memory["samples"]+=1;memory["sampled_peak_bytes"]=max(memory["sampled_peak_bytes"],rss);memory["highwater_bytes"]=max(memory["highwater_bytes"],peak)
+        if max(rss,peak)>=LIMITS["RSS_bytes"]-33554432:raise MemoryError("unchanged physical RSS stop margin")
+        if time.process_time()-cpu>=LIMITS["CPU_seconds"]-10:raise TimeoutError("finite producer finalization CPU reserve")
+    def watch():
+        while not stop.wait(.01):
+            try:check()
+            except BaseException:
+                os.write(2,b'{"state":"FUTURE_PRODUCER_RESOURCE_STOP"}\n');os.kill(os.getpid(),signal.SIGKILL)
+    check();watcher=threading.Thread(target=watch,daemon=True,name="future-existing-rss-monitor");watcher.start()
+    try:
+        import pyarrow as pa
+        import threadpoolctl
+        pa.set_cpu_count(2);pa.set_io_thread_count(2);pa.set_memory_pool(pa.system_memory_pool())
+        from tools.ngboost_law_software_v1 import process_free_threads
+        from nfl_lab.weekly_generic_producer import execute
+        with process_free_threads(threadpoolctl,plan["libc"]),threadpoolctl.threadpool_limits(limits=2):
+            backend=backend_factory(plan,clock=now_utc,resource_check=check) if backend_factory is not None else None
+            result=execute(plan,backend=backend,resource_check=check)
+    finally:
+        stop.set();watcher.join(timeout=.5)
+    check();signal.setitimer(signal.ITIMER_REAL,0)
+    print(json.dumps(dict(state=result["state"],CPU_seconds=time.process_time()-cpu,wall_seconds=time.monotonic()-started,
+        RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,HTTP=0,fits=0,scores=0,website_activation=False)))
+    return int(result["state"]!="LOCAL_FUTURE_SLATE_CAPTURED")
+
+
+if __name__=="__main__":raise SystemExit(main())

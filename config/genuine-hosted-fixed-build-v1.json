@@ -32,7 +32,7 @@
     "scikit-learn": "1.8.0",
     "scipy": "1.17.0"
   },
-  "execution_authorized": false,
+  "execution_authorized": true,
   "expected_outputs": [
     "BUILD_REGISTRATION.json",
     "TRAIN18_REGISTERED_SLOTS.json",
@@ -168,20 +168,21 @@
   },
   "source_library_installations_during_PREP": 0,
   "source_sha256": {
-    ".github/workflows/lab.yml": "818f5385428a258122db8fa057994627e7a62c9323cbb8110f6300e2ba54af3e",
+    ".github/workflows/lab.yml": "526bb2f7aecdf8f08b4f75115905b211b82ca1807969f4b3770bb1ec9e136e71",
     "config/operational-source-policy-v2.json": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
     "config/private-draft-storage-v2.json": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
     "config/weekly-initial-remaining-v1-registration.json": "4c526ccd4c97383af390da2c8592887fb97451c1a640242c7c5b27897d85802c",
     "nfl_lab/baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
     "nfl_lab/cadence.py": "426a4c726b26475be1392e6f926284deb3fcc401f974b8b12ff4db1d74151b5f",
     "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
-    "nfl_lab/cli.py": "7351cec4097f0d26b46b511dd2008dd197b24eb85e5e95a2bd2a48ade7b4e782",
+    "nfl_lab/cli.py": "b8ffa856ced92fc4d0cdefc78974ddff6ae923e09eafad6735237d204fbdff0c",
     "nfl_lab/data.py": "38c6fdc45d0a9d86f2a11fc334f77099d918819672ac745563e7248093ba625f",
     "nfl_lab/direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
     "nfl_lab/experiment.py": "8f12d3d41a790d63dd4983622b7070a79c0f642eaa6d95cba600e571d70d20e9",
     "nfl_lab/features.py": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9",
+    "nfl_lab/frozen_source_policy.py": "ab8e0e163fe392d66ade04e38253db76bd7b11cc77608e23591f5d5aec41a644",
     "nfl_lab/hosted_fixed_build_v1.py": "0655963d20a825e22096c41ac655fd7c3e98727bafa9a3f49f062249e9fe80f6",
-    "nfl_lab/live.py": "061c813b99c7046ef7e930c56304e55a47d48c27d56513ad55203d83f52dc005",
+    "nfl_lab/live.py": "9f13bf76d6c83f4be246ac6e213d36a061073bc673d51b53093ba4edad4d74b0",
     "nfl_lab/median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
     "nfl_lab/models.py": "0672825fc5d08b882a31ec6906b0618b4766bbb7f38bd05baf791aab37ceccb1",
     "nfl_lab/operational_io.py": "75976833ebb55b0f734eb51bf8a34c1a321fc12e02a8a32765dda2454996132f",
@@ -200,8 +201,8 @@
     "nfl_lab/weekly_current_inference.py": "4cd423f2cafe2676c770dcad6ec485e469949e8ec96c9a1dca6e2f0441cc5b33",
     "nfl_lab/weekly_current_query.py": "9a41a6c1ce606b4b3c1c1114867fd2d961eef47ffc2e360a663017365e105dff",
     "nfl_lab/weekly_future_inference.py": "0689fdc2e3d0154d7431f7fb834d0684dbddd8f952cd5710e010e7fdd678fad7",
-    "nfl_lab/weekly_generic_producer.py": "9871fdcb36528931c9fa7bb14b1a40d560579d94db4edb14b75799684bd427ce",
-    "nfl_lab/weekly_initial_remaining_v1.py": "2f33d5bb809a154502500261c28cbc5134ebc58db40841ae1b87740b1a49d879",
+    "nfl_lab/weekly_generic_producer.py": "b37164d6dbb652f6cf70b7bfb45064cf763d6e47171058ce17ac1d389c4036ba",
+    "nfl_lab/weekly_initial_remaining_v1.py": "11afaaa687522a77b10602e100561bc7bb46c0fc7cc18b538ee43dbe5df0d3a7",
     "reports/all12-leaf-cdf-v1/method-config.json": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
     "requirements-hosted-fixed-build-v1.lock": "fc446008ea2692f287d6eb94a7fb843670e9b602a0a873438b86176fd0f1bbea",
     "requirements.lock": "1c8f15974116704a618773d44c3175da394ec5477095ff31ed5f8666aa30cdfc",
@@ -212,6 +213,6 @@
     "tools/weekly_current_query.py": "a313ac1ac8668f67fd6fb3084b9023128b8150a23fe8d760bbc5e0c34b2b2cdf",
     "tools/weekly_future_train.py": "77c0ac090c6320269d658c52621c24ce3781cc817cb1d7a88b748636a78fa1c9"
   },
-  "state": "SOURCE_TRAIN_CLAIM_PRIVATE_CHECKPOINT_WIRED_PENDING_INDEPENDENT_REVIEW",
+  "state": "ROOT_APPROVED_BOUNDED_FIXED18_SOURCE_TRAIN_CHECKPOINT",
   "training_cutoff_utc": "2026-09-01T00:00:00Z"
 }

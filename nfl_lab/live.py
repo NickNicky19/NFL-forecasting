@@ -355,11 +355,25 @@ def grade_saved(state,cache,players,*,source_policy=None):
         return _grade_saved(state,cache,players,source_policy=policy)
 
 
-def _grade_saved(state,cache,players,*,source_policy=None):
+def grade_opportunity_rows(state,cache,players,opportunity_rows,*,source_policy):
+    """Opt-in frozen opportunities; no forecast capture or numeric conversion."""
+    from .weekly_grading import validate_collector_rows
+    from .operational_sources import load_source_policy
+    rows=validate_collector_rows(opportunity_rows)
+    policy=load_source_policy(source_policy)
+    storage=active_storage() or OperationalStorage(cache,policy,state=state)
+    if storage.cache!=Path(cache).absolute():raise ValueError("grading quota/cache identity differs")
+    storage.register_root(Path(state))
+    with operational_io(storage):
+        return _grade_saved(state,cache,players,source_policy=policy,opportunity_rows=rows)
+
+
+def _grade_saved(state,cache,players,*,source_policy=None,opportunity_rows=None):
     from .scoring import stat_value
     from .grading_sources import load_cached_grading_context,cached_nflverse_outcome
     opportunities={};identity_conflicts=set();frozen_ids_by_sleeper={}
-    for batch in records(state,"forecasts"):
+    batches=records(state,"forecasts") if opportunity_rows is None else ({"rows":opportunity_rows},)
+    for batch in batches:
         for r in batch["rows"]:
             opportunities[(r["player_id"],r["game_id"],r["target"])]=r
             if r.get("identity_binding")=="conflicting_identity_cold_start":identity_conflicts.add((r["player_id"],r["game_id"]))
@@ -373,11 +387,17 @@ def _grade_saved(state,cache,players,*,source_policy=None):
     for sid,p in players.items():candidates.setdefault(p.get("gsis_id") or "sleeper:"+str(sid),set()).add(str(sid))
     identity={pid:next(iter(ids)) for pid,ids in candidates.items() if len(ids)==1}
     obs=[];checked=0;context=None;supplement_limit=None;supplement_gaps={};supplement_supported=0
+    weekly_finality=[]
     for season,week in periods:
         if all(utc(r["kickoff_utc"])>=now_utc() for r in opportunities.values() if (r["season"],r["week"])==(season,week)):continue
         board,br=fetch(cache,f"grade-schedule-{season}-{week}",f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week={week}&dates={season}")
         if board.get("week",{}).get("number")!=week or board.get("season",{}).get("year")!=season:raise ValueError("grade schedule period mismatch")
-        finals={g["game_id"]:g for g in schedule_games(board) if g["final"] and utc(g["kickoff_utc"])<now_utc()}
+        grade_games=schedule_games(board)
+        finals={g["game_id"]:g for g in grade_games if g["final"] and utc(g["kickoff_utc"])<now_utc()}
+        if opportunity_rows is not None:
+            weekly_finality.append(dict(season=season,week=week,games=grade_games,
+                status_source_sha256=br["sha256"],observed_at=br["retrieved_utc"],
+                full_week_proof="CALLER_MUST_MATCH_COMPLETE_FROZEN_SCHEDULE"))
         if finals and context is None and supplement_limit is None:
             try:
                 if source_policy is not None:
@@ -438,7 +458,9 @@ def _grade_saved(state,cache,players,*,source_policy=None):
         elif outcome["state"].startswith("unresolved"):coverage["conflicts"]+=1
         else:coverage["unknown_or_unobserved"]+=1
     pending=len(opportunities)-coverage["supported_played"]-coverage["known_DNP"]
-    return {**result,"opportunities_checked":checked,"pending_outcomes":pending,
+    report={**result,"opportunities_checked":checked,"pending_outcomes":pending,
             "pending_final_game_opportunities":len(opportunities)-checked,"outcome_coverage":coverage,
             "nflverse_supported":supplement_supported,"nflverse_gaps":supplement_gaps,"nflverse_limit":supplement_limit,
             "corrections":"append-only; conflicting unknown-publication-clock values quarantined"}
+    if opportunity_rows is not None:report["weekly_finality"]=weekly_finality
+    return report

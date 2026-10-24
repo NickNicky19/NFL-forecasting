@@ -21,11 +21,118 @@ LIMITS = dict(CPU_seconds=300, wall_seconds=420, RSS_bytes=1073741824,
     global_bytes=536870912)
 MODEL_BOUNDARY = "weekly-owner-bootstrap-future-relocation-v1"
 EXPORT_BOUNDARY = "weekly-generic-selected-handoff-v1"
+SLOT_INVENTORY = "weekly-fixed18-slot-inventory-v1"
+CATEGORY_SHA256 = "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4"
 
 
 def require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def admit_remaining_output(storage, anchor):
+    """Charge prewritten plan metadata to the unchanged total study allowance."""
+    usage = storage._require(0)
+    used = usage['physical_bytes'] - anchor
+    require(0 <= used < LIMITS['new_bytes'], 'retained metadata exhausted the finite producer allocation')
+    remaining = LIMITS['new_bytes'] - used
+    storage._require(remaining)
+    return remaining
+
+
+def read_slot_inventory(plan,catalog,read):
+    """Opt-in metadata boundary: original build states, never a result subset."""
+    from .weekly_current_inference import EXPECTED
+    inventory=read(plan["slot_inventory"])
+    require(set(inventory)=={"schema_version","build_terminal","category_contract","selector_catalog_sha256","source_contract","slots"}
+        and inventory["schema_version"]==SLOT_INVENTORY and inventory["selector_catalog_sha256"]==plan["selector_catalog"]["sha256"]
+        and inventory["source_contract"]==plan["source_contract"],"closed exact slot/source/catalog inventory required")
+    require(inventory["build_terminal"] in plan["owned_inputs"] and inventory["category_contract"]["sha256"]==CATEGORY_SHA256,
+        "original owned build and fixed category contract required")
+    build=read(inventory["build_terminal"]);categories=read(inventory["category_contract"],owned=False)
+    categories={t:dict(c,target=t) for t,c in categories["categories"].items() if c["state"]=="READY"}
+    require(set(categories)=={t for t,_ in EXPECTED} and build["schema_version"]=="GENUINE_HOSTED_FIXED_BUILD_V1"
+        and build["state"] in {"SOURCE_AND_TRAIN18_COMPLETE","BUILD_PARTIAL_OR_FAILED_RETAINED"}
+        and build["new_operational_model_build"] is True and build["old_model_reproduction"] is False
+        and build["source"]["source_contract"]==plan["source_contract"] and build["scoring"]==0 and build["searches"]==0,
+        "authentic fixed18 source-qualified original build required")
+    rows=inventory["slots"];original=build["training"]["slots"]
+    key=lambda row:(row["target"],row["method_id"])
+    require(len(rows)==len(original)==18 and {key(r) for r in rows}=={key(r) for r in original}==EXPECTED,
+        "closed complete eighteen-slot census required; no omissions/duplicates")
+    original={key(r):r for r in original};ready=[];unavailable=[];original_metadata=[]
+    for row in rows:
+        k=key(row);prior=original[k];category=categories[k[0]]
+        require(set(row)=={"target","method_id","family","availability","artifact","original_artifact","unavailable_reason"}
+            and row["family"]==prior["family"]=={"LAB_CDF":"leaf_cdf_base","COUNT_A":"count_A","CATBOOST_MEDIUM":"catboost_medium"}[k[1]]
+            and k[1] in catalog["categories"][k[0]]["shortlist"]
+            and category["support"]==catalog["categories"][k[0]]["support"],"fixed slot family/category catalog mismatch")
+        if prior["state"]=="NEW_OPERATIONAL_ARTIFACT_EXPORTED":
+            ref=row["original_artifact"]
+            require(ref in plan["owned_inputs"] and (ref["bytes"],ref["sha256"])==(prior["artifact"]["bytes"],prior["artifact"]["sha256"]),
+                "original successful artifact must match build bytes/hash")
+            original_manifest=read(ref);original_metadata.append(original_manifest)
+            require((original_manifest["category"]["target"],original_manifest["method_id"])==k
+                and original_manifest["family"]==row["family"] and original_manifest["category"]==category
+                and original_manifest["fit_receipt"]==prior["fit_receipt"] and original_manifest["source_contract"]==plan["source_contract"],
+                "original successful model/source/fit identity changed")
+            if row["availability"]=="READY":
+                require(row["artifact"] in plan["owned_inputs"] and row["unavailable_reason"] is None,"ready slot requires exact owned artifact")
+                m=read(row["artifact"])
+                if m!=original_manifest:
+                    relocation=m.get("relocation",{})
+                    require(relocation==dict(schema_version=MODEL_BOUNDARY,original_manifest=ref,original_model=original_manifest["model"],
+                        relocated_model_path=m["model"]["path"],parameters_fixtures_code_source_unchanged=True,model_decodes=0)
+                        and (m["model"]["bytes"],m["model"]["sha256"])==(original_manifest["model"]["bytes"],original_manifest["model"]["sha256"]),
+                        "exact authenticated manifest relocation required")
+                    restored=dict(m);restored.pop("relocation");restored["model"]=original_manifest["model"]
+                    require(restored==original_manifest,"relocation changed model/procedure/source/clock metadata")
+                ready.append(row["artifact"])
+                continue
+            require(row["availability"]=="UNAVAILABLE" and row["artifact"] is None and row["unavailable_reason"]=="MODEL_NOT_READY",
+                "successful unavailable slot needs a preregistered readiness reason")
+        else:
+            require(prior["state"] in {"FAILED_FIT_RETAINED_NO_RETRY","NOT_ATTEMPTED","FIT_RESERVED_NEW_OPERATIONAL_BUILD"}
+                and row["availability"]=="UNAVAILABLE" and row["artifact"] is None and row["original_artifact"] is None
+                and row["unavailable_reason"]==prior["state"] and "artifact" not in prior,
+                "unavailable slot must retain actual build failure/reservation state")
+        unavailable.append(dict(target=k[0],method_id=k[1],category=category,reason=row["unavailable_reason"],build_state=prior["state"]))
+    require(len(ready)==len(plan["artifacts"])==len({digest(r) for r in ready})
+        and {digest(r) for r in ready}=={digest(r) for r in plan["artifacts"]},"success-only artifact list differs from closed slot census")
+    return dict(schema_version=SLOT_INVENTORY,binding=plan["slot_inventory"],build_terminal=inventory["build_terminal"],
+        categories=categories,unavailable=unavailable,original_metadata=original_metadata)
+
+
+def unavailable_capture(slots,features):
+    """All missing model opportunities remain explicit; no fictional forecasts."""
+    result=[]
+    for row in slots["unavailable"]:
+        expected=[digest({**{k:r[k] for k in ("season","week","game_id","player_id")},"category":row["target"]})
+            for r in features.loc[features.position.isin(row["category"]["modeled_roles"])].to_dict("records")]
+        result.append(dict(target=row["target"],method_id=row["method_id"],artifact=None,persistence=None,
+            expected_rows=len(expected),issued_rows=0,unissued_offered_ids=expected,
+            failure=dict(type="UNAVAILABLE_BUILD_SLOT",reason=row["reason"],build_state=row["build_state"]),state="UNAVAILABLE_RETAINED"))
+    return result
+
+
+def issue_registered(selector,panel,selection,*,atomic_TD=False):
+    """Preserve frozen choice; an incomplete TD blend uses full R0 or abstains."""
+    members=selection["members"];decision=selection["decision"]
+    if not atomic_TD or decision["category"]!="anytime_td" or len(members)!=2:
+        return selector.issue(panel,selection)
+    require({m["method_id"] for m in members}=={"LAB_CDF","CATBOOST_MEDIUM"}
+        and all(m["weight"]==.5 for m in members),"only registered equal-component TD blend supported")
+    class WholeReference:
+        def __getattr__(self,name):return getattr(panel,name)
+        def eligible(self,method,offer,lane):
+            complete=all(m["choice_eligible"] and panel.eligible(m["method_id"],offer,lane) for m in members)
+            if not complete and method!=panel.categories["anytime_td"]["reference_id"]:return False
+            return panel.eligible(method,offer,lane)
+    rows=selector.issue(WholeReference(),selection)
+    for row in rows:
+        if any(c["method_id"]==panel.categories["anytime_td"]["reference_id"] for c in row["components"]):
+            row["fallback_reason"]+=";incomplete_TD_blend_full_reference_without_reweighting"
+    return rows
 
 
 def prepare_slate(schedule, *, season, week, game_cutoffs, now):
@@ -224,7 +331,7 @@ class ProductionBackend:
         p, store, clock = self.plan, self.store, self.clock
         with store.transaction():
             require(not Path(p["output_root"]).exists(), "one fresh invocation; failed/partial roots are never retried")
-            store._require(LIMITS["new_bytes"])
+            admit_remaining_output(store, p["retention_physical_anchor"])
             output = store.register_root(p["output_root"])
         class Sink(current.BoundedOutput):
             def __init__(self, storage, root, maximum):
@@ -244,11 +351,13 @@ class ProductionBackend:
             self.auth=session
             session._verify(refs)  # Existing operation-local immutable auth; no model load here.
             required=[p[k] for k in ("schedule","roster")]+p["artifacts"]+p["source_bindings"]
+            if p.get("slot_inventory"):required.append(p["slot_inventory"])
             required += [p[k] for k in ("history_bundle","previous_choices","frozen_weekly_choice","reference_forecasts") if p.get(k)]
             require(all(r in refs for r in required), "all source/model/catalog bytes must be sealed owned inputs")
             require(p["schedule"] in p["source_bindings"] and p["roster"] in p["source_bindings"],"same original roster/schedule as source snapshot required")
             catalog=self.read(p["selector_catalog"],owned=False); startup=self.read(p["startup_policy"],owned=False)
-            require(startup["schema_version"]=="weekly-provisional-live-policy-v1" and len(p["artifacts"])==18,
+            self.slot_inventory=read_slot_inventory(p,catalog,self.read) if p.get("slot_inventory") else None
+            require(startup["schema_version"]=="weekly-provisional-live-policy-v1" and (self.slot_inventory is not None or len(p["artifacts"])==18),
                 "exact registered startup and eighteen frozen procedures required")
             schedule=pd.read_csv(p["schedule"]["path"], usecols=current.SCHEDULE_COLUMNS)
             calendar=schedule.copy()
@@ -286,7 +395,9 @@ class ProductionBackend:
                     and m["procedure_version"]==catalog["methods"][key[1]]["procedure_version"]
                     and ref["sha256"] in catalog["methods"][key[1]]["model_versions"], "frozen model/procedure/source catalog mismatch")
                 seen.add(key);records.append(dict(binding=ref,manifest=m,eligible_roles=m["category"]["modeled_roles"]))
-            require(seen==current.EXPECTED, "exact eighteen supported frozen slots; no fits/correction reservations")
+            unavailable={(r["target"],r["method_id"]) for r in self.slot_inventory["unavailable"]} if self.slot_inventory else set()
+            require(not seen&unavailable and seen|unavailable==current.EXPECTED,
+                "exact eighteen supported frozen slots including explicit unavailable; no fits/correction reservations")
             version_ref=write("SELECTED_VERSION_CATALOG.json",register_selected_versions(choice,records,catalog,p["code_pins"]))
             require(set(source._names(p["history_seasons"]))=={Path(r["path"]).name for r in p["source_bindings"] if not r["path"].endswith(".receipt.json")},
                 "exact finite original raw source/receipt whitelist required")
@@ -326,16 +437,21 @@ class ProductionBackend:
             write("SOURCE.json",dict(manifest_sha256=manifest["manifest_sha256"],source_read=source_receipt,population=packet["coverage"],
                 actual_completed_at=clock().isoformat(),freshness=p["source_freshness_seconds"],upstream_publication="NOT_INFERRED"))
             progress()
-            session.prepare(p["artifacts"])
+            if p["artifacts"]:session.prepare(p["artifacts"])
             capture_doc=self.read(cref)
             captures,all_rows=capture(session,records,features,bridge,choice,cref,capture_doc,sink,output,p,clock,progress)
+            if self.slot_inventory:
+                captures["models"].extend(unavailable_capture(self.slot_inventory,features))
+                captures["slot_inventory"]=self.slot_inventory["binding"]
             captures.update(schema_version=VERSION+"-candidate-capture",state="GENERIC_CANDIDATE_FORECASTS_PERSISTED",
                 actual_completed_at=clock().isoformat(),shared_features=fref,original_feature_capture=cref,
                 procedure_catalog=p["selector_catalog"],source_population=packet["coverage"],remote_durability="NOT_ESTABLISHED")
             candidate_ref=write("CANDIDATES.json",captures)
             # Current values enter only after the immutable weekly choice.
             bundle=dict(history)
-            bundle["offers"]=[*history["offers"],*offers(queries,records,derived)]
+            category_records=([dict(manifest=dict(category=c)) for c in self.slot_inventory["categories"].values()]
+                if self.slot_inventory else records)
+            bundle["offers"]=[*history["offers"],*offers(queries,category_records,derived)]
             reference=self.read(p["reference_forecasts"]) if p.get("reference_forecasts") else []
             require(all(r["method_id"] in {"R0","RAW"} and r["evidence_lane"]=="original_pregame" for r in reference),"authentic current reference controls only")
             offered_ids={r["offered_id"] for r in bundle["offers"]}
@@ -345,7 +461,7 @@ class ProductionBackend:
             panel=selector.Panel(bundle,catalog);selected=[]
             for selected_choice in choice["selections"]:
                 progress()
-                for row in selector.issue(panel,selected_choice):
+                for row in issue_registered(selector,panel,selected_choice,atomic_TD=self.slot_inventory is not None):
                     stamp=clock();require(len(selected)<LIMITS["selected_rows"],"selected row ceiling; no truncation")
                     require(stamp<utc(row["cutoff_utc"]) and all(utc(c["provenance"]["issued_at"])<=stamp for c in row["components"]),
                         "actual selected issuance must follow components and precede its own source cutoff")
@@ -370,6 +486,7 @@ class ProductionBackend:
             selected_completed=clock()
             output_refs=[choice_ref,candidate_ref,bref,fref,cref,selected_receipt["binding"],future.binding(output/"selected.jsonl.completion.json")]
             for item in captures["models"]:
+                if item["persistence"] is None:continue
                 ref=item["persistence"]["binding"]
                 output_refs.extend([ref,future.binding(Path(ref["path"]).with_suffix(".completion.json"))])
             session._verify(output_refs)

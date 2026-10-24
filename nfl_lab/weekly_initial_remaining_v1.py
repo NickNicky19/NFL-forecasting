@@ -84,10 +84,15 @@ def validate_plan(plan,*,now):
     return registration
 
 
-def validate_fresh_initial_metadata(registration,model_metadata,receipts,*,now):
+def validate_fresh_initial_metadata(registration,model_metadata,receipts,*,now,slot_inventory=None):
     started=utc(registration["registered_at_utc"])
-    generic.require(len(model_metadata)==18 and {(m["category"]["target"],m["method_id"]) for m in model_metadata}==EXPECTED,
-        "exact new genuine eighteen-model build metadata required")
+    seen={(m["category"]["target"],m["method_id"]) for m in model_metadata}
+    if slot_inventory is None:
+        generic.require(len(model_metadata)==18 and seen==EXPECTED,"exact new genuine eighteen-model build metadata required")
+    else:
+        missing={(r["target"],r["method_id"]) for r in slot_inventory["unavailable"]}
+        generic.require(slot_inventory["schema_version"]==generic.SLOT_INVENTORY and seen<=EXPECTED
+            and seen|missing==EXPECTED and len(model_metadata)==len(seen),"validated complete initial slot census required")
     for m in model_metadata:
         fit=m["fit_receipt"]
         generic.require(started<=utc(fit["training_source_capture_completed_at"])<=utc(fit["training_started_at"])
@@ -117,6 +122,8 @@ class InitialRemainingBackend(generic.ProductionBackend):
         generic.require(derived==self.plan["slate"],"sealed initial metadata differs from actual schedule")
         receipts={Path(r["path"]).name:self.read(r) for r in self.plan["source_bindings"] if r["path"].endswith(".receipt.json")
             and Path(r["path"]).name in {"schedules.csv.receipt.json","roster_weekly_2026.parquet.receipt.json","stats_player_week_2026.parquet.receipt.json"}}
-        validate_fresh_initial_metadata(registration,[self.read(r) for r in self.plan["artifacts"]],receipts,now=self.clock())
+        slots=getattr(self,"slot_inventory",None)
+        metadata=slots["original_metadata"] if slots is not None else [self.read(r) for r in self.plan["artifacts"]]
+        validate_fresh_initial_metadata(registration,metadata,receipts,now=self.clock(),slot_inventory=slots)
         self.consume_registration(registration,ref)
         return derived
