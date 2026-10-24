@@ -1,0 +1,257 @@
+{
+  "at": "2026-10-24T22:26:22.745263+00:00",
+  "category_release": [
+    {
+      "category": "pass_yd",
+      "method": "LAB_CDF",
+      "primary_metric": "MAE",
+      "product": "point_median",
+      "public_selected_rows": 36,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_td",
+      "method": "LAB_CDF",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 36,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_cmp",
+      "method": "LAB_CDF",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 36,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_att",
+      "method": "LAB_CDF",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 36,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "pass_int",
+      "method": "LAB_CDF",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 36,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_yd",
+      "method": "LAB_CDF",
+      "primary_metric": "MAE",
+      "product": "point_median",
+      "public_selected_rows": 99,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 99,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A",
+      "primary_metric": "MSE",
+      "product": "point_mean",
+      "public_selected_rows": 362,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "primary_metric": "MAE",
+      "product": "point_median",
+      "public_selected_rows": 362,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "primary_metric": "MAE",
+      "product": "point_median",
+      "public_selected_rows": 261,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "anytime_td",
+      "method": "TD_EQUAL_CDF_CAT",
+      "primary_metric": "Brier",
+      "product": "binary_probability",
+      "public_selected_rows": 391,
+      "release_status": "PROVISIONALLY_DEPLOYED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    },
+    {
+      "category": "fantasy_ppr",
+      "method": "R0_UNCHANGED",
+      "primary_metric": null,
+      "product": "R0_UNCHANGED_EXACT_PPR_LABELS_UNQUALIFIED",
+      "public_selected_rows": 0,
+      "release_status": "R0_RETAINED_EXACT_LABEL_BLOCKED",
+      "scientifically_qualified": false,
+      "website_relative_gain": null
+    }
+  ],
+  "checks": {
+    "TLS_validation": "ENABLED",
+    "actual_published_contract": "PASS_1754_ROWS_TWO_GENUINE_GITHUB_API_RESPONSES",
+    "browser_CPU_seconds": 5.60166,
+    "browser_wall_seconds": 5.21663,
+    "canonical_board_and_picks_preserved": true,
+    "explicit_R0_reference": true,
+    "external_browser_requests_allowed": 0,
+    "first_local_browser_certificate_failure": "RETAINED_ENVIRONMENT_FAILURE_BEFORE_RESPONSES",
+    "live_asset_readback": "PASS_SIX_EXPECTED_ASSET_HASHES",
+    "live_browser": "PASS_NINE_SCENES",
+    "products_checked": [
+      "count_mean",
+      "signed_yard_median",
+      "TD_probability"
+    ],
+    "selected_primary_display": true,
+    "typed_provisional_labels": true,
+    "viewports": [
+      320,
+      390,
+      1280
+    ]
+  },
+  "coverage": {
+    "TD_probabilities": 391,
+    "categories": 11,
+    "count_means": 605,
+    "future_games": 13,
+    "new_scored_outcomes": 0,
+    "outside_original_board_rows_retained_aggregate": 1078,
+    "private_selected_rows_aggregate": 2832,
+    "public_selected_rows": 1754,
+    "yard_medians": 758
+  },
+  "full_operational_goal_complete": false,
+  "lab_publication": {
+    "all_three_jobs": "SUCCESS",
+    "created_at": "2026-10-24T21:48:47.027547+00:00",
+    "export_job": 120996934563,
+    "feed_bytes": 1577709,
+    "feed_sha256": "e47ff56be1a73f710aa81c6847c83e7eb3d3a3b6d4413ee2c01cb1544784d020",
+    "producer_job": 120996271037,
+    "publication_policy_sha256": "45e51a07a077ce0aedede608fcef2ddb3592828a0734843d37a3991e6673a546",
+    "restorer_job": 120996804742,
+    "run_id": 40135574441,
+    "source_sha": "93e2019144be7b51248ce548fe247c6dcd949b71"
+  },
+  "live_assets": {
+    "app": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/app.js?v=weekly-primary-v1",
+      "bytes": 320322,
+      "sha256": "6ea6accea409f834da466790e112c4c45ae6c803064a06237a20714a168e05ee",
+      "status": 200
+    },
+    "board": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/week.json",
+      "bytes": 1818674,
+      "sha256": "db2bdd96fc7d2be762ec41ab1daab62f0c5d0048c4e84fe46355e11abf392fdd",
+      "status": 200
+    },
+    "helper": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/weekly-adaptive-overlay.js?v=2",
+      "bytes": 10159,
+      "sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+      "status": 200
+    },
+    "index": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/",
+      "bytes": 3484,
+      "sha256": "2b480a674ed56a6bf788d5d3e0f2d957361821de99fbe40daaf23266452afe81",
+      "status": 200
+    },
+    "overlay": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive/99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9.json",
+      "bytes": 1670747,
+      "sha256": "99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9",
+      "status": 200
+    },
+    "pointer": {
+      "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+      "bytes": 337,
+      "sha256": "5caefd3f2b477c2654f80d3e27c9e3d3e3b05ae20930c247d5bc7cb5902468f8",
+      "status": 200
+    }
+  },
+  "preservation": {
+    "R0_engine_and_fallback": "RETAINED",
+    "R0_leans_rankings_and_scoring": "UNCHANGED",
+    "prior_failed_runs": "RETAINED",
+    "private_raw_feeds_models_and_internal_ledger": "NOT_PUBLISHED"
+  },
+  "public_scope": "Aggregate deployment/status/counts and already-public source/asset identities only. No expanded internal ledger, private operational locators, model weights, provider rows, or individual forecast records.",
+  "remaining_operations": {
+    "ChatGPT_research_automation": "PAUSED",
+    "duplicate_scheduler_created": false,
+    "exact_PPR_label_qualification": "PENDING",
+    "existing_website_updater": "DAILY08_06_AMERICA_CHICAGO_AND_EXISTING_PUSH_TRIGGER",
+    "future_forecast_accuracy_scores": "PENDING_REAL_GAMES",
+    "lab_recurring_capture_grading_weekly_training_selection_handover": "PENDING_IMPLEMENTATION_AND_HOSTED_VERIFICATION",
+    "next_configured_website_run_UTC": "2026-10-25T13:06:00Z",
+    "next_decision_automatically_enabled": false,
+    "next_registered_decision_deadline_UTC": "2026-10-29T18:15:00Z",
+    "next_scheduled_run_observed": false
+  },
+  "schema_version": "public-initial-provisional-release-checkpoint-v1",
+  "scientific_status": {
+    "absolute_best_claim": false,
+    "exact_PPR": "R0_RETAINED_LABEL_CONTRACT_UNQUALIFIED",
+    "historical_report_commit": "adbd11e7d7aaa1756509eb02c621699ca1ea8678",
+    "new_error_improvement_claim": null,
+    "original_registrations_and_gates": "UNCHANGED",
+    "raw_and_R0_future_comparisons": "PENDING_REAL_OUTCOMES",
+    "selection_evidence": "Exposed2022-2024source-matched historical reports; original historical SITE/R0/raw forecasts unavailable for that panel.",
+    "simulations_or_repeated_snapshots_add_NFL_observations": false,
+    "status": "PROVISIONAL_HISTORICAL_SELECTION_NOT_INDEPENDENT_CONFIRMATION"
+  },
+  "status": "INITIAL_PROVISIONAL_RELEASE_LIVE_VERIFIED",
+  "website": "https://nicknicky19.github.io/nicks-expert-nfl-picks/#/props",
+  "website_release": {
+    "CI": "SUCCESS",
+    "CI_run": 40135758969,
+    "PR": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/3",
+    "deployment": "SUCCESS_FIRST_ATTEMPT",
+    "deployment_job": 120998759798,
+    "deployment_run": 40136412412,
+    "generated_data_commit": "02f55b0fad18d0699ac2b227ac5745cdd795969d",
+    "merge_and_build_source": "315be5e86a1a3a93022b68c453739076487e2077",
+    "merged_at": "2026-10-24T21:56:34Z",
+    "normal_protected_workflow": true,
+    "reviewed_head": "32870c1909b4b99a4580b4224f92f8143f493318"
+  }
+}
