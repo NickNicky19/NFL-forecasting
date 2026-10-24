@@ -1,0 +1,66 @@
+{
+  "schema_version": "weekly-initial-continuation-v3-engineering-checks-v1",
+  "base_commit": "c7bfd766a12773e61147cf5bb43421a4debc1e61",
+  "state": "PREPARATION_IMPLEMENTED_NOT_EXECUTED_HOSTED",
+  "old_inference_failure": {
+    "run_id": "40129209279",
+    "api_job_id": 120977667174,
+    "CPU_seconds_reported": 19.624,
+    "wall_seconds_reported": 19.097,
+    "RSS_bytes_reported": 696995840,
+    "forecast_counts": null,
+    "root_cause": "NOT_PROVEN_FROM_AVAILABLE_SAFE_METADATA",
+    "calendar_format_warning_is_not_a_proven_cause": true,
+    "history_cache_retention_pressure_is_only_a_hypothesis": true,
+    "failed_VM_local_bytes_and_forecast_prefix_are_not_reconstructed": true
+  },
+  "fictional_checks": [
+    {
+      "registration": "one 20 CPU / 40 wall / 256 MiB RSS / 4 GiB address-space attempt",
+      "tests": 53,
+      "passed": 53,
+      "failures": 0,
+      "errors": 0,
+      "syntax_files": 17,
+      "CPU_seconds": 5.478705031,
+      "wall_seconds": 5.03254998200282,
+      "peak_RSS_bytes": 69308416,
+      "forbidden_operations_attempted": []
+    },
+    {
+      "registration": "one additional 5 CPU / 10 wall / 256 MiB RSS / 4 GiB address-space targeted metadata-consumption case",
+      "test": "test_global_metadata_consumption_rejects_same_registration_before_second_extraction",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "CPU_seconds": 0.893266214,
+      "wall_seconds": 0.518252558002132,
+      "peak_RSS_bytes": 64823296,
+      "forbidden_operations_attempted": []
+    }
+  ],
+  "actual_HTTP": 0,
+  "actual_NFL_data_reads": 0,
+  "actual_model_decodes": 0,
+  "actual_fits": 0,
+  "actual_key_reads": 0,
+  "full_repository_suite_run": false,
+  "validated_scope": [
+    "Constant diagnostic stages, allowlisted error types/codes, hashed message fingerprints and no exception text in safe outputs",
+    "Distinct closed zero-fit continuation authority; original source registration remains consumed; old failed inference counters stay unknown",
+    "Opaque invented 78-file restore keeps original producer bodies and emits proofs using current actual test API run/source identities",
+    "Metadata validation separately binds the original source producer and the fresh current restorer",
+    "Historical-cache receipt binds exact original source receipts, unchanged source contract and actual preparation clocks",
+    "Generic incremental output allowance remains 16 MiB; separate historical-cache preparation allowance is 64 MiB",
+    "Existing private upload rejects duplicate continuation metadata before a second extraction callback; one fictional POST total",
+    "V1/V2 registration, source-claim, deadline, catalog, guard and metadata regression cases"
+  ],
+  "prepared_hosted_scopes_not_executed_here": {
+    "continuation_metadata_claim": "One distinct manifest for the new continuation registration; zero original source claims or fits",
+    "old_history_cache": "60 CPU seconds / 90 wall seconds / 64 MiB additional retained bytes / global 512 MiB / zero HTTP, fits, query rows or forecasts",
+    "inference": "Original generic 300 CPU seconds / 420 wall seconds / 16 MiB additional output / zero HTTP or fits"
+  },
+  "scientific_qualification": false,
+  "config_workflow_GO_or_canonical_ledger_written_by_this_packet": false
+}

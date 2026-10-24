@@ -20,9 +20,9 @@ def require(value,code):
 def basic(ref):return {k:ref[k] for k in ('path','bytes','sha256')}
 
 
-def verify_go(go,*,procedure_sha256,source_sha,now,recovery_v2=False,registration_sha256=None):
+def verify_go(go,*,procedure_sha256,source_sha,now,recovery_v2=False,registration_sha256=None,continuation_v3=False):
     from .initial_horizon import resolve
-    route=resolve(recovery_v2);expected=registration_sha256 if recovery_v2 else REGISTRATION_SHA
+    route=resolve(recovery_v2,continuation_v3=continuation_v3);expected=registration_sha256 if recovery_v2 or continuation_v3 else REGISTRATION_SHA
     require(core.HASH.fullmatch(str(expected)) and (not recovery_v2 or expected!=REGISTRATION_SHA),'EXACT_RECOVERY_REGISTRATION_SHA_REQUIRED')
     require(set(go)==GO_KEYS and go['schema_version']==route.builder_version+'-GO' and go['state']=='ROOT_APPROVED_METADATA_BUILDER'
         and go['authority_kind']=='ROOT_APPROVED_PROCEDURE' and go['root_ledger_writer']=='/root'
@@ -44,17 +44,28 @@ def schedule_metadata(body):
     return frame[['season','week','game_type','game_id','kickoff_utc']].to_dict('records')
 
 
-def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workflow_ref,process_identity,now,read,registration,recovery_v2=False):
+def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workflow_ref,process_identity,now,read,registration,recovery_v2=False,continuation=None):
     """Authenticate original controls and path relocation, with opaque model bytes."""
     from .initial_horizon import resolve
     route=resolve(recovery_v2);adapter=route.adapter()
+    origin_source=source_sha;origin_run=run_id;origin_workflow=workflow_ref
+    if continuation is not None:
+        from .weekly_initial_continuation_v3 import ContinuationOrigin
+        require(type(continuation) is ContinuationOrigin and recovery_v2,'TYPED_V2_SOURCE_CONTINUATION_REQUIRED')
+        continuation.verify_unchanged();parent=continuation.parent
+        origin_source=parent['source_sha'];origin_run=parent['run_id'];origin_workflow=parent['workflow_ref']
+        require(run_id!=origin_run and restored['continuation_origin_sha256']==continuation.registration_sha256
+            and restored['parent_origin']==parent and restored['original_procedure_sha256']==parent['checkpoint_procedure_sha256']
+            and restored['index_sha256']==parent['handoff']['index_descriptor']['entry']['payload']['sha256'],
+            'EXACT_REGISTERED_CROSS_RUN_ORIGIN_REQUIRED')
     registration_sha=core.sha(core.canonical(registration)) if recovery_v2 else REGISTRATION_SHA
     if recovery_v2:adapter.validate_registration(registration,now=now)
     root=Path(root);output=root/'private-checkpoint-restore';files=output/'files'
     expected={'control/'+n for n in ('BUILD.json','BUILD_REGISTRATION.json','SOURCE_READBACK.json','source-manifest.json')}
     expected|={'source-cache/raw/'+n+s for n in config['source_names'] for s in ('','.receipt.json')}
     expected|={'models/'+t+'/'+f+'/'+n for t,f,m in cp.JOBS for n in ('trained.joblib','future-inference.json')}
-    require(restored['schema_version']==cp.VERSION+'-restore' and restored['state']=='FULL_PRIVATE_CHECKPOINT_RESTORED'
+    expected_schema=cp.VERSION+('-continuation-restore-v3' if continuation is not None else '-restore')
+    require(restored['schema_version']==expected_schema and restored['state']=='FULL_PRIVATE_CHECKPOINT_RESTORED'
         and restored['source_sha']==source_sha and restored['run_id']==run_id and restored['procedure_sha256']==config['_sha256']
         and restored['files']==78 and type(restored['groups']) is int and 1<=restored['groups']<=8
         and restored['model_decodes']==restored['scoring']==0 and restored['old_model_hash_reproduction'] is False
@@ -68,10 +79,13 @@ def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workfl
     require(set(mapped)==expected,'COMPLETE_FIXED78_RESTORED_MAPPING_REQUIRED')
     producer=restored['original_producer'];restorer=restored['restorer']
     for ident,job in ((producer,config['produce_job']),(restorer,config['restore_job'])):
-        require(ident['execution_lane']=='github_actions' and ident['repository']==core.REPO and ident['source_sha']==source_sha
-            and ident['run_id']==run_id and ident['run_attempt']==1 and ident['permission']=='write' and ident['job_id']==job
-            and ident['workflow_ref']==workflow_ref and type(ident['api_job_id']) is int and ident['api_job_id']>0
+        original=ident is producer
+        require(ident['execution_lane']=='github_actions' and ident['repository']==core.REPO
+            and ident['source_sha']==(origin_source if original else source_sha)
+            and ident['run_id']==(origin_run if original else run_id) and ident['run_attempt']==1 and ident['permission']=='write' and ident['job_id']==job
+            and ident['workflow_ref']==(origin_workflow if original else workflow_ref) and type(ident['api_job_id']) is int and ident['api_job_id']>0
             and core.HASH.fullmatch(ident['process_identity']),'GENUINE_SAME_RUN_PRODUCER_RESTORER_METADATA_REQUIRED')
+    if continuation is not None:require(producer['api_job_id']==continuation.parent['producer_api_job_id'],'EXACT_PARENT_SOURCE_API_JOB')
     require(producer['api_job_id']!=restorer['api_job_id'] and len({producer['process_identity'],restorer['process_identity'],process_identity})==3,
         'FRESH_BUILDER_PROCESS_AFTER_FRESH_RESTORE_REQUIRED')
     require(len(restored['proofs'])==restored['groups']+1,'COMPLETE_RESTORE_PROOF_CENSUS')
@@ -86,17 +100,17 @@ def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workfl
     build=read(mapped['control/BUILD.json']);source=read(mapped['control/SOURCE_READBACK.json']);build_registration=read(mapped['control/BUILD_REGISTRATION.json'])
     source_manifest=read(mapped['control/source-manifest.json'])
     require(build['schema_version']=='GENUINE_HOSTED_FIXED_BUILD_V1' and build['state']=='SOURCE_AND_TRAIN18_COMPLETE' and build['fatal'] is None
-        and build['source_sha']==source_sha and build['execution_lane']=='github_actions' and build['genuine_job']['run_authenticated'] is True
+        and build['source_sha']==origin_source and build['execution_lane']=='github_actions' and build['genuine_job']['run_authenticated'] is True
         and build['genuine_job']['api_job_id']==producer['api_job_id'] and build['genuine_job']['job_id']==producer['job_id']
         and build['scoring']==build['searches']==build['forecasts_issued']==0 and build['source']==source
         and build['training']['new_logical_fits_reserved']==18 and len(build['training']['slots'])==18,'COMPLETE_ORIGINAL_BUILD_CONTROL_REQUIRED')
     require(build_registration['schema_version']==route.build_registration_schema and build_registration['approved'] is True
-        and build_registration['repository']==core.REPO and build_registration['source_sha']==source_sha
+        and build_registration['repository']==core.REPO and build_registration['source_sha']==origin_source
         and build_registration['maximum_new_fits']==18 and build_registration['scope']=='SOURCE_AND_TRAIN_FIXED18_ONLY'
         and build_registration['initial_registration']==registration and build_registration['initial_registration_sha256']==registration_sha
         and core.sha(core.canonical(registration))==registration_sha,'ORIGINAL_EXACT_ROOT_REGISTERED_NEW_BUILD_REQUIRED')
     if recovery_v2:
-        adapter.validate_build_registration(build_registration,source_sha=source_sha,config_sha256=config['_build_config_sha256'],
+        adapter.validate_build_registration(build_registration,source_sha=origin_source,config_sha256=config['_build_config_sha256'],
             initial_sha256=registration_sha,now=now)
     contract=config['_source_contract']
     require(source['source_contract']==contract and source_manifest['policy_sha256']==cp.POLICY_SHA

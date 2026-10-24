@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3]
         default: daily
       bootstrap_locators_json:
         description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
@@ -63,11 +63,11 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  INITIAL_ROUTE_VERSION: ${{ fromJSON(inputs.build_registration_json || '{}').schema_version == 'genuine-hosted-fixed-build-registration-v2' && '2' || '1' }}
+  INITIAL_ROUTE_VERSION: ${{ inputs.mode == 'genuine-hosted-inference-continuation-v3' && '3' || (fromJSON(inputs.build_registration_json || '{}').schema_version == 'genuine-hosted-fixed-build-registration-v2' && '2' || '1') }}
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -469,7 +469,7 @@ jobs:
           timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py produce --execute "${route_args[@]}"
   genuine-hosted-fixed-build-restore-v1:
     needs: genuine-hosted-fixed-build-v1
-    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 && ((inputs.mode == 'genuine-hosted-fixed-build-v1' && needs.genuine-hosted-fixed-build-v1.result == 'success') || inputs.mode == 'genuine-hosted-inference-continuation-v3') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -510,13 +510,23 @@ jobs:
           STORE_PERMISSION: write
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then
+            read -r procedure_sha ignored_digest_name < <(sha256sum config/gha-private-checkpoint-v3.json)
+            route_args=(--continuation-v3 --config-sha256 "$procedure_sha")
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
             read -r procedure_sha ignored_digest_name < <(sha256sum config/gha-private-checkpoint-v2.json)
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
           timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py restore --execute "${route_args[@]}"
       - name: Install the exact already tested future inference dependencies
         run: python -m pip --disable-pip-version-check install --requirement requirements-hosted-fixed-build-v1.lock
+      - name: Prepare only authenticated original history within its separate budget
+        if: env.INITIAL_ROUTE_VERSION == '3'
+        env:
+          STORE_PERMISSION: write
+        run: |
+          read -r procedure_sha ignored_digest_name < <(sha256sum config/weekly-continuation-source-cache-v3.json)
+          timeout --signal=KILL 95s python -I -B tools/weekly_continuation_source_cache_v3.py --execute --procedure-sha256 "$procedure_sha"
       - name: Generate the source and model bound initial inference plan
         id: inference-plan
         env:
@@ -525,13 +535,17 @@ jobs:
           INITIAL_PLAN_BUILDER_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then route_args=(--continuation-v3)
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
           timeout --signal=KILL 35s python -I -B tools/hosted_initial_plan_builder_v1.py --execute "${route_args[@]}"
       - name: Issue current remaining slate forecasts using the existing frozen producer
+        id: current-inference
         env:
           INITIAL_PLAN_SHA256: ${{ steps.inference-plan.outputs.plan_sha256 }}
         run: |
-          timeout --signal=KILL --kill-after=1s 430s python -I -B "tools/weekly_initial_remaining_v${INITIAL_ROUTE_VERSION}.py" \
+          initial_tool="tools/weekly_initial_remaining_v${INITIAL_ROUTE_VERSION}.py"
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then initial_tool=tools/weekly_initial_continuation_v3.py; fi
+          timeout --signal=KILL --kill-after=1s 430s python -I -B "$initial_tool" \
             --plan "$RUNNER_TEMP/genuine-hosted-fixed-build-restore-v1-$GITHUB_RUN_ID/initial-plan-builder-v${INITIAL_ROUTE_VERSION}/PLAN.json" \
             --plan-sha256 "$INITIAL_PLAN_SHA256" --execute
       - name: Preserve every candidate and selected forecast in private storage
@@ -542,14 +556,17 @@ jobs:
           SELECTED_SNAPSHOT_MODE: ${{ inputs.mode }}
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then
+            read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v3.json)
+            route_args=(--continuation-v3 --config-sha256 "$procedure_sha")
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
             read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v2.json)
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py produce --execute "${route_args[@]}"
   genuine-hosted-selected-restore-v1:
     needs: genuine-hosted-fixed-build-restore-v1
-    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 6
     permissions:
@@ -586,14 +603,17 @@ jobs:
           SELECTED_SNAPSHOT_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.selected_handoff_sha256 }}
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then
+            read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v3.json)
+            route_args=(--continuation-v3 --config-sha256 "$procedure_sha")
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
             read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v2.json)
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py restore --execute "${route_args[@]}"
   genuine-hosted-selected-export-v1:
     needs: genuine-hosted-selected-restore-v1
-    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -626,7 +646,10 @@ jobs:
           SELECTED_SNAPSHOT_HANDOFF_SHA256: ${{ needs.genuine-hosted-selected-restore-v1.outputs.selected_handoff_sha256 }}
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then
+            read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v3.json)
+            route_args=(--continuation-v3 --config-sha256 "$procedure_sha")
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then
             read -r procedure_sha ignored_digest_name < <(sha256sum config/selected-private-snapshot-v2.json)
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
@@ -639,7 +662,8 @@ jobs:
           PUBLIC_RELEASE_GO_SHA256: ${{ inputs.public_release_go_sha256 }}
         run: |
           route_args=()
-          if [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
+          if [ "$INITIAL_ROUTE_VERSION" = 3 ]; then route_args=(--continuation-v3)
+          elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
           timeout --signal=KILL 35s python -I -B tools/hosted_public_release_plan_v1.py --execute "${route_args[@]}"
       - name: Verify actual independent jobs and export selected derived fields
         env:

@@ -13,7 +13,7 @@ def validate(plan, *, now):
 
 def main():
     from tools.weekly_generic_future_producer import main as shared
-    return shared(backend_factory=backend, plan_validator=validate)
+    return shared(backend_factory=backend, plan_validator=validate, diagnostics=True)
 
 
 if __name__ == "__main__":

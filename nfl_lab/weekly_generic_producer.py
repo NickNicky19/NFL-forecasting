@@ -265,6 +265,11 @@ def selected_procedure(selection,code_pins):
             adapter="nfl_lab/weekly_initial_remaining_v2.py"
             recipe.update(shared_initial_metadata_sha256=code_pins["nfl_lab/weekly_initial_remaining_v1.py"],
                 horizon_sha256=code_pins["nfl_lab/initial_horizon.py"])
+        elif contract.get("schema_version")=="weekly-initial-continuation-v3":
+            adapter="nfl_lab/weekly_initial_continuation_v3.py"
+            recipe.update(source_initial_adapter_sha256=code_pins["nfl_lab/weekly_initial_remaining_v2.py"],
+                shared_initial_metadata_sha256=code_pins["nfl_lab/weekly_initial_remaining_v1.py"],
+                horizon_sha256=code_pins["nfl_lab/initial_horizon.py"])
         recipe.update(slate_contract=selection["decision"]["slate_contract"],
             adapter_sha256=code_pins[adapter])
     return digest(recipe)
@@ -297,8 +302,10 @@ def execute(plan, *, backend=None, clock=now_utc, resource_check=lambda: None):
     elif isinstance(backend,ProductionBackend):
         from .weekly_initial_remaining_v1 import InitialRemainingBackend
         from .weekly_initial_remaining_v2 import InitialRemainingBackend as RecoveryBackend
+        from .weekly_initial_continuation_v3 import InitialContinuationBackend
         allowed=type(backend) is InitialRemainingBackend or (type(backend) is RecoveryBackend
-            and plan.get("initial_adapter",{}).get("schema_version")=="weekly-initial-remaining-v2")
+            and plan.get("initial_adapter",{}).get("schema_version")=="weekly-initial-remaining-v2") or (
+            type(backend) is InitialContinuationBackend and plan.get("initial_adapter",{}).get("schema_version")=="weekly-initial-continuation-v3")
         require(allowed and backend.plan is plan,
                 "production uses the explicitly registered initial adapter only")
     else:
@@ -327,6 +334,11 @@ class ProductionBackend:
             pin(ref)
         return json.loads(Path(ref["path"]).read_text())
 
+    def checkpoint(self,phase):
+        self.diagnostic_phase=phase
+        callback=getattr(self,"diagnostic_checkpoint",None)
+        if callback is not None:callback(phase)
+
     def derive_slate(self,schedule):
         return prepare_slate(schedule,season=self.plan["slate"]["season"],week=self.plan["slate"]["week"],
             game_cutoffs=self.plan["slate"]["game_cutoffs"],now=self.clock())
@@ -338,6 +350,7 @@ class ProductionBackend:
         from .owned_reference_batch import validate_owned_references
         from .weekly_source_read_batch import source_read_operation, manifest_bindings
         p, store, clock = self.plan, self.store, self.clock
+        self.checkpoint("OUTPUT_ADMISSION")
         with store.transaction():
             require(not Path(p["output_root"]).exists(), "one fresh invocation; failed/partial roots are never retried")
             admit_remaining_output(store, p["retention_physical_anchor"])
@@ -355,6 +368,7 @@ class ProductionBackend:
             require(clock() < min(map(utc, p["slate"]["game_cutoffs"].values())), "source/inference/persistence deadline elapsed")
         fatal=None; result={}; session=None
         try:
+            self.checkpoint("OWNED_AUTH")
             refs=p["owned_inputs"]
             session=future.FutureInferenceSession.from_storage(store)
             self.auth=session
@@ -364,20 +378,24 @@ class ProductionBackend:
             required += [p[k] for k in ("history_bundle","previous_choices","frozen_weekly_choice","reference_forecasts") if p.get(k)]
             require(all(r in refs for r in required), "all source/model/catalog bytes must be sealed owned inputs")
             require(p["schedule"] in p["source_bindings"] and p["roster"] in p["source_bindings"],"same original roster/schedule as source snapshot required")
+            self.checkpoint("CATALOG")
             catalog=self.read(p["selector_catalog"],owned=False); startup=self.read(p["startup_policy"],owned=False)
             self.slot_inventory=read_slot_inventory(p,catalog,self.read) if p.get("slot_inventory") else None
             require(startup["schema_version"]=="weekly-provisional-live-policy-v1" and (self.slot_inventory is not None or len(p["artifacts"])==18),
                 "exact registered startup and eighteen frozen procedures required")
+            self.checkpoint("SCHEDULE_CLOCKS")
             schedule=pd.read_csv(p["schedule"]["path"], usecols=current.SCHEDULE_COLUMNS)
             calendar=schedule.copy()
             local=pd.to_datetime(calendar.gameday.astype(str)+" "+calendar.gametime.astype(str),errors="coerce")
             calendar["kickoff_utc"]=local.dt.tz_localize("America/New_York",ambiguous="NaT",nonexistent="NaT").dt.tz_convert("UTC")
+            self.checkpoint("SLATE")
             derived=self.derive_slate(calendar.to_dict("records"))
             require(derived==p["slate"], "sealed full schedule/clock/slate differs from actual schedule")
             history=self.read(p["history_bundle"]) if p.get("history_bundle") else dict(schema_version=selector.VERSION,offers=[],forecasts=[],outcomes=[],decisions=[],weeks=[])
             require(all(r.get("evidence_lane")=="original_pregame" for r in history["forecasts"]), "only genuine live evidence may select P2")
             require(all(r["season"]<=derived["season"] and (r["season"]<derived["season"] or r["week"]<derived["week"])
                 for r in history["offers"]),"history must exclude current/future target weeks")
+            self.checkpoint("CHOICE")
             if p.get("frozen_weekly_choice"):
                 proof=self.read(p["frozen_weekly_choice"])
                 require(proof["schema_version"]==VERSION+"-weekly-choice-completion"
@@ -396,6 +414,7 @@ class ProductionBackend:
             write("WEEKLY_CHOICE_COMPLETION.json",dict(schema_version=VERSION+"-weekly-choice-completion",choice_binding=choice_ref,
                 persisted_completed_at=choice_completed.isoformat(),original_predeadline_completion=p.get("frozen_weekly_choice")))
             progress()
+            self.checkpoint("MODEL_CENSUS")
             records=[];seen=set()
             for ref in p["artifacts"]:
                 m=self.read(ref);key=(m["category"]["target"],m["method_id"])
@@ -417,23 +436,40 @@ class ProductionBackend:
             source_receipts={name:json.loads((Path(p["source_cache"])/"raw"/(name+".receipt.json")).read_text())
                 for name in source._names(p["history_seasons"])}
             validate_freshness(source_receipts,now=clock(),season=derived["season"],limits=p["source_freshness_seconds"])
+            self.checkpoint("SOURCE_ADOPTION")
             asof=clock()
+            if p.get("prepared_source"):
+                from .weekly_initial_continuation_v3 import validate_prepared_history
+                require(p.get("initial_adapter",{}).get("schema_version")=="weekly-initial-continuation-v3"
+                    and p['prepared_source'] in p['owned_inputs'],'EXPLICIT_OWNED_CONTINUATION_PREPARED_SOURCE_ONLY')
+                prepared=self.read(p['prepared_source'])
+                validate_prepared_history(prepared,origin_sha256=p['continuation_origin_sha256'],
+                    source_sha=p['generation_authority']['source_sha'],run_id=p['generation_authority']['run_id'],
+                    source_contract=p['source_contract'],source_bindings=p['source_bindings'],allowed_periods=p['allowed_periods'],now=clock())
+                require(prepared['asof_utc']==p['prepared_source_asof_utc'] and prepared['bindings']==p['prepared_source_bindings'],
+                    'SEALED_PREPARED_ASOF_AND_OWNED_BINDINGS_CHANGED')
+                validate_owned_references(store,p['prepared_source_bindings'])
+                asof=utc(p['prepared_source_asof_utc'])
             manifest=source.acquire_operational_history(Path(p["cache"]),p["history_seasons"],self.policy,asof,
                 source_cache=Path(p["source_cache"]),allowed_periods=p["allowed_periods"],storage=store)
             validate_freshness(manifest["source_receipts"],now=clock(),season=derived["season"],limits=p["source_freshness_seconds"])
             request=Path(p["cache"])/"operational-source-v2"/self.policy["_policy_sha256"]/"requests"/(source._digest(manifest["request"])+".json")
             refs=manifest_bindings(manifest["namespace"],manifest,manifest_sha256=manifest["manifest_sha256"],
                 request_binding=str(request),request_binding_sha256=future.sha(request))
+            self.checkpoint("SOURCE_LOAD")
             with source_read_operation(store,refs) as source_receipt:
                 prior=source.load_operational_history(Path(p["cache"]),p["history_seasons"],self.policy,asof,allowed_periods=p["allowed_periods"])
+            self.checkpoint("QUERY_BUILD")
             roster=pd.read_parquet(p["roster"]["path"],columns=query.ROSTER_COLUMNS,
                 filters=[[("season","==",derived["season"]),("week","==",derived["week"]),("game_type","==","REG")]])
             packet=query.build_current_queries(roster,schedule,season=derived["season"],week=derived["week"],
                 cutoff_utc=min(map(utc,derived["game_cutoffs"].values())),maximum_rows=1000,expected_remaining_games=len(derived["game_cutoffs"]))
             packet["queries"]["cutoff_utc"]=packet["queries"].game_id.map(derived["game_cutoffs"]).map(utc)
+            self.checkpoint("FEATURES")
             features=query.build_shared_features(prior,packet,policy=self.policy,source_contract=p["source_contract"])
             del prior
             queries=packet["queries"]
+            self.checkpoint("FEATURE_PERSIST")
             for key in ("queries","quarantine","no_remaining_game"):
                 store.write_dataframe(packet[key],output/(key+".parquet"),index=False)
             qref=future.binding(output/"queries.parquet")
@@ -446,8 +482,10 @@ class ProductionBackend:
             write("SOURCE.json",dict(manifest_sha256=manifest["manifest_sha256"],source_read=source_receipt,population=packet["coverage"],
                 actual_completed_at=clock().isoformat(),freshness=p["source_freshness_seconds"],upstream_publication="NOT_INFERRED"))
             progress()
+            self.checkpoint("MODEL_LOAD")
             if p["artifacts"]:session.prepare(p["artifacts"])
             capture_doc=self.read(cref)
+            self.checkpoint("CANDIDATES")
             captures,all_rows=capture(session,records,features,bridge,choice,cref,capture_doc,sink,output,p,clock,progress)
             if self.slot_inventory:
                 captures["models"].extend(unavailable_capture(self.slot_inventory,features))
@@ -467,6 +505,7 @@ class ProductionBackend:
             bundle["forecasts"]=[*history["forecasts"],*[r for r in all_rows if r["offered_id"] in offered_ids],
                 *[r for r in reference if r["offered_id"] in offered_ids]]
             bundle["decisions"]=[*history["decisions"],*[s["decision"] for s in choice["selections"]]]
+            self.checkpoint("SELECTED")
             panel=selector.Panel(bundle,catalog);selected=[]
             for selected_choice in choice["selections"]:
                 progress()
@@ -490,6 +529,7 @@ class ProductionBackend:
                     if derived.get("slate_contract") is not None:
                         row["slate_contract"]=derived["slate_contract"]
                     selected.append(row)
+            self.checkpoint("SELECTED_PERSIST")
             selected_receipt=future.persist_policy_inputs(output/"selected.jsonl.gz",[selected],storage=sink,
                 max_serialized_bytes=4*1024*1024,clock=clock)
             selected_completed=clock()
@@ -508,6 +548,9 @@ class ProductionBackend:
                 local_readback="SAME_PROCESS_OWNED_IMMUTABLE_READBACK",output_refs=output_refs,
                 export_boundary=EXPORT_BOUNDARY,remote_durability="NOT_ESTABLISHED",independent_remote_restore="REQUIRED_BEFORE_PUBLIC_USE",
                 public_export_authorized=False,website_activation=False,scientifically_qualified=False)
+            if p.get('prepared_source'):
+                result['original_history_preparation']=dict(receipt=p['prepared_source'],asof_utc=p['prepared_source_asof_utc'],
+                    continuation_origin_sha256=p['continuation_origin_sha256'],separate_budget=True,metadata=prepared)
             if derived.get("slate_contract") is not None:
                 result["slate_contract"]=derived["slate_contract"]
         except BaseException as error:
@@ -518,9 +561,14 @@ class ProductionBackend:
                 except BaseException as error:fatal=fatal or dict(type=type(error).__name__,reason=str(error)[:500])
         result.update(schema_version=VERSION,fatal=fatal,state="FAILED_RETAINED" if fatal else result["state"],
             actual_completed_at=clock().isoformat(),all_failed_bytes_retained=True,HTTP=0,fits=0,scores=0)
+        if getattr(self,"diagnostic_checkpoint",None) is not None:
+            from .weekly_inference_diagnostics_v1 import summary
+            result["safe_diagnostic"]=summary(state=result["state"],result=result)
+        self.checkpoint("TERMINAL")
         write("FINISHED.json",result)
         if not fatal:
             try:
+                self.checkpoint("EXPORT_HANDOFF")
                 progress()
                 write("EXPORT_INPUTS.json",dict(schema_version=EXPORT_BOUNDARY,source_state=result["state"],
                     terminal=future.binding(output/"FINISHED.json"),selected=selected_receipt["binding"],

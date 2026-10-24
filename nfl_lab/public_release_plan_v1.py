@@ -47,21 +47,31 @@ class BoardGET:
         return body
 
 
-def validate_go(go,*,procedure_sha256,source_sha,event,go_text,go_sha,at,recovery_v2=False,build_config_sha256=None):
+def validate_go(go,*,procedure_sha256,source_sha,event,go_text,go_sha,at,recovery_v2=False,build_config_sha256=None,continuation_v3=False,continuation_registration_sha256=None):
     from .initial_horizon import resolve
-    route=resolve(recovery_v2)
+    route=resolve(recovery_v2,continuation_v3=continuation_v3)
     require(type(go) is dict and set(go)==GO_KEYS and go['schema_version']==route.public_version+'-GO' and go['state']=='ROOT_APPROVED_DERIVED_PUBLICATION'
         and go['authority_kind']=='ROOT_APPROVED_PROCEDURE' and go['repository']==s.REPO and go['source_sha']==source_sha and go['procedure_sha256']==procedure_sha256
         and h(go['review_sha256']) and h(go['root_ledger_sha256']) and go['input_cutoff_utc']==route.cutoff
         and utc(go['registered_at_utc'])<=utc(at)<utc(go['input_cutoff_utc']),'EXACT_ROOT_PUBLIC_RELEASE_GO')
     require(s.canonical(go).decode()==go_text and s.sha(go_text.encode())==go_sha and len(go_text.encode())<=48<<10,'CANONICAL_PUBLIC_GO_PIN')
-    require(event.get('repository',{}).get('full_name')==s.REPO and event.get('inputs',{}).get('mode')=='genuine-hosted-fixed-build-v1'
+    initial=route.adapter()
+    require(event.get('repository',{}).get('full_name')==s.REPO
+        and event.get('inputs',{}).get('mode')==(initial.MODE if continuation_v3 else 'genuine-hosted-fixed-build-v1')
         and event['inputs'].get('public_release_go_json')==go_text and event['inputs'].get('public_release_go_sha256')==go_sha,'EXACT_PUBLIC_GO_DISPATCH')
-    text=event['inputs']['build_registration_json'];build=cp.strict_json(text)
-    require(s.canonical(build).decode()==text and s.sha(text.encode())==event['inputs']['build_registration_sha256'] and build['source_sha']==source_sha
-        and build.get('schema_version')==route.build_registration_schema and build.get('approved') is True and build.get('repository')==s.REPO
-        and build.get('scope')=='SOURCE_AND_TRAIN_FIXED18_ONLY' and build.get('maximum_new_fits')==18
-        and utc(go['registered_at_utc'])<=utc(build['registered_at_utc'])<=utc(at),'PUBLIC_GO_BEFORE_SOURCE_REGISTRATION')
+    text=event['inputs']['bootstrap_locators_json' if continuation_v3 else 'build_registration_json'];build=cp.strict_json(text)
+    if continuation_v3:
+        require(s.canonical(build).decode()==text
+            and s.sha(text.encode())==event['inputs']['bootstrap_locators_sha256']==continuation_registration_sha256,
+            'EXACT_REGISTERED_ZERO_FIT_CONTINUATION_DISPATCH')
+        initial.validate_registration(build,now=utc(at))
+        require(utc(build['registered_at_utc'])<=utc(go['registered_at_utc'])<=utc(at)
+            and build['parent']['build_config_sha256']==build_config_sha256,'CONTINUATION_PUBLIC_GO_AFTER_ORIGINAL_SOURCE_BEFORE_ISSUANCE')
+    else:
+        require(s.canonical(build).decode()==text and s.sha(text.encode())==event['inputs']['build_registration_sha256'] and build['source_sha']==source_sha
+            and build.get('schema_version')==route.build_registration_schema and build.get('approved') is True and build.get('repository')==s.REPO
+            and build.get('scope')=='SOURCE_AND_TRAIN_FIXED18_ONLY' and build.get('maximum_new_fits')==18
+            and utc(go['registered_at_utc'])<=utc(build['registered_at_utc'])<=utc(at),'PUBLIC_GO_BEFORE_SOURCE_REGISTRATION')
     if recovery_v2:
         require(h(build_config_sha256),'EXACT_RECOVERY_BUILD_CONFIG_REQUIRED')
         route.adapter().validate_build_registration(build,source_sha=source_sha,config_sha256=build_config_sha256,
@@ -81,7 +91,7 @@ def validate_go(go,*,procedure_sha256,source_sha,event,go_text,go_sha,at,recover
     archive_url(board['url']);return build
 
 
-def build_plan(inputs,*,go,storage,root,output,context,source_policy_ref,board_get,at,recovery_v2=False):
+def build_plan(inputs,*,go,storage,root,output,context,source_policy_ref,board_get,at,recovery_v2=False,continuation_v3=False):
     """Inputs are the existing consume handoff; no invented exporter keys."""
     require(inputs['schema_version']=='weekly-selected-private-snapshot-v1-restored-inputs' and inputs['candidates_retained']==18 and inputs['public_export_authorized'] is False,'GENUINE_RELOCATED_INPUTS_REQUIRED')
     refs={k:inputs[k] for k in REFS};validate_owned_references(storage,{r['path']:r['sha256'] for r in refs.values()})
@@ -122,5 +132,5 @@ def build_plan(inputs,*,go,storage,root,output,context,source_policy_ref,board_g
         source_policy=source_policy_ref,cache_root=str(Path(root)/'cache'),state_root=str(state),publication_manifest=str(output/'PUBLICATION_MANIFEST.json'))
     plan_ref=save('EXPORT_PLAN.json',s.canonical(plan))
     from .initial_horizon import resolve
-    save('BUILDER_RECEIPT.json',s.canonical(dict(schema_version=resolve(recovery_v2).public_version,state='METADATA_PLAN_READY_NOT_PUBLISHED',plan_sha256=plan_ref['sha256'],GO_sha256=s.sha(s.canonical(go)),rights_authority_sha256=rights_authority['sha256'],inherited_current_job_proof_sha256=a.digest(physical),fresh_API_auth_by_builder=False,archived_board_GET_attempts=board_get.calls,archived_board_bytes=board_get.bytes,NFL_provider_HTTP=0,model_decodes=0,selected_values_decoded=0,public_export_authorized=False,created_at=at)))
+    save('BUILDER_RECEIPT.json',s.canonical(dict(schema_version=resolve(recovery_v2,continuation_v3=continuation_v3).public_version,state='METADATA_PLAN_READY_NOT_PUBLISHED',plan_sha256=plan_ref['sha256'],GO_sha256=s.sha(s.canonical(go)),rights_authority_sha256=rights_authority['sha256'],inherited_current_job_proof_sha256=a.digest(physical),fresh_API_auth_by_builder=False,archived_board_GET_attempts=board_get.calls,archived_board_bytes=board_get.bytes,NFL_provider_HTTP=0,model_decodes=0,selected_values_decoded=0,public_export_authorized=False,created_at=at)))
     return plan_ref

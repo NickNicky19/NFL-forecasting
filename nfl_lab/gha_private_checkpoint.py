@@ -246,8 +246,13 @@ def check_index(doc,handoff,config,producer_api_job_id,workflow_ref):
     require(seen==expected and len(set(asset_ids))==len(asset_ids) and handoff['runtime_binding']['canary_asset_id'] not in asset_ids,'MISSING_OR_DUPLICATE_GROUP_FILES');return doc
 
 
-def restore(handoff,factory,*,config,storage,output,producer_api_job_id):
+def restore(handoff,factory,*,config,storage,output,producer_api_job_id,continuation=None):
     """Fresh job; exact readback, opaque extraction and new path-bound manifests."""
+    if continuation is not None:
+        from .weekly_initial_continuation_v3 import ContinuationOrigin
+        require(type(continuation) is ContinuationOrigin,'TYPED_CONTINUATION_ORIGIN_REQUIRED')
+        continuation.check_handoff(handoff)
+        require(producer_api_job_id==continuation.parent['producer_api_job_id'],'REGISTERED_PARENT_SOURCE_JOB_REQUIRED')
     output=Path(output);proofs=[]
     def get(descriptor,name):
         client=factory('restore');p=descriptor['entry']['payload'];destination=output/'downloads'/name;destination.parent.mkdir(parents=True,exist_ok=True)
@@ -258,7 +263,9 @@ def restore(handoff,factory,*,config,storage,output,producer_api_job_id):
     descriptor_meta(handoff['index_descriptor'],INDEX_CAP)
     encoded=get(handoff['index_descriptor'],'index.gz')
     with gzip.GzipFile(fileobj=io.BytesIO(encoded)) as stream:plain=stream.read(INDEX_CAP+1)
-    require(len(plain)<=INDEX_CAP,'PRIVATE_INDEX_INFLATED_CAP');doc=check_index(strict_json(plain),handoff,config,producer_api_job_id,factory.last.job['workflow_ref'])
+    require(len(plain)<=INDEX_CAP,'PRIVATE_INDEX_INFLATED_CAP')
+    producer_workflow=continuation.parent['workflow_ref'] if continuation is not None else factory.last.job['workflow_ref']
+    doc=check_index(strict_json(plain),handoff,config,producer_api_job_id,producer_workflow)
     extracted=output/'files'
     for g in doc['groups']:
         body=get(g['descriptor'],'group-'+str(g['index'])+'.gz');codec.extract_owned(body,g,storage,extracted)
@@ -276,4 +283,11 @@ def restore(handoff,factory,*,config,storage,output,producer_api_job_id):
     result=dict(schema_version=VERSION+'-restore',state='FULL_PRIVATE_CHECKPOINT_RESTORED',source_sha=handoff['source_sha'],run_id=handoff['run_id'],procedure_sha256=handoff['procedure_sha256'],
         index_sha256=store.sha(encoded),actual_completed_at=now(),original_producer=doc['producer'],restorer=client_identity(factory.last),proofs=proofs,path_mapping=mapping,models=model_refs,
         source_cache=str(extracted/'source-cache'),files=len(doc['files']),groups=len(doc['groups']),model_decodes=0,scoring=0,old_model_hash_reproduction=False,selected_forecast_durability='NOT_CLAIMED')
+    if continuation is not None:
+        current=client_identity(factory.last)
+        require(current['execution_lane']=='github_actions' and current['run_id']!=handoff['run_id']
+            and factory.last.job['run_authenticated'] is True,'NEW_GENUINE_CONTINUATION_RESTORER_REQUIRED')
+        result.update(schema_version=VERSION+'-continuation-restore-v3',source_sha=current['source_sha'],run_id=current['run_id'],
+            procedure_sha256=config['_sha256'],original_procedure_sha256=handoff['procedure_sha256'],
+            continuation_origin_sha256=continuation.registration_sha256,parent_origin=continuation.parent)
     storage.write_bytes(output/'RESTORE_FINISHED.json',store.canonical(result));return result

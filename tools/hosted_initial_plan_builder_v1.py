@@ -20,11 +20,11 @@ def require(value,code):
     if not value:raise ValueError(code)
 
 
-def run(env,procedure_sha256,*,recovery_v2=False):
+def run(env,procedure_sha256,*,recovery_v2=False,continuation_v3=False):
     sys.path.insert(0,str(ROOT))
     from nfl_lab import hosted_initial_plan_builder_v1 as b
     from nfl_lab.initial_horizon import resolve
-    route=resolve(recovery_v2);initial=route.adapter();version=route.builder_version
+    route=resolve(recovery_v2,continuation_v3=continuation_v3);initial=route.adapter();version=route.builder_version
     from nfl_lab import gha_private_checkpoint as cp,private_draft_store as core
     from nfl_lab.operational_storage import OperationalStorage
     from nfl_lab.owned_reference_batch import validate_owned_references
@@ -36,7 +36,7 @@ def run(env,procedure_sha256,*,recovery_v2=False):
         path=core.parents_safe(path);body=core.read_local(path,cap)
         return dict(path=str(path),bytes=len(body),sha256=core.sha(body))
     def public(name,cap=2<<20):return cp.strict_json(cp.read_ref(pin(ROOT/name,cap),cap))
-    config_path=ROOT/route.builder_config_path if recovery_v2 else CONFIG
+    config_path=ROOT/route.builder_config_path if recovery_v2 or continuation_v3 else CONFIG
     procedure_ref=pin(config_path);require(procedure_ref['sha256']==procedure_sha256,'EXACT_REVIEWED_BUILDER_PROCEDURE_SHA')
     config=public(config_path.relative_to(ROOT));require(config['schema_version']==version+'-procedure'
         and config['state']=='ROOT_APPROVED_METADATA_BUILDER' and config['budgets']==dict(CPU_seconds=20,wall_seconds=30,address_space_bytes=512<<20,
@@ -54,12 +54,13 @@ def run(env,procedure_sha256,*,recovery_v2=False):
     go=cp.strict_json(text);require(core.canonical(go).decode()==text,'CANONICAL_BUILDER_GO_REQUIRED')
     registration_ref=pin(ROOT/route.registration_path);registration=public(route.registration_path)
     registration_sha=core.sha(core.canonical(registration))
-    if not recovery_v2:require(registration_sha==b.REGISTRATION_SHA,'ACTUAL_UNCHANGED_INITIAL_REGISTRATION')
+    if not recovery_v2 and not continuation_v3:require(registration_sha==b.REGISTRATION_SHA,'ACTUAL_UNCHANGED_INITIAL_REGISTRATION')
     initial.validate_registration(registration,now=now)
     b.verify_go(go,procedure_sha256=procedure_sha256,source_sha=env['GITHUB_SHA'],now=now,
-        recovery_v2=recovery_v2,registration_sha256=registration_sha)
+        recovery_v2=recovery_v2,continuation_v3=continuation_v3,registration_sha256=registration_sha)
+    continuation=initial.origin(registration,now=now) if continuation_v3 else None
     event=cp.strict_json(core.read_local(env['GITHUB_EVENT_PATH'],256<<10))
-    require(event.get('inputs',{}).get('mode')=='genuine-hosted-fixed-build-v1'
+    require(event.get('inputs',{}).get('mode')==(initial.MODE if continuation_v3 else 'genuine-hosted-fixed-build-v1')
         and event['inputs'].get('inference_builder_go_json')==text and event['inputs'].get('inference_builder_go_sha256')==go_sha
         and event.get('repository',{}).get('full_name')==core.REPO,'EXACT_OWNER_DISPATCH_BUILDER_APPROVAL_REQUIRED')
     checkpoint=public(route.checkpoint_config_path);checkpoint['_sha256']=pin(ROOT/route.checkpoint_config_path)['sha256']
@@ -68,10 +69,13 @@ def run(env,procedure_sha256,*,recovery_v2=False):
     require(core.sha(core.canonical(actual['binding']))==checkpoint['binding_sha256']
         and core.sha(core.canonical(actual['qualification']))==checkpoint['qualification_sha256'],'EXACT_QUALIFIED_RUNTIME_METADATA')
     build_config=public(route.build_config_path);checkpoint['_source_contract']=build_config['source_contract']
-    if recovery_v2:
+    if recovery_v2 or continuation_v3:
         checkpoint['_build_config_sha256']=pin(ROOT/route.build_config_path)['sha256']
-        require(build_config['initial_registration_canonical_sha256']==checkpoint['initial_registration_canonical_sha256']==registration_sha,
+        expected_source_registration=initial.ORIGINAL_REGISTRATION_SHA if continuation_v3 else registration_sha
+        require(build_config['initial_registration_canonical_sha256']==expected_source_registration
+            and checkpoint['initial_registration_canonical_sha256']==registration_sha,
             'SAME_REGISTERED_RECOVERY_BUILD_AND_CHECKPOINT_REQUIRED')
+        if continuation_v3:require(checkpoint['_build_config_sha256']==continuation.parent['build_config_sha256'],'EXACT_PARENT_BUILD_CONFIGURATION_BYTES')
     checkpoint['_environment']={n:metadata.version(n) for n in build_config['environment_versions']}
     require(checkpoint['_environment']==build_config['environment_versions'],'ACTUAL_FULL_FIXED18_RUNTIME_REQUIRED')
     def code_fields(relative):
@@ -99,13 +103,51 @@ def run(env,procedure_sha256,*,recovery_v2=False):
         return cp.strict_json(cp.read_ref(b.basic(ref),1<<20))
     process=core.process_identity()
     validated=b.validate_restore(restored,restore_ref=restore_ref,root=root,config=checkpoint,source_sha=env['GITHUB_SHA'],run_id=env['GITHUB_RUN_ID'],
-        workflow_ref=job['workflow_ref'],process_identity=process,now=now,read=read_owned,registration=registration,recovery_v2=recovery_v2)
+        workflow_ref=job['workflow_ref'],process_identity=process,now=now,read=read_owned,
+        registration=registration['initial_registration'] if continuation_v3 else registration,
+        recovery_v2=recovery_v2 or continuation_v3,continuation=continuation)
     validate_owned_references(storage,{r['path']:r['sha256'] for r in validated['owned_inputs']})
+    if continuation_v3:
+        claim_ref=pin(root/'private-checkpoint-restore/CONTINUATION_METADATA_CLAIM.json')
+        validate_owned_references(storage,{claim_ref['path']:claim_ref['sha256']})
+        claim=cp.strict_json(cp.read_ref(claim_ref))
+        initial.validate_metadata_consumption(claim,authority=continuation,current_run=env['GITHUB_RUN_ID'],
+            current_source=env['GITHUB_SHA'],current_api_job_id=restored['restorer']['api_job_id'])
+        validated['owned_inputs'].append(claim_ref)
+    prepared=None;prepared_ref=None;prepared_owned=[]
+    if continuation_v3:
+        from tools.weekly_continuation_source_cache_v3 import BUDGETS as PREP_BUDGETS
+        from nfl_lab.weekly_source_read_batch import manifest_bindings
+        prepared_ref=pin(root/'source-cache-preparation-v3/PREPARED.json')
+        validate_owned_references(storage,{prepared_ref['path']:prepared_ref['sha256']})
+        prepared=cp.strict_json(cp.read_ref(prepared_ref,2<<20))
+        initial.validate_prepared_history(prepared,origin_sha256=continuation.registration_sha256,source_sha=env['GITHUB_SHA'],
+            run_id=env['GITHUB_RUN_ID'],source_contract=checkpoint['_source_contract'],source_bindings=validated['source_bindings'],
+            allowed_periods=checkpoint['_allowed_periods'],now=now)
+        require(prepared['budgets']==PREP_BUDGETS and prepared['procedure_sha256']==config['source_sha256']['config/weekly-continuation-source-cache-v3.json'],
+            'SEPARATELY_REGISTERED_PREPARATION_PROCEDURE_AND_BUDGET')
+        references,_=validate_owned_references(storage,prepared['bindings'])
+        manifest=cp.strict_json(cp.read_ref(prepared['source_manifest'],2<<20))
+        request=cp.strict_json(cp.read_ref(prepared['request_binding'],2<<20))
+        require(manifest['request']['asof_utc']==prepared['asof_utc'] and manifest['policy_sha256']==cp.POLICY_SHA
+            and manifest['code_sha256s']==checkpoint['_source_code_pins'] and manifest['allowed_periods']==checkpoint['_allowed_periods']
+            and manifest['request']['seasons']==list(range(2019,2027))
+            and Path(prepared['request_binding']['path']).name==core.sha(core.canonical(manifest['request']))+'.json'
+            and request['snapshot_sha256']==manifest['snapshot_sha256']
+            and (root/'cache/operational-source-v2'/cp.POLICY_SHA/request['namespace']).resolve()==Path(prepared['namespace']).resolve(),
+            'SEALED_PREPARED_NAMESPACE_REQUEST_CODE_POLICY_AND_ASOF')
+        expected_bindings=manifest_bindings(prepared['namespace'],manifest,manifest_sha256=prepared['source_manifest']['sha256'],
+            request_binding=prepared['request_binding']['path'],request_binding_sha256=prepared['request_binding']['sha256'])
+        require(expected_bindings==prepared['bindings'],'EXACT_COMPLETE_PREPARED_OWNED_BINDINGS')
+        original_receipts={Path(ref['path']).name[:-13]:read_owned(ref) for ref in validated['source_bindings'] if ref['path'].endswith('.receipt.json')}
+        require(manifest['source_receipts']==original_receipts,'PREPARATION_CANNOT_RELABEL_OR_CHANGE_ORIGINAL_RECEIPTS')
+        prepared_owned=[prepared_ref,*[b.basic(ref) for ref in references.values()]]
     slate=initial.prepare_initial_slate(b.schedule_metadata(cp.read_ref(validated['schedule'])),registration,registration_ref,now=now)
     invocation=interpreter_invocation_identity(sys.executable);interpreter=pin(invocation['resolved_path'],64<<20)
     libc=Path('/usr/lib/x86_64-linux-gnu/libc.so.6').resolve(strict=True);libc_ref=pin(libc,8<<20)
     catalog=b.catalog_metadata(list(zip(validated['artifacts'],validated['records'])),registered_at=restored['actual_completed_at'])
-    startup_ref=pin(ROOT/'config/weekly-provisional-live-policy-v1.json');require(startup_ref['sha256']==registration['startup_policy_sha256'],'UNCHANGED_STARTUP_POLICY')
+    original_registration=registration['initial_registration'] if continuation_v3 else registration
+    startup_ref=pin(ROOT/'config/weekly-provisional-live-policy-v1.json');require(startup_ref['sha256']==original_registration['startup_policy_sha256'],'UNCHANGED_STARTUP_POLICY')
     output=root/('initial-plan-builder-v'+str(route.version));inference_output=root/('initial-inference-v'+str(route.version))
     with storage.transaction():
         require(not output.exists() and not inference_output.exists(),'ONE_METADATA_GENERATION_NO_RETRY')
@@ -128,8 +170,13 @@ def run(env,procedure_sha256,*,recovery_v2=False):
             history_seasons=list(range(2019,2027)),allowed_periods=checkpoint['_allowed_periods'],schedule=validated['schedule'],roster=validated['roster'],
             artifacts=validated['artifacts'],selector_catalog=catalog_ref,startup_policy=startup_ref,slate=slate,
             initial_adapter=dict(schema_version=initial.VERSION,registration=registration_ref),history_bundle=None,previous_choices=None,frozen_weekly_choice=None,reference_forecasts=None,
-            owned_inputs=[*validated['owned_inputs'],catalog_ref,go_ref],code_pins=dict(config['source_sha256'],**{str(config_path.relative_to(ROOT)):procedure_sha256}),
+            owned_inputs=[*validated['owned_inputs'],*prepared_owned,catalog_ref,go_ref],code_pins=dict(config['source_sha256'],**{str(config_path.relative_to(ROOT)):procedure_sha256}),
             interpreter=interpreter,interpreter_invocation=invocation,libc=libc_ref,rss_sampler=pin(ROOT/'tools/review_direct_booster_screen_guard_v4.py'),numerical_environment=config['numerical_environment'])
+        if continuation_v3:
+            plan.update(continuation_origin_sha256=continuation.registration_sha256,prepared_source=prepared_ref,
+                prepared_source_asof_utc=prepared['asof_utc'],prepared_source_bindings=prepared['bindings'])
+            authority.update(original_history_preparation=prepared_ref,source_cache_preparation_asof_utc=prepared['asof_utc'],
+                separate_preparation_budget=prepared['budgets'],parent_run_id=continuation.parent['run_id'],parent_source_sha=continuation.parent['source_sha'])
         b.generic.validate_plan(plan,now=now);initial.validate_plan(plan,now=now);validate_interpreter_binding(plan)
         encoded=core.canonical(plan);require(len(encoded)+len(core.canonical(catalog))+len(text.encode())<1<<20,'FINITE_METADATA_PLAN_BYTES')
         storage.write_bytes(output/'PLAN.json',encoded);plan_ref=pin(output/'PLAN.json')
@@ -140,7 +187,7 @@ def run(env,procedure_sha256,*,recovery_v2=False):
 
 def main(argv=None):
     parser=argparse.ArgumentParser();parser.add_argument('--execute',action='store_true');parser.add_argument('--procedure-sha256')
-    parser.add_argument('--recovery-v2',action='store_true');args=parser.parse_args(argv)
+    parser.add_argument('--recovery-v2',action='store_true');parser.add_argument('--continuation-v3',action='store_true');args=parser.parse_args(argv)
     if not args.execute:print('{"state":"INITIAL_PLAN_BUILDER_PREPARATION_ONLY_NO_IO"}');return 2
     try:
         resource.setrlimit(resource.RLIMIT_CPU,(20,20));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(30)
@@ -148,7 +195,7 @@ def main(argv=None):
             if event.startswith(('socket.','subprocess.')) or event in {'os.fork','os.forkpty','os.exec','os.system','os.posix_spawn','pickle.find_class'}:raise ValueError('METADATA_ONLY_NO_NETWORK_CHILDREN_MODEL_DECODE')
         sys.addaudithook(audit)
         expected=args.procedure_sha256 or json.loads(os.environ.get('INITIAL_PLAN_BUILDER_GO_JSON','{}')).get('procedure_sha256')
-        result=run(os.environ,expected,recovery_v2=args.recovery_v2);print(json.dumps(result,sort_keys=True))
+        result=run(os.environ,expected,recovery_v2=args.recovery_v2,continuation_v3=args.continuation_v3);print(json.dumps(result,sort_keys=True))
         if os.environ.get('GITHUB_OUTPUT'):
             with open(os.environ['GITHUB_OUTPUT'],'a') as stream:stream.write('plan_sha256='+result['plan_sha256']+'\n')
         return 0

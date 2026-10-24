@@ -142,7 +142,9 @@ class InitialRemainingBackend(generic.ProductionBackend):
         wanted = {"schedules.csv.receipt.json", "roster_weekly_2026.parquet.receipt.json", "stats_player_week_2026.parquet.receipt.json"}
         receipts = {Path(r["path"]).name:self.read(r) for r in self.plan["source_bindings"] if Path(r["path"]).name in wanted}
         slots = getattr(self, "slot_inventory", None)
+        self.checkpoint("INITIAL_METADATA")
         metadata = slots["original_metadata"] if slots is not None else [self.read(r) for r in self.plan["artifacts"]]
         validate_fresh_initial_metadata(registration, metadata, receipts, now=self.clock(), slot_inventory=slots)
+        self.checkpoint("INITIAL_CONSUME")
         self.consume_registration(registration, ref)
         return derived

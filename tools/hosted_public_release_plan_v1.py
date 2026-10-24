@@ -21,13 +21,13 @@ def read(path,cap):
 def sha(body):return hashlib.sha256(body).hexdigest()
 
 
-def run(env,procedure_sha256,*,transport=None,recovery_v2=False):
+def run(env,procedure_sha256,*,transport=None,recovery_v2=False,continuation_v3=False):
     # Source/procedure identity is checked before importing shared CAS hooks or
     # reading private inputs. No credential is requested by this builder.
     sys.path.insert(0,str(ROOT))
     from nfl_lab.initial_horizon import resolve
-    route=resolve(recovery_v2)
-    body=read(ROOT/route.public_config_path if recovery_v2 else CONFIG,1<<20);require(sha(body)==procedure_sha256,'EXACT_PUBLIC_PLAN_PROCEDURE');config=json.loads(body)
+    route=resolve(recovery_v2,continuation_v3=continuation_v3)
+    body=read(ROOT/route.public_config_path if recovery_v2 or continuation_v3 else CONFIG,1<<20);require(sha(body)==procedure_sha256,'EXACT_PUBLIC_PLAN_PROCEDURE');config=json.loads(body)
     require(config['schema_version']=='weekly-hosted-public-release-plan-procedure-v'+str(route.version) and config['state']=='ROOT_APPROVED_METADATA_BUILDER'
         and config['budgets']==dict(CPU_seconds=15,wall_seconds=30,address_space_bytes=512<<20,archived_board_GETs=1,board_bytes=4<<20,retries=0,children=0,model_decodes=0),'PUBLIC_PLAN_PROCEDURE_PENDING')
     for name,expected in config['source_sha256'].items():require(not Path(name).is_absolute() and '..' not in Path(name).parts and sha(read(ROOT/name,2<<20))==expected,'PUBLIC_PLAN_SOURCE_PIN')
@@ -41,8 +41,11 @@ def run(env,procedure_sha256,*,transport=None,recovery_v2=False):
     job=actions_context(env,'write')  # Checkout identity only; inherited proof below supplies prior API auth.
     text=env.get('PUBLIC_RELEASE_GO_JSON','');go_sha=env.get('PUBLIC_RELEASE_GO_SHA256','');require(len(text.encode())<=48<<10,'PUBLIC_GO_BOUND')
     go=cp.strict_json(text);event=cp.strict_json(read(env['GITHUB_EVENT_PATH'],256<<10));at=b.now()
+    continuation_sha=None
+    if continuation_v3:continuation_sha=s.sha(s.canonical(cp.strict_json(read(ROOT/route.registration_path,16384))))
     registration=b.validate_go(go,procedure_sha256=procedure_sha256,source_sha=env['GITHUB_SHA'],event=event,go_text=text,go_sha=go_sha,at=at,
-        recovery_v2=recovery_v2,build_config_sha256=config['source_sha256'].get(route.build_config_path))
+        recovery_v2=recovery_v2,continuation_v3=continuation_v3,continuation_registration_sha256=continuation_sha,
+        build_config_sha256=config['source_sha256'].get(route.build_config_path))
     require(go['policy']['publication_authority']['source_branch']==env['GITHUB_REF'].removeprefix('refs/heads/'),'EXACT_REGISTERED_SOURCE_BRANCH')
     source_path=ROOT/'config/operational-source-policy-v2.json';raw=read(source_path,1<<20);require(sha(raw)==cp.POLICY_SHA,'EXACT_E7_POLICY_BYTES');policy=cp.strict_json(raw)
     root=s.parents_safe(Path(env['RUNNER_TEMP'])/('genuine-hosted-selected-export-v1-'+env['GITHUB_RUN_ID']));require(root.is_dir(),'EXISTING_JOB4_CACHE_REQUIRED')
@@ -52,19 +55,19 @@ def run(env,procedure_sha256,*,transport=None,recovery_v2=False):
     validate_owned_references(storage,{handoff_ref['path']:handoff_ref['sha256']});inputs=cp.strict_json(cp.read_ref(handoff_ref,1<<20))
     source_ref=dict(path=str(source_path),bytes=len(raw),sha256=sha(raw));getter=b.BoardGET(transport)
     context=dict(source_sha=env['GITHUB_SHA'],run_id=env['GITHUB_RUN_ID'],job=job,process_identity=s.process_identity(),season=registration['initial_registration']['season'],week=registration['initial_registration']['week'])
-    ref=b.build_plan(inputs,go=go,storage=storage,root=root,output=root/('public-release-plan-v'+str(route.version)),context=context,source_policy_ref=source_ref,board_get=getter,at=at,recovery_v2=recovery_v2)
+    ref=b.build_plan(inputs,go=go,storage=storage,root=root,output=root/('public-release-plan-v'+str(route.version)),context=context,source_policy_ref=source_ref,board_get=getter,at=at,recovery_v2=recovery_v2,continuation_v3=continuation_v3)
     return ref['sha256']
 
 
 def main(argv=None,*,environ=None,transport=None):
     p=argparse.ArgumentParser();p.add_argument('--execute',action='store_true');p.add_argument('--procedure-sha256')
-    p.add_argument('--recovery-v2',action='store_true');args=p.parse_args(argv)
+    p.add_argument('--recovery-v2',action='store_true');p.add_argument('--continuation-v3',action='store_true');args=p.parse_args(argv)
     if not args.execute:print('{"state":"PUBLIC_RELEASE_PLAN_PREPARATION_ONLY"}');return 2
     try:
         resource.setrlimit(resource.RLIMIT_CPU,(15,15));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(30)
         env=os.environ if environ is None else environ
         expected=args.procedure_sha256 or json.loads(env.get('PUBLIC_RELEASE_GO_JSON','{}')).get('procedure_sha256')
-        result=run(env,expected,transport=transport,recovery_v2=args.recovery_v2);print('PUBLIC_RELEASE_PLAN_SHA256='+result)
+        result=run(env,expected,transport=transport,recovery_v2=args.recovery_v2,continuation_v3=args.continuation_v3);print('PUBLIC_RELEASE_PLAN_SHA256='+result)
         if env.get('GITHUB_OUTPUT'):
             with open(env['GITHUB_OUTPUT'],'a',encoding='utf-8') as stream:stream.write('plan_sha256='+result+'\n')
         return 0
