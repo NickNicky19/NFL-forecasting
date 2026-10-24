@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing]
         default: daily
   push:
     branches: [main]
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || inputs.mode != 'storage-probe'
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -137,7 +137,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
   storage-probe-write:
-    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'storage-probe' && github.run_attempt == 1
+    if: github.event_name == 'workflow_dispatch' && (inputs.mode == 'storage-probe' || inputs.mode == 'storage-probe-existing') && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -146,16 +146,26 @@ jobs:
       release_id: ${{ steps.canary.outputs.release_id }}
       asset_id: ${{ steps.canary.outputs.asset_id }}
       fixture_sha256: ${{ steps.canary.outputs.fixture_sha256 }}
+      recovery_run_id: ${{ steps.canary.outputs.recovery_run_id }}
+      recovery_config_sha256: ${{ steps.canary.outputs.recovery_config_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Create one harmless unpublished canary
+      - name: Create harmless canary or pin exact existing canary without writes
         id: canary
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROBE_PERMISSION: write
-        run: timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py write
+          PROBE_MODE: ${{ inputs.mode }}
+        run: |
+          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-pin
+          elif [ "$PROBE_MODE" = storage-probe ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py write
+          else
+            exit 1
+          fi
   storage-probe-read:
     needs: storage-probe-write
     runs-on: ubuntu-latest
@@ -170,10 +180,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROBE_PERMISSION: read
+          PROBE_MODE: ${{ inputs.mode }}
+          RECOVERY_PIN_RUN_ID: ${{ needs.storage-probe-write.outputs.recovery_run_id }}
+          RECOVERY_PIN_CONFIG_SHA256: ${{ needs.storage-probe-write.outputs.recovery_config_sha256 }}
           RELEASE_ID: ${{ needs.storage-probe-write.outputs.release_id }}
           ASSET_ID: ${{ needs.storage-probe-write.outputs.asset_id }}
           FIXTURE_SHA256: ${{ needs.storage-probe-write.outputs.fixture_sha256 }}
-        run: timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py read --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"
+        run: |
+          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-read
+          elif [ "$PROBE_MODE" = storage-probe ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py read --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"
+          else
+            exit 1
+          fi
   storage-probe-restore:
     needs: [storage-probe-write, storage-probe-read]
     runs-on: ubuntu-latest
@@ -188,7 +208,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROBE_PERMISSION: write
+          PROBE_MODE: ${{ inputs.mode }}
+          RECOVERY_PIN_RUN_ID: ${{ needs.storage-probe-write.outputs.recovery_run_id }}
+          RECOVERY_PIN_CONFIG_SHA256: ${{ needs.storage-probe-write.outputs.recovery_config_sha256 }}
           RELEASE_ID: ${{ needs.storage-probe-write.outputs.release_id }}
           ASSET_ID: ${{ needs.storage-probe-write.outputs.asset_id }}
           FIXTURE_SHA256: ${{ needs.storage-probe-write.outputs.fixture_sha256 }}
-        run: timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py restore --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"
+        run: |
+          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-restore
+          elif [ "$PROBE_MODE" = storage-probe ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py restore --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"
+          else
+            exit 1
+          fi

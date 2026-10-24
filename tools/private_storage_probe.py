@@ -23,11 +23,14 @@ CONTROL_REPO = "cli/cli"
 CONTROL_TAG = "v2.0.0"
 CONTROL_NAME = "gh_2.0.0_checksums.txt"
 FIXTURE_NAME = "nfl-lab-private-storage-canary.txt"
+EXISTING_CONFIG_RELATIVE = "config/private-storage-existing-canary-v1.json"
+EXISTING_CONFIG_SHA256 = "7e320f66f8dda6ce91e5f95198bec203617457293ceeae950ee5f7bd52022ecc"
 CDN_HOSTS = frozenset({"release-assets.githubusercontent.com", "objects.githubusercontent.com",
     "github-releases.githubusercontent.com"})
 MAX_CALLS, MAX_TRANSFER, MAX_SUMMARY = 20, 1024 * 1024, 16 * 1024
 MAX_RESPONSE, MAX_CONTROL_BODY = 128 * 1024, 16 * 1024
 STATUSES = {"WRITE_CANARY_CREATED", "READ_BOUNDARY_DENIED", "RESTORE_EXACT_BODY_VERIFIED",
+    "EXISTING_CANARY_PINNED",
     "FAIL_PRIVATE_BOUNDARY", "INCONCLUSIVE_DENIAL", "PUBLIC_CONTROL_FAILED",
     "DRAFT_IDENTITY_REQUIRED", "ASSET_IDENTITY_REQUIRED", "RESTORE_MISMATCH",
     "PROBE_GUARD_STOP", "PROBE_INTERNAL_ERROR"}
@@ -197,6 +200,48 @@ class Client:
         return result
 
 
+def existing_config():
+    """Only this exact reviewed harmless destination; no caller-supplied path."""
+    path = Path(__file__).resolve().parents[1] / EXISTING_CONFIG_RELATIVE
+    if path.is_symlink() or any(parent.is_symlink() for parent in path.parents):
+        raise ProbeError()
+    payload = path.read_bytes()
+    if len(payload) > MAX_SUMMARY or hashlib.sha256(payload).hexdigest() != EXISTING_CONFIG_SHA256:
+        raise ProbeError()
+    document = json.loads(payload)
+    expected_browser = (r"https://github\.com/NickNicky19/NFL-forecasting/releases/download/"
+        r"untagged-[0-9a-f]{20}/nfl-lab-private-storage-canary\.txt")
+    body = fixture(document["original_run_id"])
+    if (document["repository"] != REPOSITORY or document["registration_id"] != "lab-existing-canary-recovery-v1"
+            or not re.fullmatch(expected_browser, document["browser_download_url"])
+            or len(body) != document["fixture_bytes"] or hashlib.sha256(body).hexdigest() != document["fixture_sha256"]
+            or document["asset_name"] != FIXTURE_NAME or document["HTTP_methods"] != ["GET"]):
+        raise ProbeError()
+    return document
+
+
+class ExistingClient(Client):
+    """Separately versioned GET-only recovery of one already-created canary."""
+    def __init__(self, token, active_run_id, *, transport=None, clock=time.monotonic):
+        self.config = existing_config()
+        self.active_run_id = str(integer(active_run_id))
+        if self.active_run_id == self.config["original_run_id"]:
+            raise ProbeError()
+        self.existing_only = True
+        super().__init__(token, self.config["original_run_id"], release_id=self.config["release_id"],
+            asset_id=self.config["asset_id"], transport=transport, clock=clock)
+        if self.tag != self.config["tag_name"]:
+            raise ProbeError()
+
+    def browser(self):
+        return self.config["browser_download_url"]
+
+    def validate_url(self, url, method, *, cdn=False):
+        if method != "GET":
+            raise ProbeError()
+        return super().validate_url(url, method, cdn=cdn)
+
+
 def pin_draft(client, document, *, empty=False):
     release_id = integer(document.get("id"))
     if (client.release_id not in {None, release_id} or document.get("draft") is not True
@@ -215,7 +260,8 @@ def pin_asset(client, document):
             or document.get("url") != client.path("/releases/assets/" + str(asset_id))
             or document.get("browser_download_url") != client.browser()
             or document.get("size") != len(body) or document.get("state") != "uploaded"
-            or document.get("digest") not in {None, "sha256:" + hashlib.sha256(body).hexdigest()}):
+            or document.get("digest") not in {None, "sha256:" + hashlib.sha256(body).hexdigest()}
+            or (getattr(client, "existing_only", False) and document.get("digest") != "sha256:" + client.config["fixture_sha256"])):
         raise ProbeError("ASSET_IDENTITY_REQUIRED")
     client.asset_id = asset_id
     return document
@@ -324,6 +370,20 @@ def restore(client):
         "post_download_draft_single_asset": True}
 
 
+def pin_existing(client):
+    if not isinstance(client, ExistingClient):
+        raise ProbeError()
+    _, checks = restore(client)
+    return "EXISTING_CANARY_PINNED", {**checks, "existing_asset_only": True, "exact_untagged_browser_pinned": True}
+
+
+def require_existing_pin(client, env):
+    expected = {"RECOVERY_PIN_RUN_ID": client.active_run_id, "RECOVERY_PIN_CONFIG_SHA256": EXISTING_CONFIG_SHA256,
+        "RELEASE_ID": str(client.release_id), "ASSET_ID": str(client.asset_id), "FIXTURE_SHA256": client.config["fixture_sha256"]}
+    if any(env.get(key) != value for key, value in expected.items()):
+        raise ProbeError()
+
+
 def summary(client, state, checks):
     document = {"schema_version": "lab-harmless-storage-probe-v1", "state": state,
         "repository": REPOSITORY, "run_id": client.run_id, "run_attempt": 1,
@@ -331,6 +391,11 @@ def summary(client, state, checks):
         "fixture_sha256": hashlib.sha256(fixture(client.run_id)).hexdigest(),
         "HTTP_calls": client.calls, "transfer_bytes": client.transferred, "checks": checks,
         "sensitive_data_used": False, "private_durability_qualified": False}
+    if isinstance(client, ExistingClient):
+        document.update(schema_version="lab-existing-canary-recovery-v1", run_id=client.active_run_id,
+            recovery_run_id=client.active_run_id, original_failed_run_id=client.run_id,
+            fixture_origin_run_id=client.run_id, recovery_config_sha256=EXISTING_CONFIG_SHA256,
+            original_failure_retained=True, existing_asset_only=True)
     encoded = json.dumps(document, sort_keys=True)
     if len(encoded.encode()) > MAX_SUMMARY:
         raise ProbeError()
@@ -347,7 +412,7 @@ def limits():
 def main(argv=None, *, environ=None, transport=None):
     limits()
     parser = argparse.ArgumentParser()
-    parser.add_argument("phase", choices=("write", "read", "restore"))
+    parser.add_argument("phase", choices=("write", "read", "restore", "existing-pin", "existing-read", "existing-restore"))
     parser.add_argument("--release-id")
     parser.add_argument("--asset-id")
     parser.add_argument("--expected-sha256")
@@ -355,17 +420,28 @@ def main(argv=None, *, environ=None, transport=None):
     env = os.environ if environ is None else environ
     client = None
     try:
+        existing = args.phase.startswith("existing-")
+        permission = "read" if args.phase in {"read", "existing-read"} else "write"
         if (env.get("GITHUB_REPOSITORY") != REPOSITORY or env.get("GITHUB_ACTIONS") != "true"
                 or env.get("GITHUB_EVENT_NAME") != "workflow_dispatch" or env.get("GITHUB_RUN_ATTEMPT") != "1"
-                or env.get("PROBE_PERMISSION") != ("read" if args.phase == "read" else "write")):
+                or env.get("PROBE_PERMISSION") != permission):
             raise ProbeError()
-        client = Client(env.get("GITHUB_TOKEN"), env.get("GITHUB_RUN_ID"), release_id=args.release_id,
-            asset_id=args.asset_id, transport=transport)
-        expected = hashlib.sha256(fixture(client.run_id)).hexdigest()
-        if ((args.phase == "write" and any((args.release_id, args.asset_id, args.expected_sha256)))
-                or (args.phase != "write" and args.expected_sha256 != expected)):
-            raise ProbeError()
-        state, checks = {"write": write, "read": read, "restore": restore}[args.phase](client)
+        if existing:
+            if env.get("PROBE_MODE") != "storage-probe-existing" or any((args.release_id, args.asset_id, args.expected_sha256)):
+                raise ProbeError()
+            client = ExistingClient(env.get("GITHUB_TOKEN"), env.get("GITHUB_RUN_ID"), transport=transport)
+            if args.phase != "existing-pin":
+                require_existing_pin(client, env)
+            action = {"existing-pin": pin_existing, "existing-read": read, "existing-restore": restore}[args.phase]
+        else:
+            client = Client(env.get("GITHUB_TOKEN"), env.get("GITHUB_RUN_ID"), release_id=args.release_id,
+                asset_id=args.asset_id, transport=transport)
+            expected = hashlib.sha256(fixture(client.run_id)).hexdigest()
+            if ((args.phase == "write" and any((args.release_id, args.asset_id, args.expected_sha256)))
+                    or (args.phase != "write" and args.expected_sha256 != expected)):
+                raise ProbeError()
+            action = {"write": write, "read": read, "restore": restore}[args.phase]
+        state, checks = action(client)
         result, code = summary(client, state, checks), 0
     except ProbeError as error:
         result, code = (summary(client, error.state, {}) if client else {"state": error.state,
@@ -379,7 +455,10 @@ def main(argv=None, *, environ=None, transport=None):
             stream.write("```json\n" + encoded + "\n```\n")
     if code == 0 and env.get("GITHUB_OUTPUT"):
         with Path(env["GITHUB_OUTPUT"]).open("a") as stream:
-            for key in ("release_id", "asset_id", "fixture_sha256"):
+            keys = ("release_id", "asset_id", "fixture_sha256")
+            if isinstance(client, ExistingClient):
+                keys += ("recovery_run_id", "recovery_config_sha256")
+            for key in keys:
                 stream.write(key + "=" + str(result[key]) + "\n")
     return code
 

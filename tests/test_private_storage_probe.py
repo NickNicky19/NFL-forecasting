@@ -310,9 +310,10 @@ class StorageProbeChecks(unittest.TestCase):
         workflow = (SOURCE.parents[1] / ".github/workflows/lab.yml").read_text()
         self.assertEqual(workflow.count("- cron:"), 1)
         self.assertEqual(workflow.count("group: nfl-lab-single-writer"), 1)
-        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.mode != 'storage-probe'", workflow)
+        skip = "    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing')\n"
+        self.assertIn(skip, workflow)
         lab = "  lab:\n" + workflow.split("  lab:\n", 1)[1].split("  storage-probe-write:\n", 1)[0]
-        lab = lab.replace("    if: github.event_name != 'workflow_dispatch' || inputs.mode != 'storage-probe'\n", "", 1)
+        lab = lab.replace(skip, "", 1)
         self.assertEqual(hashlib.sha256(lab.encode()).hexdigest(),
             "8f9eb212533ecb5dba0efa0144db19e63ead6726912e5475dfd5ac742b5e50a3")
         self.assertEqual(workflow.count("timeout-minutes: 3\n"), 3)
@@ -322,6 +323,133 @@ class StorageProbeChecks(unittest.TestCase):
         self.assertNotIn("upload-artifact", probe_jobs)
         self.assertNotIn("secrets.", probe_jobs)
         self.assertNotIn("pip install", probe_jobs)
+
+
+class ExistingCanaryChecks(unittest.TestCase):
+    def client(self, answers=()):
+        http = MockHTTP(answers)
+        return probe.ExistingClient(TOKEN, "456", transport=http), http
+
+    def asset(self, client, **changes):
+        result = {"id": client.asset_id, "name": probe.FIXTURE_NAME, "state": "uploaded",
+            "url": client.path("/releases/assets/" + str(client.asset_id)), "browser_download_url": client.browser(),
+            "size": len(probe.fixture(client.run_id)), "digest": "sha256:" + client.config["fixture_sha256"]}
+        result.update(changes)
+        return result
+
+    def draft(self, client, asset=None, **changes):
+        result = {"id": client.release_id, "draft": True, "published_at": None, "tag_name": client.tag,
+            "url": client.path("/releases/" + str(client.release_id)), "assets": [asset or self.asset(client)]}
+        result.update(changes)
+        return result
+
+    def download_answers(self, client):
+        return [reply(self.draft(client)), reply(self.asset(client)), Response(200, probe.fixture(client.run_id)), reply(self.draft(client))]
+
+    def environment(self, client, permission="read"):
+        return {"GITHUB_REPOSITORY": probe.REPOSITORY, "GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "workflow_dispatch",
+            "GITHUB_RUN_ATTEMPT": "1", "GITHUB_RUN_ID": client.active_run_id, "GITHUB_TOKEN": TOKEN,
+            "PROBE_PERMISSION": permission, "PROBE_MODE": "storage-probe-existing",
+            "RECOVERY_PIN_RUN_ID": client.active_run_id, "RECOVERY_PIN_CONFIG_SHA256": probe.EXISTING_CONFIG_SHA256,
+            "RELEASE_ID": str(client.release_id), "ASSET_ID": str(client.asset_id), "FIXTURE_SHA256": client.config["fixture_sha256"]}
+
+    def test_existing_config_binds_original_fixture_and_separate_recovery_run(self):
+        client, _ = self.client()
+        self.assertEqual(client.run_id, "40072854281")
+        self.assertEqual((client.release_id, client.asset_id), (422575680, 671552361))
+        self.assertEqual(len(probe.fixture(client.run_id)), 117)
+        self.assertEqual(hashlib.sha256(probe.fixture(client.run_id)).hexdigest(), client.config["fixture_sha256"])
+        result = probe.summary(client, "EXISTING_CANARY_PINNED", {})
+        self.assertEqual(result["run_id"], "456")
+        self.assertEqual(result["fixture_origin_run_id"], "40072854281")
+        self.assertTrue(result["original_failure_retained"])
+        self.assertFalse(result["private_durability_qualified"])
+        legacy = probe.Client(TOKEN, client.run_id, release_id=client.release_id, asset_id=client.asset_id, transport=MockHTTP([]))
+        with self.assertRaises(probe.ProbeError) as failure:
+            probe.pin_asset(legacy, self.asset(client))
+        self.assertEqual(failure.exception.state, "ASSET_IDENTITY_REQUIRED")
+
+    def test_existing_pin_has_only_gets_and_strips_cdn_auth(self):
+        client, http = self.client()
+        http.answers = [reply(self.draft(client)), reply(self.asset(client)),
+            Response(302, headers={"Location": "https://release-assets.githubusercontent.com/existing?signature=never_log"}),
+            Response(200, probe.fixture(client.run_id)), reply(self.draft(client))]
+        state, checks = probe.pin_existing(client)
+        self.assertEqual(state, "EXISTING_CANARY_PINNED")
+        self.assertTrue(all(checks.values()))
+        self.assertEqual(client.calls, 5)
+        self.assertTrue(all(request.method == "GET" for request, _ in http.requests))
+        self.assertIsNone(http.requests[3][0].get_header("Authorization"))
+        for method in ("POST", "PATCH", "PUT", "DELETE"):
+            with self.assertRaises(probe.ProbeError):
+                client.request(client.path("/releases"), method=method, data=b"{}")
+        self.assertEqual(client.calls, 5)
+        self.assertFalse(client.created or client.uploaded)
+
+    def test_existing_browser_digest_and_asset_identity_fail_before_anonymous_access(self):
+        for changes in ({"browser_download_url": "https://github.com/other/repo/releases/download/untagged-abc/file"},
+                {"browser_download_url": "https://github.com/" + probe.REPOSITORY + "/releases/download/tag/" + probe.FIXTURE_NAME},
+                {"digest": None}, {"size": 118}, {"id": 99}):
+            client, http = self.client()
+            http.answers = [reply(self.draft(client, self.asset(client, **changes)))]
+            with self.subTest(changes=changes), self.assertRaises(probe.ProbeError):
+                probe.pin_existing(client)
+            self.assertEqual(client.calls, 1)
+            self.assertIsNotNone(http.requests[0][0].get_header("Authorization"))
+
+    def test_existing_cli_requires_same_run_pin_proof_and_no_destination_arguments(self):
+        client, _ = self.client()
+        base = self.environment(client)
+        for changes in ({"RECOVERY_PIN_RUN_ID": "999"}, {"RECOVERY_PIN_CONFIG_SHA256": "bad"},
+                {"RELEASE_ID": "999"}, {"ASSET_ID": "999"}, {"FIXTURE_SHA256": "bad"},
+                {"GITHUB_RUN_ID": client.run_id}, {"GITHUB_RUN_ATTEMPT": "2"}, {"PROBE_MODE": "storage-probe"}):
+            http = MockHTTP([])
+            with self.subTest(changes=changes), patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO):
+                self.assertEqual(probe.main(["existing-read"], environ={**base, **changes}, transport=http), 1)
+                self.assertFalse(http.requests)
+        with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO):
+            http = MockHTTP([])
+            self.assertEqual(probe.main(["existing-read", "--release-id", "999"], environ=base, transport=http), 1)
+            self.assertFalse(http.requests)
+
+    def test_existing_pin_and_restore_receipts_bind_new_run_to_original_body(self):
+        for phase, expected in (("existing-pin", "EXISTING_CANARY_PINNED"), ("existing-restore", "RESTORE_EXACT_BODY_VERIFIED")):
+            client, http = self.client()
+            http.answers = self.download_answers(client)
+            with self.subTest(phase=phase), patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO) as output:
+                self.assertEqual(probe.main([phase], environ=self.environment(client, "write"), transport=http), 0)
+                result = json.loads(output.getvalue())
+            self.assertEqual(result["state"], expected)
+            self.assertEqual(result["run_id"], "456")
+            self.assertEqual(result["original_failed_run_id"], "40072854281")
+            self.assertEqual(result["fixture_sha256"], client.config["fixture_sha256"])
+            self.assertTrue(result["checks"]["post_download_draft_single_asset"])
+            self.assertEqual(client.config["original_read_restore_jobs"], "NOT_RUN")
+
+    def test_existing_read_checks_fixed_untagged_browser_anonymously(self):
+        client, http = self.client()
+        http.answers = StorageProbeChecks.controls(self) + [Response(404)] * 10
+        with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO) as output:
+            self.assertEqual(probe.main(["existing-read"], environ=self.environment(client), transport=http), 0)
+            result = json.loads(output.getvalue())
+        self.assertEqual(result["HTTP_calls"], 17)
+        self.assertEqual(sum(key.endswith("_404") for key in result["checks"]), 10)
+        for index in (-6, -1):
+            request = http.requests[index][0]
+            self.assertEqual(request.full_url, client.config["browser_download_url"])
+            self.assertIsNone(request.get_header("Authorization"))
+
+    def test_existing_config_tamper_and_post_download_mutation_fail_closed(self):
+        with patch.object(Path, "read_bytes", return_value=b'{"repository":"other/repo"}'):
+            with self.assertRaises(probe.ProbeError):
+                probe.existing_config()
+        client, http = self.client()
+        http.answers = self.download_answers(client)
+        http.answers[-1] = reply(self.draft(client, published_at="changed"))
+        with self.assertRaises(probe.ProbeError) as failure:
+            probe.pin_existing(client)
+        self.assertEqual(failure.exception.state, "DRAFT_IDENTITY_REQUIRED")
+        self.assertEqual(client.calls, 4)
 
 
 if __name__ == "__main__":
