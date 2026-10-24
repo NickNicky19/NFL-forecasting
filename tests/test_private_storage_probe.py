@@ -310,7 +310,7 @@ class StorageProbeChecks(unittest.TestCase):
         workflow = (SOURCE.parents[1] / ".github/workflows/lab.yml").read_text()
         self.assertEqual(workflow.count("- cron:"), 1)
         self.assertEqual(workflow.count("group: nfl-lab-single-writer"), 1)
-        skip = "    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing')\n"
+        skip = "    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1')\n"
         self.assertIn(skip, workflow)
         lab = "  lab:\n" + workflow.split("  lab:\n", 1)[1].split("  storage-probe-write:\n", 1)[0]
         lab = lab.replace(skip, "", 1)
@@ -450,6 +450,125 @@ class ExistingCanaryChecks(unittest.TestCase):
             probe.pin_existing(client)
         self.assertEqual(failure.exception.state, "DRAFT_IDENTITY_REQUIRED")
         self.assertEqual(client.calls, 4)
+
+
+class DiagnosticCanaryChecks(unittest.TestCase):
+    def fixture(self, answers):
+        helper = ExistingCanaryChecks()
+        client, http = helper.client(answers)
+        env = helper.environment(client)
+        env["PROBE_MODE"] = probe.DIAGNOSTIC_MODE
+        return helper, client, http, env
+
+    def forbidden(self):
+        return reply({"message": probe.RESOURCE_PERMISSION_MESSAGE, "secret": TOKEN}, 403,
+            {"X-RateLimit-Remaining": "42", "X-GitHub-Request-Id": "DO_NOT_ECHO_REQUEST_ID"})
+
+    def test_diagnostic_collects_all_routes_but_403_stays_inconclusive(self):
+        answers = StorageProbeChecks.controls(self) + [self.forbidden()] * 10
+        _, client, _, _ = self.fixture(answers)
+        state, checks = probe.diagnostic_read(client)
+        self.assertEqual(state, "INCONCLUSIVE_DENIAL")
+        self.assertEqual((client.calls, len(checks["routes"]), checks["inconclusive_routes"]), (17, 10, 10))
+        self.assertTrue(checks["all_routes_collected"])
+        for item in checks["routes"]:
+            self.assertEqual(item["status"], 403)
+            self.assertTrue(item["resource_permission_message_exact_match"])
+            self.assertTrue(item["rate_remaining_nonzero"])
+            self.assertTrue(item["request_id_present"])
+            if item["route"] == "browser":
+                self.assertEqual(item["principal"], "anonymous")
+        encoded = json.dumps(checks)
+        for forbidden in (TOKEN, probe.RESOURCE_PERMISSION_MESSAGE, "DO_NOT_ECHO_REQUEST_ID"):
+            self.assertNotIn(forbidden, encoded)
+        _, legacy, _, _ = self.fixture(answers)
+        with self.assertRaises(probe.ProbeError) as failure:
+            probe.read(legacy)
+        self.assertEqual(failure.exception.state, "INCONCLUSIVE_DENIAL")
+        self.assertEqual(legacy.calls, 8)  # Old fail-fast criterion is unchanged.
+
+    def test_any_visible_negative_route_including_oversize_body_is_privacy_failure(self):
+        for visible in (Response(200, b"visible"), Response(302, headers={"Location": "https://objects.githubusercontent.com/private?secret=DO_NOT_ECHO"}),
+                Response(200, headers={"Content-Length": str(probe.MAX_RESPONSE + 1)})):
+            _, client, _, _ = self.fixture(StorageProbeChecks.controls(self) + [self.forbidden()] * 8 + [visible, Response(404)])
+            with self.subTest(status=visible.status):
+                state, checks = probe.diagnostic_read(client)
+                self.assertEqual(state, "FAIL_PRIVATE_BOUNDARY")
+                self.assertTrue(checks["privacy_boundary_failed"])
+                self.assertEqual(len(checks["routes"]), 10)
+                self.assertEqual(checks["routes"][8]["status"], visible.status)
+                self.assertNotIn("DO_NOT_ECHO", json.dumps(checks))
+
+    def test_nonzero_read_emits_only_completion_marker_for_scoped_restore(self):
+        _, _, http, env = self.fixture(StorageProbeChecks.controls(self) + [self.forbidden()] + [Response(404)] * 9)
+        import tempfile
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "output"
+            env["GITHUB_OUTPUT"] = str(path)
+            with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO) as output:
+                code = probe.main(["diagnostic-read"], environ=env, transport=http)
+            result = json.loads(output.getvalue())
+            self.assertEqual(code, 1)
+            self.assertEqual(result["state"], "INCONCLUSIVE_DENIAL")
+            self.assertEqual(result["schema_version"], "lab-existing-canary-diagnostic-v1")
+            self.assertTrue(result["diagnostic_only"])
+            self.assertFalse(result["private_durability_qualified"])
+            self.assertEqual(path.read_text(), "diagnostic_read_completed=true\n")
+            self.assertLess(len(output.getvalue()), probe.MAX_SUMMARY)
+
+    def test_mandatory_positive_controls_must_finish_before_completion_marker(self):
+        _, _, http, env = self.fixture([Response(403)])
+        import tempfile
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "output"
+            env["GITHUB_OUTPUT"] = str(path)
+            with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO):
+                self.assertEqual(probe.main(["diagnostic-read"], environ=env, transport=http), 1)
+            self.assertEqual(len(http.requests), 1)
+            self.assertFalse(path.exists())
+
+    def test_diagnostic_restore_requires_complete_read_marker_and_remains_get_only(self):
+        helper, client, http, env = self.fixture([])
+        env["PROBE_PERMISSION"] = "write"
+        with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO):
+            self.assertEqual(probe.main(["diagnostic-restore"], environ=env, transport=http), 1)
+        self.assertFalse(http.requests)
+        env["DIAGNOSTIC_READ_COMPLETED"] = "true"
+        http.answers = helper.download_answers(client)
+        with patch.object(probe, "limits"), patch("sys.stdout", new_callable=io.StringIO) as output:
+            self.assertEqual(probe.main(["diagnostic-restore"], environ=env, transport=http), 0)
+        result = json.loads(output.getvalue())
+        self.assertEqual(result["state"], "RESTORE_EXACT_BODY_VERIFIED")
+        self.assertTrue(result["checks"]["post_download_draft_single_asset"])
+        self.assertEqual(result["prior_failed_recovery_run_id"], "40073778089")
+        self.assertFalse(result["private_durability_qualified"])
+        self.assertTrue(all(request.method == "GET" for request, _ in http.requests))
+
+    def test_transport_errors_and_message_nonmatches_are_retained_without_retry(self):
+        results = [URLError("https://private.invalid/?token=" + TOKEN), reply({"message": probe.RESOURCE_PERMISSION_MESSAGE + " suffix"}, 403),
+            Response(404, headers={"Retry-After": "not echoed", "X-RateLimit-Remaining": "0"})] + [Response(404)] * 7
+        _, client, _, _ = self.fixture(StorageProbeChecks.controls(self) + results)
+        state, checks = probe.diagnostic_read(client)
+        self.assertEqual((state, client.calls, len(checks["routes"])), ("INCONCLUSIVE_DENIAL", 17, 10))
+        self.assertTrue(checks["routes"][0]["request_failed"])
+        self.assertIsNone(checks["routes"][0]["status"])
+        self.assertFalse(checks["routes"][1]["resource_permission_message_exact_match"])
+        self.assertTrue(checks["routes"][2]["retry_after_present"])
+        self.assertFalse(checks["routes"][2]["rate_remaining_nonzero"])
+        self.assertNotIn(TOKEN, json.dumps(checks))
+
+    def test_only_diagnostic_workflow_can_restore_after_completed_failed_read(self):
+        workflow = (SOURCE.parents[1] / ".github/workflows/lab.yml").read_text()
+        restore_job = workflow.split("  storage-probe-restore:\n", 1)[1]
+        self.assertIn("(success() && inputs.mode != 'storage-probe-diagnostic-v1')", restore_job)
+        self.assertIn("!cancelled()", restore_job)
+        self.assertIn("needs.storage-probe-write.result == 'success'", restore_job)
+        self.assertIn("needs.storage-probe-read.outputs.diagnostic_read_completed == 'true'", restore_job)
+        self.assertNotIn("continue-on-error", workflow)
+        self.assertEqual(workflow.count("- cron:"), 1)
+        self.assertIn("diagnostic-pin", workflow)
+        self.assertIn("diagnostic-read", workflow)
+        self.assertIn("diagnostic-restore", workflow)
 
 
 if __name__ == "__main__":

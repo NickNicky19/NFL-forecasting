@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1]
         default: daily
   push:
     branches: [main]
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -137,7 +137,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
   storage-probe-write:
-    if: github.event_name == 'workflow_dispatch' && (inputs.mode == 'storage-probe' || inputs.mode == 'storage-probe-existing') && github.run_attempt == 1
+    if: github.event_name == 'workflow_dispatch' && (inputs.mode == 'storage-probe' || inputs.mode == 'storage-probe-existing' || inputs.mode == 'storage-probe-diagnostic-v1') && github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -159,7 +159,9 @@ jobs:
           PROBE_PERMISSION: write
           PROBE_MODE: ${{ inputs.mode }}
         run: |
-          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+          if [ "$PROBE_MODE" = storage-probe-diagnostic-v1 ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py diagnostic-pin
+          elif [ "$PROBE_MODE" = storage-probe-existing ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-pin
           elif [ "$PROBE_MODE" = storage-probe ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py write
@@ -172,11 +174,14 @@ jobs:
     timeout-minutes: 3
     permissions:
       contents: read
+    outputs:
+      diagnostic_read_completed: ${{ steps.read_check.outputs.diagnostic_read_completed }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Require authenticated API and anonymous API/browser denials with controls
+        id: read_check
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROBE_PERMISSION: read
@@ -187,7 +192,9 @@ jobs:
           ASSET_ID: ${{ needs.storage-probe-write.outputs.asset_id }}
           FIXTURE_SHA256: ${{ needs.storage-probe-write.outputs.fixture_sha256 }}
         run: |
-          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+          if [ "$PROBE_MODE" = storage-probe-diagnostic-v1 ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py diagnostic-read
+          elif [ "$PROBE_MODE" = storage-probe-existing ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-read
           elif [ "$PROBE_MODE" = storage-probe ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py read --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"
@@ -196,6 +203,7 @@ jobs:
           fi
   storage-probe-restore:
     needs: [storage-probe-write, storage-probe-read]
+    if: (success() && inputs.mode != 'storage-probe-diagnostic-v1') || (!cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'storage-probe-diagnostic-v1' && github.run_attempt == 1 && needs.storage-probe-write.result == 'success' && needs.storage-probe-read.outputs.diagnostic_read_completed == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -211,11 +219,14 @@ jobs:
           PROBE_MODE: ${{ inputs.mode }}
           RECOVERY_PIN_RUN_ID: ${{ needs.storage-probe-write.outputs.recovery_run_id }}
           RECOVERY_PIN_CONFIG_SHA256: ${{ needs.storage-probe-write.outputs.recovery_config_sha256 }}
+          DIAGNOSTIC_READ_COMPLETED: ${{ needs.storage-probe-read.outputs.diagnostic_read_completed }}
           RELEASE_ID: ${{ needs.storage-probe-write.outputs.release_id }}
           ASSET_ID: ${{ needs.storage-probe-write.outputs.asset_id }}
           FIXTURE_SHA256: ${{ needs.storage-probe-write.outputs.fixture_sha256 }}
         run: |
-          if [ "$PROBE_MODE" = storage-probe-existing ]; then
+          if [ "$PROBE_MODE" = storage-probe-diagnostic-v1 ]; then
+            timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py diagnostic-restore
+          elif [ "$PROBE_MODE" = storage-probe-existing ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py existing-restore
           elif [ "$PROBE_MODE" = storage-probe ]; then
             timeout --signal=KILL --kill-after=1s 180s python3 -I -B tools/private_storage_probe.py restore --release-id "$RELEASE_ID" --asset-id "$ASSET_ID" --expected-sha256 "$FIXTURE_SHA256"

@@ -148,3 +148,60 @@ cover exact config/origin binding, GET-only pinning, pre-anonymous asset rejecti
 same-run pin proof, distinct recovery receipts, fixed anonymous browser checks,
 config tamper and post-download mutation. No HTTP or hosted dispatch occurred
 during this recovery preparation.
+
+## Diagnostic-only v1: collect all routes without changing qualification
+
+Actual existing-canary run `40073778089` completed its fresh write-token pin:
+the117byte original body restored exactly and the final draft check passed.
+The read job stopped at eight HTTP calls with `INCONCLUSIVE_DENIAL`, before its
+anonymous routes completed. Restore was skipped. This failed/incomplete privacy
+result stays retained; it does not establish a private boundary.
+
+The separately reviewed manual mode `storage-probe-diagnostic-v1` proposes at
+most one third GET-only hosted diagnostic with the identical immutable source
+config, original run `40072854281`, release/asset IDs and harmless fixture. It
+creates, uploads, overwrites, publishes and deletes nothing. New receipts use
+schema `lab-existing-canary-diagnostic-v1` and explicitly retain both earlier
+failed run identities. The normal creation/recovery modes keep their original
+fail-fast404 qualification and restore-after-success rules.
+
+Three fresh automatic-token jobs run diagnostic-pin, diagnostic-read and
+diagnostic-restore. The first and last reuse exact before/after unpublished
+draft/single-asset pins and body/digest/hash readback. The read phase requires
+valid own-repository authenticated positive control and anonymous public
+metadata/download controls before sampling all ten protected routes, even when
+an earlier route returns403. Browser requests remain anonymous. Each record
+contains only constant route/principal labels, integer status ornull, old-rule
+classification and booleans for exact message equality to GitHub's resource
+permission message, rate-header presence/nonzero, retry-header presence,
+request-ID presence and request failure. No raw header values, request IDs,
+response/error bodies, token or signed URL is emitted.
+
+The message-match boolean is diagnostic evidence only:403 remains inconclusive
+even with a nonzero rate limit and exact resource-permission message. Every
+2xx/3xx protected response explicitly sets FAIL_PRIVATE_BOUNDARY, including a
+response whose oversized body is rejected before full reading. Protocol or
+transport failures remain inconclusive. All routes are sampled within the old
+20-call/1MiB/20s-request/120s-script/3min-job ceilings, without retry.
+Any visible/inconclusive route makes the diagnostic read job NONZERO; the
+workflow may therefore conclude failure. No continue-on-error hides that state.
+
+Only after valid controls and all-route collection does the failing diagnostic
+read step emit a public-safe completion flag. Only this diagnostic mode may run
+fresh write-token restoration after that completed failed read, requiring the
+flag plus the same-current-run config/fixture pin outputs. Cancellation,
+failed/incomplete controls or missing pin outputs do not authorize it. Normal
+modes still require success. The fresh restoration teaches only that the write
+token can retrieve this harmless body; it cannot rescue privacy qualification.
+Every receipt keeps private_durability_qualified=false. There is no sensitive
+producer activation, second cron, new account/key/spending, or actual hosted
+diagnostic executed during this preparation. Root retains the separate exact
+review and one-run GO.
+
+Local diagnostic preparation ran28/28 mocked methods successfully in0.072s,
+including the21 retained methods and seven new diagnostic methods. These cover
+all-route403 collection with unchanged old fail-fast behavior, visible/redirect/
+oversized200 privacy failures, safe output redaction, mandatory controls,
+nonzero-read completion output, narrowly gated fresh restoration, transport
+errors and no retry. The existing source config hash is unchanged. No actual
+HTTP, dispatch, upload, deletion or NFL value read occurred in this preparation.

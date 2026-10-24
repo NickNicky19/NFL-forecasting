@@ -25,12 +25,16 @@ CONTROL_NAME = "gh_2.0.0_checksums.txt"
 FIXTURE_NAME = "nfl-lab-private-storage-canary.txt"
 EXISTING_CONFIG_RELATIVE = "config/private-storage-existing-canary-v1.json"
 EXISTING_CONFIG_SHA256 = "7e320f66f8dda6ce91e5f95198bec203617457293ceeae950ee5f7bd52022ecc"
+DIAGNOSTIC_MODE = "storage-probe-diagnostic-v1"
+PRIOR_RECOVERY_RUN_ID = "40073778089"
+RESOURCE_PERMISSION_MESSAGE = "Resource not accessible by integration"
 CDN_HOSTS = frozenset({"release-assets.githubusercontent.com", "objects.githubusercontent.com",
     "github-releases.githubusercontent.com"})
 MAX_CALLS, MAX_TRANSFER, MAX_SUMMARY = 20, 1024 * 1024, 16 * 1024
 MAX_RESPONSE, MAX_CONTROL_BODY = 128 * 1024, 16 * 1024
 STATUSES = {"WRITE_CANARY_CREATED", "READ_BOUNDARY_DENIED", "RESTORE_EXACT_BODY_VERIFIED",
     "EXISTING_CANARY_PINNED",
+    "DIAGNOSTIC_READ_ALL_DENIED",
     "FAIL_PRIVATE_BOUNDARY", "INCONCLUSIVE_DENIAL", "PUBLIC_CONTROL_FAILED",
     "DRAFT_IDENTITY_REQUIRED", "ASSET_IDENTITY_REQUIRED", "RESTORE_MISMATCH",
     "PROBE_GUARD_STOP", "PROBE_INTERNAL_ERROR"}
@@ -135,6 +139,7 @@ class Client:
         raise ProbeError()
 
     def request(self, url, *, method="GET", data=None, anonymous=False, octet=False, download=False):
+        self.last_status, self.last_headers = None, {}
         self.validate_url(url, method)
         # Consume POST reservations BEFORE the transport; ambiguous failures are never repeated.
         if method == "POST":
@@ -169,6 +174,7 @@ class Client:
                     with response:
                         status = response.status
                         observed = {key.lower(): value for key, value in response.headers.items()}
+                        self.last_status, self.last_headers = status, observed
                         length = observed.get("content-length")
                         if length is not None and (not length.isdigit() or int(length) > min(MAX_RESPONSE, remaining)):
                             raise ProbeError()
@@ -356,6 +362,54 @@ def read(client):
     return "READ_BOUNDARY_DENIED", {"authenticated_own_repo_control": True, "anonymous_public_controls": True, **checks}
 
 
+def diagnostic_read(client):
+    """Collect every bounded route; old404 criteria and failure status stay strict."""
+    if not isinstance(client, ExistingClient):
+        raise ProbeError()
+    public_controls(client)  # Both authenticated-own-repo and public lanes mandatory.
+    endpoints = {"release_metadata": client.path("/releases/" + str(client.release_id)),
+        "asset_metadata": client.path("/releases/assets/" + str(client.asset_id)),
+        "asset_list": client.path("/releases/" + str(client.release_id) + "/assets"),
+        "api_octet": client.path("/releases/assets/" + str(client.asset_id)), "browser": client.browser()}
+    records = []
+    for group in ("read_only", "anonymous"):
+        for route, url in endpoints.items():
+            anonymous = group == "anonymous" or route == "browser"
+            status, headers, body, failed = None, {}, b"", False
+            classification = "INCONCLUSIVE_DENIAL"
+            try:
+                status, headers, body = client.request(url, anonymous=anonymous, octet=route == "api_octet")
+                try:
+                    denial((status, headers, body))
+                    classification = "DENIED_404"
+                except ProbeError as error:
+                    classification = error.state
+            except ProbeError:
+                failed = True
+                status, headers = client.last_status, client.last_headers
+                if isinstance(status, int) and 200 <= status < 400:
+                    classification = "FAIL_PRIVATE_BOUNDARY"
+            try:
+                parsed = json.loads(body)
+                permission_match = isinstance(parsed, dict) and parsed.get("message") == RESOURCE_PERMISSION_MESSAGE
+            except (ValueError, UnicodeError):
+                permission_match = False
+            remaining = headers.get("x-ratelimit-remaining", "")
+            records.append(dict(route=route, sequence=group + "_api_group",
+                principal="anonymous" if anonymous else "authenticated_read_only", status=status,
+                classification=classification, resource_permission_message_exact_match=permission_match,
+                rate_header_present="x-ratelimit-remaining" in headers,
+                rate_remaining_nonzero=isinstance(remaining, str) and remaining.isdigit() and int(remaining) > 0,
+                retry_after_present="retry-after" in headers, request_id_present=bool(headers.get("x-github-request-id")),
+                request_failed=failed))
+    visible = any(item["classification"] == "FAIL_PRIVATE_BOUNDARY" for item in records)
+    inconclusive = sum(item["classification"] == "INCONCLUSIVE_DENIAL" for item in records)
+    state = "FAIL_PRIVATE_BOUNDARY" if visible else "INCONCLUSIVE_DENIAL" if inconclusive else "DIAGNOSTIC_READ_ALL_DENIED"
+    return state, dict(authenticated_own_repo_control=True, anonymous_public_controls=True,
+        all_routes_collected=True, routes=records, inconclusive_routes=inconclusive,
+        privacy_boundary_failed=visible, all_negative_routes_404=not visible and not inconclusive)
+
+
 def restore(client):
     if not client.release_id or not client.asset_id:
         raise ProbeError()
@@ -396,6 +450,9 @@ def summary(client, state, checks):
             recovery_run_id=client.active_run_id, original_failed_run_id=client.run_id,
             fixture_origin_run_id=client.run_id, recovery_config_sha256=EXISTING_CONFIG_SHA256,
             original_failure_retained=True, existing_asset_only=True)
+    if getattr(client, "diagnostic_only", False):
+        document.update(schema_version="lab-existing-canary-diagnostic-v1", diagnostic_only=True,
+            prior_failed_recovery_run_id=PRIOR_RECOVERY_RUN_ID)
     encoded = json.dumps(document, sort_keys=True)
     if len(encoded.encode()) > MAX_SUMMARY:
         raise ProbeError()
@@ -412,7 +469,8 @@ def limits():
 def main(argv=None, *, environ=None, transport=None):
     limits()
     parser = argparse.ArgumentParser()
-    parser.add_argument("phase", choices=("write", "read", "restore", "existing-pin", "existing-read", "existing-restore"))
+    parser.add_argument("phase", choices=("write", "read", "restore", "existing-pin", "existing-read", "existing-restore",
+        "diagnostic-pin", "diagnostic-read", "diagnostic-restore"))
     parser.add_argument("--release-id")
     parser.add_argument("--asset-id")
     parser.add_argument("--expected-sha256")
@@ -420,19 +478,27 @@ def main(argv=None, *, environ=None, transport=None):
     env = os.environ if environ is None else environ
     client = None
     try:
-        existing = args.phase.startswith("existing-")
-        permission = "read" if args.phase in {"read", "existing-read"} else "write"
+        diagnostic = args.phase.startswith("diagnostic-")
+        existing = args.phase.startswith("existing-") or diagnostic
+        permission = "read" if args.phase in {"read", "existing-read", "diagnostic-read"} else "write"
         if (env.get("GITHUB_REPOSITORY") != REPOSITORY or env.get("GITHUB_ACTIONS") != "true"
                 or env.get("GITHUB_EVENT_NAME") != "workflow_dispatch" or env.get("GITHUB_RUN_ATTEMPT") != "1"
                 or env.get("PROBE_PERMISSION") != permission):
             raise ProbeError()
         if existing:
-            if env.get("PROBE_MODE") != "storage-probe-existing" or any((args.release_id, args.asset_id, args.expected_sha256)):
+            expected_mode = DIAGNOSTIC_MODE if diagnostic else "storage-probe-existing"
+            if env.get("PROBE_MODE") != expected_mode or any((args.release_id, args.asset_id, args.expected_sha256)):
                 raise ProbeError()
             client = ExistingClient(env.get("GITHUB_TOKEN"), env.get("GITHUB_RUN_ID"), transport=transport)
-            if args.phase != "existing-pin":
+            client.diagnostic_only = diagnostic
+            if diagnostic and client.active_run_id == PRIOR_RECOVERY_RUN_ID:
+                raise ProbeError()
+            if args.phase not in {"existing-pin", "diagnostic-pin"}:
                 require_existing_pin(client, env)
-            action = {"existing-pin": pin_existing, "existing-read": read, "existing-restore": restore}[args.phase]
+            if args.phase == "diagnostic-restore" and env.get("DIAGNOSTIC_READ_COMPLETED") != "true":
+                raise ProbeError()
+            action = {"existing-pin": pin_existing, "existing-read": read, "existing-restore": restore,
+                "diagnostic-pin": pin_existing, "diagnostic-read": diagnostic_read, "diagnostic-restore": restore}[args.phase]
         else:
             client = Client(env.get("GITHUB_TOKEN"), env.get("GITHUB_RUN_ID"), release_id=args.release_id,
                 asset_id=args.asset_id, transport=transport)
@@ -442,7 +508,8 @@ def main(argv=None, *, environ=None, transport=None):
                 raise ProbeError()
             action = {"write": write, "read": read, "restore": restore}[args.phase]
         state, checks = action(client)
-        result, code = summary(client, state, checks), 0
+        result = summary(client, state, checks)
+        code = 1 if args.phase == "diagnostic-read" and state != "DIAGNOSTIC_READ_ALL_DENIED" else 0
     except ProbeError as error:
         result, code = (summary(client, error.state, {}) if client else {"state": error.state,
             "sensitive_data_used": False, "private_durability_qualified": False}), 1
@@ -460,6 +527,10 @@ def main(argv=None, *, environ=None, transport=None):
                 keys += ("recovery_run_id", "recovery_config_sha256")
             for key in keys:
                 stream.write(key + "=" + str(result[key]) + "\n")
+    if (args.phase == "diagnostic-read" and result.get("checks", {}).get("all_routes_collected") is True
+            and env.get("GITHUB_OUTPUT")):
+        with Path(env["GITHUB_OUTPUT"]).open("a") as stream:
+            stream.write("diagnostic_read_completed=true\n")
     return code
 
 
