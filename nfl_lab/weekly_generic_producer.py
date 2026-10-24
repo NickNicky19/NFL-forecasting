@@ -7,6 +7,7 @@ hash-bound consumers of the local result, never inferred from a local write.
 from __future__ import annotations
 
 import json
+from contextlib import contextmanager
 from itertools import product as combinations
 from datetime import timedelta
 from pathlib import Path
@@ -28,6 +29,29 @@ CATEGORY_SHA256 = "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473
 def require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+@contextmanager
+def owned_feature_output(owner,sink):
+    """Authenticate the real owner; keep every feature write in the same sink."""
+    from types import SimpleNamespace
+    from .operational_storage import OperationalStorage
+    require(isinstance(owner,OperationalStorage) and sink.storage is owner,"feature output requires its exact genuine storage owner")
+    missing=object();prior=owner.__dict__.get('write_bytes',missing)
+    downstream=SimpleNamespace(transaction=owner.transaction,write_bytes=owner.write_bytes)
+    def bounded_write(path,body,*,replace=False):
+        require(replace is False,"feature output cannot replace immutable retained bytes")
+        return sink.write_bytes(path,body)
+    with owner.transaction():
+        require(sink.storage is owner,"feature output owner changed before exclusive scope")
+        try:
+            sink.storage=downstream
+            owner.write_bytes=bounded_write
+            yield owner
+        finally:
+            sink.storage=owner
+            if prior is missing:owner.__dict__.pop('write_bytes',None)
+            else:owner.write_bytes=prior
 
 
 def admit_remaining_output(storage, anchor):
@@ -470,12 +494,13 @@ class ProductionBackend:
             del prior
             queries=packet["queries"]
             self.checkpoint("FEATURE_PERSIST")
-            for key in ("queries","quarantine","no_remaining_game"):
-                store.write_dataframe(packet[key],output/(key+".parquet"),index=False)
-            qref=future.binding(output/"queries.parquet")
-            fref,cref=future.persist_feature_capture(output/"features.parquet",features,
-                features=[n for n in features if n.startswith("f_")],source_contract=p["source_contract"],
-                source_bindings=p["source_bindings"],storage=sink)
+            with owned_feature_output(store,sink) as owner:
+                for key in ("queries","quarantine","no_remaining_game"):
+                    owner.write_dataframe(packet[key],output/(key+".parquet"),index=False)
+                qref=future.binding(output/"queries.parquet")
+                fref,cref=future.persist_feature_capture(output/"features.parquet",features,
+                    features=[n for n in features if n.startswith("f_")],source_contract=p["source_contract"],
+                    source_bindings=p["source_bindings"],storage=owner)
             # This parameterized bridge reuses unchanged canonical ID validators.
             bridge=exact_bridge(queries,schedule,schedule_binding=p["schedule"],query_binding=qref,season=derived["season"],week=derived["week"])
             bref=write("IDENTITY_BRIDGE.json",dict(schema_version=VERSION+"-identity",identities=list(bridge.values()),visible_board_match="NOT_YET_CHECKED",name_matching=False))

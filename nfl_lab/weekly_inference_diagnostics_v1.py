@@ -13,6 +13,8 @@ ERROR_TYPES = frozenset({"ValueError", "TypeError", "KeyError", "AttributeError"
     "OSError", "FileNotFoundError", "PermissionError", "ImportError", "ModuleNotFoundError", "StorageQuotaError", "StorageIntegrityError",
     "StoreError", "PacketGuardError", "JSONDecodeError", "ParserError", "AccountingFailure", "SystemExit", "KeyboardInterrupt"})
 GUARDS = {
+    "existing OperationalStorage instance required": "REAL_OPERATIONAL_STORAGE_REQUIRED",
+    "feature output requires its exact genuine storage owner": "EXACT_FEATURE_STORAGE_OWNER_REQUIRED",
     "finite additional retained source/query allocation exhausted": "STUDY_RETAINED_BYTES_EXHAUSTED",
     "incoming bytes exceed shared operational quota before write; evidence preserved": "GLOBAL_STORAGE_QUOTA",
     "honest elapsed/remaining kickoff census differs": "ACTUAL_REMAINING_CENSUS",

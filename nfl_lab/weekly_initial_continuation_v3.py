@@ -11,8 +11,8 @@ from .state import digest, utc
 
 VERSION="weekly-initial-continuation-v3"
 REGISTRATION=VERSION+"-registration"
-REGISTRATION_ID="2026-REG-W07-continuation-run40129209279-metadata-repair-v4"
-REGISTRATION_PATH="config/weekly-initial-continuation-v4-registration.json"
+REGISTRATION_ID="2026-REG-W07-continuation-run40129209279-owner-bridge-v5"
+REGISTRATION_PATH="config/weekly-initial-continuation-v5-registration.json"
 MODE="genuine-hosted-inference-continuation-v3"
 CUTOFF=original.CUTOFF
 ORIGINAL_REGISTRATION_SHA="bb65b2e0bf5c4c78788fceea3875230126fa8c0856f708bc7deaad14f3430fe6"

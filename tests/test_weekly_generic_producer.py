@@ -118,6 +118,11 @@ class GenericProducerChecks(unittest.TestCase):
                 def write_dataframe(self,frame,path,**kw):Path(path).parent.mkdir(parents=True,exist_ok=True);frame.to_parquet(path,**kw)
             @contextmanager
             def operation(*args,**kwargs):yield {'fictional_only':True}
+            @contextmanager
+            def fictional_feature_owner(owner,sink):
+                # This orchestration fixture injects a fake store; real ownership
+                # and unchanged sink reserve are covered by the actual-owner test.
+                yield owner
             request={'fictional':'request'};request_path=base/'cache/operational-source-v2'/('f'*64)/'requests'/(source._digest(request)+'.json');request_path.parent.mkdir(parents=True);request_path.write_text('{}')
             manifest=dict(request=request,namespace=str(base/'namespace'),manifest_sha256='c'*64,source_receipts={x.name[:-13]:json.loads(x.read_text()) for x in raw.glob('*.receipt.json')})
             def shared(prior,packet,**kw):return packet['queries'].assign(f_fixture=1.,f_player_games_prior=1.,feature_max_source_available_utc=NOW-pd.Timedelta(hours=1))
@@ -138,7 +143,7 @@ class GenericProducerChecks(unittest.TestCase):
                             source_capture_completed_at=NOW.isoformat(),source_policy_sha256='f'*64))
                     yield out
             backend=object.__new__(g.ProductionBackend);backend.plan=p;backend.store=Store();backend.policy={'_policy_sha256':'f'*64};backend.clock=lambda:NOW;backend.resource_check=lambda:None
-            with patch('nfl_lab.owned_reference_batch.validate_owned_references'),patch('nfl_lab.weekly_source_read_batch.source_read_operation',operation),patch('nfl_lab.weekly_source_read_batch.manifest_bindings',return_value={}),\
+            with patch('nfl_lab.owned_reference_batch.validate_owned_references'),patch.object(g,'owned_feature_output',fictional_feature_owner),patch('nfl_lab.weekly_source_read_batch.source_read_operation',operation),patch('nfl_lab.weekly_source_read_batch.manifest_bindings',return_value={}),\
                 patch.object(source,'acquire_operational_history',return_value=manifest) as acquire,patch.object(source,'load_operational_history',return_value=pd.DataFrame()),\
                 patch.object(query,'build_shared_features',side_effect=shared),patch.object(future.FutureInferenceSession,'from_storage',return_value=Session()):
                 result=backend.run()

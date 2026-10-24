@@ -45,8 +45,8 @@ class RequestDigestChecks(unittest.TestCase):
 
     def test_next_registration_uses_distinct_fixed_id_path_and_unchanged_horizon(self):
         from nfl_lab import weekly_initial_continuation_v3 as cont,initial_horizon
-        self.assertEqual(cont.REGISTRATION_ID,'2026-REG-W07-continuation-run40129209279-metadata-repair-v4')
-        self.assertEqual(cont.REGISTRATION_PATH,'config/weekly-initial-continuation-v4-registration.json')
+        self.assertEqual(cont.REGISTRATION_ID,'2026-REG-W07-continuation-run40129209279-owner-bridge-v5')
+        self.assertEqual(cont.REGISTRATION_PATH,'config/weekly-initial-continuation-v5-registration.json')
         self.assertEqual(initial_horizon.CONTINUATION.registration_path,cont.REGISTRATION_PATH)
         self.assertEqual(cont.CUTOFF,'2026-10-25T00:00:00Z')
         self.assertTrue((ROOT/'config/weekly-initial-continuation-v3-registration.json').is_file())
