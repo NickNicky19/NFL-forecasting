@@ -1,0 +1,1203 @@
+{
+  "actual_harmless_GHA_qualification_bound": true,
+  "actual_scope_encoding_credentials_HTTP_CAS_models_fits_scores": 0,
+  "checks": 291,
+  "failures": 0,
+  "first_MemoryError_retained": true,
+  "full_opaque_hash_authentication": "UNRUN_UNTIL_ROOT_GO_ORIGINAL_OWNED_BATCH",
+  "items": [
+    {
+      "check": "code config/operational-source-policy-v2.json",
+      "passed": true
+    },
+    {
+      "check": "code config/private-draft-storage-v2.json",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/operational_storage.py",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/owned_reference_batch.py",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/owner_bootstrap_bundle.py",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/owner_private_bootstrap.py",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/private_draft_probe_helpers.py",
+      "passed": true
+    },
+    {
+      "check": "code nfl_lab/private_draft_store.py",
+      "passed": true
+    },
+    {
+      "check": "code tests/test_owner_private_bootstrap.py",
+      "passed": true
+    },
+    {
+      "check": "code tools/owner_private_bootstrap_v1.py",
+      "passed": true
+    },
+    {
+      "check": "code tools/private_draft_store_v2.py",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/fd01f44fb501ea36bff024fc8393c4009aa5d7200637894b0f597267f1384359.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/fd01f44fb501ea36bff024fc8393c4009aa5d7200637894b0f597267f1384359.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_td/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_td/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_td/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_td/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_td/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_td/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_td/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_td/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/26a2a807559f1ed5860cedf51b04be9c19604f5988404137a856bb67d7b7f302.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/26a2a807559f1ed5860cedf51b04be9c19604f5988404137a856bb67d7b7f302.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_cmp/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_cmp/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_cmp/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_cmp/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_cmp/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_cmp/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_cmp/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_cmp/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_att/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_att/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_att/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_att/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_att/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_att/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_att/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_att/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_int/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_int/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_int/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_int/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_int/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_int/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_int/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_int/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/5660759b036e0f3a8dc324a589dbdb10775ae471a72d99af1b4f1dd8e90d01db.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/5660759b036e0f3a8dc324a589dbdb10775ae471a72d99af1b4f1dd8e90d01db.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_att/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_att/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_att/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_att/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_att/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_att/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_att/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_att/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/53724fdd36fdc9f3b1d1f11127fc191ce4dddc0e3c7f087f9d034077289af25b.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/53724fdd36fdc9f3b1d1f11127fc191ce4dddc0e3c7f087f9d034077289af25b.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/5044e65b99608b9886aa8e2e337f6f501e656a374be9877051317fa047d36f40.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/5044e65b99608b9886aa8e2e337f6f501e656a374be9877051317fa047d36f40.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_rec_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_rec_yd/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_rec_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_rec_yd/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_rec_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_rec_yd/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_rec_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_rec_yd/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/anytime_td/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/anytime_td/LAB_CDF/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/anytime_td/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/anytime_td/LAB_CDF/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/anytime_td/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/anytime_td/LAB_CDF.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/anytime_td/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/anytime_td/LAB_CDF.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias projections/8c787df81d6fd40adbee7ea2a8795cb32509222512c3e168b1897b61229fb239.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy projections/8c787df81d6fd40adbee7ea2a8795cb32509222512c3e168b1897b61229fb239.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_att/COUNT_A/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_att/COUNT_A/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_att/COUNT_A/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_att/COUNT_A/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_att/COUNT_A.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_att/COUNT_A.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_att/COUNT_A.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_att/COUNT_A.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec/COUNT_A/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec/COUNT_A/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec/COUNT_A/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec/COUNT_A/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec/COUNT_A.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec/COUNT_A.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec/COUNT_A.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec/COUNT_A.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/pass_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/pass_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/pass_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/pass_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rec_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rec_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rec_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rec_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_rec_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_rec_yd/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/rush_rec_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/rush_rec_yd/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_rec_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_rec_yd/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/rush_rec_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/rush_rec_yd/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/anytime_td/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/anytime_td/CATBOOST_MEDIUM/trained.joblib",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias models/anytime_td/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy models/anytime_td/CATBOOST_MEDIUM/future-inference.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/anytime_td/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/anytime_td/CATBOOST_MEDIUM.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias forecasts/anytime_td/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy forecasts/anytime_td/CATBOOST_MEDIUM.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias capture/FINISHED.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy capture/FINISHED.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias capture/LOCAL_READBACK.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy capture/LOCAL_READBACK.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias capture/PROCEDURE_CATALOG.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy capture/PROCEDURE_CATALOG.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias capture/IDENTITY_BRIDGE.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy capture/IDENTITY_BRIDGE.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias selected/FINISHED.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy selected/FINISHED.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias selected/DECISION.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy selected/DECISION.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias selected/COVERAGE.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy selected/COVERAGE.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias selected/selected-policy-inputs.jsonl.completion.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy selected/selected-policy-inputs.jsonl.completion.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias selected/selected-policy-inputs.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "not-legacy selected/selected-policy-inputs.jsonl.gz",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias features/shared-feature.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy features/shared-feature.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias features/shared-feature.capture.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy features/shared-feature.capture.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias features/query-offers.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy features/query-offers.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias provenance/training-0.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy provenance/training-0.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias provenance/training-1.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy provenance/training-1.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias provenance/restoration-0.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy provenance/restoration-0.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias provenance/restoration-1.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy provenance/restoration-1.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias sources/qualified/source-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy sources/qualified/source-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias sources/qualified/subset-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy sources/qualified/subset-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias sources/accepted-training-features.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy sources/accepted-training-features.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias sources/qualified/history.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy sources/qualified/history.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/nflverse_LICENSE.md",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/nflverse_LICENSE.md",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/nflverse_LICENSE.md.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/nflverse_LICENSE.md.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/players.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/players.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/players.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/players.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2019.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2019.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2019.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2019.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2020.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2020.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2020.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2020.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2021.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2021.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2021.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2021.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2022.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2022.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2022.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2022.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2023.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2023.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2023.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2023.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2024.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2024.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2024.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2024.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2025.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2025.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2025.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2025.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2026.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2026.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/roster_weekly_2026.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/roster_weekly_2026.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/schedules.csv",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/schedules.csv",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/schedules.csv.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/schedules.csv.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2019.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2019.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2019.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2019.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2020.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2020.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2020.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2020.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2021.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2021.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2021.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2021.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2022.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2022.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2022.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2022.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2023.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2023.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2023.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2023.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2024.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2024.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2024.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2024.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2025.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2025.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2025.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2025.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2026.parquet",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2026.parquet",
+      "passed": true
+    },
+    {
+      "check": "metadata-owned-alias source-cache/raw/stats_player_week_2026.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "not-legacy source-cache/raw/stats_player_week_2026.parquet.receipt.json",
+      "passed": true
+    },
+    {
+      "check": "actual harmless binding",
+      "passed": true
+    },
+    {
+      "check": "actual harmless qualification",
+      "passed": true
+    },
+    {
+      "check": "actual harmless hosted_summary",
+      "passed": true
+    },
+    {
+      "check": "final15 fictional code bound",
+      "passed": true
+    },
+    {
+      "check": "private plan0600",
+      "passed": true
+    },
+    {
+      "check": "exact136/96 scope",
+      "passed": true
+    },
+    {
+      "check": "no private source paths in public config",
+      "passed": true
+    },
+    {
+      "check": "separate snapshot no execute",
+      "passed": true
+    }
+  ],
+  "optional_opaque_bytes": 24631657,
+  "optional_owned_alias_metadata_all_pass": true,
+  "owner_authorization_comment_created": false,
+  "private_plan_sha256": "2f25963ce3a46b5a08a2c27f079b4c67eb8a32d98fe5f3d1a94bb2fe4e5c898d",
+  "private_runtime_qualified": false,
+  "public_config_sha256": "26e8a425eb2ff98e59a32688d83ba73e198a43b780aac9efff37dc1e991f42fc",
+  "required_files": 96,
+  "required_opaque_bytes": 7718823,
+  "schema_version": "weekly-owner-private-bootstrap-v1-preparation-static",
+  "scope_files": 136,
+  "state": "STATIC_BINDINGS_PASS_NOT_INDEPENDENT_REVIEW",
+  "test_receipts": [
+    {
+      "bytes": 813,
+      "path": "reports/weekly-owner-private-bootstrap-v1/FICTIONAL_TESTS_ATTEMPT_1.json",
+      "sha256": "508faa6e61784465aa50daea8f2e7814ede0dd6c09769c25f75af71e4686cb01"
+    },
+    {
+      "bytes": 1041,
+      "path": "reports/weekly-owner-private-bootstrap-v1/FICTIONAL_TESTS_ATTEMPT_2.json",
+      "sha256": "f7f486da93981cc5665f96e99539074dc40b82cf6b44518e0b68077b6036aedb"
+    },
+    {
+      "bytes": 1032,
+      "path": "reports/weekly-owner-private-bootstrap-v1/FICTIONAL_TESTS_ATTEMPT_3.json",
+      "sha256": "78997da2b604e222d0cc59752a0f88e8c4cd4924f7a1368693f5674397d8456f"
+    }
+  ],
+  "workflow_wiring": "PENDING_SEPARATE_ROOT_REVIEW"
+}
