@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import ast
+import hashlib
 from datetime import datetime,timezone
 from importlib import metadata
 import json
@@ -18,6 +19,16 @@ CONFIG=ROOT/'config/hosted-initial-plan-builder-v1.json'
 
 def require(value,code):
     if not value:raise ValueError(code)
+
+
+def source_request_digest(value,source_body):
+    """Use the pinned adapter's metadata serializer without importing its runtime."""
+    tree=ast.parse(source_body)
+    nodes=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name in {'_json','_digest'}]
+    require(len(nodes)==2 and {node.name for node in nodes}=={'_json','_digest'},'EXACT_ORIGINAL_SOURCE_REQUEST_DIGEST_FUNCTIONS')
+    namespace=dict(json=json,hashlib=hashlib)
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),'operational_sources.py:request-digest-metadata','exec'),namespace)
+    return namespace['_digest'](value)
 
 
 def run(env,procedure_sha256,*,recovery_v2=False,continuation_v3=False):
@@ -129,10 +140,11 @@ def run(env,procedure_sha256,*,recovery_v2=False,continuation_v3=False):
         references,_=validate_owned_references(storage,prepared['bindings'])
         manifest=cp.strict_json(cp.read_ref(prepared['source_manifest'],2<<20))
         request=cp.strict_json(cp.read_ref(prepared['request_binding'],2<<20))
+        require(Path(prepared['request_binding']['path']).name==source_request_digest(manifest['request'],
+            core.read_local(ROOT/'nfl_lab/operational_sources.py',2<<20))+'.json','SEALED_PREPARED_REQUEST_FILENAME_DIGEST')
         require(manifest['request']['asof_utc']==prepared['asof_utc'] and manifest['policy_sha256']==cp.POLICY_SHA
             and manifest['code_sha256s']==checkpoint['_source_code_pins'] and manifest['allowed_periods']==checkpoint['_allowed_periods']
             and manifest['request']['seasons']==list(range(2019,2027))
-            and Path(prepared['request_binding']['path']).name==core.sha(core.canonical(manifest['request']))+'.json'
             and request['snapshot_sha256']==manifest['snapshot_sha256']
             and (root/'cache/operational-source-v2'/cp.POLICY_SHA/request['namespace']).resolve()==Path(prepared['namespace']).resolve(),
             'SEALED_PREPARED_NAMESPACE_REQUEST_CODE_POLICY_AND_ASOF')

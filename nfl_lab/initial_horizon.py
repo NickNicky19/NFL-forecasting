@@ -37,7 +37,7 @@ RECOVERY = InitialHorizon(2, "2026-10-25T00:00:00Z", "config/weekly-initial-rema
     "config/hosted-initial-plan-builder-v2.json", "config/hosted-public-release-plan-v2.json",
     "genuine-hosted-fixed-build-registration-v2", "initial-remaining-2026W7-20261025T00Z-operational-build-v2",
     "weekly-hosted-initial-plan-builder-v2", "STRICT18_INITIAL_RECOVERY00Z_METADATA_PLAN_ONLY", "weekly-hosted-public-release-plan-v2")
-CONTINUATION = InitialHorizon(3, "2026-10-25T00:00:00Z", "config/weekly-initial-continuation-v3-registration.json",
+CONTINUATION = InitialHorizon(3, "2026-10-25T00:00:00Z", "config/weekly-initial-continuation-v4-registration.json",
     "config/genuine-hosted-fixed-build-v2.json", "config/gha-private-checkpoint-v3.json",
     "config/hosted-initial-plan-builder-v3.json", "config/hosted-public-release-plan-v3.json",
     "genuine-hosted-fixed-build-registration-v2", "initial-remaining-2026W7-20261025T00Z-operational-build-v2",
