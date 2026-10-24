@@ -54,7 +54,7 @@ def file_item(ref,logical,kind):
         origin=dict(source_path=ref['path'],source_sha256=ref['sha256'],source_policy_sha256=POLICY_SHA))
 
 
-def collect(build_root,storage,policy,*,source_sha,job):
+def collect(build_root,storage,policy,*,source_sha,job,recovery_v2=False):
     """Only approved fixed metadata is decoded. All model/raw bytes stay opaque."""
     root=store.parents_safe(build_root);build_ref=binding(root/'FINISHED.json');build=strict_json(read_ref(build_ref))
     require(build['schema_version']=='GENUINE_HOSTED_FIXED_BUILD_V1' and build['state']=='SOURCE_AND_TRAIN18_COMPLETE' and build['fatal'] is None
@@ -88,9 +88,17 @@ def collect(build_root,storage,policy,*,source_sha,job):
         require(meta.get('sha256')==body['sha256'] and meta.get('url')==url and meta.get('status') in {'acquired','stale_cache'},'EXACT_ORIGINAL_SOURCE_RECEIPT')
         files.extend([file_item(body,'source-cache/raw/'+name,'source_raw'),file_item(receipt,'source-cache/raw/'+name+'.receipt.json','control')])
     registration_ref=binding(root/'BUILD_REGISTRATION.json');registration=strict_json(read_ref(registration_ref,256<<10))
-    require(registration.get('schema_version')=='genuine-hosted-fixed-build-registration-v1' and registration.get('approved') is True
+    from .initial_horizon import resolve
+    route=resolve(recovery_v2)
+    require(registration.get('schema_version')==route.build_registration_schema and registration.get('approved') is True
         and registration.get('repository')==store.REPO and registration.get('source_sha')==source_sha and registration.get('maximum_new_fits')==18
         and registration.get('scope')=='SOURCE_AND_TRAIN_FIXED18_ONLY','EXACT_GENUINE_BUILD_REGISTRATION')
+    if recovery_v2:
+        from datetime import datetime,timezone
+        config_path=Path(__file__).resolve().parents[1]/route.build_config_path
+        config_sha256=store.sha(store.read_local(config_path,1<<20))
+        route.adapter().validate_build_registration(registration,source_sha=source_sha,config_sha256=config_sha256,
+            initial_sha256=store.sha(store.canonical(registration['initial_registration'])),now=datetime.now(timezone.utc))
     controls=[(build_ref,'BUILD.json'),(registration_ref,'BUILD_REGISTRATION.json'),(source_ref,'SOURCE_READBACK.json'),(source['manifest'],'source-manifest.json')]
     for ref,name in controls:
         require(Path(ref['path']).is_relative_to(root),'BUILD_CONTROL_OUTSIDE_OWNED_ROOT');files.append(file_item(ref,'control/'+name,'control'))
@@ -112,12 +120,14 @@ def seed_pending(journal,records):
         else:store.create_local(target,encoded)
 
 
-def claim_once(client,body,qualification,*,expected_sha256,procedure_sha256):
+def claim_once(client,body,qualification,*,expected_sha256,procedure_sha256,recovery_v2=False):
     """Serialized by the existing workflow lock; no independent CAS claim."""
-    registration=strict_json(body)
+    from .initial_horizon import resolve
+    route=resolve(recovery_v2);registration=strict_json(body)
+    if recovery_v2:route.adapter().validate_registration(registration,now=datetime.now(timezone.utc))
     require(store.canonical(registration)==body and store.sha(body)==expected_sha256 and len(body)<=16384
-        and registration.get('schema_version')=='weekly-initial-remaining-v1-registration' and registration.get('state')=='FROZEN_ROOT_REGISTERED'
-        and registration.get('slate_kind')=='INITIAL_REMAINING_ONE_TIME' and registration.get('maximum_uses')==1
+        and registration.get('schema_version')=='weekly-initial-remaining-v'+str(route.version)+'-registration' and registration.get('state')=='FROZEN_ROOT_REGISTERED'
+        and registration.get('slate_kind')==('INITIAL_REMAINING_RECOVERY_ONE_TIME' if recovery_v2 else 'INITIAL_REMAINING_ONE_TIME') and registration.get('maximum_uses')==1
         and store.utc(registration['registered_at_utc'])<=datetime.now(timezone.utc)<store.utc(registration['input_cutoff_utc']),'EXACT_LIVE_ROOT_INITIAL_CLAIM')
     require(client.job['execution_lane']=='github_actions' and client.job['run_authenticated'] is True,'REAL_GHA_CLAIM_JOB_REQUIRED')
     store.check_proof(client,qualification,'qualified',same_run=False)

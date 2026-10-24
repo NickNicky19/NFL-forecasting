@@ -1,0 +1,90 @@
+{
+  "schema_version": "weekly-initial-recovery-v2-engineering-checks-v1",
+  "base_commit": "273cfea",
+  "scope": "FICTIONAL_METADATA_AND_GUARDS_ONLY",
+  "actual_source_or_fit_execution_authorized_by_this_report": false,
+  "scientific_qualification": false,
+  "full_repository_suite_run": false,
+  "distinct_selected_cases": 43,
+  "final_case_coverage": "42 cases passed in attempt 2; the repaired remaining fixture passed separately in attempt 3. No all-green 43-case rerun claimed.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "state": "FAILED_BEFORE_TEST_CASES",
+      "reason": "The extra numerical-import audit blocked eager pandas import from the existing operational_storage module.",
+      "tests": 0,
+      "CPU_seconds": null,
+      "wall_seconds": null,
+      "peak_RSS_bytes": null,
+      "external_tool_wall_seconds": 0.124854226,
+      "trusted_internal_final_measurement": false,
+      "registered_limits": {
+        "CPU_seconds": 45,
+        "wall_seconds": 90,
+        "address_space_bytes": 268435456
+      },
+      "registered_budget_retained_not_reset": true,
+      "syntax_files_parsed_before_import_failure": 13
+    },
+    {
+      "attempt": 2,
+      "state": "42_PASSED_ONE_FIXTURE_ERROR_RETAINED",
+      "tests": 43,
+      "passed": 42,
+      "failures": 0,
+      "errors": 1,
+      "error_test": "test_public_GO_has_recovery_cutoff_and_new_build_authority",
+      "error_guard": "EXACT_ROOT_PUBLIC_RELEASE_GO",
+      "error_reason": "The reused fictional GO source hash differed from the new test's source hash. The production guard correctly rejected it.",
+      "CPU_seconds": 1.167686999,
+      "wall_seconds": 0.7841989320004359,
+      "peak_RSS_bytes": 68931584,
+      "syntax_files": 13,
+      "registered_limits": {
+        "CPU_seconds": 15,
+        "wall_seconds": 30,
+        "RSS_bytes": 268435456,
+        "address_space_bytes": 4294967296
+      },
+      "forbidden_operations_attempted": []
+    },
+    {
+      "attempt": 3,
+      "state": "TARGETED_REPAIRED_FIXTURE_PASSED",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "test": "test_public_GO_has_recovery_cutoff_and_new_build_authority",
+      "repair": "Bind the fictional GO and policy publication authority to the same fictional source SHA used by the build registration.",
+      "production_gate_changed_for_this_repair": false,
+      "CPU_seconds": 0.944246835,
+      "wall_seconds": 0.4974347219977062,
+      "peak_RSS_bytes": 65708032,
+      "registered_limits": {
+        "CPU_seconds": 5,
+        "wall_seconds": 10,
+        "RSS_bytes": 268435456,
+        "address_space_bytes": 4294967296
+      },
+      "forbidden_operations_attempted": []
+    }
+  ],
+  "actual_HTTP": 0,
+  "actual_NFL_data_reads": 0,
+  "model_decodes": 0,
+  "fits": 0,
+  "actual_key_reads": 0,
+  "selected_checks": [
+    "Closed V2 registration, original expired V1 defaults, exact full14 and remaining13 census, distinct one-use journal",
+    "Fresh source and fit metadata after recovery registration, exact separately registered fixed18 authorization",
+    "Actual A preflight before B claim authentication or POST, nonempty source-pin config-hash regression",
+    "Shared generic backend dispatch and selected-procedure code/registration binding",
+    "Strict18 restored metadata chain, separate metadata GO schema/digest/scope, public GO source and cutoff binding"
+  ],
+  "existing_cases_outside_this_selected_metadata_check": [
+    "test_production_orchestration_calls_real_boundaries_with_fictional_transports",
+    "test_exact_bridge_rejects_namespace_and_kickoff_mismatch",
+    "test_exact14_schedule_metadata_derives_new15Z_slate_without_player_or_stat_values"
+  ]
+}

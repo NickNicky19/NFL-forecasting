@@ -20,14 +20,17 @@ def require(value,code):
 def basic(ref):return {k:ref[k] for k in ('path','bytes','sha256')}
 
 
-def verify_go(go,*,procedure_sha256,source_sha,now):
-    require(set(go)==GO_KEYS and go['schema_version']==VERSION+'-GO' and go['state']=='ROOT_APPROVED_METADATA_BUILDER'
+def verify_go(go,*,procedure_sha256,source_sha,now,recovery_v2=False,registration_sha256=None):
+    from .initial_horizon import resolve
+    route=resolve(recovery_v2);expected=registration_sha256 if recovery_v2 else REGISTRATION_SHA
+    require(core.HASH.fullmatch(str(expected)) and (not recovery_v2 or expected!=REGISTRATION_SHA),'EXACT_RECOVERY_REGISTRATION_SHA_REQUIRED')
+    require(set(go)==GO_KEYS and go['schema_version']==route.builder_version+'-GO' and go['state']=='ROOT_APPROVED_METADATA_BUILDER'
         and go['authority_kind']=='ROOT_APPROVED_PROCEDURE' and go['root_ledger_writer']=='/root'
         and go['procedure_sha256']==procedure_sha256 and go['source_sha']==source_sha
-        and go['initial_registration_sha256']==REGISTRATION_SHA and go['scope']=='STRICT18_INITIAL15Z_METADATA_PLAN_ONLY'
+        and go['initial_registration_sha256']==expected and go['scope']==route.builder_scope
         and go['individual_generated_plan_human_review'] is False and str(go['reviewer']).startswith('/root/')
         and core.HASH.fullmatch(str(go['independent_review_receipt_sha256'])) and core.HASH.fullmatch(str(go['root_ledger_event_sha256']))
-        and utc(go['approved_at_utc'])<=now<utc(initial.CUTOFF),'REVIEWED_ROOT_METADATA_BUILDER_GO_REQUIRED')
+        and utc(go['approved_at_utc'])<=now<utc(route.cutoff),'REVIEWED_ROOT_METADATA_BUILDER_GO_REQUIRED')
     return go
 
 
@@ -41,8 +44,12 @@ def schedule_metadata(body):
     return frame[['season','week','game_type','game_id','kickoff_utc']].to_dict('records')
 
 
-def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workflow_ref,process_identity,now,read,registration):
+def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workflow_ref,process_identity,now,read,registration,recovery_v2=False):
     """Authenticate original controls and path relocation, with opaque model bytes."""
+    from .initial_horizon import resolve
+    route=resolve(recovery_v2);adapter=route.adapter()
+    registration_sha=core.sha(core.canonical(registration)) if recovery_v2 else REGISTRATION_SHA
+    if recovery_v2:adapter.validate_registration(registration,now=now)
     root=Path(root);output=root/'private-checkpoint-restore';files=output/'files'
     expected={'control/'+n for n in ('BUILD.json','BUILD_REGISTRATION.json','SOURCE_READBACK.json','source-manifest.json')}
     expected|={'source-cache/raw/'+n+s for n in config['source_names'] for s in ('','.receipt.json')}
@@ -83,11 +90,14 @@ def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workfl
         and build['genuine_job']['api_job_id']==producer['api_job_id'] and build['genuine_job']['job_id']==producer['job_id']
         and build['scoring']==build['searches']==build['forecasts_issued']==0 and build['source']==source
         and build['training']['new_logical_fits_reserved']==18 and len(build['training']['slots'])==18,'COMPLETE_ORIGINAL_BUILD_CONTROL_REQUIRED')
-    require(build_registration['schema_version']=='genuine-hosted-fixed-build-registration-v1' and build_registration['approved'] is True
+    require(build_registration['schema_version']==route.build_registration_schema and build_registration['approved'] is True
         and build_registration['repository']==core.REPO and build_registration['source_sha']==source_sha
         and build_registration['maximum_new_fits']==18 and build_registration['scope']=='SOURCE_AND_TRAIN_FIXED18_ONLY'
-        and build_registration['initial_registration']==registration and build_registration['initial_registration_sha256']==REGISTRATION_SHA
-        and core.sha(core.canonical(registration))==REGISTRATION_SHA,'ORIGINAL_EXACT_ROOT_REGISTERED_NEW_BUILD_REQUIRED')
+        and build_registration['initial_registration']==registration and build_registration['initial_registration_sha256']==registration_sha
+        and core.sha(core.canonical(registration))==registration_sha,'ORIGINAL_EXACT_ROOT_REGISTERED_NEW_BUILD_REQUIRED')
+    if recovery_v2:
+        adapter.validate_build_registration(build_registration,source_sha=source_sha,config_sha256=config['_build_config_sha256'],
+            initial_sha256=registration_sha,now=now)
     contract=config['_source_contract']
     require(source['source_contract']==contract and source_manifest['policy_sha256']==cp.POLICY_SHA
         and source_manifest['code_sha256s']==config['_source_code_pins'] and source_manifest['allowed_periods']==config['_allowed_periods']
@@ -122,7 +132,7 @@ def validate_restore(restored,*,restore_ref,root,config,source_sha,run_id,workfl
         comparison=dict(m);comparison.pop('relocation');comparison['model']=original['model']
         require(comparison==original,'RELOCATION_CANNOT_CHANGE_PARAMETERS_FIXTURES_SOURCE_OR_CLOCKS')
         artifacts.append(ref);records.append(m);all_refs.extend([ref,basic(m['model'])])
-    initial.validate_fresh_initial_metadata(registration,records,{n+'.receipt.json':r for n,r in receipts.items()},now=now)
+    adapter.validate_fresh_initial_metadata(registration,records,{n+'.receipt.json':r for n,r in receipts.items()},now=now)
     generic.validate_freshness(receipts,now=now,season=2026,limits=config['source_freshness_seconds'])
     return dict(records=records,artifacts=artifacts,owned_inputs=all_refs,source_bindings=source_refs,source_cache=restored['source_cache'],
         schedule=mapped['source-cache/raw/schedules.csv'],roster=mapped['source-cache/raw/roster_weekly_2026.parquet'],build=mapped['control/BUILD.json'])

@@ -11,7 +11,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/selected-private-snapshot-v1.json'
-CONFIG_SHA256='3e1b2578bff855b6917174c0fa85ec893d5b9f0a2c100c2e9a3ddcc950d09e8e'
+CONFIG_SHA256='f908af1a4130705dc53e368acda96a658f8166035c693e353e08679a022cbef8'
 
 
 def require(v,code):
@@ -20,22 +20,27 @@ def sha(body):return hashlib.sha256(body).hexdigest()
 def read(path,cap):
     path=Path(path);require(path.is_file() and not path.is_symlink() and not any(p.is_symlink() for p in path.parents) and path.stat().st_size<=cap,'SELECTED_CONTROL_BOUND')
     body=path.read_bytes();require(len(body)<=cap,'SELECTED_CONTROL_BOUND');return body
-def verify_sources(expected):
-    body=read(CONFIG,1<<20);require(sha(body)==expected,'SELECTED_PROCEDURE_PIN');c=json.loads(body)
-    require(c['schema_version']=='weekly-selected-private-snapshot-procedure-v1' and c['state']=='ROOT_APPROVED_FOR_GENUINE_GHA'
-        and c['authority_kind']=='ROOT_APPROVED_PROCEDURE' and c['input_cutoff_utc']=='2026-10-24T15:00:00Z','SELECTED_PROCEDURE_PENDING')
+def verify_sources(expected,*,recovery_v2=False):
+    sys.path.insert(0,str(ROOT))
+    from nfl_lab.initial_horizon import resolve
+    route=resolve(recovery_v2)
+    path=ROOT/'config/selected-private-snapshot-v2.json' if recovery_v2 else CONFIG
+    body=read(path,1<<20);require(sha(body)==expected,'SELECTED_PROCEDURE_PIN');c=json.loads(body)
+    require(c['schema_version']=='weekly-selected-private-snapshot-procedure-v'+str(route.version) and c['state']=='ROOT_APPROVED_FOR_GENUINE_GHA'
+        and c['authority_kind']=='ROOT_APPROVED_PROCEDURE' and c['input_cutoff_utc']==route.cutoff,'SELECTED_PROCEDURE_PENDING')
     for path,value in c['source_sha256'].items():
         require(not Path(path).is_absolute() and '..' not in Path(path).parts and sha(read(ROOT/path,2<<20))==value,'SELECTED_SOURCE_PIN')
     c['_sha256']=expected;return c
 
 
 def main(argv=None,*,environ=None,transport=None):
-    p=argparse.ArgumentParser();p.add_argument('phase',choices=['produce','restore','consume']);p.add_argument('--execute',action='store_true');p.add_argument('--config-sha256',default=CONFIG_SHA256);args=p.parse_args(argv)
+    p=argparse.ArgumentParser();p.add_argument('phase',choices=['produce','restore','consume']);p.add_argument('--execute',action='store_true');p.add_argument('--config-sha256',default=CONFIG_SHA256)
+    p.add_argument('--recovery-v2',action='store_true');args=p.parse_args(argv)
     if not args.execute:print('{"state":"SELECTED_SNAPSHOT_PREPARATION_ONLY"}');return 2
     clients=[]
     try:
         resource.setrlimit(resource.RLIMIT_CPU,(120,120));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(180)
-        c=verify_sources(args.config_sha256);env=os.environ if environ is None else environ
+        c=verify_sources(args.config_sha256,recovery_v2=args.recovery_v2);env=os.environ if environ is None else environ
         sys.path.insert(0,str(ROOT))
         from nfl_lab import selected_private_snapshot as snap,private_draft_store as s,gha_private_checkpoint as cp
         from nfl_lab.operational_storage import OperationalStorage
@@ -65,7 +70,7 @@ def main(argv=None,*,environ=None,transport=None):
                 client.authenticate_actions_job();client.bind(binding);return client
         factory=Factory()
         if args.phase=='produce':
-            first=factory('append');selected,files,refs,producer,candidates=snap.collect(base/'initial-inference-v1',storage,output,first,c)
+            first=factory('append');selected,files,refs,producer,candidates=snap.collect(base/('initial-inference-v2' if args.recovery_v2 else 'initial-inference-v1'),storage,output,first,c)
             result=snap.append_snapshot(selected,files,refs,producer,candidates,factory,q,storage,output,c,first=first)
         else:
             text=env.get('SELECTED_SNAPSHOT_HANDOFF_JSON','');require(len(text.encode())<=32768 and sha(text.encode())==env.get('SELECTED_SNAPSHOT_HANDOFF_SHA256'),'EXACT_SELECTED_HANDOFF')

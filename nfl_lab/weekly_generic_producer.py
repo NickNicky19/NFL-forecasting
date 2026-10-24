@@ -259,8 +259,14 @@ def selected_procedure(selection,code_pins):
     recipe=dict(schema_version=VERSION+"-issued-procedure",members=selection["members"],
         producer_sha256=code_pins["nfl_lab/weekly_generic_producer.py"],selector_sha256=code_pins["nfl_lab/weekly_adaptive.py"])
     if selection["decision"].get("slate_contract") is not None:
+        contract=selection["decision"]["slate_contract"]
+        adapter="nfl_lab/weekly_initial_remaining_v1.py"
+        if contract.get("schema_version")=="weekly-initial-remaining-v2":
+            adapter="nfl_lab/weekly_initial_remaining_v2.py"
+            recipe.update(shared_initial_metadata_sha256=code_pins["nfl_lab/weekly_initial_remaining_v1.py"],
+                horizon_sha256=code_pins["nfl_lab/initial_horizon.py"])
         recipe.update(slate_contract=selection["decision"]["slate_contract"],
-            adapter_sha256=code_pins["nfl_lab/weekly_initial_remaining_v1.py"])
+            adapter_sha256=code_pins[adapter])
     return digest(recipe)
 
 
@@ -290,7 +296,10 @@ def execute(plan, *, backend=None, clock=now_utc, resource_check=lambda: None):
         backend = ProductionBackend(plan, clock=clock, resource_check=resource_check)
     elif isinstance(backend,ProductionBackend):
         from .weekly_initial_remaining_v1 import InitialRemainingBackend
-        require(type(backend) is InitialRemainingBackend and backend.plan is plan,
+        from .weekly_initial_remaining_v2 import InitialRemainingBackend as RecoveryBackend
+        allowed=type(backend) is InitialRemainingBackend or (type(backend) is RecoveryBackend
+            and plan.get("initial_adapter",{}).get("schema_version")=="weekly-initial-remaining-v2")
+        require(allowed and backend.plan is plan,
                 "production uses the explicitly registered initial adapter only")
     else:
         require(getattr(backend, "fictional_only", False) and plan.get("fictional_only") is True, "production uses existing real APIs")

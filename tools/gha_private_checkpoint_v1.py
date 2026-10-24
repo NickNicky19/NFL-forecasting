@@ -12,7 +12,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/gha-private-checkpoint-v1.json'
-REGISTERED_CONFIG_SHA256='089f00542617714c4952fd136ed6e8b1ddea17e3c8afe38ea14b4b910e1d6247'
+REGISTERED_CONFIG_SHA256='f4fe90f2bde17b97198b9a4f36f84ca7941c8fb4a17e2584db6c49598291cdb6'
 
 
 def require(v,code):
@@ -23,28 +23,50 @@ def read(path,cap):
     body=path.read_bytes();require(len(body)<=cap,'CHECKPOINT_SOURCE_BOUND');return body
 
 
-def verified(config_sha):
-    body=read(CONFIG,1<<20);require(sha(body)==config_sha,'CHECKPOINT_CONFIG_PIN');config=json.loads(body)
-    require(config['schema_version']=='weekly-gha-private-checkpoint-procedure-v1' and config['authority_kind']=='ROOT_APPROVED_PROCEDURE'
+def verified(config_sha,*,recovery_v2=False):
+    sys.path.insert(0,str(ROOT))
+    from nfl_lab.initial_horizon import resolve
+    route=resolve(recovery_v2)
+    body=read(ROOT/route.checkpoint_config_path if recovery_v2 else CONFIG,1<<20);require(sha(body)==config_sha,'CHECKPOINT_CONFIG_PIN');config=json.loads(body)
+    require(config['schema_version']=='weekly-gha-private-checkpoint-procedure-v'+str(route.version) and config['authority_kind']=='ROOT_APPROVED_PROCEDURE'
         and config['state']=='ROOT_APPROVED_FOR_GENUINE_GHA' and config['source_policy_sha256']=='e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441'
         and config['maximum_groups']==8 and config['maximum_files_per_group']==64 and config['runtime_cap_bytes']==32<<20
         and config['global_private_cap_bytes']==512<<20 and config['automatic_retries']==0,'CHECKPOINT_PROCEDURE_NOT_APPROVED')
-    require({'nfl_lab/hosted_fixed_build_v1.py','tools/genuine_hosted_fixed_build_v1.py','config/genuine-hosted-fixed-build-v1.json'}<=set(config['source_sha256']),'REGISTERED_FIXED_BUILD_SOURCE_PINS_REQUIRED')
-    require(config['initial_registration_path']=='config/weekly-initial-remaining-v1-registration.json'
-        and config['initial_registration_canonical_sha256']=='9fdae2c34732602c81155e7b6db0488043886ca45259f8c3560aa6787125ca72'
+    require({'nfl_lab/hosted_fixed_build_v1.py','tools/genuine_hosted_fixed_build_v1.py',route.build_config_path}<=set(config['source_sha256']),'REGISTERED_FIXED_BUILD_SOURCE_PINS_REQUIRED')
+    expected='9fdae2c34732602c81155e7b6db0488043886ca45259f8c3560aa6787125ca72'
+    if recovery_v2:
+        from datetime import datetime,timezone
+        registration=json.loads(read(ROOT/route.registration_path,16384));route.adapter().validate_registration(registration,now=datetime.now(timezone.utc))
+        expected=sha(json.dumps(registration,sort_keys=True,separators=(',',':'),allow_nan=False).encode())
+        require(route.registration_path in config['source_sha256'],'REGISTERED_RECOVERY_REGISTRATION_PIN_REQUIRED')
+    require(config['initial_registration_path']==route.registration_path
+        and config['initial_registration_canonical_sha256']==expected
         and config['claim_job']==config['produce_job'],'EXACT_ONCE_ONLY_CLAIM_SCOPE')
     for name,expected in config['source_sha256'].items():
         require(not Path(name).is_absolute() and '..' not in Path(name).parts and sha(read(ROOT/name,2<<20))==expected,'CHECKPOINT_SOURCE_PIN')
     return config
 
 
+def recovery_claim_preflight(env):
+    """Admit the actual A build before consuming the new remote one-use claim."""
+    sys.path.insert(0,str(ROOT))
+    from tools import genuine_hosted_fixed_build_v1 as build
+    text=env.get('BUILD_REGISTRATION_JSON','')
+    require(0<len(text.encode())<=16384,'RECOVERY_BUILD_REGISTRATION_BEFORE_CLAIM')
+    registration=json.loads(text);expected=registration.get('config_sha256')
+    require(type(expected) is str and re.fullmatch('[a-f0-9]{64}',expected),'RECOVERY_BUILD_CONFIG_BEFORE_CLAIM')
+    config=build.verify_sources(recovery_v2=True,config_sha256=expected)
+    return build.preflight(env,config,recovery_v2=True)
+
+
 def main(argv=None,*,environ=None,transport=None):
-    p=argparse.ArgumentParser();p.add_argument('phase',choices=['claim','produce','restore']);p.add_argument('--execute',action='store_true');p.add_argument('--config-sha256',default=REGISTERED_CONFIG_SHA256);args=p.parse_args(argv)
+    p=argparse.ArgumentParser();p.add_argument('phase',choices=['claim','produce','restore']);p.add_argument('--execute',action='store_true');p.add_argument('--config-sha256',default=REGISTERED_CONFIG_SHA256)
+    p.add_argument('--recovery-v2',action='store_true');args=p.parse_args(argv)
     if not args.execute:print('{"state":"CHECKPOINT_PREPARATION_ONLY_NO_IO"}');return 2
     factory=None
     try:
         resource.setrlimit(resource.RLIMIT_CPU,(120,120));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(180)
-        config=verified(args.config_sha256);env=os.environ if environ is None else environ
+        config=verified(args.config_sha256,recovery_v2=args.recovery_v2);env=os.environ if environ is None else environ
         sys.path.insert(0,str(ROOT))
         from nfl_lab import gha_private_checkpoint as cp,private_draft_store as store
         from nfl_lab.operational_storage import OperationalStorage
@@ -52,6 +74,7 @@ def main(argv=None,*,environ=None,transport=None):
         require(env.get('GITHUB_ACTIONS')=='true' and env.get('GITHUB_REPOSITORY')==store.REPO and env.get('GITHUB_EVENT_NAME')=='workflow_dispatch'
             and env.get('GITHUB_RUN_ATTEMPT')=='1' and env.get('STORE_PERMISSION')=='write' and env.get('CHECKPOINT_MODE')==config['build_mode']
             and env.get('GITHUB_JOB')==config[args.phase+'_job'],'GENUINE_CHECKPOINT_JOB_CONTEXT')
+        if args.recovery_v2 and args.phase=='claim':recovery_claim_preflight(env)
         job=actions_context(env,'write');run_id=env['GITHUB_RUN_ID'];source_sha=env['GITHUB_SHA']
         require(re.fullmatch('[1-9][0-9]{0,19}',run_id),'EXACT_RUN_ID')
         actual=json.loads(read(ROOT/config['canary_report'],256<<10));runtime=actual['binding'];qualification=actual['qualification']
@@ -85,14 +108,14 @@ def main(argv=None,*,environ=None,transport=None):
             native=dict(schema_version=cp.VERSION+'-native-claim-GO',authority_kind='ROOT_APPROVED_PROCEDURE',human_approval=False,procedure_sha256=args.config_sha256,
                 registration_sha256=config['initial_registration_canonical_sha256'],repository=store.REPO,run_id=run_id,source_sha=source_sha,job=client.job,binding_sha256=config['binding_sha256'],operation='claim_once')
             storage.write_bytes(output/'NATIVE_CLAIM_GO.json',store.canonical(native))
-            result=cp.claim_once(client,body,qualification,expected_sha256=config['initial_registration_canonical_sha256'],procedure_sha256=args.config_sha256)
+            result=cp.claim_once(client,body,qualification,expected_sha256=config['initial_registration_canonical_sha256'],procedure_sha256=args.config_sha256,recovery_v2=args.recovery_v2)
             text=store.canonical(result).decode();storage.write_bytes(output/'CLAIM_RECEIPT.json',text.encode())
             print('CHECKPOINT_SAFE_CLAIM_RECEIPT_JSON='+text);print('CHECKPOINT_SAFE_CLAIM_RECEIPT_SHA256='+sha(text.encode()))
             if env.get('GITHUB_OUTPUT'):
                 with open(env['GITHUB_OUTPUT'],'a',encoding='utf-8') as stream:stream.write('claim_receipt_json='+text+'\nclaim_receipt_sha256='+sha(text.encode())+'\n')
         elif args.phase=='produce':
             first=factory('append')  # Real API job authentication before private metadata/body reads.
-            files,pairs,build_ref=cp.collect(root,storage,policy,source_sha=source_sha,job=first.job)
+            files,pairs,build_ref=cp.collect(root,storage,policy,source_sha=source_sha,job=first.job,recovery_v2=args.recovery_v2)
             result=cp.produce(files,pairs,build_ref,factory,qualification,procedure_sha256=args.config_sha256,source_sha=source_sha,run_id=run_id,output=output,storage=storage,pending=config['external_pending_reservations'],first=first)
             text=store.canonical(result).decode();print('CHECKPOINT_SAFE_HANDOFF_JSON='+text);print('CHECKPOINT_SAFE_HANDOFF_SHA256='+sha(text.encode()))
             if env.get('GITHUB_OUTPUT'):
