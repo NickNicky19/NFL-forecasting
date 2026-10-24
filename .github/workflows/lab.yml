@@ -478,7 +478,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install only the original CAS bootstrap dependencies
-        run: python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
+        run: |
+          python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
       - name: Restore and verify the complete private checkpoint in a fresh job
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -534,7 +535,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install the original bounded opaque restoration dependencies
-        run: python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
+        run: |
+          python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
       - name: Restore the exact comparison snapshot and record the independent witness
         id: selected-restore
         env:

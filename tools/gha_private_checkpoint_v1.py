@@ -12,7 +12,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/gha-private-checkpoint-v1.json'
-REGISTERED_CONFIG_SHA256='e52f745d7de2d7c48f2040a13f98559fd5da87d9e4c02c594af04e7d196b9c43'
+REGISTERED_CONFIG_SHA256='089f00542617714c4952fd136ed6e8b1ddea17e3c8afe38ea14b4b910e1d6247'
 
 
 def require(v,code):

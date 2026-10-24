@@ -11,7 +11,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/selected-private-snapshot-v1.json'
-CONFIG_SHA256='7e8afde9936721b886a3c1eb7e6ab9372c4095efca45d76a1365b46084fdb744'
+CONFIG_SHA256='3e1b2578bff855b6917174c0fa85ec893d5b9f0a2c100c2e9a3ddcc950d09e8e'
 
 
 def require(v,code):

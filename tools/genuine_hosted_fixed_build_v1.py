@@ -18,7 +18,7 @@ import time
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/genuine-hosted-fixed-build-v1.json'
-CONFIG_SHA256='3aec07c609079f661f96045b3dc91863ef4430d721b33036561faddc868e0b2b'
+CONFIG_SHA256='53e9d76de4c778c551ef3586d03e1611047f42980f3158752d18ba60e3fa188a'
 MODE='genuine-hosted-fixed-build-v1'
 REPO='NickNicky19/NFL-forecasting'
 
