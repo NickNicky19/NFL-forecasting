@@ -1,0 +1,990 @@
+{
+  "factored_plan_example": {
+    "control_metadata_report_failure_reserve": 4194304,
+    "forecast_bytes": 19200000,
+    "forecast_rows": 600000,
+    "guarantee": false,
+    "limit": 50331648,
+    "logical_loss_rows_example": 1000000,
+    "logical_scored_rows": 600000,
+    "loss_view_bytes": 327680,
+    "loss_view_count_example": 160,
+    "request_bytes": 6400000,
+    "request_rows_example": 100000,
+    "scored_label_bytes": 6055296,
+    "total": 36177280,
+    "unique_label_rows_example": 150000
+  },
+  "global_cache_size_metadata_receipt": {
+    "path": "/tmp/dynamic-opportunity-cache-size-preprofile.json",
+    "physical_bytes": 475547411,
+    "remaining_bytes": 61323501,
+    "reported_by": "root; not rerun",
+    "sha256": "fef88fd9317476788df0a1804e40564819b0a46432034e6b79b667ae382dcda5"
+  },
+  "notes": [
+    "Only stat/footer counts; no NFL Parquet row-group values.",
+    "Existing compressed ratios do not guarantee new schemas compress equally.",
+    "Actual source/forecast/scoring/report preflight requires exact54 package row counts and conservative serialized estimates before any forecast.",
+    "48MiB pre-exposure proposal with versioned factored views must pass preflight and exact admission; otherwise stop before data/model work without dropping artifacts or offers.",
+    "Original all-231 input references remain external immutable refs; do not duplicate inherited6MiB environment in each package.",
+    "Factored per-query/task history/request audit stored once, shared by six dev settings and dynamic/static propagation. No repeated full proxy/calendar JSON in forecast rows."
+  ],
+  "predata_ceiling_stress_estimate": {
+    "action": "Actual exact54 context counts and comparison counts must fit beforeforecast; ceiling case doesnotnecessarilyfit.",
+    "forecast_bytes": 19200000,
+    "forecast_rows": 600000,
+    "guarantee": false,
+    "loss_bytes": 20000000,
+    "loss_rows_example": 1000000,
+    "metadata_reports_logs_failure_reserve": 4194304,
+    "proposed_limit": 67108864,
+    "request_bytes": 6400000,
+    "request_rows_example": 100000,
+    "scored_bytes": 24000000,
+    "total": 73794304,
+    "within_limit": false
+  },
+  "previous_32MiB_draft": "UNEXECUTED superseded budget proposal, not a spent study or changed result",
+  "prior_inventory_path": "reports/BASELINE_CORRECTION_REPORT_V3_METADATA_INVENTORY.json",
+  "proposed_limit_bytes": 50331648,
+  "schema": "dynamic-opportunity-storage-planning-profile-v1",
+  "source_artifact_profiles": [
+    {
+      "bytes": 193679,
+      "bytes_per_row": 22.297835597513238,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 193689,
+      "bytes_per_row": 22.29898687543173,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73422,
+      "bytes_per_row": 8.452912733133779,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73432,
+      "bytes_per_row": 8.454064011052267,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73788,
+      "bytes_per_row": 8.495049504950495,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73798,
+      "bytes_per_row": 8.496200782868984,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 72096,
+      "bytes_per_row": 8.300253281142068,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 72106,
+      "bytes_per_row": 8.301404559060558,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 72105,
+      "bytes_per_row": 8.301289431268708,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 72115,
+      "bytes_per_row": 8.302440709187199,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 60199,
+      "bytes_per_row": 6.930577941515081,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 60209,
+      "bytes_per_row": 6.931729219433572,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 153545,
+      "bytes_per_row": 17.677296799447387,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 153555,
+      "bytes_per_row": 17.678448077365875,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66396,
+      "bytes_per_row": 7.644024867603039,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66406,
+      "bytes_per_row": 7.645176145521529,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 122283,
+      "bytes_per_row": 14.078171770665438,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 122293,
+      "bytes_per_row": 14.079323048583928,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68297,
+      "bytes_per_row": 7.862882799907898,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68307,
+      "bytes_per_row": 7.864034077826387,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 62278,
+      "bytes_per_row": 7.169928620769054,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 62288,
+      "bytes_per_row": 7.171079898687543,
+      "kind": "forecasts",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 203270,
+      "bytes_per_row": 23.619567743434814,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 190848,
+      "bytes_per_row": 22.176156170113874,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 77752,
+      "bytes_per_row": 9.034627004415524,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75435,
+      "bytes_per_row": 8.765396235184754,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75914,
+      "bytes_per_row": 8.82105507785266,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73543,
+      "bytes_per_row": 8.545549616546596,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75937,
+      "bytes_per_row": 8.823727631884731,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73652,
+      "bytes_per_row": 8.558215198698582,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 76082,
+      "bytes_per_row": 8.840576342086916,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73791,
+      "bytes_per_row": 8.574366720892401,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 61212,
+      "bytes_per_row": 7.1127120613525445,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 61222,
+      "bytes_per_row": 7.113874041366489,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 159387,
+      "bytes_per_row": 18.52045084824541,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 154152,
+      "bytes_per_row": 17.91215431094585,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66780,
+      "bytes_per_row": 7.75970253311643,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66790,
+      "bytes_per_row": 7.760864513130374,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 121156,
+      "bytes_per_row": 14.07808505693702,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 119827,
+      "bytes_per_row": 13.923657913083895,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68681,
+      "bytes_per_row": 7.980594933767139,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68691,
+      "bytes_per_row": 7.981756913781083,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 62804,
+      "bytes_per_row": 7.297699279572392,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 62814,
+      "bytes_per_row": 7.298861259586335,
+      "kind": "forecasts",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 204864,
+      "bytes_per_row": 23.876923076923077,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 192636,
+      "bytes_per_row": 22.451748251748253,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 77607,
+      "bytes_per_row": 9.045104895104895,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75610,
+      "bytes_per_row": 8.812354312354312,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75809,
+      "bytes_per_row": 8.835547785547785,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73803,
+      "bytes_per_row": 8.601748251748251,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75781,
+      "bytes_per_row": 8.832284382284382,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73827,
+      "bytes_per_row": 8.604545454545455,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 75793,
+      "bytes_per_row": 8.833682983682984,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73765,
+      "bytes_per_row": 8.597319347319347,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 60840,
+      "bytes_per_row": 7.090909090909091,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 60850,
+      "bytes_per_row": 7.092074592074592,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 159553,
+      "bytes_per_row": 18.595920745920747,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 153484,
+      "bytes_per_row": 17.88857808857809,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66176,
+      "bytes_per_row": 7.712820512820513,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 66186,
+      "bytes_per_row": 7.713986013986014,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 120346,
+      "bytes_per_row": 14.026340326340327,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 118759,
+      "bytes_per_row": 13.841375291375291,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68551,
+      "bytes_per_row": 7.98962703962704,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 68561,
+      "bytes_per_row": 7.99079254079254,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 64009,
+      "bytes_per_row": 7.46025641025641,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 64019,
+      "bytes_per_row": 7.461421911421912,
+      "kind": "forecasts",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 321007,
+      "bytes_per_row": 36.95682707805664,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 321017,
+      "bytes_per_row": 36.95797835597513,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91098,
+      "bytes_per_row": 10.48791158185586,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91108,
+      "bytes_per_row": 10.48906285977435,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91274,
+      "bytes_per_row": 10.508174073221277,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91284,
+      "bytes_per_row": 10.509325351139765,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 87007,
+      "bytes_per_row": 10.016923785401795,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 87017,
+      "bytes_per_row": 10.018075063320286,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 87486,
+      "bytes_per_row": 10.072069997697444,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 87496,
+      "bytes_per_row": 10.073221275615934,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73090,
+      "bytes_per_row": 8.414690306239926,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73100,
+      "bytes_per_row": 8.415841584158416,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 210510,
+      "bytes_per_row": 24.235551462122956,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 210520,
+      "bytes_per_row": 24.236702740041444,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84258,
+      "bytes_per_row": 9.700437485609026,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84268,
+      "bytes_per_row": 9.701588763527516,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 165954,
+      "bytes_per_row": 19.105917568501035,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 165964,
+      "bytes_per_row": 19.107068846419526,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86600,
+      "bytes_per_row": 9.970066774119273,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86610,
+      "bytes_per_row": 9.971218052037761,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 78461,
+      "bytes_per_row": 9.03304167626065,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 78471,
+      "bytes_per_row": 9.034192954179138,
+      "kind": "scored",
+      "rows": 8686,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 337311,
+      "bytes_per_row": 39.19486404833837,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 316604,
+      "bytes_per_row": 36.78875203346502,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 95374,
+      "bytes_per_row": 11.082268184987218,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 92987,
+      "bytes_per_row": 10.804903555658843,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 92699,
+      "bytes_per_row": 10.771438531257262,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 90210,
+      "bytes_per_row": 10.48222170578666,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91064,
+      "bytes_per_row": 10.581454798977457,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 88536,
+      "bytes_per_row": 10.287706251452475,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91629,
+      "bytes_per_row": 10.64710666976528,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 89095,
+      "bytes_per_row": 10.352660934231931,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73821,
+      "bytes_per_row": 8.577852660934232,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73831,
+      "bytes_per_row": 8.579014640948175,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 218328,
+      "bytes_per_row": 25.369277248431327,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 211792,
+      "bytes_per_row": 24.609807111317686,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84849,
+      "bytes_per_row": 9.85928422031141,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84859,
+      "bytes_per_row": 9.860446200325354,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 162718,
+      "bytes_per_row": 18.907506390890077,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 161119,
+      "bytes_per_row": 18.72170578666047,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86885,
+      "bytes_per_row": 10.09586335115036,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86895,
+      "bytes_per_row": 10.097025331164303,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 78190,
+      "bytes_per_row": 9.085521729026262,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 78200,
+      "bytes_per_row": 9.086683709040205,
+      "kind": "scored",
+      "rows": 8606,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 340993,
+      "bytes_per_row": 39.74277389277389,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 320390,
+      "bytes_per_row": 37.341491841491845,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 95490,
+      "bytes_per_row": 11.12937062937063,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 93437,
+      "bytes_per_row": 10.89009324009324,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 92724,
+      "bytes_per_row": 10.806993006993007,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 90670,
+      "bytes_per_row": 10.567599067599067,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 90971,
+      "bytes_per_row": 10.602680652680652,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 88805,
+      "bytes_per_row": 10.3502331002331,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 91502,
+      "bytes_per_row": 10.664568764568765,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 89260,
+      "bytes_per_row": 10.403263403263404,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73552,
+      "bytes_per_row": 8.572494172494173,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 73562,
+      "bytes_per_row": 8.573659673659673,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 218192,
+      "bytes_per_row": 25.43030303030303,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 210391,
+      "bytes_per_row": 24.52109557109557,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84377,
+      "bytes_per_row": 9.834149184149185,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 84387,
+      "bytes_per_row": 9.835314685314685,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 162201,
+      "bytes_per_row": 18.904545454545456,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 160207,
+      "bytes_per_row": 18.67214452214452,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86963,
+      "bytes_per_row": 10.135547785547786,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 86973,
+      "bytes_per_row": 10.136713286713286,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 79782,
+      "bytes_per_row": 9.298601398601399,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    },
+    {
+      "bytes": 79792,
+      "bytes_per_row": 9.2997668997669,
+      "kind": "scored",
+      "rows": 8580,
+      "source": "existing frozen metadata only"
+    }
+  ],
+  "state": "METADATA_ONLY_NOT_ACTUAL_ADMISSION",
+  "summary": {
+    "forecasts": {
+      "files": 66,
+      "max_bytes_per_row": 23.876923076923077
+    },
+    "scored": {
+      "files": 66,
+      "max_bytes_per_row": 39.74277389277389
+    }
+  },
+  "unused64MiB_proposal": "Cannotfit root-measured remaining bytes. No study or source values ran on either old proposal."
+}

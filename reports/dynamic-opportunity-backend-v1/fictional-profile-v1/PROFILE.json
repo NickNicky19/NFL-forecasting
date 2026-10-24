@@ -1,0 +1,339 @@
+{
+  "calendar_sides": 576,
+  "failure": null,
+  "history_fictional_rows": 1020,
+  "offered_rows": 60,
+  "original_real_sources_private_inputs_priors_models_forecasts_scores_CAS_HTTP": 0,
+  "profile_CPU_seconds": 1.344023192,
+  "profile_wall_seconds": 1.3498222099951818,
+  "raw_fictional_rows": 10880,
+  "result_digest": "ade59da28aea0f235ade8d3c383a3073d3d21e43da25a09a148c804a78a61959",
+  "results_by_state": {
+    "READY_CORE_REQUEST": 60
+  },
+  "roster_fictional_rows": 1020,
+  "scope": "One fictional pure adapter batch; no numerical NFL experiment and no old suite",
+  "state": "COMPLETED",
+  "top35": [
+    {
+      "cumulative_seconds": 1.345268979,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "historical_requests",
+      "line": 352,
+      "own_seconds": 0.008163231,
+      "primitive_calls": 1,
+      "total_calls": 1
+    },
+    {
+      "cumulative_seconds": 0.692232544,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "_calendar",
+      "line": 57,
+      "own_seconds": 0.21899005600000002,
+      "primitive_calls": 64,
+      "total_calls": 64
+    },
+    {
+      "cumulative_seconds": 0.6797453170000001,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "membership_for_offer",
+      "line": 150,
+      "own_seconds": 0.020109956000000002,
+      "primitive_calls": 60,
+      "total_calls": 60
+    },
+    {
+      "cumulative_seconds": 0.660418076,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "index_calendar",
+      "line": 87,
+      "own_seconds": 0.00039413400000000003,
+      "primitive_calls": 62,
+      "total_calls": 62
+    },
+    {
+      "cumulative_seconds": 0.32079914800000003,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "build_recorded_proxy_panel",
+      "line": 85,
+      "own_seconds": 0.096751264,
+      "primitive_calls": 1,
+      "total_calls": 1
+    },
+    {
+      "cumulative_seconds": 0.25315892,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/state.py",
+      "function": "utc",
+      "line": 16,
+      "own_seconds": 0.154603449,
+      "primitive_calls": 142085,
+      "total_calls": 142085
+    },
+    {
+      "cumulative_seconds": 0.223145757,
+      "file": "~",
+      "function": "<built-in method builtins.all>",
+      "line": 0,
+      "own_seconds": 0.053481697,
+      "primitive_calls": 73858,
+      "total_calls": 73858
+    },
+    {
+      "cumulative_seconds": 0.145650535,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "<genexpr>",
+      "line": 61,
+      "own_seconds": 0.050742159,
+      "primitive_calls": 147456,
+      "total_calls": 147456
+    },
+    {
+      "cumulative_seconds": 0.13258671500000002,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "credit_rows",
+      "line": 124,
+      "own_seconds": 0.045963106000000004,
+      "primitive_calls": 1,
+      "total_calls": 1
+    },
+    {
+      "cumulative_seconds": 0.103437892,
+      "file": "~",
+      "function": "<method 'get' of 'dict' objects>",
+      "line": 0,
+      "own_seconds": 0.103437892,
+      "primitive_calls": 618105,
+      "total_calls": 618105
+    },
+    {
+      "cumulative_seconds": 0.097573214,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "qualified_player_rows",
+      "line": 193,
+      "own_seconds": 0.03193381,
+      "primitive_calls": 1,
+      "total_calls": 1
+    },
+    {
+      "cumulative_seconds": 0.09222848,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "_text",
+      "line": 31,
+      "own_seconds": 0.062027059,
+      "primitive_calls": 132532,
+      "total_calls": 132532
+    },
+    {
+      "cumulative_seconds": 0.085569452,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history_replay_v2.py",
+      "function": "build_historical_offer_windows",
+      "line": 39,
+      "own_seconds": 0.010984321,
+      "primitive_calls": 1,
+      "total_calls": 1
+    },
+    {
+      "cumulative_seconds": 0.080618691,
+      "file": "~",
+      "function": "<method 'isoformat' of 'datetime.datetime' objects>",
+      "line": 0,
+      "own_seconds": 0.080618691,
+      "primitive_calls": 73729,
+      "total_calls": 73729
+    },
+    {
+      "cumulative_seconds": 0.06550499900000001,
+      "file": "~",
+      "function": "<built-in method builtins.isinstance>",
+      "line": 0,
+      "own_seconds": 0.056424816,
+      "primitive_calls": 386499,
+      "total_calls": 386499
+    },
+    {
+      "cumulative_seconds": 0.06420143,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "_sha",
+      "line": 27,
+      "own_seconds": 0.041689275000000005,
+      "primitive_calls": 21847,
+      "total_calls": 21847
+    },
+    {
+      "cumulative_seconds": 0.036296105,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "canonical_team",
+      "line": 46,
+      "own_seconds": 0.014380588000000001,
+      "primitive_calls": 23800,
+      "total_calls": 23800
+    },
+    {
+      "cumulative_seconds": 0.028950836,
+      "file": "~",
+      "function": "<built-in method fromisoformat>",
+      "line": 0,
+      "own_seconds": 0.028950836,
+      "primitive_calls": 142085,
+      "total_calls": 142085
+    },
+    {
+      "cumulative_seconds": 0.028908095,
+      "file": "~",
+      "function": "<method 'astimezone' of 'datetime.datetime' objects>",
+      "line": 0,
+      "own_seconds": 0.028908095,
+      "primitive_calls": 142085,
+      "total_calls": 142085
+    },
+    {
+      "cumulative_seconds": 0.025679792,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/state.py",
+      "function": "digest",
+      "line": 28,
+      "own_seconds": 0.00104592,
+      "primitive_calls": 1211,
+      "total_calls": 1211
+    },
+    {
+      "cumulative_seconds": 0.024018757,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "_require",
+      "line": 22,
+      "own_seconds": 0.024018757,
+      "primitive_calls": 262739,
+      "total_calls": 262739
+    },
+    {
+      "cumulative_seconds": 0.02327281,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "missing_value",
+      "line": 55,
+      "own_seconds": 0.004269574,
+      "primitive_calls": 14960,
+      "total_calls": 14960
+    },
+    {
+      "cumulative_seconds": 0.02235037,
+      "file": "~",
+      "function": "<method 'replace' of 'str' objects>",
+      "line": 0,
+      "own_seconds": 0.02235037,
+      "primitive_calls": 142085,
+      "total_calls": 142085
+    },
+    {
+      "cumulative_seconds": 0.02208616,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "<genexpr>",
+      "line": 80,
+      "own_seconds": 0.02208616,
+      "primitive_calls": 184320,
+      "total_calls": 184320
+    },
+    {
+      "cumulative_seconds": 0.021212787,
+      "file": "~",
+      "function": "<method 'strip' of 'str' objects>",
+      "line": 0,
+      "own_seconds": 0.021212787,
+      "primitive_calls": 157352,
+      "total_calls": 157352
+    },
+    {
+      "cumulative_seconds": 0.019402376000000002,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_source.py",
+      "function": "text",
+      "line": 42,
+      "own_seconds": 0.011470828,
+      "primitive_calls": 24820,
+      "total_calls": 24820
+    },
+    {
+      "cumulative_seconds": 0.019202429,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/state.py",
+      "function": "canonical",
+      "line": 25,
+      "own_seconds": 0.001004893,
+      "primitive_calls": 1211,
+      "total_calls": 1211
+    },
+    {
+      "cumulative_seconds": 0.017325621,
+      "file": "~",
+      "function": "<method 'fullmatch' of 're.Pattern' objects>",
+      "line": 0,
+      "own_seconds": 0.017325621,
+      "primitive_calls": 21847,
+      "total_calls": 21847
+    },
+    {
+      "cumulative_seconds": 0.016953631,
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py",
+      "function": "dumps",
+      "line": 183,
+      "own_seconds": 0.0017242050000000001,
+      "primitive_calls": 1211,
+      "total_calls": 1211
+    },
+    {
+      "cumulative_seconds": 0.015541240000000001,
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py",
+      "function": "deepcopy",
+      "line": 118,
+      "own_seconds": 0.006730621,
+      "primitive_calls": 60,
+      "total_calls": 3780
+    },
+    {
+      "cumulative_seconds": 0.015072038000000001,
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py",
+      "function": "_deepcopy_dict",
+      "line": 217,
+      "own_seconds": 0.004436516000000001,
+      "primitive_calls": 60,
+      "total_calls": 240
+    },
+    {
+      "cumulative_seconds": 0.01484537,
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py",
+      "function": "encode",
+      "line": 183,
+      "own_seconds": 0.001328067,
+      "primitive_calls": 1211,
+      "total_calls": 1211
+    },
+    {
+      "cumulative_seconds": 0.014125912000000001,
+      "file": "~",
+      "function": "<built-in method builtins.sorted>",
+      "line": 0,
+      "own_seconds": 0.004227796000000001,
+      "primitive_calls": 122,
+      "total_calls": 122
+    },
+    {
+      "cumulative_seconds": 0.012939294,
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py",
+      "function": "iterencode",
+      "line": 205,
+      "own_seconds": 0.012939294,
+      "primitive_calls": 1211,
+      "total_calls": 1211
+    },
+    {
+      "cumulative_seconds": 0.011759705,
+      "file": "/workspace/nfl-dynamic-source-performance-v1/nfl_lab/dynamic_opportunity_history.py",
+      "function": "_count",
+      "line": 35,
+      "own_seconds": 0.007658023000000001,
+      "primitive_calls": 11360,
+      "total_calls": 11360
+    }
+  ],
+  "total_function_calls": 2964623,
+  "version": "dynamic-source-fictional-profile-v2-20261024",
+  "worker_CPU_seconds": 1.422138032,
+  "worker_HWM_bytes": 34787328,
+  "worker_wall_seconds": 1.4281463749939576
+}

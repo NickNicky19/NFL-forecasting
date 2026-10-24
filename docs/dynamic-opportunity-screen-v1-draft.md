@@ -153,6 +153,16 @@ confirmation or original historical issuance. Do not read 2025/2026 here.
 Proposed first-run ceiling: **600 wall/CPU seconds, 1 GiB combined RSS, two
 threads, 600,000 forecast-row incidences, 32 MiB new retained CAS content under
 the unchanged 512 MiB global cap, one actual invocation, no retries/HTTP/GPU**.
+This paragraph records the initial unconsumed proposal. Before any NFL study
+invocation, a metadata-only profile found that full duplicate row tables could
+exceed 32 MiB. An initial cache-only scan mistakenly labeled apparent path
+sizes as physical/global quota use. The corrected scan of all registered roots,
+deduplicated by inode, found 422,216,321 of 536,870,912 bytes occupied; the original
+incorrectly labeled receipt is retained with an explicit correction. The backend is
+being prepared with a **48 MiB** ceiling and factored immutable query, forecast
+and outcome references. The final exact registration must bind its conservative
+estimate and code before source primitives or study scoring are opened. No
+search, global retention or frozen promotion gate is expanded by this draft.
 At most 24 development candidate cells, twelve final candidate packages
 (carry, auxiliary targets, receptions, receiving yards x three years), twelve
 matched static final controls and six auxiliary simple final controls: 54 new

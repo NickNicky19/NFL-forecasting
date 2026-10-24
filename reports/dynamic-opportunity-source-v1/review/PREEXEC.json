@@ -1,0 +1,183 @@
+{
+  "blockers": [],
+  "checks": [
+    {
+      "check": "exact_owner_head",
+      "pass": true
+    },
+    {
+      "check": "clean_owner_worktree",
+      "pass": true
+    },
+    {
+      "check": "nine_exact_code_policy_bindings",
+      "pass": true
+    },
+    {
+      "check": "binding:config/dynamic-opportunity-source-v1-software.json",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/__init__.py",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/dynamic_opportunity_core.py",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/dynamic_opportunity_history.py",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/dynamic_opportunity_source.py",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/dynamic_opportunity_study.py",
+      "pass": true
+    },
+    {
+      "check": "binding:nfl_lab/state.py",
+      "pass": true
+    },
+    {
+      "check": "binding:tests/test_dynamic_opportunity_source.py",
+      "pass": true
+    },
+    {
+      "check": "binding:tools/dynamic_opportunity_source_software_v1.py",
+      "pass": true
+    },
+    {
+      "check": "frozen_copy_identical",
+      "pass": true
+    },
+    {
+      "check": "exact_interpreter_metadata",
+      "pass": true
+    },
+    {
+      "check": "exact_timeout_metadata",
+      "pass": true
+    },
+    {
+      "check": "exact_twelve_new_fixture_definitions",
+      "pass": true
+    },
+    {
+      "check": "root_go_remains_pending",
+      "pass": true
+    },
+    {
+      "check": "fresh_output_absent",
+      "pass": true
+    },
+    {
+      "check": "exact_software_budget",
+      "pass": true
+    },
+    {
+      "check": "all_six_numerical_caps_two",
+      "pass": true
+    },
+    {
+      "check": "calendar_unique_set_header_guard",
+      "pass": true
+    },
+    {
+      "check": "identity_only_full_file_guard",
+      "pass": true
+    },
+    {
+      "check": "prior_core_bytes_retained",
+      "pass": true
+    },
+    {
+      "check": "prior_history_bytes_retained",
+      "pass": true
+    }
+  ],
+  "execution_contract": {
+    "command_argv": [
+      "env",
+      "-i",
+      "PATH=/usr/bin:/bin",
+      "HOME=/tmp",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "MKL_NUM_THREADS=2",
+      "NUMEXPR_NUM_THREADS=2",
+      "OMP_NUM_THREADS=2",
+      "OMP_THREAD_LIMIT=2",
+      "OPENBLAS_NUM_THREADS=2",
+      "VECLIB_MAXIMUM_THREADS=2",
+      "/usr/bin/timeout",
+      "--signal=KILL",
+      "120s",
+      "/workspace/nfl-venv/bin/python",
+      "-B",
+      "/workspace/nfl-dynamic-opportunity-source-v1/tools/dynamic_opportunity_source_software_v1.py",
+      "--freeze",
+      "/tmp/dynamic-opportunity-source-v1-software-freeze.json",
+      "--freeze-sha256",
+      "4282d9115289a94328f1d382e84794d92acfc72ae111e73f75f538a87636639d"
+    ],
+    "command_argv_sha256": "2131c4ad10ce228fabf5c48057179e4de102508ad75ded48ff8f0f5c0bd291ab",
+    "one_invocation_no_retry": true,
+    "root_GO_required": true
+  },
+  "fixture_methods": [
+    "test_01_calendar_exact_reg_projection_and_reciprocal_context",
+    "test_02_strict_seven_day_and_no_future_primitive_access",
+    "test_03_physical_identity_order_and_duplicate_occurrences",
+    "test_04_all_position_credits_orphan_and_explicit_zero_survive",
+    "test_05_week1_anchor_required_and_missing_slot_never_filled",
+    "test_06_roster_conflict_duplicates_and_unavailable_rows_not_continuity",
+    "test_07_raw_zero_requires_unchanged_qualified_playing",
+    "test_08_source_gate_explicit_projection_cache_and_clock_preservation",
+    "test_09_exact54_sequence_and_global_label_gate",
+    "test_10_fixed_selection_ties_and_equal_common_cohort",
+    "test_11_static_fixed_efficiency_and_auxiliary_controls",
+    "test_12_orchestration_mock_phase_boundaries_and_preflight_rejection"
+  ],
+  "forbidden_effect_counters": {
+    "CAS_writes": 0,
+    "HTTP": 0,
+    "NFL_semantic_reads": 0,
+    "fits": 0,
+    "forecasts": 0,
+    "model_loads": 0,
+    "project_module_imports": 0,
+    "root_or_owner_edits": 0,
+    "scores": 0,
+    "source_acquisitions": 0,
+    "tests_run": 0
+  },
+  "freeze": {
+    "bytes": 4291,
+    "path": "/tmp/dynamic-opportunity-source-v1-software-freeze.json",
+    "sha256": "4282d9115289a94328f1d382e84794d92acfc72ae111e73f75f538a87636639d"
+  },
+  "head": "f76d05b3184d788239f362cfb923f3f493439a15",
+  "limitations": [
+    "No tests or project-module imports executed by reviewer.",
+    "Wrapper RSS claim is single-process highwater with traced checks, not continuous kernel enforcement.",
+    "Wall/CPU counters reported before receipt persistence; immutable external timeout still bounds entire command.",
+    "All actual NFL forecasting, concrete backend, factored output consumer schema, source/environment freeze and 48 MiB study registration remain unapproved by this software-only review.",
+    "A passing fictional suite would establish software behavior, not NFL accuracy or future confirmation."
+  ],
+  "review_resources_before_receipt": {
+    "CPU_seconds": 0.074864028,
+    "ru_maxrss_bytes": 42467328,
+    "wall_seconds": 0.08433349099504994
+  },
+  "review_scope": [
+    "Read-only source/study/fixture/harness/policy inspection and exact metadata authentication.",
+    "Twelve new fictional methods only; no original suite, replay timing suite or actual study invocation.",
+    "Full-file identity-only physical ordinals remain separated from strict earlier-available primitive projections.",
+    "54-package selection and fallback semantics were inspected statically; concrete backend remains a separate prerequisite."
+  ],
+  "root": "/workspace/nfl-dynamic-opportunity-source-v1",
+  "schema_version": "independent-source-software-preexec-v1",
+  "state": "STATIC_PREEXEC_PASS_ROOT_GO_REQUIRED"
+}
