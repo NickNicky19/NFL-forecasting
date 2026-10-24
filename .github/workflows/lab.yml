@@ -8,8 +8,28 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1]
         default: daily
+      bootstrap_locators_json:
+        description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
+        type: string
+        required: false
+        default: ''
+      bootstrap_locators_sha256:
+        description: 'SHA256 of the exact canonical locator envelope'
+        type: string
+        required: false
+        default: ''
+      build_registration_json:
+        description: 'Canonical root-registered NEW fixed18 build and nested15Z initial registration'
+        type: string
+        required: false
+        default: ''
+      build_registration_sha256:
+        description: 'SHA256 of the exact new build registration'
+        type: string
+        required: false
+        default: ''
   push:
     branches: [main]
     paths: ['nfl_lab/**', 'tests/**', 'config/**', 'schemas/**', 'pyproject.toml', '.github/workflows/lab.yml']
@@ -24,7 +44,7 @@ concurrency:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -312,3 +332,127 @@ jobs:
           CANARY_READ_JSON: ${{ needs.private-draft-v2-read.outputs.read_json }}
           CANARY_READ_SHA256: ${{ needs.private-draft-v2-read.outputs.read_sha256 }}
         run: timeout --signal=KILL 180s python3 -I -B tools/private_draft_canary_v2.py qualify --execute
+  owner-bootstrap-restore-v1:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'owner-bootstrap-restore-v1' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    env:
+      OMP_NUM_THREADS: '2'
+      OMP_THREAD_LIMIT: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+      VECLIB_MAXIMUM_THREADS: '2'
+      MALLOC_ARENA_MAX: '2'
+      ARROW_DEFAULT_MEMORY_POOL: system
+      ARROW_IO_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact existing opaque storage dependencies
+        run: python -m pip --disable-pip-version-check install --requirement requirements.lock
+      - name: Restore only the two registered private opaque bundles
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          BOOTSTRAP_MODE: ${{ inputs.mode }}
+          BOOTSTRAP_LOCATORS_JSON: ${{ inputs.bootstrap_locators_json }}
+          BOOTSTRAP_LOCATORS_SHA256: ${{ inputs.bootstrap_locators_sha256 }}
+        run: timeout --signal=KILL --kill-after=1s 450s python -I -B tools/gha_owner_bootstrap_restore_v1.py --execute
+  genuine-hosted-fixed-build-v1:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      checkpoint_handoff_json: ${{ steps.private-checkpoint.outputs.handoff_json }}
+      checkpoint_handoff_sha256: ${{ steps.private-checkpoint.outputs.handoff_sha256 }}
+    env:
+      OMP_NUM_THREADS: '2'
+      OMP_THREAD_LIMIT: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+      VECLIB_MAXIMUM_THREADS: '2'
+      MALLOC_ARENA_MAX: '2'
+      ARROW_DEFAULT_MEMORY_POOL: system
+      ARROW_IO_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the exact fixed-build dependencies
+        run: python -m pip --disable-pip-version-check install --requirement requirements-hosted-fixed-build-v1.lock
+      - name: Claim the root one-time registration before source or fits
+        id: source-claim
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          CHECKPOINT_MODE: ${{ inputs.mode }}
+        run: timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py claim --execute
+      - name: New genuine source capture and fixed18 operational training only
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          BUILD_MODE: ${{ inputs.mode }}
+          BUILD_REGISTRATION_JSON: ${{ inputs.build_registration_json }}
+          BUILD_REGISTRATION_SHA256: ${{ inputs.build_registration_sha256 }}
+          BUILD_CLAIM_RECEIPT_JSON: ${{ steps.source-claim.outputs.claim_receipt_json }}
+          BUILD_CLAIM_RECEIPT_SHA256: ${{ steps.source-claim.outputs.claim_receipt_sha256 }}
+        run: timeout --signal=KILL --kill-after=1s 1230s python -I -B tools/genuine_hosted_fixed_build_v1.py --execute
+      - name: Persist the complete private model and source checkpoint
+        id: private-checkpoint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          CHECKPOINT_MODE: ${{ inputs.mode }}
+        run: timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py produce --execute
+  genuine-hosted-fixed-build-restore-v1:
+    needs: genuine-hosted-fixed-build-v1
+    if: success() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'genuine-hosted-fixed-build-v1' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+      CHECKPOINT_MODE: ${{ inputs.mode }}
+      CHECKPOINT_HANDOFF_JSON: ${{ needs.genuine-hosted-fixed-build-v1.outputs.checkpoint_handoff_json }}
+      CHECKPOINT_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-v1.outputs.checkpoint_handoff_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only the original CAS bootstrap dependencies
+        run: python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
+      - name: Restore and verify the complete private checkpoint in a fresh job
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+        run: timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py restore --execute

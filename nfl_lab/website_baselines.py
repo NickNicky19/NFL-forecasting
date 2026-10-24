@@ -235,6 +235,9 @@ def capture_website_bindings(state, prepared, lab_batch, *, clock=now_utc):
         raise ValueError("website binding requires exactly one new immutable lab batch")
     header = prepared["header"]; points = prepared["_private_points"]; bindings = []; excluded = Counter()
     for row in batches[0]["rows"]:
+        from .recorded_research import FUNCTIONAL
+        if row.get("prediction_functional")==FUNCTIONAL:
+            excluded["research_point_comparator_binding_not_implemented"] += 1; continue
         if row.get("code_integrity") != "pre_post_source_digest_required":
             raise ValueError("unqualified lab code cannot acquire website baseline")
         if not _lab_scope(row, header):
@@ -386,14 +389,20 @@ def score_saved_website(state, cache, *, downloader=_download):
             if sum(p.stat().st_size for p in private.glob("*.parquet")) + len(body) > 256*1024*1024:
                 limits.append("Private comparison row retention cap reached; no evidence deleted.")
             else:
-                temporary = None
-                try:
-                    with tempfile.NamedTemporaryFile(dir=private, prefix=".pending-", delete=False) as f:
-                        temporary = Path(f.name); f.write(body); f.flush(); os.fsync(f.fileno())
-                    try:os.link(temporary, destination)
+                from .operational_io import active_storage
+                storage = active_storage()
+                if storage is not None:
+                    try:storage.write_bytes(destination, body, replace=False)
                     except FileExistsError:pass
-                finally:
-                    if temporary is not None:temporary.unlink(missing_ok=True)
+                else:
+                    temporary = None
+                    try:
+                        with tempfile.NamedTemporaryFile(dir=private, prefix=".pending-", delete=False) as f:
+                            temporary = Path(f.name); f.write(body); f.flush(); os.fsync(f.fileno())
+                        try:os.link(temporary, destination)
+                        except FileExistsError:pass
+                    finally:
+                        if temporary is not None:temporary.unlink(missing_ok=True)
     report = {"schema_version": "website-paired-scorecard-v1", "state": "SCORED" if rows else "PENDING_OR_UNSUPPORTED",
               "paired_rows": len(rows) // 2, "coverage": dict(coverage), "summaries": summaries, "paired": paired,
               "limits": sorted(set(limits)), "promoted": [],

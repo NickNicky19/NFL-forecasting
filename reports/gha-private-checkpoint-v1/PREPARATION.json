@@ -1,0 +1,142 @@
+{
+  "actual_activity": {
+    "HTTP": 0,
+    "NFL_source_value_or_model_decodes": 0,
+    "NFL_tests_or_fits": 0,
+    "credential_access": 0,
+    "dispatch": 0,
+    "private_payload_upload_bytes": 0,
+    "website_or_workflow_source_edits": 0
+  },
+  "actual_backend": "UNATTESTED",
+  "base_commit": "cf4e409d5c607d83585e74f19484b30e38b5a5f7",
+  "binding_sha256": "763d08e2d576434b3722ad942da9f807645f6ffa39d0650616fae80a11d1fa11",
+  "canary_source_sha": "ee5bcdeb3d8f7ab52d26374fa41b8b5c5ff948cd",
+  "files": {
+    "config/gha-private-checkpoint-v1.json": {
+      "bytes": 6769,
+      "sha256": "a97314fd2e77a95ef9c538595f3988751d533ea3f68df61c20b8d5feb55e1f18"
+    },
+    "docs/weekly-adaptive-release-v1/GHA_PRIVATE_CHECKPOINT_V1.md": {
+      "bytes": 13693,
+      "sha256": "4ce71383e4766f6c9dbe127d143632d6d31a957fbf0f02f308d8ba7da050d04d"
+    },
+    "nfl_lab/gha_private_checkpoint.py": {
+      "bytes": 25020,
+      "sha256": "f62fa019118e5cc56f40333211189df0cd14549dc7f801b2673ed88239de400d"
+    },
+    "reports/gha-private-checkpoint-v1/FICTIONAL_TESTS.json": {
+      "bytes": 3491,
+      "sha256": "67949d8bd32c56dc0c1eca6dddb7649c7cc316115bc171a9b1c46d408fce2f69"
+    },
+    "requirements-gha-private-checkpoint-v1.lock": {
+      "bytes": 96,
+      "sha256": "e89737821ae965d2cd75515273b257a00a7497026ec00f58c79f99ebba511f89"
+    },
+    "tests/test_gha_private_checkpoint.py": {
+      "bytes": 18415,
+      "sha256": "f93718d3699991f6e1f18f9bc6c256f04ff588b8ab3904b7af24b8633c58cb61"
+    },
+    "tools/gha_private_checkpoint_v1.py": {
+      "bytes": 11684,
+      "sha256": "0f3d577c0f967192d659ba4e40275e0164a65005197737a2665fd933dfef3025"
+    },
+    "website_packet/gha-private-checkpoint-v1/lab-job-integration.yml": {
+      "bytes": 3114,
+      "sha256": "bc99e0f60f4b14593accd4c47efff880a13d486a244e89ba190450742a900708"
+    }
+  },
+  "native_limits": {
+    "AS_bytes": 536870912,
+    "CPU_seconds_per_phase": 120,
+    "HTTP_claim_phase": 40,
+    "HTTP_per_core_operation": 40,
+    "HTTP_per_phase": 360,
+    "HTTP_producer_claim_plus_append": 400,
+    "asset_bytes": 8388608,
+    "automatic_retries": 0,
+    "core_operations_per_phase": 9,
+    "files_per_group": 64,
+    "global_owned_bytes": 536870912,
+    "groups": 8,
+    "runtime_bytes": 33554432,
+    "wall_seconds_per_phase": 180
+  },
+  "old_owner_route": "NOT_USED",
+  "old_pending_external_reservations": [
+    {
+      "bytes": 80745,
+      "key": "asset:manifest-baca684ad83cd320bda7691803f5b3fcc550d756f6006886a26bd9df8ed0c0e9.json",
+      "name": "manifest-baca684ad83cd320bda7691803f5b3fcc550d756f6006886a26bd9df8ed0c0e9.json",
+      "schema_version": "weekly-private-POST-reservation-v2",
+      "sha256": "baca684ad83cd320bda7691803f5b3fcc550d756f6006886a26bd9df8ed0c0e9"
+    }
+  ],
+  "pre_source_claim": {
+    "global_workflow_serialization_required": true,
+    "independent_atomicity_claim": false,
+    "reuse": false,
+    "schema_version": "weekly-gha-private-checkpoint-v1-source-claim",
+    "scope": "EXACT_ROOT_CONTROL_ONLY",
+    "worker_hook": "ROOT_INTEGRATION_PENDING"
+  },
+  "python_version": "3.12.14",
+  "qualification_sha256": "9572b87c5335529b1fc38ea8f9348d47c3e8af7760e8980595aac26d09079450",
+  "remote_profile": "REAL_UNRUN; all required encoded groups and bounded index profiled before firstPOST",
+  "required_files": {
+    "explicit_controls": 4,
+    "manifests": 18,
+    "models": 18,
+    "original_receipts": 19,
+    "raw": 19,
+    "total": 78
+  },
+  "required_integration_commit": "c45421a2c744d8f13da3aad7dcc9001415c58999",
+  "required_root_registration_canonical_sha256": "9fdae2c34732602c81155e7b6db0488043886ca45259f8c3560aa6787125ca72",
+  "required_root_registration_commit": "4179899",
+  "required_root_registration_physical_sha256": "4c526ccd4c97383af390da2c8592887fb97451c1a640242c7c5b27897d85802c",
+  "routine_readiness": "PENDING_ROOT_REVIEW_FINAL_SAME_WORKFLOW_WIRING_AND_SOURCE_SEALS",
+  "runtime_import_scope": "original CAS bootstrap imports pandas/numpy; no DataFrame or model work",
+  "schema_version": "weekly-gha-private-checkpoint-preparation-v1",
+  "scoped_tests": {
+    "accepted": {
+      "receipt": {
+        "CPU_seconds_children": 3.5230669999999997,
+        "CPU_seconds_parent": 18.397736000000002,
+        "errors": 0,
+        "failures": 0,
+        "largest_sequential_child_peak_RSS_bytes": 66256896,
+        "limits": {
+          "AS_bytes_per_process": 536870912,
+          "CPU_seconds_per_process": 90,
+          "wall_seconds_parent": 120
+        },
+        "methods": 14,
+        "parent_peak_RSS_bytes": 68059136,
+        "scope": "fictional opaque invented files+injected in-memory API incl actual fresh-Python restore;0 actual HTTP/credentials/NFL models/source/outcomes",
+        "state": "PASS",
+        "wall_seconds": 20.995348853000905
+      },
+      "sha256": "4d506fea1c2ffd4c1a2df5d10d2d82d74d0b24293e5fd01b3a026121a140fb6f"
+    },
+    "additional_claim_and_metadata_methods": 6,
+    "claim_and_metadata": {
+      "receipt": {
+        "CPU_seconds": 0.850914,
+        "errors": 0,
+        "failures": 0,
+        "methods": 6,
+        "peak_RSS_bytes": 64077824,
+        "scope": "fictional claim/duplicate-dispatch/ambiguous-POST/metadata;0 HTTP/credentials/NFL/model imports; original CAS bootstrap imports pandas/numpy",
+        "state": "PASS",
+        "wall_seconds": 0.3844841990066925
+      },
+      "sha256": "9742a1f915ee28178569efc9b861cc190042958d4a2de56a21986cda98ffddda"
+    },
+    "end_to_end_and_negative_methods": 14,
+    "prior_iterations_retained": true
+  },
+  "selected_forecast_durability": "NOT_CLAIMED",
+  "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+  "state": "PREPARED_FICTIONALLY_TESTED_NOT_AUTHORIZED"
+}

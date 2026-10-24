@@ -1,0 +1,217 @@
+{
+  "budgets": {
+    "CPU_seconds": 600,
+    "address_space_bytes": 4294967296,
+    "automatic_packet_retries": 0,
+    "children": 0,
+    "control_GHA_API_calls": 2,
+    "forecasts_issued": 0,
+    "heldout_scores": 0,
+    "logical_fit_reservations": 18,
+    "model_retained_bytes": 12582912,
+    "numerical_threads": 2,
+    "per_fit_CPU_wall_seconds": 60,
+    "physical_RSS_bytes": 1073741824,
+    "private_global_bytes": 536870912,
+    "searches": 0,
+    "source_HTTP_roundtrips": 180,
+    "source_URLs": 19,
+    "source_acquisitions": 1,
+    "source_phase_CPU_wall_seconds": 300,
+    "source_top_level_attempts": 60,
+    "training_feature_builds": 1,
+    "wall_seconds": 1200
+  },
+  "build_kind": "GENUINE_HOSTED_FIXED_BUILD_V1",
+  "dependency_pin_note": "Include all operational source code-fingerprint dependencies and the shared website feature normalizer; no data/recipe/feature/source URL changes.",
+  "environment_versions": {
+    "catboost": "1.2.10",
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "execution_authorized": false,
+  "expected_outputs": [
+    "BUILD_REGISTRATION.json",
+    "TRAIN18_REGISTERED_SLOTS.json",
+    "SOURCE_READBACK.json",
+    "training-features.parquet",
+    "models/<target>/<family>/future-inference.json",
+    "models/<target>/<family>/trained.joblib",
+    "slots/<target>-<family>.json",
+    "FINISHED.json"
+  ],
+  "initial_registration": "Exact closed weekly-initial-remaining-v1-registration nested in root build registration, with actual timestamp and canonical SHA, validated before fresh provider reads. PreparedNULL template is rejected.",
+  "initial_registration_canonical_sha256": "9fdae2c34732602c81155e7b6db0488043886ca45259f8c3560aa6787125ca72",
+  "jobs": [
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "pass_yd"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "pass_td"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "pass_cmp"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "pass_att"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "pass_int"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "rush_yd"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "rush_att"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "rec"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "rec_yd"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "rush_rec_yd"
+    },
+    {
+      "family": "leaf_cdf_base",
+      "method_id": "LAB_CDF",
+      "target": "anytime_td"
+    },
+    {
+      "family": "count_A",
+      "method_id": "COUNT_A",
+      "target": "rush_att"
+    },
+    {
+      "family": "count_A",
+      "method_id": "COUNT_A",
+      "target": "rec"
+    },
+    {
+      "family": "catboost_medium",
+      "method_id": "CATBOOST_MEDIUM",
+      "target": "pass_yd"
+    },
+    {
+      "family": "catboost_medium",
+      "method_id": "CATBOOST_MEDIUM",
+      "target": "rush_yd"
+    },
+    {
+      "family": "catboost_medium",
+      "method_id": "CATBOOST_MEDIUM",
+      "target": "rec_yd"
+    },
+    {
+      "family": "catboost_medium",
+      "method_id": "CATBOOST_MEDIUM",
+      "target": "rush_rec_yd"
+    },
+    {
+      "family": "catboost_medium",
+      "method_id": "CATBOOST_MEDIUM",
+      "target": "anytime_td"
+    }
+  ],
+  "maximum_new_fits": 18,
+  "mode": "genuine-hosted-fixed-build-v1",
+  "model_contract": "NEW current-vintage operational fits from2019..2025REG only, fixed existing18 recipes; no inherited old artifacts/hashes/clocks or scientific qualification. All18 statuses retained; independent Python/library failures continue; actual successful refs only. Native hard time/resource exhaustion terminates finitepacket without retry.",
+  "numerical_environment": {
+    "ARROW_DEFAULT_MEMORY_POOL": "system",
+    "ARROW_IO_THREADS": "2",
+    "MALLOC_ARENA_MAX": "2",
+    "MKL_NUM_THREADS": "2",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OMP_THREAD_LIMIT": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "VECLIB_MAXIMUM_THREADS": "2"
+  },
+  "old_12Z_registration": "UNCHANGED_NO_RETRY_OR_BACKDATED_ISSUANCE",
+  "outputs": "Private job directory RUNNER_TEMP/genuine-hosted-fixed-build-v1-RUN_ID, original shared storage quota. Public stdout only reservations/counts/hashes, no source rows/weights/URLs.",
+  "primitive_TD": "Use existing weekly_future_train.training_columns including rush_td and rec_td; never fabricate missing composite components.",
+  "private_persistence": "NOT WIRED IN THIS COMMIT: Root must add same-job genuine core.append checkpoint with exact root-approved fixed whitelist/payloadGO before real18fit dispatch, then native core.restore in a fresh job. Owner ingress/old12Zlocators are unrelated and remain failed/dormant.",
+  "review": {
+    "integrator": "/root",
+    "status": "PENDING_INDEPENDENT_REVIEW"
+  },
+  "schema_version": "genuine-hosted-fixed-build-plan-v1",
+  "source_cache_contract": "SOURCE_READBACK.original_source_cache is original daily/<actual-date> parent of raw, with38 body/receipt bindings including full schedules.csv ESPN. Never adopt derived namespace/raw as original cache.",
+  "source_contract": {
+    "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+    "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+    "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "source_library_installations_during_PREP": 0,
+  "source_sha256": {
+    ".github/workflows/lab.yml": "818f5385428a258122db8fa057994627e7a62c9323cbb8110f6300e2ba54af3e",
+    "config/operational-source-policy-v2.json": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    "config/private-draft-storage-v2.json": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+    "config/weekly-initial-remaining-v1-registration.json": "4c526ccd4c97383af390da2c8592887fb97451c1a640242c7c5b27897d85802c",
+    "nfl_lab/baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+    "nfl_lab/cadence.py": "426a4c726b26475be1392e6f926284deb3fcc401f974b8b12ff4db1d74151b5f",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "nfl_lab/cli.py": "7351cec4097f0d26b46b511dd2008dd197b24eb85e5e95a2bd2a48ade7b4e782",
+    "nfl_lab/data.py": "38c6fdc45d0a9d86f2a11fc334f77099d918819672ac745563e7248093ba625f",
+    "nfl_lab/direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "nfl_lab/experiment.py": "8f12d3d41a790d63dd4983622b7070a79c0f642eaa6d95cba600e571d70d20e9",
+    "nfl_lab/features.py": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9",
+    "nfl_lab/hosted_fixed_build_v1.py": "0655963d20a825e22096c41ac655fd7c3e98727bafa9a3f49f062249e9fe80f6",
+    "nfl_lab/live.py": "061c813b99c7046ef7e930c56304e55a47d48c27d56513ad55203d83f52dc005",
+    "nfl_lab/median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "nfl_lab/models.py": "0672825fc5d08b882a31ec6906b0618b4766bbb7f38bd05baf791aab37ceccb1",
+    "nfl_lab/operational_io.py": "75976833ebb55b0f734eb51bf8a34c1a321fc12e02a8a32765dda2454996132f",
+    "nfl_lab/operational_models.py": "be5592454358bd8f0be2b25179c05e3be5c996e8279755335b015d5b2f69f810",
+    "nfl_lab/operational_sources.py": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+    "nfl_lab/operational_storage.py": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad",
+    "nfl_lab/owned_reference_batch.py": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb",
+    "nfl_lab/permitted_source_features.py": "e3a7a3aac3320f8f88a6bdd81d239e5c36c6e23c278b5a504f822bda109d0edb",
+    "nfl_lab/private_draft_probe_helpers.py": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+    "nfl_lab/rb_readiness.py": "e36a9be08a38a2c66195a81bd8958fe1574c18f679318ba632e2570eac05ded3",
+    "nfl_lab/role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "nfl_lab/scoring.py": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13",
+    "nfl_lab/state.py": "db7093c5c80a7eb9ae3a4662d801dde1c8a86e6125a6a239cd3782f559b00cfd",
+    "nfl_lab/website_cdf_features.py": "3c75e69d01816995934c434807fd06be9f137d6124e65c9562654e2caafd0047",
+    "nfl_lab/weekly_current_inference.py": "4cd423f2cafe2676c770dcad6ec485e469949e8ec96c9a1dca6e2f0441cc5b33",
+    "nfl_lab/weekly_current_query.py": "9a41a6c1ce606b4b3c1c1114867fd2d961eef47ffc2e360a663017365e105dff",
+    "nfl_lab/weekly_future_inference.py": "0689fdc2e3d0154d7431f7fb834d0684dbddd8f952cd5710e010e7fdd678fad7",
+    "nfl_lab/weekly_generic_producer.py": "9871fdcb36528931c9fa7bb14b1a40d560579d94db4edb14b75799684bd427ce",
+    "nfl_lab/weekly_initial_remaining_v1.py": "2f33d5bb809a154502500261c28cbc5134ebc58db40841ae1b87740b1a49d879",
+    "reports/all12-leaf-cdf-v1/method-config.json": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
+    "requirements-hosted-fixed-build-v1.lock": "fc446008ea2692f287d6eb94a7fb843670e9b602a0a873438b86176fd0f1bbea",
+    "requirements.lock": "1c8f15974116704a618773d44c3175da394ec5477095ff31ed5f8666aa30cdfc",
+    "tools/ngboost_law_software_v1.py": "5ccfe3076530db21f92e3bf5abdb8f746f864aa9f95d3fad09dcccd2ec6cbe81",
+    "tools/private_draft_store_v2.py": "abb6330e881bdf872a3da89a135c76d3256952ee184f652b22d4b58457009487",
+    "tools/review_direct_booster_screen_guard_v4.py": "b27adddc4f0cd79a405e7f431d23a205e3b50e9743768dab4081302fa41fe9d0",
+    "tools/weekly_current_inference_capture.py": "ff17c8105515815f6dcb4ba3aaa28df0d766e1c4ed13770a927a1741882fb4a7",
+    "tools/weekly_current_query.py": "a313ac1ac8668f67fd6fb3084b9023128b8150a23fe8d760bbc5e0c34b2b2cdf",
+    "tools/weekly_future_train.py": "77c0ac090c6320269d658c52621c24ce3781cc817cb1d7a88b748636a78fa1c9"
+  },
+  "state": "SOURCE_TRAIN_CLAIM_PRIVATE_CHECKPOINT_WIRED_PENDING_INDEPENDENT_REVIEW",
+  "training_cutoff_utc": "2026-09-01T00:00:00Z"
+}

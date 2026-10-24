@@ -66,16 +66,18 @@ def probability_scores(y, mean, scale, family):
             "push_mass": None, "push_mass_semantics": "requires an actually recorded integer line"}
 
 
-def summarize(rows: pd.DataFrame,include_distribution=True) -> dict:
+def summarize(rows: pd.DataFrame,include_distribution=True,*,value_column="mean") -> dict:
+    if value_column not in {"mean","point"} or (value_column=="point" and include_distribution):
+        raise ValueError("point scoring requires explicit point column and no distribution")
     observed = rows["participation_state"].eq("played") & pd.to_numeric(rows["actual"],errors="coerce").notna()
-    scored = rows.loc[observed & pd.to_numeric(rows["mean"], errors="coerce").notna()]
+    scored = rows.loc[observed & pd.to_numeric(rows[value_column], errors="coerce").notna()]
     out = {"population_rows": len(rows), "supported_played_outcomes": int(observed.sum()),
            "scored_rows": len(scored), "dnp": int(rows.participation_state.eq("DNP").sum()),
            "unknown_participation": int(rows.participation_state.eq("unknown").sum()),
            "played_missing_statistic": int((rows.participation_state.eq("played") & ~observed).sum()),
            "fallback_rows": int(rows.fallback.fillna("").ne("").sum()), "selected_line_performance": "unavailable_no_recorded_offers"}
     if len(scored):
-        e = scored["mean"].astype(float)-scored.actual.astype(float)
+        e = scored[value_column].astype(float)-scored.actual.astype(float)
         out.update(mae=float(e.abs().mean()),rmse=float(np.sqrt(np.mean(e*e))),bias=float(e.mean()),
                    p95_absolute_error=float(e.abs().quantile(.95)),
                    unique_games=int(scored.game_id.nunique()),unique_players=int(scored.player_id.nunique()),
@@ -83,14 +85,15 @@ def summarize(rows: pd.DataFrame,include_distribution=True) -> dict:
                    played_zero_rows=int(scored.actual.eq(0).sum()))
         # Only actual distributions qualify; archived points do not inherit one.
         dist = scored.loc[scored.scale.notna() & scored.family.notna()] if include_distribution else scored.iloc[:0]
-        for family, group in dist.groupby("family"):
-            out[family] = probability_scores(group.actual,group["mean"],group.scale,family)
+        if include_distribution:
+            for family, group in dist.groupby("family"):
+                out[family] = probability_scores(group.actual,group["mean"],group.scale,family)
         if include_distribution and len(scored) and scored.family.eq("bernoulli").all():
             out["calibration"] = []
             for b in range(10):
                 g=scored.loc[(scored["mean"]>=b/10)&((scored["mean"]<(b+1)/10) if b<9 else (scored["mean"]<=1))]
                 out["calibration"].append({"lower":b/10,"n":len(g),"mean_probability":float(g["mean"].mean()) if len(g) else None,"event_rate":float(g.actual.mean()) if len(g) else None})
-    known=rows.participation_state.isin(["played","DNP"]) & rows.p_participation.notna()
+    known=rows.participation_state.isin(["played","DNP"]) & rows.get("p_participation",pd.Series(index=rows.index,dtype=float)).notna()
     if known.any():
         y=rows.loc[known,"participation_state"].eq("played").astype(float)
         out["participation_brier"] = float(np.mean((rows.loc[known,"p_participation"]-y)**2))
