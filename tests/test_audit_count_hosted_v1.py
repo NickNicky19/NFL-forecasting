@@ -3,11 +3,13 @@ from copy import deepcopy
 from datetime import datetime,timedelta,timezone
 import json
 from pathlib import Path
+import signal
 
 import pytest
 
 from tools import audit_count_hosted_v1 as hosted
 from nfl_lab import audit_count_requalify_v1 as audit
+from nfl_lab import private_draft_store as store
 
 
 @pytest.fixture
@@ -72,3 +74,35 @@ def test_dirty_checkout_and_scheduled_event_never_get_authority(fictional_root,m
     env["GITHUB_EVENT_NAME"]="workflow_dispatch"
     monkeypatch.setattr(hosted.subprocess,"check_output",lambda args,**kw:"a"*40+"\n" if args[1]=="rev-parse" else "?? tools/injected.py\n")
     with pytest.raises(audit.AuditGuardError,match="CLEAN_EXACT_HOSTED_SOURCE_REQUIRED"):hosted.checked_root(body,digest,env)
+
+
+def test_real_private_exchange_needs_metadata_timer_and_timer_does_not_reach_children():
+    # This reproduces the actual first hosted failure without making HTTP calls.
+    before=signal.getitimer(signal.ITIMER_REAL);handler=signal.getsignal(signal.SIGALRM)
+    try:
+        signal.setitimer(signal.ITIMER_REAL,0)
+        signal.signal(signal.SIGALRM,signal.SIG_DFL)
+        with pytest.raises(store.StoreError,match="WALL_GUARD_REQUIRED"):
+            with store.exchange_deadline(True):pass
+        with hosted.metadata_deadline(2):
+            assert signal.getsignal(signal.SIGALRM)==signal.SIG_DFL
+            with store.exchange_deadline(True):
+                assert 0 < signal.getitimer(signal.ITIMER_REAL)[0] <= 2
+        assert signal.getitimer(signal.ITIMER_REAL)==(0.,0.)
+        assert signal.getsignal(signal.SIGALRM)==signal.SIG_DFL
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0);signal.signal(signal.SIGALRM,handler)
+        signal.setitimer(signal.ITIMER_REAL,*before)
+
+
+def test_metadata_failure_restores_the_original_native_envelope():
+    before=signal.getitimer(signal.ITIMER_REAL);handler=signal.getsignal(signal.SIGALRM)
+    try:
+        signal.signal(signal.SIGALRM,signal.SIG_IGN);signal.setitimer(signal.ITIMER_REAL,20)
+        with pytest.raises(RuntimeError,match="fictional metadata failure"):
+            with hosted.metadata_deadline(2):raise RuntimeError("fictional metadata failure")
+        remaining,interval=signal.getitimer(signal.ITIMER_REAL)
+        assert 0 < remaining <= 20 and interval==0 and signal.getsignal(signal.SIGALRM)==signal.SIG_IGN
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0);signal.signal(signal.SIGALRM,handler)
+        signal.setitimer(signal.ITIMER_REAL,*before)

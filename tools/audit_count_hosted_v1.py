@@ -6,14 +6,16 @@ exceptions stay private. This command does not issue or publish forecasts.
 from __future__ import annotations
 
 import argparse
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import contextmanager, redirect_stdout, redirect_stderr
 from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -29,6 +31,31 @@ ROOT_KEYS = {"schema_version", "approved", "repository", "source_sha", "workflow
 OPERATION = "QUALIFIED_RESTORE_REQUALIFY_AND_DURABLY_VERIFY"
 READER_JOB = "audit-count-effective-restore-v1"
 WORKFLOW_REF = audit.REPO+"/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1"
+
+
+@contextmanager
+def metadata_deadline(seconds=180):
+    """The unchanged private client requires a native timer before real HTTP.
+
+    Scope it to metadata preparation. Child restore/requalification processes
+    establish their own separate registered envelopes after this scope ends.
+    """
+    before=signal.getitimer(signal.ITIMER_REAL)
+    handler=signal.getsignal(signal.SIGALRM)
+    audit.require(before[1] == 0 and type(seconds) is int and 0 < seconds <= 180,
+                  "FINITE_METADATA_WALL_ENVELOPE")
+    started=time.monotonic()
+    signal.signal(signal.SIGALRM,signal.SIG_DFL)
+    signal.setitimer(signal.ITIMER_REAL,min(float(seconds),before[0]) if before[0]>0 else float(seconds))
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0)
+        signal.signal(signal.SIGALRM,handler)
+        if before[0]>0:
+            remaining=before[0]-(time.monotonic()-started)
+            signal.setitimer(signal.ITIMER_REAL,max(.001,remaining))
+            audit.require(remaining>0,"OUTER_METADATA_DEADLINE_EXHAUSTED")
 
 
 def checked_root(body, expected, env):
@@ -95,10 +122,7 @@ def execute(command, *, env, receipt, timeout):
         raise audit.AuditGuardError(reason)
 
 
-def run(env):
-    root_body = env["AUDIT_COUNT_ROOT_GO_JSON"].encode()
-    root_go = checked_root(root_body, env["AUDIT_COUNT_ROOT_GO_SHA256"], env)
-    audit.require(env.get("GITHUB_JOB") == audit.RESTORE_JOB, "WRITER_JOB_ONLY")
+def prepare_package(env):
     runner = store.parents_safe(env["RUNNER_TEMP"])
     package_root = runner/("audit-count-package-"+env["GITHUB_RUN_ID"])
     audit.require(not package_root.exists(), "ONE_REVIEWED_HOSTED_INVOCATION")
@@ -120,6 +144,16 @@ def run(env):
     audit.private_write(inventory, audit.canonical([release]))
     package = package_root/"package"
     audit.prepare_package(ROOT, inventory, package)
+    return package_root,package,total
+
+
+def run(env):
+    root_body = env["AUDIT_COUNT_ROOT_GO_JSON"].encode()
+    checked_root(root_body, env["AUDIT_COUNT_ROOT_GO_SHA256"], env)
+    audit.require(env.get("GITHUB_JOB") == audit.RESTORE_JOB, "WRITER_JOB_ONLY")
+    with metadata_deadline():
+        package_root,package,total=prepare_package(env)
+    runner=store.parents_safe(env["RUNNER_TEMP"])
     plan_sha = (package/"PLAN.sha256").read_text().strip()
     plan = checkpoint.strict_json((package/"PLAN.json").read_bytes())
     output = runner/(audit.VERSION+"-"+env["GITHUB_RUN_ID"])
