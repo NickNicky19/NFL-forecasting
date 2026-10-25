@@ -1,0 +1,85 @@
+{
+  "schema_version": "nfl-audit-continuation-state-v1",
+  "observed_at": "2026-10-25T16:24:53.203094+00:00",
+  "task_state": "PARTIAL_ACTIVE_IMPLEMENTATION",
+  "repos": {
+    "research": {
+      "url": "https://github.com/NickNicky19/NFL-forecasting",
+      "main": "0c4d8a30ac8d893a599bdd7518fb33dca47e50cb",
+      "pooled": "f575e4c602d771867dae389693a6e7636441b5f4",
+      "producer": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+      "lab_state_observed": "a0c32b21967b1d8bfb4847cfbf8e28ba52abfa81"
+    },
+    "website": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks",
+      "main": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+      "canonical": "67c1c4a202d22b316e719446010ba1b39e66f9e4",
+      "last_fully_verified_source": "5e45584460a0f1eb61acf8d0cb50faea6e8a614b"
+    }
+  },
+  "coordination": {
+    "commit": "fc361f8546ba7b3f26e44b5901112b411c1f97a3",
+    "active_run": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+    "owner_confirmed_other_session_still_running": true,
+    "latest_protected_source_record": 6399761140,
+    "corrected_COUNT_handoff": 6399428166,
+    "competing_writer_created": false
+  },
+  "producer": {
+    "PR21_exact_head": "cdb3eb5d243ed47ac3657b49e0a5176b5e76fc4c",
+    "PR21_merge": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+    "CI_run": 40202359694,
+    "CI_job": 121196025152,
+    "tests": 1076,
+    "subtests": 319,
+    "skips": 1,
+    "capture_run": 40203512153,
+    "jobs": {
+      "produce": 121199486624,
+      "restore": 121201823053,
+      "consume": 121202129920
+    },
+    "whole_run": "completed_success",
+    "private_candidate_rows": 10098,
+    "private_selected_rows": 2605,
+    "public_rows": 1620,
+    "fits": 0,
+    "models": 18,
+    "public_feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+    "compressed_receipt_sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0",
+    "independent_reader_result_sha256": "9216da365ebca9af85fe320a7c2ca5b006df57f6fa4f278b289b8d7230729940",
+    "new_public_delivery_verified": true,
+    "website_installed": false
+  },
+  "consumer_packet": {
+    "commit": "f6674c825471389e6eb87edbfc8e63cd02329134",
+    "path": "reports/count-consumer-binding-20261025/current-7",
+    "variant": "CURRENT_MAIN_ALTERNATIVE_NOT_FOR_BLIND_PHASE2_STACKING",
+    "base": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+    "patch_sha256": "fc8567e6c551c66d0d520ca365f0a88fad3477c296afe1725bb7231f6eaa1ea1",
+    "expected_tree": "4cddf64bf8098073a64fc344da81d533f54ae057",
+    "website_policy_sha256": "091e7741aabc49757ac9ca06228f9c8932b11fd0d67613dce311f6b812476134"
+  },
+  "unresolved": [
+    "Actual combined website source integration/CI/deploy/live corrected selected-feed installation",
+    "Narrow propV2 remains prepared, not integrated; broader existing fantasy unknown/DNP/ROS boundaries remain",
+    "Full recurring capture/grade/weekly-select/export native execution and restoration not qualified",
+    "Cross-run grading-history restore and primary assignment retention under implementation",
+    "Full operational worker native memory check not yet passed; shared helper roundtrip passed at finite single-capture scale",
+    "Full36-capture history requires bounded partition design rather than increasing64MiB/8MiB/512MiB caps",
+    "Website08:06 precedes research08:36; compatible daily publication ordering and exact-horizon gaps still need resolution before recurring activation",
+    "Protected source clocks/private historical accuracy panels remain outside reproduced evidence"
+  ],
+  "schedules": {
+    "website": "daily08:06America/Chicago",
+    "research": "daily08:36America/Chicago",
+    "existing_single_group": "nfl-lab-single-writer",
+    "retired_ticker_revived": false,
+    "new_scheduler_created": false,
+    "next_configured_website_UTC": "2026-10-26T13:06:00Z",
+    "next_configured_research_UTC": "2026-10-26T13:36:00Z",
+    "actual_next_capture_verified": false,
+    "research_main_old_readiness_guard_retained": true
+  },
+  "evidence_boundary": "No private Root, provider row, model weight or protected confirmation outcome is published. Software checks claim no football accuracy gain."
+}

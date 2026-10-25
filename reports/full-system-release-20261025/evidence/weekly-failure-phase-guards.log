@@ -1,0 +1,113 @@
+........F.................... [ 34%]
+.......................................................    [100%]
+=================================== FAILURES ===================================
+_ test_failed_jobs_have_a_closed_evidence_only_reader_and_exact_source_checkout _
+
+    def test_failed_jobs_have_a_closed_evidence_only_reader_and_exact_source_checkout():
+        import yaml
+>       workflow=yaml.load((hosted.ROOT/'.github/workflows/lab.yml').read_text(),Loader=yaml.BaseLoader)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_hosted_v1.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+           ^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+               ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:82: in compose_node
+    node = self.compose_sequence_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:111: in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+                         ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+           ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <yaml.loader.BaseLoader object at 0x7ff79a6d5490>
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+>                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "<unicode string>", line 1092, column 82:
+E                        ... check install --only-binary=:all: --no-deps -r requirements.lock ... 
+E                                                            ^
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_hosted_v1.py::test_failed_jobs_have_a_closed_evidence_only_reader_and_exact_source_checkout
+1 failed, 83 passed, 57 subtests passed in 8.48s

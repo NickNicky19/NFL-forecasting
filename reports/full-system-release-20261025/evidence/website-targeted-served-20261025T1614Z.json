@@ -1,0 +1,39 @@
+{
+  "schema_version": "nfl-targeted-served-generation-check-v1",
+  "observed_at": "2026-10-25T16:14:24.723146+00:00",
+  "tls_verified": true,
+  "generated_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+  "source_sha": "5e45584460a0f1eb61acf8d0cb50faea6e8a614b",
+  "files": [
+    {
+      "path": "index.html",
+      "HTTP_status": 200,
+      "bytes": 3491,
+      "sha256": "e182288210162aa9ef6733474a62b18a033b685b16b7b043838c6c4348930a9a",
+      "matches_generated_git": true
+    },
+    {
+      "path": "app.js",
+      "HTTP_status": 200,
+      "bytes": 342038,
+      "sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
+      "matches_generated_git": true
+    },
+    {
+      "path": "data/meta.json",
+      "HTTP_status": 200,
+      "bytes": 1215,
+      "sha256": "9abc272bb8c783078d1785aaf0b0305422d2a4349a3c1817b4da696366783738",
+      "matches_generated_git": true
+    },
+    {
+      "path": "data/weekly-adaptive-overlay.json",
+      "HTTP_status": 200,
+      "bytes": 337,
+      "sha256": "1cd425cb5a93ce91a09a15b82d7c38748e6839fd6d3807667981018778967ff4",
+      "matches_generated_git": true
+    }
+  ],
+  "corrected_COUNT_installed": false,
+  "limitation": "Four actual served bodies checked against the previously fully verified generation. This does not repeat the earlier40-file/browser/grading checks or qualify a new deployment."
+}

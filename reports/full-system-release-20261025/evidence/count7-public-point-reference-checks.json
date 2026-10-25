@@ -1,0 +1,94 @@
+{
+  "schema_version": "count7-public-point-reference-checks-v2",
+  "observed_at": "2026-10-25T16:17:48.426674+00:00",
+  "feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+  "rows": 1620,
+  "paired_passing_opportunities": 33,
+  "counts": {
+    "pass_yd": 33,
+    "pass_td": 33,
+    "pass_cmp": 33,
+    "pass_att": 33,
+    "pass_int": 33,
+    "rush_yd": 92,
+    "rush_att": 92,
+    "rec": 335,
+    "rec_yd": 335,
+    "rush_rec_yd": 241,
+    "anytime_td": 360
+  },
+  "category_contracts": {
+    "pass_yd": [
+      {
+        "product": "point_median",
+        "functional": "intended_median"
+      }
+    ],
+    "pass_td": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "pass_cmp": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "pass_att": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "pass_int": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "rush_yd": [
+      {
+        "product": "point_median",
+        "functional": "intended_median"
+      }
+    ],
+    "rush_att": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "rec": [
+      {
+        "product": "point_mean",
+        "functional": "expected_mean"
+      }
+    ],
+    "rec_yd": [
+      {
+        "product": "point_median",
+        "functional": "intended_median"
+      }
+    ],
+    "rush_rec_yd": [
+      {
+        "product": "point_median",
+        "functional": "intended_median"
+      }
+    ],
+    "anytime_td": [
+      {
+        "product": "binary_probability",
+        "functional": "event_probability"
+      }
+    ]
+  },
+  "failures": {},
+  "fits": 0,
+  "private_rows_read": false,
+  "accuracy_gain_claim": false,
+  "initial_reference_error": "The retained initial probe used shorthand mean/median/probability instead of the documented wire aliases. No production calculation or issued forecast was changed.",
+  "limitation": "Finite point/label properties only. No calibrated joint-distribution, rare-credit exhaustive coverage, private historical accuracy, optimality or website-installation claim."
+}

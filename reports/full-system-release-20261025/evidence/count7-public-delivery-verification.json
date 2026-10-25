@@ -1,0 +1,108 @@
+{
+  "schema_version": "count7-independent-public-verification-v1",
+  "state": "PASS_PUBLIC_DELIVERY_NOT_WEBSITE_INSTALLATION",
+  "observed_at": "2026-10-25T15:18:11.066231+00:00",
+  "tls_verified": true,
+  "redirects": false,
+  "source_sha": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "run_id": "40203512153",
+  "feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+  "feed_bytes": 1463658,
+  "rows": 1620,
+  "categories": [
+    "anytime_td",
+    "pass_att",
+    "pass_cmp",
+    "pass_int",
+    "pass_td",
+    "pass_yd",
+    "rec",
+    "rec_yd",
+    "rush_att",
+    "rush_rec_yd",
+    "rush_yd"
+  ],
+  "receipt_sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0",
+  "receipt_plain_sha256": "0a92768628f5c46697fec9230e84648b58aedc2c8c1bde216565df4ce5795a63",
+  "public_policy_sha256": "8cf0df7f10842639f814daedb82231064fab0c4816cb4740bcc13c9263a06791",
+  "website_policy_file_sha256": "091e7741aabc49757ac9ca06228f9c8932b11fd0d67613dce311f6b812476134",
+  "jobs": {
+    "consume": {
+      "api_job_id": 121202129920,
+      "job_id": "audit-weekly-export-v1"
+    },
+    "produce": {
+      "api_job_id": 121199486624,
+      "job_id": "audit-weekly-produce-v1"
+    },
+    "restore": {
+      "api_job_id": 121201823053,
+      "job_id": "audit-weekly-restore-v1"
+    }
+  },
+  "fits": 0,
+  "protected_outcomes_read": false,
+  "private_models_read": false,
+  "website_installed": false,
+  "source_bound_consumer_proof": {
+    "schema_version": "weekly-derived-v4-publication-execution",
+    "repository": "NickNicky19/NFL-forecasting",
+    "run_id": "40203512153",
+    "source_sha": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+    "api_job_id": 121202129920,
+    "export_job": "audit-weekly-export-v1",
+    "run_response_sha256": "8265b42d1a3203289f287cccd61892c8b104d7bd71890b2a79984be22ad496bb",
+    "jobs_response_sha256": "1f07fef495c0fbb0787fab3b88022efdefe847d9b189880025eb5e7e57d03f77",
+    "API_GETs": 3,
+    "verification": "COMPLETED_RUN_AND_JOB; public bytes trusted through owner-controlled immutable lab-state publisher",
+    "registered_jobs": {
+      "produce": 121199486624,
+      "restore": 121201823053,
+      "consume": 121202129920
+    },
+    "recipe_registration_sha256": "3fa851684b04ec95d8c42c5a5a80e004be438797b819d4dac0f73bca4b443984",
+    "final_run_response_sha256": "c0fc79ec48a1c01e14c2c2ade097f5832c637295fd4364348454ddc301aadaa2",
+    "verification_HTTP_GETs": 4,
+    "public_receipt_sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0",
+    "public_receipt_body_sha256": "0a92768628f5c46697fec9230e84648b58aedc2c8c1bde216565df4ce5795a63",
+    "lab_public_policy_sha256": "8cf0df7f10842639f814daedb82231064fab0c4816cb4740bcc13c9263a06791",
+    "lab_policy_registered_at_utc": "2026-10-25T14:42:09.438903+00:00",
+    "workflow_sha256": "5bf10804854207876b3eae5b240d8cce67e50de6dfa66d9d89355da0470e3aba",
+    "public_receipt_schema": "audit-weekly-delivery-v1-public-receipt",
+    "public_receipt_GETs": 1,
+    "receipt_policy_and_workflow_checked": true
+  },
+  "responses": [
+    {
+      "url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting/lab-state/state/public/weekly-adaptive-v1/2026-W07/20261025T145527.113720Z--214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c.json",
+      "bytes": 1463658,
+      "sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting/lab-state/state/public/weekly-adaptive-v1/receipts/214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c.json.gz",
+      "bytes": 1026,
+      "sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0"
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/runs/40203512153",
+      "bytes": 12948,
+      "sha256": "8265b42d1a3203289f287cccd61892c8b104d7bd71890b2a79984be22ad496bb"
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/runs/40203512153/jobs?per_page=100&page=1",
+      "bytes": 23776,
+      "sha256": "1f07fef495c0fbb0787fab3b88022efdefe847d9b189880025eb5e7e57d03f77"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting/lab-state/state/public/weekly-adaptive-v1/receipts/214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c.json.gz",
+      "bytes": 1026,
+      "sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0"
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/runs/40203512153",
+      "bytes": 12948,
+      "sha256": "8265b42d1a3203289f287cccd61892c8b104d7bd71890b2a79984be22ad496bb"
+    }
+  ],
+  "limitation": "Public evidence is not an independent reproduction of private forecast accuracy; actual website combined CI, deployment and live consumption remain required."
+}
