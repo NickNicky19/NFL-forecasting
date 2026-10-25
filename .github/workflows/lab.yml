@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1, audit-count-retained-v1]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1, audit-count-retained-v1, audit-private-rotation-v1]
         default: daily
       bootstrap_locators_json:
         description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
@@ -67,7 +67,7 @@ env:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1' && inputs.mode != 'audit-private-rotation-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -812,3 +812,81 @@ jobs:
           timeout --signal=KILL 120s python -I -B tools/persist_state.py \
             --public-export-plan "$RUNNER_TEMP/genuine-hosted-selected-export-v1-$GITHUB_RUN_ID/public-release-plan-v${INITIAL_ROUTE_VERSION}/EXPORT_PLAN.json" \
             --public-export-plan-sha256 "$PUBLIC_EXPORT_PLAN_SHA256"
+
+  audit-private-rotation-write-v1:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-private-rotation-v1' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      handoff_json: ${{ steps.rotation.outputs.handoff_json }}
+      handoff_sha256: ${{ steps.rotation.outputs.handoff_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Reserve and initialize only the new harmless canary
+        id: rotation
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+        run: timeout --signal=KILL 370s python3 -I -B tools/audit_private_rotation_v1.py write --execute
+
+  audit-private-rotation-read-v1:
+    needs: audit-private-rotation-write-v1
+    if: ${{ success() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-private-rotation-v1' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      handoff_json: ${{ steps.rotation.outputs.handoff_json }}
+      handoff_sha256: ${{ steps.rotation.outputs.handoff_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify the new harmless canary boundary
+        id: rotation
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: read
+          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_PRIVATE_ROTATION_HANDOFF_JSON: ${{ needs.audit-private-rotation-write-v1.outputs.handoff_json }}
+          AUDIT_PRIVATE_ROTATION_HANDOFF_SHA256: ${{ needs.audit-private-rotation-write-v1.outputs.handoff_sha256 }}
+        run: timeout --signal=KILL 190s python3 -I -B tools/audit_private_rotation_v1.py read --execute
+
+  audit-private-rotation-qualify-v1:
+    needs: audit-private-rotation-read-v1
+    if: ${{ success() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-private-rotation-v1' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Qualify the new runtime in a fresh write-token process
+        id: rotation
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_PRIVATE_ROTATION_HANDOFF_JSON: ${{ needs.audit-private-rotation-read-v1.outputs.handoff_json }}
+          AUDIT_PRIVATE_ROTATION_HANDOFF_SHA256: ${{ needs.audit-private-rotation-read-v1.outputs.handoff_sha256 }}
+        run: timeout --signal=KILL 190s python3 -I -B tools/audit_private_rotation_v1.py qualify --execute
