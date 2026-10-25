@@ -23,6 +23,16 @@ import test_audit_weekly_archive_v1 as fixture
 from test_private_draft_store_v2 import Server
 
 
+def _memory(label):
+    """Closed Linux process counters only; never fixture bodies or paths."""
+    fields = {"VmSize", "VmPeak", "VmRSS", "VmHWM"}
+    values = {}
+    for line in Path("/proc/self/status").read_text().splitlines():
+        key, _, value = line.partition(":")
+        if key in fields: values[key + "_bytes"] = int(value.split()[0]) * 1024
+    print(json.dumps(dict(fictional=True, memory_phase=label, **values)), flush=True)
+
+
 def _build(base):
     p = fixture.capture.__wrapped__(base)
     noise = lambda n, size: hashlib.shake_256(str(n).encode()).hexdigest(size // 2)
@@ -145,6 +155,7 @@ def _child(request_path, phase, original=None):
     limits()
     assert resource.getrlimit(resource.RLIMIT_CPU) == (120, 120)
     assert resource.getrlimit(resource.RLIMIT_AS) == (512 << 20, 512 << 20)
+    _memory("guarded_start")
     base = request_path.parent
     request = json.loads(request_path.read_bytes())
     scan = OperationalStorage._scan
@@ -158,17 +169,22 @@ def _child(request_path, phase, original=None):
     def measured(owner, name):
         original = getattr(owner, name)
         def call(*args, **kwargs):
+            _memory(name + "_before")
             cpu = time.process_time()
             try: return original(*args, **kwargs)
-            finally: functions[name] = functions.get(name, 0.) + time.process_time() - cpu
+            finally:
+                functions[name] = functions.get(name, 0.) + time.process_time() - cpu
+                _memory(name + "_after")
         setattr(owner, name, call)
     measured(a, "validate_capture"); measured(a.codec, "encode"); measured(a.codec, "verify_bundle")
+    measured(a.store, "append")
     started = time.monotonic(); cpu = time.process_time()
     storage = OperationalStorage(request["cache"], ROOT / "config/operational-source-policy-v2.json", state=request["state"])
     stages = {}
     def mark(label):
         nonlocal cpu
         current = time.process_time(); stages[label] = round(current - cpu, 4); cpu = current
+        _memory(label)
         print(json.dumps(dict(fictional=True, phase=phase, stage=label, CPU_seconds=stages[label], scan_calls=calls)), flush=True)
     if phase == "produce":
         snapshot = a.collect(request["root"], request["context"], storage=storage, output=base / "collection", r0=request["r0"])
@@ -176,6 +192,7 @@ def _child(request_path, phase, original=None):
         assert 22 << 20 <= sum(f["bytes"] for f in snapshot["files"]) <= 26 << 20
         mark("collect_validate")
         service = fixture.Service(base)
+        _memory("native_produce_before")
         handoff = a.produce(snapshot, service.factory(base / "writer-journal", "produce"), service.package, storage=storage,
                             output=base / "producer", root_go_sha256="d" * 64, jobs=fixture.ROLES, pending_census=service.census)
         service.writer_completed = datetime.now(timezone.utc)
@@ -200,7 +217,9 @@ def _child(request_path, phase, original=None):
             assert Path(f["path"]).read_bytes() == Path(restored["aliases"][f["logical_path"]]["path"]).read_bytes()
         assert restored["scope_qualified_for_publication"] is False
         mark("native_restore_extract_validate_all383")
+    _memory("transport_handoff_before")
     (base / "fictional-transport.json").write_bytes(a.store.canonical(dict(service=_service_state(service), result=result)))
+    _memory("transport_handoff_after")
     print(json.dumps(dict(fictional=True, phase=phase, stages=stages, wall_seconds=round(time.monotonic()-started, 4),
                          CPU_seconds=round(time.process_time(), 4), scan_calls=calls, max_RSS_KiB=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
                          function_CPU_seconds={k: round(v, 4) for k, v in functions.items()},
@@ -219,12 +238,13 @@ def test_full383_capture_with_maximum_rows_fits_each_unchanged_native_envelope(t
     request = _build(tmp_path)
     for phase in ("produce", "restore", "consume"):
         result = _run(request, phase)
+        print(result.stdout, end="", flush=True)
+        if result.returncode: print(result.stderr, end="", file=sys.stderr, flush=True)
         assert result.returncode == 0, (phase, result.returncode, result.stdout, result.stderr)
         summary = json.loads(result.stdout.splitlines()[-1])
         assert summary["CPU_seconds"] < 120 and summary["wall_seconds"] < 180
         assert summary["files"] == 383 and summary["native_durability_claim"] is False
         assert summary["scan_calls"] < 150
-        print(result.stdout, end="")
 
 
 @pytest.mark.parametrize("failure", ["unowned", "wrong_hash"])

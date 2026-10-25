@@ -1,0 +1,44 @@
+name: Archive envelope diagnostic
+
+on:
+  push:
+    branches: [audit/archive-metadata-runtime-20261025]
+    paths:
+      - '.github/workflows/audit-archive-diagnostic.yml'
+      - 'nfl_lab/audit_weekly_archive_v1.py'
+      - 'nfl_lab/owner_bootstrap_bundle.py'
+      - 'tests/test_audit_weekly_archive_scale_v1.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: archive-envelope-diagnostic-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  archive-envelope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install the same exact source-check dependencies
+        run: python -m pip install -r requirements.lock -r requirements-audit-weekly-metadata-v1.lock -e '.[test]'
+      - name: Set only the registered nonsecret numerical environment
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from nfl_lab.audit_numerical_runtime_v1 import profile
+          registered,_=profile(Path.cwd())
+          with open(os.environ['GITHUB_ENV'],'a') as out:
+              for key,value in registered['environment'].items():
+                  assert '\n' not in key+value and '\r' not in key+value
+                  out.write(key+'='+value+'\n')
+          PY
+      - name: Exercise the full fictional archive under unchanged native limits
+        run: python -m pytest -q -s tests/test_audit_weekly_archive_scale_v1.py
