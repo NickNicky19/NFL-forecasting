@@ -149,7 +149,7 @@ def packet(tmp_path,monkeypatch):
     monkeypatch.setattr(r.selector,'select',forbidden)
     return SimpleNamespace(runtime=runtime,storage=storage,clock=clock,put=put,requests=requests,download=download,
         historical_sources=history_sources,acquisitions=acquisitions,feature_calls=feature_calls,loads=loads,
-        root=tmp_path,manifests=manifests,original=f)
+        root=tmp_path,manifests=manifests,original=f,schedule=schedule,roster=roster)
 
 
 def staged(p):
@@ -194,6 +194,33 @@ def test_complete_all18_future_only_real_zero_unavailable_and_preserved_choice(p
     assert handoff['schema_version']==r.HANDOFF and handoff['requires_new_epoch_checkpoint_export_consumer'] is True
     assert handoff['durability'] is handoff['rights'] is None
     assert r.read_owned(p.storage,result['bridge'])['name_matching'] is False
+
+
+def test_raw_schedule_LA_and_canonical_roster_LAR_preserve_every_future_side(packet):
+    p=packet
+    # nfldata uses LA while the existing canonical identity contract uses LAR.
+    # One complete Rams side must survive; no coverage assertion is weakened.
+    p.schedule.loc[p.schedule.home_team.eq('A'),'home_team']='LA'
+    p.roster.loc[p.roster.team.eq('A'),'team']='LAR'
+    prepared,source,_=staged(p)
+    result=r.read_owned(p.storage,p.runtime.infer(prepared,source,p.root/'inference'))
+    assert result['state']=='PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE',result
+    assert result['prediction_rows']==72 and result['query_rows']==4
+    identity=r.read_owned(p.storage,result['bridge'])['identities']
+    assert 'LAR' in {x['team'] for x in identity} and 'LA' not in {x['team'] for x in identity}
+    assert {x['game_id'] for x in rows(result['selected']['binding'])}=={'fictional-sunday','fictional-monday'}
+
+
+def test_cli_preserves_fixed_failure_reason_without_private_library_text():
+    from tools.audit_weekly_runtime_v1 import public_summary
+    code='ALL_FUTURE_GAME_SIDES_REQUIRE_CURRENT_ROSTER_COVERAGE'
+    failed=dict(state='FAILED_RETAINED',reason=code,private_rows=['DO_NOT_PUBLISH'])
+    result=public_summary(failed,'infer','a'*64)
+    assert result['reason']==code and 'private_rows' not in result
+    assert result['public_release'] is result['public_export_authorized'] is False
+    failed['reason']='private exception text and source body'
+    assert public_summary(failed,'infer','a'*64)['reason']=='UPSTREAM_OPERATION_FAILED'
+    assert public_summary(dict(state='PARTIAL_RETAINED_NOT_QUALIFIED'),'infer','a'*64)['reason']=='INCOMPLETE_CANDIDATE_CAPTURE'
 
 
 def test_metadata_and_version_catalog_precede_downloads_or_current_values(packet):

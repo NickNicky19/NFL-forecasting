@@ -114,8 +114,18 @@ def execute(args,env):
     else:
         ref=backend.infer(p["prepared"],p["source"],p["output"])
     result=runtime.read_owned(storage,ref)
-    return dict(state=result.get("state","METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION"),
-        phase=args.phase,result_sha256=ref["sha256"],fits=0,public_release=False,public_export_authorized=False)
+    return public_summary(result,args.phase,ref["sha256"])
+
+
+def public_summary(result,phase,result_sha256):
+    state=result.get("state","METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION")
+    runtime.require(state in {"METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION","FRESH_E7_SOURCE_PREPARED",
+        "PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE","FAILED_RETAINED","PARTIAL_RETAINED_NOT_QUALIFIED"},"CLOSED_RUNTIME_PHASE_STATUS")
+    value=dict(state=state,phase=phase,result_sha256=result_sha256,fits=0,public_release=False,public_export_authorized=False)
+    if state in {"FAILED_RETAINED","PARTIAL_RETAINED_NOT_QUALIFIED"}:
+        code=result.get("reason","INCOMPLETE_CANDIDATE_CAPTURE" if state=="PARTIAL_RETAINED_NOT_QUALIFIED" else "UPSTREAM_OPERATION_FAILED")
+        value["reason"]=code if type(code) is str and re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code) else "UPSTREAM_OPERATION_FAILED"
+    return value
 
 
 class Quiet:

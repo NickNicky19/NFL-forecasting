@@ -193,6 +193,18 @@ def test_failure_keeps_actual_exit_or_explicit_unknown(code,recorded,kind,expect
             hosted.actual_failure(dict(AUDIT_WEEKLY_ORIGINAL_EXIT_CODE=invalid),python_failure_recorded=recorded)
 
 
+def test_diagnostic_retains_only_public_code_locations_without_exception_values():
+    secret='DO_NOT_PRINT_PRIVATE_EXCEPTION_VALUES'
+    value=hosted.error_diagnostic(ValueError(secret))
+    assert value==dict(error_type='ValueError',source_frames=[])
+    try:hosted.require(False,'FICTIONAL_PUBLIC_GUARD')
+    except store.StoreError as error:value=hosted.error_diagnostic(error)
+    assert value['error_type']=='StoreError' and value['source_frames']
+    assert all(set(f)=={'file','line'} and f['file'].startswith(('nfl_lab/','tools/')) and type(f['line']) is int for f in value['source_frames'])
+    encoded=json.dumps(value)
+    assert secret not in encoded and 'FICTIONAL_PUBLIC_GUARD' not in encoded and '/workspace/' not in encoded and '/tmp/' not in encoded
+
+
 def test_operational_past_history_and_software_acceptance_have_distinct_purposes():
     from nfl_lab import audit_weekly_runtime_v1 as runtime
     config=dict(history_seasons=[2026],allowed_periods={'2026':[1,2,3,4,5,6]},
@@ -262,9 +274,13 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
         request,bodies=failure.unpack((output/'FAILURE.json.gz').read_bytes())
         attachments={item['label']:body for item,body in zip(request['attachments'],bodies)}
         assert request['failure']['exit_code']==exit_code and request['state']=='FAILED'
-        expected={'file-graph','owner-root','original-post-reservations','phase-00'}
+        # This isolated core fixture intentionally has no qualified native
+        # archive client. Its secondary failure must be retained too.
+        expected={'file-graph','owner-root','original-post-reservations','phase-00','secondary-preservation-failure'}
         if has_delivery:expected.add('complete-auxiliary-controls')
         assert set(attachments)==expected
+        secondary=hosted.cp.strict_json(attachments['secondary-preservation-failure'])
+        assert secondary['original_failure_replaced'] is secondary['partial_forecast_durability_established'] is False
         if has_delivery:
             import base64
             assert request['operation']=='export' and request['failure']['kind']=='INTERRUPTION'
@@ -280,6 +296,6 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
     assert result['successful_forecast'] is result['public_release'] is False
     script='from pathlib import Path;from nfl_lab.operational_failure_v1 import unpack;import json,sys; r,a=unpack(Path(sys.argv[1]).read_bytes());print(json.dumps(dict(state=r["state"],files=len(a))))'
     out=subprocess.run([sys.executable,'-c',script,str(observed['package'])],cwd=hosted.ROOT,capture_output=True,text=True,check=True)
-    assert json.loads(out.stdout)==dict(state='FAILED',files=5 if has_delivery else 4)
+    assert json.loads(out.stdout)==dict(state='FAILED',files=6 if has_delivery else 5)
     with pytest.raises(store.StoreError,match='FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED'):
         r.preserve_failure()
