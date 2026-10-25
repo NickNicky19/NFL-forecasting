@@ -406,3 +406,25 @@ The [new sum-law report](../reports/combined-yard-copula-v1/README.md) completed
 ### Subsequent workload engineering state
 
 The later F7 package20 run failed its native CPU bound after certifying seven earlier frames and durably saving an eighth forecast. No global freeze or scoring completed, and no partial-prefix accuracy is reported. Its213.357961 CPU/144.823528029 wall seconds and raw unknown counters remain retained. A separately versioned package40 continuation is prepared with the original science, sources, feature values and masks unchanged. It reuses the seven certified frames, verifies only the fixed eighth frame and must freeze all30 logical packages before labels. Preparation checks add no NFL forecasts or gains. Actual execution and scoring remain pending at this publication checkpoint; the old20/forward120 failures are not passed or refunded.
+
+
+## Later fixed workload numerical evidence — 2026-10-25
+
+The [completed aggregate report](../reports/dynamic-workload-fixed-forward-v1/README.md) supplies a later endpoint after the dated partial-forward snapshots above. It retains all 30 frozen forecasts,12 qualified labels and30 scored views without changing earlier FAILED scopes. In exposed REG2022–24,815 games/54 weeks, the fixed smooth-H8-k25 policy loses toCDF on primary carriesMSE 4.22145%,receptionsMSE 2.28499% andreceiving-yardMAE 3.36052%; bothcluster intervals are strictly adverse. Target-count MSE has a 0.38002% static-relative auxiliary gain on 5,599 rows /424 games /51 weeks, but worse MAE/bias/p95 andno final category gain.
+
+| Category | This later endpoint | Earlier evidence retained |
+|---|---|---|
+| Passing yards | Not retested | H3 bias/mixed records unchanged |
+| Passing TD | Not retested | Previous category controls unchanged |
+| Completions | Not retested | Previous H3/control evidence unchanged |
+| Passing attempts | Not retested | Previous category controls unchanged |
+| Interceptions | Not retested | Previous category controls unchanged |
+| Rushing yards | Not retested | Original RB five-season protocol remains separate |
+| Carries | Negative fixed workload MSE vsCDF | All prior failures/controls retained |
+| Receptions | Negative fixed workload MSE vsCDF | Original rec-half 2026 Weeks 7–14 unchanged |
+| Receiving yards | Negative fixed workload MAE vsCDF | Earlier yardagecontrols retained |
+| Rushing+receiving yards | Not retested | Negative copula sum result unchanged |
+| Anytime TD | Not retested | Earlier calibration/blend evidence unchanged |
+| Exact website PPR | Blocked | Exact label contract unchanged |
+
+Numerical arithmetic accepted 7,620 scalars /104 summaries /120 pairs /12 informed /60 intervals. Source/grading parentACKfailure, absent native receipt and unknown whole post-final resources remain; the report is not an operational PASS or old budget refund. No candidate advances, current website comparison or production/scheduler change follows. All prior matrix bytes, original RB contract, rec-half window andH3 bias records remain.
