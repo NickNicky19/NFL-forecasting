@@ -61,6 +61,7 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
     "tests/test_audit_weekly_receipt_bundle_v1.py",
     "tests/test_audit_weekly_child_status_v1.py", "tests/test_audit_weekly_archive_scale_v1.py",
+    "tests/test_audit_weekly_archive_packing_v1.py",
     "nfl_lab/audit_numerical_runtime_v1.py", "tests/test_audit_numerical_runtime_v1.py",
     "config/audit-weekly-numerical-runtime-v1.json",
     ".github/workflows/audit-source-checks.yml"}))
@@ -157,6 +158,18 @@ def read_owned(storage, ref, cap=4 << 20, *, raw=False):
     validate_owned_references(storage,{ref["path"]:ref["sha256"]})
     body=cp.read_ref(ref,cap)
     return body if raw else cp.strict_json(body)
+
+
+def read_owned_stdio(storage,ref):
+    """Raw child stdio may be empty; checkpoint/JSON references remain nonempty."""
+    require(type(ref) is dict and set(ref)=={"path","bytes","sha256"}
+        and type(ref["path"]) is str and Path(ref["path"]).suffix in {".stdout",".stderr"}
+        and type(ref["bytes"]) is int and 0<=ref["bytes"]<=64 << 10
+        and type(ref["sha256"]) is str and store.HASH.fullmatch(ref["sha256"]),"EXACT_OWNED_STDIO_REFERENCE")
+    validate_owned_references(storage,{ref["path"]:ref["sha256"]})
+    body=store.read_local(ref["path"],64 << 10)
+    require(len(body)==ref["bytes"] and store.sha(body)==ref["sha256"],"OWNED_STDIO_REFERENCE_HASH_OR_LENGTH")
+    return body
 
 
 def write(storage,path,value):
@@ -585,7 +598,7 @@ class Runner:
         for path in fixed:
             if not path.exists():continue
             ref=cp.binding(path);require(ref["bytes"]<=64 << 10,"BOUNDED_COMPLETE_FAILED_PHASE_CONTROL")
-            value=read_owned(self.storage,ref,64 << 10,raw=True)
+            value=read_owned_stdio(self.storage,ref) if path.suffix in {".stdout",".stderr"} else read_owned(self.storage,ref,64 << 10,raw=True)
             item=dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(value),sha256=store.sha(value),
                 body_base64=base64.b64encode(value).decode())
             candidate=dict(schema_version=VERSION+"-complete-auxiliary-controls",files=auxiliary+[item])
