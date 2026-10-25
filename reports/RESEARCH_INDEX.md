@@ -8,6 +8,8 @@
 
 [Paired older-correction comparison](cached-correction-pairs-v1/README.md): 44 pooled contrasts / 132 annual diagnostics, zero fits or inference; all reproduced independently. Response-CDF has lower observed point loss in six of eleven targets versus the stronger of the two fixed corrections; all 22 corresponding week/game intervals include zero. Monotone wins none. Other controls can remain stronger: this is not an overall category ranking, new SITE/R0 evidence or a deployment decision. All twelve category states and every comparison are retained.
 
+[FTN charting schema pilot](ftn-charting-schema-buffered-v2/README.md): a fixed 2024-named asset was authenticated; all nine required nullable fields are present (48,031 footer rows). This is source/schema evidence only: zero forecasting fits, scores or publication-clock qualification. Prior resource failure remains retained; player/denominator joins and model ablations remain pending.
+
 # Forecasting research: complete navigation index
 
 ## Latest website integration — 2026-10-25
