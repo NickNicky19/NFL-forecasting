@@ -1,0 +1,35 @@
+{
+  "schema_version": "audit-website-selected-consumed-payload-v2",
+  "observed_at": "2026-10-25T19:59:50.646718+00:00",
+  "tls_verified": true,
+  "expected_generated_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+  "pointer_path": "data/weekly-adaptive-overlay.json",
+  "consumed_payload_path": "data/weekly-adaptive/3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267.json",
+  "HTTP_status": 200,
+  "payload_bytes": 1670747,
+  "payload_sha256": "3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267",
+  "exact_prior_live_verified_Git_bytes": true,
+  "rows": 1754,
+  "categories": {
+    "anytime_td": 391,
+    "rec": 362,
+    "rec_yd": 362,
+    "rush_rec_yd": 261,
+    "rush_att": 99,
+    "rush_yd": 99,
+    "pass_att": 36,
+    "pass_cmp": 36,
+    "pass_int": 36,
+    "pass_td": 36,
+    "pass_yd": 36
+  },
+  "product_counts": {
+    "binary_probability": 391,
+    "point_mean": 605,
+    "point_median": 758
+  },
+  "corrected_COUNT_installed": false,
+  "corrected_COUNT_feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+  "prior_observation_correction": "website-current-TLS-20261025T1958Z.json inspected the pointer, so its overlay_rows=0 was not the consumed-payload row count. This receipt follows and verifies the actual pointer target; the original observation is retained.",
+  "limitation": "This targeted response check revalidates actual served bytes against the earlier fully traced release. It is not a new browser run or a verification of the uninstalled COUNT7 consumer package."
+}
