@@ -1,0 +1,40 @@
+{
+  "schema_version": "count-consumer-qualification-v2",
+  "state": "PREPARED_COMBINED_SOURCE_NOT_INSTALLED",
+  "source_parent": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "source_tree": "c204f48961749715301a5133b2518ee8e8c829fb",
+  "producer_source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "producer_run": 40203512153,
+  "feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+  "focused_checks": {
+    "passed": 88,
+    "subtests_passed": 121,
+    "seconds": 20.14,
+    "actual_committed_installed_source": false
+  },
+  "patch_apply_check": {
+    "actual_source_parent": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "whitespace": "error",
+    "passed": true,
+    "website_worktree_mutated": false
+  },
+  "current_website_assembly_ci": {
+    "pr_run": 40215159984,
+    "push_run": 40215154808,
+    "state": "IN_PROGRESS_AT_REVIEW"
+  },
+  "initial_adaptation_failures": [
+    {
+      "count": 2,
+      "passed": 83,
+      "subtests": 121,
+      "reason": "Copied Main-only test expected 22-file inventory and omitted mandatory retained registration Git objects. Updated fixture supplies independently hash-checked objects and requires all32files; production checks remain strict."
+    }
+  ],
+  "limitations": [
+    "Preview checks are supporting evidence; actual owner combined-source CI and deployment remain required.",
+    "Main packet and Phase2 packet are alternatives; do not stack blindly.",
+    "No fits, model changes, forecast values or scientific qualifications arise from these software checks.",
+    "Games already started retain prior issued rows; do not backdate installation or recapture those rows."
+  ]
+}
