@@ -466,3 +466,79 @@ def test_manual_capture_cannot_get_posthoc_population_and_empty_week8_uses_start
     assert rec['members'][0]['method_id']=='COUNT_A' and not rec['evidence']['scores']
     assert next_choice.document['resolved_prior_keys']==[] and empty['bundle']['offers']==[]
     assert len(q['schedule'])==3 and 'fictional-elapsed' not in {x['original_game_id'] for x in q['capture'].document['opportunities']}
+
+
+def _clock_metadata_table(kind, values):
+    clocks = pa.array(values, type=kind)
+    count = len(values)
+    fields = {name: [1 if name in ('season', 'week') else 'fictional'] * count
+        for name in g.grading.METADATA if name not in ('kickoff_utc', 'cutoff_utc')}
+    table = pa.table(fields)
+    return table.append_column('kickoff_utc', clocks).append_column('cutoff_utc', clocks)
+
+
+def test_clock_projection_preserves_original_units_offsets_and_nanoseconds():
+    # Literal references include negative epoch time and fractions datetime
+    # cannot represent; the production helper does not supply these answers.
+    expected = {-1: '1969-12-31T23:59:59.999999999+00:00',
+        0: '1970-01-01T00:00:00+00:00',
+        1: '1970-01-01T00:00:00.000000001+00:00',
+        1000: '1970-01-01T00:00:00.000001+00:00',
+        123456789: '1970-01-01T00:00:00.123456789+00:00'}
+    epoch_start = datetime(1970, 1, 1, tzinfo=timezone.utc)
+    # Both occurrences of Chicago's repeated autumn hour remain distinct.
+    fall = []
+    for text in ['2026-11-01T06:30:00+00:00', '2026-11-01T07:30:00+00:00']:
+        delta = datetime.fromisoformat(text) - epoch_start
+        ns = (delta.days * 86400 + delta.seconds) * 1000000000 + 1
+        fall.append(ns)
+        expected[ns] = text[:-6] + '.000000001+00:00'
+    for zone in ['UTC', 'America/Chicago', '+05:30']:
+        for unit in ['s', 'ms', 'us', 'ns']:
+            values = list(expected) if unit == 'ns' else [-1, 0, 1, 123456789]
+            table = _clock_metadata_table(pa.timestamp(unit, tz=zone), values)
+            stream = io.BytesIO(); pq.write_table(table, stream)
+            parquet = pq.ParquetFile(io.BytesIO(stream.getvalue()))
+            legacy = parquet.read(columns=list(g.grading.METADATA)).to_pylist()
+            for row in legacy:
+                for key in ['kickoff_utc', 'cutoff_utc']:
+                    row[key] = state.utc(row[key]).isoformat()
+            actual = g._query_metadata(parquet)
+            assert actual == legacy
+            if unit == 'ns':
+                assert [r['kickoff_utc'] for r in actual] == [expected[v] for v in values]
+
+
+def test_clock_projection_rejects_missing_and_timezone_free_clocks():
+    for kind, values in [(pa.timestamp('ns'), [0]),
+            (pa.timestamp('ns', tz='UTC'), [None])]:
+        table = _clock_metadata_table(kind, values)
+        stream = io.BytesIO(); pq.write_table(table, stream)
+        with pytest.raises(ValueError):
+            g._query_metadata(pq.ParquetFile(io.BytesIO(stream.getvalue())))
+
+
+def test_clock_projection_cold_process_keeps_pandas_unloaded(tmp_path):
+    import json
+    import subprocess
+    import sys
+    table = _clock_metadata_table(pa.timestamp('ns', tz='America/Chicago'), [-1, 0, 1])
+    path = tmp_path / 'fictional-nanosecond-clocks.parquet'; pq.write_table(table, path)
+    script = '''import sys,json,resource,signal
+sys.path.insert(0,sys.argv[1])
+resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(30)
+from nfl_lab import audit_weekly_grade_v1 as grade
+import pyarrow.parquet as pq
+rows=grade._query_metadata(pq.ParquetFile(sys.argv[2]))
+assert 'pandas' not in sys.modules
+from pathlib import Path
+threads=next(int(line.split(':',1)[1]) for line in Path('/proc/self/status').read_text().splitlines() if line.startswith('Threads:'))
+assert threads<=3, 'Metadata decoding exceeded the two numerical threads plus its caller'
+assert rows[2]['kickoff_utc']=='1970-01-01T00:00:00.000000001+00:00'
+print(json.dumps(dict(rows=len(rows),pandas_loaded=False)))
+'''
+    profile = json.loads((ROOT/'config/audit-weekly-numerical-runtime-v1.json').read_bytes())['environment']
+    result = subprocess.run([sys.executable, '-I', '-B', '-c', script, str(ROOT), str(path)],
+        env=profile, capture_output=True, text=True, timeout=40)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == dict(rows=3, pandas_loaded=False)

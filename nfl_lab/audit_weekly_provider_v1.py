@@ -22,6 +22,8 @@ cooperative checks here cannot interrupt an in-flight frozen HTTP helper.
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
+import json
 import math
 from pathlib import Path
 import re
@@ -36,6 +38,18 @@ from .operational_storage import OperationalStorage
 VERSION = "audit-weekly-provider-v1"
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "config/operational-source-policy-v2.json"
+# The original numeric loader remains the producer's feature/source authority.
+# This metadata-only copy is usable only while that exact validator is installed.
+_SOURCE_LOADER_SHA256 = "069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e"
+_POLICY_ID = "permitted-operational-nfl-history-v2-20261023"
+_SCHEDULE_COLUMNS = ["game_id", "season", "week", "game_type", "gameday", "gametime", "away_team", "home_team"]
+_SOURCE_SPECS = {
+    "schedules": ("schedules.csv", "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv"),
+    "players": ("players.parquet", "https://github.com/nflverse/nflverse-data/releases/download/players/players.parquet"),
+    "statistics": ("stats_player_week_{season}.parquet", "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_{season}.parquet"),
+    "rosters": ("roster_weekly_{season}.parquet", "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_{season}.parquet"),
+    "license": ("nflverse_LICENSE.md", "https://raw.githubusercontent.com/nflverse/nflverse-data/main/LICENSE.md"),
+}
 REQUEST_KEYS = {"schema_version", "scope", "source_policy_sha256", "as_of", "games", "opportunities", "retries", "fits", "research_or_tuning"}
 GAME_KEYS = {"season", "week", "website_game_id", "game_id", "kickoff_utc", "home", "away"}
 OPPORTUNITY_KEYS = set(grading.METADATA) | {"schema_version", "original_game_id", "website_game_id", "target", "offered_id",
@@ -57,6 +71,39 @@ class ProviderError(ValueError):
 def require(value, code):
     if not value:
         raise ProviderError(code)
+
+
+def _load_source_policy(policy: Path | str | dict) -> dict:
+    """The exact 069c loader's policy checks, without its numerical imports."""
+    require(store.sha(store.read_local(ROOT / "nfl_lab/operational_sources.py", 2 << 20)) == _SOURCE_LOADER_SHA256,
+        "ORIGINAL_SOURCE_POLICY_VALIDATOR_REQUIRED")
+    if isinstance(policy, (str, Path)):
+        body = Path(policy).read_bytes()
+        result = json.loads(body)
+        file_sha = hashlib.sha256(body).hexdigest()
+    else:
+        result = dict(policy)
+        file_sha = result.get("_policy_sha256")
+    clean = {k: v for k, v in result.items() if not k.startswith("_")}
+    if clean.get("policy_id") != _POLICY_ID:
+        raise ValueError("unsupported operational source policy")
+    if set(clean.get("sources", {})) != set(_SOURCE_SPECS):
+        raise ValueError("source policy whitelist changed")
+    for kind, (name, url) in _SOURCE_SPECS.items():
+        spec = clean["sources"][kind]
+        if spec.get("name") != name or spec.get("url") != url:
+            raise ValueError("source policy URL/name changed: " + kind)
+    if clean["sources"]["schedules"].get("columns") != _SCHEDULE_COLUMNS:
+        raise ValueError("schedule metadata columns changed")
+    if clean.get("history", {}).get("statistics_lag_days") != 7 or clean["history"].get("season_type") != "REG":
+        raise ValueError("unsupported availability/season-type policy")
+    predicates = clean["history"].get("parquet_predicates", {})
+    if predicates.get("statistics_season_type") != "season_type == REG" or predicates.get("roster_season_type") != "game_type == REG":
+        raise ValueError("explicit REG parquet predicates required")
+    canonical = hashlib.sha256((json.dumps(clean, sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n").encode()).hexdigest()
+    if file_sha and not isinstance(policy, (str, Path)) and result.get("_canonical_policy_sha256") != canonical:
+        raise ValueError("normalized operational policy body changed")
+    return {**clean, "_policy_sha256": file_sha or canonical, "_canonical_policy_sha256": canonical}
 
 
 def pins():
@@ -172,9 +219,8 @@ class Collector:
     def __init__(self, *, storage, output, authenticate, source_policy=POLICY, fetch=None, clock=state.now_utc):
         require(isinstance(storage, OperationalStorage) and callable(authenticate)
             and callable(clock), "OWNED_STORAGE_AND_LIVE_PARENT_CALLBACK_REQUIRED")
-        from . import operational_sources as sources
-        policy = sources.load_source_policy(source_policy)
-        frozen_policy = sources.load_source_policy(POLICY)
+        policy = _load_source_policy(source_policy)
+        frozen_policy = _load_source_policy(POLICY)
         require(policy["_policy_sha256"] == frozen_policy["_policy_sha256"] == cp.POLICY_SHA
             and policy["_canonical_policy_sha256"] == frozen_policy["_canonical_policy_sha256"],
             "UNCHANGED_E7_SOURCE_POLICY_REQUIRED")

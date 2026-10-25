@@ -327,6 +327,34 @@ def pins():
     return {name: store.sha(store.read_local(root/name, 2 << 20)) for name in names}
 
 
+def _query_metadata(parquet):
+    """Decode exact clock metadata without pandas' nanosecond scalar adapter.
+
+    Arrow formats the original timezone and full fractional precision. The UTC
+    conversion preserves the sub-microsecond remainder that datetime alone
+    cannot represent. Non-timestamp columns retain their original conversion.
+    """
+    import pyarrow as pa
+    table = parquet.read(columns=list(grading.METADATA), use_threads=False)
+    clocks = ("cutoff_utc", "kickoff_utc")
+    rows = table.drop_columns(clocks).to_pylist()
+    for key in clocks:
+        column = table.column(key)
+        timestamp = pa.types.is_timestamp(column.type)
+        values = column.cast(pa.string()).to_pylist() if timestamp else column.to_pylist()
+        for row, value in zip(rows, values):
+            utc = state.utc(value)
+            fraction = re.search(r"\.(\d+)", value) if timestamp and value is not None else None
+            remainder = int((fraction[1]+"000000000")[6:9]) if fraction else 0
+            if remainder:
+                base = utc.replace(microsecond=0).isoformat()
+                row[key] = base[:-6]+f".{utc.microsecond:06d}{remainder:03d}"+base[-6:]
+            else:
+                row[key] = utc.isoformat()
+    return rows
+
+
+
 def _authenticate(callback, kind, document, at):
     require(callable(callback), "EXTERNAL_LIVE_PARENT_AUTHENTICATOR_REQUIRED")
     request = dict(schema_version=VERSION+"-authentication-request", kind=kind,
@@ -561,9 +589,7 @@ def bind_capture(registered, choice, population, restored, *, storage, capture_i
     raw = _read_owned(storage, restored["aliases"]["runtime/queries.parquet"], 8 << 20, raw=True)
     parquet = pq.ParquetFile(io.BytesIO(raw))
     require(parquet.metadata.num_rows <= 1000, "FINITE_ORIGINAL_QUERIES")
-    queries = parquet.read(columns=list(grading.METADATA)).to_pylist()
-    for query in queries:
-        for key in ("cutoff_utc", "kickoff_utc"): query[key] = state.utc(query[key]).isoformat()
+    queries = _query_metadata(parquet)
     bridge = meta("runtime/IDENTITY_BRIDGE.json")
     opportunities = grading.opportunity_rows(queries, bridge, role_catalog)
     require(all(pop["assignments"].get(q["game_id"]) == capture_id
@@ -722,8 +748,11 @@ def bind_observations(captures, document, *, authenticate, at):
         and type(document["finality"]) is list and len(document["finality"]) <= 18
         and state.utc(document["captured_at"]) <= state.utc(at), "CLOSED_BOUNDED_OPERATIONAL_OBSERVATIONS_REQUIRED")
     _authenticate(authenticate, "COMPLETED_GAME_PROVIDER_OBSERVATIONS", dict(request=request, observations=document), at)
-    offered = {(o["player_id"],o["game_id"],o["target"]):o for o in request["opportunities"]}
+    offered = {(o["player_id"],o["game_id"],o["target"]) for o in request["opportunities"]}
     games = {"espn:"+r["website_game_id"]:r for r in request["games"]}; finals = {}
+    # Only these authenticated identity keys and game metadata are consulted
+    # below. Preserve the complete original capture in its immutable pages.
+    del request
     for proof in document["finality"]:
         require(set(proof) == {"season","week","games","status_source_sha256","observed_at"}
             and store.HASH.fullmatch(str(proof["status_source_sha256"])) and len(proof["games"]) <= 32

@@ -479,14 +479,19 @@ def execute(context,*,transport=None,fetch=None,clock=None):
         requested=grade.provider_request(captures,at=clock());e7=E7Fetch(context,storage,requested,clock,fetch)
         collector=provider.Collector(storage=storage,output=output/"provider",authenticate=e7.authenticate,fetch=e7,clock=clock)
         document=collector(requested);collector.capture.verify()
+        # The complete provider capture is already authenticated and owned.
+        # Release its input copies before constructing the independently timed
+        # observation scope, rather than keeping three full opportunity graphs.
+        del collector,e7,requested
         observation_at=clock()
-        observation_scope=dict(request=grade.provider_request(captures,at=observation_at),observations=document)
+        observation_auth=_exact(context,"COMPLETED_GAME_PROVIDER_OBSERVATIONS",
+            dict(request=grade.provider_request(captures,at=observation_at),observations=document),clock)
         observations=grade.bind_observations(captures,document,
-            authenticate=_exact(context,"COMPLETED_GAME_PROVIDER_OBSERVATIONS",observation_scope,clock),at=observation_at)
+            authenticate=observation_auth,at=observation_at)
         # The bound observations own the exact authenticated values. Raw
         # provider/request graphs are no longer needed by the resolver; their
         # immutable source receipts and completion file remain in the store.
-        del collector,e7,document,requested,observation_scope
+        del document,observation_auth
         snapshot=grade.grade(registered,captures,[observations],storage=storage,output=output/"grade",
             previous=previous.durable if previous is not None else None,clock=clock)
         if previous is not None:_retains(previous,snapshot)

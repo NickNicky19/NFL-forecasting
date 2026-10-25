@@ -172,3 +172,30 @@ def test_ambiguous_identity_is_quarantined_without_blocking_other_players(tmp_pa
     assert identity.loc[["a", "b"], "identity_status"].eq("ambiguous_source_binding").all()
     assert identity.loc["a", "sleeper_id_candidates"] == "1|2"
     assert identity.loc["c", "sleeper_id"] == "3"
+
+
+def test_downloader_metadata_import_preserves_annotation_introspection_without_eager_arrays():
+    import subprocess
+    import sys
+    root = Path(__file__).resolve().parents[1]
+    script = '''import sys,typing
+sys.path.insert(0,sys.argv[1])
+from nfl_lab import data
+assert 'numpy' not in sys.modules and 'pandas' not in sys.modules
+from pathlib import Path
+assert data._sha(Path(data.__file__))
+assert 'numpy' not in sys.modules and 'pandas' not in sys.modules
+hints=typing.get_type_hints(data.load_identity)
+import pandas as pd
+assert hints['return'] is pd.DataFrame
+assert typing.get_type_hints(data._team)['return'] is pd.Series
+assert typing.get_type_hints(data._schedule)['return'] is pd.DataFrame
+assert typing.get_type_hints(data.load_history)['return'] is pd.DataFrame
+assert typing.get_type_hints(data._require)['frame'] is pd.DataFrame
+print('METADATA_LIGHT_ANNOTATIONS_ORIGINAL_TYPES')
+'''
+    profile = json.loads((root/'config/audit-weekly-numerical-runtime-v1.json').read_bytes())['environment']
+    result = subprocess.run([sys.executable, '-I', '-B', '-c', script, str(root)],
+        env=profile, capture_output=True, text=True, timeout=30)
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == 'METADATA_LIGHT_ANNOTATIONS_ORIGINAL_TYPES'

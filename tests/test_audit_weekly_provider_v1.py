@@ -1,10 +1,16 @@
 """Fictional E7 responses in real owned storage; no providers, outcomes or fits."""
+import ast
 from copy import deepcopy
 from datetime import timedelta
+import hashlib
 import json
+import os
 from pathlib import Path
 import pickle
 import socket
+import subprocess
+import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -126,6 +132,166 @@ def setup(tmp_path):
         collector=p.Collector(storage=storage,output=tmp_path/label,authenticate=parent,fetch=transport,clock=lambda:at)
         return collector,parent,transport,req
     return storage,make
+
+
+@pytest.fixture(scope="module")
+def original_policy_reference():
+    """Execute only metadata code from the unmodified pre-repair Git source."""
+    original = "5085bdbe00d56f9a47a057a186b374c1bf839d2b"
+    def blob(name):
+        return subprocess.check_output(["git", "-C", str(p.ROOT), "show", original+":"+name])
+    loader_body = blob("nfl_lab/operational_sources.py")
+    provider_body = blob("nfl_lab/audit_weekly_provider_v1.py")
+    assert hashlib.sha256(loader_body).hexdigest() == "069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e"
+    assert hashlib.sha256(provider_body).hexdigest() == "911a2690dd1bb418f692e7be5e7b4d9f1c4f31703d791115e748f3a7b21336ec"
+    data_tree = ast.parse(blob("nfl_lab/data.py"))
+    base = next(ast.literal_eval(n.value) for n in data_tree.body if isinstance(n, ast.Assign)
+        and any(isinstance(t, ast.Name) and t.id == "BASE" for t in n.targets))
+    checkpoint_tree = ast.parse(blob("nfl_lab/gha_private_checkpoint.py"))
+    policy_sha = next(ast.literal_eval(n.value) for n in checkpoint_tree.body if isinstance(n, ast.Assign)
+        and any(isinstance(t, ast.Name) and t.id == "POLICY_SHA" for t in n.targets))
+    names = {"POLICY_ID", "SCHEDULE_COLUMNS", "SOURCE_SPECS"}
+    nodes = [n for n in ast.parse(loader_body).body
+        if isinstance(n, ast.FunctionDef) and n.name in {"_json", "_digest", "load_source_policy"}
+        or isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id in names for t in n.targets)]
+    scope = dict(Path=Path, json=json, hashlib=hashlib, data=SimpleNamespace(BASE=base))
+    exec(compile(ast.Module(body=nodes, type_ignores=[]), "original-069c-policy", "exec"), scope)
+    loader = scope["load_source_policy"]
+    original_class = next(n for n in ast.parse(provider_body).body if isinstance(n, ast.ClassDef) and n.name == "Collector")
+    init = next(n for n in original_class.body if isinstance(n, ast.FunctionDef) and n.name == "__init__")
+    # Substitute only the import seam with the independently compiled original
+    # loader. Every original constructor statement and both hash gates execute.
+    for i, node in enumerate(init.body):
+        if isinstance(node, ast.ImportFrom) and any(a.name == "operational_sources" for a in node.names):
+            init.body[i] = ast.copy_location(ast.Assign(targets=[ast.Name(id="sources", ctx=ast.Store())],
+                value=ast.Name(id="original_sources", ctx=ast.Load())), node)
+    constructor = dict(POLICY=p.POLICY, state=state, cp=SimpleNamespace(POLICY_SHA=policy_sha), require=p.require, OperationalStorage=OperationalStorage,
+        store=store, live=p.live, original_sources=SimpleNamespace(load_source_policy=loader))
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[init], type_ignores=[])), "original-5085-Collector", "exec"), constructor)
+    return SimpleNamespace(load=loader, Collector=type("OriginalCollector", (), {"__init__": constructor["__init__"]}))
+
+
+_POLICY_CASES = [
+    ("path", "ACCEPT"), ("copied_path", "ACCEPT"), ("copied_string", "ACCEPT"),
+    ("raw_dict", "UNCHANGED_E7_SOURCE_POLICY_REQUIRED"), ("normalized", "ACCEPT"),
+    ("private_metadata", "ACCEPT"), ("changed_file_format", "UNCHANGED_E7_SOURCE_POLICY_REQUIRED"),
+    ("policy_id", "unsupported operational source policy"),
+    ("missing_source", "source policy whitelist changed"), ("extra_source", "source policy whitelist changed"),
+    ("schedule_columns", "schedule metadata columns changed"),
+    ("lag", "unsupported availability/season-type policy"), ("season_type", "unsupported availability/season-type policy"),
+    ("statistics_predicate", "explicit REG parquet predicates required"), ("roster_predicate", "explicit REG parquet predicates required"),
+    ("extra_field", "UNCHANGED_E7_SOURCE_POLICY_REQUIRED"), ("extra_source_field", "UNCHANGED_E7_SOURCE_POLICY_REQUIRED"),
+    ("bad_canonical", "normalized operational policy body changed"), ("bad_policy_sha", "UNCHANGED_E7_SOURCE_POLICY_REQUIRED"),
+] + [(kind+"_"+field, "source policy URL/name changed: "+kind)
+    for kind in ("schedules", "players", "statistics", "rosters", "license") for field in ("name", "url")]
+
+
+@pytest.mark.parametrize("case,expected", _POLICY_CASES, ids=[v[0] for v in _POLICY_CASES])
+def test_metadata_policy_matches_original_loader_and_full_Collector_admission(setup, tmp_path, original_policy_reference, case, expected):
+    reference = original_policy_reference
+    raw = p.POLICY.read_bytes()
+    candidate = deepcopy(reference.load(p.POLICY))
+    if case == "path": candidate = p.POLICY
+    elif case in {"copied_path", "copied_string", "changed_file_format"}:
+        copied = tmp_path/"copied-policy.json"
+        copied.write_bytes(raw + (b"\n" if case == "changed_file_format" else b""))
+        candidate = str(copied) if case == "copied_string" else copied
+    elif case == "raw_dict": candidate = json.loads(raw)
+    elif case == "private_metadata": candidate["_ignored_metadata"] = "fictional"
+    elif case == "normalized": pass
+    else:
+        if case == "policy_id": candidate["policy_id"] = "unregistered"
+        elif case == "missing_source": del candidate["sources"]["license"]
+        elif case == "extra_source": candidate["sources"]["unregistered"] = dict(name="fictional", url="https://example.invalid")
+        elif case == "schedule_columns": candidate["sources"]["schedules"]["columns"].reverse()
+        elif case == "lag": candidate["history"]["statistics_lag_days"] = 6
+        elif case == "season_type": candidate["history"]["season_type"] = "POST"
+        elif case == "statistics_predicate": candidate["history"]["parquet_predicates"]["statistics_season_type"] = "season_type == POST"
+        elif case == "roster_predicate": candidate["history"]["parquet_predicates"]["roster_season_type"] = "game_type == POST"
+        elif case == "extra_field": candidate["fictional_public_extra"] = "é"
+        elif case == "extra_source_field": candidate["sources"]["schedules"]["fictional_extra"] = True
+        elif case not in {"bad_canonical", "bad_policy_sha"}:
+            kind, field = case.rsplit("_", 1)
+            candidate["sources"][kind][field] += "-changed"
+        clean = {k:v for k,v in candidate.items() if not k.startswith("_")}
+        candidate["_canonical_policy_sha256"] = hashlib.sha256(
+            (json.dumps(clean, sort_keys=True, separators=(",", ":"), allow_nan=False)+"\n").encode()).hexdigest()
+        if case == "bad_canonical": candidate["_canonical_policy_sha256"] = "0"*64
+        if case == "bad_policy_sha": candidate["_policy_sha256"] = "0"*64
+    def normalized(load):
+        try: return load(candidate)
+        except ValueError as error: return str(error)
+    assert normalized(p._load_source_policy) == normalized(reference.load)
+    storage, _ = setup
+    def admission(constructor, label):
+        try:
+            constructor(storage=storage, output=tmp_path/label, authenticate=lambda _auth:True,
+                source_policy=candidate, clock=lambda:AT)
+        except ValueError as error: return str(error)
+        return "ACCEPT"
+    assert admission(reference.Collector, "old") == expected
+    assert admission(p.Collector, "new") == expected
+
+
+def test_metadata_policy_canonical_newline_and_both_actual_loads(setup, tmp_path, monkeypatch):
+    storage, _ = setup; calls = []; actual = p._load_source_policy
+    def load(value):
+        calls.append(value)
+        return actual(value)
+    monkeypatch.setattr(p, "_load_source_policy", load)
+    p.Collector(storage=storage, output=tmp_path/"two-policy-loads", authenticate=lambda _:True)
+    assert calls == [p.POLICY, p.POLICY]
+    policy = actual(p.POLICY)
+    assert policy["_policy_sha256"] == p.cp.POLICY_SHA
+    assert policy["_canonical_policy_sha256"] == "c3e28c603d7bdaeefed9d9d2c2a2e5e34e0ef45794b34078472b3e6c14239595"
+    clean = {k:v for k,v in policy.items() if not k.startswith("_")}
+    assert policy["_canonical_policy_sha256"] == hashlib.sha256(
+        (json.dumps(clean, sort_keys=True, separators=(",", ":"), allow_nan=False)+"\n").encode()).hexdigest()
+
+
+def test_metadata_policy_rejects_original_validator_drift_before_policy_decode(setup, tmp_path, monkeypatch):
+    storage, _ = setup; actual = store.read_local
+    source = p.ROOT/"nfl_lab/operational_sources.py"
+    def changed(path, cap):
+        body = actual(path, cap)
+        return body+b"\n" if Path(path) == source else body
+    monkeypatch.setattr(store, "read_local", changed)
+    monkeypatch.setattr(p.json, "loads", lambda *_a,**_k:pytest.fail("POLICY_DECODE_BEFORE_ORIGINAL_VALIDATOR_PIN"))
+    with pytest.raises(p.ProviderError, match="ORIGINAL_SOURCE_POLICY_VALIDATOR_REQUIRED"):
+        p.Collector(storage=storage, output=tmp_path/"drift", authenticate=lambda _:True)
+    assert not (tmp_path/"drift").exists()
+
+
+def test_cold_Collector_policy_admission_imports_no_numerical_loader(tmp_path):
+    profile = json.loads((p.ROOT/"config/audit-weekly-numerical-runtime-v1.json").read_bytes())["environment"]
+    env = {k:os.environ[k] for k in ("PATH", "LANG", "LC_ALL", "TZ") if k in os.environ}
+    env.update(profile)
+    script = '''import json,resource,signal,sys
+from pathlib import Path
+resource.setrlimit(resource.RLIMIT_CPU,(120,120));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20))
+signal.alarm(180)
+sys.path.insert(0,sys.argv[1])
+blocked=('nfl_lab.operational_sources','nfl_lab.features','numpy','pandas','pyarrow','scipy','sklearn','catboost')
+class NoNumerics:
+ def find_spec(self,name,*_args):
+  if any(name==p or name.startswith(p+'.') for p in blocked):raise RuntimeError('NUMERICAL_IMPORT_DURING_POLICY_ADMISSION')
+sys.meta_path.insert(0,NoNumerics())
+def deny(event,_args):
+ if event.startswith(('socket.','subprocess.')):raise RuntimeError('NO_EXTERNAL_EXECUTION_FOR_METADATA_POLICY')
+sys.addaudithook(deny)
+from nfl_lab import audit_weekly_provider_v1 as p
+from nfl_lab.operational_storage import OperationalStorage
+root=Path(sys.argv[2]);storage=OperationalStorage(root/'cache',p.POLICY,state=root/'state')
+def authenticate(_):raise RuntimeError('NO_AUTHORIZATION_FROM_POLICY_METADATA')
+collector=p.Collector(storage=storage,output=root/'unused-output',authenticate=authenticate)
+assert collector.capture is None and not collector.output.exists()
+assert not any(name==p or name.startswith(p+'.') for name in sys.modules for p in blocked)
+print(json.dumps(dict(state='COLD_METADATA_POLICY_ADMITTED',fits=0,provider_calls=0)))
+'''
+    result = subprocess.run([sys.executable, "-I", "-B", "-c", script, str(p.ROOT), str(tmp_path)],
+        cwd=p.ROOT, env=env, capture_output=True, text=True, timeout=185)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == dict(state="COLD_METADATA_POLICY_ADMITTED", fits=0, provider_calls=0)
 
 
 def test_zero_games_empty_pending_no_HTTP_with_default_transport(setup,tmp_path):
