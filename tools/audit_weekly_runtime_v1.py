@@ -46,8 +46,7 @@ def context(args,env):
     from hashlib import sha256
     import subprocess
     runtime.require(env.get("GITHUB_ACTIONS") == "true" and env.get("GITHUB_REPOSITORY") == private.REPO
-        and env.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and env.get("GITHUB_RUN_ATTEMPT") == "1"
-        and env.get("GITHUB_ACTOR") == "NickNicky19" and env.get("GITHUB_ACTOR_ID") == "208912933", "ACTUAL_OWNER_ACTIONS_CHILD_ONLY")
+        and env.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and env.get("GITHUB_RUN_ATTEMPT") == "1", "ACTUAL_OWNER_ACTIONS_CHILD_ONLY")
     job=actions_context(env,"write")
     body=env.get("AUDIT_WEEKLY_RUNTIME_AUTHORITY_JSON","").encode()
     runtime.require(0 < len(body) <= 16 << 10 and sha256(body).hexdigest() == env.get("AUDIT_WEEKLY_RUNTIME_AUTHORITY_SHA256"), "EXACT_PARENT_NATIVE_AUTHORITY_HASH")
@@ -69,6 +68,8 @@ def context(args,env):
     runtime.require(event.get("repository",{}).get("full_name") == private.REPO and root
         and private.HASH.fullmatch(str(authority["owner_root_go_sha256"]))
         and private.sha(root) == authority["owner_root_go_sha256"] == event["inputs"].get("inference_builder_go_sha256"), "ACTUAL_SEALED_OWNER_ROOT_INPUT_REQUIRED")
+    from nfl_lab import audit_weekly_operations_authority_v1 as operations_authority
+    operations_authority.child(env,root,ROOT)
     dirty=subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",
         ".github","nfl_lab","tools","config","schemas","requirements.lock","requirements-hosted-fixed-build-v1.lock"],cwd=ROOT,text=True)
     runtime.require(dirty == "", "CLEAN_COMMITTED_RUNTIME_SOURCE_REQUIRED")

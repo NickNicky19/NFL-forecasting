@@ -36,6 +36,8 @@ LIMITS = dict(wall_seconds=180, CPU_seconds=120, address_space_bytes=512 << 20,
     groups=8, native_clients=10, HTTP_per_client=40, fits=0, retries=0)
 CONTEXT = {"epoch", "epoch_registration", "original_choice", "origin_witness", "original_slate",
     "original_catalog", "original_policy", "retained_models", "prepared", "source"}
+OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope"}
+OPERATIONS_HISTORY_CONTEXT = {"ops_previous_checkpoint_sidecar", "ops_previous_public_receipt"}
 CONTROL_FILES = {"CONSUMED.json", "RUNTIME_RECIPE.json", "WEEKLY_CHOICE.json", "ARTIFACT_CATALOG.json",
     "SELECTED_VERSION_CATALOG.json", "POPULATION.json", "MODEL_ATTEMPTS.json", "FINISHED.json",
     "queries.parquet", "quarantine.parquet", "no_remaining_game.parquet", "IDENTITY_BRIDGE.json",
@@ -69,6 +71,48 @@ def pins():
     return {p:store.sha(store.read_local(root/p,2 << 20)) for p in PIN_PATHS}
 
 
+def capture_groups(files):
+    """Deterministic bounded packing of every required immutable file.
+
+    The codec's lexical next-fit order can exhaust eight groups even when the
+    same full census fits. Balance larger encoded members across a bounded
+    number of groups, keeping the codec, file-count and inflated-size bounds. This
+    chooses a finite packing, never promises an optimal solution or drops a
+    file that does not fit. All grouping/encoding completes before any POST.
+    """
+    validate_files(files)
+    members=[item for item in files if item["bytes"]]
+    empty=codec.inflated_size([])
+    costs={item["logical_path"]:codec.inflated_size([item])-empty for item in members}
+    ordered=sorted(members,key=lambda item:(-costs[item["logical_path"]],item["logical_path"]))
+    require(all(empty+cost<=codec.GROUP_JSON for cost in costs.values()),"SINGLE_FILE_BUNDLE_CAP")
+    if not ordered:return []
+    # Filling early groups to their byte cap can strand their file slots and
+    # consume too many groups for the remaining small original receipts.
+    lower=max((len(ordered)+codec.MAX_FILES-1)//codec.MAX_FILES,
+        (sum(costs.values())+codec.GROUP_JSON-empty-1)//(codec.GROUP_JSON-empty))
+    groups=[];sizes=[]
+    for count in range(lower,MAX_GROUPS+1):
+        bins=[[] for _ in range(count)];loads=[empty]*count
+        for item in ordered:
+            cost=costs[item["logical_path"]]
+            eligible=[n for n,group in enumerate(bins) if len(group)<codec.MAX_FILES
+                and loads[n]+cost+bool(group)<=codec.GROUP_JSON]
+            if not eligible:break
+            n=min(eligible,key=lambda n:(loads[n],len(bins[n]),n))
+            loads[n]+=cost+bool(bins[n]);bins[n].append(item)
+        else:
+            groups=[group for group in bins if group]
+            sizes=[load for group,load in zip(bins,loads) if group]
+            break
+    require(groups,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
+    require(sorted(item["logical_path"] for group in groups for item in group)
+        ==sorted(item["logical_path"] for item in members),"EXACT_COMPLETE_ARCHIVE_PACKING_CENSUS")
+    require(all(len(group)<=codec.MAX_FILES and codec.inflated_size(group)==size<=codec.GROUP_JSON
+        for group,size in zip(groups,sizes)),"UNCHANGED_ARCHIVE_CODEC_GROUP_BOUNDS")
+    return groups
+
+
 def write(storage,path,value):
     storage.write_bytes(path,store.canonical(value))
     return cp.binding(path)
@@ -76,8 +120,11 @@ def write(storage,path,value):
 
 def read_owned(storage,ref,cap=store.ASSET_CAP,*,raw=False):
     require(type(ref) is dict and set(ref)=={"path","bytes","sha256"},"CLOSED_ARCHIVE_REFERENCE")
+    require(type(ref["bytes"]) is int and 0<ref["bytes"]<=cap,"EXACT_CHECKPOINT_REFERENCE")
     validate_owned_references(storage,{ref["path"]:ref["sha256"]})
-    body=cp.read_ref(ref,cap)
+    # Keep the caller's ceiling, CAS validation and exact readback checks, but
+    # allocate the declared actual length rather than the entire ceiling.
+    body=cp.read_ref(ref,ref["bytes"])
     return body if raw else cp.strict_json(body)
 
 
@@ -161,7 +208,12 @@ context roles are exact owned metadata bindings, including the parent's honest
 origin witness and the separately qualified retained-model restore receipt.
 No old completion is invented. Missing files force a failure archive.
 """
-    require(type(context) is dict and CONTEXT <= set(context) <= CONTEXT | {"public_policy"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+    require(type(context) is dict and CONTEXT <= set(context)
+        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+    history=set(context) & OPERATIONS_HISTORY_CONTEXT
+    require(not history or history == OPERATIONS_HISTORY_CONTEXT,"PAIRED_OPERATIONAL_HISTORY_REFERENCES_REQUIRED")
+    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
+    require(not operations or OPERATIONS_CONTEXT <= set(context), "COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED")
     root=store.parents_safe(runtime_root);output=fresh(storage,output)
     entries={};physical_origins={}
     def add(ref,name,kind="control"):
@@ -435,8 +487,9 @@ def authenticate_qualification(client,package,pending_census):
 
 def jobs_for(client):
     run=client.json(client.allow(store.API+"/actions/runs/"+client.run_id))
+    from . import audit_weekly_operations_authority_v1 as operations_authority
     require(run.get("head_branch")==client.job["workflow_ref"].split("@refs/heads/",1)[1]
-        and run.get("actor",{}).get("login")=="NickNicky19" and run.get("actor",{}).get("id")==208912933,"ACTUAL_ARCHIVE_BRANCH_AND_OWNER")
+        and operations_authority.authorize_client_actor(client,run),"ACTUAL_ARCHIVE_BRANCH_AND_OWNER")
     data=client.json(client.allow(store.API+"/actions/runs/"+client.run_id+"/jobs?per_page=100&page=1"))
     require(type(data.get("jobs")) is list and data.get("total_count")==len(data["jobs"])<=100,"COMPLETE_ARCHIVE_ACTIONS_JOB_LIST")
     return data["jobs"]
@@ -494,7 +547,7 @@ def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pendin
     complete=census["archive_state"]=="COMPLETE_CAPTURE"
     validate_capture(snapshot,lambda n:Path(next(f["path"] for f in files if f["logical_path"]==n)),complete=complete)
     prepared=[]
-    for n,members in enumerate(codec.groups([f for f in files if f["bytes"]])):
+    for n,members in enumerate(capture_groups(files)):
         require(n<MAX_GROUPS,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
         body,inflated=codec.encode(members)
         record=dict(index=n,bytes=len(body),sha256=store.sha(body),inflated_bytes=inflated,files=members)

@@ -2,8 +2,8 @@ name: NFL research lab
 
 on:
   schedule:
-    # One scheduler. Both UTC offsets are gated to08:36 America/Chicago below.
-    - cron: '36 13,14 * * *'
+    # One scheduler: explicit Parent 07:36; legacy 08:36. Each gates one DST slot.
+    - cron: '36 12,13,14 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -70,6 +70,9 @@ jobs:
     if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1' && inputs.mode != 'audit-private-rotation-v1' && inputs.mode != 'audit-weekly-producer-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    permissions:
+      contents: write
+      actions: write
     env:
       OMP_NUM_THREADS: '2'
       OPENBLAS_NUM_THREADS: '2'
@@ -78,21 +81,89 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
           fetch-depth: 0
+      - name: Select explicit main parent route without granting readiness
+        id: parent_route
+        env:
+          PARENT_ENABLED: ${{ vars.AUDIT_WEEKLY_PARENT_ENABLED }}
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+          REF: ${{ github.ref }}
+        run: |
+          python3 - <<'PY'
+          import os
+          requested=(os.environ['PARENT_ENABLED']=='true'
+              and os.environ['REF']=='refs/heads/main'
+              and (os.environ['EVENT']=='schedule'
+                  or os.environ['EVENT']=='workflow_dispatch' and os.environ['MODE']=='daily'))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'requested={str(requested).lower()}\n')
+          PY
       - name: Enforce source and publication handover safety
         id: readiness
+        if: steps.parent_route.outputs.requested != 'true'
         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+      - name: Set up metadata-only parent Python
+        if: steps.parent_route.outputs.requested == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-audit-weekly-metadata-v1.lock
+      - name: Install exact metadata-only parent dependencies
+        if: steps.parent_route.outputs.requested == 'true'
+        run: 'timeout 90s python -m pip install --disable-pip-version-check --no-input --only-binary=:all: --no-deps -r requirements-audit-weekly-metadata-v1.lock'
+      - name: Determine parent cadence without enabling legacy research
+        id: parent_cadence
+        if: steps.parent_route.outputs.requested == 'true'
+        env:
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from nfl_lab.cadence import decision, PARENT_POLICY
+          result=decision(os.environ['EVENT'],os.environ['MODE'] or None,policy=PARENT_POLICY)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'due={str(result["due"]).lower()}\nmode={result["mode"]}\n')
+          with open('parent-cadence-result.json','w') as f:json.dump(result,f,indent=2)
+          print(result)
+          PY
+      - name: Enqueue one qualified same-source Ops capture and return
+        id: weekly_parent
+        if: steps.parent_route.outputs.requested == 'true' && steps.parent_cadence.outputs.due == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --execute > controller-parent-result.json
+      - name: Keep original handover block when parent qualification fails
+        id: parent_readiness_block
+        if: always() && steps.parent_route.outputs.requested == 'true' && steps.weekly_parent.outcome != 'success'
+        run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+      - name: Upload public-safe parent enqueue status
+        if: always() && steps.parent_route.outputs.requested == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-parent-${{ github.run_id }}-${{ github.run_attempt }}
+          path: controller-parent-result.json
+          retention-days: 14
+          if-no-files-found: ignore
       - uses: actions/setup-python@v5
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         with:
           python-version: '3.12'
           cache: pip
       - name: Install exact tested dependencies
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         run: python -m pip install -r requirements.lock -e '.[test]'
       - name: Acceptance tests
         id: acceptance
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         run: python -m pytest -q
       - name: Determine cadence
         id: cadence
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         env:
           EVENT: ${{ github.event_name }}
           MODE: ${{ inputs.mode }}
@@ -107,7 +178,7 @@ jobs:
           print(result)
           PY
       - name: Restore derived evidence state
-        if: steps.cadence.outcome == 'success'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         run: |
           mkdir -p state
           if git show-ref --verify --quiet refs/remotes/origin/lab-state; then
@@ -115,24 +186,24 @@ jobs:
           fi
       - name: Capture and grade
         id: daily
-        if: steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
         run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
       - name: Grade recorded games without pregame issuance
         id: grading
-        if: steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
         run: timeout 300 python -m nfl_lab.cli grade > grading-result.json
       - name: Bounded weekly experiments
         id: training
-        if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
         run: |
           timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
           timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
       - name: Replay immutable records
         id: replay
-        if: steps.cadence.outcome == 'success'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         run: python -m nfl_lab.cli replay
       - name: Persist only lab-derived forecasts and corrections
-        if: always() && steps.cadence.outcome == 'success'
+        if: always() && steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         env:
           ACCEPTANCE_OUTCOME: ${{ steps.acceptance.outcome }}
           DAILY_OUTCOME: ${{ steps.daily.outcome }}
@@ -172,7 +243,7 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
       - name: Upload exact public-safe readiness receipt
-        if: always()
+        if: always() && (steps.parent_route.outputs.requested != 'true' || steps.weekly_parent.outcome != 'success')
         uses: actions/upload-artifact@v4
         with:
           name: lab-readiness-${{ github.run_id }}-${{ github.run_attempt }}
@@ -900,6 +971,10 @@ jobs:
       actions: read
     outputs:
       archive_handoff_json: ${{ steps.weekly.outputs.archive_handoff_json || steps.preserve.outputs.archive_handoff_json }}
+      controller_template_handoff_json: ${{ steps.weekly.outputs.controller_template_handoff_json }}
+      controller_template_handoff_sha256: ${{ steps.weekly.outputs.controller_template_handoff_sha256 }}
+      controller_writer_native_json: ${{ steps.weekly.outputs.controller_writer_native_json }}
+      controller_writer_native_sha256: ${{ steps.weekly.outputs.controller_writer_native_sha256 }}
       archive_handoff_sha256: ${{ steps.weekly.outputs.archive_handoff_sha256 || steps.preserve.outputs.archive_handoff_sha256 }}
       failure_handoff_json: ${{ steps.preserve.outputs.failure_handoff_json }}
       failure_handoff_sha256: ${{ steps.preserve.outputs.failure_handoff_sha256 }}
@@ -917,14 +992,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/checkout@v4
         with:
           repository: NickNicky19/nicks-expert-nfl-picks
@@ -941,6 +1016,8 @@ jobs:
       - name: Capture all effective candidates, selected rows and original R0
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           NFL_R0_SOURCE_REPOSITORY: ${{ github.workspace }}/r0-public-reference
         run: |
@@ -953,6 +1030,8 @@ jobs:
         id: preserve
         if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
           NFL_R0_SOURCE_REPOSITORY: ${{ github.workspace }}/r0-public-reference
@@ -960,7 +1039,7 @@ jobs:
 
   audit-weekly-restore-v1:
     needs: audit-weekly-produce-v1
-    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '') }}
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json != '') }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:
@@ -969,6 +1048,12 @@ jobs:
     outputs:
       reader_handoff_json: ${{ steps.weekly.outputs.archive_reader_handoff_json }}
       reader_handoff_sha256: ${{ steps.weekly.outputs.archive_reader_handoff_sha256 }}
+      grade_checkpoint_handoff_json: ${{ steps.weekly.outputs.grade_checkpoint_handoff_json }}
+      controller_template_seal_json: ${{ steps.weekly.outputs.controller_template_seal_json }}
+      controller_template_seal_sha256: ${{ steps.weekly.outputs.controller_template_seal_sha256 }}
+      controller_reader_native_json: ${{ steps.weekly.outputs.controller_reader_native_json }}
+      controller_reader_native_sha256: ${{ steps.weekly.outputs.controller_reader_native_sha256 }}
+      grade_checkpoint_handoff_sha256: ${{ steps.weekly.outputs.grade_checkpoint_handoff_sha256 }}
       failure_handoff_json: ${{ steps.preserve.outputs.failure_handoff_json }}
       failure_handoff_sha256: ${{ steps.preserve.outputs.failure_handoff_sha256 }}
     env:
@@ -985,14 +1070,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1002,8 +1087,14 @@ jobs:
       - name: Restore complete capture or failed evidence in a fresh job
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.archive_handoff_json }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_sha256 }}
+          AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_json }}
+          AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_sha256 }}
           AUDIT_WEEKLY_ARCHIVE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.archive_handoff_sha256 }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.failure_handoff_json }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.failure_handoff_sha256 }}
@@ -1018,13 +1109,15 @@ jobs:
         id: preserve
         if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
         run: timeout --signal=KILL 300s python -I -B tools/audit_weekly_hosted_v1.py preserve --execute
 
   audit-weekly-export-v1:
     needs: [audit-weekly-produce-v1, audit-weekly-restore-v1]
-    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
+    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && (needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' || needs.audit-weekly-restore-v1.outputs.controller_template_seal_json != '') && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:
@@ -1047,14 +1140,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: true
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1064,21 +1157,45 @@ jobs:
       - name: Recover, verify and publish only the approved derived public feed
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_READER_HANDOFF_JSON: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_json }}
           AUDIT_WEEKLY_READER_HANDOFF_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_sha256 }}
+          AUDIT_WEEKLY_GRADE_HANDOFF_JSON: ${{ needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_sha256 }}
+          AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_json }}
+          AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_sha256 }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_SEAL_JSON: ${{ needs.audit-weekly-restore-v1.outputs.controller_template_seal_json }}
+          AUDIT_WEEKLY_CONTROLLER_TEMPLATE_SEAL_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.controller_template_seal_sha256 }}
+          AUDIT_WEEKLY_CONTROLLER_READER_NATIVE_JSON: ${{ needs.audit-weekly-restore-v1.outputs.controller_reader_native_json }}
+          AUDIT_WEEKLY_CONTROLLER_READER_NATIVE_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.controller_reader_native_sha256 }}
+          AUDIT_WEEKLY_GRADE_HANDOFF_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_sha256 }}
         run: |
           set +e
           timeout --signal=KILL 400s python -I -B tools/audit_weekly_hosted_v1.py consume --execute
           weekly_phase_exit=$?
           printf 'exit_code=%s\n' "$weekly_phase_exit" >> "$GITHUB_OUTPUT"
           exit "$weekly_phase_exit"
+      - name: Upload only the closed controller SAFE_SEAL metadata
+        id: controller_seal_upload
+        if: ${{ success() && steps.weekly.outputs.controller_safe_seal_path != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: controller-root-safe-seal-v2-${{ github.run_id }}
+          path: ${{ steps.weekly.outputs.controller_safe_seal_path }}
+          if-no-files-found: error
+          retention-days: 90
       - name: Preserve an original export failure without publishing partial output
         id: preserve
-        if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
+        if: ${{ always() && !cancelled() && (steps.weekly.outcome == 'failure' || steps.controller_seal_upload.outcome == 'failure') }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
-          AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
+          AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outcome == 'failure' && steps.weekly.outputs.exit_code || '' }}
+          AUDIT_WEEKLY_FAILED_ACTION_STEP: ${{ steps.controller_seal_upload.outcome == 'failure' && 'Upload only the closed controller SAFE_SEAL metadata' || '' }}
         run: timeout --signal=KILL 300s python -I -B tools/audit_weekly_hosted_v1.py preserve --execute
 
   audit-weekly-failure-restore-v1:
@@ -1103,14 +1220,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1119,6 +1236,8 @@ jobs:
           python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps -r requirements.lock -r requirements-audit-weekly-metadata-v1.lock
       - name: Independently restore the failed reader or exporter evidence
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_JSON: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_json || needs.audit-weekly-restore-v1.outputs.failure_handoff_json }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_sha256 || needs.audit-weekly-restore-v1.outputs.failure_handoff_sha256 }}

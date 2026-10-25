@@ -178,7 +178,13 @@ def test_failed_jobs_have_a_closed_evidence_only_reader_and_exact_source_checkou
         assert "steps.weekly.outcome == 'failure'" in preserve['if']
         assert preserve['run'].endswith('tools/audit_weekly_hosted_v1.py preserve --execute')
         assert job['outputs']['failure_handoff_json']=='${{ steps.preserve.outputs.failure_handoff_json }}'
-        assert preserve['env']['AUDIT_WEEKLY_ORIGINAL_EXIT_CODE']=='${{ steps.weekly.outputs.exit_code }}'
+        expected_exit="${{ steps.weekly.outcome == 'failure' && steps.weekly.outputs.exit_code || '' }}" \
+            if phase=='consume' else '${{ steps.weekly.outputs.exit_code }}'
+        assert preserve['env']['AUDIT_WEEKLY_ORIGINAL_EXIT_CODE']==expected_exit
+        if phase=='consume':
+            assert "steps.controller_seal_upload.outcome == 'failure'" in preserve['if']
+            assert "steps.controller_seal_upload.outcome == 'failure'" in preserve['env']['AUDIT_WEEKLY_FAILED_ACTION_STEP']
+            assert 'Upload only the closed controller SAFE_SEAL metadata' in preserve['env']['AUDIT_WEEKLY_FAILED_ACTION_STEP']
         original=next(s for s in job['steps'] if s.get('id')=='weekly')
         assert 'weekly_phase_exit=$?' in original['run'] and 'exit "$weekly_phase_exit"' in original['run']
 

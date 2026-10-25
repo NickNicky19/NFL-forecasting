@@ -34,7 +34,9 @@ HISTORICAL_FILES=(".github/workflows/lab.yml","nfl_lab/audit_weekly_archive_v1.p
     "nfl_lab/private_draft_store.py","nfl_lab/owner_bootstrap_bundle.py","nfl_lab/gha_private_checkpoint.py",
     "nfl_lab/audit_reference_capture_v1.py","config/private-draft-storage-v2.json")
 PIN_PATHS=tuple(sorted(set(archive.PIN_PATHS)|{"nfl_lab/audit_weekly_retained_v1.py","tools/audit_weekly_retained_v1.py",
-    "tests/test_audit_weekly_retained_v1.py","nfl_lab/weekly_durable_acceptance.py"}))
+    "tests/test_audit_weekly_retained_v1.py","tests/test_audit_weekly_retained_recurring_v1.py",
+    "nfl_lab/audit_weekly_controller_v1.py","nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+    "nfl_lab/weekly_durable_acceptance.py"}))
 REQUEST_KEYS={"schema_version","approved","repository","phase","helper_sha256","limits","registered_at_utc",
     "reader_handoff","exporter_api_job_id","historical_source_sha256","qualified_runtime","pending_census",
     "pending_reservations","cache","state_root","output"}
@@ -43,6 +45,9 @@ AUTHORITY_KEYS={"schema_version","phase","request_sha256","repository","owner_ro
     "issued_at_utc","expires_at_utc","fits","remote_writes","protected_outcome_reads","public_release"}
 WITNESS_KEYS={"schema_version","restorer","index_sha256","files_sha256","producer_proof_sha256","proofs","validation",
     "actual_completed_at","archive_state","public_export_authorized","successful_forecast"}
+_GRANT_KEY=object()
+_JOB_EVIDENCE_KEYS={"repository","run_id","source_sha","workflow_ref","api_job_id","job_id","status","conclusion",
+    "started_at","completed_at","verified_permissions"}
 
 
 def require(value,code):
@@ -53,6 +58,108 @@ def now():return datetime.now(timezone.utc)
 
 
 def pins(root):return {name:store.sha(store.read_local(Path(root)/name,2 << 20)) for name in PIN_PATHS}
+
+
+def _grant_utc(value):return store.utc(value.isoformat() if isinstance(value,datetime) else value)
+
+
+def _historical_jobs(p,jobs):
+    """Exact original metadata, independently checked again against live APIs."""
+    h=p["reader_handoff"]["archive"]
+    ids=dict(produce=h["producer"]["api_job_id"],restore=p["reader_handoff"]["restorer"]["api_job_id"],consume=p["exporter_api_job_id"])
+    require(type(jobs) is dict and set(jobs)==set(ids),"COMPLETE_GRANTED_HISTORICAL_THREE_JOBS")
+    for role,row in jobs.items():
+        require(type(row) is dict and set(row)==_JOB_EVIDENCE_KEYS
+            and row["repository"]==store.REPO and row["run_id"]==h["run_id"] and row["source_sha"]==h["source_sha"]
+            and row["workflow_ref"]==h["producer"]["workflow_ref"] and row["job_id"]==h["jobs"][role]
+            and type(row["api_job_id"]) is int and row["api_job_id"]==ids[role]
+            and row["status"]=="completed" and row["conclusion"]=="success"
+            and row["verified_permissions"]==dict(contents="write",actions="read")
+            and store.utc(row["started_at"])<=store.utc(row["completed_at"])<=store.utc(p["registered_at_utc"]),
+            "EXACT_GRANTED_HISTORICAL_JOB_SOURCE_AND_CLOCKS")
+    require(store.utc(jobs["produce"]["completed_at"])<=store.utc(jobs["restore"]["started_at"])
+        and store.utc(jobs["restore"]["completed_at"])<=store.utc(jobs["consume"]["started_at"]),
+        "ORDERED_GRANTED_HISTORICAL_THREE_JOBS")
+    return jobs
+
+
+def _bootstrap_scope(proof,authority,at):
+    # Lazy import: the legacy Nick reader retains its original authority path.
+    from . import audit_weekly_controller_bootstrap_v1 as bootstrap, audit_weekly_controller_v1 as controller
+    require(type(proof) in {bootstrap.Owner,controller.Proof},"LIVE_CURRENT_BOOTSTRAP_PROOF_REQUIRED")
+    require(type(authority) is dict and set(authority)==AUTHORITY_KEYS
+        and authority["schema_version"]==VERSION+"-native-authority" and authority["repository"]==store.REPO
+        and authority["phase"]==PHASE and store.utc(authority["issued_at_utc"])<=_grant_utc(at)<store.utc(authority["expires_at_utc"])
+        and 0<(store.utc(authority["expires_at_utc"])-store.utc(authority["issued_at_utc"])).total_seconds()<=3600,
+        "CURRENT_GRANT_AUTHORITY_SCOPE_AND_CLOCKS")
+    if type(proof) is bootstrap.Owner:
+        proof.verify(root_sha256=authority["owner_root_go_sha256"])
+        expected_actor=controller.OWNER
+    else:
+        proof.verify(registration_sha256=proof.document["registration_sha256"],run_id=authority["run_id"],
+            job_id=authority["job_id"],root_sha256=authority["owner_root_go_sha256"])
+        require(proof.document.get("schema_version")==controller.VERSION+"-current-child-proof","CURRENT_CHILD_GRANT_PROOF_REQUIRED")
+        expected_actor=controller.BOT
+    seal=getattr(proof,"bootstrap_seal",None)
+    require(type(seal) is bootstrap.Seal,"LIVE_CURRENT_OWNER_SEAL_REQUIRED");seal.verify()
+    registration=controller.registration(seal.registration_bytes,sealed_sha256=seal.registration_sha256,at=at)
+    spec=registration["producer"];d=proof.document
+    require(d.get("registration_sha256")==seal.registration_sha256 and d.get("actor")==expected_actor
+        and all(d.get(k)==authority[k] for k in ("source_sha","run_id","job_id","api_job_id"))
+        and authority["source_sha"]==spec["source_sha"] and authority["job_id"] in spec["jobs"].values()
+        and authority["workflow_ref"]==store.REPO+"/.github/workflows/lab.yml@refs/heads/"+spec["branch"]
+        and store.utc(seal.document["owner_registration_completed_at"])<=store.utc(authority["issued_at_utc"]),
+        "EXACT_CURRENT_SEALED_OPERATIONAL_SOURCE_AND_JOB")
+    return dict(approved_source_sha=spec["source_sha"],public_policy_sha256=seal.document["static_public_policy_sha256"],
+        bootstrap_registration_sha256=seal.registration_sha256,bootstrap_seal_sha256=controller.digest(seal.document),
+        operational_jobs={k:spec["jobs"][k] for k in ("produce","restore","consume")},
+        operational_workflow_sha256=spec["workflow_sha256"],
+        operational_workflow_ref=store.REPO+"/.github/workflows/lab.yml@refs/heads/"+spec["branch"],current_actor=dict(expected_actor))
+
+
+class HistoricalSourceGrant:
+    """Live, process-bound extension; JSON and historical proof flags cannot mint it."""
+    def __init__(self,document,proof,authenticate,key):
+        require(key is _GRANT_KEY,"LIVE_HISTORICAL_SOURCE_GRANT_REQUIRED")
+        self.document=deepcopy(document);self.sha256=store.sha(store.canonical(document))
+        self._proof,self._authenticate,self._process=proof,authenticate,store.process_identity()
+    def verify(self,p,authority,at):
+        require(self.sha256==store.sha(store.canonical(self.document)) and self._process==store.process_identity(),
+            "HISTORICAL_SOURCE_GRANT_CHANGED_OR_DIFFERENT_PROCESS")
+        scope=_bootstrap_scope(self._proof,authority,at)
+        require(self.document["scope"]==scope and self.document["request_sha256"]==store.sha(store.canonical(p))
+            and self.document["authority_sha256"]==store.sha(store.canonical(authority))
+            and store.utc(self.document["created_at_utc"])<=_grant_utc(at),"EXACT_HISTORICAL_SOURCE_GRANT_BINDING")
+        return self
+    def __reduce__(self):raise store.StoreError("HISTORICAL_SOURCE_GRANT_CANNOT_BE_SERIALIZED")
+
+
+def _grant_authenticate(callback,kind,document,at):
+    require(callable(callback),"LIVE_HISTORICAL_SOURCE_AUTHENTICATOR_REQUIRED")
+    request=dict(schema_version=VERSION+"-historical-source-authentication",kind=kind,
+        inputs=deepcopy(document),inputs_sha256=store.sha(store.canonical(document)),at_utc=_grant_utc(at).isoformat())
+    require(len(store.canonical(request))<=64 << 10 and callback(request) is True,"LIVE_HISTORICAL_SOURCE_AUTHENTICATION_REJECTED")
+
+
+def bind_historical_source(p,authority,*,bootstrap_proof,public_policy_sha256,historical_jobs,authenticate,root,clock=now):
+    """Metadata-only binding BEFORE private bodies; performs no HTTP itself.
+
+    The live parent authenticates the exact public-policy SHA and complete old
+    three-job evidence. restore() independently rereads source/jobs and calls
+    that authenticator again before its first private GET. BOT history is
+    restricted to the currently owner-sealed operational source, never added
+    as an unconditional historical actor. Request/result schemas stay intact.
+    """
+    validate_request(p,root);at=_grant_utc(clock());scope=_bootstrap_scope(bootstrap_proof,authority,at)
+    require(type(public_policy_sha256) is str and store.HASH.fullmatch(public_policy_sha256)
+        and public_policy_sha256==scope["public_policy_sha256"]
+        and authority["request_sha256"]==store.sha(store.canonical(p))
+        and store.utc(p["registered_at_utc"])<=store.utc(authority["issued_at_utc"]),"EXACT_GRANTED_POLICY_AND_REGISTERED_REQUEST")
+    document=dict(schema_version=VERSION+"-historical-source-grant",scope=scope,
+        request_sha256=authority["request_sha256"],authority_sha256=store.sha(store.canonical(authority)),
+        historical_jobs=deepcopy(_historical_jobs(p,historical_jobs)),created_at_utc=at.isoformat())
+    _grant_authenticate(authenticate,"BIND_SEALED_HISTORICAL_SOURCE",document,at)
+    return HistoricalSourceGrant(document,bootstrap_proof,authenticate,_GRANT_KEY)
 
 
 def prepare_request(root,reader_handoff,qualified_runtime,*,exporter_api_job_id,historical_source_sha256,
@@ -170,21 +277,32 @@ def workflow_permissions(raw,h):
     return permissions
 
 
-def authenticate_origin(client,p,authority):
+def authenticate_origin(client,p,authority,*,historical_grant=None):
     h=p["reader_handoff"]["archive"]
+    if historical_grant is not None:
+        require(type(historical_grant) is HistoricalSourceGrant,"LIVE_HISTORICAL_SOURCE_GRANT_REQUIRED")
+        historical_grant.verify(p,authority,now())
     require(client.run_id==authority["run_id"]!=h["run_id"] and client.source_sha==authority["source_sha"]
         and client.job["api_job_id"]==authority["api_job_id"] and client.job["job_id"]==authority["job_id"]
         and client.job["workflow_ref"]==authority["workflow_ref"] and client.job["api_job_id"] not in
         {h["producer"]["api_job_id"],p["reader_handoff"]["restorer"]["api_job_id"],p["exporter_api_job_id"]},"NEW_ACTUAL_READER_NOT_HISTORICAL_IDENTITY")
     current=client.json(client.allow(store.API+"/actions/runs/"+client.run_id))
+    current_actor=dict(login="NickNicky19",id=208912933) if historical_grant is None else historical_grant.document["scope"]["current_actor"]
     require(current.get("head_branch")==authority["workflow_ref"].split("@refs/heads/",1)[1]
-        and current.get("actor",{}).get("login")=="NickNicky19" and current.get("actor",{}).get("id")==208912933,"ACTUAL_NEW_RETAINED_BRANCH_OWNER")
+        and current.get("actor",{}).get("login")==current_actor["login"]
+        and type(current.get("actor",{}).get("id")) is int and current["actor"]["id"]==current_actor["id"],"ACTUAL_NEW_RETAINED_BRANCH_OWNER")
     url=store.API+"/actions/runs/"+h["run_id"];run=client.json(client.allow(url));listing=client.json(client.allow(url+"/jobs?per_page=100&page=1"))
+    actor=run.get("actor",{});original_owner=actor.get("login")=="NickNicky19" and type(actor.get("id")) is int and actor["id"]==208912933
+    granted_bot=historical_grant is not None and h["source_sha"]==historical_grant.document["scope"]["approved_source_sha"] \
+        and h["jobs"]==historical_grant.document["scope"]["operational_jobs"] \
+        and h["producer"]["workflow_ref"]==historical_grant.document["scope"]["operational_workflow_ref"] \
+        and p["historical_source_sha256"][".github/workflows/lab.yml"]==historical_grant.document["scope"]["operational_workflow_sha256"] \
+        and actor.get("login")=="github-actions[bot]" and type(actor.get("id")) is int and actor["id"]==41898282
     require(run.get("id")==int(h["run_id"]) and run.get("head_sha")==h["source_sha"] and run.get("status")=="completed"
         and run.get("conclusion")=="success" and run.get("event")=="workflow_dispatch" and run.get("run_attempt")==1
         and run.get("path")==".github/workflows/lab.yml" and run.get("head_branch")==h["producer"]["workflow_ref"].split("@refs/heads/",1)[1]
         and run.get("repository",{}).get("full_name")==run.get("head_repository",{}).get("full_name")==store.REPO
-        and run.get("actor",{}).get("login")=="NickNicky19" and run.get("actor",{}).get("id")==208912933,
+        and (original_owner or granted_bot),
         "ACTUAL_REGISTERED_COMPLETED_SUCCESSFUL_PRIOR_RUN")
     require(type(listing.get("jobs")) is list and listing.get("total_count")==len(listing["jobs"])<=100,"COMPLETE_PRIOR_WEEKLY_JOB_LIST")
     ids=dict(produce=h["producer"]["api_job_id"],restore=p["reader_handoff"]["restorer"]["api_job_id"],consume=p["exporter_api_job_id"])
@@ -209,6 +327,12 @@ def authenticate_origin(client,p,authority):
         require(len(raw)==doc["size"] and store.sha(raw)==digest,"REGISTERED_HISTORICAL_ARCHIVE_SOURCE_HASH")
         if name==".github/workflows/lab.yml":permissions=workflow_permissions(raw,h)
     for role,row in evidence.items():row["verified_permissions"]=permissions[role]
+    if historical_grant is not None:
+        historical_grant.verify(p,authority,now())
+        require(evidence==historical_grant.document["historical_jobs"],"LIVE_HISTORICAL_JOBS_MUST_EQUAL_SEALED_GRANT")
+        _grant_authenticate(historical_grant._authenticate,"LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET",
+            dict(grant_sha256=historical_grant.sha256,grant=historical_grant.document,
+                current_run=current,historical_run=run,historical_jobs=evidence),now())
     q=p["qualified_runtime"]["qualification"]
     qualified=client.json(client.allow(store.API+"/actions/runs/"+q["run_id"]))
     require(qualified.get("status")=="completed" and qualified.get("conclusion")=="success","COMPLETED_SUCCESSFUL_QUALIFIED_RUNTIME_RUN")
@@ -265,7 +389,7 @@ def r0_closure(index,aliases,storage):
         control_completion=aliases["r0/control_completion.json"],capture=aliases["r0/CAPTURE_COMPLETE.json"],original_native=aliases["r0/original-native.json.gz"])
 
 
-def restore(p,factory,*,storage,authority,root,check_authority=None):
+def restore(p,factory,*,storage,authority,root,check_authority=None,historical_grant=None):
     h=validate_request(p,root);r=p["reader_handoff"]
     require(authority["request_sha256"]==store.sha(store.canonical(p)) and store.utc(p["registered_at_utc"])<=store.utc(authority["issued_at_utc"]),
         "FRESH_PARENT_AUTHORITY_BINDS_APPROVED_PRIOR_REGISTRATION")
@@ -285,7 +409,7 @@ def restore(p,factory,*,storage,authority,root,check_authority=None):
             {h["producer"]["process_identity"],r["restorer"]["process_identity"]},"CURRENT_PROOF_IDENTITY_NEVER_RELABELLED")
         require(current is None or current==ident,"ONE_GENUINE_CURRENT_RETAINED_PROCESS")
         current=ident;clients.append(c);return c
-    first=client();evidence=authenticate_origin(first,p,authority)
+    first=client();evidence=authenticate_origin(first,p,authority,historical_grant=historical_grant)
     proofs=[];downloads={}
     def get(descriptor,name,cap):
         c=client();entry=cp.descriptor_meta(descriptor,cap);destination=output/"downloads"/name;destination.parent.mkdir(parents=True,exist_ok=True)
@@ -298,6 +422,11 @@ def restore(p,factory,*,storage,authority,root,check_authority=None):
             <=store.utc(proof["created_at_utc"])<=now(),"GENUINE_CURRENT_PAYLOAD_PROOF_AND_NEW_CLOCK")
         proofs.append(proof);downloads[name]=cp.binding(owned);return cp.read_ref(downloads[name],cap)
     raw=get(h["index_descriptor"],"index.gz",archive.INDEX_CAP);index=archive.check_index(archive.unpack(raw,archive.INDEX_PLAIN_CAP),h)
+    if historical_grant is not None and h["source_sha"]==historical_grant.document["scope"]["approved_source_sha"]:
+        policy=[f for f in index["files"] if f["logical_path"]=="context/public_policy.json"]
+        require(len(policy)==1 and 0<policy[0]["bytes"]<=128 << 10
+            and policy[0]["sha256"]==historical_grant.document["scope"]["public_policy_sha256"],
+            "EXACT_GRANTED_OPERATIONAL_ARCHIVE_PUBLIC_POLICY")
     writer=evidence["produce"];producer=index["producer_proof"]
     require(index["qualification_sha256"]==store.sha(store.canonical(p["qualified_runtime"]["qualification"]))
         and producer["root_go_sha256"]==h["root_go_sha256"] and producer["fits"]==0
@@ -323,13 +452,14 @@ def restore(p,factory,*,storage,authority,root,check_authority=None):
             "UNMODIFIED_HISTORICAL_READER_PROOFS_INSIDE_ACTUAL_JOB")
     with storage.transaction():storage._require(sum(f["bytes"] for f in index["files"])+sum(g["bytes"]*2 for g in index["groups"])+(4 << 20))
     for group in index["groups"]:
-        guard();codec.extract_owned(get(group["descriptor"],str(group["index"])+".gz",store.ASSET_CAP),group,storage,output/"files")
-    for f in index["files"]:
-        if f["bytes"]==0:storage.write_bytes(output/"files"/f["logical_path"],b"")
+        guard();archive._extract_owned_group(get(group["descriptor"],str(group["index"])+".gz",store.ASSET_CAP),group,storage,output/"files")
+    empty=[(f["logical_path"],b"") for f in index["files"] if f["bytes"]==0]
+    if empty:archive._publish_owned_files(storage,empty,output/"files")
     aliases={f["logical_path"]:dict(path=str(output/"files"/f["logical_path"]),bytes=f["bytes"],sha256=f["sha256"]) for f in index["files"]}
     validate_owned_references(storage,{ref["path"]:ref["sha256"] for ref in aliases.values()})
     guard();validation=archive.validate_capture(index,lambda name:Path(aliases[name]["path"]),complete=True)
     require(validation==past["validation"] and validation["replay_ready"] is True,"UNCHANGED_COMPLETE_CAPTURE_READBACK_VALIDATION")
+    validate_owned_references(storage,{ref["path"]:ref["sha256"] for ref in aliases.values()})
     r0=r0_closure(index,aliases,storage);guard()
     calls=sum(c.calls for c in clients);rss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024
     require(calls<=LIMITS["HTTP_calls"] and rss<=LIMITS["RSS_bytes"],"FINITE_RETAINED_WEEKLY_HTTP_AND_RSS")

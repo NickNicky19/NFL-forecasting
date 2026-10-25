@@ -23,7 +23,7 @@ import pytest
 from nfl_lab import audit_weekly_hosted_v1 as hosted
 from nfl_lab import operational_failure_v1 as failure
 from nfl_lab import private_draft_store as store, gha_private_checkpoint as cp
-from nfl_lab.operational_storage import OperationalStorage
+from nfl_lab.operational_storage import OperationalStorage, StorageIntegrityError
 from nfl_lab.owned_reference_batch import validate_owned_references
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -61,7 +61,10 @@ def runner(tmp_path):
         canary_asset_id=100,canary_name='canary-'+canary+'.txt',canary_sha256=canary,canary_bytes=117,
         browser_tag='weekly-private-runtime-v2-'+runtime,config_sha256=store.config_sha())
     store.checked_binding(binding)  # Closed fictional metadata, no platform authority.
-    r.go=dict(qualified_runtime=dict(binding=binding,qualification={}),pending_census=dict(reservations=[]))
+    # This fixture exercises the existing owner capture, not recurring Root
+    # authority. The native append boundary remains explicitly fictional.
+    r.go=dict(operation='CURRENT_CORRECTION_CAPTURE',qualified_runtime=dict(binding=binding,qualification={}),pending_census=dict(reservations=[]))
+    r.operations_proof=None
     r.go_sha='a'*64
     r.root_ref=hosted.write(r.storage,r.root/'OWNER_ROOT.json',dict(fictional_root=True,successful_forecast=False))
     r.identity=dict(execution_lane='github_actions',repository=store.REPO,run_id='49900000000',run_attempt=1,source_sha='c'*40,
@@ -293,3 +296,89 @@ def test_all_original_archive_intents_and_pending_survive_fresh_failure_append_w
     assert len(charges)==len(boundary['archives'])==len(boundary['core'])==1
     assert intent.read_bytes()==before
     assert all((normal/name).read_bytes()==body for name,(body,_,_) in old.items())
+
+
+@pytest.mark.parametrize('out,err,code',[(b'',b'',-signal.SIGTERM),
+    (b'{"state":"FICTIONAL_CHILD_COMPLETE"}',b'',0),(b'',ERR_PREFIX,17)])
+def test_empty_child_stdio_reaches_complete_core_failure_package_and_fresh_reader(runner,monkeypatch,out,err,code):
+    r=runner;real_popen=subprocess.Popen
+    script='import os,signal,sys;os.write(1,%r);os.write(2,%r);'%(out,err)
+    script+='os.kill(os.getpid(),signal.SIGTERM)'if code<0 else f'sys.exit({code})'
+    def controlled(command,**kwargs):
+        assert command[3].endswith('/tools/fictional_child.py') and kwargs['start_new_session'] is True
+        return real_popen([sys.executable,'-I','-B','-c',script],**kwargs)
+    with monkeypatch.context() as child:
+        child.setattr(hosted.subprocess,'Popen',controlled)
+        if out:
+            assert r.child('fictional_child','infer',{}, {},'FICTIONAL_AUTHORITY',5)==cp.strict_json(out)
+        else:
+            with pytest.raises(store.StoreError,match='WEEKLY_CHILD_STATUS_INVALID'):
+                r.child('fictional_child','infer',{}, {},'FICTIONAL_AUTHORITY',5)
+    prefix='phase-status/01-infer'
+    status=hosted.read_owned(r.storage,cp.binding(r.root/(prefix+'.json')))
+    assert status['exit_code']==code
+    expected={prefix+'.stdout':out,prefix+'.stderr':err}
+    original={name:(r.root/name).read_bytes()for name in expected}
+    empty=next(cp.binding(r.root/name)for name,body in expected.items()if not body)
+    with pytest.raises(store.StoreError,match='EXACT_CHECKPOINT_REFERENCE'):cp.read_ref(empty)
+    intent=r.root/'archive-produce/transport/APPEND_INTENT_0.json'
+    r.storage.write_bytes(intent,b'FICTIONAL_ORIGINAL_APPEND_INTENT\x00\xff')
+    intent_before=intent.read_bytes();identity=(intent.stat().st_dev,intent.stat().st_ino)
+    boundary=append_boundary(r,monkeypatch,archive_success=True)
+    result=r.preserve_failure()
+    assert len(boundary['archives'])==len(boundary['core'])==1
+    assert result['partial_forecast_archive_state']=='FAILURE_EVIDENCE'
+    assert result['successful_forecast'] is result['public_release'] is False
+    request,attachments=boundary['core'][0]
+    assert request['state']=='FAILED' and request['failure']['exit_code']==1
+    controls,_=auxiliary_files(attachments);assert controls==expected
+    phases=[cp.strict_json(body)for name,body in attachments.items()if re.fullmatch('phase-[0-9]{2}',name)]
+    assert phases==[status]
+    assert all((r.root/name).read_bytes()==body for name,body in original.items())
+    assert intent.read_bytes()==intent_before and (intent.stat().st_dev,intent.stat().st_ino)==identity
+    reader='''
+import base64,json,sys
+from pathlib import Path
+from nfl_lab import operational_failure_v1 as failure,gha_private_checkpoint as cp,private_draft_store as store
+request,bodies=failure.unpack(Path(sys.argv[1]).read_bytes())
+records={}
+for item,body in zip(request['attachments'],bodies):
+ if item['label'].startswith('complete-auxiliary-controls'):
+  for value in cp.strict_json(body)['files']:
+   raw=base64.b64decode(value['body_base64'],validate=True)
+   assert len(raw)==value['bytes']and store.sha(raw)==value['sha256']
+   records[value['relative_path']]=raw
+assert len(records)==2
+assert request['state']=='FAILED'and request['failure']['exit_code']==1
+print(json.dumps(dict(state='FAILED',empty=sum(not raw for raw in records.values()),files=len(records))))
+'''
+    restored=subprocess.run([sys.executable,'-B','-c',reader,str(r.root/'failure-evidence/FAILURE.json.gz')],
+        cwd=ROOT,capture_output=True,text=True,timeout=15)
+    assert restored.returncode==0,restored.stderr
+    import json
+    assert json.loads(restored.stdout)==dict(state='FAILED',empty=int(not out)+int(not err),files=2)
+    with pytest.raises(store.StoreError,match='EXACT_CHECKPOINT_REFERENCE'):cp.read_ref(empty)
+
+
+@pytest.mark.parametrize('damage',['hash','length','foreign_alias','writable','symlink'])
+def test_stdio_integrity_or_ownership_failure_cannot_append_core_envelope(runner,tmp_path,monkeypatch,damage):
+    r=runner;path=r.root/'phase-status/01-failed.stderr';r.storage.write_bytes(path,b'')
+    hosted.write(r.storage,r.root/'phase-status/01-failed.json',dict(state='DEADLINE',exit_code=-9,successful_forecast=False))
+    boundary=append_boundary(r,monkeypatch,archive_success=True)
+    if damage in {'hash','length'}:
+        original=cp.binding
+        def binding(candidate):
+            result=original(candidate)
+            if Path(candidate)==path:result['sha256'if damage=='hash'else'bytes']='0'*64 if damage=='hash'else 1
+            return result
+        monkeypatch.setattr(cp,'binding',binding)
+    elif damage=='foreign_alias':
+        path.unlink();path.write_bytes(b'');path.chmod(0o444)
+    elif damage=='writable':path.chmod(0o644)
+    else:
+        foreign=tmp_path/'fictional-outside-stdio';foreign.write_bytes(b'')
+        path.unlink();path.symlink_to(foreign)
+    with pytest.raises((store.StoreError,StorageIntegrityError)):
+        r.preserve_failure()
+    assert boundary['core']==[] and boundary['factory_calls']==[]
+    assert not (r.root/'failure-evidence/FAILURE.json.gz').exists()

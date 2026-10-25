@@ -29,8 +29,10 @@ from . import audit_weekly_origin_v1 as origin, audit_weekly_epoch_v1 as epoch
 from . import audit_weekly_runtime_v1 as runtime, audit_weekly_archive_v1 as archive
 from . import audit_reference_capture_v1 as reference
 from . import audit_weekly_public_v1 as public, audit_weekly_retained_v1 as weekly_retained
+from .audit_weekly_template_v1 import retained_registration
 from . import operational_failure_v1 as failure
 from . import audit_numerical_runtime_v1 as numerical
+from . import audit_weekly_operations_authority_v1 as operations_authority
 from .operational_storage import OperationalStorage, _OWNER
 from .owned_reference_batch import validate_owned_references
 from .state import digest, now_utc, utc
@@ -41,6 +43,13 @@ ROOT = Path(__file__).resolve().parents[1]
 JOBS = dict(produce="audit-weekly-produce-v1", restore="audit-weekly-restore-v1", consume="audit-weekly-export-v1")
 FAILURE_JOB = "audit-weekly-failure-restore-v1"
 EXECUTION_JOBS = dict(JOBS, evidence=FAILURE_JOB)
+OPERATIONS_PHASES = {"operations-prepare":("produce","operations-prepared"),
+    "operations-retained":("produce","operations-retained"),
+    "operations-grade-write":("restore","operations-grade-write"),
+    "operations-grade-read":("consume","operations-grade-read"),
+    "controller-template-write":("produce","controller-template-write"),
+    "controller-template-read":("restore","controller-template-read"),
+    "controller-template-seal":("consume","controller-template-seal")}
 LIMITS = dict(wall_seconds=1500, CPU_seconds=900, address_space_bytes=4 << 30,
     global_private_bytes=512 << 20, runtime_bytes=32 << 20, fits=0, searches=0,
     automatic_retry=False, maximum_dispatches=1, public_raw_or_models=False)
@@ -61,9 +70,39 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
     "tests/test_audit_weekly_receipt_bundle_v1.py",
     "tests/test_audit_weekly_child_status_v1.py", "tests/test_audit_weekly_archive_scale_v1.py",
+    "tests/test_audit_weekly_archive_packing_v1.py",
     "nfl_lab/audit_numerical_runtime_v1.py", "tests/test_audit_numerical_runtime_v1.py",
     "config/audit-weekly-numerical-runtime-v1.json",
-    ".github/workflows/audit-source-checks.yml"}))
+    ".github/workflows/audit-source-checks.yml",
+    # Executable operational closure and the independently required bootstrap
+    # checks. Standalone preparation CLIs are not invoked by this workflow.
+    # The full repository CI still checks their exact committed source.
+    "nfl_lab/audit_weekly_controller_v1.py", "tools/audit_weekly_controller_v1.py",
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py", "tools/audit_weekly_controller_bootstrap_v1.py",
+    "tests/test_audit_weekly_controller_v1.py", "tests/test_audit_weekly_controller_bootstrap_v1.py",
+    "nfl_lab/audit_weekly_template_v1.py", "nfl_lab/audit_weekly_discovery_v1.py",
+    "nfl_lab/audit_weekly_resume_v1.py", "nfl_lab/audit_weekly_grade_v1.py",
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py", "nfl_lab/audit_weekly_provider_v1.py",
+    "nfl_lab/audit_weekly_operations_v1.py", "nfl_lab/audit_weekly_operations_authority_v1.py",
+    "nfl_lab/audit_weekly_operations_restore_v1.py", "tools/audit_weekly_operations_restore_v1.py",
+    "nfl_lab/audit_weekly_operations_worker_v1.py", "tools/audit_weekly_operations_worker_v1.py",
+    "nfl_lab/audit_weekly_operations_grade_v1.py", "tools/audit_weekly_operations_grade_v1.py",
+    "tests/test_audit_weekly_operations_worker_v1.py", "tests/test_audit_weekly_operations_restore_v1.py",
+    "tests/test_audit_weekly_operations_grade_v1.py", "tests/test_audit_weekly_operations_grade_scale_v1.py",
+    "nfl_lab/audit_weekly_controller_registration_v1.py", "tools/audit_weekly_controller_registration_v1.py",
+    "tests/test_audit_weekly_controller_registration_v1.py", "tests/test_audit_weekly_archive_packing_v1.py",
+    "tools/mask_dispatch_inputs.py", "tests/test_private_dispatch_masking_v1.py",
+    "nfl_lab/audit_weekly_grade_history_v1.py", "tests/test_audit_weekly_grade_history_v1.py",
+    "nfl_lab/audit_weekly_parent_v1.py", "tools/audit_weekly_parent_v1.py", "tests/test_audit_weekly_parent_v1.py",
+    "nfl_lab/cadence.py", "nfl_lab/state.py", "nfl_lab/weekly_grading.py",
+    "tests/test_audit_weekly_grade_checkpoint_v1.py", "tests/test_audit_weekly_parent_workflow_v1.py", "tests/test_cadence.py",
+    "tools/audit_weekly_grade_checkpoint_v1.py", "tools/audit_weekly_grade_v1.py"}
+    - {"tests/test_audit_weekly_child_status_v1.py"}))
+# Runtime pins cover the complete executable closure and mandatory protocol
+# tests. These three additional qualification suites remain in full exact-source
+# CI, not in the private Root's bounded runtime inventory; no test is skipped.
+CI_ONLY_QUALIFICATION_TESTS=("tests/test_audit_weekly_child_status_v1.py",
+    "tests/test_audit_weekly_workflow_composition_v1.py", "tests/test_audit_weekly_delivery_grading_v1.py")
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
     "actual_actions_api_authenticated","owner_root_checked","fits","public_release"}
@@ -101,9 +140,11 @@ def publication_configuration(go, *, now):
     except Exception:raise store.StoreError("PUBLIC_METADATA_ENCODING_INVALID") from None
     require(body==store.canonical(policy),"CANONICAL_ROOT_PUBLIC_POLICY")
     public.policy_check(policy,at=now.isoformat())
-    replay=go["retained_registration"]["origin"]["replay_catalog"]
+    replay=retained_registration(go)["origin"]["replay_catalog"]
     require(policy["source_sha"]==go["source_sha"] and policy["source_branch"]=="research/weekly-storage-probe-v1"
-        and policy["jobs"]==JOBS and policy["registered_at_utc"]==go["issued_at_utc"]
+        and policy["jobs"]==JOBS
+        and (utc(policy["registered_at_utc"])<=utc(go["issued_at_utc"]) if go.get("operation")=="RECURRING_CAPTURE"
+             else policy["registered_at_utc"]==go["issued_at_utc"])
         and policy["workflow_sha256"]==store.sha(store.read_local(ROOT/".github/workflows/lab.yml",128 << 10))
         and policy["approved_candidates"]==[{k:s[k] for k in ("target","family","method_id","procedure_version")} for s in replay["slots"]],
         "EXACT_CURRENT_ROOT_PUBLICATION_SCOPE_BEFORE_VALUES")
@@ -139,11 +180,25 @@ def validate_root(go, *, now):
     issued,expires=utc(go["issued_at_utc"]),utc(go["expires_at_utc"])
     require(issued<=now<expires and 0<(expires-issued).total_seconds()<=3600,"CURRENT_WEEKLY_GO_CLOCK")
     require(type(go["cutoff_lead_seconds"]) is int and go["cutoff_lead_seconds"]==5400
-        and type(go["publication"]) is bool and go["effective_epoch"] is None,
+        and type(go["publication"]) is bool,
         "EXPLICIT_INITIAL_CORRECTION_SCOPE_NO_BACKFILL")
-    require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE"}
-        and (go["publication"] is False or go["operation"]=="CURRENT_CORRECTION_CAPTURE"),"EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
-    retained.validate_registration(go["retained_registration"])
+    require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}
+        and (go["publication"] is False or go["operation"] in {"CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}),
+        "EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
+    if go["operation"]=="RECURRING_CAPTURE":
+        from . import audit_weekly_operations_v1 as operations
+        operations.context(go["effective_epoch"])
+    elif go["operation"]=="CONTROLLER_REGISTRATION":
+        value=go["effective_epoch"]
+        require(type(value) is dict and set(value)=={"schema_version","parent_source_sha","previous_capture"}
+            and value["schema_version"]=="audit-weekly-controller-registration-v1-context"
+            and re.fullmatch(r"[a-f0-9]{40}",str(value["parent_source_sha"]))
+            and type(value["previous_capture"]) is dict
+            and set(value["previous_capture"])=={"feed_sha256","receipt_sha256"}
+            and all(re.fullmatch(r"[a-f0-9]{64}",str(v)) for v in value["previous_capture"].values()),
+            "EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT")
+    else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
+    retained.validate_registration(retained_registration(go))
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
         and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
         "NEW_GENUINELY_QUALIFIED_NAMESPACE_REQUIRED")
@@ -159,16 +214,28 @@ def read_owned(storage, ref, cap=4 << 20, *, raw=False):
     return body if raw else cp.strict_json(body)
 
 
+def read_owned_stdio(storage,ref):
+    """Raw child stdio may be empty; checkpoint/JSON references remain nonempty."""
+    require(type(ref) is dict and set(ref)=={"path","bytes","sha256"}
+        and type(ref["path"]) is str and Path(ref["path"]).suffix in {".stdout",".stderr"}
+        and type(ref["bytes"]) is int and 0<=ref["bytes"]<=64 << 10
+        and type(ref["sha256"]) is str and store.HASH.fullmatch(ref["sha256"]),"EXACT_OWNED_STDIO_REFERENCE")
+    validate_owned_references(storage,{ref["path"]:ref["sha256"]})
+    body=store.read_local(ref["path"],64 << 10)
+    require(len(body)==ref["bytes"] and store.sha(body)==ref["sha256"],"OWNED_STDIO_REFERENCE_HASH_OR_LENGTH")
+    return body
+
+
 def write(storage,path,value):
     storage.write_bytes(path,store.canonical(value));return cp.binding(path)
 
 
-def actual_failure(env, *, python_failure_recorded):
+def actual_failure(env, *, python_failure_recorded, action_failure_recorded=False):
     value=env.get("AUDIT_WEEKLY_ORIGINAL_EXIT_CODE","")
     require(value=="" or re.fullmatch(r"[1-9][0-9]{0,2}",value) and int(value)<=255,"ACTUAL_FAILED_STEP_EXIT_CODE_REQUIRED")
     code=int(value) if value else None
-    kind="DEADLINE" if code==124 else "INTERRUPTION" if code in {130,137,143} or not python_failure_recorded else "EXCEPTION"
-    return dict(kind=kind,code="WEEKLY_PHASE_FAILED_RETAINED",exit_code=code)
+    kind="DEADLINE" if code==124 else "INTERRUPTION" if code in {130,137,143} or not (python_failure_recorded or action_failure_recorded) else "EXCEPTION"
+    return dict(kind=kind,code="WEEKLY_ACTION_STEP_FAILED" if action_failure_recorded else "WEEKLY_PHASE_FAILED_RETAINED",exit_code=code)
 
 
 def error_diagnostic(error):
@@ -195,9 +262,9 @@ class Runner:
         require(0<len(raw)<=60 << 10 and store.sha(raw)==env.get("AUDIT_WEEKLY_ROOT_GO_SHA256"),"EXACT_WEEKLY_ROOT_INPUT")
         self.go=validate_root(cp.strict_json(raw),now=now_utc());self.go_sha=store.sha(raw)
         require(store.canonical(self.go)==raw,"CANONICAL_WEEKLY_ROOT")
+        self.operations_proof=operations_authority.current(env,raw,ROOT)
         require(env.get("GITHUB_ACTIONS")=="true" and env.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
             and env.get("GITHUB_REPOSITORY")==store.REPO and env.get("GITHUB_RUN_ATTEMPT")=="1"
-            and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
             and env.get("GITHUB_SHA")==env.get("GITHUB_WORKFLOW_SHA")==self.go["source_sha"]
             and env.get("GITHUB_WORKFLOW_REF")==self.go["workflow_ref"] and env.get("GITHUB_JOB")==EXECUTION_JOBS[phase]
             and env.get("STORE_PERMISSION")=="write","GENUINE_OWNER_WEEKLY_JOB_REQUIRED")
@@ -245,6 +312,7 @@ class Runner:
             self.client=Metadata(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=self.journal,
                 job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"])
             self.client.authenticate_actions_job();self.client.bind(self.go["qualified_runtime"]["binding"])
+            operations_authority.attach(self.client,self.operations_proof,env,raw)
             archive.authenticate_qualification(self.client,self.go["qualified_runtime"],self.go["pending_census"])
             jobs=archive.jobs_for(self.client);self.identity=cp.client_identity(self.client)
             current=[j for j in jobs if j.get("id")==self.identity["api_job_id"]]
@@ -267,6 +335,9 @@ class Runner:
                 original_start_sha256=cp.binding(self.root/"BOOTSTRAP_STARTED.json")["sha256"],current_identity=self.identity,
                 actual_authenticated_at=now_utc().isoformat(),original_process_api_proof_retained=False,public_release=False))
         self.publication=publication_configuration(self.go,now=now_utc())
+        if self.operations_proof is not None and self.publication is not None:
+            from . import audit_weekly_controller_bootstrap_v1 as bootstrap
+            bootstrap.authorize_policy(self.operations_proof,raw,store.canonical(self.publication["policy"]))
         if (self.root/"PARENT_STARTED.json").exists():
             original_start=read_owned(self.storage,cp.binding(self.root/"PARENT_STARTED.json"))
             require(original_start["actual_identity"]["run_id"]==self.identity["run_id"]
@@ -278,6 +349,13 @@ class Runner:
         validate_root(self.go,now=now_utc())
         total=[resource.getrusage(k) for k in (resource.RUSAGE_SELF,resource.RUSAGE_CHILDREN)]
         require(sum(x.ru_utime+x.ru_stime for x in total)<=LIMITS["CPU_seconds"],"WEEKLY_AGGREGATE_CPU_CAP")
+
+    def fresh_operations_proof(self):
+        """A long numerical phase cannot extend an earlier metadata proof."""
+        self.check()
+        if self.go["operation"]=="RECURRING_CAPTURE":
+            self.operations_proof=operations_authority.current(self.env,store.canonical(self.go),ROOT)
+        return self.operations_proof
 
     def native(self, version, phase, request, *, zero_fields=()):
         self.check()
@@ -337,6 +415,7 @@ class Runner:
         client=ClaimClient(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
             journal=self.journal,job=self.job,operation="append",qualification=package["qualification"])
         client.authenticate_actions_job();client.bind(package["binding"])
+        operations_authority.attach(client,self.operations_proof,self.env,store.canonical(self.go))
         archive.authenticate_qualification(client,package,self.go["pending_census"])
         body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
         assets,total=client.inventory()
@@ -354,16 +433,111 @@ class Runner:
         return cp.binding(self.root/"origin"/"ORIGIN_RESULT.json")
 
     def recover_models(self):
-        request=dict(schema_version=VERSION+"-model-request",registration=self.go["retained_registration"],cache=str(self.storage.cache),
+        request=dict(schema_version=VERSION+"-model-request",registration=retained_registration(self.go),cache=str(self.storage.cache),
             state_root=str(self.root/"state"),output=str(self.root/"retained"),code_pins=pins())
         a=self.native(VERSION,"models",request)
         self.child("audit_weekly_hosted_v1","models",request,a,"AUDIT_WEEKLY_NATIVE_AUTHORITY",430)
         return cp.binding(self.root/"retained"/"RESTORED.json")
 
+    def recurring_prepare(self):
+        """Recover the exact previous issue, then register a fresh capture.
+
+        Qualified prior bodies are immutable inputs, never a replacement for
+        fresh current-source acquisition. The worker validates the original
+        canonical choice and rejects an unsupported previous grading state.
+        """
+        from . import audit_weekly_operations_worker_v1 as worker
+        from . import audit_weekly_operations_restore_v1 as recovery
+        from .operational_io import quota_downloader
+        require(self.go["operation"]=="RECURRING_CAPTURE" and self.operations_proof is not None,
+            "LIVE_RECURRING_CAPTURE_ROOT_REQUIRED")
+        self.claim()
+        prior_metadata=self.prior_public_metadata()
+        request=dict(schema_version=recovery.VERSION+"-request",phase=recovery.PHASE,code_pins=pins(),
+            limits=recovery.LIMITS,cache=str(self.storage.cache),state_root=str(self.root/"state"),
+            output=str(self.root/recovery.PHASE),inputs={k:prior_metadata[k] for k in ("receipt","historical_source_sha256")})
+        recovered=self.child("audit_weekly_operations_restore_v1",recovery.PHASE,request,
+            self.native(VERSION,recovery.PHASE,request),"AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
+        retained_ref=recovered["retained_result"]
+        retained_result=read_owned(self.storage,retained_ref)
+        require(retained_result["current_root_go_sha256"]==self.go_sha
+            and retained_result["validation"].get("qualified_selected") is True,
+            "EXACT_AUTHENTICATED_PRIOR_CAPTURE_REQUIRED")
+        models=self.recover_models()
+        aliases=retained_result["aliases"]
+        canonical=aliases.get("context/canonical_weekly_choice.json",aliases["runtime/WEEKLY_CHOICE.json"])
+        original_choice_sha256=digest(read_owned(self.storage,canonical))
+        calendar_root=self.storage.register_root(self.root/"current-calendar")
+        started=now_utc()
+        receipt=quota_downloader(self.storage)(calendar_root,"schedules.csv",worker.CALENDAR_URL,refresh_daily=False)
+        require(receipt.get("status")=="acquired" and receipt.get("cache_reused") is False
+            and not receipt.get("stale") and started<=utc(receipt["retrieved_utc"])<=now_utc(),
+            "GENUINELY_FRESH_FULL_CALENDAR_REQUIRED")
+        body=cp.binding(calendar_root/"schedules.csv")
+        require(body["bytes"]<=worker.LIMITS["calendar_bytes"] and body["sha256"]==receipt["sha256"],
+            "EXACT_FULL_CALENDAR_BODY_AND_RECEIPT")
+        calendar=dict(body=body,receipt=cp.binding(calendar_root/"schedules.csv.receipt.json"))
+        inputs=dict(retained_result=retained_ref,retained_models=models,calendar=calendar,
+            canonical_weekly_choice_sha256=original_choice_sha256,
+            capture_id=digest(dict(root_go_sha256=self.go_sha,canonical_weekly_choice_sha256=original_choice_sha256,
+                stream="weekly-corrected-primary-player-game-v1")),previous_grade_snapshot=prior_metadata["previous_grade_snapshot"])
+        request=dict(schema_version=worker.VERSION+"-request",phase=worker.PHASE,code_pins=pins(),limits=worker.LIMITS,
+            cache=str(self.storage.cache),state_root=str(self.root/"state"),output=str(self.root/worker.OUTPUT_NAME),inputs=inputs)
+        prepared=self.child("audit_weekly_operations_worker_v1",worker.PHASE,request,
+            self.native(VERSION,worker.PHASE,request),"AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
+        manifest=read_owned(self.storage,prepared["manifest"])
+        require(manifest["current_root_go_sha256"]==self.go_sha and manifest["current_values_used"] is False
+            and manifest["no_reselection"] is manifest["no_cutoff_extension"] is True,
+            "ACTUAL_PREVALUE_RECURRING_METADATA_REQUIRED")
+        return retained_result,manifest
+
+    def prior_public_metadata(self):
+        """Exact registered public receipt/source, never a latest-feed query."""
+        from . import audit_weekly_operations_v1 as operations
+        from . import audit_weekly_discovery_v1 as discovery
+        from . import audit_weekly_grade_history_v1 as history
+        context=operations.context(self.go["effective_epoch"])
+        require(self.operations_proof is not None,"LIVE_RECURRING_ROOT_REQUIRED")
+        previous=context["previous_capture"]
+        def content(path,ref,cap):
+            url=store.API+"/contents/"+path+"?ref="+ref
+            # Fixed repository, registered hash and fixed eight source names.
+            # Metadata client rejects every method other than GET.
+            self.client.allowed.add(url);value=self.client.json(url)
+            require(type(value) is dict and value.get("type")=="file" and value.get("path")==path
+                and value.get("encoding")=="base64" and type(value.get("size")) is int
+                and 0<value["size"]<=cap,"BOUNDED_RECURRING_PUBLIC_METADATA_FILE")
+            raw=base64.b64decode(value["content"].replace("\n",""),validate=True)
+            from . import audit_weekly_controller_v1 as controller
+            require(len(raw)==value["size"] and controller.blob_sha(raw)==value.get("sha"),
+                "EXACT_IMMUTABLE_PUBLIC_METADATA_BLOB")
+            return raw
+        path="state/public/weekly-adaptive-v1/receipts/"+previous["feed_sha256"]+".json.gz"
+        compressed=content(path,"lab-state",64 << 10)
+        require(store.sha(compressed)==previous["receipt_sha256"],"EXACT_REGISTERED_PRIOR_COMPRESSED_RECEIPT")
+        value=archive.unpack(compressed,64 << 10);plain=store.canonical(value)
+        discovery.receipt(plain,store.sha(plain))
+        require(value["feed_sha256"]==previous["feed_sha256"] and value["run_id"]!=self.identity["run_id"],
+            "EXACT_PRIOR_FEED_FROM_DISTINCT_RUN")
+        historical={name:store.sha(content(name,value["source_sha"],256 << 10))
+            for name in weekly_retained.HISTORICAL_FILES}
+        folder=self.storage.register_root(self.root/"operations-public-metadata")
+        self.storage.write_bytes(folder/"PUBLIC_RECEIPT.json.gz",compressed)
+        receipt_ref=cp.binding(folder/"PUBLIC_RECEIPT.json.gz")
+        checkpoint=history.previous_checkpoint(self.go)
+        pair=None
+        if checkpoint is not None:
+            path="state/controller-v1/grade-checkpoints/"+previous["feed_sha256"]+".json.gz"
+            packed=content(path,"lab-state",history.LIMITS["sidecar_bytes"])
+            require(store.sha(packed)==checkpoint["sha256"],"EXACT_ROOT_PRIOR_GRADING_SIDECAR_HASH_BEFORE_VALUES")
+            self.storage.write_bytes(folder/"PREVIOUS_GRADE_CHECKPOINT.json.gz",packed)
+            pair=dict(sidecar=cp.binding(folder/"PREVIOUS_GRADE_CHECKPOINT.json.gz"),public_receipt=receipt_ref)
+        return dict(receipt=receipt_ref,historical_source_sha256=historical,previous_grade_snapshot=pair)
+
     def metadata(self, origin_ref, retained_ref):
         old=read_owned(self.storage,origin_ref);restored=read_owned(self.storage,retained_ref)
         read=lambda role,raw=False:read_owned(self.storage,old[role],raw=raw)
-        replay=self.go["retained_registration"]["origin"]["replay_catalog"]
+        replay=retained_registration(self.go)["origin"]["replay_catalog"]
         e=epoch.prepare_epoch(read("original_choice",True),read("original_terminal_witness"),read("original_slate"),
             read("original_catalog"),read("original_policy"),replay,history_binding=old["history_binding"],
             effective_controls=dict(R0=reference.control_spec()))
@@ -411,11 +585,16 @@ class Runner:
             elif phase=="acquire":request["source"]=cp.binding(outputs[phase]/"SOURCE_FINISHED.json")
         return request
 
-    def reference(self, inputs, request):
+    def reference(self, inputs, request, *, previous_state=None, previous_state_aliases=None):
         payload=dict(schema_version=VERSION+"-reference-request",inputs=inputs,history_binding=request["history_binding"],
             config=self.go["source_config"],cache=str(self.storage.cache),state_root=str(self.root/"state"),
             prepared=request["prepared"],source=request["source"],runtime_root=str(self.root/"runtime"),
             output=str(self.root/"reference"),repository=self.env["NFL_R0_SOURCE_REPOSITORY"],code_pins=pins())
+        if self.go["operation"]=="RECURRING_CAPTURE":
+            require(previous_state is not None and type(previous_state_aliases) is dict,
+                "QUALIFIED_PRIOR_ORIGINAL_R0_STATE_REQUIRED")
+            payload.update(previous_state=previous_state,previous_state_aliases=previous_state_aliases)
+        else:require(previous_state is previous_state_aliases is None,"NO_IMPLICIT_REFERENCE_STATE_OVERRIDE")
         a=self.native(VERSION,"reference",payload)
         self.child("audit_weekly_hosted_v1","reference",payload,a,"AUDIT_WEEKLY_NATIVE_AUTHORITY",430)
         return cp.binding(self.root/"reference"/"CAPTURE_COMPLETE.json")
@@ -433,6 +612,154 @@ class Runner:
         result=self.child("audit_weekly_archive_v1",phase,request,self.native(archive.VERSION,phase,request),"AUDIT_WEEKLY_ARCHIVE_AUTHORITY",190)
         return result
 
+    def grading_phase(self, phase, restored, *, handoff=None):
+        """Use independent guarded workers; grading failure stops export."""
+        from . import audit_weekly_operations_grade_v1 as grading
+        from . import audit_weekly_grade_checkpoint_v1 as checkpoint
+        require(self.go["operation"]=="RECURRING_CAPTURE" and phase in grading.PHASES,
+            "EXPLICIT_RECURRING_GRADING_PHASE_REQUIRED")
+        inputs=dict(archive_restored=restored)
+        if phase==grading.PHASES[0]:
+            require(handoff is None,"NO_PRETENDED_PRIOR_GRADING_STATE")
+            inputs["previous_snapshot"]=None
+        else:
+            checkpoint.safe_handoff(handoff)
+            require(handoff["current_root_go_sha256"]==self.go_sha,"EXACT_CURRENT_GRADING_HANDOFF_ROOT")
+            inputs["checkpoint_handoff"]=handoff
+        request=dict(schema_version=grading.VERSION+"-request",phase=phase,code_pins=pins(),limits=grading.LIMITS,
+            cache=str(self.storage.cache),state_root=str(self.root/"state"),output=str(self.root/phase),inputs=inputs)
+        result=self.child("audit_weekly_operations_grade_v1",phase,request,self.native(VERSION,phase,request),
+            "AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
+        expected="PRIVATE_GRADE_APPENDED_FRESH_READER_REQUIRED" if phase==grading.PHASES[0] \
+            else "PRIVATE_OPERATIONAL_GRADING_FRESH_READER_VERIFIED"
+        require(result["state"]==expected and result["successful_forecast"] is result["public_release"] is False,
+            "REAL_OPERATIONAL_GRADING_PHASE_REQUIRED")
+        if phase==grading.PHASES[0]:
+            body=checkpoint.safe_handoff(result["checkpoint_handoff"])
+            require(result["checkpoint_handoff"]["current_root_go_sha256"]==self.go_sha,
+                "EXACT_APPENDED_GRADING_HANDOFF_ROOT")
+            with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+                stream.write("grade_checkpoint_handoff_json="+body.decode()+"\n"
+                    "grade_checkpoint_handoff_sha256="+store.sha(body)+"\n")
+                stream.flush();os.fsync(stream.fileno())
+        return result
+
+    def grading_delivery(self, manifest_ref, public_receipt):
+        """Append original reader evidence, then publish its closed locator.
+
+        This runs only after the actual guarded grade-read child succeeds and
+        before delivery publishes either the forecast feed or its receipt. An
+        orphan locator from a later feed failure conveys no successful run.
+        """
+        from . import audit_weekly_grade_history_v1 as history
+        from . import audit_weekly_grade_checkpoint_v1 as checkpoint
+        from .audit_weekly_delivery_v1 import quiet_publisher
+        from tools import persist_state
+        self.check()
+        require(self.phase=="consume" and self.go["operation"]=="RECURRING_CAPTURE"
+            and self.go["publication"] is True,"CURRENT_RECURRING_EXPORT_GRADING_REQUIRED")
+        report=read_owned(self.storage,manifest_ref,128 << 10)
+        require(report["schema_version"]=="audit-weekly-operations-grade-v1-read"
+            and report["state"]=="PRIVATE_OPERATIONAL_GRADING_FRESH_READER_VERIFIED"
+            and report["root_go_sha256"]==self.go_sha
+            and report["fits"]==0 and report["public_release"] is report["successful_forecast"] is False,
+            "ORIGINAL_NATIVE_GRADE_READ_MANIFEST_REQUIRED")
+        handoff=report["checkpoint_handoff"];checkpoint.safe_handoff(handoff)
+        proof=report["grade_read_proof"]
+        require(handoff["current_root_go_sha256"]==public_receipt["root_go_sha256"]==self.go_sha
+            and handoff["epoch_sha256"]==public_receipt["epoch_sha256"]
+            and proof==read_owned(self.storage,report["proof"],128 << 10)
+            and public_receipt["jobs"]["restore"]=={k:proof["producer"][k] for k in ("job_id","api_job_id")}
+            and public_receipt["jobs"]["consume"]=={k:proof["reader"][k] for k in ("job_id","api_job_id")},
+            "SAME_NATIVE_GRADING_AND_FEED_COHORT")
+        envelope_ref=report["evidence_envelope"]
+        body=read_owned(self.storage,envelope_ref,history.LIMITS["envelope_bytes"],raw=True)
+        envelope=history._unpack(body,history.LIMITS["envelope_bytes"])
+        require(set(envelope)==history.ENVELOPE_KEYS and envelope["schema_version"]==history.VERSION+"-evidence-envelope"
+            and envelope["handoff_sha256"]==store.sha(checkpoint.safe_handoff(handoff))
+            and envelope["grade_read_proof"]==proof,
+            "COMPLETE_ORIGINAL_NATIVE_READ_EVIDENCE_REQUIRED")
+        folder=self.storage.register_root(self.root/"grading-delivery")
+        write(self.storage,folder/"APPEND_INTENT.json",dict(schema_version="audit-weekly-grading-delivery-v1-intent",
+            root_go_sha256=self.go_sha,feed_sha256=public_receipt["feed_sha256"],evidence_sha256=envelope_ref["sha256"],fits=0))
+        client=self.failure_client("append")  # Actual same-job API auth and fresh Root authority.
+        assets,total=client.inventory()
+        require(total+len(body)+cp.ENTRY_CAP<=store.TOTAL_CAP and client.inventory_slots+2<=store.MAX_ASSETS,
+            "GRADING_EVIDENCE_APPEND_QUOTA_BEFORE_POST")
+        self.check()
+        descriptor=store.append(client,body,cp.payload(body),self.go["qualified_runtime"]["qualification"])
+        current=cp.client_identity(client)
+        require(current["job_id"]==JOBS["consume"] and current["api_job_id"]==self.identity["api_job_id"]
+            and current["source_sha"]==self.go["source_sha"] and current["run_id"]==self.identity["run_id"],
+            "ACTUAL_CURRENT_EXPORT_EVIDENCE_APPEND_REQUIRED")
+        write(self.storage,folder/"APPENDED.json",dict(descriptor=descriptor,producer=current,
+            evidence_sha256=envelope_ref["sha256"],actual_completed_at=now_utc().isoformat()))
+        sidecar=history.sidecar_document(public_receipt,handoff,proof,descriptor,current)
+        encoded=gzip.compress(store.canonical(sidecar),mtime=0)
+        require(len(encoded)<=history.LIMITS["sidecar_bytes"],"BOUNDED_PUBLIC_GRADING_LOCATOR")
+        public_state=self.storage.register_root(folder/"public-state")
+        name="controller-v1/grade-checkpoints/"+public_receipt["feed_sha256"]+".json.gz"
+        self.storage.write_bytes(public_state/name,encoded)
+        self.check()
+        # The generic reviewed-map publisher preserves all existing paths and
+        # verifies this one owned file in the remote commit. The existing
+        # two-file forecast publisher and its schema stay unchanged.
+        from .operational_io import operational_io
+        with quiet_publisher(ROOT),operational_io(self.storage,run_root=ROOT/"runs"):
+            persist_state.persist(ROOT,public_state,storage=self.storage,
+                policy_path=ROOT/"config/operational-source-policy-v2.json",files={name:store.sha(encoded)})
+        self.check()
+        return dict(schema_version="audit-weekly-grading-delivery-v1",feed_sha256=public_receipt["feed_sha256"],
+            sidecar_sha256=store.sha(encoded),sidecar_path=name,evidence_descriptor_sha256=store.sha(store.canonical(descriptor)))
+
+    def controller_registration(self, phase):
+        """Prepare the native seal; the whole run must finish before adoption."""
+        from . import audit_weekly_controller_registration_v1 as registration
+        require(self.go["operation"]=="CONTROLLER_REGISTRATION" and phase in registration.PHASES,
+            "EXPLICIT_OWNER_CONTROLLER_REGISTRATION_REQUIRED")
+        role,folder=registration.PHASES[phase]
+        require(self.phase==role,"EXACT_CONTROLLER_REGISTRATION_JOB_ROLE")
+        if role=="produce":self.claim()
+        names=registration.INPUT_KEYS[phase]
+        inputs={}
+        for name in sorted(names):
+            if name=="readiness":inputs[name]=None;continue
+            prefix="AUDIT_WEEKLY_CONTROLLER_"+name.upper()
+            raw=self.env.get(prefix+"_JSON","").encode()
+            require(0<len(raw)<=64 << 10 and store.sha(raw)==self.env.get(prefix+"_SHA256"),
+                "EXACT_CONTROLLER_NATIVE_STAGE_HANDOFF")
+            document=cp.strict_json(raw)
+            require(store.canonical(document)==raw,"CANONICAL_CONTROLLER_NATIVE_STAGE_HANDOFF")
+            inputs[name]=write(self.storage,self.root/"controller-inputs"/(name+".json"),document)
+        request=registration.build_request(phase,code_pins=pins(),cache=self.storage.cache,state_root=self.root/"state",
+            output=self.root/folder,inputs=inputs)
+        result=self.child("audit_weekly_controller_registration_v1",phase,request,self.native(VERSION,phase,request),
+            "AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
+        expected=set(registration.OUTPUT_FILES[phase])
+        require(result["phase"]==phase and set(result["artifacts"])==expected
+            and result["public_root"] is result["registry_created"] is result["registration_run_completed"] is False,
+            "ACTUAL_NATIVE_CONTROLLER_STAGE_REQUIRED")
+        public_metadata={}
+        with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+            for name,ref in sorted(result["artifacts"].items()):
+                require(Path(ref["path"])==self.root/folder/registration.OUTPUT_FILES[phase][name],
+                    "EXACT_CLOSED_CONTROLLER_ARTIFACT_OUTPUT")
+                value=read_owned(self.storage,ref,64 << 10,raw=True)
+                require(value==store.canonical(cp.strict_json(value)) and b"\n" not in value,
+                    "CANONICAL_CONTROLLER_ARTIFACT_OUTPUT")
+                stream.write("controller_"+name+"_json="+value.decode()+"\n"
+                    "controller_"+name+"_sha256="+store.sha(value)+"\n")
+                if name=="safe_seal":stream.write("controller_safe_seal_path="+ref["path"]+"\n")
+                if name in {"registration","locator_registration"}:public_metadata[name]=cp.strict_json(value)
+            stream.flush();os.fsync(stream.fileno())
+        summary=dict(state=result["state"],phase=phase,fits=0,public_release=False,successful_forecast=False,
+            public_root=False,registry_created=False,registration_run_completed=False)
+        if role=="consume":
+            require(set(public_metadata)=={"registration","locator_registration"},"COMPLETE_CLEARED_REGISTRATION_METADATA")
+            summary.update(public_metadata_scope="CLEARED_CONTROLLER_REGISTRATION_METADATA_ONLY",**public_metadata)
+        require(len(store.canonical(summary))<=64 << 10,"CLOSED_PUBLIC_REGISTRATION_SUMMARY_BOUND")
+        return summary
+
     def produce(self):
         if self.go["operation"]=="ORIGIN_METADATA_ONLY":
             ref=self.recover_origin();old=read_owned(self.storage,ref)
@@ -444,17 +771,28 @@ class Runner:
                 original_decision_write_clock=witness["actual_decision_persist_completed_at"],
                 new_witness_created_at=witness["created_at_utc"],raw_original_completion_file_retained=False,
                 source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],fits=0,model_decodes=0,forecasts=0,remote_writes=0,public_release=False)
-        self.claim()
-        origin_ref=self.recover_origin();old=read_owned(self.storage,origin_ref)
-        retained_ref=self.recover_models()
-        inputs=self.metadata(origin_ref,retained_ref)
+        if self.go["operation"]=="CONTROLLER_REGISTRATION":
+            return self.controller_registration("controller-template-write")
+        recurring=self.go["operation"]=="RECURRING_CAPTURE"
+        if recurring:
+            prior,operations=self.recurring_prepare()
+            origin_ref=self.recover_origin()
+            inputs=operations["inputs"];retained_ref=inputs["retained_restore"]
+        else:
+            self.claim()
+            origin_ref=self.recover_origin()
+            retained_ref=self.recover_models()
+            inputs=self.metadata(origin_ref,retained_ref)
         policy_ref=self.register_publication(inputs)
         request=self.capture(inputs,origin_ref)
-        r0=self.reference(inputs,request)
+        r0=self.reference(inputs,request,previous_state=prior["previous_state"] if recurring else None,
+            previous_state_aliases=prior["previous_state_aliases"] if recurring else None)
         context=dict(epoch=inputs["epoch"],epoch_registration=inputs["epoch_registration"],original_choice=inputs["original_choice"],
             origin_witness=inputs["original_completion"],original_slate=inputs["original_slate"],original_catalog=inputs["original_catalog"],
             original_policy=inputs["original_policy"],retained_models=retained_ref,prepared=request["prepared"],source=request["source"])
         if policy_ref is not None:context["public_policy"]=policy_ref
+        if recurring:
+            context.update({k:v for k,v in operations["archive_context"].items() if v is not None})
         result=self.archive_call("produce",self.archive_request("produce",context=context,r0=r0))
         require(result["archive_state"]=="COMPLETE_CAPTURE","PARTIAL_ARCHIVE_NOT_A_SUCCESSFUL_FORECAST")
         terminal=read_owned(self.storage,cp.binding(self.root/"runtime"/"FINISHED.json"))
@@ -467,6 +805,8 @@ class Runner:
 
     def restore(self):
         failure_text=self.env.get("AUDIT_WEEKLY_FAILURE_HANDOFF_JSON","").encode()
+        if self.go["operation"]=="CONTROLLER_REGISTRATION" and not failure_text:
+            return self.controller_registration("controller-template-read")
         if failure_text:
             require(store.sha(failure_text)==self.env.get("AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256"),"EXACT_FAILED_ATTEMPT_HANDOFF")
             value=cp.strict_json(failure_text)
@@ -492,27 +832,48 @@ class Runner:
         require(0<len(raw)<=16 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_SHA256"),"EXACT_ARCHIVE_JOB_HANDOFF")
         handoff=cp.strict_json(raw);archive.safe_handoff(handoff)
         require(handoff["root_go_sha256"]==self.go_sha and handoff["jobs"]==JOBS,"SAME_WEEKLY_ROOT_RESTORE")
-        return self.archive_call("restore",self.archive_request("restore",handoff=handoff))
+        result=self.archive_call("restore",self.archive_request("restore",handoff=handoff))
+        if self.go["operation"]=="RECURRING_CAPTURE":
+            self.grading_phase("operations-grade-write",cp.binding(self.root/"archive-restore"/"transport"/"RESTORED.json"))
+        return result
 
     def consume(self):
+        if self.go["operation"]=="CONTROLLER_REGISTRATION":
+            return self.controller_registration("controller-template-seal")
         raw=self.env.get("AUDIT_WEEKLY_READER_HANDOFF_JSON","").encode()
         require(0<len(raw)<=32 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_READER_HANDOFF_SHA256"),"EXACT_READER_JOB_HANDOFF")
         reader=cp.strict_json(raw)
         require(reader["archive"]["root_go_sha256"]==self.go_sha and reader["archive"]["jobs"]==JOBS,"SAME_WEEKLY_ROOT_EXPORT")
+        if self.go["operation"]=="RECURRING_CAPTURE":
+            raw_handoff=self.env.get("AUDIT_WEEKLY_GRADE_HANDOFF_JSON","").encode()
+            require(0<len(raw_handoff)<=16 << 10
+                and store.sha(raw_handoff)==self.env.get("AUDIT_WEEKLY_GRADE_HANDOFF_SHA256"),
+                "EXACT_NATIVE_GRADING_WRITER_HANDOFF_REQUIRED")
+            # This first complete archive read belongs to grading. The later
+            # public-delivery process performs its own complete live read and
+            # acceptance. Neither a saved JSON flag nor this phase substitutes
+            # for that acceptance; failed grading never reaches publication.
+            self.archive_call("consume",self.archive_request("consume",reader_handoff=reader))
+            grading_result=self.grading_phase("operations-grade-read",cp.binding(self.root/"archive-consume"/"transport"/"RESTORED.json"),
+                handoff=cp.strict_json(raw_handoff))
         if self.publication is not None:
             from . import audit_weekly_delivery_v1 as delivery
             clients=[];package=self.go["qualified_runtime"]
+            proof=self.fresh_operations_proof()
             def factory(operation):
                 self.check()
                 require(operation=="restore" and len(clients)<archive.MAX_CLIENTS,"FINITE_PUBLIC_DELIVERY_GET_ONLY")
                 client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
                     journal=self.journal,job=self.job,operation="restore",qualification=package["qualification"],readonly=True)
                 client.authenticate_actions_job();client.bind(package["binding"])
+                operations_authority.attach(client,proof,self.env,store.canonical(self.go))
                 require(cp.client_identity(client)["api_job_id"]==self.identity["api_job_id"],"SAME_AUTHENTICATED_PUBLIC_EXPORT_JOB")
                 clients.append(client);return client
             result=delivery.deliver(reader,package,factory,self.storage,self.root/"delivery",self.go_sha,self.go["pending_census"],
                 self.publication,ROOT,expected_source_sha=self.go["source_sha"],
-                expected_original_choice_sha256=self.publication["policy"]["origin_choice_sha256"],root_go=self.go)
+                expected_original_choice_sha256=self.publication["policy"]["origin_choice_sha256"],root_go=self.go,
+                before_publication=(lambda receipt:self.grading_delivery(grading_result["manifest"],receipt))
+                    if self.go["operation"]=="RECURRING_CAPTURE" else None)
             self.check()
             return dict(result,public_release=True,successful_forecast=True,scientific_qualification=False)
         result=self.archive_call("consume",self.archive_request("consume",reader_handoff=reader))
@@ -520,10 +881,12 @@ class Runner:
         return result
 
     def failure_client(self, operation):
+        proof=self.fresh_operations_proof()
         client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
             journal=self.journal,job=self.job,operation=operation,qualification=self.go["qualified_runtime"]["qualification"],
             readonly=operation=="restore")
         client.authenticate_actions_job();client.bind(self.go["qualified_runtime"]["binding"])
+        operations_authority.attach(client,proof,self.env,store.canonical(self.go))
         return client
 
     def operation_go(self,operation,inputs,*,manifest=None):
@@ -535,10 +898,33 @@ class Runner:
             single_writer_group="nfl-lab-single-writer",runtime_id=package["binding"]["runtime_id"],
             input_sha256={k:store.sha(v) for k,v in inputs.items()},job_id=self.identity["job_id"],workflow_ref=self.identity["workflow_ref"])
 
+    def verify_external_failure(self):
+        """An environment flag cannot invent an artifact-action failure."""
+        name=self.env.get("AUDIT_WEEKLY_FAILED_ACTION_STEP","")
+        if not name:return False
+        require(self.go["operation"]=="CONTROLLER_REGISTRATION" and self.phase=="consume"
+            and name=="Upload only the closed controller SAFE_SEAL metadata",
+            "CLOSED_EXTERNAL_ACTION_FAILURE_SCOPE")
+        self.check()
+        jobs=archive.jobs_for(self.client)
+        current=[j for j in jobs if j.get("id")==self.identity["api_job_id"]]
+        require(len(current)==1 and type(current[0].get("steps")) is list,"ACTUAL_FAILED_ACTION_JOB_REQUIRED")
+        found=[s for s in current[0]["steps"] if s.get("name")==name]
+        require(len(found)==1 and found[0].get("status")=="completed" and found[0].get("conclusion")=="failure"
+            and type(found[0].get("number")) is int and found[0]["number"]>0
+            and self.started<=utc(found[0]["started_at"])<=utc(found[0]["completed_at"])<=now_utc(),
+            "GENUINE_FAILED_ACTION_API_EVIDENCE_REQUIRED")
+        write(self.storage,self.root/"phase-status"/"EXTERNAL_ACTION_FAILED.json",dict(state="FAILED_RETAINED",
+            root_go_sha256=self.go_sha,current_identity=self.identity,actual_step=found[0],
+            actual_observed_at=now_utc().isoformat(),original_process_exit_code_retained=False,
+            successful_forecast=False,public_release=False))
+        return True
+
     def preserve_failure(self):
         """A distinct fresh process; no original command or source is retried."""
         output=self.root/"failure-evidence"
         require(not output.exists(),"FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED")
+        action_failure=self.verify_external_failure()
         controls=self.storage.register_root(self.root/"failure-controls")
         # A secondary archive failure must not suppress the independent
         # original-failure envelope. Never retry an existing archive intent.
@@ -585,7 +971,7 @@ class Runner:
         for path in fixed:
             if not path.exists():continue
             ref=cp.binding(path);require(ref["bytes"]<=64 << 10,"BOUNDED_COMPLETE_FAILED_PHASE_CONTROL")
-            value=read_owned(self.storage,ref,64 << 10,raw=True)
+            value=read_owned_stdio(self.storage,ref) if path.suffix in {".stdout",".stderr"} else read_owned(self.storage,ref,64 << 10,raw=True)
             item=dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(value),sha256=store.sha(value),
                 body_base64=base64.b64encode(value).decode())
             candidate=dict(schema_version=VERSION+"-complete-auxiliary-controls",files=auxiliary+[item])
@@ -612,7 +998,8 @@ class Runner:
         attempt={k:self.identity[k] for k in failure.ATTEMPT_KEYS if k!="run_attempt"};attempt["run_attempt"]=1
         request=dict(schema_version=failure.VERSION+"-request",attempt=attempt,
             operation={"produce":"producer","restore":"checkpoint","consume":"export"}.get(self.phase,"checkpoint"),state="FAILED",
-            failure=actual_failure(self.env,python_failure_recorded=(self.root/"phase-status/PARENT_FAILED.json").exists() or (self.root/"BOOTSTRAP_FAILED.json").exists()),
+            failure=actual_failure(self.env,python_failure_recorded=(self.root/"phase-status/PARENT_FAILED.json").exists() or (self.root/"BOOTSTRAP_FAILED.json").exists(),
+                action_failure_recorded=action_failure),
             clocks=dict(started_at_utc=self.started.isoformat(),observed_at_utc=now_utc().isoformat(),original={}),
             input_contract_sha256=self.go_sha,attachments=attachments)
         failure.record_failure(request,self.storage,output)
@@ -681,7 +1068,9 @@ class Runner:
             # Native admission must still charge every unresolved earlier POST.
             # This copies original reservation metadata, never retries a POST.
             if original_pending:cp.seed_pending(self.journal,original_pending)
-        for folder in ("runtime","reference","metadata","phase-status","requests","journal"):
+        for folder in ("runtime","reference","metadata","phase-status","requests","journal",
+                "operations-grade-write","operations-grade-read","operations-prepared","grading-delivery",
+                "controller-template-write","controller-template-read","controller-template-seal"):
             base=self.root/folder
             if not base.exists():continue
             for path in sorted(base.rglob("*")):
@@ -722,11 +1111,14 @@ class Runner:
         if bundled:census["bundled_control_sources"]=bundled
         snapshot=dict(files=sorted(files,key=lambda f:f["logical_path"]),census=census)
         package=self.go["qualified_runtime"];clients=[]
+        proof=self.fresh_operations_proof()
         def factory(operation):
             require(operation=="append" and len(clients)<archive.MAX_CLIENTS,"FINITE_FAILED_ARCHIVE_APPEND")
             c=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],journal=self.journal,
                 job=self.job,operation=operation,qualification=package["qualification"])
-            c.authenticate_actions_job();c.bind(package["binding"]);clients.append(c);return c
+            c.authenticate_actions_job();c.bind(package["binding"])
+            operations_authority.attach(c,proof,self.env,store.canonical(self.go))
+            clients.append(c);return c
         # A failed normal archive is immutable. This is a separate failure-only
         # append with its own intent, never a retry of that normal archive.
         handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"failure-archive-produce",
@@ -748,10 +1140,10 @@ def schedule_metadata(raw, *, season, week):
     return result
 
 
-def child_context(args,env,phase):
+def child_context(args,env,phase,*,operations_proof=None):
     """Both native children independently bind the complete current authority."""
     from tools.private_draft_store_v2 import actions_context
-    require(phase in {"models","reference"},"CLOSED_HOSTED_CHILD_PHASE")
+    require(phase in {"models","reference"}|set(OPERATIONS_PHASES),"CLOSED_HOSTED_CHILD_PHASE")
     raw_authority=env.get("AUDIT_WEEKLY_NATIVE_AUTHORITY_JSON","").encode()
     require(0<len(raw_authority)<=16 << 10 and store.sha(raw_authority)==env.get("AUDIT_WEEKLY_NATIVE_AUTHORITY_SHA256"),
         "EXACT_HOSTED_NATIVE_AUTHORITY_HASH")
@@ -765,12 +1157,16 @@ def child_context(args,env,phase):
     root_body=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
     require(0<len(root_body)<=60 << 10 and store.sha(root_body)==env.get("AUDIT_WEEKLY_ROOT_GO_SHA256"),"EXACT_CHILD_ROOT_GO_HASH")
     go=validate_root(cp.strict_json(root_body),now=now_utc())
+    if go["operation"]=="RECURRING_CAPTURE":
+        if operations_proof is None:operations_proof=operations_authority.current(env,root_body,ROOT)
+        operations_authority._verify(operations_proof,env,root_body)
+    else:require(operations_proof is None and operations_authority.owner(env),"ORIGINAL_OWNER_CHILD_REQUIRED")
+    role,output_name=OPERATIONS_PHASES.get(phase,("produce","retained" if phase=="models" else "reference"))
     require(store.canonical(go)==root_body and a["owner_root_go_sha256"]==store.sha(root_body)
         and env.get("GITHUB_ACTIONS")=="true" and env.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
         and env.get("GITHUB_REPOSITORY")==store.REPO and env.get("GITHUB_RUN_ATTEMPT")=="1"
-        and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
         and env.get("STORE_PERMISSION")=="write" and a["source_sha"]==env.get("GITHUB_SHA")==env.get("GITHUB_WORKFLOW_SHA")==go["source_sha"]
-        and a["run_id"]==env.get("GITHUB_RUN_ID") and a["job_id"]==env.get("GITHUB_JOB")==JOBS["produce"]
+        and a["run_id"]==env.get("GITHUB_RUN_ID") and a["job_id"]==env.get("GITHUB_JOB")==JOBS[role]
         and a["workflow_ref"]==env.get("GITHUB_WORKFLOW_REF")==go["workflow_ref"]
         and utc(go["issued_at_utc"])<=utc(a["issued_at_utc"])<=now_utc()<utc(a["expires_at_utc"])==utc(go["expires_at_utc"]),
         "ACTUAL_HOSTED_CHILD_ROOT_AND_IDENTITY")
@@ -781,14 +1177,14 @@ def child_context(args,env,phase):
     require(subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()==go["source_sha"]
         and subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",*PINS],cwd=ROOT,text=True)=="",
         "CLEAN_COMMITTED_CHILD_SOURCE")
-    expected=store.parents_safe(env["RUNNER_TEMP"])/(VERSION+"-"+env["GITHUB_RUN_ID"]+"-produce")
+    expected=store.parents_safe(env["RUNNER_TEMP"])/(VERSION+"-"+env["GITHUB_RUN_ID"]+"-"+role)
     request_path=store.parents_safe(args.request)
     require(request_path.is_relative_to(expected/"requests"),"CURRENT_OWNED_CHILD_REQUEST_PATH")
     raw=store.read_local(request_path,512 << 10);request=cp.strict_json(raw)
     require(raw==store.canonical(request) and store.sha(raw)==args.request_sha256==a["request_sha256"]
         and request["code_pins"]==pins() and request["cache"]==str(expected/"cache")
         and request["state_root"]==str(expected/"state")
-        and request["output"]==str(expected/("retained" if phase=="models" else "reference")),"SEALED_CONFINED_CURRENT_CHILD_REQUEST")
+        and request["output"]==str(expected/output_name),"SEALED_CONFINED_CURRENT_CHILD_REQUEST")
     job=actions_context(env,"write")
     require(job["job_id"]==a["job_id"] and job["workflow_ref"]==a["workflow_ref"] and job["workflow_sha"]==a["source_sha"],
         "ACTUAL_NATIVE_JOB_MATCHES_AUTHORITY")
@@ -797,10 +1193,12 @@ def child_context(args,env,phase):
 
 def model_child(args, env):
     """Dedicated numerical process; source/model restoration does zero fits."""
-    request,a,job,go=child_context(args,env,"models")
+    root_bytes=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
+    proof=operations_authority.child(env,root_bytes,ROOT)
+    request,a,job,go=child_context(args,env,"models",operations_proof=proof)
     numerical.loaded(ROOT,env)
     require(set(request)=={"schema_version","registration","cache","state_root","output","code_pins"}
-        and request["schema_version"]==VERSION+"-model-request" and request["registration"]==go["retained_registration"],
+        and request["schema_version"]==VERSION+"-model-request" and request["registration"]==retained_registration(go),
         "CLOSED_CURRENT_MODEL_REQUEST")
     storage=OperationalStorage(request["cache"],ROOT/"config/operational-source-policy-v2.json",state=request["state_root"])
     archived=cp.strict_json(store.read_local(ROOT/"reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json",store.META_CAP))
@@ -814,6 +1212,7 @@ def model_child(args, env):
             c=retained.ReadClient(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],journal=journal,source_sha=env["GITHUB_SHA"],job=job,
                 operation=operation,extra_routes=retained.routes(request["registration"],self.qualification))
             c.authenticate_actions_job();c.bind(archived["binding"])
+            operations_authority.attach(c,proof,env,root_bytes)
             require(c.job["api_job_id"]==a["api_job_id"],"CURRENT_MODEL_API_JOB_REQUIRED")
             self.clients.append(c);return c
     factory=Factory()
@@ -833,15 +1232,19 @@ def model_child(args, env):
 
 def reference_child(args, env):
     """Private original R0; metadata/source identities were fixed before values."""
-    p,a,job,go=child_context(args,env,"reference")
+    root_bytes=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
+    proof=operations_authority.child(env,root_bytes,ROOT)
+    p,a,job,go=child_context(args,env,"reference",operations_proof=proof)
+    extra={"previous_state","previous_state_aliases"} if go["operation"]=="RECURRING_CAPTURE" else set()
     require(set(p)=={"schema_version","inputs","history_binding","config","cache","state_root","prepared","source",
-        "runtime_root","output","repository","code_pins"} and p["schema_version"]==VERSION+"-reference-request"
+        "runtime_root","output","repository","code_pins"}|extra and p["schema_version"]==VERSION+"-reference-request"
         and p["config"]==go["source_config"] and p["repository"]==env.get("NFL_R0_SOURCE_REPOSITORY")==str(ROOT/"r0-public-reference")
         and p["runtime_root"]==str(Path(p["output"]).parent/"runtime"),"CLOSED_REGISTERED_ORIGINAL_REFERENCE_REQUEST")
     storage=OperationalStorage(p["cache"],ROOT/"config/operational-source-policy-v2.json",state=p["state_root"])
     journal=Path(p["output"]).parent/"reference-journal";journal.mkdir(mode=0o700)
     c=store.Client(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=journal,job=job,operation="metadata")
     c.authenticate_actions_job()
+    operations_authority.attach(c,proof,env,root_bytes)
     require(c.job["api_job_id"]==a["api_job_id"] and c.job["job_id"]==a["job_id"]==env["GITHUB_JOB"]
         and a["source_sha"]==env["GITHUB_SHA"]
         and a["run_id"]==env["GITHUB_RUN_ID"] and a["job_id"]==JOBS["produce"]
@@ -861,7 +1264,8 @@ def reference_child(args, env):
     bridge=read_owned(storage,cp.binding(Path(p["runtime_root"])/"IDENTITY_BRIDGE.json"))["identities"]
     offers=runtime.generic.offers(q,backend.records,choice.document["slate"])
     pref=reference.prepare_reference(storage,p["output"],repository=p["repository"],permit=permit,
-        slate=choice.document["slate"],control=e.document["catalog"]["methods"]["R0"],offers=offers,bridge=bridge)
+        slate=choice.document["slate"],control=e.document["catalog"]["methods"]["R0"],offers=offers,bridge=bridge,
+        previous_state=p.get("previous_state"),previous_state_aliases=p.get("previous_state_aliases"))
     ref=reference.capture_reference(storage,pref);finished=read_owned(storage,ref)
     return dict(state=finished["state"],available_rows=finished["available_rows"],unavailable_rows=finished["unavailable_rows"],fits=0,public_release=False)
 

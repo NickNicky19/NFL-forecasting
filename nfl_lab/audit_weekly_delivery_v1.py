@@ -147,7 +147,7 @@ def public_pair(storage,state,exported,live,policy,root_sha,origin_sha,reader_wi
 
 def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending_census,configuration,root_repository,*,
         expected_source_sha,expected_original_choice_sha256,source_policy_path=None,root_go=None,at=None,
-        source_check=None,publisher=None,clock=now):
+        source_check=None,publisher=None,before_publication=None,clock=now):
     """Return only a public-safe final marker; transport injection is in factory.
 
     source_check/publisher are explicit fictional-test seams. Production uses
@@ -162,11 +162,17 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
             require(type(root_go) is dict and root_go.get("publication") is True and root_go.get("approved") is True
                 and root_go.get("repository")==store.REPO and root_go.get("source_sha")==expected_source_sha
                 and store.sha(store.canonical(root_go))==root_go_sha256,"EXPLICIT_ROOT_AUTHORIZED_PUBLIC_DELIVERY")
+            recurring=root_go.get("operation")=="RECURRING_CAPTURE"
+            require(recurring==callable(before_publication),"RECURRING_PUBLICATION_REQUIRES_NATIVE_GRADING_DELIVERY")
+        elif before_publication is not None:
+            require(callable(before_publication) and source_check is not None and publisher is not None,
+                "PRODUCTION_GRADING_CALLBACK_REQUIRES_CURRENT_ROOT")
         return _deliver(storage=storage,factory=factory,qualified_runtime=package,root_go_sha256=root_go_sha256,
             reader_handoff=reader_handoff,publication=configuration,expected_source_sha=expected_source_sha,
             expected_original_choice_sha256=expected_original_choice_sha256,repository_root=root_repository,output=output,
             source_policy_path=Path(root_repository)/"config/operational-source-policy-v2.json" if source_policy_path is None else source_policy_path,
-            pending_census=pending_census,source_check=source_check,publisher=publisher,clock=clock)
+            pending_census=pending_census,source_check=source_check,publisher=publisher,
+            before_publication=before_publication,clock=clock)
     except (store.StoreError,public.PublicError,epoch.EpochError) as error:
         reason=str(error)
         raise store.StoreError(reason if re.fullmatch(r"[A-Z][A-Z0-9_]{0,95}",reason) else "PUBLIC_DELIVERY_UPSTREAM_GUARD") from None
@@ -176,7 +182,7 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
 
 def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,publication,
         expected_source_sha,expected_original_choice_sha256,repository_root,output,source_policy_path,pending_census,
-        source_check,publisher,clock):
+        source_check,publisher,before_publication,clock):
     require(isinstance(storage,OperationalStorage) and storage.limit_bytes==512 << 20,"EXISTING_SHARED_DELIVERY_STORAGE_OWNER_REQUIRED")
     require(type(publication) is dict and set(publication)==CONFIG_KEYS and re.fullmatch(r"[a-f0-9]{40}",str(expected_source_sha))
         and re.fullmatch(r"[a-f0-9]{64}",str(expected_original_choice_sha256))
@@ -246,6 +252,24 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
     safe.update({key:public_receipt[key] for key in DISCOVERY_HASH_KEYS})
     archive.write(storage,output/"DELIVERY_PUBLISH_INTENT.json",safe)
     require(check(client,policy["source_branch"])==expected_source_sha,"PRODUCER_SOURCE_CHANGED_BEFORE_PUBLICATION")
+    grading=None
+    if before_publication is not None:
+        try:
+            grading=before_publication(deepcopy(public_receipt))
+            require(type(grading) is dict and set(grading)=={"schema_version","feed_sha256","sidecar_sha256",
+                "sidecar_path","evidence_descriptor_sha256"} and grading["schema_version"]=="audit-weekly-grading-delivery-v1"
+                and grading["feed_sha256"]==files[feed_path]
+                and all(public.feed.h(grading[k]) for k in ("sidecar_sha256","evidence_descriptor_sha256"))
+                and grading["sidecar_path"]=="controller-v1/grade-checkpoints/"+files[feed_path]+".json.gz",
+                "CLOSED_SAME_FEED_GRADING_DELIVERY_REQUIRED")
+        except Exception:
+            archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,
+                state="GRADING_DELIVERY_FAILED_FEED_NOT_PUBLISHED",failed_at=clock().isoformat()))
+            raise store.StoreError("GRADING_DELIVERY_FAILED_FEED_NOT_PUBLISHED") from None
+        # The callback performs durable private/public metadata writes. Its
+        # completion is not permission to publish from a source that advanced.
+        require(check(client,policy["source_branch"])==expected_source_sha,
+            "PRODUCER_SOURCE_CHANGED_AFTER_GRADING_BEFORE_FEED")
     publish=persist_state.persist if publisher is None else publisher
     try:
         with quiet_publisher(repository_root),operational_io(storage,run_root=Path(repository_root)/"runs"):
@@ -261,9 +285,12 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,state="SOURCE_RACE_AFTER_PUBLICATION_BYTES_RETAINED",observed_source_sha=observed,failed_at=clock().isoformat()))
         raise store.StoreError("PRODUCER_SOURCE_CHANGED_AFTER_PUBLICATION")
     receipt=dict(safe,state="PUBLIC_DERIVED_DELIVERY_COMPLETE",published_at=clock().isoformat(),source_head_verified_before_after=True)
+    if grading is not None:receipt["grading_checkpoint"]=grading
     ref=archive.write(storage,output/"DELIVERY_RECEIPT.json",receipt)
-    return dict(state=receipt["state"],feed_path=feed_path,feed_sha256=files[feed_path],export_receipt_path=receipt_path,
+    result=dict(state=receipt["state"],feed_path=feed_path,feed_sha256=files[feed_path],export_receipt_path=receipt_path,
         export_receipt_sha256=files[receipt_path],delivery_receipt_sha256=ref["sha256"],source_sha=expected_source_sha,run_id=identity["run_id"],
         categories=receipt["categories"],jobs=receipt["jobs"],published_at=receipt["published_at"],fits=0,raw_or_models_public=False,
         policy_registered_at_utc=receipt["policy_registered_at_utc"],workflow_sha256=receipt["workflow_sha256"],
         **{key:public_receipt[key] for key in DISCOVERY_HASH_KEYS})
+    if grading is not None:result["grading_checkpoint"]=grading
+    return result
