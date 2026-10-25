@@ -7,9 +7,11 @@ this parent never fits, searches, loads outcomes or calls a paid service.
 """
 from __future__ import annotations
 
+import base64
 import csv
 from datetime import datetime, timedelta, timezone
 import io
+import gzip
 import json
 import os
 from pathlib import Path
@@ -32,17 +34,19 @@ from .operational_storage import OperationalStorage, _OWNER
 from .owned_reference_batch import validate_owned_references
 from .state import digest, now_utc, utc
 
-VERSION = "audit-weekly-hosted-v1"
+VERSION = "audit-weekly-hosted-v2"
 MODE = "audit-weekly-producer-v1"
 ROOT = Path(__file__).resolve().parents[1]
 JOBS = dict(produce="audit-weekly-produce-v1", restore="audit-weekly-restore-v1", consume="audit-weekly-export-v1")
+FAILURE_JOB = "audit-weekly-failure-restore-v1"
+EXECUTION_JOBS = dict(JOBS, evidence=FAILURE_JOB)
 LIMITS = dict(wall_seconds=1500, CPU_seconds=900, address_space_bytes=4 << 30,
     global_private_bytes=512 << 20, runtime_bytes=32 << 20, fits=0, searches=0,
     automatic_retry=False, maximum_dispatches=1, public_raw_or_models=False)
 ROOT_KEYS = {"schema_version", "approved", "repository", "mode", "operation", "source_sha", "workflow_ref",
     "owner_authorization", "issued_at_utc", "expires_at_utc", "single_writer_group", "code_pins",
-    "limits", "jobs", "retained_registration", "original_selected_handoff", "qualified_runtime",
-    "pending_census", "source_config", "cutoff_lead_seconds", "publication", "effective_epoch"}
+    "limits", "jobs", "failure_restorer", "retained_registration", "original_selected_handoff", "qualified_runtime",
+    "pending_census", "source_config", "cutoff_lead_seconds", "publication", "publication_registration", "effective_epoch"}
 PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtime.PIN_PATHS) |
     set(archive.PIN_PATHS) | set(public.PIN_PATHS) | set(weekly_retained.PIN_PATHS) |
     {"nfl_lab/audit_weekly_hosted_v1.py", "tools/audit_weekly_hosted_v1.py",
@@ -50,6 +54,8 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "tests/test_audit_weekly_hosted_v1.py", "tests/test_audit_weekly_epoch_v1.py",
     "tests/test_audit_weekly_origin_v1.py", "tests/test_audit_weekly_archive_v1.py",
     "tests/test_audit_reference_capture_v1.py", "tools/audit_process_guard_v1.py", "requirements-audit-weekly-metadata-v1.lock",
+    "nfl_lab/audit_weekly_delivery_v1.py", "tools/audit_weekly_delivery_v1.py", "tests/test_audit_weekly_delivery_v1.py",
+    "nfl_lab/public_release_plan_v1.py",
     ".github/workflows/audit-source-checks.yml"}))
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
@@ -63,12 +69,63 @@ def require(ok, code):
 def pins(): return {p:store.sha(store.read_local(ROOT/p,2 << 20)) for p in PINS}
 
 
+def publication_configuration(go, *, now):
+    """Decode only root-approved bounded metadata, never forecast bytes.
+
+    The exact canonical policy is registered in the owner root before current
+    source reads. Compression is only for Actions' finite input-size ceiling.
+    The producer archives the decoded body unchanged before acquiring values.
+    """
+    if go["publication"] is False:
+        require(go["publication_registration"] is None,"NO_IMPLICIT_PUBLICATION_REGISTRATION")
+        return None
+    value=go["publication_registration"]
+    require(type(value) is dict and set(value)=={"policy_gzip_base64","policy_sha256","rights_authority","r0"},
+        "CLOSED_ROOT_PUBLICATION_REGISTRATION")
+    encoded=value["policy_gzip_base64"]
+    require(type(encoded) is str and 0<len(encoded)<=48 << 10,"FINITE_PUBLIC_METADATA_INPUT")
+    try:
+        packed=base64.b64decode(encoded,validate=True)
+        with gzip.GzipFile(fileobj=io.BytesIO(packed)) as source:
+            body=source.read((128 << 10)+1)
+        require(0<len(body)<=128 << 10 and store.sha(body)==value["policy_sha256"],"EXACT_BOUNDED_PUBLIC_POLICY_BODY")
+        policy=cp.strict_json(body)
+    except store.StoreError:raise
+    except Exception:raise store.StoreError("PUBLIC_METADATA_ENCODING_INVALID") from None
+    require(body==store.canonical(policy),"CANONICAL_ROOT_PUBLIC_POLICY")
+    public.policy_check(policy,at=now.isoformat())
+    replay=go["retained_registration"]["origin"]["replay_catalog"]
+    require(policy["source_sha"]==go["source_sha"] and policy["source_branch"]=="research/weekly-storage-probe-v1"
+        and policy["jobs"]==JOBS and policy["registered_at_utc"]==go["issued_at_utc"]
+        and policy["workflow_sha256"]==store.sha(store.read_local(ROOT/".github/workflows/lab.yml",128 << 10))
+        and policy["approved_candidates"]==[{k:s[k] for k in ("target","family","method_id","procedure_version")} for s in replay["slots"]],
+        "EXACT_CURRENT_ROOT_PUBLICATION_SCOPE_BEFORE_VALUES")
+    rights=value["rights_authority"];r0=value["r0"]
+    from .public_release_plan_v1 import RIGHTS
+    require(type(rights) is dict and set(rights)==RIGHTS and rights.get("schema_version")=="weekly-selected-derived-rights-authority-v1"
+        and rights.get("state")=="ROOT_REGISTERED" and rights.get("scope")=="SELECTED_DERIVED_ONLY"
+        and rights.get("authority_kind")=="ROOT_APPROVED_DERIVED_PUBLICATION"
+        and rights.get("public_raw_or_model_weights") is False and rights.get("human_approval") is False
+        and rights.get("source_policy_sha256")==cp.POLICY_SHA
+        and rights.get("public_fields")==list(public.overlay.ROW_FIELDS)
+        and public.feed.h(rights["source_review_sha256"]) and type(rights["basis"]) is str and 0<len(rights["basis"])<=4096
+        and rights["upstream_blanket_grant"] is False
+        and digest(rights) in policy["rights_authorities"] and digest(r0) in policy["r0_identities"],
+        "REGISTERED_DERIVED_SOURCE_RIGHTS_AND_ORIGINAL_R0_REQUIRED")
+    require(type(r0) is dict and r0.get("schema_version")=="weekly-actual-r0-freeze-v1"
+        and r0.get("state")=="ACTUAL_FIRST_RELEASE_R0_FROZEN" and type(r0.get("deployment_id")) is int and r0["deployment_id"]>0
+        and re.fullmatch(r"[a-f0-9]{40}",str(r0.get("deployed_source_sha"))) and public.feed.h(r0.get("visible_board_sha256"))
+        and r0.get("engine_sha256")==policy["engine_sha256"]
+        and utc(r0["frozen_at"])<=utc(policy["registered_at_utc"]),"ORIGINAL_R0_FROZEN_BEFORE_NEW_POLICY_AND_VALUES")
+    return dict(policy=policy,rights_authority=rights,r0=r0)
+
+
 def validate_root(go, *, now):
     require(type(go) is dict and set(go)==ROOT_KEYS and go["schema_version"]==VERSION+"-root-GO"
         and go["approved"] is True and go["repository"]==store.REPO and go["mode"]==MODE
         and go["owner_authorization"]=="OWNER_NFL_AUDIT_CONTINUATION_20261025"
         and go["single_writer_group"]=="nfl-lab-single-writer" and go["limits"]==LIMITS
-        and go["jobs"]==JOBS and go["code_pins"]==pins(), "CLOSED_CURRENT_WEEKLY_ROOT_REQUIRED")
+        and go["jobs"]==JOBS and go["failure_restorer"]==FAILURE_JOB and go["code_pins"]==pins(), "CLOSED_CURRENT_WEEKLY_ROOT_REQUIRED")
     require(re.fullmatch(r"[a-f0-9]{40}",str(go["source_sha"]))
         and go["workflow_ref"]==store.REPO+"/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1",
         "EXACT_REGISTERED_WEEKLY_SOURCE_BRANCH")
@@ -78,13 +135,14 @@ def validate_root(go, *, now):
         and type(go["publication"]) is bool and go["effective_epoch"] is None,
         "EXPLICIT_INITIAL_CORRECTION_SCOPE_NO_BACKFILL")
     require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE"}
-        and go["publication"] is False,"EXPLICIT_PRIVATE_WEEKLY_OPERATION_SCOPE")
+        and (go["publication"] is False or go["operation"]=="CURRENT_CORRECTION_CAPTURE"),"EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
     retained.validate_registration(go["retained_registration"])
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
         and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
         "NEW_GENUINELY_QUALIFIED_NAMESPACE_REQUIRED")
     runtime.config_check(go["source_config"],dict(season=2026,week=8))
     require(go["source_config"].get("purpose")=="CURRENT_OPERATIONAL_INFERENCE","FROZEN_INFERENCE_PURPOSE_REQUIRED_NO_TUNING")
+    publication_configuration(go,now=now)
     return go
 
 
@@ -98,10 +156,18 @@ def write(storage,path,value):
     storage.write_bytes(path,store.canonical(value));return cp.binding(path)
 
 
+def actual_failure(env, *, python_failure_recorded):
+    value=env.get("AUDIT_WEEKLY_ORIGINAL_EXIT_CODE","")
+    require(value=="" or re.fullmatch(r"[1-9][0-9]{0,2}",value) and int(value)<=255,"ACTUAL_FAILED_STEP_EXIT_CODE_REQUIRED")
+    code=int(value) if value else None
+    kind="DEADLINE" if code==124 else "INTERRUPTION" if code in {130,137,143} or not python_failure_recorded else "EXCEPTION"
+    return dict(kind=kind,code="WEEKLY_PHASE_FAILED_RETAINED",exit_code=code)
+
+
 class Runner:
     def __init__(self, phase, env, *, existing=False):
         from tools.private_draft_store_v2 import actions_context
-        require(phase in JOBS,"CLOSED_WEEKLY_PHASE")
+        require(phase in EXECUTION_JOBS,"CLOSED_WEEKLY_PHASE")
         self.phase,self.env=phase,env
         raw=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
         require(0<len(raw)<=60 << 10 and store.sha(raw)==env.get("AUDIT_WEEKLY_ROOT_GO_SHA256"),"EXACT_WEEKLY_ROOT_INPUT")
@@ -111,7 +177,7 @@ class Runner:
             and env.get("GITHUB_REPOSITORY")==store.REPO and env.get("GITHUB_RUN_ATTEMPT")=="1"
             and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
             and env.get("GITHUB_SHA")==env.get("GITHUB_WORKFLOW_SHA")==self.go["source_sha"]
-            and env.get("GITHUB_WORKFLOW_REF")==self.go["workflow_ref"] and env.get("GITHUB_JOB")==JOBS[phase]
+            and env.get("GITHUB_WORKFLOW_REF")==self.go["workflow_ref"] and env.get("GITHUB_JOB")==EXECUTION_JOBS[phase]
             and env.get("STORE_PERMISSION")=="write","GENUINE_OWNER_WEEKLY_JOB_REQUIRED")
         event=cp.strict_json(store.read_local(env["GITHUB_EVENT_PATH"],256 << 10))
         require(event.get("repository",{}).get("full_name")==store.REPO
@@ -131,29 +197,61 @@ class Runner:
         self.journal=self.root/"journal"
         if not existing:self.journal.mkdir(mode=0o700)
         self.job=actions_context(env,"write")
-        class Metadata(archive.Client):
-            def request(self,url,*,method="GET",**kw):
-                require(method=="GET" and kw.get("data") is None,"ROOT_METADATA_GET_ONLY")
-                return super().request(url,method=method,**kw)
-        self.client=Metadata(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=self.journal,
-            job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"])
-        self.client.authenticate_actions_job();self.client.bind(self.go["qualified_runtime"]["binding"])
-        archive.authenticate_qualification(self.client,self.go["qualified_runtime"],self.go["pending_census"])
-        archive.jobs_for(self.client)
-        self.identity=cp.client_identity(self.client)
         if existing:
             self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
             require(read_owned(self.storage,self.root_ref)==self.go and read_owned(self.storage,self.package_ref)==self.go["qualified_runtime"],"EXACT_ORIGINAL_FAILED_ROOT_REQUIRED")
         else:
             self.root_ref=write(self.storage,self.root/"OWNER_ROOT.json",self.go)
             self.package_ref=write(self.storage,self.root/"QUALIFIED_RUNTIME.json",self.go["qualified_runtime"])
-            write(self.storage,self.root/"PARENT_STARTED.json",dict(actual_started_at=self.client.started_at,actual_identity=self.identity))
-        original_start=read_owned(self.storage,cp.binding(self.root/"PARENT_STARTED.json"))
-        require(original_start["actual_identity"]["run_id"]==self.identity["run_id"]
-            and original_start["actual_identity"]["api_job_id"]==self.identity["api_job_id"],"SAME_ORIGINAL_FAILED_JOB")
-        self.started=utc(original_start["actual_started_at"]);self.child_number=0
+            # Persist the local start AFTER static event/source checks, BEFORE
+            # the first authentication request. This is not an API proof.
+            write(self.storage,self.root/"BOOTSTRAP_STARTED.json",dict(schema_version=VERSION+"-bootstrap-start",
+                state="STATIC_SOURCE_AND_EVENT_CHECKED_API_AUTHENTICATION_PENDING",actual_started_at=now_utc().isoformat(),
+                root_go_sha256=self.go_sha,run_id=env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],
+                job_id=EXECUTION_JOBS[phase],workflow_ref=env["GITHUB_WORKFLOW_REF"],actual_actions_api_authenticated=False))
+        start=read_owned(self.storage,cp.binding(self.root/"BOOTSTRAP_STARTED.json"))
+        require(start["schema_version"]==VERSION+"-bootstrap-start" and start["root_go_sha256"]==self.go_sha
+            and start["run_id"]==env["GITHUB_RUN_ID"] and start["source_sha"]==env["GITHUB_SHA"]
+            and start["job_id"]==EXECUTION_JOBS[phase] and start["workflow_ref"]==env["GITHUB_WORKFLOW_REF"]
+            and start["actual_actions_api_authenticated"] is False
+            and utc(self.go["issued_at_utc"])<=utc(start["actual_started_at"])<=now_utc(),"EXACT_ORIGINAL_STATIC_BOOTSTRAP_START")
+        class Metadata(archive.Client):
+            def request(self,url,*,method="GET",**kw):
+                require(method=="GET" and kw.get("data") is None,"ROOT_METADATA_GET_ONLY")
+                return super().request(url,method=method,**kw)
+        try:
+            self.client=Metadata(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=self.journal,
+                job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"])
+            self.client.authenticate_actions_job();self.client.bind(self.go["qualified_runtime"]["binding"])
+            archive.authenticate_qualification(self.client,self.go["qualified_runtime"],self.go["pending_census"])
+            jobs=archive.jobs_for(self.client);self.identity=cp.client_identity(self.client)
+            current=[j for j in jobs if j.get("id")==self.identity["api_job_id"]]
+            require(len(current)==1 and utc(current[0]["started_at"])<=utc(start["actual_started_at"])<=now_utc(),
+                "ORIGINAL_LOCAL_START_WITHIN_GENUINE_CURRENT_JOB")
+        except Exception as error:
+            code=error.code if isinstance(error,store.StoreError) else "WEEKLY_BOOTSTRAP_AUTHENTICATION_FAILED"
+            if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_BOOTSTRAP_AUTHENTICATION_FAILED"
+            path=self.root/"BOOTSTRAP_FAILED.json"
+            if not path.exists():write(self.storage,path,dict(state="FAILED_RETAINED",reason=code,actual_observed_at=now_utc().isoformat(),
+                original_start_sha256=cp.binding(self.root/"BOOTSTRAP_STARTED.json")["sha256"],successful_forecast=False,public_release=False))
+            raise
+        if not existing:
+            write(self.storage,self.root/"PARENT_STARTED.json",dict(actual_started_at=start["actual_started_at"],actual_identity=self.identity))
+        elif not (self.root/"PARENT_STARTED.json").exists():
+            # Fresh preservation authenticated the original static start now.
+            # Do not invent an API-authenticated original process or receipt.
+            write(self.storage,self.root/"BOOTSTRAP_REAUTHENTICATED.json",dict(state="ORIGINAL_STATIC_START_AUTHENTICATED_FOR_FAILURE_ONLY",
+                original_start_sha256=cp.binding(self.root/"BOOTSTRAP_STARTED.json")["sha256"],current_identity=self.identity,
+                actual_authenticated_at=now_utc().isoformat(),original_process_api_proof_retained=False,public_release=False))
+        self.publication=publication_configuration(self.go,now=now_utc())
+        if (self.root/"PARENT_STARTED.json").exists():
+            original_start=read_owned(self.storage,cp.binding(self.root/"PARENT_STARTED.json"))
+            require(original_start["actual_identity"]["run_id"]==self.identity["run_id"]
+                and original_start["actual_identity"]["api_job_id"]==self.identity["api_job_id"],"SAME_ORIGINAL_FAILED_JOB")
+        self.started=utc(start["actual_started_at"]);self.child_number=0
 
     def check(self):
+        require(store.sha(store.canonical(self.go))==self.go_sha,"OWNER_ROOT_METADATA_CHANGED_DURING_OPERATION")
         validate_root(self.go,now=now_utc())
         total=[resource.getrusage(k) for k in (resource.RUSAGE_SELF,resource.RUSAGE_CHILDREN)]
         require(sum(x.ru_utime+x.ru_stime for x in total)<=LIMITS["CPU_seconds"],"WEEKLY_AGGREGATE_CPU_CAP")
@@ -256,6 +354,16 @@ class Runner:
         return dict(epoch=eref,epoch_registration=regref,original_choice=old["original_choice"],original_completion=old["original_terminal_witness"],
             original_slate=old["original_slate"],original_catalog=old["original_catalog"],original_policy=old["original_policy"],choice=cref,retained_restore=retained_ref)
 
+    def register_publication(self, inputs):
+        if self.publication is None:return None
+        policy=self.publication["policy"]
+        require(inputs["original_choice"]["sha256"]==policy["origin_choice_sha256"],
+            "ROOT_PUBLICATION_MUST_BIND_RECOVERED_ORIGINAL_CHOICE")
+        ref=write(self.storage,self.root/"metadata"/"PUBLIC_POLICY.json",policy)
+        require(ref["sha256"]==self.go["publication_registration"]["policy_sha256"],
+            "ORIGINAL_APPROVED_PUBLIC_POLICY_ARCHIVE_BYTES")
+        return ref
+
     def capture(self, inputs, origin_ref):
         from tools.audit_weekly_runtime_v1 import template
         old=read_owned(self.storage,origin_ref)
@@ -308,11 +416,13 @@ class Runner:
         origin_ref=self.recover_origin();old=read_owned(self.storage,origin_ref)
         retained_ref=self.recover_models()
         inputs=self.metadata(origin_ref,retained_ref)
+        policy_ref=self.register_publication(inputs)
         request=self.capture(inputs,origin_ref)
         r0=self.reference(inputs,request)
         context=dict(epoch=inputs["epoch"],epoch_registration=inputs["epoch_registration"],original_choice=inputs["original_choice"],
             origin_witness=inputs["original_completion"],original_slate=inputs["original_slate"],original_catalog=inputs["original_catalog"],
             original_policy=inputs["original_policy"],retained_models=retained_ref,prepared=request["prepared"],source=request["source"])
+        if policy_ref is not None:context["public_policy"]=policy_ref
         result=self.archive_call("produce",self.archive_request("produce",context=context,r0=r0))
         require(result["archive_state"]=="COMPLETE_CAPTURE","PARTIAL_ARCHIVE_NOT_A_SUCCESSFUL_FORECAST")
         terminal=read_owned(self.storage,cp.binding(self.root/"runtime"/"FINISHED.json"))
@@ -357,13 +467,30 @@ class Runner:
         require(0<len(raw)<=32 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_READER_HANDOFF_SHA256"),"EXACT_READER_JOB_HANDOFF")
         reader=cp.strict_json(raw)
         require(reader["archive"]["root_go_sha256"]==self.go_sha and reader["archive"]["jobs"]==JOBS,"SAME_WEEKLY_ROOT_EXPORT")
+        if self.publication is not None:
+            from . import audit_weekly_delivery_v1 as delivery
+            clients=[];package=self.go["qualified_runtime"]
+            def factory(operation):
+                self.check()
+                require(operation=="restore" and len(clients)<archive.MAX_CLIENTS,"FINITE_PUBLIC_DELIVERY_GET_ONLY")
+                client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
+                    journal=self.journal,job=self.job,operation="restore",qualification=package["qualification"],readonly=True)
+                client.authenticate_actions_job();client.bind(package["binding"])
+                require(cp.client_identity(client)["api_job_id"]==self.identity["api_job_id"],"SAME_AUTHENTICATED_PUBLIC_EXPORT_JOB")
+                clients.append(client);return client
+            result=delivery.deliver(reader,package,factory,self.storage,self.root/"delivery",self.go_sha,self.go["pending_census"],
+                self.publication,ROOT,expected_source_sha=self.go["source_sha"],
+                expected_original_choice_sha256=self.publication["policy"]["origin_choice_sha256"],root_go=self.go)
+            self.check()
+            return dict(result,public_release=True,successful_forecast=True,scientific_qualification=False)
         result=self.archive_call("consume",self.archive_request("consume",reader_handoff=reader))
         require(result["state"]=="PRIVATE_CAPTURE_EXPORT_INPUTS_VERIFIED","FAILED_OR_PARTIAL_CAPTURE_CANNOT_EXPORT")
         return result
 
     def failure_client(self, operation):
         client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
-            journal=self.journal,job=self.job,operation=operation,qualification=self.go["qualified_runtime"]["qualification"])
+            journal=self.journal,job=self.job,operation=operation,qualification=self.go["qualified_runtime"]["qualification"],
+            readonly=operation=="restore")
         client.authenticate_actions_job();client.bind(self.go["qualified_runtime"]["binding"])
         return client
 
@@ -399,6 +526,11 @@ class Runner:
                 require(not path.is_symlink(),"FAILED_ATTEMPT_SYMLINK_FORBIDDEN")
                 if path.is_file():
                     ref=cp.binding(path);graph.append(dict(relative_path=path.relative_to(self.root).as_posix(),reference=ref))
+        delivery=self.root/"delivery"
+        if delivery.is_dir():
+            for path in sorted(delivery.glob("DELIVERY_*.json")):
+                require(path.is_file() and not path.is_symlink(),"ORIGINAL_DELIVERY_FAILURE_STATUS_REQUIRED")
+                ref=cp.binding(path);graph.append(dict(relative_path=path.relative_to(self.root).as_posix(),reference=ref))
         require(len(graph)<=1024,"FINITE_FAILURE_FILE_GRAPH")
         inventory=write(self.storage,controls/"ORIGINAL_FILE_GRAPH.json",dict(schema_version=VERSION+"-failed-file-graph",files=graph,
             raw_HTTP_corpus_archived=False,successful_forecast=False,public_release=False))
@@ -413,16 +545,32 @@ class Runner:
         journal_ref=write(self.storage,controls/"ORIGINAL_POST_RESERVATIONS.json",dict(schema_version=VERSION+"-original-post-journals",records=journals))
         require(journal_ref["bytes"]<=failure.ATTACHMENT_CAP,"FULL_ORIGINAL_POST_JOURNAL_BOUND")
         attachments.append(dict(label="original-post-reservations",kind="post_reservation",reference=journal_ref))
+        auxiliary=[]
+        fixed=[self.root/name for name in ("BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json","BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json")]
+        fixed += sorted(delivery.glob("DELIVERY_*.json")) if delivery.is_dir() else []
+        for path in fixed:
+            if not path.exists():continue
+            ref=cp.binding(path);require(ref["bytes"]<=64 << 10,"BOUNDED_COMPLETE_FAILED_PHASE_CONTROL")
+            value=read_owned(self.storage,ref,64 << 10,raw=True)
+            auxiliary.append(dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(value),sha256=store.sha(value),
+                body_base64=base64.b64encode(value).decode()))
+        if auxiliary:
+            aux=write(self.storage,controls/"ORIGINAL_AUXILIARY_CONTROLS.json",dict(schema_version=VERSION+"-complete-auxiliary-controls",files=auxiliary))
+            require(aux["bytes"]<=failure.ATTACHMENT_CAP,"COMPLETE_FAILED_PHASE_AUXILIARY_CONTROL_BOUND")
+            attachments.append(dict(label="complete-auxiliary-controls",kind="original_failure",reference=aux))
         secondary=controls/"SECONDARY_PRESERVATION_FAILURE.json"
         if secondary.is_file():
             attachments.append(dict(label="secondary-preservation-failure",kind="original_failure",reference=cp.binding(secondary)))
         status_paths=sorted((self.root/"phase-status").glob("*.json"))
-        for n,path in enumerate(status_paths[-12:]):
+        require(len(status_paths)+len(attachments)<=failure.ATTACHMENT_COUNT,"ALL_FAILED_PHASE_CONTROLS_MUST_FIT_NO_OMISSION")
+        for n,path in enumerate(status_paths):
             ref=cp.binding(path)
-            if ref["bytes"]<=failure.ATTACHMENT_CAP:attachments.append(dict(label=f"phase-{n:02}",kind="original_failure",reference=ref))
+            require(ref["bytes"]<=failure.ATTACHMENT_CAP,"COMPLETE_FAILED_PHASE_STATUS_BOUND")
+            attachments.append(dict(label=f"phase-{n:02}",kind="original_failure",reference=ref))
         attempt={k:self.identity[k] for k in failure.ATTEMPT_KEYS if k!="run_attempt"};attempt["run_attempt"]=1
-        request=dict(schema_version=failure.VERSION+"-request",attempt=attempt,operation="producer",state="FAILED",
-            failure=dict(kind="EXCEPTION",code="WEEKLY_PRODUCER_FAILED_RETAINED",exit_code=1),
+        request=dict(schema_version=failure.VERSION+"-request",attempt=attempt,
+            operation={"produce":"producer","restore":"checkpoint","consume":"export"}.get(self.phase,"checkpoint"),state="FAILED",
+            failure=actual_failure(self.env,python_failure_recorded=(self.root/"phase-status/PARENT_FAILED.json").exists() or (self.root/"BOOTSTRAP_FAILED.json").exists()),
             clocks=dict(started_at_utc=self.started.isoformat(),observed_at_utc=now_utc().isoformat(),original={}),
             input_contract_sha256=self.go_sha,attachments=attachments)
         failure.record_failure(request,self.storage,output)
@@ -618,5 +766,19 @@ def reference_child(args, env):
 
 
 def execute(phase, env):
-    runner=Runner("produce" if phase=="preserve" else phase,env,existing=phase=="preserve")
-    return {"produce":runner.produce,"restore":runner.restore,"consume":runner.consume,"preserve":runner.preserve_failure}[phase]()
+    actual=phase
+    if phase=="preserve":
+        matches=[k for k,v in JOBS.items() if v==env.get("GITHUB_JOB")]
+        require(len(matches)==1,"ONLY_ORIGINAL_FAILED_PHASE_MAY_BE_PRESERVED")
+        actual=matches[0]
+    runner=Runner(actual,env,existing=phase=="preserve")
+    action={"produce":runner.produce,"restore":runner.restore,"consume":runner.consume,
+        "evidence":runner.restore,"preserve":runner.preserve_failure}[phase]
+    try:return action()
+    except Exception as error:
+        if phase!="preserve":
+            code=error.code if isinstance(error,store.StoreError) else "WEEKLY_UNEXPECTED_PHASE_FAILURE"
+            if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_UNEXPECTED_PHASE_FAILURE"
+            write(runner.storage,runner.root/"phase-status"/"PARENT_FAILED.json",dict(state="FAILED_RETAINED",phase=actual,
+                reason=code,actual_observed_at=now_utc().isoformat(),public_release=False,successful_forecast=False))
+        raise

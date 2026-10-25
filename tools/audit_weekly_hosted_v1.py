@@ -19,7 +19,7 @@ class Quiet:
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("phase",choices=("produce","restore","consume","preserve","models","reference"))
+    parser.add_argument("phase",choices=("produce","restore","consume","evidence","preserve","models","reference"))
     parser.add_argument("--execute",action="store_true")
     parser.add_argument("--request");parser.add_argument("--request-sha256")
     args=parser.parse_args(argv)

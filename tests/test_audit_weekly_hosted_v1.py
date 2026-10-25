@@ -56,6 +56,143 @@ def test_entry_preparation_has_no_network_credentials_or_package_dependencies():
     assert not result.stderr
 
 
+def public_root_fixture():
+    import base64,gzip
+    from nfl_lab import audit_weekly_public_v1 as public
+    from test_audit_weekly_epoch_v1 import fixture
+    at=hosted.utc('2026-10-25T06:30:00Z');source='b'*40
+    replay=fixture()['replay']
+    rights=dict(schema_version='weekly-selected-derived-rights-authority-v1',state='ROOT_REGISTERED',
+        scope='SELECTED_DERIVED_ONLY',authority_kind='ROOT_APPROVED_DERIVED_PUBLICATION',
+        source_policy_sha256=public.cp.POLICY_SHA,public_fields=list(public.overlay.ROW_FIELDS),
+        public_raw_or_model_weights=False,human_approval=False,source_review_sha256='d'*64,
+        basis='Fictional selected derivatives only; no upstream blanket grant',upstream_blanket_grant=False)
+    r0=dict(schema_version='weekly-actual-r0-freeze-v1',state='ACTUAL_FIRST_RELEASE_R0_FROZEN',
+        deployment_id=1,deployed_source_sha='c'*40,visible_board_sha256='d'*64,
+        engine_sha256={p:'e'*64 for p in public.feed.ENGINE_FILES},frozen_at='2026-10-24T10:00:00Z')
+    policy=public.policy_template()
+    policy.update(state='ROOT_REGISTERED',registered_at_utc=at.isoformat(),source_sha=source,
+        source_branch='research/weekly-storage-probe-v1',workflow_sha256=store.sha((hosted.ROOT/'.github/workflows/lab.yml').read_bytes()),
+        origin_choice_sha256='a'*64,jobs=hosted.JOBS,rights_authorities=[hosted.digest(rights)],r0_identities=[hosted.digest(r0)],
+        public_roles={t:['QB'] for t in public.cp.TARGETS},engine_sha256=r0['engine_sha256'],
+        website_code_sha256={p:'e'*64 for p in public.feed.CODE_FILES},
+        approved_candidates=[{k:s[k] for k in ('target','family','method_id','procedure_version')} for s in replay['slots']])
+    policy['producer_policy_sha256']=public.recipe_commitment(policy)
+    policy['publication_authority'].update(state='ROOT_REGISTERED',source_sha=source,source_branch=policy['source_branch'],
+        export_job=hosted.JOBS['consume'],recipe_registration_sha256=policy['producer_policy_sha256'])
+    go=dict(publication=True,source_sha=source,issued_at_utc=at.isoformat(),retained_registration=dict(origin=dict(replay_catalog=replay)))
+    def bind(doc):
+        body=store.canonical(doc)
+        go['publication_registration']=dict(policy_gzip_base64=base64.b64encode(gzip.compress(body,mtime=0)).decode(),
+            policy_sha256=store.sha(body),rights_authority=rights,r0=r0)
+    bind(policy)
+    return go,policy,bind,at
+
+
+@pytest.mark.parametrize('case',['missing_review','blanket','unknown_field','invalid_review','invalid_basis','zero_deployment','late_freeze','wrong_engine'])
+def test_invalid_rights_or_R0_reject_before_any_source_or_forecast_read(case):
+    go,policy,bind,at=public_root_fixture()
+    value=go['publication_registration'];rights=value['rights_authority'];r0=value['r0']
+    if case=='missing_review':rights.pop('source_review_sha256')
+    elif case=='blanket':rights['upstream_blanket_grant']=True
+    elif case=='unknown_field':rights['new_claim']=True
+    elif case=='invalid_review':rights['source_review_sha256']='unbound'
+    elif case=='invalid_basis':rights['basis']=''
+    elif case=='zero_deployment':r0['deployment_id']=0
+    elif case=='late_freeze':r0['frozen_at']='2026-10-25T06:31:00Z'
+    elif case=='wrong_engine':r0['engine_sha256']={k:'f'*64 for k in r0['engine_sha256']}
+    # A matching new digest is insufficient to turn a malformed authority or
+    # later freeze into a valid prior registration.
+    policy['rights_authorities']=[hosted.digest(rights)];policy['r0_identities']=[hosted.digest(r0)];bind(policy)
+    with pytest.raises(store.StoreError,match='REGISTERED_DERIVED_SOURCE_RIGHTS|ORIGINAL_R0_FROZEN'):
+        hosted.publication_configuration(go,now=at)
+
+
+def test_root_publication_metadata_is_exact_current_source_recipe_and_prior_clock():
+    go,policy,bind,at=public_root_fixture()
+    result=hosted.publication_configuration(go,now=at)
+    assert result['policy']==policy
+    assert result['rights_authority']['public_raw_or_model_weights'] is False
+    for field,value in [('source_sha','f'*40),('registered_at_utc','2026-10-25T06:29:00+00:00'),
+        ('workflow_sha256','f'*64)]:
+        changed=deepcopy(policy);changed[field]=value;bind(changed)
+        with pytest.raises((store.StoreError,hosted.public.PublicError)):
+            hosted.publication_configuration(go,now=at)
+    changed=deepcopy(policy);changed['approved_candidates'][0]['procedure_version']='f'*64
+    changed['producer_policy_sha256']=hosted.public.recipe_commitment(changed)
+    changed['publication_authority']['recipe_registration_sha256']=changed['producer_policy_sha256'];bind(changed)
+    with pytest.raises(store.StoreError,match='EXACT_CURRENT_ROOT_PUBLICATION_SCOPE'):
+        hosted.publication_configuration(go,now=at)
+
+
+def test_root_publication_metadata_rejects_corruption_inflation_and_implicit_approval():
+    import base64,gzip
+    go,policy,bind,at=public_root_fixture()
+    go['publication_registration']['policy_sha256']='f'*64
+    with pytest.raises(store.StoreError,match='EXACT_BOUNDED_PUBLIC_POLICY_BODY'):
+        hosted.publication_configuration(go,now=at)
+    bind(policy)
+    go['publication_registration']['policy_gzip_base64']=base64.b64encode(gzip.compress(b' '*((128<<10)+2))).decode()
+    with pytest.raises(store.StoreError,match='EXACT_BOUNDED_PUBLIC_POLICY_BODY'):
+        hosted.publication_configuration(go,now=at)
+    bind(policy);go['publication_registration']['rights_authority']['public_raw_or_model_weights']=True
+    with pytest.raises(store.StoreError,match='REGISTERED_DERIVED_SOURCE_RIGHTS'):
+        hosted.publication_configuration(go,now=at)
+    go['publication']=False
+    with pytest.raises(store.StoreError,match='NO_IMPLICIT_PUBLICATION_REGISTRATION'):
+        hosted.publication_configuration(go,now=at)
+    go['publication_registration']=None
+    assert hosted.publication_configuration(go,now=at) is None
+
+
+@pytest.mark.parametrize('phase',['produce','restore','consume'])
+def test_fresh_failure_preserver_reopens_only_the_original_job_phase(phase):
+    observed=[]
+    class Original:
+        def __init__(self,actual,env,*,existing):
+            observed.append((actual,existing));assert actual==phase and existing is True
+        def preserve_failure(self):return dict(state='FAILED_ATTEMPT_APPENDED_READER_REQUIRED',public_release=False,successful_forecast=False)
+        def produce(self):raise AssertionError('must not rerun original phase')
+        restore=produce;consume=produce
+    with patch.object(hosted,'Runner',Original):
+        result=hosted.execute('preserve',dict(GITHUB_JOB=hosted.JOBS[phase]))
+    assert observed==[(phase,True)] and result['successful_forecast'] is result['public_release'] is False
+    with pytest.raises(store.StoreError,match='ONLY_ORIGINAL_FAILED_PHASE'):
+        hosted.execute('preserve',dict(GITHUB_JOB=hosted.FAILURE_JOB))
+
+
+def test_failed_jobs_have_a_closed_evidence_only_reader_and_exact_source_checkout():
+    import yaml
+    workflow=yaml.load((hosted.ROOT/'.github/workflows/lab.yml').read_text(),Loader=yaml.BaseLoader)
+    jobs=workflow['jobs'];evidence=jobs[hosted.FAILURE_JOB]
+    assert evidence['needs']==list(hosted.JOBS.values())
+    assert "needs.audit-weekly-export-v1.outputs.failure_handoff_json != ''" in evidence['if']
+    commands=[step.get('run','') for step in evidence['steps']]
+    assert sum(' audit_weekly_hosted_v1.py ' in cmd for cmd in commands)==0
+    assert commands[-1].endswith('tools/audit_weekly_hosted_v1.py evidence --execute')
+    checkout=next(s for s in evidence['steps'] if s.get('uses')=='actions/checkout@v4')
+    assert checkout['with']=={'ref':'${{ github.sha }}','persist-credentials':'false','fetch-depth':'0'}
+    for phase in ('restore','consume'):
+        job=jobs[hosted.JOBS[phase]]
+        preserve=next(s for s in job['steps'] if s.get('id')=='preserve')
+        assert "steps.weekly.outcome == 'failure'" in preserve['if']
+        assert preserve['run'].endswith('tools/audit_weekly_hosted_v1.py preserve --execute')
+        assert job['outputs']['failure_handoff_json']=='${{ steps.preserve.outputs.failure_handoff_json }}'
+        assert preserve['env']['AUDIT_WEEKLY_ORIGINAL_EXIT_CODE']=='${{ steps.weekly.outputs.exit_code }}'
+        original=next(s for s in job['steps'] if s.get('id')=='weekly')
+        assert 'weekly_phase_exit=$?' in original['run'] and 'exit "$weekly_phase_exit"' in original['run']
+
+
+@pytest.mark.parametrize('code,recorded,kind,expected',[('',False,'INTERRUPTION',None),('',True,'EXCEPTION',None),
+    ('137',False,'INTERRUPTION',137),('124',False,'DEADLINE',124),('1',True,'EXCEPTION',1)])
+def test_failure_keeps_actual_exit_or_explicit_unknown(code,recorded,kind,expected):
+    result=hosted.actual_failure(dict(AUDIT_WEEKLY_ORIGINAL_EXIT_CODE=code),python_failure_recorded=recorded)
+    assert result['kind']==kind and result['exit_code']==expected
+    for invalid in ('0','-9','256','unknown'):
+        with pytest.raises(store.StoreError,match='ACTUAL_FAILED_STEP_EXIT_CODE'):
+            hosted.actual_failure(dict(AUDIT_WEEKLY_ORIGINAL_EXIT_CODE=invalid),python_failure_recorded=recorded)
+
+
 def test_operational_past_history_and_software_acceptance_have_distinct_purposes():
     from nfl_lab import audit_weekly_runtime_v1 as runtime
     config=dict(history_seasons=[2026],allowed_periods={'2026':[1,2,3,4,5,6]},
@@ -98,26 +235,41 @@ def test_owned_worker_dies_when_its_parent_is_interrupted(tmp_path):
         if parent.poll() is None:parent.kill();parent.wait(timeout=5)
 
 
-def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(tmp_path):
+@pytest.mark.parametrize('phase,has_delivery',[('produce',False),('consume',True)])
+def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(tmp_path,phase,has_delivery):
     # Real owned filesystem/CAS and original failure codec, injected append only.
     # A newly loaded JSON status cannot authorize a successful forecast.
-    r=object.__new__(hosted.Runner);r.root=tmp_path/'attempt';r.root.mkdir()
+    r=object.__new__(hosted.Runner);r.phase=phase;r.root=tmp_path/'attempt';r.root.mkdir()
     r.storage=OperationalStorage(r.root/'cache',Path(hosted.ROOT)/'config/operational-source-policy-v2.json',state=r.root/'state')
     r.storage.register_root(r.root)
     r.go_sha='a'*64;r.go=dict(qualified_runtime=dict(binding=dict(runtime_id='b'*32),qualification=dict()))
     r.root_ref=hosted.write(r.storage,r.root/'OWNER_ROOT.json',dict(fictional_root=True))
     r.identity=dict(repository=store.REPO,run_id='49900000000',run_attempt=1,source_sha='c'*40,
-        job_id=hosted.JOBS['produce'],workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/fictional')
-    r.started=hosted.now_utc()-timedelta(seconds=2);r.env=dict(GITHUB_OUTPUT=str(tmp_path/'output'))
+        job_id=hosted.JOBS[phase],workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/fictional')
+    exit_code=137 if has_delivery else 1
+    r.started=hosted.now_utc()-timedelta(seconds=2);r.env=dict(GITHUB_OUTPUT=str(tmp_path/'output'),AUDIT_WEEKLY_ORIGINAL_EXIT_CODE=str(exit_code))
     (tmp_path/'output').touch()
     hosted.write(r.storage,r.root/'phase-status'/'01-source.json',dict(state='FAILED_RETAINED',reason='FICTIONAL_SOURCE_UNAVAILABLE',successful_forecast=False))
     hosted.write(r.storage,r.root/'journal'/'one.reservation.json',dict(schema_version='weekly-private-POST-reservation-v2',key='fictional',bytes=7,sha256='d'*64,name='fictional'))
+    original_controls={}
+    if has_delivery:
+        for name in ('DELIVERY_PUBLISH_INTENT.json','DELIVERY_FAILED.json'):
+            path=r.root/'delivery'/name
+            hosted.write(r.storage,path,dict(state='FICTIONAL_ORIGINAL_EXPORT_FAILURE',name=name))
+            original_controls['delivery/'+name]=path.read_bytes()
     observed={}
     def append(client,storage,output,**kwargs):
         request,bodies=failure.unpack((output/'FAILURE.json.gz').read_bytes())
         attachments={item['label']:body for item,body in zip(request['attachments'],bodies)}
-        assert request['failure']['exit_code']==1 and request['state']=='FAILED'
-        assert set(attachments)=={'file-graph','owner-root','original-post-reservations','phase-00'}
+        assert request['failure']['exit_code']==exit_code and request['state']=='FAILED'
+        expected={'file-graph','owner-root','original-post-reservations','phase-00'}
+        if has_delivery:expected.add('complete-auxiliary-controls')
+        assert set(attachments)==expected
+        if has_delivery:
+            import base64
+            assert request['operation']=='export' and request['failure']['kind']=='INTERRUPTION'
+            auxiliary=hosted.cp.strict_json(attachments['complete-auxiliary-controls'])
+            assert {f['relative_path']:base64.b64decode(f['body_base64'],validate=True) for f in auxiliary['files']}==original_controls
         assert b'FICTIONAL_SOURCE_UNAVAILABLE' in attachments['phase-00']
         assert b'one.reservation.json' in attachments['original-post-reservations']
         assert kwargs['inputs']['payload_manifest']==store.canonical(failure.payload_manifest((output/'FAILURE.json.gz').read_bytes()))
@@ -128,6 +280,6 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
     assert result['successful_forecast'] is result['public_release'] is False
     script='from pathlib import Path;from nfl_lab.operational_failure_v1 import unpack;import json,sys; r,a=unpack(Path(sys.argv[1]).read_bytes());print(json.dumps(dict(state=r["state"],files=len(a))))'
     out=subprocess.run([sys.executable,'-c',script,str(observed['package'])],cwd=hosted.ROOT,capture_output=True,text=True,check=True)
-    assert json.loads(out.stdout)==dict(state='FAILED',files=4)
+    assert json.loads(out.stdout)==dict(state='FAILED',files=5 if has_delivery else 4)
     with pytest.raises(store.StoreError,match='FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED'):
         r.preserve_failure()
