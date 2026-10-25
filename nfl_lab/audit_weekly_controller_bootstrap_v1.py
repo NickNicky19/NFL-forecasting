@@ -64,6 +64,7 @@ SHARED_EXECUTABLE_PINS = frozenset({MODULE, TOOL, TEST, c.MODULE, c.TOOL, TEMPLA
     "nfl_lab/audit_weekly_grade_history_v1.py", "nfl_lab/private_draft_store.py",
     "nfl_lab/private_draft_probe_helpers.py", "nfl_lab/owner_private_bootstrap.py",
     "nfl_lab/owner_bootstrap_bundle.py", "nfl_lab/operational_storage.py",
+    "nfl_lab/owned_reference_batch.py",
     "nfl_lab/weekly_durable_acceptance.py", "nfl_lab/cadence.py",
     "tools/private_draft_store_v2.py", "tools/audit_process_guard_v1.py",
     "config/private-draft-storage-v2.json", "config/operational-source-policy-v2.json",
