@@ -1,0 +1,7 @@
+This exact six-path current-Main alternative is PREPARED and HELD pending genuine capture7/run40203512153. It is not installed or release acceptance. Base453e7e6 preserves the currently deployed game-market/Classic/FG corrections. Do not stack this full Main alternative on a separate Phase2 composition; reconcile the actual22-file inventory and protected current model first if source advances.
+
+Producer sourcec74812b441c15d8e45daa09021f428ed131ff7cf is the normally merged PR21 repair after1076pass/319subtests/1skip actual CI40202359694/job121196025152. Its new root/policy are issued at their actual clocks. Old failed attempts and all earlier packets remain preserved/held.
+
+HANDOFF.json records exact before/after files, expected tree4cddf64bf8098073a64fc344da81d533f54ae057, patchSHAfc8567e6c551c66d0d520ca365f0a88fad3477c296afe1725bb7231f6eaa1ea1 and new policySHA091e7741aabc49757ac9ca06228f9c8932b11fd0d67613dce311f6b812476134. PUBLIC-native-policy.json is cleared static source/recipe/rights/R0/candidate registration metadata; it contains no private root, raw row, model or credential.
+
+The active122500Z website integrator retains source ownership. Apply only after genuine receipt/run qualification and exact prepared protected-source binding; test the actual combined source. After eligible normal merge/deploy, verify exact assets/data/public receipt and selected COUNT procedure/value consumption. A successful fallback-only build does not establish installation. Exact selectedPPR remains blocked.

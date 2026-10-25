@@ -1,0 +1,73 @@
+{
+  "schema_version": "count-consumer-current-main-handoff-v1",
+  "state": "PREPARED_NOT_INSTALLED",
+  "source_parent": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+  "source_parent_tree": "725e7fb8ba0c833fe766172d0328009c1748200b",
+  "expected_tree": "4cddf64bf8098073a64fc344da81d533f54ae057",
+  "file_manifest": [
+    {
+      "path": ".github/workflows/hourly.yml",
+      "before_sha256": "d76d1c07c73a6230cc232ca0af4d2051e1d59d813d90948bae30fb3443cf724d",
+      "sha256": "8544d42cdd358df47273e14b4159e883e3731ec290a37d330eb8c882a0fee3fa",
+      "bytes": 11201,
+      "git_blob": "b01ccaeefb45fa35688fdc562d1806757806945a"
+    },
+    {
+      "path": "config/weekly-derived-selected-policy-v4.json",
+      "before_sha256": null,
+      "sha256": "091e7741aabc49757ac9ca06228f9c8932b11fd0d67613dce311f6b812476134",
+      "bytes": 6512,
+      "git_blob": "591af0439d05e2c8c76d6b016cf9dcb76b802b33"
+    },
+    {
+      "path": "tests/test_classic_build_pair_v1.py",
+      "before_sha256": "ef8da5b63c354aa2b49865bdf45909cd6ae858146de1c70331c10c93b968da57",
+      "sha256": "3c61f00bbdac564b34dc93ee0e10e06ed9bd816a338859073c5ac6e2b26b76f6",
+      "bytes": 14717,
+      "git_blob": "fca7ea80df33ce5d4fda752ea1f85558b5ca94c7"
+    },
+    {
+      "path": "tests/test_weekly_public_feed_v4.py",
+      "before_sha256": null,
+      "sha256": "66453a63482946c5fd0c8682c475ef50240993538a1eab6431bc9783e40b284f",
+      "bytes": 21390,
+      "git_blob": "498ede78924bef7bfd0861d99fcebd9c794fe40b"
+    },
+    {
+      "path": "tools/weekly_public_feed.py",
+      "before_sha256": "43f3fca95f9662382643879f5deed0bf3e3d87a7c76297f0f4820386efc6d4f8",
+      "sha256": "cce406fd77c7e614bf2e52f9d849abfeb9da58aadbd94b4b0b0bdad1ab708ba7",
+      "bytes": 39619,
+      "git_blob": "12e95e3ce7b4ad350df789393fdff203a7d4d8a9"
+    },
+    {
+      "path": "tools/weekly_public_feed_v4.py",
+      "before_sha256": null,
+      "sha256": "42275a3351cf04fa825d66af8be3abb92e2f6e1fbf92da8a500e06d0419c3623",
+      "bytes": 20087,
+      "git_blob": "64dcc4b128806580b7e97dbf36112caeb0704da7"
+    }
+  ],
+  "patch_sha256": "fc8567e6c551c66d0d520ca365f0a88fad3477c296afe1725bb7231f6eaa1ea1",
+  "website_policy_sha256": "091e7741aabc49757ac9ca06228f9c8932b11fd0d67613dce311f6b812476134",
+  "website_policy_prepared_at": "2026-10-25T14:49:27.125446+00:00",
+  "lab_source_sha": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "lab_public_policy_sha256": "8cf0df7f10842639f814daedb82231064fab0c4816cb4740bcc13c9263a06791",
+  "lab_recipe_sha256": "3fa851684b04ec95d8c42c5a5a80e004be438797b819d4dac0f73bca4b443984",
+  "lab_recipe_registered_at": "2026-10-25T14:42:09.438903+00:00",
+  "effective18_approved_candidates_sha256": "6bb231a2f96ff94205b70ef8534b9d5b32673b03ce775e581f0ab57bc0ef7c58",
+  "website_worktree_edited": false,
+  "new_fits": 0,
+  "original_registrations_preserved": true,
+  "prerequisites": [
+    "actual producer/reader/export SUCCESS",
+    "existing website lead exact protected-source binding",
+    "actual combined source CI",
+    "normal protected release",
+    "live corrected selected-feed verification"
+  ],
+  "native_capture_run_id": 40203512153,
+  "native_capture_state_at_preparation": "IN_PROGRESS",
+  "eligible_for_release": false,
+  "release_gate": "Require actual producer, independent reader and exporter SUCCESS at the exact source, then actual combined website source CI and live verification."
+}
