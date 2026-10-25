@@ -1,0 +1,1081 @@
+{
+  "$defs": {
+    "baseProof": {
+      "properties": {
+        "HTTP_calls": {
+          "maximum": 40,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "binding_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "config_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "created_at_utc": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "job": {
+          "$ref": "#/$defs/job"
+        },
+        "process_identity": {
+          "$ref": "#/$defs/sha256"
+        },
+        "repository": {
+          "const": "NickNicky19/NFL-forecasting"
+        },
+        "run_attempt": {
+          "const": 1
+        },
+        "run_id": {
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "weekly-private-proof-v2.1"
+        },
+        "source_sha": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": "string"
+        },
+        "started_at_utc": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "transfer_bytes": {
+          "maximum": 41943040,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "HTTP_calls",
+        "binding_sha256",
+        "config_sha256",
+        "created_at_utc",
+        "job",
+        "process_identity",
+        "repository",
+        "run_attempt",
+        "run_id",
+        "schema_version",
+        "source_sha",
+        "started_at_utc",
+        "transfer_bytes"
+      ],
+      "type": "object"
+    },
+    "job": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "else": {
+            "properties": {
+              "run_authenticated": {
+                "const": false
+              }
+            }
+          },
+          "if": {
+            "properties": {
+              "execution_lane": {
+                "const": "github_actions"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "run_authenticated": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "api_job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "event_name": {
+          "const": "workflow_dispatch"
+        },
+        "execution_lane": {
+          "enum": [
+            "github_actions",
+            "fictional_injected_transport"
+          ]
+        },
+        "job_id": {
+          "type": "string"
+        },
+        "permission": {
+          "enum": [
+            "read",
+            "write"
+          ]
+        },
+        "run_authenticated": {
+          "type": "boolean"
+        },
+        "workflow_ref": {
+          "type": "string"
+        },
+        "workflow_sha": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "api_job_id",
+        "event_name",
+        "execution_lane",
+        "job_id",
+        "permission",
+        "run_authenticated",
+        "workflow_ref",
+        "workflow_sha"
+      ],
+      "type": "object"
+    },
+    "operationGO": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "initialize"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {},
+                "required": [],
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "pin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {
+                  "binding": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "binding"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "boundary"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {
+                  "before": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "binding": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "binding",
+                  "before"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "qualify"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {
+                  "before": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "binding": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "read_proof": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "binding",
+                  "before",
+                  "read_proof"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "append"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {
+                  "binding": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "payload_manifest": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "qualification": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "binding",
+                  "payload_manifest",
+                  "qualification"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "restore"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "input_sha256": {
+                "additionalProperties": false,
+                "properties": {
+                  "binding": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "descriptor": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "binding",
+                  "descriptor"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "approved": {
+          "const": true
+        },
+        "config_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "input_sha256": {
+          "additionalProperties": {
+            "$ref": "#/$defs/sha256"
+          },
+          "type": "object"
+        },
+        "job_id": {
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "initialize",
+            "pin",
+            "boundary",
+            "qualify",
+            "append",
+            "restore"
+          ]
+        },
+        "qualification_sha256": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "repository": {
+          "const": "NickNicky19/NFL-forecasting"
+        },
+        "run_id": {
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "type": "string"
+        },
+        "runtime_id": {
+          "pattern": "^[a-f0-9]{32}$",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "weekly-private-operation-GO-v2.1"
+        },
+        "scope_manifest_sha256": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "single_writer_group": {
+          "const": "nfl-lab-single-writer"
+        },
+        "source_sha": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": "string"
+        },
+        "workflow_ref": {
+          "pattern": "^NickNicky19/NFL-forecasting/\\.github/workflows/lab\\.yml@refs/heads/[A-Za-z0-9_./-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "approved",
+        "operation",
+        "repository",
+        "run_id",
+        "source_sha",
+        "config_sha256",
+        "scope_manifest_sha256",
+        "qualification_sha256",
+        "single_writer_group",
+        "runtime_id",
+        "input_sha256",
+        "job_id",
+        "workflow_ref"
+      ],
+      "type": "object"
+    },
+    "payload": {
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "payload_kind": {
+            "not": {
+              "const": "model_artifact"
+            }
+          }
+        }
+      },
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "format": {
+          "enum": [
+            "json",
+            "gzip",
+            "pickle",
+            "npz"
+          ]
+        },
+        "payload_kind": {
+          "enum": [
+            "forecast_batch",
+            "outcome_snapshot",
+            "selection_receipt",
+            "model_artifact",
+            "runtime_manifest",
+            "feature_snapshot",
+            "source_snapshot",
+            "identity_snapshot"
+          ]
+        },
+        "schema_version": {
+          "const": "weekly-private-payload-v2"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "schema_version",
+        "payload_kind",
+        "format",
+        "bytes",
+        "sha256",
+        "source_policy_sha256"
+      ],
+      "then": {
+        "properties": {
+          "format": {
+            "enum": [
+              "json",
+              "gzip"
+            ]
+          }
+        }
+      },
+      "type": "object"
+    },
+    "proof_qualified": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseProof"
+        },
+        {
+          "properties": {
+            "HTTP_calls": {
+              "maximum": 40,
+              "minimum": 5,
+              "type": "integer"
+            },
+            "before_completed_at_utc": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "before_process_identity": {
+              "$ref": "#/$defs/sha256"
+            },
+            "before_proof": {
+              "$ref": "#/$defs/proof_write_pin"
+            },
+            "before_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "engineering_boundary_v2": {
+              "const": true
+            },
+            "job": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/job"
+                },
+                {
+                  "properties": {
+                    "permission": {
+                      "const": "write"
+                    }
+                  }
+                }
+              ]
+            },
+            "operation": {
+              "const": "qualify"
+            },
+            "phase": {
+              "const": "qualified"
+            },
+            "read_completed_at_utc": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "read_process_identity": {
+              "$ref": "#/$defs/sha256"
+            },
+            "read_proof": {
+              "$ref": "#/$defs/proof_read_boundary"
+            },
+            "read_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "restricted_upload_authorized": {
+              "const": false
+            },
+            "strict_v1_unchanged": {
+              "const": "INCONCLUSIVE"
+            }
+          },
+          "required": [
+            "HTTP_calls",
+            "before_completed_at_utc",
+            "before_process_identity",
+            "before_proof",
+            "before_sha256",
+            "engineering_boundary_v2",
+            "job",
+            "operation",
+            "phase",
+            "read_completed_at_utc",
+            "read_process_identity",
+            "read_proof",
+            "read_sha256",
+            "restricted_upload_authorized",
+            "strict_v1_unchanged"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "proof_read_boundary": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseProof"
+        },
+        {
+          "properties": {
+            "HTTP_calls": {
+              "maximum": 40,
+              "minimum": 15,
+              "type": "integer"
+            },
+            "all10_denied": {
+              "const": true
+            },
+            "before_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "controls_passed": {
+              "const": true
+            },
+            "job": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/job"
+                },
+                {
+                  "properties": {
+                    "permission": {
+                      "const": "read"
+                    }
+                  }
+                }
+              ]
+            },
+            "operation": {
+              "const": "boundary"
+            },
+            "phase": {
+              "const": "read_boundary"
+            },
+            "routes": {
+              "$ref": "#/$defs/routes"
+            }
+          },
+          "required": [
+            "HTTP_calls",
+            "all10_denied",
+            "before_sha256",
+            "controls_passed",
+            "job",
+            "operation",
+            "phase",
+            "routes"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "proof_restore": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseProof"
+        },
+        {
+          "properties": {
+            "HTTP_calls": {
+              "maximum": 40,
+              "minimum": 8,
+              "type": "integer"
+            },
+            "bytes": {
+              "maximum": 8388608,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "draft_before_after": {
+              "const": true
+            },
+            "exact_readback": {
+              "const": true
+            },
+            "job": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/job"
+                },
+                {
+                  "properties": {
+                    "permission": {
+                      "const": "write"
+                    }
+                  }
+                }
+              ]
+            },
+            "operation": {
+              "const": "restore"
+            },
+            "payload_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "phase": {
+              "const": "restore"
+            },
+            "separate_process": {
+              "const": true
+            }
+          },
+          "required": [
+            "HTTP_calls",
+            "bytes",
+            "draft_before_after",
+            "exact_readback",
+            "job",
+            "operation",
+            "payload_sha256",
+            "phase",
+            "separate_process"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "proof_write_pin": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseProof"
+        },
+        {
+          "properties": {
+            "HTTP_calls": {
+              "maximum": 40,
+              "minimum": 5,
+              "type": "integer"
+            },
+            "draft_before_after": {
+              "const": true
+            },
+            "exact_canary_readback": {
+              "const": true
+            },
+            "job": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/job"
+                },
+                {
+                  "properties": {
+                    "permission": {
+                      "const": "write"
+                    }
+                  }
+                }
+              ]
+            },
+            "operation": {
+              "const": "pin"
+            },
+            "phase": {
+              "const": "write_pin"
+            }
+          },
+          "required": [
+            "HTTP_calls",
+            "draft_before_after",
+            "exact_canary_readback",
+            "job",
+            "operation",
+            "phase"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "route": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": 403
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rate_header_present": {
+                "const": true
+              },
+              "rate_remaining_nonzero": {
+                "const": true
+              },
+              "resource_permission_message_exact_match": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "principal": {
+          "enum": [
+            "anonymous",
+            "contents_read"
+          ]
+        },
+        "rate_header_present": {
+          "type": "boolean"
+        },
+        "rate_remaining_nonzero": {
+          "type": "boolean"
+        },
+        "request_failed": {
+          "const": false
+        },
+        "resource_permission_message_exact_match": {
+          "type": "boolean"
+        },
+        "retry_after_present": {
+          "const": false
+        },
+        "route": {
+          "enum": [
+            "release_metadata",
+            "asset_metadata",
+            "asset_list",
+            "api_octet",
+            "browser"
+          ]
+        },
+        "sequence": {
+          "enum": [
+            "read_only",
+            "anonymous"
+          ]
+        },
+        "status": {
+          "enum": [
+            403,
+            404
+          ]
+        }
+      },
+      "required": [
+        "principal",
+        "rate_header_present",
+        "rate_remaining_nonzero",
+        "request_failed",
+        "resource_permission_message_exact_match",
+        "retry_after_present",
+        "route",
+        "sequence",
+        "status"
+      ],
+      "type": "object"
+    },
+    "routes": {
+      "items": false,
+      "maxItems": 10,
+      "minItems": 10,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "contents_read"
+                },
+                "route": {
+                  "const": "release_metadata"
+                },
+                "sequence": {
+                  "const": "read_only"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "contents_read"
+                },
+                "route": {
+                  "const": "asset_metadata"
+                },
+                "sequence": {
+                  "const": "read_only"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "contents_read"
+                },
+                "route": {
+                  "const": "asset_list"
+                },
+                "sequence": {
+                  "const": "read_only"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "contents_read"
+                },
+                "route": {
+                  "const": "api_octet"
+                },
+                "sequence": {
+                  "const": "read_only"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "browser"
+                },
+                "sequence": {
+                  "const": "read_only"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "release_metadata"
+                },
+                "sequence": {
+                  "const": "anonymous"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "asset_metadata"
+                },
+                "sequence": {
+                  "const": "anonymous"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "asset_list"
+                },
+                "sequence": {
+                  "const": "anonymous"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "api_octet"
+                },
+                "sequence": {
+                  "const": "anonymous"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/route"
+            },
+            {
+              "properties": {
+                "principal": {
+                  "const": "anonymous"
+                },
+                "route": {
+                  "const": "browser"
+                },
+                "sequence": {
+                  "const": "anonymous"
+                }
+              }
+            },
+            {
+              "properties": {
+                "status": {
+                  "const": 404
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "type": "array"
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "weekly-private-draft-store-v2.1",
+  "$ref": "#/$defs/payload",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

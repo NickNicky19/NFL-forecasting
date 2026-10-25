@@ -1,0 +1,43 @@
+name: Audit source checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: audit-source-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.lock
+            requirements-audit-weekly-metadata-v1.lock
+      - name: Install exact metadata-only parent dependencies
+        run: 'timeout 90s python -m pip install --disable-pip-version-check --no-input --only-binary=:all: --no-deps -r requirements-audit-weekly-metadata-v1.lock'
+      - name: Verify preparation-only parent contract before numerical dependencies
+        run: timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --contract
+      - name: Install exact research and test dependencies
+        run: python -m pip install -r requirements.lock -e '.[test]'
+      - name: Run complete Main repository acceptance checks
+        run: python -m pytest -q

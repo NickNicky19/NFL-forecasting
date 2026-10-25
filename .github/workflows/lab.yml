@@ -2,8 +2,8 @@ name: NFL research lab
 
 on:
   schedule:
-    # One scheduler. Both UTC offsets are gated to08:36 America/Chicago below.
-    - cron: '36 13,14 * * *'
+    # One scheduler: explicit Parent 07:36; legacy 08:36. Each gates one DST slot.
+    - cron: '36 12,13,14 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -26,29 +26,105 @@ jobs:
   lab:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    permissions:
+      contents: write
+      actions: write
     env:
       OMP_NUM_THREADS: '2'
       OPENBLAS_NUM_THREADS: '2'
       MKL_NUM_THREADS: '2'
       NUMEXPR_NUM_THREADS: '2'
     steps:
+      - name: Select explicit main parent route without granting readiness
+        id: parent_route
+        env:
+          PARENT_ENABLED: ${{ vars.AUDIT_WEEKLY_PARENT_ENABLED }}
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+          REF: ${{ github.ref }}
+        run: |
+          python3 - <<'PY'
+          import os
+          requested=(os.environ['PARENT_ENABLED']=='true'
+              and os.environ['REF']=='refs/heads/main'
+              and (os.environ['EVENT']=='schedule'
+                  or os.environ['EVENT']=='workflow_dispatch' and os.environ['MODE']=='daily'))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'requested={str(requested).lower()}\n')
+          PY
       - uses: actions/checkout@v4
+        if: steps.parent_route.outputs.requested == 'true'
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        if: steps.parent_route.outputs.requested != 'true'
         with:
           fetch-depth: 0
       - name: Enforce source and publication handover safety
         id: readiness
+        if: steps.parent_route.outputs.requested != 'true'
         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+      - name: Set up metadata-only parent Python
+        if: steps.parent_route.outputs.requested == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-audit-weekly-metadata-v1.lock
+      - name: Install exact metadata-only parent dependencies
+        if: steps.parent_route.outputs.requested == 'true'
+        run: 'timeout 90s python -m pip install --disable-pip-version-check --no-input --only-binary=:all: --no-deps -r requirements-audit-weekly-metadata-v1.lock'
+      - name: Determine parent cadence without enabling legacy research
+        id: parent_cadence
+        if: steps.parent_route.outputs.requested == 'true'
+        env:
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from nfl_lab.cadence import decision, PARENT_POLICY
+          result=decision(os.environ['EVENT'],os.environ['MODE'] or None,policy=PARENT_POLICY)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write(f'due={str(result["due"]).lower()}\nmode={result["mode"]}\n')
+          with open('parent-cadence-result.json','w') as f:json.dump(result,f,indent=2)
+          print(result)
+          PY
+      - name: Enqueue one qualified same-source Ops capture and return
+        id: weekly_parent
+        if: steps.parent_route.outputs.requested == 'true' && steps.parent_cadence.outputs.due == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --execute > controller-parent-result.json
+      - name: Keep original handover block when parent qualification fails
+        id: parent_readiness_block
+        if: always() && steps.parent_route.outputs.requested == 'true' && steps.weekly_parent.outcome != 'success'
+        run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+      - name: Upload public-safe parent enqueue status
+        if: always() && steps.parent_route.outputs.requested == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-parent-${{ github.run_id }}-${{ github.run_attempt }}
+          path: controller-parent-result.json
+          retention-days: 14
+          if-no-files-found: ignore
       - uses: actions/setup-python@v5
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         with:
           python-version: '3.12'
           cache: pip
       - name: Install exact tested dependencies
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         run: python -m pip install -r requirements.lock -e '.[test]'
       - name: Acceptance tests
         id: acceptance
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         run: python -m pytest -q
       - name: Determine cadence
         id: cadence
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped'
         env:
           EVENT: ${{ github.event_name }}
           MODE: ${{ inputs.mode }}
@@ -63,7 +139,7 @@ jobs:
           print(result)
           PY
       - name: Restore derived evidence state
-        if: steps.cadence.outcome == 'success'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         run: |
           mkdir -p state
           if git show-ref --verify --quiet refs/remotes/origin/lab-state; then
@@ -71,24 +147,24 @@ jobs:
           fi
       - name: Capture and grade
         id: daily
-        if: steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
         run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
       - name: Grade recorded games without pregame issuance
         id: grading
-        if: steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
         run: timeout 300 python -m nfl_lab.cli grade > grading-result.json
       - name: Bounded weekly experiments
         id: training
-        if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
         run: |
           timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
           timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
       - name: Replay immutable records
         id: replay
-        if: steps.cadence.outcome == 'success'
+        if: steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         run: python -m nfl_lab.cli replay
       - name: Persist only lab-derived forecasts and corrections
-        if: always() && steps.cadence.outcome == 'success'
+        if: always() && steps.parent_route.outputs.requested != 'true' && steps.weekly_parent.outcome == 'skipped' && steps.cadence.outcome == 'success'
         env:
           ACCEPTANCE_OUTCOME: ${{ steps.acceptance.outcome }}
           DAILY_OUTCOME: ${{ steps.daily.outcome }}
@@ -128,7 +204,7 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
       - name: Upload exact public-safe readiness receipt
-        if: always()
+        if: always() && (steps.parent_route.outputs.requested != 'true' || steps.weekly_parent.outcome != 'success')
         uses: actions/upload-artifact@v4
         with:
           name: lab-readiness-${{ github.run_id }}-${{ github.run_attempt }}
