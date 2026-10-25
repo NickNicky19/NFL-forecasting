@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
+from retained_source_fixture import retained_procedure
 
 from nfl_lab import selected_private_snapshot as x,private_draft_store as s,weekly_durable_acceptance as a
 from nfl_lab.operational_storage import OperationalStorage
@@ -96,7 +97,10 @@ class SnapshotChecks(unittest.TestCase):
         unapproved=json.loads(body);unapproved['state']='FICTIONAL_UNAPPROVED';rejected=s.canonical(unapproved)
         with patch.object(cli,'read',return_value=rejected),self.assertRaisesRegex(ValueError,'PROCEDURE_PENDING'):
             cli.verify_sources(cli.sha(rejected))
-        self.assertEqual(cli.verify_sources(cli.CONFIG_SHA256)['state'],'ROOT_APPROVED_FOR_GENUINE_GHA')
+        with retained_procedure(cli,'config/selected-private-snapshot-v1.json'):
+            self.assertEqual(cli.verify_sources(cli.CONFIG_SHA256)['state'],'ROOT_APPROVED_FOR_GENUINE_GHA')
+        with self.assertRaisesRegex(ValueError,'SELECTED_SOURCE_PIN'):
+            cli.verify_sources(cli.CONFIG_SHA256)
     def test_v2_honest_clock_negatives_and_v1_semantics_unchanged(self):
         _,_,b,_,_=self.chain();policy=dict(producer_policy_sha256=self.config['producer_policy_sha256'],source_policy_sha256=x.cp.POLICY_SHA)
         for change in ['future_terminal','backdated_packager','wrong_body']:

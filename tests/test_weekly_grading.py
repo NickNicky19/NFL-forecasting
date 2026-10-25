@@ -59,8 +59,11 @@ class WeeklyGradingChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             changed=Path(d)/"same-body-different-physical-policy.json";changed.write_bytes(policy_path.read_bytes()+b'\n')
             with self.assertRaisesRegex(ValueError,"mismatch"):w.validate_grading_policy({"source_policy_sha256":policy["_policy_sha256"]},changed,active)
-            plan=json.loads((ROOT/"config/weekly-grading-v1.json").read_text());plan.update(state="FROZEN_ROOT_REVIEWER_SEALED",execution_authorized=True,
-                review={"status":"PREEXEC_PASS","integrator":"/root"},source_policy_sha256="f"*64)
+            # A negative fixture must not require a missing operational plan.
+            plan=dict(schema_version="weekly-grading-v1-plan",state="FROZEN_ROOT_REVIEWER_SEALED",execution_authorized=True,
+                review={"status":"PREEXEC_PASS","integrator":"/root"},source_policy_sha256="f"*64,
+                budgets=dict(CPU_seconds=120,wall_seconds=180,address_space_bytes=1073741824,maximum_queries=1000,
+                             maximum_opportunities=18000,maximum_REG_periods=18,fits=0,capture=0,retries=0))
             p=Path(d)/"mismatch-plan.json";p.write_text(json.dumps(plan))
             with patch("nfl_lab.operational_io.active_storage",return_value=active),patch.object(resource,"setrlimit",side_effect=AssertionError("resource mutation before policy")),\
                 patch("nfl_lab.owned_reference_batch.validate_owned_references",side_effect=AssertionError("input decode before policy")),patch.object(live,"fetch",side_effect=AssertionError("source call")):

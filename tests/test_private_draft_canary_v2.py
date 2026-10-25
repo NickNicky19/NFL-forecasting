@@ -15,11 +15,14 @@ from tools import private_draft_canary_v2 as driver
 from tools import private_draft_store_v2 as cli
 from nfl_lab import private_draft_store as store
 from test_private_draft_store_v2 import Server,Response,RUN,SOURCE
+from retained_source_fixture import retained_procedure, registered_bytes, workflow_job, REPOSITORY
 
 
 class CanaryDriverTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.directory=Path(self.temp.name);self.server=Server();self.invocations=[]
+        retained = retained_procedure(driver, 'config/private-draft-canary-v2.json')
+        retained.__enter__(); self.addCleanup(retained.__exit__, None, None, None)
         self.config=driver.verify_sources()
     def tearDown(self):self.temp.cleanup()
     def environment(self,phase):
@@ -27,11 +30,11 @@ class CanaryDriverTests(unittest.TestCase):
         event=self.directory/(phase+"-event");event.write_text(json.dumps(dict(inputs=dict(mode=driver.MODE),repository=dict(full_name=store.REPO),ref="refs/heads/fictional")))
         return dict(GITHUB_ACTIONS="true",CI="true",RUNNER_ENVIRONMENT="github-hosted",GITHUB_REPOSITORY=store.REPO,GITHUB_EVENT_NAME="workflow_dispatch",
             GITHUB_RUN_ATTEMPT="1",CANARY_MODE=driver.MODE,GITHUB_JOB=driver.JOBS[phase],STORE_PERMISSION="read" if phase=="read" else "write",GITHUB_RUN_ID=RUN,
-            GITHUB_SHA=SOURCE,GITHUB_WORKFLOW_SHA=SOURCE,GITHUB_WORKSPACE=str(ROOT),GITHUB_REF="refs/heads/fictional",GITHUB_WORKFLOW_REF=store.REPO+"/.github/workflows/lab.yml@refs/heads/fictional",
+            GITHUB_SHA=SOURCE,GITHUB_WORKFLOW_SHA=SOURCE,GITHUB_WORKSPACE=str(driver.ROOT),GITHUB_REF="refs/heads/fictional",GITHUB_WORKFLOW_REF=store.REPO+"/.github/workflows/lab.yml@refs/heads/fictional",
             RUNNER_TEMP=str(self.directory),GITHUB_OUTPUT=str(output),GITHUB_EVENT_PATH=str(event))
     def preflight(self,phase,env):
         original=driver.safe_read
-        def read(path,cap):return SOURCE.encode() if Path(path)==ROOT/".git/HEAD" else original(path,cap)
+        def read(path,cap):return SOURCE.encode() if Path(path)==driver.ROOT/".git/HEAD" else original(path,cap)
         with patch.object(driver,"safe_read",side_effect=read):return driver.preflight(phase,env)
     def runner(self,env):
         def invoke(argv,timeout):
@@ -95,17 +98,22 @@ class CanaryDriverTests(unittest.TestCase):
         env=self.environment("read");self.attach(env,"binding",{"extra":"FICTIONAL_RAW_NOT_ALLOWED"})
         with self.assertRaises(store.StoreError):driver.run_phase("read",env,self.config,runner=lambda *args:(_ for _ in ()).throw(AssertionError()))
     def test_existing_workflow_and_old_probe_modes_preserved(self):
-        old=Path('/workspace/nfl-weekly-storage-probe-v1/.github/workflows/lab.yml').read_bytes()
+        old=registered_bytes('.github/workflows/lab.yml','dd6492ebb83d22a65fdf3a7173d55ee042798ac7fbdab7a4deac4cf146870dfd')
         self.assertEqual(driver.digest(old),'dd6492ebb83d22a65fdf3a7173d55ee042798ac7fbdab7a4deac4cf146870dfd')
-        current=(ROOT/'.github/workflows/lab.yml').read_text();prefix=current.split('  private-draft-v2-write:\n',1)[0]
+        retained=(driver.ROOT/'.github/workflows/lab.yml').read_text();prefix=retained.split('  private-draft-v2-write:\n',1)[0]
         prefix=prefix.replace(', private-draft-canary-v2]',']').replace(" && inputs.mode != 'private-draft-canary-v2'",'')
-        self.assertEqual(prefix,old.decode());self.assertEqual(current.count('- cron:'),1);self.assertEqual(current.count('group: nfl-lab-single-writer'),1)
-        new=current.split('  private-draft-v2-write:\n',1)[1]
+        self.assertEqual(prefix,old.decode());self.assertEqual(retained.count('- cron:'),1);self.assertEqual(retained.count('group: nfl-lab-single-writer'),1)
+        new=retained.split('  private-draft-v2-write:\n',1)[1]
         self.assertEqual(new.count('ref: ${{ github.sha }}'),3);self.assertEqual(new.count('persist-credentials: false'),3)
         self.assertEqual(new.count('actions: read'),3);self.assertEqual(new.count('contents: write'),2);self.assertEqual(new.count('contents: read'),1)
         self.assertIn("needs.private-draft-v2-read.result == 'success'",new);self.assertIn("!cancelled()",new)
         self.assertNotIn('upload-artifact',new);self.assertNotIn('pip install',new);self.assertNotIn('private_storage_probe.py',new)
         self.assertEqual(new.count('private_draft_canary_v2.py'),3);self.assertIn('timeout-minutes: 8',new);self.assertEqual(new.count('timeout-minutes: 4'),2)
+        current=(REPOSITORY/'.github/workflows/lab.yml').read_text()
+        for job in driver.JOBS.values():
+            self.assertEqual(workflow_job(current,job),workflow_job(retained,job))
+        with patch.object(driver,'ROOT',REPOSITORY),self.assertRaisesRegex(driver.CanaryError,'PINNED_SOURCE_CHANGED'):
+            driver.verify_sources()
     def test_child_failure_logs_only_strict_safe_reason_and_counts(self):
         class Child:
             returncode=1

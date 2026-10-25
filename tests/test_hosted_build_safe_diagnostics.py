@@ -65,14 +65,14 @@ class SafeDiagnosticChecks(unittest.TestCase):
 
     def execute_failure(self,run=None,preflight=None):
         with patch.object(driver.resource,'setrlimit'),patch.object(driver.signal,'signal'),patch.object(driver.signal,'setitimer'),\
-                patch.object(driver,'verify_sources',return_value={}),patch.object(driver,'preflight',side_effect=preflight or (lambda *a:{})),\
-                patch.object(driver,'run_build',side_effect=run or (lambda *a:(_ for _ in ()).throw(ImportError(SECRET)))),\
+                patch.object(driver,'verify_sources',return_value={}),patch.object(driver,'preflight',side_effect=preflight or (lambda *a,**k:{})),\
+                patch.object(driver,'run_build',side_effect=run or (lambda *a,**k:(_ for _ in ()).throw(ImportError(SECRET)))),\
                 redirect_stdout(io.StringIO()) as output:
             self.assertEqual(driver.main(['--execute']),1)
         return [json.loads(line) for line in output.getvalue().splitlines()]
 
     def test_main_keeps_precheck_pass_last_subphase_and_all_unattested_counts_unknown(self):
-        def fail(*unused):
+        def fail(*unused, **kwargs):
             driver.diagnostic_checkpoint('ACTIONS_AUTH');driver.diagnostic_checkpoint('ACTIONS_AUTH','PASSED')
             driver.diagnostic_checkpoint('SOURCE_CLAIM_VERIFY');raise driver.GuardStop('SOURCE_CLAIM_GENUINE_CURRENT_JOB')
         rows=self.execute_failure(run=fail)
@@ -83,7 +83,7 @@ class SafeDiagnosticChecks(unittest.TestCase):
             self.assertIsNone(fatal[key])
         self.assertEqual(fatal['counters_attestation'],'UNKNOWN_NO_TRUSTED_TERMINAL')
         self.assertNotIn(SECRET,json.dumps(rows))
-        rows=self.execute_failure(preflight=lambda *a:(_ for _ in ()).throw(ValueError(SECRET)))
+        rows=self.execute_failure(preflight=lambda *a,**k:(_ for _ in ()).throw(ValueError(SECRET)))
         self.assertEqual(len(rows),2);self.assertEqual(rows[-1]['phase'],'PRECHECK');self.assertEqual(rows[-1]['phase_state'],'ENTER')
 
     def test_static_checkpoints_precede_operations_without_executing_pipeline(self):
