@@ -365,3 +365,34 @@ Exact PPR remains label-blocked; no other category inherits a gain or source
 qualification. The pending workload continuation retains its spent resources
 and fixed model recipe while startup-clock repair is prepared. No additional
 website model or scientific-registration change follows from this checkpoint.
+
+
+## Later anytime-TD Bernoulli blend and workload checkpoint — 2026-10-25
+
+The [separate binary-law blend](../reports/anytime-td-blend-v1/README.md)
+completed two earlier-only scalar weight fits and four factored forecasts with
+zero new base fits or original calibrator calls. Six pooled and twelve annual
+contrasts retain all 14,282 offers and 10,157 supported played outcomes over
+544 games/36 season-week blocks. Both blend Brier values are slightly lower than
+the two specified bases on the pooled exposed panel. Both worsen absolute bias
+versus CatBoost medium, both lose to CatBoost on 2024 Brier, and every CatBoost
+paired week/game interval includes zero. Independent numerical review passed
+7,030 checks; both descriptive advance flags remain false. This closes one
+narrow anytime-TD experiment; numeric and joint-distribution stacking remain
+unrun. Every other category/method state above retains its prior evidence, and
+exact PPR remains label-blocked. No global winner, SITE/R0 gain, confirmation,
+automatic selection, scientific qualification or deployment follows.
+
+The latest workload checkpoint retains V7/V8 startup failures and V9's later
+failure after successful startup repair: **approved numeric feature dtype/value
+changed** during query validation. Completed forward comparisons remain zero.
+V9 consumed 52.964827 CPU/42.603011769009754 wall seconds; cumulative V7–V9
+charges are 122.074228 CPU/100.09144812399644 wall seconds. Its recorded source
+phase used 17.86447758 CPU/17.873875306017 wall seconds. Other unreported counters
+remain unavailable, and a future correction is unmeasured. A V10 technical dtype
+correction remains in preparation, with no actual V10 run. The separate PBP source
+pilot has completed acquisition and derived-schema inspection; GSIS conversion,
+target/participant joins and availability clocks remain unqualified. FTN/PBP source
+prerequisites add no new qualified labels or predictive gain. Earlier failures
+and charges stay retained. The website, scheduler and frozen scientific registrations retain
+their separate ownership and states.

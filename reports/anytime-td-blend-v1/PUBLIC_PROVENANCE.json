@@ -1,0 +1,143 @@
+{
+  "accepted_scope": {
+    "annual_primary_contrasts": 12,
+    "descriptive_advance": {
+      "fixed_half": false,
+      "shrunk_brier": false
+    },
+    "findings": 0,
+    "forecast_factors": 4,
+    "independent_checks": 7030,
+    "interval_records": 72,
+    "pooled_primary_contrasts": 6,
+    "probability_output_incidences": 28564,
+    "summary_cells": 15,
+    "weight_fits": 2
+  },
+  "accepted_thread_helper_sha256": "5ccfe3076530db21f92e3bf5abdb8f746f864aa9f95d3fad09dcccd2ec6cbe81",
+  "actual_resource": {
+    "CPU_seconds": 7.5899701109999995,
+    "conservative_combined_RSS_bound_bytes": 280682496,
+    "payload_bytes": 417665,
+    "receipt_reserve_bytes": 65536,
+    "total_with_reserve_bytes": 483201,
+    "wall_seconds": 5.376708817027975
+  },
+  "allocation": {
+    "CPU_seconds": 60,
+    "RSS_bytes": 536870912,
+    "address_space_bytes": 8589934592,
+    "automatic_retries": 0,
+    "retained_bytes": 2097152,
+    "threads": 2,
+    "wall_seconds": 90
+  },
+  "existing_shared_source_files": {
+    "nfl_lab/anytime_calibration.py": "0806235bef8e981ead8bd694dba73430a78628de62f810d3a2846b48028b117b",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "nfl_lab/source_matched_reporting.py": "d338ddd8062bd29e8df4479b014720f93429e97d07b8f4b96d7e9ae157ee5b0e",
+    "tools/threshold_cdf_wave_supervisor.py": "1ef8e8a4109ebc2c098e6f814d72e7aeb17da66cba31d0dfea809d6ac7d751a6"
+  },
+  "input_and_result_identities": {
+    "aggregate_sha256": "633e70dcddbe53a0003ffed3e903b56ea5771e8705ca36e14def78ba60f5fd26",
+    "completion_sha256": "f268064e14b672336fc2a45087fe18b71e7bd6b58766a3bfd5ba3359ca4015dc",
+    "execution_manifest_sha256": "e726606b8a46cf583dac233f899822997e577da1ece3e9ff26ffaa4aba76a528",
+    "global_forecast_freeze_sha256": "d1cd47b911ed771e169e960ed29cb01c5683f7ad2cb9b0461f930dc5747c39d0",
+    "independent_acceptance_sha256": "b2137c0cc0228a57d0354894ab0f2db9d3631e2be8fe3ea115063974c2248063",
+    "root_GO_sha256": "5772fbaedfb89e34d348a380f8070698081d64decef8c64087c5ad13a80438e1",
+    "supervisor_sha256": "6673b09e4d5ae14de5dc65f6aee167c5de0590b3f20c706f1d72b16baf9544ff"
+  },
+  "input_semantics": {
+    "clock": "current-vintage reconstructed kickoff+7days; no historic publication claim",
+    "historical_SITE_R0": "UNAVAILABLE",
+    "known_label_availability": "strictly before earliest evaluation cutoff",
+    "outcome": "rushing OR receiving TD conditional on played",
+    "period": "2022-2024 exposed; evaluation2023-2024",
+    "primary_roles": [
+      "RB",
+      "WR",
+      "TE"
+    ],
+    "training_years_by_evaluation": {
+      "2023": [
+        2022
+      ],
+      "2024": [
+        2022,
+        2023
+      ]
+    }
+  },
+  "latest_workload_checkpoint": {
+    "V10": "TECHNICAL_DTYPE_CORRECTION_PREPARATION_PENDING_NO_ACTUAL_RUN",
+    "V7": "FAILED_STARTUP",
+    "V8": "FAILED_STARTUP",
+    "V9": "FAILED_NUMERIC_QUERY_VALIDATION",
+    "completed_forward_comparisons": 0,
+    "failure": "approved numeric feature dtype/value changed",
+    "future_correction": "UNMEASURED",
+    "other_unreported_counters": null
+  },
+  "numerical_acceptance": "PASS",
+  "private_postrun_diagnostics": {
+    "not_in_public_payload": true,
+    "records": 3920,
+    "scope": "Independent diagnostic only; no new primary contrast or selection",
+    "sha256": "8e623bd6d19068ec8fe8950e40c2dbf08e072c5fb172d2d78aadbd344daaa51a"
+  },
+  "public_parent_commit": "1cd36bea89c3b5284244c77910c303dd88c225b1",
+  "publication_packaging": {
+    "final": {
+      "failed": 0,
+      "passed": 6,
+      "seconds": 1.94
+    },
+    "fixture_change": "repository-local shared source binding only",
+    "prior_failures": [
+      {
+        "failed": 1,
+        "passed": 5,
+        "reason": "missing shared runner",
+        "seconds": 1.29
+      },
+      {
+        "failed": 1,
+        "passed": 5,
+        "reason": "missing startup helper",
+        "seconds": 1.54
+      }
+    ],
+    "runtime_code_and_NFL_results_unchanged": true
+  },
+  "publication_privacy_review": "EXACT_ALLOWLIST_ACCEPTANCE_REQUIRED_SEPARATELY_BEFORE_REMOTE_MUTATION",
+  "registration_sha256": "a6be4b84f3b155926b386912347949604704044c96034621a6271e3d2d899013",
+  "schema": "anytime-td-blend-public-provenance-v1",
+  "scope": {
+    "HTTP": 0,
+    "automatic_selection": false,
+    "base_inference_calls": 0,
+    "base_model_loads": 0,
+    "deployment": false,
+    "new_base_fits": 0,
+    "operational_CAS_writes": 0,
+    "original_calibrator_calls": 0,
+    "private_row_or_model_bodies_published": false,
+    "scientific_qualification": false
+  },
+  "separate_source_checkpoint": {
+    "GSIS_conversion_targets_joins_clocks": "UNQUALIFIED",
+    "PBP": "COMPLETED_SOURCE_PILOT_ONLY",
+    "new_qualified_labels_or_forecast_gain": false
+  },
+  "source_files": {
+    "config/anytime-td-blend-v1.json": "a6be4b84f3b155926b386912347949604704044c96034621a6271e3d2d899013",
+    "nfl_lab/anytime_td_blend.py": "3b3a7a9c66910de9659248425f7801c00ca3396a7a588ee69ee1c8eb22c0338e",
+    "tests/test_anytime_td_blend_v1.py": "c0b645c5b80640532bf7dc1f28ea63d1f88c2e444930c38246f62e0b9537bdd0",
+    "tools/check_anytime_calibration_startup.py": "8e6ecd9f0780697f3bb3214b9dd50692d255280a0a9bf16c57888113f011e8f3",
+    "tools/launch_anytime_td_blend_v1.py": "53c91f10200f3301819dfdf0e075f83e2e8251459e761b3c6b8af33fe4cf781c",
+    "tools/ngboost_law_software_v1.py": "5ccfe3076530db21f92e3bf5abdb8f746f864aa9f95d3fad09dcccd2ec6cbe81",
+    "tools/prepare_anytime_td_blend_v1.py": "7aed02fc9b312d82496d62c2c506a06e10f9a4539a4d5878360cddc984f4737e",
+    "tools/run_anytime_calibration.py": "457babbfadb95bb4c8c68639fa4aba0a7727abe31f57aa62fdc7f44ffce4e981",
+    "tools/run_anytime_td_blend_v1.py": "e7158499298d512591607a24b5a79b0dfb92feb7bfe7b5d7e002e45c2787020f"
+  }
+}
