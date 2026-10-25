@@ -334,3 +334,20 @@ entry point. Completed result packets take precedence over stale preparation
 prose. Only aggregate status, reviewed method descriptions and code/report
 links are included here; no individual player/game records, source bodies,
 private artifact locations or expanded internal execution record are published.
+
+
+## Later executed cached correction controls — 2026-10-25
+
+The [exact paired supplement](../reports/cached-correction-pairs-v1/README.md)
+completed 44 pooled and 132 annual comparisons against the fixed intercept and
+context corrections. It adds zero fits or inference and reuses the same exposed
+2022–2024 population. Independent review reproduced all metrics and 352 paired
+intervals exactly. The response family has lower observed loss for six of the
+eleven scored targets against the stronger of those two corrections; every
+corresponding week/game interval includes zero. The threshold family wins none.
+This closes the earlier public-summary-only gap for these controls. It does not
+make the response family best among all controls: the corrected Count A reception
+mean and the CatBoost combined-yard median remain stronger on their matched point
+products. The combined-yard CRPS result is a separate distribution comparison.
+Exact website PPR remains label-blocked. No deployment, scientific registration,
+protected outcome access, original forecast or older result changed.

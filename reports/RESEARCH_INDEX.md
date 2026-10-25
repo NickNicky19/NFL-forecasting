@@ -2,9 +2,11 @@
 
 [Corrected two-family distribution comparison](distribution-cdf-after-audit-v2/README.md): 114 fit calls, 815 games/54 season-weeks; eight small response-CDF CRPS gains, two numeric losses and one unchanged TD alias; monotone loses eleven. Combined yards is an exposed research lead only. V1 source-mask omission remains retained. [Complete category × method matrix](../docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md). No scientific or website promotion.
 
-[Cached point-control supplement](distribution-cdf-after-audit-v2/point-control-supplement/README.md): 132 pooled contrasts / 396 annual cells, zero training or inference. Monotone loses all eleven direct minima; CDF-response is lower in seven, with only passing TD/attempts/interceptions lowest in the named fresh-CDF/corrected-Count-A/six-direct set. Older published correction summaries narrow passing-TD/attempt gaps to about 0.0354% / 0.2406%, without a new paired test against those older forecasts. Combined-yard CatBoost-medium point MAE remains lower than the response median. Exposed descriptive results select no candidate and change no deployment.
+[Cached point-control supplement](distribution-cdf-after-audit-v2/point-control-supplement/README.md): 132 pooled contrasts / 396 annual cells, zero training or inference. Monotone loses all eleven direct minima; CDF-response is lower in seven, with only passing TD/attempts/interceptions lowest in the named fresh-CDF/corrected-Count-A/six-direct set. The later [44 paired correction comparisons](cached-correction-pairs-v1/README.md) authenticate those older forecasts on the same rows: passing-TD/attempt gaps are about 0.0354% / 0.2406%; both paired intervals include zero. Combined-yard CatBoost-medium point MAE remains lower than the response median. Exposed descriptive results select no candidate and change no deployment.
 
 [Fixed anytime-TD calibration](anytime-calibration-v1/README.md): independently accepted 16 calibrator fits, zero base fits, evaluation 2023–2024 only (10,157 supported outcomes / 14,282 offers). All eight method/base combinations worsen pooled Brier versus both unchanged bases; two genuine infinite fresh-CDF isotonic log losses remain. Exact calibrator/design source and curated fictional checks are public; no calibration lead or selection follows.
+
+[Paired older-correction comparison](cached-correction-pairs-v1/README.md): 44 pooled contrasts / 132 annual diagnostics, zero fits or inference; all reproduced independently. Response-CDF has lower observed point loss in six of eleven targets versus the stronger of the two fixed corrections; all 22 corresponding week/game intervals include zero. Monotone wins none. Other controls can remain stronger: this is not an overall category ranking, new SITE/R0 evidence or a deployment decision. All twelve category states and every comparison are retained.
 
 # Forecasting research: complete navigation index
 
@@ -15,7 +17,7 @@
 [Exact public release evidence](selected-ranking-integration-20261025/PUBLIC_RELEASE.json).
 Current Top lists contain 22 selected forecasts and two labeled R0 fallbacks.
 This is an operational provisional release, not a new accuracy result or scientific
-qualification. Forecast-method research is paused. Older dated checkpoints below
+qualification. Forecast-method research resumed under the owner's subsequent research-wave instruction. Older dated checkpoints below
 retain their original state; use the latest release for current deployment status.
 
 
