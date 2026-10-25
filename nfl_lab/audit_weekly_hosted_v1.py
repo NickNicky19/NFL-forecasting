@@ -58,6 +58,7 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "nfl_lab/public_release_plan_v1.py",
     "nfl_lab/operational_failure_v1.py",
     "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
+    "tests/test_audit_weekly_receipt_bundle_v1.py",
     ".github/workflows/audit-source-checks.yml"}))
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
@@ -614,7 +615,9 @@ class Runner:
         Raw HTTP/source intermediates and qualified model weights remain outside
         this declared capture scope; every included byte is bounded and owned.
         """
-        files=[];physical_origins={}
+        import base64
+        import re
+        files=[];physical_origins={};observations=[];observation_bytes=0
         collection=self.storage.register_root(self.root/"failure-opaque-collection")
         def add(path,logical):
             require(not path.is_symlink() and path.is_file(),"FAILED_SNAPSHOT_SYMLINK")
@@ -641,15 +644,38 @@ class Runner:
                 require(not path.is_symlink(),"FAILED_SNAPSHOT_SYMLINK")
                 if not path.is_file() or path.name==_OWNER:continue
                 logical="failed/"+path.relative_to(self.root).as_posix()
+                if folder=="reference" and path.parent==base/"source-observations" and re.fullmatch(r"[0-9]{4}-(?:BEGIN|END)\.json",path.name):
+                    # Preserve all original small receipts in one bounded
+                    # container. Do not spend one of 512 transport-file slots
+                    # per receipt, raise the cap, or discard hard rows.
+                    ref=cp.binding(path)
+                    require(len(observations)<1024 and ref["bytes"]<=64 << 10,"FINITE_FULL_ORIGINAL_OBSERVATION_CONTROLS")
+                    raw=archive.read_owned(self.storage,ref,64 << 10,raw=True)
+                    observation_bytes+=len(raw)
+                    require(observation_bytes<=1 << 20,"COMPLETE_ORIGINAL_OBSERVATION_BYTES_CAP")
+                    observations.append(dict(logical_path=logical,reference=ref,body_base64=base64.b64encode(raw).decode()))
+                    continue
                 # Files left by an interrupted atomic write may not yet be CAS
                 # aliases. Import exact original bytes; never rewrite them.
                 add(path,logical)
+        bundled={}
+        if observations:
+            observations.sort(key=lambda r:r["logical_path"])
+            value=dict(schema_version=archive.FAILURE_OBSERVATIONS_SCHEMA,records=observations)
+            body=store.canonical(value)
+            require(len(body)<=1 << 20,"FULL_ENCODED_ORIGINAL_OBSERVATION_BYTES_CAP")
+            bundle_root=self.storage.register_root(self.root/"failure-observation-bundle")
+            path=bundle_root/"SOURCE_OBSERVATIONS_BUNDLE.json"
+            self.storage.write_bytes(path,body)
+            add(path,archive.FAILURE_OBSERVATIONS_NAME)
+            bundled[archive.FAILURE_OBSERVATIONS_NAME]=[{k:r[k] for k in ("logical_path","reference")} for r in observations]
         if not files:return None
         census=dict(schema_version=archive.VERSION+"-failed-opaque-census",archive_state="FAILURE_EVIDENCE",
             raw_HTTP_corpus_archived=False,model_weights_reuploaded=False,actual_collected_at=now_utc().isoformat(),
             source_started_at=self.started.isoformat(),source_completed_at=now_utc().isoformat(),
             logical_files=len(files),logical_bytes=sum(f["bytes"] for f in files),physical_origins=physical_origins,
             fits=0,successful_forecast=False,public_release=False)
+        if bundled:census["bundled_control_sources"]=bundled
         snapshot=dict(files=sorted(files,key=lambda f:f["logical_path"]),census=census)
         package=self.go["qualified_runtime"];clients=[]
         def factory(operation):
