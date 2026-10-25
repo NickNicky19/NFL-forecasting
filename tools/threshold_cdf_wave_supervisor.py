@@ -22,7 +22,7 @@ import subprocess
 import sys
 import time
 
-VERSION = "threshold-cdf-wave-supervisor-v1-20261025"
+VERSION = "threshold-cdf-wave-supervisor-v2-20261025"
 START_WALL = time.monotonic()
 RECEIPT_RESERVE = 65536
 PAYLOAD_TERMINAL_RESERVE = 262144
@@ -106,6 +106,21 @@ def proc(pid):
     return {"pid": pid, "state": values[0], "ppid": int(values[1]), "pgrp": int(values[2]),
             "start_ticks": int(values[19]), "rss": int(values[21]) * PAGE_SIZE,
             "cpu": sum(int(values[i]) for i in (11, 12, 13, 14)) / TICKS}
+
+
+def require_isolated_monitor():
+    """Refuse shared process ownership before creating or changing anything."""
+    if len(list(Path("/proc/self/task").iterdir())) != 1:
+        raise RuntimeError("supervisor requires a single-threaded isolated monitor")
+    for directory in Path("/proc").iterdir():
+        if not directory.name.isdigit():
+            continue
+        try:
+            child = proc(int(directory.name))
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        if child["ppid"] == os.getpid():
+            raise RuntimeError("supervisor refuses preexisting direct children")
 
 
 def snapshot(worker_pid, worker_start, known):
@@ -209,6 +224,9 @@ def write_receipt(descriptor, receipt):
 
 def supervise(command, *, cwd, output, limits, receipt, metadata=None, start=None, cpu_origin=None):
     """Bounded stdlib core; small limits are used only by fictional unit tests."""
+    # Adopted children can be attributed to the worker only in a fresh monitor.
+    # A shared parent may already own a resource tracker or another actor's job.
+    require_isolated_monitor()
     start = time.monotonic() if start is None else start
     cpu_origin = time.process_time() if cpu_origin is None else cpu_origin
     output, receipt = Path(output), Path(receipt)

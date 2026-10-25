@@ -43,6 +43,14 @@ Rush-attempt CRPS improves slightly versus CDF but absolute mean bias worsens ag
 - Exact PPR remains label-blocked. Strong cached point-control comparisons, dedicated probability calibration and the workload continuation have separate statuses in the matrix. Historical source-publication time remains reconstructed; no post-cutoff news/weather/current rankings are fabricated.
 - No new model was selected, issued prospectively or deployed by this comparison. Existing production ownership, scheduler and scientific registrations remain intact. A ready challenger must pass actual future inference, source/catalog bindings, durable replay/restoration and consumer/fallback/rollback checks through the existing integrator. No new eight-week prerequisite is imposed on provisional release.
 
+## Retained hosted failure and monitor hardening
+
+[Hosted acceptance of public commit `848da55`](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40157073703/job/121060622243) failed: one fictional normal-exit fixture returned `FAILED` instead of `COMPLETED`; 1,580 tests passed, one skipped, four warnings and 62 subtests were reported in 291.59 seconds. The failed run remains evidence. A fresh synthetic helper reproduced an ownership bug: the supervisor classified its unrelated preexisting child as a worker descendant, then killed and reaped that child.
+
+The current supervisor refuses preexisting direct children and concurrent monitor threads before creating a receipt, changing handlers/subreaper state or launching a worker. The process fixtures now use fresh stdlib monitor interpreters, excluding pytest's children, numerical threads and lifetime memory high water from the monitor. Regression fixtures verify refusal preserves the helper's own unrelated sentinel and leaves no receipt or worker output. Resource caps and worker-descendant escape detection remain unchanged.
+
+The completed 114-fit NFL run used the [exact archived executed supervisor](execution-source/supervisor-executed.py), SHA-256 `8503e47b07b860d10fe6c55affe5f8104bffe48dcfb293d7a961239e04b153bd`. This post-run hardening did not produce those fits. [The source inventory](SOURCE_CONTENT.json) distinguishes the archived execution source from current supervisor and test hashes. NFL model code, inputs, forecasts, aggregate scores and observed run resources retain their original identities.
+
 ## Retained affected trial
 
 The earlier 84-call V1 run omitted the source adapter’s required unavailable-participation mask. Its numeric scores were consistent, but its source qualification failed. It is retained as an affected trial; its source/registration and aggregate hashes are in [the retained packet](retained-v1/AFFECTED_TRIAL.json). V2 restores the mask and refits every affected model and control. Earlier failures and consumed allocations were not refunded or relabeled.
