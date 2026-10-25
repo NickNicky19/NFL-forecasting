@@ -218,3 +218,10 @@ Eighteen future-query procedures saved 7,672 candidate rows for 610 distinct pla
 
 
 [Anytime-TD Bernoulli blends](anytime-td-blend-v1/README.md): two scalar weight fits, four factor forecasts, six pooled/twelve annual contrasts over the same exposed 2023–2024 panel. Both blends have small pooled Brier gains versus the specified CDF/CatBoost bases, worse absolute bias versus CatBoost, and a 2024 CatBoost loss; all CatBoost paired intervals include zero. Independent arithmetic accepted; both advance flags false.
+
+
+[Cached combined-yard dependence challenger](combined-yard-copula-v1/README.md): two fixed marginal couplings completed on the exposed2023–2024 cohort(544games/36weeks), zero new base fits/two dependence fits. Both lose directCDF CRPS and direct/Catmedium medianMAE; mixed bias/coverage diagnostics and every fallback remain. Independent numerical acceptance passed2,086 checks with zero mismatches; no website/SITE/R0 or advancement claim. Only combined yards was tested; the other eleven category states retain their dated evidence. The separate20CPU package workload failed; its newly prepared40CPU package scope remains pending, with no new forward result claimed.
+
+Independent numerical acceptance for the combined-yard supplement passed2,086 checks with zero mismatches, including all paired intervals and four fixed draw replays. Both sum arms remain adverse results; no current-site/R0 gain or deployment follows. [Accepted scope](combined-yard-copula-v1/INDEPENDENT_ACCEPTANCE.md).
+
+The combined-yard publication's initial hosted head failed existing resource checks after a quadratic-memory fictional CRPS oracle. The public oracle now retains the full4096-draw/pair calculation in bounded blocks;53 targeted software checks passed with all native/RSS limits unchanged. Forecast code, original NFL rows and scores are unchanged. The failed hosted run is retained; a fresh full successor run remains required.

@@ -1,0 +1,81 @@
+{
+  "registration_id": "combined-yard-copula-v1-20261025",
+  "state": "DRAFT_INACTIVE_PREPARATION_ONLY",
+  "seal": null,
+  "source_period": "2022\u201324 all exposed, current-vintage reconstructed kickoff+7day availability; not confirmation or prospective capture",
+  "training": {
+    "year2023": [
+      2022
+    ],
+    "year2024": [
+      2022,
+      2023
+    ],
+    "labels": "played-supported component labels with outcome_available_utc strictly before first evaluation cutoff",
+    "PIT": "randomized exact discrete marginal interval, identity-seeded PCG64; exclude numerically unrepresented PIT interval with counts",
+    "formula": "rho=n/(n+100)*Pearson(ndtri(Urush),ndtri(Urec)); n<2 or zero variance fallback0; no search"
+  },
+  "evaluation_years": [
+    2023,
+    2024
+  ],
+  "arms": [
+    "independent_sum",
+    "shrunk_gaussian_sum"
+  ],
+  "draws": 4096,
+  "law": "Full signed original marginal CDF inverses under independent/Gaussian copula; finite draw empirical approximation of sum, never normal yards or adding medians",
+  "all_offered": "exact combined population; RB with both native qualified marginals informed, every other row uses unchanged direct combined leafCDF law; no favorable intersection",
+  "qualification": "both source-matched97feature rows, exact identity/context/clocks, native empty marginal fallback reasons and available supported law",
+  "primary": "CRPS of4096draw empirical sum approximation vs exact direct combinedCDF; copula vs independence",
+  "secondary": "own sum medianMAE, analytic sum meanbias, p95, p10/p90 coverage/tails, fixed push mass, zero mass, CDF-at-label calibration; Catmedium literal median-objective pointMAE only",
+  "joint_log_density": "not estimated; no normal approximation or probability floor",
+  "push_thresholds": [
+    0,
+    20,
+    40,
+    60,
+    80,
+    100,
+    150,
+    200
+  ],
+  "freezes": "2023 forecasts before2023training labels used for2024; both weights/four forecast factors+draw hashes before any evaluation loss; deterministic draw regeneration checked against frozenSHA",
+  "contrasts": {
+    "all_offered_pooled": 8,
+    "all_offered_annual": 16,
+    "RB_pooled_diagnostic": 8,
+    "RB_annual_diagnostic": 16,
+    "bootstrap": "shared500PCG64 wholeweek1911/game1912; no row bootstrap"
+  },
+  "candidate_or_tuning_change": false,
+  "automatic_selection_deployment_or_qualification": false,
+  "resources": {
+    "maximum_CPU_seconds": 900,
+    "maximum_wall_seconds": 1200,
+    "maximum_RSS_bytes": 2147483648,
+    "maximum_address_space_bytes": 8589934592,
+    "maximum_new_retained_bytes": 67108864,
+    "finalization_reserve_seconds": 30,
+    "threads": 2,
+    "base_fits": 0,
+    "dependence_fits": 2,
+    "maximum_model_loads": 9,
+    "HTTP": 0,
+    "automatic_retries": 0,
+    "actual_invocations": 1
+  },
+  "maximum_draw_row_passes": 57128,
+  "maximum_marginal_query_rows": 49243,
+  "maximum_forecast_attempts": 4,
+  "maximum_dependence_fit_attempts": 2,
+  "thread_environment": [
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "NUMEXPR_NUM_THREADS",
+    "OMP_THREAD_LIMIT",
+    "ARROW_IO_THREADS",
+    "VECLIB_MAXIMUM_THREADS"
+  ]
+}
