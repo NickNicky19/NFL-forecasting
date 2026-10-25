@@ -2,6 +2,7 @@
 const {chromium}=require('playwright');
 const fs=require('fs');
 const root=process.env.NFL_AUDIT_ROOT || __dirname,base='https://nicknicky19.github.io/nicks-expert-nfl-picks/';
+const website=process.env.NFL_AUDIT_WEBSITE_ROOT || root+'/website-audit';
 (async()=>{
  const opts={executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']};
  if(process.env.HTTPS_PROXY)opts.proxy={server:process.env.HTTPS_PROXY};
@@ -15,7 +16,7 @@ const root=process.env.NFL_AUDIT_ROOT || __dirname,base='https://nicknicky19.git
    if(mode==='hash-mismatch')await page.route('**/data/weekly-adaptive/*.json',r=>r.fulfill({status:200,contentType:'application/json',body:'{}'}));
    if(mode==='missing-board')await page.route('**/data/week.json*',r=>r.fulfill({status:503,body:'Unavailable'}));
    if(mode==='empty-players')await page.route('**/data/week.json*',r=>{
-    const board=JSON.parse(fs.readFileSync(root+'/website-audit/output/data/week.json','utf8'));
+    const board=JSON.parse(fs.readFileSync(website+'/output/data/week.json','utf8'));
     board.players=[];board.picks={over:[],under:[]};
     return r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(board)});
    });

@@ -1,5 +1,7 @@
 # Cross-repository system audit — 2026-10-25
 
+**Current live state changed during this audit:** read [the superseding selected-ranking release checkpoint](SUCCESSOR-RELEASE.md) first. Main is nowb32b13d/builda254616, live verified; rankings ownership closed normally. Initial snapshot statements below remain dated evidence. No audit mathematical repair is deployed.
+
 **PARTIAL. The current public forecast-consumption path passed the stated checks. Material calculation, grading and operational findings remain unreleased.** This report does not certify the whole system, private accuracy results, uninterrupted capture, mathematical perfection or optimal NFL forecasts.
 
 This is the owner-authorized implementation audit prepared October 24 America/Chicago and executed October 25 UTC. It supersedes the earlier website-read-only task for this audit, while preserving the single writer, private-artifact controls, frozen scientific registrations and issued forecasts. No new real NFL fits, paid source requests, credentials, scientific promotions or confirmation-outcome reads occurred.

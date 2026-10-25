@@ -3,6 +3,7 @@ import hashlib, json, pathlib, re, datetime, os
 import requests
 
 ROOT = pathlib.Path(os.environ.get('NFL_AUDIT_ROOT', pathlib.Path(__file__).resolve().parent))
+WEBSITE = pathlib.Path(os.environ.get('NFL_AUDIT_WEBSITE_ROOT', ROOT / 'website-audit'))
 BASE = 'https://nicknicky19.github.io/nicks-expert-nfl-picks/'
 OUT = ROOT / 'evidence'
 OUT.mkdir(exist_ok=True)
@@ -16,7 +17,7 @@ def fetch(path, local=None):
              'content_type':r.headers.get('content-type'), 'etag':r.headers.get('etag'),
              'last_modified':r.headers.get('last-modified'), 'url':r.url}
     if local:
-        entry['matches_checkout'] = (ROOT / 'website-audit' / 'output' / local).read_bytes() == b
+        entry['matches_checkout'] = (WEBSITE / 'output' / local).read_bytes() == b
     receipt['assets'][path] = entry
     return b
 
@@ -34,7 +35,7 @@ assert hashlib.sha256(overlay_bytes).hexdigest() == pointer['sha256']
 assert len(overlay_bytes) == pointer['bytes']
 assert hashlib.sha256(board_bytes).hexdigest() == overlay['display_board_sha256'] == pointer['display_board_sha256']
 import sys
-sys.path.insert(0,str(ROOT / 'website-audit' / 'tools'))
+sys.path.insert(0,str(WEBSITE / 'tools'))
 import weekly_adaptive_overlay as consumer
 consumer.validate_overlay(overlay, board, hashlib.sha256(board_bytes).hexdigest())
 from collections import Counter

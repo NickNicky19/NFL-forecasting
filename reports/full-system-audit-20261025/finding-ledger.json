@@ -145,6 +145,17 @@
       "repair_status": "blocker;existingintegratorhandoff",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-014",
+      "severity": "medium",
+      "title": "Successor Python ranking validation does not bind side container",
+      "affected_path": "website-current:tools/weekly_selected_rankings.py:228",
+      "expected": "Each item direction must equal its over/under container",
+      "actual": "Matching-hash fictional over item in under container accepted by Python;actual JS rejects",
+      "repair_status": "exact current-source one-line scratch patch validated;not installed",
+      "evidence": "successor delta validation;16Python+36JS fictionalchecks",
+      "historical_effect": "No malformed current live pick observed;normal producer assigns correct sides;browserfailsclosed"
     }
   ]
 }

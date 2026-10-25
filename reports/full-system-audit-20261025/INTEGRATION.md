@@ -1,5 +1,7 @@
 # Concrete integration handoff
 
+**Superseding state:** [SUCCESSOR-RELEASE.md](SUCCESSOR-RELEASE.md) records current mainb32b13d/builda254616 and closed rankings lease1ea1456 (active:null). The original snapshot below remains preserved; use refreshed successor preimages, and reconcile with the existing Phase2 lead rather than treating the old lease as still busy.
+
 This package belongs to audit run `NFL-FULL-SYSTEM-AUDIT-20261025`. The current website writer remains `NFL-WEEKLY-RANKINGS-20261024-V1` at coordination `40cd1f36868783115f8f7a62cae85d1f05a2b687`. The prior Phase2 lead retains its unfinished protected integration. No audit lease or competing production scheduler exists.
 
 ## Corrective commits already pushed
@@ -22,7 +24,7 @@ Use the main or Phase2 preimage variants in `patches/` according to the actual s
 1. Reconcile the active selected-ranking work and lead's pending protected assembly; preserve both and close only the owning leases normally.
 2. Apply field-goal retention (`01`), versioned classic identity/regrade-history correction (`02`) and confirmed-final gates (`03`) to the reconciled engine. Patch02 retains original issued grading bytes and emits the distinct `statistical-v3-identity-20261025` identity. Older predictions/results must not be relabeled as newly issued pregame forecasts.
 3. In the presence-aware Phase2 scorer, apply negative-count rejection (`04`). The original main scorer needs the existing Phase2 presence correction first. The patch does not claim that raw aggregate game inputs now reject every malformed number.
-4. Half-PPR missing-value patches (`05`) are supplied as tested ordinary app proposals. They require UI/consumer validation on the exact merged app, including layout and ranking changes. Their focused fictional checks do not establish whole-app acceptance.
+4. Half-PPR missing-value patches (`05`) are supplied as tested ordinary app proposals; use the exact `website-current-b32b13d2123` variant on the successor. A current-source ranking side-container guard for SYS-014 is also included. They require UI/consumer validation on the exact merged app, including layout and ranking changes. Their focused fictional checks do not establish whole-app acceptance.
 5. Integrate the workflow source-fence proposal into the lead's exact reviewed combined workflow; it changes no cron. Recompute its physical/source pins and required CI seals. A stale event now refuses rather than pulling newer generated evidence; use an eligible current-source invocation through existing orchestration. Address the separate post-push deployment race and failed-attempt durability contract; the fence alone does not fix those.
 
 Changed engine, app, grading or workflow bytes invalidate the selected-feed closed code/policy/source pins. Generate new reviewed bindings and current-source evidence; do not simply reuse policy SHA `45e51a07a077ce0aedede608fcef2ddb3592828a0734843d37a3991e6673a546` or old CI. A green R0 fallback build does not prove selected forecast consumption. Fixed-reference R0 procedure evolution must preserve old issued forecasts and separately name the corrected version; it must not be silently substituted into older comparisons.

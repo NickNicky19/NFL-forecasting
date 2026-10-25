@@ -6,7 +6,8 @@ Private model/input/capture inspection is explicitly outside this receipt.
 import sys, pathlib, json, hashlib, datetime, collections, os
 import requests
 ROOT=pathlib.Path(os.environ.get('NFL_AUDIT_ROOT', pathlib.Path(__file__).resolve().parent))
-sys.path.insert(0,str(ROOT/'website-audit'/'tools'))
+WEBSITE=pathlib.Path(os.environ.get('NFL_AUDIT_WEBSITE_ROOT', ROOT/'website-audit'))
+sys.path.insert(0,str(WEBSITE/'tools'))
 import weekly_public_feed as f
 import weekly_adaptive_overlay as o
 base='https://nicknicky19.github.io/nicks-expert-nfl-picks/'
@@ -18,7 +19,7 @@ def get(url,cap=4<<20):
 board_body=get(base+'data/week.json');board=json.loads(board_body)
 pointer=json.loads(get(base+'data/weekly-adaptive-overlay.json'))
 overlay_body=get(base+pointer['path']);overlay=json.loads(overlay_body)
-policy=json.loads((ROOT/'website-audit/config/weekly-derived-selected-policy-v2.json').read_text())
+policy=json.loads((WEBSITE/'config/weekly-derived-selected-policy-v2.json').read_text())
 now=datetime.datetime.now(datetime.timezone.utc).isoformat()
 feed=f.fetch_feed(policy,board,fetch=get)
 selected,proof=f.validate_feed_v2(feed,policy,board,now=now,fetch=get)
