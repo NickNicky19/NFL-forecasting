@@ -121,6 +121,11 @@ def metric(stage):
         if key in {'VmPeak','VmSize','VmHWM','VmRSS'}:m[key]=int(value.split()[0])*1024
     print(json.dumps(dict(fictional=True,phase=phase,stage=stage,CPU_seconds=time.process_time(),wall_seconds=time.monotonic()-began,**m)),flush=True)
     return m
+# Initialize the actual required serializer before artificial scratch. Before
+# metadata imports were deferred, pandas was already loaded at this baseline.
+# Its import time/peak still count; the production guard is entered again below.
+if phase=='provider':
+    with storage.capture_writes():pass
 before=metric('BEFORE_FICTIONAL_SCRATCH')
 # This is explicit scratch pressure, not a claim to model 36-capture capacity.
 scratch=bytearray(max(0,(512<<20)-before['VmSize']-(12<<20)))
