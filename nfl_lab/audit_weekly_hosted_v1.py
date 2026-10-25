@@ -64,7 +64,8 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "tests/test_audit_weekly_archive_packing_v1.py",
     "nfl_lab/audit_numerical_runtime_v1.py", "tests/test_audit_numerical_runtime_v1.py",
     "config/audit-weekly-numerical-runtime-v1.json",
-    ".github/workflows/audit-source-checks.yml"}))
+    ".github/workflows/audit-source-checks.yml", "tools/mask_dispatch_inputs.py",
+    "tests/test_private_dispatch_masking_v1.py"}))
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
     "actual_actions_api_authenticated","owner_root_checked","fits","public_release"}

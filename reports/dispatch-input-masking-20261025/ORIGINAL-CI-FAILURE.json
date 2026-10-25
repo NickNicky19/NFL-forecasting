@@ -1,0 +1,18 @@
+{
+  "schema_version": "audit-preserved-CI-failure-v1",
+  "run_id": 40212544931,
+  "job_id": 121226698031,
+  "head_sha": "769ea0a8f445fea8d6c7c5ccdba1889db1988763",
+  "state": "FAILED_RETAINED",
+  "passed": 1082,
+  "failed": 2,
+  "skipped": 1,
+  "subtests": 319,
+  "seconds": 798.18,
+  "failures": [
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_existing_workflow_and_old_probe_modes_preserved",
+    "tests/test_private_storage_probe.py::StorageProbeChecks::test_workflow_reuses_one_scheduler_and_preserves_entire_lab_job"
+  ],
+  "correction": "Limit the implementation to the four affected weekly jobs; leave original preservation assertions and all other jobs unchanged.",
+  "new_head_CI_required": true
+}
