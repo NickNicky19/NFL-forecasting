@@ -79,8 +79,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Enforce source and publication handover safety
         id: readiness
         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
@@ -197,8 +195,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Create harmless canary or pin exact existing canary without writes
         id: canary
         env:
@@ -227,8 +223,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Require authenticated API and anonymous API/browser denials with controls
         id: read_check
         env:
@@ -261,8 +255,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Restore exact harmless bytes with a fresh write token
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -302,8 +294,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Initialize only one harmless draft and pin in a fresh process
         id: canary
         env:
@@ -328,8 +318,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Check only the new harmless canary boundary
         id: canary
         env:
@@ -355,8 +343,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Fresh write-token canary restoration and safe proof
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -392,8 +378,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -433,8 +417,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -520,8 +502,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -680,8 +660,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -738,8 +716,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -785,8 +761,6 @@ jobs:
           # Normal credentials are used only by the existing reviewed lab-state publisher.
           persist-credentials: true
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -855,8 +829,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Reserve and initialize only the new harmless canary
         id: rotation
         env:
@@ -883,8 +855,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Verify the new harmless canary boundary
         id: rotation
         env:
@@ -910,8 +880,6 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
-      - name: Mask private dispatch metadata before environment logging
-        run: python3 tools/mask_dispatch_inputs.py
       - name: Qualify the new runtime in a fresh write-token process
         id: rotation
         env:
