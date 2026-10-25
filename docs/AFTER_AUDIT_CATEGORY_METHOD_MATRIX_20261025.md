@@ -396,3 +396,13 @@ target/participant joins and availability clocks remain unqualified. FTN/PBP sou
 prerequisites add no new qualified labels or predictive gain. Earlier failures
 and charges stay retained. The website, scheduler and frozen scientific registrations retain
 their separate ownership and states.
+
+
+## Later completed combined-yard dependence challenger — 2026-10-25
+
+The [new sum-law report](../reports/combined-yard-copula-v1/README.md) completed two fixed cached-marginal couplings with zero base fits and two earlierOOF randomized-PIT dependence fits. This wave tests only rushing+receiving yards on2023–2024:14,282 offers/10,157 supported outcomes,544games/36weeks. Its cohort differs from the earlier all-category2022–2024 panel of815games/54weeks. Both sum laws have higher pooled CRPS than the direct combinedCDF, and higher medianMAE than directCDF and Catmedium point. Bias/coverage diagnostics are mixed and all fallback rows remain. No arm advances. Independent numerical acceptance passed2,086 checks with zero mismatches; all paired intervals and four fixed draw samples were independently reproduced. The compact twelve-category matrix in the report retains the other ten scoreable category states and exact-PPR label block. All earlier matrix rows and dated failed scopes remain unchanged.
+
+
+### Subsequent workload engineering state
+
+The later F7 package20 run failed its native CPU bound after certifying seven earlier frames and durably saving an eighth forecast. No global freeze or scoring completed, and no partial-prefix accuracy is reported. Its213.357961 CPU/144.823528029 wall seconds and raw unknown counters remain retained. A separately versioned package40 continuation is prepared with the original science, sources, feature values and masks unchanged. It reuses the seven certified frames, verifies only the fixed eighth frame and must freeze all30 logical packages before labels. Preparation checks add no NFL forecasts or gains. Actual execution and scoring remain pending at this publication checkpoint; the old20/forward120 failures are not passed or refunded.
