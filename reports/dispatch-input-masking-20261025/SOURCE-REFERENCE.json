@@ -1,0 +1,36 @@
+{
+  "schema_version": "private-dispatch-masking-source-reference-v1",
+  "affected_source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "before_job_environment_exposures": [
+    "audit-weekly-produce-v1",
+    "audit-weekly-restore-v1",
+    "audit-weekly-export-v1",
+    "audit-weekly-failure-restore-v1"
+  ],
+  "after_job_environment_exposures": [],
+  "before_workflow_sha256": "5bf10804854207876b3eae5b240d8cce67e50de6dfa66d9d89355da0470e3aba",
+  "after_workflow_sha256": "82c6b401eee9da3a8a2db85f608b18e683658a51e44ce11902336fdb4d596982",
+  "triggers_permissions_concurrency_and_job_roles_unchanged": true,
+  "masker_jobs": 4,
+  "local_tests": 8,
+  "native_runtime_verified": false,
+  "new_fits": 0,
+  "legacy_jobs_unchanged": [
+    "lab",
+    "storage-probe-write",
+    "storage-probe-read",
+    "storage-probe-restore",
+    "private-draft-v2-write",
+    "private-draft-v2-read",
+    "private-draft-v2-qualify",
+    "owner-bootstrap-restore-v1",
+    "genuine-hosted-fixed-build-v1",
+    "genuine-hosted-fixed-build-restore-v1",
+    "audit-count-effective-restore-v1",
+    "genuine-hosted-selected-restore-v1",
+    "genuine-hosted-selected-export-v1",
+    "audit-private-rotation-write-v1",
+    "audit-private-rotation-read-v1",
+    "audit-private-rotation-qualify-v1"
+  ]
+}

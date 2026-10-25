@@ -1,0 +1,14 @@
+Balanced packing review complete. Only the new owned test file was edited; the archive implementation was reviewed without changes.
+
+Frozen test SHA256: `9b17dab6d23ffe315c88231d74c9b941b58aebf824d4292be5ed7ce6c9a5d6b4`.
+Reviewed archive SHA256: `30a837beba1e661e90db3bb0cce3a7198521a4eed4ea340b61eec1d054c38529`.
+
+All 14 focused tests passed in 13.11 seconds. The permitted partial normal metadata has exactly 353 nonempty originals totaling 24,257,203 bytes. Two source JSON metadata originals remain unavailable; this is not a complete normal-capture reconstruction or a new durability proof. No forecast/model/outcome bodies were read. The anonymous fixture preserves every original byte count, logical and physical path JSON length, required status, lexical ordering and single-file wire size. It contains no original names, private paths or body hashes.
+
+Both old lexical packing and the rejected first-fit-decreasing heuristic require nine groups. FFD strands the early groups at 3/6/9 members, followed by five groups of 64 and a final 15. Balanced decreasing uses six groups with 33/64/64/64/64/64 members; independent canonical/base64 accounting verifies all 353 members exactly once, with each group under the unchanged wire and 64-file caps. Six is the file-count lower bound for this particular fixture. The general planner makes no optimality guarantee.
+
+The existing independent 383-file lexical12-to-six witness, exact empty-wrapper/comma boundary, deterministic order, zero-original census, invalid/duplicate/infeasible cases and pre-encoder/pre-POST rejection all pass. Whole-census validation, original origins, eight groups, 64 members, eight MiB assets and 512-file bounds remain strict. The lower bound may omit comma overhead, which is safely optimistic: each actual assignment and final wire size includes every comma. Attempts remain finite through eight bins, and an infeasible result fails before encoding or POST.
+
+Fresh native codec and real owned-CAS extraction passed under hard 512MiB AS, 120CPU and 180wall limits. The 383-file fictional case used 5.2368 CPU/4.2898 wall seconds and 140,788KiB peak RSS. The exact anonymous 353-file shape used 4.622 CPU/3.3248 wall seconds and 149,132KiB peak RSS. Every original fictional body and hash round-tripped. Repeated fictional bytes compress well; these are codec/ownership/envelope results, not a claim about actual compression, full production memory, historical replay or private durability. The genuine next full capture must still satisfy every complete census, native preflight and fresh-reader guard.
+
+Evidence: `evidence/archive-packing-balanced-v2-tests.log` and `evidence/archive-packing-balanced-independent-review-v2.json`. The earlier FFD review/baseline and an initial fixture-generation syntax error log remain preserved. No remote actions, fits, registered limits, source pins or old failed evidence were changed.
