@@ -10,10 +10,9 @@ import unittest
 from unittest.mock import Mock, patch
 
 ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,"/workspace/nfl-baseline-correction-v1/tools")
-sys.path.insert(0,"/workspace/nfl-direct-booster-screen-v1")
+sys.path.insert(0,str(ROOT/"tools"))
 from baseline_correction_run import extension
-extension({"path":"/workspace/nfl-baseline-correction-v1/nfl_lab/baseline_correction.py",
+extension({"path":str(ROOT/"nfl_lab/baseline_correction.py"),
     "sha256":"077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2"})
 spec=importlib.util.spec_from_file_location("fictional_correction_reporting",ROOT/"tools/baseline_correction_report_v2.py")
 subject=importlib.util.module_from_spec(spec);spec.loader.exec_module(subject)

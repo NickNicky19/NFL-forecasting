@@ -1,0 +1,67 @@
+{
+  "actual_js_wrong_side_rejection": "{\"state\":\"PASS\",\"checks\":36,\"scope\":\"fictional Python/JS contracts and actual app functions\",\"HTTP\":0}",
+  "full_release_regated": false,
+  "half_ppr_patch": {
+    "path": "patches/website-current-b32b13d2123-math-05-half-ppr-missing-labels.patch",
+    "preimage_sha256": "e3e575eccf66b25fd8c4799bc2a9082e6a0c7c5fc8e4ade60dbf1723e6fc6782",
+    "sha256": "2501f1a78c3d5197906909720e4dea4f2203153b705b05676078e544c909d6b7"
+  },
+  "half_ppr_scratch": {
+    "evidence": "FICTIONAL_HALF_PPR_PATCH_CHECK",
+    "results": {
+      "DISPOSABLE_SOURCE_COPY": {
+        "average": null,
+        "label": "Sleeper Half PPR",
+        "projection": null,
+        "prop": {
+          "adj": null,
+          "adj_h": null,
+          "key": "fpts",
+          "lean": null,
+          "line": null,
+          "n": 0,
+          "over": 0,
+          "proj": null,
+          "scoring_missing": true,
+          "values": []
+        }
+      }
+    }
+  },
+  "independent_wrong_side_counterexample": {
+    "container": "under",
+    "item_direction": "over",
+    "python_accepts_wrong_side": true,
+    "score": 1.625
+  },
+  "new_regression_before_guard": {
+    "expected_failure": true,
+    "reason": "ValueError not raised",
+    "tests": 17
+  },
+  "node_selected_rankings": "{\"state\":\"PASS\",\"checks\":35,\"scope\":\"fictional Python/JS contracts and actual app functions\",\"HTTP\":0}",
+  "patched_focused_node": "{\"state\":\"PASS\",\"checks\":36,\"scope\":\"fictional Python/JS contracts and actual app functions\",\"HTTP\":0}",
+  "patched_focused_python": {
+    "errors": 0,
+    "failures": 0,
+    "tests": 17
+  },
+  "python_selected_rankings": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 16
+  },
+  "schema_version": "website-current-bounded-delta-review-v1",
+  "side_guard_patch": {
+    "corrected_counterexample": {
+      "container": "under",
+      "item_direction": "over",
+      "python_accepts_wrong_side": false,
+      "score": 1.625
+    },
+    "path": "patches/website-current-b32b13d2123-rankings-side-guard.patch",
+    "sha256": "43128d21639a658f1aebc80a1540420a2a188f270aa1bb7e804e2c5def9dde5b"
+  },
+  "source_pin": "b32b13d2123e56ae9e490ab881d4306758a48db1"
+}

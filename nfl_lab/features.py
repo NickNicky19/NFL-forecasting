@@ -16,6 +16,7 @@ from nfl_lab.data import TARGETS
 
 PLAYER_STATS = list(TARGETS) + ["rec_tgt", "rush_td", "rec_td", "offense_snaps"]
 TEAM_STATS = ["pass_yd", "rush_yd", "pass_att", "rush_att", "rec_yd"]
+FEATURE_VERSION = "cutoff-features-v2-20261025"
 
 
 def _times(series: pd.Series) -> np.ndarray:
@@ -29,8 +30,8 @@ def _lookup_windows(source: pd.DataFrame, target: pd.DataFrame, entity: str,
               for col in columns for win in windows for kind in ("mean", "n", "sum")}
     result["games"] = np.zeros(len(target))
     result["max_available"] = np.full(len(target), np.iinfo(np.int64).min, dtype=np.int64)
-    source_groups = {key: group.sort_values(["outcome_available_utc", "kickoff_utc"])
-                     for key, group in source.groupby(entity, sort=False, dropna=True)}
+    source_groups = {key: group.sort_values(["outcome_available_utc", "kickoff_utc"], kind="stable")
+                     for key, group in source.loc[source.outcome_available_utc.notna()].groupby(entity, sort=False, dropna=True)}
     for key, indices in target.groupby(entity, sort=False, dropna=True).indices.items():
         group = source_groups.get(key)
         if group is None:
@@ -42,6 +43,24 @@ def _lookup_windows(source: pd.DataFrame, target: pd.DataFrame, entity: str,
         good = right > 0
         result["max_available"][positions[good]] = available[right[good] - 1]
         vals = group[columns].apply(pd.to_numeric, errors="coerce").to_numpy(dtype=float)
+        kickoffs = _times(group.kickoff_utc)
+        if np.any(kickoffs[1:] < kickoffs[:-1]):
+            # Availability admits observations; game chronology defines recency.
+            # Keep the cumulative fast path below for ordinary monotone clocks.
+            # Unknown values still consume a game slot inside the chosen window.
+            for position, stop in zip(positions, right):
+                order = np.argsort(kickoffs[:stop], kind="stable")
+                for win in windows:
+                    selected = vals[order[-win:]]
+                    finite = np.isfinite(selected)
+                    ns = finite.sum(axis=0)
+                    totals = np.where(finite, selected, 0).sum(axis=0)
+                    means = np.divide(totals, ns, out=np.full(len(columns), np.nan), where=ns > 0)
+                    for j, col in enumerate(columns):
+                        result[(col, win, "mean")][position] = means[j]
+                        result[(col, win, "n")][position] = ns[j]
+                        result[(col, win, "sum")][position] = totals[j] if ns[j] else np.nan
+            continue
         finite = np.isfinite(vals)
         sums = np.vstack([np.zeros(len(columns)), np.cumsum(np.where(finite, vals, 0), axis=0)])
         counts = np.vstack([np.zeros(len(columns)), np.cumsum(finite, axis=0)])
@@ -118,13 +137,15 @@ def build_features(history: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("cutoff must be at or before kickoff")
     if "outcome_available_utc" not in out:
         out["outcome_available_utc"] = out.kickoff_utc + pd.Timedelta(days=7)
-    out["outcome_available_utc"] = pd.to_datetime(out.outcome_available_utc, utc=True).fillna(out.kickoff_utc + pd.Timedelta(days=7))
-    if out.outcome_available_utc.isna().any() or (out.outcome_available_utc <= out.kickoff_utc).any():
+    out["outcome_available_utc"] = pd.to_datetime(out.outcome_available_utc, utc=True)
+    if (out.outcome_available_utc <= out.kickoff_utc).any():
         raise ValueError("outcome availability must be after its game kickoff")
     for col in PLAYER_STATS:
         if col not in out:
             out[col] = np.nan
-    source = out.copy()
+    # An absent availability column declares the historical reconstruction
+    # assumption above. An explicitly unknown clock cannot establish availability.
+    source = out.loc[out.outcome_available_utc.notna()].copy()
     source["known_play"] = np.where(source.participation_state.eq("played"), 1.0,
                                    np.where(source.participation_state.eq("DNP"), 0.0, np.nan))
     player = _lookup_windows(source, out, "player_id", PLAYER_STATS + ["known_play"])
@@ -150,7 +171,7 @@ def build_features(history: pd.DataFrame) -> pd.DataFrame:
         pooled = _lookup_windows(pair, out, "player_id", [num, den], (3,))
         features["f_player_" + name] = _ratio(pooled[(num, 3, "sum")], pooled[(den, 3, "sum")])
 
-    team = _team_table(out)
+    team = _team_table(source)
     team_columns = TEAM_STATS + ["offense_plays"]
     own = _lookup_windows(team, out, "team", team_columns)
     defense = team.rename(columns={"team": "offense", "opponent": "team"})
@@ -212,9 +233,9 @@ def build_features(history: pd.DataFrame) -> pd.DataFrame:
     max_available = np.maximum.reduce([player["max_available"], own["max_available"], allowed["max_available"], league_max])
     result["feature_max_source_available_utc"] = pd.to_datetime(max_available, utc=True)
     result.index = original_index
-    result.attrs["feature_profile"] = {"rows": len(result), "numeric_feature_count": len(features),
+    result.attrs["feature_profile"] = {"version": FEATURE_VERSION, "rows": len(result), "numeric_feature_count": len(features),
                                       "elapsed_seconds": round(time.monotonic() - started, 3),
-                                      "availability": "strictly before each cutoff_utc; default historical lag 7 days",
+                                      "availability": "strictly before each cutoff_utc; absent column reconstructs lag 7 days; explicit unknown excluded",
                                       "pace_semantics": "pass attempts + rush attempts per game, not neutral-situation or clock pace",
                                       "unimplemented": ["historic authenticated news", "injuries", "routes", "NGS features", "weather forecasts", "private schemes"]}
     return result

@@ -1,0 +1,38 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 18%]
+.............................................................. [ 22%]
+.................................................................... [ 27%]
+........................................................................ [ 31%]
+........................................................................ [ 36%]
+........................................................................ [ 41%]
+........................................................................ [ 45%]
+........................................................................ [ 50%]
+........................................................................ [ 55%]
+.....................................................s......... [ 59%]
+............................................................ [ 63%]
+........................................................................ [ 67%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 81%]
+........................................................................ [ 86%]
+........................................................................ [ 91%]
+..................................................................................................................... [ 98%]
+...................                                                      [100%]
+=============================== warnings summary ===============================
+tests/test_canonical_feature_inputs_v2.py::test_adversarial_future_and_required_clocks_reject_before_builder[invalid-None-None]
+  /workspace/nfl-system-audit/research-audit/nfl_lab/canonical_feature_inputs.py:166: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+    return pd.to_datetime(values, utc=True, errors="raise")
+
+tests/test_direct_boosters.py::test_supported_zeros_invalid_missing_and_unknown_are_distinct
+  /workspace/nfl-system-audit/research-audit/tests/test_direct_boosters.py:108: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '[0.0, nan, -1.0, 1.5, 4.0]' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
+    train.loc[:4, "pass_att"] = [0., np.nan, -1., 1.5, 4.]
+
+tests/test_operational_storage.py::test_concurrent_processes_cannot_double_spend
+tests/test_operational_storage.py::test_concurrent_processes_cannot_double_spend
+  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=13938) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    self.pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1540 passed, 1 skipped, 4 warnings, 62 subtests passed in 320.99s (0:05:20)

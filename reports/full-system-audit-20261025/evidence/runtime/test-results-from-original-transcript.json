@@ -1,0 +1,94 @@
+{
+  "compiled_at_utc": "2026-10-25T00:29:09.978212+00:00",
+  "distinct_live_cases_after_diagnostic_fixture_copy": {
+    "clean_suite_claim": false,
+    "errors": 5,
+    "passed": 100
+  },
+  "fresh_executions": 0,
+  "original_stdout_file_available": false,
+  "other_attempts": [
+    {
+      "errors": 2,
+      "id": "phase2-capture-initial",
+      "reason": "requests absent in initial minimal environment; 60 base cases executed. Not an actual product regression finding.",
+      "status": "ERROR",
+      "tests_reported": 62
+    },
+    {
+      "id": "phase2-capture-with-dependency",
+      "reason": "isolated copy deliberately omitted retained Git source objects; no full E2E execution claimed",
+      "status": "IMPORT_BLOCKED"
+    },
+    {
+      "duration_seconds": 0.164,
+      "errors": 2,
+      "id": "phase2-recovery-with-dependency",
+      "reason": "retained Git source objects absent in minimal isolated copy",
+      "status": "FAILED",
+      "tests": 6
+    }
+  ],
+  "outstanding_live_case_errors": [
+    "legacy v1 checkpoint source-pin mismatch",
+    "legacy v1 selected snapshot source-pin mismatch",
+    "missing historical workflow snippet",
+    "test clock coupled to expired midnight registration",
+    "missing weekly-grading plan"
+  ],
+  "results": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_hosted_safety_guard.py -v",
+      "duration_seconds": 0.008,
+      "id": "main-guard",
+      "snapshot": "research",
+      "status": "PASS",
+      "tests": 8
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /tmp/nfl-runtime-review/venv/bin/python -m pytest -p no:cacheprovider -q tests/test_cadence.py tests/test_lab_state.py tests/test_hosted_safety_guard.py tests/test_operational_storage.py tests/test_operational_storage_routing.py tests/test_operational_sources.py tests/test_publication_scope.py tests/test_publication_qualification.py tests/test_hosted_witness_state_v1.py",
+      "duration_seconds": 17.01,
+      "id": "research-critical-paths",
+      "snapshot": "research-audit",
+      "status": "PASS",
+      "tests": 204,
+      "warnings": 2
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:tools:pull python -m unittest test_reliability test_recovery -q",
+      "duration_seconds": 0.577,
+      "id": "website-current-reliability-recovery",
+      "snapshot": "website-audit",
+      "status": "PASS",
+      "tests": 60
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:tools:pull python -m unittest test_writer_gate test_manual_writer_gate test_manual_checkpoint_authority test_source_ci -q",
+      "duration_seconds": 12.662,
+      "id": "phase2-gate-and-source-ci",
+      "snapshot": "website-phase2",
+      "status": "PASS",
+      "tests": 98
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:. /tmp/nfl-runtime-review/venv/bin/python -m unittest test_private_draft_store_v2 test_owner_private_bootstrap test_gha_private_checkpoint test_selected_private_snapshot test_weekly_initial_continuation_v3 test_weekly_grading -q",
+      "duration_seconds": 43.678,
+      "errors": 6,
+      "id": "live-private-controls-initial",
+      "snapshot": "research-live-source",
+      "status": "FAILED",
+      "tests": 105
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:. /tmp/nfl-runtime-review/venv/bin/python -m unittest test_gha_private_checkpoint.CheckpointTests.test_preparation_and_unapproved_procedure_read_no_credentials test_gha_private_checkpoint.CheckpointTests.test_workflow_snippet_preserves_existing_mode_and_safe_boundaries test_selected_private_snapshot.SnapshotChecks.test_unapproved_snapshot_procedure_fails_before_credentials test_weekly_initial_continuation_v3.ContinuationChecks.test_cross_run_builder_authenticates_old_producer_and_current_restorer_separately -q",
+      "duration_seconds": 2.303,
+      "errors": 3,
+      "id": "live-private-controls-diagnostic-rerun",
+      "snapshot": "research-live-source",
+      "status": "FAILED",
+      "tests": 4
+    }
+  ],
+  "schema_version": "runtime-transcript-derived-test-results-v1",
+  "source": "Original visible tool responses during the prior audit; not process logs retrieved from disk."
+}

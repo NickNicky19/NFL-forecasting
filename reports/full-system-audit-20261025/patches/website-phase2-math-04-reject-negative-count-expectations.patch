@@ -1,0 +1,13 @@
+--- a/pull/scoring.py
++++ b/pull/scoring.py
+@@ -73,8 +73,8 @@
+             return {"value": None, "state": "explicit_unknown"}
+         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+             return {"value": None, "state": "invalid_value"}
+-        if not projection and ((key in ACTUAL_COUNTS and value < 0)
+-                               or key in ACTUAL_COUNTS | {"pass_yd", "rush_yd", "rec_yd"} and int(value) != value):
++        if ((key in ACTUAL_COUNTS and value < 0)
++                or not projection and key in ACTUAL_COUNTS | {"pass_yd", "rush_yd", "rec_yd"} and int(value) != value):
+             return {"value": None, "state": "invalid_value"}
+         return {"value": value, "state": "reported_zero" if value == 0 else "reported_value"}
+     if projection:
