@@ -1,0 +1,150 @@
+{
+  "schema_version": "full-system-audit-finding-ledger-v1",
+  "observed_date": "2026-10-25",
+  "scope": "public-safe;no private row data",
+  "findings": [
+    {
+      "id": "SYS-001",
+      "severity": "high",
+      "title": "Count fallback functional mismatch",
+      "affected_path": "producer:role_boosting.py:137;weekly_future_inference.py:124",
+      "expected": "Geometric q.75 expected mean3",
+      "actual": "Median2 labeled mean",
+      "repair_status": "implemented isolated producer;not integrated",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-002",
+      "severity": "high",
+      "title": "Projected field goals lost",
+      "affected_path": "website:pull/scoring.py:33;pull/build.py:139;pull/gamemodel.py:28",
+      "expected": "Normalized team rollup preserves fgm;fictional spread1",
+      "actual": "Dropped fgm;fictional spread8.8",
+      "repair_status": "exact patches scratch tested;not installed",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-003",
+      "severity": "high",
+      "title": "Contradictory grading identity accepted",
+      "affected_path": "website:pull/grade.py:126,144",
+      "expected": "Wrong team/game row unresolved",
+      "actual": "Classic hit andPPR error accepted",
+      "repair_status": "exact patches scratch tested;not installed",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-004",
+      "severity": "high",
+      "title": "Canceled post treated as final",
+      "affected_path": "website:pull/build.py:121,526,746,748",
+      "expected": "Completed true andpast aware kickoff required",
+      "actual": "post alone entersfinals",
+      "repair_status": "exact patches scratch tested;not installed",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-005",
+      "severity": "high",
+      "title": "Old workflow newer source race",
+      "affected_path": "website:.github/workflows/hourly.yml:33",
+      "expected": "Workflow/event/checkout/currentmain agree",
+      "actual": "gitpull maymix runningoldYAML withnewsource",
+      "repair_status": "source-fence patches apply checked;not installed",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-006",
+      "severity": "high",
+      "title": "New failed-attempt evidence durability",
+      "affected_path": "producer:.github/workflows/lab.yml:457,551;phase2:phase2_capture.py:1299",
+      "expected": "Failed andpartial evidence retained privately",
+      "actual": "Success-only checkpoint/commit may skipfailedlocal evidence",
+      "repair_status": "unresolved contract;no speculativealways change",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-007",
+      "severity": "high",
+      "title": "Recurring orchestration/horizon gap",
+      "affected_path": "lab.yml;hourly.yml;timing-policy.json",
+      "expected": "Registered captures andweeklydecisions from genuineprior evidence",
+      "actual": "Labblocked/manualonly;40of42 nominaltiming misses",
+      "repair_status": "declaredpending;single schedulerpreserved",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-008",
+      "severity": "medium",
+      "title": "Feature availability andchronology",
+      "affected_path": "research:nfl_lab/features.py:32,119",
+      "expected": "Last3 bykickoff afteravailability;unknown excluded",
+      "actual": "Mean50vs20;unknown999admitted",
+      "repair_status": "implemented cutoff-features-v2-20261025",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-009",
+      "severity": "medium",
+      "title": "Infinite logloss population loss",
+      "affected_path": "research:nfl_lab/cdf_evaluation.py:258",
+      "expected": "Impossibleevent loss+infinity retained",
+      "actual": "Droppedrow falselyfavorscandidate bylog2",
+      "repair_status": "implemented paired-distribution-interval-v2-20261025",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-010",
+      "severity": "medium",
+      "title": "Freshcheckout acceptance portability",
+      "affected_path": "tests/test_baseline_correction_report_v2.py;v3.py;test_raw_orphan_context.py;pyproject.toml",
+      "expected": "Declareddeps;relativepaths;directimport guard",
+      "actual": "Collectionfails;missingxgb;globalmodulestate falsefailure",
+      "repair_status": "implemented researchtestrepair",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-011",
+      "severity": "medium",
+      "title": "Negativecount expectations accepted",
+      "affected_path": "phase2:pull/scoring.py:76",
+      "expected": "Fractionalnonnegative counts;invalidnegative abstains",
+      "actual": "rec=-1 accepted",
+      "repair_status": "phase2patch scratchtested;notinstalled",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-012",
+      "severity": "medium",
+      "title": "MissinghalfPPR labeledHalfPPR",
+      "affected_path": "website:output/app.js:210,221,235",
+      "expected": "Missinghalftypedunknown orexplicitfallbacklabel",
+      "actual": "FullPPR20underHalfPPRlabel",
+      "repair_status": "exact half-PPR scratch patches validated;not installed;merged-app browser acceptance pending",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    },
+    {
+      "id": "SYS-013",
+      "severity": "high",
+      "title": "IncompletePhase2releaseassembly",
+      "affected_path": "phase2:config/policy-v2;helperJS;schema;workflowcontroller",
+      "expected": "Actual combinedsourceCIgreen andqualified",
+      "actual": "CurrentCI2fails12errors;protectedbytesmissing",
+      "repair_status": "blocker;existingintegratorhandoff",
+      "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
+      "historical_effect": "Unmeasured from private rows;original forecasts/reports retained"
+    }
+  ]
+}

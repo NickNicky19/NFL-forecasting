@@ -1,0 +1,25 @@
+{
+  "fresh_apply_or_check_invocations": 0,
+  "limits": [
+    "stale source and data-only descendants are both refused",
+    "no pull/rebase/merge of newer generated evidence",
+    "does not alter an already-created run using old workflow instructions",
+    "post-push deployment race remains unclosed",
+    "integration changes require refreshed exact workflow hashes and source seal"
+  ],
+  "patches": [
+    {
+      "applied": false,
+      "path": "patches/runtime-main-workflow-source-fence.patch",
+      "sha256": "61f8067bd4691f1fdaa9a502df200d8ecaadaa119408052a81490b8736977b61",
+      "validation": "Original git apply --check exit 0, recorded twice during audit; not rerun for this handoff."
+    },
+    {
+      "applied": false,
+      "path": "patches/runtime-phase2-workflow-source-fence.patch",
+      "sha256": "c5ca336c3f3fe5af09dac89ba2859aced45a6350c5b605813dda0809969f7394",
+      "validation": "Original git apply --check exit 0, recorded twice during audit; not rerun for this handoff."
+    }
+  ],
+  "schema_version": "runtime-patch-validation-transcript-v1"
+}

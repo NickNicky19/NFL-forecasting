@@ -1,0 +1,57 @@
+{
+  "finding": "A-MATH-001",
+  "reference": "Two observed events, candidate probabilities0and1 vscontrol.5and.5: candidate mean loss+infinity; it cannot beat finite log(2).",
+  "before": {
+    "paired_rows": 1,
+    "clusters": 1,
+    "cluster": "week",
+    "candidate_years": [
+      2001
+    ],
+    "control_years": [
+      2001
+    ],
+    "compared_complete_years": [
+      2001
+    ],
+    "excluded_unpaired_years": [],
+    "mean_delta_candidate_minus_control": -0.6931471805599453,
+    "interval": null,
+    "replicates": 500,
+    "seed": 1701,
+    "monte_carlo_tail_probability_se": 0.0069821200218844704,
+    "monte_carlo_error_semantics": "binomial SE of nominal .025 tail fraction only; interval endpoint uncertainty in target units is not established",
+    "status": "secondary_distribution_diagnostic",
+    "interval_semantics": "nominal95% unadjusted descriptive; no familywise coverage or calibration claim",
+    "reason": "fewer_than_8_clusters"
+  },
+  "after": {
+    "paired_rows": 2,
+    "clusters": 2,
+    "cluster": "week",
+    "candidate_years": [
+      2001
+    ],
+    "control_years": [
+      2001
+    ],
+    "compared_complete_years": [
+      2001
+    ],
+    "excluded_unpaired_years": [],
+    "mean_delta_candidate_minus_control": null,
+    "delta_state": "positive_infinity",
+    "candidate_infinite_log_losses": 1,
+    "control_infinite_log_losses": 0,
+    "interval": null,
+    "replicates": 500,
+    "seed": 1701,
+    "monte_carlo_tail_probability_se": 0.0069821200218844704,
+    "monte_carlo_error_semantics": "binomial SE of nominal .025 tail fraction only; interval endpoint uncertainty in target units is not established",
+    "status": "secondary_distribution_diagnostic",
+    "interval_semantics": "nominal95% unadjusted descriptive; no familywise coverage or calibration claim",
+    "reason": "infinite_log_losses_retained; finite bootstrap delta interval undefined"
+  },
+  "old_source_commit": "66c824dabb19675d29f8ec9b5acd4e0c25cf1a5e",
+  "data": "fictional only"
+}

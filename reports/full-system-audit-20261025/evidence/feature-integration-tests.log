@@ -1,0 +1,9 @@
+........................................................................ [ 94%]
+....                                                                     [100%]
+=============================== warnings summary ===============================
+tests/test_canonical_feature_inputs_v2.py::test_adversarial_future_and_required_clocks_reject_before_builder[invalid-None-None]
+  /workspace/nfl-system-audit/research-audit/nfl_lab/canonical_feature_inputs.py:166: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+    return pd.to_datetime(values, utc=True, errors="raise")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+76 passed, 1 warning in 19.27s
