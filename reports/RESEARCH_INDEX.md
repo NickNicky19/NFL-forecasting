@@ -1,3 +1,7 @@
+# Latest executed after-audit research
+
+[Corrected two-family distribution comparison](distribution-cdf-after-audit-v2/README.md): 114 fit calls, 815 games/54 season-weeks; eight small response-CDF CRPS gains, two numeric losses and one unchanged TD alias; monotone loses eleven. Combined yards is an exposed research lead only. V1 source-mask omission remains retained. [Complete category × method matrix](../docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md). No scientific or website promotion.
+
 # Forecasting research: complete navigation index
 
 ## Latest website integration — 2026-10-25
