@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1, audit-count-retained-v1]
         default: daily
       bootstrap_locators_json:
         description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
@@ -67,7 +67,7 @@ env:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -469,7 +469,7 @@ jobs:
           timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py produce --execute "${route_args[@]}"
   genuine-hosted-fixed-build-restore-v1:
     needs: genuine-hosted-fixed-build-v1
-    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 && ((inputs.mode == 'genuine-hosted-fixed-build-v1' && needs.genuine-hosted-fixed-build-v1.result == 'success') || inputs.mode == 'genuine-hosted-inference-continuation-v3' || inputs.mode == 'audit-count-requalify-v1') }}
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 && ((inputs.mode == 'genuine-hosted-fixed-build-v1' && needs.genuine-hosted-fixed-build-v1.result == 'success') || inputs.mode == 'genuine-hosted-inference-continuation-v3' || inputs.mode == 'audit-count-requalify-v1' || inputs.mode == 'audit-count-retained-v1') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -509,7 +509,7 @@ jobs:
         run: |
           python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
       - name: Restore and verify the complete private checkpoint in a fresh job
-        if: inputs.mode != 'audit-count-requalify-v1'
+        if: inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: write
@@ -533,7 +533,7 @@ jobs:
           read -r procedure_sha ignored_digest_name < <(sha256sum config/weekly-continuation-source-cache-v3.json)
           timeout --signal=KILL 95s python -I -B tools/weekly_continuation_source_cache_v3.py --execute --procedure-sha256 "$procedure_sha"
       - name: Generate the source and model bound initial inference plan
-        if: inputs.mode != 'audit-count-requalify-v1'
+        if: inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1'
         id: inference-plan
         env:
           STORE_PERMISSION: write
@@ -545,7 +545,7 @@ jobs:
           elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
           timeout --signal=KILL 35s python -I -B tools/hosted_initial_plan_builder_v1.py --execute "${route_args[@]}"
       - name: Issue current remaining slate forecasts using the existing frozen producer
-        if: inputs.mode != 'audit-count-requalify-v1'
+        if: inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1'
         id: current-inference
         env:
           INITIAL_PLAN_SHA256: ${{ steps.inference-plan.outputs.plan_sha256 }}
@@ -556,7 +556,7 @@ jobs:
             --plan "$RUNNER_TEMP/genuine-hosted-fixed-build-restore-v1-$GITHUB_RUN_ID/initial-plan-builder-v${INITIAL_ROUTE_VERSION}/PLAN.json" \
             --plan-sha256 "$INITIAL_PLAN_SHA256" --execute
       - name: Preserve every candidate and selected forecast in private storage
-        if: inputs.mode != 'audit-count-requalify-v1'
+        if: inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1'
         id: selected-checkpoint
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -572,6 +572,28 @@ jobs:
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py produce --execute "${route_args[@]}"
+      - name: Restore the registered effective artifacts from a completed prior run
+        if: inputs.mode == 'audit-count-retained-v1'
+        id: audit-count-retained
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_RETAINED_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_RETAINED_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_COUNT_RETAINED_REGISTRATION_JSON: ${{ inputs.build_registration_json }}
+          AUDIT_COUNT_RETAINED_REGISTRATION_SHA256: ${{ inputs.build_registration_sha256 }}
+        run: |
+          python - <<'PYREG'
+          import hashlib, os
+          from pathlib import Path
+          raw=os.environ['AUDIT_COUNT_RETAINED_REGISTRATION_JSON'].encode()
+          if not 0<len(raw)<=262144 or hashlib.sha256(raw).hexdigest()!=os.environ['AUDIT_COUNT_RETAINED_REGISTRATION_SHA256']:
+              raise ValueError('EXACT_RETAINED_REGISTRATION_INPUT')
+          path=Path(os.environ['RUNNER_TEMP'])/'audit-count-retained-registration.json'
+          with path.open('xb')as handle:handle.write(raw)
+          path.chmod(0o600)
+          PYREG
+          timeout --signal=KILL 430s python -I -B tools/audit_count_retained_v1.py restore --execute --registration "$RUNNER_TEMP/audit-count-retained-registration.json" --registration-sha256 "$AUDIT_COUNT_RETAINED_REGISTRATION_SHA256"
       - name: Record the actual zero-fit recovery start
         if: inputs.mode == 'audit-count-requalify-v1'
         id: audit-count-start
