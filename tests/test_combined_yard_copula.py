@@ -42,7 +42,13 @@ def test_empirical_crps_and_median_addition_counterexample():
     assert x.quantile(.5)[0]+x.quantile(.5)[0]==0
     assert e.quantile(.5)[0]==10
     y=7;raw=s[0].astype(float)
-    exact=np.mean(np.abs(raw-y))-.5*np.mean(np.abs(raw[:,None]-raw[None,:]))
+    # Evaluate every pair while bounding temporary memory. A full4096x4096
+    # matrix inflates process-lifetime ru_maxrss and interferes with later
+    # resource tests in the same pytest process.
+    pairwise_absolute_sum = 0.0
+    for start in range(0, len(raw), 64):
+        pairwise_absolute_sum += np.abs(raw[start:start + 64, None] - raw[None, :]).sum()
+    exact = np.mean(np.abs(raw - y)) - .5 * pairwise_absolute_sum / len(raw)**2
     assert np.isclose(e.crps([y])[0],exact)
 
 def test_signed_and_no_artificial_push_probability_floor():

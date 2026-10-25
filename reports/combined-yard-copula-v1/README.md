@@ -128,7 +128,9 @@ from the worker's pre-completion snapshot and are retained separately.
 The public metadata preparer accepts explicit private input/output locators
 rather than publishing internal absolute artifact paths. That packaging-only
 change is documented by old/new source hashes; executed method, runner, native
-helper and tests remain byte-identical to the actual source tree. The public
+helper remain byte-identical to the actual source tree. The public test oracle
+has the separately documented memory fix below; its draw count, complete
+pair set, assertions and resource guards are unchanged. The public
 registration is its original unactivated draft, SHA5d699f4864025cae985e327b1f7268aedbf0b3f5a655d984fbfd554a14c8b9e7.
 The actual sealed activation used SHA7a286685c66ee61495c7dc9bc808e83d064dc6d8462d4fb9c04c98ce1904d777;
 only activation state and seal changed, with normalized scientific body equal
@@ -171,3 +173,10 @@ complete review elapsed517.51 seconds within its600-second envelope; metered
 checker processes used3.75286 CPU seconds, while total orchestration CPU was
 not independently aggregated. Software fixture success, numerical verification
 and predictive improvement remain separate claims.
+
+
+## Hosted acceptance failure and memory repair
+
+The initial publication head `c5e0a218` failed hosted run40201147447, job121192390402:31 failures,1,574 passes, one skip and62 passing subtests. The31 failures were existing subgroup/participation resource checks. The new fictional CRPS oracle formed a full4096-by4096 difference matrix, raising process-lifetime peak RSS; that is consistent with the later resource-check failures. The failed run remains retained.
+
+The public test now evaluates all16,777,216 pair terms in64-row blocks. It keeps the same4096 draws, V-statistic, assertions and resource ceilings; no forecasting code, recorded NFL law, output or score changed. A fresh combined regression passed53 tests in11.80 pytest seconds (12.3911 wrapper wall,14.060416 CPU), with child peak RSS209,899,520 bytes. The old eleven-test standalone run used442,535,936 bytes. These test scopes differ, so these figures are not a forecast runtime comparison. A fresh full hosted successor run is still required before merge. This repair adds no football evidence.

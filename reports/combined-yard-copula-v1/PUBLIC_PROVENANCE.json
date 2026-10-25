@@ -72,9 +72,39 @@
       2024
     ]
   },
+  "preserved_initial_hosted_CI": {
+    "failed_tests": 31,
+    "failure_receipt_sha256": "ca5bdb002105eac54e4e433eb4a919e16ce89e94b70de55c53e7c677cf73e6b1",
+    "failure_scope": "Existingfrozen-subgroup17 andparticipationprobe14 resourcechecks; fullmatrixoracleinflates process-lifetimeHWM. Consistentdiagnosis; fullfreshhosted successor remainsrequired.",
+    "head": "c5e0a218e837dbdac318124ef6f07e24b5809d79",
+    "job_id": 121192390402,
+    "passed_subtests": 62,
+    "passed_tests": 1574,
+    "run_id": 40201147447,
+    "skipped_tests": 1,
+    "state": "FAILED",
+    "wall_seconds": 296.21
+  },
   "public_parent_commit": "2d605972ee8f7f62ca9588b46de32f5bef1f567a",
   "publication_only_changes": {
-    "metadata_preparer": "Explicit CLI parameters replace internal absolute artifact locators; no method/worker/fixture change",
+    "memory_bounded_test_oracle": {
+      "actual_NFL_model_or_score_reruns": 0,
+      "block_rows": 64,
+      "new_public_test_sha256": "fbbde12573bcaf0238ad6f0cf1dee1ed8f2cd9e7919381af67e878e80bb27371",
+      "old_test_sha256": "6c6b34a94e34436ba2b5de9fc3c0490119d5293a8399071c1f4f0d48cd0daf47",
+      "resource_or_native_guards_changed": false,
+      "same_complete_V_stat_pairwise_terms": 16777216,
+      "same_draw_count": 4096,
+      "targeted_regression": {
+        "CPU_seconds": 14.060416,
+        "child_RSS_bytes": 209899520,
+        "returncode": 0,
+        "state": "PASS",
+        "wall_seconds": 12.391130850999616
+      },
+      "targeted_tests": 53
+    },
+    "metadata_preparer": "Explicit CLI parameters replace internal absolute artifact locators; no method/worker or fictional fixture-data change",
     "tests": {
       "CPU_seconds": 6.450718999999999,
       "child_RSS_bytes": 442535936,
@@ -124,8 +154,9 @@
     },
     "tests/test_combined_yard_copula.py": {
       "executed_sha256": "6c6b34a94e34436ba2b5de9fc3c0490119d5293a8399071c1f4f0d48cd0daf47",
-      "packaging_changed": false,
-      "published_sha256": "6c6b34a94e34436ba2b5de9fc3c0490119d5293a8399071c1f4f0d48cd0daf47"
+      "packaging_changed": true,
+      "packaging_reason": "Public test oracle sums the same full4096x4096 pair set in64rowblocks to boundtemporarymemory; no drawcount/assertion/resourceguard/scientificchange.",
+      "published_sha256": "fbbde12573bcaf0238ad6f0cf1dee1ed8f2cd9e7919381af67e878e80bb27371"
     },
     "tools/combined_yard_native_core.py": {
       "executed_sha256": "1ef8e8a4109ebc2c098e6f814d72e7aeb17da66cba31d0dfea809d6ac7d751a6",
