@@ -454,8 +454,14 @@ def continue_week(registered, schedule, game_cutoffs, *, clock=now_utc):
         epoch_sha256=epoch.sha256, original_slate_sha256=digest(old), original_choice_sha256=origin["choice_file"]["sha256"],
         full_week_first_kickoff_utc=slate["scheduled_first_kickoff_utc"], full_week_deadline_utc=slate["weekly_deadline_utc"],
         original_weekly_deadline_utc=old["weekly_deadline_utc"], registered_at_utc=epoch.document["registered_at_utc"],
-        actual_continued_at=now.isoformat(), late_capture=now >= utc(old["weekly_deadline_utc"]))
-    slate.update(slate_id=old["slate_id"], scheduled_first_kickoff_utc=first.isoformat(), slate_contract=contract)
+        actual_continued_at=now.isoformat(), late_capture=now >= utc(old["weekly_deadline_utc"]),
+        full_week_deadline_already_passed=now >= utc(slate["weekly_deadline_utc"]))
+    # A source-bound initial remaining-games release can have a later declared
+    # deadline than the complete calendar. Preserve that original contract in
+    # this software continuation; neither a new weekly selection nor a new
+    # generic full-week registration is made here.
+    slate.update(slate_id=old["slate_id"], scheduled_first_kickoff_utc=first.isoformat(),
+        weekly_deadline_utc=old["weekly_deadline_utc"], slate_contract=contract)
     selections = []
     for original in origin["choice"]["selections"]:
         selected = deepcopy(original)

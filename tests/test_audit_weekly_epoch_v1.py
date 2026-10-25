@@ -101,6 +101,34 @@ def continuation(f, r):
     return epoch.continue_week(r, f["schedule"], cutoffs, clock=lambda: CONTINUED)
 
 
+def test_initial_remaining_week_deadline_and_full_calendar_deadline_remain_distinct():
+    f=fixture()
+    # A registered initial remaining-game release can legitimately start after
+    # Thursday. Its original Sunday deadline is not the full week's deadline.
+    old=deepcopy(f['slate'])
+    old.update(scheduled_first_kickoff_utc='2026-10-25T20:00:00+00:00',
+        weekly_deadline_utc='2026-10-25T14:00:00+00:00',
+        game_cutoffs={k:v for k,v in old['game_cutoffs'].items() if k!='fictional-elapsed'},
+        elapsed_games=1,slate_contract=dict(kind='REGISTERED_INITIAL_REMAINING_GAMES'))
+    original=generic.freeze_choices(selector,dict(schema_version=selector.VERSION,offers=[],forecasts=[],outcomes=[],decisions=[],weeks=[]),
+        f['catalog'],f['policy'],old,actual_choice_at=utc('2026-10-24T21:00:00Z'))
+    raw=canonical(original)
+    completion=dict(schema_version=generic.VERSION+'-weekly-choice-completion',
+        choice_binding=dict(path='/fictional/original-choice.json',bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()),
+        persisted_completed_at='2026-10-24T21:01:00Z',original_predeadline_completion=None)
+    e=epoch.prepare_epoch(raw,completion,old,f['catalog'],f['policy'],f['replay'],
+        history_binding=f['history_binding'],clock=lambda:REGISTERED)
+    r=registered(e)
+    c=continuation(f,r)
+    # The source-bound old deadline survives correction. Full-week chronology
+    # remains explicit and the generic constructor is unchanged.
+    assert c.document['slate']['weekly_deadline_utc']=='2026-10-25T14:00:00+00:00'
+    assert c.document['slate']['slate_contract']['full_week_deadline_utc']=='2026-10-22T18:15:00+00:00'
+    assert c.document['slate']['slate_contract']['original_weekly_deadline_utc']=='2026-10-25T14:00:00+00:00'
+    assert c.document['slate']['slate_contract']['full_week_deadline_already_passed'] is True
+    assert c.document['slate']['slate_contract']['late_capture'] is False
+
+
 def next_slate(week, first):
     schedule = [dict(season=2026, week=week, game_type="REG", game_id="fictional-week-" + str(week), kickoff_utc=first)]
     return generic.prepare_slate(schedule, season=2026, week=week,
