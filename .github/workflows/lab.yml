@@ -79,6 +79,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Enforce source and publication handover safety
         id: readiness
         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
@@ -195,6 +197,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Create harmless canary or pin exact existing canary without writes
         id: canary
         env:
@@ -223,6 +227,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Require authenticated API and anonymous API/browser denials with controls
         id: read_check
         env:
@@ -255,6 +261,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Restore exact harmless bytes with a fresh write token
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -294,6 +302,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Initialize only one harmless draft and pin in a fresh process
         id: canary
         env:
@@ -318,6 +328,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Check only the new harmless canary boundary
         id: canary
         env:
@@ -343,6 +355,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Fresh write-token canary restoration and safe proof
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -378,6 +392,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -417,6 +433,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -502,6 +520,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -660,6 +680,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -716,6 +738,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -761,6 +785,8 @@ jobs:
           # Normal credentials are used only by the existing reviewed lab-state publisher.
           persist-credentials: true
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -829,6 +855,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Reserve and initialize only the new harmless canary
         id: rotation
         env:
@@ -855,6 +883,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Verify the new harmless canary boundary
         id: rotation
         env:
@@ -880,6 +910,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 1
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - name: Qualify the new runtime in a fresh write-token process
         id: rotation
         env:
@@ -917,14 +949,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/checkout@v4
         with:
           repository: NickNicky19/nicks-expert-nfl-picks
@@ -941,6 +973,8 @@ jobs:
       - name: Capture all effective candidates, selected rows and original R0
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           NFL_R0_SOURCE_REPOSITORY: ${{ github.workspace }}/r0-public-reference
         run: |
@@ -953,6 +987,8 @@ jobs:
         id: preserve
         if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
           NFL_R0_SOURCE_REPOSITORY: ${{ github.workspace }}/r0-public-reference
@@ -985,14 +1021,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1002,6 +1038,8 @@ jobs:
       - name: Restore complete capture or failed evidence in a fresh job
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.archive_handoff_json }}
           AUDIT_WEEKLY_ARCHIVE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.archive_handoff_sha256 }}
@@ -1018,6 +1056,8 @@ jobs:
         id: preserve
         if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
         run: timeout --signal=KILL 300s python -I -B tools/audit_weekly_hosted_v1.py preserve --execute
@@ -1047,14 +1087,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: true
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1064,6 +1104,8 @@ jobs:
       - name: Recover, verify and publish only the approved derived public feed
         id: weekly
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_READER_HANDOFF_JSON: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_json }}
           AUDIT_WEEKLY_READER_HANDOFF_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_sha256 }}
@@ -1077,6 +1119,8 @@ jobs:
         id: preserve
         if: ${{ always() && !cancelled() && steps.weekly.outcome == 'failure' }}
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ORIGINAL_EXIT_CODE: ${{ steps.weekly.outputs.exit_code }}
         run: timeout --signal=KILL 300s python -I -B tools/audit_weekly_hosted_v1.py preserve --execute
@@ -1103,14 +1147,14 @@ jobs:
       ARROW_DEFAULT_MEMORY_POOL: system
       ARROW_IO_THREADS: '2'
       STORE_PERMISSION: write
-      AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
-      AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Mask private dispatch metadata before environment logging
+        run: python3 tools/mask_dispatch_inputs.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -1119,6 +1163,8 @@ jobs:
           python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps -r requirements.lock -r requirements-audit-weekly-metadata-v1.lock
       - name: Independently restore the failed reader or exporter evidence
         env:
+          AUDIT_WEEKLY_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_JSON: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_json || needs.audit-weekly-restore-v1.outputs.failure_handoff_json }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_sha256 || needs.audit-weekly-restore-v1.outputs.failure_handoff_sha256 }}

@@ -1,0 +1,9 @@
+# Dispatch metadata logging correction
+
+At producerc74812b441c15d8e45daa09021f428ed131ff7cf, the four weekly jobs set the full private Root input at job environment scope. GitHub can display that environment before an execution step runs. Existing native job logs reproduce that exposure of private operational metadata. No private Root body is copied into this report.
+
+The correction removes Root JSON/hash from those job environments and supplies them only to the exact hosted execution/preservation steps. Every existing lab job runs the small masker after its source checkout and before any step exposes private dispatch JSON in an environment. The masker reads the bounded event file directly, validates all input types before output, and uses escaped GitHub add-mask commands. Malformed/oversized input errors emit only a fixed code. The executable helper and regression source are included in the existing full Root source inventory.
+
+This preserves workflow triggers, the daily Chicago cadence, permissions, job dependencies, concurrency, native limits, source/owner/private-store guards and forecast calculations. It adds no scheduler or credential and performs no fit. Original logs/receipts are retained; the correction does not erase historical evidence or claim to audit every possible logging surface.
+
+Eight local checks pass: reserved-character/command injection escaping, non-dispatch behavior, bounded/sanitized failures, and actual combined workflow ordering/environment scope. The original source has four job-level Root exposures and no masker; corrected source has zero such exposures and a mask before every private step. Actual committed source CI and a genuine read-only metadata execution with masked-log verification are still required before reporting runtime acceptance. A metadata execution does not publish or qualify new forecasts.

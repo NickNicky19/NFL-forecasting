@@ -1,0 +1,18 @@
+{
+  "schema_version": "private-dispatch-masking-source-reference-v1",
+  "affected_source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "before_job_environment_exposures": [
+    "audit-weekly-produce-v1",
+    "audit-weekly-restore-v1",
+    "audit-weekly-export-v1",
+    "audit-weekly-failure-restore-v1"
+  ],
+  "after_job_environment_exposures": [],
+  "before_workflow_sha256": "5bf10804854207876b3eae5b240d8cce67e50de6dfa66d9d89355da0470e3aba",
+  "after_workflow_sha256": "7e603aa1bbab6726ea1b4a7fa5ced2fd3d3be43733b87bbdbf43270c6a5e84ed",
+  "triggers_permissions_concurrency_and_job_roles_unchanged": true,
+  "masker_jobs": 20,
+  "local_tests": 8,
+  "native_runtime_verified": false,
+  "new_fits": 0
+}
