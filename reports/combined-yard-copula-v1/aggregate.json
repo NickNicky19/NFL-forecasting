@@ -1,0 +1,2077 @@
+{
+  "state": "DESCRIPTIVE_EXPOSED_PERIOD_ONLY",
+  "summary": [
+    {
+      "cohort": "all_offered",
+      "arm": "independent_sum",
+      "pooled": {
+        "offered_rows": 14282,
+        "supported_played": 10157,
+        "unknown_participation": 4101,
+        "DNP": 0,
+        "played_missing_stat": 24,
+        "played_invalid_stat": 0,
+        "played_zero": 1673,
+        "fallback_offered": 10304,
+        "forecasted": 14282,
+        "games": 544,
+        "weeks": 36,
+        "players": 625,
+        "mean": {
+          "n": 10157,
+          "MAE": 21.795248642195794,
+          "MSE": 874.5153514105521,
+          "RMSE": 29.572205724472973,
+          "bias": 0.11599815429897294,
+          "p95_absolute_error": 59.56645866625233
+        },
+        "median": {
+          "n": 10157,
+          "MAE": 20.77513045190509,
+          "MSE": 912.9812936890814,
+          "RMSE": 30.21558031362432,
+          "bias": -6.376784483607365,
+          "p95_absolute_error": 64.0
+        },
+        "distribution": {
+          "n": 10157,
+          "CRPS": 14.788579443636761,
+          "Brier": null,
+          "log_score": null,
+          "positive_infinite_log_losses": 0,
+          "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+          "coverage80": 0.8735847198976076,
+          "width80": 70.47829083390765,
+          "interval_score80": 93.42305798956384,
+          "mean_zero_mass": 0.1330613713136619,
+          "below10": 0.043418332184700204,
+          "above90": 0.08299694791769223,
+          "mean_cdf_actual_below": 0.4661904741711911,
+          "mean_cdf_actual": 0.518726643003182,
+          "fixed_push_mass": {
+            "0": 0.15856218015568072,
+            "20": 0.012616937520922161,
+            "40": 0.008113044939263292,
+            "60": 0.005023820000687842,
+            "80": 0.0029805187213692353,
+            "100": 0.0018350035698735752,
+            "150": 0.00037890394154448906,
+            "200": 0.00010468793998090253
+          }
+        },
+        "sum_modes": {
+          "DIRECT_COMBINED_FALLBACK": 10304,
+          "INFORMED_MONTE_CARLO_SUM": 3978
+        }
+      },
+      "annual": {
+        "2023": {
+          "offered_rows": 7134,
+          "supported_played": 5062,
+          "unknown_participation": 2072,
+          "DNP": 0,
+          "played_missing_stat": 0,
+          "played_invalid_stat": 0,
+          "played_zero": 792,
+          "fallback_offered": 5147,
+          "forecasted": 7134,
+          "games": 272,
+          "weeks": 18,
+          "players": 491,
+          "mean": {
+            "n": 5062,
+            "MAE": 21.887687851533453,
+            "MSE": 885.0053024701646,
+            "RMSE": 29.749038681445903,
+            "bias": 0.3648730066371763,
+            "p95_absolute_error": 59.790162055735415
+          },
+          "median": {
+            "n": 5062,
+            "MAE": 20.817661003555905,
+            "MSE": 918.9077439747135,
+            "RMSE": 30.313491121523985,
+            "bias": -6.104899249308573,
+            "p95_absolute_error": 63.0
+          },
+          "distribution": {
+            "n": 5062,
+            "CRPS": 14.855485434273906,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8719873567759778,
+            "width80": 71.08455156064797,
+            "interval_score80": 93.96088502568155,
+            "mean_zero_mass": 0.1317883875822573,
+            "below10": 0.04563413670485974,
+            "above90": 0.08237850651916238,
+            "mean_cdf_actual_below": 0.4663944368999365,
+            "mean_cdf_actual": 0.5167254713236173,
+            "fixed_push_mass": {
+              "0": 0.15754632963397394,
+              "20": 0.01267111495726784,
+              "40": 0.008224313314392993,
+              "60": 0.005105598065679123,
+              "80": 0.0030396289618265003,
+              "100": 0.001861362022255633,
+              "150": 0.00037726911018797014,
+              "200": 0.00011464790722849071
+            }
+          },
+          "sum_modes": {
+            "DIRECT_COMBINED_FALLBACK": 5147,
+            "INFORMED_MONTE_CARLO_SUM": 1987
+          }
+        },
+        "2024": {
+          "offered_rows": 7148,
+          "supported_played": 5095,
+          "unknown_participation": 2029,
+          "DNP": 0,
+          "played_missing_stat": 24,
+          "played_invalid_stat": 0,
+          "played_zero": 881,
+          "fallback_offered": 5157,
+          "forecasted": 7148,
+          "games": 272,
+          "weeks": 18,
+          "players": 510,
+          "mean": {
+            "n": 5095,
+            "MAE": 21.70340815590194,
+            "MSE": 864.0933431154081,
+            "RMSE": 29.39546466915276,
+            "bias": -0.1312647510074032,
+            "p95_absolute_error": 59.175553189561924
+          },
+          "median": {
+            "n": 5095,
+            "MAE": 20.73287536800785,
+            "MSE": 907.0932286555446,
+            "RMSE": 30.11798845632863,
+            "bias": -6.646908734052993,
+            "p95_absolute_error": 64.0
+          },
+          "distribution": {
+            "n": 5095,
+            "CRPS": 14.722106798964495,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.875171736997056,
+            "width80": 69.87595682041217,
+            "interval_score80": 92.88871442590775,
+            "mean_zero_mass": 0.1343261100081408,
+            "below10": 0.04121687929342493,
+            "above90": 0.08361138370951914,
+            "mean_cdf_actual_below": 0.46598783249642983,
+            "mean_cdf_actual": 0.5207148532175013,
+            "fixed_push_mass": {
+              "0": 0.1595760410429018,
+              "20": 0.012562866195951525,
+              "40": 0.008001994493239888,
+              "60": 0.004942202105381771,
+              "80": 0.0029215242536269107,
+              "100": 0.0018086967428879005,
+              "150": 0.0003805355709369634,
+              "200": 9.474748022372653e-05
+            }
+          },
+          "sum_modes": {
+            "DIRECT_COMBINED_FALLBACK": 5157,
+            "INFORMED_MONTE_CARLO_SUM": 1991
+          }
+        }
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "pooled": {
+        "offered_rows": 14282,
+        "supported_played": 10157,
+        "unknown_participation": 4101,
+        "DNP": 0,
+        "played_missing_stat": 24,
+        "played_invalid_stat": 0,
+        "played_zero": 1673,
+        "fallback_offered": 10304,
+        "forecasted": 14282,
+        "games": 544,
+        "weeks": 36,
+        "players": 625,
+        "mean": {
+          "n": 10157,
+          "MAE": 21.795248642195794,
+          "MSE": 874.5153514105521,
+          "RMSE": 29.572205724472973,
+          "bias": 0.11599815429897294,
+          "p95_absolute_error": 59.56645866625233
+        },
+        "median": {
+          "n": 10157,
+          "MAE": 20.770306192773457,
+          "MSE": 915.4539726297135,
+          "RMSE": 30.256469930077987,
+          "bias": -6.560204784877424,
+          "p95_absolute_error": 64.0
+        },
+        "distribution": {
+          "n": 10157,
+          "CRPS": 14.7915795127966,
+          "Brier": null,
+          "log_score": null,
+          "positive_infinite_log_losses": 0,
+          "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+          "coverage80": 0.878802796101211,
+          "width80": 71.4658855961406,
+          "interval_score80": 93.54228610810279,
+          "mean_zero_mass": 0.1347777109147375,
+          "below10": 0.04046470414492468,
+          "above90": 0.08073249975386433,
+          "mean_cdf_actual_below": 0.46785681746430174,
+          "mean_cdf_actual": 0.5207048142305376,
+          "fixed_push_mass": {
+            "0": 0.16057316932145757,
+            "20": 0.01251710687745486,
+            "40": 0.008027641875091607,
+            "60": 0.004974879053385293,
+            "80": 0.0029580910151656217,
+            "100": 0.0018387130304270691,
+            "150": 0.00038675021985810063,
+            "200": 0.00011255131258277904
+          }
+        },
+        "sum_modes": {
+          "DIRECT_COMBINED_FALLBACK": 10304,
+          "INFORMED_MONTE_CARLO_SUM": 3978
+        }
+      },
+      "annual": {
+        "2023": {
+          "offered_rows": 7134,
+          "supported_played": 5062,
+          "unknown_participation": 2072,
+          "DNP": 0,
+          "played_missing_stat": 0,
+          "played_invalid_stat": 0,
+          "played_zero": 792,
+          "fallback_offered": 5147,
+          "forecasted": 7134,
+          "games": 272,
+          "weeks": 18,
+          "players": 491,
+          "mean": {
+            "n": 5062,
+            "MAE": 21.887687851533453,
+            "MSE": 885.0053024701646,
+            "RMSE": 29.749038681445903,
+            "bias": 0.3648730066371763,
+            "p95_absolute_error": 59.790162055735415
+          },
+          "median": {
+            "n": 5062,
+            "MAE": 20.8064006321612,
+            "MSE": 921.4176214934809,
+            "RMSE": 30.35486157921793,
+            "bias": -6.298696167522718,
+            "p95_absolute_error": 63.94999999999982
+          },
+          "distribution": {
+            "n": 5062,
+            "CRPS": 14.85918662062829,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8781114184116949,
+            "width80": 72.14124851837218,
+            "interval_score80": 94.12070327933623,
+            "mean_zero_mass": 0.1335570325564523,
+            "below10": 0.04148557882259976,
+            "above90": 0.08040300276570525,
+            "mean_cdf_actual_below": 0.4682067300893873,
+            "mean_cdf_actual": 0.5188215020272671,
+            "fixed_push_mass": {
+              "0": 0.15968079766339294,
+              "20": 0.012571836578640843,
+              "40": 0.008117574512966722,
+              "60": 0.005044785353228183,
+              "80": 0.0030191299101899713,
+              "100": 0.0018622860195748087,
+              "150": 0.0003907868487462824,
+              "200": 0.00012357988131385657
+            }
+          },
+          "sum_modes": {
+            "DIRECT_COMBINED_FALLBACK": 5147,
+            "INFORMED_MONTE_CARLO_SUM": 1987
+          }
+        },
+        "2024": {
+          "offered_rows": 7148,
+          "supported_played": 5095,
+          "unknown_participation": 2029,
+          "DNP": 0,
+          "played_missing_stat": 24,
+          "played_invalid_stat": 0,
+          "played_zero": 881,
+          "fallback_offered": 5157,
+          "forecasted": 7148,
+          "games": 272,
+          "weeks": 18,
+          "players": 510,
+          "mean": {
+            "n": 5095,
+            "MAE": 21.70340815590194,
+            "MSE": 864.0933431154081,
+            "RMSE": 29.39546466915276,
+            "bias": -0.1312647510074032,
+            "p95_absolute_error": 59.175553189561924
+          },
+          "median": {
+            "n": 5095,
+            "MAE": 20.734445534838077,
+            "MSE": 909.5289499509323,
+            "RMSE": 30.15839766882406,
+            "bias": -6.820019627085378,
+            "p95_absolute_error": 64.0
+          },
+          "distribution": {
+            "n": 5095,
+            "CRPS": 14.724410292022508,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8794896957801767,
+            "width80": 70.79489695780177,
+            "interval_score80": 92.9676153091266,
+            "mean_zero_mass": 0.13599048301476493,
+            "below10": 0.039450441609421,
+            "above90": 0.08105986261040235,
+            "mean_cdf_actual_below": 0.4675091712016555,
+            "mean_cdf_actual": 0.5225759283371039,
+            "fixed_push_mass": {
+              "0": 0.16146379318948126,
+              "20": 0.01246248436930421,
+              "40": 0.007937885378365098,
+              "60": 0.004905109671309303,
+              "80": 0.0028971716702994067,
+              "100": 0.001815186211095791,
+              "150": 0.0003827214970701475,
+              "200": 0.00010154434429409588
+            }
+          },
+          "sum_modes": {
+            "DIRECT_COMBINED_FALLBACK": 5157,
+            "INFORMED_MONTE_CARLO_SUM": 1991
+          }
+        }
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "independent_sum",
+      "pooled": {
+        "offered_rows": 4084,
+        "supported_played": 2990,
+        "unknown_participation": 1082,
+        "DNP": 0,
+        "played_missing_stat": 12,
+        "played_invalid_stat": 0,
+        "played_zero": 330,
+        "fallback_offered": 106,
+        "forecasted": 4084,
+        "games": 544,
+        "weeks": 36,
+        "players": 188,
+        "mean": {
+          "n": 2990,
+          "MAE": 24.948399499420287,
+          "MSE": 1105.7651613524622,
+          "RMSE": 33.25304739948599,
+          "bias": -0.21107967607114772,
+          "p95_absolute_error": 66.3861080364401
+        },
+        "median": {
+          "n": 2990,
+          "MAE": 23.962207357859533,
+          "MSE": 1142.0785953177258,
+          "RMSE": 33.79465335401039,
+          "bias": -6.3361204013377925,
+          "p95_absolute_error": 69.54999999999973
+        },
+        "distribution": {
+          "n": 2990,
+          "CRPS": 17.04269595029919,
+          "Brier": null,
+          "log_score": null,
+          "positive_infinite_log_losses": 0,
+          "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+          "coverage80": 0.8458193979933111,
+          "width80": 78.85953177257525,
+          "interval_score80": 107.74916387959867,
+          "mean_zero_mass": 0.07192906047439064,
+          "below10": 0.0645484949832776,
+          "above90": 0.08963210702341137,
+          "mean_cdf_actual_below": 0.46983445574219057,
+          "mean_cdf_actual": 0.5046512591096194,
+          "fixed_push_mass": {
+            "0": 0.09437249808554006,
+            "20": 0.011684662787660423,
+            "40": 0.008632666608839996,
+            "60": 0.006207203056713158,
+            "80": 0.0041457362597446664,
+            "100": 0.0025367227994395215,
+            "150": 0.0007190589220458736,
+            "200": 0.0001121162235026102
+          }
+        },
+        "sum_modes": {
+          "INFORMED_MONTE_CARLO_SUM": 3978,
+          "DIRECT_COMBINED_FALLBACK": 106
+        }
+      },
+      "annual": {
+        "2023": {
+          "offered_rows": 2037,
+          "supported_played": 1466,
+          "unknown_participation": 571,
+          "DNP": 0,
+          "played_missing_stat": 0,
+          "played_invalid_stat": 0,
+          "played_zero": 142,
+          "fallback_offered": 50,
+          "forecasted": 2037,
+          "games": 272,
+          "weeks": 18,
+          "players": 148,
+          "mean": {
+            "n": 1466,
+            "MAE": 25.07681647990321,
+            "MSE": 1103.3517509438132,
+            "RMSE": 33.21673901730592,
+            "bias": 0.4468468482499203,
+            "p95_absolute_error": 67.37906377357166
+          },
+          "median": {
+            "n": 1466,
+            "MAE": 24.085266030013642,
+            "MSE": 1133.1998635743519,
+            "RMSE": 33.66303408153151,
+            "bias": -5.624147339699864,
+            "p95_absolute_error": 69.75
+          },
+          "distribution": {
+            "n": 1466,
+            "CRPS": 17.14989509896502,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8458390177353342,
+            "width80": 80.1862210095498,
+            "interval_score80": 108.37858117326057,
+            "mean_zero_mass": 0.0656071105388178,
+            "below10": 0.06753069577080491,
+            "above90": 0.08663028649386084,
+            "mean_cdf_actual_below": 0.4689692959207992,
+            "mean_cdf_actual": 0.49848076556894394,
+            "fixed_push_mass": {
+              "0": 0.09153290458936984,
+              "20": 0.011718607684866933,
+              "40": 0.008710911250322508,
+              "60": 0.006427510484715103,
+              "80": 0.004104244151404824,
+              "100": 0.0025967667920771295,
+              "150": 0.0006949525623013621,
+              "200": 0.00010764075025927392
+            }
+          },
+          "sum_modes": {
+            "INFORMED_MONTE_CARLO_SUM": 1987,
+            "DIRECT_COMBINED_FALLBACK": 50
+          }
+        },
+        "2024": {
+          "offered_rows": 2047,
+          "supported_played": 1524,
+          "unknown_participation": 511,
+          "DNP": 0,
+          "played_missing_stat": 12,
+          "played_invalid_stat": 0,
+          "played_zero": 188,
+          "fallback_offered": 56,
+          "forecasted": 2047,
+          "games": 272,
+          "weeks": 18,
+          "players": 148,
+          "mean": {
+            "n": 1524,
+            "MAE": 24.82486977934945,
+            "MSE": 1108.0867228085513,
+            "RMSE": 33.28793659583831,
+            "bias": -0.8439670019600493,
+            "p95_absolute_error": 65.9508311071026
+          },
+          "median": {
+            "n": 1524,
+            "MAE": 23.843832020997375,
+            "MSE": 1150.6194225721786,
+            "RMSE": 33.9207815737223,
+            "bias": -7.020997375328084,
+            "p95_absolute_error": 69.0
+          },
+          "distribution": {
+            "n": 1524,
+            "CRPS": 16.939576559259756,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8458005249343832,
+            "width80": 77.58333333333333,
+            "interval_score80": 107.14370078740157,
+            "mean_zero_mass": 0.07801041126543379,
+            "below10": 0.06167979002624672,
+            "above90": 0.09251968503937008,
+            "mean_cdf_actual_below": 0.47066668953363405,
+            "mean_cdf_actual": 0.510586917594285,
+            "fixed_push_mass": {
+              "0": 0.09719821960566645,
+              "20": 0.011650883717992782,
+              "40": 0.008554804207911867,
+              "60": 0.005987971874084939,
+              "80": 0.004187025670926034,
+              "100": 0.0024769721335856833,
+              "150": 0.0007430475174535776,
+              "200": 0.00011656983317367811
+            }
+          },
+          "sum_modes": {
+            "INFORMED_MONTE_CARLO_SUM": 1991,
+            "DIRECT_COMBINED_FALLBACK": 56
+          }
+        }
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "pooled": {
+        "offered_rows": 4084,
+        "supported_played": 2990,
+        "unknown_participation": 1082,
+        "DNP": 0,
+        "played_missing_stat": 12,
+        "played_invalid_stat": 0,
+        "played_zero": 330,
+        "fallback_offered": 106,
+        "forecasted": 4084,
+        "games": 544,
+        "weeks": 36,
+        "players": 188,
+        "mean": {
+          "n": 2990,
+          "MAE": 24.948399499420287,
+          "MSE": 1105.7651613524622,
+          "RMSE": 33.25304739948599,
+          "bias": -0.21107967607114772,
+          "p95_absolute_error": 66.3861080364401
+        },
+        "median": {
+          "n": 2990,
+          "MAE": 23.94581939799331,
+          "MSE": 1150.4782608695652,
+          "RMSE": 33.918700754444664,
+          "bias": -6.959197324414716,
+          "p95_absolute_error": 69.54999999999973
+        },
+        "distribution": {
+          "n": 2990,
+          "CRPS": 17.052887155134133,
+          "Brier": null,
+          "log_score": null,
+          "positive_infinite_log_losses": 0,
+          "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+          "coverage80": 0.8635451505016722,
+          "width80": 82.214381270903,
+          "interval_score80": 108.15418060200669,
+          "mean_zero_mass": 0.07775944887844582,
+          "below10": 0.05451505016722408,
+          "above90": 0.08193979933110368,
+          "mean_cdf_actual_below": 0.47549500718972404,
+          "mean_cdf_actual": 0.5113710869210742,
+          "fixed_push_mass": {
+            "0": 0.10140505128476264,
+            "20": 0.011335548867484125,
+            "40": 0.008334006823702875,
+            "60": 0.006036053544133579,
+            "80": 0.004067305187266703,
+            "100": 0.0025496950118844286,
+            "150": 0.0007464978414569902,
+            "200": 0.00013961492269457887
+          }
+        },
+        "sum_modes": {
+          "INFORMED_MONTE_CARLO_SUM": 3978,
+          "DIRECT_COMBINED_FALLBACK": 106
+        }
+      },
+      "annual": {
+        "2023": {
+          "offered_rows": 2037,
+          "supported_played": 1466,
+          "unknown_participation": 571,
+          "DNP": 0,
+          "played_missing_stat": 0,
+          "played_invalid_stat": 0,
+          "played_zero": 142,
+          "fallback_offered": 50,
+          "forecasted": 2037,
+          "games": 272,
+          "weeks": 18,
+          "players": 148,
+          "mean": {
+            "n": 1466,
+            "MAE": 25.07681647990321,
+            "MSE": 1103.3517509438132,
+            "RMSE": 33.21673901730592,
+            "bias": 0.4468468482499203,
+            "p95_absolute_error": 67.37906377357166
+          },
+          "median": {
+            "n": 1466,
+            "MAE": 24.04638472032742,
+            "MSE": 1141.8663028649387,
+            "RMSE": 33.791512290291756,
+            "bias": -6.2933151432469305,
+            "p95_absolute_error": 69.0
+          },
+          "distribution": {
+            "n": 1466,
+            "CRPS": 17.162675048027697,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.8669849931787176,
+            "width80": 83.83492496589359,
+            "interval_score80": 108.93042291950887,
+            "mean_zero_mass": 0.07171412340333008,
+            "below10": 0.05320600272851296,
+            "above90": 0.07980900409276943,
+            "mean_cdf_actual_below": 0.4752270231547692,
+            "mean_cdf_actual": 0.5057182194719965,
+            "fixed_push_mass": {
+              "0": 0.0990082580119889,
+              "20": 0.011370914040721129,
+              "40": 0.008337089645327417,
+              "60": 0.006214531647883979,
+              "80": 0.0040324521855849916,
+              "100": 0.002600002823925436,
+              "150": 0.0007422945097117697,
+              "200": 0.00013892239145956846
+            }
+          },
+          "sum_modes": {
+            "INFORMED_MONTE_CARLO_SUM": 1987,
+            "DIRECT_COMBINED_FALLBACK": 50
+          }
+        },
+        "2024": {
+          "offered_rows": 2047,
+          "supported_played": 1524,
+          "unknown_participation": 511,
+          "DNP": 0,
+          "played_missing_stat": 12,
+          "played_invalid_stat": 0,
+          "played_zero": 188,
+          "fallback_offered": 56,
+          "forecasted": 2047,
+          "games": 272,
+          "weeks": 18,
+          "players": 148,
+          "mean": {
+            "n": 1524,
+            "MAE": 24.82486977934945,
+            "MSE": 1108.0867228085513,
+            "RMSE": 33.28793659583831,
+            "bias": -0.8439670019600493,
+            "p95_absolute_error": 65.9508311071026
+          },
+          "median": {
+            "n": 1524,
+            "MAE": 23.849081364829395,
+            "MSE": 1158.762467191601,
+            "RMSE": 34.040600276605005,
+            "bias": -7.599737532808399,
+            "p95_absolute_error": 69.84999999999991
+          },
+          "distribution": {
+            "n": 1524,
+            "CRPS": 16.947277541628903,
+            "Brier": null,
+            "log_score": null,
+            "positive_infinite_log_losses": 0,
+            "log_score_state": "NOT_COMPUTED_JOINT_DENSITY",
+            "coverage80": 0.860236220472441,
+            "width80": 80.65551181102362,
+            "interval_score80": 107.40748031496064,
+            "mean_zero_mass": 0.0835747029115952,
+            "below10": 0.0557742782152231,
+            "above90": 0.08398950131233596,
+            "mean_cdf_actual_below": 0.47575279235720686,
+            "mean_cdf_actual": 0.5168088189947935,
+            "fixed_push_mass": {
+              "0": 0.1037901357481921,
+              "20": 0.0113003564601154,
+              "40": 0.008330939062271907,
+              "60": 0.005858447341231984,
+              "80": 0.004101987925139517,
+              "100": 0.002499632963458668,
+              "150": 0.0007506806390950041,
+              "200": 0.00014030407077748858
+            }
+          },
+          "sum_modes": {
+            "INFORMED_MONTE_CARLO_SUM": 1991,
+            "DIRECT_COMBINED_FALLBACK": 56
+          }
+        }
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "cohort": "all_offered",
+      "arm": "independent_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.855485434273906,
+          "control_loss": 14.860329956917663,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.03492321542708424,
+              0.02011752882954659
+            ],
+            "game": [
+              -0.03340304760918044,
+              0.022340219639506796
+            ]
+          },
+          "delta": -0.004844522643759744,
+          "relative_gain_pct": 0.032600370636472406,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.722106798964496,
+          "control_loss": 14.716803877087791,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.017060894858575766,
+              0.027117232171037956
+            ],
+            "game": [
+              -0.01634701690826201,
+              0.02835930428010364
+            ]
+          },
+          "delta": 0.005302921876702061,
+          "relative_gain_pct": -0.036033108282166444,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 14.788579443636761,
+        "control_loss": 14.788333759543123,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.01904427439758112,
+            0.01685558152947889
+          ],
+          "game": [
+            -0.015120750375563652,
+            0.017173011033467404
+          ]
+        },
+        "delta": 0.0002456840936383947,
+        "relative_gain_pct": -0.0016613372245516747,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.85918662062829,
+          "control_loss": 14.860329956917663,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.030255372758594534,
+              0.02358801679362329
+            ],
+            "game": [
+              -0.028932558911226747,
+              0.02620660908398089
+            ]
+          },
+          "delta": -0.001143336289376184,
+          "relative_gain_pct": 0.0076938822535483654,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.724410292022512,
+          "control_loss": 14.716803877087791,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.013520647896657818,
+              0.028273781544166623
+            ],
+            "game": [
+              -0.01434284328789776,
+              0.02998379093139359
+            ]
+          },
+          "delta": 0.007606414934716726,
+          "relative_gain_pct": -0.051685236809893155,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 14.7915795127966,
+        "control_loss": 14.788333759543123,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.015451261955150926,
+            0.020201055861564104
+          ],
+          "game": [
+            -0.011869270457415308,
+            0.0202911848739008
+          ]
+        },
+        "delta": 0.0032457532534763676,
+        "relative_gain_pct": -0.021948065997513477,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "independent_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.817661003555905,
+          "control_loss": 20.802054523903596,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.04378134027871331,
+              0.07602919259887768
+            ],
+            "game": [
+              -0.03686369636673896,
+              0.06675671052856273
+            ]
+          },
+          "delta": 0.01560647965231134,
+          "relative_gain_pct": -0.07502374169039706,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.73287536800785,
+          "control_loss": 20.70559371933268,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.01665428134848496,
+              0.07476993096099604
+            ],
+            "game": [
+              -0.01945548651783704,
+              0.06859155699028055
+            ]
+          },
+          "delta": 0.027281648675171737,
+          "relative_gain_pct": -0.13175979904260413,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 20.77513045190509,
+        "control_loss": 20.75366742148272,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.01936582139503708,
+            0.057561926117008166
+          ],
+          "game": [
+            -0.010815850382841373,
+            0.051285336954492014
+          ]
+        },
+        "delta": 0.02146303042236881,
+        "relative_gain_pct": -0.10341801276120731,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.8064006321612,
+          "control_loss": 20.802054523903596,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.05639887736199151,
+              0.05988426960721159
+            ],
+            "game": [
+              -0.0461482145467198,
+              0.05259615459423642
+            ]
+          },
+          "delta": 0.00434610825760569,
+          "relative_gain_pct": -0.020892687559344814,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.734445534838077,
+          "control_loss": 20.70559371933268,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.011565731061099128,
+              0.07045102717495208
+            ],
+            "game": [
+              -0.0152317086303286,
+              0.0678696318108828
+            ]
+          },
+          "delta": 0.02885181550539745,
+          "relative_gain_pct": -0.13934309682923549,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 20.770306192773457,
+        "control_loss": 20.75366742148272,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.022606836835532777,
+            0.05038581777936514
+          ],
+          "game": [
+            -0.015057283358153215,
+            0.04552406261031592
+          ]
+        },
+        "delta": 0.016638771290735453,
+        "relative_gain_pct": -0.08017267961764324,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "control": "independent_sum",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.85918662062829,
+          "control_loss": 14.855485434273906,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.003933719327264863,
+              0.011762659536532247
+            ],
+            "game": [
+              -0.0020064804365751954,
+              0.009020167972875782
+            ]
+          },
+          "delta": 0.0037011863543835615,
+          "relative_gain_pct": -0.02491461063833477,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 14.724410292022512,
+          "control_loss": 14.722106798964496,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.0012244836787737312,
+              0.005767245503879493
+            ],
+            "game": [
+              -0.0024176999557737615,
+              0.006756483935195068
+            ]
+          },
+          "delta": 0.002303493058014665,
+          "relative_gain_pct": -0.015646490610822555,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 14.7915795127966,
+        "control_loss": 14.788579443636761,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.0014748262639383096,
+            0.007590689679285952
+          ],
+          "game": [
+            -0.0009577332661075432,
+            0.006856796239286873
+          ]
+        },
+        "delta": 0.003000069159837974,
+        "relative_gain_pct": -0.02028639174758418,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "control": "independent_sum",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.8064006321612,
+          "control_loss": 20.817661003555905,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.02105242887903985,
+              0.00019730801884530456
+            ],
+            "game": [
+              -0.02269689238665252,
+              0.00039557150704426334
+            ]
+          },
+          "delta": -0.01126037139470565,
+          "relative_gain_pct": 0.05409047343398403,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.734445534838077,
+          "control_loss": 20.73287536800785,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.01137176503377104,
+              0.013403940351632511
+            ],
+            "game": [
+              -0.009525249722530521,
+              0.010679624652123111
+            ]
+          },
+          "delta": 0.0015701668302257115,
+          "relative_gain_pct": -0.0075733191964772305,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 20.770306192773457,
+        "control_loss": 20.77513045190509,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.013084441562267422,
+            0.003548706276926492
+          ],
+          "game": [
+            -0.0127722015591814,
+            0.0024190994364483407
+          ]
+        },
+        "delta": -0.004824259131633356,
+        "relative_gain_pct": 0.02322131811782965,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "independent_sum",
+      "control": "Catmedium_POINT_ONLY",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.817661003555905,
+          "control_loss": 20.739263662156254,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.050197147526028475,
+              0.21172403547897697
+            ],
+            "game": [
+              -0.04240521014389751,
+              0.18285296868292603
+            ]
+          },
+          "delta": 0.07839734139965433,
+          "relative_gain_pct": -0.3780141025098461,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.73287536800785,
+          "control_loss": 20.620533516013065,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              0.023969847463656498,
+              0.19509351580919962
+            ],
+            "game": [
+              0.020582049545487698,
+              0.19693796272166272
+            ]
+          },
+          "delta": 0.11234185199478591,
+          "relative_gain_pct": -0.5448057486366424,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 20.77513045190509,
+        "control_loss": 20.67970571250581,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.008315243902643136,
+            0.183447058115449
+          ],
+          "game": [
+            0.03420010329347947,
+            0.16453706729793954
+          ]
+        },
+        "delta": 0.09542473939927973,
+        "relative_gain_pct": -0.46144147661429397,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "all_offered",
+      "arm": "shrunk_gaussian_sum",
+      "control": "Catmedium_POINT_ONLY",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5062,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.8064006321612,
+          "control_loss": 20.739263662156254,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.06640403384872488,
+              0.21068399290644457
+            ],
+            "game": [
+              -0.05243753601627434,
+              0.1691297200398866
+            ]
+          },
+          "delta": 0.06713697000494868,
+          "relative_gain_pct": -0.32371915945816726,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 5095,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 20.734445534838077,
+          "control_loss": 20.620533516013065,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              0.026683261616076235,
+              0.19727443910875242
+            ],
+            "game": [
+              0.02250200581127141,
+              0.19380647658217176
+            ]
+          },
+          "delta": 0.11391201882501162,
+          "relative_gain_pct": -0.5524203277114647,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 10157,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 20.770306192773457,
+        "control_loss": 20.67970571250581,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.002062384495555585,
+            0.17897466016414604
+          ],
+          "game": [
+            0.029340906035638572,
+            0.1598940541882085
+          ]
+        },
+        "delta": 0.09060048026764639,
+        "relative_gain_pct": -0.43811300570325207,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "independent_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 17.14989509896502,
+          "control_loss": 17.16662291180452,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.11999379907888946,
+              0.06895091300775692
+            ],
+            "game": [
+              -0.11568082442102431,
+              0.07753506862957077
+            ]
+          },
+          "delta": -0.016727812839503302,
+          "relative_gain_pct": 0.09744381830627322,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 16.939576559259756,
+          "control_loss": 16.92184795889112,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.057085896259772714,
+              0.09007633323307546
+            ],
+            "game": [
+              -0.05487546938427835,
+              0.09498726671298802
+            ]
+          },
+          "delta": 0.01772860036863319,
+          "relative_gain_pct": -0.10476751955048601,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 17.04269595029919,
+        "control_loss": 17.04186136389816,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.06510997471783689,
+            0.05727314029256481
+          ],
+          "game": [
+            -0.05127778271656543,
+            0.05844392703475864
+          ]
+        },
+        "delta": 0.0008345864010318241,
+        "relative_gain_pct": -0.004897272564358404,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 17.162675048027697,
+          "control_loss": 17.16662291180452,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.10587037735013972,
+              0.0816693637286487
+            ],
+            "game": [
+              -0.10084101067534908,
+              0.09066123659060256
+            ]
+          },
+          "delta": -0.0039478637768228155,
+          "relative_gain_pct": 0.02299732333555212,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 16.947277541628907,
+          "control_loss": 16.92184795889112,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.04532373060425524,
+              0.09416922516103068
+            ],
+            "game": [
+              -0.04787740764916789,
+              0.10047977199438173
+            ]
+          },
+          "delta": 0.025429582737783278,
+          "relative_gain_pct": -0.15027662935846597,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 17.052887155134133,
+        "control_loss": 17.04186136389816,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.05278363486058708,
+            0.06878495260663993
+          ],
+          "game": [
+            -0.0404112306654418,
+            0.06873309181632949
+          ]
+        },
+        "delta": 0.011025791235973062,
+        "relative_gain_pct": -0.06469828031420366,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "independent_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 24.085266030013642,
+          "control_loss": 24.03137789904502,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.15160084331281953,
+              0.2610551334693277
+            ],
+            "game": [
+              -0.1265333410660893,
+              0.2321077622838995
+            ]
+          },
+          "delta": 0.0538881309686221,
+          "relative_gain_pct": -0.22424070394550566,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 23.843832020997375,
+          "control_loss": 23.75262467191601,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.05589408673407832,
+              0.24954881448027658
+            ],
+            "game": [
+              -0.06515173100043817,
+              0.23047389031762455
+            ]
+          },
+          "delta": 0.09120734908136482,
+          "relative_gain_pct": -0.38398850796983586,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 23.962207357859533,
+        "control_loss": 23.889297658862876,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.06615546256477732,
+            0.19603700725220424
+          ],
+          "game": [
+            -0.036928210488220536,
+            0.174635786252464
+          ]
+        },
+        "delta": 0.07290969899665552,
+        "relative_gain_pct": -0.3051981688109938,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "control": "direct_leaf_CDF",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 24.04638472032742,
+          "control_loss": 24.03137789904502,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.19400997798992936,
+              0.20534336875245965
+            ],
+            "game": [
+              -0.15833474249181254,
+              0.18188702933581546
+            ]
+          },
+          "delta": 0.015006821282401092,
+          "relative_gain_pct": -0.06244677831393959,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 23.849081364829395,
+          "control_loss": 23.75262467191601,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.039204672320556806,
+              0.2354088011675106
+            ],
+            "game": [
+              -0.051418486036896735,
+              0.2277111636780507
+            ]
+          },
+          "delta": 0.09645669291338582,
+          "relative_gain_pct": -0.4060885659824831,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 23.94581939799331,
+        "control_loss": 23.889297658862876,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.07729562787276013,
+            0.17034313175511426
+          ],
+          "game": [
+            -0.050966511686851,
+            0.1544937891738528
+          ]
+        },
+        "delta": 0.05652173913043478,
+        "relative_gain_pct": -0.23659858040851897,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "control": "independent_sum",
+      "metric": "crps",
+      "annual": {
+        "2023": {
+          "metric": "crps",
+          "point": null,
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 17.162675048027697,
+          "control_loss": 17.14989509896502,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.01360738345557409,
+              0.04077167160683061
+            ],
+            "game": [
+              -0.006899369737763021,
+              0.031311002455939395
+            ]
+          },
+          "delta": 0.012779949062680483,
+          "relative_gain_pct": -0.0745191092361286,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "crps",
+          "point": null,
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 16.947277541628907,
+          "control_loss": 16.939576559259756,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.004091564967451565,
+              0.019385184138068726
+            ],
+            "game": [
+              -0.008047667727429321,
+              0.02263086496091527
+            ]
+          },
+          "delta": 0.007700982369150076,
+          "relative_gain_pct": -0.04546148094204607,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "crps",
+        "point": null,
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 17.052887155134133,
+        "control_loss": 17.04269595029919,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.005035307084257083,
+            0.02560844068909383
+          ],
+          "game": [
+            -0.0032459676217667464,
+            0.02329942993055555
+          ]
+        },
+        "delta": 0.010191204834941238,
+        "relative_gain_pct": -0.05979807927491492,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "control": "independent_sum",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 24.04638472032742,
+          "control_loss": 24.085266030013642,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.07252287698795512,
+              0.0006874706455987726
+            ],
+            "game": [
+              -0.0777615403511893,
+              0.0013759242084136324
+            ]
+          },
+          "delta": -0.038881309686221006,
+          "relative_gain_pct": 0.16143192953638086,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 23.849081364829395,
+          "control_loss": 23.843832020997375,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.037968100496255194,
+              0.04469797507788162
+            ],
+            "game": [
+              -0.03183348833604588,
+              0.03582450779135952
+            ]
+          },
+          "delta": 0.005249343832020997,
+          "relative_gain_pct": -0.02201552094225929,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 23.94581939799331,
+        "control_loss": 23.962207357859533,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.04451841973229681,
+            0.01205284370600841
+          ],
+          "game": [
+            -0.04327371273225599,
+            0.008248553978365106
+          ]
+        },
+        "delta": -0.016387959866220735,
+        "relative_gain_pct": 0.06839086074783836,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "independent_sum",
+      "control": "Catmedium_POINT_ONLY",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 24.085266030013642,
+          "control_loss": 23.944410138552236,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.04761559532325013,
+              0.3665773461376008
+            ],
+            "game": [
+              -0.10549052088346322,
+              0.35627302193108185
+            ]
+          },
+          "delta": 0.14085589146140776,
+          "relative_gain_pct": -0.5882621064639133,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 23.843832020997375,
+          "control_loss": 23.674166503922468,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.03347063306381932,
+              0.35264653595418105
+            ],
+            "game": [
+              -0.04592404889619494,
+              0.3647145760422888
+            ]
+          },
+          "delta": 0.16966551707490576,
+          "relative_gain_pct": -0.7166694423932365,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 23.962207357859533,
+        "control_loss": 23.806667229128905,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.010654302764974982,
+            0.3080728709835186
+          ],
+          "game": [
+            0.01688900053471255,
+            0.3046418167197599
+          ]
+        },
+        "delta": 0.1555401287306288,
+        "relative_gain_pct": -0.6533469268655773,
+        "state": "finite"
+      }
+    },
+    {
+      "cohort": "RB_diagnostic",
+      "arm": "shrunk_gaussian_sum",
+      "control": "Catmedium_POINT_ONLY",
+      "metric": "MAE",
+      "annual": {
+        "2023": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1466,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 24.04638472032742,
+          "control_loss": 23.944410138552236,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.09736622931317485,
+              0.3431957634135199
+            ],
+            "game": [
+              -0.1509121412430611,
+              0.31875453811081045
+            ]
+          },
+          "delta": 0.10197458177518673,
+          "relative_gain_pct": -0.42588053405833637,
+          "state": "finite"
+        },
+        "2024": {
+          "metric": "MAE",
+          "point": "median",
+          "n": 1524,
+          "games": 272,
+          "weeks": 18,
+          "candidate_loss": 23.849081364829395,
+          "control_loss": 23.674166503922468,
+          "candidate_infinite": 0,
+          "control_infinite": 0,
+          "intervals": {
+            "week": [
+              -0.008113655133734214,
+              0.3586436751717902
+            ],
+            "game": [
+              -0.026514063666576763,
+              0.3602511055698757
+            ]
+          },
+          "delta": 0.17491486090692676,
+          "relative_gain_pct": -0.7388427418466726,
+          "state": "finite"
+        }
+      },
+      "pooled": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 2990,
+        "games": 544,
+        "weeks": 36,
+        "candidate_loss": 23.94581939799331,
+        "control_loss": 23.806667229128905,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.004736269305879947,
+            0.292059168730358
+          ],
+          "game": [
+            0.0025944911406790947,
+            0.2794332051490165
+          ]
+        },
+        "delta": 0.13915216886440807,
+        "relative_gain_pct": -0.5845092365307859,
+        "state": "finite"
+      }
+    }
+  ],
+  "dependence": {
+    "2023": {
+      "n": 1541,
+      "raw_correlation": 0.17195810116052515,
+      "rho": 0.16147924063886,
+      "fallback": "",
+      "training_years": [
+        2022
+      ],
+      "first_evaluation_cutoff": "2023-09-08 00:20:00+00:00",
+      "excluded_training": {
+        "2022": {
+          "non_RB_direct_combined": 5071,
+          "unavailable_or_late_training_label": 559,
+          "missing_or_fallback_marginal_direct_combined": 51
+        }
+      }
+    },
+    "2024": {
+      "n": 2978,
+      "raw_correlation": 0.1490210976651331,
+      "rho": 0.14417960651291956,
+      "fallback": "",
+      "training_years": [
+        2022,
+        2023
+      ],
+      "first_evaluation_cutoff": "2024-09-06 00:20:00+00:00",
+      "excluded_training": {
+        "2022": {
+          "non_RB_direct_combined": 5071,
+          "unavailable_or_late_training_label": 559,
+          "missing_or_fallback_marginal_direct_combined": 51
+        },
+        "2023": {
+          "non_RB_direct_combined": 5097,
+          "unavailable_or_late_training_label": 550,
+          "missing_or_fallback_marginal_direct_combined": 50
+        }
+      }
+    }
+  },
+  "primary": "CRPS Monte Carlo empirical approximation; direct control exact",
+  "no_SITE_R0_current_site_or_qualification_claim": true,
+  "bootstrap": "existing paired500PCG64 wholeweek1911/game1912",
+  "joint_log_density": "not computed; no invented normal or probability floor"
+}
