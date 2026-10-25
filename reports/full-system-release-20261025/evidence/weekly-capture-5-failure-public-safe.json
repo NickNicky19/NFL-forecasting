@@ -1,0 +1,102 @@
+{
+  "schema_version": "audit-capture-failure-5-public-safe-v1",
+  "observed_at_utc": "2026-10-25T10:57:30.170778+00:00",
+  "state": "FAILED_NO_PUBLICATION",
+  "source_sha": "53ac5782f8ee57fd6e1e830c11724782e3965973",
+  "run_id": "40185254386",
+  "producer_job_id": 121144579804,
+  "reader_job_id": 121147103528,
+  "root_go_sha256": "bcf98687b1c561fbca7b5952b5a6a8f19ff9a33b71425ac4e2e9e2d05653cebc",
+  "successful_stages": [
+    {
+      "phase": "phase-00",
+      "state": "ORIGINALS_RECOVERED_GET_ONLY",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:35:07.883853+00:00",
+      "status_sha256": "711d22af474a549b5b3bdcd87634767c3dbfec37b14bdfebd86191c8f46bd1f9",
+      "fits": 0,
+      "public_release": false
+    },
+    {
+      "phase": "phase-01",
+      "state": "CROSS_RUN_EFFECTIVE18_RESTORED_AND_REPLAYED_PRIVATE",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:35:42.805900+00:00",
+      "status_sha256": "e9d6c7f0bca7fcd35fcd4f028aaaf660c1c3c69de2324e572d4a62f027658a7c",
+      "model_pairs": 18,
+      "fits": 0,
+      "public_release": false
+    },
+    {
+      "phase": "phase-02",
+      "state": "METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:35:52.649762+00:00",
+      "status_sha256": "a1f53e3810d5cf4788d5d2fa99e26ab662c810ecc2b17a6bc313e10731de5678",
+      "fits": 0,
+      "public_release": false
+    },
+    {
+      "phase": "phase-03",
+      "state": "FRESH_E7_SOURCE_PREPARED",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:36:29.390808+00:00",
+      "status_sha256": "141f48c2294e683e138fbf94417bb8f0813269f26ae8a3d037af796b4b2db859",
+      "fits": 0,
+      "public_release": false
+    },
+    {
+      "phase": "phase-04",
+      "state": "PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:38:43.234641+00:00",
+      "status_sha256": "3fda0610de4a41ddde5dafd92b7fbdd43773e93c751a061f824d3268ff45f871",
+      "fits": 0,
+      "public_release": false
+    },
+    {
+      "phase": "phase-05",
+      "state": "ORIGINAL_R0_CAPTURE_COMPLETE_PRIVATE",
+      "exit_code": 0,
+      "actual_completed_at": "2026-10-25T10:43:19.559681+00:00",
+      "status_sha256": "fd34e2052adf7c906f4a79fa10f121f0f1e1c9b6762c30c0c6871ef750f0888a",
+      "available_rows": 1653,
+      "unavailable_rows": 1179,
+      "fits": 0,
+      "public_release": false
+    }
+  ],
+  "archive": {
+    "state": "FAILED",
+    "reason": "WEEKLY_CHILD_STATUS_INVALID",
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "original_child_exit_code_retained": false,
+    "exact_signal_or_cause_proven": false,
+    "seconds_between_reference_completion_and_parent_failure": 124.927835
+  },
+  "failure_evidence": {
+    "native_core_appended": true,
+    "owner_authenticated_GETs": 6,
+    "original_native_package_sha256": "bb527ecca1867df8862fbd24956ae1d64a69bd2dedc8b99f28818766ed0d121e",
+    "native_reader_restored": false,
+    "declared_full_opaque_capture_restored": false,
+    "original_partial_forecast_bytes_available": false
+  },
+  "reader_failure": {
+    "reason": "NUMERICAL_REQUIRED_PACKAGE_METADATA_MISSING",
+    "model_only_package_required_by_metadata_entrypoint": true,
+    "new_independent_native_restore_proof": false
+  },
+  "repairs_in_progress": [
+    "phase-scoped package preflight with full model checks preserved",
+    "retain actual child return code and raw stdio in core evidence",
+    "separate failure-only archive after failed normal archive",
+    "profile normal archive at production scale without increasing resource limits"
+  ],
+  "fits": 0,
+  "accuracy_claim": false,
+  "scientific_qualification": false,
+  "public_release": false,
+  "website_selected_feed_changed": false
+}

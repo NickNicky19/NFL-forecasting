@@ -1,0 +1,82 @@
+{
+  "schema_version": "audit-game-finality-release-verification-v1",
+  "verified_at_utc": "2026-10-25T11:01:50.513063+00:00",
+  "source_head": "5e45584460a0f1eb61acf8d0cb50faea6e8a614b",
+  "merge_commit": "0f03af20226c17c54f27f930eccea162ab331c4c",
+  "generated_commit": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+  "workflow_run_id": 40183962653,
+  "workflow_job_id": 121140701607,
+  "live_served_identity": {
+    "actual_observed_at_utc": "2026-10-25T10:43:56.174326+00:00",
+    "TLS_certificate_validation": true,
+    "all40_source_data_files_identical": true,
+    "bytes": 13923239,
+    "main_stable": true,
+    "independent_normalized_inventory_sha256": "28466eaa22e8c8bc206b34d5b5360e825b632eeb759fac4ff352f8d8e28b2069",
+    "upload_deploy_postdeploy_fences_match": true
+  },
+  "functional_checks": {
+    "mode": "TLS_VERIFIED_SERVED_CODE_WITH_FICTIONAL_DATA_ON_LOOPBACK",
+    "checks": 170,
+    "cases": 36,
+    "widths": [
+      320,
+      390,
+      1280
+    ],
+    "page_errors": 0,
+    "console_errors": 0,
+    "actual_provider_requests": 0,
+    "website_source_writes": 0,
+    "cases_include": [
+      "live-above-equal-below-provisional",
+      "confirmed-final-hit-push-miss",
+      "postponed-unresolved",
+      "invalid-score-unresolved",
+      "identity-conflict-unresolved",
+      "live-spread-provisional",
+      "final-moneyline",
+      "personal-line-edit-and-reload-preserves-legacy-record"
+    ]
+  },
+  "selected_feed": {
+    "rows": 1754,
+    "producer_fields_unchanged": true,
+    "changed_website_packaging_field_counts": {
+      "first_prepared_at": 1754
+    },
+    "producer_source_sha": "93e2019144be7b51248ce548fe247c6dcd949b71",
+    "producer_run_id": "40135574441",
+    "producer_feed_sha256": "e47ff56be1a73f710aa81c6847c83e7eb3d3a3b6d4413ee2c01cb1544784d020",
+    "current_overlay_sha256": "3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267",
+    "category_counts": {
+      "anytime_td": 391,
+      "rec": 362,
+      "rec_yd": 362,
+      "rush_rec_yd": 261,
+      "rush_att": 99,
+      "rush_yd": 99,
+      "pass_att": 36,
+      "pass_cmp": 36,
+      "pass_int": 36,
+      "pass_td": 36,
+      "pass_yd": 36
+    },
+    "fallback_counts": {
+      "PPR_or_unsupported_R0": 403,
+      "missing_or_duplicate_candidate_R0": 61,
+      "started_R0_frozen_no_new_selection": 175
+    },
+    "corrected_COUNT_feed_installed": false
+  },
+  "harness_failures_preserved": [
+    "Original init script reset fictional storage on reload",
+    "Fictional empty board lacked required picks container",
+    "Initial verifier inventory sort differed from repository-relative Path component order; all original files matched"
+  ],
+  "limits": [
+    "Functional browser checks use fictional data; provider finality and venue settlement are not authenticated by these cases",
+    "No corrected COUNT publication or forecast-accuracy gain established",
+    "Existing player-prop evidence boundaries and complete Phase2 integration remain separate active work"
+  ]
+}
