@@ -76,7 +76,7 @@ def system(tmp_path,monkeypatch):
         # The separately qualified old namespace still authenticates its own
         # original Nick jobs. This fake service is not current actor authority.
         return service.transport(request,timeout)
-    journal=tmp_path/'discovery-journal';journal.mkdir()
+    journal=tmp_path/'discovery-journal';journal.mkdir(mode=0o700)
     def factory(operation):
         assert operation=='restore'
         ident=proof.document

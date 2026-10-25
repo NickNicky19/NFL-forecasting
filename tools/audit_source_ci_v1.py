@@ -168,11 +168,20 @@ class Recorder:
         if report.failed:
             remaining = DIAGNOSTIC_CAP - self.diagnostic_bytes.get(report.nodeid, 0)
             if remaining > 0:
-                message = str(report.longrepr)[:remaining]
-                self.diagnostic_bytes[report.nodeid] = DIAGNOSTIC_CAP - remaining + len(message)
-                diagnostic = dict(type="diagnostic", nodeid=report.nodeid, when=report.when, message=message)
-                journal(self.directory, diagnostic)
-                print("SOURCE_CI_FAILURE " + json.dumps(dict(diagnostic, nodeid=node_label(report.nodeid))), flush=True)
+                # Native probes print capacity stages and the original child
+                # traceback into captured output. Keep a bounded tail as well
+                # as the assertion, which pytest may abbreviate internally.
+                messages = [str(report.longrepr)[:min(remaining, 6144)]]
+                available = remaining - len(messages[0])
+                for name, content in getattr(report, "sections", ()):
+                    if available <= 0:break
+                    section = ("[" + name + "]\n" + content)[-min(available, 2048):]
+                    messages.append(section);available -= len(section)
+                for message in messages:
+                    self.diagnostic_bytes[report.nodeid] = self.diagnostic_bytes.get(report.nodeid, 0) + len(message)
+                    diagnostic = dict(type="diagnostic", nodeid=report.nodeid, when=report.when, message=message)
+                    journal(self.directory, diagnostic)
+                    print("SOURCE_CI_FAILURE " + json.dumps(dict(diagnostic, nodeid=node_label(report.nodeid))), flush=True)
 
     def pytest_runtest_logfinish(self, nodeid, location):
         rows = self.reports[nodeid]

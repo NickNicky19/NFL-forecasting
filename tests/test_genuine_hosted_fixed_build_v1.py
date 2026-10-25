@@ -16,7 +16,7 @@ import pandas as pd
 
 from nfl_lab import hosted_fixed_build_v1 as b
 from tools.weekly_future_train import training_columns
-from retained_source_fixture import retained_procedure
+from retained_source_fixture import retained_procedure, workflow_job
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('fictional_hosted_fixed_driver',ROOT/'tools/genuine_hosted_fixed_build_v1.py')
@@ -221,14 +221,18 @@ class HostedFixedBuildChecks(unittest.TestCase):
             self.assertEqual(d.verify_sources()['maximum_new_fits'],18)
         with self.assertRaisesRegex(d.GuardStop,'BUILD_SOURCE_CHANGED'):
             d.verify_sources()
-        workflow=(ROOT/'.github/workflows/lab.yml').read_text();job=workflow.split('  genuine-hosted-fixed-build-v1:\n',1)[1]
-        self.assertIn('group: nfl-lab-single-writer',workflow);self.assertEqual(workflow.count("cron: '36 13,14 * * *'"),1)
+        workflow=(ROOT/'.github/workflows/lab.yml').read_text()
+        job=workflow_job(workflow,'genuine-hosted-fixed-build-v1')
+        restored=workflow_job(workflow,'genuine-hosted-fixed-build-restore-v1')
+        self.assertIn('group: nfl-lab-single-writer',workflow)
+        self.assertEqual(workflow.count('- cron:'),1)
+        self.assertEqual(workflow.count("cron: '36 12,13,14 * * *'"),1)
         self.assertIn('requirements-hosted-fixed-build-v1.lock',job);self.assertNotIn('upload-artifact',job)
         self.assertLess(job.index('id: source-claim'),job.index('tools/genuine_hosted_fixed_build_v1.py --execute'))
         self.assertGreater(job.index('id: private-checkpoint'),job.index('tools/genuine_hosted_fixed_build_v1.py --execute'))
         self.assertIn('BUILD_CLAIM_RECEIPT_JSON: ${{ steps.source-claim.outputs.claim_receipt_json }}',job)
-        self.assertIn('genuine-hosted-fixed-build-restore-v1:',job)
-        self.assertIn('needs: genuine-hosted-fixed-build-v1',job)
+        self.assertIn('genuine-hosted-fixed-build-restore-v1:',restored)
+        self.assertIn('needs: genuine-hosted-fixed-build-v1',restored)
         self.assertIn('checkpoint_handoff_json: ${{ steps.private-checkpoint.outputs.handoff_json }}',job)
         self.assertIn("inputs.mode != 'genuine-hosted-fixed-build-v1'",workflow)
 

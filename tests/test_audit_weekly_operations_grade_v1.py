@@ -418,7 +418,7 @@ def native_archive_graph(tmp_path_factory):
     reader_handoff=archive.read_owned(p.storage,cp.binding(root/'archive-reader/READER_HANDOFF.json'))
     contexts={}
     def context(phase,role,restored,directory):
-        journal=root/('grade-'+role+'-journal');journal.mkdir()
+        journal=root/('grade-'+role+'-journal');journal.mkdir(mode=0o700)
         client=archive.Client('ghs_FICTIONAL',RUN,journal=journal,source_sha=SOURCE,transport=service.transport,
             job=dict(reader.clients[0].job,job_id=original.ROLES[role],api_job_id=0,run_authenticated=False),
             operation='metadata',qualification=service.q,readonly=True,process=store.sha(('FICTIONAL-grade-'+role).encode()))

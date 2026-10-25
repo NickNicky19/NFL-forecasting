@@ -311,7 +311,9 @@ def restore(handoff, client, package, registered, *, storage, output, current_ro
 
 
 def _finish_restore(handoff, client, registered, storage, output, authenticate, clock, native, reader, reader_job, context, budget):
-    body = store.read_local(output / "NATIVE_READBACK.json.gz", 8 << 20)
+    # safe_handoff already bounds this declared length by the original 8 MiB
+    # cap. Keep the exact length/hash checks without reserving the whole cap.
+    body = store.read_local(output / "NATIVE_READBACK.json.gz", handoff["body_bytes"])
     require(len(body) == handoff["body_bytes"] and store.sha(body) == handoff["body_sha256"], "EXACT_RESTORED_GRADING_BODY")
     del body
     storage.import_file(output / "NATIVE_READBACK.json.gz", output / "GRADING_SNAPSHOT.json.gz", expected_sha256=handoff["body_sha256"])

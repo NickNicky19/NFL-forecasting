@@ -25,6 +25,8 @@ PREFIX = 'failed/reference/source-observations/'
 
 def original_case(tmp_path):
     case = scope.fixture(tmp_path, partial=False)
+    # Legacy byte collection stops before any client; it supplies no operational grant.
+    case.runner.fresh_operations_proof = lambda: None
     storage, root = case.runner.storage, case.runner.root
     storage.register_root(root/'reference')
 

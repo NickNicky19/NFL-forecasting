@@ -483,13 +483,17 @@ def execute(context,*,transport=None,fetch=None,clock=None):
         observation_scope=dict(request=grade.provider_request(captures,at=observation_at),observations=document)
         observations=grade.bind_observations(captures,document,
             authenticate=_exact(context,"COMPLETED_GAME_PROVIDER_OBSERVATIONS",observation_scope,clock),at=observation_at)
+        # The bound observations own the exact authenticated values. Raw
+        # provider/request graphs are no longer needed by the resolver; their
+        # immutable source receipts and completion file remain in the store.
+        del collector,e7,document,requested,observation_scope
         snapshot=grade.grade(registered,captures,[observations],storage=storage,output=output/"grade",
             previous=previous.durable if previous is not None else None,clock=clock)
         if previous is not None:_retains(previous,snapshot)
         context.snapshot=snapshot
         # The sealed snapshot now owns every row. Release duplicate live input
         # graphs before the unchanged native checkpoint decoder runs.
-        del captures,observations,collector,e7,document,requested,observation_scope,pop
+        del captures,observations,pop
         if assigned is None:del capture,data
         client=_client(context,"append",transport)
         context.checkpoint_client=client

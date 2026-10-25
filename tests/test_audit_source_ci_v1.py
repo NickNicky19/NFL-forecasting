@@ -128,7 +128,7 @@ def test_coverage_rejects_omissions_duplicates_partial_status_and_invented_recei
 
 
 def test_failure_and_setup_error_diagnostics_are_immediate_and_bounded(tmp_path):
-    (tmp_path/"test_a.py").write_text("def test_failure(): raise AssertionError('CALL_FAILURE_DIAGNOSTIC'+'x'*20000)\n")
+    (tmp_path/"test_a.py").write_text("def test_failure():\n print('NATIVE_CAPACITY_STAGE_DIAGNOSTIC')\n raise AssertionError('CALL_FAILURE_DIAGNOSTIC'+'x'*20000)\n")
     (tmp_path/"test_b.py").write_text('''import pytest
 @pytest.fixture
 def broken(): raise ValueError('SETUP_FAILURE_DIAGNOSTIC')
@@ -145,6 +145,7 @@ def test_b(broken): pass
             assert list(r["outcomes"].values())==["failed"]
             messages=[e["message"] for e in ci.events(out) if e["type"]=="diagnostic"]
             assert 0<sum(map(len,messages))<=ci.DIAGNOSTIC_CAP
+            if i==0:assert any('NATIVE_CAPACITY_STAGE_DIAGNOSTIC' in message for message in messages)
         else:assert result.returncode==0
 
 

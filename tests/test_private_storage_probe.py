@@ -314,12 +314,43 @@ class StorageProbeChecks(unittest.TestCase):
         self.assertEqual(workflow.count("group: nfl-lab-single-writer"), 1)
         original = subprocess.check_output(['git','show','93e2019144be7b51248ce548fe247c6dcd949b71:.github/workflows/lab.yml'],
                                            cwd=REPOSITORY,text=True)
+        reviewed_main = subprocess.check_output(['git','show','4d5beccae7c1a00307205ea390abfeade7bc6a3c:.github/workflows/lab.yml'],
+                                                cwd=REPOSITORY,text=True)
         lab = workflow_job(workflow,'lab')
         for mode in ('audit-count-requalify-v1','audit-count-retained-v1','audit-private-rotation-v1','audit-weekly-producer-v1'):
             exclusion = " && inputs.mode != '" + mode + "'"
             self.assertEqual(lab.count(exclusion),1)
             lab = lab.replace(exclusion,'')
-        self.assertEqual(lab,workflow_job(original,'lab'))
+        # The current owner authorized and merged Main's guarded parent. Keep
+        # the entire reviewed job byte-for-byte, with only the Producer's
+        # original dispatch exclusions and stronger exact-source checkout.
+        # The historical job remains preserved at its original commit above.
+        expected = workflow_job(reviewed_main,'lab')
+        legacy_if = workflow_job(original,'lab').splitlines(keepends=True)[1]
+        self.assertTrue(legacy_if.startswith('    if: '))
+        expected = expected.replace('  lab:\n','  lab:\n'+legacy_if,1)
+        conditional_checkouts = """      - uses: actions/checkout@v4
+        if: steps.parent_route.outputs.requested == 'true'
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        if: steps.parent_route.outputs.requested != 'true'
+        with:
+          fetch-depth: 0
+"""
+        exact_source_checkout = """      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+"""
+        self.assertEqual(expected.count(conditional_checkouts),1)
+        self.assertEqual(expected.count('    steps:\n'),1)
+        expected = expected.replace(conditional_checkouts,'',1)
+        expected = expected.replace('    steps:\n','    steps:\n'+exact_source_checkout,1)
+        self.assertEqual(lab,expected)
         self.assertIn("needs: [storage-probe-write, storage-probe-read]", workflow)
         names = ['storage-probe-write','storage-probe-read','storage-probe-restore']
         probe_jobs = ''.join(workflow_job(workflow,name) for name in names)

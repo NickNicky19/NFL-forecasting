@@ -218,7 +218,7 @@ class _PagedRows(list):
 
 class _JSONStream:
     """Strict incremental JSON, paging original rows without changing bytes."""
-    def __init__(self, stream, cap, *, paged_keys=("forecasts", "selected", "opportunities", "rows")):
+    def __init__(self, stream, cap, *, paged_keys=("forecasts", "selected", "opportunities", "rows", "collector_records")):
         self.stream, self.cap, self.total = stream, cap, 0
         self.buffer, self.pos, self.eof = "", 0, False
         self.text_decoder = None
@@ -349,7 +349,18 @@ class _Sealed:
 
 class Population(_Sealed): pass
 class Capture(_Sealed): pass
-class Observations(_Sealed): pass
+class _ObservationRows(_PagedRows):
+    # A caller may copy a bound batch to form its next observation request.
+    # Preserve the original editable-list deepcopy contract for that boundary.
+    def __deepcopy__(self, memo): return deepcopy(list(self), memo)
+
+
+class Observations(_Sealed):
+    def __init__(self, document, key):
+        require(key is _KEY, "LIVE_PARENT_BOUND_INPUT_REQUIRED")
+        self.document = {name: _ObservationRows(value) if name == "observations" else deepcopy(value)
+            for name,value in document.items()}
+        self.sha256 = _digest(document)
 class Snapshot(_Sealed):
     def verify(self):
         super().verify()
@@ -742,6 +753,8 @@ def bind_observations(captures, document, *, authenticate, at):
         if row["source_timestamp"] is not None:
             require(state.utc(games[row["game_id"]]["kickoff_utc"]) < state.utc(row["source_timestamp"])
                 <= state.utc(row["observed_at"]), "HONEST_PROVIDER_PUBLICATION_CLOCK_NOT_LOCAL_ARRIVAL")
+    # The authenticated observation bytes remain exact. Avoid a second full
+    # live provider graph while grading retains the caller's original capture.
     return Observations(dict(document, capture_ids=sorted(c.sha256 for c in captures)), _KEY)
 
 
@@ -759,7 +772,8 @@ def _category_rows(rows, category):
 
 
 def _project(captures, registered, *, category=None, include_selected=True):
-    offers = {}; forecasts = {}; decisions = {}; schedule = {}; raw_selected = []; catalogs = []
+    offers = {}; forecasts = set(); decisions = {}; schedule = {}; raw_selected = []; catalogs = []
+    forecast_pages = []; pending_forecasts = []
     for capture in captures:
         catalogs.append(capture["catalog"])
         for row in capture["schedule"]:
@@ -791,7 +805,10 @@ def _project(captures, registered, *, category=None, include_selected=True):
             if not capture["ready"] or capture["known_by"] is None or state.utc(capture["known_by"]) > state.utc(row["cutoff_utc"]):
                 row.update(operational_eligible=False, grading_ineligible_reason="CAPTURE_PARTIAL_OR_DURABILITY_AFTER_INPUT_CUTOFF")
             key = identity, method
-            require(key not in forecasts, "DUPLICATE_METHOD_ISSUANCE_NO_LAST_WRITE_WINS"); forecasts[key] = row
+            require(key not in forecasts, "DUPLICATE_METHOD_ISSUANCE_NO_LAST_WRITE_WINS"); forecasts.add(key)
+            pending_forecasts.append(row)
+            if len(pending_forecasts) == 64:
+                forecast_pages.append(_PagedRows(pending_forecasts)); pending_forecasts = []
         if include_selected:
             for row in _category_rows(capture["selected"], category):
                 if row["offered_id"] in opportunity_by: raw_selected.append((capture,row))
@@ -800,7 +817,10 @@ def _project(captures, registered, *, category=None, include_selected=True):
         require(selector.procedure_catalog(item["catalog"]) == selector.procedure_catalog(catalog), "UNCHANGED_EFFECTIVE_EPOCH_PROCEDURES")
         for method,spec in item["catalog"]["methods"].items():
             catalog["methods"][method]["model_versions"] = sorted(set(catalog["methods"][method]["model_versions"] + spec["model_versions"]))
-    return list(offers.values()),list(forecasts.values()),list(decisions.values()),list(schedule.values()),catalog,raw_selected
+    if pending_forecasts: forecast_pages.append(_PagedRows(pending_forecasts))
+    # Panel copies every forecast. Keep its exact input order/values in bounded
+    # immutable pages rather than retaining another complete dictionary graph.
+    return list(offers.values()),_PagedRows.join(forecast_pages),list(decisions.values()),list(schedule.values()),catalog,raw_selected
 
 
 def _write_snapshot(storage, output, document):
@@ -1018,13 +1038,13 @@ def grade(registered, captures, batches, *, storage, output, previous=None, cloc
     require(len(offer_ids) <= LIMITS["opportunities"] and forecast_count <= LIMITS["forecast_rows"], "FINITE_COMPLETE_EPOCH_HISTORY")
     del offer_ids
     output = archive.fresh(storage,output); root = output/"resolver"; storage.register_root(root)
-    observations = deepcopy(old["collector_records"] if old else [])
+    observation_parts = [old["collector_records"]] if old else []
     finality = deepcopy(old["finality_records"] if old else [])
     for batch in batches:
         require(type(batch) is Observations, "LIVE_PROVIDER_OBSERVATIONS_REQUIRED"); batch.verify()
         require(set(batch.document["capture_ids"]) <= {_digest(c) for c in retained}, "OUTCOMES_FROM_DIFFERENT_CAPTURE_SCOPE")
-        observations.extend(deepcopy(batch.document["observations"])); finality.extend(deepcopy(batch.document["finality"]))
-    require(len(observations) <= LIMITS["revisions"], "FINITE_RETAINED_PROVIDER_REVISIONS")
+        observation_parts.append(batch.document["observations"]); finality.extend(deepcopy(batch.document["finality"]))
+    require(sum(len(part) for part in observation_parts) <= LIMITS["revisions"], "FINITE_RETAINED_PROVIDER_REVISIONS")
     stream = dict(schema_version=grading.VERSION+"-stream",stream_id=next(iter(streams))[0],stream_kind="primary_daily",horizon_version=VERSION+"-exact-assignment-player-game")
     opportunities = [o for c in retained for o in c["opportunities"]]
     with operational_io(storage), _record_batch(storage, root):
@@ -1032,13 +1052,13 @@ def grade(registered, captures, batches, *, storage, output, previous=None, cloc
             for version in old["versions"]:
                 state.save(root,"weekly_versions",version["snapshot"])
                 state.save(root,"weekly_completions",version["completion"])
-        state.append_outcomes(root/"collector",observations)
-        del observations
+        state.append_outcomes(root/"collector",(deepcopy(row) for part in observation_parts for row in part))
+        del observation_parts
         completed_opportunities = [o for o in opportunities if state.utc(o["kickoff_utc"]) < stamp]
         resolved = grading.append_resolved(root,stream,completed_opportunities,clock=clock)
         changed = resolved[1]; del resolved
         del opportunities, completed_opportunities
-        collector = list(state.records(root/"collector","outcomes"))
+        collector = _PagedRows(state.records(root/"collector","outcomes"))
         completions = {v["snapshot_id"]:v for v in state.records(root,"weekly_completions")}
         versions = [dict(snapshot=v,completion=completions[_digest(v)]) for v in state.records(root,"weekly_versions")]
     completed = state.utc(clock()).isoformat()
@@ -1193,6 +1213,8 @@ def history(durable, registered, *, at):
         if len(rows) > 1:
             selected = dict(selected,coqualified_prior_revisions=sorted(r["revision"] for r in rows if r is not selected))
         outcomes.append(selected)
+    outcomes = _PagedRows(outcomes)
+    simultaneous.clear()
     weeks = []
     for raw in doc["weeks"]:
         known = doc["known_weeks"].get(state.digest(raw))
