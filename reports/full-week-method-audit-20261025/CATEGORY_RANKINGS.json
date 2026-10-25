@@ -1,0 +1,288 @@
+{
+  "categories": [
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Point blend does not provide a full-law mixture median.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/pass_yd/methods/leaf_cdf/median/MAE",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 66.12044852312579,
+        "method": "P4_point_heuristic"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 66.16173469387755,
+        "method": "leaf_cdf_lower_median"
+      },
+      "metric": "MAE",
+      "offered": 4091,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "season_week_blocks": 54,
+      "target": "pass_yd",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Tiny lead versus stronger context correction; bias worsens; exposed selection.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/pass_td/methods/distribution_split_cdf/mean/MSE",
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 1.0619745013505355,
+        "method": "distribution_split_cdf_mean"
+      },
+      "metric": "MSE",
+      "offered": 4091,
+      "readable_RMSE": 1.030521470591727,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "season_week_blocks": 54,
+      "target": "pass_td",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Lowest inspected mean point; no absolute optimality.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/pass_cmp/methods/leaf_cdf/mean/MSE",
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 51.375356756738206,
+        "method": "leaf_cdf_mean"
+      },
+      "metric": "MSE",
+      "offered": 4091,
+      "readable_RMSE": 7.167660480012862,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "season_week_blocks": 54,
+      "target": "pass_cmp",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Policy/member fallback semantics retained; intervals include no improvement.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/pass_att/methods/distribution_split_cdf/mean/MSE",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 113.87577074767553,
+        "method": "P4_mean_objective_point"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 113.9007310602089,
+        "method": "distribution_split_cdf_mean"
+      },
+      "metric": "MSE",
+      "offered": 4091,
+      "readable_RMSE": 10.672428545565854,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "season_week_blocks": 54,
+      "target": "pass_att",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Lower mean MSE coexists with slightly worse CRPS.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/pass_int/methods/distribution_split_cdf/mean/MSE",
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 0.6775664279562187,
+        "method": "distribution_split_cdf_mean"
+      },
+      "metric": "MSE",
+      "offered": 4091,
+      "readable_RMSE": 0.8231442327783258,
+      "scientifically_qualified": false,
+      "scored": 1960,
+      "season_week_blocks": 54,
+      "target": "pass_int",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "LAB_CDF",
+      "games": 815,
+      "limitations": "Direct point and distribution ranking differ.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/rush_yd/methods/leaf_cdf/median/MAE",
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 19.718955682316807,
+        "method": "leaf_cdf_lower_median"
+      },
+      "metric": "MAE",
+      "offered": 6235,
+      "scientifically_qualified": false,
+      "scored": 4558,
+      "season_week_blocks": 54,
+      "target": "rush_yd",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "COUNT_A_LEGACY",
+      "games": 815,
+      "limitations": "Old Count A/P4 fallback points remain separate from mean-corrected variants.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/point-control-supplement/all-132-point-contrasts.csv#target=rush_att,control=direct_catboost_medium",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 23.948563771898566,
+        "method": "P4_legacy_point"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 24.04640959278721,
+        "method": "direct_catboost_medium_intended_mean"
+      },
+      "metric": "MSE",
+      "offered": 6235,
+      "readable_RMSE": 4.903713857148193,
+      "scientifically_qualified": false,
+      "scored": 4558,
+      "season_week_blocks": 54,
+      "target": "rush_att",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "COUNT_A_LEGACY",
+      "games": 815,
+      "limitations": "Legacy lower-loss point has different fallback semantics; correction is not retroactive.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/aggregate-report.json#/categories/rec/methods/count_A_mean_v2/mean/MSE",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 3.2439191700973486,
+        "method": "count_A_legacy_point"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 3.2541464520891097,
+        "method": "count_A_mean_fallback_v2"
+      },
+      "metric": "MSE",
+      "offered": 21504,
+      "readable_RMSE": 1.803925290051977,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "season_week_blocks": 54,
+      "target": "rec",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "CATBOOST_MEDIUM",
+      "games": 815,
+      "limitations": "Tiny point-blend gain; bias/tail and law-median limitations remain.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/point-control-supplement/all-132-point-contrasts.csv#target=rec_yd,control=direct_catboost_medium",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 16.342946966774235,
+        "method": "P4_point_heuristic"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 16.343397995395673,
+        "method": "direct_catboost_medium_median_objective"
+      },
+      "metric": "MAE",
+      "offered": 21504,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "season_week_blocks": 54,
+      "target": "rec_yd",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "CATBOOST_MEDIUM",
+      "games": 815,
+      "limitations": "Combined target separately scored; no inherited component gain.",
+      "literal_published_loss_pointer": "reports/distribution-cdf-after-audit-v2/point-control-supplement/all-132-point-contrasts.csv#target=rush_rec_yd,control=direct_catboost_medium",
+      "lower_recorded_other_product_or_policy": {
+        "loss": 20.966112819114475,
+        "method": "P4_point_heuristic"
+      },
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 20.98392513503166,
+        "method": "direct_catboost_medium_direct_total"
+      },
+      "metric": "MAE",
+      "offered": 21504,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "season_week_blocks": 54,
+      "target": "rush_rec_yd",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "R0_UNCHANGED",
+      "limitations": "Exact18-component contract unsupported; generic provider totals/arithmetic checks are not qualified labels.",
+      "lowest_fixed_or_current_probability_family": null,
+      "metric": null,
+      "qualified_broad_labels": 0,
+      "scientifically_qualified": false,
+      "target": "fantasy_ppr"
+    },
+    {
+      "current_live_superiority_established": false,
+      "current_served_startup_family": "TD_EQUAL_CDF_CAT",
+      "games": 815,
+      "limitations": "Same family as current startup. Learned two-year variant has separate period and false advancement.",
+      "literal_published_loss_pointer": "reports/weekly-policy-checkpoint-v1/aggregate.json#categories[target=anytime_td]/primary_losses/P4",
+      "lowest_fixed_or_current_probability_family": {
+        "loss": 0.14064701358764026,
+        "method": "equal_CDF_Cat_P4_family"
+      },
+      "metric": "Brier",
+      "offered": 21504,
+      "scientifically_qualified": false,
+      "scored": 15251,
+      "season_week_blocks": 54,
+      "target": "anytime_td",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    }
+  ],
+  "counts": "Legacy points and corrected intended means remain separate",
+  "scope": "Named inspected source-matched REG2022\u201324 primary-role frontiers; aliases deduplicated; minima are exposed descriptive selections, not promotion decisions"
+}

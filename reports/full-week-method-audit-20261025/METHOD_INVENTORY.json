@@ -1,0 +1,665 @@
+{
+  "methods": [
+    {
+      "id": "raw_sleeper",
+      "name": "Retained original provider points",
+      "recipe": "Recorded values only; no regenerated historical provider forecasts.",
+      "source": "reports/methods-resumption-20261022/website-comparison.md",
+      "state": "BASELINE_WHERE_ARCHIVED"
+    },
+    {
+      "id": "original_site",
+      "name": "Pinned website adjustment",
+      "recipe": "Original point multiplied by round(clip(1+(r-1)*n/(n+8),.75,1.25),3), with original category eligibility/rounding/fallback.",
+      "source": "config/website-baseline-v1.json",
+      "state": "BASELINE_WHERE_ARCHIVED"
+    },
+    {
+      "id": "recent3",
+      "name": "Recent supported production",
+      "recipe": "(n*recent_mean3+3*earlier_role_prior)/(n+3), with qualified-window and fixed fallback rules.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_MULTIPLE_PANELS"
+    },
+    {
+      "id": "pooled8",
+      "name": "Pooled/shrunk production",
+      "recipe": "(n*recent_mean8+5*earlier_role_prior)/(n+5), with explicit missing-window fallback.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_MULTIPLE_PANELS"
+    },
+    {
+      "id": "initial_workload",
+      "name": "Opportunity times efficiency",
+      "recipe": "Separate fixed component-recent opportunity and pooled/shrunk efficiency; exact target recipes and fallback in models.py.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "ridge_logistic",
+      "name": "Regularized direct point/event models",
+      "recipe": "Ridge alpha32; logistic for Bernoulli; earlier-only imputation, standardization and position/category design.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "initial_tree",
+      "name": "Fixed ExtraTrees direct model",
+      "recipe": "24trees/depth6/minleaf30/maxfeatures.8/seed1701; earlier-only feature/label fits, not an unlimited search.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "initial_distributional",
+      "name": "Parametric count/signed/event laws",
+      "recipe": "Negative-binomial/Poisson counts, normal signed totals and Bernoulli with fixed earlier residual/prior spread; distinct from later empirical CDF.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "initial_ensemble",
+      "name": "Original fixed point ensemble",
+      "recipe": "0.5*ridge +0.25*workload +0.25*recent; numeric point averaging is not a full-law mixture.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "feature_removals",
+      "name": "Ridge without opponent/workload/team",
+      "recipe": "Same earlier-only learner with one predeclared feature group removed; no group selected retrospectively.",
+      "source": "nfl_lab/models.py",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "ngs_ablation",
+      "name": "28-feature public NGS addition",
+      "recipe": "Hold fixed ridge/logistic; add prior NGS context only. Three small primary gains, eight losses in exposed2023.",
+      "source": "reports/ngs-context-study/summary.json",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "scheme_pace_ablation",
+      "name": "47-feature PBP/schedule addition",
+      "recipe": "Hold learner fixed; prior team/opponent style, tempo proxy, rest, lagged coach/venue. All11 primary losses worsen.",
+      "source": "reports/public-scheme-study/README.md",
+      "state": "SCORED_LEGACY_SOURCE"
+    },
+    {
+      "id": "h3_site_pass_yd",
+      "name": "SITE-held three-appearance pooled YPA",
+      "recipe": "Original SITE attempt point * sum(H3 pass_yd)/sum(H3 pass_att); exactly3 qualified appearances; unchanged SITE-yard fallback.",
+      "source": "reports/methods-resumption-20261022/category-status.json",
+      "state": "EXPOSED_W6_RECONSTRUCTION_ORIGINAL_MISSING"
+    },
+    {
+      "id": "h3_site_pass_cmp",
+      "name": "SITE-held pooled completion conversion",
+      "recipe": "Original SITE attempt point * sum(H3 completions)/sum(H3 attempts), original selected H3 and unchanged completion fallback.",
+      "source": "reports/methods-resumption-20261022/category-status.json",
+      "state": "EXPOSED_W6_MIXED"
+    },
+    {
+      "id": "original_attempt_glm",
+      "name": "Frozen attempts workload GLM",
+      "recipe": "Log-link mean of training-standardized log1p(player H3 attempts), log1p(team G5 attempts), positive-attempt fraction and missing flags; lambda1; original parameters/artifact gaps retained.",
+      "source": "reports/methods-resumption-20261022/category-status.json",
+      "state": "HISTORICAL_AND_W6_MIXED_WITH_MISSING_ORIGINALS"
+    },
+    {
+      "id": "held_tree_h3_h8_passing",
+      "name": "Historical pooled passing efficiency",
+      "recipe": "Hold saved tree attempts fixed; multiply by H3 or H8 pooled YPA with commonH8 eligibility/fallback. Both lose pooled yard control.",
+      "source": "reports/methods-resumption-20261022/history-passing.json",
+      "state": "SCORED_SEPARATE_HISTORICAL_PANEL"
+    },
+    {
+      "id": "held_tree_h3_h8_rushing",
+      "name": "Historical pooled rushing efficiency",
+      "recipe": "Hold saved tree carries fixed; multiply H3/H8 pooled YPC. H8 small gain versus pooled, with adverse bias/tails and intervals crossing0.",
+      "source": "reports/rushing-efficiency-v1/README.md",
+      "state": "SCORED_SEPARATE_HISTORICAL_PANEL"
+    },
+    {
+      "id": "original_rb_protocol",
+      "name": "Original five-season RB carry-share proposal",
+      "recipe": "mu=tau*(SC+kappa*p0)/(ST+kappa), original five-prior-season p0/tau0 and kappa{0,25,100}; original history/fallback/window retained.",
+      "source": "reports/source-policy-20261023/README.md",
+      "state": "NOT_COMPLETED_PARTICIPATION_AND_PRIORS_BLOCKED"
+    },
+    {
+      "id": "rec_half_registered",
+      "name": "Frozen reception half-adjustment",
+      "recipe": "raw_rec+.5*(adjusted_rec-raw_rec); original registration and2026Weeks7-14, no restart/backfill.",
+      "source": "config/preserved-rec-half-registration.json",
+      "state": "REGISTRATION_PRESERVED_NO_RECOVERED_PROSPECTIVE_WIN"
+    },
+    {
+      "id": "receiving_ypt_h3",
+      "name": "Projected targets times H3 pooled YPT",
+      "recipe": "Same-cutoff projected targets * sum(H3 rec_yd)/sum(H3 targets); exact-three history/source adapter and unchanged SITE fallback.",
+      "source": "reports/methods-resumption-20261022/category-status.json",
+      "state": "SCORED_EXPOSED_W6_SEPARATE_FROM_DRAFT"
+    },
+    {
+      "id": "component_sum",
+      "name": "Same-receipt combined-yard point",
+      "recipe": "SITE rush_yd + SITE rec_yd on identical eligible rows; missing components retain registered fallback.",
+      "source": "reports/methods-resumption-20261022/category-status.json",
+      "state": "SCORED_EXPOSED_W6_NOT_INHERITED_GAIN"
+    },
+    {
+      "id": "leaf_cdf",
+      "name": "Empirical-leaf marginal forecast law",
+      "recipe": "32 ExtraTrees/depth8/minleaf30/seed1701; 95% leaf empirical distribution +5% earlier role/global support prior.",
+      "source": "reports/all12-leaf-cdf-v1/method-config.json",
+      "state": "SCORED_LEGACY_SOURCE_AND_REFIT_PERMITTED_SOURCE"
+    },
+    {
+      "id": "median_hgb",
+      "name": "Absolute-error/binary histogram boosting",
+      "recipe": "150iterations/.05/depth3/15leaves/minleaf30/L2=10/seed1702; numeric point heuristic, binary genuine class probability.",
+      "source": "config/median-boosting-research.json",
+      "state": "SCORED_SOURCE_MATCHED"
+    },
+    {
+      "id": "count_A_role_B",
+      "name": "Count objective and role-specific boosting",
+      "recipe": "Poisson objective on six counts; B separates roles; passing singleton and noncount aliases retained. Legacy prior-median fallback distinct from mean-v2.",
+      "source": "config/role-count-research.json",
+      "state": "SCORED_SOURCE_MATCHED_WITH_ALIASES"
+    },
+    {
+      "id": "count_A_mean_v2",
+      "name": "Corrected intended-mean Count A",
+      "recipe": "Same registered Poisson-HGB specification, separately refitted in18V2 calls; required fallback uses stored prior.mean, not prior.median. Original frozen procedure not overwritten.",
+      "source": "reports/distribution-cdf-after-audit-v2/README.md",
+      "state": "SCORED_CORRECTED_V2"
+    },
+    {
+      "id": "direct_boosters",
+      "name": "Six native direct configurations",
+      "recipe": "XGBoost/LightGBM/CatBoost \u00d7small64-depth3 ormedium128-depth5; LR.05/L2=10; quantile.5 yards, Poisson counts, binary logloss.",
+      "source": "config/direct-booster-screen-v1.json",
+      "state": "SCORED_SOURCE_MATCHED_WITH_BINARY_RECOVERY"
+    },
+    {
+      "id": "baseline_corrections",
+      "name": "Intercept/context corrections to honest CDF",
+      "recipe": "Corrections trained on earlier out-of-fold baseline predictions; log mean offset for counts and logit offset for events, exact frozen regularization/preprocessing.",
+      "source": "reports/baseline-correction-report-v3/README.md",
+      "state": "SCORED_NO_NOMINATION"
+    },
+    {
+      "id": "threshold_cdf",
+      "name": "Monotone threshold-distribution challenger",
+      "recipe": "Fixed threshold classifiers and monotone valid CDF construction with full-support tails; same information as controls.",
+      "source": "config/distribution-cdf-after-audit-v2.json",
+      "state": "SCORED_CORRECTED_V2_LOSES_ALL11_PRIMARY"
+    },
+    {
+      "id": "cdf_response",
+      "name": "Distribution-sensitive response forest",
+      "recipe": "ExtraTrees splits on weighted indicator CDF response grid; empirical outcome leaves plus5% support prior; binary arm exact leaf alias.",
+      "source": "config/distribution-cdf-after-audit-v2.json",
+      "state": "SCORED_CORRECTED_V2_NOT_EXACT_DRF_LIBRARY"
+    },
+    {
+      "id": "td_calibration",
+      "name": "Four probability recalibrations on two bases",
+      "recipe": "Intercept-only, constrained Platt, constrained beta and increasing isotonic trained earlier-only; true infinite log losses retained.",
+      "source": "reports/anytime-calibration-v1/README.md",
+      "state": "16_FITS_ALL8_POOLED_BRIER_LOSE_BASES"
+    },
+    {
+      "id": "conformal",
+      "name": "Fixed80% chronological CQR",
+      "recipe": "Earlier calibration residuals choose interval radius; all20 radii zero; point and CDF unchanged.",
+      "source": "reports/conformal-interval-v1/README.md",
+      "state": "SCORED_NO_CHANGE_NOT_PROP_PROBABILITY_PROOF"
+    },
+    {
+      "id": "weekly_policies",
+      "name": "P0/P1/P2/P3/P4",
+      "recipe": "Reference; previous-week; cumulative; nested earlier-only recency; frozen equal shortlist blend. Retain all losing weeks and startup/fallback.",
+      "source": "reports/weekly-policy-checkpoint-v1/README.md",
+      "state": "SCORED_54_WEEK_DEVELOPMENT_REPLAY"
+    },
+    {
+      "id": "td_fixed_learned_blends",
+      "name": "Equal and shrunk probability stacking",
+      "recipe": "Fixed .5CDF+.5Cat; earlier-only scalar Brier weight shrunk toward .5 with lambda.001; exactly2 weight fits.",
+      "source": "reports/anytime-td-blend-v1/README.md",
+      "state": "SCORED2023_24_NO_ADVANCE"
+    },
+    {
+      "id": "combined_joint",
+      "name": "Fixed marginals, independence versus Gaussian copula",
+      "recipe": "Randomized discrete PIT, correlation shrink n/(n+100),4096 fixed draws, sum components per draw; direct-total and Cat controls.",
+      "source": "reports/combined-yard-copula-v1/README.md",
+      "state": "SCORED2023_24_BOTH_SUM_LAWS_LOSE"
+    },
+    {
+      "id": "dynamic_workload",
+      "name": "Smooth-H8-k25 role shares with held efficiency",
+      "recipe": "Fixed decayed team/player shares; half-life8/team slots, shrink25, fixed100-strength efficiency prior; same fallbacks/control population.",
+      "source": "reports/dynamic-workload-fixed-forward-v1/README.md",
+      "state": "NUMERICAL_RESULTS_VERIFIED_NEGATIVE_OPERATIONAL_ACK_FAILED"
+    },
+    {
+      "id": "recorded_lines",
+      "name": "Original recorded threshold directions",
+      "recipe": "13 fixed point procedures; exact retained line/player/game cohort. Direction accuracy is not calibrated probability or EV.",
+      "source": "reports/recorded-thresholds-v1/README.md",
+      "state": "SCORED_EXPOSED_W6_NO_MARKET_HYBRID_STUDY"
+    },
+    {
+      "id": "exact_ppr",
+      "name": "Exact versioned website scoring transform",
+      "recipe": "Original18primitive fields and conditional defensive-recovery attribution; no unsupported rare component imputed0.",
+      "source": "reports/source-policy-20261023/README.md",
+      "state": "BROAD_LABEL_PANEL_BLOCKED_NO_WINNER"
+    },
+    {
+      "id": "player_context_news",
+      "name": "Timestamped factual context intake",
+      "recipe": "Source-linked identity/time/conflict records; no invented injury penalties or private gameplan access.",
+      "source": "reports/player-context-intake-v1/README.md",
+      "state": "ENGINEERING_ONLY_NO_MEASURED_INCREMENTAL_GAIN"
+    },
+    {
+      "id": "ftn_targeted",
+      "name": "Interception-worthy and catch-quality features",
+      "recipe": "Permitted source/schema recovery distinct from qualified joins/as-of features; no completed incremental model comparison.",
+      "source": "reports/ftn-charting-schema-buffered-v2/README.md",
+      "state": "SOURCE_PREREQUISITE_ONLY"
+    },
+    {
+      "id": "ngboost",
+      "name": "Native conditional-law boosting",
+      "recipe": "Poisson/Bernoulli/signed law API and genuine synthetic runtime verified; six-fit NFL preparation inert and paused, previous failures retained.",
+      "source": "docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md",
+      "state": "ZERO_COMPLETED_NFL_FITS"
+    },
+    {
+      "id": "remaining_proposals",
+      "name": "ExactDRF/MMD,XGBoostLSS,AdaBoost,rich role/joint/market extensions",
+      "recipe": "Not completed by mentioning libraries, acquiring metadata or building software fixtures. No measured gain assigned.",
+      "source": "docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md",
+      "state": "UNTESTED_OR_PREREQUISITE_ONLY"
+    }
+  ],
+  "new_NFL_work": 0,
+  "schema": "full-week-method-family-catalog-v1",
+  "scope": "Complete named family inventory reconciled with the research index and category audits; family count is not fit count or independent evidence",
+  "settings": {
+    "config/direct-booster-screen-v1.json#native_parameters": {
+      "catboost": {
+        "medium": {
+          "bernoulli": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 5,
+            "iterations": 128,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Logloss",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          },
+          "count": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 5,
+            "iterations": 128,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Poisson",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          },
+          "signed_integer": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 5,
+            "iterations": 128,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Quantile:alpha=0.5",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          }
+        },
+        "small": {
+          "bernoulli": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 3,
+            "iterations": 64,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Logloss",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          },
+          "count": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 3,
+            "iterations": 64,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Poisson",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          },
+          "signed_integer": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "No",
+            "depth": 3,
+            "iterations": 64,
+            "l2_leaf_reg": 10.0,
+            "learning_rate": 0.05,
+            "loss_function": "Quantile:alpha=0.5",
+            "random_seed": 1753,
+            "random_strength": 0.0,
+            "rsm": 1.0,
+            "task_type": "CPU",
+            "thread_count": 2,
+            "use_best_model": false,
+            "verbose": false
+          }
+        }
+      },
+      "lightgbm": {
+        "medium": {
+          "bernoulli": {
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_samples": 30,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "num_leaves": 31,
+            "objective": "binary",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          },
+          "count": {
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_samples": 30,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "num_leaves": 31,
+            "objective": "poisson",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          },
+          "signed_integer": {
+            "alpha": 0.5,
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_samples": 30,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "num_leaves": 31,
+            "objective": "quantile",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          }
+        },
+        "small": {
+          "bernoulli": {
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_samples": 30,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "num_leaves": 7,
+            "objective": "binary",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          },
+          "count": {
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_samples": 30,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "num_leaves": 7,
+            "objective": "poisson",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          },
+          "signed_integer": {
+            "alpha": 0.5,
+            "colsample_bytree": 1.0,
+            "deterministic": true,
+            "force_col_wise": true,
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_samples": 30,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "num_leaves": 7,
+            "objective": "quantile",
+            "random_state": 1752,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "verbosity": -1
+          }
+        }
+      },
+      "xgboost": {
+        "medium": {
+          "bernoulli": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_weight": 30.0,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "objective": "binary:logistic",
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          },
+          "count": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_weight": 30.0,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "objective": "count:poisson",
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          },
+          "signed_integer": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 5,
+            "min_child_weight": 30.0,
+            "n_estimators": 128,
+            "n_jobs": 2,
+            "objective": "reg:quantileerror",
+            "quantile_alpha": 0.5,
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          }
+        },
+        "small": {
+          "bernoulli": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_weight": 30.0,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "objective": "binary:logistic",
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          },
+          "count": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_weight": 30.0,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "objective": "count:poisson",
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          },
+          "signed_integer": {
+            "colsample_bytree": 1.0,
+            "device": "cpu",
+            "learning_rate": 0.05,
+            "max_bin": 255,
+            "max_depth": 3,
+            "min_child_weight": 30.0,
+            "n_estimators": 64,
+            "n_jobs": 2,
+            "objective": "reg:quantileerror",
+            "quantile_alpha": 0.5,
+            "random_state": 1751,
+            "reg_alpha": 0.0,
+            "reg_lambda": 10.0,
+            "subsample": 1.0,
+            "tree_method": "hist",
+            "verbosity": 0
+          }
+        }
+      }
+    },
+    "config/role-count-research.json#fixed_parameters": {
+      "binary_loss": "log_loss",
+      "count_loss": "poisson",
+      "early_stopping": false,
+      "l2_regularization": 10.0,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "max_iter": 150,
+      "max_leaf_nodes": 15,
+      "min_samples_leaf": 30,
+      "minimum_supported_training_rows": 60,
+      "random_state": 1702,
+      "signed_yard_loss": "absolute_error"
+    },
+    "reports/all12-leaf-cdf-v1/method-config.json#smoothing": {
+      "bernoulli": "Beta(1,1) posterior predictive p=(sum(y)+1)/(n+2) on {0,1}.",
+      "count": "Geometric on {0,1,...}, equivalently fixed NB(r=1); mu=max(.05,mean(y)); q=mu/(1+mu); P(Y=k)=(1-q)*q**k. Mean=mu. No moment-matched dispersion claim.",
+      "fractional_ppr": "BLOCKED pending exact pinned website scoring/components; no generic provider total or invented zero labels.",
+      "prior_weight": 0.05,
+      "role_groups": "position; each trained role prior uses all earlier supported played labels for that role, including zeros. Unknown/unseen role uses trained global prior with explicit fallback.",
+      "signed_integer": "Discrete Laplace at integer lower training role median c; s=max(1,mean(abs(y-c))); q=s/(1+s); P(Y=k)=(1-q)/(1+q)*q**abs(k-c). This is fixed support smoothing, not a claim that its MAD equals s. Mean=c; variance=2q/(1-q)^2."
+    },
+    "reports/all12-leaf-cdf-v1/method-config.json#topology": {
+      "bootstrap": false,
+      "class": "sklearn.ensemble.ExtraTreesRegressor",
+      "criterion": "squared_error",
+      "max_depth": 8,
+      "max_features": 1.0,
+      "min_samples_leaf": 30,
+      "n_estimators": 32,
+      "n_jobs": 2,
+      "random_state": 1701
+    }
+  }
+}
