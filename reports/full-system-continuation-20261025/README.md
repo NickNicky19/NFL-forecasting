@@ -127,7 +127,8 @@ repairs preserve the actual gates: registered public source fixtures are
 recovered by their original hashes, changed current source remains rejected,
 and historical fictional clocks stay in tests only. The repaired combined
 producer suite passed 695 tests and 244 subtests with one optional skip before
-the final hosted bridge/source checks were added. Its final committed source,+hosted CI, actual private replay and durability are separate pending acceptance.
+the final hosted bridge/source checks were added. Its final committed source,
+hosted CI, actual private replay and durability are separate pending acceptance.
 
 The daily website refresh remains 08:06 America/Chicago; the retired ticker is
 unchanged. The next nominal website invocation is 2026-10-25T13:06Z. A daily
