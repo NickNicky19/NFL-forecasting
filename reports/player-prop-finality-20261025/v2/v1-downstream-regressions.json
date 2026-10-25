@@ -1,0 +1,686 @@
+{
+  "schema_version": "player-prop-frozen-downstream-review-v1",
+  "fixture_only": true,
+  "provider_calls": 0,
+  "source_writes": 0,
+  "results": [
+    {
+      "name": "missing-player-row",
+      "pos": "WR",
+      "stats": null,
+      "expected_live_points": null,
+      "versions": {
+        "original": {
+          "participation": null,
+          "current": {
+            "stats": {},
+            "none": true
+          },
+          "live_points": null,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": null,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "gp-zero-points-zero-is-not-participation",
+      "pos": "WR",
+      "stats": {
+        "gp": 0,
+        "pts_ppr": 0
+      },
+      "expected_live_points": null,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "gp": 0,
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "points-zero-alone-is-not-participation",
+      "pos": "WR",
+      "stats": {
+        "pts_ppr": 0
+      },
+      "expected_live_points": null,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "played-skill-zero",
+      "pos": "RB",
+      "stats": {
+        "gp": 1,
+        "off_snp": 1,
+        "rush_att": 1,
+        "rush_yd": 0,
+        "pts_ppr": 0
+      },
+      "expected_live_points": 0,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "gp": 1,
+              "off_snp": 1,
+              "rush_att": 1,
+              "rush_yd": 0,
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "gp": 1,
+              "off_snp": 1,
+              "rush_att": 1,
+              "rush_yd": 0,
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "kicker-positive-field-goal-no-gp",
+      "pos": "K",
+      "stats": {
+        "fgm": 1,
+        "fgm_20_29": 1,
+        "pts_ppr": 3
+      },
+      "expected_live_points": 3,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "fgm": 1,
+              "fgm_20_29": 1,
+              "pts_ppr": 3
+            },
+            "none": false
+          },
+          "live_points": 3,
+          "week_points": 3
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "kicker-positive-extra-point-no-gp",
+      "pos": "K",
+      "stats": {
+        "xpm": 1,
+        "pts_ppr": 1
+      },
+      "expected_live_points": 1,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "xpm": 1,
+              "pts_ppr": 1
+            },
+            "none": false
+          },
+          "live_points": 1,
+          "week_points": 1
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "kicker-played-zero-missed-XP",
+      "pos": "K",
+      "stats": {
+        "xpmiss": 1,
+        "pts_ppr": 0
+      },
+      "expected_live_points": 0,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "xpmiss": 1,
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "defense-positive-sack-no-gp",
+      "pos": "DEF",
+      "stats": {
+        "sack": 1,
+        "pts_allow": 7,
+        "yds_allow": 100,
+        "pts_ppr": 7
+      },
+      "expected_live_points": 7,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "sack": 1,
+              "pts_allow": 7,
+              "yds_allow": 100,
+              "pts_ppr": 7
+            },
+            "none": false
+          },
+          "live_points": 7,
+          "week_points": 7
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "defense-played-zero-known-allowances",
+      "pos": "DEF",
+      "stats": {
+        "pts_allow": 20,
+        "yds_allow": 320,
+        "pts_ppr": 0
+      },
+      "expected_live_points": 0,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "pts_allow": 20,
+              "yds_allow": 320,
+              "pts_ppr": 0
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "receiving-two-point-only",
+      "pos": "TE",
+      "stats": {
+        "rec_2pt": 1,
+        "pts_ppr": 2
+      },
+      "expected_live_points": 2,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "rec_2pt": 1,
+              "pts_ppr": 2
+            },
+            "none": false
+          },
+          "live_points": 2,
+          "week_points": 2
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "passing-two-point-only",
+      "pos": "QB",
+      "stats": {
+        "pass_2pt": 1,
+        "pts_ppr": 2
+      },
+      "expected_live_points": 2,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "pass_2pt": 1,
+              "pts_ppr": 2
+            },
+            "none": false
+          },
+          "live_points": 2,
+          "week_points": 2
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "rushing-two-point-only",
+      "pos": "RB",
+      "stats": {
+        "rush_2pt": 1,
+        "pts_ppr": 2
+      },
+      "expected_live_points": 2,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "rush_2pt": 1,
+              "pts_ppr": 2
+            },
+            "none": false
+          },
+          "live_points": 2,
+          "week_points": 2
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "special-teams-touchdown-only",
+      "pos": "WR",
+      "stats": {
+        "st_td": 1,
+        "pts_ppr": 6
+      },
+      "expected_live_points": 6,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "st_td": 1,
+              "pts_ppr": 6
+            },
+            "none": false
+          },
+          "live_points": 6,
+          "week_points": 6
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "offensive-blocked-kick-only",
+      "pos": "TE",
+      "stats": {
+        "idp_blk_kick": 1,
+        "pts_ppr": 2
+      },
+      "expected_live_points": 2,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "idp_blk_kick": 1,
+              "pts_ppr": 2
+            },
+            "none": false
+          },
+          "live_points": 2,
+          "week_points": 2
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "fumble-negative-only",
+      "pos": "WR",
+      "stats": {
+        "fum_lost": 1,
+        "pts_ppr": -2
+      },
+      "expected_live_points": -2,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "fum_lost": 1,
+              "pts_ppr": -2
+            },
+            "none": false
+          },
+          "live_points": -2,
+          "week_points": -2
+        },
+        "prototype": {
+          "participation": false,
+          "current": null,
+          "live_points": null,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "fresh-kicker-row-versus-older-build",
+      "pos": "K",
+      "stats": {
+        "fgm": 1,
+        "fgm_20_29": 1,
+        "pts_ppr": 3
+      },
+      "expected_live_points": 3,
+      "versions": {
+        "original": {
+          "participation": true,
+          "current": {
+            "stats": {
+              "fgm": 1,
+              "fgm_20_29": 1,
+              "pts_ppr": 3
+            },
+            "none": false
+          },
+          "live_points": 3,
+          "week_points": 3
+        },
+        "prototype": {
+          "participation": false,
+          "current": {
+            "stats": {
+              "xpm": 1,
+              "pts_ppr": 1
+            },
+            "none": false
+          },
+          "live_points": 1,
+          "week_points": 1
+        }
+      }
+    },
+    {
+      "name": "skill-participation-without-scoring-fields",
+      "pos": "WR",
+      "stats": {
+        "gp": 1
+      },
+      "expected_live_points": null,
+      "legacy_sparse_scoring_counterexample": true,
+      "versions": {
+        "original": {
+          "current": {
+            "stats": {
+              "gp": 1
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        },
+        "prototype": {
+          "current": {
+            "stats": {
+              "gp": 1
+            },
+            "none": false
+          },
+          "live_points": 0,
+          "week_points": 0
+        }
+      }
+    },
+    {
+      "name": "defense-participation-without-allowances",
+      "pos": "DEF",
+      "stats": {
+        "gp": 1
+      },
+      "expected_live_points": null,
+      "legacy_sparse_scoring_counterexample": true,
+      "versions": {
+        "original": {
+          "current": {
+            "stats": {
+              "gp": 1
+            },
+            "none": false
+          },
+          "live_points": 10,
+          "week_points": 10
+        },
+        "prototype": {
+          "current": {
+            "stats": {
+              "gp": 1
+            },
+            "none": false
+          },
+          "live_points": 10,
+          "week_points": 10
+        }
+      }
+    }
+  ],
+  "new_regressions": [
+    "kicker-positive-field-goal-no-gp",
+    "kicker-positive-extra-point-no-gp",
+    "kicker-played-zero-missed-XP",
+    "defense-positive-sack-no-gp",
+    "defense-played-zero-known-allowances",
+    "receiving-two-point-only",
+    "passing-two-point-only",
+    "rushing-two-point-only",
+    "special-teams-touchdown-only",
+    "offensive-blocked-kick-only",
+    "fumble-negative-only",
+    "fresh-kicker-row-versus-older-build"
+  ],
+  "scoring_policy": {
+    "scoring": {
+      "pass_yd": 0.04,
+      "pass_td": 4,
+      "pass_int": -1,
+      "pass_2pt": 2,
+      "rush_yd": 0.1,
+      "rush_td": 6,
+      "rush_2pt": 2,
+      "rec": 1,
+      "rec_yd": 0.1,
+      "rec_td": 6,
+      "rec_2pt": 2,
+      "fum_lost": -2,
+      "st_td": 6,
+      "st_fum_rec": 1,
+      "st_ff": 1,
+      "fum_rec_td": 6,
+      "idp_blk_kick": 2
+    },
+    "scoring_k": {
+      "fgm_0_19": 3,
+      "fgm_20_29": 3,
+      "fgm_30_39": 3,
+      "fgm_40_49": 4,
+      "fgm_50_59": 5,
+      "fgm_60p": 6,
+      "xpm": 1,
+      "fgmiss": -1
+    },
+    "scoring_def": {
+      "sack": 1,
+      "int": 2,
+      "fum_rec": 2,
+      "def_st_fum_rec": 2,
+      "blk_kick": 2,
+      "safe": 2,
+      "def_td": 6,
+      "def_st_td": 6
+    },
+    "def_tiers": {
+      "pts": [
+        [
+          0,
+          5
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          17,
+          1
+        ],
+        [
+          27,
+          0
+        ],
+        [
+          34,
+          -1
+        ],
+        [
+          45,
+          -3
+        ],
+        [
+          1000000,
+          -5
+        ]
+      ],
+      "yds": [
+        [
+          99,
+          5
+        ],
+        [
+          199,
+          3
+        ],
+        [
+          299,
+          2
+        ],
+        [
+          349,
+          0
+        ],
+        [
+          399,
+          -1
+        ],
+        [
+          449,
+          -3
+        ],
+        [
+          499,
+          -5
+        ],
+        [
+          549,
+          -6
+        ],
+        [
+          1000000,
+          -7
+        ]
+      ]
+    }
+  }
+}

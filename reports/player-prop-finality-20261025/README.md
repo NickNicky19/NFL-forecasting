@@ -1,3 +1,5 @@
+> V1 is HELD for confirmed downstream regressions. The separately reviewed narrow [V2 package](v2/README.md) restores all shared fantasy helpers to exact Main bytes, passes expanded tests, and does not claim the wider baseline fantasy debt is repaired. Do not integrate the v1 patch below.
+
 The three-path main-site prototype is ready for review. It is based on generated
 main `453e7e6e843b0cb1ae611b0925063e0f96c70196`, whose source is
 `5e45584460a0f1eb61acf8d0cb50faea6e8a614b`. The baseline app and index exactly
