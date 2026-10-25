@@ -1,0 +1,76 @@
+{
+  "schema_version": "blinded-week7-clock-corrected-capture-receipt-v1",
+  "status": "FORECASTS_FROZEN_OUTCOMES_PENDING",
+  "forecast_body_sha256": "4cbd219a8ad5817a2e8f74a4216f394067f3adeff91e4e4140799c10b082d889",
+  "forecast_body_compressed_bytes": 434560,
+  "feature_body_sha256": "7036bff9cffb5e852cba6bc7e45665d796388d045d902945d8a0fc9e35bc3dc4",
+  "completion_receipt_sha256": "9f161410e0fa8797e34d6e2bd753ef66d60bb08d09b3d2f7c78411cc1252bbf7",
+  "finished_receipt_sha256": "ddc034392cb52d7c434140f53cf4dbc5bb9815115f60a48547e9e607a83aa25a",
+  "sealed_plan_sha256": "1f6e84ce8436121e9691ce597e7595b500efdbc0efa27cd4d7af2cc974c75cdc",
+  "worker_sha256": "0ad8a09853678f728ab3366771841a98b3ac965ce0c5b95f10b4fba834676418",
+  "completion_receipt_persisted_at": "2026-10-25T20:00:04.753181+00:00",
+  "counts": {
+    "category_method_combinations": 48,
+    "forecast_incidences": 15444,
+    "unique_player_games": 610,
+    "games": 13,
+    "supported_categories": 11,
+    "exact_PPR": "BLOCKED_EXACT_LABEL_CONTRACT",
+    "history_supported_players": 572,
+    "cold_fallback_players": 38,
+    "unique_matched_website_player_game_categories": 1754,
+    "matched_forecast_incidences": 6580
+  },
+  "evidence_lanes": {
+    "new_before_kickoff_games": 5,
+    "new_before_kickoff_incidences": 6016,
+    "post_start_blinded_reconstruction_games": 8,
+    "post_start_blinded_reconstruction_incidences": 9428,
+    "future_games_by_America_Chicago_date": {
+      "2026-10-25": 4,
+      "2026-10-26": 1
+    },
+    "new_horizon": "Corrected-input T0 stream; original T15 records remain unchanged"
+  },
+  "sources": {
+    "football_inputs": "Authenticated archived pregame NFL history/roster/schedule/identity, earlier seasons and 2026 Weeks1-5 only",
+    "archived_input_cutoff_utc": "2026-10-24T12:00:00Z",
+    "website_reference_sha256": "3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267",
+    "website_reference_input_cutoff_utc": "2026-10-25T00:00:00Z",
+    "comparison_status": "UNMATCHED_INPUT_VINTAGE_DESCRIPTIVE_ONLY",
+    "history_availability": "Original kickoff+7days reconstruction retained, not authenticated publication times"
+  },
+  "execution": {
+    "fixed_fits_earlier_in_this_task": 13,
+    "additional_fits_for_clock_correction": 0,
+    "frozen_states_reused": 31,
+    "target_week_outcome_reads": 0,
+    "accuracy_scores": 0,
+    "current_game_result_HTTP": 0,
+    "website_changed": false,
+    "scheduler_changed": false,
+    "scientifically_qualified": false,
+    "final_independent_replay": "PASS",
+    "native_clock_correction_exit_code": 0,
+    "native_wall_seconds": 57.042,
+    "native_user_seconds": 51.569,
+    "native_system_seconds": 6.16,
+    "independent_checks": {
+      "all_31_model_files_authenticated": true,
+      "bitwise_prediction_replays": 15444,
+      "independent_prior_game_count_checks": 610,
+      "independent_last3_last8_mean_and_count_checks": 39040,
+      "matched_website_incidences": 6580,
+      "verification_CPU_seconds": 5.511,
+      "verification_wall_seconds": 5.198,
+      "outcomes_read": 0,
+      "fits": 0
+    }
+  },
+  "limitations": [
+    "Hidden outcomes and mechanistic replay do not turn started-game forecasts into prospective evidence.",
+    "Archive timestamps were normalized from mixed milliseconds/nanoseconds without changing actual times; earlier all-cold forecasts and failures remain retained.",
+    "Forecast/model bodies stay private; a public hash receipt is not recovery of their bodies or proof of source truth.",
+    "No current-website superiority or scientific promotion claimed."
+  ]
+}
