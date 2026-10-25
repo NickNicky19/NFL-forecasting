@@ -82,8 +82,10 @@ def previous_checkpoint(go):
     if value.get("schema_version") == "audit-weekly-recurring-v1-context":
         require(set(value) == {"schema_version", "controller_context", "previous_capture"}, "CLOSED_HISTORY_V1_CONTEXT")
         return None
-    require(value.get("schema_version") == CONTEXT_V2
-        and set(value) == {"schema_version", "controller_context", "previous_capture", "previous_checkpoint"}, "CLOSED_HISTORY_V2_CONTEXT")
+    require(value.get("schema_version") in {CONTEXT_V2, "audit-weekly-recurring-v3-context"}
+        and set(value) == {"schema_version", "controller_context", "previous_capture", "previous_checkpoint"}
+            | ({"plan"} if value.get("schema_version") == "audit-weekly-recurring-v3-context" else set()),
+        "CLOSED_HISTORY_V2_CONTEXT")
     locator = value["previous_checkpoint"]
     require(locator is None or type(locator) is dict and set(locator) == {"sha256"}
         and type(locator["sha256"]) is str and store.HASH.fullmatch(locator["sha256"]), "EXACT_ROOT_HISTORY_SIDECAR_HASH")

@@ -12,6 +12,41 @@ from tools import persist_state
 import test_audit_weekly_operations_grade_v1 as bridge
 
 
+def test_real_produce_grade_only_route_never_reaches_capture_reference_or_publication(monkeypatch,tmp_path):
+    r=object.__new__(hosted.Runner)
+    r.go=dict(operation='RECURRING_CAPTURE',effective_epoch=dict(plan=dict(kind='GRADE_ONLY')))
+    r.go_sha='a'*64;r.env=dict(GITHUB_OUTPUT=str(tmp_path/'outputs'));r.check=lambda:None
+    r.recurring_prepare=lambda:({},dict(execution_plan=dict(kind='GRADE_ONLY'),inputs=None))
+    def forbidden(*args,**kwargs):pytest.fail('GRADE_ONLY_MUST_NOT_ISSUE_OR_PUBLISH_FORECAST')
+    for name in ('recover_origin','capture','reference','register_publication','archive_call'):
+        monkeypatch.setattr(r,name,forbidden)
+    result=r.produce()
+    assert result['state']=='ORIGINAL_CAPTURE_RECOVERED_GRADE_ONLY_NO_NEW_FORECAST'
+    assert result['public_feed_written'] is result['successful_forecast'] is result['public_release'] is False
+    lines=(tmp_path/'outputs').read_text().splitlines()
+    assert lines[0].startswith('grade_only_plan_json=') and lines[1].startswith('grade_only_plan_sha256=')
+    assert not any(line.startswith(('archive_handoff_json=','archive_reader_handoff_json=')) for line in lines)
+
+
+@pytest.mark.parametrize('phase',['restore','consume'])
+def test_grade_only_real_phase_router_requires_no_fake_archive_handoff(phase):
+    r=object.__new__(hosted.Runner);r.go=dict(operation='RECURRING_CAPTURE',effective_epoch=dict(plan=dict(kind='GRADE_ONLY')))
+    body=store.canonical({'fictional':'native handoff checked by guarded grade worker'})
+    r.env=dict(AUDIT_WEEKLY_GRADE_HANDOFF_JSON=body.decode(),AUDIT_WEEKLY_GRADE_HANDOFF_SHA256=store.sha(body))
+    seen=[]
+    r.grade_only=lambda **kwargs:(seen.append(kwargs) or dict(state='FICTIONAL_ROUTING_ONLY'))
+    result=getattr(r,phase)()
+    assert result['state']=='FICTIONAL_ROUTING_ONLY'
+    assert seen==([{}] if phase=='restore' else [dict(handoff=cp.strict_json(body))])
+
+
+def test_grade_only_consume_rejects_corrupt_native_handoff_before_any_restore():
+    r=object.__new__(hosted.Runner);r.go=dict(operation='RECURRING_CAPTURE',effective_epoch=dict(plan=dict(kind='GRADE_ONLY')))
+    r.env=dict(AUDIT_WEEKLY_GRADE_HANDOFF_JSON='{}',AUDIT_WEEKLY_GRADE_HANDOFF_SHA256='0'*64)
+    r.grade_only=lambda **kwargs:pytest.fail('CORRUPT_HANDOFF_CANNOT_TRIGGER_PRIVATE_RESTORATION')
+    with pytest.raises(store.StoreError,match='EXACT_NATIVE_GRADING_WRITER_HANDOFF_REQUIRED'):r.consume()
+
+
 @pytest.fixture
 def ready(tmp_path,monkeypatch):
     x=bridge.pipeline.__wrapped__(tmp_path,monkeypatch);q=x.q
@@ -65,3 +100,22 @@ def test_sidecar_publish_failure_retains_actual_evidence_append_and_original_man
     appended=cp.strict_json((r.root/'grading-delivery/APPENDED.json').read_bytes())
     assert appended['descriptor']['entry']['writer_run_id']==r.identity['run_id']
     assert appended['evidence_sha256']==archive.read_owned(r.storage,manifest)['evidence_envelope']['sha256']
+
+
+def test_grade_only_reader_evidence_is_privately_retained_without_any_feed_or_locator(ready,monkeypatch):
+    r,manifest,receipt,x=ready
+    r.go['effective_epoch']=dict(plan=dict(kind='GRADE_ONLY',season=2026,week=7),
+        previous_capture=dict(feed_sha256=receipt['feed_sha256'],receipt_sha256='9'*64))
+    before=len(x.service.server.assets);original=cp.read_ref(manifest)
+    monkeypatch.setattr(persist_state,'persist',lambda *_a,**_k:pytest.fail('GRADE_ONLY_CANNOT_PUBLISH_A_FEED'))
+    result=r.retain_grade_only_evidence(manifest)
+    assert len(x.service.server.assets)==before+2
+    saved=archive.read_owned(r.storage,result['receipt'])
+    report=archive.read_owned(r.storage,manifest)
+    assert saved['grade_read_proof']==report['grade_read_proof']
+    assert saved['checkpoint_handoff']==report['checkpoint_handoff']
+    assert saved['evidence_sha256']==report['evidence_envelope']['sha256']
+    assert cp.read_ref(manifest)==original
+    assert saved['public_release'] is saved['successful_forecast'] is False
+    assert result['public_feed_written'] is result['scheduled_parent_discoverable'] is False
+    assert not (r.root/'grade-only-evidence/public-state').exists()

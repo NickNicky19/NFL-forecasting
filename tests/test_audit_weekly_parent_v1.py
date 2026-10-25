@@ -808,3 +808,18 @@ assert cli.main(['--execute'], environ={}) == 1
     assert result.returncode == 0, result.stderr
     status = json.loads(result.stdout)
     assert status["state"] == "PARENT_BLOCKED" and status["child_completion_claimed"] is False
+
+
+@pytest.mark.parametrize('kind,week',[('GRADE_ONLY',7),('FUTURE_CAPABLE',8)])
+def test_actual_parent_root_can_bind_explicit_v3_plan_without_changing_static_template(case,monkeypatch,kind,week):
+    actual=w._build_root
+    plan=dict(kind=kind,season=2026,week=week)
+    def planned(*args,**kwargs):return actual(*args,**kwargs,plan=plan)
+    monkeypatch.setattr(w,'_build_root',planned)
+    result=case.execute()
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT'
+    root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert root['effective_epoch']['schema_version']=='audit-weekly-recurring-v3-context'
+    assert root['effective_epoch']['plan']==plan
+    assert len(root['code_pins'])<=128 and len(c.canonical(root))<=60 << 10
+    assert all(root[k]==case.root[k] for k in set(root)-w.DYNAMIC_FIELDS)

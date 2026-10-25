@@ -971,6 +971,8 @@ jobs:
       actions: read
     outputs:
       archive_handoff_json: ${{ steps.weekly.outputs.archive_handoff_json || steps.preserve.outputs.archive_handoff_json }}
+      grade_only_plan_json: ${{ steps.weekly.outputs.grade_only_plan_json }}
+      grade_only_plan_sha256: ${{ steps.weekly.outputs.grade_only_plan_sha256 }}
       controller_template_handoff_json: ${{ steps.weekly.outputs.controller_template_handoff_json }}
       controller_template_handoff_sha256: ${{ steps.weekly.outputs.controller_template_handoff_sha256 }}
       controller_writer_native_json: ${{ steps.weekly.outputs.controller_writer_native_json }}
@@ -1039,7 +1041,7 @@ jobs:
 
   audit-weekly-restore-v1:
     needs: audit-weekly-produce-v1
-    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json != '') }}
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '') }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:
@@ -1117,7 +1119,7 @@ jobs:
 
   audit-weekly-export-v1:
     needs: [audit-weekly-produce-v1, audit-weekly-restore-v1]
-    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && (needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' || needs.audit-weekly-restore-v1.outputs.controller_template_seal_json != '') && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
+    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && (needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' || needs.audit-weekly-restore-v1.outputs.controller_template_seal_json != '' || (needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '' && needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json != '')) && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:

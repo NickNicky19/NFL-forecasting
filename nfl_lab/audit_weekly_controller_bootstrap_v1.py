@@ -589,16 +589,23 @@ def _recurring(root_bytes, *, bot):
     require(type(root) is dict and root_bytes == c.canonical(root) and root.get("operation") == "RECURRING_CAPTURE",
             "EXPLICIT_RECURRING_CAPTURE_ROOT_REQUIRED")
     epoch = root.get("effective_epoch")
-    require(type(epoch) is dict and epoch.get("schema_version") in {"audit-weekly-recurring-v1-context","audit-weekly-recurring-v2-context"}
+    require(type(epoch) is dict and epoch.get("schema_version") in {"audit-weekly-recurring-v1-context","audit-weekly-recurring-v2-context","audit-weekly-recurring-v3-context"}
             and (type(epoch.get("controller_context")) is dict if bot else epoch.get("controller_context") is None)
             and type(epoch.get("previous_capture")) is dict
             and set(epoch["previous_capture"]) == {"feed_sha256", "receipt_sha256"}
             and all(c.hashed(v) for v in epoch["previous_capture"].values()), "RECURRING_CONTEXT_AND_PRIOR_CAPTURE_LOCATOR")
-    if epoch["schema_version"]=="audit-weekly-recurring-v2-context":
+    if epoch["schema_version"] in {"audit-weekly-recurring-v2-context", "audit-weekly-recurring-v3-context"}:
         locator=epoch.get("previous_checkpoint")
         require(set(epoch)=={"schema_version","controller_context","previous_capture","previous_checkpoint"}
+                | ({"plan"} if epoch["schema_version"]=="audit-weekly-recurring-v3-context" else set())
             and (locator is None or type(locator) is dict and set(locator)=={"sha256"} and c.hashed(locator["sha256"])),
             "RECURRING_V2_EXACT_PREVIOUS_GRADING_LOCATOR")
+        if epoch["schema_version"] == "audit-weekly-recurring-v3-context":
+            plan = epoch["plan"]
+            require(type(plan) is dict and set(plan) == {"kind", "season", "week"}
+                and plan["kind"] in {"GRADE_ONLY", "FUTURE_CAPABLE"}
+                and type(plan["season"]) is int and 2019 <= plan["season"] <= 2100
+                and type(plan["week"]) is int and 1 <= plan["week"] <= 18, "CLOSED_RECURRING_ROOT_PLAN")
     # The caller still runs its FULL closed ROOT/epoch schema first. The wrapper
     # checks only its interface, not fields owned by the model/epoch runtime.
     return root

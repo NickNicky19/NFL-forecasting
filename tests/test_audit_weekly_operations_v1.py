@@ -9,6 +9,8 @@ from nfl_lab import audit_weekly_operations_v1 as o, audit_weekly_grade_v1 as gr
 from nfl_lab import audit_weekly_epoch_v1 as epoch, gha_private_checkpoint as cp, state
 from nfl_lab.operational_storage import OperationalStorage
 from test_audit_weekly_epoch_v1 import fixture, prepare, registered, continuation, CONTINUED
+from test_audit_weekly_grade_v1 import packet as grade_packet
+import test_audit_weekly_grade_v1 as fictional_grade
 
 
 def test_calendar_independent_DST_offsets_aliases_and_poison_outcomes():
@@ -43,6 +45,79 @@ def test_closed_context_cannot_carry_values_or_a_self_supplied_private_body():
     for key in ("forecast_rows","private_template","root_go"):
         changed=dict(value,**{key:[]})
         with pytest.raises(o.OperationsError,match="CLOSED_RECURRING"):o.context(changed)
+
+
+def _plan(q, full, at, durable=None):
+    return o.recurring_plan(q['r'], q['c'], full, authenticate=q['parent'], durable=durable,
+        cutoff_lead_seconds=900, clock=lambda:at)
+
+
+def _next_calendar():
+    return [dict(season=2026, week=8, game_type='REG', game_id='fictional-week-8',
+        kickoff_utc='2026-10-29T20:00:00Z')]
+
+
+def test_fully_elapsed_plan_keeps_original_choice_and_never_invokes_future_calendar(grade_packet, monkeypatch):
+    q=grade_packet;before=state.canonical(q['c'].document)
+    full=[dict(season=2026,week=7,game_type='REG',game_id=r['game_id'],kickoff_utc=r['kickoff_utc']) for r in q['schedule']]
+    monkeypatch.setattr(o.resume,'_calendar',lambda *_:pytest.fail('GRADE_ONLY_CANNOT_ENTER_FUTURE_RESUME'))
+    choice,plan=_plan(q,full,fictional_grade.GRADE)
+    assert choice is q['c'] and state.canonical(choice.document)==before
+    assert set(plan)==o.PLAN_KEYS and plan['kind']=='GRADE_ONLY'
+    assert plan['future_game_ids']==[] and plan['capture_allowed'] is plan['publication_allowed'] is False
+    assert plan['current_values_used'] is False and plan['fits']==0
+
+
+@pytest.mark.parametrize('conflict',[False,True])
+def test_incomplete_or_conflicting_finality_stays_pending_and_cannot_select_next(grade_packet,tmp_path,conflict):
+    q=grade_packet;at=fictional_grade.GRADE
+    batches=[fictional_grade.batch(q,final=False)]
+    if conflict:batches.append(fictional_grade.batch(q,final=True))
+    snapshot=grade.grade(q['r'],[q['capture']],batches,storage=q['storage'],output=tmp_path/'pending',clock=lambda:at)
+    durable=fictional_grade.qualify(q,snapshot)
+    assert not durable.document['weeks'] and durable.document['pending_weeks']
+    assert len(durable.document['finality_records'])==len(batches)
+    with pytest.raises(o.OperationsError,match='COMPLETE_PRIOR'):
+        _plan(q,_next_calendar(),at+timedelta(minutes=3),durable)
+
+
+def test_next_week_choice_is_exact_existing_P2_before_values_and_deterministic(grade_packet,tmp_path):
+    q=grade_packet;durable=fictional_grade.qualify(q,fictional_grade.grade(q,tmp_path/'resolved'))
+    stamp=fictional_grade.GRADE+timedelta(minutes=3);full=_next_calendar()
+    choice,plan=_plan(q,full,stamp,durable)
+    expected=grade.select_next(q['r'],durable,choice.document['slate'],q['c'],full_schedule=full,
+        authenticate=q['parent'],clock=lambda:stamp)
+    again,again_plan=_plan(q,full,stamp,durable)
+    assert state.canonical(choice.document)==state.canonical(expected.document)==state.canonical(again.document)
+    assert plan==again_plan and plan['kind']=='FUTURE_CAPTURE' and plan['history_sha256']==durable.sha256
+    assert state.utc(choice.document['choice']['actual_frozen_at'])==stamp<state.utc(choice.document['slate']['weekly_deadline_utc'])
+    assert q['f']['old_history']==b'{"weeks":[{"COUNT_A_loss":123456,"LAB_CDF_loss":0,"week":6}]}'
+
+
+def test_next_week_never_falls_back_to_absent_or_local_history(grade_packet,tmp_path):
+    q=grade_packet;local=fictional_grade.grade(q,tmp_path/'local')
+    for missing in (None,local,local.document):
+        with pytest.raises(o.OperationsError,match='DURABLE_CAUSAL_HISTORY_REQUIRED_NO_FALLBACK'):
+            _plan(q,_next_calendar(),fictional_grade.GRADE+timedelta(minutes=3),missing)
+
+
+def test_late_new_week_and_history_not_yet_durable_are_rejected(grade_packet,tmp_path):
+    q=grade_packet;snapshot=fictional_grade.grade(q,tmp_path/'resolved');durable=fictional_grade.qualify(q,snapshot)
+    late=state.utc('2026-10-29T19:45:00Z')
+    with pytest.raises(ValueError):_plan(q,_next_calendar(),late,durable)
+    future=fictional_grade.qualify(q,snapshot,at=fictional_grade.GRADE+timedelta(hours=2))
+    with pytest.raises(o.OperationsError,match='DURABLE_BEFORE_ACTUAL_DECISION'):
+        _plan(q,_next_calendar(),fictional_grade.GRADE+timedelta(minutes=3),future)
+
+
+def test_closed_v3_root_plan_does_not_accept_labels_or_execution_flags():
+    value=dict(schema_version=o.CONTEXT_V3,controller_context=None,
+        previous_capture=dict(feed_sha256='a'*64,receipt_sha256='b'*64),previous_checkpoint=dict(sha256='c'*64),
+        plan=dict(kind='GRADE_ONLY',season=2026,week=7))
+    assert o.context(value)==value
+    for change in ({'outcomes':[]},{'execution_authorized':True},{'week':True},{'kind':'REPLAY_AS_FUTURE'}):
+        bad=deepcopy(value);bad['plan'].update(change)
+        with pytest.raises(o.OperationsError):o.context(bad)
 
 
 def model_roles_fixture(tmp_path):

@@ -528,7 +528,7 @@ def daily_claim_id(registration_sha256, producer_source_sha, at):
         chicago_date=c.utc(at).astimezone(CHICAGO).date().isoformat()))
 
 
-def _build_root(parent, document, capture, at):
+def _build_root(parent, document, capture, at, *, plan=None):
     require(type(parent) is bootstrap.Parent and type(capture) is _Capture, "LIVE_PARENT_AND_CAPTURE_REQUIRED")
     capture.verify(parent)
     parent.seal.verify()
@@ -547,6 +547,13 @@ def _build_root(parent, document, capture, at):
                 parent.proof.document["scheduled_parent"], claim_id),
             previous_capture=dict(feed_sha256=capture.receipt["feed_sha256"], receipt_sha256=capture.packed_sha256),
             previous_checkpoint=deepcopy(capture.checkpoint)))
+    if plan is not None:
+        require(type(plan) is dict and set(plan)=={"kind","season","week"}
+            and plan["kind"] in {"GRADE_ONLY","FUTURE_CAPABLE"}
+            and type(plan["season"]) is int and 2019<=plan["season"]<=2100
+            and type(plan["week"]) is int and 1<=plan["week"]<=18,"EXPLICIT_CLOSED_RECURRING_PLAN")
+        root["effective_epoch"]["schema_version"]="audit-weekly-recurring-v3-context"
+        root["effective_epoch"]["plan"]=deepcopy(plan)
     require(set(root) == template.ROOT_KEYS and all(root[k] == document["root_template"][k] for k in set(root) - DYNAMIC_FIELDS)
         and root["code_pins"] == p["producer"]["code_pins"] and root["source_sha"] == p["producer"]["source_sha"]
         and root["workflow_ref"] == c.REPO + "/" + c.WORKFLOW + "@refs/heads/" + p["producer"]["branch"]

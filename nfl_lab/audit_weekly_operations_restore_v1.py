@@ -13,6 +13,7 @@ from pathlib import Path
 
 VERSION="audit-weekly-operations-restore-v1"
 PHASE="operations-retained"
+PHASES=(PHASE,"operations-grade-retained-write","operations-grade-retained-read")
 FILES=("nfl_lab/audit_weekly_operations_restore_v1.py","tools/audit_weekly_operations_restore_v1.py",
        "tests/test_audit_weekly_operations_restore_v1.py")
 LIMITS=dict(wall_seconds=180,CPU_seconds=120,address_space_bytes=512 << 20,
@@ -28,7 +29,8 @@ def require(value,code):
 
 def run(args,env,*,transport=None):
     from . import audit_weekly_operations_worker_v1 as worker
-    context=worker.authenticate_child(args,env,phase=PHASE,transport=transport)
+    require(args.phase in PHASES,"CLOSED_RECURRING_RESTORE_PHASE")
+    context=worker.authenticate_child(args,env,phase=args.phase,transport=transport)
     return restore(context,transport=transport)
 
 
@@ -42,10 +44,12 @@ def restore(context,*,transport=None):
     require(type(context) is worker.Authenticated,"LIVE_RECURRING_RESTORE_CONTEXT_REQUIRED")
     context.verify();p=context.request
     require(type(p) is dict and set(p)==KEYS and p["schema_version"]==VERSION+"-request"
-        and p["phase"]==PHASE and p["limits"]==LIMITS and type(p["inputs"]) is dict
+        and p["phase"] in PHASES and p["limits"]==LIMITS and type(p["inputs"]) is dict
         and set(p["inputs"])=={"receipt","historical_source_sha256"},"CLOSED_RECURRING_RESTORE_REQUEST")
     inputs=p["inputs"];base=Path(p["cache"]).parent;output=Path(p["output"])
-    require(output==base/PHASE and Path(p["state_root"])==base/"state","EXACT_RECURRING_RESTORE_PATHS")
+    require(output==base/p["phase"] and Path(p["state_root"])==base/"state","EXACT_RECURRING_RESTORE_PATHS")
+    if p["phase"] != PHASE:
+        require(context.go["effective_epoch"].get("plan",{}).get("kind")=="GRADE_ONLY", "EXPLICIT_GRADE_ONLY_RESTORATION_PHASE")
     worker._reference(inputs["receipt"],base,64 << 10)
     historical=inputs["historical_source_sha256"]
     require(type(historical) is dict and set(historical)==set(retained.HISTORICAL_FILES)

@@ -72,6 +72,21 @@ def test_current_weekly_steps_bind_the_actual_masked_root_and_grading_handoff():
     assert step["env"]["AUDIT_WEEKLY_GRADE_HANDOFF_SHA256"] == "${{ needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_sha256 }}"
 
 
+def test_grade_only_can_reach_existing_read_jobs_without_fabricating_archive_outputs():
+    workflow=yaml.load((ROOT/'.github/workflows/lab.yml').read_bytes(),Loader=yaml.BaseLoader)
+    jobs=workflow['jobs'];producer=jobs['audit-weekly-produce-v1'];reader=jobs['audit-weekly-restore-v1'];exporter=jobs['audit-weekly-export-v1']
+    assert producer['outputs']['grade_only_plan_json']=='${{ steps.weekly.outputs.grade_only_plan_json }}'
+    assert producer['outputs']['grade_only_plan_sha256']=='${{ steps.weekly.outputs.grade_only_plan_sha256 }}'
+    assert "needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != ''" in reader['if']
+    assert "needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '' && needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json != ''" in exporter['if']
+    assert "needs.audit-weekly-produce-v1.result == 'success'" in exporter['if']
+    assert "needs.audit-weekly-restore-v1.result == 'success'" in exporter['if']
+    for job in (producer,reader,exporter):
+        assert job['permissions']==dict(contents='write',actions='read')
+    assert reader['needs']=='audit-weekly-produce-v1'
+    assert exporter['needs']==['audit-weekly-produce-v1','audit-weekly-restore-v1']
+
+
 def test_runtime_inventory_covers_parent_and_grading_contracts_within_the_original_bound():
     from nfl_lab import audit_weekly_hosted_v1 as hosted, audit_weekly_parent_v1 as parent
     from nfl_lab import audit_weekly_grade_v1 as grade, audit_weekly_grade_checkpoint_v1 as checkpoint

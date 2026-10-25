@@ -54,20 +54,30 @@ def native_envelope():
         "OPERATIONS_GRADE_NATIVE_WALL_REQUIRED")
 
 
-def validate_request(p,phase):
-    require(phase in PHASES and type(p) is dict and set(p)==REQUEST_KEYS and p["schema_version"]==VERSION+"-request"
+def validate_request(p,phase,*,go=None):
+    grade_only = type(go) is dict and (go.get("effective_epoch") or {}).get("plan", {}).get("kind") == "GRADE_ONLY"
+    v2 = type(p) is dict and p.get("schema_version") == VERSION+"-request-v2"
+    require(phase in PHASES and type(p) is dict and set(p)==REQUEST_KEYS
+        and (p["schema_version"]==VERSION+"-request" or v2 and grade_only)
         and p["phase"]==phase and canonical(p["limits"])==canonical(LIMITS)
-        and type(p["inputs"]) is dict and set(p["inputs"])==INPUT_KEYS[phase],"CLOSED_OPERATIONS_GRADE_REQUEST")
+        and type(p["inputs"]) is dict and set(p["inputs"])==INPUT_KEYS[phase] | ({"previous_history"} if v2 else set()),
+        "CLOSED_OPERATIONS_GRADE_REQUEST")
     cache,state,output=(Path(p[k]) for k in ("cache","state_root","output"))
     require(all(x.is_absolute() and ".." not in x.parts for x in (cache,state,output))
         and cache.name=="cache" and state==cache.parent/"state" and output==cache.parent/phase,"CONFINED_OPERATIONS_GRADE_PATHS")
     ref=p["inputs"]["archive_restored"]
     require(type(ref) is dict and set(ref)=={"path","bytes","sha256"} and type(ref["path"]) is str
         and Path(ref["path"]).is_absolute() and ".." not in Path(ref["path"]).parts
-        and Path(ref["path"]).is_relative_to(cache.parent) and Path(ref["path"]).name=="RESTORED.json"
+        and Path(ref["path"]).is_relative_to(cache.parent)
+        and Path(ref["path"]).name==("RETAINED_RESULT.json" if v2 else "RESTORED.json")
         and type(ref["bytes"]) is int and 0<ref["bytes"]<=LIMITS["archive_metadata_bytes"]
         and type(ref["sha256"]) is str and len(ref["sha256"])==64 and all(c in "0123456789abcdef" for c in ref["sha256"]),
         "ACTUAL_CURRENT_ARCHIVE_RESTORED_REFERENCE_REQUIRED")
+    if v2:
+        from .audit_weekly_operations_worker_v1 import _reference
+        pair=p["inputs"]["previous_history"]
+        require(type(pair) is dict and set(pair)=={"sidecar","public_receipt"},"CLOSED_GRADE_ONLY_HISTORY_INPUTS")
+        for r in pair.values():_reference(r,cache.parent,64 << 10)
     if phase==PHASES[0]:
         require(p["inputs"]["previous_snapshot"] is None,"LIVE_CROSS_RUN_HISTORY_RESTORE_REQUIRED")
     else:
@@ -110,7 +120,7 @@ def guard(args,env,*,transport=None):
     raw=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
     shared=shared_guard.authenticate_child(args,env,phase=args.phase,transport=transport)
     p,a,go=shared.request,shared.authority,shared.go
-    validate_request(p,args.phase)
+    validate_request(p,args.phase,go=go)
     from . import audit_weekly_grade_history_v1 as history
     require(go["operation"]=="RECURRING_CAPTURE" and p["code_pins"]==go["code_pins"]==hosted.pins()
         and all(name in p["code_pins"] for name in FILES+history.FILES) and store.canonical(go)==raw,
@@ -142,6 +152,42 @@ def _archive(context,storage,clock):
     from . import weekly_durable_acceptance as acceptance,state
     context.verify();ref=context.request["inputs"]["archive_restored"]
     restored=archive.read_owned(storage,ref,LIMITS["archive_metadata_bytes"])
+    if context.request["schema_version"] == VERSION+"-request-v2":
+        from . import audit_weekly_resume_v1 as resume,audit_weekly_discovery_v1 as discovery
+        from . import audit_weekly_operations_v1 as operations
+        operations.context(context.go["effective_epoch"])
+        require(context.go["effective_epoch"]["plan"]["kind"]=="GRADE_ONLY", "EXPLICIT_ROOT_GRADE_ONLY_RESTORATION")
+        archive.authenticate_qualification(context.client,context.go["qualified_runtime"],context.go["pending_census"])
+        reader=resume._Metadata(storage)
+        index=resume._capture(restored,reader,clock())
+        original=restored["original_archive"];actual=cp.client_identity(context.client)
+        role="restore" if context.request["phase"]==PHASES[0] else "consume"
+        require(restored["current_root_go_sha256"]==context.root_sha256
+            and all(restored["current"][k]==actual[k] for k in ("repository","run_id","run_attempt","source_sha","workflow_ref","job_id","api_job_id"))
+            and actual["job_id"]==context.go["jobs"][role] and original["source_sha"]==actual["source_sha"],
+            "ACTUAL_SAME_SOURCE_GRADE_ONLY_CURRENT_RESTORER")
+        pair=context.request["inputs"]["previous_history"]
+        packed=archive.read_owned(storage,pair["public_receipt"],64 << 10,raw=True)
+        previous=context.go["effective_epoch"]["previous_capture"]
+        require(store.sha(packed)==previous["receipt_sha256"], "EXACT_ROOT_GRADE_ONLY_CAPTURE_RECEIPT")
+        receipt=archive.unpack(packed,64 << 10)
+        discovery.receipt(store.canonical(receipt),store.sha(store.canonical(receipt)))
+        require(receipt["feed_sha256"]==previous["feed_sha256"]
+            and receipt["archive_index_sha256"]==original["index_descriptor"]["entry"]["payload"]["sha256"]
+            and receipt["archive_files_sha256"]==original["files_sha256"], "EXACT_GRADE_ONLY_ORIGINAL_CAPTURE_COHORT")
+        aliases=restored["aliases"]
+        choice_ref=aliases.get("context/canonical_weekly_choice.json",aliases["runtime/WEEKLY_CHOICE.json"])
+        choice=archive.read_owned(storage,choice_ref,512 << 10)
+        plan=context.go["effective_epoch"]["plan"]
+        require((choice["slate"]["season"],choice["slate"]["week"])==(plan["season"],plan["week"])
+            and all(state.utc(t)<=state.utc(clock()) for t in choice["slate"]["game_cutoffs"].values()),
+            "GRADE_ONLY_EXACT_ORIGINAL_WEEK_AFTER_FROZEN_CAPTURE_WINDOW")
+        require({"context/"+r+".json" for r in EPOCH_ROLES|OPS_ROLES}<=set(restored["aliases"]),
+            "REGISTERED_OPERATIONAL_CONTEXT_MISSING_NO_POSTHOC_POPULATION")
+        archive.validate_owned_references(storage,{r["path"]:r["sha256"] for r in restored["aliases"].values()})
+        for proof in restored["current_restore_proofs"]:store.check_proof(context.client,proof,"restore")
+        reader.guard();context.verify()
+        return restored,index
     h=restored["archive"];archive.safe_handoff(h)
     write=context.request["phase"]==PHASES[0];role="restore" if write else "consume"
     current=acceptance.identity(restored["current"]);actual=cp.client_identity(context.client)
@@ -414,6 +460,9 @@ def _same_capture(restored,registered,choice,durable,storage,*,capture_id=None):
 def _previous(context,restored,storage,transport):
     from . import audit_weekly_grade_history_v1 as history
     if context.go.get("effective_epoch") is None or history.previous_checkpoint(context.go) is None:return None
+    if context.request["schema_version"]==VERSION+"-request-v2":
+        pair=context.request["inputs"]["previous_history"]
+        return history.restore_previous(context.shared,storage,pair["sidecar"],pair["public_receipt"],transport=transport)
     aliases=restored["aliases"]
     names=("context/ops_previous_checkpoint_sidecar.json","context/ops_previous_public_receipt.json")
     require(all(name in aliases for name in names),"EXACT_ARCHIVED_HISTORY_SIDECAR_AND_RECEIPT_REQUIRED")
@@ -451,7 +500,7 @@ def execute(context,*,transport=None,fetch=None,clock=None):
     from . import audit_weekly_provider_v1 as provider,private_draft_store as store,state,gha_private_checkpoint as cp
     from .operational_storage import OperationalStorage
     clock=clock or state.now_utc;p=context.request
-    validate_request(p,p["phase"])
+    validate_request(p,p["phase"],go=context.go)
     storage=OperationalStorage(p["cache"],ROOT/"config/operational-source-policy-v2.json",state=p["state_root"])
     restored,index=_archive(context,storage,clock);registered,choice=_epoch(restored,storage,clock)
     previous=_previous(context,restored,storage,transport)

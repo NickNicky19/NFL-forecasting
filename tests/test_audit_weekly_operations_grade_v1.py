@@ -28,6 +28,20 @@ ACTUAL_ARCHIVE=worker._archive
 ACTUAL_EPOCH=worker._epoch
 
 
+def test_grade_only_v2_reference_requires_explicit_root_and_owned_history_pair(tmp_path):
+    base=tmp_path/'owned';p=request(base,worker.PHASES[0])
+    p['schema_version']=worker.VERSION+'-request-v2'
+    p['inputs']['archive_restored']['path']=str(base/'recovered'/'RETAINED_RESULT.json')
+    pair={name:dict(path=str(base/(name+'.json.gz')),bytes=10,sha256='a'*64) for name in ('sidecar','public_receipt')}
+    p['inputs']['previous_history']=pair
+    go=dict(effective_epoch=dict(plan=dict(kind='GRADE_ONLY')))
+    assert worker.validate_request(p,worker.PHASES[0],go=go) is p
+    for root in (None,dict(effective_epoch=None),dict(effective_epoch=dict(plan=dict(kind='FUTURE_CAPABLE')))):
+        with pytest.raises(worker.GradeBridgeError):worker.validate_request(p,worker.PHASES[0],go=root)
+    bad=deepcopy(p);bad['inputs']['previous_history']['outcomes']=[]
+    with pytest.raises(worker.GradeBridgeError):worker.validate_request(bad,worker.PHASES[0],go=go)
+
+
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))
