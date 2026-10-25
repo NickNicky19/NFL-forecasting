@@ -1,0 +1,90 @@
+{
+  "advisory_diagnostics": "Legacy tools/verify.py and tools/compare_lines.py still read original cache paths; their historical diagnostic scope was not rewritten.",
+  "cannot_use_existing_phase2_model": "sleeper-matchup-data-integrity-v2",
+  "changed_registered_code": {
+    "output/app.js": {
+      "after": "76cc66917e1c8f5f61d1d0169001bd09bc76c2a6439b2ec32c89619c9484bbd7",
+      "before": "b86c5bc0580611d6f8bcd18dff75b5ca3db663dcc625fbc6a29ce135ac5f5704"
+    },
+    "pull/build.py": {
+      "after": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1",
+      "before": "75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419"
+    },
+    "pull/scoring.py": {
+      "after": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+      "before": "31672c10d526d591db8951157b0ecd669b4d02b412a75deec337618bff18dab2"
+    },
+    "tools/weekly_selected_rankings.py": {
+      "after": "9482d7ab53e8273b736177daf1b289b1ff75de29b3987f27f283693c5b1457c7",
+      "before": "7503eaedeb8e2c5d8328423d49bd9e7269488af378fe023dcc43a8bcba8209b1"
+    }
+  },
+  "corrected_model_version": "UNREGISTERED_REQUIRES_NEW_DISTINCT_CLASSIC_EXECUTION_MODEL",
+  "current_classic_grader_sha256": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354",
+  "current_corrected_engine_sha256": {
+    "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+    "pull/build.py": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1",
+    "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+    "pull/matchup.py": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c",
+    "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+    "pull/scoring.py": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+    "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+  },
+  "current_execution_required_engine_and_grader_sha256": {
+    "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+    "pull/build.py": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1",
+    "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+    "pull/grade.py": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354",
+    "pull/matchup.py": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c",
+    "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+    "pull/scoring.py": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+    "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+  },
+  "current_website_code_inventory_sha256": "27b9cdedd97e451ac6506734cd508e6d705502d9c476b5596881d377e6826588",
+  "current_website_code_sha256": {
+    "config/release-mode.json": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+    "output/app.js": "76cc66917e1c8f5f61d1d0169001bd09bc76c2a6439b2ec32c89619c9484bbd7",
+    "output/weekly-adaptive-overlay.js": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+    "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+    "pull/build.py": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1",
+    "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+    "pull/matchup.py": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c",
+    "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+    "pull/scoring.py": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+    "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+    "tools/reliability.py": "cac8e91d80225f99f03d82bb48bacb287bf4b41f9b3d94a13c9b7571930acc38",
+    "tools/weekly_adaptive_overlay.py": "6835d58efa3ccc88cff57a0cd55abea349387c49902d3bedd4d57b92274918cb",
+    "tools/weekly_public_feed.py": "9c1449777357dea062b49bfaca6ae38b214b160ff7af32f9b7dbd5704da2b207",
+    "tools/weekly_selected_rankings.py": "9482d7ab53e8273b736177daf1b289b1ff75de29b3987f27f283693c5b1457c7"
+  },
+  "grading_version": "statistical-v3-identity-20261025",
+  "historical_engine_sha256": {
+    "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+    "pull/build.py": "75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419",
+    "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+    "pull/matchup.py": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c",
+    "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+    "pull/scoring.py": "31672c10d526d591db8951157b0ecd669b4d02b412a75deec337618bff18dab2",
+    "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+  },
+  "historical_main_v2_policy_physical_sha256": "e8e037a00a22d3e0e07e41ed5816f2374e8f162a7fa78ea8cc45888ed2e2f094",
+  "historical_policy_and_freeze": "Preserve exact bytes and fixed R0 engine map. Repinning both engine_sha256 and website_code_sha256 under the old R0 identity is invalid.",
+  "lab_publication_authority_and_scientific_registrations": "UNCHANGED",
+  "normalized_stats_cache": {
+    "absent_upstream_total": "Not reconstructed. The path only changes which normalization contract is trusted.",
+    "corrected_path_template": "data/cache/stat-keys-fgm-v1/stats_{season}_{week:02d}.json",
+    "first_corrected_read": "Refetch if the versioned cache is absent, including refresh=False; no legacy fallback.",
+    "first_release_real_provider_FG_availability": "NOT_OBSERVED; fictional source-function traces only",
+    "original_R0_path_template": "data/cache/stats_{season}_{week:02d}.json",
+    "original_cache_read_or_overwritten_by_corrected_builder": false,
+    "private_capture_and_recovery_path_allowances": "Parent must bind the new cache lane in any applicable evidence/capture/recovery contracts; no such protected edit is included.",
+    "version": "stat-keys-fgm-v1"
+  },
+  "original_fresh_input_R0_shadow": "Retain original engine execution on the same newly captured raw inputs under its original identity; corrected normalization is a distinct execution.",
+  "original_r0_identities": [
+    "a21ccd21ad395da3487c5e084ab2865c54a357a191419cc4da9ce31c19f83660"
+  ],
+  "registration_status": "PARENT_OWNS_ANALOGOUS_V3_TRANSITION; NO_POLICY_OR_WORKFLOW_EDIT_INCLUDED",
+  "source_base": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+  "source_code_release": "a2047854bece90ba354f7e379846cafc499fa7d6"
+}

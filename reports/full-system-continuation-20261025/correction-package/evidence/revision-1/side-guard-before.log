@@ -1,0 +1,32 @@
+
+test_bad_row_hash_and_previous_receipt_rejected (test_weekly_selected_rankings.SelectedRankingsTests.test_bad_row_hash_and_previous_receipt_rejected) ... ok
+test_closed_document_rejects_bad_source_and_coverage (test_weekly_selected_rankings.SelectedRankingsTests.test_closed_document_rejects_bad_source_and_coverage) ... ok
+test_closed_pointer_rejects_extra_fields_bad_clocks_and_byte_types (test_weekly_selected_rankings.SelectedRankingsTests.test_closed_pointer_rejects_extra_fields_bad_clocks_and_byte_types) ... ok
+test_complete_public_graph_and_original_receipts_are_required (test_weekly_selected_rankings.SelectedRankingsTests.test_complete_public_graph_and_original_receipts_are_required) ... ok
+test_crossing_kickoff_never_advances_pointer (test_weekly_selected_rankings.SelectedRankingsTests.test_crossing_kickoff_never_advances_pointer) ... ok
+test_durable_readback_idempotency_and_new_process (test_weekly_selected_rankings.SelectedRankingsTests.test_durable_readback_idempotency_and_new_process) ... ok
+test_early_expiry_never_freezes_or_promotes_replacement (test_weekly_selected_rankings.SelectedRankingsTests.test_early_expiry_never_freezes_or_promotes_replacement) ... ok
+test_expiry_between_selection_and_persistence_rejected (test_weekly_selected_rankings.SelectedRankingsTests.test_expiry_between_selection_and_persistence_rejected) ... ok
+test_frozen_membership_line_model_and_clock_persist (test_weekly_selected_rankings.SelectedRankingsTests.test_frozen_membership_line_model_and_clock_persist) ... ok
+test_missing_row_falls_back_explicitly_not_zero (test_weekly_selected_rankings.SelectedRankingsTests.test_missing_row_falls_back_explicitly_not_zero) ... ok
+test_selected_reverses_reference_and_original_stays_intact (test_weekly_selected_rankings.SelectedRankingsTests.test_selected_reverses_reference_and_original_stays_intact) ... ok
+test_started_games_are_never_backfilled (test_weekly_selected_rankings.SelectedRankingsTests.test_started_games_are_never_backfilled) ... ok
+test_ties_stable_and_one_candidate_per_player_side (test_weekly_selected_rankings.SelectedRankingsTests.test_ties_stable_and_one_candidate_per_player_side) ... ok
+test_unknown_history_is_not_invented_zero (test_weekly_selected_rankings.SelectedRankingsTests.test_unknown_history_is_not_invented_zero) ... ok
+test_unsupported_population_and_fake_lines_not_top (test_weekly_selected_rankings.SelectedRankingsTests.test_unsupported_population_and_fake_lines_not_top) ... ok
+test_valid_over_cannot_be_rehomed_into_under_container (test_weekly_selected_rankings.SelectedRankingsTests.test_valid_over_cannot_be_rehomed_into_under_container) ... FAIL
+test_zero_and_signed_yards_are_retained (test_weekly_selected_rankings.SelectedRankingsTests.test_zero_and_signed_yards_are_retained) ... ok
+
+======================================================================
+FAIL: test_valid_over_cannot_be_rehomed_into_under_container (test_weekly_selected_rankings.SelectedRankingsTests.test_valid_over_cannot_be_rehomed_into_under_container)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "DISPOSABLE_FULL_SOURCE/side-guard-before/tests/test_weekly_selected_rankings.py", line 214, in test_valid_over_cannot_be_rehomed_into_under_container
+    with self.assertRaisesRegex(ValueError, "ranking side mismatch"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.109s
+
+FAILED (failures=1)

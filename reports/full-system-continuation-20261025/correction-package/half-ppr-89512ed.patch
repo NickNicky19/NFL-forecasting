@@ -1,0 +1,52 @@
+--- a/output/app.js
++++ b/output/app.js
+@@ -209,7 +209,7 @@
+ 
+ function projPts(p) {
+   if (p.pos === "K" || p.pos === "DEF") return p.proj_ppr;
+-  if (isDefault()) return S.sc.half ? p.proj_half ?? p.proj_ppr : p.proj_ppr;
++  if (isDefault()) return S.sc.half ? (Number.isFinite(p.proj_half) ? p.proj_half : null) : p.proj_ppr;
+   return p.proj && Object.keys(p.proj).length ? skillPts(p.proj, p.pos) : null;
+ }
+ 
+@@ -220,7 +220,7 @@
+ 
+ function avgPts(p) {
+   if (p.pos === "K" || p.pos === "DEF") return p.avg_ppr;
+-  if (isDefault()) return S.sc.half ? p.avg_half ?? p.avg_ppr : p.avg_ppr;
++  if (isDefault()) return S.sc.half ? (Number.isFinite(p.avg_half) ? p.avg_half : null) : p.avg_ppr;
+   const pts = (p.log || []).map((x) => logPts(p, x)).filter((v) => v != null);
+   return pts.length ? Math.round((pts.reduce((a, b) => a + b, 0) / pts.length) * 100) / 100 : null;
+ }
+@@ -234,7 +234,14 @@
+ // The fantasy points prop in the current scoring (half PPR swaps in its own numbers)
+ function pv(p, prop) {
+   if (prop.key !== "fpts" || (isDefault() && !S.sc.half)) return prop;
+-  if (isDefault()) return prop.adj_h == null ? prop : { ...prop, line: prop.line_h, adj: prop.adj_h, proj: prop.proj_h, over: prop.over_h, values: prop.values.map((x) => ({ ...x, v: x.h ?? x.v })) };
++  if (isDefault()) {
++    const values = prop.values.filter(x => Number.isFinite(x.h)).map(x => ({ ...x, v: x.h }));
++    const missing = !Number.isFinite(prop.adj_h) || !Number.isFinite(prop.line_h);
++    return { ...prop, line: missing ? null : prop.line_h, adj: missing ? null : prop.adj_h,
++      proj: Number.isFinite(prop.proj_h) ? prop.proj_h : null, lean: missing ? null : prop.lean,
++      over: missing ? 0 : values.filter(x => x.v > prop.line_h).length, n: values.length, values,
++      scoring_missing: missing };
++  }
+   // Any other scoring: re-score his games and his projection, keep the matchup adjustment
+   const byWeek = Object.fromEntries((p.log || []).map((x) => [x.w, x]));
+   const values = prop.values.map((x) => { const g = byWeek[x.w]; const v = g ? logPts(p, g) : null; return { ...x, v: v ?? x.v }; });
+@@ -1052,6 +1059,7 @@
+ 
+ function propChip(p, raw) {
+   const prop = pv(p, raw);
++  if (prop.scoring_missing) return `<span class="pchip"><span>FPts</span><span class="muted">Half PPR unavailable</span></span>`;
+   const selected = selectedPropForecast(p, prop.key);
+   const effectiveGap = selected ? selectedPropGap(p, prop, true) : null;
+   const lean = selected ? effectiveGap?.lean : prop.lean;
+@@ -1071,6 +1079,7 @@
+ 
+ function catCard(p, raw) {
+   const prop = pv(p, raw);
++  if (prop.scoring_missing) return `<div class="card"><h3>Fantasy Points · Half PPR</h3><p class="muted">Half PPR projection and line unavailable.</p></div>`;
+   const selected = selectedPropForecast(p, prop.key);
+   const from = prop.line_from || "ours";
+   const cat = S.data.categories[prop.key];

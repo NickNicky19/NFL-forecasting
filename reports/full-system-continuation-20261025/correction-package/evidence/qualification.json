@@ -1,0 +1,749 @@
+{
+  "actual_js_side_guard": {
+    "exit_code": 0,
+    "log": "side-guard-js.log",
+    "summary": {
+      "HTTP": 0,
+      "checks": 2,
+      "scope": "Actual current JS validator, ordinary artifact control and wrong-side rejection",
+      "state": "PASS"
+    }
+  },
+  "baseline_half_ppr": {
+    "command": [
+      "node",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/half_ppr_repro.cjs",
+      "--root",
+      "/tmp/nfl-current-corrections-89512ed-v3/baseline"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "baseline",
+    "summary": {
+      "evidence": "FICTIONAL_MISSING_HALF_LABEL_COUNTEREXAMPLE",
+      "results": {
+        "DISPOSABLE_SOURCE_COPY": {
+          "average": 12,
+          "label": "Sleeper Half PPR",
+          "projection": 20,
+          "prop": {
+            "adj": 21,
+            "adj_h": null,
+            "key": "fpts",
+            "line": 21.5,
+            "proj": 20,
+            "values": []
+          }
+        }
+      }
+    },
+    "wall_seconds": 0.064
+  },
+  "baseline_math": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/integrated_math_repro.py",
+      "--root",
+      "/tmp/nfl-current-corrections-89512ed-v3/baseline"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "baseline",
+    "summary": {
+      "all12": {
+        "anytime_td": 2,
+        "fpts": 35.9,
+        "pass_att": 30,
+        "pass_cmp": 20,
+        "pass_int": 1,
+        "pass_td": 2,
+        "pass_yd": 250,
+        "rec": 4,
+        "rec_yd": 51,
+        "rush_att": 3,
+        "rush_rec_yd": 49,
+        "rush_yd": -2
+      },
+      "cancelled_post_classic": {
+        "games_complete": true,
+        "top_over": {
+          "dnp": 0,
+          "hit": 1,
+          "miss": 0,
+          "n_decided": 1,
+          "pct": 100.0,
+          "picks": [
+            {
+              "actual": 6,
+              "adj": 6,
+              "decision_projection": 6,
+              "direction": "over",
+              "game_id": "fictional-game",
+              "key": "rec",
+              "line": 4.5,
+              "line_from": "dk",
+              "name": "Fictional Receiver",
+              "player_id": "fictional-player",
+              "proj": 6,
+              "result": "hit",
+              "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+            }
+          ],
+          "push": 0,
+          "unresolved": 0
+        }
+      },
+      "checks": 43,
+      "combined_tally": {
+        "dnp": 0,
+        "hit": 1,
+        "miss": 1,
+        "n_decided": 2,
+        "pct": 50.0,
+        "push": 1,
+        "unresolved": 0
+      },
+      "field_goal_loss": {
+        "after_normalization": {
+          "fictional-game": {
+            "away_pts": 26.4,
+            "home_pts": 17.6,
+            "home_win": 0.257,
+            "lean_spread": "BBB",
+            "lean_total": null,
+            "ml_away": -289,
+            "ml_home": 289,
+            "spread": 8.8,
+            "total": 44.0
+          }
+        },
+        "direct": {
+          "fictional-game": {
+            "away_pts": 22.5,
+            "home_pts": 21.5,
+            "home_win": 0.47,
+            "lean_spread": null,
+            "lean_total": null,
+            "ml_away": -113,
+            "ml_home": 113,
+            "spread": 1.0,
+            "total": 44.0
+          }
+        }
+      },
+      "invalid_actual_counts": {
+        "boolean": [
+          1,
+          "hit"
+        ],
+        "fractional": [
+          1.5,
+          "hit"
+        ],
+        "negative": [
+          -1,
+          "miss"
+        ]
+      },
+      "missing_projection": {
+        "partial_combined": 30,
+        "receiving_prop": {
+          "adj": 0.0,
+          "key": "rec_yd",
+          "lean": null,
+          "line": 0.5,
+          "mf": 1.0,
+          "mf_n": 0,
+          "n": 0,
+          "over": 0,
+          "proj": 0,
+          "source": "model",
+          "values": []
+        }
+      },
+      "negative_count_projection": {
+        "adj": -1.0,
+        "key": "rec",
+        "lean": null,
+        "line": -0.5,
+        "mf": 1.0,
+        "mf_n": 0,
+        "n": 0,
+        "over": 0,
+        "proj": -1,
+        "source": "model",
+        "values": []
+      },
+      "null_actual": [
+        0,
+        "hit"
+      ],
+      "patched_expectations": false,
+      "presence_aware": false,
+      "root": "DISPOSABLE_FULL_SOURCE/baseline",
+      "wrong_identity_classic": [
+        {
+          "actual": 6,
+          "adj": 6,
+          "decision_projection": 6,
+          "direction": "over",
+          "game_id": "fictional-game",
+          "key": "rec",
+          "line": 4.5,
+          "line_from": "dk",
+          "name": "Fictional Receiver",
+          "player_id": "fictional-player",
+          "proj": 6,
+          "result": "hit",
+          "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+        }
+      ],
+      "wrong_top_game": [
+        {
+          "actual": 6,
+          "adj": 6,
+          "decision_projection": 6,
+          "direction": "over",
+          "game_id": "fictional-other-game",
+          "key": "rec",
+          "line": 4.5,
+          "line_from": "dk",
+          "name": "Fictional Receiver",
+          "player_id": "fictional-player",
+          "proj": 6,
+          "result": "hit",
+          "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+        }
+      ]
+    },
+    "wall_seconds": 0.316
+  },
+  "baseline_python": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/run_python_suite.py"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "baseline",
+    "summary": {
+      "denied_network_attempts": 0,
+      "errors": 0,
+      "failures": 0,
+      "fgm_cache_trace": null,
+      "grading_version": "statistical-v2",
+      "network": "DENIED",
+      "skipped": 0,
+      "tests": 113
+    },
+    "wall_seconds": 0.974
+  },
+  "combined_half_ppr": {
+    "command": [
+      "node",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/half_ppr_repro.cjs",
+      "--root",
+      "/tmp/nfl-current-corrections-89512ed-v3/combined",
+      "--expect-patches"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "evidence": "FICTIONAL_HALF_PPR_PATCH_CHECK",
+      "results": {
+        "DISPOSABLE_SOURCE_COPY": {
+          "average": null,
+          "label": "Sleeper Half PPR",
+          "projection": null,
+          "prop": {
+            "adj": null,
+            "adj_h": null,
+            "key": "fpts",
+            "lean": null,
+            "line": null,
+            "n": 0,
+            "over": 0,
+            "proj": null,
+            "scoring_missing": true,
+            "values": []
+          }
+        }
+      }
+    },
+    "wall_seconds": 0.069
+  },
+  "combined_math": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/integrated_math_repro.py",
+      "--root",
+      "/tmp/nfl-current-corrections-89512ed-v3/combined",
+      "--expect-patches"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "all12": {
+        "anytime_td": 2,
+        "fpts": 35.9,
+        "pass_att": 30,
+        "pass_cmp": 20,
+        "pass_int": 1,
+        "pass_td": 2,
+        "pass_yd": 250,
+        "rec": 4,
+        "rec_yd": 51,
+        "rush_att": 3,
+        "rush_rec_yd": 49,
+        "rush_yd": -2
+      },
+      "cancelled_post_classic": {
+        "games_complete": false,
+        "top_over": {
+          "dnp": 0,
+          "hit": 0,
+          "miss": 0,
+          "n_decided": 0,
+          "pct": null,
+          "picks": [],
+          "push": 0,
+          "unresolved": 0
+        }
+      },
+      "checks": 47,
+      "combined_tally": {
+        "dnp": 0,
+        "hit": 1,
+        "miss": 1,
+        "n_decided": 2,
+        "pct": 50.0,
+        "push": 1,
+        "unresolved": 0
+      },
+      "field_goal_loss": {
+        "after_normalization": {
+          "fictional-game": {
+            "away_pts": 22.5,
+            "home_pts": 21.5,
+            "home_win": 0.47,
+            "lean_spread": null,
+            "lean_total": null,
+            "ml_away": -113,
+            "ml_home": 113,
+            "spread": 1.0,
+            "total": 44.0
+          }
+        },
+        "direct": {
+          "fictional-game": {
+            "away_pts": 22.5,
+            "home_pts": 21.5,
+            "home_win": 0.47,
+            "lean_spread": null,
+            "lean_total": null,
+            "ml_away": -113,
+            "ml_home": 113,
+            "spread": 1.0,
+            "total": 44.0
+          }
+        }
+      },
+      "invalid_actual_counts": {
+        "boolean": [
+          1,
+          "hit"
+        ],
+        "fractional": [
+          1.5,
+          "hit"
+        ],
+        "negative": [
+          -1,
+          "miss"
+        ]
+      },
+      "missing_projection": {
+        "partial_combined": 30,
+        "receiving_prop": {
+          "adj": 0.0,
+          "key": "rec_yd",
+          "lean": null,
+          "line": 0.5,
+          "mf": 1.0,
+          "mf_n": 0,
+          "n": 0,
+          "over": 0,
+          "proj": 0,
+          "source": "model",
+          "values": []
+        }
+      },
+      "negative_count_projection": {
+        "adj": -1.0,
+        "key": "rec",
+        "lean": null,
+        "line": -0.5,
+        "mf": 1.0,
+        "mf_n": 0,
+        "n": 0,
+        "over": 0,
+        "proj": -1,
+        "source": "model",
+        "values": []
+      },
+      "null_actual": [
+        0,
+        "hit"
+      ],
+      "patched_expectations": true,
+      "presence_aware": false,
+      "root": "DISPOSABLE_FULL_SOURCE/combined",
+      "wrong_identity_classic": [
+        {
+          "actual": null,
+          "adj": 6,
+          "decision_projection": 6,
+          "direction": "over",
+          "game_id": "fictional-game",
+          "key": "rec",
+          "line": 4.5,
+          "line_from": "dk",
+          "name": "Fictional Receiver",
+          "player_id": "fictional-player",
+          "proj": 6,
+          "result": "unresolved",
+          "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+        }
+      ],
+      "wrong_top_game": [
+        {
+          "actual": null,
+          "adj": 6,
+          "decision_projection": 6,
+          "direction": "over",
+          "game_id": "fictional-other-game",
+          "key": "rec",
+          "line": 4.5,
+          "line_from": "dk",
+          "name": "Fictional Receiver",
+          "player_id": "fictional-player",
+          "proj": 6,
+          "result": "unresolved",
+          "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+        }
+      ]
+    },
+    "wall_seconds": 0.185
+  },
+  "combined_python": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "/workspace/nfl-system-audit/current-production-corrections/verification/run_python_suite.py"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "denied_network_attempts": 0,
+      "errors": 0,
+      "failures": 0,
+      "fgm_cache_trace": {
+        "current_actual_and_projection": {
+          "actual_fgm": [
+            3,
+            1
+          ],
+          "actual_raw": {
+            "AAA": 23,
+            "BBB": 24
+          },
+          "old_cache_bytes_preserved": true,
+          "projection_fgm": [
+            3,
+            1
+          ],
+          "projection_raw": {
+            "AAA": 23,
+            "BBB": 24
+          }
+        },
+        "first_historical_read": {
+          "new_raw": {
+            "AAA": 23,
+            "BBB": 24
+          },
+          "new_spread": 1.0,
+          "old_cache_bytes_preserved": true,
+          "old_raw": {
+            "AAA": 14,
+            "BBB": 21
+          },
+          "old_spread": 8.8,
+          "rollup_scope": "Direct diagnostic using actual normalized cached values; not a rewrite of an archived game forecast",
+          "season": 2098,
+          "source_calls": 1,
+          "week": 18
+        },
+        "load_stats_through": {
+          "old_cache_bytes_preserved": true,
+          "periods": [
+            [
+              2098,
+              1
+            ],
+            [
+              2098,
+              2
+            ],
+            [
+              2099,
+              1
+            ],
+            [
+              2099,
+              2
+            ]
+          ],
+          "source_calls": 4,
+          "unrefreshed_legacy_periods_recollected": true
+        },
+        "missing_upstream_total": {
+          "claim": "Retention cannot establish an absent upstream total",
+          "raw": {
+            "AAA": 14,
+            "BBB": 21
+          },
+          "reconstructed": false
+        },
+        "unavailable_source": {
+          "new_cache_created": false,
+          "old_cache_bytes_preserved": true,
+          "old_cache_used": false
+        }
+      },
+      "grading_version": "statistical-v3-identity-20261025",
+      "network": "DENIED",
+      "skipped": 0,
+      "tests": 129
+    },
+    "wall_seconds": 0.987
+  },
+  "full_app_browser": {
+    "exit_code": 0,
+    "log": "full-app-browser.log",
+    "summary": {
+      "actual_network_requests": 0,
+      "checks": 75,
+      "network": "ALL_ROUTES_INTERCEPTED_NO_CONTINUE",
+      "provider_requests": 0,
+      "scenes": [
+        {
+          "blocked_external_requests": 25,
+          "checks": 25,
+          "fulfilled_fictional_requests": 11,
+          "intercepted_requests": 36,
+          "observed_requests": 36,
+          "page_errors": [],
+          "width": 320
+        },
+        {
+          "blocked_external_requests": 27,
+          "checks": 25,
+          "fulfilled_fictional_requests": 11,
+          "intercepted_requests": 38,
+          "observed_requests": 38,
+          "page_errors": [],
+          "width": 390
+        },
+        {
+          "blocked_external_requests": 34,
+          "checks": 25,
+          "fulfilled_fictional_requests": 11,
+          "intercepted_requests": 45,
+          "observed_requests": 45,
+          "page_errors": [],
+          "width": 1280
+        }
+      ],
+      "source_scope": "Entire current HTML/CSS/JS, fictional input only",
+      "state": "PASS",
+      "widths": [
+        320,
+        390,
+        1280
+      ]
+    }
+  },
+  "output/app.js_syntax": {
+    "command": [
+      "node",
+      "--check",
+      "output/app.js"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "wall_seconds": 0.1
+  },
+  "output/reliability-ui.js_syntax": {
+    "command": [
+      "node",
+      "--check",
+      "output/reliability-ui.js"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "wall_seconds": 0.05
+  },
+  "output/weekly-adaptive-overlay.js_syntax": {
+    "command": [
+      "node",
+      "--check",
+      "output/weekly-adaptive-overlay.js"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "wall_seconds": 0.074
+  },
+  "phase2_reconstructed_static": {
+    "exit_code": 1,
+    "qualifies_main": false,
+    "summary": {
+      "errors": 0,
+      "failures": 7,
+      "network": "DENIED",
+      "scope": "Retained static/binding tests; no full Phase2 or operating qualification",
+      "skipped": 0,
+      "tests": 33
+    }
+  },
+  "python_compile": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "-m",
+      "compileall",
+      "-q",
+      "pull",
+      "tools"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "wall_seconds": 0.099
+  },
+  "selected_rankings_browser": {
+    "exit_code": 0,
+    "log": "selected-rankings-browser.log",
+    "summary": {
+      "HTTP": 0,
+      "checks": 53,
+      "scope": "fictional Python/JS contracts and actual app functions",
+      "state": "PASS"
+    }
+  },
+  "side_guard_before": {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_weekly_selected_rankings.py",
+      "-v"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "source_lane": "side-guard-before",
+    "wall_seconds": 0.231
+  },
+  "test-selected-rankings.cjs": {
+    "command": [
+      "node",
+      "tests/test-selected-rankings.cjs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "HTTP": 0,
+      "checks": 37,
+      "scope": "fictional Python/JS contracts and actual app functions",
+      "state": "PASS"
+    },
+    "wall_seconds": 0.199
+  },
+  "test-ui.cjs": {
+    "command": [
+      "node",
+      "tests/test-ui.cjs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": "8 UI helper assertions passed.\nBiggest-lean presentation: 19 focused preservation checks passed.",
+    "wall_seconds": 0.063
+  },
+  "test-weekly-overlay.cjs": {
+    "command": [
+      "node",
+      "tests/test-weekly-overlay.cjs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "checks": 27,
+      "scope": "fictional bounded-loader/overlay; explicit final push semantics; no HTTP/provider/data",
+      "state": "PASS"
+    },
+    "wall_seconds": 0.314
+  },
+  "test-weekly-primary-forecast.cjs": {
+    "command": [
+      "node",
+      "tests/test-weekly-primary-forecast.cjs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "actual_network_requests": 0,
+      "checks": 100,
+      "scope": "fictional actual render functions/DOM; no NFL/model/provider/publication",
+      "state": "PASS",
+      "widths": [
+        320,
+        390,
+        1280
+      ]
+    },
+    "wall_seconds": 2.349
+  },
+  "test_weekly_public_feed_caption.cjs": {
+    "command": [
+      "node",
+      "tests/test_weekly_public_feed_caption.cjs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "source_lane": "combined",
+    "summary": {
+      "cases": 3,
+      "scope": "fictional caption only; no HTTP/data",
+      "state": "PASS"
+    },
+    "wall_seconds": 0.061
+  }
+}

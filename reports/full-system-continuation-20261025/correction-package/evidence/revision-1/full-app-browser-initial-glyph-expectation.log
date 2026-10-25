@@ -1,0 +1,19 @@
+AssertionError [ERR_ASSERTION]: full card headlines render unavailable
++ actual - expected
+
+  [
++   '-',
++   '-'
+-   '—',
+-   '—'
+  ]
+
+    at eq (/workspace/nfl-system-audit/current-production-corrections/verification/full_app_browser.cjs:30:29)
+    at /workspace/nfl-system-audit/current-production-corrections/verification/full_app_browser.cjs:63:7 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

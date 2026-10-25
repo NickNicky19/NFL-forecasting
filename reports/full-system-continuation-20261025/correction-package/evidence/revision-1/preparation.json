@@ -1,0 +1,69 @@
+{
+  "archive_sha256": "1143916ac9dc544da3d9bd0c36d1ae2607a1094a0f60f2c7599e7f2ead28cc9e",
+  "changed_files": {
+    "output/app.js": {
+      "bytes": 334225,
+      "postimage_sha256": "76cc66917e1c8f5f61d1d0169001bd09bc76c2a6439b2ec32c89619c9484bbd7",
+      "preimage_sha256": "b86c5bc0580611d6f8bcd18dff75b5ca3db663dcc625fbc6a29ce135ac5f5704"
+    },
+    "pull/build.py": {
+      "bytes": 39638,
+      "postimage_sha256": "3962b8f13aec49771a94e7e4259d4aefdb161783572278e614d47a5e50ddc78f",
+      "preimage_sha256": "75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419"
+    },
+    "pull/grade.py": {
+      "bytes": 14270,
+      "postimage_sha256": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354",
+      "preimage_sha256": "ca16cd918d3a17a4a5c34be79f22aaaee7ae7babf2ddfb1a45e7fc17f521f105"
+    },
+    "pull/scoring.py": {
+      "bytes": 6000,
+      "postimage_sha256": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+      "preimage_sha256": "31672c10d526d591db8951157b0ecd669b4d02b412a75deec337618bff18dab2"
+    },
+    "tests/test_grading_identity_v3.py": {
+      "bytes": 8861,
+      "postimage_sha256": "aa40a0182873e28d2d547dce755908ccad8632cb8a95052f30d0cec9ba5b860d",
+      "preimage_sha256": null
+    },
+    "tests/test_weekly_selected_rankings.py": {
+      "bytes": 13358,
+      "postimage_sha256": "32594620d39d0f49a655d6080904d9790fbcca217782ba2f44871343419e08e9",
+      "preimage_sha256": "33a8377249a69232e19b970ba9fd5eacc9d76b0e122e99f60f83aafc63a2f775"
+    },
+    "tools/weekly_selected_rankings.py": {
+      "bytes": 19311,
+      "postimage_sha256": "9482d7ab53e8273b736177daf1b289b1ff75de29b3987f27f283693c5b1457c7",
+      "preimage_sha256": "7503eaedeb8e2c5d8328423d49bd9e7269488af378fe023dcc43a8bcba8209b1"
+    }
+  },
+  "combined_patch_exact_application": "patching file output/app.js\npatching file pull/build.py\npatching file pull/grade.py\npatching file pull/scoring.py\npatching file tests/test_grading_identity_v3.py\npatching file tests/test_weekly_selected_rankings.py\npatching file tools/weekly_selected_rankings.py",
+  "external_actions": false,
+  "full_source_copy": "DISPOSABLE_NO_GIT",
+  "negative_count_main": "NOT_APPLICABLE_REQUIRES_PRESENCE_AWARE_COMPONENT_CONTRACT",
+  "prepared_patch_applications": [
+    {
+      "output": "patching file pull/scoring.py",
+      "patch": "website-audit-math-01-retain-field-goals.patch",
+      "sha256": "b0a17e63014d6612a6414b3bd01ca1dbbbcbd67c21bcf7ffb9aebdae04d15952"
+    },
+    {
+      "output": "patching file pull/grade.py\npatching file pull/build.py\npatching file tests/test_grading_identity_v3.py",
+      "patch": "website-audit-math-02-bind-classic-statistics.patch",
+      "sha256": "34c7ab18da4f905fbaa2b2f4f62389f888dbf4f48c2dffa37b7f3f4f97a5cbd2"
+    },
+    {
+      "output": "patching file pull/build.py\nHunk #1 succeeded at 116 (offset 2 lines).\nHunk #2 succeeded at 138 (offset 2 lines).\nHunk #3 succeeded at 537 (offset 2 lines).\nHunk #4 succeeded at 757 (offset 2 lines).",
+      "patch": "website-audit-math-03-require-completed-finals.patch",
+      "sha256": "9fdddac5a02432cf6a8bbcbd458ea964014b5237380c1b77f0fadd653d9ee9ec"
+    },
+    {
+      "output": "patching file tools/weekly_selected_rankings.py\npatching file tests/test_weekly_selected_rankings.py",
+      "patch": "website-current-b32b13d2123-rankings-side-guard.patch",
+      "sha256": "f701a4b7bfce169955b269ff12d4d69a4aacef9f2ef325ddd0cb316da6753bed"
+    }
+  ],
+  "source_base": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+  "sourcebase89512ed": true,
+  "website_worktree_modified": false
+}
