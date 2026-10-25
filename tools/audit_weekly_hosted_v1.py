@@ -25,6 +25,15 @@ def main(argv=None):
     args=parser.parse_args(argv)
     if not args.execute:
         print('{"state":"WEEKLY_PREPARATION_ONLY_NO_IO","fits":0,"public_release":false}');return 2
+    # Select and check the backend before hosted imports numerical libraries.
+    try:
+        from nfl_lab import audit_numerical_runtime_v1 as numerical
+        numerical.preflight(ROOT,os.environ)
+    except Exception as error:
+        code=str(error)
+        if not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="NUMERICAL_STARTUP_CONFIGURATION_REQUIRED"
+        print(json.dumps(dict(state="FAILED_RETAINED",reason=code,fits=0,public_release=False,
+            successful_forecast=False),sort_keys=True));return 1
     from nfl_lab import audit_weekly_hosted_v1 as hosted,private_draft_store as store
     try:
         from tools.audit_process_guard_v1 import arm_parent_death

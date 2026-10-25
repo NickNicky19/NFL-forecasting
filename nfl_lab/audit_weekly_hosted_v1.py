@@ -30,6 +30,7 @@ from . import audit_weekly_runtime_v1 as runtime, audit_weekly_archive_v1 as arc
 from . import audit_reference_capture_v1 as reference
 from . import audit_weekly_public_v1 as public, audit_weekly_retained_v1 as weekly_retained
 from . import operational_failure_v1 as failure
+from . import audit_numerical_runtime_v1 as numerical
 from .operational_storage import OperationalStorage, _OWNER
 from .owned_reference_batch import validate_owned_references
 from .state import digest, now_utc, utc
@@ -59,6 +60,8 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "nfl_lab/operational_failure_v1.py",
     "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
     "tests/test_audit_weekly_receipt_bundle_v1.py",
+    "nfl_lab/audit_numerical_runtime_v1.py", "tests/test_audit_numerical_runtime_v1.py",
+    "config/audit-weekly-numerical-runtime-v1.json",
     ".github/workflows/audit-source-checks.yml"}))
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
@@ -752,6 +755,7 @@ def child_context(args,env,phase):
 def model_child(args, env):
     """Dedicated numerical process; source/model restoration does zero fits."""
     request,a,job,go=child_context(args,env,"models")
+    numerical.loaded(ROOT,env)
     require(set(request)=={"schema_version","registration","cache","state_root","output","code_pins"}
         and request["schema_version"]==VERSION+"-model-request" and request["registration"]==go["retained_registration"],
         "CLOSED_CURRENT_MODEL_REQUEST")
