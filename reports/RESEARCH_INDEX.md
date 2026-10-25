@@ -1,5 +1,16 @@
 # Forecasting research: complete navigation index
 
+## Latest website integration — 2026-10-25
+
+**Selected forecasts now drive Top Overs/Unders, directional leans and new sorting.**
+[Verified live release](selected-ranking-integration-20261025/README.md) ·
+[Exact public release evidence](selected-ranking-integration-20261025/PUBLIC_RELEASE.json).
+Current Top lists contain 22 selected forecasts and two labeled R0 fallbacks.
+This is an operational provisional release, not a new accuracy result or scientific
+qualification. Forecast-method research is paused. Older dated checkpoints below
+retain their original state; use the latest release for current deployment status.
+
+
 Updated 2026-10-23. Scope: recorded work in this lab and the earlier evidence
 actually recovered here. This index adds no forecasts, fits, outcomes or scores.
 It does not claim to recover every artifact from an earlier chat.
