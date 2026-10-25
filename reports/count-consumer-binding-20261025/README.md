@@ -1,3 +1,5 @@
+> Current status (2026-10-25T12:50UTC): all existing COUNT binding packets are HELD. Captures4 and5 failed and must not be installed. PR19 merged as a172f7d8c239b9781117859c6afcab55d6fdfe70 after actual1054-test CI and actual native archive-envelope checks. Genuine capture6 has not yet run; it is eligible after13:30UTC. The dated preparation below and current-5 remain original evidence, not release authorization. Active website assembly is owned by NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z under coordinationfc361f8546ba7b3f26e44b5901112b411c1f97a3.
+
 # Exact COUNT consumer binding for the existing website integrator
 
 This is a prepared two-file source package, not an installed or verified release.
