@@ -1,0 +1,56 @@
+{
+  "schema_version": "count-consumer-current-main-qualification-v1",
+  "state": "PRODUCER_PUBLIC_DELIVERY_QUALIFIED_WEBSITE_PENDING",
+  "preparation_commit": "89a0065bcc9ef3a50677770078dd90e64ea9c2ed",
+  "preparation_record_preserved": true,
+  "observed_at": "2026-10-25T15:18:11.066231+00:00",
+  "source_sha": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "run_id": "40203512153",
+  "feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+  "feed_rows": 1620,
+  "feed_categories": [
+    "anytime_td",
+    "pass_att",
+    "pass_cmp",
+    "pass_int",
+    "pass_td",
+    "pass_yd",
+    "rec",
+    "rec_yd",
+    "rush_att",
+    "rush_rec_yd",
+    "rush_yd"
+  ],
+  "public_receipt_sha256": "ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0",
+  "public_policy_sha256": "8cf0df7f10842639f814daedb82231064fab0c4816cb4740bcc13c9263a06791",
+  "jobs": {
+    "consume": {
+      "api_job_id": 121202129920,
+      "job_id": "audit-weekly-export-v1"
+    },
+    "produce": {
+      "api_job_id": 121199486624,
+      "job_id": "audit-weekly-produce-v1"
+    },
+    "restore": {
+      "api_job_id": 121201823053,
+      "job_id": "audit-weekly-restore-v1"
+    }
+  },
+  "producer_reader_exporter_completed_success": true,
+  "public_anonymous_TLS_receipt_verified": true,
+  "fresh_private_restore_result_sha256": "9216da365ebca9af85fe320a7c2ca5b006df57f6fa4f278b289b8d7230729940",
+  "actual_combined_website_CI": false,
+  "website_installed": false,
+  "website_deployed": false,
+  "website_live_verified": false,
+  "eligible_for_website_source_integration": true,
+  "eligible_for_unchecked_release": false,
+  "new_fits": 0,
+  "remaining_gates": [
+    "existing active writer exact protected-source binding",
+    "actual combined website source CI",
+    "normal protected release",
+    "actual corrected selected-feed live verification"
+  ]
+}
