@@ -89,6 +89,61 @@ def public_root_fixture():
     return go,policy,bind,at
 
 
+def controller_admission_root(*, separate):
+    """Fictional Root with the actual clock, source, config and context guards.
+
+    Only retained model artifact qualification is outside this admission test;
+    its independent validator is exercised by the retained-artifact suites.
+    """
+    from nfl_lab import audit_weekly_controller_registration_v1 as registration
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    at=hosted.utc('2026-10-25T19:30:00Z')
+    context=dict(schema_version=registration.VERSION+'-context',parent_source_sha='a'*40,
+        previous_capture=dict(feed_sha256='b'*64,receipt_sha256='c'*64))
+    if separate:
+        context.update(schema_version=registration.SEPARATE_CONTEXT_SCHEMA,
+            parent_code_pins={name:'d'*64 for name in bootstrap.PARENT_EXECUTABLE_PINS})
+    root={key:None for key in hosted.ROOT_KEYS}
+    root.update(schema_version=hosted.VERSION+'-root-GO',approved=True,repository=store.REPO,
+        mode=hosted.MODE,operation='CONTROLLER_REGISTRATION',source_sha='e'*40,
+        workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1',
+        owner_authorization='OWNER_NFL_AUDIT_CONTINUATION_20261025',issued_at_utc=at.isoformat(),
+        expires_at_utc=(at+timedelta(minutes=30)).isoformat(),single_writer_group='nfl-lab-single-writer',
+        code_pins=hosted.pins(),limits=hosted.LIMITS.copy(),jobs=hosted.JOBS.copy(),
+        failure_restorer=hosted.FAILURE_JOB,cutoff_lead_seconds=5400,publication=False,
+        qualified_runtime=dict(schema_version='audit-private-rotation-v1-qualified-runtime',runtime_reserved_bytes=32<<20),
+        source_config=dict(purpose='CURRENT_OPERATIONAL_INFERENCE',history_seasons=[2026],
+            allowed_periods={'2026':[1,2,3,4,5,6]},
+            freshness_seconds=dict(schedule=86400,current_roster=86400,current_statistics=86400,players=604800)),
+        effective_epoch=context)
+    return root,at
+
+
+@pytest.mark.parametrize('separate',[False,True])
+def test_actual_root_admission_accepts_original_and_separate_source_context(separate):
+    root,at=controller_admission_root(separate=separate)
+    with patch.object(hosted.retained,'validate_registration') as retained_check:
+        assert hosted.validate_root(root,now=at) is root
+    retained_check.assert_called_once_with(None)
+
+
+@pytest.mark.parametrize('damage',['extra','unknown_schema','parent_sha','missing_pin','invalid_pin','too_many_pins'])
+def test_actual_root_admission_rejects_bad_split_context_before_artifact_qualification(damage):
+    root,at=controller_admission_root(separate=True)
+    ctx=root['effective_epoch'];pins=ctx['parent_code_pins']
+    if damage=='extra':ctx['approved']=True
+    elif damage=='unknown_schema':ctx['schema_version']='unregistered-context'
+    elif damage=='parent_sha':ctx['parent_source_sha']='a'*39
+    elif damage=='missing_pin':pins.pop('nfl_lab/owned_reference_batch.py')
+    elif damage=='invalid_pin':pins['nfl_lab/owned_reference_batch.py']='unbound'
+    elif damage=='too_many_pins':
+        pins.update({'nfl_lab/fictional_extra_%03d.py'%i:'f'*64 for i in range(129-len(pins))})
+    with patch.object(hosted.retained,'validate_registration') as retained_check:
+        with pytest.raises(store.StoreError,match='EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT'):
+            hosted.validate_root(root,now=at)
+    retained_check.assert_not_called()
+
+
 @pytest.mark.parametrize('case',['missing_review','blanket','unknown_field','invalid_review','invalid_basis','zero_deployment','late_freeze','wrong_engine'])
 def test_invalid_rights_or_R0_reject_before_any_source_or_forecast_read(case):
     go,policy,bind,at=public_root_fixture()

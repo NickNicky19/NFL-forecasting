@@ -82,5 +82,32 @@ def test_runtime_inventory_covers_parent_and_grading_contracts_within_the_origin
     # continues discovering them; moving them out of Root is not a CI filter.
     for name in hosted.CI_ONLY_QUALIFICATION_TESTS:
         assert (ROOT/name).is_file() and name not in hosted.PINS
-    ci=(ROOT/'.github/workflows/audit-source-checks.yml').read_text()
-    assert 'python -m pytest -q' in ci and '-k ' not in ci and '--ignore' not in ci
+    ci=yaml.load((ROOT/'.github/workflows/audit-source-checks.yml').read_bytes(),Loader=yaml.BaseLoader)
+    assert ci['permissions']=={'contents':'read'} and 'schedule' not in ci['on']
+    jobs=ci['jobs'];assert set(jobs)=={'collect','shards','offline'}
+    assert jobs['shards']['strategy']=={'fail-fast':'false','max-parallel':'4','matrix':{'shard':['0','1','2','3']}}
+    assert 'needs' not in jobs['shards']  # Independent full discovery even if the separate collector fails.
+    assert jobs['offline']['needs']==['collect','shards'] and jobs['offline']['if']=='always()'
+    for job in jobs.values():
+        assert job['timeout-minutes']=='20' and 'continue-on-error' not in job
+    for name,phase in [('collect','collect'),('shards','run')]:
+        steps=jobs[name]['steps']
+        run=next(step for step in steps if step.get('id')=='tests')
+        assert f'tools/audit_source_ci_v1.py {phase} ' in run['run']
+        assert '--seconds 960' in run['run']
+        assert '-k ' not in run['run'] and '--ignore' not in run['run']
+        r0=next(step for step in steps if step.get('with',{}).get('repository')=='NickNicky19/nicks-expert-nfl-picks')
+        assert r0['with']['ref']=='89512ed952308dacc1f6a930915ddbcdccd460d9'
+        assert r0['with']['persist-credentials']=='false'
+        finish=next(step for step in steps if ' finish ' in step.get('run',''))
+        assert finish['if']=='always()' and '--step-status "${{ steps.tests.outcome }}"' in finish['run']
+        upload=next(step for step in steps if step.get('uses')=='actions/upload-artifact@v4')
+        assert upload['if']=='always()' and upload['with']['if-no-files-found']=='error'
+        assert '${{ github.run_attempt }}' in upload['with']['name']
+    verify=next(step for step in jobs['offline']['steps'] if ' verify ' in step.get('run',''))
+    assert verify['env']=={'AUDIT_SOURCE_CI_NEEDS_JSON':'${{ toJSON(needs) }}'}
+    assert '--artifacts source-ci-evidence' in verify['run']
+    from nfl_lab.audit_numerical_runtime_v1 import ENVIRONMENT
+    assert ci['env']==ENVIRONMENT and len(ci['env'])==11
+    assert 'tools/audit_source_ci_v1.py' not in hosted.PINS
+    assert 'tests/test_audit_source_ci_v1.py' not in hosted.PINS

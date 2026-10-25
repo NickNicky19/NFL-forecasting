@@ -189,14 +189,10 @@ def validate_root(go, *, now):
         from . import audit_weekly_operations_v1 as operations
         operations.context(go["effective_epoch"])
     elif go["operation"]=="CONTROLLER_REGISTRATION":
-        value=go["effective_epoch"]
-        require(type(value) is dict and set(value)=={"schema_version","parent_source_sha","previous_capture"}
-            and value["schema_version"]=="audit-weekly-controller-registration-v1-context"
-            and re.fullmatch(r"[a-f0-9]{40}",str(value["parent_source_sha"]))
-            and type(value["previous_capture"]) is dict
-            and set(value["previous_capture"])=={"feed_sha256","receipt_sha256"}
-            and all(re.fullmatch(r"[a-f0-9]{64}",str(v)) for v in value["previous_capture"].values()),
-            "EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT")
+        from . import audit_weekly_controller_registration_v1 as registration
+        try:registration.context(go["effective_epoch"])
+        except registration.RegistrationError:
+            raise store.StoreError("EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT") from None
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
     retained.validate_registration(retained_registration(go))
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
