@@ -215,3 +215,6 @@ P0–P4 replay completed for eleven targets over 2022–2024 REG, 54 weeks and 8
 [All-twelve-category capture and release status](weekly-provisional-capture-v1/README.md) · [Machine-readable matrix](weekly-provisional-capture-v1/aggregate.json) · [Genuine hosted canary proof](private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json).
 
 Eighteen future-query procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 primary-role selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. The expanded historical run is active, with no result asserted here. Original scientific registrations remain unchanged.
+
+
+[Anytime-TD Bernoulli blends](anytime-td-blend-v1/README.md): two scalar weight fits, four factor forecasts, six pooled/twelve annual contrasts over the same exposed 2023–2024 panel. Both blends have small pooled Brier gains versus the specified CDF/CatBoost bases, worse absolute bias versus CatBoost, and a 2024 CatBoost loss; all CatBoost paired intervals include zero. Independent arithmetic accepted; both advance flags false.
