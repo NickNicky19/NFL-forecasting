@@ -5,6 +5,8 @@ import io
 import json
 from pathlib import Path
 import subprocess
+import os
+import sys
 
 import joblib
 import numpy as np
@@ -21,6 +23,27 @@ from nfl_lab.state import digest
 from tools import audit_count_requalify_v1 as cli
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_native_restore_envelope_accepts_the_unchanged_real_exchange_guard():
+    # A separate interpreter owns the hard native caps; no HTTP/model I/O occurs.
+    code = '''
+from pathlib import Path
+from nfl_lab import audit_count_requalify_v1 as audit, private_draft_store as store
+import signal
+plan={"runtime_envelopes":audit.shared_envelopes()}
+with audit.resource_envelope(plan,"restore",Path.cwd()):
+    assert signal.getsignal(signal.SIGALRM)==signal.SIG_DFL
+    assert signal.getitimer(signal.ITIMER_REAL)[0]>0
+    with store.exchange_deadline(True):
+        pass
+print("NATIVE_RESTORE_EXCHANGE_ACCEPTED")
+'''
+    numerical=json.loads((ROOT/'config/weekly-owner-private-bootstrap-v1.json').read_text())['numerical_environment']
+    result=subprocess.run([sys.executable,'-B','-c',code],cwd=ROOT,env={**os.environ,**numerical},
+                          text=True,capture_output=True,timeout=30)
+    assert result.returncode==0,result.stderr
+    assert result.stdout.strip()=='NATIVE_RESTORE_EXCHANGE_ACCEPTED'
 
 
 class FixedEstimator:

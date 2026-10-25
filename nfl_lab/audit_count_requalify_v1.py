@@ -348,9 +348,9 @@ def resource_envelope(plan, phase, checkout):
     require(plan["runtime_envelopes"] == shared_envelopes(), "EXACT_SHARED_RUNTIME_ENVELOPES")
     resource.setrlimit(resource.RLIMIT_CPU, (caps["CPU_seconds"],) * 2)
     resource.setrlimit(resource.RLIMIT_AS, (caps["address_space_bytes"],) * 2)
-    def expire(*unused):
-        raise AuditGuardError("COUNT_REQUALIFICATION_WALL_CAP")
-    signal.signal(signal.SIGALRM, expire)
+    # Real private exchanges require the original native, default-handler
+    # deadline. Keep that strong guard; a custom Python handler is incompatible.
+    signal.signal(signal.SIGALRM, signal.SIG_DFL)
     signal.setitimer(signal.ITIMER_REAL, caps["wall_seconds"])
     started, cpu = time.monotonic(), time.process_time()
     stats = dict(sampled_peak_bytes=0, highwater_bytes=0, samples=0)
