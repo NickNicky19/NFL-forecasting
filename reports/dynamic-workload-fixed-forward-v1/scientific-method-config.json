@@ -1,0 +1,99 @@
+{
+  "schema": "dynamic-workload-scientific-method-config-public-v1",
+  "method_id": "dynamic-workload-fixed-forward-v1",
+  "status": "RECORDED_RECIPE_ONLY_NOT_EXECUTION_AUTHORITY",
+  "targets": [
+    "rush_att",
+    "rec",
+    "rec_yd"
+  ],
+  "auxiliary_target": "rec_tgt",
+  "evaluation_years": [
+    2022,
+    2023,
+    2024
+  ],
+  "selected_before_forward": {
+    "rush_att": "smooth-H8-k25",
+    "rec_tgt": "smooth-H8-k25"
+  },
+  "conditional_share": {
+    "core_version": "dynamic-opportunity-core-v1-20261023",
+    "support": "conditional expected count; no numeric probability law",
+    "maximum_team_game_slots": 8,
+    "reset_boundaries": [
+      "season",
+      "team",
+      "spell"
+    ],
+    "half_life_team_games": 8,
+    "decay_per_team_game": "2**(-1/8)",
+    "prior_strength_kappa": 25,
+    "changepoint_hazard": 0,
+    "prior": "Earlier-season role-specific individual repeated-exposure share, training strictly before annual query boundary",
+    "updates": "Only explicit qualified paired player/team counts; missing/unknown slots consume window and transition without zero update",
+    "query_transition": "One observation-free team-game transition",
+    "output": "Supported fixed team volume \u00d7 expected individual share",
+    "joint_allocation": "Not established; no simultaneous player-share-sum constraint"
+  },
+  "fixed_efficiency": {
+    "maximum_same_slots": 8,
+    "prior_strength": 100,
+    "catch_rate": "(100*prior_catch_rate + qualified_catches)/(100 + compatible_targets)",
+    "receiving_yards_per_target": "(100*prior_YPT + qualified_signed_yards)/(100 + compatible_targets)",
+    "receptions_point": "target_point * catch_rate",
+    "receiving_yards_point": "target_point * YPT",
+    "dynamic_and_matched_static_conversion": "Identical untuned conversion; no efficiency search"
+  },
+  "methods_per_year": {
+    "rush_att": [
+      "selected_dynamic",
+      "matched_static"
+    ],
+    "rec_tgt": [
+      "selected_dynamic",
+      "matched_static",
+      "aux_recent3",
+      "aux_pooled8"
+    ],
+    "rec": [
+      "selected_dynamic",
+      "matched_static"
+    ],
+    "rec_yd": [
+      "selected_dynamic",
+      "matched_static"
+    ]
+  },
+  "comparator_contract": {
+    "counts": "Literal saved corrected leafCDF MEAN, paired MSE",
+    "rec_yd": "Literal saved corrected leafCDF lowerMEDIAN, paired MAE",
+    "matched_static": "Same source/request/volume/efficiency and fixed earlier prior; no dynamic share updates",
+    "aux_recent3_pooled8": "Separate target-count diagnostics with limited supported coverage"
+  },
+  "freeze_and_population": {
+    "global_forecasts": 30,
+    "before_scoring_labels": true,
+    "same_original_full_offered_order_and_context": true,
+    "dtype_mask_clock_identity_checks_required": true,
+    "fallbacks": "Exact saved CDF retained for final targets when unsupported/outside modeledrole; auxiliary target prediction can abstain",
+    "qualified_labels": "Availability admission before canonical game order; REG2022\u201324 only; no missing-to-zero"
+  },
+  "uncertainty": {
+    "generator": "PCG64",
+    "independently_recomputed_intervals": 60,
+    "percentile": "linear .025/.975",
+    "replicates": 500,
+    "seed": 1703,
+    "unadjusted_descriptive_exposed_only": true,
+    "wholecluster_weighted_sums_counts": true
+  },
+  "evidence_lane": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTED_HISTORICAL; no original issuance or confirmation",
+  "optimizer_model_fits": 0,
+  "prior_calculations": "Separate charged computations/reservations, not refunded or represented as absent",
+  "public_pure_core": {
+    "relative_path": "../../nfl_lab/dynamic_opportunity_core.py",
+    "sha256": "d9323e22cf3fdc4a0f3bbbc57c108f766811630060d3045ae54e89b80dc686a9"
+  },
+  "full_replay": "Unavailable from public artifacts alone; private inputs, frozen factors, priors, exact controls, label qualification, source plan and continuation harness remain required"
+}
