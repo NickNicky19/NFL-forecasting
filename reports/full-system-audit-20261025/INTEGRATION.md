@@ -1,6 +1,6 @@
 # Concrete integration handoff
 
-**Superseding state:** [SUCCESSOR-RELEASE.md](SUCCESSOR-RELEASE.md) records current mainb32b13d/builda254616 and closed rankings lease1ea1456 (active:null). The original snapshot below remains preserved; use refreshed successor preimages, and reconcile with the existing Phase2 lead rather than treating the old lease as still busy.
+**Superseding state:** [SUCCESSOR-RELEASE.md](SUCCESSOR-RELEASE.md) records current mainb32b13d/builda254616 and closed rankings lease1ea1456 (active:null). The original snapshot below remains preserved; use refreshed successor preimages, and reconcile with the existing Phase2 lead rather than treating the old lease as still busy. A later exact refresh observed caption-only writer NFL-WEEKLY-RANKINGS-CAPTION-20261025-V1 atcoordinationb4f6313/revision153; preserve that separate active scope too.
 
 This package belongs to audit run `NFL-FULL-SYSTEM-AUDIT-20261025`. The current website writer remains `NFL-WEEKLY-RANKINGS-20261024-V1` at coordination `40cd1f36868783115f8f7a62cae85d1f05a2b687`. The prior Phase2 lead retains its unfinished protected integration. No audit lease or competing production scheduler exists.
 
