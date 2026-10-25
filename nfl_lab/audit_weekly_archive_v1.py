@@ -69,6 +69,48 @@ def pins():
     return {p:store.sha(store.read_local(root/p,2 << 20)) for p in PIN_PATHS}
 
 
+def capture_groups(files):
+    """Deterministic bounded packing of every required immutable file.
+
+    The codec's lexical next-fit order can exhaust eight groups even when the
+    same full census fits. Balance larger encoded members across a bounded
+    number of groups, keeping the codec, file-count and inflated-size bounds. This
+    chooses a finite packing, never promises an optimal solution or drops a
+    file that does not fit. All grouping/encoding completes before any POST.
+    """
+    validate_files(files)
+    members=[item for item in files if item["bytes"]]
+    empty=codec.inflated_size([])
+    costs={item["logical_path"]:codec.inflated_size([item])-empty for item in members}
+    ordered=sorted(members,key=lambda item:(-costs[item["logical_path"]],item["logical_path"]))
+    require(all(empty+cost<=codec.GROUP_JSON for cost in costs.values()),"SINGLE_FILE_BUNDLE_CAP")
+    if not ordered:return []
+    # Filling early groups to their byte cap can strand their file slots and
+    # consume too many groups for the remaining small original receipts.
+    lower=max((len(ordered)+codec.MAX_FILES-1)//codec.MAX_FILES,
+        (sum(costs.values())+codec.GROUP_JSON-empty-1)//(codec.GROUP_JSON-empty))
+    groups=[];sizes=[]
+    for count in range(lower,MAX_GROUPS+1):
+        bins=[[] for _ in range(count)];loads=[empty]*count
+        for item in ordered:
+            cost=costs[item["logical_path"]]
+            eligible=[n for n,group in enumerate(bins) if len(group)<codec.MAX_FILES
+                and loads[n]+cost+bool(group)<=codec.GROUP_JSON]
+            if not eligible:break
+            n=min(eligible,key=lambda n:(loads[n],len(bins[n]),n))
+            loads[n]+=cost+bool(bins[n]);bins[n].append(item)
+        else:
+            groups=[group for group in bins if group]
+            sizes=[load for group,load in zip(bins,loads) if group]
+            break
+    require(groups,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
+    require(sorted(item["logical_path"] for group in groups for item in group)
+        ==sorted(item["logical_path"] for item in members),"EXACT_COMPLETE_ARCHIVE_PACKING_CENSUS")
+    require(all(len(group)<=codec.MAX_FILES and codec.inflated_size(group)==size<=codec.GROUP_JSON
+        for group,size in zip(groups,sizes)),"UNCHANGED_ARCHIVE_CODEC_GROUP_BOUNDS")
+    return groups
+
+
 def write(storage,path,value):
     storage.write_bytes(path,store.canonical(value))
     return cp.binding(path)
@@ -494,7 +536,7 @@ def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pendin
     complete=census["archive_state"]=="COMPLETE_CAPTURE"
     validate_capture(snapshot,lambda n:Path(next(f["path"] for f in files if f["logical_path"]==n)),complete=complete)
     prepared=[]
-    for n,members in enumerate(codec.groups([f for f in files if f["bytes"]])):
+    for n,members in enumerate(capture_groups(files)):
         require(n<MAX_GROUPS,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
         body,inflated=codec.encode(members)
         record=dict(index=n,bytes=len(body),sha256=store.sha(body),inflated_bytes=inflated,files=members)
