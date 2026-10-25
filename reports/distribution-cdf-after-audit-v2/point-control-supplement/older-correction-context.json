@@ -1,0 +1,44 @@
+{
+  "schema_version": "cached-point-controls-older-correction-descriptive-context-v1",
+  "state": "PUBLIC_AGGREGATE_ONLY_NO_NEW_PAIRED_TEST",
+  "source_scope": "Two already published baseline-correction-v3 aggregate references; no source rows, forecasts, fits or outcome scoring were opened for this addition",
+  "fresh_control_context_scope": "existing-v2-fixed-control-context.json contains only fresh V2 CDF, corrected-mean Count A and the six direct settings; it does not include these older corrections",
+  "references": [
+    {
+      "target": "pass_td",
+      "product": "mean point",
+      "primary_loss": "MSE",
+      "published_reference": "cdf_offset_context_v1",
+      "published_reference_MSE": 1.0623503956897387,
+      "CDF_response_MSE": 1.0619745013505355,
+      "descriptive_change_pct": 0.03538327285689023,
+      "published_period": "pooled_2022_2024",
+      "published_population": "primary_roles",
+      "published_paired_rows": 1960,
+      "source_report": "reports/baseline-correction-report-v3/target-reports/pass_td.json",
+      "source_report_sha256": "3b1681164c9489dfcd1db610690127149f9a0524b196688ed73814da1336978a",
+      "source_pair_index": 75
+    },
+    {
+      "target": "pass_att",
+      "product": "mean point",
+      "primary_loss": "MSE",
+      "published_reference": "cdf_offset_intercept_v1",
+      "published_reference_MSE": 114.17545157826838,
+      "CDF_response_MSE": 113.9007310602089,
+      "descriptive_change_pct": 0.24061259601952023,
+      "published_period": "pooled_2022_2024",
+      "published_population": "primary_roles",
+      "published_paired_rows": 1960,
+      "source_report": "reports/baseline-correction-report-v3/target-reports/pass_att.json",
+      "source_report_sha256": "103b1907985860dffa9c216dccf15b5f7598b9e9b32f9c3203bbffcf410bd1d0",
+      "source_pair_index": 35
+    }
+  ],
+  "comparability": "Published populations and periods are descriptive metadata. This packet has not authenticated exact older-correction row/cutoff/forecast/source identity to V2; numerical minima across the named publications are not a new paired comparison or globally best result",
+  "new_training": 0,
+  "new_inference": 0,
+  "new_row_scoring": 0,
+  "new_paired_tests": 0,
+  "interpretation": "CDF-response has the lowest observed mean MSE for pass_td and pass_att within these specifically named published references; gains are descriptive, unconfirmed and do not select a policy. pass_int minimum in the stated fresh/direct set is unchanged"
+}

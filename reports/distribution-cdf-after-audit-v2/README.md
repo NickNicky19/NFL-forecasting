@@ -33,6 +33,68 @@ The descriptive paired 95% week interval for candidate-minus-CDF CRPS is **[−0
 
 Rush-attempt CRPS improves slightly versus CDF but absolute mean bias worsens against the prior control. Other response gains fail a declared bias or tail gate. No gate was relaxed after results. A valid marginal law does not establish calibration or a coherent joint simulator; combined yards was scored directly.
 
+## Cached point-control supplement
+
+The separately registered [cached report](point-control-supplement/README.md)
+completed **132 pooled comparisons and 396 annual diagnostics**, with zero new
+training, model decoding or inference. All six fixed direct settings remain in
+all eleven supported categories; the separately recovered XGBoost binary
+procedures are named explicitly. Each comparison verifies original method,
+annual year, primary-role keys, cutoffs, labels and identical finite masks.
+All have three annual cells and full offered-forecast coverage. Count mean MSE,
+yardage median-objective MAE and event Brier remain separate products.
+
+Monotone loses to the lowest-loss direct setting in all eleven categories.
+CDF-response is lower in seven, but is below every applicable member of the
+named six-direct/fresh-CDF/corrected-mean-Count-A set only for **passing TD,
+passing attempts and thrown interceptions**. Older published correction
+summaries supply still stronger point references for two of those: passing-TD
+context MSE **1.06235040** versus response **1.06197450** (about **0.0354%** lower),
+and passing-attempt intercept MSE **114.17545158** versus response
+**113.90073106** (about **0.2406%** lower). These are lowest observed values within
+specifically named references, not globally best values. The older-correction
+addition uses public summaries only; exact older forecast/source comparability
+is not authenticated for a new paired test. Most paired intervals cross zero;
+passing-TD absolute bias is worse than its strongest direct setting.
+
+Combined yards remains this study's distribution research lead, while
+**CatBoost medium point MAE 20.9839251 is lower than response-law median MAE
+21.0094420**. CRPS gains do not establish a gain against stronger point forecasts.
+The [full comparison table](point-control-supplement/all-132-point-contrasts.csv)
+retains losses, bias, tails, both uncertainty views and coverage. The failed V1
+cached-report startup remains retained with zero comparisons and no refund.
+
+This is a report-only supplement with source contracts and hashes. The public
+package lacks private row-level source/features, forecasts/outcomes and annual
+artifacts, so it cannot independently reproduce the original paired scoring.
+No entrant, selected, deployed or live-verified candidate follows. Exact annual
+laws exist privately; current-source/artifact qualification, future-query
+inference, replay, restoration and consumer/fallback acceptance remain with the
+incumbent owner. R0, scheduler, visible deployment sequence and original
+registrations are unchanged. There is no inherited eight-week prerequisite for
+the provisional track; these are operational dependencies.
+
+Lab PR3 has since merged the same count fallback semantics (stored `prior.mean`
+for fallback points; warm predictions unchanged). The executed numerical recipe
+remains `63e070241396feb9c62fb389ff5cb4f9c74ab1dc`; later operational requalification
+and recovery are distinct from this execution source.
+
+## Separate completed anytime-TD calibration
+
+The [fixed calibration comparison](../anytime-calibration-v1/README.md) completed
+**16 calibrator fits and zero base refits**, with independent acceptance
+(**168,946 checks, zero mismatches**). Its evaluation is **2023–2024 only:
+10,157 supported outcomes / 14,282 offers**, not the three-year V2 population.
+All eight base/method combinations worsen pooled Brier versus both unchanged
+bases: CatBoost medium **0.140820746**, fresh CDF **0.141021013**. Four fixed
+recipes were tested on each base: intercept shift, constrained Platt, constrained
+beta and increasing isotonic. Fresh-CDF isotonic retains two genuine infinite
+2023 log losses. No clipping, row deletion or calibration lead follows.
+The linked packet includes exact calibrator source, the historical prepared
+design and explicitly curated fictional checks; private controllers and cached
+row-level inputs are excluded. These 16 fits are separate from the original
+114-call distribution study.
+
 ## What ran and what remains
 
 - Fresh controls and challengers use the same corrected features, source, eligible player-games, cutoff assumptions, training-only preprocessing and earlier annual fits. All forecasts freeze before the score phase. Sparse/cold offers and fallback rows remain. Unknown participation/statistics are not scored as zero.
@@ -40,7 +102,7 @@ Rush-attempt CRPS improves slightly versus CDF but absolute mean bias worsens ag
 - 33 monotone classifiers, 30 response forests, 33 leaf-CDF controls and 18 mean-corrected COUNT_A calls ran. Three TD response aliases add no fit. The 6,793,906 expanded response cells and 1,018,230 query incidences are computational work, not extra football observations.
 - Independent acceptance reconstructed all 150 annual, 50 pooled, 2,700 weekly summaries and 188 contrasts/188,000 bootstrap draws, plus 66 direct-law checks, 18 COUNT_A replays and 300 fixed subgroup summaries. **146,931 checks, zero mismatches.** Review adds no independent NFL observations.
 - Observed whole-run resources: **649.754867 CPU / 370.016761 wall seconds**, conservative combined RSS **1,183,879,168 bytes**, private retained output **164,574,010 bytes**. Both original and corrected budgets/failures remain recorded.
-- Exact PPR remains label-blocked. Strong cached point-control comparisons, dedicated probability calibration and the workload continuation have separate statuses in the matrix. Historical source-publication time remains reconstructed; no post-cutoff news/weather/current rankings are fabricated.
+- Exact PPR remains label-blocked. The cached point-control report is complete as linked above; dedicated probability calibration is complete as linked above, while the workload continuation retains its separate matrix status. Historical source-publication time remains reconstructed; no post-cutoff news/weather/current rankings are fabricated.
 - No new model was selected, issued prospectively or deployed by this comparison. Existing production ownership, scheduler and scientific registrations remain intact. A ready challenger must pass actual future inference, source/catalog bindings, durable replay/restoration and consumer/fallback/rollback checks through the existing integrator. No new eight-week prerequisite is imposed on provisional release.
 
 ## Retained hosted failure and monitor hardening
@@ -48,6 +110,11 @@ Rush-attempt CRPS improves slightly versus CDF but absolute mean bias worsens ag
 [Hosted acceptance of public commit `848da55`](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40157073703/job/121060622243) failed: one fictional normal-exit fixture returned `FAILED` instead of `COMPLETED`; 1,580 tests passed, one skipped, four warnings and 62 subtests were reported in 291.59 seconds. The failed run remains evidence. A fresh synthetic helper reproduced an ownership bug: the supervisor classified its unrelated preexisting child as a worker descendant, then killed and reaped that child.
 
 The current supervisor refuses preexisting direct children and concurrent monitor threads before creating a receipt, changing handlers/subreaper state or launching a worker. The process fixtures now use fresh stdlib monitor interpreters, excluding pytest's children, numerical threads and lifetime memory high water from the monitor. Regression fixtures verify refusal preserves the helper's own unrelated sentinel and leaves no receipt or worker output. Resource caps and worker-descendant escape detection remain unchanged.
+
+Hosted CI for exact public head `c57e6f1` subsequently passed **1,583 tests and
+62 subtests, one skipped**, in 196.88 seconds ([run 40158854912](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40158854912)).
+That acceptance covers that exact head; the later reporting/calibration-source
+supplement has its own subsequent normal CI, and is not covered by this result.
 
 The completed 114-fit NFL run used the [exact archived executed supervisor](execution-source/supervisor-executed.py), SHA-256 `8503e47b07b860d10fe6c55affe5f8104bffe48dcfb293d7a961239e04b153bd`. This post-run hardening did not produce those fits. [The source inventory](SOURCE_CONTENT.json) distinguishes the archived execution source from current supervisor and test hashes. NFL model code, inputs, forecasts, aggregate scores and observed run resources retain their original identities.
 

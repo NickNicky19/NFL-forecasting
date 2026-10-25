@@ -193,6 +193,40 @@ and [latest source-phase failure](../reports/dynamic-computational-reuse-v6/ACTU
 The retained NGBoost source-bundle checkpoint (private; not included in this public tree)
 is a source checkpoint, not a native runtime or NFL result.
 
+## Completed cached point-control report
+
+The [separate report](../reports/distribution-cdf-after-audit-v2/point-control-supplement/README.md)
+reuses authenticated frozen predictions: **132 pooled contrasts / 396 annual
+cells**, zero fits, model decoding or inference. Every comparison has all three
+years, identical eligible-outcome masks and full offered-forecast coverage.
+The monotone family loses to the lowest-loss of six direct settings in all eleven
+categories. The response rows below use count **mean MSE**, signed-yard
+**median-objective MAE** or event **Brier**; these do not replace CRPS.
+
+| Category | CDF-response point/event result versus lowest-loss of six direct settings | Stronger named fixed reference / limitation |
+|---|---|---|
+| `pass_yd` | Lower MAE | Fresh CDF point remains lower |
+| `pass_td` | Lower mean MSE | Response 1.06197450 versus older context 1.06235040; descriptive gap about 0.0354% |
+| `pass_cmp` | Lower mean MSE | Fresh CDF mean remains lower |
+| `pass_att` | Lower mean MSE | Response 113.90073106 versus older intercept 114.17545158; descriptive gap about 0.2406% |
+| `pass_int` | Lower mean MSE | Lowest observed within the named direct/fresh-CDF/corrected-Count-A set |
+| `rush_yd` | Lower MAE | Fresh CDF median remains lower |
+| `rush_att` | Higher mean MSE | CatBoost medium lower |
+| `rec` | Lower mean MSE | Corrected-mean Count A lower: 3.25414645 versus response 3.26402176 |
+| `rec_yd` | Higher MAE | CatBoost medium lower |
+| `rush_rec_yd` | Higher MAE | CatBoost medium 20.9839251 versus response median 21.0094420; CRPS lead remains separate |
+| `anytime_td` | Higher Brier; exact fresh-CDF alias | CatBoost medium lower; no new response fit |
+| Exact PPR | E | Label contract remains blocked; zero comparisons |
+
+Only passing TDs, passing attempts and interceptions have response mean MSE below
+every applicable reference in the declared six-direct/fresh-CDF/corrected-Count-A
+set. The separate older-correction context reads public aggregate summaries
+only; exact older forecast/source/row comparability has not been authenticated
+for a new paired test. These are lowest observed values within specifically
+named references, not globally best values. Most paired intervals cross zero;
+adverse bias and tails remain. No setting or annual cell was dropped, and the
+failed first cached-report startup remains retained without refund.
+
 ## Matrix C — category mechanisms and information still to test
 
 Each entry below is **U for a completed, qualified NFL mechanism comparison**,
@@ -241,6 +275,21 @@ Evidence: [FTN targeted design](ftn-charting-targeted-pilot-design-v1.md),
 [scheme ablation](../reports/public-scheme-study/README.md),
 [recorded-threshold study](../reports/recorded-thresholds-v1/README.md).
 
+## Completed dedicated anytime-TD calibration
+
+The [separate accepted calibration study](../reports/anytime-calibration-v1/README.md)
+uses only 2023–2024 evaluation (10,157 supported outcomes, 544 games / 36 weeks),
+with earlier-only out-of-fit probabilities/labels for each fit. Four fixed
+monotone recipes on each of fresh CDF and CatBoost medium produce **16 calibrator
+fits, zero base fits**. All eight pooled Brier values are worse than both
+unchanged bases. CatBoost medium Brier is 0.140820746 versus CDF 0.141021013;
+these values have a two-year denominator and must not be substituted into the
+three-year table above. Fresh-CDF isotonic retains two positive-infinite 2023
+log losses and corresponding undefined finite-loss intervals. Independent
+acceptance passed 168,946 checks with zero mismatches; no calibration lead,
+policy selection or prospective evidence follows. Numeric-law calibration
+remains unrun, and exact PPR remains blocked.
+
 ## Other named methods: scope across all twelve categories
 
 | Method / product | Eleven supported categories | Exact PPR | Data or execution prerequisite and next action |
@@ -250,7 +299,7 @@ Evidence: [FTN targeted design](ftn-charting-targeted-pilot-design-v1.md),
 | Native categorical boosting | U; numeric six-pipeline screen already C | E | Freeze categorical inputs, unseen-category behavior and earlier-only encodings; compare on the same offered population. |
 | AdaBoost | U; lower-priority point control | E | Declare the point functional and unchanged information first; run only a small identifiable comparison. |
 | Hierarchical GLM/GAM or state-space law | U for the richer conditional law; fixed workload stages P/F | E | Qualified exposures, partial pooling and role transitions; distinguish count-law uncertainty from a fixed share point. |
-| Dedicated free-slope Platt, constrained beta or isotonic calibration | U; completed intercept/logit-offset correction is separate | E | Earlier chronological out-of-sample probabilities; freeze before later evaluation. Preserve impossible-event infinite loss and CDF monotonicity. |
+| Dedicated intercept/Platt/beta/isotonic calibration | C for `anytime_td`: 16 calibrator fits across two fixed bases; all eight pooled Brier values worsen; U for numeric-law recalibration | E | [Accepted separate 2023–2024 report](../reports/anytime-calibration-v1/README.md): 10,157 supported outcomes; two genuine infinite CDF-isotonic losses retained. No calibration lead or base refit. |
 | Learned full-distribution stacking | U; fixed point blends and P0–P4 already C | E | Earlier out-of-fold laws, nonnegative sum-to-one weights, strongest single-law control; derive mixture medians from the mixture. |
 | Adaptive/conditional conformal intervals | U for a new recipe; fixed 80% widening-only CQR already C | E | New registered interval procedure, chronology and group diagnostics; no automatic full-CDF or point improvement claim. |
 | Joint simulation / pooled copula | U for NFL joint-accuracy comparison; helper software exists | E | Hold marginals fixed initially; use compatible earlier complete vectors and evaluate total/joint proper scores. Means add; medians generally do not. |

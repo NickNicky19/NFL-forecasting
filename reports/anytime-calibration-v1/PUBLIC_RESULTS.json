@@ -1,0 +1,1703 @@
+{
+  "version": "anytime-calibration-v1-actual-public-safe-results-20261025",
+  "state": "ACTUAL_COMPLETED_INDEPENDENT_NUMERICAL_ACCEPTANCE_PASS",
+  "result": "NO_PRIMARY_BRIER_IMPROVEMENT: all eight calibrators worsened pooled2023-2024 Brier versus both unchanged fixed bases. No calibration lead, production selection or promotion follows.",
+  "fixed_design": {
+    "target": "anytime_td",
+    "roles": [
+      "RB",
+      "WR",
+      "TE"
+    ],
+    "bases": [
+      "fresh corrected leaf CDF",
+      "archived CatBoost medium"
+    ],
+    "methods": [
+      "intercept-only logit shift",
+      "nonnegative-slope Platt",
+      "nonnegative a,b beta calibration",
+      "increasing isotonic PAVA"
+    ],
+    "horizons": [
+      "2022 out-of-fit calibration probabilities/labels train ->2023evaluation",
+      "2022+2023 out-of-fit calibration probabilities/labels train ->2024evaluation"
+    ],
+    "calibrator_attempts": 16,
+    "completed_fits": 16,
+    "fit_failures_or_calibration_fallbacks": 0,
+    "base_fits": 0,
+    "HTTP": 0,
+    "retries": 0,
+    "tuning": 0,
+    "calibration_minimum": "200supported calibration rows,30positives and30negatives; otherwise unchanged base; all16cells exceeded minimum"
+  },
+  "chronology": {
+    "calibration_labels": "supported played, valid binary, known availability strictly before earliest evaluation cutoff; missing/unknown clocks excluded",
+    "forecast_sources": "base probabilities are annual out-of-fit predictions trained through the previous year; same primary-role player/game/team/opponent/kickoff/cutoff and outcome/participation across bases",
+    "freeze": "all2023candidate models/predictions frozen before2023labels enter2024calibration; all16models and all predictions frozen before evaluation scoring",
+    "protected_data": "no2025+ or original protected future labels",
+    "evidence": "exposed retrospective historical diagnostics; no fresh confirmation or original pregame issuance claim"
+  },
+  "assumptions": [
+    "Conditional-on-played marginal event probabilities; no learned participation probability.",
+    "Approved sufficient-positive source retained all97feature identities; f_player_play_rate8 stays unavailable, not converted into zero or a participation denominator.",
+    "Unknown participation, played missing labels and offered fallback rows remained offered; no DNP row occurred in this matched sample, which is not proof all missing players played.",
+    "One fixed objective/initialization/attempt per calibrator; mean NLL plus.01/2 identity-slope shrinkage, intercept unpenalized, nonnegative slopes, max200iterations.",
+    "Logistic q(0)=0/q(1)=1 even at zero slopes; contrary training endpoints would be charged failures with unchanged base. Isotonic learns endpoint mapping and extends constantly outside its training range; no probability epsilon clipping.",
+    "The pooled control is the Beta(1,1) training-event posterior mean at the same availability cutoff.",
+    "All tail and reliability diagnostics are descriptive. Zero forecasts at or above.9 occurred on supported evaluation rows; the extreme upper tail is not validated.",
+    "Nominal95percent whole-week/game bootstrap intervals are unadjusted across candidates/metrics/periods; they are not simultaneous scientific qualification."
+  ],
+  "metrics": {
+    "2023": {
+      "population": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "base_fallback_offered": 183
+      },
+      "methods": {
+        "pooled": {
+          "Brier": 0.15232875416922895,
+          "log_loss": 0.4825427953635314,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 1.0,
+          "mean_interval_width80": 1.0,
+          "low_tail_rows": 0,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf": {
+          "Brier": 0.1388448281164667,
+          "log_loss": 0.4411632706813588,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9922955353615172,
+          "mean_interval_width80": 0.8749506124061636,
+          "low_tail_rows": 633,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__intercept": {
+          "Brier": 0.13892374729158996,
+          "log_loss": 0.4405270881155547,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9853812722244172,
+          "mean_interval_width80": 0.7992888186487555,
+          "low_tail_rows": 1016,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__platt": {
+          "Brier": 0.13867995677027503,
+          "log_loss": 0.4399597680979197,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9824180165942316,
+          "mean_interval_width80": 0.7694587119715528,
+          "low_tail_rows": 1167,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__beta": {
+          "Brier": 0.13869635872710442,
+          "log_loss": 0.44000268442006907,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9826155669695772,
+          "mean_interval_width80": 0.7704464638482813,
+          "low_tail_rows": 1162,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__isotonic": {
+          "Brier": 0.13902434062634483,
+          "log_loss": null,
+          "log_loss_state": "positive_infinity",
+          "infinite_log_losses": 2,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9757013038324773,
+          "mean_interval_width80": 0.7173054128802845,
+          "low_tail_rows": 1431,
+          "high_tail_rows": 0
+        },
+        "catboost_medium": {
+          "Brier": 0.13882982883550476,
+          "log_loss": 0.44084886999164685,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9867641248518372,
+          "mean_interval_width80": 0.8184512050572896,
+          "low_tail_rows": 919,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__intercept": {
+          "Brier": 0.13886104126430204,
+          "log_loss": 0.4404667787444621,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9832082180956144,
+          "mean_interval_width80": 0.774792572105887,
+          "low_tail_rows": 1140,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__platt": {
+          "Brier": 0.138858802240705,
+          "log_loss": 0.4404613305576547,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9832082180956144,
+          "mean_interval_width80": 0.7738048202291584,
+          "low_tail_rows": 1145,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__beta": {
+          "Brier": 0.13885284318904723,
+          "log_loss": 0.44044631073867074,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9828131173449229,
+          "mean_interval_width80": 0.7726195179770842,
+          "low_tail_rows": 1151,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__isotonic": {
+          "Brier": 0.13912929627380854,
+          "log_loss": 0.4413442961891496,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9774792572105887,
+          "mean_interval_width80": 0.7309363887791387,
+          "low_tail_rows": 1362,
+          "high_tail_rows": 0
+        }
+      }
+    },
+    "2024": {
+      "population": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "base_fallback_offered": 183
+      },
+      "methods": {
+        "pooled": {
+          "Brier": 0.15930563332318887,
+          "log_loss": 0.4989186840531135,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 1.0,
+          "mean_interval_width80": 1.0,
+          "low_tail_rows": 0,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf": {
+          "Brier": 0.14318310274641471,
+          "log_loss": 0.4491958481232813,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9927379784102061,
+          "mean_interval_width80": 0.8488714425907753,
+          "low_tail_rows": 770,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__intercept": {
+          "Brier": 0.1439341444804619,
+          "log_loss": 0.45064891185303496,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9878312070657508,
+          "mean_interval_width80": 0.7866535819430814,
+          "low_tail_rows": 1087,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__platt": {
+          "Brier": 0.14357278481041913,
+          "log_loss": 0.4497345588161142,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9815505397448478,
+          "mean_interval_width80": 0.7177625122669283,
+          "low_tail_rows": 1438,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__beta": {
+          "Brier": 0.14359205296609906,
+          "log_loss": 0.44976118072279664,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9819430814524043,
+          "mean_interval_width80": 0.722080471050049,
+          "low_tail_rows": 1416,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__isotonic": {
+          "Brier": 0.1438124313355882,
+          "log_loss": 0.45111089892760176,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9817468105986261,
+          "mean_interval_width80": 0.7209028459273797,
+          "low_tail_rows": 1422,
+          "high_tail_rows": 0
+        },
+        "catboost_medium": {
+          "Brier": 0.14279876741629124,
+          "log_loss": 0.44848513152039543,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9872423945044161,
+          "mean_interval_width80": 0.7937193326790971,
+          "low_tail_rows": 1051,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__intercept": {
+          "Brier": 0.14331283543279147,
+          "log_loss": 0.44963535521748293,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9823356231599607,
+          "mean_interval_width80": 0.7395485770363102,
+          "low_tail_rows": 1327,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__platt": {
+          "Brier": 0.14318343624759974,
+          "log_loss": 0.449330050488227,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9799803729146221,
+          "mean_interval_width80": 0.7189401373895976,
+          "low_tail_rows": 1432,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__beta": {
+          "Brier": 0.1431869729415739,
+          "log_loss": 0.44932814755023276,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9799803729146221,
+          "mean_interval_width80": 0.7201177625122669,
+          "low_tail_rows": 1426,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__isotonic": {
+          "Brier": 0.14319536597751845,
+          "log_loss": 0.4499950522079705,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9697742885181551,
+          "mean_interval_width80": 0.624730127576055,
+          "low_tail_rows": 1912,
+          "high_tail_rows": 0
+        }
+      }
+    },
+    "2023+2024": {
+      "population": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "base_fallback_offered": 366
+      },
+      "methods": {
+        "pooled": {
+          "Brier": 0.1558285276544535,
+          "log_loss": 0.49075734226452783,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 1.0,
+          "mean_interval_width80": 1.0,
+          "low_tail_rows": 0,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf": {
+          "Brier": 0.1410210129387159,
+          "log_loss": 0.4451926082876003,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9925174756325686,
+          "mean_interval_width80": 0.861868662006498,
+          "low_tail_rows": 1403,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__intercept": {
+          "Brier": 0.14143708525332105,
+          "log_loss": 0.4456044428406175,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9866102195530176,
+          "mean_interval_width80": 0.7929506744117357,
+          "low_tail_rows": 2103,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__platt": {
+          "Brier": 0.14113431916709832,
+          "log_loss": 0.4448630425597884,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9819828689573693,
+          "mean_interval_width80": 0.743526631879492,
+          "low_tail_rows": 2605,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__beta": {
+          "Brier": 0.1411521588794799,
+          "log_loss": 0.4448977852040011,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9822782317613469,
+          "mean_interval_width80": 0.7461848971152899,
+          "low_tail_rows": 2578,
+          "high_tail_rows": 0
+        },
+        "fresh_cdf__isotonic": {
+          "Brier": 0.1414261642124032,
+          "log_loss": null,
+          "log_loss_state": "positive_infinity",
+          "infinite_log_losses": 2,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9787338781136162,
+          "mean_interval_width80": 0.7191099734173476,
+          "low_tail_rows": 2853,
+          "high_tail_rows": 0
+        },
+        "catboost_medium": {
+          "Brier": 0.1408207456484522,
+          "log_loss": 0.4446794058279148,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9870040366249877,
+          "mean_interval_width80": 0.8060450920547406,
+          "low_tail_rows": 1970,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__intercept": {
+          "Brier": 0.14109417026779258,
+          "log_loss": 0.4450659612914781,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9827705031013094,
+          "mean_interval_width80": 0.7571133208624594,
+          "low_tail_rows": 2467,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__platt": {
+          "Brier": 0.14102814459229784,
+          "log_loss": 0.4449100977178659,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9815890518853992,
+          "mean_interval_width80": 0.7462833513832825,
+          "low_tail_rows": 2577,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__beta": {
+          "Brier": 0.14102694883925135,
+          "log_loss": 0.44490165764768996,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9813921433494142,
+          "mean_interval_width80": 0.7462833513832825,
+          "low_tail_rows": 2577,
+          "high_tail_rows": 0
+        },
+        "catboost_medium__isotonic": {
+          "Brier": 0.1411689364372822,
+          "log_loss": 0.44568372731210837,
+          "log_loss_state": "finite",
+          "infinite_log_losses": 0,
+          "calibration_fallback_offered": 0,
+          "coverage80": 0.9736142561780053,
+          "mean_interval_width80": 0.6776607265924978,
+          "low_tail_rows": 3274,
+          "high_tail_rows": 0
+        }
+      }
+    }
+  },
+  "pooled_paired_diagnostics": [
+    {
+      "candidate": "fresh_cdf__intercept",
+      "pooled_Brier_delta_minus_own_base": 0.00041607231460512366,
+      "pooled_Brier_delta_minus_other_base": 0.0006163396048688256,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014391442401132472,
+      "Brier_week_CI95": [
+        2.1553692579540953e-06,
+        0.000838329628899967
+      ],
+      "Brier_game_CI95": [
+        1.897622150140623e-05,
+        0.0007752503653738898
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 7.891917512325626e-05,
+        "2024": 0.0007510417340471673
+      },
+      "pooled_log_loss_delta_minus_own_base": 0.00041183455301706365,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.000701333374182669,
+        0.0016238687778044416
+      ],
+      "log_game_CI95": [
+        -0.0007342311673839076,
+        0.001512677832436023
+      ]
+    },
+    {
+      "candidate": "fresh_cdf__platt",
+      "pooled_Brier_delta_minus_own_base": 0.00011330622838240552,
+      "pooled_Brier_delta_minus_other_base": 0.0003135735186461074,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014694208487355191,
+      "Brier_week_CI95": [
+        -0.00024816176893222974,
+        0.0004984179985204718
+      ],
+      "Brier_game_CI95": [
+        -0.00022842390469980385,
+        0.0004665681833708261
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": -0.00016487134619168448,
+        "2024": 0.00038968206400439643
+      },
+      "pooled_log_loss_delta_minus_own_base": -0.0003295657278119841,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.001520656906652224,
+        0.0009279336507391808
+      ],
+      "log_game_CI95": [
+        -0.0014460637481418519,
+        0.0008585467337263039
+      ]
+    },
+    {
+      "candidate": "fresh_cdf__beta",
+      "pooled_Brier_delta_minus_own_base": 0.0001311459407639975,
+      "pooled_Brier_delta_minus_other_base": 0.00033141323102769943,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014676368774973596,
+      "Brier_week_CI95": [
+        -0.0002294195139146328,
+        0.000524596246570253
+      ],
+      "Brier_game_CI95": [
+        -0.0002164622482970731,
+        0.00048764873234324055
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": -0.00014846938936227943,
+        "2024": 0.00040895021968435355
+      },
+      "pooled_log_loss_delta_minus_own_base": -0.00029482308359929854,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.001460223764642287,
+        0.0009490873022616016
+      ],
+      "log_game_CI95": [
+        -0.0014271102235863637,
+        0.0008658207422488494
+      ]
+    },
+    {
+      "candidate": "fresh_cdf__isotonic",
+      "pooled_Brier_delta_minus_own_base": 0.00040515127368729155,
+      "pooled_Brier_delta_minus_other_base": 0.0006054185639509934,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014402363442050304,
+      "Brier_week_CI95": [
+        2.4639144695723614e-06,
+        0.0008638275054451369
+      ],
+      "Brier_game_CI95": [
+        2.294476478463532e-06,
+        0.000849481900634331
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 0.00017951250987810745,
+        "2024": 0.000629328589173472
+      },
+      "pooled_log_loss_delta_minus_own_base": null,
+      "log_loss_delta_state": "positive_infinity",
+      "log_week_CI95": null,
+      "log_game_CI95": null
+    },
+    {
+      "candidate": "catboost_medium__intercept",
+      "pooled_Brier_delta_minus_own_base": 0.0002734246193403945,
+      "pooled_Brier_delta_minus_other_base": 7.315732907669247e-05,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014734357386660903,
+      "Brier_week_CI95": [
+        -4.029468407365762e-05,
+        0.0006051399681810216
+      ],
+      "Brier_game_CI95": [
+        -2.475467340202991e-05,
+        0.0005571862234639999
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 3.121242879728517e-05,
+        "2024": 0.000514068016500202
+      },
+      "pooled_log_loss_delta_minus_own_base": 0.00038655546356323615,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.000488093989216354,
+        0.0013141945285973552
+      ],
+      "log_game_CI95": [
+        -0.0004848952138803935,
+        0.0012411454819898145
+      ]
+    },
+    {
+      "candidate": "catboost_medium__platt",
+      "pooled_Brier_delta_minus_own_base": 0.0002073989438456406,
+      "pooled_Brier_delta_minus_other_base": 7.1316535819387614e-06,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014800383062155656,
+      "Brier_week_CI95": [
+        -8.960662804935983e-05,
+        0.0005183199938614242
+      ],
+      "Brier_game_CI95": [
+        -7.690782336504638e-05,
+        0.0005081609441918626
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 2.8973405200203965e-05,
+        "2024": 0.00038466883130848663
+      },
+      "pooled_log_loss_delta_minus_own_base": 0.00023069188995112025,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.0006337879713251435,
+        0.0011750994389103848
+      ],
+      "log_game_CI95": [
+        -0.0006485517895199553,
+        0.0011017210086470565
+      ]
+    },
+    {
+      "candidate": "catboost_medium__beta",
+      "pooled_Brier_delta_minus_own_base": 0.00020620319079915102,
+      "pooled_Brier_delta_minus_other_base": 5.935900535449026e-06,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014801578815202146,
+      "Brier_week_CI95": [
+        -8.730315526208205e-05,
+        0.0005130282716460851
+      ],
+      "Brier_game_CI95": [
+        -7.420926908303414e-05,
+        0.0005017289879156082
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 2.3014353542448955e-05,
+        "2024": 0.00038820552528264965
+      },
+      "pooled_log_loss_delta_minus_own_base": 0.0002222518197751772,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.0006357919253690033,
+        0.0011632406231156778
+      ],
+      "log_game_CI95": [
+        -0.0006533329042316923,
+        0.001096193995406273
+      ]
+    },
+    {
+      "candidate": "catboost_medium__isotonic",
+      "pooled_Brier_delta_minus_own_base": 0.00034819078883000697,
+      "pooled_Brier_delta_minus_other_base": 0.00014792349856630513,
+      "pooled_Brier_delta_minus_pooled_event_rate": -0.014659591217171291,
+      "Brier_week_CI95": [
+        -3.7936939381586025e-05,
+        0.0007685005019121028
+      ],
+      "Brier_game_CI95": [
+        -1.664882461995224e-05,
+        0.0007538476698678232
+      ],
+      "annual_Brier_delta_minus_own_base": {
+        "2023": 0.0002994674383037772,
+        "2024": 0.00039659856122721494
+      },
+      "pooled_log_loss_delta_minus_own_base": 0.0010043214841935894,
+      "log_loss_delta_state": "finite",
+      "log_week_CI95": [
+        -0.00029627409751209434,
+        0.0023134888436763296
+      ],
+      "log_game_CI95": [
+        -0.00014347610364839284,
+        0.0023072985639181563
+      ]
+    }
+  ],
+  "uncertainty": {
+    "replicates": 500,
+    "week_seed": 1931,
+    "game_seed": 1932,
+    "pooled_week_clusters": 36,
+    "pooled_game_clusters": 544,
+    "generator": "PCG64",
+    "percentile": "linear",
+    "interpretation": "candidate-minus-control loss; positive delta is worse; nominal95percent descriptive unadjusted"
+  },
+  "pooled_reliability": {
+    "columns": [
+      "bin_lower",
+      "supported_rows",
+      "mean_probability",
+      "event_rate"
+    ],
+    "bin_rule": "[lower,lower+.1), final bin includes1",
+    "methods": {
+      "pooled": [
+        [
+          0.0,
+          0,
+          null,
+          null
+        ],
+        [
+          0.1,
+          10157,
+          0.1869786986179936,
+          0.19306881953332677
+        ],
+        [
+          0.2,
+          0,
+          null,
+          null
+        ],
+        [
+          0.3,
+          0,
+          null,
+          null
+        ],
+        [
+          0.4,
+          0,
+          null,
+          null
+        ],
+        [
+          0.5,
+          0,
+          null,
+          null
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "fresh_cdf": [
+        [
+          0.0,
+          1403,
+          0.0709696285497612,
+          0.0541696364932288
+        ],
+        [
+          0.1,
+          4578,
+          0.14492350281274435,
+          0.12145041502839668
+        ],
+        [
+          0.2,
+          2376,
+          0.24446709481396336,
+          0.2529461279461279
+        ],
+        [
+          0.3,
+          1181,
+          0.3450821322226417,
+          0.3624047417442845
+        ],
+        [
+          0.4,
+          495,
+          0.4389685946949656,
+          0.45656565656565656
+        ],
+        [
+          0.5,
+          124,
+          0.5313008490278992,
+          0.5967741935483871
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "fresh_cdf__intercept": [
+        [
+          0.0,
+          2103,
+          0.07254250905637032,
+          0.06466951973371374
+        ],
+        [
+          0.1,
+          4603,
+          0.14240978408151048,
+          0.14229850097762328
+        ],
+        [
+          0.2,
+          2112,
+          0.24306594262254327,
+          0.2859848484848485
+        ],
+        [
+          0.3,
+          977,
+          0.3437458578922913,
+          0.39201637666325484
+        ],
+        [
+          0.4,
+          307,
+          0.4381547672727594,
+          0.48534201954397393
+        ],
+        [
+          0.5,
+          55,
+          0.5149899420313718,
+          0.6181818181818182
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "fresh_cdf__platt": [
+        [
+          0.0,
+          2605,
+          0.07170152746705415,
+          0.07024952015355086
+        ],
+        [
+          0.1,
+          4123,
+          0.14302101765139466,
+          0.14892068881882126
+        ],
+        [
+          0.2,
+          1950,
+          0.2428529069135827,
+          0.2825641025641026
+        ],
+        [
+          0.3,
+          986,
+          0.34289077060303774,
+          0.37018255578093306
+        ],
+        [
+          0.4,
+          381,
+          0.4381226447988105,
+          0.47244094488188976
+        ],
+        [
+          0.5,
+          112,
+          0.5328825898689523,
+          0.6071428571428571
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "fresh_cdf__beta": [
+        [
+          0.0,
+          2578,
+          0.07167988657782418,
+          0.06982156710628394
+        ],
+        [
+          0.1,
+          4136,
+          0.14302413390895272,
+          0.14845261121856868
+        ],
+        [
+          0.2,
+          1971,
+          0.24289032873097274,
+          0.28259766615931
+        ],
+        [
+          0.3,
+          990,
+          0.34283889221641395,
+          0.3717171717171717
+        ],
+        [
+          0.4,
+          377,
+          0.4374263078562205,
+          0.47214854111405835
+        ],
+        [
+          0.5,
+          105,
+          0.529539916151398,
+          0.6095238095238096
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "fresh_cdf__isotonic": [
+        [
+          0.0,
+          2847,
+          0.07249247649478097,
+          0.07551808921671935
+        ],
+        [
+          0.1,
+          4300,
+          0.1465504505037966,
+          0.1569767441860465
+        ],
+        [
+          0.2,
+          1412,
+          0.2589124149233318,
+          0.29603399433427763
+        ],
+        [
+          0.3,
+          1034,
+          0.33709047437442763,
+          0.36266924564796904
+        ],
+        [
+          0.4,
+          286,
+          0.46013101430805525,
+          0.44405594405594406
+        ],
+        [
+          0.5,
+          278,
+          0.5035574890647472,
+          0.5431654676258992
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "catboost_medium": [
+        [
+          0.0,
+          1970,
+          0.07437626830372863,
+          0.06700507614213198
+        ],
+        [
+          0.1,
+          4174,
+          0.14607965563014574,
+          0.1291327264015333
+        ],
+        [
+          0.2,
+          2183,
+          0.24502214369222822,
+          0.26110856619331196
+        ],
+        [
+          0.3,
+          1173,
+          0.3414523197826887,
+          0.33248081841432225
+        ],
+        [
+          0.4,
+          476,
+          0.440508933287923,
+          0.46008403361344535
+        ],
+        [
+          0.5,
+          149,
+          0.5390040469694376,
+          0.6241610738255033
+        ],
+        [
+          0.6,
+          32,
+          0.6318606420518391,
+          0.5625
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "catboost_medium__intercept": [
+        [
+          0.0,
+          2467,
+          0.07272852672973727,
+          0.07093635995135793
+        ],
+        [
+          0.1,
+          4156,
+          0.14381035912034923,
+          0.1453320500481232
+        ],
+        [
+          0.2,
+          2102,
+          0.24433608264475531,
+          0.2792578496669838
+        ],
+        [
+          0.3,
+          969,
+          0.34192570961585955,
+          0.36429308565531476
+        ],
+        [
+          0.4,
+          345,
+          0.44176330027482036,
+          0.4753623188405797
+        ],
+        [
+          0.5,
+          103,
+          0.5408569202154023,
+          0.6699029126213593
+        ],
+        [
+          0.6,
+          15,
+          0.6254576785144278,
+          0.6
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "catboost_medium__platt": [
+        [
+          0.0,
+          2577,
+          0.07171468122043348,
+          0.07256499805975941
+        ],
+        [
+          0.1,
+          4051,
+          0.1436917203887308,
+          0.1463836089854357
+        ],
+        [
+          0.2,
+          2060,
+          0.24435843259755877,
+          0.27815533980582524
+        ],
+        [
+          0.3,
+          972,
+          0.34174394459243274,
+          0.35905349794238683
+        ],
+        [
+          0.4,
+          352,
+          0.441481946814927,
+          0.4744318181818182
+        ],
+        [
+          0.5,
+          118,
+          0.5374090201076793,
+          0.6440677966101694
+        ],
+        [
+          0.6,
+          27,
+          0.6318519451102104,
+          0.5925925925925926
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "catboost_medium__beta": [
+        [
+          0.0,
+          2577,
+          0.07153917293528965,
+          0.07334109429569266
+        ],
+        [
+          0.1,
+          4044,
+          0.1436945471789323,
+          0.14589515331355093
+        ],
+        [
+          0.2,
+          2064,
+          0.24443491722387964,
+          0.2766472868217054
+        ],
+        [
+          0.3,
+          976,
+          0.3417293538901653,
+          0.36065573770491804
+        ],
+        [
+          0.4,
+          356,
+          0.4414748249081558,
+          0.47752808988764045
+        ],
+        [
+          0.5,
+          114,
+          0.5371309913378471,
+          0.6491228070175439
+        ],
+        [
+          0.6,
+          26,
+          0.6285310759617485,
+          0.5769230769230769
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ],
+      "catboost_medium__isotonic": [
+        [
+          0.0,
+          3274,
+          0.0779732749361442,
+          0.08185705558949298
+        ],
+        [
+          0.1,
+          3239,
+          0.1430262187020672,
+          0.15004631058968818
+        ],
+        [
+          0.2,
+          2124,
+          0.24500243059461066,
+          0.2707156308851224
+        ],
+        [
+          0.3,
+          1066,
+          0.36229672461738954,
+          0.3724202626641651
+        ],
+        [
+          0.4,
+          320,
+          0.45662364752549695,
+          0.46875
+        ],
+        [
+          0.5,
+          134,
+          0.5618220554804015,
+          0.6343283582089553
+        ],
+        [
+          0.6,
+          0,
+          null,
+          null
+        ],
+        [
+          0.7,
+          0,
+          null,
+          null
+        ],
+        [
+          0.8,
+          0,
+          null,
+          null
+        ],
+        [
+          0.9,
+          0,
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "adverse_findings": [
+    "Fresh-CDF Platt and beta improved2023 Brier slightly but reversed in2024.",
+    "Every calibration method worsened2024 Brier versus its own unchanged base.",
+    "Fresh-CDF isotonic produced two genuine positive-infinite log losses in2023; these remain in both pooled loss state and paired populations, with finite log-loss delta intervals undefined. No other method/base produced an infinite loss.",
+    "Fresh-CDF intercept and isotonic pooled Brier delta CIs are above zero for both clusterings, with unadjusted descriptive interpretation only.",
+    "All calibrators beat the weaker pooled training-event control on pooled Brier; that does not establish improvement over either fixed forecasting base."
+  ],
+  "model_coefficients": [
+    {
+      "evaluation_year": 2023,
+      "base": "catboost_medium",
+      "method": "beta",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 15,
+      "coefficients": {
+        "intercept": -0.0937885584198931,
+        "a": 1.0135810752330279,
+        "b": 0.9712056632956055
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "06a066b9261c458efb3e86fc3d12a320e0341de7c05736db8f50bdd1fc26f15a"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "catboost_medium",
+      "method": "intercept",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 3,
+      "coefficients": {
+        "intercept": -0.12301951896098691
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "3302c10d0cb1e8f5cc81c54ae107fe131e79f3234d02db680900fe2b9f954936"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "catboost_medium",
+      "method": "isotonic",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": null,
+      "coefficients": null,
+      "isotonic_knots": 56,
+      "model_manifest_sha256": "6264017ea6381ea5ca82be9b3a9b7770ec1ba1a5e66d087ebe592eee8e7e902f"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "catboost_medium",
+      "method": "platt",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 10,
+      "coefficients": {
+        "intercept": -0.12214391784078658,
+        "slope": 1.0007235167577218
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "09c6801dd9b6e0c3a84a948d640c8a20e0b896d4a30e0e6c24248326385fd14d"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "fresh_cdf",
+      "method": "beta",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 15,
+      "coefficients": {
+        "intercept": -0.04921039957653163,
+        "a": 1.078464826420378,
+        "b": 1.0158254422207496
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "4525bd83a1692d6383dbd498ca6ffd1d6cb56b0ef714205a4358618eed87ffff"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "fresh_cdf",
+      "method": "intercept",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 3,
+      "coefficients": {
+        "intercept": -0.1608358692205248
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "dd6e9ca27504206467aa6749d3c70343337572912ba87883dff6b643255e6fde"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "fresh_cdf",
+      "method": "isotonic",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": null,
+      "coefficients": null,
+      "isotonic_knots": 45,
+      "model_manifest_sha256": "7cb34b6579b86bd0135a9ba00661a250ddada55606ad686513742b802aea03da"
+    },
+    {
+      "evaluation_year": 2023,
+      "base": "fresh_cdf",
+      "method": "platt",
+      "state": "FITTED",
+      "supported_training_rows": 5094,
+      "positive_labels": 951,
+      "negative_labels": 4143,
+      "iterations": 10,
+      "coefficients": {
+        "intercept": -0.08096106632423843,
+        "slope": 1.0676742418050198
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "c81f926b46fa59b32456d083c117c39d666ff5b7b766115ba160772a9897b2b4"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "catboost_medium",
+      "method": "beta",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 15,
+      "coefficients": {
+        "intercept": -0.013583005287499977,
+        "a": 1.0611137573861171,
+        "b": 1.0117254300106262
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "63f89401297e07176a62f72e713dd0736ba6731a9cde8a78bb93897efd0cd475"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "catboost_medium",
+      "method": "intercept",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 3,
+      "coefficients": {
+        "intercept": -0.10307848033375265
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "8a32f10cc68e83911d60075e0d6bd2723c7490223b27aaf76da183ebf8881ffc"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "catboost_medium",
+      "method": "isotonic",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": null,
+      "coefficients": null,
+      "isotonic_knots": 60,
+      "model_manifest_sha256": "088c6aab019d04523306d5b09ff8adb8773653b39ba466d3e675cdb036f0a5f3"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "catboost_medium",
+      "method": "platt",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 9,
+      "coefficients": {
+        "intercept": -0.03880244182923448,
+        "slope": 1.0524834346557175
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "c543dfc71f55c9acc89755ee637c7869e9af660cd8d490985edb6a0a93e16b9d"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "fresh_cdf",
+      "method": "beta",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 16,
+      "coefficients": {
+        "intercept": 0.031119703950578986,
+        "a": 1.1203969733782708,
+        "b": 1.049871358022552
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "c4dd5ec4fdaa8317d65b3e31c7ec8d388cd5a0bce2b5345f58244915ea7a780b"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "fresh_cdf",
+      "method": "intercept",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 3,
+      "coefficients": {
+        "intercept": -0.13431898132509545
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "33b5e43f80a838a01a4a5aa47b706a7aa36cc6c56adbca7fbc03be8a92bfda1d"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "fresh_cdf",
+      "method": "isotonic",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": null,
+      "coefficients": null,
+      "isotonic_knots": 63,
+      "model_manifest_sha256": "cbaa50f63a1500cab408eb0c3f818f0fbe2eaca1f42a97d04e3fbe9e76a8bc21"
+    },
+    {
+      "evaluation_year": 2024,
+      "base": "fresh_cdf",
+      "method": "platt",
+      "state": "FITTED",
+      "supported_training_rows": 10156,
+      "positive_labels": 1900,
+      "negative_labels": 8256,
+      "iterations": 10,
+      "coefficients": {
+        "intercept": 0.002031573385108885,
+        "slope": 1.1137245229142854
+      },
+      "isotonic_knots": 0,
+      "model_manifest_sha256": "80981410dc96c920cdf79fb2e7c3b7d5a0df0edfea4ac9307c99a0ded94fd5a7"
+    }
+  ],
+  "isotonic_note": "Global PAVA knot counts and model hashes are included. Full fitted knot maps remain private; no player-level probabilities/labels are included.",
+  "resources": {
+    "combined_CPU_seconds": 24.536802479000002,
+    "wall_seconds": 15.267301713000052,
+    "peak_sampled_combined_RSS_bytes": 288555008,
+    "conservative_combined_RSS_bound_bytes": 288575488,
+    "worker_CPU_seconds": 15.705580908,
+    "worker_RSS_bytes": 272384000,
+    "payload_bytes": 3333279,
+    "actual_outer_receipt_bytes": 35664,
+    "total_execution_retained_bytes": 3368943,
+    "receipt_reserved_total_bytes": 3398815,
+    "limits": {
+      "CPU_seconds": 120,
+      "wall_seconds": 180,
+      "RSS_bytes": 2147483648,
+      "address_space_bytes": 8589934592,
+      "retained_bytes": 16777216,
+      "numerical_threads": 2
+    },
+    "TERM_sent": false,
+    "KILL_sent": false,
+    "worker_returncode": 0,
+    "process_tree_clean": true,
+    "unexpected_descendants": 0,
+    "public_safe_packet_bytes": 46670,
+    "execution_plus_packet_bytes": 3415613
+  },
+  "evidence_hashes": {
+    "source_commit": "fd844c6df2bd38c0b03ad6d15aad7a417bcf0864",
+    "execution_manifest_sha256": "12b6de9ddddf5c83b53f3fc9e99b761d6a8a248860d9620b9d1f6d368e727edd",
+    "registration_sha256": "5cfb33c1ecaadc6255a7096b839fbc481cdd1b0800a7fb222c133dff5c4b4f80",
+    "calibrator_source_sha256": "0806235bef8e981ead8bd694dba73430a78628de62f810d3a2846b48028b117b",
+    "global_forecast_freeze_sha256": "9e4e765caa1f1cc5c95c33518670681042e9048b117b9649d24871d1d0c9927e",
+    "completion_sha256": "63e2d2c0c31f3f5953237570fc0d333d2f89be632dd21720d256f3bf7e1283e4",
+    "aggregate_sha256": "e26ca6848c33b80d2c5f38b2ae559a9e789833494aa136e9bbf0cbae0524c6ea",
+    "outer_receipt_sha256": "27d2b21960c447caa713d9a46d9a8aebd86d6e624d4359319aeed732af435963",
+    "completion_bound_bodies_rehashed": 83,
+    "binding_errors": 0,
+    "independent_acceptance_sha256": "dacf7f338fed9dfb7c269c7e0c6a9e7fad62519b03287f04b0312331b25aed51"
+  },
+  "publication_scope": "Aggregate metrics, global coefficients, model hashes and assumptions only. No private paths, player/game identifiers, raw feeds, tickets, credentials, source rows or full private ledger are embedded.",
+  "independent_acceptance": {
+    "state": "PASS_NUMERICAL_AND_FROZEN_SOURCE_CHRONOLOGY",
+    "acceptance_sha256": "dacf7f338fed9dfb7c269c7e0c6a9e7fad62519b03287f04b0312331b25aed51",
+    "checks": 168946,
+    "mismatches": 0,
+    "source_binding_occurrences": 180,
+    "output_bindings": 83,
+    "saved_calibrators_replayed": 16,
+    "summaries": 33,
+    "paired_contrasts": 144,
+    "bootstrap_interval_slots": 288,
+    "finite_intervals": 276,
+    "finite_replicates": 138000,
+    "nonfinite_interval_slots_retained": 12,
+    "logistic_max_projected_gradient": 6.01628954394022e-08,
+    "isotonic_max_positive_cumulative_KKT": 1.2417844530432376e-13,
+    "review_combined_CPU_seconds": 14.476868699,
+    "review_wall_seconds": 10.181319968018215,
+    "review_conservative_RSS_bytes": 195870720,
+    "new_football_observations": 0,
+    "fits": 0,
+    "base_model_loads": 0,
+    "HTTP": 0,
+    "single_invocation": true,
+    "automatic_retries": 0
+  }
+}

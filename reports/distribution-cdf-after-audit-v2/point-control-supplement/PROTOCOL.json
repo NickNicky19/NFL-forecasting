@@ -1,0 +1,84 @@
+{
+  "registration_id": "cached-point-controls-v2-20261025",
+  "scope": "One cached-report comparison; exposed REG 2022-2024; no fitting or inference",
+  "years": [
+    2022,
+    2023,
+    2024
+  ],
+  "candidates": [
+    "threshold_cdf",
+    "distribution_split_cdf"
+  ],
+  "controls": [
+    "direct_xgboost_small",
+    "direct_xgboost_medium",
+    "direct_lightgbm_small",
+    "direct_lightgbm_medium",
+    "direct_catboost_small",
+    "direct_catboost_medium"
+  ],
+  "primary": {
+    "count": {
+      "field": "mean",
+      "metric": "MSE"
+    },
+    "signed_integer": {
+      "field": "median",
+      "metric": "MAE"
+    },
+    "bernoulli": {
+      "field": "mean",
+      "metric": "brier"
+    }
+  },
+  "maximum_primary_contrasts": 132,
+  "annual_diagnostics": "Three supporting annual views per registered pooled contrast; all years retained; no annual selection",
+  "uncertainty": {
+    "replicates": 500,
+    "week_seed": 1911,
+    "game_seed": 1912,
+    "confidence": 0.95,
+    "procedure": "Reuse V2 paired whole-season-week and whole-game resampling; pooled and annual descriptive intervals"
+  },
+  "source_compatibility": "Require completed V2 and its all-97-feature exact equivalence to the direct screen's same accepted source identity before decoding values; same category contract and 2022-2024 primary-role offered keys, context, cutoffs and outcomes",
+  "point_semantics": "Use literal saved direct points unchanged. Frozen direct source explicitly uses prior.mean on count fallbacks. Verify stored mean-objective/median-objective/event semantics, report fallback counts and losses, never convert a point into a predictive law",
+  "binary_recovery": "Only the two XGBoost anytime-TD settings use separately authenticated direct_xgboost_binary_canonical_v2_{small,medium} scored derivatives. Their original direct-screen slots stay FAILED. No derivative missingness or identity mismatch is filled with a donor or another method",
+  "anytime_response_candidate": "Exact fresh leaf-CDF alias, zero new fit; preserve alias identity in every comparison",
+  "cohort": "All primary-role offers retained. Exact one-to-one keys/context/cutoffs/actuals/participation required before comparison; mismatches retained as unavailable, never favorable intersections. Played zero, unknown, DNP, missing and invalid labels distinct",
+  "eligibility": "Best-observed descriptive eligibility requires all three annual cells, identical supported and forecast masks, and complete offered forecast coverage. Keep all six settings and all failed/unavailable cells. No tuning, nomination, SITE/R0 claim, scientific qualification or deployment",
+  "secondary": [
+    "prediction-minus-actual bias",
+    "p95 absolute error",
+    "MAE",
+    "MSE",
+    "RMSE",
+    "offered/supported/forecast/fallback/played-zero/unknown/DNP/missing/invalid coverage",
+    "fallback-stratum point loss"
+  ],
+  "resources": {
+    "maximum_CPU_seconds": 120,
+    "maximum_wall_seconds": 180,
+    "maximum_RSS_bytes": 2147483648,
+    "maximum_address_space_bytes": 8589934592,
+    "maximum_new_retained_bytes": 33554432,
+    "finalization_reserve_seconds": 15,
+    "threads": 2,
+    "fits": 0,
+    "model_loads": 0,
+    "inference_calls": 0,
+    "HTTP": 0,
+    "automatic_retries": 0,
+    "actual_invocations": 1
+  },
+  "publication": "Aggregate metrics/status/procedure identities and safe hashes only; no private paths, individual player/game rows, model weights or expanded internal ledger",
+  "exact_PPR": "BLOCKED_LABEL_CONTRACT",
+  "technical_continuation": {
+    "parent": "cached-point-controls-v1-20261025",
+    "parent_state": "FAILED_STARTUP_ZERO_CONTRASTS",
+    "parent_CPU_seconds": 2.517020678,
+    "refund": false,
+    "science_metrics_settings_pairs_inputs_unchanged": true,
+    "repair": "Accepted process_free_threads helper, exact hash-bound already-mapped libc, only name c; retain strict child/network/model guards and private failure stacks"
+  }
+}
