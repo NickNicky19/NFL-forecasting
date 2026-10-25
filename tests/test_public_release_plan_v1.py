@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from nfl_lab import public_release_plan_v1 as b,private_draft_store as s,weekly_durable_acceptance as a,gha_private_checkpoint as cp
 from nfl_lab.operational_storage import OperationalStorage
@@ -18,8 +19,14 @@ ROOT=Path(__file__).resolve().parents[1]
 
 class ReleasePlanChecks(unittest.TestCase):
     def setUp(self):
+        class FictionalWindowClock(datetime):
+            @classmethod
+            def now(cls,tz=None):return datetime(2026,10,24,14,tzinfo=timezone.utc)
+        for target in ('test_owner_private_bootstrap.datetime','nfl_lab.private_draft_store.datetime'):
+            clock=patch(target,FictionalWindowClock);clock.start();self.addCleanup(clock.stop)
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);self.policy_source=json.loads((ROOT/'config/operational-source-policy-v2.json').read_bytes());self.storage=OperationalStorage(self.root/'cache',self.policy_source,state=self.root/'state');self.storage.register_root(self.root)
-        self.stamp=datetime.now(timezone.utc);stamp=lambda seconds:(self.stamp+timedelta(seconds=seconds)).isoformat();self.at=stamp(0)
+        # Fictional historical clock; this never extends live one-use authority.
+        self.stamp=datetime(2026,10,24,14,tzinfo=timezone.utc);stamp=lambda seconds:(self.stamp+timedelta(seconds=seconds)).isoformat();self.at=stamp(0)
         journal=self.root/'journal';journal.mkdir(mode=0o700);server=Server();client=s.Client('ghs_FICTIONAL',RUN,journal=journal,source_sha=SOURCE,transport=server,process='e'*64);runtime=s.initialize(client,'b'*32);q=qualification(runtime)
         workflow=s.REPO+'/.github/workflows/lab.yml@refs/heads/fictional';identity=lambda role,n:dict(execution_lane='github_actions',repository=s.REPO,run_id=RUN,run_attempt=1,source_sha=SOURCE,process_identity=str(n)*64,job_id=role,api_job_id=n,permission='write',workflow_ref=workflow)
         producer=identity('genuine-hosted-fixed-build-restore-v1',4);restorer=identity('genuine-hosted-selected-restore-v1',5);physical=identity('genuine-hosted-selected-export-v1',6)

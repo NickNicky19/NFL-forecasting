@@ -191,6 +191,9 @@ class ContinuationChecks(unittest.TestCase):
             self.assertTrue(all(p['run_id']==current_run and p['source_sha']==current_source for p in result['proofs']))
         finally:case.tearDown()
 
+    @patch('test_owner_private_bootstrap.datetime',Clock)
+    @patch.object(core,'datetime',Clock)
+    @patch('datetime.datetime',Clock)
     def test_global_metadata_consumption_rejects_same_registration_before_second_extraction(self):
         from test_gha_private_checkpoint import ClaimGuardChecks
         from test_private_draft_store_v2 import Response

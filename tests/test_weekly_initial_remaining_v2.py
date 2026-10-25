@@ -232,7 +232,7 @@ class RecoveryChecks(unittest.TestCase):
         bodies[initial.REGISTRATION_PATH]=canonical(registration())
         config["source_sha256"]={name:core.sha(body) for name,body in bodies.items()}
         bodies[horizons.RECOVERY.checkpoint_config_path]=canonical(config)
-        with patch.object(checkpoint_cli,"read",side_effect=lambda path,cap:bodies[Path(path).relative_to(ROOT).as_posix()]):
+        with patch.object(checkpoint_cli,"read",side_effect=lambda path,cap:bodies[Path(path).relative_to(ROOT).as_posix()]),patch('datetime.datetime',Clock):
             result=checkpoint_cli.verified(core.sha(bodies[horizons.RECOVERY.checkpoint_config_path]),recovery_v2=True)
             self.assertEqual(result["initial_registration_canonical_sha256"],digest(registration()))
 

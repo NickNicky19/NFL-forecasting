@@ -3,10 +3,12 @@ import hashlib
 import importlib.util
 import io
 import json
+import subprocess
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 from urllib.error import URLError
+from retained_source_fixture import workflow_job, REPOSITORY
 
 SOURCE = Path(__file__).resolve().parents[1] / "tools/private_storage_probe.py"
 SPEC = importlib.util.spec_from_file_location("private_storage_probe", SOURCE)
@@ -310,16 +312,18 @@ class StorageProbeChecks(unittest.TestCase):
         workflow = (SOURCE.parents[1] / ".github/workflows/lab.yml").read_text()
         self.assertEqual(workflow.count("- cron:"), 1)
         self.assertEqual(workflow.count("group: nfl-lab-single-writer"), 1)
-        skip = "    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1')\n"
-        self.assertIn(skip, workflow)
-        lab = "  lab:\n" + workflow.split("  lab:\n", 1)[1].split("  storage-probe-write:\n", 1)[0]
-        lab = lab.replace(skip, "", 1)
-        self.assertEqual(hashlib.sha256(lab.encode()).hexdigest(),
-            "8f9eb212533ecb5dba0efa0144db19e63ead6726912e5475dfd5ac742b5e50a3")
-        self.assertEqual(workflow.count("timeout-minutes: 3\n"), 3)
-        self.assertEqual(workflow.count("GITHUB_TOKEN: ${{ github.token }}"), 3)
+        original = subprocess.check_output(['git','show','93e2019144be7b51248ce548fe247c6dcd949b71:.github/workflows/lab.yml'],
+                                           cwd=REPOSITORY,text=True)
+        lab = workflow_job(workflow,'lab')
+        self.assertEqual(lab.replace(" && inputs.mode != 'audit-count-requalify-v1'",''),workflow_job(original,'lab'))
+        self.assertIn("inputs.mode != 'audit-count-requalify-v1'",lab)
         self.assertIn("needs: [storage-probe-write, storage-probe-read]", workflow)
-        probe_jobs = workflow.split("  storage-probe-write:", 1)[1]
+        names = ['storage-probe-write','storage-probe-read','storage-probe-restore']
+        probe_jobs = ''.join(workflow_job(workflow,name) for name in names)
+        for name in names:
+            self.assertEqual(workflow_job(workflow,name),workflow_job(original,name))
+        self.assertEqual(probe_jobs.count("timeout-minutes: 3\n"),3)
+        self.assertEqual(probe_jobs.count("GITHUB_TOKEN: ${{ github.token }}"),3)
         self.assertNotIn("upload-artifact", probe_jobs)
         self.assertNotIn("secrets.", probe_jobs)
         self.assertNotIn("pip install", probe_jobs)

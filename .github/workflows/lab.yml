@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1]
         default: daily
       bootstrap_locators_json:
         description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
@@ -67,7 +67,7 @@ env:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -469,7 +469,7 @@ jobs:
           timeout --signal=KILL 190s python -I -B tools/gha_private_checkpoint_v1.py produce --execute "${route_args[@]}"
   genuine-hosted-fixed-build-restore-v1:
     needs: genuine-hosted-fixed-build-v1
-    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 && ((inputs.mode == 'genuine-hosted-fixed-build-v1' && needs.genuine-hosted-fixed-build-v1.result == 'success') || inputs.mode == 'genuine-hosted-inference-continuation-v3') }}
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 && ((inputs.mode == 'genuine-hosted-fixed-build-v1' && needs.genuine-hosted-fixed-build-v1.result == 'success') || inputs.mode == 'genuine-hosted-inference-continuation-v3' || inputs.mode == 'audit-count-requalify-v1') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -478,6 +478,10 @@ jobs:
     outputs:
       selected_handoff_json: ${{ steps.selected-checkpoint.outputs.handoff_json }}
       selected_handoff_sha256: ${{ steps.selected-checkpoint.outputs.handoff_sha256 }}
+      audit_handoff_json: ${{ steps.audit-count-checkpoint.outputs.handoff_json }}
+      audit_handoff_sha256: ${{ steps.audit-count-checkpoint.outputs.handoff_sha256 }}
+      audit_failure_handoff_json: ${{ steps.audit-count-failure.outputs.failure_handoff_json }}
+      audit_failure_handoff_sha256: ${{ steps.audit-count-failure.outputs.failure_handoff_sha256 }}
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       OMP_NUM_THREADS: '2'
@@ -497,7 +501,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-          fetch-depth: 1
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -505,6 +509,7 @@ jobs:
         run: |
           python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps --requirement requirements-gha-private-checkpoint-v1.lock
       - name: Restore and verify the complete private checkpoint in a fresh job
+        if: inputs.mode != 'audit-count-requalify-v1'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: write
@@ -528,6 +533,7 @@ jobs:
           read -r procedure_sha ignored_digest_name < <(sha256sum config/weekly-continuation-source-cache-v3.json)
           timeout --signal=KILL 95s python -I -B tools/weekly_continuation_source_cache_v3.py --execute --procedure-sha256 "$procedure_sha"
       - name: Generate the source and model bound initial inference plan
+        if: inputs.mode != 'audit-count-requalify-v1'
         id: inference-plan
         env:
           STORE_PERMISSION: write
@@ -539,6 +545,7 @@ jobs:
           elif [ "$INITIAL_ROUTE_VERSION" = 2 ]; then route_args=(--recovery-v2); fi
           timeout --signal=KILL 35s python -I -B tools/hosted_initial_plan_builder_v1.py --execute "${route_args[@]}"
       - name: Issue current remaining slate forecasts using the existing frozen producer
+        if: inputs.mode != 'audit-count-requalify-v1'
         id: current-inference
         env:
           INITIAL_PLAN_SHA256: ${{ steps.inference-plan.outputs.plan_sha256 }}
@@ -549,6 +556,7 @@ jobs:
             --plan "$RUNNER_TEMP/genuine-hosted-fixed-build-restore-v1-$GITHUB_RUN_ID/initial-plan-builder-v${INITIAL_ROUTE_VERSION}/PLAN.json" \
             --plan-sha256 "$INITIAL_PLAN_SHA256" --execute
       - name: Preserve every candidate and selected forecast in private storage
+        if: inputs.mode != 'audit-count-requalify-v1'
         id: selected-checkpoint
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -564,6 +572,105 @@ jobs:
             route_args=(--recovery-v2 --config-sha256 "$procedure_sha")
           fi
           timeout --signal=KILL 190s python -I -B tools/selected_private_snapshot_v1.py produce --execute "${route_args[@]}"
+      - name: Record the actual zero-fit recovery start
+        if: inputs.mode == 'audit-count-requalify-v1'
+        id: audit-count-start
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone
+          import os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as handle:
+              handle.write('started_at_utc=' + datetime.now(timezone.utc).isoformat() + '\n')
+          PY
+      - name: Restore original artifacts and requalify without fitting
+        if: inputs.mode == 'audit-count-requalify-v1'
+        id: audit-count-requalify
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+        run: timeout --signal=KILL 700s python -I -B tools/audit_count_hosted_v1.py --execute
+      - name: Preserve complete effective artifacts in the qualified private runtime
+        if: inputs.mode == 'audit-count-requalify-v1' && steps.audit-count-requalify.outcome == 'success'
+        id: audit-count-checkpoint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+        run: timeout --signal=KILL 240s python -I -B tools/audit_count_checkpoint_v1.py produce --execute
+      - name: Preserve failed attempts without successful forecast publication
+        if: ${{ always() && !cancelled() && inputs.mode == 'audit-count-requalify-v1' && steps.audit-count-start.outcome == 'success' && (steps.audit-count-requalify.outcome == 'failure' || steps.audit-count-checkpoint.outcome == 'failure') }}
+        id: audit-count-failure
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_COUNT_WRITER_OUTCOME: ${{ steps.audit-count-requalify.outcome }}
+          AUDIT_COUNT_CHECKPOINT_OUTCOME: ${{ steps.audit-count-checkpoint.outcome }}
+          AUDIT_COUNT_STARTED_AT_UTC: ${{ steps.audit-count-start.outputs.started_at_utc }}
+        run: timeout --signal=KILL 190s python -I -B tools/audit_count_failure_v1.py append --execute
+  audit-count-effective-restore-v1:
+    needs: genuine-hosted-fixed-build-restore-v1
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-count-requalify-v1' && github.run_attempt == 1 && (needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_handoff_json != '' || needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_json != '') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+      checks: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '2'
+      OMP_THREAD_LIMIT: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      NUMEXPR_NUM_THREADS: '2'
+      VECLIB_MAXIMUM_THREADS: '2'
+      MALLOC_ARENA_MAX: '2'
+      ARROW_DEFAULT_MEMORY_POOL: system
+      ARROW_IO_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact existing numerical dependencies for independent replay
+        run: python -m pip --disable-pip-version-check install --requirement requirements-hosted-fixed-build-v1.lock
+      - name: Restore and replay the complete new effective model checkpoint
+        if: needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_handoff_json != '' && needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_json == ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_COUNT_HANDOFF_JSON: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_handoff_json }}
+          AUDIT_COUNT_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_handoff_sha256 }}
+        run: timeout --signal=KILL 430s python -I -B tools/audit_count_checkpoint_v1.py restore --execute
+      - name: Publish only the verified hash-only model restoration receipt
+        if: needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_handoff_json != '' && needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_json == ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+        run: timeout --signal=KILL 60s python -I -B tools/audit_count_verification_receipt_v1.py --execute
+      - name: Restore the failed attempt as failure evidence only
+        if: needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_json != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          AUDIT_COUNT_ROOT_GO_JSON: ${{ inputs.inference_builder_go_json }}
+          AUDIT_COUNT_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
+          AUDIT_COUNT_FAILURE_HANDOFF_JSON: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_json }}
+          AUDIT_COUNT_FAILURE_HANDOFF_SHA256: ${{ needs.genuine-hosted-fixed-build-restore-v1.outputs.audit_failure_handoff_sha256 }}
+        run: timeout --signal=KILL 190s python -I -B tools/audit_count_failure_v1.py restore --execute
   genuine-hosted-selected-restore-v1:
     needs: genuine-hosted-fixed-build-restore-v1
     if: ${{ !cancelled() && needs.genuine-hosted-fixed-build-restore-v1.result == 'success' && github.event_name == 'workflow_dispatch' && (inputs.mode == 'genuine-hosted-fixed-build-v1' || inputs.mode == 'genuine-hosted-inference-continuation-v3') && github.run_attempt == 1 }}

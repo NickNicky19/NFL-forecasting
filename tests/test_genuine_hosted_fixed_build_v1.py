@@ -16,6 +16,7 @@ import pandas as pd
 
 from nfl_lab import hosted_fixed_build_v1 as b
 from tools.weekly_future_train import training_columns
+from retained_source_fixture import retained_procedure
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('fictional_hosted_fixed_driver',ROOT/'tools/genuine_hosted_fixed_build_v1.py')
@@ -216,7 +217,10 @@ class HostedFixedBuildChecks(unittest.TestCase):
     def test_noop_source_pins_and_same_workflow_single_writer_only(self):
         with redirect_stdout(io.StringIO()) as output:self.assertEqual(d.main([]),2)
         self.assertEqual(json.loads(output.getvalue())['state'],'HOSTED_FIXED_BUILD_PREPARATION_ONLY_NO_IO')
-        self.assertEqual(d.verify_sources()['maximum_new_fits'],18)
+        with retained_procedure(d,'config/genuine-hosted-fixed-build-v1.json'):
+            self.assertEqual(d.verify_sources()['maximum_new_fits'],18)
+        with self.assertRaisesRegex(d.GuardStop,'BUILD_SOURCE_CHANGED'):
+            d.verify_sources()
         workflow=(ROOT/'.github/workflows/lab.yml').read_text();job=workflow.split('  genuine-hosted-fixed-build-v1:\n',1)[1]
         self.assertIn('group: nfl-lab-single-writer',workflow);self.assertEqual(workflow.count("cron: '36 13,14 * * *'"),1)
         self.assertIn('requirements-hosted-fixed-build-v1.lock',job);self.assertNotIn('upload-artifact',job)

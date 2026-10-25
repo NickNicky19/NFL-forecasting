@@ -17,6 +17,7 @@ from nfl_lab.operational_storage import OperationalStorage
 from tools import gha_private_checkpoint_v1 as cli
 from test_private_draft_store_v2 import Server,Response,RUN,SOURCE
 from test_owner_private_bootstrap import qualification
+from retained_source_fixture import retained_procedure, workflow_job
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -154,9 +155,12 @@ print(json.dumps(dict(state=result['state'],files=result['files'],models=len(res
         rejected=s.canonical(unapproved)
         with patch.object(cli,'read',return_value=rejected),self.assertRaisesRegex(ValueError,'NOT_APPROVED'):
             cli.verified(cli.sha(rejected))
-        self.assertEqual(cli.verified(cli.REGISTERED_CONFIG_SHA256)['state'],'ROOT_APPROVED_FOR_GENUINE_GHA')
+        with retained_procedure(cli,'config/gha-private-checkpoint-v1.json'):
+            self.assertEqual(cli.verified(cli.REGISTERED_CONFIG_SHA256)['state'],'ROOT_APPROVED_FOR_GENUINE_GHA')
+        with self.assertRaisesRegex(ValueError,'CHECKPOINT_SOURCE_PIN'):
+            cli.verified(cli.REGISTERED_CONFIG_SHA256)
     def test_workflow_snippet_preserves_existing_mode_and_safe_boundaries(self):
-        text=(ROOT/'website_packet/gha-private-checkpoint-v1/lab-job-integration.yml').read_text()
+        text=workflow_job((ROOT/'.github/workflows/lab.yml').read_text(),'genuine-hosted-fixed-build-restore-v1')
         self.assertIn('needs: genuine-hosted-fixed-build-v1',text);self.assertIn('persist-credentials: false',text)
         self.assertIn('ref: ${{ github.sha }}',text);self.assertIn('contents: write',text);self.assertIn('actions: read',text)
         self.assertNotIn('cron:',text);self.assertNotIn('uses: actions/upload-artifact',text);self.assertNotIn('ghp_',text)

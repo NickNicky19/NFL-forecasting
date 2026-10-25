@@ -20,6 +20,7 @@ from . import cdf_engine as cdf
 from .state import digest, now_utc, utc
 
 VERSION = 'weekly-adaptive-release-v1-future-inference'
+COUNT_A_FALLBACK_VERSION = 'count-a-prior-mean-fallback-v2-20261025'
 IDENTITY = cdf.KEYS + ['team','opponent','position','kickoff_utc','cutoff_utc']
 FAMILIES = ('leaf_cdf_base','count_A','catboost_medium','cdf_small_correction')
 CODE_FILES = ('weekly_future_inference.py','cdf_engine.py','role_boosting.py',
@@ -108,6 +109,7 @@ def product(category):
 
 def procedure_version(family,source_contract):
     return digest(dict(registration='weekly-adaptive-release-v1',family=family,source_contract=source_contract,
+        count_fallback_version=COUNT_A_FALLBACK_VERSION if family=='count_A' else None,
         code_pins=code_pins(),category_contract_sha256='9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4',
         training_rule='annual earlier seasons since2019; fixed correction earlierOOF since2022; pass_td context/pass_att intercept initially',
         fallback='existing role/global priors; all offered preserved'))
@@ -136,6 +138,18 @@ def _points(model, family, frame):
     else:points,reasons=model.predict(frame)
     points=np.asarray(points,dtype=float);reasons=np.asarray(reasons,dtype=str)
     require(points.shape==reasons.shape==(len(frame),),'every offered row must remain')
+    if family=='count_A':
+        # The frozen research model deliberately retains numeric prior medians.
+        # This versioned weekly mean product changes only explicit fallbacks;
+        # warm fitted values and the historical model object remain unchanged.
+        points=points.copy()
+        roles=cdf.strings(frame,'position')
+        for i in np.flatnonzero(reasons!=''):
+            prior=model.priors.get(str(roles[i]),model.global_prior)
+            if prior is not None:
+                require(prior.support=='count' and np.isfinite(prior.mean)
+                    and prior.mean>=0,'invalid stored count fallback prior')
+                points[i]=prior.mean
     finite=np.isfinite(points)
     require(not np.isinf(points).any(),'infinite forecast')
     if support=='count': require((points[finite]>=0).all(),'negative count point')
@@ -200,6 +214,7 @@ def export_trained_artifact(directory, model, *, family, method_id, training_fra
         fit_receipt=getattr(model['correction'],'weekly_fit_receipt',None)
     manifest=dict(schema_version=VERSION,artifact_kind='TRAINED_FUTURE_QUERY_NOT_HISTORICAL_REPLAY',
         family=family,method_id=method_id,procedure_version=procedure_version(family,source_contract),category=category,features=features,
+        count_fallback_version=COUNT_A_FALLBACK_VERSION if family=='count_A' else None,
         dependencies=[base_artifact] if base_artifact else [],
         model=dict(path=str(model_path.absolute()),bytes=len(body),sha256=hashlib.sha256(body).hexdigest()),
         training_cutoff_utc=cutoff.isoformat(),training_max_available_utc=pd.to_datetime(training_frame.outcome_available_utc,utc=True).max().isoformat(),
@@ -271,6 +286,9 @@ class FutureInferenceSession:
             require(m['schema_version']==VERSION and m['artifact_kind']=='TRAINED_FUTURE_QUERY_NOT_HISTORICAL_REPLAY',
                     'new future-query schema required; old query checks cannot be bypassed')
             require(m['code_pins']==current_code and m['environment']==current_environment,'trained code/environment changed')
+            if m['family']=='count_A':
+                require(m.get('count_fallback_version')==COUNT_A_FALLBACK_VERSION,
+                    'versioned weekly count-mean fallback artifact required; requalification needed')
             manifests[b['sha256']]=m
         self._verify([m['model'] for m in manifests.values()])
         for version,m in sorted(manifests.items(),key=lambda item:item[1]['family']=='cdf_small_correction'):
