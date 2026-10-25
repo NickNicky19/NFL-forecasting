@@ -76,6 +76,28 @@ def test_required_env_only_public_safe_receipt():
     assert result["original_expected_bits_sha256"]==n.ORIGINAL_BITS_SHA256
 
 
+def test_metadata_reader_does_not_claim_model_package_readiness(monkeypatch):
+    original=importlib.metadata.version
+    def without_model_package(package):
+        if package=="catboost":raise importlib.metadata.PackageNotFoundError(package)
+        return original(package)
+    monkeypatch.setattr(n.importlib.metadata,"version",without_model_package)
+    with pytest.raises(n.NumericalRuntimeError,match="NUMERICAL_REQUIRED_PACKAGE_METADATA_MISSING"):
+        n.preflight(ROOT,RequiredOnly(),cpuinfo=CPU)
+    result=n.preflight(ROOT,RequiredOnly(),cpuinfo=CPU,scope="METADATA_ONLY")
+    assert result["scope"]=="METADATA_ONLY_NOT_MODEL_READINESS"
+    assert result["package_versions"]=={k:v for k,v in n.VERSIONS.items() if k!="catboost"}
+    assert result["execution_authorized"] is result["forecast_release"] is False
+
+
+def test_metadata_scope_retains_other_package_checks_and_closed_modes(monkeypatch):
+    monkeypatch.setattr(n.importlib.metadata,"version",lambda package:"WRONG")
+    with pytest.raises(n.NumericalRuntimeError,match="NUMERICAL_PACKAGE_VERSION_MISMATCH"):
+        n.preflight(ROOT,RequiredOnly(),cpuinfo=CPU,scope="METADATA_ONLY")
+    with pytest.raises(n.NumericalRuntimeError,match="CLOSED_NUMERICAL_PREFLIGHT_SCOPE"):
+        n.preflight(ROOT,RequiredOnly(),cpuinfo=CPU,scope="SKIP_GUARDS")
+
+
 @pytest.mark.parametrize("key",sorted(n.ENVIRONMENT))
 def test_every_original_or_new_startup_control_is_required(key):
     env=dict(n.ENVIRONMENT);env[key]="FICTIONAL_WRONG"
