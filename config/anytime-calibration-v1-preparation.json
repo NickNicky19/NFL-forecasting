@@ -1,0 +1,135 @@
+{
+  "registration_id": "anytime-calibration-v1-20261025",
+  "state": "PREPARED_NO_INVOCATION",
+  "target": "anytime_td",
+  "support": "bernoulli",
+  "conditional_on": "played",
+  "primary_roles": [
+    "RB",
+    "WR",
+    "TE"
+  ],
+  "bases": [
+    "fresh_cdf",
+    "catboost_medium"
+  ],
+  "methods": [
+    "intercept",
+    "platt",
+    "beta",
+    "isotonic"
+  ],
+  "horizons": [
+    {
+      "calibration_years": [
+        2022
+      ],
+      "evaluation_year": 2023
+    },
+    {
+      "calibration_years": [
+        2022,
+        2023
+      ],
+      "evaluation_year": 2024
+    }
+  ],
+  "base_training": "Annual out-of-fit forecasts:2022base trained through2021;2023through2022;2024through2023. No base refits. No random-fold claim.",
+  "eligibility": "One global category/horizon calibrator per method/base. Fit only primary-role supported played binary labels, supported probabilities and known outcome_available_utc strictly before earliest evaluation cutoff. Missing/unknown/DNP/invalid labels excluded explicitly, never zero-filled. Retain every registered offered row, unsupported base forecast and offered fallback; inference reads probabilities only.",
+  "minimum": {
+    "supported_calibration_rows": 200,
+    "positive_labels": 30,
+    "negative_labels": 30,
+    "failure": "unchanged base probability with explicit fallback reason; attempt remains charged"
+  },
+  "logistic_objective": "Mean binary NLL over ALL supported calibration rows plus0.01/2 sum((slopes-identity)^2). Intercept unpenalized. One L-BFGS-B attempt max200iterations, ftol1e-12 gtol1e-8 maxls20; initial intercept0 and identity slopes.",
+  "transforms": {
+    "intercept": "logit(q)=c+logit(p)",
+    "platt": "logit(q)=c+s*logit(p),s>=0; identitys=1",
+    "beta": "logit(q)=c+a*log(p)-b*log(1-p),a,b>=0; identitya=b=1",
+    "isotonic": "increasing PAVA, all supported p including0/1; out_of_bounds=clip is constant monotone endpoint extension"
+  },
+  "endpoints": {
+    "logistic": "For finite intercept, q(0)=0,q(1)=1 even at zero slopes; monotone jumps permitted. Compatible endpoint NLL0/gradient0 included in total denominator. A contrary training endpoint gives irreducible infinite NLL; one charged fit failure and unchanged base, never drop/clip/epsilon-replace.",
+    "isotonic": "Learns mapping from genuine0/1 input values as well. Constant endpoint extension outside training probability range. Genuine calibrated0/1 contrary evaluation events retain infinite NLL."
+  },
+  "pooled_control": "Training-only event-rate posterior mean under Beta(1,1), same primary-role supported-played known-availability labels/cutoffs, independent of base support. No extra calibrator fit.",
+  "scoring": {
+    "primary": "Brier",
+    "secondary": [
+      "log_loss including positive infinity",
+      "reliability fixed tenths including1 in last bin",
+      "low<=.1 and high>=.9 tails",
+      "forecast/eligible/fallback coverage",
+      "Bernoulli lower-quantile80percent coverage/width"
+    ],
+    "comparators": [
+      "own unchanged base",
+      "other fixed unchanged base",
+      "training-only pooled control"
+    ],
+    "uncertainty": {
+      "clusters": [
+        "season_week",
+        "season_game"
+      ],
+      "replicates": 500,
+      "seeds": [
+        1931,
+        1932
+      ],
+      "confidence": 0.95,
+      "method": "existing whole-cluster paired sums/counts bootstrap, PCG64 linear percentile, nominal descriptive; infinite paired loss deltas explicit/undefined, never dropped"
+    }
+  },
+  "freeze": "All2023calibrators/forecasts freeze before2023labels open for2024training. All16new models and all2023/24candidate/control predictions freeze durably before evaluation scoring. Only2022/2023training labels and2023/2024evaluation labels; no2025+ or protected labels.",
+  "source_contract": {
+    "normalized_source_manifest_sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+    "approved_feature_reference_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+    "feature_schema": "all97 exact, play_rate8 unavailable mask retained",
+    "category_contract_sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
+    "matching": "exact one-to-one primary-role player-game/team/opponent/position/kickoff/cutoff and both-base actual/participation equality when each label year may open"
+  },
+  "resources": {
+    "CPU_seconds": 120,
+    "wall_seconds": 180,
+    "RSS_bytes": 2147483648,
+    "address_space_bytes": 8589934592,
+    "threads": 2,
+    "retained_bytes": 16777216,
+    "calibrator_calls": 16,
+    "base_fits": 0,
+    "HTTP": 0
+  },
+  "terminal_reserve": {
+    "CPU_seconds": 5,
+    "wall_seconds": 5,
+    "bytes": 65536
+  },
+  "optimizer_attempts_per_method_base_horizon": 1,
+  "automatic_retries": 0,
+  "parameter_search": 0,
+  "result_scope": "All exposed historical diagnostics; no fresh confirmation, production/default change, automatic selection, scientific calibration or betting claim.",
+  "startup_contract": {
+    "helper": "existing ngboost_law_software_v1.process_free_threads",
+    "helper_sha256": "5ccfe3076530db21f92e3bf5abdb8f746f864aa9f95d3fad09dcccd2ec6cbe81",
+    "libc_sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+    "requirements": "Exact hash/size/ELF and already-mapped device/inode proof; resolve only c through accepted helper; preserve strict nochild/socket guards; restore original resolver on context exit; fresh-process startup smoke before actual GO"
+  },
+  "outer_resource_contract": {
+    "core_sha256": "8503e47b07b860d10fe6c55affe5f8104bffe48dcfb293d7a961239e04b153bd",
+    "CPU_seconds": 120,
+    "wall_seconds": 180,
+    "RSS_bytes": 2147483648,
+    "address_space_bytes": 8589934592,
+    "threads": 2,
+    "retained_bytes": 16777216,
+    "soft_reserve_seconds": 10,
+    "termination_grace_seconds": 5,
+    "poll_seconds": 0.05,
+    "external_receipt_reserve_bytes": 65536,
+    "worker_terminal_reserve_bytes": 65536,
+    "preflight": "Fresh stdlib single-threaded launcher refuses any existing direct children before unchanged accepted core can adopt/signal/reap; never invoke core from an actor-owning caller.",
+    "retention": "External receipt counts within16MiB. Worker ALWAYS reserves65536 outer bytes and ordinary writes additionally reserve65536 internal terminal bytes. No model/scoring/parameter change."
+  }
+}

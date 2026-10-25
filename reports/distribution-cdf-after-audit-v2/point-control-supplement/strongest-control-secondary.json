@@ -1,0 +1,1018 @@
+{
+  "schema_version": "cached-point-controls-strongest-secondary-v1",
+  "source_aggregate_sha256": "2ccfb217c89d66a89e880814394d0fce502622fc485845f3e2a6899e4a8ad52e",
+  "rows": [
+    {
+      "target": "pass_yd",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_small",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 66.9515306122449,
+        "control_loss": 66.6026269355634,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.23365550146459707,
+            0.8956463358298961
+          ],
+          "game": [
+            -0.20314280489552003,
+            0.8999929295415815
+          ]
+        },
+        "delta": 0.3489036766814833,
+        "relative_gain_pct": -0.5238587316068545,
+        "state": "finite"
+      },
+      "candidate_bias": 3.9545918367346937,
+      "control_bias": 2.8843788859787884,
+      "candidate_p95_absolute_error": 169.0,
+      "control_p95_absolute_error": 166.95786550834805,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 110,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_yd",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_small",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 66.2030612244898,
+        "control_loss": 66.6026269355634,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -1.1341750468103526,
+            0.45564552260774965
+          ],
+          "game": [
+            -1.06657243632824,
+            0.31753952765891774
+          ]
+        },
+        "delta": -0.39956571107361877,
+        "relative_gain_pct": 0.5999248520034762,
+        "state": "finite"
+      },
+      "candidate_bias": -0.3377551020408163,
+      "control_bias": 2.8843788859787884,
+      "candidate_p95_absolute_error": 175.0,
+      "control_p95_absolute_error": 166.95786550834805,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 110,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_td",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_lightgbm_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 1.0781786875954658,
+        "control_loss": 1.0713835492241233,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.006130016433954192,
+            0.019734601623124376
+          ],
+          "game": [
+            -0.005479549661898029,
+            0.01938408094183605
+          ]
+        },
+        "delta": 0.00679513837134249,
+        "relative_gain_pct": -0.6342395658644757,
+        "state": "finite"
+      },
+      "candidate_bias": 0.07346404969265145,
+      "control_bias": 0.05356999520190639,
+      "candidate_p95_absolute_error": 1.888844449838454,
+      "control_p95_absolute_error": 1.9524358463440357,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 668,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_td",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_lightgbm_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 1.0619745013505355,
+        "control_loss": 1.0713835492241233,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.01992147424060678,
+            -0.0003639493322386901
+          ],
+          "game": [
+            -0.020115277468669028,
+            0.0013238544149087143
+          ]
+        },
+        "delta": -0.009409047873587704,
+        "relative_gain_pct": 0.878214704752712,
+        "state": "finite"
+      },
+      "candidate_bias": 0.06827012506318142,
+      "control_bias": 0.05356999520190639,
+      "candidate_p95_absolute_error": 1.9212898435315302,
+      "control_p95_absolute_error": 1.9524358463440357,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 668,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_cmp",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_lightgbm_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 53.37862724892512,
+        "control_loss": 52.14003261468847,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.19419514022157217,
+            2.5328849712723165
+          ],
+          "game": [
+            0.14777837436638303,
+            2.549677778501221
+          ]
+        },
+        "delta": 1.2385946342366467,
+        "relative_gain_pct": -2.375515649155388,
+        "state": "finite"
+      },
+      "candidate_bias": 0.45871634046830095,
+      "control_bias": 0.004576145897428406,
+      "candidate_p95_absolute_error": 13.872524340334268,
+      "control_p95_absolute_error": 14.215429287275454,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 110,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_cmp",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_lightgbm_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 51.540210184679644,
+        "control_loss": 52.14003261468847,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -1.3889610501525798,
+            0.17301567002499885
+          ],
+          "game": [
+            -1.3285025504624381,
+            0.1791000694463285
+          ]
+        },
+        "delta": -0.5998224300088278,
+        "relative_gain_pct": 1.1504067027373723,
+        "state": "finite"
+      },
+      "candidate_bias": 0.21936055479311717,
+      "control_bias": 0.004576145897428406,
+      "candidate_p95_absolute_error": 14.144828809711628,
+      "control_p95_absolute_error": 14.215429287275454,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 110,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_att",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 116.87899778402972,
+        "control_loss": 115.62508141480838,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -3.7810535404718886,
+            5.623691756416343
+          ],
+          "game": [
+            -2.070073624258989,
+            4.8980596175169975
+          ]
+        },
+        "delta": 1.2539163692213313,
+        "relative_gain_pct": -1.0844674476144858,
+        "state": "finite"
+      },
+      "candidate_bias": 0.8755083795673055,
+      "control_bias": -0.45033586710602785,
+      "candidate_p95_absolute_error": 21.055100909620055,
+      "control_p95_absolute_error": 21.433488488281178,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 79,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_att",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 113.9007310602089,
+        "control_loss": 115.62508141480838,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -5.1717430013644705,
+            1.2553933523495606
+          ],
+          "game": [
+            -4.366502255708648,
+            1.0505050734023182
+          ]
+        },
+        "delta": -1.7243503545994785,
+        "relative_gain_pct": 1.4913289863237564,
+        "state": "finite"
+      },
+      "candidate_bias": 0.5041907741572343,
+      "control_bias": -0.45033586710602785,
+      "candidate_p95_absolute_error": 21.44702593002134,
+      "control_p95_absolute_error": 21.433488488281178,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 79,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_int",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_small",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 0.6841086775273709,
+        "control_loss": 0.679346161887616,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.001078124831058209,
+            0.011240350277550154
+          ],
+          "game": [
+            -0.0010838306606752923,
+            0.012128631305864553
+          ]
+        },
+        "delta": 0.004762515639755008,
+        "relative_gain_pct": -0.7010440195204636,
+        "state": "finite"
+      },
+      "candidate_bias": 0.011438986160599424,
+      "control_bias": -5.6853707724526396e-05,
+      "candidate_p95_absolute_error": 1.413709289166632,
+      "control_p95_absolute_error": 1.4356412880362748,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 1096,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "pass_int",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_small",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 1960,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 0.6775664279562187,
+        "control_loss": 0.679346161887616,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.00998483128093372,
+            0.0057159723036605365
+          ],
+          "game": [
+            -0.008638331328246781,
+            0.005558917023769186
+          ]
+        },
+        "delta": -0.0017797339313971384,
+        "relative_gain_pct": 0.26197747646828085,
+        "state": "finite"
+      },
+      "candidate_bias": 0.011518881401420517,
+      "control_bias": -5.6853707724526396e-05,
+      "candidate_p95_absolute_error": 1.447898353941145,
+      "control_p95_absolute_error": 1.4356412880362748,
+      "coverage": {
+        "offered": 4091,
+        "forecasted": 4091,
+        "supported_played": 1960,
+        "scored": 1960,
+        "unknown": 2131,
+        "DNP": 0,
+        "played_missing": 0,
+        "played_invalid": 0,
+        "played_zero": 1096,
+        "fallback_offered": 64
+      },
+      "control_fallback_offered": 64
+    },
+    {
+      "target": "rush_yd",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 4558,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 20.403466432645896,
+        "control_loss": 19.826424396922995,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.4012416747759629,
+            0.7477098711429901
+          ],
+          "game": [
+            0.4127947683727864,
+            0.7528417239240215
+          ]
+        },
+        "delta": 0.5770420357229016,
+        "relative_gain_pct": -2.9104695035805648,
+        "state": "finite"
+      },
+      "candidate_bias": -8.93483984203598,
+      "control_bias": -6.826032014903538,
+      "candidate_p95_absolute_error": 68.0,
+      "control_p95_absolute_error": 62.550899027914866,
+      "coverage": {
+        "offered": 6235,
+        "forecasted": 6235,
+        "supported_played": 4558,
+        "scored": 4558,
+        "unknown": 1665,
+        "DNP": 0,
+        "played_missing": 12,
+        "played_invalid": 0,
+        "played_zero": 739,
+        "fallback_offered": 157
+      },
+      "control_fallback_offered": 157
+    },
+    {
+      "target": "rush_yd",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 4558,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 19.755375164545853,
+        "control_loss": 19.826424396922995,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.17289606887838926,
+            0.02934714064067031
+          ],
+          "game": [
+            -0.170038467375339,
+            0.022319195709949103
+          ]
+        },
+        "delta": -0.07104923237714228,
+        "relative_gain_pct": 0.3583562570574679,
+        "state": "finite"
+      },
+      "candidate_bias": -6.787406757349715,
+      "control_bias": -6.826032014903538,
+      "candidate_p95_absolute_error": 62.149999999999636,
+      "control_p95_absolute_error": 62.550899027914866,
+      "coverage": {
+        "offered": 6235,
+        "forecasted": 6235,
+        "supported_played": 4558,
+        "scored": 4558,
+        "unknown": 1665,
+        "DNP": 0,
+        "played_missing": 12,
+        "played_invalid": 0,
+        "played_zero": 739,
+        "fallback_offered": 157
+      },
+      "control_fallback_offered": 157
+    },
+    {
+      "target": "rush_att",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 4558,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 25.197748399030488,
+        "control_loss": 24.04640959278721,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.7949099963660486,
+            1.5006225022687223
+          ],
+          "game": [
+            0.7664828522156723,
+            1.542710423283326
+          ]
+        },
+        "delta": 1.1513388062432777,
+        "relative_gain_pct": -4.787986338669973,
+        "state": "finite"
+      },
+      "candidate_bias": -0.0855812885055477,
+      "control_bias": 0.09039211714382638,
+      "candidate_p95_absolute_error": 10.151226188482866,
+      "control_p95_absolute_error": 10.07177172771656,
+      "coverage": {
+        "offered": 6235,
+        "forecasted": 6235,
+        "supported_played": 4558,
+        "scored": 4558,
+        "unknown": 1665,
+        "DNP": 0,
+        "played_missing": 12,
+        "played_invalid": 0,
+        "played_zero": 682,
+        "fallback_offered": 157
+      },
+      "control_fallback_offered": 157
+    },
+    {
+      "target": "rush_att",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 4558,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 24.231383465175476,
+        "control_loss": 24.04640959278721,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.013537256494860176,
+            0.3665528180987926
+          ],
+          "game": [
+            -0.0405818957931015,
+            0.415537619054126
+          ]
+        },
+        "delta": 0.1849738723882663,
+        "relative_gain_pct": -0.7692369693467641,
+        "state": "finite"
+      },
+      "candidate_bias": 0.10942955508625504,
+      "control_bias": 0.09039211714382638,
+      "candidate_p95_absolute_error": 10.007478105946117,
+      "control_p95_absolute_error": 10.07177172771656,
+      "coverage": {
+        "offered": 6235,
+        "forecasted": 6235,
+        "supported_played": 4558,
+        "scored": 4558,
+        "unknown": 1665,
+        "DNP": 0,
+        "played_missing": 12,
+        "played_invalid": 0,
+        "played_zero": 682,
+        "fallback_offered": 157
+      },
+      "control_fallback_offered": 157
+    },
+    {
+      "target": "rec",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 3.343831564325947,
+        "control_loss": 3.2672804867594087,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.053661053267741156,
+            0.09972205200129318
+          ],
+          "game": [
+            0.055250035154285,
+            0.10046382152766083
+          ]
+        },
+        "delta": 0.07655107756653869,
+        "relative_gain_pct": -2.342960081840543,
+        "state": "finite"
+      },
+      "candidate_bias": 0.12479523021258046,
+      "control_bias": 0.011223104817565032,
+      "candidate_p95_absolute_error": 3.6369042675236103,
+      "control_p95_absolute_error": 3.7419150134610835,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 3786,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "rec",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MSE",
+        "point": "mean",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 3.264021761683143,
+        "control_loss": 3.2672804867594087,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.0164990935134594,
+            0.009656115810187849
+          ],
+          "game": [
+            -0.019200777246484568,
+            0.011643767274032301
+          ]
+        },
+        "delta": -0.0032587250762653947,
+        "relative_gain_pct": 0.0997381488816715,
+        "state": "finite"
+      },
+      "candidate_bias": 0.05343515251945016,
+      "control_bias": 0.011223104817565032,
+      "candidate_p95_absolute_error": 3.6807754238367894,
+      "control_p95_absolute_error": 3.7419150134610835,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 3786,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "rec_yd",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 16.541538259786243,
+        "control_loss": 16.343397995395673,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.14743885655160419,
+            0.24939548520515492
+          ],
+          "game": [
+            0.13767242850249853,
+            0.25055526427810826
+          ]
+        },
+        "delta": 0.1981402643905699,
+        "relative_gain_pct": -1.2123566007900632,
+        "state": "finite"
+      },
+      "candidate_bias": -6.6839551504819354,
+      "control_bias": -5.443884936907999,
+      "candidate_p95_absolute_error": 55.0,
+      "control_p95_absolute_error": 53.89685901383612,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 3884,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "rec_yd",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 16.357025768802046,
+        "control_loss": 16.343397995395673,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.024561043823162494,
+            0.047282166344654576
+          ],
+          "game": [
+            -0.019714131007826832,
+            0.047647030639591664
+          ]
+        },
+        "delta": 0.013627773406372145,
+        "relative_gain_pct": -0.08338396586935283,
+        "state": "finite"
+      },
+      "candidate_bias": -5.7223132909317425,
+      "control_bias": -5.443884936907999,
+      "candidate_p95_absolute_error": 55.0,
+      "control_p95_absolute_error": 53.89685901383612,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 3884,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "rush_rec_yd",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 21.483509278080128,
+        "control_loss": 20.98392513503166,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            0.4148314116070354,
+            0.5724942268724964
+          ],
+          "game": [
+            0.418586109865098,
+            0.588414156037861
+          ]
+        },
+        "delta": 0.499584143048465,
+        "relative_gain_pct": -2.3807945359776093,
+        "state": "finite"
+      },
+      "candidate_bias": -7.578191593993837,
+      "control_bias": -6.013686241698656,
+      "candidate_p95_absolute_error": 67.0,
+      "control_p95_absolute_error": 63.740447095639226,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 2519,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "rush_rec_yd",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "MAE",
+        "point": "median",
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 21.00944200380303,
+        "control_loss": 20.98392513503166,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.031292570771177794,
+            0.07638085063370426
+          ],
+          "game": [
+            -0.028778442690301012,
+            0.0762826191155955
+          ]
+        },
+        "delta": 0.025516868771368387,
+        "relative_gain_pct": -0.12160198155096334,
+        "state": "finite"
+      },
+      "candidate_bias": -6.3778768605337355,
+      "control_bias": -6.013686241698656,
+      "candidate_p95_absolute_error": 64.0,
+      "control_p95_absolute_error": 63.740447095639226,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 2519,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "anytime_td",
+      "candidate": "threshold_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "brier",
+        "point": null,
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 0.14122654069156007,
+        "control_loss": 0.14076308980223012,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            8.74727517711434e-05,
+            0.0008147411977243592
+          ],
+          "game": [
+            0.000145601655523645,
+            0.00077927524358863
+          ]
+        },
+        "delta": 0.00046345088932997844,
+        "relative_gain_pct": -0.3292417706808569,
+        "state": "finite"
+      },
+      "candidate_bias": 0.00993945900828187,
+      "control_bias": 0.00863078575224623,
+      "candidate_p95_absolute_error": 0.81932831982058,
+      "control_p95_absolute_error": 0.8243950376155924,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 12339,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    },
+    {
+      "target": "anytime_td",
+      "candidate": "distribution_split_cdf",
+      "strongest_direct_control": "direct_catboost_medium",
+      "paired": {
+        "metric": "brier",
+        "point": null,
+        "n": 15251,
+        "games": 815,
+        "weeks": 54,
+        "candidate_loss": 0.14096923634165753,
+        "control_loss": 0.14076308980223012,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "intervals": {
+          "week": [
+            -0.0002040096380657497,
+            0.0006404051571285531
+          ],
+          "game": [
+            -0.00019377984049066138,
+            0.000606511155759
+          ]
+        },
+        "delta": 0.00020614653942740621,
+        "relative_gain_pct": -0.14644928561673545,
+        "state": "finite"
+      },
+      "candidate_bias": 0.012781094948786799,
+      "control_bias": 0.00863078575224623,
+      "candidate_p95_absolute_error": 0.8174045774866326,
+      "control_p95_absolute_error": 0.8243950376155924,
+      "coverage": {
+        "offered": 21504,
+        "forecasted": 21504,
+        "supported_played": 15251,
+        "scored": 15251,
+        "unknown": 6229,
+        "DNP": 0,
+        "played_missing": 24,
+        "played_invalid": 0,
+        "played_zero": 12339,
+        "fallback_offered": 545
+      },
+      "control_fallback_offered": 545
+    }
+  ]
+}

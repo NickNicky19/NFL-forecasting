@@ -1,3 +1,11 @@
+# Latest executed after-audit research
+
+[Corrected two-family distribution comparison](distribution-cdf-after-audit-v2/README.md): 114 fit calls, 815 games/54 season-weeks; eight small response-CDF CRPS gains, two numeric losses and one unchanged TD alias; monotone loses eleven. Combined yards is an exposed research lead only. V1 source-mask omission remains retained. [Complete category × method matrix](../docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md). No scientific or website promotion.
+
+[Cached point-control supplement](distribution-cdf-after-audit-v2/point-control-supplement/README.md): 132 pooled contrasts / 396 annual cells, zero training or inference. Monotone loses all eleven direct minima; CDF-response is lower in seven, with only passing TD/attempts/interceptions lowest in the named fresh-CDF/corrected-Count-A/six-direct set. Older published correction summaries narrow passing-TD/attempt gaps to about 0.0354% / 0.2406%, without a new paired test against those older forecasts. Combined-yard CatBoost-medium point MAE remains lower than the response median. Exposed descriptive results select no candidate and change no deployment.
+
+[Fixed anytime-TD calibration](anytime-calibration-v1/README.md): independently accepted 16 calibrator fits, zero base fits, evaluation 2023–2024 only (10,157 supported outcomes / 14,282 offers). All eight method/base combinations worsen pooled Brier versus both unchanged bases; two genuine infinite fresh-CDF isotonic log losses remain. Exact calibrator/design source and curated fictional checks are public; no calibration lead or selection follows.
+
 # Forecasting research: complete navigation index
 
 ## Latest website integration — 2026-10-25

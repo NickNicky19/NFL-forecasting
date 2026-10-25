@@ -1,0 +1,100 @@
+{
+  "registration_id": "threshold-cdf-after-audit-v1-20261025",
+  "state": "PRESPECIFIED_BEFORE_NEW_SCORES",
+  "scope": "NFL REG exposed development; conditional on supported played",
+  "purpose": "One new distribution learner versus freshly refitted source-matched controls after audit corrections; no scientific promotion or website-relative claim",
+  "years": [
+    2022,
+    2023,
+    2024
+  ],
+  "training_year_start": 2019,
+  "protected_outcomes": "No semantic read of seasons later than 2024; original future scientific streams unchanged",
+  "input_features_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+  "category_contract_sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
+  "source_manifest_sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+  "source_manifest_note": "Exact permitted normalized history verified against source manifest; precomputed old features are reference only and are not reused as corrected features",
+  "corrections": {
+    "features": "cutoff-features-v2-20261025: admit by known availability strictly before cutoff, recent by kickoff; explicit unknown excluded, absent column seven-day assumption retained",
+    "distribution_diagnostic": "paired-distribution-interval-v2-20261025: retain positive infinite log losses, undefined finite delta/interval explicit",
+    "count_control": "count-a-prior-mean-fallback-v2-20261025: new procedure uses role/global training means only on explicit fallback rows; old frozen point model unchanged",
+    "law_arithmetic": "New shared stable mixture arithmetic applied to both freshly fitted distribution arms; old stored laws/scores untouched"
+  },
+  "methods": [
+    "threshold_cdf_monotone_v1",
+    "leaf_cdf_corrected_features_v2",
+    "training_role_prior_v2",
+    "count_A_mean_fallback_v2"
+  ],
+  "features": "Existing category base panel only; same training-only imputation/missing indicators and role encoding; no new information source",
+  "new_learner": "One monotonic HistGradientBoostingClassifier with threshold covariate per numeric category/year; one direct binary classifier for anytime TD; fixed grid/parameters in frozen source, no selection",
+  "within_bin_law": "Training-only empirical frequencies; predeclared boundary integer for empty bins; fixed 5% role/global full-support prior; complete count/signed support, Bernoulli separately",
+  "fit_calls": {
+    "threshold_cdf": 33,
+    "fresh_leaf_cdf": 33,
+    "count_A": 18,
+    "total_maximum": 84
+  },
+  "search": {
+    "settings_per_method": 1,
+    "tuning": 0,
+    "calibration_fits": 0,
+    "ensemble_fits": 0,
+    "retries": 0
+  },
+  "chronology": "Annual fits use seasons2019..year-1 with known label availability strictly earlier than first test cutoff; in-season lagged features may use only earlier available games. Forecasts for all years/arms durably freeze before scoring. Labels after2024 never decoded",
+  "population": "All offered rows in existing primary-role contracts, not selected positive outcomes; sparse/new/cold/unknown offers retain forecasts/fallbacks. Score only supported played valid labels. DNP, played zero, missing, invalid and unknown remain separate",
+  "primary": {
+    "numeric_full_distribution": "CRPS",
+    "anytime_td": "Brier"
+  },
+  "secondary": [
+    "median_MAE",
+    "mean_MSE_RMSE",
+    "mean_and_median_bias",
+    "p95_absolute_error",
+    "log_score_with_infinite_states",
+    "80_percent_interval_coverage_width_score",
+    "zero_mass",
+    "fixed_bin_TD_reliability",
+    "player_team_opponent_summaries",
+    "fallback_loss_coverage"
+  ],
+  "comparators": "Fresh paired leaf CDF and role prior for proper scores; count_A corrected mean on six count targets for mean/MSE only. Original raw/SITE/R0 and recorded market thresholds unavailable: N/A",
+  "uncertainty": {
+    "unit": [
+      "whole_week",
+      "whole_game"
+    ],
+    "replicates": 500,
+    "seed_week": 1911,
+    "seed_game": 1912,
+    "confidence": 0.95,
+    "method": "paired cluster loss difference, linear percentile; descriptive exposed-development, no selected-winner or simultaneous qualification claim"
+  },
+  "decision": "Per category, pooled2022-24 primary-role offered population only, with all three annual candidate/control cells complete: advance as research lead only if primary distribution CRPS (TD Brier) strictly lower than both freshCDF and prior; equal within absolute1e-12 is tie/retain. No forecast coverage loss. Require absolute mean bias no increase beyond1e-12 and median-point p95 absolute error no increase beyond1e-12 (TD mean probability p95). Report annual reversals; no pooling category units. Missing/failed annual cells prevent research nomination, but explicit common-year descriptive contrasts remain allowed. No automatic provisional selection/deployment/scientific promotion.",
+  "resources": {
+    "maximum_CPU_seconds": 1200,
+    "maximum_wall_seconds": 1500,
+    "finalization_reserve_seconds": 45,
+    "maximum_RSS_bytes": 4294967296,
+    "maximum_address_space_bytes": 8589934592,
+    "threads": 2,
+    "maximum_new_retained_bytes": 201326592,
+    "maximum_expanded_fit_rows": 8000000,
+    "maximum_forecast_or_score_query_rows": 2000000,
+    "HTTP": 0,
+    "GPU": 0
+  },
+  "failure": "Charge before each attempt; retain partial forecasts/models/errors and terminal state, no retry or favorable subset. A failed target does not stop independent valid targets unless shared hard resource ceiling exhausted",
+  "publication": "Private rows/features/models/paths/expanded ledger never public. Only reviewed source, registration, aggregate results and schemas through explicit allowlist",
+  "production": "Research package only; existing integrator owns actual provisional entry, scheduler, protected source and deployment",
+  "actual_agent_settings": {
+    "requested": "gpt-6.1-sol xhigh",
+    "backend_attestation": "unavailable; not claimed"
+  },
+  "exact_website_PPR": "BLOCKED_LABEL_CONTRACT; no fabricated generic proxy",
+  "input_normalized_history_sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+  "law_arithmetic_version": "normalized-cumulative-mixture-v1-20261025",
+  "pre_execution_amendment": "Metadata/source and decision precision clarified before any semantic NFL decode, fit or score; original registration receipt retained in ledger"
+}
