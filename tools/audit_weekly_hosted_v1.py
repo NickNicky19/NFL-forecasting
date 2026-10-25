@@ -40,6 +40,7 @@ def main(argv=None):
     except Exception as error:
         code=error.code if isinstance(error,store.StoreError) else "WEEKLY_HOSTED_GUARD"
         if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_HOSTED_GUARD"
-        print(json.dumps(dict(state="FAILED_RETAINED",reason=code,fits=0,public_release=False,successful_forecast=False),sort_keys=True));return 1
+        print(json.dumps(dict(state="FAILED_RETAINED",reason=code,fits=0,public_release=False,successful_forecast=False,
+            diagnostic=hosted.error_diagnostic(error)),sort_keys=True));return 1
 
 if __name__=="__main__":raise SystemExit(main())

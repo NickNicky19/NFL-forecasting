@@ -56,6 +56,8 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "tests/test_audit_reference_capture_v1.py", "tools/audit_process_guard_v1.py", "requirements-audit-weekly-metadata-v1.lock",
     "nfl_lab/audit_weekly_delivery_v1.py", "tools/audit_weekly_delivery_v1.py", "tests/test_audit_weekly_delivery_v1.py",
     "nfl_lab/public_release_plan_v1.py",
+    "nfl_lab/operational_failure_v1.py",
+    "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
     ".github/workflows/audit-source-checks.yml"}))
 NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
     "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
@@ -164,6 +166,21 @@ def actual_failure(env, *, python_failure_recorded):
     return dict(kind=kind,code="WEEKLY_PHASE_FAILED_RETAINED",exit_code=code)
 
 
+def error_diagnostic(error):
+    """Public code locations and type only; never exception text/values."""
+    kind=type(error).__name__
+    if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{0,79}",kind):kind="Exception"
+    frames=[];trace=error.__traceback__
+    while trace is not None:
+        path=Path(trace.tb_frame.f_code.co_filename).resolve()
+        if path.is_relative_to(ROOT):
+            name=path.relative_to(ROOT)
+            if name.parts[0] in {"nfl_lab","tools"} and name.suffix==".py":
+                frames.append(dict(file=name.as_posix(),line=trace.tb_lineno))
+        trace=trace.tb_next
+    return dict(error_type=kind,source_frames=frames[-5:])
+
+
 class Runner:
     def __init__(self, phase, env, *, existing=False):
         from tools.private_draft_store_v2 import actions_context
@@ -233,7 +250,8 @@ class Runner:
             if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_BOOTSTRAP_AUTHENTICATION_FAILED"
             path=self.root/"BOOTSTRAP_FAILED.json"
             if not path.exists():write(self.storage,path,dict(state="FAILED_RETAINED",reason=code,actual_observed_at=now_utc().isoformat(),
-                original_start_sha256=cp.binding(self.root/"BOOTSTRAP_STARTED.json")["sha256"],successful_forecast=False,public_release=False))
+                original_start_sha256=cp.binding(self.root/"BOOTSTRAP_STARTED.json")["sha256"],successful_forecast=False,public_release=False,
+                diagnostic=error_diagnostic(error)))
             raise
         if not existing:
             write(self.storage,self.root/"PARENT_STARTED.json",dict(actual_started_at=start["actual_started_at"],actual_identity=self.identity))
@@ -443,7 +461,7 @@ class Runner:
             client=self.failure_client("restore")
             inputs={k:store.canonical(value[k]) for k in ("binding","descriptor")}
             go=self.operation_go("restore",inputs)
-            result=failure.restore_failure(client,self.storage,self.root/"failure-restored",authorization=go,
+            result=failure.restore_failure(client,self.storage,self.root/"failure-restored",authorization=store.canonical(go),
                 authorization_sha256=store.sha(store.canonical(go)),inputs=inputs)
             archive_restored=False
             archive_raw=self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON","").encode()
@@ -579,7 +597,7 @@ class Runner:
         inputs={k:store.canonical(v) for k,v in dict(binding=package["binding"],payload_manifest=manifest,qualification=package["qualification"]).items()}
         go=self.operation_go("append",inputs,manifest=manifest)
         client=self.failure_client("append")
-        value=failure.append_failure(client,self.storage,output,authorization=go,authorization_sha256=digest(go),inputs=inputs)
+        value=failure.append_failure(client,self.storage,output,authorization=store.canonical(go),authorization_sha256=digest(go),inputs=inputs)
         handoff=dict(schema_version=VERSION+"-failure-handoff",root_go_sha256=self.go_sha,binding=package["binding"],descriptor=value["descriptor"])
         body=store.canonical(handoff)
         require(len(body)<=16 << 10 and not any(x in body for x in (b"https://",b"/tmp/",b"ghs_")),"SAFE_FAILED_HANDOFF")
@@ -596,26 +614,36 @@ class Runner:
         Raw HTTP/source intermediates and qualified model weights remain outside
         this declared capture scope; every included byte is bounded and owned.
         """
-        if not any((self.root/name).is_dir() and any(p.is_file() and p.name!=_OWNER for p in (self.root/name).rglob("*"))
-            for name in ("runtime","reference")):
-            return None
         files=[];physical_origins={}
         collection=self.storage.register_root(self.root/"failure-opaque-collection")
+        def add(path,logical):
+            require(not path.is_symlink() and path.is_file(),"FAILED_SNAPSHOT_SYMLINK")
+            require(len(files)<archive.MAX_FILES and path.stat().st_size<=store.ASSET_CAP,"ALL_FAILED_FILES_WITHIN_CLOSED_CAPS")
+            ref=cp.binding(path);physical_origins[logical]=dict(ref)
+            alias=collection/logical
+            self.storage.import_file(path,alias,expected_sha256=ref["sha256"])
+            files.append(cp.file_item(cp.binding(alias),logical,"forecast" if path.suffix==".gz" else "control"))
+        # Full fixed controls survive even if the separate core-failure
+        # envelope cannot finish. Raw source caches and weights stay excluded.
+        for name in ("OWNER_ROOT.json","QUALIFIED_RUNTIME.json","BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json",
+                "BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json"):
+            path=self.root/name
+            if path.exists():add(path,"failed/bootstrap/"+name)
+        for folder,names in (("source",("SOURCE_FINISHED.json","SOURCE_FAILED.json","CONSUMED.json")),
+                ("prepared",("PREPARED.json",))):
+            for name in names:
+                path=self.root/folder/name
+                if path.exists():add(path,"failed/"+folder+"-metadata/"+name)
         for folder in ("runtime","reference","metadata","phase-status","requests","journal"):
             base=self.root/folder
             if not base.exists():continue
             for path in sorted(base.rglob("*")):
                 require(not path.is_symlink(),"FAILED_SNAPSHOT_SYMLINK")
                 if not path.is_file() or path.name==_OWNER:continue
-                require(len(files)<archive.MAX_FILES and path.stat().st_size<=store.ASSET_CAP,"ALL_FAILED_FILES_WITHIN_CLOSED_CAPS")
                 logical="failed/"+path.relative_to(self.root).as_posix()
-                ref=cp.binding(path)
-                physical_origins[logical]=dict(ref)
                 # Files left by an interrupted atomic write may not yet be CAS
                 # aliases. Import exact original bytes; never rewrite them.
-                alias=collection/logical
-                self.storage.import_file(path,alias,expected_sha256=ref["sha256"])
-                files.append(cp.file_item(cp.binding(alias),logical,"forecast" if path.suffix==".gz" else "control"))
+                add(path,logical)
         if not files:return None
         census=dict(schema_version=archive.VERSION+"-failed-opaque-census",archive_state="FAILURE_EVIDENCE",
             raw_HTTP_corpus_archived=False,model_weights_reuploaded=False,actual_collected_at=now_utc().isoformat(),
@@ -780,5 +808,5 @@ def execute(phase, env):
             code=error.code if isinstance(error,store.StoreError) else "WEEKLY_UNEXPECTED_PHASE_FAILURE"
             if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_UNEXPECTED_PHASE_FAILURE"
             write(runner.storage,runner.root/"phase-status"/"PARENT_FAILED.json",dict(state="FAILED_RETAINED",phase=actual,
-                reason=code,actual_observed_at=now_utc().isoformat(),public_release=False,successful_forecast=False))
+                reason=code,actual_observed_at=now_utc().isoformat(),public_release=False,successful_forecast=False,diagnostic=error_diagnostic(error)))
         raise

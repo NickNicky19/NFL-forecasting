@@ -312,6 +312,11 @@ class Runtime:
             schedule_ref = source["raw"]["schedules.csv"]
             roster_ref = source["raw"][f"roster_weekly_{slate['season']}.parquet"]
             schedule = pd.read_csv(schedule_ref["path"], usecols=query.SCHEDULE_COLUMNS+["espn"])
+            # Query construction and the exact bridge already use this same
+            # canonical identity mapping. Coverage must compare that contract,
+            # rather than raw nfldata LA against canonical LAR.
+            for side in ("home_team","away_team"):
+                schedule[side]=query.data._team(schedule[side])
             local = pd.to_datetime(schedule.gameday.astype(str)+" "+schedule.gametime.astype(str), errors="coerce")
             calendar = schedule.assign(kickoff_utc=local.dt.tz_localize("America/New_York", ambiguous="NaT", nonexistent="NaT").dt.tz_convert("UTC"))
             derived = generic.prepare_slate(calendar.to_dict("records"), season=slate["season"], week=slate["week"],
