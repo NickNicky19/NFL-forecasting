@@ -216,7 +216,7 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
     body = grade._read_owned(storage, snapshot.binding, 8 << 20, raw=True)
     doc = grade._unpack(body, 64 << 20)
     require(doc == snapshot.document and grade._digest(doc) == snapshot.sha256 and set(doc) == grade.SNAPSHOT_KEYS
-            and doc["code_pins"] == grade.pins() and doc["schema_version"] == grade.VERSION + "-snapshot"
+            and doc["schema_version"] == grade.VERSION + "-snapshot"
             and hashed(doc["epoch_sha256"]) and doc["local_only"] is True
             and doc["metadata_remote_durability_qualified"] is doc["successful_forecast"] is doc["public_release"] is doc["scientific_qualification"] is False
             and type(doc["fits"]) is int and type(doc["searches"]) is int and doc["fits"] == doc["searches"] == 0
@@ -224,7 +224,12 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
             "EXACT_CURRENT_JOB_LOCAL_GRADING_SNAPSHOT_BYTES")
     # All full-document checks above remain. Keep only immutable scalar fields
     # needed for the handoff while the native append holds its body buffers.
+    snapshot_code_pins = doc["code_pins"]
     doc = {key:doc[key] for key in ("epoch_sha256", "actual_completed_at")}
+    # Validate the exact current source before any intent/native POST, after
+    # releasing the redundant decoded row graph. No source check is cached or
+    # skipped; the immutable snapshot retains every original row and byte.
+    require(snapshot_code_pins == grade.pins(), "EXACT_CURRENT_JOB_LOCAL_GRADING_SNAPSHOT_BYTES")
     output = output_root(storage, output, len(body) + (64 << 10))
     intent = dict(authenticate_inputs, schema_version=VERSION + "-append-intent", body_bytes=len(body),
         epoch_sha256=doc["epoch_sha256"], actual_started_at=state.utc(clock()).isoformat(), public_release=False, successful_forecast=False)
