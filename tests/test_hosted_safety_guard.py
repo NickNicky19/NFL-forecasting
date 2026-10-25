@@ -78,7 +78,7 @@ class HostedSafetyChecks(unittest.TestCase):
         workflow=(source.parents[1]/".github/workflows/lab.yml").read_text()
         self.assertEqual(workflow.count("- cron:"),1)
         self.assertEqual(workflow.count("group: nfl-lab-single-writer"),1)
-        self.assertIn("- cron: '36 13,14 * * *'",workflow)
+        self.assertIn("- cron: '36 12,13,14 * * *'",workflow)
         self.assertIn("cancel-in-progress: false",workflow)
         self.assertLess(workflow.index("id: readiness"),workflow.index("Install exact tested dependencies"))
         self.assertLess(workflow.index("id: readiness"),workflow.index("actions/setup-python@v5"))
