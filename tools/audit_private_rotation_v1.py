@@ -26,6 +26,12 @@ def main(argv=None):
         from nfl_lab import audit_private_rotation_v1 as rotation
         root = rotation.preflight(args.phase, os.environ)
         result = rotation.run_phase(args.phase, os.environ, root)
+        if args.phase == "qualify":
+            # The final job has no downstream consumer of GITHUB_OUTPUT. Keep
+            # this checked metadata receipt outside the disposable runner too.
+            # safe_output excludes secrets, URLs, private paths and bodies;
+            # only the native canary proofs and quota/identity metadata remain.
+            print("AUDIT_PRIVATE_ROTATION_QUALIFIED_JSON=" + rotation.safe_output(result).decode(), flush=True)
         print(json.dumps(dict(state="ROTATION_PHASE_COMPLETE", phase=args.phase, handoff_sha256=rotation.sha(rotation.canonical(result)),
             private_payload_bytes=0, private_durability_qualified=False), sort_keys=True))
         return 0
