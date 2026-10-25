@@ -351,3 +351,17 @@ mean and the CatBoost combined-yard median remain stronger on their matched poin
 products. The combined-yard CRPS result is a separate distribution comparison.
 Exact website PPR remains label-blocked. No deployment, scientific registration,
 protected outcome access, original forecast or older result changed.
+
+
+## Later FTN schema prerequisite — 2026-10-25
+
+The [buffered schema pilot](../reports/ftn-charting-schema-buffered-v2/README.md)
+authenticated one fixed 2024-named asset and nine required nullable field types.
+Its 48,031 footer rows supply no new model observations or measured gain. The
+previous CPU-limited partial capture remains retained. Interception-worthy and
+catch-quality model experiments remain unrun: player/play joins, value/zero
+semantics, denominators, coverage and availability still require qualification.
+Exact PPR remains label-blocked; no other category inherits a gain or source
+qualification. The pending workload continuation retains its spent resources
+and fixed model recipe while startup-clock repair is prepared. No additional
+website model or scientific-registration change follows from this checkpoint.
