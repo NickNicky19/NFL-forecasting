@@ -1,0 +1,456 @@
+{
+  "baselines": {
+    "website-audit": {
+      "full_current_suite": {
+        "errors": 0,
+        "failures": 0,
+        "grading_version": "statistical-v3-identity-20261025",
+        "log_path": "website-math-full-current-suite.log",
+        "log_sha256": "a3894b80713368f7ddbcf66175ade9f59bf22387fbf8012a2c735a212771c97e",
+        "network": "DISABLED",
+        "new_tests": 9,
+        "original_tests": 97,
+        "skipped": 0,
+        "total": 106
+      },
+      "half_ppr_scratch": {
+        "evidence": "FICTIONAL_HALF_PPR_PATCH_CHECK",
+        "results": {
+          "DISPOSABLE_SOURCE_COPY": {
+            "average": null,
+            "label": "Sleeper Half PPR",
+            "projection": null,
+            "prop": {
+              "adj": null,
+              "adj_h": null,
+              "key": "fpts",
+              "lean": null,
+              "line": null,
+              "n": 0,
+              "over": 0,
+              "proj": null,
+              "scoring_missing": true,
+              "values": []
+            }
+          }
+        }
+      },
+      "patched_source_sha256": {
+        "output/app.js": "2224e648cedc2bff656af15e519f22d2c1680a4b36fbfcea9ce5282fa179a64f",
+        "pull/build.py": "3962b8f13aec49771a94e7e4259d4aefdb161783572278e614d47a5e50ddc78f",
+        "pull/grade.py": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354",
+        "pull/scoring.py": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+        "tests/test_grading_identity_v3.py": "aa40a0182873e28d2d547dce755908ccad8632cb8a95052f30d0cec9ba5b860d"
+      },
+      "patches": [
+        {
+          "depends_on": [],
+          "path": "patches/website-audit-math-01-retain-field-goals.patch",
+          "preimages": {
+            "pull/scoring.py": "31672c10d526d591db8951157b0ecd669b4d02b412a75deec337618bff18dab2"
+          },
+          "sha256": "4e5175c08e026d4fcc503249f594a7518962bdae6ae81e98f97e462a18e69db8"
+        },
+        {
+          "depends_on": [],
+          "path": "patches/website-audit-math-02-bind-classic-statistics.patch",
+          "preimages": {
+            "pull/build.py": "75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419",
+            "pull/grade.py": "ca16cd918d3a17a4a5c34be79f22aaaee7ae7babf2ddfb1a45e7fc17f521f105",
+            "tests/test_grading_identity_v3.py": null
+          },
+          "sha256": "37f4a126029b8533914c731a44b7c488c842913bdca304f0b9b17bbb186e1e38"
+        },
+        {
+          "depends_on": [
+            "02-bind-classic-statistics"
+          ],
+          "path": "patches/website-audit-math-03-require-completed-finals.patch",
+          "preimages": {
+            "pull/build.py": "75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419"
+          },
+          "sha256": "f01d8240ff1e750615d2f2b4225b3d03e890e2fac3f1de06189565082ba523c9"
+        },
+        {
+          "depends_on": [],
+          "path": "patches/website-audit-math-05-half-ppr-missing-labels.patch",
+          "preimages": {
+            "output/app.js": "6ea6accea409f834da466790e112c4c45ae6c803064a06237a20714a168e05ee"
+          },
+          "sha256": "06d7eb953a7d52b8dcb1b998eca9d016debb49c4600843f5c56ce1dbaca44bcb"
+        }
+      ],
+      "repro": {
+        "all12": {
+          "anytime_td": 2,
+          "fpts": 35.9,
+          "pass_att": 30,
+          "pass_cmp": 20,
+          "pass_int": 1,
+          "pass_td": 2,
+          "pass_yd": 250,
+          "rec": 4,
+          "rec_yd": 51,
+          "rush_att": 3,
+          "rush_rec_yd": 49,
+          "rush_yd": -2
+        },
+        "cancelled_post_classic": {
+          "games_complete": false,
+          "top_over": {
+            "dnp": 0,
+            "hit": 0,
+            "miss": 0,
+            "n_decided": 0,
+            "pct": null,
+            "picks": [],
+            "push": 0,
+            "unresolved": 0
+          }
+        },
+        "checks": 47,
+        "combined_tally": {
+          "dnp": 0,
+          "hit": 1,
+          "miss": 1,
+          "n_decided": 2,
+          "pct": 50.0,
+          "push": 1,
+          "unresolved": 0
+        },
+        "field_goal_loss": {
+          "after_normalization": {
+            "fictional-game": {
+              "away_pts": 22.5,
+              "home_pts": 21.5,
+              "home_win": 0.47,
+              "lean_spread": null,
+              "lean_total": null,
+              "ml_away": -113,
+              "ml_home": 113,
+              "spread": 1.0,
+              "total": 44.0
+            }
+          },
+          "direct": {
+            "fictional-game": {
+              "away_pts": 22.5,
+              "home_pts": 21.5,
+              "home_win": 0.47,
+              "lean_spread": null,
+              "lean_total": null,
+              "ml_away": -113,
+              "ml_home": 113,
+              "spread": 1.0,
+              "total": 44.0
+            }
+          }
+        },
+        "invalid_actual_counts": {
+          "boolean": [
+            1,
+            "hit"
+          ],
+          "fractional": [
+            1.5,
+            "hit"
+          ],
+          "negative": [
+            -1,
+            "miss"
+          ]
+        },
+        "missing_projection": {
+          "partial_combined": 30,
+          "receiving_prop": {
+            "adj": 0.0,
+            "key": "rec_yd",
+            "lean": null,
+            "line": 0.5,
+            "mf": 1.0,
+            "mf_n": 0,
+            "n": 0,
+            "over": 0,
+            "proj": 0,
+            "source": "model",
+            "values": []
+          }
+        },
+        "negative_count_projection": {
+          "adj": -1.0,
+          "key": "rec",
+          "lean": null,
+          "line": -0.5,
+          "mf": 1.0,
+          "mf_n": 0,
+          "n": 0,
+          "over": 0,
+          "proj": -1,
+          "source": "model",
+          "values": []
+        },
+        "null_actual": [
+          0,
+          "hit"
+        ],
+        "patched_expectations": true,
+        "presence_aware": false,
+        "root": "DISPOSABLE_FICTIONAL_SOURCE_COPY",
+        "wrong_identity_classic": [
+          {
+            "actual": null,
+            "adj": 6,
+            "decision_projection": 6,
+            "direction": "over",
+            "game_id": "fictional-game",
+            "key": "rec",
+            "line": 4.5,
+            "line_from": "dk",
+            "name": "Fictional Receiver",
+            "player_id": "fictional-player",
+            "proj": 6,
+            "result": "unresolved",
+            "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+          }
+        ],
+        "wrong_top_game": [
+          {
+            "actual": null,
+            "adj": 6,
+            "decision_projection": 6,
+            "direction": "over",
+            "game_id": "fictional-other-game",
+            "key": "rec",
+            "line": 4.5,
+            "line_from": "dk",
+            "name": "Fictional Receiver",
+            "player_id": "fictional-player",
+            "proj": 6,
+            "result": "unresolved",
+            "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+          }
+        ]
+      },
+      "source_pin": "02f55b0fad18d0699ac2b227ac5745cdd795969d"
+    },
+    "website-phase2": {
+      "half_ppr_scratch": {
+        "evidence": "FICTIONAL_HALF_PPR_PATCH_CHECK",
+        "results": {
+          "DISPOSABLE_SOURCE_COPY": {
+            "average": null,
+            "label": "Sleeper Half PPR",
+            "projection": null,
+            "prop": {
+              "adj": null,
+              "adj_h": null,
+              "key": "fpts",
+              "lean": null,
+              "line": null,
+              "n": 0,
+              "over": 0,
+              "proj": null,
+              "scoring_missing": true,
+              "values": []
+            }
+          }
+        }
+      },
+      "migration_regressions": {
+        "errors": 0,
+        "failures": 0,
+        "tests": 9
+      },
+      "patched_source_sha256": {
+        "output/app.js": "5a7601a6411b801ef1fea676b9e31db9dd5beaf0e47dfdb736595fab962b1a58",
+        "pull/build.py": "8c3dbfdaa3be0b88aa2dfef5084baf8b8f25c4a8186f4abaefc043cb43393b6c",
+        "pull/grade.py": "e17b0737b171fa51998bfcb6f39b867642269d43884d303c307989a07a955628",
+        "pull/scoring.py": "73b493a5e1f18400e80d050764cb0daa4b21f0175bdd109a2417f20c14f501cd",
+        "tests/test_grading_identity_v3.py": "bd4eab51cf7bc838dd121eae816f2ba1918eb9e0171f6b5939623338b0dc8f6a"
+      },
+      "patches": [
+        {
+          "depends_on": [],
+          "path": "patches/website-phase2-math-01-retain-field-goals.patch",
+          "preimages": {
+            "pull/scoring.py": "473e8fa2601d75eab8a223edda53555c51ce145c6426e570df9ae918c3f9eee0"
+          },
+          "sha256": "7c87478731c00f647a8eab51ec36d6b2549786803f92e85efa2a571ddf44bc47"
+        },
+        {
+          "depends_on": [],
+          "path": "patches/website-phase2-math-02-bind-classic-statistics.patch",
+          "preimages": {
+            "pull/build.py": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c",
+            "pull/grade.py": "cf4bccf4fd960d5cc896d5e8bbef216a7d84cd20ca938ce1c60ca7942c307d2f",
+            "tests/test_grading_identity_v3.py": null
+          },
+          "sha256": "0f10a08787a0b0f29195db716ba18d8d16d559b55529ed437c56cf3fda8e0540"
+        },
+        {
+          "depends_on": [
+            "02-bind-classic-statistics"
+          ],
+          "path": "patches/website-phase2-math-03-require-completed-finals.patch",
+          "preimages": {
+            "pull/build.py": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c"
+          },
+          "sha256": "0ff8a84338ca023e7e693d3bfc6729f28db1cc18a48842908c9941b29f7fbcf8"
+        },
+        {
+          "depends_on": [],
+          "path": "patches/website-phase2-math-04-reject-negative-count-expectations.patch",
+          "preimages": {
+            "pull/scoring.py": "473e8fa2601d75eab8a223edda53555c51ce145c6426e570df9ae918c3f9eee0"
+          },
+          "sha256": "55eaa5e962c52195d502c7d03221684ebb62ddb4956ca01e168bf50b7aca7023"
+        },
+        {
+          "depends_on": [],
+          "path": "patches/website-phase2-math-05-half-ppr-missing-labels.patch",
+          "preimages": {
+            "output/app.js": "9d0a12b9e0d848188b3de6d412a64af62fcb48b8a1dbf26c41bb66bd6ce63c37"
+          },
+          "sha256": "74f28a43044d27165ade7e3c999ac6a1d3ff17ab4fbd54409e1664863a10c5c3"
+        }
+      ],
+      "repro": {
+        "all12": {
+          "anytime_td": 2,
+          "fpts": 35.9,
+          "pass_att": 30,
+          "pass_cmp": 20,
+          "pass_int": 1,
+          "pass_td": 2,
+          "pass_yd": 250,
+          "rec": 4,
+          "rec_yd": 51,
+          "rush_att": 3,
+          "rush_rec_yd": 49,
+          "rush_yd": -2
+        },
+        "cancelled_post_classic": {
+          "games_complete": false,
+          "top_over": {
+            "dnp": 0,
+            "hit": 0,
+            "miss": 0,
+            "n_decided": 0,
+            "pct": null,
+            "picks": [],
+            "push": 0,
+            "unresolved": 0
+          }
+        },
+        "checks": 57,
+        "combined_tally": {
+          "dnp": 0,
+          "hit": 1,
+          "miss": 1,
+          "n_decided": 2,
+          "pct": 50.0,
+          "push": 1,
+          "unresolved": 0
+        },
+        "field_goal_loss": {
+          "after_normalization": {
+            "fictional-game": {
+              "away_pts": 22.5,
+              "home_pts": 21.5,
+              "home_win": 0.47,
+              "lean_spread": null,
+              "lean_total": null,
+              "ml_away": -113,
+              "ml_home": 113,
+              "spread": 1.0,
+              "total": 44.0
+            }
+          },
+          "direct": {
+            "fictional-game": {
+              "away_pts": 22.5,
+              "home_pts": 21.5,
+              "home_win": 0.47,
+              "lean_spread": null,
+              "lean_total": null,
+              "ml_away": -113,
+              "ml_home": 113,
+              "spread": 1.0,
+              "total": 44.0
+            }
+          }
+        },
+        "invalid_actual_counts": {
+          "boolean": [
+            null,
+            "unresolved"
+          ],
+          "fractional": [
+            null,
+            "unresolved"
+          ],
+          "negative": [
+            null,
+            "unresolved"
+          ]
+        },
+        "missing_projection": {
+          "partial_combined": null,
+          "receiving_prop": null
+        },
+        "negative_count_projection": null,
+        "null_actual": [
+          null,
+          "unresolved"
+        ],
+        "patched_expectations": true,
+        "phase2_scorecard_identity": {
+          "outcome_identity_reasons": [
+            "statistics_opponent_mismatch",
+            "statistics_team_mismatch"
+          ],
+          "outcome_identity_status": "quarantined"
+        },
+        "presence_aware": true,
+        "root": "DISPOSABLE_FICTIONAL_SOURCE_COPY",
+        "wrong_identity_classic": [
+          {
+            "actual": null,
+            "adj": 6,
+            "decision_projection": 6,
+            "direction": "over",
+            "game_id": "fictional-game",
+            "key": "rec",
+            "line": 4.5,
+            "line_from": "dk",
+            "name": "Fictional Receiver",
+            "player_id": "fictional-player",
+            "proj": 6,
+            "result": "unresolved",
+            "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+          }
+        ],
+        "wrong_top_game": [
+          {
+            "actual": null,
+            "adj": 6,
+            "decision_projection": 6,
+            "direction": "over",
+            "game_id": "fictional-other-game",
+            "key": "rec",
+            "line": 4.5,
+            "line_from": "dk",
+            "name": "Fictional Receiver",
+            "player_id": "fictional-player",
+            "proj": 6,
+            "result": "unresolved",
+            "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+          }
+        ]
+      },
+      "source_pin": "e415912b9c3d3ff52e8f435517af02e794d97fa4"
+    }
+  },
+  "schema_version": "website-math-patch-qualification-v2",
+  "scope": "FICTIONAL_PATCH_VALIDATION_ONLY_NOT_RELEASE_QUALIFICATION"
+}

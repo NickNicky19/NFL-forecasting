@@ -1,0 +1,132 @@
+{
+  "agent_settings": {
+    "actual_backend": "UNATTESTED",
+    "requested_effort": "Extra High",
+    "requested_model": "GPT-6.1 Sol"
+  },
+  "aggregation": "Original target_report/product_pairs/subgroup_rows/later_descriptive_pairs/research_nominations unchanged;500 original bootstrap seed1703;all5controls and both arms;PPRblocked;no new scientific qualification.",
+  "budgets": {
+    "CPU_seconds": 600,
+    "HTTP": 0,
+    "actual_invocations": 1,
+    "automatic_retries": 0,
+    "combined_RSS_bytes": 1073741824,
+    "new_fits_inference_scoring_labeljoins_raw_model_law_calls": 0,
+    "new_retained_bytes": 16777216,
+    "numerical_threads": 2,
+    "shared_retention_bytes": 536870912,
+    "wall_seconds": 600
+  },
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "code_root": "/workspace/nfl-direct-booster-screen-v1",
+  "completed_outputs": {
+    "pass_att": {
+      "pairs": {
+        "bytes": 1115061,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/paired-losses/pass_att.parquet",
+        "sha256": "c1591e10d05a49000ddd64028538bff7753cfd98c10542abc4ef691162d82c73"
+      },
+      "report": {
+        "bytes": 169959,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/target-reports/pass_att.json",
+        "sha256": "103b1907985860dffa9c216dccf15b5f7598b9e9b32f9c3203bbffcf410bd1d0"
+      },
+      "subgroups": {
+        "bytes": 33290,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/subgroups/pass_att.parquet",
+        "sha256": "e37b104a32af7c925e6230a3102c8ccc06ed3d5638eea7cc780ec70e49fd31f3"
+      }
+    },
+    "pass_cmp": {
+      "pairs": {
+        "bytes": 1075095,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/paired-losses/pass_cmp.parquet",
+        "sha256": "552aaf9ecdc041d355cec38630921f82a6e53f4ec5a8ed0912976ae24c74f372"
+      },
+      "report": {
+        "bytes": 169788,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/target-reports/pass_cmp.json",
+        "sha256": "3c3b1b75343036aba4ba0bbfc816cd40c7596d9d0bf411df4de17f0dd0c4dfac"
+      },
+      "subgroups": {
+        "bytes": 31211,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/subgroups/pass_cmp.parquet",
+        "sha256": "5779be793350771c0f064e1070ad670c7c3ec9e3abb825094580a2596ac53154"
+      }
+    },
+    "pass_td": {
+      "pairs": {
+        "bytes": 1030527,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/paired-losses/pass_td.parquet",
+        "sha256": "f90d375930522bdce1515376c80a4cf0b04f3e98e2eb0e2b1bc00e984a761b30"
+      },
+      "report": {
+        "bytes": 167747,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/target-reports/pass_td.json",
+        "sha256": "3b1681164c9489dfcd1db610690127149f9a0524b196688ed73814da1336978a"
+      },
+      "subgroups": {
+        "bytes": 28004,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/subgroups/pass_td.parquet",
+        "sha256": "fbe2ebf59232bc42cf9233e3a0a97761d6dbe82514856f0e16ba9f09559abfaa"
+      }
+    },
+    "pass_yd": {
+      "pairs": {
+        "bytes": 909772,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/paired-losses/pass_yd.parquet",
+        "sha256": "9e8adb33df2e734be397c226ae6417e5893f888343e6e76790a3f3a5faa31cf1"
+      },
+      "report": {
+        "bytes": 167923,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/target-reports/pass_yd.json",
+        "sha256": "1ff0a03a3c1707eb423eaa89ee161464a8870e3839a6acd05c627c604dc82ba7"
+      },
+      "subgroups": {
+        "bytes": 22060,
+        "path": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023/private/subgroups/pass_yd.parquet",
+        "sha256": "314c2fe678fedc4c558676295897a5f63fcb882239e506a4c14fc9c76a6d104a"
+      }
+    }
+  },
+  "control_root": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023",
+  "methods": [
+    "cdf_offset_intercept_v1",
+    "cdf_offset_context_v1"
+  ],
+  "original_tools_root": "/workspace/nfl-baseline-correction-v1/tools",
+  "output": "/workspace/website-methods-research/resumed/baseline-correction-report-v2-20261023",
+  "parent_root": "/workspace/website-methods-research/resumed/baseline-correction-v1-20261023",
+  "registration_id": "baseline-correction-report-v2-20261023",
+  "remaining_targets": [
+    "pass_int",
+    "rush_yd",
+    "rush_att",
+    "rec",
+    "rec_yd",
+    "rush_rec_yd",
+    "anytime_td"
+  ],
+  "required_SHA256": {
+    "parent_FAILED_completion": "58485013ee684179491b7f788d9c0eb6e7aeb0e05d58a86ec84e48d1bf81877e",
+    "parent_forecast_freeze": "6e75ba54ffb2204732fb465ea02f4f95bcc1060bc193ae0c8a8f588fc15c822c",
+    "parent_scored_freeze": "e0301f5f17e048c859f8b82e1f1399dce205d3568dd68f7fedb9a2bdb0eb444b"
+  },
+  "reuse": "Original4 complete reports plus8 private paired/subgroup files byte-exact owned CAS aliases;never recompute or semantically decode private reused rows.",
+  "reused_targets": [
+    "pass_yd",
+    "pass_td",
+    "pass_cmp",
+    "pass_att"
+  ],
+  "software_budget": {
+    "CPU_seconds": 120,
+    "NFL_semantic_model_network_fit_score_worker_children": 0,
+    "combined_RSS_bytes": 536870912,
+    "invocations": 1,
+    "maximum_new_tests": 10,
+    "numerical_threads": 2,
+    "wall_seconds": 120
+  },
+  "state": "PREDECLARED_REPORT_ONLY"
+}

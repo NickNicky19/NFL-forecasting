@@ -1,0 +1,172 @@
+{
+  "CPU_seconds_before_receipt_write": 0.017739134000000004,
+  "checks": [
+    {
+      "PASS": true,
+      "check": "accepted exactPREEXECreceipt"
+    },
+    {
+      "PASS": true,
+      "check": "root exacttransferreceipt"
+    },
+    {
+      "PASS": true,
+      "check": "acceptedcandidateunchanged"
+    },
+    {
+      "PASS": true,
+      "check": "sole deterministic preexecPENDINGtoPASS delta"
+    },
+    {
+      "PASS": true,
+      "check": "owned SHA and byte equality"
+    },
+    {
+      "PASS": true,
+      "check": "ownedpath exact"
+    },
+    {
+      "PASS": true,
+      "check": "owned and CAS paths canonical nonsymlink"
+    },
+    {
+      "PASS": true,
+      "check": "ownedbody shares exactCAS inode"
+    },
+    {
+      "PASS": true,
+      "check": "body and CAS immutable0444"
+    },
+    {
+      "PASS": true,
+      "check": "CAS digest/size agree"
+    },
+    {
+      "PASS": true,
+      "check": "ownerregistry version/root/quota exact"
+    },
+    {
+      "PASS": true,
+      "check": "fresh namespace registered once"
+    },
+    {
+      "PASS": true,
+      "check": "registry bound to current quota lock"
+    },
+    {
+      "PASS": true,
+      "check": "ownedroot marker exact"
+    },
+    {
+      "PASS": true,
+      "check": "private root and owner modes"
+    },
+    {
+      "PASS": true,
+      "check": "only owner+freeze exist; all actual consumption markers absent"
+    },
+    {
+      "PASS": true,
+      "check": "transfer scope explicit metadataonly"
+    },
+    {
+      "PASS": true,
+      "check": "combined old and new campaign charge exact"
+    },
+    {
+      "PASS": true,
+      "check": "saved shared quota snapshot within unchanged512MiB"
+    },
+    {
+      "PASS": true,
+      "check": "saved metadata transfer resource counters within declared budget"
+    },
+    {
+      "PASS": true,
+      "check": "prior failed/diagnosis artifact unchanged: DYNAMIC_FINISHED.json"
+    },
+    {
+      "PASS": true,
+      "check": "prior failed/diagnosis artifact unchanged: DYNAMIC_FAILURE.json"
+    },
+    {
+      "PASS": true,
+      "check": "prior failed/diagnosis artifact unchanged: dynamic-supervisor-completion.json"
+    },
+    {
+      "PASS": true,
+      "check": "prior failed/diagnosis artifact unchanged: RECEIPT.json"
+    },
+    {
+      "PASS": true,
+      "check": "original failed freeze preserved: DYNAMIC_OPPORTUNITY_EXECUTION_FREEZE.json"
+    },
+    {
+      "PASS": true,
+      "check": "original failed freeze preserved: DYNAMIC_OPPORTUNITY_EXECUTION_FREEZE_V2.json"
+    },
+    {
+      "PASS": true,
+      "check": "exact final540argv digest unchanged"
+    },
+    {
+      "PASS": true,
+      "check": "exact owned540 argv/noHOME"
+    },
+    {
+      "PASS": true,
+      "check": "fresh reviewerreceipt"
+    }
+  ],
+  "command_argv": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OMP_NUM_THREADS=2",
+    "OPENBLAS_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "VECLIB_MAXIMUM_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "--kill-after=1s",
+    "540s",
+    "/workspace/nfl-direct-boosters-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/dynamic_opportunity_study_supervisor.py",
+    "--freeze",
+    "/workspace/website-methods-research/resumed/dynamic-opportunity-source-recovery-v2-20261024/DYNAMIC_OPPORTUNITY_SOURCE_RECOVERY_V2_FREEZE.json",
+    "--freeze-sha256",
+    "7f3508b0a2610f8dd1184fb77f0bb90b41b1751cf6241f5914d25128c53fa73a"
+  ],
+  "command_argv_SHA256": "2b5b9c6af95b0a55525f12cc7cbcd64d18343ba8dcdabab5264e1d2e1a074d2b",
+  "counters": {
+    "full_execution_or_environment_pin_audits": 0,
+    "new_NFL_semantic_source_model_tests_network_CASwrites": 0
+  },
+  "owned_bytes": 280612,
+  "owned_inode": [
+    27,
+    1866169
+  ],
+  "owned_mode": "0o100444",
+  "owned_path": "/workspace/website-methods-research/resumed/dynamic-opportunity-source-recovery-v2-20261024/DYNAMIC_OPPORTUNITY_SOURCE_RECOVERY_V2_FREEZE.json",
+  "owned_sha256": "7f3508b0a2610f8dd1184fb77f0bb90b41b1751cf6241f5914d25128c53fa73a",
+  "preexec_receipt": {
+    "path": "/tmp/dynamic-opportunity-source-recovery-v2-preexec/PREEXEC_FINAL.json",
+    "sha256": "d7bbc4e55210e5d71e7d288c17355d74e52814f8bcb180c5775ec53849238d8d"
+  },
+  "reviewer": "/root/resume_independent_reviewer",
+  "schema_version": "dynamic-source-recovery-v2-owned-transfer-review",
+  "scope": "Owned metadata readback/deterministic delta/CAS inode/ownership/failure retention only; no repeatedfullpin/environment audit, no projectimports/tests/NFLsemantics/models/CASwrites/network. Quota totals are authenticated saved transfer snapshot, not a new globalscan.",
+  "self_highwater_bytes": 12525568,
+  "state": "OWNED_TRANSFER_PASS_EXPLICIT_ROOT_GO_REQUIRED",
+  "transfer_receipt": {
+    "path": "/tmp/dynamic-opportunity-source-recovery-v2-transfer.json",
+    "sha256": "86917acad4b8d970a991b2555180899e15e03e067639124a2351a83b6f712305"
+  },
+  "wall_seconds_before_receipt_write": 0.017739727001753636
+}

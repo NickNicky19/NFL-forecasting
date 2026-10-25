@@ -1,0 +1,104 @@
+# Cross-repository system audit — 2026-10-25
+
+**Current live state changed during this audit:** read [the superseding selected-ranking release checkpoint](SUCCESSOR-RELEASE.md) first. Main is nowb32b13d/builda254616, live verified; rankings ownership closed normally. Initial snapshot statements below remain dated evidence. No audit mathematical repair is deployed.
+
+**PARTIAL. The current public forecast-consumption path passed the stated checks. Material calculation, grading and operational findings remain unreleased.** This report does not certify the whole system, private accuracy results, uninterrupted capture, mathematical perfection or optimal NFL forecasts.
+
+This is the owner-authorized implementation audit prepared October 24 America/Chicago and executed October 25 UTC. It supersedes the earlier website-read-only task for this audit, while preserving the single writer, private-artifact controls, frozen scientific registrations and issued forecasts. No new real NFL fits, paid source requests, credentials, scientific promotions or confirmation-outcome reads occurred.
+
+## Exact system examined
+
+| Repository / ref | Examined commit | Role |
+|---|---|---|
+| `NickNicky19/NFL-forecasting`, main | `0c4d8a30ac8d893a599bdd7518fb33dca47e50cb` | Default scheduled research source; safety-blocked |
+| Research PR #1, `research/pooled-ypa-20261022` | `66c824dabb19675d29f8ec9b5acd4e0c25cf1a5e` | Latest published research/reporting; base of isolated research repairs |
+| Actual producer, `research/weekly-storage-probe-v1` | `93e2019144be7b51248ce548fe247c6dcd949b71` | Released weekly producer; separate from PR #1 |
+| `NickNicky19/nicks-expert-nfl-picks`, main | `02f55b0fad18d0699ac2b227ac5745cdd795969d` | Generated website data |
+| Website release/build source | `315be5e86a1a3a93022b68c453739076487e2077` | Merged PR #3; actual successful updater/Pages source |
+| Website PR #1, `upgrade/phase2-reproducible-comparison` | `e415912b9c3d3ff52e8f435517af02e794d97fa4` | Unmerged, incomplete protected integration |
+| Website coordination | `40cd1f36868783115f8f7a62cae85d1f05a2b687` | Active `NFL-WEEKLY-RANKINGS-20261024-V1`; no takeover/lease expiry |
+
+Repository roots, nested instruction inventory, current PR metadata/discussions, research index/ledger, release manifests, jobs, branch/ruleset metadata and relevant handoffs were refreshed. Both initial main worktrees stayed clean. There are no registered submodules. No website worktree, canonical ledger, coordination state, production ref or scheduler was edited by this audit. Both mains report `protected:false` and ruleset lists returned empty; detailed protection endpoints were inaccessible to the integration. These observations do not authorize bypassing writer/workflow/environment controls.
+
+Three separable reviews ran within the four-agent limit (including the integrator). Their exposed identity is Codex; an exact backend/effort attestation was unavailable. Requested model strings in old research configs are not actual-setting evidence. Detailed local review notes and restricted metadata remain in the audit workspace; this publication contains public source identities, aggregate receipts and fictional examples only.
+
+## Live release verification
+
+The [live Props page](https://nicknicky19.github.io/nicks-expert-nfl-picks/#/props) was read with TLS verification. Index, CSS, app, both helpers, board, overlay pointer and hash-addressed overlay match the current website checkout byte-for-byte. The selected overlay is `99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9`; the board SHA256 is `db2bdd96fc7d2be762ec41ab1daab62f0c5d0048c4e84fe46355e11abf392fdd`. Board generation is `2026-10-24T21:56:52Z`; overlay preparation is `2026-10-24T21:57:00.066451+00:00`.
+
+[Producer run 40135574441](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40135574441) and export job `120996934563` were authenticated through fresh public API responses: exact registered source, branch, workflow, attempt and successful completed run/job. All **1,754** current selected rows match the published producer feed's projected fields exactly. This verifies declared provenance and delivery, not the private fitted parameters or training inputs.
+
+Chromium checked direct `#/props`, navigation, browser refresh and actual selected-value rendering at **320, 390 and 1280** pixels. One representative player-game per supported category was traced from public feed to overlay to rendered category value; every row was also compared upstream-to-overlay. The trace receipts retain hashes rather than individual values/identities. All 11 typed labels matched. Props, Fantasy, Compare, League, Trade, My Picks, Teams, Track Record and About produced content without horizontal document overflow, page errors or failed requests. League/account features were exercised only in their unsigned state. News was not separately exercised as a route. Worker-dependent Yahoo/AI services were disabled and not activated. Physical Safari/mobile devices were not tested.
+
+Controlled response faults in the actual deployed app verified unavailable overlay and changed overlay hash → usable R0 board; missing board → load-error message; empty players → empty state. No production files or page data were changed. An initial environment certificate-trust failure was retained separately; successful browser runs used existing proxy CA trust with TLS verification, not certificate-error bypasses.
+
+| Category | Current startup recipe | Product / unit | Public rows | Contract boundary |
+|---|---|---|---:|---|
+| Passing yards | LAB_CDF | Median / signed yards | 36 | Conditional on participation; marginal |
+| Passing TDs | LAB_CDF | Mean / count | 36 | Passing TD credit, not scorer event |
+| Completions | LAB_CDF | Mean / count | 36 | Marginal, not validated joint passing law |
+| Passing attempts | LAB_CDF | Mean / count | 36 | Fractional expectation allowed |
+| Interceptions | LAB_CDF | Mean / count | 36 | Count, not negative fantasy points |
+| Rushing yards | LAB_CDF | Median / signed yards | 99 | Initial public RB scope |
+| Rushing attempts | COUNT_A | Declared mean / count | 99 | **SYS-001 fallback mismatch** |
+| Receptions | COUNT_A | Declared mean / count | 362 | **SYS-001 fallback mismatch** |
+| Receiving yards | CATBOOST_MEDIUM | Intended median / signed yards | 362 | No double catch-probability multiplication |
+| Rush + receiving yards | CATBOOST_MEDIUM | Intended median / signed yards | 261 | Direct combined target; not sum of medians |
+| Anytime rushing/receiving TD | Equal CDF/CatBoost | Event probability [0,1] | 391 | Excludes passing/return TD credit; fixed half weights |
+| Exact website PPR | R0 unchanged | Points under selected scoring mode | 0 selected | Exact research labels/rare components remain unqualified |
+
+Counts use MSE, yard medians MAE, binary probability Brier in the provisional product. Historical studies retain their own original metrics; original count-median MAE comparisons are not relabeled as weekly mean-MSE results. All categories remain scientifically unqualified. Current selected forecasts are displayed first; current Top Picks, leans, saved selections, ranking and grading remain on explicitly labeled R0. The active rankings writer owns their separately requested integration. An unplayed selected forecast has no measured live accuracy gain.
+
+## Findings and implemented status
+
+The [finding ledger](finding-ledger.json) and [coverage matrix](coverage.csv) are finite, with exact paths/checks and unresolved boundaries. High severity means materially wrong displayed forecasts/results or unreliable critical operation under a plausible trigger; it does not assert a measured incident count.
+
+| ID | Severity | Reproduction / impact | Correction status |
+|---|---|---|---|
+| SYS-001 | High | COUNT_A geometric prior q=.75 has mean 3, median 2; the future adapter emits 2 as `expected_mean` on fallback. Rushing attempts/receptions may be affected. | Versioned producer repair on isolated branch; warm outputs preserved, old manifests rejected before model decode. Original model objects/receipts unchanged. **Not integrated/requalified/deployed.** |
+| SYS-002 | High | Projection normalization drops `fgm`, but team rollup needs it. Fictional scaled spread changes +1.0 to +8.8 and home probability .470 to .257. | Exact main/Phase2 patches retain total made FGs without adding fantasy weights. Temporary-copy regression passes. **Not installed.** |
+| SYS-003 | High | Classic grader joins same-ID statistics from contradictory team/opponent/game; records a hit and PPR error. | Exact patches reject explicit identity/period contradictions. Phase2's separate scorecard already has stronger guards; classic path still needs this repair. **Not installed.** |
+| SYS-004 | High | `post,completed=false,Canceled` enters classic final IDs and can produce decided results / games_complete=true. | Exact patches retain/check completed flag and past aware kickoff at all three build call sites. Existing separate Phase2 scorecard fix does not repair classic path. **Not installed.** |
+| SYS-005 | High | Queued old workflow pulls newer main and can publish using old workflow instructions despite passing final HEAD comparison. | Exact source-fence patches pass apply checks for both trees; no schedule change. Residual post-push deployment race remains. **Not installed.** |
+| SYS-006 | High | New local failure/partial receipts can be lost when failed steps skip success-only checkpoint/commit on ephemeral runners. | **Unresolved.** Needs a bounded private failed-attempt preservation contract, distinct from successful forecast publication. `always()` on the success-bundle path is insufficient. |
+| SYS-007 | High operational gap | Default research cron remains safety-blocked; successful producer is one-time manual. New-stream recurring grader/selector/export not wired. Daily refresh nominally misses 40/42 Week7 timing checkpoints. | **Already-declared pending work**, not a false release claim. Keep guards and single scheduler; no fabricated captures or relaxed freshness. |
+| SYS-008 | Medium | Last-three eligible games sorted by publication instead of kickoff yields mean50 instead of20; explicit unknown availability admits999 under assumed clock. | Shared feature repair `cutoff-features-v2-20261025`, chronology after admission, unknown excluded, absent-column reconstruction preserved; independent tests pass. **Isolated research commit only.** |
+| SYS-009 | Medium | Paired log-loss drops `+inf`, making impossible-event candidate falsely beat control by log2. | Versioned diagnostic retains paired rows and extended-real state; JSON-safe undefined delta, no fake finite interval. **Isolated research commit only.** |
+| SYS-010 | Medium | Fresh checkout cannot collect two hardcoded-path tests; native test dependency undeclared; import guard test depends on suite order. | Repository-relative test paths, exact CPU XGBoost test extra and actual import-attempt guard. Original dependency lock and frozen helper digests unchanged. **Isolated research commit only.** |
+| SYS-011 | Medium | Negative count projection still accepted in Phase2 component validation. | Exact Phase2 patch retains fractional nonnegative expectations and signed yards. Does not qualify raw game-rollup inputs. **Not installed.** |
+| SYS-012 | Medium | Missing half-PPR projection/average/prop silently falls back to full PPR under Half PPR label. | Exact scratch patches propagate missing half values and label unavailable chips/cards. **Not installed; complete merged-app validation remains pending.** |
+| SYS-013 | High release blocker | Current Phase2 CI is failed, with missing protected assembly files and mismatched controller bytes. | **Not release-ready.** Exact existing integration must be reconciled by owning lead; assertions must remain strict. |
+
+Lower-priority boundaries are explicit: defense missing points/yards allowed can produce an unsupported 10-point result; About omits rare PPR exceptions; the dormant joint sampler on main/producer remains older than the corrected research helper; legacy all-skill studies and unknown participation do not establish game-day eligibility. These are not passed paths or claims that wrong live rows were observed.
+
+## Mathematical and historical evidence
+
+Independent fictional checks cover geometric/bilateral/Bernoulli laws, lattice CRPS, lower quantiles, zero mass, negative yardage, proper log loss, shared participation/TD thinning, nonlinear PPR rare-credit exception, frozen future replay without fitting, strict timing and equal-row weekly selection. For example, a geometric/empirical mixture gives CRPS **85/192**, and `.75*.4+.25*.2=.35` gives Bernoulli Brier `.65²` at outcome1. A PPR mixture must score each draw before averaging: two complete rare-credit outcomes score6 and0, mean3; scoring their mean components can give0 under the nonlinear discriminator. These are independent arithmetic controls, not new football observations.
+
+Public study aggregates, population counts, conflicting mean/median objectives, exposed periods, game/week dependence and previous failure labels were inspected. No private row-level historical metric was recomputed. The original H3 gain claims remain retrospective/reported rather than newly reproduced; newer CDF/booster reports are exposed source-matched model comparisons, not demonstrated gains over historical SITE/R0 where those forecasts are absent. SYS-009 changes a secondary diagnostic; no existing primary gain or deployment choice was recalculated or asserted affected without its rows. SYS-008's uniform-seven-day historical ordering often agrees with kickoff order; this audit does not claim the heterogeneous-clock counterexample occurred in those studies.
+
+Exact offensive PPR label qualification, complete independent played-zero evidence, private trained-parameter verification, real roster/trade/source revision frequency, and fresh private future-artifact replay remain incomplete. Model count margins do not constitute a compatible joint passing distribution. Official statistical crediting and the dormant-helper limitations are not replaced with a simplified equality. Losing weeks, failed experiments, old source pins, original issued forecasts and scientific registrations were retained.
+
+## Operation, private access, release and recovery
+
+Website `.github/workflows/hourly.yml` is actually **daily 08:06 America/Chicago**, retaining its old filename and existing push/manual triggers. Next nominal refresh is **2026-10-25 13:06Z**; it was not observed during this audit. The default research cron targets08:36 Chicago but exits at its safety guard before operational work. All six inspected NFL ChatGPT tasks are paused with no next run. Ticker remains retired. No scheduler was added/resumed or cadence changed.
+
+The saved Week7 schedule and one-hour freshness rule make an exact daily08:06 observation potentially eligible for only1/14 24-hour checkpoints,1/14 six-hour checkpoints and0/14 90-minute checkpoints. Those are nominal compatibility calculations, not genuine capture receipts. Real Actions delivery can be delayed. The next registered weekly decision deadline is **2026-10-29 18:15Z**, subject to saved-schedule revisions, and is **not automatically enabled**. Future producer/grading/decision locations are the existing lab workflow and `weekly_generic_producer.py`, `weekly_adaptive.py`, `weekly_grading.py`; their pending orchestration must not be inferred from these filenames.
+
+Private-store metadata was accessible under existing authenticated owner access: two restricted draft stores,34 assets,total24,022,565 bytes; current runtime33 assets uses24,022,448 of its33,554,432-byte ceiling before unknown reservations. Seventeen research and eight website Actions artifacts were inventoried. This is not absent credentials and not verified body recovery. No private body was decoded. A fresh sealed root/GO/owned-path restoration plan and genuine job context were unavailable here; plain forensic reads outside that protocol remain **unexamined, not an observed403 or owner prohibition**. The old continuation's midnight cutoff is expired; no backdating, fake hosted variables or consumed registration reuse is permitted. Detailed locators/metadata remain local and are not published in this packet.
+
+Current Phase2 [CI run40143622134](https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40143622134) failed after1,180 tests:2 failures/12 errors. Missing assembly includes policy-v2, overlay helper and feed schema; raw controller is30,854 bytes/hash`2ee6d870c3bb6c8e667eae3a49cadf22220d6ab21d0c990c8035332d1deadfaf`, whereas the reviewed proposed controller is35,468 bytes/hash`2f4d7f7eac10c4c82a56762929e5d3d8f853493f5b01edbee2925adf158b501e`. Earlier green runs do not certify this tree. Existing active writer/result/handoff obligations remain unchanged.
+
+The current release is still the initial PR#3 deployment: updater/Pages run40136412412 successful; this audit live-verified its bytes and consumer behavior. **No repair in this audit is merged, built into production, deployed or live-verified as a new release.** Isolated corrective commits/PR states and exact handoff appear in [INTEGRATION.md](INTEGRATION.md). Website corrections remain patches for the owning integrator. No blanket approval loop is introduced.
+
+Rollback is code/config forward restoration through existing workflows, retaining newer forecast/outcome evidence. An incompatible old reader is not a working recovery. COUNT_A needs new effective procedure/artifact identities, replay fixtures, public catalog/policy/source bindings and restored immutable receipts before release; changing pins alone is not requalification. Failure durability, recurring capture and complete combined-source release acceptance remain blockers. Do not overwrite issued rows to make corrected outputs appear pregame.
+
+## Reproduction and check receipts
+
+Use the exact source pins above in isolated clones/worktrees named `website-audit`, `website-phase2`, `research-audit`, `research-live-source`, alongside this packet's scripts. Set `NFL_AUDIT_ROOT` to their parent audit directory. `live_assets.py` and `trace_public_feed.py` emit only aggregate/hash receipts to its `evidence/`; browser scripts require Playwright/Chromium and the environment's verified proxy CA trust. They open the genuine public site. Fault scripts intercept responses locally and disclose that scope.
+
+`website_math_repro.py` runs network-disabled fictional controls against both website pins. Exit0 means its explicit observations were reproduced, including known incorrect unpatched outputs. `website_math_patch_check.py` constructs and applies exact patches only to disposable plain source copies, then checks corrected expectations. It does not edit a website worktree or claim release qualification. The two workflow-fence patches are alternative preimages, not blindly stackable changes. Patch framing whitespace was normalized for repository whitespace checks and rechecked against every pinned base; adjacent deterministic `.patch.gz` files preserve exact original reviewed patch bytes. `evidence/patch-transport.json` maps both identities. Earlier validation manifests name the original bytes; the publication manifest names delivered bytes.
+
+Research checks use `pip install -r requirements.lock -e '.[test]'`, then `OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 python -m pytest -q --tb=short`. The optional real-cache test is skipped because its qualified ignored cache is absent. Thirty coverage components are recorded:7 examined without defect under stated checks,11 with confirmed defects,8 unresolved concerns,3 blocked/unexamined and1 disabled/not-applicable service. Components can contain multiple findings; these are not exhaustive function counts. The final check summary and evidence manifest are recorded separately, including failed initial commands. The complete corrected research run passed1,540 tests plus62 subtests (one optional-cache skip, four warnings,320.99s); producer checks passed44 tests plus45 subtests. The temporary patched website source passed97 existing plus9 new Python tests (106 total), including interrupted history-write/retry controls. Tests that directly use clocks or missing legacy fixtures on the producer source are not silently repaired by these research-branch changes.
+
+Conclusion: **the audited public delivery/rendering path passed its stated checks. The full-system audit and repair/release objective remains partial because high-impact fixes and operational acceptance are still blocked by current ownership/integration and qualified private recovery requirements.** Unexamined paths in the coverage map are not passes.

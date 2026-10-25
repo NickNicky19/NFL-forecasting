@@ -1,0 +1,59 @@
+{
+  "CPU_seconds": 136.160040142,
+  "campaign_CPU_seconds": 181.84488856000002,
+  "campaign_prior_reservations": 4,
+  "campaign_wall_seconds": 176.6900734420051,
+  "child_ru_maxrss_bytes": 595079168,
+  "exception": {
+    "exception": "RuntimeError",
+    "generated_at": "2026-10-24T00:34:30.234203+00:00",
+    "message": "cumulative phase ceiling exceeded: source_prior"
+  },
+  "hashes": {
+    "DYNAMIC_FAILURE.json": "ddf9cfa3d9e4831ccdcca661e1c97e104f742b7c0620015b4ebe5f2e0be3f351",
+    "DYNAMIC_FINISHED.json": "6207e77347e6fc3b2ef0f2d9e9b483f1e78caa46c04077d8f98ff7c342d4f416",
+    "dynamic-supervisor-completion.json": "a4830c65662fb8db6918839b14307e311ea24104fe558076cc6a4f3d744a63d5",
+    "preflight-estimate.json": "ae1fa6c41e9a4398ca543481104a1c334be5f84b05682de66ca92ee0212d9baf"
+  },
+  "last_observed_package": 0,
+  "limit_reason": null,
+  "packages": 0,
+  "peak_sampled_combined_RSS_bytes": 807407616,
+  "phase_usage": {
+    "source_prior": [
+      100.09506176600553,
+      100.29106317
+    ]
+  },
+  "previous_campaign_consumption": {
+    "CPU_seconds": 45.684848418,
+    "forecast_packages": 0,
+    "forecast_row_incidences": 0,
+    "prior_vector_reservations": 2,
+    "retained_bytes": 12717378,
+    "wall_seconds": 43.262377277998894
+  },
+  "remaining_execution_limits": {
+    "CPU_seconds": 540,
+    "prior_reserved": 2,
+    "prior_retained_bytes": 12717378,
+    "wall_seconds": 540
+  },
+  "retention": {
+    "borrowed_helper_limit_bytes": 67108864,
+    "charged_bytes": 13279914,
+    "limit_bytes": 50331648,
+    "new_unique_CAS_bytes": 562536,
+    "newly_charged_bytes": 562536,
+    "previous_campaign_retained_bytes": 12717378,
+    "reserved_failed_or_inflight_bytes": 0,
+    "scope": "All CAS content added after baseline, namespace-only bootstrap content, and unreleased attempted bodies; shared concurrent additions count conservatively; unchanged earlier failed campaign charge remains reserved"
+  },
+  "returncode": 1,
+  "row_incidences": 0,
+  "scope": "Actual source preparation exhausted fixed cumulative source_prior100s.0forecasts0scores0NFLgains. Missingnesscheckno longerrejected. Oldfailedstatesretained, noautomaticretry/phaseextension orbudgetrefund. Entirefixedstudy didnotcomplete.",
+  "startup_released": true,
+  "state": "FAILED",
+  "supervisor_ru_maxrss_bytes": 211140608,
+  "wall_seconds": 133.4276961640062
+}

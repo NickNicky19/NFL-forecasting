@@ -1,0 +1,35 @@
+{
+  "budgets": {
+    "CPU_seconds": 30,
+    "RSS_bytes": 268435456,
+    "automatic_retries": 0,
+    "invocations": 1,
+    "new_tests_fits_predictions_scores_NFL_semantic_model_network_worker_children_CAS": 0,
+    "numerical_threads": 1,
+    "wall_seconds": 30
+  },
+  "diagnostic_payload": "Fixed phase and event name, plus at most10 Python frame code filenames/function names/line numbers per denial; no arguments, line text, locals, raw values, exception messages or dataset paths. At most20events and64KiB diagnostic output in/tmp.",
+  "guards": "Strict audit hook blocks all socket/process effects and actual research-source or parquet/model file opens before access; do not weaken or count expected exceptions as a software pass.",
+  "inputs": {
+    "tests/test_baseline_correction_report_v2.py": {
+      "bytes": 8832,
+      "sha256": "6188947d36042e876fa15c12878a59ba6f40886ffe77b82a96c9d9e0e4ac4da5"
+    },
+    "tools/baseline_correction_report_v2.py": {
+      "bytes": 16316,
+      "sha256": "21fe661a8a51da46662f02255a41cf513f86a239e7e3999682658294e1bfdaad"
+    }
+  },
+  "parent_failed_software_receipt": {
+    "path": "/tmp/baseline-correction-report-v2-software-checks.json",
+    "sha256": "a68f0382ac485fe2ec841523d2f1dfff27bd952f1c1fb863e45dcd40aaa96e6d"
+  },
+  "phases": [
+    "Import the exact existing fictional test module, without unittest discovery or test execution",
+    "Enter and exit its subject.report_only() context once with an empty body; call no model/scorer/source/test method"
+  ],
+  "registration_id": "baseline-correction-report-import-diagnostic-v1-20261023",
+  "result_semantics": "Diagnostic only; original software remains FAILED, and report execution remains unconsumed/unsealed. No unchanged ten-test rerun.",
+  "state": "PROPOSED_UNEXECUTED",
+  "static_finding": "No ten-test body intentionally invokes socket/subprocess/process creation. Negative checks call patched Python model/scoring/label/read methods; those reject before any audit-governed operation. The one denied audit event is not identified by the original harness; import probing remains an unconfirmed hypothesis."
+}

@@ -1,0 +1,80 @@
+{
+  "bindings": [
+    {
+      "bytes": 34692,
+      "name": "FINISHED.json",
+      "sha256": "e4f5be3aba19ea630ad63d90f1813429733d304d45c3c448779d2579e4db5fe8"
+    },
+    {
+      "bytes": 177,
+      "name": "worker.json",
+      "sha256": "d5d1767cc1c9eeedb6cf8b55132019f00ccfde8a1dc9000f2350c31dc6d17907"
+    },
+    {
+      "bytes": 258,
+      "name": "READY.json",
+      "sha256": "d41bf15e1c8b991cc960547a93a66ad15d37b224b55d97966a89d80259d0d0e0"
+    },
+    {
+      "bytes": 222,
+      "name": "GO.json",
+      "sha256": "3925b2c1e1fef55fcc0873b5993885319ecfbb0b44d3d7ec1d619ef645549e93"
+    },
+    {
+      "bytes": 145,
+      "name": "TESTS_STARTED.json",
+      "sha256": "ebe6e48c0950c268769cc62abf2adf1b4f0208aee3a6538e840673d1a6626ef5"
+    },
+    {
+      "bytes": 143,
+      "name": "CONSUMED.json",
+      "sha256": "b9b50086c8d96a4a5600667af0413314bb4955cd7aba2bb4f4acceb71bb32fdb"
+    },
+    {
+      "bytes": 3293,
+      "name": "worker.log",
+      "sha256": "e288656eed1d9314f3cf2383a7ec9216542b7d3943e43be30cd6c4cc5db660f8"
+    }
+  ],
+  "observed_failure_snapshot": {
+    "CPU_seconds": 0.16,
+    "after_start_ticks": 3331188,
+    "after_state": "R",
+    "before_start_ticks": 3331188,
+    "before_state": "R",
+    "pid": 44474,
+    "stage": "CONTRACT_CHECKS_RELEASED",
+    "start_ticks": 3331188,
+    "stat_RSS_after_bytes": 0,
+    "stat_RSS_before_bytes": 0,
+    "status_fields": {
+      "Pid": [
+        "44474"
+      ]
+    }
+  },
+  "observed_resources": {
+    "CPU_seconds": 0.32354399999999994,
+    "combined_RSS_peak_sampled_bytes": 38440960,
+    "individual_HWM_sum_upper_bound_bytes": 39305216,
+    "wall_seconds": 0.2367911820037989
+  },
+  "original_cause": "UNPROVEN_FROM_SAVED_EVIDENCE",
+  "original_packet_state": "FAILED_UNCHANGED",
+  "required_conditions": [
+    "Existing packet remainsFAILED; do not retroactively applynewsemantics or claimcausereproduction.",
+    "Permit resolution onlyformissing/zeroRSS on the exactknownchild+recordedPID/startticks; neverforidentitymismatch,negative/malformedcounters or arbitraryPID.",
+    "IfPopen.poll() isNone,failclosed; no sleep/retryuntilcounterlooksvalid orprocessfinallyexits.",
+    "Supervisor/timeout accounting remainsstrict; allCPU/wall/RSS/startup/PDEATHSIG/process/networkguards unchanged.",
+    "ReapchildandretaincombinedCPU plusindividualRUSAGE/highwater checks beforeanysuccess.",
+    "Boundgenericworker18PASSreceipt throughdistinctexecutionfreeze,READY/GO/TESTS_STARTED/FINISHED andlog; identicalgenericJSONhashalone isnotrunidentity.",
+    "<=6newguard-onlyfictionalchecks needownfreeze/rootGO; anylater18-functionalendtoendinvocation isseparateexplicitversionedauthorization,notautomaticretry."
+  ],
+  "review_peak_RSS_bytes": 9961472,
+  "review_self_CPU_seconds": 0.0005443749999999997,
+  "review_wall_seconds": 0.0005474219942698255,
+  "reviewed_proposal": "New separately versioned guard may resolve only absent/zero RSS of the authenticated original Popen child via one nonblocking poll confirmation of termination, retaining original snapshot and explicit exit code/proof; no live-process accounting is bypassed.",
+  "scope": "Savedfictionalsoftware receipts andstaticguardsemantics only; no tests/reexecution/NFL/source/model values, forecasts/scoring/network/CASwrites.",
+  "state": "SAVED_FAILURE_INTERPRETATION_AND_EARLY_GUARD_DESIGN_REVIEW",
+  "test_body_state": "18PASS_EXIT0_SEPARATE_FROM_GUARD_FAILURE"
+}

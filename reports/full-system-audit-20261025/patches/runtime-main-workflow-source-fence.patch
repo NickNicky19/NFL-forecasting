@@ -1,0 +1,21 @@
+--- a/.github/workflows/hourly.yml
++++ b/.github/workflows/hourly.yml
+@@ -30,8 +30,16 @@
+       - uses: actions/checkout@v4
+         with:
+           fetch-depth: 0
+-      - name: Use latest main before building
+-        run: git pull --ff-only origin main
++      - name: Require the trigger workflow and checkout to match current main
++        env:
++          TRIGGER_SOURCE_SHA: ${{ github.sha }}
++          WORKFLOW_SOURCE_SHA: ${{ github.workflow_sha }}
++        run: |
++          set -euo pipefail
++          git fetch --no-tags origin main
++          test "$WORKFLOW_SOURCE_SHA" = "$TRIGGER_SOURCE_SHA" || { echo "Workflow source differs from trigger source; refusing publication."; exit 1; }
++          test "$(git rev-parse HEAD)" = "$TRIGGER_SOURCE_SHA" || { echo "Checkout differs from trigger source; refusing publication."; exit 1; }
++          test "$TRIGGER_SOURCE_SHA" = "$(git rev-parse origin/main)" || { echo "Main advanced after this trigger; require a fresh run on current main."; exit 1; }
+       - uses: actions/setup-python@v5
+         with:
+           python-version: "3.12"

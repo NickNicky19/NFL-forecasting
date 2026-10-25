@@ -1,0 +1,1346 @@
+{
+  "state": "PASS",
+  "returncode": 0,
+  "stage": "CONTRACT_CHECKS_RELEASED",
+  "reason_code": null,
+  "reason_snapshot": null,
+  "release_verified": true,
+  "contract_check_completion": "VERIFIED8",
+  "wall_seconds": 0.21800137300306233,
+  "CPU_seconds": 0.28800899999999996,
+  "child_CPU_seconds": 0.153331,
+  "CPU_scope": "three known processes through final sample",
+  "combined_RSS_peak_sampled_bytes": 38797312,
+  "child_ru_maxrss_bytes": 19398656,
+  "supervisor_ru_maxrss_bytes": 19791872,
+  "timeout_final_sample": {
+    "pid": 45983,
+    "start_ticks": 3465404,
+    "stage": "POST_REAP_FINAL",
+    "before_state": "S",
+    "before_start_ticks": 3465404,
+    "stat_RSS_before_bytes": 524288,
+    "after_state": "S",
+    "after_start_ticks": 3465404,
+    "stat_RSS_after_bytes": 524288,
+    "status_fields": {
+      "Pid": [
+        "45983"
+      ],
+      "VmHWM": [
+        "708",
+        "kB"
+      ],
+      "VmRSS": [
+        "708",
+        "kB"
+      ]
+    },
+    "CPU_seconds": 0.0,
+    "status_RSS_bytes": 724992,
+    "status_HWM_bytes": 724992,
+    "charged_RSS_bytes": 724992,
+    "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+    "state": "AUTHENTICATED_LIVE_RSS"
+  },
+  "individual_HWM_sum_upper_bound_bytes": 39915520,
+  "RSS_scope": "Exact timeout/supervisor/worker PID+startticks; max(stat_before,stat_after,status); non-atomic sampling may miss transient peaks",
+  "startup_known_zero_samples": 0,
+  "worker_stat_status_mismatch_samples": 16,
+  "startup_samples": [
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19398656,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19398656,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "18996",
+            "kB"
+          ],
+          "VmRSS": [
+            "18996",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19451904,
+        "status_HWM_bytes": 19451904,
+        "charged_RSS_bytes": 19451904,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 0,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 0,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "80",
+            "kB"
+          ],
+          "VmRSS": [
+            "80",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 81920,
+        "status_HWM_bytes": 81920,
+        "charged_RSS_bytes": 81920,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19208",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19668992,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19668992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 6422528,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 6422528,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "6424",
+            "kB"
+          ],
+          "VmRSS": [
+            "6424",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 6578176,
+        "status_HWM_bytes": 6578176,
+        "charged_RSS_bytes": 6578176,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19212",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19673088,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19673088,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 9437184,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 9437184,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "9256",
+            "kB"
+          ],
+          "VmRSS": [
+            "9256",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.01,
+        "status_RSS_bytes": 9478144,
+        "status_HWM_bytes": 9478144,
+        "charged_RSS_bytes": 9478144,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19212",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19673088,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19673088,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 11010048,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 11010048,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "10828",
+            "kB"
+          ],
+          "VmRSS": [
+            "10828",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.03,
+        "status_RSS_bytes": 11087872,
+        "status_HWM_bytes": 11087872,
+        "charged_RSS_bytes": 11087872,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19212",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19673088,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19673088,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 12713984,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 12713984,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "12616",
+            "kB"
+          ],
+          "VmRSS": [
+            "12616",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.03,
+        "status_RSS_bytes": 12918784,
+        "status_HWM_bytes": 12918784,
+        "charged_RSS_bytes": 12918784,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 15990784,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 15990784,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "15716",
+            "kB"
+          ],
+          "VmRSS": [
+            "15716",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.04,
+        "status_RSS_bytes": 16093184,
+        "status_HWM_bytes": 16093184,
+        "charged_RSS_bytes": 16093184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 16777216,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 16777216,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "16436",
+            "kB"
+          ],
+          "VmRSS": [
+            "16436",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.05,
+        "status_RSS_bytes": 16830464,
+        "status_HWM_bytes": 16830464,
+        "charged_RSS_bytes": 16830464,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17039360,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17039360,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "16740",
+            "kB"
+          ],
+          "VmRSS": [
+            "16740",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.06,
+        "status_RSS_bytes": 17141760,
+        "status_HWM_bytes": 17141760,
+        "charged_RSS_bytes": 17141760,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17170432,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17170432,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "16924",
+            "kB"
+          ],
+          "VmRSS": [
+            "16924",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.07,
+        "status_RSS_bytes": 17330176,
+        "status_HWM_bytes": 17330176,
+        "charged_RSS_bytes": 17330176,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17539072,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17539072,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "17264",
+            "kB"
+          ],
+          "VmRSS": [
+            "17264",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.08,
+        "status_RSS_bytes": 17678336,
+        "status_HWM_bytes": 17678336,
+        "charged_RSS_bytes": 17678336,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17539072,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17539072,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "17264",
+            "kB"
+          ],
+          "VmRSS": [
+            "17264",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.09,
+        "status_RSS_bytes": 17678336,
+        "status_HWM_bytes": 17678336,
+        "charged_RSS_bytes": 17678336,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17539072,
+        "after_state": "R",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17539072,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "17264",
+            "kB"
+          ],
+          "VmRSS": [
+            "17264",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.1,
+        "status_RSS_bytes": 17678336,
+        "status_HWM_bytes": 17678336,
+        "charged_RSS_bytes": 17678336,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ],
+    [
+      {
+        "pid": 45983,
+        "start_ticks": 3465404,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465404,
+        "stat_RSS_before_bytes": 524288,
+        "after_state": "S",
+        "after_start_ticks": 3465404,
+        "stat_RSS_after_bytes": 524288,
+        "status_fields": {
+          "Pid": [
+            "45983"
+          ],
+          "VmHWM": [
+            "708",
+            "kB"
+          ],
+          "VmRSS": [
+            "708",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.0,
+        "status_RSS_bytes": 724992,
+        "status_HWM_bytes": 724992,
+        "charged_RSS_bytes": 724992,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45986,
+        "start_ticks": 3465405,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "R",
+        "before_start_ticks": 3465405,
+        "stat_RSS_before_bytes": 19619840,
+        "after_state": "R",
+        "after_start_ticks": 3465405,
+        "stat_RSS_after_bytes": 19619840,
+        "status_fields": {
+          "Pid": [
+            "45986"
+          ],
+          "VmHWM": [
+            "19328",
+            "kB"
+          ],
+          "VmRSS": [
+            "19216",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.12,
+        "status_RSS_bytes": 19677184,
+        "status_HWM_bytes": 19791872,
+        "charged_RSS_bytes": 19677184,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      },
+      {
+        "pid": 45987,
+        "start_ticks": 3465418,
+        "stage": "STARTUP_BARRIER",
+        "before_state": "S",
+        "before_start_ticks": 3465418,
+        "stat_RSS_before_bytes": 17539072,
+        "after_state": "S",
+        "after_start_ticks": 3465418,
+        "stat_RSS_after_bytes": 17539072,
+        "status_fields": {
+          "Pid": [
+            "45987"
+          ],
+          "VmHWM": [
+            "17296",
+            "kB"
+          ],
+          "VmRSS": [
+            "17296",
+            "kB"
+          ]
+        },
+        "CPU_seconds": 0.1,
+        "status_RSS_bytes": 17711104,
+        "status_HWM_bytes": 17711104,
+        "charged_RSS_bytes": 17711104,
+        "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+        "state": "AUTHENTICATED_LIVE_RSS"
+      }
+    ]
+  ],
+  "last_authenticated_samples": [
+    {
+      "pid": 45983,
+      "start_ticks": 3465404,
+      "stage": "CONTRACT_CHECKS_RELEASED",
+      "before_state": "S",
+      "before_start_ticks": 3465404,
+      "stat_RSS_before_bytes": 524288,
+      "after_state": "S",
+      "after_start_ticks": 3465404,
+      "stat_RSS_after_bytes": 524288,
+      "status_fields": {
+        "Pid": [
+          "45983"
+        ],
+        "VmHWM": [
+          "708",
+          "kB"
+        ],
+        "VmRSS": [
+          "708",
+          "kB"
+        ]
+      },
+      "CPU_seconds": 0.0,
+      "status_RSS_bytes": 724992,
+      "status_HWM_bytes": 724992,
+      "charged_RSS_bytes": 724992,
+      "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+      "state": "AUTHENTICATED_LIVE_RSS"
+    },
+    {
+      "pid": 45986,
+      "start_ticks": 3465405,
+      "stage": "CONTRACT_CHECKS_RELEASED",
+      "before_state": "R",
+      "before_start_ticks": 3465405,
+      "stat_RSS_before_bytes": 19619840,
+      "after_state": "R",
+      "after_start_ticks": 3465405,
+      "stat_RSS_after_bytes": 19619840,
+      "status_fields": {
+        "Pid": [
+          "45986"
+        ],
+        "VmHWM": [
+          "19328",
+          "kB"
+        ],
+        "VmRSS": [
+          "19220",
+          "kB"
+        ]
+      },
+      "CPU_seconds": 0.12,
+      "status_RSS_bytes": 19681280,
+      "status_HWM_bytes": 19791872,
+      "charged_RSS_bytes": 19681280,
+      "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+      "state": "AUTHENTICATED_LIVE_RSS"
+    },
+    {
+      "pid": 45987,
+      "start_ticks": 3465418,
+      "stage": "CONTRACT_CHECKS_RELEASED",
+      "before_state": "R",
+      "before_start_ticks": 3465418,
+      "stat_RSS_before_bytes": 18325504,
+      "after_state": "R",
+      "after_start_ticks": 3465418,
+      "stat_RSS_after_bytes": 18325504,
+      "status_fields": {
+        "Pid": [
+          "45987"
+        ],
+        "VmHWM": [
+          "17960",
+          "kB"
+        ],
+        "VmRSS": [
+          "17960",
+          "kB"
+        ]
+      },
+      "CPU_seconds": 0.13,
+      "status_RSS_bytes": 18391040,
+      "status_HWM_bytes": 18391040,
+      "charged_RSS_bytes": 18391040,
+      "RSS_reconciliation": "maximum of identity-bound non-atomic stat/status observations",
+      "state": "AUTHENTICATED_LIVE_RSS"
+    }
+  ],
+  "termination_transfers": [],
+  "termination_reap_charges": [],
+  "original_dynamic_guard": "FAILED_UNCHANGED_NO_RETROACTIVE_PASS",
+  "new_fictional_invocations": 1,
+  "freeze_sha256": "4f2af460e00068ecae10be99a2acc551330d019099b97b176478fb4cdf07ea7e",
+  "NFL_semantic_reads_models_sources_HTTP_CAS": 0
+}

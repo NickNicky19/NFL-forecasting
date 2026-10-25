@@ -1,0 +1,167 @@
+{
+  "all12": {
+    "anytime_td": 2,
+    "fpts": 35.9,
+    "pass_att": 30,
+    "pass_cmp": 20,
+    "pass_int": 1,
+    "pass_td": 2,
+    "pass_yd": 250,
+    "rec": 4,
+    "rec_yd": 51,
+    "rush_att": 3,
+    "rush_rec_yd": 49,
+    "rush_yd": -2
+  },
+  "cancelled_post_classic": {
+    "games_complete": true,
+    "top_over": {
+      "dnp": 0,
+      "hit": 1,
+      "miss": 0,
+      "n_decided": 1,
+      "pct": 100.0,
+      "picks": [
+        {
+          "actual": 6,
+          "adj": 6,
+          "decision_projection": 6,
+          "direction": "over",
+          "game_id": "fictional-game",
+          "key": "rec",
+          "line": 4.5,
+          "line_from": "dk",
+          "name": "Fictional Receiver",
+          "player_id": "fictional-player",
+          "proj": 6,
+          "result": "hit",
+          "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+        }
+      ],
+      "push": 0,
+      "unresolved": 0
+    }
+  },
+  "checks": 43,
+  "combined_tally": {
+    "dnp": 0,
+    "hit": 1,
+    "miss": 1,
+    "n_decided": 2,
+    "pct": 50.0,
+    "push": 1,
+    "unresolved": 0
+  },
+  "field_goal_loss": {
+    "after_normalization": {
+      "fictional-game": {
+        "away_pts": 26.4,
+        "home_pts": 17.6,
+        "home_win": 0.257,
+        "lean_spread": "BBB",
+        "lean_total": null,
+        "ml_away": -289,
+        "ml_home": 289,
+        "spread": 8.8,
+        "total": 44.0
+      }
+    },
+    "direct": {
+      "fictional-game": {
+        "away_pts": 22.5,
+        "home_pts": 21.5,
+        "home_win": 0.47,
+        "lean_spread": null,
+        "lean_total": null,
+        "ml_away": -113,
+        "ml_home": 113,
+        "spread": 1.0,
+        "total": 44.0
+      }
+    }
+  },
+  "invalid_actual_counts": {
+    "boolean": [
+      1,
+      "hit"
+    ],
+    "fractional": [
+      1.5,
+      "hit"
+    ],
+    "negative": [
+      -1,
+      "miss"
+    ]
+  },
+  "missing_projection": {
+    "partial_combined": 30,
+    "receiving_prop": {
+      "adj": 0.0,
+      "key": "rec_yd",
+      "lean": null,
+      "line": 0.5,
+      "mf": 1.0,
+      "mf_n": 0,
+      "n": 0,
+      "over": 0,
+      "proj": 0,
+      "source": "model",
+      "values": []
+    }
+  },
+  "negative_count_projection": {
+    "adj": -1.0,
+    "key": "rec",
+    "lean": null,
+    "line": -0.5,
+    "mf": 1.0,
+    "mf_n": 0,
+    "n": 0,
+    "over": 0,
+    "proj": -1,
+    "source": "model",
+    "values": []
+  },
+  "null_actual": [
+    0,
+    "hit"
+  ],
+  "patched_expectations": false,
+  "presence_aware": false,
+  "root": "/workspace/nfl-system-audit/website-current",
+  "wrong_identity_classic": [
+    {
+      "actual": 6,
+      "adj": 6,
+      "decision_projection": 6,
+      "direction": "over",
+      "game_id": "fictional-game",
+      "key": "rec",
+      "line": 4.5,
+      "line_from": "dk",
+      "name": "Fictional Receiver",
+      "player_id": "fictional-player",
+      "proj": 6,
+      "result": "hit",
+      "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+    }
+  ],
+  "wrong_top_game": [
+    {
+      "actual": 6,
+      "adj": 6,
+      "decision_projection": 6,
+      "direction": "over",
+      "game_id": "fictional-other-game",
+      "key": "rec",
+      "line": 4.5,
+      "line_from": "dk",
+      "name": "Fictional Receiver",
+      "player_id": "fictional-player",
+      "proj": 6,
+      "result": "hit",
+      "settlement_status": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+    }
+  ]
+}

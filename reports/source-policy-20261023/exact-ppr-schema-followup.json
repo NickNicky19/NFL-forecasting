@@ -1,0 +1,56 @@
+{
+  "version": "exact-ppr-schema-followup-20261023",
+  "owner": "/root/category_fantasy_ppr_source",
+  "scope": "New publisher schema documentation and cached Arrow schema inspection only; no outcome rows or numerical scores",
+  "source_documents": [
+    {
+      "repository": "nflverse/nflreadr",
+      "git_blob": "32bfe2f5b9308f16a34cd7e195cafdf5c59ca3d0",
+      "bytes": 1988
+    },
+    {
+      "repository": "nflverse/nflreadr",
+      "git_blob": "83e007490967c0fa2f7fb94bf1e19e9a8b2fdd71",
+      "bytes": 16565
+    }
+  ],
+  "successful_publisher_requests": 2,
+  "response_bytes": 26149,
+  "retained_technical_failure": "Initial sandbox socket request failed before HTTP; inherited managed proxy then worked. No bypass or new credentials.",
+  "findings": [
+    {
+      "field": "special_teams_tds",
+      "finding": "Dictionary describes kick/punt return touchdowns; exhaustive equivalence to original Sleeper st_td not established."
+    },
+    {
+      "field": "fumble_recoveries_own_and_opponent",
+      "finding": "Classifies which team fumbled; neither special teams phase nor exact Sleeper idp_fum_rec credit established."
+    },
+    {
+      "field": "fumble_recovery_tds",
+      "finding": "Recovered and advanced for touchdown; joint mapping to original conditional defensive-recovery exception unresolved."
+    },
+    {
+      "field": "def_fumbles_forced",
+      "finding": "Ambiguous dictionary wording; phase completeness not established."
+    },
+    {
+      "field": "def_punt_blocks_def_fg_blocks_def_pat_blocks_and_all_phase_fumble_totals",
+      "finding": "Cached fields not defined by these modern dictionary entries."
+    },
+    {
+      "field": "fg_blocked",
+      "finding": "Kicker attempt being blocked; not blocker credit."
+    }
+  ],
+  "zero_semantics": "Neither document establishes omitted/null means zero or exhaustive player-game event coverage. No new zero inference permitted.",
+  "state": "EXACT_PPR_STILL_SOURCE_BLOCKED",
+  "next_dependency": "Source generator/provider contract establishing exhaustive all-phase recovery/forced-fumble/block coverage, explicit-zero behavior and exact Sleeper credit taxonomy; separate panel registration required before any new scoring.",
+  "rights": "Upstream rights retained; schema findings and source identities only, no raw-feed redistribution permission inferred.",
+  "timing": "Current accessibility only; historical publication and correction clocks not established.",
+  "new_fits": 0,
+  "new_predictions": 0,
+  "new_outcome_rows_read": 0,
+  "new_scores": 0,
+  "current_role_study_changed": false
+}

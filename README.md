@@ -9,6 +9,24 @@ Read [START_HERE.md](START_HERE.md), [EXECUTION_SPEC.md](EXECUTION_SPEC.md),
 [the registration](config/research.json), and [the execution ledger](execution/ledger.jsonl).
 The attached review package and raw source bodies are kept outside public Git.
 
+For the full recorded research history, formulas, data versions, gains, losses
+and missing/private artifacts, start with the [research index](reports/RESEARCH_INDEX.md).
+
+The owner adopted the [ongoing operating goal](RESEARCH_GOAL.txt) on 2026-10-23.
+It covers cross-season learning, qualified news, bounded recovery and per-category
+release readiness. The longer [goal proposal](GOAL_PROPOSAL_2026-10-23.txt) remains
+background rationale; frozen registrations and website release ownership remain in force.
+
+Latest bounded research: [role and count comparison](reports/role-count-boosting-v1/README.md) completes 136 estimator fits, 88 supported forecast packages and all 48 primary slots, including four exact-PPR blocks. Both prespecified arms improve five Week 6 primary errors and worsen six against the saved website. Historical carry improvements repair an earlier failed model but still lose stronger controls. The original reporting failure and separate zero-fit recovery remain recorded. [Current twelve-category state](reports/role-count-boosting-v1/category-status.json). No candidate is promoted.
+
+Earlier bounded research: [recorded player-prop threshold comparison](reports/recorded-thresholds-v1/README.md) reuses thirteen fixed point variants on585 supported rows from604 original provider-fed lines. All twelve categories remain explicit and unqualified; directions are descriptive and numeric over/under probabilities remain unavailable.
+
+Current implementation packet: [H3 point recording contract](reports/h3-recording-contract-v1/README.md) addresses accurate forecast semantics through the existing lab writer. Current website main still uses the original comparison's source formulas. This packet adds no football observations, live hook, activation or qualified replacement.
+
+Earlier bounded research: [fixed boosting and permitted-source comparison](reports/median-boosting-v1/README.md) completes88 fits across eleven supported categories, retains exact PPR as blocked, and preserves every mixed or failed result. No candidate is promoted; numeric stat-total error does not establish over/under probability accuracy.
+
+Earlier bounded research: [direct original-website CDF comparison](reports/website-direct-leaf-cdf-v1/README.md) covers all twelve categories, with eleven scored and exact PPR blocked. Both fixed panels and website blends are retained. The exposed single-week gains are descriptive; no replacement is promoted.
+
 Current evidence: [category status](reports/lab-status.json),
 [historical comparisons](reports/initial-campaign/README.md), and
 [hosted verification](reports/hosted-verification.json). Hosted capture, retries
@@ -24,6 +42,21 @@ retained cold-context protocol deviation. The separate
 tested primary loss and remains inactive. New website comparisons use
 [hash-bound pregame capture](docs/website-baseline-comparisons.md), without
 backfilling old forecasts.
+
+The [resumed methods work](reports/methods-resumption-20261022/README.md) adds
+a bounded historical passing-efficiency comparison and a portable
+[opt-in passing-yard adapter](docs/research-passing.md). It matches the prior
+37 saved opportunity points technically, including fallbacks. The larger
+historical comparison favors the pooled-yard control over both efficiency
+variants. Neither result changes a default or qualifies a website replacement.
+
+The [archived website scorecard](reports/methods-resumption-20261022/website-comparison.md)
+shows six lower and five higher primary errors across the fixed indexed
+candidates; exact PPR lacks a qualified outcome comparison. A subsequent
+[RB rushing-efficiency test](reports/rushing-efficiency-v1/README.md) scores
+4,591 appearances across 54 season-weeks: H8 gains 0.82% against the pooled
+control, with worse bias and uncertainty spanning zero. It adds no new
+website-relative gain or default replacement.
 
 ```sh
 python -m venv .venv
@@ -86,3 +119,15 @@ those packages are not ready for joint integration. No candidate is promoted.
 
 Integer push mass needs an actual saved line; absent odds never block football
 forecasts, and this lab makes no EV or financial settlement claims.
+
+## Empirical distribution research
+
+The [twelve-category leaf-CDF study](reports/all12-leaf-cdf-v1/README.md)
+completed 66 fixed historical fits across eleven supported targets. Exact PPR
+retains its blocked scoring-source contract. Both player-history and context
+panels, their mean/median errors, proper scores, adverse findings and coverage
+are retained. The new gains compare against saved pooled-history controls;
+they are separate from the one-week website scorecard and are not untouched
+confirmation. [Inference and recovery contracts](docs/EMPIRICAL_CDF_RESEARCH.md)
+describe explicit research use outside the operational registry. No new default,
+recorder or scheduler is activated.

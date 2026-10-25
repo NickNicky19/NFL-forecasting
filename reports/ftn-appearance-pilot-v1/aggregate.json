@@ -1,0 +1,149 @@
+{
+  "accepted_source_policy_or_model_population_changed": false,
+  "audit": {
+    "duplicate_game_play_keys": 0,
+    "full_special_teams_game_coverage_or_DNP_established": false,
+    "game_predicate": "2024_01_BAL_KC",
+    "invalid_play_keys": 0,
+    "list_fields": {
+      "defense_players": {
+        "duplicate_membership_rows": 0,
+        "encoding_counts": {
+          "EXACT_SEMICOLON_IDS": 163
+        },
+        "membership_count": 1792,
+        "rows_with_missing_or_unresolved_lists": 0,
+        "rows_with_supported_lists": 163,
+        "unique_positive_witnesses": 54
+      },
+      "offense_players": {
+        "duplicate_membership_rows": 0,
+        "encoding_counts": {
+          "EXACT_SEMICOLON_IDS": 163
+        },
+        "membership_count": 1793,
+        "rows_with_missing_or_unresolved_lists": 0,
+        "rows_with_supported_lists": 163,
+        "unique_positive_witnesses": 66
+      },
+      "players_on_play": {
+        "duplicate_membership_rows": 0,
+        "encoding_counts": {
+          "EXACT_SEMICOLON_IDS": 163
+        },
+        "membership_count": 3585,
+        "rows_with_missing_or_unresolved_lists": 0,
+        "rows_with_supported_lists": 163,
+        "unique_positive_witnesses": 92
+      }
+    },
+    "maximum_output_batch_rows": 512,
+    "missing_statistics_filled_or_zeros_restored": 0,
+    "offense_defense_count_consistency": {
+      "defense": {
+        "compared_rows": 163,
+        "invalid_count_rows": 0,
+        "matched_rows": 163,
+        "missing_or_unresolved_rows": 0
+      },
+      "offense": {
+        "compared_rows": 163,
+        "invalid_count_rows": 0,
+        "matched_rows": 163,
+        "missing_or_unresolved_rows": 0
+      }
+    },
+    "players_on_play_union_comparable_rows": 163,
+    "players_on_play_union_matching_rows": 163,
+    "predicate_before_output_batch_materialization": true,
+    "projected_columns": [
+      "nflverse_game_id",
+      "play_id",
+      "players_on_play",
+      "offense_players",
+      "defense_players",
+      "n_offense",
+      "n_defense"
+    ],
+    "projected_rows": 163,
+    "projection_bytes": 9381,
+    "projection_sha256": "4b5946f063050df232973b387c6ef0e61c536a32bc03a35c016a8a3f8de492c0",
+    "schema": {
+      "approved_missing_columns": [],
+      "approved_present_types": {
+        "defense_players": "string",
+        "n_defense": "int32",
+        "n_offense": "int32",
+        "nflverse_game_id": "string",
+        "offense_players": "string",
+        "play_id": "double",
+        "players_on_play": "string"
+      },
+      "file_rows_metadata": 45919,
+      "row_groups_metadata": 1
+    },
+    "state": "PROJECTED_POSITIVE_WITNESS_SCHEMA_AUDIT",
+    "unique_game_play_keys": 163,
+    "unique_positive_witnesses_across_supported_fields": 92,
+    "unsupported_list_rows_across_fields": 0,
+    "use_threads": false,
+    "wrong_game_rows": 0
+  },
+  "complete_panel_DNP_special_teams_PPR_or_historical_pregame_qualification": false,
+  "evidence_lane": "RETROSPECTIVE_PRIVATE_APPEARANCE_SCHEMA_PILOT",
+  "execution_freeze_sha256": "831b0a19f9dcb9abfa025957e218dc2950cfa6cf2267a0cf468a9751719f1ad6",
+  "new_fits_predictions_scores_or_zero_restorations": 0,
+  "no_names_statistics_outcomes_roster_join_models_scores": true,
+  "policy_sha256": "88745a729241e30a23aaba34d3893735360b5665e3519ed76c7c25a15c0c1284",
+  "private_outer_receipt_sha256": "f9f3ec63eec417ff0a7fefa7e2e60afb05561716e199d0e7c469b641ff29bb00",
+  "private_result_sha256": "9869e6dfc6ff9f3575b8a296b67863652d557afb0b296037f56e512fd9cc7d17",
+  "registration_id": "ftn-participation-appearance-pilot-v1-20261023",
+  "resources": {
+    "RSS_limitation": "Live combined samples every0.01s may miss transient peaks; child highwater is separate, not a measured simultaneous combined peak",
+    "child_peak_RSS_highwater_bytes": 182460416,
+    "numerical_threads": 1,
+    "owner_tool_after_outer_receipt_write": {
+      "combined_CPU_seconds": 14.903784627,
+      "combined_RSS_peak_sampled_bytes": 108400640,
+      "wall_seconds": 15.297788052001124
+    },
+    "preparation_only_three_quota_jobs": {
+      "CPU_seconds": 11.44039496,
+      "maximum_RSS_bytes": 108920832,
+      "scope": "Separate measured preparation jobs before invocation; excludes unprofiled editing/preflight tool overhead",
+      "wall_seconds": 13.883776127
+    },
+    "saved_outer_receipt_before_write": {
+      "RSS_poll_seconds": 0.01,
+      "combined_CPU_seconds_before_receipt_write": 14.230444028,
+      "combined_RSS_peak_sampled_bytes": 107364352,
+      "wall_seconds_before_receipt_write": 14.622825565998937
+    }
+  },
+  "schema_version": "ftn-appearance-pilot-public-v1",
+  "source": {
+    "asset_id": 289570938,
+    "bytes": 4644767,
+    "document_commit_root_association": "UNRESOLVED as recorded in participation-substitutes-v1.md",
+    "name": "pbp_participation_2024.parquet",
+    "original_upstream_publication_utc": null,
+    "release_id": 71636554,
+    "retrospective_not_authenticated_pregame_available": true,
+    "sha256": "5e8cf1f6a11bb2be573c3db1533c28a5658907302d1ad45ca769a4ca35890d7c",
+    "size_and_catalog_digest_independently_verified_before_Parquet_decode": true,
+    "source_attribution": "FTN Data via nflverse",
+    "source_license_declaration": "CC-BY-SA-4.0",
+    "source_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp_participation/pbp_participation_2024.parquet"
+  },
+  "transport": {
+    "application_HTTP_transactions": 2,
+    "automatic_retries": 0,
+    "incoming_body_bytes_including_redirect_bodies": 4644767,
+    "raw_HTTP_metadata_and_redirect_URLs_private": true,
+    "status_sequence": [
+      302,
+      200
+    ]
+  }
+}

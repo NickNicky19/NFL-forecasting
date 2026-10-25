@@ -1,0 +1,57 @@
+{
+  "before": {
+    "error_type": "StoreError",
+    "log_file": "reference-receipt-bundle-before.log",
+    "log_sha256": "e8d6641320d07d0674896eb89d7fc540fe6cc381729a0c2331d9fc094459fa53",
+    "reason": "ALL_FAILED_FILES_WITHIN_CLOSED_CAPS",
+    "result": "EXPECTED_CAP_FAILURE",
+    "root_module_sha256": "0690fb3dc0017033fa5ccc05616249f7c749e5aea8391c644340b55977ba5f06",
+    "source_commit": "46992338f5ef86ef5d7ca8d2772b66448a849ae8"
+  },
+  "existing_scope_tests": {
+    "failed": 0,
+    "passed": 2,
+    "seconds": 8.1,
+    "source_modified": false
+  },
+  "final_execution": {
+    "log_file": "reference-receipt-bundle-actual.log",
+    "state": "PARENT_RUN_PENDING_AT_REVIEW"
+  },
+  "final_guard_review": {
+    "archive_module_sha256": "f571971ba5c0ae9b4b0ba64b4bb20535763297e1be6233d065833df179e0d346",
+    "guard": "FAILED_CONTROL_BUNDLE_AND_CENSUS_REQUIRED_TOGETHER",
+    "old_no_bundle_cases_preserved": true,
+    "requires_container_presence_equal_census_presence": true,
+    "state": "MATERIAL_GAP_FIXED_BY_PARENT_SOURCE_REVIEWED"
+  },
+  "fits": 0,
+  "fixture": {
+    "bundled_original_controls": 344,
+    "container_cap_bytes": 1048576,
+    "direct_original_controls": 211,
+    "original_files": 555,
+    "transport_files": 212,
+    "unchanged_archive_group_cap": 8,
+    "unchanged_file_cap": 512
+  },
+  "frozen": true,
+  "genuine_Actions_or_native_proof_claimed": false,
+  "pre_census_fix": {
+    "failed": 1,
+    "passed": 2,
+    "regression": "MISSING_CENSUS_ACCEPTED",
+    "seconds": 135.04
+  },
+  "private_capture_bodies_in_test": false,
+  "protected_outcome_reads": 0,
+  "remote_calls": 0,
+  "schema_version": "audit-weekly-receipt-bundle-independent-review-v1",
+  "scope": "FICTIONAL_SOFTWARE_TESTS_AND_READONLY_SOURCE_REVIEW",
+  "source_edits_by_reviewer": [
+    "tests/test_audit_weekly_receipt_bundle_v1.py"
+  ],
+  "test_bytes": 9019,
+  "test_file": "tests/test_audit_weekly_receipt_bundle_v1.py",
+  "test_sha256": "4f1bde06afeea6f1cca2249572b4c927ec52c00974cacc7d9e08b45642edec78"
+}

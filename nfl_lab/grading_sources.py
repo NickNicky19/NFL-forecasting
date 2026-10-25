@@ -95,6 +95,24 @@ def load_cached_grading_context(cache: Path, seasons: list[int]) -> dict:
     return context
 
 
+def load_permitted_grading_context(cache, seasons, policy, asof):
+    """Use only a verified existing permitted snapshot; never acquire sources."""
+    from .operational_sources import load_source_policy, load_operational_history, load_operational_identity
+    from .operational_models import source_binding
+    policy = load_source_policy(policy)
+    history = load_operational_history(cache, seasons, policy, asof, latest=True)
+    manifest = history.attrs["operational_manifest"]
+    source_binding(policy, manifest)
+    # Resolve once, then bind identities to that exact immutable snapshot.
+    identity = load_operational_identity(cache, manifest["seasons"], policy, manifest["asof_utc"],
+                                         allowed_periods=manifest["allowed_periods"])
+    context = {"history": history, "identity": identity, "receipts": manifest["source_receipts"],
+               "seasons": seasons, "verified_utc": _clock(asof).isoformat(),
+               "vintage": VINTAGE, "operational_manifest": manifest}
+    _grading_lookups(context, True)
+    return context
+
+
 def cached_nflverse_outcome(context: dict, forecast: dict, completed_game: dict,
                            status_receipt: dict | None = None, *, use_lookup_cache: bool = True) -> dict:
     """Return a supplemental value only with exact identity and final-game binding.

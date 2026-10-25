@@ -1,0 +1,143 @@
+{
+  "actual_backend": "UNATTESTED",
+  "alpha": 0.2,
+  "base_method": "leaf_cdf",
+  "base_panel": "base",
+  "blocks": [
+    {
+      "calibration": 2022,
+      "evaluation": 2023
+    },
+    {
+      "calibration": 2023,
+      "evaluation": 2024
+    }
+  ],
+  "budgets": {
+    "CPU_seconds": 300,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "invocations": 1,
+    "new_base_fits": 0,
+    "new_base_predictions": 0,
+    "new_retained_bytes": 16777216,
+    "numerical_thread_caps": 2,
+    "radii": 20,
+    "retries": 0,
+    "semantic_projection_row_cap": 600000,
+    "shared_retention_bytes": 536870912,
+    "wall_seconds": 300
+  },
+  "calibration_population": "unchanged original primary_role and existing supported-played _observed, including zeros",
+  "category_contract": {
+    "bytes": 40385,
+    "path": "/workspace/nfl-methods-integration/reports/all12-leaf-cdf-v1/method-config.json",
+    "sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4"
+  },
+  "code_bindings": {
+    "nfl_lab/cdf_engine.py": {
+      "bytes": 27618,
+      "path": "/workspace/nfl-conformal-interval-v1/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    "nfl_lab/cdf_evaluation.py": {
+      "bytes": 19547,
+      "path": "/workspace/nfl-conformal-interval-v1/nfl_lab/cdf_evaluation.py",
+      "sha256": "774ac9f9d37ff9c9201723504058b369a5a5c68906d366c6ebfee16d5363f076"
+    },
+    "nfl_lab/source_matched_reporting.py": {
+      "bytes": 23159,
+      "path": "/workspace/nfl-conformal-interval-v1/nfl_lab/source_matched_reporting.py",
+      "sha256": "d338ddd8062bd29e8df4479b014720f93429e97d07b8f4b96d7e9ae157ee5b0e"
+    }
+  },
+  "control_root": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023",
+  "count_endpoints": "max(0,p10-r),p90+r; no rounding",
+  "evaluation_populations": [
+    "all_offered",
+    "primary_roles"
+  ],
+  "insufficient_n": "k>n => unchanged original interval, UNCALIBRATED_FALLBACK_INSUFFICIENT_N",
+  "metadata_checkpoint": {
+    "cdf_files": 30,
+    "cdf_outcome_available_columns": 0,
+    "original_query_outcome_available_columns": 3,
+    "path": "/tmp/conformal-interval-v1-input-metadata/RECEIPT.json",
+    "query_files": 3,
+    "semantic_rows_decoded": 0,
+    "sha256": "7ee59681b6cf117ec7578d64efe76b0d03a36b28337ede1aa80702191149ce16",
+    "state": "METADATA_ONLY_COMPLETE"
+  },
+  "no_actual_NFL_or_footer_or_model_reads_for_preparation": true,
+  "no_coverage_point_CDF_probability_promotion_guarantee": true,
+  "phase_allowance_semantics": "Fixed allocations within the hard300s whole-job ceiling; no separate source-training or fitting phase. Worker stops at280s to retain20s failure budget.",
+  "phase_allowances_seconds": {
+    "evaluation_reporting": 140,
+    "final_persistence": 20,
+    "metadata_read_preflight": 40,
+    "original_label_attachment": 40,
+    "radius_and_prediction_freeze": 40,
+    "terminal_failure_reserve": 20
+  },
+  "primary_metric": "80_percent_interval_score",
+  "radius_rule": "max(0,kth max(p10-y,y-p90)); k=ceil(4*(n+1)/5); no interpolation",
+  "registration_id": "cdf-split-cqr-80-v1-20261024",
+  "requested_model": "GPT-6.1 Sol Extra High",
+  "scored_freeze": {
+    "bytes": 100310,
+    "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/scored-freeze.json",
+    "sha256": "d222f6bd22db1e34590ef49645d1bb0a7512f4cb210499005df950b414627ad2"
+  },
+  "secondary_metrics": [
+    "coverage",
+    "width",
+    "lower_miss_frequency",
+    "upper_miss_frequency",
+    "fallback_missing_coverage"
+  ],
+  "signed_endpoints": "p10-r,p90+r; no clipping or rounding",
+  "source_manifest": {
+    "bytes": 23272,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+    "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+  },
+  "source_policy": {
+    "bytes": 13487,
+    "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "state": "PROPOSED_NOT_EXECUTED",
+  "subgroups": "Compact private pooled player/position/team/opponent/history/fallback aggregates; same rows and main paired game/week uncertainty; small groups unqualified.",
+  "targets": [
+    "pass_yd",
+    "pass_td",
+    "pass_cmp",
+    "pass_att",
+    "pass_int",
+    "rush_yd",
+    "rush_att",
+    "rec",
+    "rec_yd",
+    "rush_rec_yd"
+  ],
+  "uncertainty": {
+    "clusters": [
+      "week",
+      "game"
+    ],
+    "confirmation": false,
+    "generator": "PCG64",
+    "helper": "nfl_lab.source_matched_reporting._bootstrap",
+    "minimum_clusters": 8,
+    "nominal_level": 0.95,
+    "percentile": "linear",
+    "replicates": 500,
+    "seed": 1703
+  },
+  "unmet_before_actual": [
+    "independent exact compact execution freeze and complete original DIRECT environment authentication",
+    "entry/exit owned references and current quota headroom",
+    "strict ordered original query/CDF clock/context join plus supported-played label gating",
+    "guarded actual invocation rootGO after focused consumer software packet"
+  ]
+}

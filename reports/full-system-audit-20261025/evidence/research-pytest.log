@@ -1,0 +1,33 @@
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tests/test_baseline_correction_report_v2.py _________
+tests/test_baseline_correction_report_v2.py:16: in <module>
+    extension({"path":"/workspace/nfl-baseline-correction-v1/nfl_lab/baseline_correction.py",
+tools/baseline_correction_run.py:57: in extension
+    if sha(path)!=CORE_SHA256 or binding['sha256']!=CORE_SHA256:raise ValueError('correction extension hash changed')
+       ^^^^^^^^^
+tools/direct_booster_frozen_report_run.py:37: in sha
+    with Path(path).open("rb") as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/nfl-baseline-correction-v1/nfl_lab/baseline_correction.py'
+_________ ERROR collecting tests/test_baseline_correction_report_v3.py _________
+tests/test_baseline_correction_report_v3.py:19: in <module>
+    extension({"path":"/workspace/nfl-baseline-correction-v1/nfl_lab/baseline_correction.py",
+tools/baseline_correction_run.py:57: in extension
+    if sha(path)!=CORE_SHA256 or binding['sha256']!=CORE_SHA256:raise ValueError('correction extension hash changed')
+       ^^^^^^^^^
+tools/direct_booster_frozen_report_run.py:37: in sha
+    with Path(path).open("rb") as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/nfl-baseline-correction-v1/nfl_lab/baseline_correction.py'
+=========================== short test summary info ============================
+ERROR tests/test_baseline_correction_report_v2.py - FileNotFoundError: [Errno...
+ERROR tests/test_baseline_correction_report_v3.py - FileNotFoundError: [Errno...
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 6.86s

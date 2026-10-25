@@ -1,0 +1,43 @@
+{
+  "registration_id": "all12-leaf-cdf-v1-20261023",
+  "state": "DRAFT_AWAITING_ROOT_AND_REVIEWER_CLEARANCE",
+  "scientific_novelty": "ExtraTrees partitions induce training-label empirical conditional CDFs; each forest law is a mixture of leaf histograms, not the prior mean-only tree plus residual dispersion.",
+  "input": {
+    "path": "/workspace/NFL-forecasting/data/processed/features.parquet",
+    "sha256": "ff7a14bac024958f32cbf367e83f6d70e4f86572f461ca6ebd33a9207d04d297",
+    "rows": 62752,
+    "bytes": 5486918,
+    "vintage": "current-vintage reconstruction; all historical seasons exposed; source publication clocks unverified and seven-day label lag assumed",
+    "forbidden_substitute": "/workspace/NFL-forecasting/data/processed/history.parquet"
+  },
+  "controls": {
+    "directory": "/workspace/NFL-forecasting/runs/lab-v1-2026-10-22",
+    "methods": ["recent", "pooled"],
+    "policy": "Import unchanged saved rows, pin per-file hashes, require one-to-one identity/outcome/participation bindings; never refit old consumed methods. No invented archived website/raw points or distributions.",
+    "additional": "One train-only role prior distribution with the same support law used for smoothing. Its lower median and mean are declared separate points. It is deterministic, not a further fitted candidate topology."
+  },
+  "seasons": [2022, 2023, 2024],
+  "split": "Fit independently once per target/panel/year on all retained earlier-season supported played outcomes whose kickoff and supplied outcome availability precede earliest evaluation cutoff. No within-year target refits. Each precomputed test feature must independently precede its row cutoff; later-year source labels may enter later-year lag features only under their retained availability policy.",
+  "conditional_target": "player statistic conditional on played; DNP, unknown, played zero, missing statistic and invalid support remain distinct. Retain every offered cache row; model primary roles and emit trained role/global prior fallback for nonmodeled/cold/unsupported rows.",
+  "panels": ["base", "context"],
+  "panel_policy": "Root consolidates explicit category-owned numeric lag-feature lists before seal. Context contains base plus fixed lagged team/opponent/home/rest context. No feature search, post-result eligibility filter or test-era vocabulary fitting.",
+  "topology": {"class": "sklearn.ensemble.ExtraTreesRegressor", "n_estimators": 32, "criterion": "squared_error", "max_depth": 8, "min_samples_leaf": 30, "max_features": 1.0, "bootstrap": false, "random_state": 1701, "n_jobs": 2},
+  "preprocessing": "Train-supported-row numeric medians with explicit missingness indicators; fixed explicit feature names only; training-only position categorical vocabulary; no target-era clipping/scaling/vocabulary fitting; missing whole optional columns remain explicit missing indicators.",
+  "empirical_law": "For each training-supported row and tree, count its original entire target label in its terminal leaf. Normalize each query leaf histogram and average all 32 tree histograms. Preserve integer yard negatives and counts/played zeros. No rounded synthetic labels or Gaussianized tree residuals.",
+  "smoothing": {
+    "prior_weight": 0.05,
+    "role_groups": "position; each trained role prior uses all earlier supported played labels for that role, including zeros. Unknown/unseen role uses trained global prior with explicit fallback.",
+    "signed_integer": "Discrete Laplace at integer lower training role median c; s=max(1,mean(abs(y-c))); q=s/(1+s); P(Y=k)=(1-q)/(1+q)*q**abs(k-c). This is fixed support smoothing, not a claim that its MAD equals s. Mean=c; variance=2q/(1-q)^2.",
+    "count": "Geometric on {0,1,...}, equivalently fixed NB(r=1); mu=max(.05,mean(y)); q=mu/(1+mu); P(Y=k)=(1-q)*q**k. Mean=mu. No moment-matched dispersion claim.",
+    "bernoulli": "Beta(1,1) posterior predictive p=(sum(y)+1)/(n+2) on {0,1}.",
+    "fractional_ppr": "BLOCKED pending exact pinned website scoring/components; no generic provider total or invented zero labels."
+  },
+  "functionals": {"mean": "actual 95/5 law expectation", "median": "smallest support integer k with mixture CDF(k)>=.5", "reported_points": "MAE, RMSE, signed bias and p95 absolute error for BOTH mean and median; median MAE primary for nonbinary targets; Bernoulli mixture p primary Brier. Never relabel median as operational mean."},
+  "distribution_scoring": "PMF/log mass by stable logaddexp. Exact discrete CRPS via E|X-y| - .5 E|X-X'|, with finite empirical support sums and closed-form prior/cross absolute moments. Lower/upper interval quantiles from the same mixture CDF; report empirical PIT bracket/mid-PIT as discrete diagnostics. No tail truncation or Monte Carlo approximation in marginal scoring.",
+  "dependence": "No joint-law or cross-target coherence claim. Audit completion<=attempt and passTD<=completion marginal means separately. Direct rush_rec_yd requires both signed source components and exact sum identity. Independently fit component medians/quantiles do not add. No PPR/joint simulation from independent component assumptions.",
+  "contrasts": "Exactly24 planned primary slots: each target/panel median MAE vs exact saved POOLED point (binary mixture probability Brier vs pooled probability); blocked categories retain blocked slots. Never select a better panel. Recent controls, context-minus-base and mean-vs-median point losses are secondary. Distribution CRPS/logmass/calibration vs training-only role prior are separate diagnostics. All outcomes exposed; no promotion or confirmation claim.",
+  "monte_carlo": "Not needed for analytic marginal law/scores. Fixed-seed 500-replicate paired week and game cluster bootstrap of row losses only; nominal95% UNADJUSTED descriptive intervals, no familywise coverage claim, no promotion/confirmation, and whole adaptive search/multiplicity explicitly disclosed. Any future joint simulation requires its own source-coherent paired-label law and preregistration.",
+  "budgets": {"candidate_configurations_per_target": 2, "annual_fits_per_configuration": 3, "maximum_candidate_fit_attempts": 72, "maximum_threads": 2, "campaign_wall_seconds": 1800, "campaign_cpu_seconds": 2400, "per_trial_wall_seconds": 60, "per_trial_cpu_seconds": 90, "memory_bytes": 2147483648, "private_output_bytes": 1073741824, "bootstrap_replicates": 500, "reporting_wall_reserve_seconds": 180, "profile": "Before any real fit, deterministic fictional n=40000 train/n=10000 test/100 numeric feature profile of ONE topology and histogram/scoring path, hard wall120/CPU180/memory2GiB. Profile is engineering evidence only; preregistered values are not tuned using real outcomes. Failed profile blocks study until bounded design is re-precleared."},
+  "execution": "Before study launch pin proposal, consolidated registry, engine/tests/dependency hashes and root+reviewer clearance in private root. Append-only per-trial STARTED/fit freeze/forecast freeze/score consumed/completed/failure records, unique attempt directory, row/model hashes and timings. One score pass; interrupted score artifact consumed and preserved. Root alone writes canonical ledger. Parent monitor enforces campaign and pertrial wall/CPU and process RSS caps with process-group termination; use RSS rather than virtual-address limits. All summaries, failures, empty populations and skipped budget cells remain visible. No scheduling, activation, default merge or website writes.",
+  "publication": "Private research artifacts only; no raw or row-level source redistribution. Results historical exploratory only; all years exposed. Frozen prior protocols and evidence untouched."
+}

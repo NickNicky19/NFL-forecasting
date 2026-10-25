@@ -1,0 +1,43 @@
+{
+  "registration_id": "all12-median-boosting-v1-20261023",
+  "state": "SOFTWARE_ONLY_PENDING_ROOT_AND_REVIEWER_SOURCE_SEAL",
+  "hypothesis": "Fixed absolute-error histogram boosting may reduce point MAE relative to saved squared-split CDF medians; if source changes, attribute results jointly to learner and source reconstruction.",
+  "topology": {
+    "numeric_loss": "absolute_error",
+    "binary_loss": "log_loss",
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15,
+    "max_depth": 3,
+    "min_samples_leaf": 30,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 1702
+  },
+  "budgets": {
+    "maximum_candidate_fit_attempts": 88,
+    "maximum_threads": 2,
+    "campaign_wall_seconds": 1200,
+    "campaign_cpu_seconds": 1800,
+    "per_trial_wall_seconds": 60,
+    "per_trial_cpu_seconds": 90,
+    "memory_bytes": 2147483648,
+    "private_output_bytes": 536870912,
+    "reporting_wall_reserve_seconds": 180,
+    "bootstrap_replicates": 500,
+    "score_passes": 1
+  },
+  "targets": ["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd", "fantasy_ppr", "anytime_td"],
+  "panels": ["base", "context"],
+  "periods": ["2022", "2023", "2024", "website_week6"],
+  "PPR": "Explicit blocked slots; no provider fantasy substitute",
+  "training": "Exact inherited panels/roles, training-only FixedDesign median/missingness/position vocabulary, supported old played labels; inherited role/global prior median or probability fallback",
+  "numeric_output": "MAE-objective point heuristic; count=max(0,prediction), fractional retained; signed yards unchanged; no forecast mean, law median, CDF, numeric probabilities or numeric distribution",
+  "binary_output": "Genuine event probability without clipping; single-class modeled labels use trained role/global Beta probability; zero/one infinite log losses retained",
+  "comparison": "Pooled2022-2024 rows (not averaged annual MAEs), all offered eligible pairs primary against saved same-panel CDF numeric median or genuine binary probability only; annuals, literal saved pooled/recent and primary-role secondary; historical week/game500 nominal descriptive intervals; W6 all original offers literal website only primary; no W6 intervals;48primary slots including4blockedPPR",
+  "source_change": "Only under explicit joint learner/source mode: all clean offered and old control populations retained in outer audit, strict common context, new qualified outcomes universally, finite contradictions quarantined, unmatched rows explicit",
+  "website_blend": "Only fixed secondary .5 literal website + .5 candidate point/probability; no added fit or weight search; missing site abstains",
+  "execution": "Create-only sealed output, all models/forecasts frozen globally before exactly one outcome phase; failures consumed and retained without restart",
+  "evidence": "All periods exposed; no untouched confirmation, prospective forecast claim, winner selection or promotion",
+  "activation": "Explicit research invocation only; no default, website, recorder or scheduler change"
+}

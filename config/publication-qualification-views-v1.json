@@ -1,0 +1,27 @@
+{
+  "registration_id": "publication-qualification-views-v1-20261023",
+  "scope": "Prepare opt-in, label-free exact scoped-publication qualification views. Existing frozen consumers, scorecards, receptions registration/executable and windows remain unchanged; this module is not caller/hosted integration.",
+  "files": [
+    "nfl_lab/publication_qualification.py",
+    "tests/test_publication_qualification.py",
+    "docs/publication-qualification-v1.md"
+  ],
+  "API": [
+    "qualified_forecast_view(root,state,scope_evidence,expected_policy_sha256)",
+    "qualified_website_view(root,state,scope_evidence,expected_policy_sha256)"
+  ],
+  "evidence": "Caller must provide original full scope envelopes keyed by exact digest. Current v1 receipts store only scope SHA; missing full evidence => SCOPE_EVIDENCE_UNAVAILABLE. Never guess a one-file map or manufacture an older public clock. Reuse verify_committed_scope for local immutable commit/tree/path/blob/file/document proof; original remote readback remains publisher attestation.",
+  "qualification": "Scoped v1 only; exact receipt kind/batch/snapshot/state path/file SHA/Git blob/commit/verified remote commit/full envelope digest/policy and actual capture/persist/readback clock chain. Require cutoff<=issued<=persistence start<=completion<=actual readback<kickoff and actual row/counter/link consistency. Reject contradictions; select deterministic earliest valid scoped proof by clock then receipt digest. Legacy stays unqualified/descriptive even if early; later actual republication cannot become pregame.",
+  "order": "Prove both website and linked lab qualification before any downstream rehydration/outcome access. Layer imports/calls no outcome resolver, HTTP, model or scorer. Zero qualified inputs produce only coverage/reason metadata.",
+  "privacy": "Copied qualified private rows/bindings and aggregate reasons only. No actual private data opened in software implementation; no raw source/forecast/statistic/weight redistribution.",
+  "budgets": {
+    "owner_fictional_wall_seconds": 120,
+    "owner_fictional_CPU_seconds": 180,
+    "root_fictional_wall_seconds": 180,
+    "threads": 2,
+    "new_actual_NFL_rows_source_models_outcomes_HTTP_scores": 0
+  },
+  "frozen_boundary": "No original receipt/forecast correction, old scorecard rewrite, backfill, rec-half code/source/registration hash change, restarted window, promotion, scheduler/default/website/dispatch change.",
+  "remaining": "Existing score_saved/score_saved_website retain legacy-inclusive behavior until separately versioned caller wiring. New publisher full-scope evidence persistence and actual hosted source/runtime acceptance remain subsequent work; this prepared layer alone cannot certify them.",
+  "authority": "Authorized ongoing lab implementation and technical blocker repair; root one integrator/ledger writer, isolated owner and separate read-only reviewer."
+}

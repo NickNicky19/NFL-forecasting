@@ -1,0 +1,582 @@
+--- a/output/app.js
++++ b/output/app.js
+@@ -209,7 +209,7 @@
+ 
+ function projPts(p) {
+   if (p.pos === "K" || p.pos === "DEF") return p.proj_ppr;
+-  if (isDefault()) return S.sc.half ? p.proj_half ?? p.proj_ppr : p.proj_ppr;
++  if (isDefault()) return S.sc.half ? (Number.isFinite(p.proj_half) ? p.proj_half : null) : p.proj_ppr;
+   return p.proj && Object.keys(p.proj).length ? skillPts(p.proj, p.pos) : null;
+ }
+ 
+@@ -220,7 +220,7 @@
+ 
+ function avgPts(p) {
+   if (p.pos === "K" || p.pos === "DEF") return p.avg_ppr;
+-  if (isDefault()) return S.sc.half ? p.avg_half ?? p.avg_ppr : p.avg_ppr;
++  if (isDefault()) return S.sc.half ? (Number.isFinite(p.avg_half) ? p.avg_half : null) : p.avg_ppr;
+   const pts = (p.log || []).map((x) => logPts(p, x)).filter((v) => v != null);
+   return pts.length ? Math.round((pts.reduce((a, b) => a + b, 0) / pts.length) * 100) / 100 : null;
+ }
+@@ -234,7 +234,14 @@
+ // The fantasy points prop in the current scoring (half PPR swaps in its own numbers)
+ function pv(p, prop) {
+   if (prop.key !== "fpts" || (isDefault() && !S.sc.half)) return prop;
+-  if (isDefault()) return prop.adj_h == null ? prop : { ...prop, line: prop.line_h, adj: prop.adj_h, proj: prop.proj_h, over: prop.over_h, values: prop.values.map((x) => ({ ...x, v: x.h ?? x.v })) };
++  if (isDefault()) {
++    const values = prop.values.filter(x => Number.isFinite(x.h)).map(x => ({ ...x, v: x.h }));
++    const missing = !Number.isFinite(prop.adj_h) || !Number.isFinite(prop.line_h);
++    return { ...prop, line: missing ? null : prop.line_h, adj: missing ? null : prop.adj_h,
++      proj: Number.isFinite(prop.proj_h) ? prop.proj_h : null, lean: missing ? null : prop.lean,
++      over: missing ? 0 : values.filter(x => x.v > prop.line_h).length, n: values.length, values,
++      scoring_missing: missing };
++  }
+   // Any other scoring: re-score his games and his projection, keep the matchup adjustment
+   const byWeek = Object.fromEntries((p.log || []).map((x) => [x.w, x]));
+   const values = prop.values.map((x) => { const g = byWeek[x.w]; const v = g ? logPts(p, g) : null; return { ...x, v: v ?? x.v }; });
+@@ -1052,6 +1059,7 @@
+ 
+ function propChip(p, raw) {
+   const prop = pv(p, raw);
++  if (prop.scoring_missing) return `<span class="pchip"><span>FPts</span><span class="muted">Half PPR unavailable</span></span>`;
+   const selected = selectedPropForecast(p, prop.key);
+   const effectiveGap = selected ? selectedPropGap(p, prop, true) : null;
+   const lean = selected ? effectiveGap?.lean : prop.lean;
+@@ -1071,6 +1079,7 @@
+ 
+ function catCard(p, raw) {
+   const prop = pv(p, raw);
++  if (prop.scoring_missing) return `<div class="card"><h3>Fantasy Points · Half PPR</h3><p class="muted">Half PPR projection and line unavailable.</p></div>`;
+   const selected = selectedPropForecast(p, prop.key);
+   const from = prop.line_from || "ours";
+   const cat = S.data.categories[prop.key];
+--- a/pull/build.py
++++ b/pull/build.py
+@@ -24,6 +24,8 @@
+ 
+ ROOT = Path(__file__).resolve().parent.parent
+ CACHE = ROOT / "data" / "cache"
++# Normalized before the FG key was retained: never reuse the old R0 cache.
++STATS_CACHE_VERSION = "stat-keys-fgm-v1"
+ OUT = ROOT / "output" / "data"
+ ARCHIVE = OUT / "archive"
+ WEEKS = OUT / "weeks"
+@@ -47,6 +49,8 @@
+ 
+ 
+ def dump(path, data):
++    if path.name == "track_record.json":
++        grade.preserve_issued_record(path)
+     path.parent.mkdir(parents=True, exist_ok=True)
+     path.write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False))
+ 
+@@ -69,7 +73,7 @@
+ 
+ def week_stats(season, week, refresh):
+     """Weekly stats, cached on disk. Recent weeks are refetched each run to pick up stat corrections."""
+-    path = CACHE / f"stats_{season}_{week:02d}.json"
++    path = CACHE / STATS_CACHE_VERSION / f"stats_{season}_{week:02d}.json"
+     if path.exists() and not refresh:
+         return json.loads(path.read_text())
+     data = trim_stats(sources.week_stats(season, week))
+@@ -114,6 +118,17 @@
+     return keep, kdef
+ 
+ 
++def confirmed_final(game):
++    """A post flag alone also covers cancellations; require a completed past game."""
++    if game.get("state") != "post" or game.get("completed") is not True:
++        return False
++    try:
++        kickoff = datetime.fromisoformat(game["kickoff"].replace("Z", "+00:00"))
++        return kickoff.tzinfo is not None and kickoff < now_utc()
++    except (KeyError, TypeError, ValueError, AttributeError):
++        return False
++
++
+ def load_games(season, week):
+     games = []
+     for e in sources.scoreboard(season, week).get("events", []):
+@@ -125,6 +140,7 @@
+             "id": e["id"],
+             "kickoff": e["date"],
+             "state": status["state"],  # pre, in, post
++            "completed": status.get("completed"),
+             "detail": status.get("shortDetail"),
+             "home": sources.team_code(sides["home"]["team"]["abbreviation"]),
+             "away": sources.team_code(sides["away"]["team"]["abbreviation"]),
+@@ -523,7 +539,7 @@
+                      "game_id": gid, "st": {k: v for k, v in e["stats"].items() if v and k in keep}}
+         if who.get("espn_id"):
+             rows[pid]["espn_id"] = str(who["espn_id"])
+-    finished = [g["id"] for g in games if g["state"] == "post"]
++    finished = [g["id"] for g in games if confirmed_final(g)]
+     try:
+         lines = books.week_lines(season, week, finished, {pid: {"name": r["name"], "team": r["team"], "espn_id": r.get("espn_id")} for pid, r in rows.items()})
+     except Exception as err:
+@@ -743,9 +759,9 @@
+     def scores_for(s_, w):
+         if (s_, w) not in finals:
+             board = games if (s_, w) == (season, week) else load_games(s_, w)
+-            finals[(s_, w)] = {g["id"]: (g["home_score"], g["away_score"]) for g in board if g["state"] == "post"}
++            finals[(s_, w)] = {g["id"]: (g["home_score"], g["away_score"]) for g in board if confirmed_final(g)}
+         return finals[(s_, w)]
+-    record = grade.grade_all(ARCHIVE, stats_for, current=(season, week), final_games={g["id"] for g in games if g["state"] == "post"},
++    record = grade.grade_all(ARCHIVE, stats_for, current=(season, week), final_games={g["id"] for g in games if confirmed_final(g)},
+                              scores_for=scores_for)
+     dump(OUT / "track_record.json", record)
+     print(f"{len(entries)} players, {len(games)} games, {len(picks['over'])} top overs, {len(picks['under'])} top unders")
+--- a/pull/grade.py
++++ b/pull/grade.py
+@@ -5,6 +5,10 @@
+ The public keys used by the original UI remain available.
+ """
+ import json
++import hashlib
++import os
++import tempfile
++from pathlib import Path
+ import math
+ import statistics
+ from collections import Counter
+@@ -12,7 +16,7 @@
+ import gamemodel
+ import scoring
+ 
+-GRADING_VERSION = "statistical-v2"
++GRADING_VERSION = "statistical-v3-identity-20261025"
+ RESULTS = ("hit", "miss", "push", "dnp", "unresolved")
+ 
+ 
+@@ -100,6 +104,78 @@
+     return {"spread": tally(spread), "total": tally(total)}
+ 
+ 
++def _bound_stats(archive, player, entry, *, game_id=None):
++    """Reject recorded identity contradictions without inventing legacy evidence."""
++    gid = player.get("game_id")
++    if game_id is not None and game_id != gid:
++        return None
++    matches = [game for game in archive.get("games", []) if game.get("id") == gid]
++    if archive.get("games") and len(matches) != 1:
++        return None
++    game = matches[0] if matches else {}
++    team, opponent = player.get("team"), player.get("opp")
++    home, away = game.get("home"), game.get("away")
++    if home is not None and away is not None:
++        if team not in (home, away) or home == away:
++            return None
++        expected = away if team == home else home
++        if opponent is not None and opponent != expected:
++            return None
++        opponent = expected
++    if not isinstance(entry, dict):
++        return entry
++    if (entry.get("team") is not None and team is not None and entry["team"] != team
++            or entry.get("opp") is not None and opponent is not None and entry["opp"] != opponent):
++        return None
++    stats = entry.get("stats")
++    if isinstance(stats, dict) and "_presence" in stats:
++        metadata = stats["_presence"]
++        if not isinstance(metadata, dict):
++            return None
++        original, context = metadata.get("original_row"), metadata.get("source_context")
++        if (metadata.get("version") != getattr(scoring, "PRESENCE_VERSION", None) or metadata.get("kind") != "actual"
++                or not isinstance(original, dict) or not isinstance(context, dict)
++                or original.get("player_id") != player["id"]
++                or original.get("team") != team or original.get("opponent") != opponent
++                or (context.get("season"), context.get("week")) != (archive["season"], archive["week"])
++                or original.get("stats") != {key: value for key, value in stats.items() if key != "_presence"}):
++            return None
++    return entry
++
++
++def preserve_issued_record(path):
++    """Keep exact previously issued bytes before a caller replaces its pointer.
++
++    Original grading versions and historical results remain inside their
++    original bytes. These snapshots are prior publications, not new forecasts.
++    A corrupt existing history object fails before the live pointer is written.
++    Temporary partial writes never occupy the final content-addressed path.
++    """
++    path = Path(path)
++    if not path.exists():
++        return None
++    issued = path.read_bytes()
++    target = path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")
++    target.parent.mkdir(parents=True, exist_ok=True)
++    fd, temporary = tempfile.mkstemp(prefix=".issued-grading-", suffix=".tmp", dir=target.parent)
++    try:
++        with os.fdopen(fd, "wb") as stream:
++            stream.write(issued)
++            stream.flush()
++            os.fsync(stream.fileno())
++        try:
++            os.link(temporary, target, follow_symlinks=False)
++        except FileExistsError:
++            if target.is_symlink() or not target.is_file() or target.read_bytes() != issued:
++                raise ValueError("Previously issued grading history checksum mismatch")
++    finally:
++        try:
++            os.unlink(temporary)
++        except FileNotFoundError:
++            pass
++    return target
++
++
+ def _prop_result(prop, direction, entry):
+     status = participation(entry)
+     if status != "played":
+@@ -123,7 +199,7 @@
+                 continue
+             if p.get("line_from") not in ("dk", "sleeper"):
+                 continue
+-            value, outcome = _prop_result(p, side, stats.get(p["player_id"]))
++            value, outcome = _prop_result(p, side, _bound_stats(archive, who, stats.get(p["player_id"]), game_id=p["game_id"]))
+             graded.append({
+                 "player_id": p["player_id"], "game_id": p["game_id"], "name": who.get("name", p["player_id"]),
+                 "key": p["key"], "line": p["line"], "line_from": p.get("line_from"),
+@@ -141,7 +217,7 @@
+     for p in archive["players"]:
+         if not done(p["game_id"]) or p.get("late"):
+             continue
+-        entry = stats.get(p["id"])
++        entry = _bound_stats(archive, p, stats.get(p["id"]))
+         for prop in p["props"]:
+             venue, side = prop.get("line_from"), prop.get("lean")
+             if side and venue in ("dk", "sleeper") and prop["key"] != "anytime_td":
+--- a/pull/scoring.py
++++ b/pull/scoring.py
+@@ -32,7 +32,7 @@
+ # The raw stats kept from Sleeper (everything else is dropped to keep files small)
+ STAT_KEYS = sorted(set(PPR) | set(K_SCORING) | set(DEF_SCORING)
+                    | {"pass_cmp", "pass_att", "rush_att", "rec_tgt", "gp", "off_snp", "pts_ppr", "pts_half_ppr", "idp_fum_rec",
+-                      "pts_allow", "yds_allow", "tm_off_snp", "fgm_50p"})
++                      "pts_allow", "yds_allow", "tm_off_snp", "fgm_50p", "fgm"})
+ 
+ 
+ def ppr_points(stats):
+--- /dev/null
++++ b/tests/test_fgm_cache_contract.py
+@@ -0,0 +1,125 @@
++"""Fictional first-use/current/history traces for the retained-FG cache contract."""
++import copy
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++
++ROOT=Path(__file__).resolve().parents[1]
++sys.path[:0]=[str(ROOT/'pull'),str(ROOT/'tools')]
++import build
++import gamemodel
++
++TRACE={}
++TEAMS={'home-qb':('QB','AAA'),'home-k':('K','AAA'),'away-qb':('QB','BBB'),'away-k':('K','BBB')}
++GAME=[dict(id='fictional-game',home='AAA',away='BBB',odds=dict(spread=1,total=44))]
++ROWS=[dict(player_id=pid,team=team,opponent='BBB'if team=='AAA'else'AAA',stats=stats)
++      for pid,team,stats in [
++          ('home-qb','AAA',dict(gp=1,pts_ppr=20,pass_td=2)),
++          ('home-k','AAA',dict(gp=1,pts_ppr=0,fgm=3,xpm=2)),
++          ('away-qb','BBB',dict(gp=1,pts_ppr=24,pass_td=3)),
++          ('away-k','BBB',dict(gp=1,pts_ppr=0,fgm=1,xpm=3))]]
++OLD={r['player_id']:dict(team=r['team'],opp=r['opponent'],stats={k:v for k,v in r['stats'].items()if k!='fgm'})for r in ROWS}
++OLD_BYTES=(json.dumps(OLD,sort_keys=True,indent=2)+'\n').encode()
++
++def raw_points(stats):
++    return gamemodel.rollup({pid:entry['stats']for pid,entry in stats.items()},TEAMS)
++
++class RetainedFGCacheTests(unittest.TestCase):
++    def old_cache(self,root,season,week):
++        path=root/f'stats_{season}_{week:02d}.json';path.write_bytes(OLD_BYTES);return path
++
++    def test_first_historical_read_ignores_legacy_cache_and_preserves_its_bytes(self):
++        with tempfile.TemporaryDirectory() as directory:
++            root=Path(directory);old=self.old_cache(root,2098,18)
++            with patch.object(build,'CACHE',root),patch.object(build.sources,'week_stats',return_value=copy.deepcopy(ROWS))as source:
++                stats=build.week_stats(2098,18,refresh=False)
++            source.assert_called_once_with(2098,18)
++            self.assertEqual(build.STATS_CACHE_VERSION,'stat-keys-fgm-v1')
++            self.assertEqual(old.read_bytes(),OLD_BYTES)
++            saved=root/build.STATS_CACHE_VERSION/'stats_2098_18.json'
++            self.assertEqual(json.loads(saved.read_text()),stats)
++            self.assertEqual(stats['home-k']['stats']['fgm'],3)
++            self.assertEqual(raw_points(OLD),{'AAA':14,'BBB':21})
++            self.assertEqual(raw_points(stats),{'AAA':23,'BBB':24})
++            old_spread=gamemodel.finish(GAME,raw_points(OLD),22)['fictional-game']['spread']
++            new_spread=gamemodel.finish(GAME,raw_points(stats),22)['fictional-game']['spread']
++            self.assertEqual((old_spread,new_spread),(8.8,1.0))
++            TRACE['first_historical_read']=dict(old_raw={'AAA':14,'BBB':21},new_raw={'AAA':23,'BBB':24},
++                old_spread=old_spread,new_spread=new_spread,source_calls=source.call_count,
++                old_cache_bytes_preserved=True,season=2098,week=18,
++                rollup_scope='Direct diagnostic using actual normalized cached values; not a rewrite of an archived game forecast')
++
++    def test_current_actual_and_projection_take_independent_full_normalization_paths(self):
++        with tempfile.TemporaryDirectory() as directory:
++            root=Path(directory);old=self.old_cache(root,2099,1)
++            with patch.object(build,'CACHE',root),\
++                 patch.object(build.sources,'week_stats',return_value=copy.deepcopy(ROWS))as actual_source,\
++                 patch.object(build.sources,'week_projections',return_value=copy.deepcopy(ROWS))as projection_source:
++                actual=build.week_stats(2099,1,refresh=True)
++                projection=build.projections(2099,1)
++            self.assertEqual(old.read_bytes(),OLD_BYTES)
++            actual_source.assert_called_once_with(2099,1)
++            projection_source.assert_called_once_with(2099,1)
++            self.assertEqual(raw_points(actual),{'AAA':23,'BBB':24})
++            self.assertEqual(gamemodel.rollup(projection,TEAMS),{'AAA':23,'BBB':24})
++            self.assertEqual(gamemodel.finish(GAME,gamemodel.rollup(projection,TEAMS),22)['fictional-game']['spread'],1.0)
++            TRACE['current_actual_and_projection']=dict(actual_fgm=[actual['home-k']['stats']['fgm'],actual['away-k']['stats']['fgm']],
++                projection_fgm=[projection['home-k']['fgm'],projection['away-k']['fgm']],
++                actual_raw=raw_points(actual),projection_raw=gamemodel.rollup(projection,TEAMS),old_cache_bytes_preserved=True)
++
++    def test_load_stats_through_uses_new_contract_for_prior_and_current_seasons(self):
++        with tempfile.TemporaryDirectory()as directory:
++            root=Path(directory);keys=[(2098,1),(2098,2),(2099,1),(2099,2)]
++            originals=[self.old_cache(root,*key)for key in keys]
++            with patch.object(build,'CACHE',root),patch.object(build,'REGULAR_SEASON_WEEKS',2),\
++                 patch.object(build.sources,'week_stats',return_value=copy.deepcopy(ROWS))as source:
++                history=build.load_stats_through(2099,2,refresh_from=2)
++            self.assertEqual(list(history),keys)
++            self.assertEqual(source.call_count,4)
++            for key,old in zip(keys,originals):
++                self.assertEqual(history[key]['home-k']['stats']['fgm'],3)
++                self.assertEqual(old.read_bytes(),OLD_BYTES)
++            TRACE['load_stats_through']=dict(periods=[list(key)for key in keys],source_calls=4,
++                unrefreshed_legacy_periods_recollected=True,old_cache_bytes_preserved=True)
++
++    def test_warm_new_cache_reuses_its_contract_and_forced_refresh_preserves_legacy(self):
++        with tempfile.TemporaryDirectory()as directory:
++            root=Path(directory);old=self.old_cache(root,2098,18)
++            with patch.object(build,'CACHE',root):
++                with patch.object(build.sources,'week_stats',return_value=copy.deepcopy(ROWS)):
++                    first=build.week_stats(2098,18,refresh=False)
++                with patch.object(build.sources,'week_stats',side_effect=AssertionError('unexpected refresh')):
++                    self.assertEqual(build.week_stats(2098,18,refresh=False),first)
++                revised=copy.deepcopy(ROWS);revised[1]['stats']['fgm']=4
++                with patch.object(build.sources,'week_stats',return_value=revised):
++                    self.assertEqual(build.week_stats(2098,18,refresh=True)['home-k']['stats']['fgm'],4)
++            self.assertEqual(old.read_bytes(),OLD_BYTES)
++
++    def test_missing_source_cannot_fall_back_to_legacy_cache(self):
++        with tempfile.TemporaryDirectory()as directory:
++            root=Path(directory);old=self.old_cache(root,2098,18)
++            with patch.object(build,'CACHE',root),patch.object(build.sources,'week_stats',side_effect=RuntimeError('FICTIONAL_SOURCE_UNAVAILABLE')):
++                with self.assertRaisesRegex(RuntimeError,'FICTIONAL_SOURCE_UNAVAILABLE'):
++                    build.week_stats(2098,18,refresh=False)
++            self.assertEqual(old.read_bytes(),OLD_BYTES)
++            self.assertFalse((root/build.STATS_CACHE_VERSION/'stats_2098_18.json').exists())
++            TRACE['unavailable_source']=dict(old_cache_used=False,old_cache_bytes_preserved=True,new_cache_created=False)
++
++    def test_unreported_total_is_not_reconstructed_by_the_cache_version(self):
++        missing=copy.deepcopy(ROWS)
++        for row in missing:row['stats'].pop('fgm',None)
++        with tempfile.TemporaryDirectory()as directory:
++            with patch.object(build,'CACHE',Path(directory)),\
++                 patch.object(build.sources,'week_stats',return_value=missing),\
++                 patch.object(build.sources,'week_projections',return_value=missing):
++                stats=build.week_stats(2098,18,refresh=False);projection=build.projections(2099,1)
++            self.assertNotIn('fgm',stats['home-k']['stats'])
++            self.assertNotIn('fgm',projection['home-k'])
++            self.assertEqual(raw_points(stats),{'AAA':14,'BBB':21})
++            self.assertEqual(gamemodel.rollup(projection,TEAMS),{'AAA':14,'BBB':21})
++            TRACE['missing_upstream_total']=dict(reconstructed=False,raw={'AAA':14,'BBB':21},claim='Retention cannot establish an absent upstream total')
++
++if __name__=='__main__':unittest.main()
+--- /dev/null
++++ b/tests/test_grading_identity_v3.py
+@@ -0,0 +1,161 @@
++"""Fictional identity/version migration checks; only temporary fixture writes."""
++import copy
++import hashlib
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path[:0] = [str(ROOT / "pull"), str(ROOT / "tools")]
++import build
++import grade
++
++EXPECTED_VERSION = "statistical-v3-identity-20261025"
++OLD_VERSION = "statistical-v2"
++
++
++def fixture():
++    prop = dict(key="rec", line=4.5, adj=6, proj=6, source="model", line_from="dk", lean="over")
++    player = dict(id="fictional-player", name="Fictional Receiver", team="AAA", opp="BBB", pos="WR",
++                  game_id="fictional-game", props=[prop], proj_ppr=12)
++    pick = dict(prop, player_id=player["id"], game_id=player["game_id"])
++    archive = dict(season=2099, week=1, players=[player], picks={"over": [pick], "under": []},
++        games=[dict(id=player["game_id"], home="AAA", away="BBB", kickoff="2099-01-01T00:00:00Z")])
++    stats = {player["id"]: dict(team="AAA", opp="BBB", stats={"gp": 1, "rec": 6})}
++    return archive, stats
++
++
++class IdentityV3Tests(unittest.TestCase):
++    def test_new_version_is_explicit_on_week_and_issued_report(self):
++        self.assertEqual(grade.GRADING_VERSION, EXPECTED_VERSION)
++        archive, stats = fixture()
++        week = grade.grade_week(archive, stats, {"fictional-game"})
++        self.assertEqual(week["grading_version"], EXPECTED_VERSION)
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory)
++            (path / "archive.json").write_text(json.dumps(archive))
++            issued = grade.grade_all(path, lambda *args: stats, (2099, 1), {"fictional-game"})
++            self.assertEqual(issued["grading_version"], EXPECTED_VERSION)
++            self.assertEqual(issued["weeks"][0]["grading_version"], EXPECTED_VERSION)
++
++    def test_valid_same_game_and_wrong_team_opponent_are_distinct(self):
++        archive, stats = fixture()
++        self.assertEqual(grade.grade_week(archive, stats, {"fictional-game"})["top_over"]["hit"], 1)
++        for field in ("team", "opp"):
++            wrong = copy.deepcopy(stats)
++            wrong["fictional-player"][field] = "OTHER"
++            report = grade.grade_week(archive, wrong, {"fictional-game"})
++            self.assertEqual(report["top_over"]["unresolved"], 1)
++            self.assertEqual(report["leans"]["unresolved"], 1)
++
++    def test_top_pick_game_cannot_borrow_another_player_game_statistic(self):
++        archive, stats = fixture()
++        archive["picks"]["over"][0]["game_id"] = "other-game"
++        report = grade.grade_week(archive, stats, {"fictional-game", "other-game"})
++        self.assertEqual(report["top_over"]["unresolved"], 1)
++
++    def test_builder_preserves_previously_issued_bytes_and_version(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            old = ('{ "grading_version": "' + OLD_VERSION + '", "issued": "fictional" }\n').encode()
++            path.write_bytes(old)
++            build.dump(path, {"grading_version": EXPECTED_VERSION, "issued": "new-fictional"})
++            target = path.parent / "grading-history" / (hashlib.sha256(old).hexdigest() + ".json")
++            self.assertEqual(target.read_bytes(), old)
++            self.assertEqual(json.loads(target.read_bytes())["grading_version"], OLD_VERSION)
++            self.assertEqual(json.loads(path.read_bytes())["grading_version"], EXPECTED_VERSION)
++
++    def test_each_issued_revision_is_retained_without_relabeling(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            build.dump(path, {"grading_version": EXPECTED_VERSION, "actual": 4})
++            first = path.read_bytes()
++            build.dump(path, {"grading_version": EXPECTED_VERSION, "actual": 5})
++            second = path.read_bytes()
++            build.dump(path, {"grading_version": EXPECTED_VERSION, "actual": 6})
++            for issued in (first, second):
++                self.assertEqual((path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")).read_bytes(), issued)
++            grade.preserve_issued_record(path)
++            count = len(list((path.parent / "grading-history").glob("*.json")))
++            grade.preserve_issued_record(path)
++            self.assertEqual(len(list((path.parent / "grading-history").glob("*.json"))), count)
++
++    def test_corrupt_history_fails_before_replacing_issued_pointer(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            issued = b'{"grading_version":"statistical-v2","issued":"fictional"}'
++            path.write_bytes(issued)
++            target = path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")
++            target.parent.mkdir()
++            target.write_bytes(b"corrupt")
++            with self.assertRaises(ValueError):
++                build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertEqual(path.read_bytes(), issued)
++
++    def test_partial_write_never_occupies_final_path_and_retry_succeeds(self):
++        real_fdopen = grade.os.fdopen
++        class InterruptedWriter:
++            def __init__(self, fd, mode):
++                self.stream = real_fdopen(fd, mode)
++            def __enter__(self):
++                self.stream.__enter__()
++                return self
++            def write(self, value):
++                self.stream.write(value[:7])
++                self.stream.flush()
++                raise OSError("FICTIONAL_INTERRUPTED_PARTIAL_WRITE")
++            def __exit__(self, *args):
++                return self.stream.__exit__(*args)
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            issued = json.dumps(dict(grading_version=OLD_VERSION, issued="fictional-original")).encode()
++            path.write_bytes(issued)
++            target = path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")
++            with patch.object(grade.os, "fdopen", side_effect=InterruptedWriter):
++                with self.assertRaisesRegex(OSError, "FICTIONAL_INTERRUPTED_PARTIAL_WRITE"):
++                    build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertEqual(path.read_bytes(), issued)
++            self.assertFalse(target.exists())
++            self.assertEqual(list(target.parent.iterdir()), [])
++            build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertEqual(target.read_bytes(), issued)
++            self.assertEqual(json.loads(path.read_bytes())["grading_version"], EXPECTED_VERSION)
++
++    def test_fsync_interruption_publishes_nothing_and_retry_succeeds(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            issued = json.dumps(dict(grading_version=OLD_VERSION, issued="fictional-original")).encode()
++            path.write_bytes(issued)
++            target = path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")
++            with patch.object(grade.os, "fsync", side_effect=OSError("FICTIONAL_FSYNC_INTERRUPTION")):
++                with self.assertRaisesRegex(OSError, "FICTIONAL_FSYNC_INTERRUPTION"):
++                    build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertEqual(path.read_bytes(), issued)
++            self.assertFalse(target.exists())
++            self.assertEqual(list(target.parent.iterdir()), [])
++            build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertEqual(target.read_bytes(), issued)
++
++    def test_symlink_history_collision_does_not_rewrite_any_original(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "track_record.json"
++            issued = json.dumps(dict(grading_version=OLD_VERSION, issued="fictional-original")).encode()
++            path.write_bytes(issued)
++            original = path.parent / "fictional-other-original.json"
++            original.write_bytes(b"FICTIONAL_ORIGINAL_MUST_REMAIN_UNCHANGED")
++            target = path.parent / "grading-history" / (hashlib.sha256(issued).hexdigest() + ".json")
++            target.parent.mkdir()
++            target.symlink_to(original)
++            with self.assertRaisesRegex(ValueError, "history checksum mismatch"):
++                build.dump(path, {"grading_version": EXPECTED_VERSION})
++            self.assertTrue(target.is_symlink())
++            self.assertEqual(path.read_bytes(), issued)
++            self.assertEqual(original.read_bytes(), b"FICTIONAL_ORIGINAL_MUST_REMAIN_UNCHANGED")
++            self.assertEqual(list(target.parent.iterdir()), [target])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tests/test_weekly_selected_rankings.py
++++ b/tests/test_weekly_selected_rankings.py
+@@ -202,5 +202,19 @@
+                 with self.assertRaises(ValueError): r.validate_document(bad, pointer, board, o.digest(board), doc)
+ 
+ 
++    def test_valid_over_cannot_be_rehomed_into_under_container(self):
++        board, doc = fixture(); good = make(board, doc)
++        with tempfile.TemporaryDirectory() as td:
++            pointer = r.write_public(good, td, atomic_json, clock=lambda: PERSIST)
++            r.validate_document(good, pointer, board, o.digest(board), doc, root=td)
++            bad = copy.deepcopy(good)
++            bad["picks"]["under"].append(bad["picks"]["over"].pop(0))
++            bad["picks"]["under"].sort(key=r.order)
++            pointer = r.write_public(bad, td, atomic_json, clock=lambda: PERSIST)
++            with self.assertRaisesRegex(ValueError, "ranking side mismatch"):
++                r.validate_document(bad, pointer, board, o.digest(board), doc, root=td)
++
++
++
+ if __name__ == "__main__":
+     unittest.main()
+--- a/tools/weekly_selected_rankings.py
++++ b/tools/weekly_selected_rankings.py
+@@ -228,6 +228,7 @@
+             raise ValueError("ranking order/size")
+         seen = set()
+         for item in items:
++            if item["direction"] != side: raise ValueError("ranking side mismatch")
+             validate_item(item, offers, selected)
+             k = identity(item); proof = proofs.get(k); used.add(k)
+             player_game = item["game_id"], item["player_id"]

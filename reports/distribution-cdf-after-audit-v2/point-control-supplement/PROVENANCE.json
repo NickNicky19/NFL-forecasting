@@ -1,0 +1,125 @@
+{
+  "schema_version": "cached-point-control-public-supplement-v2-20261025",
+  "registration_id": "cached-point-controls-v2-20261025",
+  "state": "COMPLETED_CACHED_DESCRIPTIVE_REPORT",
+  "exposure": {
+    "REG_years": [
+      2022,
+      2023,
+      2024
+    ],
+    "games": 815,
+    "season_week_blocks": 54,
+    "historical_lane": "current-vintage reconstructed, already exposed; not original pregame issuance",
+    "independent_NFL_sample_increment": 0
+  },
+  "work": {
+    "primary_contrasts": 132,
+    "annual_diagnostics": 396,
+    "complete_three_year_contrasts": 132,
+    "missing_or_incompatible_cells": 0,
+    "full_offered_forecast_coverage": true,
+    "matching_offered_supported_and_finite_masks": true,
+    "model_training": 0,
+    "model_decoding": 0,
+    "inference": 0,
+    "HTTP": 0,
+    "CPU_seconds": 32.90208189,
+    "wall_seconds": 21.858440329990117,
+    "conservative_combined_RSS_bytes": 241897472,
+    "retained_payload_bytes": 3210917
+  },
+  "source_contract": {
+    "approved_feature_identity_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+    "source_manifest_sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+    "category_contract_sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4",
+    "all97_V2_features_exact_to_original_direct_input": true,
+    "feature_equivalence_keys": 51141,
+    "identity_checks": "Exact expected year and recorded direct method, primary-role offers, one-to-one player-game keys, context, cutoffs, actuals and participation; reject unequal valid-outcome forecast masks before losses",
+    "direct_source": "nfl_lab/direct_boosters.py",
+    "direct_source_sha256": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "direct_registration_sha256": "ecef55bea20f0303442ef101c435e70a84388923635fdb22e61b1d516c03ca83",
+    "count_direct_fallback": "Original direct adapter replaces count fallbacks with stored prior.mean. Literal cached points are not repaired; native count objective points are not full predictive laws",
+    "new_Count_A_context": "Use V2 count_A_mean_v2; original older Count A point procedure remains historical"
+  },
+  "binary_controls": {
+    "original_XGBoost_screen_slots": "FAILED_RETAINED",
+    "procedures": [
+      "direct_xgboost_binary_canonical_v2_small",
+      "direct_xgboost_binary_canonical_v2_medium"
+    ],
+    "scope": "Separately frozen recovered/scored derivatives; named explicitly in all comparison rows, zero new fits or inference",
+    "unchanged_response_anytime_TD": "Exact fresh leaf-CDF alias; no response-forest fit"
+  },
+  "comparison_scope": {
+    "methods": "Two frozen V2 families versus all six original fixed direct settings, with the two explicitly named binary derivatives",
+    "count_primary": "mean-point MSE",
+    "signed_yard_primary": "candidate law-median versus direct median-objective point MAE",
+    "TD_primary": "genuine event-probability Brier",
+    "resampling": "500 paired PCG64 whole-season-week draws seed1911 and whole-game draws seed1912 per reported view; nominal95%, exposed and not winner-selection-adjusted",
+    "strongest_fixed_scope": "Six direct settings, fresh V2 CDF point/event reference and corrected-mean Count A where applicable; no claim to exhaust all policies or methods",
+    "lowest_observed_mean_MSE_in_this_combined_fixed_set": [
+      "pass_td",
+      "pass_att",
+      "pass_int"
+    ],
+    "combined_yards": "CDF-response remains the original CRPS research lead versus freshCDF/prior; CatBoost medium has lower median-objective point MAE",
+    "older_correction_descriptive_context": "Separate older-correction-context.json adds published pass_td context and pass_att intercept MSE references using public aggregate values only. No new paired test or exact-row/source comparability with those older correction forecasts is claimed",
+    "lowest_observed_scope": "Lowest observed within specifically named compared references; no globally-best claim"
+  },
+  "retained_failure": {
+    "parent": "cached-point-controls-v1-20261025",
+    "state": "FAILED_STARTUP_ZERO_CONTRASTS",
+    "CPU_seconds": 2.517020678,
+    "cause": "Strict no-child guard rejected threadpoolctl libc discovery launching ldconfig",
+    "repair": "Separately versioned continuation with accepted exact-pinned already-mapped libc resolver, only name c; no child/network/model guard relaxed",
+    "budget_refunded": false
+  },
+  "integrity": {
+    "original_public_V2_aggregate_sha256": "eb3ce24a709fd2c914641c251e8af18690668107024d363c86e34e20cdfb3b20",
+    "cached_report_full_aggregate_sha256": "2ccfb217c89d66a89e880814394d0fce502622fc485845f3e2a6899e4a8ad52e",
+    "reporting_worker_sha256": "c4d2644dcb46704ea74c3a03764b187abfd792b874537e1d50fd2a43bf7d8c16",
+    "protocol_sha256": "fb24dac1a22749b90db8b05c0efbe8b6b035d82067cc7719ff83bbc1444c4769",
+    "files": {
+      "summary-v2.md": {
+        "bytes": 4786,
+        "sha256": "512fca9771c4b9b9a976d3847f6e3a7cad0640223c44b12df3b1ed26c047eec2"
+      },
+      "all-132-point-contrasts.csv": {
+        "bytes": 70268,
+        "sha256": "279cd12d82f116043ed3158509451eff81329a7754bf64d2d8b55eb80880987c"
+      },
+      "strongest-control-secondary.json": {
+        "bytes": 29139,
+        "sha256": "62e01750ccdd36219a71e9b601e425c56a60f8b6be203947da4fd1db5d488024"
+      },
+      "existing-v2-fixed-control-context.json": {
+        "bytes": 5782,
+        "sha256": "a8de3815bb37c414d2381f36328c9bd5d8becafc025488e1a9af0d04f7c35576"
+      }
+    }
+  },
+  "reproducibility": {
+    "publication_scope": "Report-only supplement plus public protocol and curated source identities. Reporting executor, execution/GO manifests and private cache locations are excluded",
+    "private_required_inputs": "Original row-level source/features, frozen forecasts/outcomes and fitted annual artifacts remain private; hashes do not supply their bytes",
+    "public_reproduction_limit": "Public aggregates and available method source cannot by themselves reproduce the original row-level paired scores. No public raw-feed redistribution or self-contained cached-data reproduction is claimed"
+  },
+  "handoff": {
+    "new_entrant": false,
+    "selected": false,
+    "deployed": false,
+    "live_verified": false,
+    "scientifically_qualified": false,
+    "next_operational_work": "Existing incumbent owner must qualify current source/artifact identity, future-query inference, replay, restoration, capture and consumer/fallback behavior before any entrant or provisional release",
+    "original_R0_scheduler_visible_deployment_sequence_registrations": "Preserved; no change by this report",
+    "provisional_track": "No inherited eight-week prerequisite; actual operational qualification remains required"
+  },
+  "calibration_results_included": false,
+  "operational_dependency_refresh": {
+    "lab_PR3_state": "MERGED",
+    "merge_commit": "93b2060109afbe45b6388b6d9b59863165eb1e6f",
+    "final_head": "3f7cb5a2b25c3ba6c1fc07cdaea661d53a0ce11f",
+    "executed_COUNT_A_recipe": "63e070241396feb9c62fb389ff5cb4f9c74ab1dc",
+    "semantic_review": "Merged repair retains the executed count-a-prior-mean-fallback-v2 semantics: stored prior.mean only for fallback points; warm predictions unchanged. Later artifact requalification/recovery changes are operational, not the source that produced these numerical results"
+  }
+}

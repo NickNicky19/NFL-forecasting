@@ -1,0 +1,103 @@
+{
+  "asof_utc": "2026-10-23T11:27:49.536081+00:00",
+  "base_head": "438fa682e2292f137d3b888a66dfe607accc24e0",
+  "budgets": {
+    "HTTP_accuracy_official_forecasts_confirmation": 0,
+    "automatic_actual_retries": 0,
+    "feature_builder_calls": 1,
+    "feature_invocations": 1,
+    "feature_max_CPU_seconds": 450,
+    "feature_max_wall_seconds": 300,
+    "max_RSS_bytes": 2147483648,
+    "max_state_logical_bytes": 209715200,
+    "owner_software_CPU_seconds": 300,
+    "owner_software_wall_seconds": 180,
+    "postrun_saved_forecast_comparisons": 3300,
+    "root_software_wall_seconds": 300,
+    "runtime_expected_route_charges": 78315,
+    "runtime_invocations": 1,
+    "runtime_max_CPU_seconds": 900,
+    "runtime_max_estimator_fits": 0,
+    "runtime_max_reference_parameter_fits": 22,
+    "runtime_max_wall_seconds": 600,
+    "runtime_query_route_limit": 100000,
+    "shared_private_unique_file_bytes": 536870912,
+    "software_combined_wall_seconds": 900,
+    "threads": 2
+  },
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "expected": {
+    "feature_columns": 97,
+    "historical_identity_matches": 585,
+    "historical_rows": 62388,
+    "original_IDs_changed": 531,
+    "query_games": 13,
+    "query_rows": 681,
+    "source_snapshot_sha256": "06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af",
+    "unchanged_original_ID_rows": 150
+  },
+  "failure": "Preservefailed/partialfreeze/consumedmarkers; noactualretry/refit withinthisregistration. Technicalfailureblocksaffectedphase only, nothistoricalbenchmark preparation. Do not weakenchecks orrenameexposed periods.",
+  "feature_work": "One qualified build_operational_features(history,queries=canonicalmetadata) call, source._verify ownership/hash/code/cutoff gates unchanged. Historical trainingfeatures reused exactly, not rebuilt. Preservecanonicalmapping receipt/aliases/context/time. Compare97feature floats/dtypes/order againstoldquery: unchangedID150rows all97same; nonplayer context features unchanged for all681. Full planned681remain; no countzerofilling/eligible-playerfilter.",
+  "inputs": {
+    "accepted_summary": {
+      "bytes": 59697,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache-acceptance-summary.json",
+      "sha256": "c2e3ce38a667b083b68fa0bf5b573e9645d10bc37ad9b4849c93351d23f59c58"
+    },
+    "canonical_query": {
+      "bytes": 362162,
+      "path": "/workspace/website-methods-research/resumed/query-identity-v1-20261023/private-canonical-query.json",
+      "sha256": "35dc44aa8ef6fcbd56e1b5fc81c32eebbd048ce7532173949e1c7edd84965eb3"
+    },
+    "identity_acceptance": {
+      "bytes": 2052,
+      "path": "/workspace/website-methods-research/resumed/query-identity-v1-20261023/result.json",
+      "sha256": "7725407de90f81549899c59cfed1928219df087e53b19ea98b59e7fa4458eb62"
+    },
+    "old_reference_result": {
+      "bytes": 7073,
+      "path": "/workspace/website-methods-research/resumed/reference-runtime-v2-20261023/result.json",
+      "sha256": "e50aa94411ff1b4840fe059bae97cba853e1b6ff4ef71811521f647d9ca77b03"
+    },
+    "qualified_history": {
+      "bytes": 1155175,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/processed/history.parquet",
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55"
+    },
+    "query_features": {
+      "bytes": 126570,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-query.parquet",
+      "sha256": "c14c85f3778c66359d4009dc34ba80f7075a12859417659bf6b1f5ef546ed8a5"
+    },
+    "query_metadata": {
+      "bytes": 254865,
+      "path": "/workspace/website-methods-research/resumed/operational-source-repair-20261023/FEATURE_QUERY_METADATA.json",
+      "sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8"
+    },
+    "source_manifest": {
+      "bytes": 23272,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+      "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+    },
+    "training_features": {
+      "bytes": 5070165,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet",
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+    }
+  },
+  "output": "/workspace/website-methods-research/resumed/canonical-query-input-v1-20261023",
+  "ownership": "One integratorledgerwriter, one feature/API owner, sharedreferenceprotocol advice and independentread-onlyreviewer; max4inclroot isolatedworktrees. RequestedGPT6.1Sol/xhigh acceptedpreviously, actualbackendunattested; rootactualsettingunexposed.",
+  "publication": "Derivedcode/config/aggregateonlysubjectindependentcontentreview. Allrawsource/identity/rowforecasts/models/private scripts remainprivate; no dispatch/mainmerge/site/defaultswitch inthispacket. Hostedhandover and independent source-matchedaccuracybenchmark remainlaterpackets.",
+  "registration_id": "canonical-query-input-v1-20261023",
+  "runtime_output": "/workspace/website-methods-research/resumed/canonical-query-reference-v1-20261023",
+  "runtime_protocol": "Reuse byte-identical reference_runtime.run_acceptance and same reusable executable protocol registration_id. Independently register input_revision_registration_id=canonical-query-reference-v1-20261023 with NEW configSHA, inputs, output/state and consumption markers beforeanyfit. Same protocol is not a replay or extra invocation of the original a9a7config. No monkeypatch/checkweakening/new learner/search. New plan frozen only after exactnewfeaturebytes exist.",
+  "runtime_validation": "Same frozen5routes,4negativecases,strictoutput/content/support checks andstateboundquota fromoriginalprotocol; separate22parameterfits duechangedinputdependency. Afterimmutableforecastsfreeze compareold/newaggregateinference+distributionparams(all22) andsaved8fieldforecasts on150unchangedIDrows fixedwithoutlookingatNFLoutcomes; no extra model inference.",
+  "scope": "Separately versioned corrected-identity feature/input acceptance, then the unchanged22referenceprotocol on newquerybytes. Zero accuracy/HTTP/officialissuance/confirmation. Oldqueries/artifacts/config/evidence stayunchanged.",
+  "source_policy": {
+    "bytes": 13487,
+    "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "source_scope": "Current-vintage reconstructed officialNFL permitted v2 history only REG2019-2025 and2026W1-5, protectedfutureoutcomes excluded. Original7day/historycalendar gates preserved; exactPPRblocked/Pplayunavailable. Binaryintegrity/quota scans permitted; no newsource semanticvalues outsidequalifiedhistory.",
+  "state": "/workspace/website-methods-research/resumed/canonical-query-reference-v1-20261023/state"
+}

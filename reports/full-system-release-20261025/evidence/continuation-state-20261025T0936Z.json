@@ -1,0 +1,100 @@
+{
+  "schema_version": "full-system-continuation-state-v1",
+  "observed_at": "2026-10-25T09:38:13.369207+00:00",
+  "state": "IN_PROGRESS_NOT_FULL_SYSTEM_PASS",
+  "repositories": {
+    "research": "NickNicky19/NFL-forecasting",
+    "website": "NickNicky19/nicks-expert-nfl-picks"
+  },
+  "heads": {
+    "research_main": "0c4d8a30ac8d893a599bdd7518fb33dca47e50cb",
+    "research_pooled": "1cd36bea89c3b5284244c77910c303dd88c225b1",
+    "producer": "ddb1e3cbbafbe529d00b27c8199730590d7183df",
+    "website_main": "2405d7d3b4e453bc2c42b413a2033cac7915d4d6",
+    "phase2": "67c1c4a202d22b316e719446010ba1b39e66f9e4"
+  },
+  "integration": [
+    {
+      "pr": 15,
+      "head": "60cfb81625d73c2f47a29f8cd12faaa853cca6f0",
+      "merged": "46992338f5ef86ef5d7ca8d2772b66448a849ae8",
+      "CI": 40174481147,
+      "job": 121112098866,
+      "tests": 1006,
+      "subtests": 319,
+      "skipped": 1
+    },
+    {
+      "pr": 16,
+      "head": "83bd9211a9223ec17927cc031bb3034aa68122ef",
+      "merged": "ddb1e3cbbafbe529d00b27c8199730590d7183df",
+      "CI": 40178593583,
+      "job": 121124570726,
+      "tests": 1011,
+      "subtests": 319,
+      "skipped": 1
+    }
+  ],
+  "website_consumer": {
+    "pr": 7,
+    "head": "abfea7754e4e8262fc8f4afd4bd29143389e2896",
+    "tree": "e2662c9d74daf9a6bf451528154fe5424ce2d78a",
+    "CI": 40175531264,
+    "job": 121115251703,
+    "python_tests": 212,
+    "state": "COMMITTED_PUSHED_CI_PASSED_NOT_INTEGRATED_NOT_RELEASED",
+    "current_policy_binds_failed_source": true
+  },
+  "writer": {
+    "audit_owned_lease_finished_at_commit": "31926bddf604df0725e10e215f83f06ac99e6aba",
+    "audit_active": false,
+    "current_coordination": "8200613e6e47987528e528c9b3405f30486b39f8",
+    "current_owner_run": "NFL-WEB-GAME-FINALITY-RELEASE-20261025-090519Z",
+    "current_authorization_comment": 6395844454,
+    "automatic_implementation_enabled": false
+  },
+  "attempts": [
+    {
+      "run": 40175329144,
+      "source": "46992338f5ef86ef5d7ca8d2772b66448a849ae8",
+      "producer": 121114641520,
+      "state": "FAILED_REFERENCE_IDENTITY_GUARD",
+      "inference_completed": true,
+      "original_R0_worker_completed": true,
+      "precise_original_mismatching_field_retained": false,
+      "core_failure_restored": true,
+      "opaque_partial_forecasts_restored": false,
+      "original_files": 555,
+      "file_cap": 512,
+      "source_observation_receipts": 344
+    },
+    {
+      "run": 40179248868,
+      "source": "ddb1e3cbbafbe529d00b27c8199730590d7183df",
+      "producer": 121126539567,
+      "reader": 121126974035,
+      "state": "FAILED_STRICT_WARM_BIT_REPLAY",
+      "inference_started": false,
+      "core_failure_restored": true,
+      "opaque_scope_restored": true,
+      "receipt_sha256": "56d318241ba06d79614c33bd872ac94c94b14181e120f8a992dd6c9fd9f7a4ff",
+      "successful_forecast": false,
+      "public_release": false
+    }
+  ],
+  "active_blocker": "A retained model fails unchanged strict warm-bit replay; originals and feature-only fixtures recovered for bounded numerical/runtime diagnosis, no expected-bit edits, fits or relaxed checks.",
+  "future_orchestration": {
+    "component_tests": 116,
+    "actual_recurring_cycle_verified": false,
+    "main_guard_retained": true,
+    "cadence": "Existing08:36America/Chicago; website08:06",
+    "next_scheduled_research_tick_utc": "2026-10-25T13:36:00Z",
+    "next_scheduled_tick_is_successful_capture": false,
+    "exact_T24_T6_T90_guaranteed": false
+  },
+  "latest_website_identity_evidence": "website-targeted-identity-20261025T0935Z.json",
+  "new_fits": 0,
+  "scientific_registrations_changed": false,
+  "original_issued_forecasts_overwritten": false,
+  "protected_confirmation_tuning": false
+}

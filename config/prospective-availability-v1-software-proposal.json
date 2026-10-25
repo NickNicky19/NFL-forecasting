@@ -1,0 +1,24 @@
+{
+  "packet_id": "prospective-availability-v1-software",
+  "status": "PREPARED_NOT_RUN_AWAITING_EXACT_EXECUTION_FREEZE_AND_ROOT_GO",
+  "adapter_version": "prospective-capture-availability-v1",
+  "scope": "18 new fictional test methods; no historical study or prospective source capture",
+  "budget": {
+    "wall_seconds": 120,
+    "cpu_seconds": 120,
+    "combined_rss_bytes": 536870912,
+    "threads": 2,
+    "worker_children": 0,
+    "network_calls": 0,
+    "nfl_semantic_reads": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "predictions": 0,
+    "cas_writes": 0
+  },
+  "code": ["nfl_lab/prospective_availability.py"],
+  "reused_contract": ["nfl_lab/state.py"],
+  "tests": ["tests/test_prospective_availability.py"],
+  "execution": "Not authorized by this proposal; root pins a guarded harness and exact inventory before one invocation.",
+  "non_activation": "No source-policy/default/model/feature/CLI/workflow or frozen experiment is changed."
+}

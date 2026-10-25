@@ -1,0 +1,187 @@
+{
+  "as_of": "2026-10-24",
+  "coverage": {
+    "comparable_permitted_REG_panel": {
+      "games": 815,
+      "season_week_blocks": 54,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ]
+    },
+    "direct_SITE_panel": {
+      "exposed": true,
+      "games": 13,
+      "season": 2026,
+      "week": 6
+    },
+    "full_2026_season_website_comparison_completed": false,
+    "older_historical_panel": {
+      "games": 854,
+      "includes_postseason": true,
+      "season_week_blocks": 66,
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ]
+    }
+  },
+  "distinct_lifetime_software_total_known": false,
+  "exact_lifetime_fit_total_known": false,
+  "fit_attempt_lower_bound": 1178,
+  "fit_counter_derivation": {
+    "completed_fit_lower_bound_through_role_study": 768,
+    "do_not_double_count_prior_study_table": true,
+    "later_correction_attempts": 44,
+    "later_direct_attempts": 198,
+    "later_source_matched_attempts": 168
+  },
+  "historical_minima": [
+    {
+      "display_RMSE": null,
+      "method": "Existing leaf-CDF median",
+      "paired_n": 1960,
+      "published_primary_error": 66.16173469,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MAE",
+      "target": "pass_yd"
+    },
+    {
+      "display_RMSE": 1.0307038371908779,
+      "method": "Context correction to CDF",
+      "paired_n": 1960,
+      "published_primary_error": 1.0623504,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "pass_td"
+    },
+    {
+      "display_RMSE": 7.167660480240397,
+      "method": "Existing leaf-CDF mean",
+      "paired_n": 1960,
+      "published_primary_error": 51.37535676,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "pass_cmp"
+    },
+    {
+      "display_RMSE": 10.685291366172473,
+      "method": "Intercept correction to CDF",
+      "paired_n": 1960,
+      "published_primary_error": 114.17545158,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "pass_att"
+    },
+    {
+      "display_RMSE": 0.8240548100703011,
+      "method": "Existing leaf-CDF mean",
+      "paired_n": 1960,
+      "published_primary_error": 0.67906633,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "pass_int"
+    },
+    {
+      "display_RMSE": null,
+      "method": "Existing leaf-CDF median",
+      "paired_n": 4558,
+      "published_primary_error": 19.71895568,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MAE",
+      "target": "rush_yd"
+    },
+    {
+      "display_RMSE": 4.901493837596861,
+      "method": "Count-A Poisson-objective boosting",
+      "paired_n": 4558,
+      "published_primary_error": 24.02464184,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "rush_att"
+    },
+    {
+      "display_RMSE": 1.801088329316472,
+      "method": "Count-A Poisson-objective boosting",
+      "paired_n": 15251,
+      "published_primary_error": 3.24391917,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MSE",
+      "target": "rec"
+    },
+    {
+      "display_RMSE": null,
+      "method": "CatBoost medium",
+      "paired_n": 15251,
+      "published_primary_error": 16.343398,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MAE",
+      "target": "rec_yd"
+    },
+    {
+      "display_RMSE": null,
+      "method": "CatBoost medium",
+      "paired_n": 15251,
+      "published_primary_error": 20.98392514,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "MAE",
+      "target": "rush_rec_yd"
+    },
+    {
+      "display_RMSE": null,
+      "method": "No qualified broad label comparison",
+      "paired_n": 0,
+      "published_primary_error": null,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": null,
+      "target": "fantasy_ppr"
+    },
+    {
+      "display_RMSE": null,
+      "method": "CatBoost medium",
+      "paired_n": 15251,
+      "published_primary_error": 0.14076309,
+      "qualification": "NONE; exposed descriptive minimum",
+      "registered_primary_metric": "Brier",
+      "target": "anytime_td"
+    }
+  ],
+  "latest_broad_software_suite_passes": 759,
+  "limitations": [
+    "The historical ranking uses one source-matched cohort and registered primary objectives, not arbitrary cross-study minimum comparisons.",
+    "Count means use MSE, displayed as RMSE without changing ordering; signed-yard point forecasts use MAE; anytime-TD probability uses Brier.",
+    "Historical contemporaneous SITE/raw-Sleeper forecasts are unavailable for that panel.",
+    "Different older/W6 populations are not merged; W6 H3 passing-yards reconstruction remains separate.",
+    "Exposed periods and repeated method searches do not provide independent future confirmation.",
+    "Participation/zero coverage and source-availability assumptions remain disclosed.",
+    "No new candidate has met all scientific and operational release gates."
+  ],
+  "one_private_audit_deselected": 1,
+  "pending_defined_work": {
+    "all_remaining_future_experiments_count_known": false,
+    "dynamic_affected_requested_categories": [
+      "rush_att",
+      "rec",
+      "rec_yd"
+    ],
+    "dynamic_auxiliary_target": "rec_tgt",
+    "dynamic_forward_packages": 30,
+    "independent_later_confirmation": "Pending under category-specific frozen rules; cannot manufacture future games",
+    "native_NGBoost_fictional_fits": 6,
+    "native_NGBoost_fictional_methods_before_NFL": 8,
+    "proposed_NGBoost_NFL_fit_attempts": 66
+  },
+  "scope": "Reporting-only inventory and descriptive minima of already published matched aggregate comparisons. No new training, NFL forecasts or outcome scoring.",
+  "sources": [
+    "execution/ledger.jsonl:89",
+    "reports/OPERATIONAL_STORAGE_V2.md",
+    "reports/RESEARCH_INDEX.md",
+    "reports/source-matched-base-v1/aggregate-report.json",
+    "reports/direct-booster-screen-v1/aggregate-report.json",
+    "reports/baseline-correction-report-v3/README.md",
+    "reports/direct-xgboost-binary-recovery-v2/aggregate-report.json",
+    "reports/role-count-boosting-v1/README.md"
+  ]
+}

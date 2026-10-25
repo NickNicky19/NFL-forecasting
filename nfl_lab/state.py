@@ -73,6 +73,17 @@ def save(root,kind,doc,max_bytes=200*1024*1024):
 
 
 def validate_forecast(row):
+    functional=row.get("prediction_functional")
+    from .recorded_research import FUNCTIONAL,validate_recorded_point
+    if functional==FUNCTIONAL:
+        if not isinstance(row.get("point"),(int,float)) or isinstance(row.get("point"),bool) or not math.isfinite(row["point"]):
+            raise ValueError("invalid research point")
+        validate_recorded_point(row)
+        return
+    if "prediction_functional" in row and functional!="conditional_played_mean":
+        raise ValueError("unknown prediction functional")
+    if "point" in row or "research_result" in row:
+        raise ValueError("mean/point forecast hybrid")
     for key in ["player_id","game_id","team","opponent","target","model_id","scoring_id","input_sha256","code_sha256","kickoff_utc","issued_at"]:
         if not row.get(key):raise ValueError(f"missing {key}")
     if utc(row["issued_at"])>=utc(row["kickoff_utc"]):raise ValueError("late forecast")

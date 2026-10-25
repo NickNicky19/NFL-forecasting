@@ -1,0 +1,132 @@
+{
+  "registration_id": "permitted-reference-runtime-v2-20261023",
+  "scope": "One actual real-data reference inference/replay/content acceptance. No accuracy scoring, model selection, official issuance, scientific qualification or activation. Existing source/learners frozen.",
+  "base_head": "77a0ae1d95c7ca5ea4433a2bca502c067b132f10",
+  "source_policy": {
+    "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    "bytes": 13487
+  },
+  "inputs": {
+    "training_features": {
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet",
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+      "bytes": 5070165
+    },
+    "query_features": {
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-query.parquet",
+      "sha256": "c14c85f3778c66359d4009dc34ba80f7075a12859417659bf6b1f5ef546ed8a5",
+      "bytes": 126570
+    },
+    "source_manifest": {
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+      "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7",
+      "bytes": 23272
+    },
+    "accepted_summary": {
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache-acceptance-summary.json",
+      "sha256": "c2e3ce38a667b083b68fa0bf5b573e9645d10bc37ad9b4849c93351d23f59c58",
+      "bytes": 59697
+    },
+    "query_metadata": {
+      "path": "/workspace/website-methods-research/resumed/operational-source-repair-20261023/FEATURE_QUERY_METADATA.json",
+      "sha256": "c96a815978186fd1b392addea89577b71e9a0a7670d70a7c917d5b222d649fc8",
+      "bytes": 254865
+    }
+  },
+  "asof_utc": "2026-10-23T11:27:49.536081+00:00",
+  "expected": {
+    "training_rows": 62388,
+    "query_rows": 681,
+    "query_games": 13,
+    "feature_columns": 97,
+    "source_snapshot_sha256": "06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af",
+    "source_adapter": "permitted-operational-nfl-history-v2",
+    "model_adapter": "permitted-operational-reference-v2"
+  },
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "state": "/workspace/website-methods-research/resumed/reference-runtime-v2-20261023/state",
+  "output": "/workspace/website-methods-research/resumed/reference-runtime-v2-20261023",
+  "targets": [
+    "pass_yd",
+    "pass_td",
+    "pass_cmp",
+    "pass_att",
+    "pass_int",
+    "rush_yd",
+    "rush_att",
+    "rec",
+    "rec_yd",
+    "rush_rec_yd",
+    "fantasy_ppr",
+    "anytime_td"
+  ],
+  "methods": [
+    "recent",
+    "pooled"
+  ],
+  "blocked": {
+    "fantasy_ppr": "Exact18component scoring/source contract unqualified. Two slots retained, zerofits/forecasts/zeros substituted."
+  },
+  "chronology": "Training kickoff and outcome_available_utc strictly before frozen feature asof; target labels only in pinned historical table. Query rows/order/dtypes remain unchanged, all12 labels null and participation unknown. Only REG2019-2025 and2026W1-5 source values; all future confirmation outcomes excluded.",
+  "timing": "Use actual calculation/persistence clocks. Feature asof is not issuance. NONISSUED_RUNTIME_PROBE; never write official state/forecasts or inherit before-game recording claims. Actual681futurequery metadata reused, not sampled favorable players.",
+  "bindings": "Final code/dependency/environment/source/query/input manifests frozen before invocation. Exact policy/source/training/query hashes through existing operational model_binding. No v1/PFR/source acquisition/old modelreuse. Acceptedsource metadata augmented with actual namespace and manifest_sha256 without editing original.",
+  "phases": [
+    "Import-only runtime capability and exact input/code hash preflight before consumed marker",
+    "At most22 supported target-method parameter packages; consume each beforecall; register PPR slotsblocked",
+    "Freeze every returned output and artifact before replay; rowforecasts/fallbacks private, new accuracy scores0",
+    "Sameprocess operational wrapper replay; tolerance rtol1e-10/atol1e-9/NaNs equal, family/fallback exact",
+    "Existingartifactreuse with coremodels.fit_predict forbidden; no22additionalfits",
+    "Freshreadonlychild uses coremodel_artifacts.predict_artifact, contract verification+exact parentverified artifactSHA/operational binding/version/code/query checks. No OperationalStorage fullscan/source/training reread or childwrites; boundedstdout returned to parentquota writer",
+    "Independent reference formula from savedaggregateparams and queryfeatures for all8outputcolumns, samefrozen tolerances; no training rows",
+    "Four fixednegative cases: changed queryfeature; sourcebindingmutation; internallycorrupt checksummed wrapper; wrongtarget/method reuse. Expected failures retained; no new fits. Replay original validreference fortechnicalrecovery only",
+    "Strict content-schema review; exact reviewed subset manifest generation only after explicitrootcontentacceptance, no publication/activation. Derived aggregate report only"
+  ],
+  "budgets": {
+    "invocations": 1,
+    "max_reference_parameter_fits": 22,
+    "max_estimator_fits": 0,
+    "max_hyperparameter_searches": 0,
+    "max_model_prediction_row_incidences": 100000,
+    "max_real_accuracy_scores": 0,
+    "max_HTTP_attempts": 0,
+    "max_wall_seconds": 600,
+    "max_CPU_seconds": 900,
+    "max_RSS_bytes": 2147483648,
+    "threads": 2,
+    "max_package_wall_seconds": 30,
+    "max_package_CPU_seconds": 45,
+    "reporting_reserve_seconds": 60,
+    "max_private_shared_unique_file_bytes": 536870912,
+    "max_state_logical_bytes": 209715200,
+    "software_combined_wall_seconds": 900,
+    "software_combined_CPU_seconds": 1500,
+    "owner_software_wall_seconds": 180,
+    "owner_software_CPU_seconds": 300,
+    "root_software_wall_seconds": 300,
+    "fresh_stdout_max_bytes": 67108864,
+    "repairs": "At mostone separately frozen replay-only repair within original cumulative limits; no refit of any consumed package. Retain failure/unrun slots and originalbytes."
+  },
+  "storage": "Reuse same existing OperationalStorage global store/cache; register output and state roots before any writes. All new scripts/runtime log chunks/phase/failure/result/temp artifacts quota-safe. New StateBoundStorage thin proxy checks exact serialized state model/temp peaks against unchanged200MiB under sameglobaltransaction; do not weaken512MiB. Readonlyfreshchild no separatequota store.",
+  "publication": "Root already authorized lab derivedcode/config/aggregate publication subject to rights/content. Rawrows/query/history/source bodies remainprivate. Any derivedmodel parameter publication requires separate exactstrictcontentreview; generatorpure and explicitreview_state ACCEPTED. No websitewrite/dispatch/merge/defaultswitch inthispacket.",
+  "software": "Fictional fixtures only for new runtime/contract. Rootintegrated regression excludes previouslyaccepted cachedPPRaudit readingW6; no testcode weakened. Do not repeat unrelated numerical studies.",
+  "unchanged_frozen_files": [
+    "nfl_lab/data.py",
+    "nfl_lab/features.py",
+    "nfl_lab/permitted_source_features.py",
+    "nfl_lab/operational_sources.py",
+    "nfl_lab/operational_models.py",
+    "nfl_lab/operational_storage.py",
+    "nfl_lab/operational_io.py",
+    "nfl_lab/models.py",
+    "nfl_lab/model_artifacts.py",
+    "nfl_lab/evaluation.py",
+    "nfl_lab/live.py",
+    "nfl_lab/experiment.py",
+    "nfl_lab/cli.py",
+    "config/research.json",
+    "config/preserved-rec-half-registration.json",
+    "alloriginalreports/evidence/forecasts/sourceversions"
+  ],
+  "evidence": "Real-data inference/software acceptance, not prediction accuracy. All12scientific decisions unchanged. Historical/currentvintage7dayreconstruction remains; Pplayunavailable fromselectedpositive-actionpanel; no certification of calibratedcountlaw."
+}

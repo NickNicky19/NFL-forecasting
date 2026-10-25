@@ -1,0 +1,53 @@
+{
+  "schema_version": "anytime-calibration-public-provenance-v1",
+  "registration": "anytime-calibration-v1-20261025",
+  "accepted_result_sha256": "a650338de2a6958c0cb533cb83df33d544f0ffeca091a757bddf3e01ba7d42eb",
+  "acceptance_receipt_sha256": "dacf7f338fed9dfb7c269c7e0c6a9e7fad62519b03287f04b0312331b25aed51",
+  "independent_acceptance": {
+    "checks": 168946,
+    "mismatches": 0,
+    "calibrators_replayed": 16,
+    "fits": 0,
+    "new_NFL_observations": 0
+  },
+  "source_export_review_sha256": "5ff8742593df3f931af9ecac9669c8b834d48bdeacd50ae5d496486a7746a4d6",
+  "files": {
+    "reports/anytime-calibration-v1/PUBLIC_RESULTS.json": {
+      "bytes": 47725,
+      "sha256": "a650338de2a6958c0cb533cb83df33d544f0ffeca091a757bddf3e01ba7d42eb"
+    },
+    "reports/anytime-calibration-v1/INDEPENDENT_ACCEPTANCE.md": {
+      "bytes": 1984,
+      "sha256": "5a1133b5d140efaf48b4e0fb82e92b906abcd61ee4a9a9382733e08f76320eaf"
+    },
+    "nfl_lab/anytime_calibration.py": {
+      "bytes": 13538,
+      "sha256": "0806235bef8e981ead8bd694dba73430a78628de62f810d3a2846b48028b117b"
+    },
+    "config/anytime-calibration-v1-preparation.json": {
+      "bytes": 6379,
+      "sha256": "50863d80662c17c31a1581eb834e525e4c82f9b88cc13eedde1d5b8995d86c60"
+    }
+  },
+  "test_derivation": {
+    "original_source_sha256": "9b834db97ff8feef807d02be5e13b7af878f5ac5d7d3864efd60484ba4d1e45a",
+    "public_derivative": "tests/test_anytime_calibration.py",
+    "public_derivative_sha256": "250862569b3bf7eebb1b322f7059dceafbf0d637adbeb8028c04675d97ef59a3",
+    "changes": "Keep first four test functions unchanged and only pure align_context portion of fifth; remove runner_module, controller freeze_member fixture, full sixth synthetic runner fixture and unused imports; disclose derivative in module docstring",
+    "fictional_check_count": 5,
+    "run_during_publication_task": true
+  },
+  "publication_scope": "Aggregate metrics, global coefficient metadata, exact calibrator source and design; no executor/controller manifests, source rows, full fitted maps, base artifacts or private locators",
+  "reproduction_limit": "Original paired scores require private row-level frozen inputs/outputs; no self-contained public cached-data reproduction claim",
+  "public_fictional_checks": {
+    "passed": 5,
+    "pytest_seconds": 1.42,
+    "process_CPU_seconds": 2.5176979999999998,
+    "process_wall_seconds": 2.1651898990094196,
+    "peak_child_RSS_bytes": 180649984,
+    "actual_NFL_inputs": 0,
+    "controller_imports": 0,
+    "first_timing_wrapper": "Failed before test launch because optional /usr/bin/time executable absent; retained locally, then stdlib process accounting used",
+    "full_local_suite_rerun": false
+  }
+}

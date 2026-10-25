@@ -1,0 +1,53 @@
+{
+  "amendment": "Remove only HOME=/tmp from env-i argv. Do not repurpose HOME. All95 frozen bindings and the earlier static review remain unchanged; no re-review or test invocation.",
+  "command_argv": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OPENBLAS_NUM_THREADS=2",
+    "OMP_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "VECLIB_MAXIMUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "120s",
+    "/workspace/nfl-direct-boosters-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/dynamic_opportunity_backend_software_v1.py",
+    "--freeze",
+    "/tmp/dynamic-opportunity-backend-software-v1-freeze.json",
+    "--freeze-sha256",
+    "11fdacee48411366449f0516414f6becdc568778061998b05f105b5d5926b01d"
+  ],
+  "command_argv_sha256": "58c962a4dedbaf38e42a990d59c6654b2c8b2b610c1c8ba815d4adc354a8c9a4",
+  "effect_counters": {
+    "CAS_writes": 0,
+    "HTTP": 0,
+    "NFL_source_model_reads": 0,
+    "project_imports": 0,
+    "tests": 0
+  },
+  "freeze": {
+    "bytes": 26656,
+    "path": "/tmp/dynamic-opportunity-backend-software-v1-freeze.json",
+    "sha256": "11fdacee48411366449f0516414f6becdc568778061998b05f105b5d5926b01d"
+  },
+  "preserved_root_GO": "67a3c55",
+  "prior_receipt": {
+    "path": "/tmp/dynamic-opportunity-backend-software-preexec-v1/PREEXEC.json",
+    "sha256": "98516a81f2ac3099ac66b8acd4a0e871f5ba4750952d3b2224f0fb2535b0ac62"
+  },
+  "review_limitations": [
+    "This is static approval for exactly one six-method fictional software run; not actual forecasting-study approval.",
+    "Exact interpreter and project code only; full 14,946 environment-file pins remain for later scientific freeze.",
+    "Single-process highwater/traced resource checks are not continuous RSS certification; receipt resource interval ends before write.",
+    "Fixture01 simulates persisted JSON-cell and list-array shapes without actual Parquet disk roundtrip; actual artifacts still need later authenticated replay review.",
+    "No old suite, tests, project imports, source values, NFL rows, models, fitting, predictions, scoring, HTTP or CAS activity by reviewer."
+  ],
+  "schema_version": "independent-software-command-amendment-v1",
+  "state": "STATIC_PREEXEC_PASS_ROOT_GO_ALREADY_RECORDED_NO_INVOCATION"
+}

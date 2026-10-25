@@ -1,0 +1,57 @@
+{
+  "accepted_delta_fields": [
+    "preexec_review",
+    "seal",
+    "state"
+  ],
+  "checks": [
+    "exact_original_reviewed_draft",
+    "exact_owned_freeze",
+    "only_seal_transfer_fields",
+    "sealed_state",
+    "integrator_and_reviewer",
+    "seal_binds_review_and_draft",
+    "all_prior_pins_unchanged",
+    "owned_registry_root",
+    "canonical_readonly_regular_alias",
+    "no_consumption_or_report",
+    "only_metadata_payload"
+  ],
+  "conditions": [
+    "Serialize CAS writers and preserve original failed parent; fresh consumption markers must remain absent before sole invocation.",
+    "Keep frozen600wall/CPU1GiB2thread16MiBnew/512MiBshared limits and all guard/source checks unchanged.",
+    "Independent cached-row arithmetic audit remains separate and uninvoked until actual reporting completion is authenticated."
+  ],
+  "exact_command": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "OMP_NUM_THREADS=2",
+    "OPENBLAS_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "--kill-after=1s",
+    "600s",
+    "/workspace/nfl-direct-boosters-venv/bin/python",
+    "-B",
+    "/workspace/nfl-baseline-correction-report-v2/tools/baseline_correction_report_supervisor_v2.py",
+    "--freeze",
+    "/workspace/website-methods-research/resumed/baseline-correction-report-v2-20261023/REPORT_EXECUTION_FREEZE.json",
+    "--freeze-sha256",
+    "da58d76b50747329e3eadd83ee8e506576d6607b4634fa3303e96750a16162fb"
+  ],
+  "original_draft_sha256": "1dfd719fa21aab0bc6b731be8061b62368832738aa3f7c9c7bf670be4ed393aa",
+  "owned_bytes": 5764340,
+  "owned_freeze": "/workspace/website-methods-research/resumed/baseline-correction-report-v2-20261023/REPORT_EXECUTION_FREEZE.json",
+  "owned_sha256": "da58d76b50747329e3eadd83ee8e506576d6607b4634fa3303e96750a16162fb",
+  "review_peak_RSS_bytes": 43884544,
+  "review_self_CPU_seconds": 0.092685324,
+  "review_wall_seconds": 0.09268218799843453,
+  "root_GO_required": true,
+  "scope": "Metadata seal transfer delta and existing owned registry/inode reference only; no full input/environment rehash, NFL data semantics, tests, source/model access, scoring, resampling, network or CAS writes.",
+  "state": "SEALED_OWNED_TRANSFER_PASS"
+}

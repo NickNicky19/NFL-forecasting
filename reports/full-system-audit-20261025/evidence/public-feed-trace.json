@@ -1,0 +1,107 @@
+{
+  "observed_at": "2026-10-25T00:12:12.022274+00:00",
+  "tls_verify": true,
+  "state": "PASS_PUBLIC_FEED_TO_DEPLOYED_OVERLAY",
+  "producer_feed_sha256": "e47ff56be1a73f710aa81c6847c83e7eb3d3a3b6d4413ee2c01cb1544784d020",
+  "upstream_execution": {
+    "schema_version": "weekly-derived-publication-v2-execution",
+    "repository": "NickNicky19/NFL-forecasting",
+    "run_id": "40135574441",
+    "source_sha": "93e2019144be7b51248ce548fe247c6dcd949b71",
+    "api_job_id": 120996934563,
+    "export_job": "genuine-hosted-selected-export-v1",
+    "run_response_sha256": "f629ba68619b7252d173ff2a08d6854a86251d0e272d6ff249bb23fba4baeb7e",
+    "jobs_response_sha256": "83709e5b84f59e65f17434a9c6cb40bc4132bf4add99034e54e369fbc968fb53",
+    "API_GETs": 2,
+    "verification": "COMPLETED_RUN_AND_JOB; public bytes trusted through owner-controlled immutable lab-state publisher"
+  },
+  "consumer_overlay_sha256": "99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9",
+  "board_sha256": "db2bdd96fc7d2be762ec41ab1daab62f0c5d0048c4e84fe46355e11abf392fdd",
+  "all_rows_exact": 1754,
+  "category_counts": {
+    "anytime_td": 391,
+    "rec": 362,
+    "rec_yd": 362,
+    "rush_rec_yd": 261,
+    "rush_att": 99,
+    "rush_yd": 99,
+    "pass_att": 36,
+    "pass_cmp": 36,
+    "pass_int": 36,
+    "pass_td": 36,
+    "pass_yd": 36
+  },
+  "representative_traces": [
+    {
+      "category": "anytime_td",
+      "product": "binary_probability",
+      "identity_and_value_binding_sha256": "3439e33b1bbfb697041cb5a31d412304c6981cd7b66781f9602111f0cd31fee4",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "rec",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "cba99e805a7b6a0e6de1736882b69126121616f9f49e5189ae63ca8e0f7dc7b4",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "rec_yd",
+      "product": "point_median",
+      "identity_and_value_binding_sha256": "e48c60a93c49e157e338492ce512a2ec4d0acef0d551db7c7f7bc24472f22386",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "rush_rec_yd",
+      "product": "point_median",
+      "identity_and_value_binding_sha256": "de530e93f4a156ad5cd7948069546ed027e319cc85c296572bff87e16077dab4",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "rush_att",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "db1c0d9055752cc3a23880b11272290d9be119bed84017c586b529957dbaa001",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "rush_yd",
+      "product": "point_median",
+      "identity_and_value_binding_sha256": "bba57fb77835b016809d26ec3a58db8169a95cc707d1b4718e1623037381ebf4",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "pass_att",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "acb082ff9b8c044c3f448200a3e65870daf13e02430279f62322f676f43661b0",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "pass_cmp",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "b1ecb0456dbf6c8bca24f2ad82cc79559a2962124a81db459df9a3500728bdd2",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "pass_int",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "4b44418bbb353cc50bc20f04f3aad633c997d514570755f3b32ef9e3070e177b",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "pass_td",
+      "product": "point_mean",
+      "identity_and_value_binding_sha256": "ba7373d38a44c4ba0c7629df8b31505144e95d713f64febcb5b1005d60f15f77",
+      "upstream_consumer_exact": true
+    },
+    {
+      "category": "pass_yd",
+      "product": "point_median",
+      "identity_and_value_binding_sha256": "29682a702e73d0166509dffb8b353a361ba58463b84343bccb78de966389bd39",
+      "upstream_consumer_exact": true
+    }
+  ],
+  "limits": [
+    "Private inputs, fitted parameters and immutable restoration receipts not decoded here.",
+    "Displayed values checked separately in live-browser.json; grading of these future games remains pending.",
+    "This validates declared provenance, byte equality and consumer semantics; it is not independent model or accuracy reproduction."
+  ]
+}

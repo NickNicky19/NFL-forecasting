@@ -1,0 +1,53 @@
+{
+  "evidence": "Technical coherence audit of frozen reconstructed predictions only; no new football observations, fits, error scores or point repairs.",
+  "source_aggregate_sha256": "57be89be7b19b924b8f799cfa728a24dab9eeaa9767f5ecb474ffbf6b0946990",
+  "forecast_freeze_sha256": "2b8d19719d92c822bd2edb79703d603953bdfd2b4b05f2a7ecdb0976258ddfb7",
+  "audit_code_sha256": "2d2a822e544143ad3678d27e697cd4c8e7cb27b48865938657fbed9fca3cb8b0",
+  "results": [
+    {
+      "panel": "base",
+      "audit": "expected_completions_le_expected_attempts",
+      "common_offers": 37,
+      "finite_pairs": 37,
+      "violations_gt_1e_9": 0,
+      "largest_excess": 0.0
+    },
+    {
+      "panel": "base",
+      "audit": "separately_fitted_expected_combined_vs_sum_expected_components",
+      "common_offers": 100,
+      "combined_offers": 259,
+      "rush_offers": 137,
+      "rec_offers": 359,
+      "finite_triples": 100,
+      "combined_offers_without_both_components": 159,
+      "nonadditive_gt_0_03": 99,
+      "absolute_gap_mean": 1.8812370227601398,
+      "absolute_gap_max": 15.679500057640766
+    },
+    {
+      "panel": "context",
+      "audit": "expected_completions_le_expected_attempts",
+      "common_offers": 37,
+      "finite_pairs": 37,
+      "violations_gt_1e_9": 0,
+      "largest_excess": 0.0
+    },
+    {
+      "panel": "context",
+      "audit": "separately_fitted_expected_combined_vs_sum_expected_components",
+      "common_offers": 100,
+      "combined_offers": 259,
+      "rush_offers": 137,
+      "rec_offers": 359,
+      "finite_triples": 100,
+      "combined_offers_without_both_components": 159,
+      "nonadditive_gt_0_03": 99,
+      "absolute_gap_mean": 2.02593945527865,
+      "absolute_gap_max": 7.994859347212039
+    }
+  ],
+  "interpretation": "Compatible conditional means should add; independently fitted marginal laws are not a joint law. Medians/quantiles need not add. Missing component offers remain unavailable; no invented zero components.",
+  "point_repairs": 0,
+  "joint_law_claim": false
+}

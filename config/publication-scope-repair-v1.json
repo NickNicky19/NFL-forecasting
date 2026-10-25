@@ -1,0 +1,11 @@
+{
+  "registration_id": "publication-scope-repair-v1-20261023",
+  "scope": "Repair a demonstrated hosted publication receipt mismatch in an isolated worktree. The active benchmark's frozen root code stays unchanged. No actual publication, dispatch or website work is included.",
+  "finding": "After a selective state export, the existing CLI marks all local forecast batches and website bindings as published, including omitted files.",
+  "contract": "Only exact reviewed files proven present with matching bytes in the verified Git commit can receive new publication timing receipts. Verify safe paths, hashes, commit/tree identity and immutable state digests. Aggregate-only exports generate no forecast or website publication claims. Unscoped requests fail closed.",
+  "preservation": "Original records remain immutable. Append explicit scoped receipts without backdating publication. Keep late/readback-clock and idempotency semantics, exact content review, shared quota and website read-only boundary.",
+  "files": ["nfl_lab/publication_scope.py", "nfl_lab/cli.py", "tools/persist_state.py", "tests/test_publication_scope.py", "docs/publication-scope-v1.md"],
+  "software_budget": {"owner_wall_seconds": 180, "owner_CPU_seconds": 300, "root_wall_seconds": 180, "threads": 2},
+  "actual_network_source_model_forecast_publication_work": 0,
+  "review": "Fictional local Git/state fixtures and independent read-only code review before integration. Exact new code and source bindings need separate operational acceptance; no old artifact binding may be rewritten to pass."
+}

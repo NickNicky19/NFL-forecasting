@@ -47,6 +47,9 @@ jobs:
       - name: Acceptance tests
         id: acceptance
         run: python -m pytest -q
+      - name: Restore derived evidence state
+        if: steps.acceptance.outcome == 'success'
+        run: python tools/restore_state.py --source-policy config/operational-source-policy-v2.json
       - name: Determine cadence
         id: cadence
         env:
@@ -55,38 +58,39 @@ jobs:
         run: |
           python - <<'PY'
           import json,os
+          from pathlib import Path
           from nfl_lab.cadence import decision
+          from nfl_lab.operational_sources import load_source_policy
+          from nfl_lab.operational_storage import OperationalStorage
+          from nfl_lab.operational_io import operational_io
           result=decision(os.environ['EVENT'],os.environ['MODE'] or None)
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               f.write(f'due={str(result["due"]).lower()}\nmode={result["mode"]}\n')
-          with open('cadence-result.json','w') as f:json.dump(result,f,indent=2)
+          storage=OperationalStorage(Path('data'),load_source_policy('config/operational-source-policy-v2.json'),state=Path('state'))
+          with operational_io(storage,run_root=Path('runs')):
+              destination=Path('runs/operational-v2/cadence-result.json')
+              with storage.capture_writes(roots=[destination]):
+                  storage.write_text(destination,json.dumps(result,indent=2)+'\n',replace=True)
           print(result)
           PY
-      - name: Restore derived evidence state
-        if: steps.cadence.outcome == 'success'
-        run: |
-          mkdir -p state
-          if git show-ref --verify --quiet refs/remotes/origin/lab-state; then
-            git archive origin/lab-state state | tar -x
-          fi
       - name: Capture and grade
         id: daily
         if: steps.cadence.outputs.due == 'true' && (steps.cadence.outputs.mode == 'daily' || steps.cadence.outputs.mode == 'train')
-        run: timeout 900 python -m nfl_lab.cli daily > daily-result.json
-      - name: Grade recorded games without pregame issuance
-        id: grading
-        if: steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade')
-        run: timeout 300 python -m nfl_lab.cli grade > grading-result.json
+        run: timeout 540 python -m nfl_lab.cli daily --source-policy config/operational-source-policy-v2.json --output runs/operational-v2/daily-result.json
       - name: Bounded weekly experiments
         id: training
         if: steps.cadence.outputs.due == 'true' && steps.cadence.outputs.mode == 'train'
         run: |
-          timeout 300 python -m nfl_lab.cli acquire > acquire-result.json
-          timeout 1200 python -m nfl_lab.cli experiment > experiment-result.json
+          timeout 180 python -m nfl_lab.cli acquire --source-policy config/operational-source-policy-v2.json --output runs/operational-v2/acquire-result.json
+          timeout 720 python -m nfl_lab.cli experiment --source-policy config/operational-source-policy-v2.json --output runs/operational-v2/experiment-result.json
+      - name: Grade recorded games without pregame issuance
+        id: grading
+        if: always() && steps.acceptance.outcome == 'success' && steps.cadence.outcome == 'success' && (steps.cadence.outputs.due == 'false' || steps.cadence.outputs.mode == 'grade' || steps.daily.outcome == 'failure' || steps.training.outcome == 'failure')
+        run: timeout 180 python -m nfl_lab.cli grade --source-policy config/operational-source-policy-v2.json --output runs/operational-v2/grading-result.json
       - name: Replay immutable records
         id: replay
-        if: steps.cadence.outcome == 'success'
-        run: python -m nfl_lab.cli replay
+        if: always() && steps.acceptance.outcome == 'success' && steps.cadence.outcome == 'success'
+        run: python -m nfl_lab.cli replay --source-policy config/operational-source-policy-v2.json --output runs/operational-v2/replay-result.json
       - name: Persist only lab-derived forecasts and corrections
         if: always() && steps.cadence.outcome == 'success'
         env:
@@ -99,27 +103,37 @@ jobs:
           python - <<'PY'
           import json,os
           from pathlib import Path
-          from nfl_lab.state import now_utc,save
-          save(Path('state'),'operations',{
+          from nfl_lab.state import now_utc
+          from nfl_lab import state as lab_state
+          from nfl_lab.operational_sources import load_source_policy
+          from nfl_lab.operational_storage import OperationalStorage
+          from nfl_lab.operational_io import operational_io
+          storage=OperationalStorage(Path('data'),load_source_policy('config/operational-source-policy-v2.json'),state=Path('state'))
+          with operational_io(storage,run_root=Path('runs')):
+              lab_state.save(Path('state'),'operations',{
               'schema_version':'lab-hosted-operation-v1',
               'run_id':os.environ['GITHUB_RUN_ID'],
               'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],
               'event':os.environ['GITHUB_EVENT_NAME'],
               'source_commit':os.environ['GITHUB_SHA'],
               'observed_at':now_utc().isoformat(),
-              'cadence':json.loads(Path('cadence-result.json').read_text()),
+              'cadence':json.loads(Path('runs/operational-v2/cadence-result.json').read_text()),
               'step_outcomes':{k:os.environ.get(k) for k in ['ACCEPTANCE_OUTCOME','DAILY_OUTCOME','GRADING_OUTCOME','TRAINING_OUTCOME','REPLAY_OUTCOME']},
               'scope':'workflow environment attestation; verify run identity/conclusion through GitHub Actions API'
           })
           PY
-          python tools/persist_state.py
+          if test -f config/operational-publication-review-v2.json; then
+            python tools/persist_state.py --source-policy config/operational-source-policy-v2.json --publication-manifest config/operational-publication-review-v2.json
+          else
+            python tools/persist_state.py --source-policy config/operational-source-policy-v2.json
+          fi
       - name: Upload derived health reports
         if: always() && steps.readiness.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: lab-health-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            *-result.json
+            runs/operational-v2/*-result.json
             runs/daily.json
             runs/lab-v1-2026-10-22/**/summary.json
             runs/lab-v1-2026-10-22/**/campaign.json

@@ -1,0 +1,145 @@
+{
+  "accepted_delta": "Supervisor self HWM is recorded/refreshed and checked with child HWM via maximum, while simultaneous live combined sampling, CPU, startup/native-package guards remain unchanged.",
+  "candidate": {
+    "bytes": 5853943,
+    "path": "/tmp/dynamic-opportunity-study-v1-preexec-candidate.json",
+    "sha256": "9c8f9ee60157ed22775b230ebf54b4f91ccad01c95b0edc33dedc86535d339a3"
+  },
+  "checks": [
+    {
+      "check": "174unique_delta_inventory",
+      "pass_": true
+    },
+    {
+      "check": "unchanged172_binding_records_reused",
+      "pass_": true
+    },
+    {
+      "check": "original14946_environment_records_identical",
+      "pass_": true
+    },
+    {
+      "check": "fresh_pin:/workspace/nfl-methods-integration/tools/dynamic_opportunity_study_supervisor.py",
+      "pass_": true
+    },
+    {
+      "check": "fresh_pin:/workspace/nfl-methods-integration/reports/dynamic-opportunity-backend-v1/software-result/FINISHED.json",
+      "pass_": true
+    },
+    {
+      "check": "exact_supervisor_fix",
+      "pass_": true
+    },
+    {
+      "check": "exact_accepted_six_software_receipt",
+      "pass_": true
+    },
+    {
+      "check": "software_receipt_public_execution_only",
+      "pass_": true
+    },
+    {
+      "check": "own_child_individual_HWM_guard",
+      "pass_": true
+    },
+    {
+      "check": "only_declared_candidate_deltas",
+      "pass_": true
+    },
+    {
+      "check": "candidate_not_authorized",
+      "pass_": true
+    },
+    {
+      "check": "output_still_absent",
+      "pass_": true
+    }
+  ],
+  "command_argv": [
+    "env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OMP_NUM_THREADS=2",
+    "OPENBLAS_NUM_THREADS=2",
+    "MKL_NUM_THREADS=2",
+    "NUMEXPR_NUM_THREADS=2",
+    "OMP_THREAD_LIMIT=2",
+    "ARROW_IO_THREADS=2",
+    "VECLIB_MAXIMUM_THREADS=2",
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "--kill-after=1s",
+    "600s",
+    "/workspace/nfl-direct-boosters-venv/bin/python",
+    "-B",
+    "/workspace/nfl-methods-integration/tools/dynamic_opportunity_study_supervisor.py",
+    "--freeze",
+    "/workspace/website-methods-research/resumed/dynamic-opportunity-study-v1-20261023/DYNAMIC_OPPORTUNITY_EXECUTION_FREEZE.json",
+    "--freeze-sha256",
+    "5f66e1c9decd01af7d61ba860dad2188c835a6fe8acd9aec85f75ee16eadb3f1"
+  ],
+  "command_argv_sha256": "e4e20ebf9d88af11fe631ea014c213dbee05bb2cdf3f7bc2736748afd46d7cb0",
+  "expected_sealed": {
+    "allowed_transition": [
+      "top.state=SEALED_ROOT_AND_REVIEWER",
+      "top.preexec_review=PASS",
+      "top.seal.reviewer=/root/resume_independent_reviewer",
+      "execution_metadata.seal.reviewer=/root/resume_independent_reviewer",
+      "execution_metadata.source_plan.seal.reviewer=/root/resume_independent_reviewer"
+    ],
+    "bytes": 5854023,
+    "root_must_not_add_other_fields": true,
+    "serialization": "json.dumps(sort_keys=True,indent=2)+'\\n'",
+    "sha256": "5f66e1c9decd01af7d61ba860dad2188c835a6fe8acd9aec85f75ee16eadb3f1"
+  },
+  "owned_transfer_requirements": [
+    "Import only these exact expected sealed bytes through unchanged quota-owned CAS, inside original48/512MiB.",
+    "Preserve all existing failed/frozen evidence and consumed software runs.",
+    "Read back owned bytes and authenticate owned reference/manifest before root scientific GO.",
+    "No execution until root logs exact sealed digest and command.",
+    "If the chosen owned basename differs, amend command only before execution; do not change sealed content."
+  ],
+  "pending_blockers": [],
+  "proposed_owned_path": "/workspace/website-methods-research/resumed/dynamic-opportunity-study-v1-20261023/DYNAMIC_OPPORTUNITY_EXECUTION_FREEZE.json",
+  "resource_limitations": [
+    "Combined RSS is sampled; brief simultaneous peaks may escape sampling. Known individual supervisor/child highwaters are now checked; do not sum non-simultaneous individual peaks.",
+    "Only last32 resource observations plus peaks/counters/failure/exit snapshots retained, not a full timeline.",
+    "Fictional consumer01 simulates persisted JSON/list shapes, not an on-disk NFL replay. Actual source/data/runtime/metric acceptance remains postrun work."
+  ],
+  "resources_before_receipt": {
+    "CPU_seconds": 0.33860622199999996,
+    "ru_maxrss_bytes": 92409856,
+    "wall_seconds": 0.3414217630052008
+  },
+  "reused_full_metadata_receipt": {
+    "checks": 15298,
+    "environment_bindings": 14946,
+    "execution_bindings": 173,
+    "path": "/tmp/dynamic-opportunity-actual-template-review-v1/METADATA_REVIEW.json",
+    "sha256": "09814d1ba752e01f9e51a9ab9cfc889e3b48e3f53be0f5594304d071234872b3"
+  },
+  "review_effects": {
+    "CAS_writes": 0,
+    "HTTP": 0,
+    "NFL_semantic_reads": 0,
+    "fits": 0,
+    "forecasts": 0,
+    "implementation_edits": 0,
+    "model_loads": 0,
+    "project_imports": 0,
+    "resampling": 0,
+    "scores": 0,
+    "tests": 0
+  },
+  "schema_version": "dynamic-opportunity-actual-PREEXEC-v1",
+  "scientific_scope": [
+    "54 packages:24 earlier development,12 selected-forward,12 matched-static,6 auxiliary controls;600k original-offer incidence ceiling;<=16 earlier-only role-prior vectors.",
+    "2020/21 fixed6-setting selection only on setting-invariant supported common cohort; all later2022-24 data remain exposed development; no independent confirmation.",
+    "Strict prior kickoff+7days<each original query cutoff; historical query<=kickoff only under separately accepted replay policy.",
+    "All-position partial proxies and all offered rows retained; unknown/DNP/missing separate; canonical exact CDF mean/count or median/signed fallback, auxiliary abstention.",
+    "Factored request/scored/loss views retain exact contexts, ordinals, sources, forecasts, labels, scorer refs and supported null/zero/signed states; model-free shared scoring and new CDF+static nomination only.",
+    "48MiB new/512MiB shared,600wall/CPU,1GiB combined,2caps,20perpackage,570phase+30terminal reserve; no acquisition/models/gradientfits/retries."
+  ],
+  "state": "PREEXEC_PASS_EXACT_DETERMINISTIC_SEAL_REQUIRED"
+}

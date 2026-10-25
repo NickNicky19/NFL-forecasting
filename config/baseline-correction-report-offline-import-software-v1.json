@@ -1,0 +1,45 @@
+{
+  "budget": {
+    "CPU_seconds": 30,
+    "NFL_semantic_actual_network_process_CAS_old_ten_test_rerun": 0,
+    "RSS_bytes": 268435456,
+    "automatic_retries": 0,
+    "invocations": 1,
+    "new_checks": 2,
+    "numerical_threads": 1,
+    "wall_seconds": 30
+  },
+  "checks": [
+    "Restoration on success/exception and skipped optional-probe mock",
+    "Import exact old test definitions WITHOUT running old test bodies, then empty report_only guard, zero denied-effect attempts"
+  ],
+  "code": {
+    "tests/test_offline_report_imports_v1.py": {
+      "bytes": 1745,
+      "sha256": "61e02c3c3f75eeb8b007463b084ac445317d4ec1a2d285739697b6a1db797ee3"
+    },
+    "tools/baseline_correction_report_run_v2.py": {
+      "bytes": 4778,
+      "sha256": "eaefc06c13d8511e60fac84e13e943309231e128ec16732f2449fa1eda712af6"
+    },
+    "tools/baseline_correction_report_supervisor_v2.py": {
+      "bytes": 5713,
+      "sha256": "6d34cbe4dbf6926510b6f1cbb5ae848febc8242cdeb27c03d1fa7620ec552391"
+    },
+    "tools/freeze_baseline_correction_report_v2.py": {
+      "bytes": 5551,
+      "sha256": "22a86bd25ddc78bc3a5478b54f0e36c6c8a7d8f4bb1a1a82624696488352aefe"
+    },
+    "tools/offline_report_imports_v1.py": {
+      "bytes": 709,
+      "sha256": "12b0cbd3e7ad075ae91e58de1317f54b15919cd8a75cd0e081ac0695503ce91c"
+    }
+  },
+  "import_diagnostic_sha256": "e1d70d6803be314ab81b1b5584713c581b1fdec27268dc73b1b21f0cd051964d",
+  "preserved_failed_software_commit": "2a0a466",
+  "preserved_failed_software_sha256": "a68f0382ac485fe2ec841523d2f1dfff27bd952f1c1fb863e45dcd40aaa96e6d",
+  "registration_id": "baseline-correction-report-offline-import-software-v1-20261023",
+  "result_semantics": "Only the new offline-import guard can pass. Original10functionalchecks passed but old aggregate remainsFAILED forever.",
+  "scope": "Temporarily set stdlib socket.has_ipv6=False only during frozen original dependency imports; restore on success/exception. No frozen library/source/model bytes or audit-denial weakening. New runner and supervisor use identical context before extension/report imports.",
+  "state": "PROPOSED_FROZEN_NOT_RUN"
+}

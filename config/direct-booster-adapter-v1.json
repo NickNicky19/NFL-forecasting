@@ -1,0 +1,11 @@
+{
+  "registration_id": "direct-booster-software-adapter-v1-20261023",
+  "scope": "Implement a shared-feature/evaluator adapter for the requested three CPU boosters, two fixed complexities. Software only: no NFL semantic reads, fits, predictions, evaluation or acquisition in this packet.",
+  "files": ["nfl_lab/direct_boosters.py", "tests/test_direct_boosters.py", "docs/direct-boosters-v1.md"],
+  "reuse": "Existing FixedDesign/SupportPrior and frozen-row scoring contracts; no duplicate data pipeline, evaluator, old model change or inherited direct-write model save.",
+  "products": "count=Poisson-objective mean/MSE, signed_integer=.5 quantile point/MAE, bernoulli=event probability/Brier. Numeric objectives provide no forecast law. Count fallback is trained prior mean; signed fallback prior median; binary prior probability. Enforce supported zeros, signed yards and missingness.",
+  "settings": "Two fixed settings per library:64trees/depth3 or128trees/depth5, learning_rate.05, L2=10, no early stopping or validation selection; library-specific exact settings in code and later numerical freeze. Exact installed versions required at fit time; no silent substitutes.",
+  "budgets": {"root_fictional_check_invocations": 1, "root_wall_seconds": 120, "root_CPU_seconds": 180, "threads": 2, "HTTP": 0, "actual_NFL_fits_predictions_outcomes_scores": 0},
+  "tests": "Mock native estimators/version calls to check declared params, fit gate, transformations, support, training-only preprocessing, cold/new/nonmodeled roles, empty/single-class/all-zero fits, no query label reads, retained states and quota-only artifacts. No real booster fits in this packet; at most9 fictional native smokes are separately registered in capability-v1.",
+  "real_screen": "A separate numerical registration and immutable code/environment/input/comparator/resource freeze plus independent review are required before actual NFL estimator calls. Preserve all prior studies/exposure/gates. No promotion, activation, hosted dispatch, site writes or scheduler changes."
+}

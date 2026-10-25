@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unqualified recorded H3 point, without a mean or forecast distribution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "player_id", "sleeper_id", "game_id", "team", "opponent", "season", "week", "position", "target", "period", "model_id", "model_state", "scoring_id", "model_config_sha256", "input_sha256", "code_sha256", "research_module_sha256", "research_schema_sha256", "recorded_schema_sha256", "research_result_sha256", "baseline_receipt_sha256", "research_result", "projection_identity", "projection_identity_sha256", "kickoff_utc", "feature_cutoff_utc", "calculation_started_at", "calculation_completed_at", "issued_at", "point", "prediction_functional", "fallback", "qualified_for_default", "original_runner_reproduced", "code_integrity"],
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "identity": {"type": "string", "minLength": 1},
+    "clock": {"type": "string", "format": "date-time"}
+  },
+  "properties": {
+    "schema_version": {"const": "lab-recorded-research-point-v1"},
+    "player_id": {"$ref": "#/$defs/identity"},
+    "sleeper_id": {"$ref": "#/$defs/identity"},
+    "game_id": {"$ref": "#/$defs/identity"},
+    "team": {"$ref": "#/$defs/identity"},
+    "opponent": {"$ref": "#/$defs/identity"},
+    "season": {"type": "integer", "minimum": 1920},
+    "week": {"type": "integer", "minimum": 1, "maximum": 18},
+    "position": {"enum": ["QB", "RB", "FB", "WR", "TE"]},
+    "target": {"const": "pass_yd"},
+    "period": {"const": "full_game"},
+    "model_id": {"const": "website-held-attempts-h3-ypa-research-v1"},
+    "model_state": {"const": "UNQUALIFIED_SHADOW"},
+    "scoring_id": {"const": "nfl-full-game-v1"},
+    "model_config_sha256": {"$ref": "#/$defs/hash"},
+    "input_sha256": {"$ref": "#/$defs/hash"},
+    "code_sha256": {"$ref": "#/$defs/hash"},
+    "research_module_sha256": {"$ref": "#/$defs/hash"},
+    "research_schema_sha256": {"$ref": "#/$defs/hash"},
+    "recorded_schema_sha256": {"$ref": "#/$defs/hash"},
+    "research_result_sha256": {"$ref": "#/$defs/hash"},
+    "baseline_receipt_sha256": {"$ref": "#/$defs/hash"},
+    "research_result": {"$ref": "urn:nfl-lab:research-point-v1"},
+    "projection_identity_sha256": {"$ref": "#/$defs/hash"},
+    "projection_identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["player_id", "game_id", "sleeper_id", "position", "reference", "payload_sha256"],
+      "properties": {
+        "player_id": {"$ref": "#/$defs/identity"},
+        "game_id": {"$ref": "#/$defs/identity"},
+        "sleeper_id": {"$ref": "#/$defs/identity"},
+        "position": {"enum": ["QB", "RB", "FB", "WR", "TE"]},
+        "reference": {"$ref": "#/$defs/identity"},
+        "payload_sha256": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "kickoff_utc": {"$ref": "#/$defs/clock"},
+    "feature_cutoff_utc": {"$ref": "#/$defs/clock"},
+    "calculation_started_at": {"$ref": "#/$defs/clock"},
+    "calculation_completed_at": {"$ref": "#/$defs/clock"},
+    "issued_at": {"$ref": "#/$defs/clock"},
+    "point": {"type": "number"},
+    "prediction_functional": {"const": "fixed_opportunity_rate_point; mean_or_median_unverified"},
+    "fallback": {"type": ["string", "null"]},
+    "qualified_for_default": {"const": false},
+    "original_runner_reproduced": {"const": false},
+    "code_integrity": {"const": "pre_post_source_digest_required"},
+    "derived_from_original_row_sha256": {"$ref": "#/$defs/hash"},
+    "consumer_schema": {"const": "nfl-lab-recorded-research-point-v1"}
+  }
+}

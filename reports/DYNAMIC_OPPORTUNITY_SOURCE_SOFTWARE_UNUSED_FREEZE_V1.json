@@ -1,0 +1,95 @@
+{
+  "bindings": {
+    "/workspace/nfl-dynamic-opportunity-source-v1/config/dynamic-opportunity-source-v1-software.json": {
+      "bytes": 1139,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/config/dynamic-opportunity-source-v1-software.json",
+      "sha256": "27a576c188dab732984e01c626b7009cb57aedda01e577530e465c60c387325f"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/__init__.py": {
+      "bytes": 59,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/__init__.py",
+      "sha256": "b83391a537342a00ccaab7b5dd1954457377109737617e9d4c61adee5912b899"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_core.py": {
+      "bytes": 17738,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_core.py",
+      "sha256": "d9323e22cf3fdc4a0f3bbbc57c108f766811630060d3045ae54e89b80dc686a9"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_history.py": {
+      "bytes": 20386,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_history.py",
+      "sha256": "afbaec9af4130005ecfb74e5ace4eba2db31a8f7193308dbc26348052dfcd027"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_source.py": {
+      "bytes": 24149,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_source.py",
+      "sha256": "7f1ea2d2778f4891c836be270d4f19b1382ac24de4a5fb085b385bf9b1b89e58"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_study.py": {
+      "bytes": 15527,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/dynamic_opportunity_study.py",
+      "sha256": "4fb702da2079b5d163a76309e44b5ca0252fa5ce613734f1cac9e6d94312caa6"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/state.py": {
+      "bytes": 9670,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/nfl_lab/state.py",
+      "sha256": "db7093c5c80a7eb9ae3a4662d801dde1c8a86e6125a6a239cd3782f559b00cfd"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/tests/test_dynamic_opportunity_source.py": {
+      "bytes": 14477,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/tests/test_dynamic_opportunity_source.py",
+      "sha256": "86ba889f11bcaf48c3333b13bd83251f3326757f3fefdb6de18b2cb2a6be7bd8"
+    },
+    "/workspace/nfl-dynamic-opportunity-source-v1/tools/dynamic_opportunity_source_software_v1.py": {
+      "bytes": 6244,
+      "path": "/workspace/nfl-dynamic-opportunity-source-v1/tools/dynamic_opportunity_source_software_v1.py",
+      "sha256": "06f4016c94366126d4f7fee99e18183663b36b1081df741dc6772da9d2ab5106"
+    }
+  },
+  "budgets": {
+    "CPU_seconds": 120,
+    "NFL_source_model_HTTP_CAS_old_suite_runs": 0,
+    "RSS_bytes": 536870912,
+    "automatic_retries": 0,
+    "invocations": 1,
+    "new_fictional_methods": 12,
+    "numerical_thread_caps": 2,
+    "wall_seconds": 120,
+    "worker_children": 0
+  },
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=KILL",
+    "120s",
+    "/workspace/nfl-venv/bin/python",
+    "-B",
+    "/workspace/nfl-dynamic-opportunity-source-v1/tools/dynamic_opportunity_source_software_v1.py",
+    "--freeze",
+    "/tmp/dynamic-opportunity-source-v1-software-freeze.json",
+    "--freeze-sha256",
+    "<EXACT_FREEZE_SHA256>"
+  ],
+  "interpreter": {
+    "binary": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "executable": "/workspace/nfl-venv/bin/python",
+    "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "output": "/tmp/dynamic-opportunity-source-v1-software-20261023",
+  "root": "/workspace/nfl-dynamic-opportunity-source-v1",
+  "schema_version": "dynamic-opportunity-source-v1-software-20261023",
+  "state": "FROZEN_PENDING_ROOT_GO",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "2",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OMP_THREAD_LIMIT": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "VECLIB_MAXIMUM_THREADS": "2"
+  },
+  "timeout": {
+    "bytes": 47984,
+    "path": "/usr/bin/timeout",
+    "sha256": "6ca1891dfc0b05d7680770c2884c0391b92467c7bb6500a5c84677e6481739f1"
+  }
+}

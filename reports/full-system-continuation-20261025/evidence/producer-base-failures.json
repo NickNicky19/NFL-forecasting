@@ -1,0 +1,30 @@
+{
+  "base": "93e2019144be7b51248ce548fe247c6dcd949b71",
+  "state": "22_FAILURES_REPRODUCED_ON_UNCHANGED_BASE",
+  "failing_tests": [
+    "tests/test_genuine_hosted_fixed_build_v1.py::HostedFixedBuildChecks::test_actual_initial_registration_before_inputs_and_new15Z_not_old12Z",
+    "tests/test_genuine_hosted_fixed_build_v1.py::HostedFixedBuildChecks::test_noop_source_pins_and_same_workflow_single_writer_only",
+    "tests/test_gha_private_checkpoint.py::CheckpointTests::test_preparation_and_unapproved_procedure_read_no_credentials",
+    "tests/test_gha_private_checkpoint.py::CheckpointTests::test_workflow_snippet_preserves_existing_mode_and_safe_boundaries",
+    "tests/test_hosted_build_safe_diagnostics.py::SafeDiagnosticChecks::test_main_keeps_precheck_pass_last_subphase_and_all_unattested_counts_unknown",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_bad_handoff_never_starts_read_CLI",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_canonical_handoff_digest_and_safe_metadata_only",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_child_failure_logs_only_strict_safe_reason_and_counts",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_existing_workflow_and_old_probe_modes_preserved",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_no_execute_is_preparation_only",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_only_four_registered_operations_get_GO",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_preflight_accepts_only_exact_dispatch_source_role_attempt",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_source_config_schema_pins_precede_target_import",
+    "tests/test_private_draft_canary_v2.py::CanaryDriverTests::test_three_roles_four_CLI_operations_and_exact_safe_proof_handoff",
+    "tests/test_private_storage_probe.py::StorageProbeChecks::test_workflow_reuses_one_scheduler_and_preserves_entire_lab_job",
+    "tests/test_public_release_plan_v1.py::ReleasePlanChecks::test_bad_source_or_GO_after_source_registration_rejected",
+    "tests/test_public_release_plan_v1.py::ReleasePlanChecks::test_exact_existing_exporter_inputs_and_unchanged_R0",
+    "tests/test_public_release_plan_v1.py::ReleasePlanChecks::test_unsafe_rights_scope_rejected",
+    "tests/test_selected_private_snapshot.py::SnapshotChecks::test_unapproved_snapshot_procedure_fails_before_credentials",
+    "tests/test_weekly_grading.py::WeeklyGradingChecks::test_policy_hash_matches_supplied_and_actual_active_scope_before_inputs",
+    "tests/test_weekly_initial_continuation_v3.py::ContinuationChecks::test_global_metadata_consumption_rejects_same_registration_before_second_extraction",
+    "tests/test_weekly_initial_remaining_v2.py::RecoveryChecks::test_new_build_checkpoint_and_snapshot_configs_require_separate_opt_in"
+  ],
+  "private_body_reads": 0,
+  "new_NFL_fits": 0
+}

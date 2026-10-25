@@ -24,7 +24,7 @@ METHOD_VERSIONS = {
     "rb_team_share": "rb-team-volume-shrunken-share-new-v1",
     "workload_efficiency": "signed-workload-pooled-efficiency-new-v1",
     "component_means": "rush-rec-compatible-component-means-new-v1",
-    "joint_components": "empirical-copula-opportunity-components-new-v1",
+    "joint_components": "empirical-copula-coherent-passing-components-new-v2",
 }
 
 
@@ -171,8 +171,10 @@ def sample_joint_components(component_means: Mapping[str, float],
     reconstructed availability remains reconstructed evidence. Row ranks retain
     empirical cross-component dependence. Missing histories
     fall back to independent uniforms, reported in DataFrame attrs. When their
-    exposure components are supplied, catches/completions/TDs are drawn within
-    opportunities and yardage is zero at zero opportunity. Yards remain signed.
+    exposure components are supplied, catches/TDs are drawn within opportunities.
+    Passing completions, touchdown completions and interceptions share a
+    mutually exclusive allocation; passing yards require completion exposure.
+    Nonempty histories require canonical played participation. Yards are signed.
     All-player samples share one participation draw across every component.
     This is a separate research distribution, not a calibrated superiority claim.
     """
@@ -185,6 +187,19 @@ def sample_joint_components(component_means: Mapping[str, float],
         raise ValueError("invalid_participation_probability")
     names = list(component_means)
     means = {k: _number(v, signed=k in SIGNED_COMPONENTS) for k, v in component_means.items()}
+    passing_counts = {"pass_cmp", "pass_td", "pass_int"} & means.keys()
+    if passing_counts and "pass_att" not in means:
+        raise ValueError("passing_attempt_exposure_required")
+    if ("pass_td" in means or "pass_yd" in means) and "pass_cmp" not in means:
+        raise ValueError("passing_completion_exposure_required")
+    if "pass_att" in means:
+        attempts = means["pass_att"]
+        completions = means.get("pass_cmp", 0.)
+        interceptions = means.get("pass_int", 0.)
+        if completions + interceptions > attempts:
+            raise ValueError("passing_mean_allocation_exceeds_attempts")
+        if means.get("pass_td", 0.) > completions:
+            raise ValueError("passing_touchdown_mean_exceeds_completions")
     generator = np.random.default_rng(seed)
     eligible = complete_history
     if len(complete_history):
@@ -195,8 +210,16 @@ def sample_joint_components(component_means: Mapping[str, float],
             raise ValueError("aware_joint_training_cutoff_required")
         available = pd.to_datetime(complete_history.outcome_available_utc, utc=True, errors="coerce")
         eligible = complete_history.loc[available.notna() & (available < cutoff)]
+        if "participation_state" not in eligible:
+            raise ValueError("canonical_joint_participation_required")
+        if not eligible.participation_state.dropna().isin(["played", "DNP", "unknown"]).all():
+            raise ValueError("invalid_canonical_joint_participation")
         if "participation" in eligible:
-            eligible = eligible.loc[eligible.participation == "played"]
+            legacy = eligible.participation.astype("string").str.lower()
+            canonical = eligible.participation_state.astype("string").str.lower()
+            if (legacy.notna() & legacy.ne(canonical).fillna(True)).any():
+                raise ValueError("conflicting_joint_participation")
+        eligible = eligible.loc[eligible.participation_state.eq("played")]
     history = eligible.reindex(columns=names).replace([np.inf, -np.inf], np.nan).dropna()
     fallback = None
     if len(history) >= 3:
@@ -215,9 +238,21 @@ def sample_joint_components(component_means: Mapping[str, float],
     for name in names:
         if name not in SIGNED_COMPONENTS:
             result[name] = stats.poisson.ppf(u[name], means[name])
-    for count, exposure in (("rec", "rec_tgt"), ("pass_cmp", "pass_att"),
-                             ("rush_td", "rush_att"), ("rec_td", "rec"),
-                             ("pass_td", "pass_att"), ("pass_int", "pass_att")):
+    # Sequential binomials implement one four-category multinomial partition:
+    # TD completion, other completion, interception, other incomplete. Each
+    # innovation is independent of its exposure to preserve marginal means.
+    if "pass_cmp" in means:
+        rate = means["pass_cmp"] / means["pass_att"] if means["pass_att"] else 0.
+        result["pass_cmp"] = stats.binom.ppf(generator.random(draws), result["pass_att"], rate)
+    if "pass_td" in means:
+        rate = means["pass_td"] / means["pass_cmp"] if means["pass_cmp"] else 0.
+        result["pass_td"] = stats.binom.ppf(generator.random(draws), result["pass_cmp"], rate)
+    if "pass_int" in means:
+        incomplete_mean = means["pass_att"] - means.get("pass_cmp", 0.)
+        rate = means["pass_int"] / incomplete_mean if incomplete_mean else 0.
+        incomplete = result["pass_att"] - result.get("pass_cmp", 0.)
+        result["pass_int"] = stats.binom.ppf(generator.random(draws), incomplete, rate)
+    for count, exposure in (("rec", "rec_tgt"), ("rush_td", "rush_att"), ("rec_td", "rec")):
         if count in means and exposure in means:
             if means[count] > means[exposure]:
                 raise ValueError("count_mean_exceeds_opportunity:" + count)
@@ -228,7 +263,7 @@ def sample_joint_components(component_means: Mapping[str, float],
     for name in names:
         if name not in SIGNED_COMPONENTS:
             continue
-        exposure = {"rush_yd": "rush_att", "rec_yd": "rec", "pass_yd": "pass_att"}[name]
+        exposure = {"rush_yd": "rush_att", "rec_yd": "rec", "pass_yd": "pass_cmp"}[name]
         observed = history[name].to_numpy(dtype=float) if len(history) else np.array([])
         sigma = float(np.std(observed, ddof=1)) if len(observed) > 1 else max(abs(means[name]) * .5, 1.)
         if exposure in means:

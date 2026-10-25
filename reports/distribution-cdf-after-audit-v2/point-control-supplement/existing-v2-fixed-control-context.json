@@ -1,0 +1,127 @@
+{
+  "source_V2_aggregate_sha256": "eb3ce24a709fd2c914641c251e8af18690668107024d363c86e34e20cdfb3b20",
+  "rows": [
+    {
+      "target": "pass_yd",
+      "metric": "MAE",
+      "fresh_CDF": 66.16173469387755,
+      "fresh_Count_A_mean": null,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 66.16173469387755,
+      "CDF_response_loss": 66.2030612244898,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "pass_td",
+      "metric": "MSE",
+      "fresh_CDF": 1.0682416631888132,
+      "fresh_Count_A_mean": 1.0782992436422343,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 1.0682416631888132,
+      "CDF_response_loss": 1.0619745013505355,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": true,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "pass_cmp",
+      "metric": "MSE",
+      "fresh_CDF": 51.375356756738206,
+      "fresh_Count_A_mean": 52.24684383292095,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 51.375356756738206,
+      "CDF_response_loss": 51.540210184679644,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "pass_att",
+      "metric": "MSE",
+      "fresh_CDF": 114.20693762466509,
+      "fresh_Count_A_mean": 116.29355851603508,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 114.20693762466509,
+      "CDF_response_loss": 113.9007310602089,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": true,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "pass_int",
+      "metric": "MSE",
+      "fresh_CDF": 0.6790663330170006,
+      "fresh_Count_A_mean": 0.6910009298798674,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 0.6790663330170006,
+      "CDF_response_loss": 0.6775664279562187,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": true,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "rush_yd",
+      "metric": "MAE",
+      "fresh_CDF": 19.718955682316807,
+      "fresh_Count_A_mean": null,
+      "best_fixed_point_or_event_reference": "fresh_leaf_cdf",
+      "best_fixed_loss": 19.718955682316807,
+      "CDF_response_loss": 19.755375164545853,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "rush_att",
+      "metric": "MSE",
+      "fresh_CDF": 24.292747010274827,
+      "fresh_Count_A_mean": 24.296955539604067,
+      "best_fixed_point_or_event_reference": "direct_catboost_medium",
+      "best_fixed_loss": 24.04640959278721,
+      "CDF_response_loss": 24.231383465175476,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "rec",
+      "metric": "MSE",
+      "fresh_CDF": 3.2682014975938323,
+      "fresh_Count_A_mean": 3.2541464520891097,
+      "best_fixed_point_or_event_reference": "count_A_mean_v2",
+      "best_fixed_loss": 3.2541464520891097,
+      "CDF_response_loss": 3.264021761683143,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "rec_yd",
+      "metric": "MAE",
+      "fresh_CDF": 16.372434594452823,
+      "fresh_Count_A_mean": null,
+      "best_fixed_point_or_event_reference": "direct_catboost_medium",
+      "best_fixed_loss": 16.343397995395673,
+      "CDF_response_loss": 16.357025768802046,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "rush_rec_yd",
+      "metric": "MAE",
+      "fresh_CDF": 21.025703232574912,
+      "fresh_Count_A_mean": null,
+      "best_fixed_point_or_event_reference": "direct_catboost_medium",
+      "best_fixed_loss": 20.98392513503166,
+      "CDF_response_loss": 21.00944200380303,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    },
+    {
+      "target": "anytime_td",
+      "metric": "brier",
+      "fresh_CDF": 0.14096923634165753,
+      "fresh_Count_A_mean": null,
+      "best_fixed_point_or_event_reference": "direct_catboost_medium",
+      "best_fixed_loss": 0.14076308980223012,
+      "CDF_response_loss": 0.14096923634165753,
+      "CDF_response_strictly_lower_than_all_these_fixed_references": false,
+      "scope": "Descriptive context from already completed V2 summaries and the132registered direct comparisons; no new paired test"
+    }
+  ],
+  "new_fits_inference_scores_from_NFL_rows": 0
+}

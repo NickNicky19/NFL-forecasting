@@ -10,16 +10,26 @@ import numpy as np
 import pandas as pd
 
 from .state import append_outcomes, capture, digest, now_utc, records, save, source_tree_digest, utc
+from .operational_io import active_storage, operational_io, quota_downloader
+from .operational_storage import OperationalStorage
 
 TEAMS={"WSH":"WAS","LA":"LAR","SD":"LAC","OAK":"LV"}
 SKILL={"QB","RB","WR","TE","FB"}
 
 
-def fetch(cache,name,url,day=None):
+def fetch(cache,name,url,day=None,*,storage=None):
     from .data import _download
     stamp=day or now_utc().date().isoformat()
-    raw=Path(cache)/"raw"/"live"/stamp;raw.mkdir(parents=True,exist_ok=True)
-    receipt=_download(raw,name+".json",url)
+    storage=storage or active_storage()
+    raw=(storage.live_root/stamp if storage is not None else Path(cache)/"raw"/"live"/stamp)
+    raw.mkdir(parents=True,exist_ok=True)
+    if storage is None:
+        receipt=_download(raw,name+".json",url)
+    else:
+        with operational_io(storage):
+            receipt=_download(raw,name+".json",url)
+            storage.import_file(raw/(name+".json"),raw/(name+".json"),expected_sha256=receipt["sha256"])
+            storage.import_file(raw/(name+".json.receipt.json"),raw/(name+".json.receipt.json"))
     return json.loads((raw/(name+".json")).read_text()),receipt
 
 
@@ -66,22 +76,49 @@ def future_population(players,games,season,week,*,identity_by_sleeper=None,froze
     return frame
 
 
-def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
+def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,source_policy=None):
+    """A permitted-source failure abstains from issuance and retains grading."""
+    if source_policy is None:
+        return _daily(root,cache,state,seasons,methods)
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage,run_root=Path(root)/"runs"):
+        prior_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))
+        try:
+            return _daily(root,cache,state,seasons,methods,source_policy=policy)
+        except Exception as error:
+            # No legacy history retry and no partial forecast capture on this path.
+            try:
+                grading=grade_only(state,cache,source_policy=policy)["grading"]
+            except Exception as grading_error:
+                grading={"state":"GRADING_FAILED", "error":type(grading_error).__name__+": "+str(grading_error)[:500]}
+            captured_rows=sum(len(batch["rows"]) for batch in records(state,"forecasts"))-prior_rows
+            report={"state":"PERMITTED_OPERATION_FAILED_AFTER_ISSUANCE" if captured_rows else "PERMITTED_SOURCE_ISSUANCE_ABSTAINED", "error":type(error).__name__+": "+str(error)[:500],
+                    "grading":grading,"observed_at":now_utc().isoformat(),"new_forecasts":captured_rows}
+            save(state,"health",report)
+            return report
+
+
+def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,source_policy=None):
     from .data import TARGETS, acquire_history,load_history
     from .data import load_identity
     from .features import build_features
     from .models import fit_predict
     from .scoring import SCORING_VERSION
     began=now_utc();methods=methods or ["recent","pooled"]
+    if source_policy is not None:
+        from .operational_models import methods_for_policy
+        methods=methods_for_policy(methods)
     selected={}
     selected_path=Path(root)/"reports/initial-campaign/selected.json"
-    if selected_path.exists():
+    if source_policy is None and selected_path.exists():
         selected={r["target"]:r["development_selected_method"] for r in json.loads(selected_path.read_text()) if r.get("development_selected_method")}
     initial_code_sha=source_tree_digest(root)
     status,status_receipt=fetch(cache,"state","https://api.sleeper.app/v1/state/nfl")
     if status.get("season_type")!="regular":
         players,_=fetch(cache,"players","https://api.sleeper.app/v1/players/nfl")
-        return {"state":"OFFSEASON_GRADING_ONLY","grading":grade_saved(state,cache,players)}
+        return {"state":"OFFSEASON_GRADING_ONLY","grading":grade_saved(state,cache,players,**({"source_policy":source_policy} if source_policy is not None else {}))}
     year,week=int(status["season"]),int(status["week"])
     if not 1<=week<=18:raise ValueError("unsupported regular-season week")
     players,player_receipt=fetch(cache,"players","https://api.sleeper.app/v1/players/nfl")
@@ -90,36 +127,55 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
     games=schedule_games(board)
     if not games:raise ValueError("empty schedule population")
     history_limit=None
-    try:
+    if source_policy is not None:
+        from .operational_sources import acquire_operational_history,load_operational_history
+        from .operational_models import check_operational_storage
+        check_operational_storage(cache,source_policy,state=state)
+        history_asof=now_utc()
         active_seasons=sorted(set(seasons+[year]))
-        acquisition=acquire_history(cache,active_seasons,active_season=year)
-        history=load_history(cache,active_seasons)
-    except (RuntimeError,ValueError,OSError) as exc:
-        # An unavailable current season does not block supported pooled forecasts.
-        history_limit="current-season unavailable: "+str(exc)[:500]
-        acquisition=acquire_history(cache,seasons)
-        history=load_history(cache,seasons)
+        acquisition=acquire_operational_history(cache,active_seasons,source_policy,history_asof,state=state,storage=active_storage())
+        check_operational_storage(cache,source_policy,state=state)
+        history=load_operational_history(cache,active_seasons,source_policy,history_asof)
+    else:
+        try:
+            active_seasons=sorted(set(seasons+[year]))
+            acquisition=acquire_history(cache,active_seasons,active_season=year)
+            history=load_history(cache,active_seasons)
+        except (RuntimeError,ValueError,OSError) as exc:
+            # An unavailable current season does not block supported pooled forecasts.
+            history_limit="current-season unavailable: "+str(exc)[:500]
+            acquisition=acquire_history(cache,seasons)
+            history=load_history(cache,seasons)
     stale_sources=acquisition.get("stale_sources",[])
     if stale_sources:history_limit={"fallback":history_limit,"stale_sources":stale_sources}
     website_prepared=None;website_intake={"state":"NOT_ATTEMPTED"}
     try:
         from .website_baselines import prepare_website_snapshot
-        website_prepared=prepare_website_snapshot(root,cache,games,year,week)
+        storage=active_storage()
+        baseline_cache=storage.live_root/"website-baselines" if storage is not None else cache
+        website_prepared=prepare_website_snapshot(root,baseline_cache,games,year,week,**({"downloader":quota_downloader(storage)} if storage is not None else {}))
         website_intake=website_prepared["report"]
     except (OSError,RuntimeError,ValueError,KeyError,TypeError) as exc:
         website_intake={"state":"OPTIONAL_BASELINE_UNAVAILABLE","reason":type(exc).__name__+": "+str(exc)[:300]}
     feature_cutoff=now_utc() # all source responses used here were received by this clock
-    history=history.loc[pd.to_datetime(history.kickoff_utc,utc=True)<feature_cutoff].copy()
+    if source_policy is None:
+        history=history.loc[pd.to_datetime(history.kickoff_utc,utc=True)<feature_cutoff].copy()
     future_games=[g for g in games if utc(g["kickoff_utc"])>feature_cutoff]
     missed_games=[g["game_id"] for g in games if utc(g["kickoff_utc"])<=feature_cutoff]
     if not future_games:
-        grade=grade_saved(state,cache,players)
+        grade=grade_saved(state,cache,players,**({"source_policy":source_policy} if source_policy is not None else {}))
         report={"state":"GRADING_ONLY_NO_FUTURE_GAMES","grading":grade,"missed_started_games":missed_games,"history_limit":history_limit}
         save(state,"health",{**report,"observed_at":now_utc().isoformat()})
         return report
-    registry=load_identity(cache)
-    exact=registry.loc[registry.identity_status.eq("source_exact_binding") & registry.sleeper_id.notna()]
-    mapping={str(r.sleeper_id):str(r.player_id) for r in exact.itertuples()}
+    if source_policy is not None:
+        from .operational_sources import load_operational_identity
+        registry=load_operational_identity(cache,active_seasons,source_policy,history_asof)
+    else:
+        registry=load_identity(cache)
+    mapping={}
+    if source_policy is None:
+        exact=registry.loc[registry.identity_status.eq("source_exact_binding") & registry.sleeper_id.notna()]
+        mapping={str(r.sleeper_id):str(r.player_id) for r in exact.itertuples()}
     frozen={}
     for batch in records(state,"forecasts"):
         for r in batch["rows"]:
@@ -129,44 +185,83 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
                 frozen[key]=r["player_id"]
     live=future_population(players,future_games,year,week,identity_by_sleeper=mapping,frozen_by_game_sleeper=frozen)
     if live.empty:raise ValueError("no eligible future roster population")
-    for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
     live["cutoff_utc"]=feature_cutoff.isoformat()
     live["outcome_available_utc"]=pd.to_datetime(live.kickoff_utc,utc=True)+pd.Timedelta(days=7)
-    if "cutoff_utc" not in history:history["cutoff_utc"]=history.kickoff_utc
+    if source_policy is not None:
+        from .hosted_reference_adapter import adapt_live_identities, code_hashes as identity_code_hashes, PROVENANCE
+        from .reference_runtime import StateBoundStorage
+        identity_manifest=registry.attrs.get("operational_manifest",{})
+        history_manifest=history.attrs["operational_manifest"]
+        if (identity_manifest.get("snapshot_sha256")!=history_manifest.get("snapshot_sha256")
+                or identity_manifest.get("namespace")!=history_manifest.get("namespace")):
+            raise ValueError("daily identity and history must share the exact qualified snapshot")
+        identity_sha=identity_manifest["artifact_sha256s"]["processed/identity.parquet"]
+        identity_path=Path(identity_manifest["namespace"])/"processed/identity.parquet"
+        active_storage().validate_reference(identity_path,expected_sha256=identity_sha)
+        live,identity_receipt=adapt_live_identities(live,registry,identity_sha256=identity_sha,frozen_by_game_sleeper=frozen)
+        identity_codes=identity_code_hashes()
+        model_storage=StateBoundStorage(active_storage(),state)
+    for target in list(TARGETS)+["rec_tgt","rush_td","rec_td"]:live[target]=np.nan
+    if source_policy is None and "cutoff_utc" not in history:history["cutoff_utc"]=history.kickoff_utc
     # Source history uses GSIS, allowing exact matches and explicit unlinked cold starts.
-    joined=pd.concat([history,live],ignore_index=True)
-    features=build_features(joined)
+    if source_policy is not None:
+        from .operational_sources import build_operational_features
+        operational_manifest=history.attrs["operational_manifest"]
+        training_features=build_operational_features(history,policy=source_policy)
+        query_features=build_operational_features(history,policy=source_policy,queries=live)
+        features=pd.concat([training_features,query_features],ignore_index=True)
+    else:
+        joined=pd.concat([history,live],ignore_index=True)
+        features=build_features(joined)
     test=features.loc[features.game_id.astype(str).str.startswith("espn:")].copy()
     train=features.loc[~features.game_id.astype(str).str.startswith("espn:")].copy()
     available=pd.to_datetime(train.outcome_available_utc,utc=True,errors="coerce")
     train=train.loc[available<feature_cutoff]
     hashes={"state":status_receipt["sha256"],"players":player_receipt["sha256"],"schedule":board_receipt["sha256"],
-            "history":digest({r["name"]:r.get("sha256") for r in acquisition["sources"]})}
+            "history":digest({r["name"]:r.get("sha256") for r in acquisition["sources"]}) if source_policy is None else operational_manifest["snapshot_sha256"]}
+    if source_policy is not None:
+        from .operational_models import source_binding,model_binding,fit_operational_reference,predict_operational_artifact,VERSION
+        source_contract=source_binding(source_policy,operational_manifest)
+        operational_model_version=digest({"policy_sha256":source_contract["policy_sha256"],"code_sha256":source_contract["code_sha256"],
+                                         "identity_adapter_code_sha256":identity_codes})
+        hashes.update(source_policy=source_policy["_policy_sha256"],training_view=operational_manifest["training_view_sha256"],
+                      operational_binding=digest(source_contract),identity_source=identity_sha,
+                      identity_resolution=digest(identity_receipt),identity_adapter_code=digest(identity_codes))
     feature_columns=[c for c in test if c.startswith("f_")]+["player_id","game_id","team","opponent","cutoff_utc"]
+    if source_policy is not None:feature_columns+=list(PROVENANCE)
     feature_sha=hashlib.sha256(pd.util.hash_pandas_object(test[feature_columns],index=True).values.tobytes()).hexdigest()
     input_sha=digest({"sources":hashes,"feature_cutoff":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha});code_sha=initial_code_sha;out=[];abstentions=[]
     input_manifest_sha=save(state,"input_manifests",{"schema_version":"lab-input-manifest-v1","input_sha256":input_sha,
         "feature_cutoff_utc":feature_cutoff.isoformat(),"feature_values_sha256":feature_sha,"code_sha256":code_sha,
         "source_hashes":hashes,"history_acquisition":acquisition,"live_receipts":{"state":status_receipt,"players":player_receipt,"schedule":board_receipt},
         "feature_columns":feature_columns,"schedule_population":games,"population_rows":len(test),
+        **({"operational_manifest":operational_manifest,"identity_resolution":identity_receipt,"identity_adapter_code_sha256":identity_codes} if source_policy is not None else {}),
         "timing_scope":"current responses observed before featurecutoff; historical windows reconstructed; provider publication clocks unknown",
         "scope":"this intake only; no retroactive binding to existing frozen forecasts"})
     existing={tuple(r[k] for k in ["player_id","game_id","target","model_id"]) for batch in records(state,"forecasts") for r in batch["rows"]}
     already_frozen=0;artifact_replays=0
     for target in TARGETS:
+        if source_policy is not None and target=="fantasy_ppr":
+            abstentions.append({"target":target,"method":"all","reason":"exact_ppr_label_contract_unavailable"});continue
         target_methods=list(dict.fromkeys(methods+([selected[target]] if target in selected else [])))
         for method in target_methods:
-            model_id="lab-v1.1-"+method
+            model_id="lab-v1.1-"+method if source_policy is None else VERSION+"-"+operational_model_version[:16]+"-"+method
             needed=np.array([(str(r.player_id),str(r.game_id),target,model_id) not in existing for r in test.itertuples()],dtype=bool)
             already_frozen+=int((~needed).sum())
             if not needed.any():continue
             forecast_test=test.loc[needed]
-            artifact=Path(state)/"models"/input_sha/f"{target}-{method}.json"
-            if sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
-            pred=fit_predict(train,forecast_test,target,method,artifact_path=artifact)
-            from .model_artifacts import predict_artifact
-            replay=predict_artifact(artifact,forecast_test,input_manifest={"source_qualified":True,"availability_verified":True,"input_sha256":input_sha,
-                      "qualification_scope":"current source responses observed before feature_cutoff; historical source clocks remain reconstructed"})
+            artifact=Path(state)/"models"/input_sha/f"{target}-{method}.json" if source_policy is None else Path(state)/"models"/VERSION/hashes["operational_binding"]/input_sha/f"{target}-{method}.json"
+            if source_policy is None and sum(p.stat().st_size for p in Path(state).rglob("*") if p.is_file())>195*1024*1024:raise RuntimeError("derived state nearing200MiB cap; no evidence removed")
+            if source_policy is not None:
+                binding=model_binding(source_policy,operational_manifest,train,forecast_test,input_sha)
+                pred=fit_operational_reference(train,forecast_test,target,method,artifact_path=artifact,binding=binding,storage=model_storage)
+                check_operational_storage(cache,source_policy,state=state)
+                replay=predict_operational_artifact(artifact,forecast_test,binding=binding,storage=model_storage)
+            else:
+                pred=fit_predict(train,forecast_test,target,method,artifact_path=artifact)
+                from .model_artifacts import predict_artifact
+                replay=predict_artifact(artifact,forecast_test,input_manifest={"source_qualified":True,"availability_verified":True,"input_sha256":input_sha,
+                          "qualification_scope":"current source responses observed before feature_cutoff; historical source clocks remain reconstructed"})
             for col in ["mean","scale","p10","p50","p90","p_participation"]:
                 if not np.allclose(pred[col].to_numpy(float),replay[col].to_numpy(float),rtol=1e-10,atol=1e-9,equal_nan=True):raise ValueError(f"real input artifact replay mismatch:{target}/{method}/{col}")
             if pred.fallback.fillna("").tolist()!=replay.fallback.fillna("").tolist():raise ValueError("real input artifact fallback replay mismatch")
@@ -189,6 +284,9 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
                      "fallback":str(p.fallback) if pd.notna(p.fallback) else None,
                      "population_eligibility":"current_active_flag_skill_roster; not game-day proof","code_integrity":"pre_post_source_digest_required",
                      "coherence_scope":"conditional scalar marginal; cross-target joint integration not established"}
+                if source_policy is not None:
+                    row.update(operational_source_binding=binding,participation_probability_status="unavailable_positive_event_panel")
+                    row.update({name:str(getattr(r,name)) for name in PROVENANCE})
                 out.append(row)
     if source_tree_digest(root)!=initial_code_sha:raise RuntimeError("source changed during live calculation; no forecast issuance")
     result=capture(state,out)
@@ -200,7 +298,7 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
             website_intake={"state":"OPTIONAL_BASELINE_BINDING_FAILED","reason":type(exc).__name__+": "+str(exc)[:300]}
     # Archived provider projections are privately cached, never published as a raw feed.
     _,projection_receipt=fetch(cache,f"projections-{year}-{week}",f"https://api.sleeper.app/projections/nfl/{year}/{week}?season_type=regular")
-    grade=grade_saved(state,cache,players)
+    grade=grade_saved(state,cache,players,**({"source_policy":source_policy} if source_policy is not None else {}))
     report={"started_at":began.isoformat(),"completed_at":now_utc().isoformat(),"season":year,"week":week,
             "schedule_games":len(games),"population_rows":len(test),"capture":result,"grading":grade,
             "history_limit":history_limit,"missed_started_games":missed_games,
@@ -212,26 +310,52 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None):
             "baseline_comparison":"raw provider cached privately; paired score requires exact saved player/game/cutoff binding",
             "recording_scope":"new lab shadow; not rec-half-adjustment-v1"}
     (Path(root)/"runs").mkdir(exist_ok=True)
-    (Path(root)/"runs"/"daily.json").write_text(json.dumps(report,indent=2,allow_nan=False))
+    report_path=Path(root)/"runs"/"daily.json"
+    storage=active_storage()
+    if storage is None:
+        report_path.write_text(json.dumps(report,indent=2,allow_nan=False))
+    else:
+        with storage.capture_writes(roots=[report_path]):
+            storage.write_text(report_path,json.dumps(report,indent=2,allow_nan=False),replace=True)
     save(state,"health",{**report,"observed_at":now_utc().isoformat()})
     return report
 
 
-def grade_only(state,cache):
+def grade_only(state,cache,*,source_policy=None):
     """Delayed/offseason operation: grade saved games, never issue forecasts."""
+    if source_policy is None:
+        return _grade_only(state,cache)
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage):
+        return _grade_only(state,cache,source_policy=policy)
+
+
+def _grade_only(state,cache,*,source_policy=None):
     player_limit=None
     try:
         players,_=fetch(cache,"players","https://api.sleeper.app/v1/players/nfl")
     except (OSError,RuntimeError,ValueError) as exc:
         # Existing frozen Sleeper IDs remain usable; no name lookup is invented.
         players={};player_limit=type(exc).__name__+": "+str(exc)[:300]
-    result={"state":"GRADING_ONLY_NO_PREGAME_ISSUANCE","grading":grade_saved(state,cache,players),
+    result={"state":"GRADING_ONLY_NO_PREGAME_ISSUANCE","grading":grade_saved(state,cache,players,**({"source_policy":source_policy} if source_policy is not None else {})),
             "player_source_limit":player_limit,"observed_at":now_utc().isoformat()}
     save(state,"health",result)
     return result
 
 
-def grade_saved(state,cache,players):
+def grade_saved(state,cache,players,*,source_policy=None):
+    if source_policy is None:
+        return _grade_saved(state,cache,players)
+    from .operational_sources import load_source_policy
+    policy=load_source_policy(source_policy)
+    storage=OperationalStorage(cache,policy,state=state)
+    with operational_io(storage):
+        return _grade_saved(state,cache,players,source_policy=policy)
+
+
+def _grade_saved(state,cache,players,*,source_policy=None):
     from .scoring import stat_value
     from .grading_sources import load_cached_grading_context,cached_nflverse_outcome
     opportunities={};identity_conflicts=set();frozen_ids_by_sleeper={}
@@ -255,7 +379,12 @@ def grade_saved(state,cache,players):
         if board.get("week",{}).get("number")!=week or board.get("season",{}).get("year")!=season:raise ValueError("grade schedule period mismatch")
         finals={g["game_id"]:g for g in schedule_games(board) if g["final"] and utc(g["kickoff_utc"])<now_utc()}
         if finals and context is None and supplement_limit is None:
-            try:context=load_cached_grading_context(cache,sorted({s for s,_ in periods}))
+            try:
+                if source_policy is not None:
+                    from .grading_sources import load_permitted_grading_context
+                    context=load_permitted_grading_context(cache,sorted({s for s,_ in periods}),source_policy,now_utc())
+                else:
+                    context=load_cached_grading_context(cache,sorted({s for s,_ in periods}))
             except (OSError,RuntimeError,ValueError,KeyError) as exc:supplement_limit=type(exc).__name__+": "+str(exc)[:500]
         stats,sr=fetch(cache,f"stats-{season}-{week}",f"https://api.sleeper.app/stats/nfl/{season}/{week}?season_type=regular")
         entries={str(s["player_id"]):s for s in stats} if isinstance(stats,list) else stats

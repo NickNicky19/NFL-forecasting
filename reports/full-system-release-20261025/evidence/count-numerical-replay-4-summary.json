@@ -1,0 +1,103 @@
+{
+  "actual_failed_run_id": "40179248868",
+  "address_space_bytes": 4294967296,
+  "all_six_code_pins_preserved": true,
+  "completed_CPU_seconds": 18.467419089,
+  "completed_configurations": [
+    {
+      "BLAS_architectures": [
+        "SkylakeX",
+        "SkylakeX"
+      ],
+      "exact_slots": 16,
+      "mismatches": [
+        {
+          "fallback_reasons_changed": 0,
+          "family": "leaf_cdf_base",
+          "finite_max_ULP": 2,
+          "ordinal": 7,
+          "point_bits_changed": 2,
+          "target": "rush_att"
+        },
+        {
+          "fallback_reasons_changed": 0,
+          "family": "count_A",
+          "finite_max_ULP": 1,
+          "ordinal": 12,
+          "point_bits_changed": 1,
+          "target": "rush_att"
+        }
+      ],
+      "name": "default",
+      "report_sha256": "1080ed6adbc71fe42aeb018562ee70d59f07d6c3a48eb510490f7104b4584193",
+      "strict_loader": "FAIL"
+    },
+    {
+      "BLAS_architectures": [
+        "Haswell",
+        "Haswell"
+      ],
+      "exact_slots": 17,
+      "mismatches": [
+        {
+          "fallback_reasons_changed": 0,
+          "family": "count_A",
+          "finite_max_ULP": 1,
+          "ordinal": 12,
+          "point_bits_changed": 1,
+          "target": "rush_att"
+        }
+      ],
+      "name": "Haswell",
+      "report_sha256": "4df940542658a91ac45707fa7e8886b9af4a15e272d7e435f884ae13ae2c6a85",
+      "strict_loader": "FAIL"
+    },
+    {
+      "BLAS_architectures": [
+        "Haswell",
+        "Haswell"
+      ],
+      "exact_slots": 18,
+      "mismatches": [],
+      "name": "generic_Haswell",
+      "report_sha256": "5c8e466cc2c7ce61423462296475bc1c956202ebfd00fe1bab395f009e5d10bb",
+      "strict_loader": "PASS"
+    }
+  ],
+  "completed_wall_seconds": 17.676982386001328,
+  "extra_role_oracles_executed_in_this_local_diagnostic": false,
+  "fits": 0,
+  "forecast_release": false,
+  "model_hashes_preserved": true,
+  "new_Actions_or_native_durability_proof": false,
+  "numerical_configuration_id": "effective18-haswell-numpy-generic-v1",
+  "old_genuine_CPU_dispatch": "NOT_RECORDED_NOT_RECONSTRUCTED",
+  "origin_index_sha256": "9ed3d0b71d5c7c43ab27548b2f7c8c258deb3c5c77e244493cdc9d4c9a34c507",
+  "original_expected_bits_and_manifest_hashes_preserved": true,
+  "outcome_reads": 0,
+  "peak_RSS_bytes": 254296064,
+  "private_values_included": false,
+  "qualified_model_pairs": 18,
+  "replay_subprocesses_including_one_preserved_predecode_setup_failure": 4,
+  "required_genuine_readiness": [
+    "ORIGINAL_ALL18_STRICT_RETAINED_REPLAY",
+    "EXISTING_COUNT_COLD_ROLE_ORACLES",
+    "FUTURE_INFERENCE_WITH_THE_SAME_STARTUP_ENVIRONMENT"
+  ],
+  "schema_version": "count-effective18-numerical-replay-diagnostic-v1",
+  "skipped_redundant_configuration": "FIXED_SKYLAKEX_LOCAL_DEFAULT_ALREADY_SELECTED_SKYLAKEX",
+  "startup_environment": {
+    "ARROW_DEFAULT_MEMORY_POOL": "system",
+    "ARROW_IO_THREADS": "2",
+    "MALLOC_ARENA_MAX": "2",
+    "MKL_NUM_THREADS": "2",
+    "NPY_DISABLE_CPU_FEATURES": "AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL,AVX512_SPR,AVX2,FMA3,AVX,F16C,SSE41,SSE42,SSSE3,POPCNT",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OMP_THREAD_LIMIT": "2",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "2",
+    "VECLIB_MAXIMUM_THREADS": "2"
+  },
+  "state": "LOCAL_EXACT18_REPLAY_PASS_GENUINE_READINESS_PENDING"
+}

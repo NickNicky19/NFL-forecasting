@@ -1,0 +1,73 @@
+{
+  "budgets": {
+    "CPU_seconds": 60,
+    "HTTP": 0,
+    "automatic_retries": 0,
+    "combined_RSS_bytes": 268435456,
+    "fits": 0,
+    "forecast_scores": 0,
+    "invocations": 1,
+    "new_retained_bytes": 1048576,
+    "numerical_threads": 1,
+    "raw_rows": 200,
+    "wall_seconds": 60
+  },
+  "cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+  "code_sha256": {
+    "nfl_lab/ftn_context_metadata_diagnosis.py": "4283149b79c9094aa6afa071adc09ce5dc9b811e050a009fbe38aa20d39a79c4",
+    "nfl_lab/ftn_zero_join.py": "56511f54aa6717f6d102e11c55b566568a773d9003b8a90779e313c98dfe77d4",
+    "nfl_lab/operational_storage.py": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad",
+    "nfl_lab/owned_reference_batch.py": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb"
+  },
+  "environment": {
+    "executable": "/workspace/nfl-venv/bin/python",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "pyarrow": "23.0.1"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "output": "/workspace/website-methods-research/resumed/ftn-context-metadata-diagnosis-v1-20261023",
+  "prior_join_failure": {
+    "bytes": 392,
+    "path": "/workspace/website-methods-research/resumed/ftn-explicit-zero-join-v1-20261023/JOIN_FAILURE.json",
+    "sha256": "2b1022be9e9804895fce4e9edf419e36473150462b7e6fd1776edad015456a17"
+  },
+  "prior_supervisor_receipt": {
+    "bytes": 1148,
+    "path": "/workspace/website-methods-research/resumed/ftn-explicit-zero-join-v1-supervisor-20261023/JOB_FINISHED.json",
+    "sha256": "daf83611d6f1e0521301f1fac9ec819d25a6bacd73790e057d29571bdb070f2f"
+  },
+  "projection": {
+    "columns": [
+      "game_id",
+      "season",
+      "week",
+      "season_type",
+      "player_id",
+      "team",
+      "opponent_team",
+      "position"
+    ],
+    "fixed_game": "2024_01_BAL_KC",
+    "maximum_rows": 200
+  },
+  "raw_statistics": {
+    "bytes": 849243,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/sources/stats_player_week_2024.parquet",
+    "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+  },
+  "schema_version": "ftn-context-metadata-diagnosis-v1",
+  "source_manifest": {
+    "bytes": 23272,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+    "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+  },
+  "source_policy": {
+    "bytes": 13487,
+    "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "state": "BOUND_READY"
+}

@@ -1,0 +1,69 @@
+{
+  "registration_id": "all12-role-count-boosting-v1-20261023",
+  "state": "PREDECLARED_RESEARCH_ONLY_NOT_ACTIVATED",
+  "hypothesis": "Count Poisson loss/log link and role-stratified training may improve the failed pooled-role L1 point models; gains are not assumed or transferred between categories.",
+  "source": "Unchanged approved NFL-only feature/query/outcome packet from all12-median-boosting-v1-20261023; no PFR-derived new training or inference",
+  "panel": "base",
+  "variants": {
+    "A": "Six count targets use pooled-original-modeled-roles Poisson HGB; signed yards and binary probabilities reuse byte-bound original HGB base outputs",
+    "B": "Separate estimators and preprocessing within each original modeled role; unchanged full-training role/global priors; singleton passing-role cases alias A without refitting"
+  },
+  "fixed_parameters": {
+    "max_iter": 150,
+    "learning_rate": 0.05,
+    "max_leaf_nodes": 15,
+    "max_depth": 3,
+    "min_samples_leaf": 30,
+    "minimum_supported_training_rows": 60,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 1702,
+    "count_loss": "poisson",
+    "signed_yard_loss": "absolute_error",
+    "binary_loss": "log_loss"
+  },
+  "fallbacks": "Preserve training-only role/global prior point policy, cold-start routing and nonmodeled roles. All-zero count and single-class binary groups retain their declared prior without pseudolabels or fitted models.",
+  "periods": ["2022", "2023", "2024", "website_week6"],
+  "chronology": "Expanding earlier-year training for 2022-2024; 2019-2025 training for original W6 queries. Reuse strict inherited kickoff/availability filters. Every period is exposed and current-vintage reconstructed.",
+  "metrics": {
+    "numeric_primary": "MAE for an explicitly declared point heuristic; no fitted conditional-mean accuracy or numeric predictive-law claim",
+    "binary_primary": "Brier for conditional-played rush-or-receive touchdown event probability",
+    "secondary": ["MSE", "RMSE", "signed_bias", "p95_absolute_error", "coverage", "fallback", "proper_binary_log_loss", "binary_reliability"],
+    "historical_primary_population": "Unchanged category primary_roles; show all-offered population separately and preserve every eligible player-game",
+    "website_primary_population": "All original category offers on exactly paired supported outcomes",
+    "uncertainty": "500 fixed-seed nominal descriptive game/week clustered replicates on historical pairs; no Week6 interval or fresh-confirmation claim"
+  },
+  "comparisons": "Historical paired old HGB/CDF/recent/pooled where retained; historical website/raw forecasts N/A. Original W6 website/raw/simple/old-HGB/CDF points on exact compatible pairs; A-vs-B procedure ablation. Retain every loss and distinct denominator.",
+  "coherence": "Separate descriptive checks for completion-versus-attempt points and direct combined-yard versus component points on common triples; no inherited combined gain or invented missing components",
+  "cumulative_budget_amendment": {
+    "prior_audited_completed_fit_lower_bound": 632,
+    "prior_count_is_not_an_exact_lifetime_total": true,
+    "old_88_fit_study_spent": true,
+    "new_maximum_estimator_fit_attempts": 136,
+    "A_count_maximum": 24,
+    "B_skill_role_maximum": 100,
+    "B_binary_role_maximum": 12,
+    "main_packages": 96,
+    "new_model_packages": 48,
+    "reused_alias_packages": 40,
+    "blocked_PPR_packages": 8,
+    "maximum_score_passes": 1,
+    "new_blends_or_features": 0,
+    "adaptive_refits": 0,
+    "budget_failures": "Consumed attempts remain spent; checkpoint all unrun slots; no automatic retry or search extension"
+  },
+  "resource_limits": {
+    "wall_seconds": 1800,
+    "cpu_seconds": 2400,
+    "threads": 2,
+    "peak_process_group_RSS_bytes": 1610612736,
+    "private_output_bytes": 838860800,
+    "per_trial_wall_seconds": 90,
+    "per_trial_cpu_seconds": 120
+  },
+  "targets": ["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd", "fantasy_ppr", "anytime_td"],
+  "exact_PPR": "Retain every offer and blocked slot. Zero exact source-qualified labels; no generic fantasy total or unknown-to-zero substitution.",
+  "activation": false,
+  "promotion": "None from exposed research. Existing confirmation, integrity, consumer, coverage, bias and owner integration requirements remain unchanged.",
+  "preservation": "Original passing-yard reconstruction and adverse bias, original missing-runner status, frozen rec-half registration/Weeks7-14, original RB proposal and all prior failures remain unchanged. No scheduler, recorder, default or website change."
+}

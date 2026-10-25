@@ -1,0 +1,3154 @@
+{
+  "registration": "anytime-td-blend-v1-20261025",
+  "summary": {
+    "2023": {
+      "fresh_cdf": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "played_zero": 4113,
+        "played_event": 949,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1388448281164667,
+        "log_loss": 0.4411632706813588,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 633,
+            "p": 0.06967913788356163,
+            "event_rate": 0.061611374407582936
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2290,
+            "p": 0.1466458663358556,
+            "event_rate": 0.11135371179039301
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1212,
+            "p": 0.24580002084493152,
+            "event_rate": 0.23844884488448845
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 645,
+            "p": 0.3480703603944729,
+            "event_rate": 0.35968992248062015
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 243,
+            "p": 0.43432626833272636,
+            "event_rate": 0.4609053497942387
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 39,
+            "p": 0.5352743000505821,
+            "event_rate": 0.5641025641025641
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 633,
+        "high_tail_rows": 0,
+        "coverage80": 0.9922955353615172,
+        "mean_interval_width80": 0.8749506124061636,
+        "bias": 0.015756206403540328,
+        "p95_absolute_error": 0.8107411385606874
+      },
+      "catboost_medium": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "played_zero": 4113,
+        "played_event": 949,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.13882982883550476,
+        "log_loss": 0.44084886999164685,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 919,
+            "p": 0.07464448546849603,
+            "event_rate": 0.07290533188248095
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2084,
+            "p": 0.14805912523545597,
+            "event_rate": 0.11900191938579655
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1114,
+            "p": 0.24633040684516777,
+            "event_rate": 0.24685816876122083
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 649,
+            "p": 0.34274237677274555,
+            "event_rate": 0.32819722650231126
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 236,
+            "p": 0.43649738019041573,
+            "event_rate": 0.4661016949152542
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 54,
+            "p": 0.5379301981562897,
+            "event_rate": 0.6296296296296297
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 6,
+            "p": 0.620804581820558,
+            "event_rate": 0.3333333333333333
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 919,
+        "high_tail_rows": 0,
+        "coverage80": 0.9867641248518372,
+        "mean_interval_width80": 0.8184512050572896,
+        "bias": 0.012009445832391937,
+        "p95_absolute_error": 0.8223533962237328
+      },
+      "pooled": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "played_zero": 4113,
+        "played_event": 949,
+        "base_fallback_offered": 0,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.15232875416922895,
+        "log_loss": 0.4825427953635314,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 5062,
+            "p": 0.18681318681318684,
+            "event_rate": 0.18747530620308178
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 0,
+        "high_tail_rows": 0,
+        "coverage80": 1.0,
+        "mean_interval_width80": 1.0,
+        "bias": -0.0006621193898949658,
+        "p95_absolute_error": 0.8131868131868132
+      },
+      "fixed_half": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "played_zero": 4113,
+        "played_event": 949,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1386649426752947,
+        "log_loss": 0.4404591270437415,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 765,
+            "p": 0.07349303989709209,
+            "event_rate": 0.06013071895424837
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2183,
+            "p": 0.14674944493831668,
+            "event_rate": 0.11497938616582684
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1183,
+            "p": 0.24560554754022398,
+            "event_rate": 0.24175824175824176
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 646,
+            "p": 0.34651497029254147,
+            "event_rate": 0.34674922600619196
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 241,
+            "p": 0.43403255195249885,
+            "event_rate": 0.4854771784232365
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 44,
+            "p": 0.5385630322251078,
+            "event_rate": 0.5681818181818182
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 765,
+        "high_tail_rows": 0,
+        "coverage80": 0.9909126827340972,
+        "mean_interval_width80": 0.8488739628605294,
+        "bias": 0.013882826117966134,
+        "p95_absolute_error": 0.8157772052253728
+      },
+      "shrunk_brier": {
+        "offered": 7134,
+        "forecasted": 7134,
+        "scored": 5062,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2072,
+        "played_missing_label": 0,
+        "played_invalid_label": 0,
+        "played_zero": 4113,
+        "played_event": 949,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1386657966070088,
+        "log_loss": 0.44044738752680296,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 783,
+            "p": 0.07385275108699689,
+            "event_rate": 0.06130268199233716
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2171,
+            "p": 0.1469556996852692,
+            "event_rate": 0.11469368954398894
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1168,
+            "p": 0.24534591688328458,
+            "event_rate": 0.2457191780821918
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 652,
+            "p": 0.3454630038603332,
+            "event_rate": 0.3389570552147239
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 242,
+            "p": 0.43363590589382606,
+            "event_rate": 0.4793388429752066
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 46,
+            "p": 0.5381885702435328,
+            "event_rate": 0.6086956521739131
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 783,
+        "high_tail_rows": 0,
+        "coverage80": 0.9905175819834058,
+        "mean_interval_width80": 0.8453180561043065,
+        "bias": 0.013704069737645217,
+        "p95_absolute_error": 0.8163912241857069
+      }
+    },
+    "2024": {
+      "fresh_cdf": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 4083,
+        "played_event": 1012,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.14318310274641471,
+        "log_loss": 0.4491958481232813,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 770,
+            "p": 0.07203051243509151,
+            "event_rate": 0.048051948051948054
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2288,
+            "p": 0.14319963372711286,
+            "event_rate": 0.13155594405594406
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1164,
+            "p": 0.24307920276109968,
+            "event_rate": 0.26804123711340205
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 536,
+            "p": 0.3414862233218374,
+            "event_rate": 0.3656716417910448
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 252,
+            "p": 0.4434451236871248,
+            "event_rate": 0.4523809523809524
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 85,
+            "p": 0.5294777362057271,
+            "event_rate": 0.611764705882353
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 770,
+        "high_tail_rows": 0,
+        "coverage80": 0.9927379784102061,
+        "mean_interval_width80": 0.8488714425907753,
+        "bias": -0.0012092555439211362,
+        "p95_absolute_error": 0.823508514595973
+      },
+      "catboost_medium": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 4083,
+        "played_event": 1012,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.14279876741629124,
+        "log_loss": 0.44848513152039543,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 1051,
+            "p": 0.07414173778572555,
+            "event_rate": 0.06184586108468126
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2090,
+            "p": 0.14410586871269762,
+            "event_rate": 0.13923444976076554
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1069,
+            "p": 0.2436588086572659,
+            "event_rate": 0.27595884003741816
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 524,
+            "p": 0.339854520190042,
+            "event_rate": 0.3377862595419847
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 240,
+            "p": 0.44445362716713854,
+            "event_rate": 0.45416666666666666
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 95,
+            "p": 0.5396144452421743,
+            "event_rate": 0.6210526315789474
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 26,
+            "p": 0.63441204056675,
+            "event_rate": 0.6153846153846154
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 1051,
+        "high_tail_rows": 0,
+        "coverage80": 0.9872423945044161,
+        "mean_interval_width80": 0.7937193326790971,
+        "bias": -0.0039084940275976275,
+        "p95_absolute_error": 0.8289016148794592
+      },
+      "pooled": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 4083,
+        "played_event": 1012,
+        "base_fallback_offered": 0,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.15930563332318887,
+        "log_loss": 0.4989186840531135,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 5095,
+            "p": 0.1871431384130735,
+            "event_rate": 0.1986261040235525
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 0,
+        "high_tail_rows": 0,
+        "coverage80": 1.0,
+        "mean_interval_width80": 1.0,
+        "bias": -0.011482965610479026,
+        "p95_absolute_error": 0.8128568615869265
+      },
+      "fixed_half": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 4083,
+        "played_event": 1012,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.14282697690710314,
+        "log_loss": 0.4483522059403853,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 876,
+            "p": 0.07328874315964212,
+            "event_rate": 0.05365296803652968
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2225,
+            "p": 0.14292991284087328,
+            "event_rate": 0.13617977528089886
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1131,
+            "p": 0.24410945307580204,
+            "event_rate": 0.26702033598585323
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 516,
+            "p": 0.34253579581952986,
+            "event_rate": 0.35852713178294576
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 249,
+            "p": 0.44430190150554194,
+            "event_rate": 0.4497991967871486
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 95,
+            "p": 0.541300755896604,
+            "event_rate": 0.631578947368421
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 3,
+            "p": 0.6171768436998609,
+            "event_rate": 1.0
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 876,
+        "high_tail_rows": 0,
+        "coverage80": 0.9907752698724239,
+        "mean_interval_width80": 0.8280667320902846,
+        "bias": -0.0025588747857593786,
+        "p95_absolute_error": 0.8256082088419147
+      },
+      "shrunk_brier": {
+        "offered": 7148,
+        "forecasted": 7148,
+        "scored": 5095,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 2029,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 4083,
+        "played_event": 1012,
+        "base_fallback_offered": 183,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.14281625322461472,
+        "log_loss": 0.44833239990403767,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 888,
+            "p": 0.07346122915889237,
+            "event_rate": 0.05292792792792793
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 2217,
+            "p": 0.14306498250071747,
+            "event_rate": 0.13757329724853407
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 1128,
+            "p": 0.2442551824234715,
+            "event_rate": 0.26595744680851063
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 511,
+            "p": 0.34221159244584165,
+            "event_rate": 0.35812133072407043
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 252,
+            "p": 0.4438516272034117,
+            "event_rate": 0.44841269841269843
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 96,
+            "p": 0.5421725731417479,
+            "event_rate": 0.6354166666666666
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 3,
+            "p": 0.6202585477744487,
+            "event_rate": 1.0
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 888,
+        "high_tail_rows": 0,
+        "coverage80": 0.9907752698724239,
+        "mean_interval_width80": 0.825711481844946,
+        "bias": -0.002638162918375091,
+        "p95_absolute_error": 0.8257981431449325
+      }
+    },
+    "2023+2024": {
+      "fresh_cdf": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 8196,
+        "played_event": 1961,
+        "base_fallback_offered": 366,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1410210129387159,
+        "log_loss": 0.4451926082876003,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 1403,
+            "p": 0.0709696285497612,
+            "event_rate": 0.0541696364932288
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 4578,
+            "p": 0.14492350281274435,
+            "event_rate": 0.12145041502839668
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 2376,
+            "p": 0.24446709481396336,
+            "event_rate": 0.2529461279461279
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 1181,
+            "p": 0.3450821322226417,
+            "event_rate": 0.3624047417442845
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 495,
+            "p": 0.4389685946949656,
+            "event_rate": 0.45656565656565656
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 124,
+            "p": 0.5313008490278992,
+            "event_rate": 0.5967741935483871
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 1403,
+        "high_tail_rows": 0,
+        "coverage80": 0.9925174756325686,
+        "mean_interval_width80": 0.861868662006498,
+        "bias": 0.0072459151145459234,
+        "p95_absolute_error": 0.8189046947857008
+      },
+      "catboost_medium": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 8196,
+        "played_event": 1961,
+        "base_fallback_offered": 366,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1408207456484522,
+        "log_loss": 0.4446794058279148,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 1970,
+            "p": 0.07437626830372863,
+            "event_rate": 0.06700507614213198
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 4174,
+            "p": 0.14607965563014574,
+            "event_rate": 0.1291327264015333
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 2183,
+            "p": 0.24502214369222822,
+            "event_rate": 0.26110856619331196
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 1173,
+            "p": 0.3414523197826887,
+            "event_rate": 0.33248081841432225
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 476,
+            "p": 0.440508933287923,
+            "event_rate": 0.46008403361344535
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 149,
+            "p": 0.5390040469694376,
+            "event_rate": 0.6241610738255033
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 32,
+            "p": 0.6318606420518391,
+            "event_rate": 0.5625
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 1970,
+        "high_tail_rows": 0,
+        "coverage80": 0.9870040366249877,
+        "mean_interval_width80": 0.8060450920547406,
+        "bias": 0.004024617281968897,
+        "p95_absolute_error": 0.8265071831903167
+      },
+      "pooled": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 8196,
+        "played_event": 1961,
+        "base_fallback_offered": 0,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1558285276544535,
+        "log_loss": 0.49075734226452783,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 10157,
+            "p": 0.1869786986179936,
+            "event_rate": 0.19306881953332677
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 0,
+        "high_tail_rows": 0,
+        "coverage80": 1.0,
+        "mean_interval_width80": 1.0,
+        "bias": -0.006090120915333165,
+        "p95_absolute_error": 0.8131868131868132
+      },
+      "fixed_half": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 8196,
+        "played_event": 1961,
+        "base_fallback_offered": 366,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.14075272099675418,
+        "log_loss": 0.4444184887625955,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 1641,
+            "p": 0.07338398204090307,
+            "event_rate": 0.056672760511883
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 4408,
+            "p": 0.14482148238913078,
+            "event_rate": 0.12568058076225044
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 2314,
+            "p": 0.244874310358175,
+            "event_rate": 0.2541054451166811
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 1162,
+            "p": 0.34474797026838144,
+            "event_rate": 0.35197934595524955
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 490,
+            "p": 0.4392510581539432,
+            "event_rate": 0.4673469387755102
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 139,
+            "p": 0.5404341383315261,
+            "event_rate": 0.6115107913669064
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 3,
+            "p": 0.6171768436998609,
+            "event_rate": 1.0
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 1641,
+        "high_tail_rows": 0,
+        "coverage80": 0.9908437530766959,
+        "mean_interval_width80": 0.8384365462242788,
+        "bias": 0.005635266198257413,
+        "p95_absolute_error": 0.821971116952567
+      },
+      "shrunk_brier": {
+        "offered": 14282,
+        "forecasted": 14282,
+        "scored": 10157,
+        "unsupported_forecasts": 0,
+        "DNP": 0,
+        "unknown": 4101,
+        "played_missing_label": 24,
+        "played_invalid_label": 0,
+        "played_zero": 8196,
+        "played_event": 1961,
+        "base_fallback_offered": 366,
+        "calibration_fallback_offered": 0,
+        "Brier": 0.1407477673135858,
+        "log_loss": 0.4444027028819286,
+        "log_loss_state": "finite",
+        "infinite_log_losses": 0,
+        "reliability_fixed_tenths": [
+          {
+            "lo": 0.0,
+            "hi": 0.1,
+            "n": 1671,
+            "p": 0.07364468916470078,
+            "event_rate": 0.05685218432076601
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.2,
+            "n": 4388,
+            "p": 0.1449899476346422,
+            "event_rate": 0.12625341841385598
+          },
+          {
+            "lo": 0.2,
+            "hi": 0.3,
+            "n": 2296,
+            "p": 0.24481005082463078,
+            "event_rate": 0.2556620209059233
+          },
+          {
+            "lo": 0.3,
+            "hi": 0.4,
+            "n": 1163,
+            "p": 0.3440343957495807,
+            "event_rate": 0.3473774720550301
+          },
+          {
+            "lo": 0.4,
+            "hi": 0.5,
+            "n": 494,
+            "p": 0.43884716453758227,
+            "event_rate": 0.46356275303643724
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.6,
+            "n": 142,
+            "p": 0.5408819806535937,
+            "event_rate": 0.6267605633802817
+          },
+          {
+            "lo": 0.6,
+            "hi": 0.7,
+            "n": 3,
+            "p": 0.6202585477744487,
+            "event_rate": 1.0
+          },
+          {
+            "lo": 0.7,
+            "hi": 0.8,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.8,
+            "hi": 0.9,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          },
+          {
+            "lo": 0.9,
+            "hi": 1.0,
+            "n": 0,
+            "p": null,
+            "event_rate": null
+          }
+        ],
+        "low_tail_rows": 1671,
+        "high_tail_rows": 0,
+        "coverage80": 0.9906468445407108,
+        "mean_interval_width80": 0.8354829181845033,
+        "bias": 0.005506405527502116,
+        "p95_absolute_error": 0.8218580224805802
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "period": 2023,
+      "candidate": "fixed_half",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00017988544117199847,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0005349028238206399,
+              0.00012023425865132631
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004941602523939508,
+              0.0001144350298486852
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0007041436376173912,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.001664541523870855,
+              6.867476202890469e-05
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0015255278792164564,
+              0.00012780436336153782
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2023,
+      "candidate": "fixed_half",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0001648861602100713,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00045909437445603894,
+              0.0001839176134918586
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004518471970110024,
+              0.00014290522964401176
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0003897429479053094,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0012639738827104514,
+              0.0006560284504560442
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0012743347864390578,
+              0.0004903503599001526
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2023,
+      "candidate": "fixed_half",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.013663811493934284,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.01709145577808178,
+              -0.010399788793294354
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.01618064182173978,
+              -0.010966209302296581
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.042083668319789845,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.05196904706738729,
+              -0.03277666269736394
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.04916176784202209,
+              -0.03472776834009461
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2023,
+      "candidate": "shrunk_brier",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0001790315094578903,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0005672846771359436,
+              0.00014911324596364
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0005228926946043366,
+              0.00014376203721154808
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0007158831545558721,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0017715466646884555,
+              0.0001334177011120403
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0016155823111021494,
+              0.00019726285042231235
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2023,
+      "candidate": "shrunk_brier",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00016403222849596314,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004303158868260289,
+              0.00015129234936765267
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004237729036958346,
+              0.00011451084620033208
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00040148246484379046,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0012004957862483347,
+              0.0005480552861298806
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0012032756805920861,
+              0.0004011278474295167
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2023,
+      "candidate": "shrunk_brier",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7134,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.013662957562220177,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.017088885049323606,
+              -0.010384987503794525
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.016176526653367516,
+              -0.010976215008824943
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5062,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.04209540783672833,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5062,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.05198979689742448,
+              -0.032768817819729845
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5062,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.04914314393990926,
+              -0.034718189105185066
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "fixed_half",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00035612583931159223,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0006114448321784564,
+              -9.537125010458515e-05
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0006454710097180174,
+              -7.155960222412e-05
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0008436421828960696,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0015143116657726705,
+              -0.00026297379622253035
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0016578174404924691,
+              -8.311013454029295e-06
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "fixed_half",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": 2.8209490811890615e-05,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00024736600510787945,
+              0.0002788355297227876
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0002584033444302324,
+              0.0003062438526167627
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00013292558001015754,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0007308383479171661,
+              0.0005178747453961183
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0009696255115791822,
+              0.0006939397570968652
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "fixed_half",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0164786564160857,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.018717053203928285,
+              -0.014458002746134752
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0193296132846479,
+              -0.014102326068409015
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.050566478112728276,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.05607359830831283,
+              -0.04498059760802554
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.057793502524897664,
+              -0.043622673880461614
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "shrunk_brier",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0003668495217999934,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0006370094310109055,
+              -9.020386412741111e-05
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0006729295882963513,
+              -6.586233815733761e-05
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0008634482192436517,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.001573596910322076,
+              -0.00024966116070785987
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0017261568319567717,
+              2.1861247832440557e-05
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "shrunk_brier",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": 1.7485808323489418e-05,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00024216099295351883,
+              0.00025326860478201805
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0002518996876861582,
+              0.0002794006454675256
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00015273161635773956,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0007162148302655563,
+              0.0004598819705471341
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0009403199429720268,
+              0.0006275304128031217
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": 2024,
+      "candidate": "shrunk_brier",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 7148,
+      "Brier": {
+        "metric": "Brier",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.016489380098574098,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.01872597525607018,
+              -0.014477355887587749
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.019347740873416574,
+              -0.014104708608460565
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 5095,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.050586284149075865,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 5095,
+            "clusters": 18,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.056063813360713956,
+              -0.045032840786675556
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 5095,
+            "clusters": 272,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.057798834141172324,
+              -0.04364061607835008
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "fixed_half",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0002682919419617228,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004940885069068735,
+              -8.566061871713143e-05
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0004680020655804232,
+              -6.227379592996012e-05
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.000774119525004894,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.001373996148312624,
+              -0.00025745854559143977
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.001340444441204389,
+              -0.00022124814695343798
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "fixed_half",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -6.802465169802089e-05,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00025233488230448777,
+              0.00014684421023920585
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0002764701546114867,
+              0.00012677842439189912
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0002609170653193293,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0007957661818896204,
+              0.00036616315053453153
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0008699908575413835,
+              0.00026318482716779955
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "fixed_half",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.01507580665769932,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.017105233126491863,
+              -0.013150057084853959
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.016887140507649563,
+              -0.013130394082941784
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.04633885350193234,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.05204234176390009,
+              -0.04066051337770075
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.051044746902509285,
+              -0.041198225612009316
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "shrunk_brier",
+      "control": "fresh_cdf",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00027324562513013757,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0005159452037691633,
+              -7.558451657534739e-05
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00048808205599602686,
+              -5.017273169312402e-05
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.0007899054056717762,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00143868219362787,
+              -0.00022677419300768046
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.001403659185114663,
+              -0.00019424959400280535
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "shrunk_brier",
+      "control": "catboost_medium",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -7.297833486643565e-05,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00024290850448145635,
+              0.00012723966384284966
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.00026557380475479385,
+              0.00010887237745395656
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.00027670294598621144,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0007707168686242604,
+              0.0003003462318737998
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.0008414411818804959,
+              0.0002098588069042989
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    },
+    {
+      "period": "2023+2024",
+      "candidate": "shrunk_brier",
+      "control": "pooled",
+      "state": "COMPLETED",
+      "all_offered_forecast_masks_equal": true,
+      "offered": 14282,
+      "Brier": {
+        "metric": "Brier",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.015080760340867734,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.017099751499518114,
+              -0.013156095911530528
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.016893279121026138,
+              -0.013127990479984543
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      },
+      "NLL": {
+        "metric": "log_loss",
+        "n": 10157,
+        "candidate_infinite": 0,
+        "control_infinite": 0,
+        "delta": -0.046354639382599226,
+        "delta_state": "finite",
+        "intervals": {
+          "week": {
+            "cluster": "week",
+            "paired_rows": 10157,
+            "clusters": 36,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.052056670660136105,
+              -0.0406722734394129
+            ],
+            "replicates": 500,
+            "seed": 1931,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          },
+          "game": {
+            "cluster": "game",
+            "paired_rows": 10157,
+            "clusters": 544,
+            "state": "DESCRIPTIVE",
+            "interval": [
+              -0.05106360908395075,
+              -0.04124268066050974
+            ],
+            "replicates": 500,
+            "seed": 1932,
+            "generator": "PCG64",
+            "percentile_method": "linear",
+            "level": 0.95,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification"
+          }
+        }
+      }
+    }
+  ],
+  "pooled_primary_contrasts": 6,
+  "annual_primary_contrasts": 12,
+  "descriptive_advance_only": {
+    "fixed_half": false,
+    "shrunk_brier": false
+  },
+  "component_coverage": {
+    "2022": {
+      "offered": 7222,
+      "component_masks_equal": true,
+      "both_available": 7222,
+      "both_unavailable": 0,
+      "cdf_base_fallback_offered": 179,
+      "cat_base_fallback_offered": 179
+    },
+    "2023": {
+      "offered": 7134,
+      "component_masks_equal": true,
+      "both_available": 7134,
+      "both_unavailable": 0,
+      "cdf_base_fallback_offered": 183,
+      "cat_base_fallback_offered": 183
+    },
+    "2024": {
+      "offered": 7148,
+      "component_masks_equal": true,
+      "both_available": 7148,
+      "both_unavailable": 0,
+      "cdf_base_fallback_offered": 183,
+      "cat_base_fallback_offered": 183
+    }
+  },
+  "NLL_policy": "Unclipped shared evaluator; positive infinity/undefined extended deltas retained explicitly",
+  "interpretation": "All2022-2024exposed; no confirmation/SITE/R0/scientific qualification/nomination/automatic selection/deployment",
+  "usage": {
+    "CPU_seconds": 5.18465425,
+    "wall_seconds": 4.897040735988412,
+    "RSS_bytes": 235487232,
+    "weight_fit_attempts": 2,
+    "base_fits": 0,
+    "calibrator_calls": 0,
+    "model_loads": 0,
+    "base_inference_calls": 0,
+    "HTTP": 0
+  }
+}
