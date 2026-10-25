@@ -228,3 +228,8 @@ The combined-yard publication's initial hosted head failed existing resource che
 
 
 [Fixed dynamic workload: completed negative final-category evidence](dynamic-workload-fixed-forward-v1/README.md): smooth-H8-k25 on exposed REG2022–24,30 frozen forecasts /258,720 row incidences,25,872 offers per category. Carries MSE 4.22145%,receptions MSE 2.28499% andreceiving-yard MAE 3.36052% worse than literalCDF controls; all primary week/game delta intervals positive. Auxiliary target MSE 0.38002% lower than static with worse MAE/bias/p95 and partial coverage. Independent saved-factor arithmetic accepted 7,620 scalars,104 summaries /120 pairs /12 informed /60 intervals. Source/grading parent ACK failed; native receipt absent, whole post-final resources unknown. No category advances or website/R0 claim; earlier failed records remain.
+
+
+## Full-week owner-requested method audit — 2026-10-25
+
+[All twelve category rankings, exact formulas/data, current-versus-research boundaries and complete audit materials](full-week-method-audit-20261025/README.md). Forty-one method families and separate matched panel/product frontiers; current startup is not represented as a universal lowest-error winner. P4 TD is the same equal CDF/Cat family already used at startup. Legacy Count A and corrected mean-v2 remain separate. Original scores, failures and registrations are preserved; new experiments are paused. This source/configuration and published-aggregate audit adds zero NFL fits, forecasts or football observations. The collated audit bundles remain local after opaque-upload review; plain reports link the original public evidence, with learned bodies and private locators omitted.
