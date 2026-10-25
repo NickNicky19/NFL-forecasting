@@ -69,6 +69,26 @@ def require(value, code):
         raise ReferenceError(code)
 
 
+def failure_diagnostic(error, *, stage=None):
+    """Closed reason/type and public code locations, never exception values."""
+    kind = type(error).__name__
+    if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]{0,79}', kind): kind = 'Exception'
+    reason = str(error) if isinstance(error, ReferenceError) else 'ORIGINAL_REFERENCE_WORKER_EXCEPTION'
+    if not re.fullmatch(r'[A-Z][A-Z0-9_]{0,95}', reason): reason = 'ORIGINAL_REFERENCE_WORKER_EXCEPTION'
+    frames = []; trace = error.__traceback__
+    while trace is not None:
+        path = Path(trace.tb_frame.f_code.co_filename).resolve(); name = None
+        if path.is_relative_to(ROOT):
+            relative = path.relative_to(ROOT)
+            if relative.parts[0] in {'nfl_lab', 'tools'} and relative.suffix == '.py': name = relative.as_posix()
+        if stage is not None and path.is_relative_to(Path(stage).resolve()):
+            relative = path.relative_to(Path(stage).resolve()).as_posix()
+            if relative in SOURCE_FILES: name = 'original/' + relative
+        if name is not None: frames.append(dict(file=name, line=trace.tb_lineno))
+        trace = trace.tb_next
+    return dict(reason=reason, error_type=kind, source_frames=frames[-5:])
+
+
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 def stamp(): return datetime.now(timezone.utc).isoformat()
 def finite(v): return type(v) in (int, float) and math.isfinite(v)
@@ -422,9 +442,10 @@ def worker(request_path, expected_sha256):
             upstream_publication_times='NOT_INFERRED',
             fixed_original_default_refresh=True, metadata_remote_durability_qualified=False, fits=0, public_release=False)
         write(storage, output/'WORKER_COMPLETE.json', result)
-    except BaseException:
+    except BaseException as error:
         write(storage, output/'WORKER_FAILED.json', dict(schema_version=VERSION, state='FAILED_PARTIAL_ORIGINAL_R0_RETAINED',
-            actual_failed_at=stamp(), successful_forecast=False, fits=0, public_release=False))
+            actual_failed_at=stamp(), successful_forecast=False, fits=0, public_release=False,
+            diagnostic=failure_diagnostic(error, stage=stage)))
         raise
     finally:
         build.week_stats = original_stats
@@ -464,10 +485,16 @@ def bridge_control_rows(p, board, native_raw, source_receipt_sha256, source_comp
         else:
             game = games.get(player['game_id'])
             require(player['game_id'] == gid and game is not None and team(player['team']) == team(item['team'])
-                and player['pos'] == offer['position'] and utc(game['kickoff']) == utc(item['kickoff_utc'])
+                and utc(game['kickoff']) == utc(item['kickoff_utc'])
                 and {team(game['home']), team(game['away'])} == {team(item['team']), team(item['opponent'])},
                 'ORIGINAL_R0_EXACT_IDENTITY_CONFLICT_NO_FUZZY_MATCH')
-            if row is None or game['state'] != 'pre' or player.get('late'):
+            # The separately acquired R0 roster can disagree with the frozen
+            # query's role. Preserve that opportunity as unavailable; never
+            # relabel a WR prediction as an RB control or invent zero. Other
+            # exact identities remain usable under their unchanged procedure.
+            if player['pos'] != offer['position']:
+                reason = 'ORIGINAL_R0_POSITION_CONFLICT_UNAVAILABLE'
+            elif row is None or game['state'] != 'pre' or player.get('late'):
                 reason = 'ORIGINAL_R0_OPPORTUNITY_UNAVAILABLE'
             elif offer['category'] == 'anytime_td':
                 props = [prop for prop in player['props'] if prop['key'] == 'anytime_td']
@@ -527,8 +554,26 @@ def capture_reference(storage, prepared_ref):
         process = subprocess.run([sys.executable,'-B',str(ROOT/'tools/audit_reference_capture_v1.py'),
             '--worker',request['path'],'--worker-sha256',request['sha256']], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             timeout=seconds, check=False, env=child_env)
+        # Keep actual returned pipe bytes before interpreting success/failure.
+        # These private files are never printed or included in public exports.
+        # An over-cap pipe remains an explicit unqualified failure, not a
+        # truncated diagnostic presented as complete original evidence.
+        pipes = {}
+        for name, body in (('stdout', process.stdout), ('stderr', process.stderr)):
+            require(type(body) is bytes and len(body) <= LIMITS['log_bytes'], 'ORIGINAL_REFERENCE_WORKER_PIPE_BOUND')
+            storage.write_bytes(output/('WORKER.'+name), body)
+            pipes[name] = binding(output/('WORKER.'+name))
+        write(storage, output/'WORKER_EXIT.json', dict(schema_version=VERSION+'-worker-exit',
+            exit_code=process.returncode, actual_observed_at=stamp(), **pipes,
+            successful_forecast=False, fits=0, public_release=False))
         if process.returncode:
-            raise ReferenceError('ISOLATED_ORIGINAL_R0_WORKER_FAILED')
+            reason = 'ISOLATED_ORIGINAL_R0_WORKER_FAILED'
+            failed = output/'WORKER_FAILED.json'
+            if failed.is_file():
+                status = read_owned(storage, binding(failed)); diagnostic = status.get('diagnostic', {})
+                code = diagnostic.get('reason')
+                if type(code) is str and re.fullmatch(r'[A-Z][A-Z0-9_]{0,95}', code): reason = code
+            raise ReferenceError(reason)
         result = read_owned(storage, binding(output/'WORKER_COMPLETE.json'))
         board = read_owned(storage, result['board']); native = read_owned(storage, result['native'], raw=True)
         issued = stamp()

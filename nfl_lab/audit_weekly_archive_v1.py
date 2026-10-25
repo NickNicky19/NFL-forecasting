@@ -8,6 +8,7 @@ transport proofs. Models and the raw HTTP corpus are not capture-archive files.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import base64
 import gzip
 import io
 import json
@@ -27,6 +28,8 @@ INDEX_PLAIN_CAP, INDEX_CAP = 1 << 20, 512 << 10
 ENTRY_CAP, WITNESS_CAP = 16 << 10, 256 << 10
 FAILURE_RESERVE = failure.PACKAGE_CAP + ENTRY_CAP
 MAX_GROUPS, MAX_FILES, MAX_CLIENTS = 8, 512, 10
+FAILURE_OBSERVATIONS_NAME = "failed/reference/SOURCE_OBSERVATIONS_BUNDLE.json"
+FAILURE_OBSERVATIONS_SCHEMA = "audit-weekly-hosted-v2-original-source-observations-bundle"
 SEMANTIC_CAP = 128 << 20
 LIMITS = dict(wall_seconds=180, CPU_seconds=120, address_space_bytes=512 << 20,
     global_bytes=512 << 20, runtime_bytes=32 << 20, asset_bytes=8 << 20,
@@ -197,7 +200,34 @@ def validate_capture(snapshot,path,*,complete):
         and f["origin"]["source_policy_sha256"]==cp.POLICY_SHA for f in files),"NO_MODEL_RAW_OR_OPTIONAL_CAPTURE_FILES")
     require(census["raw_HTTP_corpus_archived"] is census["model_weights_reuploaded"] is False,"EXPLICIT_CAPTURE_SCOPE")
     doc=lambda name:cp.strict_json(store.read_local(path(name),2 << 20))
-    if not complete:return dict(state="FAILURE_EVIDENCE",qualified_selected=False,forecast_rows=0)
+    if not complete:
+        bundled=census.get("bundled_control_sources",{})
+        require(type(bundled) is dict and set(bundled)<={FAILURE_OBSERVATIONS_NAME},"CLOSED_FAILED_CONTROL_BUNDLE_SCOPE")
+        require((FAILURE_OBSERVATIONS_NAME in names)==bool(bundled),"FAILED_CONTROL_BUNDLE_AND_CENSUS_REQUIRED_TOGETHER")
+        for name,expected in bundled.items():
+            require(name in names and type(expected) is list and 0<len(expected)<=1024,"COMPLETE_FAILED_OBSERVATION_CENSUS")
+            body=store.read_local(path(name),1 << 20);value=cp.strict_json(body)
+            require(type(value) is dict and set(value)=={"schema_version","records"}
+                and value["schema_version"]==FAILURE_OBSERVATIONS_SCHEMA and body==store.canonical(value)
+                and type(value["records"]) is list and len(value["records"])==len(expected),"EXACT_FAILED_CONTROL_BUNDLE")
+            seen=[];projection=[]
+            for record in value["records"]:
+                require(type(record) is dict and set(record)=={"logical_path","reference","body_base64"}
+                    and type(record["logical_path"]) is str
+                    and re.fullmatch(r"failed/reference/source-observations/[0-9]{4}-(?:BEGIN|END)\.json",record["logical_path"]),
+                    "ONLY_ORIGINAL_SOURCE_OBSERVATION_CONTROLS_BUNDLED")
+                ref=record["reference"]
+                require(type(ref) is dict and set(ref)=={"path","bytes","sha256"}
+                    and type(ref["path"]) is str and Path(ref["path"]).is_absolute() and len(ref["path"])<=1024
+                    and type(ref["bytes"]) is int and 0<=ref["bytes"]<=64 << 10
+                    and store.HASH.fullmatch(str(ref["sha256"])) and type(record["body_base64"]) is str,
+                    "EXACT_ORIGINAL_BUNDLED_CONTROL_BINDING")
+                try:original=base64.b64decode(record["body_base64"],validate=True)
+                except (ValueError,TypeError):raise store.StoreError("FAILED_CONTROL_BUNDLE_ENCODING") from None
+                require(len(original)==ref["bytes"] and store.sha(original)==ref["sha256"],"FULL_ORIGINAL_BUNDLED_CONTROL_BYTES")
+                seen.append(record["logical_path"]);projection.append({k:record[k] for k in ("logical_path","reference")})
+            require(seen==sorted(set(seen)) and projection==expected,"NO_OMITTED_DUPLICATED_OR_CHANGED_BUNDLED_CONTROL")
+        return dict(state="FAILURE_EVIDENCE",qualified_selected=False,forecast_rows=0)
     require(not census["missing_required"] and {"runtime/"+n for n in CONTROL_FILES|CANDIDATE_NAMES|STATUS_NAMES}<=names,"COMPLETE_ORIGINAL_RUNTIME_CENSUS")
     terminal=doc("runtime/FINISHED.json");handoff=doc("runtime/EXPORT_INPUTS.json")
     require(terminal["schema_version"]==RUNTIME+"-result" and terminal["state"]=="PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE"

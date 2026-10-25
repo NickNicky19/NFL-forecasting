@@ -155,6 +155,38 @@ class ReferenceChecks(unittest.TestCase):
   next_result=ref.read_owned(self.store,self.capture(next_prepared));self.assertEqual(next_result['available_rows'],len(self.offers))
   self.assertEqual(ref.read_owned(self.store,next_result['next_state'])['previous_state'],result['next_state'])
 
+ def test_real_worker_failure_retains_original_exit_and_complete_diagnostics(self):
+  # Independent mismatch: the actual original builder receives Week3 while
+  # this capture was registered for Week2. It must fail, retain its original
+  # subprocess bytes and never become a qualified control forecast.
+  (self.transport/'sitecustomize.py').write_text('''
+import test_audit_reference_capture_v1 as fixture
+original=fixture.fixture_value
+def different_period(url,params):
+ value=original(url,params)
+ if url.endswith('/v1/state/nfl'):value['week']=3
+ return value
+fixture.fixture_value=different_period
+fixture.install_transport()
+''')
+  prepared=self.prepare('different-period')
+  with self.assertRaises(ref.ReferenceError):self.capture(prepared)
+  output=self.base/'different-period'
+  self.assertFalse((output/'CAPTURE_COMPLETE.json').exists())
+  self.assertFalse((output/'R0_CONTROL_FORECAST_ROWS.json').exists())
+  exit_record=ref.read_owned(self.store,ref.binding(output/'WORKER_EXIT.json'))
+  self.assertNotEqual(exit_record['exit_code'],0)
+  self.assertFalse(exit_record['successful_forecast']);self.assertFalse(exit_record['public_release'])
+  for channel in ('stdout','stderr'):
+   body=ref.read_owned(self.store,exit_record[channel],raw=True)
+   self.assertEqual(body,(output/('WORKER.'+channel)).read_bytes())
+  self.assertIn(b'ORIGINAL_CURRENT_PERIOD_REQUIRED_NOT_CORRECTED_BASELINE',(output/'WORKER.stderr').read_bytes())
+  failed=ref.read_owned(self.store,ref.binding(output/'WORKER_FAILED.json'))
+  self.assertEqual(failed['diagnostic']['reason'],'ORIGINAL_CURRENT_PERIOD_REQUIRED_NOT_CORRECTED_BASELINE')
+  self.assertEqual(failed['diagnostic']['error_type'],'ReferenceError')
+  self.assertTrue(failed['diagnostic']['source_frames'])
+  self.assertTrue(all(set(f)=={'file','line'} and not f['file'].startswith('/') for f in failed['diagnostic']['source_frames']))
+
  def test_missing_player_keeps_every_opportunity_unavailable_not_zero(self):
   item=deepcopy(self.bridge[0]);item.update(gsis_id='00-0000003',sleeper_id='9999',website_player_id='9999')
   item['identity_binding_sha256']=digest({k:v for k,v in item.items()if k!='identity_binding_sha256'});self.bridge.append(item)
@@ -178,6 +210,31 @@ class ReferenceChecks(unittest.TestCase):
   self.assertTrue((self.base/'first/native/original-native.json.gz').exists())
   self.assertTrue((self.base/'first/CAPTURE_FAILED.json').exists())
   self.assertFalse((self.base/'first/CAPTURE_COMPLETE.json').exists())
+
+ def test_role_change_is_unavailable_without_relabeling_reference_statistics(self):
+  # The same identified player/game is WR in R0's fresh source, RB in the
+  # registered query. That is unavailable for this role-qualified offer;
+  # it must not suppress another exact identity or supply a numeric fallback.
+  (self.transport/'sitecustomize.py').write_text('''
+import test_audit_reference_capture_v1 as fixture
+fixture.PLAYERS['1001']['position']='WR'
+fixture.install_transport()
+''')
+  _,result,doc=self.full()
+  self.assertEqual(len(doc['rows']),len(self.offers))
+  changed=[r for r in doc['rows'] if r['player_id']=='00-0000001']
+  self.assertEqual(len(changed),4)
+  self.assertTrue(all(r['forecast_value'] is None and r['operational_eligible'] is False
+   and r['unavailable_reason']=='ORIGINAL_R0_POSITION_CONFLICT_UNAVAILABLE' for r in changed))
+  self.assertEqual(result['unavailable_rows'],4)
+  raw=json.loads(gzip.decompress(Path(result['native']['path']).read_bytes()))['payload']
+  expected={(r['game_id'],r['player_id'],r['category']):r for r in raw['rows']}
+  kept=[r for r in doc['rows'] if r['player_id']=='00-0000002']
+  self.assertEqual(len(kept),3)
+  for r in kept:
+   native=expected[(ESPN,'1002',r['category'])]
+   if r['category']!='anytime_td':self.assertEqual(r['forecast_value'],native['adjusted_projection'])
+   self.assertTrue(r['operational_eligible']);self.assertIsNone(r['unavailable_reason'])
 
  def test_changed_or_legacy_incomplete_permit_rejects_before_provider_calls(self):
   self.permit.pop('metadata_cas_readback_sha256')
