@@ -8,6 +8,8 @@ import pandas as pd
 
 from .cdf_engine import KEYS, numeric, valid_support
 
+PAIRED_DISTRIBUTION_DIAGNOSTIC_VERSION = "paired-distribution-interval-v2-20261025"
+
 
 def _observed(rows, support):
     return rows.participation_state.eq("played").to_numpy() & valid_support(numeric(rows, "actual"), support)
@@ -256,18 +258,38 @@ def paired_distribution_interval(candidate, control, metric, *, cluster):
     if not joined._merge.eq("both").all() or not np.allclose(joined.actual_a, joined.actual_b, equal_nan=True, atol=0, rtol=0):
         raise ValueError("distribution comparison identity/outcome mismatch")
     x, y = numeric(joined, metric+"_a"), numeric(joined, metric+"_b")
-    good = np.isfinite(x) & np.isfinite(y)
+    # A zero-probability observed event has a valid +infinite log loss. Dropping
+    # it would select away the worst forecast errors. Missing scores abstain;
+    # extended-real losses retain their paired population and explicit state.
+    if metric == "log_score":
+        if np.isneginf(x).any() or np.isneginf(y).any():
+            raise ValueError("negative infinite log loss is invalid")
+        good = ~np.isnan(x) & ~np.isnan(y)
+    else:
+        good = np.isfinite(x) & np.isfinite(y)
     joined = joined.loc[good].copy()
-    joined["delta"] = x[good]-y[good]
+    candidate_infinite = int(np.isposinf(x[good]).sum())
+    control_infinite = int(np.isposinf(y[good]).sum())
+    extended = candidate_infinite or control_infinite
+    joined["delta"] = np.nan if extended else x[good]-y[good]
     grouped = joined.groupby(["season", "week"] if cluster == "week" else ["season", "game_id"]).delta.agg(["sum", "count"])
-    out = {"paired_rows": len(joined), "clusters": len(grouped), "cluster": cluster,
+    out = {"diagnostic_version": PAIRED_DISTRIBUTION_DIAGNOSTIC_VERSION,
+           "paired_rows": len(joined), "clusters": len(grouped), "cluster": cluster,
            "candidate_years": candidate_years, "control_years": control_years, "compared_complete_years": common_years,
            "excluded_unpaired_years": sorted(set(candidate_years) ^ set(control_years)),
-           "mean_delta_candidate_minus_control": float(joined.delta.mean()) if len(joined) else None,
+           "mean_delta_candidate_minus_control": float(joined.delta.mean()) if len(joined) and not extended else None,
+           "delta_state": "undefined_both_infinite" if candidate_infinite and control_infinite else
+                          "positive_infinity" if candidate_infinite else "negative_infinity" if control_infinite else
+                          "finite" if len(joined) else "unavailable",
+           "candidate_infinite_log_losses": candidate_infinite,
+           "control_infinite_log_losses": control_infinite,
            "interval": None, "replicates": 500, "seed": 1701 if cluster == "week" else 1702,
            "monte_carlo_tail_probability_se": float(np.sqrt(.025*.975/500)),
            "monte_carlo_error_semantics": "binomial SE of nominal .025 tail fraction only; interval endpoint uncertainty in target units is not established",
            "status": "secondary_distribution_diagnostic", "interval_semantics": "nominal95% unadjusted descriptive; no familywise coverage or calibration claim"}
+    if extended:
+        out["reason"] = "infinite_log_losses_retained; finite bootstrap delta interval undefined"
+        return out
     if len(grouped) < 8:
         out["reason"] = "fewer_than_8_clusters"
         return out
