@@ -24,7 +24,7 @@ from nfl_lab import audit_weekly_grade_v1,audit_weekly_operations_v1,audit_weekl
 from nfl_lab import audit_weekly_provider_v1,audit_weekly_operations_grade_v1
 from pathlib import Path
 metrics={row.partition(':')[0]:row.partition(':')[2].strip() for row in Path('/proc/self/status').read_text().splitlines() if row.partition(':')[0] in {'VmPeak','VmSize'}}
-print(json.dumps(dict(state='NATIVE_METADATA_IMPORT_COMPLETE',metrics=metrics,unneeded_models_loaded=any(x in sys.modules for x in ('sklearn','scipy','catboost')))))
+print(json.dumps(dict(state='NATIVE_METADATA_IMPORT_COMPLETE',metrics=metrics,unneeded_models_loaded=any(x in sys.modules for x in ('numpy','pandas','pyarrow','sklearn','scipy','catboost')))))
 '''
     result=subprocess.run([sys.executable,"-I","-B","-c",script,str(root)],env=env,
         capture_output=True,text=True,timeout=190)

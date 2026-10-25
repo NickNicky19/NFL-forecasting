@@ -18,7 +18,6 @@ import re
 from . import audit_weekly_epoch_v1 as epoch, audit_count_retained_v1 as retained
 from . import audit_count_checkpoint_v1 as effective, private_draft_store as private
 from . import weekly_generic_producer as generic, weekly_adaptive as selector
-from . import weekly_current_query as query
 from . import audit_numerical_runtime_v1 as numerical
 from .operational_storage import OperationalStorage
 from .owned_reference_batch import validate_owned_references
@@ -285,7 +284,7 @@ class Runtime:
             raise
 
     def infer(self, prepared_ref, source_ref, output):
-        from . import operational_sources as sources, weekly_future_inference as future
+        from . import operational_sources as sources, weekly_future_inference as future, weekly_current_query as query
         """No network, fitting, outcome/scoring API or new family selection."""
         from . import weekly_current_inference as current
         from .weekly_source_read_batch import source_read_operation

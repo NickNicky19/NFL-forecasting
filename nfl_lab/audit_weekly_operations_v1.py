@@ -15,12 +15,10 @@ from pathlib import Path
 import re
 from zoneinfo import ZoneInfo
 
-import pandas as pd
-
 from . import audit_weekly_archive_v1 as archive, audit_weekly_epoch_v1 as epoch
 from . import audit_weekly_grade_v1 as grade, audit_weekly_resume_v1 as resume
 from . import gha_private_checkpoint as cp, private_draft_store as store
-from . import weekly_current_query as query, data, state
+from . import state
 from .owned_reference_batch import validate_owned_references
 
 VERSION = "audit-weekly-operations-v1"
@@ -91,6 +89,8 @@ def roles_from_manifests(storage, restored_ref, *, authenticate):
 
 def calendar(raw, *, season, week):
     """Full calendar identities only; no score/workload/result field is used."""
+    import pandas as pd
+    from . import data, weekly_current_query as query
     require(type(raw) is bytes and 0 < len(raw) <= 8 << 20
         and type(season) is int and type(week) is int and 1 <= week <= 18,
         "BOUNDED_FULL_CURRENT_WEEK_CALENDAR_REQUIRED")

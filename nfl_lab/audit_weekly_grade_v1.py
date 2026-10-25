@@ -1046,7 +1046,6 @@ def grade(registered, captures, batches, *, storage, output, previous=None, cloc
         observation_parts.append(batch.document["observations"]); finality.extend(deepcopy(batch.document["finality"]))
     require(sum(len(part) for part in observation_parts) <= LIMITS["revisions"], "FINITE_RETAINED_PROVIDER_REVISIONS")
     stream = dict(schema_version=grading.VERSION+"-stream",stream_id=next(iter(streams))[0],stream_kind="primary_daily",horizon_version=VERSION+"-exact-assignment-player-game")
-    opportunities = [o for c in retained for o in c["opportunities"]]
     with operational_io(storage), _record_batch(storage, root):
         if old:
             for version in old["versions"]:
@@ -1054,10 +1053,14 @@ def grade(registered, captures, batches, *, storage, output, previous=None, cloc
                 state.save(root,"weekly_completions",version["completion"])
         state.append_outcomes(root/"collector",(deepcopy(row) for part in observation_parts for row in part))
         del observation_parts
-        completed_opportunities = [o for o in opportunities if state.utc(o["kickoff_utc"]) < stamp]
+        # Each immutable page already retains the complete original opportunity
+        # population. The resolver consumes it once; keeping all decoded nested
+        # identity bridges alive as well needlessly duplicates the full cohort.
+        completed_opportunities = (o for c in retained for o in c["opportunities"]
+            if state.utc(o["kickoff_utc"]) < stamp)
         resolved = grading.append_resolved(root,stream,completed_opportunities,clock=clock)
         changed = resolved[1]; del resolved
-        del opportunities, completed_opportunities
+        del completed_opportunities
         collector = _PagedRows(state.records(root/"collector","outcomes"))
         completions = {v["snapshot_id"]:v for v in state.records(root,"weekly_completions")}
         versions = [dict(snapshot=v,completion=completions[_digest(v)]) for v in state.records(root,"weekly_versions")]

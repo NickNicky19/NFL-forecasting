@@ -6,9 +6,6 @@ import json
 from datetime import timedelta
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
-
 from .state import append_outcomes, capture, digest, now_utc, records, save, source_tree_digest, utc
 from .operational_io import active_storage, operational_io, quota_downloader
 from .operational_storage import OperationalStorage
@@ -50,6 +47,7 @@ def schedule_games(doc):
 
 
 def future_population(players,games,season,week,*,identity_by_sleeper=None,frozen_by_game_sleeper=None):
+    import pandas as pd
     by_team={}
     for g in games:
         for own,opp in [("home","away"),("away","home")]:by_team[g[own]]={**g,"team":g[own],"opponent":g[opp],"is_home":own=="home"}
@@ -101,6 +99,8 @@ def daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,sourc
 
 
 def _daily(root:Path,cache:Path,state:Path,seasons:list[int],methods=None,*,source_policy=None):
+    import numpy as np
+    import pandas as pd
     from .data import TARGETS, acquire_history,load_history
     from .data import load_identity
     from .features import build_features

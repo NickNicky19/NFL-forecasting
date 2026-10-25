@@ -29,7 +29,7 @@ import time
 
 from . import audit_weekly_grade_v1 as grade, weekly_grading as grading
 from . import gha_private_checkpoint as cp, private_draft_store as store, state
-from . import live, scoring, operational_sources as sources
+from . import live, scoring
 from .operational_io import operational_io
 from .operational_storage import OperationalStorage
 
@@ -172,6 +172,7 @@ class Collector:
     def __init__(self, *, storage, output, authenticate, source_policy=POLICY, fetch=None, clock=state.now_utc):
         require(isinstance(storage, OperationalStorage) and callable(authenticate)
             and callable(clock), "OWNED_STORAGE_AND_LIVE_PARENT_CALLBACK_REQUIRED")
+        from . import operational_sources as sources
         policy = sources.load_source_policy(source_policy)
         frozen_policy = sources.load_source_policy(POLICY)
         require(policy["_policy_sha256"] == frozen_policy["_policy_sha256"] == cp.POLICY_SHA
