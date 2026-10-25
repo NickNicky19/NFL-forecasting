@@ -1,0 +1,12 @@
+--- a/tools/selection_strategies.py
++++ b/tools/selection_strategies.py
+@@ -176,6 +176,9 @@
+         return values
+     original_evidence = evidence_inventory(root) if operation == "completed" else None
+     with _retained_source(source_sha) as source:
++        # Frozen row reconstruction calls recording_source() without a commit.
++        # Bind that lookup to the authenticated retained family, never host HEAD.
++        env["GITHUB_SHA"] = source_sha
+         if operation == "completed":
+             # The old validator must see its actual old source AND an
+             # independently copied evidence root. Passing the current source

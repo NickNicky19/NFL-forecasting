@@ -1,0 +1,136 @@
+[
+  {
+    "after": {
+      "family": "e2d",
+      "fixture_only": true,
+      "phase": "after",
+      "preserved_fake_data_files": 284,
+      "preserved_fake_data_unchanged": true,
+      "results": [
+        {
+          "state": "PASS",
+          "test": "RetainedRankedSourcePipelineTests.test_closed_original_source_and_pinned_ledger_replay_and_cold_process"
+        },
+        {
+          "state": "PASS",
+          "test": "RetainedRankedSourcePipelineTests.test_retained_failure_markers_and_same_size_corruption_are_not_cached"
+        },
+        {
+          "state": "PASS",
+          "test": "RetainedRankedSourcePipelineTests.test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+        }
+      ],
+      "seed_reused_without_rebuilding": true
+    },
+    "before": {
+      "error": "Retained ranked validation rejected: Corrected recording source differs from closed engine",
+      "error_type": "IntegrityError",
+      "state": "FAIL",
+      "test": "RetainedRankedSourcePipelineTests.test_closed_original_source_and_pinned_ledger_replay_and_cold_process"
+    },
+    "computed_retained_seed_cold_replay": "PASS",
+    "family": "e2d",
+    "first_completion": {
+      "canonical_body_sha256": "e655bc0a95681237a86a306e722320be2b4b71320af4fed51e92f44d2310aa8d",
+      "compressed_bytes": 274,
+      "compressed_sha256": "d3ec188d9ae9a077a390bc24dfd21b823ba0e542a666bf583fdc95d0a1168785",
+      "content_addressed_filename": true,
+      "name": "data/verification/ranked-selection-completions/2026/w06/e655bc0a95681237a86a306e722320be2b4b71320af4fed51e92f44d2310aa8d.json.gz"
+    },
+    "first_inputs": {
+      "canonical_body_sha256": "289bbd0ddeb4dcfad277a1527d24dea15c8cd3ef31d7ba71273c5aede1f361c4",
+      "code_commit": "e2dd96a31690baad04c8660302933f45f77d72e7",
+      "compressed_bytes": 20456,
+      "compressed_sha256": "cc7f0693640a843c90c233c49e6acaf7521e4d84288d50ceacc4063efed31b47",
+      "content_addressed_filename": true,
+      "model": "sleeper-matchup-data-integrity-v2",
+      "name": "data/verification/2026/w06/289bbd0ddeb4dcfad277a1527d24dea15c8cd3ef31d7ba71273c5aede1f361c4.json.gz"
+    },
+    "first_native": {
+      "canonical_body_sha256": "a78fac641456ab6ba15ec6efc47fd710cf02114962996d7160b6039015f1f547",
+      "code_commit": "e2dd96a31690baad04c8660302933f45f77d72e7",
+      "compressed_bytes": 2070,
+      "compressed_sha256": "1d5d89c570d6d066382b0c282789edc0ccae3e393e5e26971f235fba2f7a305b",
+      "content_addressed_filename": false,
+      "model": "sleeper-matchup-data-integrity-v2",
+      "name": "data/forward/2026/w06/ebb20c3d968a2cdf3a2ec90bff7237c51d9d0731d3bcc3c9a2a49d32372ce9bc.json.gz"
+    },
+    "first_observation": {
+      "canonical_body_sha256": "fab7865e500f3a53804fffa134d2848ae79b6e3bb171c568ce645c51fc2a678c",
+      "compressed_bytes": 3008,
+      "compressed_sha256": "141df0ac6f564c92104e9ae426e516ec5dd9f0b6300029be2ab864266dd27b26",
+      "content_addressed_filename": true,
+      "name": "data/verification/ranked-selections/2026/w06/fab7865e500f3a53804fffa134d2848ae79b6e3bb171c568ce645c51fc2a678c.json.gz",
+      "source_sha": "e2dd96a31690baad04c8660302933f45f77d72e7"
+    },
+    "recorded_fake_updates": 3,
+    "saved_source_sha": "e2dd96a31690baad04c8660302933f45f77d72e7"
+  },
+  {
+    "after": {
+      "family": "045",
+      "fixture_only": true,
+      "phase": "after",
+      "preserved_fake_data_files": 284,
+      "preserved_fake_data_unchanged": true,
+      "results": [
+        {
+          "state": "PASS",
+          "test": "Retained045RankedSourcePipelineTests.test_actual045_saved_observation_ledger_and_independent_cold_replay"
+        },
+        {
+          "state": "PASS",
+          "test": "Retained045RankedSourcePipelineTests.test_retained_failure_markers_and_same_size_corruption_are_not_cached"
+        },
+        {
+          "state": "PASS",
+          "test": "Retained045RankedSourcePipelineTests.test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+        }
+      ],
+      "seed_reused_without_rebuilding": true
+    },
+    "before": {
+      "error": "Retained ranked validation rejected: Corrected recording source differs from closed engine",
+      "error_type": "IntegrityError",
+      "state": "FAIL",
+      "test": "Retained045RankedSourcePipelineTests.test_actual045_saved_observation_ledger_and_independent_cold_replay"
+    },
+    "computed_retained_seed_cold_replay": "PASS",
+    "family": "045",
+    "first_completion": {
+      "canonical_body_sha256": "efd63bde95c198f06e1567e4a1b0920a26612cfeb5d9cd9cddd616be925cf7b7",
+      "compressed_bytes": 274,
+      "compressed_sha256": "63d6f331d6598524c80bcf9488ca710d960544883c8a1854b587bbb165c06960",
+      "content_addressed_filename": true,
+      "name": "data/verification/ranked-selection-completions/2026/w06/efd63bde95c198f06e1567e4a1b0920a26612cfeb5d9cd9cddd616be925cf7b7.json.gz"
+    },
+    "first_inputs": {
+      "canonical_body_sha256": "9ab100faa7ab3069d519aa1785c65dec8ac7530c7c2324e904cac57833cc4a04",
+      "code_commit": "04519b54dfb76dcca7916fe6bf75d7e1711793b6",
+      "compressed_bytes": 20454,
+      "compressed_sha256": "fd24359ea3b03821d3967b4ecfa4580c0c8a2bfa80dfa10a0b45c07367a4114a",
+      "content_addressed_filename": true,
+      "model": "sleeper-matchup-data-integrity-v2",
+      "name": "data/verification/2026/w06/9ab100faa7ab3069d519aa1785c65dec8ac7530c7c2324e904cac57833cc4a04.json.gz"
+    },
+    "first_native": {
+      "canonical_body_sha256": "3d128a1440f2360e4f321c57d6fb1882bf42e85ac9cb441618b81b31967f4240",
+      "code_commit": "04519b54dfb76dcca7916fe6bf75d7e1711793b6",
+      "compressed_bytes": 2069,
+      "compressed_sha256": "3af4fa10922f33ca5885b630f6bbd4a0d1ffe567d0abe8842b67eae8e68acdc6",
+      "content_addressed_filename": false,
+      "model": "sleeper-matchup-data-integrity-v2",
+      "name": "data/forward/2026/w06/ebb20c3d968a2cdf3a2ec90bff7237c51d9d0731d3bcc3c9a2a49d32372ce9bc.json.gz"
+    },
+    "first_observation": {
+      "canonical_body_sha256": "30d0313edc87413f450fdce6d8b79318d5b4f7a1348f48314b0cb7f4daee9bb4",
+      "compressed_bytes": 3009,
+      "compressed_sha256": "ac6aaa031aefa7c483fe6e8b58998aef1ef63d28ad09512982dc027f906aaef8",
+      "content_addressed_filename": true,
+      "name": "data/verification/ranked-selections/2026/w06/30d0313edc87413f450fdce6d8b79318d5b4f7a1348f48314b0cb7f4daee9bb4.json.gz",
+      "source_sha": "04519b54dfb76dcca7916fe6bf75d7e1711793b6"
+    },
+    "recorded_fake_updates": 3,
+    "saved_source_sha": "04519b54dfb76dcca7916fe6bf75d7e1711793b6"
+  }
+]

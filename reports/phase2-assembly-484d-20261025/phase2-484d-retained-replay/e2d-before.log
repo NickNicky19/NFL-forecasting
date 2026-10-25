@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/tmp/phase2-484d-retained-g7ve7qyj/run_positive.py", line 29, in <module>
+    getattr(case,method)()
+  File "/tmp/phase2-484d-retained-g7ve7qyj/source/tests/test_phase2_e2e.py", line 3120, in test_closed_original_source_and_pinned_ledger_replay_and_cold_process
+    saved, _ = strategies.read_completed(self.root, self.first_name, now=self.at)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/phase2-484d-retained-g7ve7qyj/source/tools/selection_strategies.py", line 299, in read_completed
+    result = _retained_call(root, "completed", {"name": name}, utc(now or datetime.now(timezone.utc)),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/phase2-484d-retained-g7ve7qyj/source/tools/selection_strategies.py", line 205, in _retained_call
+    raise error("Retained ranked validation rejected: " + value.get("detail", "unsupported result"))
+reliability.IntegrityError: Retained ranked validation rejected: Corrected recording source differs from closed engine
+{"error": "Retained ranked validation rejected: Corrected recording source differs from closed engine", "error_type": "IntegrityError", "family": "e2d", "fixture_only": true, "source": "/tmp/phase2-484d-retained-g7ve7qyj/source", "state": "FAIL", "test": "RetainedRankedSourcePipelineTests.test_closed_original_source_and_pinned_ledger_replay_and_cold_process"}

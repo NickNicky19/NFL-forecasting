@@ -1,0 +1,71 @@
+{
+  "actual_preimage": "preimages/726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf.py",
+  "actual_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+  "code_path": "pull/build.py",
+  "error": "Corrected recording source differs from closed engine",
+  "error_type": "IntegrityError",
+  "expected_file_sha256": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c",
+  "expected_preimage": "preimages/d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c.py",
+  "expected_sha256": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c",
+  "function": "recording_source",
+  "kind": "EXACT_SOURCE_MISMATCH",
+  "line": 300,
+  "module": "/tmp/nfl-retained-ranked-___cd37h/tools/data_integrity_v2.py",
+  "pid": 447204,
+  "repository": "/tmp/nfl-retained-ranked-___cd37h",
+  "requested_commit": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "stack": [
+    {
+      "function": "make_payload",
+      "line": 238,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/reliability.py"
+    },
+    {
+      "function": "read_bundle",
+      "inputs": {
+        "code_commit": "e2dd96a31690baad04c8660302933f45f77d72e7",
+        "model": "sleeper-matchup-data-integrity-v2",
+        "schema_version": "matchup-inputs-v3"
+      },
+      "line": 890,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/data_integrity_v2.py"
+    },
+    {
+      "function": "_qualified_bundle",
+      "line": 678,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/phase2_capture.py",
+      "saved": {
+        "schema_version": "partial-completion-data-integrity-v2"
+      }
+    },
+    {
+      "function": "_strategy_qualification",
+      "inputs": {
+        "code_commit": "e2dd96a31690baad04c8660302933f45f77d72e7",
+        "model": "sleeper-matchup-data-integrity-v2",
+        "schema_version": "matchup-inputs-v3"
+      },
+      "line": 643,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/phase2_capture.py"
+    },
+    {
+      "function": "_validate_completed",
+      "line": 147,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/selection_strategies.py",
+      "saved": {
+        "schema_version": "ranked-selection-observation-v1",
+        "source_sha": "e2dd96a31690baad04c8660302933f45f77d72e7"
+      }
+    },
+    {
+      "function": "read_completed",
+      "line": 117,
+      "module": "/tmp/nfl-retained-ranked-___cd37h/tools/selection_strategies.py"
+    },
+    {
+      "function": "<module>",
+      "line": 17,
+      "module": "<string>"
+    }
+  ]
+}
