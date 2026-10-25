@@ -1,0 +1,622 @@
+"""One owner-authorized weekly correction in the existing serialized workflow.
+
+Every phase authenticates the real current Actions job. Historical identities
+remain historical. New native requests are derived only after that check and
+are scoped to one source/root/request. Numerical children remain isolated;
+this parent never fits, searches, loads outcomes or calls a paid service.
+"""
+from __future__ import annotations
+
+import csv
+from datetime import datetime, timedelta, timezone
+import io
+import json
+import os
+from pathlib import Path
+import re
+import resource
+import signal
+import subprocess
+import sys
+import time
+from zoneinfo import ZoneInfo
+
+from . import private_draft_store as store, gha_private_checkpoint as cp
+from . import audit_count_retained_v1 as retained, audit_count_requalify_v1 as bounds
+from . import audit_weekly_origin_v1 as origin, audit_weekly_epoch_v1 as epoch
+from . import audit_weekly_runtime_v1 as runtime, audit_weekly_archive_v1 as archive
+from . import audit_reference_capture_v1 as reference
+from . import audit_weekly_public_v1 as public, audit_weekly_retained_v1 as weekly_retained
+from . import operational_failure_v1 as failure
+from .operational_storage import OperationalStorage, _OWNER
+from .owned_reference_batch import validate_owned_references
+from .state import digest, now_utc, utc
+
+VERSION = "audit-weekly-hosted-v1"
+MODE = "audit-weekly-producer-v1"
+ROOT = Path(__file__).resolve().parents[1]
+JOBS = dict(produce="audit-weekly-produce-v1", restore="audit-weekly-restore-v1", consume="audit-weekly-export-v1")
+LIMITS = dict(wall_seconds=1500, CPU_seconds=900, address_space_bytes=4 << 30,
+    global_private_bytes=512 << 20, runtime_bytes=32 << 20, fits=0, searches=0,
+    automatic_retry=False, maximum_dispatches=1, public_raw_or_models=False)
+ROOT_KEYS = {"schema_version", "approved", "repository", "mode", "operation", "source_sha", "workflow_ref",
+    "owner_authorization", "issued_at_utc", "expires_at_utc", "single_writer_group", "code_pins",
+    "limits", "jobs", "retained_registration", "original_selected_handoff", "qualified_runtime",
+    "pending_census", "source_config", "cutoff_lead_seconds", "publication", "effective_epoch"}
+PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtime.PIN_PATHS) |
+    set(archive.PIN_PATHS) | set(public.PIN_PATHS) | set(weekly_retained.PIN_PATHS) |
+    {"nfl_lab/audit_weekly_hosted_v1.py", "tools/audit_weekly_hosted_v1.py",
+    "nfl_lab/audit_reference_capture_v1.py", "tools/audit_reference_capture_v1.py",
+    "tests/test_audit_weekly_hosted_v1.py", "tests/test_audit_weekly_epoch_v1.py",
+    "tests/test_audit_weekly_origin_v1.py", "tests/test_audit_weekly_archive_v1.py",
+    "tests/test_audit_reference_capture_v1.py", "tools/audit_process_guard_v1.py", "requirements-audit-weekly-metadata-v1.lock",
+    ".github/workflows/audit-source-checks.yml"}))
+NATIVE_KEYS={"schema_version","phase","request_sha256","owner_root_go_sha256","repository","source_sha",
+    "run_id","run_attempt","job_id","workflow_ref","api_job_id","issued_at_utc","expires_at_utc",
+    "actual_actions_api_authenticated","owner_root_checked","fits","public_release"}
+
+
+def require(ok, code):
+    if not ok: raise store.StoreError(code)
+
+
+def pins(): return {p:store.sha(store.read_local(ROOT/p,2 << 20)) for p in PINS}
+
+
+def validate_root(go, *, now):
+    require(type(go) is dict and set(go)==ROOT_KEYS and go["schema_version"]==VERSION+"-root-GO"
+        and go["approved"] is True and go["repository"]==store.REPO and go["mode"]==MODE
+        and go["owner_authorization"]=="OWNER_NFL_AUDIT_CONTINUATION_20261025"
+        and go["single_writer_group"]=="nfl-lab-single-writer" and go["limits"]==LIMITS
+        and go["jobs"]==JOBS and go["code_pins"]==pins(), "CLOSED_CURRENT_WEEKLY_ROOT_REQUIRED")
+    require(re.fullmatch(r"[a-f0-9]{40}",str(go["source_sha"]))
+        and go["workflow_ref"]==store.REPO+"/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1",
+        "EXACT_REGISTERED_WEEKLY_SOURCE_BRANCH")
+    issued,expires=utc(go["issued_at_utc"]),utc(go["expires_at_utc"])
+    require(issued<=now<expires and 0<(expires-issued).total_seconds()<=3600,"CURRENT_WEEKLY_GO_CLOCK")
+    require(type(go["cutoff_lead_seconds"]) is int and go["cutoff_lead_seconds"]==5400
+        and type(go["publication"]) is bool and go["effective_epoch"] is None,
+        "EXPLICIT_INITIAL_CORRECTION_SCOPE_NO_BACKFILL")
+    require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE"}
+        and go["publication"] is False,"EXPLICIT_PRIVATE_WEEKLY_OPERATION_SCOPE")
+    retained.validate_registration(go["retained_registration"])
+    require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
+        and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
+        "NEW_GENUINELY_QUALIFIED_NAMESPACE_REQUIRED")
+    runtime.config_check(go["source_config"],dict(season=2026,week=8))
+    require(go["source_config"].get("purpose")=="CURRENT_OPERATIONAL_INFERENCE","FROZEN_INFERENCE_PURPOSE_REQUIRED_NO_TUNING")
+    return go
+
+
+def read_owned(storage, ref, cap=4 << 20, *, raw=False):
+    validate_owned_references(storage,{ref["path"]:ref["sha256"]})
+    body=cp.read_ref(ref,cap)
+    return body if raw else cp.strict_json(body)
+
+
+def write(storage,path,value):
+    storage.write_bytes(path,store.canonical(value));return cp.binding(path)
+
+
+class Runner:
+    def __init__(self, phase, env, *, existing=False):
+        from tools.private_draft_store_v2 import actions_context
+        require(phase in JOBS,"CLOSED_WEEKLY_PHASE")
+        self.phase,self.env=phase,env
+        raw=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
+        require(0<len(raw)<=60 << 10 and store.sha(raw)==env.get("AUDIT_WEEKLY_ROOT_GO_SHA256"),"EXACT_WEEKLY_ROOT_INPUT")
+        self.go=validate_root(cp.strict_json(raw),now=now_utc());self.go_sha=store.sha(raw)
+        require(store.canonical(self.go)==raw,"CANONICAL_WEEKLY_ROOT")
+        require(env.get("GITHUB_ACTIONS")=="true" and env.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
+            and env.get("GITHUB_REPOSITORY")==store.REPO and env.get("GITHUB_RUN_ATTEMPT")=="1"
+            and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
+            and env.get("GITHUB_SHA")==env.get("GITHUB_WORKFLOW_SHA")==self.go["source_sha"]
+            and env.get("GITHUB_WORKFLOW_REF")==self.go["workflow_ref"] and env.get("GITHUB_JOB")==JOBS[phase]
+            and env.get("STORE_PERMISSION")=="write","GENUINE_OWNER_WEEKLY_JOB_REQUIRED")
+        event=cp.strict_json(store.read_local(env["GITHUB_EVENT_PATH"],256 << 10))
+        require(event.get("repository",{}).get("full_name")==store.REPO
+            and event.get("inputs",{}).get("mode")==MODE
+            and event["inputs"].get("inference_builder_go_json")==raw.decode()
+            and event["inputs"].get("inference_builder_go_sha256")==self.go_sha,"ACTUAL_WEEKLY_DISPATCH_INPUTS")
+        require(subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()==self.go["source_sha"]
+            and subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",*PINS],cwd=ROOT,text=True)=="",
+            "CLEAN_EXACT_COMMITTED_WEEKLY_SOURCE")
+        numerical=cp.strict_json(store.read_local(ROOT/"config/weekly-owner-private-bootstrap-v1.json",1 << 20))["numerical_environment"]
+        require(all(env.get(k)==v for k,v in numerical.items()),"EXACT_WEEKLY_NUMERICAL_STARTUP")
+        self.root=store.parents_safe(env["RUNNER_TEMP"])/(VERSION+"-"+env["GITHUB_RUN_ID"]+"-"+phase)
+        require((self.root.is_dir() and not self.root.is_symlink()) if existing else not self.root.exists(),"ONE_WEEKLY_INVOCATION_NO_RETRY")
+        if not existing:self.root.mkdir(mode=0o700)
+        self.storage=OperationalStorage(self.root/"cache",ROOT/"config/operational-source-policy-v2.json",state=self.root/"state")
+        self.storage.register_root(self.root)
+        self.journal=self.root/"journal"
+        if not existing:self.journal.mkdir(mode=0o700)
+        self.job=actions_context(env,"write")
+        class Metadata(archive.Client):
+            def request(self,url,*,method="GET",**kw):
+                require(method=="GET" and kw.get("data") is None,"ROOT_METADATA_GET_ONLY")
+                return super().request(url,method=method,**kw)
+        self.client=Metadata(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=self.journal,
+            job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"])
+        self.client.authenticate_actions_job();self.client.bind(self.go["qualified_runtime"]["binding"])
+        archive.authenticate_qualification(self.client,self.go["qualified_runtime"],self.go["pending_census"])
+        archive.jobs_for(self.client)
+        self.identity=cp.client_identity(self.client)
+        if existing:
+            self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
+            require(read_owned(self.storage,self.root_ref)==self.go and read_owned(self.storage,self.package_ref)==self.go["qualified_runtime"],"EXACT_ORIGINAL_FAILED_ROOT_REQUIRED")
+        else:
+            self.root_ref=write(self.storage,self.root/"OWNER_ROOT.json",self.go)
+            self.package_ref=write(self.storage,self.root/"QUALIFIED_RUNTIME.json",self.go["qualified_runtime"])
+            write(self.storage,self.root/"PARENT_STARTED.json",dict(actual_started_at=self.client.started_at,actual_identity=self.identity))
+        original_start=read_owned(self.storage,cp.binding(self.root/"PARENT_STARTED.json"))
+        require(original_start["actual_identity"]["run_id"]==self.identity["run_id"]
+            and original_start["actual_identity"]["api_job_id"]==self.identity["api_job_id"],"SAME_ORIGINAL_FAILED_JOB")
+        self.started=utc(original_start["actual_started_at"]);self.child_number=0
+
+    def check(self):
+        validate_root(self.go,now=now_utc())
+        total=[resource.getrusage(k) for k in (resource.RUSAGE_SELF,resource.RUSAGE_CHILDREN)]
+        require(sum(x.ru_utime+x.ru_stime for x in total)<=LIMITS["CPU_seconds"],"WEEKLY_AGGREGATE_CPU_CAP")
+
+    def native(self, version, phase, request, *, zero_fields=()):
+        self.check()
+        return dict(schema_version=version+"-native-authority",phase=phase,
+            request_sha256=store.sha(store.canonical(request)),owner_root_go_sha256=self.go_sha,
+            repository=store.REPO,source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],run_attempt=1,
+            job_id=self.identity["job_id"],workflow_ref=self.identity["workflow_ref"],api_job_id=self.identity["api_job_id"],
+            issued_at_utc=now_utc().isoformat(),expires_at_utc=self.go["expires_at_utc"],
+            actual_actions_api_authenticated=True,owner_root_checked=True,fits=0,public_release=False,
+            **{f:0 for f in zero_fields})
+
+    def child(self, tool, phase, request, authority, namespace, seconds):
+        self.child_number+=1;name=f"{self.child_number:02}-{phase}"
+        ref=write(self.storage,self.root/"requests"/(name+".json"),request)
+        env=dict(self.env,**{namespace+"_JSON":store.canonical(authority).decode(),namespace+"_SHA256":store.sha(store.canonical(authority)),
+            "AUDIT_WEEKLY_PARENT_PID":str(os.getpid())})
+        command=[sys.executable,"-I","-B",str(ROOT/"tools"/(tool+".py")),phase,"--execute","--request",ref["path"],"--request-sha256",ref["sha256"]]
+        # Each child installs its existing phase envelope. The parent allows
+        # 4GiB-AS so it cannot accidentally prevent a valid numerical child.
+        p=subprocess.Popen(command,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+        try:
+            out,err=p.communicate(timeout=seconds)
+        except subprocess.TimeoutExpired:
+            os.killpg(p.pid,signal.SIGKILL);out,err=p.communicate()
+            write(self.storage,self.root/"phase-status"/(name+".json"),dict(state="DEADLINE",exit_code=p.returncode,stdout_sha256=store.sha(out),stderr_sha256=store.sha(err)))
+            raise store.StoreError("WEEKLY_CHILD_DEADLINE") from None
+        require(len(out)<=64 << 10 and len(err)<=64 << 10,"BOUNDED_PRIVATE_CHILD_STATUS")
+        # Child summaries contain fixed codes only. Retain original bytes
+        # privately; never print arbitrary library text or partial forecasts.
+        self.storage.write_bytes(self.root/"phase-status"/(name+".stdout"),out)
+        self.storage.write_bytes(self.root/"phase-status"/(name+".stderr"),err)
+        try: result=cp.strict_json(out)
+        except Exception: raise store.StoreError("WEEKLY_CHILD_STATUS_INVALID") from None
+        write(self.storage,self.root/"phase-status"/(name+".json"),dict(exit_code=p.returncode,status=result,actual_completed_at=now_utc().isoformat()))
+        if p.returncode:
+            code=result.get("reason")
+            raise store.StoreError(code if type(code) is str and re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code) else "WEEKLY_CHILD_FAILED")
+        self.check();return result
+
+    def claim(self):
+        """A fixed root-dependent blob makes duplicate GO use detectable."""
+        package=self.go["qualified_runtime"]
+        class ClaimClient(archive.Client):
+            def upload(self,name,body,*,reuse_completed=False):
+                # GitHub's unique asset name is the atomic duplicate guard.
+                # A payload that appeared after our census must not be reused.
+                return super().upload(name,body,reuse_completed=False)
+        client=ClaimClient(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
+            journal=self.journal,job=self.job,operation="append",qualification=package["qualification"])
+        client.authenticate_actions_job();client.bind(package["binding"])
+        archive.authenticate_qualification(client,package,self.go["pending_census"])
+        body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
+        assets,total=client.inventory()
+        require(not any(a["name"]=="blob-"+store.sha(body)+".bin" for a in assets),"OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY")
+        require(total+len(body)+(32 << 10)<store.TOTAL_CAP and len(assets)+2<=store.MAX_ASSETS,"ROOT_CLAIM_CAPACITY")
+        manifest=dict(schema_version="weekly-private-payload-v2",payload_kind="runtime_manifest",format="json",bytes=len(body),sha256=store.sha(body),source_policy_sha256=cp.POLICY_SHA)
+        ref=store.append(client,body,manifest,package["qualification"])
+        write(self.storage,self.root/"ROOT_CONSUMED.json",dict(descriptor=ref,actual_identity=cp.client_identity(client),actual_completed_at=now_utc().isoformat()))
+
+    def recover_origin(self):
+        request=origin.prepare_request(ROOT,self.go["original_selected_handoff"],cache=self.storage.cache,state_root=self.root/"state",output=self.root/"origin")
+        request["approved"]=True
+        a=self.native(origin.VERSION,"origin",request,zero_fields=("remote_writes","protected_outcome_reads"))
+        self.child("audit_weekly_origin_v1","recover",request,a,"AUDIT_WEEKLY_ORIGIN_AUTHORITY",190)
+        return cp.binding(self.root/"origin"/"ORIGIN_RESULT.json")
+
+    def recover_models(self):
+        request=dict(schema_version=VERSION+"-model-request",registration=self.go["retained_registration"],cache=str(self.storage.cache),
+            state_root=str(self.root/"state"),output=str(self.root/"retained"),code_pins=pins())
+        a=self.native(VERSION,"models",request)
+        self.child("audit_weekly_hosted_v1","models",request,a,"AUDIT_WEEKLY_NATIVE_AUTHORITY",430)
+        return cp.binding(self.root/"retained"/"RESTORED.json")
+
+    def metadata(self, origin_ref, retained_ref):
+        old=read_owned(self.storage,origin_ref);restored=read_owned(self.storage,retained_ref)
+        read=lambda role,raw=False:read_owned(self.storage,old[role],raw=raw)
+        replay=self.go["retained_registration"]["origin"]["replay_catalog"]
+        e=epoch.prepare_epoch(read("original_choice",True),read("original_terminal_witness"),read("original_slate"),
+            read("original_catalog"),read("original_policy"),replay,history_binding=old["history_binding"],
+            effective_controls=dict(R0=reference.control_spec()))
+        eref=write(self.storage,self.root/"metadata"/"EPOCH.json",e.document)
+        actual_write=now_utc()
+        cas=epoch.owned_cas_readback(self.storage,dict(epoch=eref),dict(epoch=e.document),scope="EPOCH_METADATA",written_at=actual_write)
+        registration=dict(schema_version=epoch.VERSION+"-registration-completion",epoch_sha256=e.sha256,catalog_sha256=digest(e.document["catalog"]),
+            selection_recipe_sha256=digest(e.document["selection_recipe"]),persisted_completed_at=cas["readback_completed_at"],
+            owner_registration_sha256=self.go_sha,qualified_artifact_restore=dict(scope="EFFECTIVE18_MODELS_ONLY",proof_sha256=digest(restored["proofs"]),
+                replay_catalog_sha256=digest(replay),model_pairs=18),metadata_cas_readback=cas,metadata_remote_durability_qualified=False,current_values_used=False,fits=0)
+        regref=write(self.storage,self.root/"metadata"/"EPOCH_REGISTRATION.json",registration)
+        registered=epoch.bind_registration(e,registration,now=now_utc())
+        body=read_owned(self.storage,old["original_source_pairs"]["schedules.csv"]["body"],32 << 20,raw=True)
+        schedule=schedule_metadata(body,season=e.origin["slate"]["season"],week=e.origin["slate"]["week"])
+        observed=now_utc()
+        cutoffs={r["game_id"]:(utc(r["kickoff_utc"])-timedelta(seconds=self.go["cutoff_lead_seconds"])).isoformat()
+            for r in schedule if utc(r["kickoff_utc"])>observed}
+        choice=epoch.continue_week(registered,schedule,cutoffs)
+        cref=write(self.storage,self.root/"metadata"/"CHOICE.json",choice.document)
+        return dict(epoch=eref,epoch_registration=regref,original_choice=old["original_choice"],original_completion=old["original_terminal_witness"],
+            original_slate=old["original_slate"],original_catalog=old["original_catalog"],original_policy=old["original_policy"],choice=cref,retained_restore=retained_ref)
+
+    def capture(self, inputs, origin_ref):
+        from tools.audit_weekly_runtime_v1 import template
+        old=read_owned(self.storage,origin_ref)
+        request=template();request.update(approved=True,cache=str(self.storage.cache),state_root=str(self.root/"state"),inputs=inputs,
+            history_binding=old["history_binding"],config=self.go["source_config"],historical_sources=old["historical_sources"])
+        outputs={"prepare":self.root/"prepared","acquire":self.root/"source","infer":self.root/"runtime"}
+        for phase in ("prepare","acquire","infer"):
+            request["output"]=str(outputs[phase])
+            self.child("audit_weekly_runtime_v1",phase,request,self.native(runtime.VERSION,phase,request),"AUDIT_WEEKLY_RUNTIME_AUTHORITY",430)
+            if phase=="prepare":
+                request["prepared"]=cp.binding(outputs[phase]/"PREPARED.json")
+                request["choice_completion"]=read_owned(self.storage,request["prepared"])["choice_completion"]
+            elif phase=="acquire":request["source"]=cp.binding(outputs[phase]/"SOURCE_FINISHED.json")
+        return request
+
+    def reference(self, inputs, request):
+        payload=dict(schema_version=VERSION+"-reference-request",inputs=inputs,history_binding=request["history_binding"],
+            config=self.go["source_config"],cache=str(self.storage.cache),state_root=str(self.root/"state"),
+            prepared=request["prepared"],source=request["source"],runtime_root=str(self.root/"runtime"),
+            output=str(self.root/"reference"),repository=self.env["NFL_R0_SOURCE_REPOSITORY"],code_pins=pins())
+        a=self.native(VERSION,"reference",payload)
+        self.child("audit_weekly_hosted_v1","reference",payload,a,"AUDIT_WEEKLY_NATIVE_AUTHORITY",430)
+        return cp.binding(self.root/"reference"/"CAPTURE_COMPLETE.json")
+
+    def archive_request(self, phase, *, context=None, r0=None, handoff=None, reader_handoff=None):
+        from tools.audit_weekly_archive_v1 import template
+        local=self.root/("archive-"+phase)
+        request=template();request.update(approved=True,phase=phase,jobs=JOBS,cache=str(self.storage.cache),
+            state_root=str(self.root/"state"),local_root=str(local),output=str(local/"transport"),qualified_runtime=self.package_ref,
+            pending_census=self.go["pending_census"],runtime_root=str(self.root/"runtime"),context=context,r0=r0,
+            handoff=handoff,reader_handoff=reader_handoff)
+        return request
+
+    def archive_call(self, phase, request):
+        result=self.child("audit_weekly_archive_v1",phase,request,self.native(archive.VERSION,phase,request),"AUDIT_WEEKLY_ARCHIVE_AUTHORITY",190)
+        return result
+
+    def produce(self):
+        if self.go["operation"]=="ORIGIN_METADATA_ONLY":
+            ref=self.recover_origin();old=read_owned(self.storage,ref)
+            witness=read_owned(self.storage,old["original_terminal_witness"])
+            choice=read_owned(self.storage,old["original_choice"])
+            slate=read_owned(self.storage,old["original_slate"])
+            return dict(state="ORIGINAL_METADATA_RECOVERED_AND_VERIFIED",original_choice_sha256=old["original_choice"]["sha256"],
+                original_choice_actual_frozen_at=choice["actual_frozen_at"],original_declared_weekly_deadline=slate["weekly_deadline_utc"],
+                original_decision_write_clock=witness["actual_decision_persist_completed_at"],
+                new_witness_created_at=witness["created_at_utc"],raw_original_completion_file_retained=False,
+                source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],fits=0,model_decodes=0,forecasts=0,remote_writes=0,public_release=False)
+        self.claim()
+        origin_ref=self.recover_origin();old=read_owned(self.storage,origin_ref)
+        retained_ref=self.recover_models()
+        inputs=self.metadata(origin_ref,retained_ref)
+        request=self.capture(inputs,origin_ref)
+        r0=self.reference(inputs,request)
+        context=dict(epoch=inputs["epoch"],epoch_registration=inputs["epoch_registration"],original_choice=inputs["original_choice"],
+            origin_witness=inputs["original_completion"],original_slate=inputs["original_slate"],original_catalog=inputs["original_catalog"],
+            original_policy=inputs["original_policy"],retained_models=retained_ref,prepared=request["prepared"],source=request["source"])
+        result=self.archive_call("produce",self.archive_request("produce",context=context,r0=r0))
+        require(result["archive_state"]=="COMPLETE_CAPTURE","PARTIAL_ARCHIVE_NOT_A_SUCCESSFUL_FORECAST")
+        terminal=read_owned(self.storage,cp.binding(self.root/"runtime"/"FINISHED.json"))
+        ref=write(self.storage,self.root/"PRODUCER_FINISHED.json",dict(schema_version=VERSION+"-result",state="PRIVATE_CAPTURE_APPENDED_RESTORE_REQUIRED",
+            epoch_sha256=terminal["epoch_sha256"],choice_sha256=terminal["choice_sha256"],root_go_sha256=self.go_sha,
+            original_completion_file_retained=False,old_history_retained=True,fits=0,model_pairs=18,selected_rows=terminal["selected_rows"],
+            candidate_rows=terminal["prediction_rows"],R0_capture="ORIGINAL_DEFAULT_REFRESH_PRIVATE",public_release=False,successful_forecast=False,
+            actual_completed_at=now_utc().isoformat()))
+        return read_owned(self.storage,ref)
+
+    def restore(self):
+        failure_text=self.env.get("AUDIT_WEEKLY_FAILURE_HANDOFF_JSON","").encode()
+        if failure_text:
+            require(store.sha(failure_text)==self.env.get("AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256"),"EXACT_FAILED_ATTEMPT_HANDOFF")
+            value=cp.strict_json(failure_text)
+            require(value["schema_version"]==VERSION+"-failure-handoff" and value["root_go_sha256"]==self.go_sha
+                and value["binding"]==self.go["qualified_runtime"]["binding"],"SAME_ROOT_FAILED_ATTEMPT")
+            client=self.failure_client("restore")
+            inputs={k:store.canonical(value[k]) for k in ("binding","descriptor")}
+            go=self.operation_go("restore",inputs)
+            result=failure.restore_failure(client,self.storage,self.root/"failure-restored",authorization=go,
+                authorization_sha256=store.sha(store.canonical(go)),inputs=inputs)
+            archive_restored=False
+            archive_raw=self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON","").encode()
+            if archive_raw:
+                require(store.sha(archive_raw)==self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_SHA256"),"EXACT_FAILED_ARCHIVE_HANDOFF")
+                handoff=cp.strict_json(archive_raw)
+                require(handoff["archive_state"]=="FAILURE_EVIDENCE" and handoff["root_go_sha256"]==self.go_sha,"FAILURE_ARCHIVE_NOT_SELECTED_OUTPUT")
+                restored=self.archive_call("restore",self.archive_request("restore",handoff=handoff))
+                require(restored["state"]=="PRIVATE_FAILURE_ARCHIVE_RESTORED","COMPLETE_FAILED_BYTES_RESTORE_REQUIRED")
+                archive_restored=True
+            return dict(state="PRIVATE_FAILURE_RESTORED",fits=0,public_release=False,successful_forecast=False,
+                original_attempt=result["attempt"],receipt_sha256=store.sha(store.canonical(result)),opaque_failed_capture_restored=archive_restored)
+        raw=self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON","").encode()
+        require(0<len(raw)<=16 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_ARCHIVE_HANDOFF_SHA256"),"EXACT_ARCHIVE_JOB_HANDOFF")
+        handoff=cp.strict_json(raw);archive.safe_handoff(handoff)
+        require(handoff["root_go_sha256"]==self.go_sha and handoff["jobs"]==JOBS,"SAME_WEEKLY_ROOT_RESTORE")
+        return self.archive_call("restore",self.archive_request("restore",handoff=handoff))
+
+    def consume(self):
+        raw=self.env.get("AUDIT_WEEKLY_READER_HANDOFF_JSON","").encode()
+        require(0<len(raw)<=32 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_READER_HANDOFF_SHA256"),"EXACT_READER_JOB_HANDOFF")
+        reader=cp.strict_json(raw)
+        require(reader["archive"]["root_go_sha256"]==self.go_sha and reader["archive"]["jobs"]==JOBS,"SAME_WEEKLY_ROOT_EXPORT")
+        result=self.archive_call("consume",self.archive_request("consume",reader_handoff=reader))
+        require(result["state"]=="PRIVATE_CAPTURE_EXPORT_INPUTS_VERIFIED","FAILED_OR_PARTIAL_CAPTURE_CANNOT_EXPORT")
+        return result
+
+    def failure_client(self, operation):
+        client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
+            journal=self.journal,job=self.job,operation=operation,qualification=self.go["qualified_runtime"]["qualification"])
+        client.authenticate_actions_job();client.bind(self.go["qualified_runtime"]["binding"])
+        return client
+
+    def operation_go(self,operation,inputs,*,manifest=None):
+        package=self.go["qualified_runtime"]
+        return dict(schema_version="weekly-private-operation-GO-v2.1",approved=True,operation=operation,repository=store.REPO,
+            run_id=self.identity["run_id"],source_sha=self.identity["source_sha"],config_sha256=store.config_sha(),
+            scope_manifest_sha256=digest(manifest) if operation=="append" else None,
+            qualification_sha256=digest(package["qualification"]) if operation=="append" else None,
+            single_writer_group="nfl-lab-single-writer",runtime_id=package["binding"]["runtime_id"],
+            input_sha256={k:store.sha(v) for k,v in inputs.items()},job_id=self.identity["job_id"],workflow_ref=self.identity["workflow_ref"])
+
+    def preserve_failure(self):
+        """A distinct fresh process; no original command or source is retried."""
+        output=self.root/"failure-evidence"
+        require(not output.exists(),"FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED")
+        controls=self.storage.register_root(self.root/"failure-controls")
+        # A secondary archive failure must not suppress the independent
+        # original-failure envelope. Never retry an existing archive intent.
+        archive_result=None
+        try:
+            if not (self.root/"archive-produce").exists():
+                archive_result=self.preserve_opaque_outputs()
+        except Exception as error:
+            code=error.code if isinstance(error,store.StoreError) else "SECONDARY_ARCHIVE_FAILED"
+            if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="SECONDARY_ARCHIVE_FAILED"
+            write(self.storage,controls/"SECONDARY_PRESERVATION_FAILURE.json",dict(state="FAILED_RETAINED",reason=code,
+                original_failure_replaced=False,partial_forecast_durability_established=False,successful_forecast=False,public_release=False))
+        graph=[];attachments=[]
+        for folder in (self.root/"phase-status",self.root/"requests",self.root/"metadata",self.root/"runtime",self.root/"reference"):
+            if not folder.exists():continue
+            for path in sorted(folder.rglob("*")):
+                require(not path.is_symlink(),"FAILED_ATTEMPT_SYMLINK_FORBIDDEN")
+                if path.is_file():
+                    ref=cp.binding(path);graph.append(dict(relative_path=path.relative_to(self.root).as_posix(),reference=ref))
+        require(len(graph)<=1024,"FINITE_FAILURE_FILE_GRAPH")
+        inventory=write(self.storage,controls/"ORIGINAL_FILE_GRAPH.json",dict(schema_version=VERSION+"-failed-file-graph",files=graph,
+            raw_HTTP_corpus_archived=False,successful_forecast=False,public_release=False))
+        attachments.append(dict(label="file-graph",kind="control",reference=inventory))
+        attachments.append(dict(label="owner-root",kind="control",reference=self.root_ref))
+        import base64
+        journals=[]
+        for path in sorted(self.root.rglob("*.reservation.json")):
+            require(not path.is_symlink(),"ORIGINAL_POST_JOURNAL_SYMLINK")
+            raw=store.read_local(path,32 << 10)
+            journals.append(dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(raw),sha256=store.sha(raw),body_base64=base64.b64encode(raw).decode()))
+        journal_ref=write(self.storage,controls/"ORIGINAL_POST_RESERVATIONS.json",dict(schema_version=VERSION+"-original-post-journals",records=journals))
+        require(journal_ref["bytes"]<=failure.ATTACHMENT_CAP,"FULL_ORIGINAL_POST_JOURNAL_BOUND")
+        attachments.append(dict(label="original-post-reservations",kind="post_reservation",reference=journal_ref))
+        secondary=controls/"SECONDARY_PRESERVATION_FAILURE.json"
+        if secondary.is_file():
+            attachments.append(dict(label="secondary-preservation-failure",kind="original_failure",reference=cp.binding(secondary)))
+        status_paths=sorted((self.root/"phase-status").glob("*.json"))
+        for n,path in enumerate(status_paths[-12:]):
+            ref=cp.binding(path)
+            if ref["bytes"]<=failure.ATTACHMENT_CAP:attachments.append(dict(label=f"phase-{n:02}",kind="original_failure",reference=ref))
+        attempt={k:self.identity[k] for k in failure.ATTEMPT_KEYS if k!="run_attempt"};attempt["run_attempt"]=1
+        request=dict(schema_version=failure.VERSION+"-request",attempt=attempt,operation="producer",state="FAILED",
+            failure=dict(kind="EXCEPTION",code="WEEKLY_PRODUCER_FAILED_RETAINED",exit_code=1),
+            clocks=dict(started_at_utc=self.started.isoformat(),observed_at_utc=now_utc().isoformat(),original={}),
+            input_contract_sha256=self.go_sha,attachments=attachments)
+        failure.record_failure(request,self.storage,output)
+        manifest=read_owned(self.storage,cp.binding(output/"PAYLOAD.json"))
+        package=self.go["qualified_runtime"]
+        inputs={k:store.canonical(v) for k,v in dict(binding=package["binding"],payload_manifest=manifest,qualification=package["qualification"]).items()}
+        go=self.operation_go("append",inputs,manifest=manifest)
+        client=self.failure_client("append")
+        value=failure.append_failure(client,self.storage,output,authorization=go,authorization_sha256=digest(go),inputs=inputs)
+        handoff=dict(schema_version=VERSION+"-failure-handoff",root_go_sha256=self.go_sha,binding=package["binding"],descriptor=value["descriptor"])
+        body=store.canonical(handoff)
+        require(len(body)<=16 << 10 and not any(x in body for x in (b"https://",b"/tmp/",b"ghs_")),"SAFE_FAILED_HANDOFF")
+        with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+            stream.write("failure_handoff_json="+body.decode()+"\nfailure_handoff_sha256="+store.sha(body)+"\n");stream.flush();os.fsync(stream.fileno())
+        return dict(state="FAILED_ATTEMPT_APPENDED_READER_REQUIRED",fits=0,public_release=False,successful_forecast=False,
+            partial_forecast_archive_state=archive_result.get("archive_state") if archive_result else "UNQUALIFIED_SEE_ORIGINAL_FILE_GRAPH_AND_SECONDARY_STATUS")
+
+    def preserve_opaque_outputs(self):
+        """Retain failed native/partial forecast bytes as FAILURE_EVIDENCE.
+
+        This is a closed filesystem snapshot, not a repaired success receipt.
+        It does not run model decoding, forecast validation or provider reads.
+        Raw HTTP/source intermediates and qualified model weights remain outside
+        this declared capture scope; every included byte is bounded and owned.
+        """
+        if not any((self.root/name).is_dir() and any(p.is_file() and p.name!=_OWNER for p in (self.root/name).rglob("*"))
+            for name in ("runtime","reference")):
+            return None
+        files=[];physical_origins={}
+        collection=self.storage.register_root(self.root/"failure-opaque-collection")
+        for folder in ("runtime","reference","metadata","phase-status","requests","journal"):
+            base=self.root/folder
+            if not base.exists():continue
+            for path in sorted(base.rglob("*")):
+                require(not path.is_symlink(),"FAILED_SNAPSHOT_SYMLINK")
+                if not path.is_file() or path.name==_OWNER:continue
+                require(len(files)<archive.MAX_FILES and path.stat().st_size<=store.ASSET_CAP,"ALL_FAILED_FILES_WITHIN_CLOSED_CAPS")
+                logical="failed/"+path.relative_to(self.root).as_posix()
+                ref=cp.binding(path)
+                physical_origins[logical]=dict(ref)
+                # Files left by an interrupted atomic write may not yet be CAS
+                # aliases. Import exact original bytes; never rewrite them.
+                alias=collection/logical
+                self.storage.import_file(path,alias,expected_sha256=ref["sha256"])
+                files.append(cp.file_item(cp.binding(alias),logical,"forecast" if path.suffix==".gz" else "control"))
+        if not files:return None
+        census=dict(schema_version=archive.VERSION+"-failed-opaque-census",archive_state="FAILURE_EVIDENCE",
+            raw_HTTP_corpus_archived=False,model_weights_reuploaded=False,actual_collected_at=now_utc().isoformat(),
+            source_started_at=self.started.isoformat(),source_completed_at=now_utc().isoformat(),
+            logical_files=len(files),logical_bytes=sum(f["bytes"] for f in files),physical_origins=physical_origins,
+            fits=0,successful_forecast=False,public_release=False)
+        snapshot=dict(files=sorted(files,key=lambda f:f["logical_path"]),census=census)
+        package=self.go["qualified_runtime"];clients=[]
+        def factory(operation):
+            require(operation=="append" and len(clients)<archive.MAX_CLIENTS,"FINITE_FAILED_ARCHIVE_APPEND")
+            c=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],journal=self.journal,
+                job=self.job,operation=operation,qualification=package["qualification"])
+            c.authenticate_actions_job();c.bind(package["binding"]);clients.append(c);return c
+        handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"archive-produce",
+            root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"])
+        body=archive.safe_handoff(handoff)
+        with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+            stream.write("archive_handoff_json="+body.decode()+"\narchive_handoff_sha256="+store.sha(body)+"\n");stream.flush();os.fsync(stream.fileno())
+        return handoff
+
+
+def schedule_metadata(raw, *, season, week):
+    """Calendar only: score/workload/outcome columns are never used."""
+    result=[]
+    for row in csv.DictReader(io.StringIO(raw.decode("utf-8-sig"))):
+        if int(row["season"])!=season or int(row["week"])!=week or row["game_type"]!="REG":continue
+        local=datetime.fromisoformat(row["gameday"]+"T"+row["gametime"]).replace(tzinfo=ZoneInfo("America/New_York"))
+        result.append(dict(season=season,week=week,game_type="REG",game_id=row["game_id"],kickoff_utc=local.astimezone(timezone.utc).isoformat()))
+    require(result and len({r["game_id"] for r in result})==len(result),"COMPLETE_UNIQUE_WEEK_CALENDAR")
+    return result
+
+
+def child_context(args,env,phase):
+    """Both native children independently bind the complete current authority."""
+    from tools.private_draft_store_v2 import actions_context
+    require(phase in {"models","reference"},"CLOSED_HOSTED_CHILD_PHASE")
+    raw_authority=env.get("AUDIT_WEEKLY_NATIVE_AUTHORITY_JSON","").encode()
+    require(0<len(raw_authority)<=16 << 10 and store.sha(raw_authority)==env.get("AUDIT_WEEKLY_NATIVE_AUTHORITY_SHA256"),
+        "EXACT_HOSTED_NATIVE_AUTHORITY_HASH")
+    a=cp.strict_json(raw_authority)
+    require(type(a) is dict and set(a)==NATIVE_KEYS and store.canonical(a)==raw_authority
+        and a["schema_version"]==VERSION+"-native-authority" and a["phase"]==phase
+        and a["repository"]==store.REPO and type(a["api_job_id"]) is int and a["api_job_id"]>0
+        and type(a["run_attempt"]) is int and a["run_attempt"]==1 and type(a["fits"]) is int and a["fits"]==0
+        and a["public_release"] is False and a["actual_actions_api_authenticated"] is a["owner_root_checked"] is True,
+        "CLOSED_HOSTED_NATIVE_AUTHORITY")
+    root_body=env.get("AUDIT_WEEKLY_ROOT_GO_JSON","").encode()
+    require(0<len(root_body)<=60 << 10 and store.sha(root_body)==env.get("AUDIT_WEEKLY_ROOT_GO_SHA256"),"EXACT_CHILD_ROOT_GO_HASH")
+    go=validate_root(cp.strict_json(root_body),now=now_utc())
+    require(store.canonical(go)==root_body and a["owner_root_go_sha256"]==store.sha(root_body)
+        and env.get("GITHUB_ACTIONS")=="true" and env.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
+        and env.get("GITHUB_REPOSITORY")==store.REPO and env.get("GITHUB_RUN_ATTEMPT")=="1"
+        and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
+        and env.get("STORE_PERMISSION")=="write" and a["source_sha"]==env.get("GITHUB_SHA")==env.get("GITHUB_WORKFLOW_SHA")==go["source_sha"]
+        and a["run_id"]==env.get("GITHUB_RUN_ID") and a["job_id"]==env.get("GITHUB_JOB")==JOBS["produce"]
+        and a["workflow_ref"]==env.get("GITHUB_WORKFLOW_REF")==go["workflow_ref"]
+        and utc(go["issued_at_utc"])<=utc(a["issued_at_utc"])<=now_utc()<utc(a["expires_at_utc"])==utc(go["expires_at_utc"]),
+        "ACTUAL_HOSTED_CHILD_ROOT_AND_IDENTITY")
+    event=cp.strict_json(store.read_local(env["GITHUB_EVENT_PATH"],256 << 10))
+    require(event.get("repository",{}).get("full_name")==store.REPO and event.get("inputs",{}).get("mode")==MODE
+        and event["inputs"].get("inference_builder_go_json")==root_body.decode()
+        and event["inputs"].get("inference_builder_go_sha256")==a["owner_root_go_sha256"],"ACTUAL_CHILD_ROOT_EVENT")
+    require(subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()==go["source_sha"]
+        and subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",*PINS],cwd=ROOT,text=True)=="",
+        "CLEAN_COMMITTED_CHILD_SOURCE")
+    expected=store.parents_safe(env["RUNNER_TEMP"])/(VERSION+"-"+env["GITHUB_RUN_ID"]+"-produce")
+    request_path=store.parents_safe(args.request)
+    require(request_path.is_relative_to(expected/"requests"),"CURRENT_OWNED_CHILD_REQUEST_PATH")
+    raw=store.read_local(request_path,512 << 10);request=cp.strict_json(raw)
+    require(raw==store.canonical(request) and store.sha(raw)==args.request_sha256==a["request_sha256"]
+        and request["code_pins"]==pins() and request["cache"]==str(expected/"cache")
+        and request["state_root"]==str(expected/"state")
+        and request["output"]==str(expected/("retained" if phase=="models" else "reference")),"SEALED_CONFINED_CURRENT_CHILD_REQUEST")
+    job=actions_context(env,"write")
+    require(job["job_id"]==a["job_id"] and job["workflow_ref"]==a["workflow_ref"] and job["workflow_sha"]==a["source_sha"],
+        "ACTUAL_NATIVE_JOB_MATCHES_AUTHORITY")
+    return request,a,job,go
+
+
+def model_child(args, env):
+    """Dedicated numerical process; source/model restoration does zero fits."""
+    request,a,job,go=child_context(args,env,"models")
+    require(set(request)=={"schema_version","registration","cache","state_root","output","code_pins"}
+        and request["schema_version"]==VERSION+"-model-request" and request["registration"]==go["retained_registration"],
+        "CLOSED_CURRENT_MODEL_REQUEST")
+    storage=OperationalStorage(request["cache"],ROOT/"config/operational-source-policy-v2.json",state=request["state_root"])
+    archived=cp.strict_json(store.read_local(ROOT/"reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json",store.META_CAP))
+    journal=Path(request["output"]).parent/"retained-journal";journal.mkdir(mode=0o700)
+    cp.seed_pending(journal,request["registration"]["pending_reservations"])
+    class Factory:
+        qualification=archived["qualification"]
+        clients=[]
+        def __call__(self,operation):
+            require(operation=="restore" and len(self.clients)<9,"NINE_MODEL_GET_ONLY_OPERATIONS")
+            c=retained.ReadClient(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],journal=journal,source_sha=env["GITHUB_SHA"],job=job,
+                operation=operation,extra_routes=retained.routes(request["registration"],self.qualification))
+            c.authenticate_actions_job();c.bind(archived["binding"])
+            require(c.job["api_job_id"]==a["api_job_id"],"CURRENT_MODEL_API_JOB_REQUIRED")
+            self.clients.append(c);return c
+    factory=Factory()
+    def offline():
+        def deny(event,unused):
+            if event.startswith(("socket.","subprocess.")) or event in {"os.fork","os.forkpty","os.exec","os.posix_spawn","os.system"}:
+                raise store.StoreError("MODEL_REPLAY_NO_HTTP_OR_CHILDREN")
+        sys.addaudithook(deny)
+        import pyarrow as pa
+        pa.set_cpu_count(2);pa.set_io_thread_count(2);pa.set_memory_pool(pa.system_memory_pool())
+    envelope=dict(runtime_envelopes=bounds.shared_envelopes(),code_pins={"tools/review_direct_booster_screen_guard_v4.py":pins()["tools/review_direct_booster_screen_guard_v4.py"]})
+    with bounds.resource_envelope(envelope,"requalify",ROOT):
+        result=retained.restore(request["registration"],factory,storage=storage,output=request["output"],current_go_sha256=a["owner_root_go_sha256"],
+            before_replay=offline,check_authority=lambda:require(now_utc()<utc(a["expires_at_utc"]),"WEEKLY_ROOT_EXPIRED"))
+    return dict(state=result["state"],model_pairs=18,fits=0,remote_writes=0,public_release=False)
+
+
+def reference_child(args, env):
+    """Private original R0; metadata/source identities were fixed before values."""
+    p,a,job,go=child_context(args,env,"reference")
+    require(set(p)=={"schema_version","inputs","history_binding","config","cache","state_root","prepared","source",
+        "runtime_root","output","repository","code_pins"} and p["schema_version"]==VERSION+"-reference-request"
+        and p["config"]==go["source_config"] and p["repository"]==env.get("NFL_R0_SOURCE_REPOSITORY")==str(ROOT/"r0-public-reference")
+        and p["runtime_root"]==str(Path(p["output"]).parent/"runtime"),"CLOSED_REGISTERED_ORIGINAL_REFERENCE_REQUEST")
+    storage=OperationalStorage(p["cache"],ROOT/"config/operational-source-policy-v2.json",state=p["state_root"])
+    journal=Path(p["output"]).parent/"reference-journal";journal.mkdir(mode=0o700)
+    c=store.Client(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=journal,job=job,operation="metadata")
+    c.authenticate_actions_job()
+    require(c.job["api_job_id"]==a["api_job_id"] and c.job["job_id"]==a["job_id"]==env["GITHUB_JOB"]
+        and a["source_sha"]==env["GITHUB_SHA"]
+        and a["run_id"]==env["GITHUB_RUN_ID"] and a["job_id"]==JOBS["produce"]
+        and a["owner_root_go_sha256"]==store.sha(env["AUDIT_WEEKLY_ROOT_GO_JSON"].encode())==env["AUDIT_WEEKLY_ROOT_GO_SHA256"]
+        and a["actual_actions_api_authenticated"] is a["owner_root_checked"] is True
+        and utc(a["issued_at_utc"])<=now_utc()<utc(a["expires_at_utc"]),"CURRENT_REAL_REFERENCE_JOB")
+    inp=p["inputs"];read=lambda name,raw=False:read_owned(storage,inp[name],raw=raw)
+    e=epoch.restore_epoch(read("epoch"),read("original_choice",True),read("original_completion"),read("original_slate"),
+        read("original_catalog"),read("original_policy"),history_binding=p["history_binding"],now=now_utc())
+    registered=epoch.bind_registration(e,read("epoch_registration"),now=now_utc())
+    doc=read("choice");choice=epoch.EpochChoice(doc,digest(doc))
+    backend=runtime.Runtime(storage,registered,choice,inp["retained_restore"],p["config"])
+    prepared=read_owned(storage,p["prepared"]);completion=read_owned(storage,prepared["choice_completion"])
+    permit=epoch.authorize_capture(registered,choice,completion,relocated_replays=(backend.replay,))
+    import pandas as pd
+    q=pd.read_parquet(Path(p["runtime_root"])/"queries.parquet")
+    bridge=read_owned(storage,cp.binding(Path(p["runtime_root"])/"IDENTITY_BRIDGE.json"))["identities"]
+    offers=runtime.generic.offers(q,backend.records,choice.document["slate"])
+    pref=reference.prepare_reference(storage,p["output"],repository=p["repository"],permit=permit,
+        slate=choice.document["slate"],control=e.document["catalog"]["methods"]["R0"],offers=offers,bridge=bridge)
+    ref=reference.capture_reference(storage,pref);finished=read_owned(storage,ref)
+    return dict(state=finished["state"],available_rows=finished["available_rows"],unavailable_rows=finished["unavailable_rows"],fits=0,public_release=False)
+
+
+def execute(phase, env):
+    runner=Runner("produce" if phase=="preserve" else phase,env,existing=phase=="preserve")
+    return {"produce":runner.produce,"restore":runner.restore,"consume":runner.consume,"preserve":runner.preserve_failure}[phase]()
