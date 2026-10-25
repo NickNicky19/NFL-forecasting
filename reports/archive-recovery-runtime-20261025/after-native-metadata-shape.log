@@ -1,0 +1,9 @@
+{"fictional": true, "phase": "produce", "stage": "collect_validate", "CPU_seconds": 2.7633, "scan_calls": 25}
+{"fictional": true, "phase": "produce", "stage": "validate_encode_native_append", "CPU_seconds": 7.6039, "scan_calls": 75}
+{"fictional": true, "phase": "produce", "stages": {"collect_validate": 2.7633, "validate_encode_native_append": 7.6039}, "wall_seconds": 10.5033, "CPU_seconds": 11.2793, "scan_calls": 75, "max_RSS_KiB": 213364, "function_CPU_seconds": {"validate_capture": 0.868, "encode": 2.2634}, "logical_bytes": 23235655, "files": 383, "candidate_rows": 18000, "selected_rows": 5000, "native_durability_claim": false, "fits": 0}
+{"fictional": true, "phase": "restore", "stage": "native_restore_extract_validate_all383", "CPU_seconds": 8.0941, "scan_calls": 64}
+{"fictional": true, "phase": "restore", "stages": {"native_restore_extract_validate_all383": 8.0941}, "wall_seconds": 8.2121, "CPU_seconds": 9.0198, "scan_calls": 64, "max_RSS_KiB": 239848, "function_CPU_seconds": {"verify_bundle": 0.3718, "validate_capture": 0.42}, "logical_bytes": 23235655, "files": 383, "candidate_rows": 18000, "selected_rows": 5000, "native_durability_claim": false, "fits": 0}
+{"fictional": true, "phase": "consume", "stage": "native_restore_extract_validate_all383", "CPU_seconds": 9.9532, "scan_calls": 65}
+{"fictional": true, "phase": "consume", "stages": {"native_restore_extract_validate_all383": 9.9532}, "wall_seconds": 10.0843, "CPU_seconds": 10.9394, "scan_calls": 65, "max_RSS_KiB": 239384, "function_CPU_seconds": {"verify_bundle": 0.3959, "validate_capture": 0.4155}, "logical_bytes": 23235655, "files": 383, "candidate_rows": 18000, "selected_rows": 5000, "native_durability_claim": false, "fits": 0}
+....
+4 passed in 98.83s (0:01:38)

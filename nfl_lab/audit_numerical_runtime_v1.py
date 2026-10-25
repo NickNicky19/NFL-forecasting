@@ -136,8 +136,9 @@ def cpu_flags(cpuinfo):
     return len(records),sha(canonical(records))
 
 
-def preflight(root,env,*,cpuinfo=None):
+def preflight(root,env,*,cpuinfo=None,scope="MODEL_EXECUTION"):
     """Read-only stdlib startup gate; no actor/ROOT/execution authority."""
+    require(scope in {"MODEL_EXECUTION","METADATA_ONLY"},"CLOSED_NUMERICAL_PREFLIGHT_SCOPE")
     root=Path(root).absolute()
     p,config_sha=profile(root)
     required={}
@@ -152,6 +153,10 @@ def preflight(root,env,*,cpuinfo=None):
         require(actual[name]==expected,"NUMERICAL_ORIGINAL_MODEL_CODE_PIN_CHANGED")
     versions={}
     for package,expected in VERSIONS.items():
+        # The three metadata-only jobs install requirements.lock, not the
+        # separate model lock containing CatBoost. They never decode a model.
+        # Full model readiness still requires every original package below.
+        if scope=="METADATA_ONLY" and package=="catboost":continue
         try:
             versions[package]=importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:
@@ -160,7 +165,8 @@ def preflight(root,env,*,cpuinfo=None):
     return dict(schema_version=VERSION+"-preflight",configuration_id=CONFIG_ID,config_sha256=config_sha,
         env_sha256=sha(canonical(required)),cpu_flags_sha256=flags_sha,cpu_count=count,
         model_code_pins_sha256=sha(canonical(actual)),original_expected_bits_sha256=ORIGINAL_BITS_SHA256,
-        package_versions=versions,scope="NUMERICAL_MECHANICS_ONLY",execution_authorized=False,forecast_release=False,model_fits=0)
+        package_versions=versions,scope="NUMERICAL_MECHANICS_ONLY" if scope=="MODEL_EXECUTION" else "METADATA_ONLY_NOT_MODEL_READINESS",
+        execution_authorized=False,forecast_release=False,model_fits=0)
 
 
 def _libc():

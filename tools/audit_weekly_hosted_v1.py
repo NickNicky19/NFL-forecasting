@@ -28,7 +28,7 @@ def main(argv=None):
     # Select and check the backend before hosted imports numerical libraries.
     try:
         from nfl_lab import audit_numerical_runtime_v1 as numerical
-        numerical.preflight(ROOT,os.environ)
+        numerical.preflight(ROOT,os.environ,scope="MODEL_EXECUTION" if args.phase in {"produce","models","reference"} else "METADATA_ONLY")
     except Exception as error:
         code=str(error)
         if not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="NUMERICAL_STARTUP_CONFIGURATION_REQUIRED"

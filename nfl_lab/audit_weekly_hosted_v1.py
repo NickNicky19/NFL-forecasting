@@ -60,6 +60,7 @@ PINS = tuple(sorted(set(retained.CURRENT_FILES) | set(origin.FILES) | set(runtim
     "nfl_lab/operational_failure_v1.py",
     "tests/test_audit_weekly_failed_scope_v1.py", "tests/test_audit_weekly_failure_wire_v1.py",
     "tests/test_audit_weekly_receipt_bundle_v1.py",
+    "tests/test_audit_weekly_child_status_v1.py", "tests/test_audit_weekly_archive_scale_v1.py",
     "nfl_lab/audit_numerical_runtime_v1.py", "tests/test_audit_numerical_runtime_v1.py",
     "config/audit-weekly-numerical-runtime-v1.json",
     ".github/workflows/audit-source-checks.yml"}))
@@ -301,7 +302,11 @@ class Runner:
             out,err=p.communicate(timeout=seconds)
         except subprocess.TimeoutExpired:
             os.killpg(p.pid,signal.SIGKILL);out,err=p.communicate()
-            write(self.storage,self.root/"phase-status"/(name+".json"),dict(state="DEADLINE",exit_code=p.returncode,stdout_sha256=store.sha(out),stderr_sha256=store.sha(err)))
+            require(len(out)<=64 << 10 and len(err)<=64 << 10,"BOUNDED_PRIVATE_CHILD_STATUS")
+            self.storage.write_bytes(self.root/"phase-status"/(name+".stdout"),out)
+            self.storage.write_bytes(self.root/"phase-status"/(name+".stderr"),err)
+            write(self.storage,self.root/"phase-status"/(name+".json"),dict(state="DEADLINE",exit_code=p.returncode,
+                stdout_sha256=store.sha(out),stderr_sha256=store.sha(err),actual_completed_at=now_utc().isoformat()))
             raise store.StoreError("WEEKLY_CHILD_DEADLINE") from None
         require(len(out)<=64 << 10 and len(err)<=64 << 10,"BOUNDED_PRIVATE_CHILD_STATUS")
         # Child summaries contain fixed codes only. Retain original bytes
@@ -309,7 +314,12 @@ class Runner:
         self.storage.write_bytes(self.root/"phase-status"/(name+".stdout"),out)
         self.storage.write_bytes(self.root/"phase-status"/(name+".stderr"),err)
         try: result=cp.strict_json(out)
-        except Exception: raise store.StoreError("WEEKLY_CHILD_STATUS_INVALID") from None
+        except Exception:
+            # A signal, interpreter exit or malformed summary must retain the
+            # actual return code even when there is no JSON child status.
+            write(self.storage,self.root/"phase-status"/(name+".json"),dict(state="INVALID_CHILD_STATUS",exit_code=p.returncode,
+                stdout_sha256=store.sha(out),stderr_sha256=store.sha(err),actual_completed_at=now_utc().isoformat()))
+            raise store.StoreError("WEEKLY_CHILD_STATUS_INVALID") from None
         write(self.storage,self.root/"phase-status"/(name+".json"),dict(exit_code=p.returncode,status=result,actual_completed_at=now_utc().isoformat()))
         if p.returncode:
             code=result.get("reason")
@@ -534,7 +544,7 @@ class Runner:
         # original-failure envelope. Never retry an existing archive intent.
         archive_result=None
         try:
-            if not (self.root/"archive-produce").exists():
+            if not (self.root/"failure-archive-produce").exists():
                 archive_result=self.preserve_opaque_outputs()
         except Exception as error:
             code=error.code if isinstance(error,store.StoreError) else "SECONDARY_ARCHIVE_FAILED"
@@ -567,19 +577,29 @@ class Runner:
         journal_ref=write(self.storage,controls/"ORIGINAL_POST_RESERVATIONS.json",dict(schema_version=VERSION+"-original-post-journals",records=journals))
         require(journal_ref["bytes"]<=failure.ATTACHMENT_CAP,"FULL_ORIGINAL_POST_JOURNAL_BOUND")
         attachments.append(dict(label="original-post-reservations",kind="post_reservation",reference=journal_ref))
-        auxiliary=[]
+        auxiliary=[];auxiliary_groups=[]
         fixed=[self.root/name for name in ("BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json","BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json")]
         fixed += sorted(delivery.glob("DELIVERY_*.json")) if delivery.is_dir() else []
+        fixed += sorted((self.root/"phase-status").glob("*.stdout"))
+        fixed += sorted((self.root/"phase-status").glob("*.stderr"))
         for path in fixed:
             if not path.exists():continue
             ref=cp.binding(path);require(ref["bytes"]<=64 << 10,"BOUNDED_COMPLETE_FAILED_PHASE_CONTROL")
             value=read_owned(self.storage,ref,64 << 10,raw=True)
-            auxiliary.append(dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(value),sha256=store.sha(value),
-                body_base64=base64.b64encode(value).decode()))
+            item=dict(relative_path=path.relative_to(self.root).as_posix(),bytes=len(value),sha256=store.sha(value),
+                body_base64=base64.b64encode(value).decode())
+            candidate=dict(schema_version=VERSION+"-complete-auxiliary-controls",files=auxiliary+[item])
+            if len(store.canonical(candidate))>failure.ATTACHMENT_CAP:
+                require(auxiliary,"SINGLE_FAILED_PHASE_CONTROL_MUST_FIT")
+                auxiliary_groups.append(auxiliary);auxiliary=[]
+            auxiliary.append(item)
         if auxiliary:
-            aux=write(self.storage,controls/"ORIGINAL_AUXILIARY_CONTROLS.json",dict(schema_version=VERSION+"-complete-auxiliary-controls",files=auxiliary))
+            auxiliary_groups.append(auxiliary)
+        for n,group in enumerate(auxiliary_groups):
+            suffix="" if n==0 else f"-{n:02}"
+            aux=write(self.storage,controls/("ORIGINAL_AUXILIARY_CONTROLS"+suffix+".json"),dict(schema_version=VERSION+"-complete-auxiliary-controls",files=group))
             require(aux["bytes"]<=failure.ATTACHMENT_CAP,"COMPLETE_FAILED_PHASE_AUXILIARY_CONTROL_BOUND")
-            attachments.append(dict(label="complete-auxiliary-controls",kind="original_failure",reference=aux))
+            attachments.append(dict(label="complete-auxiliary-controls"+suffix,kind="original_failure",reference=aux))
         secondary=controls/"SECONDARY_PRESERVATION_FAILURE.json"
         if secondary.is_file():
             attachments.append(dict(label="secondary-preservation-failure",kind="original_failure",reference=cp.binding(secondary)))
@@ -640,6 +660,27 @@ class Runner:
             for name in names:
                 path=self.root/folder/name
                 if path.exists():add(path,"failed/"+folder+"-metadata/"+name)
+        # Keep the failed normal archive's own intent, descriptors and POST
+        # journals. Its preencoded bodies duplicate the original runtime scope
+        # below and are not retried or presented as successful output.
+        normal=self.root/"archive-produce"
+        if normal.exists():
+            for name in ("CONSUMED.json","ADMISSION.json","HANDOFF.json","APPEND_FAILED.json","APPENDED.json",
+                    *(f"APPEND_INTENT_{n}.json" for n in range(9))):
+                path=normal/"transport"/name
+                if path.exists():add(path,"failed/original-archive/"+name)
+            original_pending=[]
+            journal=normal/"journal"
+            if journal.exists():
+                for path in sorted(journal.rglob("*")):
+                    require(not path.is_symlink(),"ORIGINAL_ARCHIVE_JOURNAL_SYMLINK")
+                    if not path.is_file() or path.name==_OWNER:continue
+                    add(path,"failed/original-archive/journal/"+path.relative_to(journal).as_posix())
+                    if path.name.endswith(".reservation.json"):
+                        original_pending.append(cp.strict_json(store.read_local(path,32 << 10)))
+            # Native admission must still charge every unresolved earlier POST.
+            # This copies original reservation metadata, never retries a POST.
+            if original_pending:cp.seed_pending(self.journal,original_pending)
         for folder in ("runtime","reference","metadata","phase-status","requests","journal"):
             base=self.root/folder
             if not base.exists():continue
@@ -686,7 +727,9 @@ class Runner:
             c=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],journal=self.journal,
                 job=self.job,operation=operation,qualification=package["qualification"])
             c.authenticate_actions_job();c.bind(package["binding"]);clients.append(c);return c
-        handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"archive-produce",
+        # A failed normal archive is immutable. This is a separate failure-only
+        # append with its own intent, never a retry of that normal archive.
+        handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"failure-archive-produce",
             root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"])
         body=archive.safe_handoff(handoff)
         with open(self.env["GITHUB_OUTPUT"],"a") as stream:

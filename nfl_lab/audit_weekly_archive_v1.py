@@ -20,7 +20,7 @@ from . import private_draft_store as store, owner_bootstrap_bundle as codec
 from . import gha_private_checkpoint as cp, owner_private_bootstrap as owner
 from . import operational_failure_v1 as failure, audit_private_rotation_v1 as rotation
 from .owned_reference_batch import validate_owned_references
-from .operational_storage import _OWNER
+from .operational_storage import OperationalStorage, _OWNER
 
 VERSION = "audit-weekly-archive-v1"
 RUNTIME = "audit-weekly-runtime-v1"
@@ -81,6 +81,60 @@ def read_owned(storage,ref,cap=store.ASSET_CAP,*,raw=False):
     return body if raw else cp.strict_json(body)
 
 
+def _owned_files(storage, files):
+    """One original exclusive ownership check for a complete bounded cohort."""
+    bindings={}
+    for ref in files:
+        require(type(ref) is dict and {"path","bytes","sha256"} <= set(ref),"CLOSED_ARCHIVE_REFERENCE")
+        require(ref["path"] not in bindings or bindings[ref["path"]]==ref["sha256"],"ONE_HASH_PER_ORIGINAL_CAPTURE_PATH")
+        bindings[ref["path"]]=ref["sha256"]
+    owned,_=validate_owned_references(storage,bindings)
+    require(all(owned[ref["path"]]["bytes"]==ref["bytes"] for ref in files),"EXACT_OWNED_CAPTURE_FILE_SIZES")
+
+
+def _publish_owned_files(storage, files, destination):
+    """Publish one verified codec cohort under the original global quota flock.
+
+    Reserve its full incoming byte upper bound before the first write. Use the
+    original storage path, immutable blob, fsync and hardlink primitives, with
+    full registry/unique-inode scans at both boundaries rather than per file.
+    Partial failures remain retained; no rollback, replacement or quota reset.
+    """
+    require(isinstance(storage,OperationalStorage) and 0<len(files)<=MAX_FILES,"FINITE_OWNED_ARCHIVE_EXTRACTION")
+    destination=store.parents_safe(destination)
+    require(sum(len(body) for _,body in files)<=codec.INFLATED,"BOUNDED_OWNED_ARCHIVE_EXTRACTION")
+    with storage._locked():
+        try:
+            storage._refresh()
+            targets=[]
+            for name,body in files:
+                target=storage._check(store.parents_safe(destination/codec.logical(name)))
+                require(not target.exists(),"EXTRACTION_EXISTS")
+                targets.append((target,body))
+            require(len({target for target,_ in targets})==len(targets),"UNIQUE_OWNED_ARCHIVE_EXTRACTION")
+            storage._require(sum(len(body) for _,body in targets))
+            for target,body in targets:
+                digest=store.sha(body);blob=storage.blob_root/digest
+                if blob.exists():storage._verify_blob(blob)
+                else:
+                    temporary,descriptor=storage._temporary(storage.control_root,".incoming-")
+                    try:
+                        storage._write_all(descriptor,body)
+                        os.fsync(descriptor)
+                    finally:os.close(descriptor)
+                    blob=storage._publish_blob(temporary,digest)
+                storage._alias(blob,target,False)
+        finally:
+            storage._refresh()
+            storage._scan()
+    return dict(files=len(files),bytes=sum(len(body) for _,body in files),model_decodes=0)
+
+
+def _extract_owned_group(body,record,storage,destination):
+    # All unchanged codec schema/base64/size/hash/origin checks precede writes.
+    return _publish_owned_files(storage,codec.verify_bundle(body,record),destination)
+
+
 def fresh(storage,path):
     path=store.parents_safe(path)
     require(not path.exists(),"FRESH_ARCHIVE_PHASE_NO_RETRY")
@@ -113,13 +167,9 @@ No old completion is invented. Missing files force a failure archive.
     def add(ref,name,kind="control"):
         codec.logical(name)
         require(name not in entries and len(entries)<MAX_FILES,"FINITE_UNIQUE_CAPTURE_CENSUS")
-        validate_owned_references(storage,{ref["path"]:ref["sha256"]})
+        require(type(ref) is dict and set(ref)=={"path","bytes","sha256"},"CLOSED_ARCHIVE_REFERENCE")
         require(type(ref["bytes"]) is int and 0 <= ref["bytes"] <= store.ASSET_CAP,"COMPLETE_FILE_ASSET_BOUND_NO_TRUNCATION")
         physical_origins[name]=dict(ref)
-        if any(f["path"]==ref["path"] for f in entries.values()):
-            alias=output/"physical-aliases"/name
-            storage.import_file(ref["path"],alias,expected_sha256=ref["sha256"])
-            ref=dict(path=str(alias),bytes=ref["bytes"],sha256=ref["sha256"])
         entries[name]=cp.file_item(ref,name,kind)
     observed=set()
     for directory,dirs,names in os.walk(root,followlinks=False):
@@ -173,6 +223,18 @@ No old completion is invented. Missing files force a failure archive.
         require(worker["state"]=="ORIGINAL_R0_DEFAULT_PROCEDURE_CAPTURED" and worker["native"]==reference["native"]
             and worker["next_state"]==reference["next_state"],"EXACT_ORIGINAL_R0_WORKER_AND_SOURCE_CLOCKS")
         for n,ref in enumerate(worker["source_observations"]):add(ref,f"r0/source-observations/{n:03}.json","source_manifest")
+    # Discovery does not decode forecast bodies. Authenticate every original
+    # together before semantic reads or duplicate-role alias publication. Each
+    # input remains subject to the unchanged per-path CAS/hash/readonly checks;
+    # only redundant whole-registry scans are removed.
+    _owned_files(storage,list(entries.values()))
+    seen=set()
+    for name,item in list(entries.items()):
+        if item["path"] in seen:
+            alias=output/"physical-aliases"/name
+            storage.import_file(item["path"],alias,expected_sha256=item["sha256"])
+            entries[name]=cp.file_item(dict(path=str(alias),bytes=item["bytes"],sha256=item["sha256"]),name,item["kind"])
+        else:seen.add(item["path"])
     missing=sorted((CONTROL_FILES|CANDIDATE_NAMES|STATUS_NAMES)-observed)
     files=sorted(entries.values(),key=lambda f:f["logical_path"])
     validate_files(files)
@@ -184,10 +246,11 @@ No old completion is invented. Missing files force a failure archive.
         logical_bytes=sum(f["bytes"] for f in files),fits=0,public_export_authorized=False)
     # Complete-looking files do not turn a failed original attempt into success.
     if "FINISHED.json" in observed:
-        terminal=read_owned(storage,cp.binding(root/"FINISHED.json"))
+        terminal=cp.strict_json(cp.read_ref(physical_origins["runtime/FINISHED.json"]))
         if terminal.get("state")!="PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE":census["archive_state"]="FAILURE_EVIDENCE"
     result=dict(files=files,census=census)
     validate_capture(result,lambda name:Path(entries[name]["path"]),complete=census["archive_state"]=="COMPLETE_CAPTURE")
+    _owned_files(storage,files)
     write(storage,output/"COLLECTED.json",result)
     return result
 
@@ -560,12 +623,13 @@ def restore(handoff,factory,package,*,storage,output,root_go_sha256,pending_cens
                 and p["job"]["api_job_id"]==reader_handoff["restorer"]["api_job_id"]
                 and p["job"]["job_id"]==handoff["jobs"]["restore"] for p in prior_witness["proofs"]),"ALL_ORIGINAL_READER_PROOFS_BOUND_TO_COMPLETE_INDEX")
     with storage.transaction():storage._require(sum(f["bytes"] for f in index["files"])+sum(g["bytes"]*2 for g in index["groups"])+(2 << 20))
-    for group in index["groups"]:codec.extract_owned(get(group["descriptor"],str(group["index"])+".gz"),group,storage,output/"files")
-    for file in index["files"]:
-        if file["bytes"]==0:storage.write_bytes(output/"files"/file["logical_path"],b"")
+    for group in index["groups"]:_extract_owned_group(get(group["descriptor"],str(group["index"])+".gz"),group,storage,output/"files")
+    empty=[(f["logical_path"],b"") for f in index["files"] if f["bytes"]==0]
+    if empty:_publish_owned_files(storage,empty,output/"files")
     aliases={f["logical_path"]:dict(path=str(output/"files"/f["logical_path"]),bytes=f["bytes"],sha256=f["sha256"]) for f in index["files"]}
-    validate_owned_references(storage,{r["path"]:r["sha256"] for r in aliases.values()})
+    _owned_files(storage,list(aliases.values()))
     validation=validate_capture(index,lambda n:Path(aliases[n]["path"]),complete=index["archive_state"]=="COMPLETE_CAPTURE")
+    _owned_files(storage,list(aliases.values()))
     witness=dict(schema_version=VERSION+"-witness",restorer=current,index_sha256=store.sha(encoded),files_sha256=index["files_sha256"],
         producer_proof_sha256=store.sha(store.canonical(index["producer_proof"])),proofs=proofs,validation=validation,actual_completed_at=now(),
         archive_state=index["archive_state"],public_export_authorized=False,successful_forecast=False)
