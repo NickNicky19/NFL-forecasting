@@ -1,0 +1,173 @@
+{
+  "base_source": {
+    "commit": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "exact_preimages_required": true,
+    "repository": "NickNicky19/nicks-expert-nfl-picks"
+  },
+  "changed_paths": {
+    "output/app.js": {
+      "after_bytes": 461070,
+      "after_sha256": "ad88dd4b78314d041485275acc9f0e69ac09fb0a27fb7e9aa3c1e635df02e14c",
+      "before_bytes": 448295,
+      "before_sha256": "1fe57a6451925ced2f4afebc3eeae68022152d7bbf2f7c216394136526c1edb9"
+    },
+    "output/index.html": {
+      "after_bytes": 5547,
+      "after_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+      "before_bytes": 5545,
+      "before_sha256": "480b7678e0a842960fd74ce7fbf65b230fe027e71bd9da8c29a5cb3d7fb0b3d1"
+    },
+    "tests/test-ui.cjs": {
+      "after_bytes": 84680,
+      "after_sha256": "2892ba281205730cedc12cd013c9c3b6ad0095132d639913da749d3827f54cc9",
+      "before_bytes": 58905,
+      "before_sha256": "24c066ba4bc18d578fb00512f7ed5fe8e659c4abcfe6a8b83efb7609dc96fbcb"
+    }
+  },
+  "closed_inventory": [
+    "HUNK_REASONS.md",
+    "MANIFEST.json",
+    "REVIEW.md",
+    "evidence/about.log",
+    "evidence/browser-games.log",
+    "evidence/browser-primary.log",
+    "evidence/browser-props.log",
+    "evidence/downstream.log",
+    "evidence/preservation.json",
+    "evidence/ui-before.log",
+    "evidence/ui-preview.log",
+    "evidence/validation.json",
+    "player-prop-phase2-484d.patch.gz"
+  ],
+  "manifest_self_hash": "Excluded from its own payload hash map to avoid circularity; hash MANIFEST.json separately.",
+  "original_main_v2_alternative": {
+    "boundary": "Separate Main alternative for 453e/5e455; fails application check against 484d. This package is the surgical Phase 2 adaptation, preserving the current source.",
+    "generated_main_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+    "patch_sha256": "3506cb626934757ceed52361c0b96cd7c021e0769ffba9e44d8fe14fcbf61796",
+    "relative_package": "../v2/",
+    "source_sha": "5e45584460a0f1eb61acf8d0cb50faea6e8a614b"
+  },
+  "patch": {
+    "check_command": "gzip -dc \"$PACKAGE_DIR/player-prop-phase2-484d.patch.gz\" | git apply --check --whitespace=error -",
+    "compressed_bytes": 15057,
+    "compressed_sha256": "9246687a1e5934f87015ade1d14d8a6271a93821f16bfdf464071bcd8f6b60fc",
+    "compression": "gzip",
+    "compression_level": 9,
+    "decompressed_bytes": 52033,
+    "decompressed_sha256": "a533ac8872b008389bcbfffbd4dee2cc8262cde59346b1b6ac36065e0c6d6ce9",
+    "gzip_filename": "",
+    "gzip_mtime": 0,
+    "gzip_os_byte": 255,
+    "hunks": 17,
+    "path": "player-prop-phase2-484d.patch.gz",
+    "reconstruction_matches_preview": true
+  },
+  "payload_files": {
+    "HUNK_REASONS.md": {
+      "bytes": 4328,
+      "sha256": "13aa01681f307140564ac132f7a474bdff3ccd9511cdef4cc12a7268e8e7a5ac"
+    },
+    "REVIEW.md": {
+      "bytes": 6307,
+      "sha256": "a7441b2e8e98756383cde474a5618b29150ee8fa141b7b343788513b77ded416"
+    },
+    "evidence/about.log": {
+      "bytes": 38,
+      "sha256": "859494b63d036fba94a2d631ecfc64544ec6f1d9d480ab156cf2ad1be16564b5"
+    },
+    "evidence/browser-games.log": {
+      "bytes": 156,
+      "sha256": "63da2331b844f7206b7e34ef22d02e21acbd81d8e60a13dd983faf9c974db0f7"
+    },
+    "evidence/browser-primary.log": {
+      "bytes": 165,
+      "sha256": "00d40a2a5a1099a466325a004326a846d0e79a6925c8217a34124fcda2511907"
+    },
+    "evidence/browser-props.log": {
+      "bytes": 81,
+      "sha256": "e87f508f4b94946dc209bcd4955e0bfa8276b60b2295d90ea2c9133ccd25f010"
+    },
+    "evidence/downstream.log": {
+      "bytes": 55,
+      "sha256": "9f79b864f11fda18cfb909d7d6e3f5b9f8f07e496fecaf60e78e4fa4e921ab3d"
+    },
+    "evidence/preservation.json": {
+      "bytes": 37237,
+      "sha256": "856cfa0d0c2a6d766ff664ab9afcddc44719346d03f13456d16421aeda110508"
+    },
+    "evidence/ui-before.log": {
+      "bytes": 1542,
+      "sha256": "e63e91383a76fdb6b1e2f8e52fefc9fa2fb3b9aae52fe646839402e269457017"
+    },
+    "evidence/ui-preview.log": {
+      "bytes": 1781,
+      "sha256": "cebfca04fb2c1c96a44a2bafe8a8d8505ec9281320ff2b3e92d412a324e7b682"
+    },
+    "evidence/validation.json": {
+      "bytes": 3682,
+      "sha256": "51bd3f52ba496ee145b893f06118bf3410b0e71bfc7d846774f0c98af2a63d2b"
+    },
+    "player-prop-phase2-484d.patch.gz": {
+      "bytes": 15057,
+      "sha256": "9246687a1e5934f87015ade1d14d8a6271a93821f16bfdf464071bcd8f6b60fc"
+    }
+  },
+  "preservation": {
+    "broad_fantasy_rewrite": false,
+    "my_picks_game_row_unchanged": true,
+    "new_source_experiments": false,
+    "original_current_UI_prefix_bytes": 58905,
+    "unchanged_named_functions": 264,
+    "unchanged_other_source_paths": 153
+  },
+  "provenance": {
+    "documents": "REVIEW and MANIFEST are public-safe derived copies; original documents and all original artifacts remain intact.",
+    "frozen_preview_manifest_sha256": "16007e0b02458da72ba86860e760e9a59dc91bab4515ad206d265be94d1890e3",
+    "model_settings": "Inherited actual session defaults; no override supplied.",
+    "original_patch_sha256": "a533ac8872b008389bcbfffbd4dee2cc8262cde59346b1b6ac36065e0c6d6ce9"
+  },
+  "public_safety": {
+    "absolute_private_roots_included": false,
+    "before_preview_trees_included": false,
+    "contents": "Source patch, source hashes, fictional fixtures/test output and compact evidence only",
+    "coordination_comments": 0,
+    "deployment": false,
+    "full_backend_failure_logs_included": false,
+    "inspection": "Every text payload plus the full decompressed patch was checked for absolute private roots, credential formats and authorization header values; chosen evidence is source/fictional only.",
+    "new_provider_requests": 0,
+    "protected_2026_provider_labels_included": false,
+    "provider_data_included": false,
+    "remote_actions": 0,
+    "source_branch_writes": 0,
+    "source_commits": 0,
+    "tokens_credentials_included": false
+  },
+  "schema_version": "player-prop-phase2-484d-public-share-v1",
+  "state": "AUDIT_PREVIEW_ONLY_NOT_FINAL_ACCEPTANCE",
+  "test_summary": {
+    "about_assertions": 20,
+    "browser_game_checks": 170,
+    "browser_primary_checks": 106,
+    "browser_prop_checks": 99,
+    "browser_widths": [
+      320,
+      390,
+      1280
+    ],
+    "composition": 14,
+    "core_props": 52,
+    "downstream_comparison_cases": 18,
+    "downstream_differences": 0,
+    "python_tests_pass_per_snapshot": 150,
+    "scope_invalid_reject": 23,
+    "scope_positive_pass": 2
+  },
+  "validation_boundary": {
+    "active_owner_review_pending": true,
+    "actual_combined_CI_pass_claimed": false,
+    "full_backend_suite_pass_claimed": false,
+    "full_browser_reporting_presentation_pass_claimed": false,
+    "release_artifact_acceptance_claimed": false,
+    "textual_patch_conflicts": 0
+  }
+}
