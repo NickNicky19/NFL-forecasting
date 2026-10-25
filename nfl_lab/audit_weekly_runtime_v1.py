@@ -11,12 +11,14 @@ from copy import deepcopy
 from pathlib import Path
 import json
 import math
+import os
 import re
 
 from . import audit_weekly_epoch_v1 as epoch, audit_count_retained_v1 as retained
 from . import audit_count_checkpoint_v1 as effective, private_draft_store as private
 from . import weekly_generic_producer as generic, weekly_adaptive as selector
 from . import weekly_current_query as query, weekly_future_inference as future
+from . import audit_numerical_runtime_v1 as numerical
 from . import operational_sources as sources
 from .operational_storage import OperationalStorage
 from .owned_reference_batch import validate_owned_references
@@ -34,7 +36,8 @@ PIN_PATHS = tuple(sorted(set(retained.CURRENT_FILES) | {
     "nfl_lab/operational_sources.py", "nfl_lab/data.py", "nfl_lab/features.py",
     "nfl_lab/permitted_source_features.py", "nfl_lab/operational_io.py",
     "nfl_lab/weekly_current_inference.py", "nfl_lab/weekly_generic_producer.py",
-    "nfl_lab/weekly_adaptive.py", "nfl_lab/weekly_source_read_batch.py", "tools/audit_process_guard_v1.py"}))
+    "nfl_lab/weekly_adaptive.py", "nfl_lab/weekly_source_read_batch.py", "tools/audit_process_guard_v1.py",
+    "nfl_lab/audit_numerical_runtime_v1.py", "config/audit-weekly-numerical-runtime-v1.json"}))
 CONFIG_KEYS = {"history_seasons", "allowed_periods", "freshness_seconds"}
 BASE_CANDIDATE_KEYS = set("offered_id category season week slate_id horizon method_id model_version procedure_version product prediction_functional forecast_value metric player_id game_id team opponent position issued_at cutoff_utc kickoff_utc weekly_decision_cutoff_utc operational_eligible evidence_lane reference_stream fallback fallback_reason training_cutoff_utc training_max_available_utc source_policy_sha256 training_started_at training_completed_at source_capture_completed_at training_source_capture_completed_at feature_max_source_available_utc query_source_sha256 artifact_sha256 distribution_kind distribution_ref scientific_qualification publication_status".split())
 
@@ -127,6 +130,7 @@ def relocated_catalog(restored, aliases):
 class Runtime:
     """One typed epoch/choice. External proof authentication belongs to parent."""
     def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None):
+        numerical.loaded(Path(__file__).resolve().parents[1],os.environ)
         require(isinstance(storage, OperationalStorage) and type(registered) is epoch.RegisteredEpoch
             and type(choice) is epoch.EpochChoice, "EXISTING_OWNER_AND_TYPED_EPOCH_CHOICE_REQUIRED")
         self.storage, self.registered, self.choice = storage, registered, choice
@@ -175,7 +179,9 @@ class Runtime:
             acquisition_limits=ACQUISITION_LIMITS, epoch_sha256=registered.epoch.sha256, choice_sha256=choice.sha256,
             retained_restore=retained_restore, source_contract=self.contract, config=config,
             model_search=False, fits=0, old_procedure_losses_inherited=False,
-            product_kind=choice.document["mode"], export_boundary=HANDOFF)
+            product_kind=choice.document["mode"], export_boundary=HANDOFF,
+            numerical_runtime=dict(configuration_id="effective18-haswell-numpy-generic-v1",
+                configuration_file_sha256=private.sha(private.read_local(Path(__file__).resolve().parents[1]/"config/audit-weekly-numerical-runtime-v1.json",32 << 10))))
 
     def check(self):
         self.progress()

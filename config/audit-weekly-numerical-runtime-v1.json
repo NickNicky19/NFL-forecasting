@@ -1,0 +1,77 @@
+{
+  "applicable_to": [
+    "MODEL_RESTORE",
+    "GENERAL_FUTURE_INFERENCE"
+  ],
+  "approved": true,
+  "environment": {
+    "ARROW_DEFAULT_MEMORY_POOL": "system",
+    "ARROW_IO_THREADS": "2",
+    "MALLOC_ARENA_MAX": "2",
+    "MKL_NUM_THREADS": "2",
+    "NPY_DISABLE_CPU_FEATURES": "AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL,AVX512_SPR,AVX2,FMA3,AVX,F16C,SSE41,SSE42,SSSE3,POPCNT",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OMP_THREAD_LIMIT": "2",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "2",
+    "VECLIB_MAXIMUM_THREADS": "2"
+  },
+  "expected_bits_edits": 0,
+  "forecast_release": false,
+  "model_fits": 0,
+  "numeric_imports_must_follow_environment": true,
+  "numerical_configuration_id": "effective18-haswell-numpy-generic-v1",
+  "original_expected_replay_sha256": {
+    "anytime_td/CATBOOST_MEDIUM": "bf80a0090ae15c47efe62d15aea0cee79e3cedd17b1517e3f94b87a965a4ce45",
+    "anytime_td/LAB_CDF": "b747d5210e84e18ae21c6e77ab06c8a92c036bff760f39c1eddab4d48330fc98",
+    "pass_att/LAB_CDF": "8f6d8a19cff5ea9a85465c750538372554aa0186b445fd519f5af6f37dc73e4c",
+    "pass_cmp/LAB_CDF": "5ad470118f27a05fd4541b0856e83dce3a7a455866ae15485e53eb10b69c4fc1",
+    "pass_int/LAB_CDF": "c50a7c99c4464ca018fc83bceeafb85bc4014cd079d464c53a8f10c211d69b01",
+    "pass_td/LAB_CDF": "a9ce916cf05f09063a0be30c1b17a34c669153e955231ce0dbe8e04303e65265",
+    "pass_yd/CATBOOST_MEDIUM": "00575548b8f82cdb35e944ab0718d6bda1f2d71fefa734a3cf91bbfdcc9f3cb0",
+    "pass_yd/LAB_CDF": "36116a0f9f00ef8aa1df682fb95eb4007403a19536c6ed31f4455e41237751eb",
+    "rec/COUNT_A": "6fa4eab9e221b5097efeb2e19e3ab7a16cb9bd4ae4729af5cb9728f55a38f224",
+    "rec/LAB_CDF": "09cd82affa518f513213972857446a5abeab953da5bfa0bfd6a0628dd5604455",
+    "rec_yd/CATBOOST_MEDIUM": "ea7e04a54b38f3fa419d03759a8091cb36ef6e41a5302c3dc2728b8b508f1b51",
+    "rec_yd/LAB_CDF": "f9367f16bc5c34eb280f2bad3c5a704bb3ee782f9bd1e218e95fdb62896863b8",
+    "rush_att/COUNT_A": "4aa210e9ee0ec5b7c48fd9077fca77a60f7d9f69e0551b15be5a080e6a389acf",
+    "rush_att/LAB_CDF": "2bf9aaa7e5058cfaf2256eb9e19dce2fc790d5a99ba30b75bc74d4cc150e1fa5",
+    "rush_rec_yd/CATBOOST_MEDIUM": "e41560e9421db7f4cb2eebe491de02037b7fb8ad874421eeb44c542526618961",
+    "rush_rec_yd/LAB_CDF": "83d6eaed31169d1b267899c8d523f918b4d748db86711256f624596e85ad1c7a",
+    "rush_yd/CATBOOST_MEDIUM": "df074a5d0073036af58f44b02a9b5830e96a1ed3cc5fdf7d9f9287f1bcb7e15f",
+    "rush_yd/LAB_CDF": "3264be24d3baa5f722cbf35594e11f3218dab5c1885bafbfd4726174e2e822ec"
+  },
+  "original_genuine_job_hardware_reconstructed": false,
+  "original_model_code_sha256": {
+    "baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+    "cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "weekly_future_inference.py": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+  },
+  "package_versions": {
+    "catboost": "1.2.10",
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "readiness": [
+    "ORIGINAL_ALL18_STRICT_RETAINED_REPLAY",
+    "EXISTING_COUNT_COLD_ROLE_ORACLES",
+    "FUTURE_INFERENCE_WITH_THE_SAME_STARTUP_ENVIRONMENT"
+  ],
+  "required_hardware_features": [
+    "x86_64",
+    "AVX2",
+    "FMA3"
+  ],
+  "schema_version": "count-numerical-runtime-config-v1",
+  "state": "OWNER_REGISTERED_ZERO_FIT_WEEKLY_RUNTIME_GENUINE_READINESS_REQUIRED",
+  "registered_at_utc": "2026-10-25T09:48:22.139914+00:00",
+  "owner_authorization": "OWNER_NFL_AUDIT_CONTINUATION_20261025",
+  "local_evidence_sha256": "62495038df508693e559897dd94768a87adf9cbe3fc4ebb45f4324424ef89655"
+}
