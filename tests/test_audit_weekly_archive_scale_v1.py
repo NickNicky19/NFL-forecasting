@@ -1,6 +1,5 @@
 """Fictional scale regression: real CAS, codec and injected native transport only."""
 from datetime import datetime, timedelta, timezone
-import base64
 import gzip
 import hashlib
 import importlib.util
@@ -11,6 +10,7 @@ import resource
 import subprocess
 import sys
 import time
+from types import SimpleNamespace
 
 import pytest
 
@@ -31,6 +31,68 @@ def _memory(label):
         key, _, value = line.partition(":")
         if key in fields: values[key + "_bytes"] = int(value.split()[0]) * 1024
     print(json.dumps(dict(fictional=True, memory_phase=label, **values)), flush=True)
+
+
+class _RequestLog(list):
+    def append(self, request):
+        # A real remote service does not retain every urllib upload buffer in
+        # the caller. Keep the complete call census and exact body hash/size.
+        body = request.data or b""
+        super().append(SimpleNamespace(method=request.method, full_url=request.full_url,
+            body_bytes=len(body), body_sha256=a.store.sha(body)))
+
+
+class _FileResponse:
+    status = 200
+    headers = {"X-RateLimit-Remaining": "100"}
+    def __init__(self, path): self.path = Path(path)
+    def __enter__(self):
+        self.stream = self.path.open("rb")
+        return self
+    def read(self, count): return self.stream.read(count)
+    def __exit__(self, *unused): self.stream.close()
+
+
+class _FileServer(Server):
+    """The same fictional protocol, with remote bodies outside caller memory."""
+    def __init__(self, root):
+        super().__init__()
+        self.root = Path(root); self.root.mkdir(mode=0o700)
+        self.calls = _RequestLog()
+
+    def metadata(self, asset):
+        return {k: v for k, v in asset.items() if k not in {"body", "body_file"}}
+
+    def add(self, name, body=b"fictional", size=None):
+        asset = super().add(name, body, size)
+        path = self.root / (str(asset["id"]) + ".bin")
+        with path.open("xb") as stream: stream.write(asset.pop("body"))
+        path.chmod(0o444)
+        asset["body_file"] = str(path)
+        return asset
+
+    def __call__(self, request, timeout):
+        prefix = a.store.API + "/releases/assets/"
+        auth = request.get_header("Authorization", "")
+        if (request.method == "GET" and request.full_url.startswith(prefix)
+                and request.get_header("Accept") == "application/octet-stream"
+                and auth and auth != "Bearer ghs_READ" and not self.redirect):
+            self.calls.append(request)
+            asset_id = int(request.full_url[len(prefix):])
+            asset = next(v for v in self.assets if v["id"] == asset_id)
+            return _FileResponse(asset["body_file"])
+        return super().__call__(request, timeout)
+
+
+def _remote_bodies(service, root):
+    original = service.server
+    remote = _FileServer(root)
+    remote.tag = original.tag
+    for asset in original.assets:
+        saved = remote.add(asset["name"], asset["body"])
+        assert remote.metadata(saved) == original.metadata(asset)
+    service.server = remote
+    service.calls = _RequestLog()
 
 
 def _build(base):
@@ -128,7 +190,8 @@ def _build(base):
 
 
 def _service_state(service):
-    return dict(tag=service.server.tag, assets=[dict(v, body=base64.b64encode(v["body"]).decode()) for v in service.server.assets],
+    assert all("body" not in v and Path(v["body_file"]).is_file() for v in service.server.assets)
+    return dict(tag=service.server.tag, assets=service.server.assets, remote_root=str(service.server.root),
                 binding=service.binding, qrun=service.qrun, q=service.q, package=service.package, census=service.census,
                 started=service.started.isoformat(), writer_completed=service.writer_completed.isoformat(),
                 reader_completed=service.reader_completed.isoformat() if service.reader_completed else None)
@@ -136,12 +199,15 @@ def _service_state(service):
 
 def _service(raw):
     service = fixture.Service.__new__(fixture.Service)
-    service.server = Server(); service.server.tag = raw["tag"]
-    service.server.assets = [dict(v, body=base64.b64decode(v["body"])) for v in raw["assets"]]
+    service.server = _FileServer.__new__(_FileServer)
+    Server.__init__(service.server)
+    service.server.root = Path(raw["remote_root"])
+    service.server.calls = _RequestLog(); service.server.tag = raw["tag"]
+    service.server.assets = raw["assets"]
     for k in ("binding", "qrun", "q", "package", "census"): setattr(service, k, raw[k])
     for k in ("started", "writer_completed", "reader_completed"):
         setattr(service, k, datetime.fromisoformat(raw[k]) if raw[k] else None)
-    service.calls = []; service.bad_writer = service.bad_qualifier = False
+    service.calls = _RequestLog(); service.bad_writer = service.bad_qualifier = False
     return service
 
 
@@ -192,6 +258,7 @@ def _child(request_path, phase, original=None):
         assert 22 << 20 <= sum(f["bytes"] for f in snapshot["files"]) <= 26 << 20
         mark("collect_validate")
         service = fixture.Service(base)
+        _remote_bodies(service, base / "fictional-remote-assets")
         _memory("native_produce_before")
         handoff = a.produce(snapshot, service.factory(base / "writer-journal", "produce"), service.package, storage=storage,
                             output=base / "producer", root_go_sha256="d" * 64, jobs=fixture.ROLES, pending_census=service.census)
