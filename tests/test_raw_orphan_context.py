@@ -1,5 +1,6 @@
 """Fictional context contracts only: no NFL rows, parquet reads or labels."""
 import copy
+import builtins
 import hashlib
 import importlib.util
 import json
@@ -165,11 +166,19 @@ class PartitionChecks(unittest.TestCase):
 
 class GateChecks(unittest.TestCase):
     def test_unbound_config_refuses_before_any_source_reader_import(self):
+        original_import = builtins.__import__
+        attempted = []
+        def guarded_import(name, *args, **kwargs):
+            if name in {"ftn_zero_join", "nfl_lab.ftn_zero_join"}:
+                attempted.append(name)
+                raise AssertionError("unbound request attempted to import source reader")
+            return original_import(name, *args, **kwargs)
         with tempfile.TemporaryDirectory(prefix="fictional-raw-orphan-") as folder:
             path = Path(folder) / "unbound.json"; body = b'{"state":"UNBOUND_TEMPLATE"}'
             path.write_bytes(body)
-            with self.assertRaises(ValueError): subject.run_prerequisite(path, hashlib.sha256(body).hexdigest())
-        self.assertNotIn("nfl_lab.ftn_zero_join", sys.modules)
+            with patch.object(builtins, "__import__", guarded_import):
+                with self.assertRaises(ValueError): subject.run_prerequisite(path, hashlib.sha256(body).hexdigest())
+        self.assertEqual(attempted, [])
 
     def test_duplicate_json_keys_are_not_accepted(self):
         with tempfile.TemporaryDirectory(prefix="fictional-raw-orphan-") as folder:
