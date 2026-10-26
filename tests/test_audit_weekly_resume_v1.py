@@ -19,7 +19,7 @@ from nfl_lab import private_draft_store as store, gha_private_checkpoint as cp, 
 from nfl_lab.state import digest, utc
 from tools import audit_weekly_resume_v1 as cli
 from test_audit_weekly_runtime_v1 import packet as runtime_packet
-from test_audit_weekly_epoch_v1 import CONTINUED
+from test_audit_weekly_epoch_v1 import CONTINUED, COUNT7_PINS
 from test_audit_weekly_archive_v1 import Service, ROLES
 
 DAILY = utc("2026-10-26T08:00:00Z")
@@ -133,6 +133,77 @@ def case(runtime_packet):
             authenticate_calendar=calendar if calendar_authority is None else calendar_authority,clock=lambda:at)
     return SimpleNamespace(p=p,root=root,storage=storage,restored=restored,ref=retained_ref,context=context,
         run=run,bundle=bundle,put=put,requests=requests,original_choice=original_choice,fresh=fresh,auth=auth)
+
+
+@pytest.fixture
+def retained_count7_case(tmp_path,monkeypatch):
+    # Fictional, fully owned archive/proofs constructed under the exact literal
+    # historical interpretation pins; execution switches back to current code
+    # before any resume or typed metadata restoration.
+    with monkeypatch.context() as old:
+        old.setattr(epoch,"implementation_pins",lambda:deepcopy(COUNT7_PINS))
+        packet=runtime_packet.__wrapped__(tmp_path,monkeypatch)
+        value=case.__wrapped__(packet)
+    return value
+
+
+def test_retained_count7_resume_keeps_originals_and_authenticates_current_helpers(retained_count7_case,monkeypatch):
+    c=retained_count7_case
+    monkeypatch.setattr("socket.socket",lambda *a,**k:pytest.fail("fictional replay cannot use network"))
+    before={role:Path(ref["path"]).read_bytes() for role,ref in c.context.items()}
+    old_epoch=c.p.runtime.registered.epoch
+    old_registration=deepcopy(c.p.runtime.registered.completion)
+    result=c.run();result.verify(DAILY)
+    assert result.registered.epoch.document==old_epoch.document
+    assert result.registered.epoch.sha256==old_epoch.sha256
+    assert result.registered.completion==old_registration
+    assert result.original_choice.sha256==c.original_choice["sha256"]
+    assert result.choice.document["choice"]==result.original_choice.document["choice"]
+    assert result.registered.epoch.document["selection_recipe"]["code_pins"]==COUNT7_PINS
+    current=m.pins()
+    assert current["nfl_lab/audit_weekly_epoch_v1.py"]!=COUNT7_PINS["nfl_lab/audit_weekly_epoch_v1.py"]
+    auth=next(r for r in c.requests if r["kind"]=="GENUINE_RETAINED_CAPTURE_AND_FRESH_EFFECTIVE18")
+    assert auth["inputs_sha256"]==digest(dict(retained_result=c.restored,retained_ref=c.ref,
+        original_weekly_choice_sha256=c.original_choice["sha256"],helper_sha256=current,source_policy_sha256=cp.POLICY_SHA))
+    assert before=={role:Path(ref["path"]).read_bytes() for role,ref in c.context.items()}
+
+
+def test_retained_count7_uses_same_strict_grading_and_delivery_metadata_callers(retained_count7_case,monkeypatch):
+    from nfl_lab import audit_weekly_delivery_v1 as delivery,audit_weekly_operations_grade_v1 as operations_grade
+    c=retained_count7_case
+    monkeypatch.setattr("socket.socket",lambda *a,**k:pytest.fail("fictional replay cannot use network"))
+    aliases=dict(c.restored["aliases"])
+    # These lower-level helpers receive the owned aliases AFTER their caller's
+    # genuine archive authentication. Unread required fixture roles are opaque;
+    # this test makes no claim to execute that live authentication or native IO.
+    for name in {"context/"+role+".json" for role in archive.CONTEXT}|{
+            "context/public_policy.json","r0/original_board.json"}:
+        if name not in aliases:aliases[name]=c.put("typed-fixture/"+name,dict(fictional_opaque_metadata_role=name))
+    aliases["prepared/relocated_replay.json"]=c.put("typed-fixture/replay.json",c.p.original["replay"])
+    restored=dict(c.restored,aliases=aliases)
+    graded,graded_choice=operations_grade._epoch(restored,c.storage,lambda:DAILY)
+    delivered,delivered_choice=delivery._typed_epoch(c.storage,aliases,DAILY,c.context["original_choice"]["sha256"])
+    for registered in (graded,delivered):
+        assert registered.epoch.document==c.p.runtime.registered.epoch.document
+        assert registered.completion==c.p.runtime.registered.completion
+        registered.verify(DAILY)
+    assert graded_choice.sha256==delivered_choice.sha256==c.original_choice["sha256"]
+
+
+def test_retained_count7_cannot_replace_live_authentication_current_source_or_literal_pins(retained_count7_case):
+    c=retained_count7_case
+    with pytest.raises(m.ResumeError,match="AUTHENTICATION_REJECTED"):
+        c.run(authority=lambda _:False,output="denied-current-authority")
+    changed=deepcopy(c.fresh);changed["current"]["source_sha"]="0"*40
+    ref=c.put("wrong-current-model-source.json",changed)
+    with pytest.raises(m.ResumeError):c.run(model_ref=ref,output="wrong-current-source")
+    changed=deepcopy(c.p.runtime.registered.epoch.document)
+    changed["selection_recipe"]["code_pins"]["nfl_lab/audit_weekly_origin_v1.py"]="0"*64
+    epoch_ref=c.put("tampered-retained-epoch.json",changed)
+    value=c.bundle("tampered-retained",extras={"context/epoch.json":epoch_ref})
+    with pytest.raises(epoch.EpochError,match="EXACT_RETAINED_EPOCH_SOURCE_PINS"):
+        c.run(value=value,output="wrong-retained-pins")
+    assert all(not (c.root/name).exists() for name in ("denied-current-authority","wrong-current-source","wrong-retained-pins"))
 
 
 def test_real_runtime_prepare_keeps_frozen_weekly_dictionary_and_new_capture_commitment(case,monkeypatch):
