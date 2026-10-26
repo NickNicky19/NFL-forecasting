@@ -1,0 +1,218 @@
+{
+  "HTTP": 0,
+  "actual_backend": "UNATTESTED",
+  "coverage": {
+    "QB_DNP": 0,
+    "QB_offered": 1354,
+    "QB_played_invalid_support": 0,
+    "QB_played_missing_label": 0,
+    "QB_supported_excluded_by_missing_forecast": 0,
+    "QB_unknown_participation": 721
+  },
+  "execution": {
+    "HTTP": 0,
+    "all_retained_new_bytes": 26093,
+    "cumulative_CPU_seconds": 39.064,
+    "cumulative_wall_seconds": 37.866,
+    "fits": 1,
+    "native_predictions": 1,
+    "old_runtime_failures_preserved": true,
+    "original_CPU_limit": 120,
+    "original_private_output_limit": 65536,
+    "original_wall_limit": 180,
+    "prior_failure_CPU_seconds": 4.342,
+    "prior_failure_wall_seconds": 3.474,
+    "successful_native_CPU_seconds": 34.722,
+    "successful_native_wall_seconds": 34.392,
+    "weak_stages": 16
+  },
+  "expected_mean_primary": "MSE",
+  "exposure": "2022 exposed historical current-vintage development, seven-day availability assumption retained",
+  "fallback_offered": {
+    "": 1338,
+    "cold_start_role_prior": 16
+  },
+  "games": 271,
+  "historical_website_or_provider": "unavailable",
+  "identities": {
+    "artifacts": {
+      "CONSUMED.json": {
+        "bytes": 218,
+        "sha256": "40bcd81d5cf9e3c46519c9118777702c346c1c4c45fdfe023f1de2a0831dca49"
+      },
+      "FIT_CONSUMED.json": {
+        "bytes": 161,
+        "sha256": "db478d097519d265aa3cbf13f479e9bc6ef1573fa3a326c26268e102b0817b45"
+      },
+      "FORECAST_FREEZE.json": {
+        "bytes": 3852,
+        "sha256": "c66440ef7a545c1add1f7e80bfdceab20a2783ff4920e8a9ffcb49a9e180e15a"
+      },
+      "MODEL.joblib": {
+        "bytes": 9202,
+        "sha256": "8e3f3db5073448db42924cec5fe1babad03099040dae23c11910b27e6cdc535f"
+      },
+      "PREDICTIONS_BEFORE_LABELS.npz": {
+        "bytes": 8265,
+        "sha256": "5e8ffd82de1d0a6e97c5c299d5a7089130ec099c80637822769862c47140eeda"
+      },
+      "RESULTS.json": {
+        "bytes": 4290,
+        "sha256": "8fdc94722eaab12794aec86eabb412f082517e5cf0546530afe2cd6abfc91b18"
+      }
+    },
+    "plan_sha256": "03616ef0298244ef561112dc21ce9f3e087faec63c515eee708688bc89b4f78c",
+    "worker_sha256": "35c819bbc1e9996f7bc737653d8eac29b9a67dafcc0c0a26085842d9944a0adf"
+  },
+  "independent_review": {
+    "matched_rows_verified": 633,
+    "new_observations_or_fit_or_inference_or_HTTP": 0,
+    "offers_verified": 1354,
+    "reviewer": "accuracy_review_replacement",
+    "runtime_paths_verified": 5879,
+    "status": "POSTEXEC_PASS",
+    "vendored_sources_verified": 287
+  },
+  "native_law_secondary": {
+    "denominator": 632,
+    "law": "native Poisson assumption only; does not qualify prop probabilities",
+    "log_loss": 1.0783437463492436,
+    "native_rows": 632,
+    "positive_infinite": 0
+  },
+  "new_fits": 1,
+  "offered_rows": 1354,
+  "operational_or_release_ready": false,
+  "original_unit": "interceptions",
+  "paired": {
+    "count_A_mean_v2": {
+      "MSE_delta_candidate_minus_control": -0.017888055340839065,
+      "claim": "unadjusted exposed-development sensitivity, not selected-winner confirmation",
+      "relative_MSE_improvement_percent": 2.535741323985357,
+      "replicates": 500,
+      "seed": 1761,
+      "week_bootstrap_95_percentile": [
+        -0.03182846029215955,
+        -0.003968530419992407
+      ],
+      "weeks": 18
+    },
+    "distribution_split_cdf": {
+      "MSE_delta_candidate_minus_control": -0.002852108149174927,
+      "claim": "unadjusted exposed-development sensitivity, not selected-winner confirmation",
+      "relative_MSE_improvement_percent": 0.4131089448937254,
+      "replicates": 500,
+      "seed": 1761,
+      "week_bootstrap_95_percentile": [
+        -0.013015715558719625,
+        0.006817117105649321
+      ],
+      "weeks": 18
+    },
+    "leaf_cdf": {
+      "MSE_delta_candidate_minus_control": -0.0017015487974708116,
+      "claim": "unadjusted exposed-development sensitivity, not selected-winner confirmation",
+      "relative_MSE_improvement_percent": 0.24686946562056808,
+      "replicates": 500,
+      "seed": 1761,
+      "week_bootstrap_95_percentile": [
+        -0.013055515644926737,
+        0.010207864052485622
+      ],
+      "weeks": 18
+    },
+    "role_prior": {
+      "MSE_delta_candidate_minus_control": -0.006360422679306244,
+      "claim": "unadjusted exposed-development sensitivity, not selected-winner confirmation",
+      "relative_MSE_improvement_percent": 0.916607235429824,
+      "replicates": 500,
+      "seed": 1761,
+      "week_bootstrap_95_percentile": [
+        -0.01777554693148529,
+        0.0056065827783386545
+      ],
+      "weeks": 18
+    }
+  },
+  "participation_states": {
+    "played": 633,
+    "unknown": 721
+  },
+  "peak_RSS_bytes": 329691136,
+  "point_metrics": {
+    "count_A_mean_v2": {
+      "MAE": 0.6945371785518497,
+      "MSE": 0.7054369139169515,
+      "RMSE": 0.8399029193406531,
+      "bias": -0.01174077094429831,
+      "n": 633,
+      "p95_absolute_error": 1.5072242006903607
+    },
+    "distribution_split_cdf": {
+      "MAE": 0.6920303175297462,
+      "MSE": 0.6904009667252873,
+      "RMSE": 0.8309037048450845,
+      "bias": -0.011856531388285874,
+      "n": 633,
+      "p95_absolute_error": 1.552404221453415
+    },
+    "leaf_cdf": {
+      "MAE": 0.6902915267969052,
+      "MSE": 0.6892504073735831,
+      "RMSE": 0.830211061943638,
+      "bias": -0.011498677750389917,
+      "n": 633,
+      "p95_absolute_error": 1.5902275148710026
+    },
+    "ngboost16_mean": {
+      "MAE": 0.6959793888188958,
+      "MSE": 0.6875488585761124,
+      "RMSE": 0.8291856598953653,
+      "bias": -0.01866311703295237,
+      "n": 633,
+      "p95_absolute_error": 1.3981143063519643
+    },
+    "role_prior": {
+      "MAE": 0.7070785103490337,
+      "MSE": 0.6939092812554186,
+      "RMSE": 0.8330121735337477,
+      "bias": 0.004416604195519942,
+      "n": 633,
+      "p95_absolute_error": 1.3415549597855227
+    }
+  },
+  "prediction_calls": 1,
+  "recipe": {
+    "depth": 2,
+    "evaluation_season": 2022,
+    "imputation": "Earlier training medians only; unavailable participation and snap features masked; no new injury/news/weather information",
+    "law": "native Poisson assumption",
+    "learning_rate": 0.05,
+    "min_samples_leaf": 30,
+    "n_estimators": 16,
+    "natural_gradient": true,
+    "package": "ngboost",
+    "seed": 1761,
+    "source_commit": "7d2c6f5c439f81844d790a77f9338e8854784092",
+    "source_feature_version": "cutoff-features-v2-20261025",
+    "source_timing": "Current-vintage reconstructed seven-day lag; explicit unknown availability excluded",
+    "training_QBs": 1865,
+    "training_seasons": [
+      2019,
+      2020,
+      2021
+    ],
+    "tuning_candidates": 1,
+    "version": "0.5.11"
+  },
+  "registration_id": "ngboost-count-mean-pilot16-v2-psutil-20261026",
+  "same_all_arm_rows": 633,
+  "scientifically_qualified": false,
+  "season": 2022,
+  "source_admission": "Retained original feature/query/control files authenticated by immutable manifest/hash/stat snapshots; source manifest is already CAS. New artifacts use strict CAS. Not an exhaustive workspace-private-byte census.",
+  "state": "COMPLETE",
+  "supplemental_psutil_version": "7.2.2",
+  "supported_QB_rows": 633,
+  "supported_zero": 342,
+  "weeks": 18
+}
