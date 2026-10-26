@@ -1,27 +1,26 @@
-# Latest executed after-audit research
-
-[Corrected two-family distribution comparison](distribution-cdf-after-audit-v2/README.md): 114 fit calls, 815 games/54 season-weeks; eight small response-CDF CRPS gains, two numeric losses and one unchanged TD alias; monotone loses eleven. Combined yards is an exposed research lead only. V1 source-mask omission remains retained. [Complete category × method matrix](../docs/AFTER_AUDIT_CATEGORY_METHOD_MATRIX_20261025.md). No scientific or website promotion.
-
-[Cached point-control supplement](distribution-cdf-after-audit-v2/point-control-supplement/README.md): 132 pooled contrasts / 396 annual cells, zero training or inference. Monotone loses all eleven direct minima; CDF-response is lower in seven, with only passing TD/attempts/interceptions lowest in the named fresh-CDF/corrected-Count-A/six-direct set. The later [44 paired correction comparisons](cached-correction-pairs-v1/README.md) authenticate those older forecasts on the same rows: passing-TD/attempt gaps are about 0.0354% / 0.2406%; both paired intervals include zero. Combined-yard CatBoost-medium point MAE remains lower than the response median. Exposed descriptive results select no candidate and change no deployment.
-
-[Fixed anytime-TD calibration](anytime-calibration-v1/README.md): independently accepted 16 calibrator fits, zero base fits, evaluation 2023–2024 only (10,157 supported outcomes / 14,282 offers). All eight method/base combinations worsen pooled Brier versus both unchanged bases; two genuine infinite fresh-CDF isotonic log losses remain. Exact calibrator/design source and curated fictional checks are public; no calibration lead or selection follows.
-
-[Paired older-correction comparison](cached-correction-pairs-v1/README.md): 44 pooled contrasts / 132 annual diagnostics, zero fits or inference; all reproduced independently. Response-CDF has lower observed point loss in six of eleven targets versus the stronger of the two fixed corrections; all 22 corresponding week/game intervals include zero. Monotone wins none. Other controls can remain stronger: this is not an overall category ranking, new SITE/R0 evidence or a deployment decision. All twelve category states and every comparison are retained.
-
-[FTN charting schema pilot](ftn-charting-schema-buffered-v2/README.md): a fixed 2024-named asset was authenticated; all nine required nullable fields are present (48,031 footer rows). This is source/schema evidence only: zero forecasting fits, scores or publication-clock qualification. Prior resource failure remains retained; player/denominator joins and model ablations remain pending.
-
 # Forecasting research: complete navigation index
 
-## Latest website integration — 2026-10-25
+## Latest actual work — October 26, 2026
 
-**Selected forecasts now drive Top Overs/Unders, directional leans and new sorting.**
-[Verified live release](selected-ranking-integration-20261025/README.md) ·
-[Exact public release evidence](selected-ranking-integration-20261025/PUBLIC_RELEASE.json).
-Current Top lists contain 22 selected forecasts and two labeled R0 fallbacks.
-This is an operational provisional release, not a new accuracy result or scientific
-qualification. Forecast-method research resumed under the owner's subsequent research-wave instruction. Older dated checkpoints below
-retain their original state; use the latest release for current deployment status.
+The [accuracy wave](accuracy-wave-20261026/README.md) supersedes earlier
+zero-NFL-fit NGBoost status for its separately named pilot only: one fixed
+interception-mean NGBoost fit trained on 2019–2021 and scored 633 supported
+2022 QB appearances. Its 0.247% MSE lead over matched Leaf-CDF is small, its
+interval crosses zero, and MAE/bias worsen. It is research-tested, not selected
+or release-ready. Original runtime failures and budgets remain preserved.
 
+The same wave independently verified the Week 7 passing-workload diagnosis and
+2022/2023 retained FTN value/denominator/player/timing counters. Actual-volume
+substitutions are postgame diagnostics, and FTN source checks are not forecasting
+experiments. Complete exact PPR and several source/availability gates remain
+unresolved. All twelve category decisions and actual production dependencies
+are explicit; no new deployment is claimed. Smaller QB-only grading acquisition
+is a bounded next task, not an already observed outcome or enabled scheduler.
+
+The initial aggregate publication is
+[`a8f36f3`](https://github.com/NickNicky19/NFL-forecasting/blob/a8f36f356842f711584d519508f7b15018c1e5b9/reports/accuracy-wave-20261026/README.md).
+Later local checkpoint additions are versioned separately. The prior index and
+study descriptions below retain their original dates and scientific claims.
 
 Updated 2026-10-23. Scope: recorded work in this lab and the earlier evidence
 actually recovered here. This index adds no forecasts, fits, outcomes or scores.
@@ -35,6 +34,7 @@ into `main`. For frozen studies the website remains a reference; the owner's Oct
 
 | Question | Record |
 |---|---|
+| Have any methods beaten SITE, and was SITE tested to the same extent? | [Interpretation of observed improvements, incumbent status and independent audit requirements](../docs/website-comparison-interpretation.md). Some matched retrospective errors improve; no category has passed all release gates. The inspected record does not establish comparable predictive validation for the deployed website. |
 | What is the latest state of all twelve categories? | [Complete correction comparison](baseline-correction-report-v3/README.md), [latest twelve-category matrix](baseline-correction-report-v3/category-status.json), [six-pipeline booster screen](direct-booster-screen-v1/README.md), and [strong source-matched references](source-matched-base-v1/README.md); [earlier website comparison](role-count-boosting-v1/README.md) remains separate |
 | How much better or worse was every latest comparison? | [Every booster setting](direct-booster-screen-v1/aggregate-report.md), [complete numerical results](direct-booster-screen-v1/aggregate-report.json); historical raw/SITE are unavailable for this panel. Independent arithmetic review status is in the screen README/ledger. |
 | What happened across the whole execution? | [Single execution ledger](../execution/ledger.jsonl) |
@@ -50,9 +50,10 @@ into `main`. For frozen studies the website remains a reference; the owner's Oct
 | Were the six XGBoost touchdown failures resolved? | [Separate technical recovery](direct-xgboost-binary-recovery-v2/README.md), [all 80 comparisons](direct-xgboost-binary-recovery-v2/aggregate-report.json). Six frozen derivatives scored with zero new fits; both settings lose CDF. Both prior FAILED executions remain. |
 | Have conservative baseline corrections been tried? | [Completed all-target comparison](baseline-correction-report-v3/README.md): 44 earlier-only fit attempts, 66 scored files, eleven scored categories and exact PPR blocked. Five primary CDF-relative gains, nine losses, eight unchanged; no development nominees. Independent row arithmetic passed. Original CPU stop and V2 retention failure remain FAILED; no website-relative or confirmed gain. |
 | What follows the direct learner screen? | [Conditional smooth/change-point opportunity design](../docs/dynamic-opportunity-screen-v1-draft.md) and [targeted FTN charting pilot design](../docs/ftn-charting-targeted-pilot-design-v1.md), with [advertised free asset metadata](ftn-charting-release-metadata-v1/aggregate.json). Designs and asset identities are not fitted gains or qualified datasets. |
-| What has the dynamic workload work actually executed? | [Implementation and bounded preparation failures](dynamic-opportunity-backend-v1/README.md): normalized missingness was diagnosed and repaired; four new source and four recovery contracts passed. The real-data continuation hit its fixed preparation-time limit before any forecasts or scores. All earlier failures remain; no predictive gain. A [calendar-cache repair proposal](../docs/DYNAMIC_SOURCE_CALENDAR_CACHE_V1_PROPOSAL.md) is unapplied and untested; expected validation-call savings are not measured speedup. [Core](dynamic-opportunity-core-v1/README.md), [history](dynamic-opportunity-history-v1/README.md), [guard](dynamic-history-guard-v2/README.md), and [replay](dynamic-opportunity-replay-v2/README.md) retain their separate software scopes. |
+| What has the dynamic workload work actually executed? | [Implementation and bounded preparation failures](dynamic-opportunity-backend-v1/README.md): normalized missingness was diagnosed and repaired; four new source and four recovery contracts passed. The real-data continuation hit its fixed preparation-time limit before any forecasts or scores. All earlier failures remain; no predictive gain. The [implemented calendar/roster cache](dynamic-source-calendar-cache-v1/README.md) passed six new fictional equivalence checks and reduced one instrumented fictional call from 23.93 to 9.51 seconds (60.24%); no NFL speed or accuracy gain is established. Old failed study budgets remain consumed. Later computational continuations preserved 24 frozen development packages but have no completed accuracy report; the [V5 retained failure](dynamic-completion-v5/README.md) identifies a reused-body retention-estimate overcharge. A separately versioned computational repair is being prepared without changing scientific formulas or quotas. [Core](dynamic-opportunity-core-v1/README.md), [history](dynamic-opportunity-history-v1/README.md), [guard](dynamic-history-guard-v2/README.md), and [replay](dynamic-opportunity-replay-v2/README.md) retain their separate software scopes. |
 | Can actual future captures replace the reconstructed seven-day clock? | [Opt-in prospective availability prerequisite](prospective-availability-v1/README.md): eighteen fictional contracts passed after independent identity/category fixes. No real source-capture producer, feature/model policy, issuance or hosted activation has changed; original historical evidence keeps its frozen timing rules. |
 | Has conformal interval calibration been tested? | [Completed fixed 80% chronological interval comparison](conformal-interval-v1/README.md), [all twelve states](conformal-interval-v1/category-status.json) and [full annual/pooled metrics](conformal-interval-v1/aggregate-report.json): all 20 radii selected zero expansion; ten primary interval scores unchanged over 544 games / 36 season-week blocks. Eight new fictional arithmetic/consumer checks passed. Exact PPR remains label-blocked; anytime TD retains its separate probability reference. This exposed interval experiment changes no point, CDF probability or website default. |
+| Is the requested NGBoost family available? | [Versioned technical draft](../docs/ngboost-direct-distribution-v1-draft.md): exact 0.5.11 Apache-2.0 source and the eight-package dependency closure are authenticated. An oversized metadata catalog failure is retained; a bounded exact-release route resolved it. The [uninstalled source-bundle extraction](ngboost-vendored-source-bundle-v1/README.md) completed with 287 authenticated files and eight genuine metadata versions; no package imports or installation occurred. Native capability tests and the proposed 66 NFL fit slots have not started. |
 | Has independent participation evidence been recovered? | [One-game FTN appearance pilot](../docs/ftn-appearance-pilot-v1.md), [reviewed aggregates](ftn-appearance-pilot-v1/aggregate.json). Asset hash verified, 163 play keys and 92 on-field identifiers; no zeros restored, DNP inference, full-population or in-season qualification. |
 | Did the completed explicit-zero audit restore outcomes? | [Full-inventory audit result](raw-orphan-zero-audit-v3/README.md): all 67 raw records and 97-player union retained; zero new support candidates in every category. No accepted-label, model or forecast change. The failed earlier executor remains preserved. |
 | What blocked the first zero audit, and what changed? | [Executed context diagnosis](FTN_CONTEXT_METADATA_RESULT_V2.md): one missing player ID among 67 raw records; [completed raw-record quarantine](raw-orphan-context-v1/README.md) now preserves all 67 records, 97 known players plus the orphan, all offers and witnesses. Earlier failures remain. No zero labels or model scores changed; the next numerical audit is separately versioned. |
@@ -203,33 +204,8 @@ coverage. The independent numerical review reused the same cached NFL rows;
 arithmetic agreement adds no new games. Player/team/opponent subgroup execution
 remains pending an efficiency prerequisite under its original finite budget.
 
-
-## Weekly adaptive release checkpoint (2026-10-24)
-
-[Completed all-category policy checkpoint](weekly-policy-checkpoint-v1/README.md) · [Exact aggregate losses and coverage](weekly-policy-checkpoint-v1/aggregate.json) · [Twelve-category scientific experiment matrix](weekly-policy-checkpoint-v1/scientific-matrix.json).
-
-P0–P4 replay completed for eleven targets over 2022–2024 REG, 54 weeks and 815 games; exact PPR remains blocked. LAB_CDF is the historical reference, not contemporaneous SITE/R0/raw. Results are exposed development; new provisional release and original scientific qualification remain separate. The fixed model can remain strongest; no deployment or prospective gain is claimed by this reporting checkpoint.
-
 ## Actual initial pregame capture (2026-10-24)
 
 [All-twelve-category capture and release status](weekly-provisional-capture-v1/README.md) · [Machine-readable matrix](weekly-provisional-capture-v1/aggregate.json) · [Genuine hosted canary proof](private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json).
 
-Eighteen future-query procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 primary-role selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. The expanded historical run is active, with no result asserted here. Original scientific registrations remain unchanged.
-
-
-[Anytime-TD Bernoulli blends](anytime-td-blend-v1/README.md): two scalar weight fits, four factor forecasts, six pooled/twelve annual contrasts over the same exposed 2023–2024 panel. Both blends have small pooled Brier gains versus the specified CDF/CatBoost bases, worse absolute bias versus CatBoost, and a 2024 CatBoost loss; all CatBoost paired intervals include zero. Independent arithmetic accepted; both advance flags false.
-
-
-[Cached combined-yard dependence challenger](combined-yard-copula-v1/README.md): two fixed marginal couplings completed on the exposed2023–2024 cohort(544games/36weeks), zero new base fits/two dependence fits. Both lose directCDF CRPS and direct/Catmedium medianMAE; mixed bias/coverage diagnostics and every fallback remain. Independent numerical acceptance passed2,086 checks with zero mismatches; no website/SITE/R0 or advancement claim. Only combined yards was tested; the other eleven category states retain their dated evidence. The separate20CPU package workload failed; its newly prepared40CPU package scope remains pending, with no new forward result claimed.
-
-Independent numerical acceptance for the combined-yard supplement passed2,086 checks with zero mismatches, including all paired intervals and four fixed draw replays. Both sum arms remain adverse results; no current-site/R0 gain or deployment follows. [Accepted scope](combined-yard-copula-v1/INDEPENDENT_ACCEPTANCE.md).
-
-The combined-yard publication's initial hosted head failed existing resource checks after a quadratic-memory fictional CRPS oracle. The public oracle now retains the full4096-draw/pair calculation in bounded blocks;53 targeted software checks passed with all native/RSS limits unchanged. Forecast code, original NFL rows and scores are unchanged. The failed hosted run is retained; a fresh full successor run remains required.
-
-
-[Fixed dynamic workload: completed negative final-category evidence](dynamic-workload-fixed-forward-v1/README.md): smooth-H8-k25 on exposed REG2022–24,30 frozen forecasts /258,720 row incidences,25,872 offers per category. Carries MSE 4.22145%,receptions MSE 2.28499% andreceiving-yard MAE 3.36052% worse than literalCDF controls; all primary week/game delta intervals positive. Auxiliary target MSE 0.38002% lower than static with worse MAE/bias/p95 and partial coverage. Independent saved-factor arithmetic accepted 7,620 scalars,104 summaries /120 pairs /12 informed /60 intervals. Source/grading parent ACK failed; native receipt absent, whole post-final resources unknown. No category advances or website/R0 claim; earlier failed records remain.
-
-
-## Full-week owner-requested method audit — 2026-10-25
-
-[All twelve category rankings, exact formulas/data, current-versus-research boundaries and complete audit materials](full-week-method-audit-20261025/README.md). Forty-one method families and separate matched panel/product frontiers; current startup is not represented as a universal lowest-error winner. P4 TD is the same equal CDF/Cat family already used at startup. Legacy Count A and corrected mean-v2 remain separate. Original scores, failures and registrations are preserved; new experiments are paused. This source/configuration and published-aggregate audit adds zero NFL fits, forecasts or football observations. The collated audit bundles remain local after opaque-upload review; plain reports link the original public evidence, with learned bodies and private locators omitted.
+Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. Original scientific registrations remain unchanged.

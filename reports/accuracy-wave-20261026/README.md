@@ -81,7 +81,22 @@ The saved Sleeper payout proxy result remains exploratory: it lacks authenticate
 
 Future ranking comparisons must freeze the offered pool, eligibility, tie rules, list size and abstention procedure before grading. Keep all pending selections and evaluate probability scores separately from selected hits. The planned Week 7 outcome refresh must respect genuine prekickoff versus development lanes; existing old-finality rows cannot be silently called fresh completed-game coverage.
 
-The refresh preflight found the known full-week source bodies require **178,739 compressed bytes before receipts and grading output**, exceeding approximately **60 KiB** of remaining managed-store headroom. No new outcome download or refresh grading occurred. A one-game full-summary footprint is unknown; smaller old projections do not establish that its full wire body fits. Existing future-game outcomes therefore remain pending in this evidence stream. The separate 8 KiB FTN qualification proposal is preparation, not an executed source qualification or an accuracy result.
+The refresh preflight found the known full-week source bodies require **178,739 compressed bytes before receipts and grading output**, exceeding approximately **60 KiB** of remaining managed-store headroom. No new outcome download or refresh grading occurred. A one-game full-summary footprint is unknown; smaller old projections do not establish that its full wire body fits. Existing future-game outcomes therefore remain pending in this evidence stream. The subsequent FTN source-value qualification completed as described below; it produced no forecasts or accuracy result. A narrower, existing QB-filtered source route is now being prepared to try to refresh passing outcomes without exceeding the cap. Its HEAD request returned HTTP 200/gzip with no content length; no new statistics were parsed or graded by that metadata probe.
+
+## Subsequent retained FTN qualification completed
+
+The year-aware source check ran once on already retained 2022/2023 FTN and PBP assets, without repeating the completed 2024 census or acquiring new data. It independently counts complete source frames, missing and duplicate/context rows, source-defined risk/receiver denominators, nullable booleans, retained-panel player joins and capture clocks.
+
+|Season|FTN rows|PBP rows|Valid context matches|Source-defined risk denominator|Interception-worthy true|
+|---|---:|---:|---:|---:|---:|
+|2022|41,643|47,157|39,742|17,783|928|
+|2023|48,225|47,399|44,061|18,007|723|
+
+All four selected flags have zero actual null/invalid values in these retained assets; no null-to-false imputation occurred. Uncharted PBP rows remain a different state. Raw duplicate quarantine precedes context matching. Schedule frames contain 271/272 games respectively; that does not turn every scheduled row into a verified completed-game label. Exact retained-panel passer IDs match 19,445/19,455 rows in 2022 and 19,800/19,807 in 2023; exceptions remain explicit.
+
+`date_pulled` values are in 2024, preceding the local 2026 captures but following the games. Neither date is original publication evidence. Official identity-build equivalence, official attempt/target credit/nullification, publication availability and operational source-policy gates remain unresolved. **No new FTN feature model was fitted or deployed.** This is a completed prerequisite audit, not an accuracy experiment or blanket source activation.
+
+Outer runtime: **19.373 CPU / 19.268 wall seconds**, RSS 278,126,592 bytes. New immutable proof/metadata total **2,821 bytes**, within 8 KiB. Independent post-execution checks reproduce all counts and bindings. [Source details](FTN_QUALIFICATION.md) and [aggregate proof](FTN_AGGREGATES.json) retain the unmatched/context/denominator findings and source-rights distinctions.
 
 ## Actual deployment and recurring operation
 

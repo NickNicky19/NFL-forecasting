@@ -1,0 +1,459 @@
+{
+  "CPU_seconds_before_persistence": 15.585243626,
+  "HTTP": 0,
+  "accuracy_experiments": 0,
+  "actual_native_runtime": {
+    "CPU_seconds": 19.373,
+    "max_RSS_bytes": 278126592,
+    "wall_seconds": 19.268
+  },
+  "all_retained_bytes": 2821,
+  "allocation_bytes": 8192,
+  "fits": 0,
+  "inference": 0,
+  "inputs": {
+    "calendar": {
+      "bytes": 110449,
+      "sha256": "7a404196cffb515fdb73545836a652e299568bff813b0b35fb1d3c4842e023b0"
+    },
+    "completed_2024_F1_report": {
+      "bytes": 4280,
+      "sha256": "0a2b6cfecc3d8abe36b25f7a5381c628f439a41d7c7f319c3216b0dcfdf0fb2c"
+    },
+    "ftn2022": {
+      "bytes": 501910,
+      "sha256": "2846ef9bcc5f7298a5c783fb9a5edc85b3820c0b4943bf60a1217398e412985b"
+    },
+    "ftn2022_first_observed_freeze": {
+      "bytes": 1183,
+      "sha256": "5746b27bf37d17d6d0f17cde67eede17f2dbc2f0ee546cb6f4272926566019a1"
+    },
+    "ftn2022_schema_metadata": {
+      "bytes": 3595,
+      "sha256": "846d5030440f654397d15c2ef4be9aecb59f9df8db85bd0a92a2d08164c8cdaa"
+    },
+    "ftn2023": {
+      "bytes": 567781,
+      "sha256": "162f0f48a8fca23f86a334c78e27f8daa7443e6b383beada0416b65c593b2c0e"
+    },
+    "ftn2023_first_observed_freeze": {
+      "bytes": 1183,
+      "sha256": "6003b994d89ddf168ea1daf684181b8ef1d9b17ef2ef771bf22154d233e4371f"
+    },
+    "ftn2023_schema_metadata": {
+      "bytes": 3596,
+      "sha256": "700e9f3b3eb27ce1605d2e14975fe5912aef7007e79a180745c8286a4079a575"
+    },
+    "pbp2022": {
+      "bytes": 257966,
+      "sha256": "43a2302806677396e861f312b2ae3650d5137acad23342328d3006d9741f90cb"
+    },
+    "pbp2023": {
+      "bytes": 260732,
+      "sha256": "5759f54e5d531a0c4903c34e02b5d7f06d6ec54d3a62360c74a30742ae5271ad"
+    },
+    "pbp_projection_lineage": {
+      "bytes": 11693,
+      "sha256": "3ed7f3b7212d25b5627a98566fd5d7b359eee33963d0f88a598897d914f58628"
+    },
+    "retained_model_history": {
+      "bytes": 1155175,
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55"
+    }
+  },
+  "max_RSS_bytes": 278126592,
+  "new_source_policy_or_labels": false,
+  "original_2024_F1_rerun": false,
+  "plan_sha256": "5de26dea88864e08a79f40c472ef1b44bb8fd03fb7daa445a487e74d9977fdcb",
+  "proof_sha256": "e78a64fecba954ee6e918e1eccd570f05a0d6088d2c844226121742e4d000e50",
+  "review": {
+    "CPU_seconds": 4.951,
+    "new_accuracy_experiments": 0,
+    "reviewer": "/root/accuracy_review_replacement",
+    "status": "PASS",
+    "wall_seconds": 4.535
+  },
+  "review_status": "POSTEXEC_PASS",
+  "schema_version": "ftn-2022-2023-value-denominator-qualification-v1-20261026",
+  "seasons": [
+    {
+      "date_pulled": {
+        "kickoff_relation_counts": {
+          "at_or_after_game_kickoff": 39742,
+          "game_not_in_independent_REG_frame": 1901
+        },
+        "maximum_UTC": "2024-10-10T01:13:42.148060+00:00",
+        "minimum_UTC": "2024-09-06T23:50:14.696374+00:00",
+        "original_publication_qualified": false,
+        "recorded_capture_relation_counts": {
+          "after_recorded_capture": 0,
+          "before_recorded_capture": 41643,
+          "equal_recorded_capture": 0,
+          "invalid_or_naive": 0,
+          "null": 0
+        },
+        "recorded_first_capture_UTC": "2026-10-25T11:22:48.350794+00:00"
+      },
+      "feature_fit_or_operational_qualification": false,
+      "flag_coverage": {
+        "is_catchable_ball": {
+          "descriptive_true_fraction_among_known": 0.7820220781496408,
+          "false": 3732,
+          "invalid_nonboolean": 0,
+          "known_flag": 17121,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17121,
+          "true": 13389,
+          "uncharted": 0
+        },
+        "is_drop": {
+          "descriptive_true_fraction_among_known": 0.0393668594124175,
+          "false": 16447,
+          "invalid_nonboolean": 0,
+          "known_flag": 17121,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17121,
+          "true": 674,
+          "uncharted": 0
+        },
+        "is_interception_worthy": {
+          "descriptive_true_fraction_among_known": 0.05218467075296632,
+          "false": 16855,
+          "invalid_nonboolean": 0,
+          "known_flag": 17783,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17783,
+          "true": 928,
+          "uncharted": 0
+        },
+        "is_throw_away": {
+          "descriptive_true_fraction_among_known": 0.03700163077096103,
+          "false": 17125,
+          "invalid_nonboolean": 0,
+          "known_flag": 17783,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17783,
+          "true": 658,
+          "uncharted": 0
+        }
+      },
+      "full_outer": {
+        "FTN_only": 0,
+        "PBP_only": 4816,
+        "matched": 39742
+      },
+      "inventory": {
+        "ftn": {
+          "duplicate_groups": 0,
+          "duplicate_rows": 0,
+          "invalid_key_rows": 0,
+          "rows": 41643
+        },
+        "pbp": {
+          "duplicate_groups": 0,
+          "duplicate_rows": 0,
+          "invalid_key_rows": 0,
+          "rows": 47157
+        }
+      },
+      "missing_FTN_scheduled_games": 0,
+      "missing_PBP_scheduled_games": 0,
+      "official_ID_build_qualified": false,
+      "official_target_attempt_nullification_equivalence_qualified": false,
+      "original_rows": {
+        "ftn": 41643,
+        "pbp": 47157
+      },
+      "player_compatibility": {
+        "passer_player_id": {
+          "canonical_membership_or_participation_proof": false,
+          "matched_position_counts": {
+            "QB": 19398,
+            "RB": 8,
+            "TE": 22,
+            "WR": 17
+          },
+          "row_counts": {
+            "matched_retained_model_history": 19445,
+            "not_in_retained_model_history": 10,
+            "null_or_empty": 25103,
+            "publisher_GSIS_format": 19455
+          },
+          "unique_ids_matched_model_history": 107,
+          "unique_nonempty_ids": 114
+        },
+        "receiver_player_id": {
+          "canonical_membership_or_participation_proof": false,
+          "matched_position_counts": {
+            "FB": 104,
+            "QB": 9,
+            "RB": 3262,
+            "TE": 3665,
+            "WR": 10341
+          },
+          "row_counts": {
+            "matched_retained_model_history": 17381,
+            "not_in_retained_model_history": 10,
+            "null_or_empty": 27167,
+            "publisher_GSIS_format": 17391
+          },
+          "unique_ids_matched_model_history": 502,
+          "unique_nonempty_ids": 509
+        }
+      },
+      "quarantine": {
+        "ftn": {
+          "unknown_calendar_game": 1901
+        },
+        "pbp": {
+          "REG_or_team_context_conflict": 2599
+        }
+      },
+      "raw_nullable_flag_values": {
+        "is_catchable_ball": {
+          "false": 26952,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 14691
+        },
+        "is_drop": {
+          "false": 40919,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 724
+        },
+        "is_interception_worthy": {
+          "false": 40583,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 1060
+        },
+        "is_throw_away": {
+          "false": 40880,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 763
+        }
+      },
+      "scheduled_REG_games": 271,
+      "source_predicates": {
+        "source_defined_nonspike_risk": {
+          "false": 25729,
+          "true": 17783,
+          "unknown": 1046
+        },
+        "source_defined_receiver_assigned_event": {
+          "false": 25729,
+          "true": 17121,
+          "unknown": 1708
+        },
+        "source_defined_true_attempt": {
+          "false": 25668,
+          "true": 17843,
+          "unknown": 1047
+        }
+      },
+      "unique_context_REG_rows": {
+        "ftn": 39742,
+        "pbp": 44558
+      },
+      "unknown_is_zero": false,
+      "year": 2022
+    },
+    {
+      "date_pulled": {
+        "kickoff_relation_counts": {
+          "at_or_after_game_kickoff": 46025,
+          "game_not_in_independent_REG_frame": 2200
+        },
+        "maximum_UTC": "2024-09-06T23:50:14.696374+00:00",
+        "minimum_UTC": "2024-09-06T23:50:14.696374+00:00",
+        "original_publication_qualified": false,
+        "recorded_capture_relation_counts": {
+          "after_recorded_capture": 0,
+          "before_recorded_capture": 48225,
+          "equal_recorded_capture": 0,
+          "invalid_or_naive": 0,
+          "null": 0
+        },
+        "recorded_first_capture_UTC": "2026-10-25T11:23:18.028871+00:00"
+      },
+      "feature_fit_or_operational_qualification": false,
+      "flag_coverage": {
+        "is_catchable_ball": {
+          "descriptive_true_fraction_among_known": 0.7471383975026015,
+          "false": 4374,
+          "invalid_nonboolean": 0,
+          "known_flag": 17298,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17298,
+          "true": 12924,
+          "uncharted": 0
+        },
+        "is_drop": {
+          "descriptive_true_fraction_among_known": 0.04023586541796739,
+          "false": 16602,
+          "invalid_nonboolean": 0,
+          "known_flag": 17298,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 17298,
+          "true": 696,
+          "uncharted": 0
+        },
+        "is_interception_worthy": {
+          "descriptive_true_fraction_among_known": 0.04015105236852335,
+          "false": 17284,
+          "invalid_nonboolean": 0,
+          "known_flag": 18007,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 18007,
+          "true": 723,
+          "uncharted": 0
+        },
+        "is_throw_away": {
+          "descriptive_true_fraction_among_known": 0.03926250902426834,
+          "false": 17300,
+          "invalid_nonboolean": 0,
+          "known_flag": 18007,
+          "null": 0,
+          "official_denominator_qualified": false,
+          "source_defined_denominator": 18007,
+          "true": 707,
+          "uncharted": 0
+        }
+      },
+      "full_outer": {
+        "FTN_only": 1964,
+        "PBP_only": 816,
+        "matched": 44061
+      },
+      "inventory": {
+        "ftn": {
+          "duplicate_groups": 0,
+          "duplicate_rows": 0,
+          "invalid_key_rows": 0,
+          "rows": 48225
+        },
+        "pbp": {
+          "duplicate_groups": 0,
+          "duplicate_rows": 0,
+          "invalid_key_rows": 0,
+          "rows": 47399
+        }
+      },
+      "missing_FTN_scheduled_games": 0,
+      "missing_PBP_scheduled_games": 0,
+      "official_ID_build_qualified": false,
+      "official_target_attempt_nullification_equivalence_qualified": false,
+      "original_rows": {
+        "ftn": 48225,
+        "pbp": 47399
+      },
+      "player_compatibility": {
+        "passer_player_id": {
+          "canonical_membership_or_participation_proof": false,
+          "matched_position_counts": {
+            "FB": 1,
+            "QB": 19748,
+            "RB": 10,
+            "TE": 16,
+            "WR": 25
+          },
+          "row_counts": {
+            "matched_retained_model_history": 19800,
+            "not_in_retained_model_history": 7,
+            "null_or_empty": 25070,
+            "publisher_GSIS_format": 19807
+          },
+          "unique_ids_matched_model_history": 112,
+          "unique_nonempty_ids": 119
+        },
+        "receiver_player_id": {
+          "canonical_membership_or_participation_proof": false,
+          "matched_position_counts": {
+            "FB": 106,
+            "QB": 9,
+            "RB": 3195,
+            "TE": 3752,
+            "WR": 10487
+          },
+          "row_counts": {
+            "matched_retained_model_history": 17549,
+            "not_in_retained_model_history": 9,
+            "null_or_empty": 27319,
+            "publisher_GSIS_format": 17558
+          },
+          "unique_ids_matched_model_history": 477,
+          "unique_nonempty_ids": 486
+        }
+      },
+      "quarantine": {
+        "ftn": {
+          "unknown_calendar_game": 2200
+        },
+        "pbp": {
+          "REG_or_team_context_conflict": 2522
+        }
+      },
+      "raw_nullable_flag_values": {
+        "is_catchable_ball": {
+          "false": 33998,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 14227
+        },
+        "is_drop": {
+          "false": 47487,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 738
+        },
+        "is_interception_worthy": {
+          "false": 47404,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 821
+        },
+        "is_throw_away": {
+          "false": 47406,
+          "invalid_nonboolean": 0,
+          "null": 0,
+          "true": 819
+        }
+      },
+      "scheduled_REG_games": 272,
+      "source_predicates": {
+        "source_defined_nonspike_risk": {
+          "false": 25802,
+          "true": 18007,
+          "unknown": 1068
+        },
+        "source_defined_receiver_assigned_event": {
+          "false": 25802,
+          "true": 17298,
+          "unknown": 1777
+        },
+        "source_defined_true_attempt": {
+          "false": 25735,
+          "true": 18074,
+          "unknown": 1068
+        }
+      },
+      "unique_context_REG_rows": {
+        "ftn": 46025,
+        "pbp": 44877
+      },
+      "unknown_is_zero": false,
+      "year": 2023
+    }
+  ],
+  "state": "COMPLETED_VALUE_DENOMINATOR_PLAYER_TIMING_SOURCE_QUALIFICATION_ONLY",
+  "wall_seconds_before_persistence": 15.500179791008122
+}
