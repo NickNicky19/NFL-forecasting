@@ -689,7 +689,7 @@ class VerifiedHistory:
     def __reduce__(self): raise HistoryError("VERIFIED_HISTORY_CANNOT_BE_SERIALIZED")
 
 
-def _client(context, operation, transport, routes=()):
+def _client(context, operation, transport, routes=(), *, package=None):
     from . import audit_weekly_archive_v1 as archive, audit_weekly_operations_authority_v1 as authority
     _, _, store, _, _ = _modules()
     class ReadClient(archive.Client):
@@ -698,7 +698,8 @@ def _client(context, operation, transport, routes=()):
             return super().allow(url)
         def reserve_post(self,*args,**kwargs):raise HistoryError("HISTORY_RECOVERY_GET_ONLY")
         def reserve(self,*args,**kwargs):raise HistoryError("HISTORY_RECOVERY_GET_ONLY")
-    context.verify(); base = context.client; package = context.go["qualified_runtime"]
+    context.verify(); base = context.client
+    package = context.go["qualified_runtime"] if package is None else package
     client = ReadClient(context.env.get("GITHUB_TOKEN"), base.run_id, journal=base.journal, source_sha=base.source_sha,
         job=deepcopy(base.job), operation=operation, qualification=package["qualification"], readonly=True, transport=transport)
     client.authenticate_actions_job(); client.bind(package["binding"])
@@ -879,11 +880,21 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
     require(envelope["planning"]==locator["planning"],"PUBLIC_PLANNING_BOUND_TO_PRIVATE_READER_EVIDENCE")
     root=envelope["root_go"];cohort=locator["cohort"]
     dynamic={"approved","issued_at_utc","expires_at_utc","operation","effective_epoch"}
-    require(type(root) is dict and set(root)==template.ROOT_KEYS and root["approved"] is True
+    require(type(root) is dict and set(root)==template.root_keys(root) and root["approved"] is True
         and root["operation"]=="RECURRING_CAPTURE" and root["source_sha"]==cohort["source_sha"]
-        and root["code_pins"]==code_pins and all(root[k]==static_root[k] for k in set(root)-dynamic)
+        and root["code_pins"]==code_pins
         and store.sha(store.canonical(root))==cohort["root_go_sha256"] and root["issued_at_utc"]==cohort["root_issued_at_utc"]
         and root["effective_epoch"]["schema_version"]==CONTEXT_V4,"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
+    package,_=template.checkpoint_runtime(static_root,locator['sidecar']['checkpoint_handoff'],
+        anchor=locator['anchor'],checkpoint={'sha256':store.sha(store.canonical(locator))})
+    prior=template.prior_runtime(static_root)
+    if prior is not None and package==prior['qualified_runtime']:
+        require(template.static_root_sha256(root)==prior['root_static_sha256']
+            and root['qualified_runtime']==package and root['pending_census']==prior['pending_census'],
+            'EXACT_SEALED_ORIGINAL_RUNTIME_ROOT_PREIMAGE')
+    else:
+        require(set(root)==set(static_root) and all(root[k]==static_root[k] for k in set(root)-dynamic),
+            'ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE')
     require(state.utc(root["issued_at_utc"])<=state.utc(jobs["produce"]["started_at"])
         and state.utc(root["issued_at_utc"])<state.utc(root["expires_at_utc"])
         and (state.utc(root["expires_at_utc"])-state.utc(root["issued_at_utc"])).total_seconds()<=3600
@@ -953,7 +964,11 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         and value["feed_sha256"] == previous["feed_sha256"] and value["run_id"] != context.client.run_id
         and value["root_go_sha256"] != context.root_sha256, "EXACT_DIFFERENT_ROOT_RUN_PUBLIC_HISTORY_DELIVERY")
     require(value["source_sha"]==context.client.source_sha,"SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
-    package = context.go["qualified_runtime"]; h = value["checkpoint_handoff"]
+    from . import audit_weekly_template_v1 as template
+    h = value["checkpoint_handoff"]
+    package,pending=template.checkpoint_runtime(context.go,h)
+    require(context.go.get('schema_version')!=template.ROOT_V3 or wrapper is not None,
+        'ORIGINAL_V2_READER_ROOT_EVIDENCE_REQUIRED')
     require(h["runtime_binding_sha256"] == store.sha(store.canonical(package["binding"]))
         and h["qualified_package_sha256"] == state.digest(package)
         and h["append_proof"]["qualification_sha256"] == state.digest(package["qualification"]), "SAME_QUALIFIED_HISTORY_NAMESPACE_REQUIRED")
@@ -962,7 +977,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     routes = {retained.source_url(value["source_sha"], name) for name in pins}
     routes |= {store.API + "/actions/runs/" + value["run_id"] + suffix for suffix in ("", "/jobs?per_page=100&page=1")}
     if wrapper is not None:routes|={store.API+"/actions/runs/"+original_receipt["run_id"]+suffix for suffix in ("","/jobs?per_page=100&page=1")}
-    metadata = _client(context, "metadata", transport, routes); evidence = {}
+    metadata = _client(context, "metadata", transport, routes,package=package); evidence = {}
     run = _json(metadata, store.API + "/actions/runs/" + metadata.run_id, evidence)
     authority.authorize_client_actor(metadata, run)
     require(run.get("status") == "in_progress" and run.get("conclusion") is None and run.get("head_sha") == metadata.source_sha,
@@ -979,7 +994,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         "HISTORY_COMPLETED_BEFORE_CURRENT_ROOT_AND_VALUES")
     registered = _registered(context, storage)
     require(registered.epoch.sha256 == h["epoch_sha256"], "EXACT_REGISTERED_HISTORY_EPOCH_REQUIRED")
-    archive.authenticate_qualification(metadata, package, context.go["pending_census"])
+    archive.authenticate_qualification(metadata, package, pending)
     context.verify()
     output = checkpoint.output_root(storage, Path(context.request["cache"]).parent / (context.request["phase"]+"-history"), 2*h["body_bytes"] + (1 << 20))
     archive.write(storage,output/"RESTORE_INTENT.json",dict(schema_version=VERSION+"-restore-intent",
@@ -988,7 +1003,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         authenticated_original_api_sha256=state.digest(evidence)))
     clients = []
     def get(descriptor, name):
-        context.verify(); client = _client(context, "restore", transport); clients.append(client)
+        context.verify(); client = _client(context, "restore", transport,package=package); clients.append(client)
         destination = output / name
         with storage.transaction():
             storage._check(Path(client.journal) / "history-reservation-probe")

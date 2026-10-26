@@ -30,6 +30,12 @@ def original_seed(tmp_path_factory):
     root=tmp_path_factory.mktemp('original-history')
     with pytest.MonkeyPatch.context() as patch:
         x=bridge.pipeline.__wrapped__(root,patch);q=x.q
+        # Seal complete fictional owner census metadata before the first
+        # grading append. A later namespace transition cannot invent it.
+        x.service.census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+            as_of_utc=x.service.q['before_proof']['started_at_utc'],owner_evidence_sha256='a'*64,reservations=[])
+        x.service.package['quota_reservation'].update(pending_records=0,
+            pending_census_sha256=store.sha(store.canonical(x.service.census)))
         pop=deepcopy(q['pop']);pop['stream_id']=operations.STREAM
         x.restored['aliases']['context/ops_population.json']=archive.write(q['storage'],x.root/'original-primary-population.json',pop)
         written=worker.execute(x.context(worker.PHASES[0]),fetch=x.fetch,clock=lambda:x.service.now)
@@ -213,7 +219,7 @@ def locator_seed(tmp_path,original_seed,monkeypatch):
     pins['.github/workflows/lab.yml']=original_seed['receipt']['workflow_sha256']
     root={p:None for p in template.ROOT_KEYS}
     anchor=dict(feed_sha256=original_seed['receipt']['feed_sha256'],receipt_sha256=x.receipt['sha256'])
-    root.update(approved=True,operation='RECURRING_CAPTURE',source_sha=original_seed['source'],code_pins=pins,jobs=JOBS,
+    root.update(schema_version='audit-weekly-hosted-v2-root-GO',approved=True,operation='RECURRING_CAPTURE',source_sha=original_seed['source'],code_pins=pins,jobs=JOBS,
         qualified_runtime=original_seed['package'],pending_census=original_seed['census'],issued_at_utc=began.isoformat(),expires_at_utc=(began+timedelta(hours=1)).isoformat(),
         effective_epoch=dict(schema_version=history.CONTEXT_V4,controller_context=None,previous_capture=anchor,
             previous_checkpoint=dict(schema_version=history.LOCATOR_REF,path='20261028T080300.000000Z--40000000001--'+'a'*64+'.json.gz',sha256='b'*64),
@@ -336,6 +342,144 @@ def test_multipart_historical_reader_rejects_foreign_source_before_private_GET(t
     with pytest.raises(history.HistoryError,match='SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED'):
         history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
     assert not any('/releases/' in r.full_url for r in x.calls)
+
+
+def dual_locator_case(root, seed, monkeypatch):
+    """Real original bytes in one binding; a sealed distinct write binding."""
+    from test_audit_weekly_template_v1 import dual_runtime_root
+    x=locator_recovery_case(root,seed,monkeypatch)
+    x.context.go=dual_runtime_root(x.context.go,seed['package'],seed['census'],seed['locator']['anchor'],
+        original_root=seed['original_root'])
+    return x
+
+
+def test_v3_prior_namespace_restores_every_multipart_row_without_relabeling(tmp_path,multipart_locator_seed,monkeypatch,record_property):
+    from nfl_lab import audit_weekly_grade_v1 as grade,private_draft_store as store
+    seed=multipart_locator_seed;x=dual_locator_case(tmp_path/'dual-reader',seed,monkeypatch)
+    root_before=store.canonical(x.context.go)
+    result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert grade._digest(result.durable.document)==seed['durable_sha256']
+    assert result.durable.document['known_versions']==seed['known_versions']
+    assert result.durable.document['known_weeks']==seed['known_weeks']
+    assert result.proof['original_grade_read_proof']==seed['sidecar']['grade_read_proof']
+    assert len(result.proof['native_part_recovery']['parts'])==2
+    assert result.proof['native_snapshot_recovery']['binding_sha256']==store.sha(store.canonical(seed['package']['binding']))
+    assert all(r.method=='GET' for r in x.calls)
+    current_release=str(x.context.go['qualified_runtime']['binding']['release_id'])
+    assert not any('/releases/'+current_release in r.full_url for r in x.calls)
+    assert store.canonical(x.context.go)==root_before
+    record_property('dual_namespace_recovery_GETs',len(x.calls))
+
+
+def test_v3_restored_history_is_really_appended_and_read_from_new_namespace(tmp_path,multipart_locator_seed,monkeypatch):
+    """Two fictional releases; real append, multipart codec and fresh reader."""
+    from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_grade_checkpoint_v1 as checkpoint
+    from nfl_lab import audit_weekly_archive_v1 as archive,private_draft_store as store,state
+    from test_private_draft_store_v2 import Server,Response
+    seed=multipart_locator_seed;x=dual_locator_case(tmp_path/'transition',seed,monkeypatch)
+    previous=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    package=x.context.go['qualified_runtime'];binding=package['binding'];q=package['qualification']
+    class NewServer(Server):
+        def release(self):
+            result=super().release();result.update(id=binding['release_id'],url=store.API+'/releases/'+str(binding['release_id']))
+            return result
+        def add(self,name,body=b'fictional',size=None):
+            a=super().add(name,body,size);a['id']+=20000
+            a['url']=store.API+'/releases/assets/'+str(a['id'])
+            a['browser_download_url']='https://github.com/'+store.REPO+'/releases/download/'+self.tag+'/'+name
+            return a
+        def __call__(self,request,timeout):
+            url=request.full_url;release=store.API+'/releases/'+str(binding['release_id'])
+            if url==release:
+                self.calls.append(request);return Response(self.release())
+            if url==release+'/assets?per_page=100&page=1':
+                self.calls.append(request);return Response([self.metadata(a) for a in self.assets])
+            return super().__call__(request,timeout)
+    server=NewServer();journal=tmp_path/'initialize-new';journal.mkdir(mode=0o700)
+    init=store.Client('ghs_FICTIONAL',package['run_id'],journal=journal,source_sha=package['source_sha'],transport=server,process='2'*64)
+    actual_binding=store.initialize(init,binding['runtime_id'])
+    assert actual_binding==binding
+    at=[state.utc(seed['current_at'])+timedelta(minutes=2)];finished=[None]
+    class Clock(datetime):
+        @classmethod
+        def now(cls,tz=None):return at[0] if tz else at[0].replace(tzinfo=None)
+    monkeypatch.setattr(store,'datetime',Clock)
+    def transport(request,timeout):
+        url=request.full_url
+        if '/actions/runs/' in url:
+            rid=url.split('/runs/',1)[1].split('/',1)[0]
+            if rid==q['run_id']:
+                if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha=q['source_sha'],run_attempt=1,event='workflow_dispatch',
+                    path='.github/workflows/lab.yml',head_branch=q['job']['workflow_ref'].split('@refs/heads/',1)[1],
+                    status='completed',repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),
+                    actor=dict(login='NickNicky19',id=208912933)))
+                return Response(dict(total_count=3,jobs=[dict(id=p['job']['api_job_id'],name=p['job']['job_id'],run_id=int(rid),
+                    head_sha=p['source_sha'],status='completed',conclusion='success',started_at=p['started_at_utc'],completed_at=p['created_at_utc'])
+                    for p in (q['before_proof'],q['read_proof'],q)]))
+            assert rid==x.context.client.run_id
+            if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha=seed['source'],run_attempt=1,event='workflow_dispatch',
+                path='.github/workflows/lab.yml',head_branch='fictional',status='in_progress',conclusion=None,
+                repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
+            jobs=[dict(id=901,name=JOBS['restore'],run_id=int(rid),head_sha=seed['source'],
+                started_at=(state.utc(seed['current_at'])+timedelta(minutes=1)).isoformat(),completed_at=finished[0],
+                status='completed' if finished[0] else 'in_progress',conclusion='success' if finished[0] else None)]
+            if finished[0]:jobs.append(dict(id=902,name=JOBS['consume'],run_id=int(rid),head_sha=seed['source'],
+                started_at=(state.utc(finished[0])+timedelta(seconds=1)).isoformat(),completed_at=None,status='in_progress',conclusion=None))
+            return Response(dict(total_count=len(jobs),jobs=jobs))
+        return server(request,timeout)
+    captures=grade.retained_captures(previous.durable,previous.registered,at=at[0])
+    batch=grade.bind_observations(captures,dict(schema_version=grade.VERSION+'-provider-observations',
+        source_policy_sha256=history._METADATA_POLICY_SHA,captured_at=at[0].isoformat(),observations=[],finality=[]),
+        authenticate=lambda _:True,at=at[0])
+    snapshot=grade.grade(previous.registered,captures,[batch],storage=x.storage,output=tmp_path/'transition/new-grade',
+        previous=previous.durable,clock=lambda:at[0])
+    def client(role):
+        journal=tmp_path/('new-'+role);x.storage.register_root(journal)
+        c=archive.Client('ghs_FICTIONAL',x.context.client.run_id,journal=journal,source_sha=seed['source'],transport=transport,
+            job=dict(execution_lane='github_actions',workflow_ref=seed['sidecar']['workflow_ref'],workflow_sha=seed['source'],
+                job_id=JOBS[role],permission='write',event_name='workflow_dispatch',api_job_id=0,run_authenticated=False),
+            operation='append' if role=='restore' else 'restore',readonly=role=='consume',process=('3' if role=='restore' else '4')*64,
+            qualification=q)
+        c.bind(binding);return c
+    writer=client('restore')
+    handoff=checkpoint.append(snapshot,writer,package,storage=x.storage,output=tmp_path/'transition/new-append',
+        current_root_go_sha256=x.context.root_sha256,authenticate=lambda _:True,
+        pending_census=x.context.go['pending_census'],clock=lambda:at[0])
+    finished[0]=(at[0]+timedelta(seconds=10)).isoformat();at[0]+=timedelta(seconds=30)
+    reader=client('consume')
+    restored=checkpoint.restore(handoff,reader,package,previous.registered,storage=x.storage,output=tmp_path/'transition/new-read',
+        current_root_go_sha256=x.context.root_sha256,authenticate=lambda _:True,
+        pending_census=x.context.go['pending_census'],clock=lambda:at[0])
+    assert restored.durable.document['captures']==previous.durable.document['captures']
+    assert restored.durable.document['known_versions']==previous.durable.document['known_versions']
+    assert restored.durable.document['known_weeks']==previous.durable.document['known_weeks']
+    assert handoff['runtime_binding_sha256']==store.sha(store.canonical(binding))
+    assert handoff['runtime_binding_sha256']!=seed['sidecar']['checkpoint_handoff']['runtime_binding_sha256']
+    assert {a['id'] for a in server.assets}.isdisjoint({a['id'] for a in x.server.assets})
+    assert all(r.method=='GET' for r in x.calls)
+    assert any(r.method=='POST' for r in server.calls)
+    # Forecast anchor stays old after grade-only, while this checkpoint is new.
+    from nfl_lab import audit_weekly_template_v1 as template
+    assert template.capture_runtime(x.context.go)[0]==seed['package']
+    assert template.checkpoint_runtime(x.context.go,handoff)[0]==package
+
+
+@pytest.mark.parametrize('damage',['anchor','census','root_preimage','third_namespace','mixed_binding','source'])
+def test_v3_history_rejects_unsealed_namespace_or_original_root(tmp_path,multipart_locator_seed,monkeypatch,damage):
+    from nfl_lab import audit_weekly_template_v1 as template,private_draft_store as store,audit_weekly_controller_bootstrap_v1 as bootstrap
+    x=dual_locator_case(tmp_path/'dual-rejected',multipart_locator_seed,monkeypatch)
+    old=x.context.go['prior_capture_qualified_runtime']
+    if damage=='anchor':old['anchor']['receipt_sha256']='0'*64
+    elif damage=='census':old['pending_census']['owner_evidence_sha256']='0'*64
+    elif damage=='root_preimage':old['root_static_sha256']='0'*64
+    elif damage=='third_namespace':old['qualified_runtime']['binding']['runtime_id']='0'*32
+    elif damage=='mixed_binding':
+        old['qualified_runtime']=deepcopy(x.context.go['qualified_runtime'])
+    else:x.context.client.source_sha='0'*40
+    with pytest.raises((history.HistoryError,template.TemplateError,store.StoreError,bootstrap.BootstrapError)):
+        history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert all(r.method=='GET' for r in x.calls)
+    if damage!='root_preimage':assert not any('/releases/' in r.full_url for r in x.calls)
 
 def test_cross_run_native_restore_retains_original_clocks_and_primary_assignment(case):
     from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_operations_v1 as ops,state

@@ -24,6 +24,9 @@ RUN='40000000002'; SOURCE='b'*40
 WRITER='audit-weekly-produce-v1'; READER='audit-weekly-restore-v1'
 
 
+from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata,dual_runtime_root
+
+
 @pytest.fixture(autouse=True)
 def forbid_real_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))
@@ -34,13 +37,67 @@ def document(x):
     root={key:None for key in t.ROOT_KEYS}
     slots=[dict(target=a,family=b,method_id=d,procedure_version='1'*64,model_sha256='2'*64,
         manifest_sha256='3'*64,transport_manifest_sha256='4'*64) for a,b,d in t.JOBS]
-    root.update(schema_version='audit-weekly-hosted-v3-root-GO',approved=False,repository=s.REPO,
+    root.update(schema_version='audit-weekly-hosted-v2-root-GO',approved=False,repository=s.REPO,
         mode='audit-weekly-producer-v1',source_sha=SOURCE,code_pins=pins,single_writer_group='nfl-lab-single-writer',
         workflow_ref=s.REPO+'/.github/workflows/lab.yml@refs/heads/research/current-producer',
         retained_registration=dict(schema_version='audit-count-retained-v1-registration',approved=True,
             maximum_new_fits=0,public_release=False,origin=dict(replay_catalog=dict(slots=slots))))
     return dict(schema_version=t.VERSION+'-static',source_sha=SOURCE,code_pins=pins,
         readiness=deepcopy(x.p['readiness']),root_template=root)
+
+
+@pytest.fixture
+def dual_document(tmp_path):
+    from test_audit_weekly_controller_bootstrap_v1 import system,locator_system
+    base=tmp_path/'dual-template-metadata';base.mkdir()
+    x=locator_system.__wrapped__(system.__wrapped__(base))
+    package=deepcopy(x.package)
+    census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+        as_of_utc=package['qualification']['before_proof']['started_at_utc'],owner_evidence_sha256='a'*64,reservations=[])
+    package['quota_reservation'].update(pending_records=0,pending_census_sha256=t.digest(census))
+    value=deepcopy(x.prepared.document);old=value['root_template']
+    old['qualified_runtime']=package;old['pending_census']=census
+    anchor=dict(feed_sha256='1'*64,receipt_sha256='2'*64)
+    value.update(schema_version=t.STATIC_V3,root_template=dual_runtime_root(old,package,census,anchor,original_root=old))
+    return value
+
+
+def test_v3_static_dual_runtime_selects_exact_old_anchor_and_unique_checkpoint(dual_document):
+    value=dual_document;prepared=t.prepare(value);root=prepared.document['root_template'];old=root['prior_capture_qualified_runtime']
+    original=s.canonical(old)
+    assert t.capture_runtime(root,anchor=old['anchor'])==(old['qualified_runtime'],old['pending_census'])
+    other=dict(feed_sha256='3'*64,receipt_sha256='4'*64)
+    assert t.capture_runtime(root,anchor=other)==(root['qualified_runtime'],root['pending_census'])
+    for package in (root['qualified_runtime'],old['qualified_runtime']):
+        h=dict(runtime_binding_sha256=t.digest(package['binding']),qualified_package_sha256=t.digest(package))
+        assert t.checkpoint_runtime(root,h,anchor=old['anchor'],checkpoint={'sha256':'5'*64})[0]==package
+    assert s.canonical(old)==original and set(root)==t.ROOT_V3_KEYS
+    assert t.decode_static(prepared.body,template_sha256=s.sha(prepared.plain),template_bytes=len(prepared.plain)).plain==prepared.plain
+
+
+@pytest.mark.parametrize('damage',['extra','purpose','census','same_binding','old_hash','new_binding','no_checkpoint','anchor','no_root_hash'])
+def test_v3_prior_namespace_cannot_be_supplied_by_unsealed_or_mixed_metadata(dual_document,damage):
+    root=deepcopy(dual_document['root_template']);prior=root['prior_capture_qualified_runtime']
+    h=dict(runtime_binding_sha256=t.digest(prior['qualified_runtime']['binding']),qualified_package_sha256=t.digest(prior['qualified_runtime']))
+    anchor=deepcopy(prior['anchor']);checkpoint={'sha256':'6'*64}
+    if damage=='extra':prior['url']='https://example.invalid/'
+    elif damage=='purpose':prior['purpose']='APPEND'
+    elif damage=='census':prior['pending_census']['owner_evidence_sha256']='0'*64
+    elif damage=='same_binding':root['qualified_runtime']=deepcopy(prior['qualified_runtime'])
+    elif damage=='old_hash':h['qualified_package_sha256']='0'*64
+    elif damage=='new_binding':h['runtime_binding_sha256']=t.digest(root['qualified_runtime']['binding'])
+    elif damage=='no_checkpoint':checkpoint=None
+    elif damage=='anchor':anchor['receipt_sha256']='0'*64
+    else:prior['root_static_sha256']=None
+    with pytest.raises((t.TemplateError,c.ControllerError,s.StoreError)):
+        t.checkpoint_runtime(root,h,anchor=anchor,checkpoint=checkpoint)
+
+
+def test_v3_record_is_static_and_legacy_root_cannot_acquire_it(dual_document):
+    value=deepcopy(dual_document);value['schema_version']=t.VERSION+'-static-v2'
+    with pytest.raises(t.TemplateError):t.prepare(value)
+    root=deepcopy(dual_document['root_template']);root['schema_version']='audit-weekly-hosted-v2-root-GO'
+    with pytest.raises(t.TemplateError):t.capture_runtime(root)
 
 
 class Service(Server):

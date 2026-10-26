@@ -171,7 +171,8 @@ def publication_configuration(go, *, now):
 
 
 def validate_root(go, *, now):
-    require(type(go) is dict and set(go)==ROOT_KEYS and go["schema_version"]==VERSION+"-root-GO"
+    from . import audit_weekly_template_v1 as template
+    require(type(go) is dict and set(go)==template.root_keys(go)
         and go["approved"] is True and go["repository"]==store.REPO and go["mode"]==MODE
         and go["owner_authorization"]=="OWNER_NFL_AUDIT_CONTINUATION_20261025"
         and go["single_writer_group"]=="nfl-lab-single-writer" and go["limits"]==LIMITS
@@ -187,9 +188,14 @@ def validate_root(go, *, now):
     require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}
         and (go["publication"] is False or go["operation"] in {"CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}),
         "EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
+    if go['schema_version'] == template.ROOT_V3:
+        require(go['operation'] in {'RECURRING_CAPTURE','CONTROLLER_REGISTRATION'}, 'EXPLICIT_DUAL_RUNTIME_OPERATION')
+        template.prior_runtime(go, before=go['issued_at_utc'])
     if go["operation"]=="RECURRING_CAPTURE":
         from . import audit_weekly_operations_v1 as operations
         operations.context(go["effective_epoch"])
+        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==operations.CONTEXT_V4,
+            'EXPLICIT_DUAL_RUNTIME_HISTORY_PROTOCOL')
     elif go["operation"]=="CONTROLLER_REGISTRATION":
         from . import audit_weekly_controller_registration_v1 as registration
         try:registration.context(go["effective_epoch"])
