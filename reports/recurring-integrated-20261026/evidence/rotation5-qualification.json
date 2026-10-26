@@ -1,0 +1,64 @@
+{
+  "state": "GENUINE_NEW_RUNTIME_CANARY_QUALIFIED",
+  "run_id": 40334867331,
+  "source_sha": "47b24db6d89a73ae77fb04f5200e730a937a2aec",
+  "root_go_sha256": "eb2855d83fb62f08d557c92cccf0f8a8d10eff2f407b523c0f96041c8049a227",
+  "all_three_jobs_success": true,
+  "jobs": [
+    {
+      "completed_at": "2026-10-26T13:55:46Z",
+      "conclusion": "success",
+      "id": 121613625115,
+      "name": "audit-private-rotation-write-v1",
+      "started_at": "2026-10-26T13:55:27Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-26T13:56:00Z",
+      "conclusion": "success",
+      "id": 121613813998,
+      "name": "audit-private-rotation-read-v1",
+      "started_at": "2026-10-26T13:55:49Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-26T13:56:11Z",
+      "conclusion": "success",
+      "id": 121613935937,
+      "name": "audit-private-rotation-qualify-v1",
+      "started_at": "2026-10-26T13:56:02Z",
+      "status": "completed"
+    }
+  ],
+  "canary_bytes": 117,
+  "private_forecast_payload_bytes": 0,
+  "private_forecast_durability_qualified": false,
+  "qualified_package_sha256": "27fb665b82ca5ed71b65a2b5d7254dd5504ce01e9c520c5237aae51551736365",
+  "qualified_package_retained_outside_runner": true,
+  "metadata_static_validation": true,
+  "actual_API_job_clocks_match": true,
+  "logs": [
+    {
+      "phase": "write",
+      "log_sha256": "aa1d760ea4cd70b2b495b80c9404e1a21ff9e63de82e7bdaca967d4e91d80988",
+      "log_bytes": 15121,
+      "literal_private_Root_absent": true
+    },
+    {
+      "phase": "read",
+      "log_sha256": "f1f93ba9a790cf5d30463b6dea513383497285c8be107259d61b72075f74aa66",
+      "log_bytes": 17903,
+      "literal_private_Root_absent": true
+    },
+    {
+      "phase": "qualify",
+      "log_sha256": "a7fe688017fc37e0eff5c86088586f5c43439936b23d87161898716f2d5745aa",
+      "log_bytes": 29231,
+      "literal_private_Root_absent": true
+    }
+  ],
+  "cleared_handoffs_delivered_across_jobs": true,
+  "reserved_after_bytes": 201326592,
+  "global_cap_bytes": 536870912,
+  "original_stores_deleted": 0
+}

@@ -1,3 +1,15 @@
+Update — 2026-10-26 14:27 UTC (PARTIAL)
+
+The rotation corrections are merged atProducer `47b24db6d89a73ae77fb04f5200e730a937a2aec`, with2207passes/oneoptional skip and all2208nodes completed. Main remains77d8f1f. GenuineRotation5 (`40334867331`) passed all three jobs; its complete package is retained outside the runner, the literalRoot is masked in every log, and handoffs survived transport. Oldstores are preserved; reservedglobalcapacity is192MiB/512MiB. This canary result does not qualify forecast durability.
+
+Genuine nativeRegistration18 (`40335767911`) passed all three jobs. The1350-byte seal hash b91e4bca was verified; the create-onlyrecord is committed/read back at `866e40ac568b20ec30ab88363105e1d3e5a64557`, SHA25613d4a76e, preservingpriorrecords. ActualRoot54292/61440bytes,Actionsinput57147/65535bytes,128producer/27parent/20sharedpins. This establishes final-source registration, not successful forecasts.
+
+OwnerOps19 (`40338427888`) is now genuinely running on47b24db. Its newV4plan uses complete14-game calendar metadata, onefuturegame and the unchanged22:45UTC frozen cutoff. The oldV2Root17had no plan; local preparation was corrected before dispatch. No forecasts, outcomes or scientific registrations were backdated or rewritten, and the audit fitted no newNFLmodels. A separate authorized research wave is independent.
+
+The website remains Main453 /PR1head484d. Freshcoordination revision168 still names the other manual owner and the current gate explicitly has no expiry/takeover; clarification about whether that session stopped is pending. Both exact Main and Phase2packages are retained and handed off, but actualwebintegration/deployment is not verified. Activation-variable access was freshly403, with no value inferred. A successful current-source Ops/export/consumer and the actual website release are still required.
+
+---
+
 Update — 2026-10-26 13:46 UTC (PARTIAL)
 
 PR43 now includes the bounded release pagination repair and first-step masking of rotation Root control metadata, at `ea89ae4a6440ca490c49b38791e1fd803e6e8cb9`. Its19tests/21subtests and independent reviews pass. The earlier pagination-only head fe616 has green hostedCI; **the current masking head still needs its own run40332478189**. No failed Root is retried. The original Rotation4 log contains unmasked canary/quota control metadata (no forecast rows/credentials in that Root); it is preserved. Exactresponse-size and failure receipts are in evidence.
