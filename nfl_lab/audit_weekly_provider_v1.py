@@ -40,7 +40,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "config/operational-source-policy-v2.json"
 # The original numeric loader remains the producer's feature/source authority.
 # This metadata-only copy is usable only while that exact validator is installed.
-_SOURCE_LOADER_SHA256 = "069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e"
+_SOURCE_LOADER_SHA256 = "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c"
 _POLICY_ID = "permitted-operational-nfl-history-v2-20261023"
 _SCHEDULE_COLUMNS = ["game_id", "season", "week", "game_type", "gameday", "gametime", "away_team", "home_team"]
 _SOURCE_SPECS = {
@@ -74,7 +74,7 @@ def require(value, code):
 
 
 def _load_source_policy(policy: Path | str | dict) -> dict:
-    """The exact 069c loader's policy checks, without its numerical imports."""
+    """The registered c748 loader's policy checks, without numerical imports."""
     require(store.sha(store.read_local(ROOT / "nfl_lab/operational_sources.py", 2 << 20)) == _SOURCE_LOADER_SHA256,
         "ORIGINAL_SOURCE_POLICY_VALIDATOR_REQUIRED")
     if isinstance(policy, (str, Path)):

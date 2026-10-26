@@ -24,6 +24,77 @@ from tools import audit_weekly_runtime_v1 as cli
 from test_audit_weekly_epoch_v1 import fixture, prepare, registered, continuation, CONTINUED
 
 ROOT=Path(__file__).resolve().parents[1]
+REGISTERED_BUILDER_SHA = "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c"
+REGISTERED_SOURCE_CONTRACT = dict(
+    source_policy_sha256="e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    availability_rule="FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION", feature_builder_sha256=REGISTERED_BUILDER_SHA)
+
+
+def test_registered_original_builder_new_monday_query_features_and_owned_capture(tmp_path,monkeypatch):
+    """Fictional new queries, actual builder and literal retained contract.
+
+    No frozen feature replay, model, provider or real outcome is used. This
+    deliberately cannot update its expected builder hash from current code.
+    """
+    from nfl_lab import features,weekly_current_query as query
+    monkeypatch.setattr("socket.socket.connect",lambda *_:pytest.fail("NO_REAL_NETWORK"))
+    policy=sources.load_source_policy(ROOT/'config/operational-source-policy-v2.json')
+    schedule=pd.DataFrame([
+        dict(game_id='fictional-sunday',season=2026,week=7,game_type='REG',gameday='2026-10-25',
+            gametime='16:00',away_team='C',home_team='D'),
+        dict(game_id='fictional-monday',season=2026,week=7,game_type='REG',gameday='2026-10-26',
+            gametime='16:00',away_team='A',home_team='B')])
+    roster=pd.DataFrame([dict(season=2026,week=7,game_type='REG',team=team,gsis_id=player,
+        sleeper_id=str(101+i),position=position,status='ACT',full_name='Fictional')
+        for i,(team,player,position) in enumerate([('A','00-0000001','QB'),('B','00-0000002','RB')])])
+    packet=query.build_current_queries(roster,schedule,season=2026,week=7,
+        cutoff_utc=utc('2026-10-26T07:00:00Z'),expected_remaining_games=1)
+    packet['queries']['cutoff_utc']=packet['queries'].game_id.map(
+        {'fictional-monday':'2026-10-26T19:00:00Z'}).map(utc)
+    history=pd.DataFrame([dict(player_id=player,game_id='fictional-old',team=team,opponent=opponent,
+        position=position,season=2020,week=1,kickoff_utc=pd.Timestamp('2020-09-10T20:00:00Z'),
+        participation_state='played',**{name:amount for name in features.PLAYER_STATS})
+        for player,team,opponent,position,amount in [
+            ('00-0000001','A','B','QB',2.0),('00-0000002','B','A','RB',0.0)]])
+    # Model the qualified loader's private Parquet round trip in memory. The
+    # hand-authored rows are fictional prior observations, never real labels.
+    stream=io.BytesIO();history.to_parquet(stream,index=False)
+    loaded=pd.read_parquet(io.BytesIO(stream.getvalue()))
+    loaded.attrs['operational_manifest']=dict(policy_sha256=policy['_policy_sha256'],code_sha256s=sources._code_hashes(),
+        history_frame_sha256=sources._frame_sha(history),asof_utc='2026-10-26T07:00:00Z',
+        source_receipts={'fictional':dict(retrieved_utc='2026-10-26T06:59:00Z')})
+    contract=deepcopy(REGISTERED_SOURCE_CONTRACT)
+    frame=query.build_shared_features(loaded,packet,policy=policy,source_contract=contract)
+    assert contract==REGISTERED_SOURCE_CONTRACT
+    assert frame.game_id.tolist()==['fictional-monday']*2
+    assert frame.player_id.tolist()==['00-0000001','00-0000002']
+    assert frame.f_player_rec_mean3.tolist()==[2.0,0.0]
+    assert frame.f_player_games_prior.tolist()==[1.0,1.0]
+    assert frame.participation_state.eq('unknown').all() and frame.f_player_play_rate8.isna().all()
+    owner=OperationalStorage(tmp_path/'cache',policy,state=tmp_path/'state');owner.register_root(tmp_path/'capture')
+    source=tmp_path/'capture/fictional-source-metadata';owner.write_bytes(source,b'FICTIONAL_SOURCE_NOT_NFL_ROWS')
+    feature_ref,receipt_ref=future.persist_feature_capture(tmp_path/'capture/features.parquet',frame,
+        features=[name for name in frame if name.startswith('f_')],source_contract=contract,
+        source_bindings=[future.binding(source)],storage=owner,clock=lambda:utc('2026-10-26T07:00:00Z'))
+    capture=r.read_owned(owner,receipt_ref)
+    assert capture['source_contract']==REGISTERED_SOURCE_CONTRACT
+    assert capture['feature_binding']==feature_ref and capture['query_projection_sha256']==future.frame_digest(
+        future.query_projection(frame,[name for name in frame if name.startswith('f_')]))
+    assert capture['historical_availability_rule']=='FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION'
+
+
+@pytest.mark.parametrize('wrong_hash',['0'*64,'069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e'])
+def test_registered_original_builder_guard_rejects_other_source_before_frames(monkeypatch,wrong_hash):
+    assert future.sha(ROOT/'nfl_lab/operational_sources.py')==REGISTERED_BUILDER_SHA
+    policy=sources.load_source_policy(ROOT/'config/operational-source-policy-v2.json')
+    monkeypatch.setattr(sources,'build_operational_features',lambda *_a,**_k:pytest.fail('BUILDER_BEFORE_ORIGINAL_HASH'))
+    changed=dict(REGISTERED_SOURCE_CONTRACT,feature_builder_sha256=wrong_hash)
+    with pytest.raises(ValueError,match='feature builder identity changed'):
+        future.build_future_features(None,None,policy=policy,source_contract=changed)
+    actual=future.sha
+    monkeypatch.setattr(future,'sha',lambda path:'0'*64 if Path(path)==ROOT/'nfl_lab/operational_sources.py' else actual(path))
+    with pytest.raises(ValueError,match='feature builder identity changed'):
+        future.build_future_features(None,None,policy=policy,source_contract=REGISTERED_SOURCE_CONTRACT)
 
 
 class Clock:
