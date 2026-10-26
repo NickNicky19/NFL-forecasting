@@ -14,8 +14,12 @@ The same wave independently verified the Week 7 passing-workload diagnosis and
 substitutions are postgame diagnostics, and FTN source checks are not forecasting
 experiments. Complete exact PPR and several source/availability gates remain
 unresolved. All twelve category decisions and actual production dependencies
-are explicit; no new deployment is claimed. Smaller QB-only grading acquisition
-is a bounded next task, not an already observed outcome or enabled scheduler.
+are explicit; no new deployment is claimed. The subsequent
+[QB-only grading refresh](accuracy-wave-20261026/QB_REFRESH.md) actually completed:
+two retained source bodies, 49 newly numeric-resolved labels, four resolved
+genuine-pregame point games and one resolved genuine probability game. Mixed
+timing, incomplete rare-event zero coverage and unmatched saved-control vintages
+remain explicit. No enabled recurring scheduler is inferred from this run.
 
 The initial aggregate publication is
 [`a8f36f3`](https://github.com/NickNicky19/NFL-forecasting/blob/a8f36f356842f711584d519508f7b15018c1e5b9/reports/accuracy-wave-20261026/README.md).

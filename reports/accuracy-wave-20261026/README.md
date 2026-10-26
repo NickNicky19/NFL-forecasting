@@ -2,7 +2,9 @@
 
 ## Completed now
 
-**One genuine NFL NGBoost fit and inference completed**, plus a new passing-workload diagnostic on retained Week 7 outcomes. Both received independent read-only post-execution acceptance. No live model replacement or deployment occurred in this wave.
+**One genuine NFL NGBoost fit and inference completed**, plus a new passing-workload diagnostic and a fresh QB-only Week 7 outcome refresh. All received independent read-only post-execution acceptance. No live model replacement or deployment occurred in this wave.
+
+The [updated QB scorecard](QB_REFRESH.md) now grades frozen predictions on 12 final query games, while preserving Monday and unqueried non-QB outcomes as pending/previously supported. On the mixed-timing common rows, Count A reduces passing-TD MSE 5.09%, Response-CDF attempt MSE 3.18% and interception MSE 2.05% versus current selection. Passing yards and completions retain the current method's lowest captured lab loss. These are incomplete-week descriptive results; rare-event zero coverage and forecast-timing limitations prevent a complete-population/prospective superiority claim. Every arm remains in the [safe aggregate record](QB_REFRESH_AGGREGATES.json).
 
 The latest owner instruction reauthorizes provisional releases under the existing weekly policy. Original scientific registrations, protected outcomes and their qualification requirements remain intact. These research results do not satisfy those registrations by relabeling.
 
@@ -62,7 +64,7 @@ These are the existing served families, not newly proven champions. All retain d
 |Passing TDs|Leaf-CDF mean|Regression diagnostic completed; scoring-opportunity/conversion control remains distinct from tested count forests|Retain|
 |Completions|Leaf-CDF mean|Regression diagnostic completed; fixed-attempt conversion and qualified catchability work queued|Retain|
 |Passing attempts|Leaf-CDF mean|Regression diagnostic completed; team opportunity/QB role model needs timely participation evidence|Retain|
-|Interceptions|Leaf-CDF mean|One actual NGBoost pilot completed; targeted FTN value/player/denominator qualification queued|Retain; pilot gain small and mixed|
+|Interceptions|Leaf-CDF mean|One actual NGBoost pilot and FTN value/player/denominator qualification completed; official credit/publication and zero-label gates remain|Retain; pilot gain small and mixed|
 |Rushing yards|Leaf-CDF median|Reuse completed direct/efficiency/workload losses; role and signed-gain additions need qualified inputs|Retain|
 |Rushing attempts|Legacy Count A intended mean|Corrected-mean COUNT7 consumer package ready with existing integrator; dynamic workload losses preserved|Retain pending integrated correction|
 |Receptions|Legacy Count A intended mean|COUNT7 correction pending; qualified target/catch-quality additions queued; rec-half unchanged|Retain pending integrated correction|
@@ -73,7 +75,7 @@ These are the existing served families, not newly proven champions. All retain d
 
 Legacy Count A fallbacks must not be relabeled corrected expected means. An expected-value objective and an MAE median product remain separate. The prior historical leader report displays MAE and RMSE in original units for all ten numeric targets; it does not establish a universal acceptable error or a current-site win.
 
-The 41-family [method inventory](https://github.com/NickNicky19/NFL-forecasting/blob/cae6121e2d4dd0fc5a6c7d2217a93cd242533de7/reports/full-week-method-audit-20261025/METHOD_INVENTORY.json) remains the base. Fixed workload, monotone threshold-CDF, anytime calibration, simple copulas and historical P1–P4 comparisons have already run, often losing. No budgets were refunded. Exact distributional forests, XGBoostLSS, hierarchical role/allocation, native categorical additions and full-law stacking remain separate pending studies. AdaBoost stays lower priority. FTN 2022/2023 raw/schema acquisition already exists; the next task is actual value/denominator/player/timing qualification, not another download.
+The 41-family [method inventory](https://github.com/NickNicky19/NFL-forecasting/blob/cae6121e2d4dd0fc5a6c7d2217a93cd242533de7/reports/full-week-method-audit-20261025/METHOD_INVENTORY.json) remains the base. Fixed workload, monotone threshold-CDF, anytime calibration, simple copulas and historical P1–P4 comparisons have already run, often losing. No budgets were refunded. Exact distributional forests, XGBoostLSS, hierarchical role/allocation, native categorical additions and full-law stacking remain separate pending studies. AdaBoost stays lower priority. FTN 2022/2023 value/denominator/player/timing qualification has since completed below; official credit/publication and operational gates remain unresolved.
 
 ## Probabilities and rankings
 
@@ -81,7 +83,7 @@ The saved Sleeper payout proxy result remains exploratory: it lacks authenticate
 
 Future ranking comparisons must freeze the offered pool, eligibility, tie rules, list size and abstention procedure before grading. Keep all pending selections and evaluate probability scores separately from selected hits. The planned Week 7 outcome refresh must respect genuine prekickoff versus development lanes; existing old-finality rows cannot be silently called fresh completed-game coverage.
 
-The refresh preflight found the known full-week source bodies require **178,739 compressed bytes before receipts and grading output**, exceeding approximately **60 KiB** of remaining managed-store headroom. No new outcome download or refresh grading occurred. A one-game full-summary footprint is unknown; smaller old projections do not establish that its full wire body fits. Existing future-game outcomes therefore remain pending in this evidence stream. The subsequent FTN source-value qualification completed as described below; it produced no forecasts or accuracy result. A narrower, existing QB-filtered source route is now being prepared to try to refresh passing outcomes without exceeding the cap. Its HEAD request returned HTTP 200/gzip with no content length; no new statistics were parsed or graded by that metadata probe.
+The earlier full-week preflight found bodies requiring **178,739 compressed bytes before receipts and output**, exceeding then-available managed-store headroom. That route remains unexecuted. A narrower existing QB-filtered route subsequently succeeded: two complete source captures, 250 canonical append records and 49 newly resolved numeric labels, with all original opportunities and unknown states retained. The [refresh report](QB_REFRESH.md) separates four resolved genuine-pregame point games from eight post-start reconstruction games, and one resolved genuine probability game from pending Monday. Unqueried non-QB labels remain unchanged. No historical forecasts or losing picks were rewritten.
 
 ## Subsequent retained FTN qualification completed
 
@@ -106,7 +108,7 @@ The exact reviewed 13-path [COUNT7/strict-props Main package](https://github.com
 
 The actual active production lease is **`NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z`**, coordination revision **168**, source **`484dbeff5c3fb34673380bf52b0f30ee0354a521`**. This research run does not own that lease. The existing writer must reconcile the prepared Main paths with its authorized scope before implementation. No competing writer, lease takeover, new scheduler or fake deployment was created. Hosted CI, integrated build identity and actual selected-feed consumption remain pending for that package.
 
-Research main refreshed to **`3d0c11871fc53923ba4656dd423bc9ca0b8ef5e1`**. The existing cron is 12:36/13:36/14:36 UTC; guarded runtime/registration/private-storage handover remains incomplete. A configured cron does not prove successful capture, grading, training or selection. Last registered weekly deadline is **October 29, 18:15 UTC**, subject to actual schedule refresh and runtime qualification. Next capture/grading/selection evidence belongs to the existing controller records and canonical execution ledger; a future execution is pending until observed.
+Research main refreshed to **`77d8f1fad4960e66e0bdabff56e5c424ae949cc6`**. Website main and production coordination revision 168 were unchanged at the later October 26 refresh. The existing cron is 12:36/13:36/14:36 UTC; guarded runtime/registration/private-storage handover remains incomplete. A configured cron does not prove successful capture, grading, training or selection. Last registered weekly deadline is **October 29, 18:15 UTC**, subject to actual schedule refresh and runtime qualification. Next capture/grading/selection evidence belongs to the existing controller records and canonical execution ledger; a future execution is pending until observed.
 
 ## Retained failures and verification
 
