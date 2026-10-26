@@ -1,0 +1,213 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ FinalCandidateWorkload.test_actual_typed_maximum_cohort_population_compacts_losslessly _
+
+self = <test_operating_campaign.FinalCandidateWorkload testMethod=test_actual_typed_maximum_cohort_population_compacts_losslessly>
+
+    def test_actual_typed_maximum_cohort_population_compacts_losslessly(self):
+        value=final_workload_control();value['accuracy']=c._accuracy_workload(permitted_accuracy_control())
+        # Boundary telemetry population only: not invented observations/contexts
+        # in a seed, report, fixture or application qualification.
+        ids=sorted(c.sha(c.encoded(['unit-context-boundary',i])) for i in range(512))
+        value['metrics']['contexts']=len(ids);value['contexts'].update(ids=ids,missing_reference_ids=sorted(c.FINAL_REFERENCE_CONTEXT_IDS-set(ids)),extra_reference_ids=sorted(set(ids)-c.FINAL_REFERENCE_CONTEXT_IDS))
+        value['decisions']=c._final_workload_decisions(value);value['applicability']=c._final_applicability(value)
+>       public=c._public_final_workload(value);c._check_final_workload(public,projection=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_operating_campaign.py:188: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/operating_campaign.py:1352: in _public_final_workload
+    _check_final_workload(value,require_admitted=False)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema_version': 'final-candidate-workload-v1', 'candidate': {'commit': '1111111111111111111111111111111111111111', ...rce': '1111111111111111111111111111111111111111', 'generation_source': '1111111111111111111111111111111111111111', ...}
+source = None, tree = None, require_admitted = False, projection = False
+
+    def _check_final_workload(value,source=None,tree=None,*,require_admitted=True,projection=False):
+        expected={'schema_version','candidate','publication_source','generation_source','generation_sha256','report_id','report_schema_version','summary_index_sha256','semantics_sha256','reference','metrics','coverage','contexts','accuracy','decisions','applicability'}
+        original=value
+        if projection:expected=expected|{'private_metrics_sha256'}
+        version='final-candidate-workload-projection-v1' if projection else 'final-candidate-workload-v1'
+        if type(value) is not dict or set(value)!=expected or value.get('schema_version')!=version or value.get('reference')!=FINAL_REFERENCE:
+            raise RuntimeError('Missing exact final-candidate workload metrics')
+        if projection:
+            if not _hex(value['private_metrics_sha256'],HEX64):raise RuntimeError('Missing full private metrics binding')
+            value=copy.deepcopy(value)
+            contexts=value['contexts'];indices=contexts.pop('missing_reference_indices',None)
+            reference_ids=sorted(FINAL_REFERENCE_CONTEXT_IDS)
+            if type(indices) is not list or indices!=sorted(set(indices)) or any(type(i) is not int or not 0<=i<len(reference_ids) for i in indices) or 'missing_reference_ids' in contexts:raise RuntimeError('Malformed compact exact reference context IDs')
+            contexts['missing_reference_ids']=[reference_ids[i] for i in indices]
+            fields=('opportunities','unique_players','unique_games','unique_weeks')
+            for cohort in value['accuracy']['cohorts']:
+                for item,keys in [(cohort,('coverage',)),*((v,('coverage','paired_coverage','unpaired_coverage')) for v in cohort['categories'].values())]:
+                    for key in keys:
+                        counts=item[key]
+                        if type(counts) is not list or len(counts)!=4 or any(type(n) is not int or n<0 for n in counts):raise RuntimeError('Malformed compact accuracy sample')
+                        item[key]=dict(zip(fields,counts))
+        candidate=value['candidate']
+        if (type(candidate) is not dict or set(candidate)!={'commit','tree'} or any(not _hex(candidate[k],HEX40) for k in candidate)
+                or candidate['commit']==BASE or source is not None and candidate['commit']!=source or tree is not None and candidate['tree']!=tree
+                or value['publication_source']!=candidate['commit'] or value['generation_source']!=candidate['commit']):
+            raise RuntimeError('Final workload source/version mixing')
+        for key in ('generation_sha256','report_id','summary_index_sha256','semantics_sha256'):
+            if not _hex(value[key],HEX64):raise RuntimeError('Invalid final workload identity')
+        metrics=value['metrics']
+        if type(metrics) is not dict or set(metrics)!=set(FINAL_METRICS) or any(type(n) is not int or not 0<=n<=9007199254740991 for n in metrics.values()):
+            raise RuntimeError('Missing bounded final workload counts/bytes')
+        coverage=value['coverage']
+        allowed={'categories','sides','sources','cohorts','checkpoints','dimensions','results','periods','strategy_selected'}
+        if type(coverage) is not dict or set(coverage)!=allowed or any(type(v) is not dict or len(v)>256 or any(type(k) is not str or len(k)>160 or type(n) is not int or n<0 for k,n in v.items()) for v in coverage.values()):
+            raise RuntimeError('Invalid final semantic coverage')
+        contexts=value['contexts']
+        context_fields={'descriptors_sha256','missing_reference_ids','correspondence'}|({'ids_sha256','extra_reference_count','extra_reference_ids_sha256'} if projection else {'ids','extra_reference_ids'})
+        if type(contexts) is not dict or set(contexts)!=context_fields or not _hex(contexts['descriptors_sha256'],HEX64):raise RuntimeError('Missing final context descriptor binding')
+        for name in (('missing_reference_ids',) if projection else ('ids','missing_reference_ids','extra_reference_ids')):
+            values=contexts[name]
+            if type(values) is not list or len(values)>512 or values!=sorted(set(values)) or any(not _hex(v,HEX64) for v in values):raise RuntimeError('Invalid exact final context IDs')
+        if projection:
+            coherent=(set(contexts['missing_reference_ids'])<=FINAL_REFERENCE_CONTEXT_IDS and type(contexts['extra_reference_count']) is int and 0<=contexts['extra_reference_count']<=512
+                and metrics['contexts']==len(FINAL_REFERENCE_CONTEXT_IDS)-len(contexts['missing_reference_ids'])+contexts['extra_reference_count']
+                and all(_hex(contexts[k],HEX64) for k in ('ids_sha256','extra_reference_ids_sha256')))
+        else:
+            coherent=(metrics['contexts']==len(contexts['ids']) and contexts['missing_reference_ids']==sorted(FINAL_REFERENCE_CONTEXT_IDS-set(contexts['ids'])) and contexts['extra_reference_ids']==sorted(set(contexts['ids'])-FINAL_REFERENCE_CONTEXT_IDS))
+        if not coherent or contexts['correspondence']!='EXACT_DESCRIPTOR_IDS_MISSING_EXTRA_REPORTED_NOT_SYNTHETIC_HISTORY':raise RuntimeError('Final context correspondence differs')
+        accuracy=value['accuracy']
+        if type(accuracy) is not dict or set(accuracy)!={'schema_version','content_sha256','capture_coverage','cohorts'} or not _hex(accuracy['content_sha256'],HEX64):raise RuntimeError('Missing final accuracy work')
+        if type(accuracy['capture_coverage']) is not list or len(accuracy['capture_coverage'])>2 or type(accuracy['cohorts']) is not list or len(accuracy['cohorts'])>12:raise RuntimeError('Invalid final accuracy population bound')
+        seen=set()
+        for capture in accuracy['capture_coverage']:
+            if type(capture) is not dict or set(capture)!={'model_version','capture_coverage','unsupported_outcome_counts'} or capture['model_version'] not in FINAL_ACCURACY_MODELS or capture['model_version'] in seen:raise RuntimeError('Mixed final accuracy capture models')
+            seen.add(capture['model_version']);v=capture['capture_coverage']
+            if type(v) is not dict or set(v)!={'unique_receipts','duplicate_receipts','eligible_capture_rows','paired_capture_rows','excluded'} or any(type(v[k]) is not int or v[k]<0 for k in ('unique_receipts','duplicate_receipts')):raise RuntimeError('Invalid actual accuracy capture counts')
+            for key in ('eligible_capture_rows','paired_capture_rows','excluded'):
+                if type(v[key]) is not dict or any(type(n) is not int or n<0 for n in v[key].values()):raise RuntimeError('Invalid actual accuracy capture rows')
+            if any(n>v['eligible_capture_rows'].get(category,0) for category,n in v['paired_capture_rows'].items()):raise RuntimeError('Final paired capture count exceeds eligible captures')
+        cohort_keys=set();statistic_contracts=_final_statistic_contracts()
+        for cohort in accuracy['cohorts']:
+            keys={'model_version','engine_sha256','period','forecast_provenance','outcome_provenance','statistic_contract_sha256','source_report_sha256','coverage','categories'}
+            if type(cohort) is not dict or set(cohort)!=keys or cohort['model_version'] not in FINAL_ACCURACY_MODELS or cohort['period']!='cumulative' or cohort['forecast_provenance']!='original_recorded_pregame_observation' or cohort['outcome_provenance'] not in {'missing','unknown_unverified','identity_quarantined','conflicting_outcome_evidence','saved_cache_descriptive_regrade','recorded_outcome_receipt'}:raise RuntimeError('Mixed final accuracy cohort identity')
+            if any(not _hex(cohort[k],HEX64) for k in ('engine_sha256','statistic_contract_sha256','source_report_sha256')) or set(cohort['categories'])!=FINAL_ACCURACY_CATEGORIES:raise RuntimeError('Incomplete final accuracy categories')
+            key=(cohort['model_version'],cohort['outcome_provenance'])
+            if key in cohort_keys or cohort['engine_sha256']!=FINAL_ACCURACY_ENGINES[cohort['model_version']]:raise RuntimeError('Mixed final accuracy engine/cohort')
+            cohort_keys.add(key)
+>           if cohort['statistic_contract_sha256']!=statistic_contracts[cohort['model_version']]:raise RuntimeError('Unsupported final accuracy statistic contract')
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: Unsupported final accuracy statistic contract
+
+tools/operating_campaign.py:1323: RuntimeError
+_ FinalCandidateWorkload.test_rehashed_unsupported_statistic_contract_fails_private_and_compact _
+
+self = <test_operating_campaign.FinalCandidateWorkload testMethod=test_rehashed_unsupported_statistic_contract_fails_private_and_compact>
+
+    def test_rehashed_unsupported_statistic_contract_fails_private_and_compact(self):
+        private=final_workload_control();public=c._public_final_workload(private)
+        for cohort in private['accuracy']['cohorts']:cohort['statistic_contract_sha256']='f'*64
+        for cohort in public['accuracy']['cohorts']:cohort['statistic_contract_sha256']='f'*64
+        public['private_metrics_sha256']=c.sha(c.encoded(private))
+        with self.assertRaisesRegex(RuntimeError,'statistic contract'):c._check_final_workload(private)
+        with self.assertRaisesRegex(RuntimeError,'statistic contract'):c._check_final_workload(public,projection=True)
+        typed=permitted_accuracy_control()
+        expected=c._final_statistic_contracts()
+>       self.assertTrue(all(v['statistic_contract_sha256']==expected[v['model_version']] for v in typed['cohorts']))
+E       AssertionError: False is not true
+
+tests/test_operating_campaign.py:147: AssertionError
+__ Campaign.test_full_permitted_typed_cohort_projection_remains_bounded_once ___
+
+self = <test_operating_campaign.Campaign testMethod=test_full_permitted_typed_cohort_projection_remains_bounded_once>
+
+    def test_full_permitted_typed_cohort_projection_remains_bounded_once(self):
+        measured,outer,report,fp=self.measurement_fixture();work=self.base/'nfl-operating-1';work.mkdir();root=work/'fixture';result=work/'RESULT.json';result.write_bytes(c.encoded(report))
+        final=final_workload_control();final['accuracy']=c._accuracy_workload(permitted_accuracy_control())
+        ids=sorted(c.sha(c.encoded(['unit-context-boundary',i])) for i in range(512))
+        final['metrics']['contexts']=len(ids);final['contexts'].update(ids=ids,missing_reference_ids=sorted(c.FINAL_REFERENCE_CONTEXT_IDS-set(ids)),extra_reference_ids=sorted(set(ids)-c.FINAL_REFERENCE_CONTEXT_IDS))
+        final['decisions']=c._final_workload_decisions(final);final['applicability']=c._final_applicability(final)
+>       evidence=self.evidence();evidence['final_candidate_workload']=c._public_final_workload(final)
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_operating_campaign.py:814: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/operating_campaign.py:1352: in _public_final_workload
+    _check_final_workload(value,require_admitted=False)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'schema_version': 'final-candidate-workload-v1', 'candidate': {'commit': '1111111111111111111111111111111111111111', ...rce': '1111111111111111111111111111111111111111', 'generation_source': '1111111111111111111111111111111111111111', ...}
+source = None, tree = None, require_admitted = False, projection = False
+
+    def _check_final_workload(value,source=None,tree=None,*,require_admitted=True,projection=False):
+        expected={'schema_version','candidate','publication_source','generation_source','generation_sha256','report_id','report_schema_version','summary_index_sha256','semantics_sha256','reference','metrics','coverage','contexts','accuracy','decisions','applicability'}
+        original=value
+        if projection:expected=expected|{'private_metrics_sha256'}
+        version='final-candidate-workload-projection-v1' if projection else 'final-candidate-workload-v1'
+        if type(value) is not dict or set(value)!=expected or value.get('schema_version')!=version or value.get('reference')!=FINAL_REFERENCE:
+            raise RuntimeError('Missing exact final-candidate workload metrics')
+        if projection:
+            if not _hex(value['private_metrics_sha256'],HEX64):raise RuntimeError('Missing full private metrics binding')
+            value=copy.deepcopy(value)
+            contexts=value['contexts'];indices=contexts.pop('missing_reference_indices',None)
+            reference_ids=sorted(FINAL_REFERENCE_CONTEXT_IDS)
+            if type(indices) is not list or indices!=sorted(set(indices)) or any(type(i) is not int or not 0<=i<len(reference_ids) for i in indices) or 'missing_reference_ids' in contexts:raise RuntimeError('Malformed compact exact reference context IDs')
+            contexts['missing_reference_ids']=[reference_ids[i] for i in indices]
+            fields=('opportunities','unique_players','unique_games','unique_weeks')
+            for cohort in value['accuracy']['cohorts']:
+                for item,keys in [(cohort,('coverage',)),*((v,('coverage','paired_coverage','unpaired_coverage')) for v in cohort['categories'].values())]:
+                    for key in keys:
+                        counts=item[key]
+                        if type(counts) is not list or len(counts)!=4 or any(type(n) is not int or n<0 for n in counts):raise RuntimeError('Malformed compact accuracy sample')
+                        item[key]=dict(zip(fields,counts))
+        candidate=value['candidate']
+        if (type(candidate) is not dict or set(candidate)!={'commit','tree'} or any(not _hex(candidate[k],HEX40) for k in candidate)
+                or candidate['commit']==BASE or source is not None and candidate['commit']!=source or tree is not None and candidate['tree']!=tree
+                or value['publication_source']!=candidate['commit'] or value['generation_source']!=candidate['commit']):
+            raise RuntimeError('Final workload source/version mixing')
+        for key in ('generation_sha256','report_id','summary_index_sha256','semantics_sha256'):
+            if not _hex(value[key],HEX64):raise RuntimeError('Invalid final workload identity')
+        metrics=value['metrics']
+        if type(metrics) is not dict or set(metrics)!=set(FINAL_METRICS) or any(type(n) is not int or not 0<=n<=9007199254740991 for n in metrics.values()):
+            raise RuntimeError('Missing bounded final workload counts/bytes')
+        coverage=value['coverage']
+        allowed={'categories','sides','sources','cohorts','checkpoints','dimensions','results','periods','strategy_selected'}
+        if type(coverage) is not dict or set(coverage)!=allowed or any(type(v) is not dict or len(v)>256 or any(type(k) is not str or len(k)>160 or type(n) is not int or n<0 for k,n in v.items()) for v in coverage.values()):
+            raise RuntimeError('Invalid final semantic coverage')
+        contexts=value['contexts']
+        context_fields={'descriptors_sha256','missing_reference_ids','correspondence'}|({'ids_sha256','extra_reference_count','extra_reference_ids_sha256'} if projection else {'ids','extra_reference_ids'})
+        if type(contexts) is not dict or set(contexts)!=context_fields or not _hex(contexts['descriptors_sha256'],HEX64):raise RuntimeError('Missing final context descriptor binding')
+        for name in (('missing_reference_ids',) if projection else ('ids','missing_reference_ids','extra_reference_ids')):
+            values=contexts[name]
+            if type(values) is not list or len(values)>512 or values!=sorted(set(values)) or any(not _hex(v,HEX64) for v in values):raise RuntimeError('Invalid exact final context IDs')
+        if projection:
+            coherent=(set(contexts['missing_reference_ids'])<=FINAL_REFERENCE_CONTEXT_IDS and type(contexts['extra_reference_count']) is int and 0<=contexts['extra_reference_count']<=512
+                and metrics['contexts']==len(FINAL_REFERENCE_CONTEXT_IDS)-len(contexts['missing_reference_ids'])+contexts['extra_reference_count']
+                and all(_hex(contexts[k],HEX64) for k in ('ids_sha256','extra_reference_ids_sha256')))
+        else:
+            coherent=(metrics['contexts']==len(contexts['ids']) and contexts['missing_reference_ids']==sorted(FINAL_REFERENCE_CONTEXT_IDS-set(contexts['ids'])) and contexts['extra_reference_ids']==sorted(set(contexts['ids'])-FINAL_REFERENCE_CONTEXT_IDS))
+        if not coherent or contexts['correspondence']!='EXACT_DESCRIPTOR_IDS_MISSING_EXTRA_REPORTED_NOT_SYNTHETIC_HISTORY':raise RuntimeError('Final context correspondence differs')
+        accuracy=value['accuracy']
+        if type(accuracy) is not dict or set(accuracy)!={'schema_version','content_sha256','capture_coverage','cohorts'} or not _hex(accuracy['content_sha256'],HEX64):raise RuntimeError('Missing final accuracy work')
+        if type(accuracy['capture_coverage']) is not list or len(accuracy['capture_coverage'])>2 or type(accuracy['cohorts']) is not list or len(accuracy['cohorts'])>12:raise RuntimeError('Invalid final accuracy population bound')
+        seen=set()
+        for capture in accuracy['capture_coverage']:
+            if type(capture) is not dict or set(capture)!={'model_version','capture_coverage','unsupported_outcome_counts'} or capture['model_version'] not in FINAL_ACCURACY_MODELS or capture['model_version'] in seen:raise RuntimeError('Mixed final accuracy capture models')
+            seen.add(capture['model_version']);v=capture['capture_coverage']
+            if type(v) is not dict or set(v)!={'unique_receipts','duplicate_receipts','eligible_capture_rows','paired_capture_rows','excluded'} or any(type(v[k]) is not int or v[k]<0 for k in ('unique_receipts','duplicate_receipts')):raise RuntimeError('Invalid actual accuracy capture counts')
+            for key in ('eligible_capture_rows','paired_capture_rows','excluded'):
+                if type(v[key]) is not dict or any(type(n) is not int or n<0 for n in v[key].values()):raise RuntimeError('Invalid actual accuracy capture rows')
+            if any(n>v['eligible_capture_rows'].get(category,0) for category,n in v['paired_capture_rows'].items()):raise RuntimeError('Final paired capture count exceeds eligible captures')
+        cohort_keys=set();statistic_contracts=_final_statistic_contracts()
+        for cohort in accuracy['cohorts']:
+            keys={'model_version','engine_sha256','period','forecast_provenance','outcome_provenance','statistic_contract_sha256','source_report_sha256','coverage','categories'}
+            if type(cohort) is not dict or set(cohort)!=keys or cohort['model_version'] not in FINAL_ACCURACY_MODELS or cohort['period']!='cumulative' or cohort['forecast_provenance']!='original_recorded_pregame_observation' or cohort['outcome_provenance'] not in {'missing','unknown_unverified','identity_quarantined','conflicting_outcome_evidence','saved_cache_descriptive_regrade','recorded_outcome_receipt'}:raise RuntimeError('Mixed final accuracy cohort identity')
+            if any(not _hex(cohort[k],HEX64) for k in ('engine_sha256','statistic_contract_sha256','source_report_sha256')) or set(cohort['categories'])!=FINAL_ACCURACY_CATEGORIES:raise RuntimeError('Incomplete final accuracy categories')
+            key=(cohort['model_version'],cohort['outcome_provenance'])
+            if key in cohort_keys or cohort['engine_sha256']!=FINAL_ACCURACY_ENGINES[cohort['model_version']]:raise RuntimeError('Mixed final accuracy engine/cohort')
+            cohort_keys.add(key)
+>           if cohort['statistic_contract_sha256']!=statistic_contracts[cohort['model_version']]:raise RuntimeError('Unsupported final accuracy statistic contract')
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: Unsupported final accuracy statistic contract
+
+tools/operating_campaign.py:1323: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_operating_campaign.py::FinalCandidateWorkload::test_actual_typed_maximum_cohort_population_compacts_losslessly
+FAILED tests/test_operating_campaign.py::FinalCandidateWorkload::test_rehashed_unsupported_statistic_contract_fails_private_and_compact
+FAILED tests/test_operating_campaign.py::Campaign::test_full_permitted_typed_cohort_projection_remains_bounded_once
+3 failed in 21.41s

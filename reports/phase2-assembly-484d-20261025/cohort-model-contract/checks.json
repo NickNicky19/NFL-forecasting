@@ -1,0 +1,41 @@
+{
+  "NFL_fits": 0,
+  "actual_combined_ci_passed": false,
+  "both_fixes": "3 passed18.71s",
+  "contract_hashes_after": {
+    "original_sleeper_matchup_baseline": "53f6016d59fe93f9ce09bc23c472f7e77471e7a80a8b1f75e78b2ab3ed4a258d",
+    "sleeper-matchup-data-integrity-v2": "fd024229abd98a661f0ffa53866bf55bf13142e891b2e64ecee94012dcbe1948"
+  },
+  "contract_hashes_before": {
+    "original_sleeper_matchup_baseline": "53f6016d59fe93f9ce09bc23c472f7e77471e7a80a8b1f75e78b2ab3ed4a258d",
+    "sleeper-matchup-data-integrity-v2": "9a08bd9a3f7d2affbe8bee1ba4638fa53a9148d2f04f951f5bfa5fa296081f4e"
+  },
+  "count_only_fix": "3 failed21.41s at deeper statistic-contract mismatch",
+  "counts_overlap": "Two of the three targeted cases are in the20-case class.",
+  "deployed": false,
+  "distinct_passed_original_cases": 21,
+  "entire_final_candidate_class": "20 passed20.08s",
+  "files": {
+    "tests/test_operating_campaign.py": {
+      "after_sha256": "88df36e9bf291f9181d212e6b7a5f5b3b101b8f25f6ff3fde18a4fd760fd42ed",
+      "before_sha256": "f6082f9edb1a3273a1128a28d18a10434601214d94d67f0467218d1620e73117"
+    },
+    "tools/operating_campaign.py": {
+      "after_sha256": "4f004f5a0b761d8648739f0d67ebc5d120ac9cd7b8cc500701d2eec51cc30c4e",
+      "before_sha256": "28de99d9591d186838db1ac08f3d33f622c87ff97c1a13408ebc7023de985d3d"
+    }
+  },
+  "finding": "SYS-013: explicit model statistic-contract dispatch plus coherent cohort fixture",
+  "fixture_expected_exact_pairs": 12,
+  "fixture_expected_model_count": 2,
+  "model_sets_or_frozen_helpers_changed": false,
+  "original_baseline_contract_unchanged": true,
+  "original_three_tests_before": "3 failed22.62s at incorrect total-universe count",
+  "patch_sha256": "04504443873e4ccd739ebd842f73a9d76b72d86ab85330d88f09e801efb1a32e",
+  "presence_model_after_uses": "sleeper-matchup-data-integrity-v2",
+  "presence_model_before_uses": "sleeper-matchup-classic-data-integrity-v2",
+  "protected_outcome_reads": 0,
+  "source": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "state": "SOURCE_SPECIFIC_PREVIEW_ONLY",
+  "supported_reader_model_count": 4
+}

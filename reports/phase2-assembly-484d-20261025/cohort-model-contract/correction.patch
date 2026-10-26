@@ -1,0 +1,31 @@
+diff --git a/tests/test_operating_campaign.py b/tests/test_operating_campaign.py
+index 9fdd95b..6466aa4 100644
+--- a/tests/test_operating_campaign.py
++++ b/tests/test_operating_campaign.py
+@@ -58,7 +58,12 @@ def permitted_accuracy_control():
+                 rows.append(row)
+         reports.append(helpers.evaluation(rows,td=td,model=model))
+     typed=accuracy_publication.project_accuracy(reports);accuracy_publication.validate_accuracy(typed)
+-    assert len(typed['cohorts'])==len(accuracy_publication.MODELS)*len(accuracy_publication.PROVENANCE)==12
++    expected={(model,provenance) for model in c.FINAL_ACCURACY_MODELS
++              for provenance in accuracy_publication.PROVENANCE}
++    assert set(c.FINAL_ACCURACY_MODELS)<=accuracy_publication.MODELS
++    assert len(typed['cohorts'])==len(expected)==12
++    assert {(cohort['model_version'],cohort['outcome_provenance'])
++            for cohort in typed['cohorts']}==expected
+     return typed
+ 
+ 
+diff --git a/tools/operating_campaign.py b/tools/operating_campaign.py
+index 36c60d0..868f858 100644
+--- a/tools/operating_campaign.py
++++ b/tools/operating_campaign.py
+@@ -1176,7 +1176,7 @@ def _final_statistic_contracts():
+     # Exact existing model/schema dispatch, using the actual reviewed source.
+     # A caller-supplied digest or self-consistent metric hash has no authority.
+     from scorecard import descriptive_contract
+-    return {model:sha(encoded(descriptive_contract(presence_aware=model=='sleeper-matchup-data-integrity-v2')))
++    return {model:sha(encoded(descriptive_contract(presence_aware=model=='sleeper-matchup-data-integrity-v2',model=model)))
+         for model in FINAL_ACCURACY_MODELS}
+ 
+ 

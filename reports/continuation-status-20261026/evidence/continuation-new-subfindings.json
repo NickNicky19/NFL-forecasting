@@ -1,0 +1,46 @@
+{
+  "findings": [
+    {
+      "actual": "ops_planning was unconditionally required; valid legacy context rejected before filesystem access.",
+      "affected_commit": "2d1e4b7ead3fcccace2c860215e8452826fc3008",
+      "evidence": "rollover-review/archive-compatibility-observation.json",
+      "expected": "Original valid five-role contexts remain restorable; explicit V4 requires planning.",
+      "file": "nfl_lab/audit_weekly_archive_v1.py",
+      "function": "operational context admission",
+      "id": "SYS-007-R1",
+      "production_affected": false,
+      "repair_status": "Assigned to existing isolated operations author; not integrated/released.",
+      "reproduced": true,
+      "severity": "high release blocker in unreleased prototype"
+    },
+    {
+      "actual": "Later cohort was checked; fictional probe reached first private namespace request with zero older-anchor API requests.",
+      "affected_commit": "2d1e4b7ead3fcccace2c860215e8452826fc3008",
+      "evidence": "rollover-review/anchor-authentication-observation.json",
+      "expected": "Independently recheck both original forecast anchor and later grading cohort native run/jobs/source/clock chains before private GETs.",
+      "file": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "function": "restore_previous",
+      "id": "SYS-007-R2",
+      "private_bytes_read_by_probe": 0,
+      "production_affected": false,
+      "repair_status": "Assigned to existing isolated operations author; not integrated/released.",
+      "reproduced": true,
+      "severity": "high release blocker in unreleased prototype"
+    },
+    {
+      "actual": "Implicit presence default selected current Classic presence under the original presence model key; valid typed evidence rejected.",
+      "affected_commit": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+      "evidence": "../../phase2-assembly-484d-20261025/cohort-model-contract/checks.json",
+      "expected": "Use the exact explicitly named registered model statistic contract.",
+      "file": "tools/operating_campaign.py",
+      "function": "_final_statistic_contracts",
+      "id": "SYS-013-STAT",
+      "production_live_affected": false,
+      "repair_status": "Exact two-file preview repaired and independently approved;21 distinct existing cases pass; owner integration and actual CI pending.",
+      "reproduced": true,
+      "severity": "medium; blocks Phase2 qualification"
+    }
+  ],
+  "recorded_at_utc": "2026-10-26T01:25:19.410971+00:00",
+  "scope": "Newly reproduced subfindings under existing SYS groups; not three additional original finding groups."
+}

@@ -1,0 +1,122 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ FinalCandidateWorkload.test_actual_typed_maximum_cohort_population_compacts_losslessly _
+
+self = <test_operating_campaign.FinalCandidateWorkload testMethod=test_actual_typed_maximum_cohort_population_compacts_losslessly>
+
+    def test_actual_typed_maximum_cohort_population_compacts_losslessly(self):
+>       value=final_workload_control();value['accuracy']=c._accuracy_workload(permitted_accuracy_control())
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_operating_campaign.py:177: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def permitted_accuracy_control():
+        """Actual typed projector on small fictional inputs, not operating evidence."""
+        helper=importlib.util.spec_from_file_location('accuracy_workload_unit_helpers',DEPENDENCY_ROOT/'tests/test_accuracy_publication.py')
+        helpers=importlib.util.module_from_spec(helper);helper.loader.exec_module(helpers)
+        import accuracy_publication
+        reports=[]
+        for model in sorted(c.FINAL_ACCURACY_MODELS):
+            rows=[];td=[]
+            for provenance in sorted(accuracy_publication.PROVENANCE):
+                for category in sorted(c.FINAL_ACCURACY_CATEGORIES):
+                    row=helpers.observation('unit-'+provenance+'-'+category,category,actual=1,raw=2,adjusted=1,provenance=provenance,model=model)
+                    if category=='anytime_td':
+                        row.update(raw_projection=.5,adjusted_projection=None,probability=.25,probability_provenance='rederived_from_original_count_retained_formula');td.append(row)
+                    rows.append(row)
+            reports.append(helpers.evaluation(rows,td=td,model=model))
+        typed=accuracy_publication.project_accuracy(reports);accuracy_publication.validate_accuracy(typed)
+>       assert len(typed['cohorts'])==len(accuracy_publication.MODELS)*len(accuracy_publication.PROVENANCE)==12
+E       AssertionError: assert 12 == (4 * 6)
+E        +  where 12 = len([{'model_version': 'original_sleeper_matchup_baseline', 'engine_sha256': 'e8e8823f460e074485ee91a0dc1c1cfc43877146c449...f074d15d2b5a735d07', 'period': 'cumulative', 'forecast_provenance': 'original_recorded_pregame_observation', ...}, ...])
+E        +  and   4 = len(frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}))
+E        +    where frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.MODELS
+E        +  and   6 = len(frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}))
+E        +    where frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.PROVENANCE
+
+tests/test_operating_campaign.py:61: AssertionError
+_ FinalCandidateWorkload.test_rehashed_unsupported_statistic_contract_fails_private_and_compact _
+
+self = <test_operating_campaign.FinalCandidateWorkload testMethod=test_rehashed_unsupported_statistic_contract_fails_private_and_compact>
+
+    def test_rehashed_unsupported_statistic_contract_fails_private_and_compact(self):
+        private=final_workload_control();public=c._public_final_workload(private)
+        for cohort in private['accuracy']['cohorts']:cohort['statistic_contract_sha256']='f'*64
+        for cohort in public['accuracy']['cohorts']:cohort['statistic_contract_sha256']='f'*64
+        public['private_metrics_sha256']=c.sha(c.encoded(private))
+        with self.assertRaisesRegex(RuntimeError,'statistic contract'):c._check_final_workload(private)
+        with self.assertRaisesRegex(RuntimeError,'statistic contract'):c._check_final_workload(public,projection=True)
+>       typed=permitted_accuracy_control()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_operating_campaign.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def permitted_accuracy_control():
+        """Actual typed projector on small fictional inputs, not operating evidence."""
+        helper=importlib.util.spec_from_file_location('accuracy_workload_unit_helpers',DEPENDENCY_ROOT/'tests/test_accuracy_publication.py')
+        helpers=importlib.util.module_from_spec(helper);helper.loader.exec_module(helpers)
+        import accuracy_publication
+        reports=[]
+        for model in sorted(c.FINAL_ACCURACY_MODELS):
+            rows=[];td=[]
+            for provenance in sorted(accuracy_publication.PROVENANCE):
+                for category in sorted(c.FINAL_ACCURACY_CATEGORIES):
+                    row=helpers.observation('unit-'+provenance+'-'+category,category,actual=1,raw=2,adjusted=1,provenance=provenance,model=model)
+                    if category=='anytime_td':
+                        row.update(raw_projection=.5,adjusted_projection=None,probability=.25,probability_provenance='rederived_from_original_count_retained_formula');td.append(row)
+                    rows.append(row)
+            reports.append(helpers.evaluation(rows,td=td,model=model))
+        typed=accuracy_publication.project_accuracy(reports);accuracy_publication.validate_accuracy(typed)
+>       assert len(typed['cohorts'])==len(accuracy_publication.MODELS)*len(accuracy_publication.PROVENANCE)==12
+E       AssertionError: assert 12 == (4 * 6)
+E        +  where 12 = len([{'model_version': 'original_sleeper_matchup_baseline', 'engine_sha256': 'e8e8823f460e074485ee91a0dc1c1cfc43877146c449...f074d15d2b5a735d07', 'period': 'cumulative', 'forecast_provenance': 'original_recorded_pregame_observation', ...}, ...])
+E        +  and   4 = len(frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}))
+E        +    where frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.MODELS
+E        +  and   6 = len(frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}))
+E        +    where frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.PROVENANCE
+
+tests/test_operating_campaign.py:61: AssertionError
+__ Campaign.test_full_permitted_typed_cohort_projection_remains_bounded_once ___
+
+self = <test_operating_campaign.Campaign testMethod=test_full_permitted_typed_cohort_projection_remains_bounded_once>
+
+    def test_full_permitted_typed_cohort_projection_remains_bounded_once(self):
+        measured,outer,report,fp=self.measurement_fixture();work=self.base/'nfl-operating-1';work.mkdir();root=work/'fixture';result=work/'RESULT.json';result.write_bytes(c.encoded(report))
+>       final=final_workload_control();final['accuracy']=c._accuracy_workload(permitted_accuracy_control())
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_operating_campaign.py:805: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def permitted_accuracy_control():
+        """Actual typed projector on small fictional inputs, not operating evidence."""
+        helper=importlib.util.spec_from_file_location('accuracy_workload_unit_helpers',DEPENDENCY_ROOT/'tests/test_accuracy_publication.py')
+        helpers=importlib.util.module_from_spec(helper);helper.loader.exec_module(helpers)
+        import accuracy_publication
+        reports=[]
+        for model in sorted(c.FINAL_ACCURACY_MODELS):
+            rows=[];td=[]
+            for provenance in sorted(accuracy_publication.PROVENANCE):
+                for category in sorted(c.FINAL_ACCURACY_CATEGORIES):
+                    row=helpers.observation('unit-'+provenance+'-'+category,category,actual=1,raw=2,adjusted=1,provenance=provenance,model=model)
+                    if category=='anytime_td':
+                        row.update(raw_projection=.5,adjusted_projection=None,probability=.25,probability_provenance='rederived_from_original_count_retained_formula');td.append(row)
+                    rows.append(row)
+            reports.append(helpers.evaluation(rows,td=td,model=model))
+        typed=accuracy_publication.project_accuracy(reports);accuracy_publication.validate_accuracy(typed)
+>       assert len(typed['cohorts'])==len(accuracy_publication.MODELS)*len(accuracy_publication.PROVENANCE)==12
+E       AssertionError: assert 12 == (4 * 6)
+E        +  where 12 = len([{'model_version': 'original_sleeper_matchup_baseline', 'engine_sha256': 'e8e8823f460e074485ee91a0dc1c1cfc43877146c449...f074d15d2b5a735d07', 'period': 'cumulative', 'forecast_provenance': 'original_recorded_pregame_observation', ...}, ...])
+E        +  and   4 = len(frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}))
+E        +    where frozenset({'original_sleeper_matchup_baseline', 'sleeper-matchup-classic-data-integrity-v2', 'sleeper-matchup-classic-fg-identity-v1', 'sleeper-matchup-data-integrity-v2'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.MODELS
+E        +  and   6 = len(frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}))
+E        +    where frozenset({'conflicting_outcome_evidence', 'identity_quarantined', 'missing', 'recorded_outcome_receipt', 'saved_cache_descriptive_regrade', 'unknown_unverified'}) = <module 'accuracy_publication' from '/workspace/nfl-system-audit/website-fixture-preview/tools/accuracy_publication.py'>.PROVENANCE
+
+tests/test_operating_campaign.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_operating_campaign.py::FinalCandidateWorkload::test_actual_typed_maximum_cohort_population_compacts_losslessly
+FAILED tests/test_operating_campaign.py::FinalCandidateWorkload::test_rehashed_unsupported_statistic_contract_fails_private_and_compact
+FAILED tests/test_operating_campaign.py::Campaign::test_full_permitted_typed_cohort_projection_remains_bounded_once
+3 failed in 22.62s
