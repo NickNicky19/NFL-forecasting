@@ -1,0 +1,48 @@
+{
+  "schema_version": "full-system-audit-pending-carry-forward-reproduction-v1",
+  "finding_id": "SYS-007-CONTINUATION-05",
+  "severity": "high",
+  "source": "47b24db6d89a73ae77fb04f5200e730a937a2aec",
+  "run": 40338427888,
+  "root_sha256": "d9bdd729fadd6ddd910b183996b5094ad4ceb6463182541c7edc741de37affd4",
+  "affected_files": [
+    "nfl_lab/audit_weekly_hosted_v1.py:Runner.__init__",
+    "nfl_lab/audit_weekly_hosted_v1.py:Runner.archive_request",
+    "nfl_lab/audit_weekly_operations_v1.py:context",
+    "nfl_lab/audit_weekly_parent_v1.py:_build_root"
+  ],
+  "expected": "Fresh process conservatively retains and charges every unresolved prior POST before any write, and propagates it to archive child journals without retry.",
+  "actual": "Fresh parent journal starts empty; closed V4 context rejects a pending field; archive request defaults to an empty pending list.",
+  "reference": {
+    "uploaded_bytes": 2771504,
+    "uploaded_slots": 21,
+    "unresolved_bytes": 657667,
+    "unresolved_slots": 1,
+    "charged_bytes": 3429171,
+    "charged_slots": 22
+  },
+  "reproduction": {
+    "original_V4_context_valid": true,
+    "extended_V4_rejected": "CLOSED_RECURRING_CONTEXT_REQUIRED",
+    "actual_archive_request_pending_count": 0,
+    "exact_current_uploaded_matches": 0,
+    "reservation_sha256": "6e5ca6e1a208adbfa9d3fa6738d6ac26e55829f2919cbf92323be357f408ec81"
+  },
+  "independent_readonly_review": {
+    "agent": "Godel",
+    "result": "Current Source47 blocked for safe Root20; explicit successor context, authentication, preclaim seeding and child/parent carry-forward required; old V4 and all original proofs retained.",
+    "new_review_file_not_written": true
+  },
+  "repair_status": "CONFIRMED_UNREPAIRED",
+  "required_acceptance": [
+    "Closed explicit successor context with exact authenticated prior-failure reservation records.",
+    "Seed before first claim/write; pass existing archive pending field and reject omission.",
+    "Automatic parent carries authenticated pending evidence or fails closed.",
+    "Fresh-process accounting, no retry, duplicate/conflict/namespace rejection, uploaded-match deduplication and unchanged V4/caps.",
+    "Normal reviewed source integration, fresh native registration and complete operations/reader/grade/export."
+  ],
+  "fits": 0,
+  "prediction_or_outcome_row_decodes": 0,
+  "remote_mutations": 0,
+  "public_release": false
+}
