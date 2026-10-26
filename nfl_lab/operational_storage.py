@@ -7,6 +7,7 @@ checked against actual retained unique-inode file bytes before it starts.
 from __future__ import annotations
 
 import contextlib
+import errno
 import fcntl
 import hashlib
 import io
@@ -50,13 +51,35 @@ def _absolute(path):
 
 
 def _beneath(path, root):
-    return path == root or root in path.parents
+    # Select the only ancestor of the required depth; keep Path's own flavor
+    # and case comparison without constructing every intervening ancestor.
+    if path == root:
+        return True
+    parents = path.parents
+    index = len(path.parts) - len(root.parts) - 1
+    return 0 <= index < len(parents) and parents[index] == root
 
 
 def _no_symlinks(path):
-    for item in [path, *path.parents]:
-        if item.is_symlink():
-            raise StorageIntegrityError("symlink path is forbidden: " + str(item))
+    # Same leaf-to-root lstat sequence and is_symlink error semantics, without
+    # allocating and formatting a Path object for each shared ancestor.
+    current = os.fspath(path)
+    while True:
+        try:
+            linked = stat.S_ISLNK(os.stat(current, follow_symlinks=False).st_mode)
+        except OSError as error:
+            if (error.errno not in (errno.ENOENT, errno.ENOTDIR, errno.EBADF, errno.ELOOP)
+                    and getattr(error, "winerror", None) not in (21, 123, 1921)):
+                raise
+        except ValueError:
+            pass  # Path.is_symlink treats an unencodable path as absent too.
+        else:
+            if linked:
+                raise StorageIntegrityError("symlink path is forbidden: " + current)
+        parent = os.path.dirname(current) or "."
+        if parent == current:
+            break
+        current = parent
 
 
 def _walk_error(error):

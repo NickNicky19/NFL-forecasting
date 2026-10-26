@@ -1,0 +1,56 @@
+{
+  "schema_version": "grading-full-fixture-storage-path-equivalence-v1",
+  "fictional": true,
+  "read_only": true,
+  "identical_full_scan_census": {
+    "version": "operational-storage-v2",
+    "physical_bytes": 27501521,
+    "physical_bytes_unique_inodes": 27501521,
+    "logical_referenced_bytes": 59861540,
+    "limit_bytes": 536870912,
+    "files": 10262,
+    "unique_inodes": 5139,
+    "roots": [
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/cache/operational-live-v2",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/cache/operational-source-v2",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/cache/operational-storage-v2",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/cache/processed/operational-source-v2",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/monday/capture",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/monday/capture/actual-runtime-serializer",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/state",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/sunday/capture",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/fixture/sunday/capture/actual-runtime-serializer",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/grade",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/grade/resolver",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/grade/resolver/collector",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/reader",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/reader/restore",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/writer",
+      "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/writer/append"
+    ]
+  },
+  "measurements": [
+    {
+      "variant": "original",
+      "CPU_seconds": 0.6866063360000001,
+      "wall_seconds": 0.6866156720061554
+    },
+    {
+      "variant": "indexed",
+      "CPU_seconds": 0.6044037919999998,
+      "wall_seconds": 0.6049801439949078
+    },
+    {
+      "variant": "indexed_and_names",
+      "CPU_seconds": 0.5373662150000005,
+      "wall_seconds": 0.5373700110067148
+    },
+    {
+      "variant": "original",
+      "CPU_seconds": 0.690801059,
+      "wall_seconds": 0.6908066989999497
+    }
+  ],
+  "source_files_edited": false,
+  "new_fits": 0
+}
