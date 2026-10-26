@@ -4,7 +4,9 @@ from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -138,6 +140,33 @@ class RotationTests(unittest.TestCase):
         with patch.object(entry.os,"environ",{}), contextlib.redirect_stdout(io.StringIO()) as out:
             self.assertEqual(entry.main(["write"]),2)
         self.assertIn("PREPARATION_ONLY_NO_IO",out.getvalue());self.assertEqual(self.server.calls,[])
+
+    def test_each_rotation_job_masks_Root_from_event_before_environment_export(self):
+        import yaml
+        document=yaml.load((rotation.ROOT/'.github/workflows/lab.yml').read_text(),Loader=yaml.BaseLoader)
+        raw='{"fictional_control":"opaque%control"}';digest=store.sha(raw.encode())
+        for phase,job_name in rotation.JOBS.items():
+            with self.subTest(phase=phase):
+                job=document['jobs'][job_name];step=job['steps'][0]
+                self.assertEqual(step['name'],'Mask rotation control before step environment logging')
+                self.assertNotIn('${{',step['run'])
+                self.assertNotIn('inference_builder_go_json',json.dumps(step.get('env',{})))
+                for item in job['steps']:
+                    self.assertNotIn('AUDIT_PRIVATE_ROTATION_GO_JSON',item.get('env',{}))
+                event=self.base/(phase+'-mask-event.json');output=self.base/(phase+'-mask-env')
+                event.write_text(json.dumps(dict(inputs=dict(inference_builder_go_json=raw,inference_builder_go_sha256=digest))))
+                output.touch()
+                result=subprocess.run(['bash','-e','-c',step['run']],capture_output=True,text=True,
+                    env=dict(PATH=os.environ['PATH'],GITHUB_EVENT_PATH=str(event),GITHUB_ENV=str(output)),timeout=10)
+                self.assertEqual(result.returncode,0,result.stderr)
+                # Runner consumes the mask command, then masks the later env.
+                self.assertEqual(result.stdout,'::add-mask::'+raw.replace('%','%25')+'\n')
+                lines=output.read_text().splitlines();marker=lines[0].split('<<',1)[1]
+                self.assertEqual(lines,['AUDIT_PRIVATE_ROTATION_GO_JSON<<'+marker,raw,marker,
+                    'AUDIT_PRIVATE_ROTATION_GO_SHA256='+digest])
+                self.assertNotIn('::add-mask::'+digest,result.stdout)
+                self.assertEqual(job['steps'][-1]['id'],'rotation')
+                if phase!='qualify':self.assertIn('handoff_json',job['outputs'])
 
     def test_preflight_binds_only_real_event_inference_builder_fields_source_and_role(self):
         env=self.env("write")
