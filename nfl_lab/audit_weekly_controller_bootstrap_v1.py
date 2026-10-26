@@ -55,8 +55,9 @@ TOOL = "tools/audit_weekly_controller_bootstrap_v1.py"
 TEST = "tests/test_audit_weekly_controller_bootstrap_v1.py"
 REGISTRY_PATH = "state/controller-v1/bootstrap-v1.json"
 # The first V2 wire registration remains immutable at bootstrap-v2.json.
-# Corrected discovery source requires its own newly issued native registration.
-LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261026-discovery.json"
+# Discovery's issued registration also remains immutable. The retained-epoch
+# correction requires a separate native registration on its actual source.
+LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json"
 LOCATOR_CAP = 64 << 10
 TEMPLATE_MODULE = "nfl_lab/audit_weekly_template_v1.py"
 # Shared executable bytes are checked in BOTH literal source inventories.
@@ -208,6 +209,7 @@ def fixed_route(url):
     return any(re.fullmatch(pattern, tail) is not None for pattern in (
         r"contents/state/controller-v1/bootstrap-v[12]\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261026-discovery\.json\?ref=[a-f0-9]{40}",
+        r"contents/state/controller-v1/bootstrap-v2-20261026-retained-epoch\.json\?ref=[a-f0-9]{40}",
         r"actions/artifacts/[1-9][0-9]{0,19}"))
 
 
