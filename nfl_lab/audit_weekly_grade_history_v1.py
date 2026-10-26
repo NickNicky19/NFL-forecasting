@@ -20,6 +20,11 @@ import time
 import zlib
 
 VERSION = "audit-weekly-grade-history-v1"
+CHECKPOINT_V1 = "audit-weekly-grade-checkpoint-v1"
+CHECKPOINT_V2 = "audit-weekly-grade-checkpoint-v2"
+PART_READ_KEYS = {"schema_version","index","descriptor_sha256","root_native_proof_sha256","root_body_sha256",
+    "payload_sha256","bytes","reader","inventory_canonical_sha256","manifest_api_sha256","payload_api_sha256",
+    "started_at_utc","completed_at_utc","HTTP_calls","transfer_bytes"}
 CONTEXT_V2 = "audit-weekly-recurring-v2-context"
 CONTEXT_V4 = "audit-weekly-recurring-v4-context"
 LOCATOR_VERSION = "audit-weekly-grade-history-v2-locator"
@@ -76,6 +81,12 @@ def require(ok, code):
 
 
 def now(): return datetime.now(timezone.utc)
+
+
+def checkpoint_version(handoff):
+    require(type(handoff) is dict and handoff.get("schema_version") in {CHECKPOINT_V1+"-handoff",CHECKPOINT_V2+"-handoff"},
+        "EXPLICIT_CLOSED_CHECKPOINT_WIRE_VERSION")
+    return CHECKPOINT_V2 if handoff["schema_version"]==CHECKPOINT_V2+"-handoff" else CHECKPOINT_V1
 
 
 def _modules():
@@ -237,6 +248,107 @@ def sidecar_document(receipt, handoff, grade_read_proof, evidence_descriptor, ev
     return _sidecar(value)
 
 
+def _descriptor_meta(d,cap):
+    from . import private_draft_store as store
+    def hashed(value):return type(value) is str and store.HASH.fullmatch(value) is not None
+    def positive(value):return type(value) is int and 0 < value < 10**20
+    # Metadata-only equivalent of cp.descriptor_meta. Importing cp would
+    # import operational_storage and pandas, so this fixed V1 ABI stays local.
+    require(type(d) is dict and set(d)=={"entry","manifest_asset_id","manifest_sha256","manifest_bytes"},"CLOSED_PARENT_NATIVE_DESCRIPTOR")
+    e=d["entry"]
+    require(type(e) is dict and set(e)=={"schema_version","payload","payload_asset_id","payload_name","producer_process","binding_sha256","writer_run_id"},
+        "CLOSED_PARENT_NATIVE_ENTRY")
+    p=e["payload"]
+    require(type(p) is dict and set(p)=={"schema_version","payload_kind","format","bytes","sha256","source_policy_sha256"}
+        and p["schema_version"]=="weekly-private-payload-v2" and p["payload_kind"]=="runtime_manifest" and p["format"]=="gzip"
+        and p["source_policy_sha256"]==_METADATA_POLICY_SHA and type(p["bytes"]) is int and 0<p["bytes"]<=cap and hashed(p["sha256"])
+        and e["payload_name"]=="blob-"+p["sha256"]+".bin" and e["schema_version"]=="weekly-private-restore-manifest-v2"
+        and hashed(e["producer_process"]) and hashed(e["binding_sha256"]) and type(e["writer_run_id"]) is str
+        and re.fullmatch(r"[1-9][0-9]{0,19}",e["writer_run_id"]) and positive(e["payload_asset_id"]) and positive(d["manifest_asset_id"])
+        and type(d["manifest_bytes"]) is int and d["manifest_bytes"]==len(store.canonical(e))<=16<<10
+        and d["manifest_sha256"]==store.sha(store.canonical(e)),"EXACT_PARENT_NATIVE_DESCRIPTOR")
+    return e
+
+
+def private_checkpoint_root(packed, handoff):
+    """Metadata-only V2 root validation; never decode a forecast/outcome part."""
+    from . import private_draft_store as store,state
+    require(checkpoint_version(handoff)==CHECKPOINT_V2 and type(packed) is bytes
+        and len(packed)==handoff["body_bytes"] and store.sha(packed)==handoff["body_sha256"],"EXACT_PRIVATE_MULTIPART_ROOT_BYTES")
+    wire=metadata_document(packed,cap=64 << 10)
+    require(type(wire) is dict and set(wire)=={"schema_version","snapshot_manifest","snapshot_body_sha256","parts"}
+        and wire["schema_version"]==CHECKPOINT_V2+"-root","CLOSED_PRIVATE_MULTIPART_ROOT")
+    m=wire["snapshot_manifest"]
+    require(type(m) is dict and set(m)=={"schema_version","logical_sha256","logical_bytes","parts"}
+        and m["schema_version"]=="audit-weekly-grade-snapshot-v2" and m["logical_sha256"]==handoff["snapshot_sha256"]
+        and type(m["logical_bytes"]) is int and 0<m["logical_bytes"]<=128 << 20
+        and type(m["parts"]) is list and 0<len(m["parts"])<=2,"CLOSED_BOUNDED_PRIVATE_PARTITION_MANIFEST")
+    fields={"index","name","bytes","sha256","decoded_bytes","decoded_sha256"}
+    for i,p in enumerate(m["parts"]):
+        require(type(p) is dict and set(p)==fields and type(p["index"]) is int and p["index"]==i
+            and all(type(p[k]) is str and store.HASH.fullmatch(p[k]) for k in ("sha256","decoded_sha256"))
+            and p["name"]==f"GRADING_PART_{i:02d}_{p['sha256']}.json.gz"
+            and type(p["bytes"]) is int and 0<p["bytes"]<=8 << 20
+            and type(p["decoded_bytes"]) is int and 0<p["decoded_bytes"]<=64 << 20,"EXACT_ORDERED_PRIVATE_PARTITION")
+    require(sum(p["decoded_bytes"] for p in m["parts"])==m["logical_bytes"]
+        and sum(p["bytes"] for p in m["parts"])<=16 << 20
+        and wire["snapshot_body_sha256"]==store.sha(gzip.compress(state.canonical(m),mtime=0))
+        and type(wire["parts"]) is list and len(wire["parts"])==len(m["parts"]),"EXACT_COMPLETE_LOCAL_AND_NATIVE_ROOT_RELATION")
+    keys={"schema_version","index","local_manifest_sha256","body_sha256","body_bytes","descriptor_sha256",
+        "producer","current_root_go_sha256","qualification_sha256","started_at_utc","completed_at_utc","HTTP_calls","transfer_bytes"}
+    for p,r in zip(m["parts"],wire["parts"]):
+        require(type(r) is dict and set(r)=={"index","descriptor","append_proof"}
+            and type(r["index"]) is int and r["index"]==p["index"],"EXACT_PRIVATE_PART_DESCRIPTOR_ORDER")
+        entry=_descriptor_meta(r["descriptor"],8 << 20);proof=r["append_proof"];outer=handoff["append_proof"]
+        require(entry["payload"]["sha256"]==p["sha256"] and entry["payload"]["bytes"]==p["bytes"]
+            and entry["producer_process"]==handoff["producer"]["process_identity"]
+            and entry["writer_run_id"]==handoff["producer"]["run_id"]
+            and entry["binding_sha256"]==handoff["runtime_binding_sha256"],"EXACT_PRIVATE_PART_NATIVE_DESCRIPTOR")
+        require(type(proof) is dict and set(proof)==keys and proof["schema_version"]==CHECKPOINT_V2+"-part-append"
+            and type(proof["index"]) is int and proof["index"]==p["index"] and proof["producer"]==handoff["producer"]
+            and proof["local_manifest_sha256"]==wire["snapshot_body_sha256"]
+            and proof["current_root_go_sha256"]==handoff["current_root_go_sha256"]
+            and proof["qualification_sha256"]==outer["qualification_sha256"]
+            and proof["body_sha256"]==p["sha256"] and type(proof["body_bytes"]) is int and proof["body_bytes"]==p["bytes"]
+            and proof["descriptor_sha256"]==state.digest(r["descriptor"])
+            and type(proof["HTTP_calls"]) is int and 0<proof["HTTP_calls"]<=outer["HTTP_calls"]<=40
+            and type(proof["transfer_bytes"]) is int and 0<proof["transfer_bytes"]<=outer["transfer_bytes"]<=store.TRANSFER_CAP
+            and state.utc(handoff["snapshot_completed_at"])<=state.utc(outer["started_at_utc"])
+            <=state.utc(proof["started_at_utc"])<=state.utc(proof["completed_at_utc"])
+            <=state.utc(outer["completed_at_utc"]),"EXACT_PRIVATE_PART_APPEND_PROOF")
+    return wire
+
+
+def validate_multipart_readback(value, handoff, native, reader, *, known_by_at, wire):
+    """Bind every original part receipt to its private, hash-verified root."""
+    from . import private_draft_store as store,state
+    require(checkpoint_version(handoff)==CHECKPOINT_V2 and type(value) is dict
+        and set(value)=={"schema_version","parts","completed_at_utc","HTTP_calls","transfer_bytes"}
+        and value["schema_version"]==CHECKPOINT_V2+"-complete-part-read"
+        and type(value["parts"]) is list and len(value["parts"])==len(wire["parts"]),"COMPLETE_ORIGINAL_NATIVE_PART_READ_REQUIRED")
+    previous=state.utc(native["created_at_utc"]);calls=native["HTTP_calls"];transferred=native["transfer_bytes"];inventory=None
+    for p,r,proof in zip(wire["snapshot_manifest"]["parts"],wire["parts"],value["parts"]):
+        require(type(proof) is dict and set(proof)==PART_READ_KEYS and proof["schema_version"]==CHECKPOINT_V2+"-part-native-read"
+            and type(proof["index"]) is int and proof["index"]==p["index"]
+            and proof["descriptor_sha256"]==state.digest(r["descriptor"])
+            and proof["root_native_proof_sha256"]==state.digest(native) and proof["root_body_sha256"]==handoff["body_sha256"]
+            and proof["payload_sha256"]==p["sha256"] and type(proof["bytes"]) is int and proof["bytes"]==p["bytes"] and proof["reader"]==reader
+            and all(type(proof[k]) is str and store.HASH.fullmatch(proof[k]) for k in
+                ("inventory_canonical_sha256","manifest_api_sha256","payload_api_sha256"))
+            and (inventory is None or inventory==proof["inventory_canonical_sha256"])
+            and previous<=state.utc(proof["started_at_utc"])<=state.utc(proof["completed_at_utc"])<=state.utc(known_by_at)
+            and type(proof["HTTP_calls"]) is int and calls+4<=proof["HTTP_calls"]<=40
+            and type(proof["transfer_bytes"]) is int and transferred<proof["transfer_bytes"]<=store.TRANSFER_CAP,
+            "EXACT_ORIGINAL_NATIVE_PART_PROOF_AND_CLOCK")
+        previous=state.utc(proof["completed_at_utc"]);calls=proof["HTTP_calls"];transferred=proof["transfer_bytes"]
+        inventory=proof["inventory_canonical_sha256"]
+    require(previous<=state.utc(value["completed_at_utc"])<=state.utc(known_by_at)
+        and type(value["HTTP_calls"]) is int and calls<value["HTTP_calls"]<=40
+        and type(value["transfer_bytes"]) is int and transferred<value["transfer_bytes"]<=store.TRANSFER_CAP,
+        "NATIVE_PARTS_COMPLETE_BEFORE_ORIGINAL_KNOWN_BY")
+    return value
+
+
 def validate_parent_sidecar(packed, *, receipt, qualified_runtime, code_pins, jobs, at):
     """Strict original feed-linked reader; never accepts v2 locators/cohorts."""
     return _validate_parent_core(packed, receipt=receipt, qualified_runtime=qualified_runtime,
@@ -262,23 +374,7 @@ complete original native read evidence is still mandatory at restore_previous.
             result[key]=value
         return result
     def nonfinite(_):raise HistoryError("NONFINITE_PARENT_HISTORY_JSON")
-    def descriptor(d,cap):
-        # Metadata-only equivalent of cp.descriptor_meta. Importing cp would
-        # import operational_storage and pandas, so this fixed V1 ABI stays local.
-        require(type(d) is dict and set(d)=={"entry","manifest_asset_id","manifest_sha256","manifest_bytes"},"CLOSED_PARENT_NATIVE_DESCRIPTOR")
-        e=d["entry"]
-        require(type(e) is dict and set(e)=={"schema_version","payload","payload_asset_id","payload_name","producer_process","binding_sha256","writer_run_id"},
-            "CLOSED_PARENT_NATIVE_ENTRY")
-        p=e["payload"]
-        require(type(p) is dict and set(p)=={"schema_version","payload_kind","format","bytes","sha256","source_policy_sha256"}
-            and p["schema_version"]=="weekly-private-payload-v2" and p["payload_kind"]=="runtime_manifest" and p["format"]=="gzip"
-            and p["source_policy_sha256"]==_METADATA_POLICY_SHA and type(p["bytes"]) is int and 0<p["bytes"]<=cap and hashed(p["sha256"])
-            and e["payload_name"]=="blob-"+p["sha256"]+".bin" and e["schema_version"]=="weekly-private-restore-manifest-v2"
-            and hashed(e["producer_process"]) and hashed(e["binding_sha256"]) and type(e["writer_run_id"]) is str
-            and re.fullmatch(r"[1-9][0-9]{0,19}",e["writer_run_id"]) and positive(e["payload_asset_id"]) and positive(d["manifest_asset_id"])
-            and type(d["manifest_bytes"]) is int and d["manifest_bytes"]==len(store.canonical(e))<=16<<10
-            and d["manifest_sha256"]==store.sha(store.canonical(e)),"EXACT_PARENT_NATIVE_DESCRIPTOR")
-        return e
+    descriptor=_descriptor_meta
     try:
         require(type(packed) is bytes and 0 < len(packed) <= LIMITS["sidecar_bytes"], "BOUNDED_PARENT_HISTORY_SIDECAR")
         decoder = zlib.decompressobj(16 + zlib.MAX_WBITS)
@@ -340,8 +436,8 @@ complete original native read evidence is still mandatory at restore_previous.
             and qualified_runtime["runtime_id"] == binding["runtime_id"]
             and qualified_runtime["run_id"] == binding["origin_run_id"] == qualification["run_id"]
             and qualified_runtime["source_sha"] == qualification["source_sha"], "EXACT_PARENT_HISTORY_RUNTIME_METADATA")
-        h = value["checkpoint_handoff"]
-        require(type(h) is dict and set(h) == _HANDOFF_KEYS and h["schema_version"] == "audit-weekly-grade-checkpoint-v1-handoff"
+        h = value["checkpoint_handoff"];wire_version=checkpoint_version(h)
+        require(type(h) is dict and set(h) == _HANDOFF_KEYS and h["schema_version"] == wire_version+"-handoff"
             and h["repository"] == store.REPO and h["successful_forecast"] is h["public_release"] is False
             and type(h["fits"]) is int and h["fits"] == 0 and h["helper_sha256"] == checkpoint_pins
             and all(hashed(h[k]) for k in ("current_root_go_sha256","epoch_sha256","snapshot_sha256","body_sha256",
@@ -371,7 +467,7 @@ complete original native read evidence is still mandatory at restore_previous.
         assets=[h["descriptor"]["manifest_asset_id"],snapshot_entry["payload_asset_id"],value["evidence_descriptor"]["manifest_asset_id"],envelope_entry["payload_asset_id"]]
         require(len(set(assets)) == 4 and binding["canary_asset_id"] not in assets,"DISTINCT_PARENT_HISTORY_NATIVE_ASSETS")
         append = h["append_proof"]
-        require(type(append) is dict and set(append) == _APPEND_KEYS and append["schema_version"] == "audit-weekly-grade-checkpoint-v1-native-append"
+        require(type(append) is dict and set(append) == _APPEND_KEYS and append["schema_version"] == wire_version+"-native-append"
             and state.digest(append) == h["append_proof_sha256"] and append["producer"] == writer
             and all(append[k] == h[k] for k in ("current_root_go_sha256","epoch_sha256","snapshot_sha256","body_sha256","body_bytes"))
             and append["descriptor_sha256"] == state.digest(h["descriptor"])
@@ -551,6 +647,10 @@ def prepare_envelope(result, handoff, native_evidence_ref, *, storage, output, p
     require(state.digest(body) == result.proof["proof_sha256"] and body["context"]["handoff"] == handoff
         and body["native_restore_proof"]["payload_sha256"] == handoff["body_sha256"]
         and result.proof["snapshot_sha256"] == handoff["snapshot_sha256"], "EXACT_ORIGINAL_NATIVE_READ_EVIDENCE_REQUIRED")
+    if checkpoint_version(handoff)==CHECKPOINT_V2:
+        root=private_checkpoint_root(_read(storage,body["restored_binding"],8 << 20),handoff)
+        validate_multipart_readback(body["context"].get("multipart_readback"),handoff,body["native_restore_proof"],result.proof["reader"],
+            known_by_at=result.proof["known_by_at"],wire=root)
     envelope = dict(schema_version=VERSION + "-evidence-envelope", handoff_sha256=store.sha(store.canonical(handoff)),
         grade_read_proof=deepcopy(result.proof), native_read_evidence=body, durable_sha256=grade._digest(result.durable.document),
         grade_code_pins=grade.pins(), checkpoint_helper_sha256=checkpoint.pins())
@@ -671,6 +771,48 @@ def _original(client, value, receipt, evidence, *, check_sources=True, extra_pin
     return jobs
 
 
+def _anchor(client, receipt, evidence, *, workflow_ref, expected_jobs, before, prior=None):
+    """Independently authenticate the original forecast cohort before GETs."""
+    from . import private_draft_store as store,state,audit_weekly_controller_v1 as controller
+    base=store.API+"/actions/runs/"+receipt["run_id"]
+    def read():
+        run=_json(client,base,evidence);listing=_json(client,base+"/jobs?per_page=100&page=1",evidence)
+        actor=run.get("actor",{});who=(actor.get("login"),actor.get("id"))
+        require(run.get("id")==int(receipt["run_id"]) and run.get("head_sha")==receipt["source_sha"]
+            and run.get("status")=="completed" and run.get("conclusion")=="success"
+            and type(run.get("run_attempt")) is int and run["run_attempt"]==1
+            and run.get("event")=="workflow_dispatch" and run.get("path")==".github/workflows/lab.yml"
+            and run.get("head_branch")==workflow_ref.split("@refs/heads/",1)[1]
+            and run.get("repository",{}).get("full_name")==run.get("head_repository",{}).get("full_name")==store.REPO
+            and who in {(a["login"],a["id"]) for a in (controller.OWNER,controller.BOT)}
+            and ("triggering_actor" not in run or (run["triggering_actor"].get("login"),run["triggering_actor"].get("id"))==who),
+            "ORIGINAL_FORECAST_ANCHOR_COMPLETED_RUN_SOURCE_ACTOR_REQUIRED")
+        require(type(listing) is dict and type(listing.get("jobs")) is list and type(listing.get("total_count")) is int
+            and listing["total_count"]==len(listing["jobs"])<=100 and set(receipt["jobs"])==set(expected_jobs),
+            "COMPLETE_ORIGINAL_FORECAST_ANCHOR_JOB_CENSUS")
+        jobs={}
+        for role,ref in receipt["jobs"].items():
+            require(ref["job_id"]==expected_jobs[role],"ORIGINAL_FORECAST_ANCHOR_REGISTERED_WORKFLOW_JOBS")
+            matches=[j for j in listing["jobs"] if j.get("id")==ref["api_job_id"]]
+            require(len(matches)==1,"UNIQUE_ORIGINAL_FORECAST_ANCHOR_JOB")
+            j=matches[0]
+            require(j.get("name")==ref["job_id"] and j.get("run_id")==int(receipt["run_id"])
+                and j.get("head_sha")==receipt["source_sha"] and j.get("status")=="completed" and j.get("conclusion")=="success"
+                and state.utc(j["started_at"])<=state.utc(j["completed_at"])<=state.utc(before),
+                "ORIGINAL_FORECAST_ANCHOR_JOB_SOURCE_STATUS_CLOCK")
+            jobs[role]=j
+        require(state.utc(jobs["produce"]["completed_at"])<=state.utc(jobs["restore"]["started_at"])
+            <=state.utc(jobs["restore"]["completed_at"])<=state.utc(jobs["consume"]["started_at"])
+            <=state.utc(receipt["verified_at"])<=state.utc(receipt["created_at"])
+            <=state.utc(jobs["consume"]["completed_at"])<=state.utc(before),"ORIGINAL_FORECAST_ANCHOR_CAPTURE_CHAIN_CLOCKS")
+        return run,jobs
+    run,jobs=read()
+    if prior is not None:
+        controller.stable(prior[0],run)
+        require(jobs==prior[1],"ORIGINAL_FORECAST_ANCHOR_CHANGED_DURING_RECOVERY")
+    return run,jobs
+
+
 def _registered(context, storage):
     from . import audit_weekly_operations_grade_v1 as worker
     _, _, _, cp, _ = _modules()
@@ -681,11 +823,11 @@ def _registered(context, storage):
     return worker._epoch(restored, storage, now)[0]
 
 
-def _native_evidence(envelope, sidecar, client, jobs):
-    return validate_native_envelope(envelope,sidecar,client,jobs,version2=False)
+def _native_evidence(envelope, sidecar, client, jobs, *, private_root=None):
+    return validate_native_envelope(envelope,sidecar,client,jobs,version2=False,private_root=private_root)
 
 
-def validate_native_envelope(envelope, sidecar, client, jobs, *, version2):
+def validate_native_envelope(envelope, sidecar, client, jobs, *, version2, private_root=None):
     """Exact original proof-body checks; no grader import or snapshot decode."""
     from . import private_draft_store as store,state
     from .weekly_durable_acceptance import restored_identity
@@ -695,12 +837,14 @@ def validate_native_envelope(envelope, sidecar, client, jobs, *, version2):
         and envelope["grade_read_proof"] == sidecar["grade_read_proof"] and envelope["grade_code_pins"] == sidecar["grade_code_pins"]
         and envelope["checkpoint_helper_sha256"] == sidecar["checkpoint_helper_sha256"], "EXACT_PRIVATE_HISTORY_EVIDENCE_ENVELOPE")
     body = envelope["native_read_evidence"]; p = sidecar["grade_read_proof"]; h = sidecar["checkpoint_handoff"]
+    wire_version=checkpoint_version(h);multipart=wire_version==CHECKPOINT_V2
     require(type(body) is dict and set(body) == {"schema_version", "context", "native_restore_proof", "restored_binding", "known_by_at"}
-        and body["schema_version"] == "audit-weekly-grade-checkpoint-v1-fresh-reader-native-evidence"
+        and body["schema_version"] == wire_version+"-fresh-reader-native-evidence"
         and state.digest(body) == p["proof_sha256"] and body["known_by_at"] == p["known_by_at"], "ORIGINAL_NATIVE_GRADE_READ_PROOF_BODY_REQUIRED")
     c = body["context"]
     ref=body["restored_binding"]
     require(type(c) is dict and set(c) == {"current_root_go_sha256", "handoff_sha256", "handoff", "reader", "api_evidence", "final_api_evidence"}
+            | ({"multipart_readback"} if multipart else set())
         and c["current_root_go_sha256"] == h["current_root_go_sha256"] and c["handoff"] == h
         and c["handoff_sha256"] == envelope["handoff_sha256"] and c["reader"] == p["reader"]
         and type(ref) is dict and set(ref)=={"path","bytes","sha256"} and type(ref["path"]) is str
@@ -724,6 +868,10 @@ def validate_native_envelope(envelope, sidecar, client, jobs, *, version2):
     require(restored_identity(native) == p["reader"] and native["payload_sha256"] == h["body_sha256"] and native["bytes"] == h["body_bytes"]
         and state.utc(jobs["consume"]["started_at"]) <= state.utc(native["started_at_utc"])
         <= state.utc(native["created_at_utc"]) <= state.utc(p["known_by_at"]), "ORIGINAL_NATIVE_HISTORY_READER_COHORT_AND_CLOCK")
+    if multipart:
+        root=private_checkpoint_root(private_root,h)
+        validate_multipart_readback(c["multipart_readback"],h,native,p["reader"],known_by_at=p["known_by_at"],wire=root)
+    else:require(private_root is None,"NO_MULTIPART_ROOT_ON_ORIGINAL_V1_EVIDENCE")
 
 
 def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
@@ -755,13 +903,13 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
     return envelope
 
 
-def validate_parent_envelope(packed, locator, client, jobs, *, code_pins, static_root, at):
+def validate_parent_envelope(packed, locator, client, jobs, *, code_pins, static_root, at, private_root=None):
     """Fresh private metadata read, never a decoded-history/future grant."""
     from . import audit_weekly_template_v1 as template
     require(type(client) is template.ParentGETClient,"LIVE_READ_ONLY_PARENT_EVIDENCE_CLIENT")
     client.guard()
     envelope=metadata_document(packed,cap=LIMITS["envelope_bytes"])
-    validate_native_envelope(envelope,locator["sidecar"],client,jobs,version2=True)
+    validate_native_envelope(envelope,locator["sidecar"],client,jobs,version2=True,private_root=private_root)
     return _root_envelope(envelope,locator,jobs,code_pins=code_pins,static_root=static_root,at=at)
 
 
@@ -794,7 +942,12 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     original_receipt=receipt
     if wrapper is not None:
         require(wrapper["anchor"]==previous and receipt["source_sha"]==value["source_sha"]
-            and receipt["epoch_sha256"]==value["epoch_sha256"],"UNCHANGED_ORIGINAL_CAPTURE_ANCHOR")
+            and receipt["epoch_sha256"]==value["epoch_sha256"] and receipt["workflow_sha256"]==value["workflow_sha256"],
+            "UNCHANGED_ORIGINAL_CAPTURE_ANCHOR")
+        if wrapper["cohort"]["kind"]=="CAPTURE_AND_GRADE":
+            require(all(receipt[k]==wrapper["cohort"][k] for k in
+                ("source_sha","run_id","root_go_sha256","workflow_sha256","epoch_sha256","jobs")),"SAME_CAPTURE_AND_GRADING_ANCHOR_COHORT")
+        else:require(receipt["run_id"]!=wrapper["cohort"]["run_id"],"DISTINCT_ORIGINAL_FORECAST_AND_LATER_GRADING_COHORT")
         receipt=wrapper["cohort"];validate_cohort(receipt)
     require(all(value[k] == receipt[k] for k in ("feed_sha256", "source_sha", "run_id", "root_go_sha256", "workflow_sha256", "epoch_sha256"))
         and value["feed_sha256"] == previous["feed_sha256"] and value["run_id"] != context.client.run_id
@@ -808,6 +961,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     if wrapper is not None:pins |= LOCATOR_HELPERS
     routes = {retained.source_url(value["source_sha"], name) for name in pins}
     routes |= {store.API + "/actions/runs/" + value["run_id"] + suffix for suffix in ("", "/jobs?per_page=100&page=1")}
+    if wrapper is not None:routes|={store.API+"/actions/runs/"+original_receipt["run_id"]+suffix for suffix in ("","/jobs?per_page=100&page=1")}
     metadata = _client(context, "metadata", transport, routes); evidence = {}
     run = _json(metadata, store.API + "/actions/runs/" + metadata.run_id, evidence)
     authority.authorize_client_actor(metadata, run)
@@ -817,6 +971,10 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     jobs = _original(metadata, value, receipt, evidence,extra_pins=extra)
     if wrapper is not None:
         locator_metadata(raw,receipt=original_receipt,qualified_runtime=package,code_pins=context.go["code_pins"],jobs=jobs,at=now())
+    anchor_jobs=None
+    if wrapper is not None and original_receipt["run_id"]!=value["run_id"]:
+        anchor_jobs=_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
+            before=wrapper["cohort"]["root_issued_at_utc"])
     require(state.utc(jobs["consume"]["completed_at"])<=state.utc(context.go["issued_at_utc"]),
         "HISTORY_COMPLETED_BEFORE_CURRENT_ROOT_AND_VALUES")
     registered = _registered(context, storage)
@@ -840,10 +998,31 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         return cp.binding(owned), proof, client
     envelope_ref, recovery_envelope, envelope_client = get(value["evidence_descriptor"], "EVIDENCE.json.gz")
     envelope = metadata_document(_read(storage, envelope_ref, LIMITS["envelope_bytes"]),cap=LIMITS["envelope_bytes"])
-    validate_native_envelope(envelope,value,envelope_client,jobs,version2=wrapper is not None)
+    multipart=checkpoint_version(h)==CHECKPOINT_V2
+    if not multipart:validate_native_envelope(envelope,value,envelope_client,jobs,version2=wrapper is not None)
+    snapshot_ref, recovery_snapshot, snapshot_client = get(h["descriptor"], "SNAPSHOT.json.gz")
+    part_recovery=None
+    if multipart:
+        raw_root=_read(storage,snapshot_ref,LIMITS["snapshot_bytes"])
+        validate_native_envelope(envelope,value,envelope_client,jobs,version2=wrapper is not None,private_root=raw_root)
+        expected_parts=dict(handoff_sha256=state.digest(h),restored_binding=snapshot_ref,
+            native_root_proof_sha256=state.digest(recovery_snapshot),reader=cp.client_identity(snapshot_client))
+        admitted=[False]
+        def parts_auth(request):
+            context.verify()
+            ok=type(request) is dict and set(request)=={"schema_version","kind","inputs","inputs_sha256","at"} \
+                and request["schema_version"]==checkpoint.VERSION+"-authentication-request" \
+                and request["kind"]=="CHECKPOINT_RESTORE_PRIVATE_PARTS" and request["inputs"]==expected_parts \
+                and request["inputs_sha256"]==state.digest(expected_parts) and state.utc(request["at"])<=now() and not admitted[0]
+            if ok:admitted[0]=True
+            return ok
+        part_recovery=checkpoint.restore_parts(h,snapshot_client,storage=storage,root_binding=snapshot_ref,
+            native_root_proof=recovery_snapshot,authenticate=parts_auth,clock=now)
+        require(admitted[0],"LIVE_CURRENT_ROOT_SOURCE_API_PART_AUTHENTICATION_REQUIRED")
+        validate_multipart_readback(part_recovery,h,recovery_snapshot,cp.client_identity(snapshot_client),
+            known_by_at=now(),wire=private_checkpoint_root(raw_root,h))
     if wrapper is not None:
         _root_envelope(envelope,wrapper,jobs,code_pins=context.go["code_pins"],static_root=context.go,at=now())
-    snapshot_ref, recovery_snapshot, snapshot_client = get(h["descriptor"], "SNAPSHOT.json.gz")
     snapshot_client.authenticate_actions_job()
     current_run=_json(snapshot_client,store.API+"/actions/runs/"+snapshot_client.run_id,evidence)
     authority.authorize_client_actor(snapshot_client,current_run)
@@ -851,6 +1030,9 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         and current_run.get("head_sha")==snapshot_client.source_sha,"CURRENT_HISTORY_JOB_CHANGED_DURING_RECOVERY")
     # Recheck the completed old cohort and same source after transfers.
     require(_original(metadata, value, receipt, evidence, check_sources=False) == jobs, "ORIGINAL_HISTORY_API_CHANGED_DURING_RECOVERY")
+    if anchor_jobs is not None:
+        require(_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
+            before=wrapper["cohort"]["root_issued_at_utc"],prior=anchor_jobs)==anchor_jobs,"ORIGINAL_FORECAST_ANCHOR_CHANGED_DURING_RECOVERY")
     context.verify(); original = value["grade_read_proof"]
     expected = {"QUALIFIED_PREVIOUS_GRADING_SNAPSHOT": state.digest(dict(binding=snapshot_ref, epoch_sha256=registered.epoch.sha256)),
         "FRESH_READER_GRADING_DURABILITY": state.digest(original)}
@@ -873,6 +1055,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         current=cp.client_identity(snapshot_client), actual_recovered_at=state.utc(now()).isoformat(), original_grade_read_proof=original,
         sidecar=sidecar_ref, prior_public_receipt=prior_public_receipt_ref, native_envelope_recovery=recovery_envelope,
         native_snapshot_recovery=recovery_snapshot, original_api_evidence_sha256=state.digest(evidence))
+    if part_recovery is not None:proof["native_part_recovery"]=part_recovery
     if wrapper is not None:
         planning=deepcopy(envelope["planning"])
         require(planning["resolved_weeks"]==sorted({w["week"] for w in durable.document["weeks"]

@@ -997,3 +997,83 @@ def test_newer_or_ambiguous_locator_fails_before_any_new_decision(history_case):
     tied=ref['path'].replace('--700--','--701--')
     with pytest.raises(history.HistoryError,match='AMBIGUOUS_FRESHEST'):
         history.latest_locator(directory(history.LOCATOR_ROOT,[(ref['path'],'file',100),(tied,'file',100)]))
+
+
+@pytest.fixture
+def multipart_history_case(history_case):
+    """Private metadata only; no logical snapshot or part is decoded on Main."""
+    h=history_case;v=h.locator;handoff=v['sidecar']['checkpoint_handoff'];writer=handoff['producer']
+    handoff['schema_version']=history.CHECKPOINT_V2+'-handoff'
+    outer=handoff['append_proof'];outer['schema_version']=history.CHECKPOINT_V2+'-native-append'
+    outer.update(HTTP_calls=38,transfer_bytes=20000)
+    def descriptor(index,sha,size):
+        d=deepcopy(handoff['descriptor']);e=d['entry']
+        e.update(payload_asset_id=901+2*index,payload_name='blob-'+sha+'.bin')
+        e['payload'].update(sha256=sha,bytes=size)
+        d.update(manifest_asset_id=902+2*index,manifest_sha256=c.digest(e),manifest_bytes=len(s.canonical(e)))
+        return d
+    parts=[dict(index=i,name=f'GRADING_PART_{i:02d}_{old.h([i,"part"])}.json.gz',bytes=20,
+        sha256=old.h([i,'part']),decoded_bytes=1,decoded_sha256=old.h([i,'decoded'])) for i in range(2)]
+    manifest=dict(schema_version='audit-weekly-grade-snapshot-v2',logical_sha256=handoff['snapshot_sha256'],logical_bytes=2,parts=parts)
+    local_sha=s.sha(gzip.compress(s.canonical(manifest),mtime=0));records=[]
+    for p in parts:
+        d=descriptor(p['index'],p['sha256'],p['bytes'])
+        proof=dict(schema_version=history.CHECKPOINT_V2+'-part-append',index=p['index'],local_manifest_sha256=local_sha,
+            body_sha256=p['sha256'],body_bytes=p['bytes'],descriptor_sha256=c.digest(d),producer=writer,
+            current_root_go_sha256=handoff['current_root_go_sha256'],qualification_sha256=outer['qualification_sha256'],
+            started_at_utc=outer['started_at_utc'],completed_at_utc=outer['completed_at_utc'],HTTP_calls=15+5*p['index'],transfer_bytes=1000+1000*p['index'])
+        records.append(dict(index=p['index'],descriptor=d,append_proof=proof))
+    root=dict(schema_version=history.CHECKPOINT_V2+'-root',snapshot_manifest=manifest,snapshot_body_sha256=local_sha,parts=records)
+    packed=gzip.compress(s.canonical(root),mtime=0)
+    handoff.update(body_sha256=s.sha(packed),body_bytes=len(packed))
+    d=handoff['descriptor'];e=d['entry'];e['payload'].update(sha256=s.sha(packed),bytes=len(packed));e['payload_name']='blob-'+s.sha(packed)+'.bin'
+    d.update(manifest_sha256=c.digest(e),manifest_bytes=len(s.canonical(e)))
+    outer.update(body_sha256=handoff['body_sha256'],body_bytes=handoff['body_bytes'],descriptor_sha256=c.digest(d))
+    handoff['append_proof_sha256']=c.digest(outer)
+    proof=v['sidecar']['grade_read_proof'];proof['restored_body_sha256']=handoff['body_sha256']
+    body=h.envelope['native_read_evidence'];body['schema_version']=history.CHECKPOINT_V2+'-fresh-reader-native-evidence'
+    native=body['native_restore_proof'];native.update(payload_sha256=handoff['body_sha256'],bytes=handoff['body_bytes'],transfer_bytes=3000)
+    body['restored_binding'].update(sha256=handoff['body_sha256'],bytes=handoff['body_bytes'])
+    body['context'].update(handoff=deepcopy(handoff),handoff_sha256=c.digest(handoff))
+    reads=[]
+    for p,r in zip(parts,records):
+        reads.append(dict(schema_version=history.CHECKPOINT_V2+'-part-native-read',index=p['index'],descriptor_sha256=c.digest(r['descriptor']),
+            root_native_proof_sha256=c.digest(native),root_body_sha256=handoff['body_sha256'],payload_sha256=p['sha256'],bytes=p['bytes'],
+            reader=proof['reader'],inventory_canonical_sha256=old.h('one actual inventory'),manifest_api_sha256=old.h([p['index'],'manifest API']),
+            payload_api_sha256=old.h([p['index'],'payload API']),started_at_utc=f"2026-10-25T12:34:0{5+p['index']}Z",completed_at_utc=f"2026-10-25T12:34:0{6+p['index']}Z",
+            HTTP_calls=15+4*p['index'],transfer_bytes=5000+1000*p['index']))
+    body['context']['multipart_readback']=dict(schema_version=history.CHECKPOINT_V2+'-complete-part-read',parts=reads,
+        completed_at_utc='2026-10-25T12:34:08Z',HTTP_calls=20,transfer_bytes=7000)
+    proof['proof_sha256']=c.digest(body)
+    h.envelope.update(grade_read_proof=deepcopy(proof),handoff_sha256=c.digest(handoff))
+    h.case.service.add_exact(e['payload_name'],packed,e['payload_asset_id'])
+    h.case.service.add_exact('manifest-'+d['manifest_sha256']+'.json',s.canonical(e),d['manifest_asset_id'])
+    h.publish();h.private_root=packed
+    return h
+
+
+def test_parent_multipart_metadata_fetches_private_root_and_all_proofs_within_original_caps(multipart_history_case,record_property):
+    h=multipart_history_case;result=h.case.execute()
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT'
+    assert result['HTTP_calls']<=140 and result['HTTP_by_lane']['authority']<=80 and result['HTTP_by_lane']['private']<=40
+    assert h.case.service.calls[-1].full_url==w.DISPATCH_URL
+    assert any('/releases/assets/801' in r.full_url for r in h.case.service.calls)
+    assert not any('/releases/assets/901' in r.full_url for r in h.case.service.calls)
+    record_property('HTTP_calls',result['HTTP_calls']);record_property('HTTP_by_lane',json.dumps(result['HTTP_by_lane'],sort_keys=True))
+
+
+@pytest.mark.parametrize('damage',['missing_last','part_order','root_proof','descriptor','payload','known_before_last','empty','extra_field'])
+def test_parent_multipart_rejects_incomplete_or_unbound_part_evidence_before_claim(multipart_history_case,damage):
+    h=multipart_history_case;body=h.envelope['native_read_evidence'];reads=body['context']['multipart_readback']
+    if damage=='missing_last':reads['parts'].pop()
+    elif damage=='part_order':reads['parts'].reverse()
+    elif damage=='root_proof':reads['parts'][0]['root_native_proof_sha256']='0'*64
+    elif damage=='descriptor':reads['parts'][0]['descriptor_sha256']='0'*64
+    elif damage=='payload':reads['parts'][0]['payload_sha256']='0'*64
+    elif damage=='known_before_last':reads['completed_at_utc']='2026-10-25T12:34:11Z'
+    elif damage=='empty':reads['parts']=[]
+    else:reads['qualified']=True
+    digest=c.digest(body);h.locator['sidecar']['grade_read_proof']['proof_sha256']=digest;h.envelope['grade_read_proof']['proof_sha256']=digest
+    h.publish()
+    with pytest.raises(history.HistoryError):h.case.execute()
+    assert not any(r.get_method() in {'POST','PATCH'} for r in h.case.service.calls)

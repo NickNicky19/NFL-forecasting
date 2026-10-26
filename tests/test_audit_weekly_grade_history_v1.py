@@ -101,11 +101,14 @@ def recovery_case(root,seed,patch,*,native=False,role='produce',current_run=NEW_
                         head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
                     return Response(dict(total_count=3,jobs=[dict(id=p['job']['api_job_id'],name=p['job']['job_id'],run_id=int(rid),head_sha=q['source_sha'],
                         status='completed',conclusion='success',started_at=p['started_at_utc'],completed_at=p['created_at_utc']) for p in (q['before_proof'],q['read_proof'],q)]))
-                old=rid==seed['old_run']
-                if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha=seed['source'],run_attempt=1,event='workflow_dispatch',
+                anchor='locator' in seed and rid==seed['receipt']['run_id'] and rid!=seed['old_run']
+                old=rid==seed['old_run'] or anchor
+                if anchor and damage.get('anchor_deleted'):return Response(b'{"message":"Not Found"}',404)
+                if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha='0'*40 if anchor and damage.get('anchor_source') else seed['source'],
+                    run_attempt=2 if anchor and damage.get('anchor_attempt') else 1,event='workflow_dispatch',
                     path='.github/workflows/lab.yml',head_branch='fictional',status='completed' if old else 'in_progress',
-                    conclusion=('failure' if damage.get('run') else 'success') if old else None,repository=dict(full_name=store.REPO),
-                    head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
+                    conclusion=('failure' if damage.get('run') or anchor and damage.get('anchor_failed') else 'success') if old else None,repository=dict(full_name=store.REPO),
+                    head_repository=dict(full_name=store.REPO),actor=dict(login='OTHER' if anchor and damage.get('anchor_actor') else 'NickNicky19',id=208912933)))
                 if old:
                     h=seed['sidecar']['checkpoint_handoff']
                     times=[(state.utc(h['snapshot_completed_at'])-timedelta(hours=2),state.utc(h['snapshot_completed_at'])-timedelta(hours=1)),
@@ -113,8 +116,11 @@ def recovery_case(root,seed,patch,*,native=False,role='produce',current_run=NEW_
                         (state.utc(seed['writer_done'])+timedelta(seconds=50),state.utc(seed['old_complete']))]
                     if 'job_times' in seed:times=[(state.utc(a),state.utc(b)) for a,b in seed['job_times']]
                     refs=(seed.get('locator') or {}).get('cohort',seed['receipt'])['jobs']
+                    if anchor:
+                        times=[(state.utc(a),state.utc(b)) for a,b in seed['anchor_job_times']]
+                        refs=seed['receipt']['jobs']
                     jobs=[dict(id=refs[r]['api_job_id'],name=name,run_id=int(rid),head_sha=seed['source'],status='completed',
-                        conclusion='failure' if damage.get('job') and i==1 else 'success',started_at=a.isoformat(),completed_at=b.isoformat())
+                        conclusion='failure' if (damage.get('job') or anchor and damage.get('anchor_job')) and i==1 else 'success',started_at=a.isoformat(),completed_at=b.isoformat())
                         for i,((r,name),(a,b)) in enumerate(zip(JOBS.items(),times))]
                 else:jobs=[dict(id=900,name=JOBS[role],run_id=int(rid),head_sha=seed['source'],status='in_progress',conclusion=None,
                     started_at=(current_at-timedelta(minutes=1)).isoformat(),completed_at=None)]
@@ -242,21 +248,32 @@ def locator_seed(tmp_path,original_seed,monkeypatch):
         current_at=(completed+timedelta(days=1)).isoformat(),durable_sha256=grade._digest(result.durable.document),
         assets=[dict(a,body=base64.b64encode(a['body']).decode()) for a in x.server.assets])
     modified['job_times']=[((began+timedelta(seconds=a)).isoformat(),(began+timedelta(seconds=b)).isoformat()) for a,b in ((1,5),(10,50),(70,120))]
+    original=original_seed['sidecar']['checkpoint_handoff']
+    modified['anchor_job_times']=[(a.isoformat(),b.isoformat()) for a,b in (
+        (state.utc(original['snapshot_completed_at'])-timedelta(hours=2),state.utc(original['snapshot_completed_at'])-timedelta(hours=1)),
+        (state.utc(original['snapshot_completed_at'])-timedelta(minutes=2),state.utc(original_seed['writer_done'])),
+        (state.utc(original_seed['writer_done'])+timedelta(seconds=50),state.utc(original_seed['old_complete'])))]
     modified['sources'].update({p:base64.b64encode((ROOT/p).read_bytes()).decode() for p in history.LOCATOR_HELPERS})
     assert result.durable.document['known_versions']==previous.durable.document['known_versions']
     assert result.durable.document['captures']==previous.durable.document['captures']
     return modified
 
 
-def test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history(tmp_path,locator_seed,monkeypatch,record_property):
-    from nfl_lab import audit_weekly_grade_v1 as grade,private_draft_store as store,state,gha_private_checkpoint as cp
-    x=recovery_case(tmp_path/'next-reader',locator_seed,monkeypatch,current_run='45000000003')
+def locator_recovery_case(root,locator_seed,monkeypatch):
+    from nfl_lab import private_draft_store as store,state,gha_private_checkpoint as cp
+    x=recovery_case(root,locator_seed,monkeypatch,current_run='45000000003')
     raw=gzip.compress(store.canonical(locator_seed['locator']),mtime=0)
-    path=tmp_path/'next-reader/locator.json.gz';x.storage.write_bytes(path,raw);x.sidecar=cp.binding(path)
-    root=deepcopy(locator_seed['original_root']);root['issued_at_utc']=locator_seed['current_at']
-    root['expires_at_utc']=(state.utc(root['issued_at_utc'])+timedelta(hours=1)).isoformat()
-    root['effective_epoch']['previous_checkpoint']=dict(schema_version=history.LOCATOR_REF,path=history.locator_filename(locator_seed['locator']),sha256=store.sha(raw))
-    x.context.go=root
+    path=Path(root)/'locator.json.gz';x.storage.write_bytes(path,raw);x.sidecar=cp.binding(path)
+    go=deepcopy(locator_seed['original_root']);go['issued_at_utc']=locator_seed['current_at']
+    go['expires_at_utc']=(state.utc(go['issued_at_utc'])+timedelta(hours=1)).isoformat()
+    go['effective_epoch']['previous_checkpoint']=dict(schema_version=history.LOCATOR_REF,path=history.locator_filename(locator_seed['locator']),sha256=store.sha(raw))
+    x.context.go=go
+    return x
+
+
+def test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history(tmp_path,locator_seed,monkeypatch,record_property):
+    from nfl_lab import audit_weekly_grade_v1 as grade
+    x=locator_recovery_case(tmp_path/'next-reader',locator_seed,monkeypatch)
     result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
     assert grade._digest(result.durable.document)==locator_seed['durable_sha256']
     assert result.proof['planning']==locator_seed['locator']['planning']
@@ -264,7 +281,61 @@ def test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_
     assert result.proof['original_grade_read_proof']['reader']['run_id']==NEW_RUN
     assert result.durable.document['known_versions']==locator_seed['known_versions']
     assert all(r.method=='GET' for r in x.calls)
+    first=next(i for i,r in enumerate(x.calls) if '/releases/' in r.full_url)
+    anchor='/actions/runs/'+locator_seed['receipt']['run_id']
+    assert {r.full_url for r in x.calls[:first] if anchor in r.full_url}=={
+        'https://api.github.com/repos/NickNicky19/NFL-forecasting'+anchor,
+        'https://api.github.com/repos/NickNicky19/NFL-forecasting'+anchor+'/jobs?per_page=100&page=1'}
+    assert len([r for r in x.calls if anchor in r.full_url])>=4
     record_property('actual_fictional_GET_calls',len(x.calls))
+
+
+@pytest.mark.parametrize('damage',['anchor_deleted','anchor_failed','anchor_attempt','anchor_source','anchor_actor','anchor_job'])
+def test_child_independently_rejects_bad_forecast_anchor_before_first_private_GET(tmp_path,locator_seed,monkeypatch,damage):
+    x=locator_recovery_case(tmp_path/'reject-anchor',locator_seed,monkeypatch);x.damage[damage]=True
+    def transport(request,timeout):
+        assert '/releases/' not in request.full_url,'FIRST_PRIVATE_GET_BEFORE_ORIGINAL_ANCHOR_AUTHENTICATION'
+        return x.api(request,timeout)
+    with pytest.raises(history.HistoryError):history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=transport)
+    anchor='/actions/runs/'+locator_seed['receipt']['run_id']
+    assert any(anchor in r.full_url for r in x.calls)
+    assert not any('/releases/' in r.full_url for r in x.calls)
+
+
+@pytest.fixture
+def multipart_locator_seed(tmp_path,original_seed,monkeypatch):
+    """Same-source current V2 dependency, real grade/parts/native byte codec."""
+    from nfl_lab import audit_weekly_grade_v1 as grade
+    actual_grade=grade.grade;actual_parts=grade._write_snapshot_v2
+    def split(storage,output,document,*,part_bytes=None):
+        size=sum(len(c) for c in grade._canonical_chunks(document))
+        return actual_parts(storage,output,document,part_bytes=min(64 << 20,(size+1)//2))
+    monkeypatch.setattr(grade,'_write_snapshot_v2',split)
+    monkeypatch.setattr(grade,'grade',lambda *a,**kw:actual_grade(*a,**kw,wire_version=2))
+    return locator_seed.__wrapped__(tmp_path,original_seed,monkeypatch)
+
+
+def test_same_source_multipart_history_recovers_all_parts_and_original_known_clocks(tmp_path,multipart_locator_seed,monkeypatch,record_property):
+    from nfl_lab import audit_weekly_grade_v1 as grade
+    seed=multipart_locator_seed;x=locator_recovery_case(tmp_path/'parts-reader',seed,monkeypatch)
+    result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert grade._digest(result.durable.document)==seed['durable_sha256']
+    assert result.durable.document['known_versions']==seed['known_versions']
+    assert result.proof['original_grade_read_proof']==seed['sidecar']['grade_read_proof']
+    parts=result.proof['native_part_recovery']
+    assert len(parts['parts'])==2 and parts['HTTP_calls']<=40
+    assert all(p['reader']['run_id']=='45000000003' for p in parts['parts'])
+    assert parts['completed_at_utc']<=result.proof['actual_recovered_at']
+    assert all(r.method=='GET' for r in x.calls)
+    record_property('recovery_total_GETs',len(x.calls));record_property('part_reader_HTTP_calls',parts['HTTP_calls'])
+
+
+def test_multipart_historical_reader_rejects_foreign_source_before_private_GET(tmp_path,multipart_locator_seed,monkeypatch):
+    x=locator_recovery_case(tmp_path/'foreign-source',multipart_locator_seed,monkeypatch)
+    x.context.client.source_sha='0'*40
+    with pytest.raises(history.HistoryError,match='SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED'):
+        history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert not any('/releases/' in r.full_url for r in x.calls)
 
 def test_cross_run_native_restore_retains_original_clocks_and_primary_assignment(case):
     from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_operations_v1 as ops,state

@@ -591,19 +591,27 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
         require(c.sha(api.content(path,cohort["source_sha"],history.LIMITS["source_bytes"]))==sha,
             "HISTORY_EXECUTABLE_SOURCE_CHANGED_OR_ADAPTER_REQUIRED")
     require(type(client) is template.ParentGETClient,"ACTUAL_PRIVATE_TEMPLATE_READER_REUSED")
-    descriptor=value["sidecar"]["evidence_descriptor"];entry=descriptor["entry"]
-    client.asset_ids.update({descriptor["manifest_asset_id"],entry["payload_asset_id"]})
+    def private_metadata(descriptor):
+        entry=descriptor["entry"]
+        client.asset_ids.update({descriptor["manifest_asset_id"],entry["payload_asset_id"]})
+        saved=client.read_asset(descriptor["manifest_asset_id"],"manifest-"+descriptor["manifest_sha256"]+".json",
+            descriptor["manifest_bytes"],descriptor["manifest_sha256"])
+        require(saved==store.canonical(entry),"EXACT_HISTORY_EVIDENCE_NATIVE_MANIFEST")
+        payload=entry["payload"]
+        body=client.read_asset(entry["payload_asset_id"],entry["payload_name"],payload["bytes"],payload["sha256"])
+        return body
+    # One bounded metadata cohort retains a fresh draft boundary before and
+    # after BOTH objects; every asset still gets its own metadata and byte GET.
     client.guard();client.draft()
-    saved=client.read_asset(descriptor["manifest_asset_id"],"manifest-"+descriptor["manifest_sha256"]+".json",
-        descriptor["manifest_bytes"],descriptor["manifest_sha256"])
-    require(saved==store.canonical(entry),"EXACT_HISTORY_EVIDENCE_NATIVE_MANIFEST")
-    payload=entry["payload"]
-    packed=client.read_asset(entry["payload_asset_id"],entry["payload_name"],payload["bytes"],payload["sha256"])
+    packed=private_metadata(value["sidecar"]["evidence_descriptor"])
+    h=value["sidecar"]["checkpoint_handoff"]
+    private_root=private_metadata(h["descriptor"]) if history.checkpoint_version(h)==history.CHECKPOINT_V2 else None
     client.draft();client.guard()
     history.validate_parent_envelope(packed,value,client,jobs,code_pins=p["producer"]["code_pins"],
-        static_root=document["root_template"],at=clock())
+        static_root=document["root_template"],at=clock(),private_root=private_root)
     storage.register_root(workspace/"history-metadata")
     storage.write_bytes(workspace/"history-metadata/ORIGINAL_READER_EVIDENCE.json.gz",packed)
+    if private_root is not None:storage.write_bytes(workspace/"history-metadata/ORIGINAL_NATIVE_ROOT_METADATA.json.gz",private_root)
     reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
     return _HistoryCapture(receipt,c.sha(receipt_raw),value,reference,head,parent,cohorts,_KEY).verify(parent)
 

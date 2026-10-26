@@ -261,6 +261,8 @@ def _archive(context,storage,clock):
         require(acceptance.restored_identity(p)==current and state.utc(p["created_at_utc"])<=state.utc(clock()),"ACTUAL_CURRENT_ARCHIVE_PROOF_IDENTITY")
     require(set(EPOCH_ROLES|OPS_ROLES)<={n.removeprefix("context/").removesuffix(".json") for n in aliases if n.startswith("context/")},
         "REGISTERED_OPERATIONAL_CONTEXT_MISSING_NO_POSTHOC_POPULATION")
+    if (context.go.get("effective_epoch") or {}).get("schema_version")=="audit-weekly-recurring-v4-context":
+        require("context/ops_planning.json" in aliases,"V4_OPERATIONAL_PREVALUE_PLANNING_CONTEXT_REQUIRED")
     context.verify()
     return restored,index
 
@@ -386,10 +388,12 @@ def _checkpoint_auth(context,clock):
     """Bind each typed callback to the preceding live native operation."""
     from . import audit_weekly_grade_checkpoint_v1 as checkpoint,gha_private_checkpoint as cp
     from . import audit_weekly_grade_v1 as grade,audit_weekly_archive_v1 as archive,state
+    from . import audit_weekly_grade_history_v1 as history
     append_scope=restore_scope=native_scope=None
     snapshot_restored=False
+    private_wire=None
     def authenticate(request):
-        nonlocal append_scope,restore_scope,native_scope,snapshot_restored
+        nonlocal append_scope,restore_scope,native_scope,snapshot_restored,private_wire
         context.verify()
         if type(request) is not dict:return False
         kind=request.get("kind","")
@@ -410,7 +414,16 @@ def _checkpoint_auth(context,clock):
             if kind=="CHECKPOINT_APPEND_NATIVE_HANDOFF":
                 if append_scope is None:return False
                 handoff=x["handoff"];checkpoint.safe_handoff(handoff)
-                return handoff["snapshot_sha256"]==context.snapshot.sha256 and handoff["body_sha256"]==context.snapshot.binding["sha256"] \
+                multipart=history.checkpoint_version(handoff)==history.CHECKPOINT_V2
+                if set(x)!={"handoff_sha256","handoff","api_evidence"}|({"root_link"} if multipart else set()):return False
+                if multipart:
+                    ref=cp.binding(Path(context.request["output"])/"checkpoint/CHECKPOINT_ROOT.json.gz")
+                    if ref["sha256"]!=handoff["body_sha256"] or ref["bytes"]!=handoff["body_bytes"]:return False
+                    link=checkpoint.append_root_link(context.snapshot,handoff,storage=context.storage,native_binding=ref)
+                    if x.get("root_link")!=link or link["local_binding"]!=context.snapshot.binding \
+                        or link["local_binding"]["sha256"]!=append_scope["body_sha256"]:return False
+                elif handoff["body_sha256"]!=context.snapshot.binding["sha256"]:return False
+                return handoff["snapshot_sha256"]==context.snapshot.sha256 \
                     and handoff["producer"]==identity and handoff["qualified_package_sha256"]==append_scope["qualified_package_sha256"] \
                     and handoff["epoch_sha256"]==context.registered.epoch.sha256 and x["handoff_sha256"]==digest(handoff)
             if context.request["phase"]!=PHASES[1]:return False
@@ -421,10 +434,22 @@ def _checkpoint_auth(context,clock):
                 restore_scope=deepcopy(x);return True
             if kind=="CHECKPOINT_NATIVE_RESTORED_BODY":
                 if restore_scope is None or native_scope is not None or any(x.get(k)!=v for k,v in restore_scope.items()):return False
+                multipart=history.checkpoint_version(handoff)==history.CHECKPOINT_V2
+                if set(x)!=set(restore_scope)|{"final_api_evidence","native_restore_proof","restored_binding"}|({"multipart_readback"} if multipart else set()):return False
                 proof=x["native_restore_proof"]
                 if x.get("restored_binding")!=context.checkpoint_binding or proof["payload_sha256"]!=handoff["body_sha256"] \
                     or proof["bytes"]!=handoff["body_bytes"] or proof["process_identity"]!=identity["process_identity"] \
                     or proof["job"]!=context.checkpoint_client.job:return False
+                if multipart:
+                    raw=archive.read_owned(context.storage,context.checkpoint_binding,8 << 20,raw=True)
+                    private_wire=history.private_checkpoint_root(raw,handoff);checkpoint._private_parts(handoff,private_wire)
+                    history.validate_multipart_readback(x["multipart_readback"],handoff,proof,identity,known_by_at=clock(),wire=private_wire)
+                    folder=Path(context.checkpoint_binding["path"]).parent
+                    for p,r,part in zip(private_wire["snapshot_manifest"]["parts"],private_wire["parts"],x["multipart_readback"]["parts"]):
+                        saved=archive.read_owned(context.storage,cp.binding(folder/f"PART_{p['index']:02d}_NATIVE_READ.json"),16 << 10)
+                        manifest=archive.read_owned(context.storage,cp.binding(folder/f"PART_{p['index']:02d}_NATIVE_MANIFEST.json"),16 << 10,raw=True)
+                        actual=context.storage.validate_reference(folder/p["name"],p["sha256"])
+                        if saved!=part or manifest!=canonical(r["descriptor"]["entry"]) or actual["bytes"]!=p["bytes"]:return False
                 native_scope=deepcopy(x);return True
             return False
         if request.get("schema_version")!=grade.VERSION+"-authentication-request" or set(request)!=keys or native_scope is None:return False
@@ -434,10 +459,14 @@ def _checkpoint_auth(context,clock):
         if kind=="FRESH_READER_GRADING_DURABILITY" and snapshot_restored:
             handoff=context.request["inputs"]["checkpoint_handoff"]
             body=archive.read_owned(context.storage,cp.binding(context.checkpoint_proof_path),256 << 10)
-            expected_body=dict(schema_version=checkpoint.VERSION+"-fresh-reader-native-evidence",
+            version=history.checkpoint_version(handoff)
+            expected_body=dict(schema_version=version+"-fresh-reader-native-evidence",
                 context={k:v for k,v in native_scope.items() if k not in {"native_restore_proof","restored_binding"}},
                 native_restore_proof=native_scope["native_restore_proof"],restored_binding=native_scope["restored_binding"],known_by_at=body["known_by_at"])
             if body!=expected_body or not state.utc(body["native_restore_proof"]["created_at_utc"])<=state.utc(body["known_by_at"])<=state.utc(clock()):return False
+            if version==history.CHECKPOINT_V2:
+                history.validate_multipart_readback(body["context"]["multipart_readback"],handoff,body["native_restore_proof"],cp.client_identity(context.checkpoint_client),
+                    known_by_at=body["known_by_at"],wire=private_wire)
             expected=dict(schema_version=grade.VERSION+"-durability",snapshot_sha256=handoff["snapshot_sha256"],
                 restored_body_sha256=handoff["body_sha256"],known_by_at=body["known_by_at"],producer=handoff["producer"],
                 reader=cp.client_identity(context.checkpoint_client),proof_sha256=state.digest(body))
@@ -550,6 +579,7 @@ def execute(context,*,transport=None,fetch=None,clock=None):
             previous=previous.durable if previous is not None else None,clock=clock)
         if previous is not None:_retains(previous,snapshot)
         context.snapshot=snapshot
+        context.storage=storage
         # The sealed snapshot now owns every row. Release duplicate live input
         # graphs before the unchanged native checkpoint decoder runs.
         del captures,observations,pop
