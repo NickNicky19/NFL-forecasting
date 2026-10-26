@@ -31,6 +31,7 @@ import test_audit_weekly_controller_v1 as old
 from test_audit_weekly_controller_v1 import system as controller_system
 from test_private_draft_store_v2 import Server, Response
 from test_owner_private_bootstrap import qualification, RUN as QRUN
+from test_audit_weekly_template_v1 import dual_document
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN = "40000000009"
@@ -299,6 +300,25 @@ def test_history_locator_protocol_requires_new_explicit_owner_registration_conte
         with pytest.raises(w.RegistrationError):w.context(bad)
     bad=deepcopy(go['effective_epoch']);bad['history_protocol']='implicit-old-history-migration'
     with pytest.raises(w.RegistrationError):w.context(bad)
+
+
+def test_v3_owner_registration_seals_both_runtime_packages_without_changing_native_abi(case,dual_document):
+    from nfl_lab import audit_weekly_grade_history_v1 as history
+    go=deepcopy(case.root)
+    for name in ('schema_version','qualified_runtime','pending_census','prior_capture_qualified_runtime'):
+        go[name]=deepcopy(dual_document['root_template'][name])
+    go['effective_epoch'].update(schema_version=w.HISTORY_CONTEXT_SCHEMA,parent_code_pins=deepcopy(case.pins),history_protocol=history.LOCATOR_VERSION)
+    before=s.canonical(go)
+    prepared=w.prepare_template(go,case.readiness)
+    assert prepared.document['schema_version']==t.STATIC_V3
+    assert prepared.document['root_template']['prior_capture_qualified_runtime']==go['prior_capture_qualified_runtime']
+    assert prepared.document['root_template']['qualified_runtime']==go['qualified_runtime']
+    assert s.canonical(go)==before and not case.server.calls
+    assert set(prepared.document['root_template'])==t.ROOT_V3_KEYS
+    assert set(w.OUTPUT_FILES)==set(w.PHASES)
+    go['effective_epoch']=deepcopy(case.root['effective_epoch'])
+    with pytest.raises(w.RegistrationError,match='EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION'):
+        w.prepare_template(go,case.readiness)
 
 
 def test_generated_documents_pass_unchanged_bootstrap_after_actual_completed_three_job_chain(case):
@@ -594,3 +614,4 @@ def test_the_actual_complete_producer_inventory_passes_registration_path_admissi
     assert len(actual) <= w.LIMITS["source_pins"]
     assert "reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json" in actual
     w._pins(actual)
+from test_audit_weekly_template_v1 import dual_runtime_root

@@ -155,7 +155,7 @@ def build_request(phase, *, code_pins, cache, state_root, output, inputs):
 
 def prepare_template(go, readiness):
     """Pure static derivative of the FULL Root; this confers no IO authority."""
-    require(type(go) is dict and set(go) == template.ROOT_KEYS and go["approved"] is True
+    require(type(go) is dict and set(go) == template.root_keys(go) and go["approved"] is True
         and go["operation"] == "CONTROLLER_REGISTRATION", "FULL_OWNER_REGISTRATION_ROOT_REQUIRED")
     ctx=context(go["effective_epoch"])
     _pins(go["code_pins"])
@@ -165,7 +165,9 @@ def prepare_template(go, readiness):
     root["approved"] = False
     for key in ("issued_at_utc", "expires_at_utc", "operation", "effective_epoch"):
         root[key] = None
-    return template.prepare(dict(schema_version=template.VERSION + ("-static-v2" if ctx["schema_version"]==HISTORY_CONTEXT_SCHEMA else "-static"), source_sha=go["source_sha"],
+    version = template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"]==HISTORY_CONTEXT_SCHEMA else "-static")
+    require(version != template.STATIC_V3 or ctx['schema_version'] == HISTORY_CONTEXT_SCHEMA, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
+    return template.prepare(dict(schema_version=version, source_sha=go["source_sha"],
         code_pins=deepcopy(go["code_pins"]), readiness=deepcopy(readiness), root_template=root))
 
 
@@ -404,7 +406,7 @@ def authenticate_child(args, env, *, transport=None):
     checked = hosted.child_context(args, env, args.phase)
     request, authority, job, go = checked
     validate_request(request, args.phase)
-    require(type(go) is dict and set(go) == template.ROOT_KEYS and go["operation"] == "CONTROLLER_REGISTRATION"
+    require(type(go) is dict and set(go) == template.root_keys(go) and go["operation"] == "CONTROLLER_REGISTRATION"
         and go["approved"] is True and go["code_pins"] == request["code_pins"]
         and go["jobs"] == dict(produce=bootstrap.JOBS["write"], restore=bootstrap.JOBS["read"], consume=bootstrap.JOBS["seal"])
         and go["failure_restorer"] == "audit-weekly-failure-restore-v1", "FULL_UNCHANGED_OWNER_REGISTRATION_ROOT")

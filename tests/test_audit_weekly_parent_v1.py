@@ -832,7 +832,7 @@ def history_case(case):
     The real Parent/GET/CAS pipeline is used. No Producer grader, numerical
     worker, snapshot body, provider, or forecast rows are imported or decoded.
     """
-    x=case.x;x.template_schema=t.VERSION+"-static-v2";case.reseal()
+    x=case.x;x.template_schema=t.STATIC_V3 if case.root['schema_version']==t.ROOT_V3 else t.VERSION+"-static-v2";case.reseal()
     case.service.assets[:]=[a for a in case.service.assets if a["id"] not in {701,702}]
     case.service.add_exact(x.template_seal["descriptor"]["entry"]["payload_name"],x.prepared.body,701)
     case.service.add_exact("manifest-"+x.template_seal["descriptor"]["manifest_sha256"]+".json",s.canonical(x.template_seal["descriptor"]["entry"]),702)
@@ -897,6 +897,98 @@ def history_case(case):
         return raw
     publish()
     return SimpleNamespace(case=case,locator=locator,envelope=envelope,publish=publish)
+
+
+def test_v3_parent_routes_current_checkpoint_with_separate_sealed_old_capture_runtime(case,record_property):
+    """Actual typed Parent, native template GET, CAS and dispatch; fake HTTP."""
+    from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
+    x=case.x
+    census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+        as_of_utc=x.package['qualification']['before_proof']['started_at_utc'],owner_evidence_sha256='a'*64,reservations=[])
+    x.package['quota_reservation'].update(pending_census_sha256=c.digest(census),pending_records=0)
+    x.locators['qualified_runtime_package']=deepcopy(x.package)
+    case.root.update(schema_version=t.ROOT_V3,qualified_runtime=deepcopy(x.package),pending_census=deepcopy(census),
+        prior_capture_qualified_runtime=dict(schema_version=t.PRIOR_RUNTIME,purpose='PRIOR_CAPTURE_QUALIFIED_RUNTIME',
+            anchor=dict(feed_sha256='1'*64,receipt_sha256='2'*64),
+            qualified_runtime=fictional_runtime_metadata(x.package,census),pending_census=deepcopy(census),root_static_sha256=None))
+    x.template_schema=t.STATIC_V3
+    h=history_case.__wrapped__(case)
+    result=case.execute()
+    root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert root['schema_version']==t.ROOT_V3
+    assert root['effective_epoch']['schema_version']==history.CONTEXT_V4
+    assert root['effective_epoch']['previous_capture']==h.locator['anchor']
+    assert root['prior_capture_qualified_runtime']==case.root['prior_capture_qualified_runtime']
+    assert root['qualified_runtime']==x.package
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT' and result['dispatches']==1
+    assert result['HTTP_calls']==len(case.service.calls)<=140
+    assert result['HTTP_by_lane']['private']<=40
+    assert len(c.canonical(root))<=60<<10
+    assert len(c.canonical(case.service.dispatch_body))<=65535
+    record_property('v3_current_history_HTTP_calls',result['HTTP_calls'])
+
+
+def test_v3_parent_reads_old_checkpoint_using_separately_bound_GET_only_client(case,monkeypatch,record_property):
+    from test_audit_weekly_controller_bootstrap_v1 import dual_runtime_root
+    x=case.x;old_package=deepcopy(x.package)
+    census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+        as_of_utc=old_package['qualification']['before_proof']['started_at_utc'],owner_evidence_sha256='a'*64,reservations=[])
+    old_package['quota_reservation'].update(pending_census_sha256=c.digest(census),pending_records=0)
+    x.package=old_package;x.locators['qualified_runtime_package']=deepcopy(old_package)
+    case.root.update(qualified_runtime=deepcopy(old_package),pending_census=deepcopy(census))
+    h=history_case.__wrapped__(case)
+    old_assets=deepcopy(case.service.assets)
+    value=dual_runtime_root(case.root,old_package,census,h.locator['anchor'],original_root=h.envelope['root_go'])
+    case.root.clear();case.root.update(value)
+    x.package=deepcopy(value['qualified_runtime']);current=x.package['binding'];old_binding=old_package['binding']
+    x.locators['qualified_runtime_package']=deepcopy(x.package)
+    x.template_seal['binding']=deepcopy(current)
+    x.template_seal['descriptor']['entry']['binding_sha256']=c.digest(current)
+    x.template_schema=t.STATIC_V3;case.reseal()
+    case.service.tag=current['tag_name'];case.service.q=x.package['qualification'];case.service.assets=[]
+    case.service.add_exact(current['canary_name'],s.probe.fixture(current['origin_run_id']),current['canary_asset_id'])
+    descriptor=x.template_seal['descriptor']
+    case.service.add_exact(descriptor['entry']['payload_name'],x.prepared.body,descriptor['entry']['payload_asset_id'])
+    case.service.add_exact('manifest-'+descriptor['manifest_sha256']+'.json',s.canonical(descriptor['entry']),descriptor['manifest_asset_id'])
+    # The old store retains its canary and reader evidence; the current store
+    # contains the genuinely distinct static template, not old asset IDs.
+    old_assets=[a for a in old_assets if a['id'] not in {701,702}]
+    q=old_package['qualification'];rid=q['run_id']
+    x.api.data[c.run_url(rid)]=old.run(rid,q['source_sha'],'fictional',c.OWNER)
+    x.api.data[c.jobs_url(rid)]=dict(total_count=3,jobs=[old.job(rid,q['source_sha'],p['job']['job_id'],
+        p['job']['api_job_id'],p['started_at_utc'],p['created_at_utc']) for p in (q['before_proof'],q['read_proof'],q)])
+    original_call=Service.__call__
+    def two_stores(service,request,timeout):
+        url=request.full_url
+        if service is case.service and '/releases/' in url:
+            assert request.get_method()=='GET' and request.data is None
+            assert service.parent_verified
+            service.calls.append(request)
+            for binding,assets in ((old_binding,old_assets),(current,service.assets)):
+                release=s.API+'/releases/'+str(binding['release_id'])
+                if url==release:return Response(dict(id=binding['release_id'],draft=True,published_at=None,
+                    tag_name=binding['tag_name'],url=release,assets=[service.metadata(a) for a in assets]))
+                if url==release+'/assets?per_page=100&page=1':return Response([service.metadata(a) for a in assets])
+            asset_id=int(url.rsplit('/',1)[-1]);matches=[a for a in old_assets+service.assets if a['id']==asset_id]
+            assert len(matches)==1
+            return Response(matches[0]['body'] if request.get_header('Accept')=='application/octet-stream' else service.metadata(matches[0]))
+        return original_call(service,request,timeout)
+    monkeypatch.setattr(Service,'__call__',two_stores)
+    result=case.execute()
+    root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT' and result['dispatches']==1
+    assert root['qualified_runtime']==x.package
+    assert root['prior_capture_qualified_runtime']['qualified_runtime']==old_package
+    assert root['effective_epoch']['previous_checkpoint']['sha256']==s.sha(gzip.compress(s.canonical(h.locator),mtime=0))
+    assert root['effective_epoch']['previous_capture']==h.locator['anchor']
+    assert root['effective_epoch']['previous_checkpoint']['path']==history.locator_filename(h.locator)
+    assert result['HTTP_calls']==len(case.service.calls)<=140
+    assert result['HTTP_by_lane']['private']<=40
+    assert all(r.get_method()=='GET' for r in case.service.calls if '/releases/' in r.full_url)
+    for binding in (old_binding,current):
+        assert any(r.full_url==s.API+'/releases/'+str(binding['release_id']) for r in case.service.calls)
+    record_property('v3_prior_history_HTTP_calls',result['HTTP_calls'])
+    record_property('v3_prior_history_private_GETs',result['HTTP_by_lane']['private'])
 
 
 @pytest.mark.parametrize("resolved,expected,week",[(False,"GRADE_ONLY",8),(True,"FUTURE_CAPABLE",9)])

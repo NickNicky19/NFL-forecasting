@@ -64,7 +64,8 @@ def restore(context,*,transport=None):
     require(value["feed_sha256"]==previous["feed_sha256"] and value["run_id"]!=context.client.run_id,
         "EXACT_ROOT_REGISTERED_DISTINCT_PRIOR_CAPTURE")
     output=archive.fresh(storage,output);journal=storage.register_root(output/"journal")
-    package=context.go["qualified_runtime"]
+    from . import audit_weekly_template_v1 as template
+    package,pending=template.capture_runtime(context.go)
     extra=discovery.routes(value,package)
     clients=[]
     def factory(operation):
@@ -94,13 +95,13 @@ def restore(context,*,transport=None):
     dgrant=discovery.bind_discovery_source(plain,plain_sha,package,bootstrap_proof=context.proof,
         current_root_go_sha256=context.root_sha256,historical_source_sha256=historical,authenticate=grant_auth)
     discovered=discovery.discover(plain,plain_sha,package,factory,storage=storage,output=output/"discovery",
-        historical_source_sha256=historical,pending_census=context.go["pending_census"],
+        historical_source_sha256=historical,pending_census=pending,
         current_root_go_sha256=context.root_sha256,authenticate=authenticate_client,discovery_grant=dgrant)
     discovered.verify();doc=discovered.document
     request=retained.prepare_request(worker.ROOT,doc["reader_handoff"],package,
         exporter_api_job_id=doc["exporter_api_job_id"],historical_source_sha256=historical,
         cache=p["cache"],state_root=p["state_root"],output=output/"restored",
-        pending_census=context.go["pending_census"],pending_reservations=doc["pending_reservations"])
+        pending_census=pending,pending_reservations=doc["pending_reservations"])
     request["approved"]=True
     native={key:context.authority[key] for key in ("repository","owner_root_go_sha256","source_sha","run_id",
         "run_attempt","job_id","workflow_ref","api_job_id","expires_at_utc")}

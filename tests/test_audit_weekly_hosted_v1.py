@@ -15,6 +15,7 @@ from nfl_lab import audit_weekly_hosted_v1 as hosted, audit_weekly_epoch_v1 as e
 from nfl_lab import private_draft_store as store, operational_failure_v1 as failure
 from nfl_lab.operational_storage import OperationalStorage
 from nfl_lab.owned_reference_batch import validate_owned_references
+from test_audit_weekly_template_v1 import dual_document
 
 
 def test_calendar_uses_new_york_kickoff_clock_across_both_dst_offsets_and_not_scores():
@@ -125,6 +126,22 @@ def test_actual_root_admission_accepts_original_and_separate_source_context(sepa
     with patch.object(hosted.retained,'validate_registration') as retained_check:
         assert hosted.validate_root(root,now=at) is root
     retained_check.assert_called_once_with(None)
+
+
+def test_actual_root_v3_admission_keeps_exact_sealed_prior_package_and_v2_keys(dual_document):
+    from nfl_lab import audit_weekly_template_v1 as template
+    root,at=controller_admission_root(separate=True)
+    for name in ('schema_version','qualified_runtime','pending_census','prior_capture_qualified_runtime'):
+        root[name]=deepcopy(dual_document['root_template'][name])
+    old=store.canonical(root['prior_capture_qualified_runtime'])
+    with patch.object(hosted.retained,'validate_registration'):
+        assert hosted.validate_root(root,now=at) is root
+    assert store.canonical(root['prior_capture_qualified_runtime'])==old
+    assert set(root)==template.ROOT_V3_KEYS and len(root['code_pins'])==128
+    changed=deepcopy(root);changed['schema_version']=hosted.VERSION+'-root-GO'
+    with patch.object(hosted.retained,'validate_registration') as guarded,pytest.raises(store.StoreError,match='CLOSED_CURRENT_WEEKLY_ROOT_REQUIRED'):
+        hosted.validate_root(changed,now=at)
+    guarded.assert_not_called()
 
 
 @pytest.mark.parametrize('damage',['extra','unknown_schema','parent_sha','missing_pin','invalid_pin','too_many_pins'])
