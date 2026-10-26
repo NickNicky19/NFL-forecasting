@@ -1,0 +1,70 @@
+diff --git a/tests/test_weekly_selected_rankings.py b/tests/test_weekly_selected_rankings.py
+index 6287f4a..082b757 100644
+--- a/tests/test_weekly_selected_rankings.py
++++ b/tests/test_weekly_selected_rankings.py
+@@ -135,6 +135,50 @@ class SelectedRankingsTests(unittest.TestCase):
+             with self.assertRaises(ValueError): r.write_public(out, td, atomic_json, clock=lambda: "2031-10-25T17:00:00+00:00")
+             self.assertFalse((Path(td) / "weekly-selected-rankings.json").exists())
+ 
++    def test_registered_current_policy_freeze_preserves_original_issued_bytes(self):
++        board, doc = fixture()
++        board["execution_model"] = {"model": r.CURRENT_MODEL}
++        for player in board["players"]:
++            player["reference_model"] = r.CURRENT_MODEL
++        doc["display_board_sha256"] = doc["canonical_board_sha256"] = o.digest(board)
++        doc["board_contract_sha256"] = o.digest(o.board_contract(board))
++        old = make(board, doc)
++        self.assertEqual(old["policy_sha256"], r.CURRENT_POLICY_SHA)
++        self.assertNotEqual(old["policy_sha256"], r.POLICY_SHA)
++        with tempfile.TemporaryDirectory() as td:
++            data = Path(td)
++            pointer = r.write_public(old, data, atomic_json, clock=lambda: PERSIST)
++            originals = {path: path.read_bytes() for path in data.rglob("*.json")}
++            frozen = make(board, doc, now="2031-10-25T18:00:00+00:00",
++                          previous=old, previous_receipt=pointer)
++            self.assertEqual(frozen["picks"], old["picks"])
++            current = r.write_public(frozen, data, atomic_json,
++                                     clock=lambda: "2031-10-25T18:00:01+00:00")
++            paths = r.validate_document(frozen, current, board, o.digest(board), doc, root=data)
++            self.assertIn(pointer["path"], paths)
++            for path, original in originals.items():
++                if path.name != "weekly-selected-rankings.json":
++                    self.assertEqual(path.read_bytes(), original)
++
++    def test_frozen_original_unknown_or_misbound_policy_still_rejects(self):
++        for kind in ("unknown", "misbound"):
++            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as td:
++                board, doc = fixture()
++                old = make(board, doc)
++                old["policy"] = {**old["policy"], "version": "UNREGISTERED_FICTIONAL_POLICY"}
++                if kind == "unknown":
++                    old["policy_sha256"] = o.digest(old["policy"])
++                pointer = r.write_public(old, td, atomic_json, clock=lambda: PERSIST)
++                frozen = make(board, doc)
++                frozen["prepared_at"] = "2031-10-25T18:00:00+00:00"
++                frozen["frozen_proofs"] = [dict(key=list(r.identity(item)),
++                    receipt_sha256=o.digest(pointer), persisted_at=PERSIST)
++                    for side in frozen["picks"].values() for item in side]
++                current = r.write_public(frozen, td, atomic_json,
++                                         clock=lambda: "2031-10-25T18:00:01+00:00")
++                with self.assertRaisesRegex(ValueError, "ranking original membership changed"):
++                    r.validate_document(frozen, current, board, o.digest(board), doc, root=td)
++
+     def test_bad_row_hash_and_previous_receipt_rejected(self):
+         board, doc = fixture(); out = make(board, doc)
+         bad = copy.deepcopy(out["picks"]["over"][0]); bad["selected_row_sha256"] = "f" * 64
+diff --git a/tools/weekly_selected_rankings.py b/tools/weekly_selected_rankings.py
+index 1c64bd9..cf3d1d5 100644
+--- a/tools/weekly_selected_rankings.py
++++ b/tools/weekly_selected_rankings.py
+@@ -264,7 +264,9 @@ def validate_document(doc, pointer, board, board_hash, selected_doc, *, root=Non
+             original, _ = overlay.read_bound(root / receipt["path"], receipt["sha256"], limit=LIMIT)
+             old = [i for side in original["picks"].values() for i in side if identity(i) == k]
+             current = next(i for side in doc["picks"].values() for i in side if identity(i) == k)
+-            if len(old) != 1 or old[0] != current or original["policy_sha256"] != POLICY_SHA:
++            if (len(old) != 1 or old[0] != current
++                    or original["policy_sha256"] not in {POLICY_SHA, CURRENT_POLICY_SHA}
++                    or original["policy_sha256"] != overlay.digest(original["policy"])):
+                 raise ValueError("ranking original membership changed")
+             paths.update({receipt_path, receipt["path"]})
+     return paths

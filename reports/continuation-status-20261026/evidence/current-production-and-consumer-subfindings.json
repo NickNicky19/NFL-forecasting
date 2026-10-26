@@ -1,0 +1,24 @@
+[
+  {
+    "actual": "Hardcoded legacy policy hash rejects legitimate original Current Classic records after kickoff; misbound original policy body also accepted.",
+    "affected_commit": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+    "evidence": "../../main-count-ranking-release-20261026/RANKING-BEFORE.log",
+    "expected": "Accept only registered original policies with self-consistent policy bodies and immutable original membership/row/clock evidence.",
+    "id": "SYS-014-RANK-FREEZE",
+    "path": "tools/weekly_selected_rankings.py:validate_document",
+    "repair": "Exact Main-only two-path preview; included in combined5cc5224; not installed.",
+    "reproduced": "Actual run40214438233/job121232413479 and independent controlled before/after regressions.",
+    "severity": "high current operational refresh blocker"
+  },
+  {
+    "actual": "Five expired absent offers trigger KeyError/global fallback before active selections.",
+    "affected_source": "prepared V4 consumer in5cc5224 parent48b3d5d, not currently deployed",
+    "evidence": "../../main-count-ranking-release-20261026/AFTER-REAL-CONSUMER-ACCEPTED.json",
+    "expected": "Authenticate all identities and original row semantics; only active rows require actual offers; expired rows do not invalidate valid future rows.",
+    "id": "SYS-001-CONSUMER-EXPIRED-OFFER",
+    "path": "tools/weekly_public_feed_v4.py:validate_feed",
+    "repair": "Versioned current consumer registration and code correction in local5cc5224; not installed.",
+    "reproduced": "Real1620-row feed/live453 board ->0 selected fallback; after fix127 future rows11cats accepted.",
+    "severity": "high selected-feed installation blocker"
+  }
+]

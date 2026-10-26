@@ -1,0 +1,127 @@
+F.                                                                     [100%]
+=================================== FAILURES ===================================
+_ SelectedRankingsTests.test_registered_current_policy_freeze_preserves_original_issued_bytes _
+
+self = <test_weekly_selected_rankings.SelectedRankingsTests testMethod=test_registered_current_policy_freeze_preserves_original_issued_bytes>
+
+    def test_registered_current_policy_freeze_preserves_original_issued_bytes(self):
+        board, doc = fixture()
+        board["execution_model"] = {"model": r.CURRENT_MODEL}
+        for player in board["players"]:
+            player["reference_model"] = r.CURRENT_MODEL
+        doc["display_board_sha256"] = doc["canonical_board_sha256"] = o.digest(board)
+        doc["board_contract_sha256"] = o.digest(o.board_contract(board))
+        old = make(board, doc)
+        self.assertEqual(old["policy_sha256"], r.CURRENT_POLICY_SHA)
+        self.assertNotEqual(old["policy_sha256"], r.POLICY_SHA)
+        with tempfile.TemporaryDirectory() as td:
+            data = Path(td)
+            pointer = r.write_public(old, data, atomic_json, clock=lambda: PERSIST)
+            originals = {path: path.read_bytes() for path in data.rglob("*.json")}
+            frozen = make(board, doc, now="2031-10-25T18:00:00+00:00",
+                          previous=old, previous_receipt=pointer)
+            self.assertEqual(frozen["picks"], old["picks"])
+            current = r.write_public(frozen, data, atomic_json,
+                                     clock=lambda: "2031-10-25T18:00:01+00:00")
+>           paths = r.validate_document(frozen, current, board, o.digest(board), doc, root=data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_weekly_selected_rankings.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'schema_version': 'weekly-selected-rankings-v1', 'policy': {'version': 'selected-projection-gap-classic-v1', 'top_n':...es': 2, ...}, 'policy_sha256': 'd56088350b8adf123816e4162e868aaecfd9e5181cd2f0780bb1053bd135e72f', 'season': 2031, ...}
+pointer = {'schema_version': 'weekly-selected-rankings-pointer-v1', 'path': 'weekly-selected-rankings/7c3769a9ede6e5316e5b7c125b...c40a9005329a54.json', 'sha256': '7c3769a9ede6e5316e5b7c125bd09b5cd234ec36a199b9cb32c40a9005329a54', 'bytes': 5068, ...}
+board = {'season': 2031, 'week': 7, 'generated_at': '2031-10-24T12:00:00+00:00', 'games': [{'id': 'fictional-game', 'kickoff': '2031-10-25T17:00:00+00:00', 'state': 'pre', 'home': 'AAA', ...}], ...}
+board_hash = 'cb16228c4f1a02eb797854764ad5f286e1d3e584ae818d49b340292a38ec43d1'
+selected_doc = {'schema_version': 'weekly-adaptive-public-overlay-v1', 'registration_id': 'weekly-adaptive-release-v1', 'state': 'PROVISIONAL', 'season': 2031, ...}
+root = PosixPath('/tmp/tmp3z7ikpah')
+
+    def validate_document(doc, pointer, board, board_hash, selected_doc, *, root=None):
+        fields = {"schema_version", "policy", "policy_sha256", "season", "week", "display_board_sha256", "overlay_sha256",
+                  "prepared_at", "website_source_sha", "picks", "frozen_proofs", "fallback_counts"}
+        if (set(doc) != fields or doc["schema_version"] != VERSION or overlay.canonical(doc["policy"]) != overlay.canonical(policy_for(board))
+                or doc["policy_sha256"] != overlay.digest(policy_for(board)) or (doc["season"], doc["week"]) != (board["season"], board["week"])
+                or doc["display_board_sha256"] != board_hash or doc["overlay_sha256"] != overlay.digest(selected_doc)
+                or set(doc["picks"]) != {"over", "under"} or not isinstance(doc["frozen_proofs"], list)
+                or len(doc["frozen_proofs"]) > 2 * POLICY["top_n"]
+                or type(doc["website_source_sha"]) is not str or len(doc["website_source_sha"]) != 40
+                or any(c not in "0123456789abcdef" for c in doc["website_source_sha"])
+                or not isinstance(doc["fallback_counts"], dict) or set(doc["fallback_counts"]) != FALLBACK_FIELDS
+                or any(type(v) is not int or v < 0 for v in doc["fallback_counts"].values())
+                or not overlay.utc(doc["prepared_at"]) <= overlay.utc(pointer["published_at"])):
+            raise ValueError("ranking document contract")
+        offers = overlay.board_offers(board); selected = {overlay.key(r): r for r in selected_doc["rows"]}
+        proofs = {}
+        for proof in doc["frozen_proofs"]:
+            if set(proof) != {"key", "receipt_sha256", "persisted_at"} or not overlay.hash64(proof["receipt_sha256"]) or len(proof["key"]) != 4:
+                raise ValueError("ranking proof contract")
+            k = tuple(proof["key"])
+            if k in proofs: raise ValueError("ranking duplicate proof")
+            proofs[k] = proof
+        used = set()
+        for side, items in doc["picks"].items():
+            if not isinstance(items, list) or len(items) > POLICY["top_n"] or items != sorted(items, key=order):
+                raise ValueError("ranking order/size")
+            seen = set()
+            for item in items:
+                if item["direction"] != side: raise ValueError("ranking side mismatch")
+                validate_item(item, offers, selected)
+                k = identity(item); proof = proofs.get(k); used.add(k)
+                player_game = item["game_id"], item["player_id"]
+                if player_game in seen: raise ValueError("ranking duplicate player/side")
+                seen.add(player_game)
+                completed = proof["persisted_at"] if proof else pointer["published_at"]
+                if not overlay.utc(item["selected_at"]) <= overlay.utc(completed) < overlay.utc(item["kickoff_utc"]):
+                    raise ValueError("ranking durable completion clock")
+                if item["forecast_source"] == "SELECTED":
+                    expiry = overlay.utc(json.loads(item["selected_row_canonical"])["valid_until_utc"])
+                    if overlay.utc(completed) >= expiry or proof and expiry < overlay.utc(item["kickoff_utc"]):
+                        raise ValueError("ranking expired before completion/freeze")
+        if set(proofs) - used: raise ValueError("ranking unused proof")
+        paths = {"weekly-selected-rankings.json", pointer["path"], "weekly-selected-rankings/" + overlay.digest(pointer) + ".receipt.json"}
+        if root is not None:
+            root = Path(root)
+            current_receipt, _ = overlay.read_bound(root / ("weekly-selected-rankings/" + overlay.digest(pointer) + ".receipt.json"), overlay.digest(pointer), limit=4096)
+            if current_receipt != pointer: raise ValueError("ranking current receipt")
+            for k, proof in proofs.items():
+                receipt_path = "weekly-selected-rankings/" + proof["receipt_sha256"] + ".receipt.json"
+                receipt, _ = overlay.read_bound(root / receipt_path, proof["receipt_sha256"], limit=4096)
+                if receipt["schema_version"] != POINTER or receipt["published_at"] != proof["persisted_at"] or receipt["path"] != "weekly-selected-rankings/" + receipt["sha256"] + ".json":
+                    raise ValueError("ranking original receipt binding")
+                original, _ = overlay.read_bound(root / receipt["path"], receipt["sha256"], limit=LIMIT)
+                old = [i for side in original["picks"].values() for i in side if identity(i) == k]
+                current = next(i for side in doc["picks"].values() for i in side if identity(i) == k)
+                if len(old) != 1 or old[0] != current or original["policy_sha256"] != POLICY_SHA:
+>                   raise ValueError("ranking original membership changed")
+E                   ValueError: ranking original membership changed
+
+tools/weekly_selected_rankings.py:268: ValueError
+_ SelectedRankingsTests.test_frozen_original_unknown_or_misbound_policy_still_rejects (kind='misbound') _
+
+self = <test_weekly_selected_rankings.SelectedRankingsTests testMethod=test_frozen_original_unknown_or_misbound_policy_still_rejects>
+
+    def test_frozen_original_unknown_or_misbound_policy_still_rejects(self):
+        for kind in ("unknown", "misbound"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as td:
+                board, doc = fixture()
+                old = make(board, doc)
+                old["policy"] = {**old["policy"], "version": "UNREGISTERED_FICTIONAL_POLICY"}
+                if kind == "unknown":
+                    old["policy_sha256"] = o.digest(old["policy"])
+                pointer = r.write_public(old, td, atomic_json, clock=lambda: PERSIST)
+                frozen = make(board, doc)
+                frozen["prepared_at"] = "2031-10-25T18:00:00+00:00"
+                frozen["frozen_proofs"] = [dict(key=list(r.identity(item)),
+                    receipt_sha256=o.digest(pointer), persisted_at=PERSIST)
+                    for side in frozen["picks"].values() for item in side]
+                current = r.write_public(frozen, td, atomic_json,
+                                         clock=lambda: "2031-10-25T18:00:01+00:00")
+>               with self.assertRaisesRegex(ValueError, "ranking original membership changed"):
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError: ValueError not raised
+
+tests/test_weekly_selected_rankings.py:179: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_weekly_selected_rankings.py::SelectedRankingsTests::test_registered_current_policy_freeze_preserves_original_issued_bytes
+SUBFAILED(kind='misbound') tests/test_weekly_selected_rankings.py::SelectedRankingsTests::test_frozen_original_unknown_or_misbound_policy_still_rejects
+2 failed, 1 passed, 1 subtests passed in 0.10s

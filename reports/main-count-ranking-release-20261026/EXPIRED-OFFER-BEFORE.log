@@ -1,0 +1,32 @@
+F.                                                                   [100%]
+=================================== FAILURES ===================================
+_ V4ConsumerTests.test_expired_missing_offer_does_not_discard_authentic_future_rows _
+
+self = <test_weekly_public_feed_v4.V4ConsumerTests testMethod=test_expired_missing_offer_does_not_discard_authentic_future_rows>
+
+    def test_expired_missing_offer_does_not_discard_authentic_future_rows(self):
+        p,feed,board,run,jobs=self.expired_offer_case()
+>       selected,_=v4.validate_feed(feed,p,board,root=ROOT,now='2026-10-26T18:00:00Z',
+                                  fetch=transport(run,jobs,[]))
+
+tests/test_weekly_public_feed_v4.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/weekly_public_feed_v4.py:259: in validate_feed
+    old.require(feed["identity_scope_sha256"] == old.identity_scope(feed["rows"], board), "CURRENT_BOARD_SCOPE_CHANGED")
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [{'player_id': 'fictional-anytime_td', 'game_id': 'fictional-game', 'category': 'anytime_td', 'method_id': 'P2_SELECTE...er_id': 'fictional-pass_yd', 'game_id': 'fictional-game', 'category': 'pass_yd', 'method_id': 'P2_SELECTED', ...}, ...]
+board = {'season': 2026, 'week': 7, 'execution_model': {'schema_version': 'weekly-classic-current-execution-v1', 'model': 'sle...T17:00:00Z', 'state': 'pre'}, {'id': 'fictional-future-game', 'kickoff': '2026-10-27T17:00:00Z', 'state': 'pre'}], ...}
+
+    def identity_scope(rows,board):
+        offers=overlay().board_offers(board)
+>       return digest([dict(player_id=r["player_id"],game_id=r["game_id"],category=r["category"],kickoff=offers[overlay().key(r)][1]["kickoff"],
+                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^
+            team=offers[overlay().key(r)][0]["team"],opponent=offers[overlay().key(r)][0]["opp"]) for r in sorted(rows,key=overlay().key)])
+E       KeyError: ('fictional-game', 'fictional-rec', 'rec')
+
+tools/weekly_public_feed.py:89: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_weekly_public_feed_v4.py::V4ConsumerTests::test_expired_missing_offer_does_not_discard_authentic_future_rows
+1 failed, 1 passed, 4 subtests passed in 0.18s
