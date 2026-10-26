@@ -54,12 +54,15 @@ class RotationServer(Server):
             self.calls.append(request)
             old = dict(id=90, tag_name=self.old["tag_name"], draft=True, published_at=None, url=store.API+"/releases/90")
             releases = [old, *self.extra] + ([self.release()] if self.tag else [])
-            page = int(query["page"][0]); return Response(releases[(page-1)*5:page*5])
+            size=int(query['per_page'][0]);page=int(query['page'][0])
+            return Response(releases[(page-1)*size:page*size])
         if request.method == "GET" and "/releases/90" in url:
             self.calls.append(request)
             return Response(self.old_assets if "/assets?" in url else dict(id=90, draft=True, published_at=None, tag_name=self.old["tag_name"], url=store.API+"/releases/90"))
         if request.method == "GET" and any(parts.path.endswith("/releases/"+str(r["id"])+"/assets") for r in self.extra):
-            self.calls.append(request); return Response([])
+            self.calls.append(request)
+            release=next(r for r in self.extra if parts.path.endswith('/releases/'+str(r['id'])+'/assets'))
+            return Response(release.get('assets',[]))
         if "/releases/assets/80" in url or request.method != "GET" and "/releases/90" in url:
             raise AssertionError("Old canary/model bodies and mutations are forbidden")
         return super().__call__(request, timeout)
@@ -104,7 +107,7 @@ class RotationTests(unittest.TestCase):
         client.json = json_call
         allow = client.allow
         def routes(url):
-            if "/releases?per_page=5&page=" in url:
+            if any('/releases?per_page='+str(size)+'&page=' in url for size in (1,5)):
                 client.allowed.add(url); return url
             return allow(url)
         client.allow = routes; client.authenticate_actions_job()
@@ -198,6 +201,37 @@ class RotationTests(unittest.TestCase):
         written,_=self.run_phase("write")
         self.assertEqual(written["quota_reservation"]["reserved_after_bytes"],512<<20)
         self.assertEqual(written["quota_reservation"]["existing_draft_runtimes"],15)
+
+    def test_wide_release_metadata_is_paginated_with_original_response_and_call_caps(self):
+        # GitHub embeds asset/uploader metadata in release listing responses.
+        # Every record fits the cap, while a five-record page does not.
+        self.server.old_assets=[dict(a,uploader=dict(html_url='https://github.com/'+('x'*1500))) for a in self.server.old_assets]
+        releases=[dict(id=90,tag_name=self.server.old['tag_name'],draft=True,published_at=None,url=store.API+'/releases/90',assets=self.server.old_assets)]
+        for i in range(4):
+            value=dict(id=300+i,tag_name='retained-metadata-'+str(i),draft=True,published_at=None,url=store.API+'/releases/'+str(300+i),
+                assets=[dict(a,id=a['id']+1000*(i+1)) for a in self.server.old_assets])
+            self.server.extra.append(value);releases.append(value)
+        rows=releases
+        self.assertGreater(len(store.canonical(rows)),store.META_CAP)
+        self.assertTrue(all(len(store.canonical([r]))<store.META_CAP for r in rows))
+        original=self.server.__class__.__call__
+        def transport(server,request,timeout):
+            parts=urlsplit(request.full_url)
+            if request.method=='GET' and parts.path=='/repos/'+store.REPO+'/releases':
+                server.calls.append(request);query=parse_qs(parts.query);size=int(query['per_page'][0]);page=int(query['page'][0])
+                return Response(rows[(page-1)*size:page*size])
+            return original(server,request,timeout)
+        with patch.object(self.server.__class__,'__call__',transport):written,_=self.run_phase('write')
+        self.assertEqual(written['quota_reservation']['existing_draft_runtimes'],5)
+        self.assertEqual(written['quota_reservation']['reserved_after_bytes'],192<<20)
+        self.assertEqual(written['quota_reservation']['charged_existing_assets'],195)
+        self.assertEqual(written['quota_reservation']['charged_existing_bytes'],5*29605302)
+        listings=[r for r in self.server.calls if '/releases?' in r.full_url]
+        self.assertEqual(len(listings),6)
+        self.assertTrue(all('per_page=1&' in r.full_url for r in listings))
+        self.assertEqual(self.invoked,['initialize','pin'])
+        self.assertEqual(store.META_CAP,256<<10)
+        self.assertEqual(rotation.BUDGETS['metadata_HTTP_calls'],40)
 
     def test_starter_orphans_are_charged_at_full_asset_cap_before_post(self):
         self.server.old_assets.append(dict(id=999,name="unknown-incomplete-upload",size=0,state="starter"))

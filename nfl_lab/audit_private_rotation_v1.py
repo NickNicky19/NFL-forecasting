@@ -185,7 +185,7 @@ def metadata_client(env, journal, *, transport=None):
                 self.identity_metadata[url] = value
             return value
         def allow(self, url):
-            if re.fullmatch(re.escape(store.API) + r"/releases\?per_page=5&page=[1-8]", url):
+            if re.fullmatch(re.escape(store.API) + r"/releases\?per_page=1&page=(?:[1-9]|[1-3][0-9]|40)", url):
                 self.allowed.add(url); return url
             return super().allow(url)
         def request(self, url, **kwargs):
@@ -221,11 +221,14 @@ def global_inventory(client, root):
     own = client.json(store.API)
     require(own.get("full_name") == REPO and own.get("url") == store.API and own.get("private") is False, "ROTATION_OWN_REPOSITORY_CONTROL")
     releases = []
-    for page in range(1, 9):
-        batch = client.json(client.allow(store.API + f"/releases?per_page=5&page={page}"))
-        require(type(batch) is list and len(batch) <= 5, "GLOBAL_RELEASE_INVENTORY_SHAPE")
+    # GitHub embeds every release's asset metadata. Several otherwise valid
+    # runtimes can overflow the unchanged 256-KiB response cap in one page.
+    # Keep the original <40-release bound and the shared 40-request budget.
+    for page in range(1, 41):
+        batch = client.json(client.allow(store.API + f"/releases?per_page=1&page={page}"))
+        require(type(batch) is list and len(batch) <= 1, "GLOBAL_RELEASE_INVENTORY_SHAPE")
         releases.extend(batch)
-        if len(batch) < 5:
+        if not batch:
             break
     else:
         raise RotationError("GLOBAL_RELEASE_INVENTORY_BOUND")
