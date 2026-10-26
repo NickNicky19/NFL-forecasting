@@ -895,6 +895,21 @@ jobs:
       handoff_json: ${{ steps.rotation.outputs.handoff_json }}
       handoff_sha256: ${{ steps.rotation.outputs.handoff_sha256 }}
     steps:
+      - name: Mask rotation control before step environment logging
+        run: |
+          python3 - <<'PYMASK'
+          import json, os, re, secrets
+          with open(os.environ['GITHUB_EVENT_PATH'], encoding='utf-8') as source:
+              inputs = json.load(source)['inputs']
+          raw, digest = inputs['inference_builder_go_json'], inputs['inference_builder_go_sha256']
+          if not isinstance(raw, str) or not isinstance(digest, str) or not re.fullmatch('[a-f0-9]{64}', digest):
+              raise RuntimeError('ROTATION_CONTROL_INPUT_TYPES')
+          print('::add-mask::' + raw.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'), flush=True)
+          marker = 'MASKED_ROTATION_' + secrets.token_hex(16)
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as target:
+              target.write('AUDIT_PRIVATE_ROTATION_GO_JSON<<' + marker + '\n' + raw + '\n' + marker + '\n')
+              target.write('AUDIT_PRIVATE_ROTATION_GO_SHA256=' + digest + '\n')
+          PYMASK
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -905,8 +920,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: write
-          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
-          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
         run: timeout --signal=KILL 370s python3 -I -B tools/audit_private_rotation_v1.py write --execute
 
   audit-private-rotation-read-v1:
@@ -921,6 +934,21 @@ jobs:
       handoff_json: ${{ steps.rotation.outputs.handoff_json }}
       handoff_sha256: ${{ steps.rotation.outputs.handoff_sha256 }}
     steps:
+      - name: Mask rotation control before step environment logging
+        run: |
+          python3 - <<'PYMASK'
+          import json, os, re, secrets
+          with open(os.environ['GITHUB_EVENT_PATH'], encoding='utf-8') as source:
+              inputs = json.load(source)['inputs']
+          raw, digest = inputs['inference_builder_go_json'], inputs['inference_builder_go_sha256']
+          if not isinstance(raw, str) or not isinstance(digest, str) or not re.fullmatch('[a-f0-9]{64}', digest):
+              raise RuntimeError('ROTATION_CONTROL_INPUT_TYPES')
+          print('::add-mask::' + raw.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'), flush=True)
+          marker = 'MASKED_ROTATION_' + secrets.token_hex(16)
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as target:
+              target.write('AUDIT_PRIVATE_ROTATION_GO_JSON<<' + marker + '\n' + raw + '\n' + marker + '\n')
+              target.write('AUDIT_PRIVATE_ROTATION_GO_SHA256=' + digest + '\n')
+          PYMASK
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -931,8 +959,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: read
-          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
-          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           AUDIT_PRIVATE_ROTATION_HANDOFF_JSON: ${{ needs.audit-private-rotation-write-v1.outputs.handoff_json }}
           AUDIT_PRIVATE_ROTATION_HANDOFF_SHA256: ${{ needs.audit-private-rotation-write-v1.outputs.handoff_sha256 }}
         run: timeout --signal=KILL 190s python3 -I -B tools/audit_private_rotation_v1.py read --execute
@@ -946,6 +972,21 @@ jobs:
       contents: write
       actions: read
     steps:
+      - name: Mask rotation control before step environment logging
+        run: |
+          python3 - <<'PYMASK'
+          import json, os, re, secrets
+          with open(os.environ['GITHUB_EVENT_PATH'], encoding='utf-8') as source:
+              inputs = json.load(source)['inputs']
+          raw, digest = inputs['inference_builder_go_json'], inputs['inference_builder_go_sha256']
+          if not isinstance(raw, str) or not isinstance(digest, str) or not re.fullmatch('[a-f0-9]{64}', digest):
+              raise RuntimeError('ROTATION_CONTROL_INPUT_TYPES')
+          print('::add-mask::' + raw.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'), flush=True)
+          marker = 'MASKED_ROTATION_' + secrets.token_hex(16)
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as target:
+              target.write('AUDIT_PRIVATE_ROTATION_GO_JSON<<' + marker + '\n' + raw + '\n' + marker + '\n')
+              target.write('AUDIT_PRIVATE_ROTATION_GO_SHA256=' + digest + '\n')
+          PYMASK
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -956,8 +997,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STORE_PERMISSION: write
-          AUDIT_PRIVATE_ROTATION_GO_JSON: ${{ inputs.inference_builder_go_json }}
-          AUDIT_PRIVATE_ROTATION_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           AUDIT_PRIVATE_ROTATION_HANDOFF_JSON: ${{ needs.audit-private-rotation-read-v1.outputs.handoff_json }}
           AUDIT_PRIVATE_ROTATION_HANDOFF_SHA256: ${{ needs.audit-private-rotation-read-v1.outputs.handoff_sha256 }}
         run: timeout --signal=KILL 190s python3 -I -B tools/audit_private_rotation_v1.py qualify --execute
