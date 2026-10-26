@@ -1,0 +1,167 @@
+{
+  "schema_version": "audit-native-metadata-serial-local-v4",
+  "state": "LOCAL_ORIGINAL_NATIVE_PASS_ACTUAL_HOSTED_CI_REQUIRED",
+  "observed_at_utc": "2026-10-25T23:26:15.161563+00:00",
+  "preimage_commit": "5085bdbe00d56f9a47a057a186b374c1bf839d2b",
+  "frozen_runtime_and_probe_paths": 132,
+  "measured_paths_unchanged": true,
+  "changed_code_and_test_sha256": {
+    "nfl_lab/audit_weekly_grade_v1.py": "88e13d41b5063bff34848619ef6fe6678fdc5c3ce604a7291a17f36ec6d5ebd6",
+    "nfl_lab/audit_weekly_operations_grade_v1.py": "c42b9e0c984f855011899250da442b09ffc7c0683d2496e8f56c2f33609b15c7",
+    "nfl_lab/audit_weekly_provider_v1.py": "79ad56581ed9288c8480b8561f0f8e853dac50cdf2e1e6b3ba67aebdb20b6c72",
+    "nfl_lab/data.py": "e6caa6382a858259129dcebbe91afa744f0e59adf63df014c7a6b17fd2c27d0d",
+    "tests/test_audit_weekly_grade_v1.py": "213ea93ede2f4584064ef006c139442ef766e34ffda0ff93dd9fd18fc81c6d89",
+    "tests/test_audit_weekly_provider_v1.py": "3825d9c22cb84a1bcf52dcf73a3dd235736df6a52e6b78612eec3f8570f97d84",
+    "tests/test_data_features.py": "05bd8f4e8752b0b49d8bd86aa730428aba121c0dd1081d3bf4b2ce1aefef82ff"
+  },
+  "unchanged_original_scope": {
+    "candidate_rows": 18000,
+    "selected_rows": 5000,
+    "address_space_bytes": 536870912,
+    "CPU_seconds": 120,
+    "wall_seconds": 180,
+    "root_pin_count": 128
+  },
+  "original_native_phases": [
+    {
+      "phase": "write",
+      "returncode": 0,
+      "actual_total_CPU_seconds": 106.074213,
+      "actual_wall_seconds": 105.97680372100149,
+      "peak_address_space_bytes": 504885248
+    },
+    {
+      "phase": "read",
+      "returncode": 0,
+      "actual_total_CPU_seconds": 64.271488,
+      "actual_wall_seconds": 64.28064042401093,
+      "peak_address_space_bytes": 122994688
+    }
+  ],
+  "focused_regressions": "123 passed in 103.43s",
+  "independent_reference_checks": [
+    {
+      "label": "capture",
+      "bytes": 223173,
+      "sha256": "a71a5ad7234d3d8b0b616610ed0c03a7f49ca2a7a6483d7be13941e29ca89bb8"
+    },
+    {
+      "label": "snapshot-no-observations",
+      "bytes": 251263,
+      "sha256": "55a83696faee69a2ad5250e64073ecb4226e69de88ea3dbccaad57a51e78c413"
+    },
+    {
+      "label": "snapshot-gzip-no-observations",
+      "bytes": 18772,
+      "sha256": "120c2b49afbd7d15e4c11e63d657dbbdf98200245c3d33476c2f49287038d290"
+    },
+    {
+      "label": "report-independent-grading-zeros",
+      "bytes": 25687,
+      "sha256": "2a97a042cbaf313891f02812fd32df4902d8c27e9c649a7c5dc7d907a5e0cf69"
+    },
+    {
+      "label": "history-identical-input-zeros",
+      "bytes": 134434,
+      "sha256": "16f8234b13773cf72815cec56c2d53bef5eec5f729c361cce19db488e74a9119"
+    },
+    {
+      "label": "choice-identical-input-zeros",
+      "bytes": 16998,
+      "sha256": "aeb97fc3ea85ea64eb2ccd1c28c160088a02eee5914e6cecd45f88a81017492c"
+    },
+    {
+      "label": "report-independent-grading-missing-DNP",
+      "bytes": 25767,
+      "sha256": "746af0bb2d8d6ba37147c3533630186c9ac9d7cd67a111bcec537bdf5849015d"
+    },
+    {
+      "label": "history-identical-input-missing-DNP",
+      "bytes": 134442,
+      "sha256": "0ad0bfaab2c4f90390961989db47a258eba4e21daf9e2732a096f9a1e24a9d51"
+    },
+    {
+      "label": "choice-identical-input-missing-DNP",
+      "bytes": 16998,
+      "sha256": "491feb5df33d8af51f77b66651f554eee7dc2f81fd92628e2da67bd89299d045"
+    },
+    {
+      "label": "report-independent-grading-loss",
+      "bytes": 25743,
+      "sha256": "4a6098ec36d235f79d96c99d0170bcd8473944e3e1712e16de7b4f3028b444bf"
+    },
+    {
+      "label": "history-identical-input-loss",
+      "bytes": 134442,
+      "sha256": "4b709bb5d0f8cc9b7cd595d2ef53e95252f6d14e15f68e79ad7bcaff6bb35f1f"
+    },
+    {
+      "label": "choice-identical-input-loss",
+      "bytes": 17040,
+      "sha256": "5c0bbd7d85b4fce5d6d69d01f9de13076d368c5eff702127adc927e672d67e11"
+    }
+  ],
+  "reference_implementation_sha256": "0530a915badb0afad72a2ddb6bc6052118f6341cb6eac6f0425cf697bca2be30",
+  "reference_pin_context": "BOTH_IMPLEMENTATIONS_READ_CURRENT_SOURCE_PINS",
+  "serial_metadata_probe": [
+    {
+      "use_threads": "true",
+      "rows": 1000,
+      "arrow_cpu_count": 2,
+      "metrics": {
+        "VmPeak": "380760 kB",
+        "VmSize": "380760 kB",
+        "VmRSS": "70940 kB",
+        "Threads": "5"
+      }
+    },
+    {
+      "use_threads": "false",
+      "rows": 1000,
+      "arrow_cpu_count": 2,
+      "metrics": {
+        "VmPeak": "364368 kB",
+        "VmSize": "364368 kB",
+        "VmRSS": "70844 kB",
+        "Threads": "3"
+      }
+    }
+  ],
+  "original_files_unchanged": [
+    "operational_sources.py",
+    "weekly_future_inference.py",
+    "cdf_engine.py",
+    "role_boosting.py",
+    "direct_boosters.py",
+    "median_boosting.py",
+    "baseline_correction.py",
+    "weekly_current_query.py",
+    "weekly_grading.py"
+  ],
+  "source_review": {
+    "policy": "Complete original frozen loader conditions and canonical newline/hash behavior; both loads/comparisons; validator drift guard; independent frozen Collector admission comparisons.",
+    "clocks": "Original parity across four units and three zones; literal negative epoch/nanosecond/repeated-hour references; missing/naive clocks reject.",
+    "data": "Eleven original functions unchanged; lazy module aliases preserve real pandas annotation types.",
+    "serial_read": "Same columns, row order/census and clock conversion; removes this read operation CPU pool, not a whole-process thread guarantee."
+  },
+  "controlled_32MiB_reserve": {
+    "result": "FAILURE_RETAINED_SUPPORT_ONLY_NOT_AN_ORIGINAL_ACCEPTANCE_RULE",
+    "source_unchanged": true
+  },
+  "previous_actual_CI": {
+    "run": 40239541244,
+    "head": "5085bdbe00d56f9a47a057a186b374c1bf839d2b",
+    "conclusion": "failure",
+    "passed": 1919,
+    "failed": 1,
+    "skipped": 1,
+    "reason": "Full-scope write reached checkpoint then MemoryError at source-pin read"
+  },
+  "decoder_process_proposal": "UNQUALIFIED_NOT_APPLIED; no extra process, signal or resource mechanism adopted",
+  "fits": 0,
+  "accuracy_gain_claimed": false,
+  "merged": false,
+  "deployed": false,
+  "recurring_activation": false,
+  "limitations": "Actual complete hosted CI remains required. Grade-only/rollover prototype still lacks Parent discovery, migration and partition integration. Fixed V2 bootstrap remains held."
+}

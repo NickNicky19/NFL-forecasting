@@ -9,6 +9,9 @@ import unittest
 from unittest.mock import patch
 
 from nfl_lab import weekly_generic_producer as g, weekly_adaptive as selector
+# Import before mocking owned_reference_batch: importing it inside that mock
+# would retain the temporary MagicMock in source_read_operation after teardown.
+from nfl_lab import weekly_source_read_batch as source_batch
 from nfl_lab.state import digest,utc
 
 ROOT=Path(__file__).resolve().parents[1]

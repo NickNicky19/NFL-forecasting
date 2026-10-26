@@ -1,0 +1,192 @@
+{
+  "schema_version": "audit-native-memory-local-v3",
+  "state": "LOCAL_COMBINED_SOURCE_PASS_HOSTED_CI_PENDING",
+  "observed_at_utc": "2026-10-25T22:17:59.834369+00:00",
+  "preimage_commit": "23c13c48a52d00dc419ea42b58b84e8a6d19328d",
+  "unchanged_original_fixture": {
+    "candidate_rows": 18000,
+    "selected_rows": 5000
+  },
+  "all_frozen_source_paths": 131,
+  "all_frozen_source_paths_unchanged": true,
+  "changed_code_sha256": {
+    "nfl_lab/audit_weekly_grade_v1.py": "a72f31912c244381bcb503c785ba2c7c2e2371d91213a71a4fe57d7068415955",
+    "nfl_lab/audit_weekly_operations_v1.py": "15182fd25b6784169659e387f4fe3377f47d33be2cb248091d7606f1efd00f91",
+    "nfl_lab/audit_weekly_provider_v1.py": "911a2690dd1bb418f692e7be5e7b4d9f1c4f31703d791115e748f3a7b21336ec",
+    "nfl_lab/audit_weekly_runtime_v1.py": "1abefa4a90e042ce9e30ee8e71cb89eaf4b2ad4161a31c11bed89228cf373825",
+    "nfl_lab/live.py": "c762070dd9bf6669821f559642c3c648622c7db4bd124bc726630488124e824d",
+    "tests/test_audit_weekly_metadata_import_v1.py": "f3b7c76e0709ea23973a4bcfd143ccc2391c0cbe1ca3c6acf8e7368b7676e3b8"
+  },
+  "original_native_capacity": [
+    {
+      "phase": "write",
+      "returncode": 0,
+      "actual_wall_seconds": 60.95960212600767,
+      "actual_total_CPU_seconds": 60.967645999999995,
+      "peak_address_space_bytes": 527691776,
+      "native_AS_limit_bytes": 536870912,
+      "native_CPU_limit_seconds": 120,
+      "native_wall_limit_seconds": 180
+    },
+    {
+      "phase": "read",
+      "returncode": 0,
+      "actual_wall_seconds": 71.43073074800486,
+      "actual_total_CPU_seconds": 71.270216,
+      "peak_address_space_bytes": 130936832,
+      "native_AS_limit_bytes": 536870912,
+      "native_CPU_limit_seconds": 120,
+      "native_wall_limit_seconds": 180
+    }
+  ],
+  "controlled_32MiB_startup_reserve": {
+    "status": "PASS_SUPPORTING_DIAGNOSTIC_NOT_GHA_OR_AN_ORIGINAL_REQUIREMENT",
+    "retained_bytes": 33554432,
+    "phases": [
+      {
+        "phase": "write",
+        "returncode": 0,
+        "actual_wall_seconds": 119.19931616699614,
+        "actual_total_CPU_seconds": 119.17796799999999,
+        "peak_address_space_bytes": 536682496,
+        "native_AS_limit_bytes": 536870912,
+        "native_CPU_limit_seconds": 120,
+        "native_wall_limit_seconds": 180
+      },
+      {
+        "phase": "read",
+        "returncode": 0,
+        "actual_wall_seconds": 78.1111282070051,
+        "actual_total_CPU_seconds": 78.072869,
+        "peak_address_space_bytes": 164773888,
+        "native_AS_limit_bytes": 536870912,
+        "native_CPU_limit_seconds": 120,
+        "native_wall_limit_seconds": 180
+      }
+    ]
+  },
+  "metadata_import": {
+    "original_peak_bytes": 444719104,
+    "repaired_peak_bytes": 48492544,
+    "unneeded_numerical_packages_loaded": false,
+    "external_execution_denied": true
+  },
+  "focused_regressions": "81 passed, 6 subtests passed in 55.81s",
+  "independent_original_comparisons": [
+    {
+      "label": "capture",
+      "bytes": 223173,
+      "sha256": "b500abfda3d4b31eac56c09dae87aa3ea0ec19d4e01e2ee90d6d40c97313dc0d"
+    },
+    {
+      "label": "snapshot-no-observations",
+      "bytes": 251263,
+      "sha256": "217e720e63e3615ef62a06aef05ac07d3fbac81f093039fec09200bd33cdf74e"
+    },
+    {
+      "label": "snapshot-gzip-no-observations",
+      "bytes": 18771,
+      "sha256": "789bcd87eb06fa47ae00f21b85e51b680cf98bdfbd2ff0bf0900a1590ecd1d05"
+    },
+    {
+      "label": "report-independent-grading-zeros",
+      "bytes": 25687,
+      "sha256": "462b7da375dde4ce40776eb6936e5f782e1d5a3ee853848e6c56b0b4c47f9710"
+    },
+    {
+      "label": "history-identical-input-zeros",
+      "bytes": 134434,
+      "sha256": "1ee128ab528f9e6c05b1dee76764b6e8e743fb3f6ab7960e73627776d98c9b49"
+    },
+    {
+      "label": "choice-identical-input-zeros",
+      "bytes": 16998,
+      "sha256": "8c27db1481d4685b9d46b74db0efe9b70cb3e1ea81f1f0157d0edbc3b2fb59ba"
+    },
+    {
+      "label": "report-independent-grading-missing-DNP",
+      "bytes": 25767,
+      "sha256": "a7c2fa8b467d4b31d56754302fd9dd0c4b970b18de6019e9f1744e7b91325e45"
+    },
+    {
+      "label": "history-identical-input-missing-DNP",
+      "bytes": 134442,
+      "sha256": "35f18d22c1391562fde3efcd98b2403ea2d2d792ba7a7baee8f5a8bc336b3bd1"
+    },
+    {
+      "label": "choice-identical-input-missing-DNP",
+      "bytes": 16998,
+      "sha256": "c4a700a63afbcddcff3ac52566ba8bfa82df086d7fa0cec83ff66f19392ee120"
+    },
+    {
+      "label": "report-independent-grading-loss",
+      "bytes": 25743,
+      "sha256": "b83b8f1fb5c056d0a7690cab7ff6cdca38bc1e043b58c0e3b2d9a0e60453d475"
+    },
+    {
+      "label": "history-identical-input-loss",
+      "bytes": 134442,
+      "sha256": "fe943c43d665494323b6cb13fc6f0386bac4f1605182d47715fcd8040c878ab9"
+    },
+    {
+      "label": "choice-identical-input-loss",
+      "bytes": 17040,
+      "sha256": "459929f092a0952db759d925c7237a2496c4582b456e1d83d4d4c484852fbe69"
+    }
+  ],
+  "reference_implementation_sha256": "0530a915badb0afad72a2ddb6bc6052118f6341cb6eac6f0425cf697bca2be30",
+  "comparison_source_pin_context": "BOTH_IMPLEMENTATIONS_READ_CURRENT_SOURCE_PINS",
+  "AST_verification": {
+    "import_only_modules": [
+      {
+        "path": "nfl_lab/live.py",
+        "sha256": "c762070dd9bf6669821f559642c3c648622c7db4bd124bc726630488124e824d",
+        "AST_identical_except_imports": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_operations_v1.py",
+        "sha256": "15182fd25b6784169659e387f4fe3377f47d33be2cb248091d7606f1efd00f91",
+        "AST_identical_except_imports": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_runtime_v1.py",
+        "sha256": "1abefa4a90e042ce9e30ee8e71cb89eaf4b2ad4161a31c11bed89228cf373825",
+        "AST_identical_except_imports": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_provider_v1.py",
+        "sha256": "911a2690dd1bb418f692e7be5e7b4d9f1c4f31703d791115e748f3a7b21336ec",
+        "AST_identical_except_imports": true
+      }
+    ],
+    "original_data_and_builder_and_six_models_byte_identical": true
+  },
+  "source_binding": {
+    "original_data_loader_and_feature_builder_byte_identical": true,
+    "six_registered_model_files_byte_identical": true,
+    "original_R0_control_source_unchanged": true,
+    "original_policy_and_model_contract_guards_preserved": true,
+    "retained_artifacts_not_rehashed_or_relabelled": true
+  },
+  "actual_previous_source_CI": {
+    "run": 40235539471,
+    "head": "23c13c48a52d00dc419ea42b58b84e8a6d19328d",
+    "result": "FAILURE",
+    "passed": 1919,
+    "failed": 1,
+    "skipped": 1,
+    "remaining_case": "test_full_18000_candidate_5000_selected_scope_under_native_512MiB",
+    "reason": "MemoryError"
+  },
+  "retained_intermediate_evidence": {
+    "v5_controlled_reserve": "FAILED",
+    "v6": "MIXED_IMPORT_SOURCE_SUPPORT_ONLY_NOT_ACCEPTANCE",
+    "v7": "LOCAL_CAPACITY_PASS_BUT_BUILDER_CONTRACT_INCOMPATIBLE_REJECTED"
+  },
+  "fits": 0,
+  "forecast_accuracy_gain_claimed": false,
+  "merged": false,
+  "native_recurring_qualification": false,
+  "website_deployed": false,
+  "remaining": "Actual full hosted source CI and native operational acceptance remain required. Week rollover, grading after the last cutoff and long-history capacity remain open; activation remains disabled."
+}

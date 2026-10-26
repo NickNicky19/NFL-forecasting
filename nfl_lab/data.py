@@ -12,11 +12,31 @@ import json
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
+from importlib import import_module
 from pathlib import Path
+from types import ModuleType
 
-import numpy as np
-import pandas as pd
 import requests
+
+
+class _LazyNumericalModule(ModuleType):
+    """Keep downloader-only callers light; ordinary attributes load the module.
+
+    These are local aliases, never replacements in sys.modules. In particular,
+    postponed pandas annotations still resolve to the real pandas classes.
+    """
+    def __init__(self, name, alias):
+        super().__init__(name)
+        self._alias = alias
+
+    def __getattr__(self, name):
+        module = import_module(self.__name__)
+        globals()[self._alias] = module
+        return getattr(module, name)
+
+
+np = _LazyNumericalModule("numpy", "np")
+pd = _LazyNumericalModule("pandas", "pd")
 
 TARGETS = ("pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd",
            "rush_att", "rec", "rec_yd", "rush_rec_yd", "fantasy_ppr", "anytime_td")

@@ -1,0 +1,29 @@
+{
+  "schema_version": "audit-source-fixture-conditioning-v1",
+  "observed_at_utc": "2026-10-25T23:49:27.255713+00:00",
+  "preimage": "7975433563b9f80e3ec0451ffa33674ef6ba5426",
+  "actual_hosted_run": 40244764547,
+  "actual_hosted_job": 121323882682,
+  "actual_hosted_result": "FAILURE",
+  "actual_full_18000_5000_operations_case": "PASSED; only reported failure was the distinct provider scratch-pressure case",
+  "failed_case": "test_small_owned_and_provider_bodies_under_actual_native_scratch_pressure[provider]",
+  "cause": "Synthetic scratch filled address space before the now-deferred required dataframe serializer dependency loaded.",
+  "production_guard": "UNCHANGED; full Path and DataFrame write interception remains.",
+  "fixture_correction": "Provider only: enter and exit the real serializer guard before measuring baseline and allocating synthetic scratch. Import CPU/wall/peak still count; archive remains cold.",
+  "unchanged": {
+    "native_address_space_bytes": 536870912,
+    "native_CPU_seconds": 120,
+    "native_wall_seconds": 180,
+    "free_margin_after_scratch_bytes": 12582912,
+    "original_assertions": true,
+    "original_full_scope_capacity_test": true
+  },
+  "local_before": "1 failed, 15 passed in 3.74s; original unchanged pressure case reproduced",
+  "local_after": "17 passed in 3.48s, including independent cold metadata CAS guard",
+  "independent_review": "Read-only review approved fixture precondition restoration; production guards were not changed.",
+  "test_sha256": "3b68218f4e018d12eaba11b1b10d9c690f25477e216096d9f4b631370e1e8c89",
+  "fits": 0,
+  "accuracy_gain_claimed": false,
+  "merged": false,
+  "deployed": false
+}

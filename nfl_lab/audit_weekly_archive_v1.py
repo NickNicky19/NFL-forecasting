@@ -36,6 +36,8 @@ LIMITS = dict(wall_seconds=180, CPU_seconds=120, address_space_bytes=512 << 20,
     groups=8, native_clients=10, HTTP_per_client=40, fits=0, retries=0)
 CONTEXT = {"epoch", "epoch_registration", "original_choice", "origin_witness", "original_slate",
     "original_catalog", "original_policy", "retained_models", "prepared", "source"}
+OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope"}
+OPERATIONS_HISTORY_CONTEXT = {"ops_previous_checkpoint_sidecar", "ops_previous_public_receipt"}
 CONTROL_FILES = {"CONSUMED.json", "RUNTIME_RECIPE.json", "WEEKLY_CHOICE.json", "ARTIFACT_CATALOG.json",
     "SELECTED_VERSION_CATALOG.json", "POPULATION.json", "MODEL_ATTEMPTS.json", "FINISHED.json",
     "queries.parquet", "quarantine.parquet", "no_remaining_game.parquet", "IDENTITY_BRIDGE.json",
@@ -118,8 +120,11 @@ def write(storage,path,value):
 
 def read_owned(storage,ref,cap=store.ASSET_CAP,*,raw=False):
     require(type(ref) is dict and set(ref)=={"path","bytes","sha256"},"CLOSED_ARCHIVE_REFERENCE")
+    require(type(ref["bytes"]) is int and 0<ref["bytes"]<=cap,"EXACT_CHECKPOINT_REFERENCE")
     validate_owned_references(storage,{ref["path"]:ref["sha256"]})
-    body=cp.read_ref(ref,cap)
+    # Keep the caller's ceiling, CAS validation and exact readback checks, but
+    # allocate the declared actual length rather than the entire ceiling.
+    body=cp.read_ref(ref,ref["bytes"])
     return body if raw else cp.strict_json(body)
 
 
@@ -203,7 +208,12 @@ context roles are exact owned metadata bindings, including the parent's honest
 origin witness and the separately qualified retained-model restore receipt.
 No old completion is invented. Missing files force a failure archive.
 """
-    require(type(context) is dict and CONTEXT <= set(context) <= CONTEXT | {"public_policy"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+    require(type(context) is dict and CONTEXT <= set(context)
+        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+    history=set(context) & OPERATIONS_HISTORY_CONTEXT
+    require(not history or history == OPERATIONS_HISTORY_CONTEXT,"PAIRED_OPERATIONAL_HISTORY_REFERENCES_REQUIRED")
+    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
+    require(not operations or OPERATIONS_CONTEXT <= set(context), "COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED")
     root=store.parents_safe(runtime_root);output=fresh(storage,output)
     entries={};physical_origins={}
     def add(ref,name,kind="control"):
@@ -477,8 +487,9 @@ def authenticate_qualification(client,package,pending_census):
 
 def jobs_for(client):
     run=client.json(client.allow(store.API+"/actions/runs/"+client.run_id))
+    from . import audit_weekly_operations_authority_v1 as operations_authority
     require(run.get("head_branch")==client.job["workflow_ref"].split("@refs/heads/",1)[1]
-        and run.get("actor",{}).get("login")=="NickNicky19" and run.get("actor",{}).get("id")==208912933,"ACTUAL_ARCHIVE_BRANCH_AND_OWNER")
+        and operations_authority.authorize_client_actor(client,run),"ACTUAL_ARCHIVE_BRANCH_AND_OWNER")
     data=client.json(client.allow(store.API+"/actions/runs/"+client.run_id+"/jobs?per_page=100&page=1"))
     require(type(data.get("jobs")) is list and data.get("total_count")==len(data["jobs"])<=100,"COMPLETE_ARCHIVE_ACTIONS_JOB_LIST")
     return data["jobs"]

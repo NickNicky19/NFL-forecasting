@@ -40,7 +40,6 @@ def guard(args,env):
     import subprocess
     archive.require(env.get("GITHUB_ACTIONS")=="true" and env.get("GITHUB_REPOSITORY")==store.REPO
         and env.get("GITHUB_EVENT_NAME")=="workflow_dispatch" and env.get("GITHUB_RUN_ATTEMPT")=="1"
-        and env.get("GITHUB_ACTOR")=="NickNicky19" and env.get("GITHUB_ACTOR_ID")=="208912933"
         and env.get("STORE_PERMISSION")=="write","GENUINE_OWNER_ARCHIVE_ACTIONS_REQUIRED")
     job=actions_context(env,"write")
     raw=env.get("AUDIT_WEEKLY_ARCHIVE_AUTHORITY_JSON","").encode()
@@ -61,10 +60,12 @@ def guard(args,env):
     root=event.get("inputs",{}).get("inference_builder_go_json","").encode()
     archive.require(event.get("repository",{}).get("full_name")==store.REPO and root
         and store.sha(root)==value["owner_root_go_sha256"]==event["inputs"].get("inference_builder_go_sha256"),"EXACT_ACTUAL_ARCHIVE_OWNER_ROOT_INPUT")
+    from nfl_lab import audit_weekly_operations_authority_v1 as operations_authority
+    value_proof=operations_authority.child(env,root,ROOT)
     dirty=subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",
         ".github","nfl_lab","tools","config","schemas","requirements.lock","requirements-hosted-fixed-build-v1.lock"],cwd=ROOT,text=True)
     archive.require(dirty=="","CLEAN_COMMITTED_ARCHIVE_SOURCE_REQUIRED")
-    return value,job
+    return value,job,value_proof,root
 
 
 def datetime_now():
@@ -83,7 +84,7 @@ def output_handle(env):
 
 
 def run(args,env,*,transport=None):
-    authority,job=guard(args,env)
+    authority,job,operations_proof,root_bytes=guard(args,env)
     raw=store.read_local(args.request,512 << 10)
     archive.require(store.sha(raw)==args.request_sha256,"EXACT_ARCHIVE_REQUEST_HASH")
     p=cp.strict_json(raw)
@@ -117,6 +118,8 @@ def run(args,env,*,transport=None):
                     job=job,operation=operation,qualification=package["qualification"],readonly=args.phase=="consume",transport=transport)
                 self.clients.append(client);client.authenticate_actions_job()
                 archive.require(client.job["api_job_id"]==authority["api_job_id"],"ACTUAL_API_JOB_MATCHES_PARENT_AUTHORITY")
+                from nfl_lab import audit_weekly_operations_authority_v1 as operations_authority
+                operations_authority.attach(client,operations_proof,env,root_bytes)
                 client.bind(package["binding"])
                 return client
         factory=Factory()

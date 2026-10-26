@@ -1,0 +1,101 @@
+{
+  "schema_version": "audit-native-memory-local-v2",
+  "state": "LOCAL_ORIGINAL_CHECKS_PASS_ACTUAL_GHA_PENDING",
+  "source_sha256": {
+    "nfl_lab/audit_weekly_grade_v1.py": "882b37e9e94775183e733efe5d5948c4717160a5125043131178b1fd33f7f6a5",
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py": "fa3e65e338313fec6a576a4809a1446125eb891de5f6510d8ebfb23db75ec062",
+    "nfl_lab/audit_weekly_operations_grade_v1.py": "90c728663eb7b70959753b924f46ab74c64e2954daee6ab1ab036c2df88417eb",
+    "tests/test_audit_weekly_grade_native_memory_v1.py": "593c5a0e70891d372b68f18154bfa6a4226e4cf34298fe4544ee1f445fa07f79",
+    "tests/test_audit_weekly_operations_grade_scale_v1.py": "7bc3e2c65f5dc700f65c31514b15c329ca30ecf6656cf9cf35ce20b0e682c829"
+  },
+  "unchanged_limits": {
+    "address_space_bytes": 536870912,
+    "CPU_seconds": 120,
+    "wall_seconds": 180
+  },
+  "unchanged_fixture": {
+    "candidate_rows": 18000,
+    "selected_rows": 5000
+  },
+  "core_peak_address_space_bytes": 498565120,
+  "operational_write": {
+    "total_CPU_seconds": 66.918663,
+    "wall_seconds": 66.83203295699786,
+    "peak_address_space_bytes": 526196736
+  },
+  "operational_read": {
+    "total_CPU_seconds": 58.635517,
+    "wall_seconds": 58.52696793701034,
+    "peak_address_space_bytes": 514007040
+  },
+  "exact_comparisons": [
+    {
+      "label": "capture",
+      "bytes": 223173,
+      "sha256": "7772c1b8be089302047c0605cda5f7a1e3ca1188297affeef1d30b243661aafa"
+    },
+    {
+      "label": "snapshot-no-observations",
+      "bytes": 251263,
+      "sha256": "dd94b8aa1751a39220b076f3a1dcee1a64441464c096816a40675cfe4a5fb9a0"
+    },
+    {
+      "label": "snapshot-gzip-no-observations",
+      "bytes": 18779,
+      "sha256": "34179209f51d27f0f7c9eca5cc187ca9c47aba7c935d31309e2a97fd88ec4b73"
+    },
+    {
+      "label": "report-independent-grading-zeros",
+      "bytes": 25687,
+      "sha256": "c6abf36d358406f5f0b20da8befb5b0c429ee9fb1c22b953eba36186066bf2e6"
+    },
+    {
+      "label": "history-identical-input-zeros",
+      "bytes": 134434,
+      "sha256": "7a33ed7f2fd33059ce7132967d9247ccdf256664a7ec7ce6e2eaea0b891de326"
+    },
+    {
+      "label": "choice-identical-input-zeros",
+      "bytes": 16998,
+      "sha256": "be8e96f7343a17299c4166db75e5e3d7fd781ff536c4ea6fa9c90daff0ede2a5"
+    },
+    {
+      "label": "report-independent-grading-missing-DNP",
+      "bytes": 25767,
+      "sha256": "c8bf0fa8a3d4ecafdc363355d56a4429fff08651cee12b9de25be0821efeaecc"
+    },
+    {
+      "label": "history-identical-input-missing-DNP",
+      "bytes": 134442,
+      "sha256": "410ac276650c270ee746b33042ab8b1d6ce97b705cbe382727359f5b3f99f1ce"
+    },
+    {
+      "label": "choice-identical-input-missing-DNP",
+      "bytes": 16998,
+      "sha256": "c5c81b94aa30449a752a9e644425fe01ca5dbc1fd1f50de9ce72596c3de195ca"
+    },
+    {
+      "label": "report-independent-grading-loss",
+      "bytes": 25743,
+      "sha256": "665bd37468d75de86033c80cfa39f9b9db9a7d9610cf75fb5743051eeb3f6662"
+    },
+    {
+      "label": "history-identical-input-loss",
+      "bytes": 134442,
+      "sha256": "f8a1517f1b4b10a45958a806b41204ff285abd6189125f54505023c7ff6723b9"
+    },
+    {
+      "label": "choice-identical-input-loss",
+      "bytes": 17040,
+      "sha256": "45c6f5889fa9197b42acc6a1297057ac23b9dd30d04d947474bbfe0ea7aecc00"
+    }
+  ],
+  "reference_code_sha256": "0530a915badb0afad72a2ddb6bc6052118f6341cb6eac6f0425cf697bca2be30",
+  "code_pin_context": "BOTH_IMPLEMENTATIONS_READ_CURRENT_SOURCE_PINS",
+  "controlled_extra_32MiB_reserve": "FAILED_RETAINED_DIAGNOSTIC_NOT_AN_ORIGINAL_ACCEPTANCE_CRITERION",
+  "original_failed_GHA_run": 40228912484,
+  "original_failed_GHA_job": 121276225283,
+  "new_fits": 0,
+  "accuracy_gain_claimed": false,
+  "website_deployment": false
+}

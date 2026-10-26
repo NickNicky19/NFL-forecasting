@@ -514,13 +514,14 @@ class OperationalStorage:
             return {"path": str(path), "blob": str(blob), "sha256": sha, "bytes": info.st_size}
 
     def write_dataframe(self, frame, path, *, format="parquet", replace=False, **kwargs):
+        parquet, csv = _dataframe_writers()
         if format == "parquet":
             buffer = io.BytesIO()
-            _PANDAS_PARQUET(frame, buffer, **kwargs)
+            parquet(frame, buffer, **kwargs)
             self.write_bytes(path, buffer.getvalue(), replace=replace)
         elif format == "csv":
             buffer = io.StringIO(newline="")
-            _PANDAS_CSV(frame, buffer, **kwargs)
+            csv(frame, buffer, **kwargs)
             self.write_text(path, buffer.getvalue(), encoding=kwargs.get("encoding") or "utf-8", replace=replace)
         else:
             raise ValueError("unsupported dataframe format")
@@ -716,7 +717,15 @@ def _capture_csv(frame, path_or_buf=None, *args, **kwargs):
     return _PANDAS_CSV(frame, path_or_buf, *args, **kwargs)
 
 
-# Explicit dataframe writes also work before the first capture context.
-import pandas as _pd
-_PANDAS_PARQUET = _pd.DataFrame.to_parquet
-_PANDAS_CSV = _pd.DataFrame.to_csv
+# Metadata/CAS operations do not import a numerical runtime. Explicit dataframe
+# writes still work before the first capture context, using the original methods.
+_PANDAS_PARQUET = _PANDAS_CSV = None
+
+
+def _dataframe_writers():
+    global _PANDAS_PARQUET, _PANDAS_CSV
+    with _CAPTURE_GUARD:
+        if _PANDAS_PARQUET is None:
+            import pandas as pd
+            _PANDAS_PARQUET, _PANDAS_CSV = pd.DataFrame.to_parquet, pd.DataFrame.to_csv
+        return _PANDAS_PARQUET, _PANDAS_CSV

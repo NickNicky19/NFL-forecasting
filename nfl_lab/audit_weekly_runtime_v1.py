@@ -10,6 +10,7 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 import json
+import hashlib
 import math
 import os
 import re
@@ -17,9 +18,7 @@ import re
 from . import audit_weekly_epoch_v1 as epoch, audit_count_retained_v1 as retained
 from . import audit_count_checkpoint_v1 as effective, private_draft_store as private
 from . import weekly_generic_producer as generic, weekly_adaptive as selector
-from . import weekly_current_query as query, weekly_future_inference as future
 from . import audit_numerical_runtime_v1 as numerical
-from . import operational_sources as sources
 from .operational_storage import OperationalStorage
 from .owned_reference_batch import validate_owned_references
 from .state import canonical, digest, utc, now_utc
@@ -83,7 +82,9 @@ def fresh(storage, path):
 
 def write(storage, path, document):
     storage.write_bytes(path, canonical(document))
-    return future.binding(path)
+    p=Path(path).absolute()
+    with p.open("rb") as handle:checksum=hashlib.file_digest(handle,"sha256").hexdigest()
+    return dict(path=str(p),bytes=p.stat().st_size,sha256=checksum)
 
 
 def config_check(config, slate):
@@ -130,6 +131,7 @@ def relocated_catalog(restored, aliases):
 class Runtime:
     """One typed epoch/choice. External proof authentication belongs to parent."""
     def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None):
+        from . import operational_sources as sources
         numerical.loaded(Path(__file__).resolve().parents[1],os.environ)
         require(isinstance(storage, OperationalStorage) and type(registered) is epoch.RegisteredEpoch
             and type(choice) is epoch.EpochChoice, "EXISTING_OWNER_AND_TYPED_EPOCH_CHOICE_REQUIRED")
@@ -224,6 +226,7 @@ class Runtime:
         return value
 
     def acquire(self, prepared_ref, completion, historical_sources, output, *, downloader=None):
+        from . import operational_sources as sources, weekly_future_inference as future
         """Fresh E7 transport only; statistics decoding stays in original filters."""
         from .operational_io import quota_downloader
         self.check(); prepared = self.prepared(prepared_ref)
@@ -281,6 +284,7 @@ class Runtime:
             raise
 
     def infer(self, prepared_ref, source_ref, output):
+        from . import operational_sources as sources, weekly_future_inference as future, weekly_current_query as query
         """No network, fitting, outcome/scoring API or new family selection."""
         from . import weekly_current_inference as current
         from .weekly_source_read_batch import source_read_operation
@@ -409,6 +413,7 @@ class Runtime:
         return ref
 
     def _candidates(self, session, features, capture, capture_ref, bridge, sink, output):
+        from . import weekly_future_inference as future
         from .weekly_current_inference import projection_receipts
         records = [dict(r, eligible_roles=sorted(set(features.position))) for r in self.records]
         groups = []

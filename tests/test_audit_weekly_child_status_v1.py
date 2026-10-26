@@ -61,7 +61,10 @@ def runner(tmp_path):
         canary_asset_id=100,canary_name='canary-'+canary+'.txt',canary_sha256=canary,canary_bytes=117,
         browser_tag='weekly-private-runtime-v2-'+runtime,config_sha256=store.config_sha())
     store.checked_binding(binding)  # Closed fictional metadata, no platform authority.
-    r.go=dict(qualified_runtime=dict(binding=binding,qualification={}),pending_census=dict(reservations=[]))
+    # This fixture exercises the existing owner capture, not recurring Root
+    # authority. The native append boundary remains explicitly fictional.
+    r.go=dict(operation='CURRENT_CORRECTION_CAPTURE',qualified_runtime=dict(binding=binding,qualification={}),pending_census=dict(reservations=[]))
+    r.operations_proof=None
     r.go_sha='a'*64
     r.root_ref=hosted.write(r.storage,r.root/'OWNER_ROOT.json',dict(fictional_root=True,successful_forecast=False))
     r.identity=dict(execution_lane='github_actions',repository=store.REPO,run_id='49900000000',run_attempt=1,source_sha='c'*40,

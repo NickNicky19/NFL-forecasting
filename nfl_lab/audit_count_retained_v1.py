@@ -262,9 +262,9 @@ def authenticate_origin(client, registration, qualification):
         and client.job["run_authenticated"] is True and client.job["api_job_id"] not in {producer["api_job_id"],reader["api_job_id"]}
         and client.process != producer["process_identity"], "FRESH_CROSS_RUN_READER_REQUIRED")
     current_run = client.json(client.allow(store.API+"/actions/runs/"+client.run_id))
+    from . import audit_weekly_operations_authority_v1 as operations_authority
     require(current_run.get("head_branch") == client.job["workflow_ref"].split("@refs/heads/",1)[1]
-        and current_run.get("actor",{}).get("login") == "NickNicky19"
-        and current_run.get("actor",{}).get("id") == 208912933,
+        and operations_authority.authorize_client_actor(client,current_run),
         "ACTUAL_CURRENT_RETAINED_BRANCH_AND_OWNER")
     run_url = store.API+"/actions/runs/"+o["run_id"]
     run = client.json(client.allow(run_url))

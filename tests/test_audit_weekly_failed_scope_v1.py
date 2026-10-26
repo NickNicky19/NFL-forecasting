@@ -96,7 +96,9 @@ def fixture(tmp_path, *, partial):
         storage.write_bytes(root/relative, body)
         excluded[relative] = body
     package = dict(fixture_only=True, authentication_or_qualification_claim=False)
+    # Collection stops before the client factory; this legacy fixture supplies no live grant.
     runner = SimpleNamespace(root=root, storage=storage, started=now_utc()-timedelta(seconds=30),
+        fresh_operations_proof=lambda: None,
         go=dict(qualified_runtime=package, pending_census=dict(fixture_no_remote_census=True)),
         go_sha=store.sha(b'FICTIONAL_OWNER_ROOT'), env=dict(GITHUB_OUTPUT=str(tmp_path/'unused-output')))
     return SimpleNamespace(runner=runner, included=included, excluded=excluded, package=package)

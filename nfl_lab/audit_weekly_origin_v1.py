@@ -151,13 +151,15 @@ def checked_authority(body, expected_sha256, request_sha256, env, root):
         and 0 < (store.utc(a["expires_at_utc"])-store.utc(a["issued_at_utc"])).total_seconds() <= 3600, "FRESH_ORIGIN_AUTHORITY_CLOCK")
     require(env.get("GITHUB_ACTIONS") == "true" and env.get("GITHUB_REPOSITORY") == store.REPO
         and env.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and env.get("GITHUB_RUN_ATTEMPT") == "1"
-        and env.get("GITHUB_ACTOR") == "NickNicky19" and env.get("GITHUB_ACTOR_ID") == "208912933" and env.get("STORE_PERMISSION") == "write",
+        and env.get("STORE_PERMISSION") == "write",
         "ACTUAL_OWNER_ORIGIN_JOB_REQUIRED")
     event = cp.strict_json(store.read_local(env["GITHUB_EVENT_PATH"],256 << 10))
     text = event.get("inputs",{}).get("inference_builder_go_json","").encode()
     require(text and store.sha(text) == a["owner_root_go_sha256"] == event["inputs"].get("inference_builder_go_sha256")
         and event["inputs"].get("mode") == MODE and event.get("repository",{}).get("full_name") == store.REPO,
         "REAL_NEW_WEEKLY_ROOT_EVENT_REQUIRED")
+    from . import audit_weekly_operations_authority_v1 as operations_authority
+    operations_authority.child(env,text,root)
     # The parent validates the entire root's closed phase contract. This child
     # independently binds its exact request, source, phase and genuine API job.
     require(subprocess.check_output(["git","rev-parse","HEAD"],cwd=root,text=True).strip() == a["source_sha"], "ACTUAL_ORIGIN_CHECKOUT_SOURCE")
