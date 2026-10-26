@@ -1,0 +1,7 @@
+# Artifact clock precision correction
+
+Actual native registration40278948879 completed all three jobs on ea84002, with downloaded1350-byte artifact12631191498 matching its GitHub digest. Its native seal records06:19:56.008169UTC; GitHub reports artifact creation/updated times06:19:56Z. The old exact-point chronology guard rejects that compatible same-second event. No record was published after that rejection, and the original artifact remains unchanged.
+
+The shared bootstrap now compares native creation at available whole-second RFC3339 Z metadata precision. Explicit fractional or other timestamp forms retain exact comparison. Raw clocks, native/root freshness, source/run/digest/size and remaining API/job chronology stay strict. This is compatibility with a reported interval, not proof of subsecond causality from rounded metadata. Both old and new registry schemas and paths remain unchanged.
+
+Before tests fail for both bootstrap versions; author after checks pass108 cases. Actual combined producer checks pass169 cases. Boundary tests reject a previous-second upload, a native event at the next-second boundary, explicit fractional reversal, damaged artifact identity, stale current clock and invalid job completion. Full hosted source CI, independent review, normal integration and genuinely fresh source-specific registration/Ops remain separate requirements. No fit, backdating, historical registration edit or forecast-output change is claimed.

@@ -1,0 +1,73 @@
+{
+  "after": {
+    "exact_native_clock_unchanged": "2026-10-26T06:19:56.008169+00:00",
+    "existing_native_job_and_current_clock_checks_unchanged": true,
+    "meaning": "Compatibility with API second bucket, not proof of point-time causality within that second.",
+    "strict_remaining_API_chain": true,
+    "timestamp_compatibility": true,
+    "whole_second_normalization": "Only actual whole-second RFC3339 Z artifact created_at strings; all fractional/other formats remain exact."
+  },
+  "base": "0c4e2d3309495ad1a47f47bd820bd496632a44fd",
+  "before": {
+    "artifact_created_at": "2026-10-26T06:19:56Z",
+    "artifact_updated_at": "2026-10-26T06:19:56Z",
+    "integrated_V1_and_V2": "2 failed: NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB",
+    "native_created_at": "2026-10-26T06:19:56.008169+00:00",
+    "seal_job_completed_at": "2026-10-26T06:19:59Z",
+    "strict_point_comparison": false
+  },
+  "branch": "audit/artifact-clock-precision-main-20261026",
+  "caller_followup": {
+    "action": "Replace duplicate strict upload comparison with b.verify_artifact_upload_clock(native[\"created_at_utc\"], artifact[\"created_at\"], artifact[\"updated_at\"], jobs[\"seal\"][\"completed_at\"])",
+    "edited": false,
+    "path": "/workspace/nfl-system-audit/continuation/prepare_controller_record.py:85"
+  },
+  "created_at_utc": "2026-10-26T06:29:14.324851+00:00",
+  "evidence_sha256": {
+    "before-tests.log": "a7bc5748f7d4fb7f53d31bbc3f5b9814d76c32bae7abe6c55e3690c31ab240f1",
+    "bootstrap-tests.log": "6ec5f9a84193074cb70f75658a4c52640083ef0a21af1b14c9a906039c01e4a4",
+    "parent-integration-tests.log": "b099717b0f4a9f62539b63fe5a8ebc7ae0aa524d60e983fbf07d0b6e38a1bf22"
+  },
+  "files": {
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 57383,
+      "sha256": "d86424087e30c705cdcd6fa78add763f278c219304559867d1e58b09b1794e9e"
+    },
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 44659,
+      "sha256": "48d1259b7ddbaecfd596c4316ac18e9692f15b5b49374fa68be17270bf28215d"
+    }
+  },
+  "limits": [
+    "Independent review, combined CI and fresh literal-source native registration remain parent integration work.",
+    "No old artifact is relabelled, no registry written and no remote action taken."
+  ],
+  "local_commit": "c17f667da6826cee847f7035d135a8f043156a2d",
+  "owner_reported_original_artifact": {
+    "artifact_id": 12631191498,
+    "bytes": 1350,
+    "download_not_repeated": true,
+    "original_unchanged": true,
+    "run_id": "40278948879",
+    "sha256": "8eef4fc13e8db1734c1aa71b251024c3b7243fcd6ea04a01ddab2ba198a6f220"
+  },
+  "schema_version": "artifact-clock-precision-repair-v1",
+  "tests": {
+    "after_logs": [
+      "bootstrap-tests.log",
+      "parent-integration-tests.log"
+    ],
+    "before_log": "before-tests.log",
+    "passed": 108,
+    "socket_deny": true
+  },
+  "unchanged": {
+    "Root_and_native_timestamp_bytes": true,
+    "actual_run_source_and_jobs": true,
+    "artifact_digest_and_size": true,
+    "caps_permissions_routes": true,
+    "registry_paths": true,
+    "wire_schema_versions": true
+  },
+  "worktree": "/workspace/nfl-system-audit/artifact-clock-precision-main"
+}
