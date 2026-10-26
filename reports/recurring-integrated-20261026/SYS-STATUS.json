@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-26T08:16:56.947299+00:00",
+  "observed_at_utc": "2026-10-26T13:30:11.217934+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL",
   "findings": [
@@ -11,7 +11,7 @@
       "affected_path": "producer:role_boosting.py:137;weekly_future_inference.py:124",
       "expected": "Geometric q.75 expected mean3",
       "actual": "Median2 labeled mean",
-      "repair_status": "implemented isolated producer;not integrated",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -21,7 +21,8 @@
         "released": "COUNT7 producer only",
         "verified": "18 retained warm replays,14 independent cold means; real Main preview127rows/11categories",
         "remaining_boundary": "Website selected COUNT7 installation and actual deployed consumption remain with active writer."
-      }
+      },
+      "original_checkpoint_repair_status": "implemented isolated producer;not integrated"
     },
     {
       "id": "SYS-002",
@@ -30,7 +31,7 @@
       "affected_path": "website:pull/scoring.py:33;pull/build.py:139;pull/gamemodel.py:28",
       "expected": "Normalized team rollup preserves fgm;fictional spread1",
       "actual": "Dropped fgm;fictional spread8.8",
-      "repair_status": "exact patches scratch tested;not installed",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -40,7 +41,8 @@
         "released": "website453",
         "verified": "live served assets retain the previously verified repair",
         "remaining_boundary": "No new forecast accuracy qualification follows."
-      }
+      },
+      "original_checkpoint_repair_status": "exact patches scratch tested;not installed"
     },
     {
       "id": "SYS-003",
@@ -49,17 +51,18 @@
       "affected_path": "website:pull/grade.py:126,144",
       "expected": "Wrong team/game row unresolved",
       "actual": "Classic hit andPPR error accepted",
-      "repair_status": "exact patches scratch tested;not installed",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "partial",
+        "repaired": "Core live; strict props Main74dc and Phase2 9c168 locally repaired/reviewed",
         "integrated": "core Classic yes",
         "released": "core Classic website453",
-        "verified": "core live; strict props fixtures only",
-        "remaining_boundary": "Strict props/broader Phase2 grading require actual owner combined-source CI/release."
-      }
+        "verified": "Main216Python+7Node,all6completioncases; Phase2 targeted20Python+8Node. Live still453.",
+        "remaining_boundary": "Actual active-owner integration, hosted combined-source CI and deployed grading acceptance remain outstanding."
+      },
+      "original_checkpoint_repair_status": "exact patches scratch tested;not installed"
     },
     {
       "id": "SYS-004",
@@ -68,17 +71,18 @@
       "affected_path": "website:pull/build.py:121,526,746,748",
       "expected": "Completed true andpast aware kickoff required",
       "actual": "post alone entersfinals",
-      "repair_status": "exact patches scratch tested;not installed",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "partial",
+        "repaired": "Core live; strict props Main74dc and Phase2 9c168 locally repaired/reviewed",
         "integrated": "core and game-market yes",
         "released": "core website453",
-        "verified": "core live; props finality prepared",
-        "remaining_boundary": "The source-specific strict props variant is not yet installed."
-      }
+        "verified": "Main216Python+7Node,all6completioncases; Phase2 targeted20Python+8Node. Live still453.",
+        "remaining_boundary": "Actual active-owner integration, hosted combined-source CI and deployed grading acceptance remain outstanding."
+      },
+      "original_checkpoint_repair_status": "exact patches scratch tested;not installed"
     },
     {
       "id": "SYS-005",
@@ -87,7 +91,7 @@
       "affected_path": "website:.github/workflows/hourly.yml:33",
       "expected": "Workflow/event/checkout/currentmain agree",
       "actual": "gitpull maymix runningoldYAML withnewsource",
-      "repair_status": "source-fence patches apply checked;not installed",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -97,7 +101,8 @@
         "released": "reviewed website/producer paths",
         "verified": "website failed attempt did not publish; genuine COUNT7 export and native registry CAS verified",
         "remaining_boundary": "New recurring forecast publication remains unverified pending successful actual Ops."
-      }
+      },
+      "original_checkpoint_repair_status": "source-fence patches apply checked;not installed"
     },
     {
       "id": "SYS-006",
@@ -106,7 +111,7 @@
       "affected_path": "producer:.github/workflows/lab.yml:457,551;phase2:phase2_capture.py:1299",
       "expected": "Failed andpartial evidence retained privately",
       "actual": "Success-only checkpoint/commit may skipfailedlocal evidence",
-      "repair_status": "unresolved contract;no speculativealways change",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -114,9 +119,10 @@
         "repaired": "yes for stated lanes",
         "integrated": "yes",
         "released": "website failure ref and native producer failure lane",
-        "verified": "Remote website1558-row restoration; genuine Ops12 and Ops14 fresh failure restorations; successful forecast/export false.",
+        "verified": "Website1558-row failed-ref restoration and genuineOps12/14/17 fresh failure restorations passed. Rotation4 failed before anyPOST/newstore. No partialforecast published as success.",
         "remaining_boundary": "A restored failed attempt is not a successful forecast."
-      }
+      },
+      "original_checkpoint_repair_status": "unresolved contract;no speculativealways change"
     },
     {
       "id": "SYS-007",
@@ -125,17 +131,18 @@
       "affected_path": "lab.yml;hourly.yml;timing-policy.json",
       "expected": "Registered captures andweeklydecisions from genuineprior evidence",
       "actual": "Labblocked/manualonly;40of42 nominaltiming misses",
-      "repair_status": "declaredpending;single schedulerpreserved",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
         "repaired": "partial",
-        "integrated": "Historical epoch, per-field API clocks and exact registered feature builder repairs mergedMain39 3d0c118/Producer40c1c6812.",
-        "released": "bounded source only; activation not performed or verified; latest activation-variable read403",
-        "verified": "ActualfullCI718Main/2177Producerpassed,1optional skip each; all2178Producer nodes attempted/completed. Earliernative16registration/record29112ff belongs olderf12source. Ops17 passed18modelreplay andfreshsourceacquisition, failedinfer; actualfreshfailure restoration verified. Builderguard defect reproduced and currentcodefixed with realnew-query owned-feature tests; no successful current-source Ops yet.",
-        "remaining_boundary": "115of128private slots; >=16neededfreshregistration+Ops; old-read/new-write namespace continuation in implementation. Need qualifiednewnamespace, finalcode native/Ops/export/consumer, activation read403, namedhorizon/cumulativehistory boundaries, actualwebsitewriterintegration/deployment."
-      }
+        "integrated": "Main41 77d8f1f and Producer42 9774e2e V3 namespace continuation merged normally; earlier builder/epoch/clock fixes retained.",
+        "released": "Source only; no new successful Ops/export, scheduler activation or selected website installation.",
+        "verified": "HostedMain720passed+1skip. Producer2205passed+1skip; all2206collected nodes attempted/completed. GenuineRotation4 40329574633 failedRESPONSE_CAP beforePOST; no newrelease/fiveoldstorespreserved. FocusedpaginationfixPR43 has18tests18subtests and52boundarychecks locallypassing.",
+        "remaining_boundary": "PR43review/CI/integration; freshcanaryqualification; finalnativeRoot/seal; actualOps/capture/grade/restore/export; activationaccess403 and horizon/cumulativehistory boundaries; actualwebsiteintegration/deployment. Oldnamespace+multipartParentprobe133/140HTTP,79/80authority,40/40privateGETs leaveszeroheadroom; genuinebehaviornotqualified."
+      },
+      "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
     {
       "id": "SYS-008",
@@ -144,7 +151,7 @@
       "affected_path": "research:nfl_lab/features.py:32,119",
       "expected": "Last3 bykickoff afteravailability;unknown excluded",
       "actual": "Mean50vs20;unknown999admitted",
-      "repair_status": "implemented cutoff-features-v2-20261025",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -154,7 +161,8 @@
         "released": "research code",
         "verified": "registered tests and independent clock examples",
         "remaining_boundary": "Seven-day historical fallback assumption remains supported; actual publication clocks and all operational freshness are not proved."
-      }
+      },
+      "original_checkpoint_repair_status": "implemented cutoff-features-v2-20261025"
     },
     {
       "id": "SYS-009",
@@ -163,7 +171,7 @@
       "affected_path": "research:nfl_lab/cdf_evaluation.py:258",
       "expected": "Impossibleevent loss+infinity retained",
       "actual": "Droppedrow falselyfavorscandidate bylog2",
-      "repair_status": "implemented paired-distribution-interval-v2-20261025",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -173,7 +181,8 @@
         "released": "research code",
         "verified": "proper infinite log-loss calculations checked",
         "remaining_boundary": "Private historical accuracy results remain unreproduced; weekly Brier procedure unchanged."
-      }
+      },
+      "original_checkpoint_repair_status": "implemented paired-distribution-interval-v2-20261025"
     },
     {
       "id": "SYS-010",
@@ -182,7 +191,7 @@
       "affected_path": "tests/test_baseline_correction_report_v2.py;v3.py;test_raw_orphan_context.py;pyproject.toml",
       "expected": "Declareddeps;relativepaths;directimport guard",
       "actual": "Collectionfails;missingxgb;globalmodulestate falsefailure",
-      "repair_status": "implemented researchtestrepair",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -192,7 +201,8 @@
         "released": "research code and stated native paths",
         "verified": "declared test dependencies/relative paths/state guards; actual fresh native receipts",
         "remaining_boundary": "This does not reproduce missing private historical accuracy data or imply all Ops succeeded."
-      }
+      },
+      "original_checkpoint_repair_status": "implemented researchtestrepair"
     },
     {
       "id": "SYS-011",
@@ -201,7 +211,7 @@
       "affected_path": "phase2:pull/scoring.py:76",
       "expected": "Fractionalnonnegative counts;invalidnegative abstains",
       "actual": "rec=-1 accepted",
-      "repair_status": "phase2patch scratchtested;notinstalled",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -211,7 +221,8 @@
         "released": "no",
         "verified": "source-specific scratch regression only",
         "remaining_boundary": "Current Main not applicable; active Phase2 owner must integrate and qualify its correct variant."
-      }
+      },
+      "original_checkpoint_repair_status": "phase2patch scratchtested;notinstalled"
     },
     {
       "id": "SYS-012",
@@ -220,7 +231,7 @@
       "affected_path": "website:output/app.js:210,221,235",
       "expected": "Missinghalftypedunknown orexplicitfallbacklabel",
       "actual": "FullPPR20underHalfPPRlabel",
-      "repair_status": "exact half-PPR scratch patches validated;not installed;merged-app browser acceptance pending",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
@@ -230,7 +241,8 @@
         "released": "website453",
         "verified": "known-zero versus missing half-PPR live checks",
         "remaining_boundary": "Broader Phase2 fantasy paths pending; exact research PPR remains label/component unsupported."
-      }
+      },
+      "original_checkpoint_repair_status": "exact half-PPR scratch patches validated;not installed;merged-app browser acceptance pending"
     },
     {
       "id": "SYS-013",
@@ -239,17 +251,18 @@
       "affected_path": "phase2:config/policy-v2;helperJS;schema;workflowcontroller",
       "expected": "Actual combinedsourceCIgreen andqualified",
       "actual": "CurrentCI2fails12errors;protectedbytesmissing",
-      "repair_status": "blocker;existingintegratorhandoff",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "README.md;coverage.csv;associated fictional repro/aggregate receipts",
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "ConcretePhase2assemblylocaldc6 plus finaltestfixturefollowup pending.",
+        "repaired": "Final local combined9c168 includesstricttruecompletion,negativecounts and all10setup-blocked methods repaired.",
         "integrated": "no actual complete Phase2 assembly",
         "released": "no",
-        "verified": "Focusedpreservation/SYS01144negativecontrols pass; fullsource1375methodsrun with3class-setup errors,10additionalmethodsblockedof1385discovered; no fullpass oractualownerCI claimed.",
-        "remaining_boundary": "Finish strictfixturecorrections/rerun all10blockedmethods andindependentreview; actualownercombined-sourceCI/protectedworkflow/release."
-      }
+        "verified": "IndependentreviewPASS; originaldc6full1375with3errorsretained. All10blockedmethodspass; finaltargeted20Python+8Nodepass; no fullfinalheadCIclaim.",
+        "remaining_boundary": "Activeownercombinedsourceintegration/CI/deployment and validcurrent-sourceproducerbinding."
+      },
+      "original_checkpoint_repair_status": "blocker;existingintegratorhandoff"
     },
     {
       "id": "SYS-014",
@@ -258,7 +271,7 @@
       "affected_path": "website-current:tools/weekly_selected_rankings.py:228",
       "expected": "Each item direction must equal its over/under container",
       "actual": "Matching-hash fictional over item in under container accepted by Python;actual JS rejects",
-      "repair_status": "exact current-source one-line scratch patch validated;not installed",
+      "repair_status": "See current state; original checkpoint retained separately.",
       "evidence": "successor delta validation;16Python+36JS fictionalchecks",
       "historical_effect": "No malformed current live pick observed;normal producer assigns correct sides;browserfailsclosed",
       "current": {
@@ -266,9 +279,10 @@
         "repaired": "container/caption yes; freeze repair prepared",
         "integrated": "container/caption yes; freeze no",
         "released": "container/caption website453",
-        "verified": "live identities and original browser checks; new freeze before/after tests",
-        "remaining_boundary": "Additional actual daily-refresh policy-freeze defect remains unreleased in the ready Main eight-path package."
-      }
+        "verified": "Live453container/caption; additionalrankingfreezevalidation integrated in localMain74dc combinedCOUNT7package with216Python+7Node and genuine127row/11categoryconsumer.",
+        "remaining_boundary": "Owner mustinstallactualMain or separatePhase2variant; noselectedCOUNT7liveacceptanceyet."
+      },
+      "original_checkpoint_repair_status": "exact current-source one-line scratch patch validated;not installed"
     }
   ],
   "critical_coverage_not_passed_by_default": true,

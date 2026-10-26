@@ -1,0 +1,347 @@
+{
+  "schema_version": "independent-dual-runtime-critical-review-v1",
+  "result": "PASS",
+  "qualification": "SCOPED_READ_ONLY_CRITICAL_SOURCE_REVIEW; NOT_NATIVE_OR_PRODUCTION_ADMISSION",
+  "started_at_utc": "2026-10-26T12:47:58.346239+00:00",
+  "completed_at_utc": "2026-10-26T13:02:13.001287+00:00",
+  "source": {
+    "producer_root": "/workspace/nfl-system-audit/dual-runtime-continuation",
+    "base": "c1c681254e3ec2fe4fab445efec8530d8d865498",
+    "producer_head_at_review": "fefe3a150e88b7b8ae0cba4bc0e3d066db343859",
+    "main_mirror_root": "/workspace/nfl-system-audit/dual-runtime-main",
+    "main_mirror_base": "f063b0059911c145c166a67f7a0c945602b7056d",
+    "implementation_is_parent_owned_working_tree_delta": true,
+    "production_hashes": {
+      "nfl_lab/audit_weekly_controller_registration_v1.py": "8ad1cffc618fdec51a3c4ff37484739b8e70a461be5654a2855c337c02bd9b4b",
+      "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+      "nfl_lab/audit_weekly_hosted_v1.py": "b42e41df3f4f75fc45e5eea2da9bf8e5e5656194cf6d58bd416d64b5e2811dcc",
+      "nfl_lab/audit_weekly_operations_restore_v1.py": "859d69a37ec36672c277d10ebbc6084eb4ca1d2c384ffa3cb9481e075c156ff9",
+      "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+      "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35"
+    },
+    "all_six_production_files_unchanged_through_review": true,
+    "only_six_production_files_changed_from_base": true,
+    "all_preexisting_module_constants_in_six_files_unchanged": true,
+    "no_new_runtime_pin_paths": true,
+    "main_mirror_exact_shared_files": {
+      "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35",
+      "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+      "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+      "tests/test_audit_weekly_controller_bootstrap_v1.py": "fde36b493316e2c9702b3f781e5db10ec35009b7d1d6fbc7177501b95a4758bd",
+      "tests/test_audit_weekly_parent_v1.py": "04f803da47a8e22fa87caeef1586b4cb0ad57f162f493ec9cb2da4ee57564bc5"
+    },
+    "Main_has_no_Producer_template_test_or_numerical_grade_modules": true
+  },
+  "design": {
+    "path": "/tmp/nfl-dual-binding-continuation-20261026/DESIGN.md",
+    "sha256": "071b9d243b5d232122d461649258b372b7558d169cd2084414c00fd4e6a72f62"
+  },
+  "blocking_findings": [],
+  "reviewed_boundaries": [
+    {
+      "boundary": "Closed Root/static-V3 metadata",
+      "verdict": "PASS",
+      "references": [
+        "nfl_lab/audit_weekly_template_v1.py:79",
+        "nfl_lab/audit_weekly_template_v1.py:93",
+        "nfl_lab/audit_weekly_template_v1.py:300",
+        "nfl_lab/audit_weekly_hosted_v1.py:173",
+        "nfl_lab/audit_weekly_controller_registration_v1.py:156"
+      ],
+      "evidence": "Explicit V2/V3 Root keys, matching static versions, exact prior record/package/census schemas and clocks, distinct old/current namespace, immutable owner/template/native seal binding. Five dynamic fields stay unchanged. No VERSION ABI rewrite or saved metadata authority."
+    },
+    {
+      "boundary": "Selected old reads and current writes",
+      "verdict": "PASS",
+      "references": [
+        "nfl_lab/audit_weekly_template_v1.py:137",
+        "nfl_lab/audit_weekly_template_v1.py:146",
+        "nfl_lab/audit_weekly_operations_restore_v1.py:67",
+        "nfl_lab/audit_weekly_grade_history_v1.py:967"
+      ],
+      "evidence": "Capture selects old only for exact sealed anchor. Checkpoint selects a unique binding/package pair; old selection requires non-null checkpoint and original static Root commitment. Original census follows old qualification only; current census/current package continue to govern writes. No fallback namespace search, old asset relabelling, or writable old client."
+    },
+    {
+      "boundary": "Original Root preimage and strict same Source",
+      "verdict": "PASS",
+      "references": [
+        "nfl_lab/audit_weekly_grade_history_v1.py:879",
+        "nfl_lab/audit_weekly_grade_history_v1.py:966",
+        "nfl_lab/audit_weekly_grade_checkpoint_v1.py:384"
+      ],
+      "evidence": "Original cohort Root hash and issued clock remain exact; only explicitly sealed old static preimage may differ from current static Root, with original qualified package and census equality. Current package history keeps ordinary static equality. Same Source and exact helper pins are enforced before private history, and restore_parts retains its same-Source gate. Cross-namespace support is not a source-history adapter."
+    },
+    {
+      "boundary": "Separate Parent GET client and aggregate ledger",
+      "verdict": "PASS",
+      "references": [
+        "nfl_lab/audit_weekly_parent_v1.py:558",
+        "nfl_lab/audit_weekly_parent_v1.py:579",
+        "nfl_lab/audit_weekly_parent_v1.py:689",
+        "nfl_lab/audit_weekly_template_v1.py:504"
+      ],
+      "evidence": "Old package has a distinct ParentGETClient, live typed current Parent proof and sealed-document recheck. Transport stays the same ledger.private_get, so HTTP, private, transfer, native, cadence and expiry budgets remain aggregate. Old routes remain GET-only. Root/dispatch limits are checked before claims/dispatch."
+    },
+    {
+      "boundary": "Full old multipart rows into new checkpoint and fresh new reader",
+      "verdict": "PASS_SOFTWARE_PROTOCOL_WITH_FICTIONAL_AUTHORITY_SEAMS",
+      "evidence": "Focused history probes restored all old parts and original known-by/version/week fields, performed actual codec/native-append calls against a second mock namespace, and restored the new checkpoint with disjoint asset IDs. Current job and original historical proofs remain separate. Existing checkpoint/store code is byte-identical to base."
+    },
+    {
+      "boundary": "Main metadata checkout helper relocation",
+      "verdict": "PASS",
+      "evidence": "fictional_runtime_metadata and dual_runtime_root now reside in the existing shared bootstrap test, are re-exported from Producer template test, and are imported directly by shared Parent tests. Three shared modules plus two tests match Producer/Main byte-for-byte. Main focused tests and cold metadata checks ran without test_template or numerical grading modules."
+    },
+    {
+      "boundary": "Exact old forecast anchor/current checkpoint combination",
+      "verdict": "PASS_INDEPENDENT_FOCUSED_PROBE",
+      "evidence": "Existing Parent current-checkpoint test used a nonmatching prior anchor. The review-only additional probe seals the exact forecast anchor as prior, dispatches through actual typed Parent/CAS logic using mocked HTTP, verifies capture_runtime selects prior while checkpoint_runtime selects current, and observes 120 total calls/27 private GETs. No repository source/test was edited."
+    }
+  ],
+  "focused_validation": [
+    {
+      "label": "focused",
+      "root": "/workspace/nfl-system-audit/dual-runtime-continuation",
+      "testcases": 24,
+      "failures": 0,
+      "errors": 0,
+      "wall_seconds": 25.930769697006326,
+      "log": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/focused.log",
+      "log_sha256": "3b48ba73d8e8264e88ea363ced845be95a3a65ab387764d1fa4d92717218964e",
+      "invocation_receipt": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/focused-invocation.json"
+    },
+    {
+      "label": "post-move-producer",
+      "root": "/workspace/nfl-system-audit/dual-runtime-continuation",
+      "testcases": 16,
+      "failures": 0,
+      "errors": 0,
+      "wall_seconds": 1.8323930310143624,
+      "log": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-producer.log",
+      "log_sha256": "62d351e81d509bf7e959b65949b44947c741c7490847d67f1156589b6d8cccfb",
+      "invocation_receipt": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-producer-invocation.json"
+    },
+    {
+      "label": "post-move-main",
+      "root": "/workspace/nfl-system-audit/dual-runtime-main",
+      "testcases": 26,
+      "failures": 0,
+      "errors": 0,
+      "wall_seconds": 8.040157702984288,
+      "log": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-main.log",
+      "log_sha256": "cd66cf4906afcc88dd0d48992ed763fd049f521a8bb52892af7526b634a25fb8",
+      "invocation_receipt": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-main-invocation.json"
+    }
+  ],
+  "post_helper_move_validation": {
+    "producer_passed": 16,
+    "Main_metadata_passed": 26,
+    "full_suite_repeated": false,
+    "hosted_CI_invoked": false,
+    "Main_parent_current_history_total_HTTP": 120,
+    "Main_parent_prior_history_total_HTTP": 127,
+    "Main_parent_prior_history_private_GETs": 34,
+    "exact_old_anchor_current_checkpoint_total_HTTP": 120,
+    "exact_old_anchor_current_checkpoint_private_GETs": 27,
+    "multipart_parent_sample_HTTP_by_lane": {
+      "authority": 79,
+      "private": 33,
+      "state": 14
+    },
+    "unchanged_caps": {
+      "total_HTTP": 140,
+      "authority_HTTP": 80,
+      "private_HTTP": 40,
+      "root_bytes": 61440,
+      "Actions_dispatch_bytes": 65535
+    }
+  },
+  "retained_Godel_native_evidence": {
+    "path": "/tmp/nfl-dual-runtime-sidecar-20261026/measurements.json",
+    "sha256": "75bb084c24694af6fb275d60a167aa4bc8949fdbc3fd3cc01d8e58a1dec3f608",
+    "operation_restore_test_sha256_matches_current": true,
+    "retained_result": "14 passed in 64.91s",
+    "repeated_by_this_review": false,
+    "scope": "Local fictional native subprocess, not genuine hosted qualification",
+    "positive_case": {
+      "files": 105,
+      "HTTP_calls": 146,
+      "HTTP_cap": 640,
+      "private_GETs": 71,
+      "root_bytes": 28804,
+      "dispatch_input_bytes": 31119,
+      "pins": 24,
+      "native_CPU_seconds": 120,
+      "native_wall_seconds": 180,
+      "native_address_space_bytes": 536870912,
+      "genuine_Actions_evidence": false
+    }
+  },
+  "test_authority_limits": [
+    "Pure metadata fixtures intentionally invent package and qualification metadata; they neither mint owner authority nor qualify a runtime.",
+    "Parent composition tests use real typed Parent/controller proofs, byte/seal validation, shared counting and CAS/dispatch code over fictional HTTP; they patch the OS native_envelope seam and do not establish genuine Actions or native admission.",
+    "History codec/append/read tests explicitly inject the current authority seam (Authenticated object, verify/attach callback) and use synthetic rows and mocked HTTP. They prove data preservation and namespace behavior, not complete hosted child authority.",
+    "Retained Godel tests run real resource guards and actual selected qualification/discovery/read code in a fresh subprocess; hosted/current Root fixture seams remain explicit. No genuine new namespace readiness is claimed."
+  ],
+  "boundary_issues_and_remaining_gates": [
+    {
+      "severity": "OPERATIONAL_ADMISSION_REQUIRED",
+      "issue": "Actual full private two-package Root budget remains unmeasured by this reviewer.",
+      "required_evidence": "Parent must measure the genuine 128-pin Root with full retained registration, both package/census bodies and effective plan; Root <=60KiB, actual Actions request <=65535 bytes, and all source pins <=128. Retained native sample is only 28,804 Root bytes/31,119 dispatch-input bytes with 24 pins."
+    },
+    {
+      "severity": "OPERATIONAL_ADMISSION_REQUIRED",
+      "issue": "Fixture HTTP headroom cannot establish genuine Parent exchange/transfer capacity.",
+      "required_evidence": "Measure the actual combined Parent exchange ledger, including source/API refreshes, qualification/canary GETs, private metadata/draft boundaries and state writes; preserve total<=140, authority<=80, private<=40, state<=20 and transfer<=32MiB. A multipart sample already uses 79 of 80 authority calls."
+    },
+    {
+      "severity": "INTENTIONAL_FAIL_CLOSED_BOUNDARY",
+      "issue": "A real old checkpoint from a different Source remains rejected.",
+      "required_evidence": "Use a same-Source checkpoint with matching full helper pins and exact original Root preimage, or separately qualify a source-history adapter. Do not relabel the old Root, producer/reader proofs or known-by clocks. Initial COUNT7/null checkpoint does not prove non-null old checkpoint migration."
+    },
+    {
+      "severity": "FUTURE_NATIVE_AND_HOSTED_QUALIFICATION",
+      "issue": "No genuine final-source rotation/reservation, native template registration, direct Owner Ops smoke or BOT readiness is established here.",
+      "required_evidence": "Parent must complete genuine current-capacity reservation and final-source native qualification/create-only registration, successful same-Source Ops/sidecar and actual CI after final test/document changes. The user-reported 474 pre-helper-move Parent passes are historical evidence, not a new final-source CI result."
+    }
+  ],
+  "unchanged_reader_and_authority_hashes": [
+    {
+      "path": "nfl_lab/audit_weekly_grade_checkpoint_v1.py",
+      "sha256": "7164f7d096b443566574e1416c858a6d40175a623120314e57d78d286d6f4b6f"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_discovery_v1.py",
+      "sha256": "84f6821c41929c1cf6a9452ee96a9392ac16ff7da5496caa97c2ac339b227bf9"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_retained_v1.py",
+      "sha256": "d58fccac8298f72785c1dc8120147f6667be0a1c51528a486ae1b825ee63d0a6"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "sha256": "7e4ff297b86cb9c13dc7c6d2dc21a408bd859e048f7f60c89b259bf014287594"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_v1.py",
+      "sha256": "05b471069511d3b47e24c751ae059a1dd1b85ab817a91445c77893d2f3eb8616"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_authority_v1.py",
+      "sha256": "b4641d8a75057346a5bd72a0ba69f62d33aee8e0402fbccdd3bdbbf3a0e15583"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_worker_v1.py",
+      "sha256": "341d0a2b153ea333c1eb72d7ede56b32f7b4caed0ff4e1d7c34f5ccf2602fc4c"
+    },
+    {
+      "path": "nfl_lab/private_draft_store.py",
+      "sha256": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+    },
+    {
+      "path": "nfl_lab/owner_private_bootstrap.py",
+      "sha256": "9d4022dabb6bbe0b03d5a730a5a44978dbfa78cbf9be98275faace65b99d49fe"
+    }
+  ],
+  "reviewed_source_modules": [
+    "nfl_lab/audit_weekly_template_v1.py",
+    "nfl_lab/audit_weekly_hosted_v1.py",
+    "nfl_lab/audit_weekly_controller_registration_v1.py",
+    "nfl_lab/audit_weekly_parent_v1.py",
+    "nfl_lab/audit_weekly_operations_restore_v1.py",
+    "nfl_lab/audit_weekly_grade_history_v1.py",
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+    "nfl_lab/audit_weekly_archive_v1.py",
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py",
+    "nfl_lab/audit_weekly_retained_v1.py",
+    "nfl_lab/audit_weekly_discovery_v1.py"
+  ],
+  "reviewed_test_files": [
+    "tests/test_audit_weekly_template_v1.py",
+    "tests/test_audit_weekly_hosted_v1.py",
+    "tests/test_audit_weekly_controller_registration_v1.py",
+    "tests/test_audit_weekly_parent_v1.py",
+    "tests/test_audit_weekly_parent_inventory_v1.py",
+    "tests/test_audit_weekly_grade_history_v1.py",
+    "tests/test_audit_weekly_operations_restore_v1.py",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py",
+    "tests/test_audit_weekly_grade_checkpoint_v1.py"
+  ],
+  "reviewer_scope": {
+    "repository_edits": 0,
+    "source_edits": 0,
+    "test_edits_in_repositories": 0,
+    "temporary_review_probe_only": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/test_exact_old_anchor_current_checkpoint.py",
+    "new_patch_or_branch": false,
+    "remote_calls_or_writes": 0,
+    "PR_push_fetch_or_CI_dispatch": 0,
+    "private_outcomes_read": 0,
+    "genuine_private_Root_opened": false,
+    "canonical_ledger_owner_scheduler_edits": 0,
+    "model_math_caps_source_policy_edits": 0,
+    "public_raw_stats_retained": false
+  },
+  "artifacts": [
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/final-source-verification.json",
+      "bytes": 4320,
+      "sha256": "1f26fd9c0f1cc4a29f058d6b6f82dfe0a4d75ac0fe0cb2ffd5766a1c8c5a0a6c"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/focused-invocation.json",
+      "bytes": 3359,
+      "sha256": "d0ecb4d9b3dd19ae0018bff520ebc7b4036fdfad2926b72faf263cdb7f7cbc17"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/focused.log",
+      "bytes": 2566,
+      "sha256": "3b48ba73d8e8264e88ea363ced845be95a3a65ab387764d1fa4d92717218964e"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/focused.xml",
+      "bytes": 4419,
+      "sha256": "724e822edfe7020183e24a92323b5bfb225d01e878c3bbf004f0311b214cd51e"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-main-invocation.json",
+      "bytes": 3046,
+      "sha256": "16df1f5e61c4c62335417c9ca13116e334a599ce96114363cce1c5c842f5c877"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-main.log",
+      "bytes": 728,
+      "sha256": "cd66cf4906afcc88dd0d48992ed763fd049f521a8bb52892af7526b634a25fb8"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-main.xml",
+      "bytes": 6637,
+      "sha256": "8fa514deead21d588b98040675e831430d13c9aa5c2870042401ba1a7b3e68e1"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-producer-invocation.json",
+      "bytes": 3289,
+      "sha256": "6fd2519ffade6889936e654b78faf1d97da39305de43016d577318960cb6781a"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-producer.log",
+      "bytes": 710,
+      "sha256": "62d351e81d509bf7e959b65949b44947c741c7490847d67f1156589b6d8cccfb"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/post-move-producer.xml",
+      "bytes": 3740,
+      "sha256": "4a488d8765c3375558962d2b4675a2a29554af490da23f1f3da8dd0b153b96ee"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/source-start.json",
+      "bytes": 985,
+      "sha256": "10aeee2b962d1ed2296d8b63a6da3a6ea15973080e4627fc9c0cfefaacd0ab2e"
+    },
+    {
+      "path": "/tmp/nfl-dual-runtime-critical-review-20261026-j52ftp4y/test_exact_old_anchor_current_checkpoint.py",
+      "bytes": 2843,
+      "sha256": "ab5c278887b4e351440290042cf090147a7f9759d8ef16d5486dbb90a21f43a6"
+    }
+  ],
+  "final_status": "PASS_SCOPED_SOURCE_REVIEW; GENUINE_ADMISSION_AND_ACTUAL_CI_REMAIN_PARENT_WORK"
+}

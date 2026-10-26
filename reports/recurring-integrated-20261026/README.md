@@ -1,3 +1,17 @@
+Current checkpoint — 2026-10-26 13:30 UTC (PARTIAL)
+
+Main PR41 is merged at `77d8f1fad4960e66e0bdabff56e5c424ae949cc6` (720 passes/one existing optional skip). Producer PR42 is merged at `9774e2e6480496f7f22d76aa1534e9acf19f34a9` (2205 passes/one skip; all2206nodes attempted/completed). The actual CI, reviewed and merged trees match. These integrate explicit V3 old-read/current-write continuation; all original evidence and limits remain.
+
+Genuine canary rotation4 (`40329574633`) then failed `RESPONSE_CAP` before any POST/newstore. All five old stores remain. Focused pagination repair PR43 is in review/CI; its regression fails before and passes after, with18tests/18subtests and52store/bootstrapchecks passing locally. No new successful forecast, grade/export or active recurring scheduler is claimed. The old-namespace/multipart Parent software probe passes at133/140HTTP,79/80authority and40/40privateGETs: it has no private-call headroom and still needs genuine qualification.
+
+The ready current-Main combined website package is [23e471d](../main-count7-strict-props-release-20261026/README.md), local website head `74dc257`, one13-path patch againstMain453. It passes216Python/all7Node and the real selected consumer accepts127offers/all11categories under4s. OriginalCOUNT7expiry remains2026-10-27T00:15Z. The separately reviewed [Phase2 final alternative](../phase2-combined-final-20261026/README.md) is9c168; all ten methods blocked by the retained failed full run now pass, but actual owner combined CI/release remains pending. Do not stack Main and Phase2variants.
+
+Actual served bytes at13:06 remain Main453's old app/week hashes; no updated selected-feed installation is verified. The active website writer has both exact packages and has not acknowledged them. A text clarification about whether its session also stopped is pending; no ownership or scheduler takeover occurs. Activation-variable access remains403; actual source timing, daily-vs-per-game horizon gaps, finite storage and unreproduced private accuracy claims remain explicit.
+
+The older checkpoint below is preserved as dated history. Current per-SYS states are in `SYS-STATUS.json`.
+
+---
+
 # Actual recurring-source integration
 
 ## Current status at2026-10-26T08:15UTC

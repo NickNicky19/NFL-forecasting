@@ -1,0 +1,208 @@
+{
+  "schema_version": "independent-nfl-parent-v3-readonly-review-v1",
+  "created_utc": "2026-10-26T12:56:41.559736+00:00",
+  "status": "PASS",
+  "scope": "Read-only review of six Parent V3 production modules, now committed by owner: closed prior selector, original Root proof, current client guard and existing caps.",
+  "owner_source_root": "/workspace/nfl-system-audit/dual-runtime-continuation",
+  "owner_base_commit": "c1c681254e3ec2fe4fab445efec8530d8d865498",
+  "reviewed_final_owner_commit": "fefe3a150e88b7b8ae0cba4bc0e3d066db343859",
+  "uncommitted_owner_source": false,
+  "findings": [],
+  "production_source_stable_during_review": true,
+  "source_sha256_at_review_start": {
+    "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+    "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35",
+    "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+    "nfl_lab/audit_weekly_hosted_v1.py": "b42e41df3f4f75fc45e5eea2da9bf8e5e5656194cf6d58bd416d64b5e2811dcc",
+    "nfl_lab/audit_weekly_operations_restore_v1.py": "859d69a37ec36672c277d10ebbc6084eb4ca1d2c384ffa3cb9481e075c156ff9",
+    "nfl_lab/audit_weekly_controller_registration_v1.py": "8ad1cffc618fdec51a3c4ff37484739b8e70a461be5654a2855c337c02bd9b4b",
+    "tests/test_audit_weekly_parent_v1.py": "31f5e6219d7dc73ed2c42ec92d42bd556e5a99dba8f31ff27f42d2f8fd92d717",
+    "tests/test_audit_weekly_template_v1.py": "91d92633e28f39dbf1df9cf206931b58315ffc0d1836a1179f2243f353516a01",
+    "tests/test_audit_weekly_grade_history_v1.py": "8fc37edb74ed7243a4cb92dded7fe3efddae510b1106cb44029cebbfad8fd86c",
+    "tests/test_audit_weekly_hosted_v1.py": "a2b483fd56ae1899c1865df43fa7aa58d9ba05035037d4523ff1fd9422749e37",
+    "tests/test_audit_weekly_operations_restore_v1.py": "d9e26831422b6b003ee6f73c2569c799f7c4297817cf92216eb385638aea050d",
+    "tests/test_audit_weekly_controller_registration_v1.py": "03273dba7312a51dee6e421671ba5478c255cbe7964411d2fef718bb04dcf3de",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": "fc917ffc42934960d5379a83a6a4e9128469e807a3e0152f82fc778c6b902024"
+  },
+  "source_sha256_at_review_end": {
+    "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+    "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35",
+    "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+    "nfl_lab/audit_weekly_hosted_v1.py": "b42e41df3f4f75fc45e5eea2da9bf8e5e5656194cf6d58bd416d64b5e2811dcc",
+    "nfl_lab/audit_weekly_operations_restore_v1.py": "859d69a37ec36672c277d10ebbc6084eb4ca1d2c384ffa3cb9481e075c156ff9",
+    "nfl_lab/audit_weekly_controller_registration_v1.py": "8ad1cffc618fdec51a3c4ff37484739b8e70a461be5654a2855c337c02bd9b4b",
+    "tests/test_audit_weekly_parent_v1.py": "04f803da47a8e22fa87caeef1586b4cb0ad57f162f493ec9cb2da4ee57564bc5",
+    "tests/test_audit_weekly_template_v1.py": "63cbf0f53fc2c235b37d51a882d05de22c4ffb512761de6451d7376901386e77",
+    "tests/test_audit_weekly_grade_history_v1.py": "8fc37edb74ed7243a4cb92dded7fe3efddae510b1106cb44029cebbfad8fd86c",
+    "tests/test_audit_weekly_hosted_v1.py": "a2b483fd56ae1899c1865df43fa7aa58d9ba05035037d4523ff1fd9422749e37",
+    "tests/test_audit_weekly_operations_restore_v1.py": "d9e26831422b6b003ee6f73c2569c799f7c4297817cf92216eb385638aea050d",
+    "tests/test_audit_weekly_controller_registration_v1.py": "03273dba7312a51dee6e421671ba5478c255cbe7964411d2fef718bb04dcf3de",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": "fde36b493316e2c9702b3f781e5db10ec35009b7d1d6fbc7177501b95a4758bd"
+  },
+  "production_six_module_diff_sha256": "3e4d947149f2beed9fb6899780bbb01e1bd8dcccc4164deb404f574ef55ffcbe",
+  "owner_test_changes_during_review": {
+    "files": [
+      "tests/test_audit_weekly_parent_v1.py",
+      "tests/test_audit_weekly_template_v1.py",
+      "tests/test_audit_weekly_controller_bootstrap_v1.py"
+    ],
+    "reviewed_delta": "Fictional runtime helpers moved from template tests to bootstrap tests, adding local imports; parent imports updated. Existing tests/assertions preserved. Repeated only the eleven fast selector cases after this move: all passed.",
+    "six_production_modules_unchanged": true
+  },
+  "checks": [
+    {
+      "id": "PARENT-CLOSED-SELECTOR",
+      "status": "PASS",
+      "evidence": "V3 adds exactly one sealed prior-runtime field; legacy roots cannot acquire it. Both packages use the existing qualified-locator validator. Original/current runtime and release IDs differ. Original census is digest/count/time-bound to its qualification with closed reservation rows. Capture selects prior only for the exact sealed forecast anchor; otherwise it uses the current package. Checkpoint selects exactly one complete binding+package hash pair; prior requires its sealed anchor, an explicit checkpoint hash and a sealed original static Root hash. Selectors do not confer execution authority.",
+      "independent_probe": "11 selector/schema/negative cases passed initially and after owner helper relocation."
+    },
+    {
+      "id": "PARENT-ORIGINAL-ROOT-PROOF",
+      "status": "PASS",
+      "evidence": "V3 restore requires the private V2 reader envelope. Original literal Root SHA, cohort/source/pin identity, reader/job clocks and plan/calendar checks remain. Prior path also matches the sealed original Root static hash and exact original package/census. Current path retains full static-field equality. The static commitment removes exactly the original five dynamic fields; original proofs are not relabeled as current authority.",
+      "verification": "Source inspection; actual private Root/outcomes were not opened and multipart execution was not repeated."
+    },
+    {
+      "id": "PARENT-CLIENT-GUARD",
+      "status": "PASS",
+      "evidence": "A distinct prior binding creates a separate GET-only ParentGETClient. It reuses the original ledger-backed transport, parent run/job and trusted seal. Every authentication verifies unchanged private template bytes against the sealed descriptor/binding and calls the original live guard. guard precedes bind/package validation and each transfer. _discover_history requires the exact client type and authenticates literal source/helper pins before private GETs. Native history readers retain live current context authority while binding the exact selected historical package. No prior metadata grants writes."
+    },
+    {
+      "id": "PARENT-CAPS",
+      "status": "PASS",
+      "evidence": "All checked LIMITS/native envelope/ParentGETClient/_Ledger ASTs are unchanged. The extra prior client shares the original bound ledger; its counters cannot reset the shared native/network budget. Parent remains 180s wall, 120s CPU, 512 MiB AS/RSS, 140 total HTTP, 40 private HTTP, 32 MiB transfer, 128 source pins and 60 KiB Root. Existing native history/restore caps remain unchanged. V3 static checks retain 128 pins/60 KiB; complete canonical Actions dispatch payload is additionally capped at 65535 bytes.",
+      "unchanged_ast": {
+        "nfl_lab/audit_weekly_parent_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_parent_v1.py::DYNAMIC_FIELDS": true,
+        "nfl_lab/audit_weekly_parent_v1.py::native_envelope": true,
+        "nfl_lab/audit_weekly_parent_v1.py::_Ledger": true,
+        "nfl_lab/audit_weekly_template_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_template_v1.py::PLAIN_CAP": true,
+        "nfl_lab/audit_weekly_template_v1.py::PACKED_CAP": true,
+        "nfl_lab/audit_weekly_template_v1.py::ENTRY_CAP": true,
+        "nfl_lab/audit_weekly_template_v1.py::ROOT_KEYS": true,
+        "nfl_lab/audit_weekly_template_v1.py::ParentGETClient": true,
+        "nfl_lab/audit_weekly_grade_history_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_hosted_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_hosted_v1.py::ROOT_KEYS": true,
+        "nfl_lab/audit_weekly_operations_restore_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_operations_restore_v1.py::KEYS": true,
+        "nfl_lab/audit_weekly_controller_registration_v1.py::LIMITS": true,
+        "nfl_lab/audit_weekly_controller_registration_v1.py::native_envelope": true
+      }
+    },
+    {
+      "id": "PARENT-SCOPE",
+      "status": "PASS",
+      "evidence": "The six production modules remain byte-identical to the captured review snapshot. Current append/read namespace stays go.qualified_runtime; prior metadata is used by GET recovery/metadata verification. Existing original proof, native guard and budgets remain. git diff --check passed. Reviewer made no source, remote, handoff or lease mutations."
+    }
+  ],
+  "source_locations": {
+    "nfl_lab/audit_weekly_parent_v1.py::_Ledger": 120,
+    "nfl_lab/audit_weekly_parent_v1.py::_history_get_client": 558,
+    "nfl_lab/audit_weekly_parent_v1.py::_build_root": 651,
+    "nfl_lab/audit_weekly_template_v1.py::root_keys": 79,
+    "nfl_lab/audit_weekly_template_v1.py::static_root_sha256": 85,
+    "nfl_lab/audit_weekly_template_v1.py::prior_runtime": 93,
+    "nfl_lab/audit_weekly_template_v1.py::capture_runtime": 137,
+    "nfl_lab/audit_weekly_template_v1.py::checkpoint_runtime": 146,
+    "nfl_lab/audit_weekly_template_v1.py::restore": 470,
+    "nfl_lab/audit_weekly_template_v1.py::ParentGETClient": 504,
+    "nfl_lab/audit_weekly_grade_history_v1.py::_client": 692,
+    "nfl_lab/audit_weekly_grade_history_v1.py::_root_envelope": 878,
+    "nfl_lab/audit_weekly_grade_history_v1.py::restore_previous": 927,
+    "nfl_lab/audit_weekly_hosted_v1.py::validate_root": 173,
+    "nfl_lab/audit_weekly_operations_restore_v1.py::restore": 37,
+    "nfl_lab/audit_weekly_controller_registration_v1.py::prepare_template": 156
+  },
+  "independent_probes": {
+    "initial_selector": {
+      "command": [
+        "/workspace/nfl-system-audit/venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "-o",
+        "addopts=",
+        "--basetemp=/tmp/nfl-parent-v3-readonly-review-20261026-bu0iaxqk/pytest-tmp",
+        "tests/test_audit_weekly_template_v1.py",
+        "-k",
+        "v3_static_dual_runtime or v3_prior_namespace or v3_record"
+      ],
+      "returncode": 0,
+      "seconds": 1.101,
+      "log_sha256": "45618e3a8b94c7dfec4b3976b042a65d18312e0e0d0e2f6df9f5b75820afd74a"
+    },
+    "after_owner_helper_move": {
+      "returncode": 0,
+      "seconds": 6.398,
+      "log_sha256": "e3e17920cf4af760151246a8daab0d8a0290db3cff6ff1690cf647aae8e07bf7",
+      "owner_test_changes_reviewed": [
+        "tests/test_audit_weekly_parent_v1.py",
+        "tests/test_audit_weekly_template_v1.py",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py"
+      ],
+      "before_probe_hashes": {
+        "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+        "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35",
+        "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+        "nfl_lab/audit_weekly_hosted_v1.py": "b42e41df3f4f75fc45e5eea2da9bf8e5e5656194cf6d58bd416d64b5e2811dcc",
+        "nfl_lab/audit_weekly_operations_restore_v1.py": "859d69a37ec36672c277d10ebbc6084eb4ca1d2c384ffa3cb9481e075c156ff9",
+        "nfl_lab/audit_weekly_controller_registration_v1.py": "8ad1cffc618fdec51a3c4ff37484739b8e70a461be5654a2855c337c02bd9b4b",
+        "tests/test_audit_weekly_parent_v1.py": "04f803da47a8e22fa87caeef1586b4cb0ad57f162f493ec9cb2da4ee57564bc5",
+        "tests/test_audit_weekly_template_v1.py": "63cbf0f53fc2c235b37d51a882d05de22c4ffb512761de6451d7376901386e77",
+        "tests/test_audit_weekly_grade_history_v1.py": "8fc37edb74ed7243a4cb92dded7fe3efddae510b1106cb44029cebbfad8fd86c",
+        "tests/test_audit_weekly_hosted_v1.py": "a2b483fd56ae1899c1865df43fa7aa58d9ba05035037d4523ff1fd9422749e37",
+        "tests/test_audit_weekly_operations_restore_v1.py": "d9e26831422b6b003ee6f73c2569c799f7c4297817cf92216eb385638aea050d",
+        "tests/test_audit_weekly_controller_registration_v1.py": "03273dba7312a51dee6e421671ba5478c255cbe7964411d2fef718bb04dcf3de",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "fde36b493316e2c9702b3f781e5db10ec35009b7d1d6fbc7177501b95a4758bd"
+      },
+      "after_probe_hashes": {
+        "nfl_lab/audit_weekly_parent_v1.py": "0ec4e4a8737731dad1e3fd304ad740e9fa849c2157beec013d1d0cdf223b8606",
+        "nfl_lab/audit_weekly_template_v1.py": "bec985b6a53f1a2fdc9ab92df2a4a4e95233278cfa90a9a04af51148412a9f35",
+        "nfl_lab/audit_weekly_grade_history_v1.py": "2f62f69a1d7b746b983f9031ae860ea43b3341b87e5dc43a55233200db081332",
+        "nfl_lab/audit_weekly_hosted_v1.py": "b42e41df3f4f75fc45e5eea2da9bf8e5e5656194cf6d58bd416d64b5e2811dcc",
+        "nfl_lab/audit_weekly_operations_restore_v1.py": "859d69a37ec36672c277d10ebbc6084eb4ca1d2c384ffa3cb9481e075c156ff9",
+        "nfl_lab/audit_weekly_controller_registration_v1.py": "8ad1cffc618fdec51a3c4ff37484739b8e70a461be5654a2855c337c02bd9b4b",
+        "tests/test_audit_weekly_parent_v1.py": "04f803da47a8e22fa87caeef1586b4cb0ad57f162f493ec9cb2da4ee57564bc5",
+        "tests/test_audit_weekly_template_v1.py": "63cbf0f53fc2c235b37d51a882d05de22c4ffb512761de6451d7376901386e77",
+        "tests/test_audit_weekly_grade_history_v1.py": "8fc37edb74ed7243a4cb92dded7fe3efddae510b1106cb44029cebbfad8fd86c",
+        "tests/test_audit_weekly_hosted_v1.py": "a2b483fd56ae1899c1865df43fa7aa58d9ba05035037d4523ff1fd9422749e37",
+        "tests/test_audit_weekly_operations_restore_v1.py": "d9e26831422b6b003ee6f73c2569c799f7c4297817cf92216eb385638aea050d",
+        "tests/test_audit_weekly_controller_registration_v1.py": "03273dba7312a51dee6e421671ba5478c255cbe7964411d2fef718bb04dcf3de",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "fde36b493316e2c9702b3f781e5db10ec35009b7d1d6fbc7177501b95a4758bd"
+      },
+      "production_six_modules_unchanged": true
+    },
+    "full_suite": false,
+    "owner_namespace_tests_repeated": false,
+    "owner_multipart_tests_repeated": false
+  },
+  "readiness": {
+    "status": "BLOCKER",
+    "local_scoped_source_review": "PASS",
+    "owner_two_namespace_tests": "Running according to user; final result not independently asserted.",
+    "multipart_old_GET_new_append_new_reader": "PASS according to user; not redundantly rerun.",
+    "final_source_and_registration": "Owner committed reviewed production bytes as fefe3a150e88b7b8ae0cba4bc0e3d066db343859. Final source inventories and sealed Root still need to bind the final owner source; no remote readback was performed.",
+    "new_root_remote_dispatch": "Not dispatched according to user; reviewer made no remote calls.",
+    "gate": "Owner namespace controls and final source/pin/Root sealing remain required before operational readiness."
+  },
+  "limits": [
+    "No full suite or long namespace/multipart tests run. Only eleven fast selector/schema cases run, repeated after three owner test files changed.",
+    "Original Root and current client guard review is source-based; no actual private Root, NFL forecast or outcome opened.",
+    "No remote refs, PR state, actual canary, deployment or Root dispatch verified or mutated.",
+    "Six production files were stable throughout this review. Test-only owner relocation was reviewed; subsequent source changes require delta review.",
+    "Scoped PASS does not establish hosted capacity, completed integration CI, scientific qualification or live operational readiness."
+  ],
+  "artifact_sha256": {
+    "owner-test-move-followup.json": "27f6ed348cef9c0a7327403d53a4dbece168c5930604bc6e205c38f06048ce99",
+    "closed-selector-after-owner-move.log": "e3e17920cf4af760151246a8daab0d8a0290db3cff6ff1690cf647aae8e07bf7",
+    "closed-selector-tests.json": "80271758755c25eae068b75889391ac5d9619fdc1ac7019c89b16a80115d6bba",
+    "closed-selector-tests.log": "45618e3a8b94c7dfec4b3976b042a65d18312e0e0d0e2f6df9f5b75820afd74a",
+    "source-inventory.json": "45d74e46dbc3041834959bb677014d5163f099094a334458021fce36a73dc343",
+    "six-modules.patch": "3e4d947149f2beed9fb6899780bbb01e1bd8dcccc4164deb404f574ef55ffcbe"
+  }
+}
