@@ -1,0 +1,30 @@
+{
+  "schema_version": "native-artifact-clock-precision-finding-v1",
+  "id": "SYS-007-CONTINUATION-03",
+  "severity": "high",
+  "source": "ea84002a9df5e2ec031a3784b1f54739d695a8e6",
+  "main_source": "0c4e2d3309495ad1a47f47bd820bd496632a44fd",
+  "file_function": "nfl_lab/audit_weekly_controller_bootstrap_v1.py:load_seal artifact chronology; local prepare_controller_record.py:85",
+  "run_id": 40278948879,
+  "actual_jobs_success": [
+    121427717761,
+    121428018431,
+    121428243402
+  ],
+  "artifact_id": 12631191498,
+  "artifact_zip_bytes": 1350,
+  "artifact_zip_sha256": "8eef4fc13e8db1734c1aa71b251024c3b7243fcd6ea04a01ddab2ba198a6f220",
+  "native_created_at_utc": "2026-10-26T06:19:56.008169+00:00",
+  "artifact_created_at": "2026-10-26T06:19:56Z",
+  "artifact_updated_at": "2026-10-26T06:19:56Z",
+  "seal_job_completed_at": "2026-10-26T06:19:59Z",
+  "expected": "Chronology compatible at available whole-second artifact API precision; all exact source/job/hash/root checks still required",
+  "actual": "Native microsecond event compared to whole-second timestamp as exact point; valid source seal rejected",
+  "impact": "New recurring source registration/publication blocked; no forecast issued or original forecast changed",
+  "reproduced": true,
+  "repair_status": "FOCUSED_REPAIR_IN_PROGRESS_NOT_YET_INTEGRATED",
+  "record_published": false,
+  "new_fits": 0,
+  "raw_native_clock_unchanged": true,
+  "observed_at_utc": "2026-10-26T06:24:59.147674+00:00"
+}

@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks[system] _
+tests/test_audit_weekly_controller_bootstrap_v1.py:214: in test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks
+    seal = load()
+           ^^^^^^
+tests/test_audit_weekly_controller_bootstrap_v1.py:138: in <lambda>
+    x.load = lambda: b.load_seal(x.env, x.child_source, metadata_get=get, clock=lambda: old.AT, read_head=x.read_head)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:453: in load_seal
+    require(c.utc(native["created_at_utc"]) <= c.utc(artifact["created_at"])
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:113: in require
+    raise BootstrapError(code)
+E   nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB
+_ test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks[locator_system] _
+tests/test_audit_weekly_controller_bootstrap_v1.py:214: in test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks
+    seal = load()
+           ^^^^^^
+tests/test_audit_weekly_controller_bootstrap_v1.py:621: in <lambda>
+    x.load_locator = lambda: b.load_seal(x.env, x.child_source, metadata_get=x.get, clock=lambda:old.AT,
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:453: in load_seal
+    require(c.utc(native["created_at_utc"]) <= c.utc(artifact["created_at"])
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:113: in require
+    raise BootstrapError(code)
+E   nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks[system]
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks[locator_system]
+2 failed in 0.41s
