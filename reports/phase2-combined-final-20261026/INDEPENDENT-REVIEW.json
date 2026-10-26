@@ -1,0 +1,1070 @@
+{
+  "schema_version": "independent-nfl-p2-readonly-review-v1",
+  "created_utc": "2026-10-26T12:47:43.816621+00:00",
+  "status": "PASS",
+  "scope": "Final isolated P2 child source and supplied public-safe evidence, independently reviewed without source changes or remote access. This is not final combined CI or production readiness.",
+  "commits": {
+    "head": "9c16805214362a0409d33bfe3532112e1828effa",
+    "baseline": "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d",
+    "phase2_owner_head": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "actual_main": "453e7e6e843b0cb1ae611b0925063e0f96c70196"
+  },
+  "commit_trees": {
+    "9c16805214362a0409d33bfe3532112e1828effa": "90564be1054debd5f040f864d3c2bbdc57bbedfd",
+    "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "34a7d7bb1b51d041781968f8881ecb4b95b3e865",
+    "484dbeff5c3fb34673380bf52b0f30ee0354a521": "c204f48961749715301a5133b2518ee8e8c829fb",
+    "453e7e6e843b0cb1ae611b0925063e0f96c70196": "725e7fb8ba0c833fe766172d0328009c1748200b"
+  },
+  "three_followup_commits": [
+    "c8654141ad6c8d96a8049ad5764b9a5b0c71c6d1",
+    "99f64bf67e9379ec277e04d4aa4b45cf4164dcfc",
+    "9c16805214362a0409d33bfe3532112e1828effa"
+  ],
+  "readiness": {
+    "status": "BLOCKER",
+    "gate": "Owner combined CI on the eventual combined head and supported runtime remains required.",
+    "new_source_defects_found": 0,
+    "local_source_and_evidence_review": "PASS",
+    "final_head_full_suite": "NOT_RUN",
+    "owner_web_PR1_head_context": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "actual_main_context": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+    "owner_running_and_remote_currentness": "User-supplied context; intentionally not rechecked remotely.",
+    "owner_lease_or_handoff_mutated": false
+  },
+  "findings": [],
+  "checks": [
+    {
+      "id": "P2-COMPLETION",
+      "status": "PASS",
+      "evidence": "Exact one-operator app change; independent raw true/false/absent/null/0/string-false probe reproduces four false finals on dc6 and zero on final. Only literal true finalizes. Played zero and saved-pick bytes remain exact.",
+      "results": {
+        "status": "PASS",
+        "completion_rows": [
+          {
+            "case": "true",
+            "expected_final": true,
+            "dc6": {
+              "has_completed": true,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            },
+            "final": {
+              "has_completed": true,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            }
+          },
+          {
+            "case": "false",
+            "expected_final": false,
+            "dc6": {
+              "has_completed": true,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            },
+            "final": {
+              "has_completed": true,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            }
+          },
+          {
+            "case": "absent",
+            "expected_final": false,
+            "dc6": {
+              "has_completed": false,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            },
+            "final": {
+              "has_completed": false,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            }
+          },
+          {
+            "case": "null",
+            "expected_final": false,
+            "dc6": {
+              "has_completed": true,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            },
+            "final": {
+              "has_completed": true,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            }
+          },
+          {
+            "case": "zero",
+            "expected_final": false,
+            "dc6": {
+              "has_completed": true,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            },
+            "final": {
+              "has_completed": true,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            }
+          },
+          {
+            "case": "string-false",
+            "expected_final": false,
+            "dc6": {
+              "has_completed": true,
+              "raw_final": true,
+              "status": {
+                "v": 0,
+                "res": "hit",
+                "final": true
+              }
+            },
+            "final": {
+              "has_completed": true,
+              "raw_final": false,
+              "status": {
+                "v": 0,
+                "res": "pending",
+                "final": false
+              }
+            }
+          }
+        ],
+        "baseline_false_finals": 4,
+        "final_false_finals": 0,
+        "main453_half_values_preserved": [
+          {
+            "value": 0,
+            "half_projection": 0,
+            "half_average": 0,
+            "line": 0,
+            "n": 2
+          },
+          {
+            "value": 3.5,
+            "half_projection": 3.5,
+            "half_average": 3.5,
+            "line": 3.5,
+            "n": 2
+          },
+          {
+            "value": 12,
+            "half_projection": 12,
+            "half_average": 12,
+            "line": 12,
+            "n": 2
+          }
+        ],
+        "unknown_half_not_replaced_with_ppr": true,
+        "unknown_half_history_not_coerced_to_zero": true
+      }
+    },
+    {
+      "id": "P2-PHYSICAL-BINDINGS",
+      "status": "PASS",
+      "evidence": "Both actual policy readers pass against source/config files. Every V3/V4 inventory entry matches physical and committed bytes; config/phase2.json and hourly workflow bind the physical V4 SHA-256. V4 consumer registration time is updated; original scientific registration fields remain unchanged.",
+      "policy_readers": {
+        "v3": {
+          "status": "PASS",
+          "physical_policy_sha256": "b2100048b718aadb57092ac26049165b484eb361030f1018c8378ff6eac76d81",
+          "path_count": 31
+        },
+        "v4": {
+          "status": "PASS",
+          "physical_policy_sha256": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a",
+          "path_count": 32
+        }
+      },
+      "inventories": {
+        "v3": {
+          "policy_sha256": "b2100048b718aadb57092ac26049165b484eb361030f1018c8378ff6eac76d81",
+          "physical_policy_matches_commit": true,
+          "path_count": 31,
+          "files": {
+            "config/release-mode.json": {
+              "expected_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "physical_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "committed_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "match": true
+            },
+            "output/app.js": {
+              "expected_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "physical_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "committed_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "match": true
+            },
+            "output/index.html": {
+              "expected_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "physical_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "committed_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "match": true
+            },
+            "output/weekly-adaptive-overlay.js": {
+              "expected_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "physical_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "committed_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "match": true
+            },
+            "pull/books.py": {
+              "expected_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "physical_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "committed_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "match": true
+            },
+            "pull/build.py": {
+              "expected_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "physical_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "committed_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "match": true
+            },
+            "pull/gamemodel.py": {
+              "expected_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "physical_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "committed_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "match": true
+            },
+            "pull/grade.py": {
+              "expected_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "physical_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "committed_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "match": true
+            },
+            "pull/matchup.py": {
+              "expected_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "physical_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "committed_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "match": true
+            },
+            "pull/news.py": {
+              "expected_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "physical_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "committed_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "match": true
+            },
+            "pull/scoring.py": {
+              "expected_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "physical_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "committed_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "match": true
+            },
+            "pull/sources.py": {
+              "expected_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "physical_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "committed_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "match": true
+            },
+            "tools/accuracy_publication.py": {
+              "expected_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "physical_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "committed_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "match": true
+            },
+            "tools/build_recorded.py": {
+              "expected_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "physical_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "committed_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "match": true
+            },
+            "tools/classic_build_pair_v1.py": {
+              "expected_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "physical_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "committed_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "match": true
+            },
+            "tools/classic_failure_v1.py": {
+              "expected_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "physical_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "committed_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "match": true
+            },
+            "tools/classic_model_v1.py": {
+              "expected_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "physical_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "committed_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "match": true
+            },
+            "tools/classic_source_replay_v1.py": {
+              "expected_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "physical_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "committed_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "match": true
+            },
+            "tools/data_integrity_v2.py": {
+              "expected_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "physical_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "committed_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "match": true
+            },
+            "tools/phase2_capture.py": {
+              "expected_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "physical_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "committed_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "match": true
+            },
+            "tools/publication_guard_v1.py": {
+              "expected_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "physical_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "committed_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "match": true
+            },
+            "tools/release_mode.py": {
+              "expected_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "physical_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "committed_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "match": true
+            },
+            "tools/reliability.py": {
+              "expected_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "physical_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "committed_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "match": true
+            },
+            "tools/scorecard.py": {
+              "expected_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "physical_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "committed_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "match": true
+            },
+            "tools/selection_publication.py": {
+              "expected_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "physical_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "committed_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "match": true
+            },
+            "tools/selection_report.py": {
+              "expected_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "physical_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "committed_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "match": true
+            },
+            "tools/selection_strategies.py": {
+              "expected_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "physical_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "committed_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "match": true
+            },
+            "tools/source_ci.py": {
+              "expected_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "physical_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "committed_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "match": true
+            },
+            "tools/weekly_adaptive_overlay.py": {
+              "expected_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "physical_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "committed_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "match": true
+            },
+            "tools/weekly_public_feed.py": {
+              "expected_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "physical_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "committed_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "match": true
+            },
+            "tools/weekly_selected_rankings.py": {
+              "expected_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "physical_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "committed_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "match": true
+            }
+          },
+          "semantic_delta_from_dc6": [
+            {
+              "path": "/website_code_sha256/output/app.js",
+              "before": "ad88dd4b78314d041485275acc9f0e69ac09fb0a27fb7e9aa3c1e635df02e14c",
+              "after": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc"
+            }
+          ]
+        },
+        "v4": {
+          "policy_sha256": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a",
+          "physical_policy_matches_commit": true,
+          "path_count": 32,
+          "files": {
+            "config/release-mode.json": {
+              "expected_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "physical_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "committed_sha256": "02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9",
+              "match": true
+            },
+            "output/app.js": {
+              "expected_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "physical_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "committed_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+              "match": true
+            },
+            "output/index.html": {
+              "expected_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "physical_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "committed_sha256": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+              "match": true
+            },
+            "output/weekly-adaptive-overlay.js": {
+              "expected_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "physical_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "committed_sha256": "d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68",
+              "match": true
+            },
+            "pull/books.py": {
+              "expected_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "physical_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "committed_sha256": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "match": true
+            },
+            "pull/build.py": {
+              "expected_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "physical_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "committed_sha256": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+              "match": true
+            },
+            "pull/gamemodel.py": {
+              "expected_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "physical_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "committed_sha256": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "match": true
+            },
+            "pull/grade.py": {
+              "expected_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "physical_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "committed_sha256": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+              "match": true
+            },
+            "pull/matchup.py": {
+              "expected_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "physical_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "committed_sha256": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "match": true
+            },
+            "pull/news.py": {
+              "expected_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "physical_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "committed_sha256": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "match": true
+            },
+            "pull/scoring.py": {
+              "expected_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "physical_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "committed_sha256": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+              "match": true
+            },
+            "pull/sources.py": {
+              "expected_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "physical_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "committed_sha256": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "match": true
+            },
+            "tools/accuracy_publication.py": {
+              "expected_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "physical_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "committed_sha256": "dbd449b40197227aa9e3bac89dda89d865855e2d0c898d31d229802e60cf81d9",
+              "match": true
+            },
+            "tools/build_recorded.py": {
+              "expected_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "physical_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "committed_sha256": "39f4d07b1b69e773e47578ec54b01aead70672ac0ea07f19dd875cc317b5cee8",
+              "match": true
+            },
+            "tools/classic_build_pair_v1.py": {
+              "expected_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "physical_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "committed_sha256": "e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1",
+              "match": true
+            },
+            "tools/classic_failure_v1.py": {
+              "expected_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "physical_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "committed_sha256": "ebe4faa8845c50aae239e4615873fe16670ed49592025c8c5a70a2f8b33d89c5",
+              "match": true
+            },
+            "tools/classic_model_v1.py": {
+              "expected_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "physical_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "committed_sha256": "0aa0c13b24d07c7fb24c9d9b22d446f3ced5550b6edd35eaa9a050db553ccf90",
+              "match": true
+            },
+            "tools/classic_source_replay_v1.py": {
+              "expected_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "physical_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "committed_sha256": "00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6",
+              "match": true
+            },
+            "tools/data_integrity_v2.py": {
+              "expected_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "physical_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "committed_sha256": "06e39ddb2f1a0ae7033d98915e340ca158dbb53f8bdd28beabe72c00c7f82f43",
+              "match": true
+            },
+            "tools/phase2_capture.py": {
+              "expected_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "physical_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "committed_sha256": "10d705b4b6efd8b09b78bbdc9e493a1b4117a487a37e3a600dff4e3708ec8a0e",
+              "match": true
+            },
+            "tools/publication_guard_v1.py": {
+              "expected_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "physical_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "committed_sha256": "d4e7de9de423bb873187b70b920763f26b75f820cbcdbc55ebebefecd0a239c9",
+              "match": true
+            },
+            "tools/release_mode.py": {
+              "expected_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "physical_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "committed_sha256": "e31cb651380aabba48622928e946b27f0f663ac581707b297c64b3b98b3a327e",
+              "match": true
+            },
+            "tools/reliability.py": {
+              "expected_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "physical_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "committed_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+              "match": true
+            },
+            "tools/scorecard.py": {
+              "expected_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "physical_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "committed_sha256": "b98522282a2a6077d96976a6ea87d415af7c6896ecda897c3aec6c36d5249e5e",
+              "match": true
+            },
+            "tools/selection_publication.py": {
+              "expected_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "physical_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "committed_sha256": "45971895e59b570ace23f35c5c0f23ef441a64645b57a4799f2f3afd4e86a831",
+              "match": true
+            },
+            "tools/selection_report.py": {
+              "expected_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "physical_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "committed_sha256": "d25218d2cf6b328b7e9fca4565f0151efb6a94900ea4aa80060d1ce9b3842c1c",
+              "match": true
+            },
+            "tools/selection_strategies.py": {
+              "expected_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "physical_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "committed_sha256": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+              "match": true
+            },
+            "tools/source_ci.py": {
+              "expected_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "physical_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "committed_sha256": "f3728b363e3556771b48e9e9ed761928ca9078fa842beae5551a982d7820b619",
+              "match": true
+            },
+            "tools/weekly_adaptive_overlay.py": {
+              "expected_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "physical_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "committed_sha256": "924bf93717fae210a0b0c10771bf8842224d5eac68a4691163fddaa44ea49d7f",
+              "match": true
+            },
+            "tools/weekly_public_feed.py": {
+              "expected_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "physical_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "committed_sha256": "d7ae88f6be92207a78bb1c6870f5c8d6fa58e9415aa156c7ccb02d564fb97e9d",
+              "match": true
+            },
+            "tools/weekly_public_feed_v4.py": {
+              "expected_sha256": "532fdae52e6d3dd13912db9ba41d6ac26eafd83b88847ee61578b8eae3471cb3",
+              "physical_sha256": "532fdae52e6d3dd13912db9ba41d6ac26eafd83b88847ee61578b8eae3471cb3",
+              "committed_sha256": "532fdae52e6d3dd13912db9ba41d6ac26eafd83b88847ee61578b8eae3471cb3",
+              "match": true
+            },
+            "tools/weekly_selected_rankings.py": {
+              "expected_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "physical_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "committed_sha256": "9b4850dc757acfdfdb025f8fb99b8e3657862d4ae5be55fce31a6c3f8be752fd",
+              "match": true
+            }
+          },
+          "semantic_delta_from_dc6": [
+            {
+              "path": "/registered_at_utc",
+              "before": "2026-10-26T06:51:39Z",
+              "after": "2026-10-26T08:28:07Z"
+            },
+            {
+              "path": "/website_code_sha256/output/app.js",
+              "before": "ad88dd4b78314d041485275acc9f0e69ac09fb0a27fb7e9aa3c1e635df02e14c",
+              "after": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc"
+            }
+          ]
+        }
+      },
+      "config_deltas": {
+        "484dbeff5c3fb34673380bf52b0f30ee0354a521": [
+          {
+            "path": "/weekly_publication/path",
+            "before": "config/weekly-derived-selected-policy-v3.json",
+            "after": "config/weekly-derived-selected-policy-v4.json"
+          },
+          {
+            "path": "/weekly_publication/sha256",
+            "before": "06d512469ab85dd33a6b37aa5fa4ae586e7709556aac209e24cfeb02c2c6aea4",
+            "after": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a"
+          }
+        ],
+        "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": [
+          {
+            "path": "/weekly_publication/sha256",
+            "before": "449c45f75c3d4a1c5619841ee35de607ae3ea40538e22c86ae617138fad793c5",
+            "after": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a"
+          }
+        ]
+      },
+      "workflow_only_v4_hash_changed": true
+    },
+    {
+      "id": "P2-ENGINE-MAIN-PRESERVATION",
+      "status": "PASS",
+      "evidence": "All eight engine files are byte-identical across owner P2 484d, dc6 and final. Main453 has earlier scoring/presence differences: no claim of eight-file equality to Main. Thirteen critical Main AST definitions match, including scoring weights/stat keys, FG/DEF functions, confirmed_final, identity binding and issued-byte preservation. Independent FG, half-PPR, caption and dual-Classic checks pass.",
+      "engine_sha256": {
+        "pull/books.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+          "9c16805214362a0409d33bfe3532112e1828effa": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8"
+        },
+        "pull/build.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+          "9c16805214362a0409d33bfe3532112e1828effa": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1"
+        },
+        "pull/gamemodel.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+          "9c16805214362a0409d33bfe3532112e1828effa": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f"
+        },
+        "pull/grade.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+          "9c16805214362a0409d33bfe3532112e1828effa": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354"
+        },
+        "pull/matchup.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+          "9c16805214362a0409d33bfe3532112e1828effa": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c"
+        },
+        "pull/news.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+          "9c16805214362a0409d33bfe3532112e1828effa": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9"
+        },
+        "pull/scoring.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+          "9c16805214362a0409d33bfe3532112e1828effa": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db"
+        },
+        "pull/sources.py": {
+          "484dbeff5c3fb34673380bf52b0f30ee0354a521": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+          "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+          "9c16805214362a0409d33bfe3532112e1828effa": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+          "453e7e6e843b0cb1ae611b0925063e0f96c70196": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+        }
+      },
+      "critical_main_ast": {
+        "pull/scoring.py::PPR": true,
+        "pull/scoring.py::K_SCORING": true,
+        "pull/scoring.py::DEF_SCORING": true,
+        "pull/scoring.py::STAT_KEYS": true,
+        "pull/scoring.py::kicker_points": true,
+        "pull/scoring.py::defense_points": true,
+        "pull/scoring.py::POSITION_CATEGORIES": true,
+        "pull/scoring.py::round_to_half": true,
+        "pull/scoring.py::td_probability": true,
+        "pull/build.py::confirmed_final": true,
+        "pull/grade.py::_bound_stats": true,
+        "pull/grade.py::preserve_issued_record": true,
+        "pull/grade.py::result": true
+      }
+    },
+    {
+      "id": "P2-FIXTURE-LINEAGE",
+      "status": "PASS",
+      "evidence": "The alternative registration uses an actual distinct commit with the same executable tree, authenticated by recording_source. Original registration/receipt bytes and all four saved-generation rejection tests are retained. Retained e2d/045 source trees and original eight-file model hashes authenticate; both old helpers lack active_model. The conditional fixture change binds only their plan constructor to the explicit original presence model. Both Classic profiles execute through the real bounded overlay loader; nonempty-current, forged-fallback rejection and original-R0 checks remain.",
+      "provenance": {
+        "status": "PASS",
+        "policy_readers": {
+          "v3": {
+            "status": "PASS",
+            "physical_policy_sha256": "b2100048b718aadb57092ac26049165b484eb361030f1018c8378ff6eac76d81",
+            "path_count": 31
+          },
+          "v4": {
+            "status": "PASS",
+            "physical_policy_sha256": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a",
+            "path_count": 32
+          }
+        },
+        "retained_sources": {
+          "e2dd96a31690baad04c8660302933f45f77d72e7": {
+            "status": "PASS",
+            "actual_tree": "d02544420316557ddf1451a0753c2321e3d2a245",
+            "model": "sleeper-matchup-data-integrity-v2",
+            "has_active_model": false,
+            "old_engine_eight_hashes": {
+              "pull/build.py": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c",
+              "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "pull/scoring.py": "473e8fa2601d75eab8a223edda53555c51ce145c6426e570df9ae918c3f9eee0",
+              "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "pull/grade.py": "cf4bccf4fd960d5cc896d5e8bbef216a7d84cd20ca938ce1c60ca7942c307d2f"
+            },
+            "closed_data_integrity_helper_sha256": "f60798eca7071525727bd883e6bd230fdb5422297efb6a7748a3457a212ab3e7"
+          },
+          "04519b54dfb76dcca7916fe6bf75d7e1711793b6": {
+            "status": "PASS",
+            "actual_tree": "10a5cc1539c51c8089fb7ff077447b6d17c4e13e",
+            "model": "sleeper-matchup-data-integrity-v2",
+            "has_active_model": false,
+            "old_engine_eight_hashes": {
+              "pull/build.py": "d8a1094af872c84e0fe092662a1241afc0eceaca8c27f7bea687e6a1be2f576c",
+              "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+              "pull/scoring.py": "473e8fa2601d75eab8a223edda53555c51ce145c6426e570df9ae918c3f9eee0",
+              "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+              "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+              "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+              "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+              "pull/grade.py": "cf4bccf4fd960d5cc896d5e8bbef216a7d84cd20ca938ce1c60ca7942c307d2f"
+            },
+            "closed_data_integrity_helper_sha256": "f60798eca7071525727bd883e6bd230fdb5422297efb6a7748a3457a212ab3e7"
+          }
+        },
+        "blocked_method_discovery": {
+          "Retained045RankedSourcePipelineTests": [
+            "test_actual045_saved_observation_ledger_and_independent_cold_replay",
+            "test_retained_failure_markers_and_same_size_corruption_are_not_cached",
+            "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+          ],
+          "RetainedRankedSourcePipelineTests": [
+            "test_closed_original_source_and_pinned_ledger_replay_and_cold_process",
+            "test_retained_failure_markers_and_same_size_corruption_are_not_cached",
+            "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+          ],
+          "SavedGenerationPlanTransitionTests": [
+            "test_missing_or_corrupt_exact_edge_never_uses_valid_matching_alternative",
+            "test_saved_original_still_rejects_future_or_explicitly_failed_completion",
+            "test_saved_snapshot_uses_exact_own_plan_while_current_alias_rejects_next_plan",
+            "test_wrong_pinned_registration_fails_with_valid_original_and_alternative_present"
+          ]
+        },
+        "synthetic_distinct_sources": [
+          {
+            "actual_commit": "8d6abf508e9cc13dfe459c2a1de1e4ce6a1f577d",
+            "actual_tree": "90564be1054debd5f040f864d3c2bbdc57bbedfd",
+            "actual_parent": "9c16805214362a0409d33bfe3532112e1828effa",
+            "tree_identical_to_final_head": true,
+            "closed_recording_source_accepted": true,
+            "actual_commit_body_sha256": "2b45d2b21b0b59a2bf18b61ede96de6666ffa6c106064bf5a91563c9488cdab9",
+            "public_source_object_already_retained_in_read_only_alternate": true,
+            "isolated_git_writes_only": true
+          }
+        ],
+        "SYS011_negative_subcases": 44
+      },
+      "existing_test_methods": {
+        "tests/test_phase2_e2e.py": {
+          "removed": [],
+          "modified": [],
+          "added": []
+        },
+        "tests/test_grading_identity_v3.py": {
+          "removed": [],
+          "modified": [],
+          "added": [
+            "IdentityV3Tests.test_completed_final_requires_explicit_flag_and_past_aware_kickoff"
+          ]
+        }
+      },
+      "no_hard_row_omission": "No Python test methods removed or changed after dc6; ten blocked methods still discovered. Current Classic picks remain explicitly nonempty. The empty selected-overlay fixture existed before these three commits. Production validation algorithms are unchanged by the two fixture commits."
+    },
+    {
+      "id": "P2-SYS011",
+      "status": "PASS",
+      "evidence": "Recorded modern projection admission rejects 44 negative-count current/future subcases before builder consumption. Fractional nonnegative counts, signed yards, original responses and prior receipt bytes are preserved. Frozen standalone scoring retains its historical behavior.",
+      "negative_subcases": 44
+    },
+    {
+      "id": "P2-EVIDENCE-HONESTY",
+      "status": "PASS",
+      "evidence": "Original full-suite log and all declared evidence/patch hashes verified. The three patch artifacts exactly equal git diff --binary for their declared endpoints. Original dc6 ran 1375 tests with three setUpClass errors and ten blocked methods. All ten have later passing named-method receipts; six retained tests were run at 99f and its production/helper bytes equal final. Four saved-generation tests were independently rerun successfully at final in an isolated source copy.",
+      "original_full_suite": {
+        "source": "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d",
+        "tests_run": 1375,
+        "class_setup_errors": 3,
+        "blocked_methods": 10,
+        "discovered_methods_claim": 1385,
+        "status": "FAIL",
+        "summary": [
+          "Ran 1375 tests in 4077.551s",
+          "FAILED (errors=3)"
+        ],
+        "ordinary_fail_lines": []
+      },
+      "ten_blocked_receipts": {
+        "Retained045RankedSourcePipelineTests": {
+          "test_actual045_saved_observation_ledger_and_independent_cold_replay": true,
+          "test_retained_failure_markers_and_same_size_corruption_are_not_cached": true,
+          "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback": true
+        },
+        "RetainedRankedSourcePipelineTests": {
+          "test_closed_original_source_and_pinned_ledger_replay_and_cold_process": true,
+          "test_retained_failure_markers_and_same_size_corruption_are_not_cached": true,
+          "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback": true
+        },
+        "SavedGenerationPlanTransitionTests": {
+          "test_missing_or_corrupt_exact_edge_never_uses_valid_matching_alternative": true,
+          "test_saved_original_still_rejects_future_or_explicitly_failed_completion": true,
+          "test_saved_snapshot_uses_exact_own_plan_while_current_alias_rejects_next_plan": true,
+          "test_wrong_pinned_registration_fails_with_valid_original_and_alternative_present": true
+        }
+      },
+      "retained_six_targeted_source": "99f64bf67e9379ec277e04d4aa4b45cf4164dcfc",
+      "final_twenty_supplied_receipt": "PASS at final; not a full suite",
+      "earlier_parallel_ui_failure": "Retained: test-selected-rankings.cjs:57 assert(S.weeklyOverlay). Consistent with optional loader deadline under concurrency; exact cause not independently established. Supplied serial UI pass and independent serial UI pass both succeed, with identical log SHA-256. Deadline assertions unchanged.",
+      "CURRENT_STATUS_interpretation": "head/progress/required_remaining_files include historical dc6 state; fixture_repair_head and FINAL_HANDOFF final_head bind final 9c. Historical entries are not treated as final CI."
+    }
+  ],
+  "independent_probes": {
+    "source_snapshot": "146 tracked public source/config files copied by Git object ID to an isolated /tmp source root; data/ and output/data/ excluded. Source objects are read through an alternate; writes confined to /tmp.",
+    "python_unique_tests_passing_after_harness_correction": 26,
+    "python_detail": "Initial 20-test probe: 18 pass, two policy checks reject reviewer-added GIT_CONFIG_COUNT. Rerun all three binding tests with clean environment plus six FG tests: nine pass. Four saved-generation, ten grading and three projection tests passed in the initial run. No broad rerun.",
+    "reviewer_harness_correction": "Initial provenance scan assumed commit-tree would write a new local object. The identical public synthetic source already existed in the read-only alternate. Reconstructed the deterministic commit preimage, verified actual commit bytes and recording_source acceptance. No source fix needed.",
+    "command_results": [
+      {
+        "name": "focused-python",
+        "command": [
+          "/workspace/nfl-system-audit/venv/bin/python",
+          "-B",
+          "SELECTED_20_TESTS_NETWORK_DISABLED"
+        ],
+        "returncode": 1,
+        "wall_seconds": 66.607,
+        "log": "focused-python.log",
+        "log_sha256": "33d1b9697d3999da7a0c072363a4976c04774b4b03ea13acc6229b1817b227f4"
+      },
+      {
+        "name": "ui",
+        "command": [
+          "node",
+          "tests/test-ui.cjs"
+        ],
+        "returncode": 0,
+        "wall_seconds": 2.377,
+        "log": "ui.log",
+        "log_sha256": "c8d753a53072d83f209bf61d3b15d98c7c4a5a57c8bba762809d252204e234e7"
+      },
+      {
+        "name": "classic-ranking",
+        "command": [
+          "node",
+          "tests/test-classic-ranking-model.cjs"
+        ],
+        "returncode": 0,
+        "wall_seconds": 0.518,
+        "log": "classic-ranking.log",
+        "log_sha256": "ca0ba37b6a493d07d12d6dc27a47a9dd17435aaa4ed6e938bfa7f27f7ad8b37e"
+      },
+      {
+        "name": "weekly-caption",
+        "command": [
+          "node",
+          "tests/test_weekly_public_feed_caption.cjs"
+        ],
+        "returncode": 0,
+        "wall_seconds": 0.115,
+        "log": "weekly-caption.log",
+        "log_sha256": "293888f9cff370bb8cf564357e4dba86e5a0e6484180bbf3b6136a19aee72f7d"
+      },
+      {
+        "name": "about",
+        "command": [
+          "node",
+          "tests/test-about.cjs"
+        ],
+        "returncode": 0,
+        "wall_seconds": 0.165,
+        "log": "about.log",
+        "log_sha256": "859494b63d036fba94a2d631ecfc64544ec6f1d9d480ab156cf2ad1be16564b5"
+      },
+      {
+        "name": "clean-binding-fg",
+        "returncode": 0,
+        "wall_seconds": 0.968,
+        "log": "clean-binding-fg.log",
+        "log_sha256": "aa6771482fc248b25b9e1ce9eac88376700c97cd9181995b407da6065533b91e",
+        "correction": "Removed reviewer-added GIT_CONFIG_COUNT override; unmodified source."
+      }
+    ],
+    "runtime": {
+      "python": "3.12.14",
+      "node": "24.19.0",
+      "hourly_declared_python": "3.12",
+      "hourly_declared_node": "22"
+    },
+    "additional_probes": [
+      "Six raw completion cases at dc6 and final; half-PPR actual Main453/final helpers.",
+      "Actual V3/V4 policy readers and closed retained source/engine hashes.",
+      "Discovery-only ten originally blocked methods; no class setup.",
+      "git diff --check dc6..final passed."
+    ]
+  },
+  "hashes": {
+    "final_source_sha256": {
+      "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+      "pull/build.py": "726378a2ae5f7a1cedb1bd1538d49e77a5a6bbf9805c07eb89fc9fd4bdd92cbf",
+      "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+      "pull/grade.py": "b260a2a7905eea7caf4b14115e94fd6898c0e0fc6cdd19e28de96ccc38da394a",
+      "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+      "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+      "pull/scoring.py": "712be92bb30d6486fd4d04d3cc43a2d1482b9ade42cb6c50194fe745c0ef5ae9",
+      "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061",
+      "output/app.js": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+      "output/index.html": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+      ".github/workflows/hourly.yml": "a7c082a4630c351f22d721887eca399f0b0883d8d8029aed3cf864e7a3035403",
+      "config/phase2.json": "d05bc10f6f56dd9a2fc44952f373602fa5889a5141b82e18a597f17a5798e35c",
+      "tests/test_phase2_e2e.py": "daf36a7ba46fbbebb48025c7e878d6a4f5aacc9e85c13659fbd569dc6fbd2b7c",
+      "tests/test-ui.cjs": "fc14161de2a446cda8fd4ca9905478146cbb865c467aacbbe1dbe1855e37dbdd",
+      "tests/test-classic-ranking-model.cjs": "7c5a0d3488c05d7f80f2be947ca1cfe0c53433d5635b7524e234a86e0f8e3844"
+    },
+    "supplied_evidence_and_patches": {
+      "completion-final-python.log": {
+        "sha256": "ff5e5468d9876243a87646b012f102e174d41fcd6252c30a2d317a27b2b37808",
+        "matches_handoff": true
+      },
+      "child-retained-targeted.log": {
+        "sha256": "7fc3f0cd5e426e47b69ea40c9a778d6688666b0cffe274a97dd0d54d7178ef70",
+        "matches_handoff": true
+      },
+      "completion-ui-serial-confirmed.log": {
+        "sha256": "c8d753a53072d83f209bf61d3b15d98c7c4a5a57c8bba762809d252204e234e7",
+        "matches_handoff": true
+      },
+      "full-suite-v1.log": {
+        "sha256": "8f76b289ec4f22b39388ea58697b9df55575b83a6ef9461c12e5d55f891b5dd9",
+        "matches_handoff": true
+      },
+      "completion-production-delta.json": {
+        "sha256": "5d68b350d33e72528ca9ebad58995473f7cd5d5fec5a350a2da1681cbd606860",
+        "matches_handoff": true
+      },
+      "completion-guard-followup.patch": {
+        "sha256": "55a3b7b4fd56657ea2f5701d5b4bff6de5eb0ad388282d3746c3e4f8a880c517",
+        "bytes": 40175,
+        "matches_handoff": true,
+        "exact_git_diff": true
+      },
+      "final-followup-from-dc6.patch": {
+        "sha256": "2d00eda63c51c5d55602b790d46f712698fe4e36645f34a2e0fec758f067077d",
+        "bytes": 52802,
+        "matches_handoff": true,
+        "exact_git_diff": true
+      },
+      "phase2-assembled-completion-final.patch": {
+        "sha256": "85875a3597b2b3ea6a6df9df68d81237d4db89b45dc288aa86953f5267da0adb",
+        "bytes": 183649,
+        "matches_handoff": true,
+        "exact_git_diff": true
+      },
+      "final-followup-from-dc6.mbox": {
+        "sha256": "3acfc572e5e33644c6684f13570091c68b22384107a2d06de59b4d4091915621",
+        "bytes": 54472,
+        "matches_handoff": true
+      },
+      "FINAL_HANDOFF.json": {
+        "sha256": "27f73d7802481afd04523dbd7b3c71bcb99cdfff3d9347610f63b536b7d4bcff"
+      },
+      "CURRENT_STATUS.json": {
+        "sha256": "421f20fa18f8b76b9c46aa804648b9d2ae87c8fcae2d70b970743ec24eb0668a"
+      },
+      "blocked-class-discovery.json": {
+        "sha256": "be2a71593e0442cca0d6eeed2141a1e1dea8760e90a5ce64b5b661843abcb1d8"
+      },
+      "FULL_SUITE_FINAL_SUMMARY.json": {
+        "sha256": "3ec6ccae8463077ea1546c2508b0df26da2d823ec88926a5e59555d3980deba7"
+      },
+      "completion-final-node-results.json": {
+        "sha256": "6fecdf1f77c432b2bbf48d1f1988f43423d8ec885012a76f6fea9153637a497c"
+      },
+      "completion-final-node-4.log": {
+        "sha256": "8b0f9732245de215dc239dc3c81049b9f3c02f270112313c85ea886259dfb35c"
+      },
+      "child-completion-before.log": {
+        "sha256": "60db4c5d367a116b9a0880634f6b46eca2151bf9279a8ead2d5847d74e9804fc"
+      }
+    },
+    "review_artifacts": {
+      "about.log": "859494b63d036fba94a2d631ecfc64544ec6f1d9d480ab156cf2ad1be16564b5",
+      "classic-ranking.log": "ca0ba37b6a493d07d12d6dc27a47a9dd17435aaa4ed6e938bfa7f27f7ad8b37e",
+      "clean-binding-fg.log": "aa6771482fc248b25b9e1ce9eac88376700c97cd9181995b407da6065533b91e",
+      "completion-half-probe.cjs": "cc7eb0cb323ee9cff03c3b5e8e5a86eeaa1c3bdee64402c3f59de245702101e9",
+      "completion-half-results.json": "040250a8bfe78784b3d65814540bfc9a7c515bec37b8e3bf5249e947cdb230ac",
+      "focused-python.log": "33d1b9697d3999da7a0c072363a4976c04774b4b03ea13acc6229b1817b227f4",
+      "focused-results.json": "e58791976d357b858f346fa9728da8f22f14965280245be0fad26b1901e90494",
+      "provenance-results.json": "f6865eaa846622060c4030ac77ec829519ce63a945b697f2e601c511a3f785b3",
+      "provenance_probe.py": "587cc5226783739a8a453b162c780b3fde04f850dd8bc5929c0be4262b1f7742",
+      "run_focused.py": "363dd50839b0d346ade340a1a5e25fce972c3d05b587a46bfa6612e7d9bd00a2",
+      "source-snapshot-sha256.json": "3fac7a04a67ff066a4f2330f9ee7c58e61b21f0fa2c05c2d5f70a026107d1a67",
+      "static-results.json": "9040d93e02b2e4535fc05c90f3e6d86cd1f97a9a9188eca2bf1516ddb29bed63",
+      "static_audit.py": "ed1d52752192f504546ba0f951a29b9470980a7255782309dae5ebeb4cef968b",
+      "ui.log": "c8d753a53072d83f209bf61d3b15d98c7c4a5a57c8bba762809d252204e234e7",
+      "weekly-caption.log": "293888f9cff370bb8cf564357e4dba86e5a0e6484180bbf3b6136a19aee72f7d"
+    }
+  },
+  "limits": [
+    "No new full suite; original 4077.551-second dc6 full run remains failed supporting evidence, not final-head CI.",
+    "Owner combined supported-runtime CI remains required; local Node 24 differs from hourly Node 22.",
+    "The six retained source pipeline tests were not rerun independently (supplied 858.777-second pass log verified); closed source and final production equivalence were independently checked.",
+    "No remote refs, PR state, owner lease, handoff, deployment, activation, feed qualification, budgets, new fits or acquisition were changed or remotely verified.",
+    "No private NFL forecast/outcome files opened. Only public source, specified audit evidence, and wholly fictional temporary fixtures used.",
+    "Read-only source review passes; it does not establish hosted timing, live selection performance, scientific qualification or combined Main readiness."
+  ]
+}

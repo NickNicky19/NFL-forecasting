@@ -1,0 +1,22 @@
+{
+  "discovery_only": true,
+  "classes": {
+    "Retained045RankedSourcePipelineTests": [
+      "test_actual045_saved_observation_ledger_and_independent_cold_replay",
+      "test_retained_failure_markers_and_same_size_corruption_are_not_cached",
+      "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+    ],
+    "RetainedRankedSourcePipelineTests": [
+      "test_closed_original_source_and_pinned_ledger_replay_and_cold_process",
+      "test_retained_failure_markers_and_same_size_corruption_are_not_cached",
+      "test_unknown_source_and_unknown_ledger_helpers_fail_without_fallback"
+    ],
+    "SavedGenerationPlanTransitionTests": [
+      "test_missing_or_corrupt_exact_edge_never_uses_valid_matching_alternative",
+      "test_saved_original_still_rejects_future_or_explicitly_failed_completion",
+      "test_saved_snapshot_uses_exact_own_plan_while_current_alias_rejects_next_plan",
+      "test_wrong_pinned_registration_fails_with_valid_original_and_alternative_present"
+    ]
+  },
+  "blocked_methods": 10
+}

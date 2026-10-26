@@ -1,0 +1,145 @@
+{
+  "schema_version": "phase2-isolated-assembly-final-handoff-v1",
+  "created_utc": "2026-10-26T08:40:18Z",
+  "status": "LOCAL_HANDOFF_COMPLETE_OWNER_COMBINED_CI_REQUIRED",
+  "frozen": true,
+  "base": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "original_full_suite_source": "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d",
+  "final_head": "9c16805214362a0409d33bfe3532112e1828effa",
+  "branch": "audit/phase2-fixtures-ready-20261026",
+  "worktree": "/workspace/nfl-system-audit/phase2-audit-fixture-repair",
+  "commits_after_dc6": [
+    "9c16805214362a0409d33bfe3532112e1828effa Require explicit true completion before finalizing raw prop evidence",
+    "99f64bf67e9379ec277e04d4aa4b45cf4164dcfc Use explicit original model for closed retained ranked fixtures",
+    "c8654141ad6c8d96a8049ad5764b9a5b0c71c6d1 Repair Phase2 test fixture lineage and preserve both reference profiles"
+  ],
+  "original_worktree_and_full_log_preserved": true,
+  "original_full_suite": {
+    "commit": "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d",
+    "tests_run": 1375,
+    "ordinary_test_failures": 0,
+    "class_setup_errors": 3,
+    "wall_seconds": 4079.385,
+    "unittest_seconds": 4077.551,
+    "status": "FAIL",
+    "error_causes": {
+      "Retained045RankedSourcePipelineTests": "AttributeError: retained data_integrity_v2 lacks active_model",
+      "RetainedRankedSourcePipelineTests": "AttributeError: retained data_integrity_v2 lacks active_model",
+      "SavedGenerationPlanTransitionTests": "Independent valid registrations did not produce distinct pinned completions"
+    },
+    "log": "/tmp/nfl-phase2-assembled-ready-20261026/full-suite-v1.log",
+    "no_cancel_or_restart": true,
+    "discovered_methods": 1385,
+    "blocked_methods": 10,
+    "log_sha256": "8f76b289ec4f22b39388ea58697b9df55575b83a6ef9461c12e5d55f891b5dd9"
+  },
+  "all_ten_blocked_methods_after_fixture_repair": {
+    "status": "PASS",
+    "discovery": "/tmp/nfl-phase2-assembled-ready-20261026/blocked-class-discovery.json",
+    "retained045_and_e2d": {
+      "source": "99f64bf67e9379ec277e04d4aa4b45cf4164dcfc",
+      "classes": 2,
+      "methods": 6,
+      "seconds": 858.777,
+      "log": "/tmp/nfl-phase2-assembled-ready-20261026/child-retained-targeted.log",
+      "production_python_and_closed_old_source_bytes_unchanged_by_later_UI_fix": true
+    },
+    "saved_generation": {
+      "source": "9c16805214362a0409d33bfe3532112e1828effa",
+      "methods": 4,
+      "log": "/tmp/nfl-phase2-assembled-ready-20261026/completion-final-python.log"
+    }
+  },
+  "final_head_python": {
+    "command": "python -m unittest test_phase2_e2e.SavedGenerationPlanTransitionTests test_grading_identity_v3 test_weekly_public_feed_phase2_v4 test_projection_count_boundary_v1 -v",
+    "tests": 20,
+    "seconds": 56.524,
+    "status": "PASS",
+    "log": "/tmp/nfl-phase2-assembled-ready-20261026/completion-final-python.log"
+  },
+  "final_head_node": {
+    "commands": 8,
+    "status": "PASS_WITH_RETAINED_EARLIER_PARALLEL_DEADLINE_FAILURE",
+    "aggregate": "/tmp/nfl-phase2-assembled-ready-20261026/completion-final-node-results.json",
+    "failed_aggregate_command": "node tests/test-ui.cjs",
+    "earlier_failure": "Existing four-second overlay loader deadline under concurrent targeted Python work; standalone selected-rankings command passed.",
+    "serial_UI_rerun_exit_code": 0,
+    "serial_UI_rerun_log": "/tmp/nfl-phase2-assembled-ready-20261026/completion-ui-serial-confirmed.log",
+    "all_other_seven_commands_exit_code": 0
+  },
+  "completion_guard": {
+    "function": "recordPropEvidence",
+    "before": "completed !== false",
+    "after": "completed === true",
+    "six_raw_cases": [
+      "true",
+      "false",
+      "absent",
+      "null",
+      "0",
+      "string-false"
+    ],
+    "before_false_finals": 4,
+    "before_log": "/tmp/nfl-phase2-assembled-ready-20261026/child-completion-before.log",
+    "after_prop_cases": 58,
+    "after_failures": 0,
+    "after_log": "/tmp/nfl-phase2-assembled-ready-20261026/completion-ui-serial-confirmed.log",
+    "label_identity_source_and_other_clock_fences_unchanged": true
+  },
+  "SYS011": {
+    "boundary": "Current/future recorded Phase2 projection input admission",
+    "negative_subcases": 44,
+    "status": "PASS",
+    "frozen_scoring_engine_unchanged": true,
+    "standalone_scope_limit": "Unchanged frozen pull/scoring.py retains historical standalone behavior; new recorded Phase2 builds reject finite negative count expectations before consumption."
+  },
+  "production_delta": {
+    "receipt": "/tmp/nfl-phase2-assembled-ready-20261026/completion-production-delta.json",
+    "app_only_operator_change": true,
+    "eight_engine_files_unchanged": true,
+    "other_production_changes": "V3/V4 app hash, V4 honest consumer clock, config/workflow physical policy binding only",
+    "all_scientific_registration_fixed_plan_and_activation_fields_unchanged": true,
+    "V3_inventory_paths": 31,
+    "V4_inventory_paths": 32,
+    "app_sha256": "528e30bea33083fa2945218393e849010a1c8fd8db67cdc089adb5453d6ccbcc",
+    "V4_sha256": "c7446fd58c3b9f4e9e90023905f49547756af5ae2c9000f066153918a43b1b8a"
+  },
+  "patches": {
+    "completion-guard-followup.patch": {
+      "base": "99f64bf67e9379ec277e04d4aa4b45cf4164dcfc",
+      "head": "9c16805214362a0409d33bfe3532112e1828effa",
+      "bytes": 40175,
+      "sha256": "55a3b7b4fd56657ea2f5701d5b4bff6de5eb0ad388282d3746c3e4f8a880c517"
+    },
+    "final-followup-from-dc6.patch": {
+      "base": "dc6ddad9a345cfe4699ca7f4e7a9e50a86e0297d",
+      "head": "9c16805214362a0409d33bfe3532112e1828effa",
+      "bytes": 52802,
+      "sha256": "2d00eda63c51c5d55602b790d46f712698fe4e36645f34a2e0fec758f067077d"
+    },
+    "phase2-assembled-completion-final.patch": {
+      "base": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+      "head": "9c16805214362a0409d33bfe3532112e1828effa",
+      "bytes": 183649,
+      "sha256": "85875a3597b2b3ea6a6df9df68d81237d4db89b45dc288aa86953f5267da0adb"
+    },
+    "final-followup-from-dc6.mbox": {
+      "bytes": 54472,
+      "sha256": "3acfc572e5e33644c6684f13570091c68b22384107a2d06de59b4d4091915621"
+    }
+  },
+  "limits": [
+    "No second full suite was run. Original dc6 full run is supporting evidence, not final-head CI.",
+    "Final Owner combined CI remains required on actual supported runtime; local Python 3.12.14 / Node 24.19.0.",
+    "An earlier concurrent UI deadline failure is retained; serial qualification passed without deadline changes.",
+    "No activation/deployment/current-source feed qualification; reviewed COUNT prerequisite stays separate from Main readiness."
+  ],
+  "no_remote_writes_new_NFL_collection_new_fits_or_budget_changes": true,
+  "evidence_sha256": {
+    "completion-final-python.log": "ff5e5468d9876243a87646b012f102e174d41fcd6252c30a2d317a27b2b37808",
+    "child-retained-targeted.log": "7fc3f0cd5e426e47b69ea40c9a778d6688666b0cffe274a97dd0d54d7178ef70",
+    "completion-ui-serial-confirmed.log": "c8d753a53072d83f209bf61d3b15d98c7c4a5a57c8bba762809d252204e234e7",
+    "full-suite-v1.log": "8f76b289ec4f22b39388ea58697b9df55575b83a6ef9461c12e5d55f891b5dd9",
+    "completion-production-delta.json": "5d68b350d33e72528ca9ebad58995473f7cd5d5fec5a350a2da1681cbd606860"
+  }
+}
