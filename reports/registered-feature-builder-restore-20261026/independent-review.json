@@ -1,0 +1,99 @@
+{
+  "schema_version": "independent-registered-feature-builder-and-fixed-slot-review-v1",
+  "created_at_utc": "2026-10-26T07:39:18.304107+00:00",
+  "result": "PASS_FOCUSED_SOURCE_REVIEW",
+  "blockers": [],
+  "builder_source": {
+    "head": "9a49916bde39a139187a9b1ef628a047c0920e50",
+    "root": "/workspace/nfl-system-audit/registered-feature-builder-restore",
+    "base": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+    "clean_before_and_after": true
+  },
+  "main_slot_source": {
+    "head": "54a4faa0f93e69ad727e3a1d7503b820d46c9951",
+    "root": "/workspace/nfl-system-audit/research-builder-registry-main",
+    "base": "21970fadf31debd0d61b3e42d79f723d16eb79eb",
+    "clean_before_and_after": true
+  },
+  "findings": [
+    {
+      "result": "PASS",
+      "claim": "operational_sources.py equals immutable registered c748 Git blob byte for byte, SHA256 0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c. The existing future feature builder identity guard and literal retained source contract remain strict.",
+      "evidence": "static-reference-probes.json; builder-focused-probes.log"
+    },
+    {
+      "result": "PASS",
+      "claim": "Production builder change only restores import placement. All function bodies match f12 after removing only its two exact local permitted imports; actual computation, policy, row handling and caps unchanged.",
+      "evidence": "static-reference-probes.json"
+    },
+    {
+      "result": "PASS",
+      "claim": "Provider literal integrity gate now matches the restored source. _load_source_policy AST is unchanged excluding docstring. Drift still rejects before policy decode; cold Collector policy admission succeeds within existing native metadata bounds without importing numerical loader.",
+      "evidence": "builder-focused-probes.log"
+    },
+    {
+      "result": "PASS",
+      "claim": "New fictional Monday queries use the real shared builder and owned feature capture with literal old source contract. Hand-derived feature values, unknown participation, capture source contract and query projection assertions pass; stale/wrong/current-file drift hashes reject. No real rows or estimator fits used.",
+      "evidence": "builder-focused-probes.log"
+    },
+    {
+      "result": "PASS",
+      "claim": "All six model files, four epoch pin files, permitted_source_features.py and weekly_current_query.py are byte unchanged from f12. No original model manifest, epoch document or failed attempt is relabelled.",
+      "evidence": "static-reference-probes.json"
+    },
+    {
+      "result": "PASS",
+      "claim": "Main new V2 fixed slot is state/controller-v1/bootstrap-v2-20261026-registered-builder.json. All previous fixed contents-route AST patterns remain. Only one exact new path pattern with 40-hex commit ref is added; no Root selector, wire, API scope, caps, clock or identity relaxation.",
+      "evidence": "static-reference-probes.json; main-slot-focused-probes.log"
+    },
+    {
+      "result": "PASS",
+      "claim": "Three dated issued-route positives and their lab-state/date/suffix/traversal negatives pass, alongside unrelated private/API-route denial before callback. These checks do not publish or replace any old record.",
+      "evidence": "main-slot-focused-probes.log"
+    }
+  ],
+  "independent_probes": {
+    "builder_and_provider": {
+      "passed": 5,
+      "seconds": 3.64,
+      "log": "builder-focused-probes.log"
+    },
+    "main_fixed_routes": {
+      "passed": 7,
+      "seconds": 0.07,
+      "log": "main-slot-focused-probes.log"
+    },
+    "static_reference": "Exact local original Git-blob SHA/equality; AST comparison; 12 unchanged identity files; closed route pattern inclusion. Review-script assertion refinements are recorded in static-reference-probes.json; no product test failed."
+  },
+  "author_evidence": {
+    "report": "/tmp/nfl-registered-feature-builder-restore-20261026/REPORT.json",
+    "sha256": "aaa0409f15e9755fde70193c24a1765a4df6edd09c6ee9e6ea406198dc39dcee",
+    "retained_focused_suite": "98 passed in 57.04s, read from final-focused-tests.log; not rerun"
+  },
+  "limits": [
+    "Focused source/software PASS does not establish actual Ops inference or forecast publication success. Combined source CI belongs to parent.",
+    "Capacity hold remains: /tmp/nfl-post-ops17-capacity-rotation-review.json. Current Root7 namespace has at most 13 slots; optimistic fresh native plus complete Ops needs16; subsequent private template makes18.",
+    "No registry record published, new native/private namespace created, remote calls/writes, protected row/model body/private Root reads, source edits, source acquisitions, estimator fits, broad/full suites or deleted history."
+  ],
+  "scope_counts": {
+    "source_edits": 0,
+    "remote_calls": 0,
+    "remote_writes": 0,
+    "protected_row_or_model_body_reads": 0,
+    "new_fits": 0,
+    "independent_tests_passed": 12
+  },
+  "files_sha256": {
+    "/workspace/nfl-system-audit/registered-feature-builder-restore/nfl_lab/operational_sources.py": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+    "/workspace/nfl-system-audit/registered-feature-builder-restore/nfl_lab/audit_weekly_provider_v1.py": "ffbe666b1838998282286ad68640255962f2c047c800b64f9f476a161a3b900b",
+    "/workspace/nfl-system-audit/registered-feature-builder-restore/tests/test_audit_weekly_runtime_v1.py": "df4a454823704a55215f128d9af2c4ac85395a7111c00baf3316dcc936b28845",
+    "/workspace/nfl-system-audit/research-builder-registry-main/nfl_lab/audit_weekly_controller_bootstrap_v1.py": "91303724ad77fe93174e873116154969bf87fadf40bdc0a724002ad612690af9",
+    "/workspace/nfl-system-audit/research-builder-registry-main/tests/test_audit_weekly_controller_bootstrap_v1.py": "3bc0e85f91f58a351f345472f1f2f0c594d26203958f59b3621634938fb12896"
+  },
+  "evidence_sha256": {
+    "static-reference-probes.json": "7e1934640b35d7f5ee0b97604fdd67764ad37f6113b6fee3acedda71e951fee5",
+    "builder-focused-probes.log": "32c2347fb4e3d7c2db3732e5e267272c1d44f00fa32b3f083d43f632c5345748",
+    "main-slot-focused-probes.log": "33ceaa0d737d4006ec8ba3fe8bdb5c94696ba33d8c2c6ca14092b20570b1c688"
+  },
+  "capacity_receipt_sha256": "2157c9d1394e1705139145043f1d5ae3a87b40c36c261ca2ce41bfaa8a04ad83"
+}
