@@ -251,6 +251,36 @@ def test_whole_second_compatibility_keeps_strict_API_updated_and_job_order(updat
         b.verify_artifact_upload_clock("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56Z", updated, completed)
 
 
+@pytest.mark.parametrize("updated,accepted", [
+    ("2026-10-26T06:19:56.008168Z", False),
+    ("2026-10-26T06:19:56.008169Z", True),
+    ("2026-10-26T06:19:56.008170Z", True),
+    ("2026-10-26T06:19:56.000000Z", False),
+])
+def test_fractional_update_keeps_native_precision_after_coarse_creation(updated, accepted):
+    args = ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56Z", updated,
+        "2026-10-26T06:19:59Z")
+    if accepted:
+        b.verify_artifact_upload_clock(*args)
+    else:
+        with pytest.raises(b.BootstrapError, match="NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB"):
+            b.verify_artifact_upload_clock(*args)
+
+
+@pytest.mark.parametrize("fixture_name", ["system", "locator_system"])
+def test_same_second_creation_cannot_hide_fractional_update_before_native(request, fixture_name):
+    x = request.getfixturevalue(fixture_name)
+    x.native["created_at_utc"] = "2026-10-25T12:02:21.008169+00:00"
+    x.api.data[x.artifact_url].update(created_at="2026-10-25T12:02:21Z",
+        updated_at="2026-10-25T12:02:21.008168Z")
+    if fixture_name == "system":
+        x.publish(); load = x.load
+    else:
+        x.publish_locator(); load = x.load_locator
+    with pytest.raises(b.BootstrapError, match="NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB"):
+        load()
+
+
 @pytest.mark.parametrize("fixture_name", ["system", "locator_system"])
 @pytest.mark.parametrize("damage", ["digest", "run", "source", "current_clock", "job_completion"])
 def test_same_second_compatibility_cannot_replace_artifact_identity_or_native_freshness(request, fixture_name, damage):
