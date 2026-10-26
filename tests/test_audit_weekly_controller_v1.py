@@ -433,3 +433,13 @@ def test_cli_template_is_unregistered_and_cannot_dispatch_or_read_credentials(tm
     assert cli.main(["template","--output",str(out)])==0
     assert c.decode(out.read_bytes())["state"]=="PREPARED_UNREGISTERED"
     assert cli.main(["execute"])==2
+
+
+def test_only_the_registered_public_canary_receipt_is_an_admitted_report_pin():
+    public = "reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json"
+    assert c.source_path(public) == public
+    for path in ["reports/private-draft-canary-v2/secret.json", "reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json.bak",
+            "reports/private-draft-canary-v2/../ACTUAL_HOSTED_RESULT.json", "reports/other/ACTUAL_HOSTED_RESULT.json",
+            "/reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json", "private/ACTUAL_HOSTED_RESULT.json"]:
+        with pytest.raises(c.ControllerError, match="PUBLIC_SOURCE_PIN_PATH_ONLY"):
+            c.source_path(path)
