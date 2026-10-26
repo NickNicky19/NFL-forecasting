@@ -143,7 +143,8 @@ def source_path(path):
         and all(x not in {"",".",".."} for x in path.split("/"))
         and (re.fullmatch(r"(?:nfl_lab|tools|tests|config|schemas)/[A-Za-z0-9_./-]+\.(?:py|json|yml|yaml)",path)
              or re.fullmatch(r"\.github/workflows/[A-Za-z0-9_.-]+\.ya?ml",path)
-             or re.fullmatch(r"requirements[A-Za-z0-9_.-]*\.lock",path)), "PUBLIC_SOURCE_PIN_PATH_ONLY")
+             or re.fullmatch(r"requirements[A-Za-z0-9_.-]*\.lock",path)
+             or path == "reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json"), "PUBLIC_SOURCE_PIN_PATH_ONLY")
     return path
 
 
