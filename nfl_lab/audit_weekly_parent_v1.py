@@ -555,6 +555,26 @@ class _HistoryCapture:
     def __reduce__(self):raise ParentError("SAVED_HISTORY_METADATA_IS_NOT_PARENT_AUTHORITY")
 
 
+def _history_get_client(parent,document,client,storage,workspace,package):
+    """Separate immutable binding; both transports use the original ledger."""
+    if client.binding == package['binding']: return client
+    prior=template.prior_runtime(document['root_template'])
+    require(prior is not None and prior['qualified_runtime']==package, 'EXACT_SEALED_PARENT_HISTORY_RUNTIME')
+    original=store.canonical(document)
+    journal=storage.register_root(workspace/'prior-history-journal')
+    def authenticate(sha):
+        require(store.canonical(document)==original, 'STATIC_PRIOR_RUNTIME_CHANGED_DURING_READ')
+        loc=parent.locators['template_seal']
+        bootstrap.verify_private_template(parent.seal,original,store.canonical(loc['descriptor']),store.canonical(loc['binding']))
+        return client.authenticate(sha)
+    reader=template.ParentGETClient(client._token,seal_sha256=client.seal_sha256,
+        registration_sha256=client.registration_sha256,parent_run_id=client.parent_run_id,parent_job_id=client.parent_job_id,
+        authenticate=authenticate,journal=journal,transport=client.transport,clock=client.clock)
+    reader.asset_ids={package['binding']['canary_asset_id']};reader.run_ids={package['qualification']['run_id']}
+    reader.guard();reader.bind(package['binding']);template._package(reader,package)
+    return reader
+
+
 def _discover_history(parent,document,api,clock,client,storage,workspace):
     """V2 opt-in; no successful new feed is required for a grading-only run."""
     from . import audit_weekly_grade_history_v1 as history
@@ -582,7 +602,10 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
         old_jobs,old_run=_completed(api,p,receipt,initial=False,before=before,clock=clock)
         cohorts.append((receipt,old_jobs,old_run))
     else:require(cohort["kind"]=="CAPTURE_AND_GRADE" and receipt["jobs"]==cohort["jobs"],"DISTINCT_GRADE_ONLY_RUN_NO_RELABELING")
-    history.locator_metadata(raw,receipt=receipt,qualified_runtime=document["root_template"]["qualified_runtime"],
+    reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
+    package,_=template.checkpoint_runtime(document['root_template'],value['sidecar']['checkpoint_handoff'],
+        anchor=anchor,checkpoint=reference)
+    history.locator_metadata(raw,receipt=receipt,qualified_runtime=package,
         code_pins=p["producer"]["code_pins"],jobs=jobs,at=clock())
     pins={**value["sidecar"]["grade_code_pins"],**value["sidecar"]["checkpoint_helper_sha256"],
         **value["helper_sha256"],c.WORKFLOW:cohort["workflow_sha256"]}
@@ -591,6 +614,7 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
         require(c.sha(api.content(path,cohort["source_sha"],history.LIMITS["source_bytes"]))==sha,
             "HISTORY_EXECUTABLE_SOURCE_CHANGED_OR_ADAPTER_REQUIRED")
     require(type(client) is template.ParentGETClient,"ACTUAL_PRIVATE_TEMPLATE_READER_REUSED")
+    client=_history_get_client(parent,document,client,storage,workspace,package)
     def private_metadata(descriptor):
         entry=descriptor["entry"]
         client.asset_ids.update({descriptor["manifest_asset_id"],entry["payload_asset_id"]})
@@ -645,7 +669,7 @@ def _build_root(parent, document, capture, at, *, plan=None):
             previous_checkpoint=deepcopy(capture.checkpoint)))
     if type(capture) is _HistoryCapture:
         from . import audit_weekly_grade_history_v1 as history
-        require(document["schema_version"]==template.VERSION+"-static-v2" and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
+        require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
         root["effective_epoch"].update(schema_version=history.CONTEXT_V4,
             plan=history.next_plan(capture.locator["planning"],at=at))
     elif plan is not None:
@@ -655,13 +679,16 @@ def _build_root(parent, document, capture, at, *, plan=None):
             and type(plan["week"]) is int and 1<=plan["week"]<=18,"EXPLICIT_CLOSED_RECURRING_PLAN")
         root["effective_epoch"]["schema_version"]="audit-weekly-recurring-v3-context"
         root["effective_epoch"]["plan"]=deepcopy(plan)
-    require(set(root) == template.ROOT_KEYS and all(root[k] == document["root_template"][k] for k in set(root) - DYNAMIC_FIELDS)
+    require(set(root) == template.root_keys(root) and all(root[k] == document["root_template"][k] for k in set(root) - DYNAMIC_FIELDS)
         and root["code_pins"] == p["producer"]["code_pins"] and root["source_sha"] == p["producer"]["source_sha"]
         and root["workflow_ref"] == c.REPO + "/" + c.WORKFLOW + "@refs/heads/" + p["producer"]["branch"]
         and root["single_writer_group"] == c.GROUP and root["jobs"] == {r: p["producer"]["jobs"][r] for r in c.ROLES}
         and root["failure_restorer"] == p["producer"]["jobs"]["evidence"], "EXACT_FIVE_DYNAMIC_ROOT_FIELDS_ONLY")
     raw = c.canonical(root)
     require(raw == store.canonical(root) and 0 < len(raw) <= LIMITS["root_bytes"], "BOUNDED_DUAL_CANONICAL_PRIVATE_ROOT")
+    dispatch=dict(ref=p['producer']['branch'],inputs=dict(mode=c.MODE,
+        inference_builder_go_json=raw.decode(),inference_builder_go_sha256=c.sha(raw)))
+    require(len(c.canonical(dispatch)) <= 65535, 'BOUNDED_ACTIONS_DISPATCH_INPUT')
     c.due(parent.proof.document["scheduled_parent"]["event"], at, cadence=p["cadence"])
     return root, raw
 
@@ -763,7 +790,7 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     document,private_client,storage = _recover(parent, env, source_root, read_head, clock, ledger, workspace, journal)
     api = _API(ledger)
     capture = (_discover_history(parent,document,api,clock,private_client,storage,workspace)
-        if document["schema_version"]==template.VERSION+"-static-v2" else _discover(parent, document, api, clock))
+        if document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} else _discover(parent, document, api, clock))
     # Refresh through the unchanged actual verifier, using a separately counted
     # GET lane. The original bootstrap's 32-call cap is not enlarged or reset.
     parent.proof = c.verify_parent(parent.registration_bytes, sealed_sha256=parent.seal.registration_sha256,
