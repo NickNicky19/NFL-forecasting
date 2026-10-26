@@ -1,0 +1,168 @@
+{
+  "schema_version": "independent-rotation-metadata-pages-review-v1",
+  "result": "PASS",
+  "completed_at_utc": "2026-10-26T13:34:26.754088+00:00",
+  "root": "/workspace/nfl-system-audit/rotation-metadata-pages",
+  "head": "fe61692a560454efd19f20564da530ad332d78fa",
+  "base": "9774e2e6480496f7f22d76aa1534e9acf19f34a9",
+  "changed_files": [
+    "nfl_lab/audit_private_rotation_v1.py",
+    "tests/test_audit_private_rotation_v1.py"
+  ],
+  "changed_production_definitions": [
+    "metadata_client",
+    "global_inventory"
+  ],
+  "module_constants_and_all_other_production_definitions_unchanged": true,
+  "core_store_and_CLI_byte_identical_to_base": true,
+  "source_clean_and_unchanged": true,
+  "tests": {
+    "tests": 18,
+    "subtests": 18,
+    "subtest_failures": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "exact_base_wide_before": {
+    "result": "REJECTED_AS_EXPECTED",
+    "error": "RESPONSE_CAP",
+    "actual_metadata_client": true,
+    "GETs": 4,
+    "release_page_bytes": 316943,
+    "cap": 262144,
+    "private_asset_body_GETs": 0,
+    "POSTs": 0
+  },
+  "current_wide_after": {
+    "result": "PASS",
+    "actual_metadata_client": true,
+    "GETs": 14,
+    "release_list_GETs": 6,
+    "mandatory_empty_page": 6,
+    "asset_list_GETs": 5,
+    "response_cap": 262144,
+    "calls_cap": 40,
+    "largest_single_release_page_bytes": 63390,
+    "raw_five_release_page_bytes": 316943,
+    "old_compact_control_full_quota_equals_new_wide_quota": true,
+    "quota": {
+      "schema_version": "audit-private-rotation-v1-quota-reservation",
+      "global_cap_bytes": 536870912,
+      "reserved_before_bytes": 167772160,
+      "new_runtime_reserved_bytes": 33554432,
+      "reserved_after_bytes": 201326592,
+      "existing_draft_runtimes": 5,
+      "pending_unlocated_runtimes": 0,
+      "pending_records": 0,
+      "charged_existing_bytes": 148026510,
+      "charged_existing_assets": 195,
+      "inventory_sha256": "387050a26f9edd5058742e1969e14cbaab8248157bd5f7599d21990cbdce983e",
+      "pending_census_sha256": "7526462280ecce69c284e3adcfe3af8b1fbb356f26a6901b6d106b97f6a5a553",
+      "new_runtime_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "old_assets_deleted": 0,
+      "metadata_only": true
+    },
+    "fixture_rows_unchanged": true,
+    "POSTs": 0,
+    "private_asset_body_GETs": 0
+  },
+  "actual_production_route_checks": {
+    "result": "PASS",
+    "allowed_pages": [
+      1,
+      2,
+      9,
+      10,
+      39,
+      40
+    ],
+    "rejected_exact_collection_queries": [
+      "per_page=1&page=0",
+      "per_page=1&page=41",
+      "per_page=1&page=-1",
+      "per_page=1&page=01",
+      "per_page=1&page=1extra",
+      "per_page=5&page=1",
+      "per_page=100&page=1",
+      "per_page=1&page=1&extra=1",
+      "page=1&per_page=1"
+    ],
+    "mutation_or_body_requests_rejected": 5,
+    "additional_HTTP_calls": 0,
+    "inherited_release_resource_routes_unchanged": true
+  },
+  "oversized_single_release": {
+    "result": "REJECTED_AS_EXPECTED",
+    "error": "RESPONSE_CAP",
+    "GETs": 4,
+    "POSTs": 0
+  },
+  "actual_production_40_GET_cap": {
+    "result": "PASS",
+    "completed_GETs": 40,
+    "next_request_error": "OPERATION_LIMIT",
+    "excess_request_sent": false,
+    "counter_modified": false
+  },
+  "census_and_pending_quota_guards_unchanged": true,
+  "release_bound": "Fewer than 40, plus mandatory empty completion; unchanged 40 aggregate GET cap may reject earlier",
+  "preserved_cap_values": {
+    "response_bytes": 262144,
+    "metadata_HTTP_calls": 40,
+    "global_bytes": 536870912,
+    "runtime_bytes": 33554432,
+    "runtime_assets": 128,
+    "native_store_calls_per_operation": 40
+  },
+  "retained_provider_metadata_receipt": {
+    "path": "/tmp/nfl-rotation4-metadata-size-review-20261026-pn5o84js/REVIEW.json",
+    "sha256": "f9d83f3140c4d136507a74e9fc33e9b3c44dc6df7f83e108b83e75348c03266e",
+    "observed_at_utc": "2026-10-26T13:27:45.665939+00:00",
+    "releases": 5,
+    "assets": 157,
+    "per_page_5_bytes": 291504,
+    "largest_per_page_1_bytes": 208269,
+    "all_asset_pages_fit": true,
+    "source": "Retained metadata-only reviewer receipt; no new remote verification",
+    "observed_live_asset_count_distinct_from_195_row_synthetic_fixture": true
+  },
+  "blocking_findings": [],
+  "limitations": [
+    "One oversized individual release still fails closed at 256 KiB; pagination is not a cap increase.",
+    "More release-list GETs consume the original shared 40-GET metadata budget. No claim that every <40-release census fits it.",
+    "Existing test factory admits both old/new listing routes; independent probes above used the actual old/new production MetadataClient subclasses.",
+    "Native CLI tests use existing fictional identity/OS-guard seams. Neither this review nor the retained byte receipt is a genuine successful Rotation or new native qualification.",
+    "The failed Root4/run remains preserved and was never retried; future genuine rotation requires its own valid Source-bound authorization and qualification."
+  ],
+  "scope": {
+    "repository_edits": 0,
+    "remote_calls": 0,
+    "remote_writes": 0,
+    "native_real_store_operations": 0,
+    "real_Root_or_private_outcomes_read": 0,
+    "full_source_suite_runs": 0,
+    "failed_Root4_retries": 0,
+    "Main_changes": 0,
+    "caps_changed": false
+  },
+  "evidence_files": [
+    {
+      "path": "/tmp/nfl-rotation-metadata-pages-independent-review-20261026-jx8we074/INPUTS.json",
+      "sha256": "6ffb0d1505b69ebfe332c9e8a91070844896fc64ab5332f6c7c8df585d224f4c"
+    },
+    {
+      "path": "/tmp/nfl-rotation-metadata-pages-independent-review-20261026-jx8we074/focused-tests.log",
+      "sha256": "466c6e2a572f9395df72732ba0b995460e2748df6c5fd7aa0ad26de695d8ba13"
+    },
+    {
+      "path": "/tmp/nfl-rotation-metadata-pages-independent-review-20261026-jx8we074/review_probe.py",
+      "sha256": "becc7a0104051bdf289d9644f68d1c5630092b2cfde37a48f8e22c3899de38f2"
+    },
+    {
+      "path": "/tmp/nfl-rotation-metadata-pages-independent-review-20261026-jx8we074/tests.json",
+      "sha256": "73e5cc8f845d365b8c27d42e78362a98e28a4c9561775e7fea5b800ac2ec121f"
+    }
+  ]
+}

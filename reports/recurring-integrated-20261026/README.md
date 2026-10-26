@@ -1,3 +1,11 @@
+Update — 2026-10-26 13:46 UTC (PARTIAL)
+
+PR43 now includes the bounded release pagination repair and first-step masking of rotation Root control metadata, at `ea89ae4a6440ca490c49b38791e1fd803e6e8cb9`. Its19tests/21subtests and independent reviews pass. The earlier pagination-only head fe616 has green hostedCI; **the current masking head still needs its own run40332478189**. No failed Root is retried. The original Rotation4 log contains unmasked canary/quota control metadata (no forecast rows/credentials in that Root); it is preserved. Exactresponse-size and failure receipts are in evidence.
+
+No new store, native Root18, Ops19, forecast/export or website deployment has succeeded since this checkpoint. Website ownership clarification remains pending. The website still serves the old453build. The next genuine canary attempt is Rotation5 only after current-source CI/review/integration; readiness remains partial.
+
+---
+
 Current checkpoint — 2026-10-26 13:30 UTC (PARTIAL)
 
 Main PR41 is merged at `77d8f1fad4960e66e0bdabff56e5c424ae949cc6` (720 passes/one existing optional skip). Producer PR42 is merged at `9774e2e6480496f7f22d76aa1534e9acf19f34a9` (2205 passes/one skip; all2206nodes attempted/completed). The actual CI, reviewed and merged trees match. These integrate explicit V3 old-read/current-write continuation; all original evidence and limits remain.

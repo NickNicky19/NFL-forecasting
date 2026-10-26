@@ -1,0 +1,326 @@
+{
+  "schema_version": "nfl-rotation-metadata-byte-size-proof-v1",
+  "created_utc": "2026-10-26T13:27:45.665939+00:00",
+  "status": "PASS",
+  "metadata_cap_bytes": 262144,
+  "observed_release_count": 5,
+  "observed_draft_count": 5,
+  "observed_asset_count": 157,
+  "maximum_assets_per_draft": 115,
+  "observed_oversized_routes": [
+    {
+      "endpoint_kind": "release-list",
+      "page": 1,
+      "per_page": 5,
+      "draft_ordinal": null,
+      "body_bytes": 291504,
+      "body_sha256": "a1c1397997cfbfc0c562a468a8b0e9002704abda8e8721d89d27520dfa94bfbf",
+      "fits_256_KiB": false,
+      "cap_headroom_bytes": -29360,
+      "http_status": 200,
+      "seconds": 1.231,
+      "items": 5,
+      "content_length": 291504,
+      "body_length_matches_header": true
+    }
+  ],
+  "repository_control": {
+    "endpoint_kind": "repository-control",
+    "page": null,
+    "per_page": null,
+    "draft_ordinal": null,
+    "body_bytes": 5882,
+    "body_sha256": "c545e7ce9de9be6a3a8bed4c4e4ab479849ecb9af984124f2616a5b89a2ce614",
+    "fits_256_KiB": true,
+    "cap_headroom_bytes": 256262,
+    "http_status": 200,
+    "seconds": 0.783,
+    "content_length": 5882,
+    "body_length_matches_header": true
+  },
+  "release_per_page_5_page_1": {
+    "endpoint_kind": "release-list",
+    "page": 1,
+    "per_page": 5,
+    "draft_ordinal": null,
+    "body_bytes": 291504,
+    "body_sha256": "a1c1397997cfbfc0c562a468a8b0e9002704abda8e8721d89d27520dfa94bfbf",
+    "fits_256_KiB": false,
+    "cap_headroom_bytes": -29360,
+    "http_status": 200,
+    "seconds": 1.231,
+    "items": 5,
+    "content_length": 291504,
+    "body_length_matches_header": true
+  },
+  "release_per_page_1_pages_1_to_5": [
+    {
+      "endpoint_kind": "release-list",
+      "page": 1,
+      "per_page": 1,
+      "draft_ordinal": null,
+      "body_bytes": 3772,
+      "body_sha256": "a35ed681adeac55ac18e87a3958ba463e3064752b07587a62dc0d74ccd0f669a",
+      "fits_256_KiB": true,
+      "cap_headroom_bytes": 258372,
+      "http_status": 200,
+      "seconds": 0.886,
+      "items": 1,
+      "content_length": 3772,
+      "body_length_matches_header": true
+    },
+    {
+      "endpoint_kind": "release-list",
+      "page": 2,
+      "per_page": 1,
+      "draft_ordinal": null,
+      "body_bytes": 3772,
+      "body_sha256": "827cf31b18f4c73ce329d561cc0150ecea896566817d1c79c8a2c74835b5f375",
+      "fits_256_KiB": true,
+      "cap_headroom_bytes": 258372,
+      "http_status": 200,
+      "seconds": 0.984,
+      "items": 1,
+      "content_length": 3772,
+      "body_length_matches_header": true
+    },
+    {
+      "endpoint_kind": "release-list",
+      "page": 3,
+      "per_page": 1,
+      "draft_ordinal": null,
+      "body_bytes": 208269,
+      "body_sha256": "60a2b06a6214f4448cbfe9336ae689e83bb5ca227437a85ea803516d3a4c7d6f",
+      "fits_256_KiB": true,
+      "cap_headroom_bytes": 53875,
+      "http_status": 200,
+      "seconds": 1.132,
+      "items": 1,
+      "content_length": 208269,
+      "body_length_matches_header": true
+    },
+    {
+      "endpoint_kind": "release-list",
+      "page": 4,
+      "per_page": 1,
+      "draft_ordinal": null,
+      "body_bytes": 72010,
+      "body_sha256": "4c53585b08d8dcc571035863dbb029a829f97de9ed97e2c295228245c43b04ed",
+      "fits_256_KiB": true,
+      "cap_headroom_bytes": 190134,
+      "http_status": 200,
+      "seconds": 0.974,
+      "items": 1,
+      "content_length": 72010,
+      "body_length_matches_header": true
+    },
+    {
+      "endpoint_kind": "release-list",
+      "page": 5,
+      "per_page": 1,
+      "draft_ordinal": null,
+      "body_bytes": 3685,
+      "body_sha256": "dd19a583a53d66bb4a8a382e5074b4dde0f3b7a3e858caddb45b7bcc841129b9",
+      "fits_256_KiB": true,
+      "cap_headroom_bytes": 258459,
+      "http_status": 200,
+      "seconds": 0.823,
+      "items": 1,
+      "content_length": 3685,
+      "body_length_matches_header": true
+    }
+  ],
+  "release_per_page_1_end_page_6": {
+    "endpoint_kind": "release-list",
+    "page": 6,
+    "per_page": 1,
+    "draft_ordinal": null,
+    "body_bytes": 2,
+    "body_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "fits_256_KiB": true,
+    "cap_headroom_bytes": 262142,
+    "http_status": 200,
+    "seconds": 0.521,
+    "items": 0,
+    "content_length": 2,
+    "body_length_matches_header": true
+  },
+  "draft_asset_metadata": [
+    {
+      "draft_ordinal": 1,
+      "assets": 1,
+      "pages": [
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 1,
+          "per_page": 100,
+          "draft_ordinal": 1,
+          "body_bytes": 1793,
+          "body_sha256": "cb4778f67c14a9b4894dcf343b7841920b4ed44daeb42d8c382e21c1563d841b",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 260351,
+          "http_status": 200,
+          "seconds": 0.789,
+          "items": 1,
+          "content_length": 1793,
+          "body_length_matches_header": true
+        }
+      ],
+      "end_of_inventory_observed": true
+    },
+    {
+      "draft_ordinal": 2,
+      "assets": 1,
+      "pages": [
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 1,
+          "per_page": 100,
+          "draft_ordinal": 2,
+          "body_bytes": 1793,
+          "body_sha256": "3e72a0165e3b55532439c36152a7ca2ff0b17e5e485ed38c8a99af9c23ecd3f6",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 260351,
+          "http_status": 200,
+          "seconds": 0.675,
+          "items": 1,
+          "content_length": 1793,
+          "body_length_matches_header": true
+        }
+      ],
+      "end_of_inventory_observed": true
+    },
+    {
+      "draft_ordinal": 3,
+      "assets": 115,
+      "pages": [
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 1,
+          "per_page": 100,
+          "draft_ordinal": 3,
+          "body_bytes": 179320,
+          "body_sha256": "188f30fe1898d75872d12a26b356590599f52408f3e8464ccd3eb4c25d1b565d",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 82824,
+          "http_status": 200,
+          "seconds": 0.923,
+          "items": 100,
+          "content_length": 179320,
+          "body_length_matches_header": true
+        },
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 2,
+          "per_page": 100,
+          "draft_ordinal": 3,
+          "body_bytes": 26971,
+          "body_sha256": "357a9bbe5937728e05ee34102aae452feb81991e29c94635e38418a11933f64e",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 235173,
+          "http_status": 200,
+          "seconds": 0.673,
+          "items": 15,
+          "content_length": 26971,
+          "body_length_matches_header": true
+        }
+      ],
+      "end_of_inventory_observed": true
+    },
+    {
+      "draft_ordinal": 4,
+      "assets": 39,
+      "pages": [
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 1,
+          "per_page": 100,
+          "draft_ordinal": 4,
+          "body_bytes": 70031,
+          "body_sha256": "c3d50e862b77c6ede677d36a31e870a24963f67917d8805a4ba2632f30d888ea",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 192113,
+          "http_status": 200,
+          "seconds": 0.832,
+          "items": 39,
+          "content_length": 70031,
+          "body_length_matches_header": true
+        }
+      ],
+      "end_of_inventory_observed": true
+    },
+    {
+      "draft_ordinal": 5,
+      "assets": 1,
+      "pages": [
+        {
+          "endpoint_kind": "draft-assets-list",
+          "page": 1,
+          "per_page": 100,
+          "draft_ordinal": 5,
+          "body_bytes": 1697,
+          "body_sha256": "95bcc67918490f6b5ccd74c4c5eb6f753b0487554b2992420b3c1d9ebb75cdd4",
+          "fits_256_KiB": true,
+          "cap_headroom_bytes": 260447,
+          "http_status": 200,
+          "seconds": 0.572,
+          "items": 1,
+          "content_length": 1697,
+          "body_length_matches_header": true
+        }
+      ],
+      "end_of_inventory_observed": true
+    }
+  ],
+  "release_inventory_recheck": {
+    "endpoint_kind": "release-list-recheck",
+    "page": 1,
+    "per_page": 5,
+    "draft_ordinal": null,
+    "body_bytes": 291504,
+    "body_sha256": "a1c1397997cfbfc0c562a468a8b0e9002704abda8e8721d89d27520dfa94bfbf",
+    "fits_256_KiB": false,
+    "cap_headroom_bytes": -29360,
+    "http_status": 200,
+    "seconds": 0.674,
+    "items": 5,
+    "content_length": 291504,
+    "body_length_matches_header": true
+  },
+  "release_and_asset_metadata_stable_during_probe": true,
+  "all_per_page_1_responses_fit": true,
+  "all_asset_page_responses_fit": true,
+  "call_budget": {
+    "phase_metadata_cap": 40,
+    "actions_identity_metadata_calls_in_source": 2,
+    "repository_control_calls": 1,
+    "release_list_calls_with_empty_terminal": 6,
+    "asset_list_calls": 6,
+    "global_inventory_calls": 13,
+    "writer_phase_metadata_total": 15,
+    "remaining_writer_phase_metadata_calls": 25,
+    "reviewer_actual_GET_attempts": 15,
+    "native_store_operation_budgets": "Separate unchanged 40-call budgets; no store operation invoked."
+  },
+  "recommendation": "Change the release-list allowlist and global_inventory loop together to per_page=1, require batch length <=1 and stop only on an empty page. Retain the finite eight-page bound and fail-closed exhaustion. Keep META_CAP=262144, the existing assets per_page=100/two-page logic and the 40-call metadata cap. Current five releases require occupied pages 1-5 plus empty page 6; do not truncate after five occupied pages.",
+  "limits": [
+    "Observed metadata only; byte sizes may change with asset names/counts or GitHub metadata.",
+    "No release asset payload, model, score, outcome, actual private Root or workflow log accessed.",
+    "No POST, PATCH, DELETE, dispatch, source edit or native rotation execution performed.",
+    "Failed Root/run retained as supplied context; no redispatch.",
+    "Read-only reviewer GET count is separate from the hypothetical future genuine writer metadata budget."
+  ],
+  "raw_evidence_protection": {
+    "directory_mode": "0700",
+    "all_files_mode": "0600",
+    "private_full_responses_saved": true,
+    "public_report_contains_no_release_asset_or_runtime_IDs": true
+  },
+  "full_release_metadata_equal_across_all_listing_views": true,
+  "examined_source_sha256": {
+    "rotation-source": "9c012dfdea76ce2cefd490d6a0cadd71336e6c652e2fdeacbc18cd08580c2851",
+    "store-source": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+  },
+  "measurement": "Exact gh --include HTTP response bodies, JSON media type, API version matching the source, Accept-Encoding identity. Full bodies and response headers are retained only in private mode-0600 files.",
+  "responses_with_content_length_verified": 15
+}

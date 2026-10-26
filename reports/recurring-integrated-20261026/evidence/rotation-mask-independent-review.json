@@ -1,0 +1,241 @@
+{
+  "schema_version": "independent-rotation-Root-mask-review-v1",
+  "result": "PASS",
+  "completed_at_utc": "2026-10-26T13:43:57.656587+00:00",
+  "root": "/workspace/nfl-system-audit/rotation-metadata-pages",
+  "base": "fe61692a560454efd19f20564da530ad332d78fa",
+  "inspected_change_now_committed_as": "ea89ae4a6440ca490c49b38791e1fd803e6e8cb9",
+  "source_clean": true,
+  "source_hashes": {
+    ".github/workflows/lab.yml": "2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384",
+    "tests/test_audit_private_rotation_v1.py": "5f853b3a17bb805f62da6c1ab65eb4e7ed4b3699b1edd33939d306bb2e77c94c",
+    "nfl_lab/audit_private_rotation_v1.py": "984064292d057476cd5e2a88bc96c52fc15d82d7a97bbe351762cb8ee2db5dcf",
+    "tools/audit_private_rotation_v1.py": "3a69c4ba748e335278377ad5b51621de4ce53acdfde35860f2cd94dfd4ad1a11",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+  },
+  "changed_files": [
+    ".github/workflows/lab.yml",
+    "tests/test_audit_private_rotation_v1.py"
+  ],
+  "only_three_rotation_job_first_steps_and_raw_Root_input_env_changed": true,
+  "original_jobs_permissions_timeouts_needs_outputs_CLI_and_all_other_workflow_content_unchanged": true,
+  "masking_before_checkout_or_runtime_Root_environment_logging": true,
+  "three_identical_inline_scripts": true,
+  "cryptographic_delimiter_bits": 128,
+  "workflow_command_escape_order": "percent, carriage return, newline",
+  "only_literal_Root_masked": true,
+  "Root_SHA_handoffs_GITHUB_OUTPUT_not_masked": true,
+  "original_CLI_source_clock_hash_schema_permissions_preflight_and_native_guards_unchanged": true,
+  "tests": {
+    "tests": 19,
+    "subtests": 21,
+    "subtest_failures": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "independent_actual_inline_positive_cases": [
+    {
+      "phase": "write",
+      "case": "canonical_percent",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "write",
+      "case": "multiline_CRLF",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "write",
+      "case": "shell_literal",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "read",
+      "case": "canonical_percent",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "read",
+      "case": "multiline_CRLF",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "read",
+      "case": "shell_literal",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "qualify",
+      "case": "canonical_percent",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "qualify",
+      "case": "multiline_CRLF",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    },
+    {
+      "phase": "qualify",
+      "case": "shell_literal",
+      "passed": true,
+      "commands": 1,
+      "command_roundtrip": true,
+      "exact_environment_roundtrip": true,
+      "root_sha_and_handoff_not_registered_as_masks": true,
+      "shell_expansion": false
+    }
+  ],
+  "independent_actual_inline_negative_cases": [
+    {
+      "phase": "write",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "write",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "write",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "write",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "read",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "read",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "read",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "read",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "qualify",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "qualify",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "qualify",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    },
+    {
+      "phase": "qualify",
+      "passed": true,
+      "mask_emitted": false,
+      "environment_exported": false
+    }
+  ],
+  "blocking_findings": [],
+  "limitations": [
+    "Actual shell/Python scripts were executed over fictional event/env files. No actual GitHub runner log redaction or cross-job output delivery was exercised locally.",
+    "add-mask protects subsequent runner logging; it does not retroactively sanitize the retained Rotation4 log.",
+    "The mask/export step only checks input types and SHA format. The unchanged authoritative CLI still validates Root hash, schema, source, actual event, job, permissions and clocks before native operations.",
+    "The workflow/test changes alter pinned helper bytes, so fresh owner execution must use the final committed Source and matching Root pins; prior CI or Root4 is not reused.",
+    "Direct counting observed 19 test methods and 21 successful subtests, including the new three phase-script subtests; a 19/18 footer would omit those new subtests."
+  ],
+  "scope": {
+    "repository_edits": 0,
+    "remote_calls": 0,
+    "remote_writes": 0,
+    "full_suite_runs": 0,
+    "real_Root_or_forecast_outcomes_read": 0,
+    "original_Rotation4_log_opened": false,
+    "original_Rotation4_log_modified": false,
+    "old_CI_cancelled": false,
+    "new_canary_or_native_writes": 0
+  },
+  "evidence_files": [
+    {
+      "path": "/tmp/nfl-rotation-Root-mask-independent-review-20261026-t7l5vojb/INPUTS.json",
+      "sha256": "e7087510cb4b3341ae51fa80e038526b15868b0eec300ac21b52f8d8aba16311"
+    },
+    {
+      "path": "/tmp/nfl-rotation-Root-mask-independent-review-20261026-t7l5vojb/focused-tests.log",
+      "sha256": "7a5ca2291a4b056880138b3a31059b55cf05da8fc7ea07fe18b12d30c239f8c0"
+    },
+    {
+      "path": "/tmp/nfl-rotation-Root-mask-independent-review-20261026-t7l5vojb/review_mask.py",
+      "sha256": "d7c3182f9505f359de468f7e9f167b323aae3d4ce8987d7c8face86f21310163"
+    },
+    {
+      "path": "/tmp/nfl-rotation-Root-mask-independent-review-20261026-t7l5vojb/tests.json",
+      "sha256": "4005703861cc34bba9a33d26e8211959f554b32460681ec1be9530ddf544e305"
+    }
+  ]
+}
