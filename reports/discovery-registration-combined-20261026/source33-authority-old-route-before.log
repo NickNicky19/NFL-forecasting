@@ -1,0 +1,16 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_current_bot_needs_actual_registered_metadata_before_client_scope _____
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7fdf97bcd520>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7fdf97b034c0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7fdf97b020c0>)
+
+    def test_current_bot_needs_actual_registered_metadata_before_client_scope(locator_system):
+        x=locator_system;p=proof(x);q=client(x,p)
+>       assert any("bootstrap-v2.json" in url for url,_ in x.calls)
+E       assert False
+E        +  where False = any(<generator object test_current_bot_needs_actual_registered_metadata_before_client_scope.<locals>.<genexpr> at 0x7fdf98087c60>)
+
+tests/test_audit_weekly_operations_authority_v1.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_operations_authority_v1.py::test_current_bot_needs_actual_registered_metadata_before_client_scope
+1 failed in 0.17s
