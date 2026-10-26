@@ -1,0 +1,23 @@
+diff --git a/tools/reliability.py b/tools/reliability.py
+index b823642..8f59e3c 100644
+--- a/tools/reliability.py
++++ b/tools/reliability.py
+@@ -348,14 +348,16 @@ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--root", type=Path, default=ROOT)
+     parser.add_argument("--mode", choices=("live", "replay"), required=True)
++    parser.add_argument("--model", default="original_sleeper_matchup_baseline",
++                        help="Explicit registered capture profile; unknown/crossed profiles are rejected")
+     parser.add_argument("--replay-at", help="An explicit test clock; forbidden in live mode")
+     args = parser.parse_args()
+     if args.mode == "live" and args.replay_at:
+         parser.error("Live capture cannot use a supplied clock")
+     now = utc(args.replay_at) if args.replay_at else datetime.now(timezone.utc)
+     root = args.root.resolve()
+-    path, health = capture(load_json(root / "output/data/week.json"), load_json(root / "output/data/meta.json"),
+-                           root, now, engine_hashes(root), mode=args.mode)
++    path, health = capture_profile(load_json(root / "output/data/week.json"), load_json(root / "output/data/meta.json"),
++                                   root, now, model=args.model, mode=args.mode)
+     if args.mode == "live":
+         atomic_json(root / "output/data/health.json", health)
+     print(json.dumps(health, indent=2))

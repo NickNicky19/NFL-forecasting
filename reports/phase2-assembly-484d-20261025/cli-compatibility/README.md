@@ -1,0 +1,9 @@
+# Conditional capture CLI compatibility
+
+Exact484d preview only; no website branch, lease or production source was changed. The existing workflow legacy branch supplies `--model sleeper-matchup-classic-fg-identity-v1`, but the actual CLI has no model argument and bypasses its existing strict `capture_profile` dispatcher. The original unchanged `ClassicProfileTests.test_live_cli_rejects_supplied_replay_clock` fails before the patch on unrecognized arguments and passes afterward on its intended supplied-clock rejection.
+
+Accept the explicit model argument with the preserved original-model default, then use the existing strict dispatcher. Every other top-level function/class is AST-identical. Independent real-subprocess controls with empty fictional inputs and current public engine bytes still reject an unknown model, original-model/current-code crossing, and Classic1/current-presence crossing before any forecast/health write. No source or model allow-list was broadened.
+
+This repairs the CLI interface. It does not make the conditional legacy workflow operational on current presence code: that branch still requires matching frozen Classic1 code/inputs or an explicit separately reviewed profile change. The enabled Phase2 route uses phase2_capture.py. Strict current-helper inventory registration is still required; old frozen helpers/engines/registrations must not be repinned. Apply only the exact source preimage through the existing writer, compose with its retained-caller/other changes, and run genuine combined CI and normal release checks. Main453e is unaffected and its ready COUNT correction remains separate.
+
+See checks.json for exact hashes and bounds. Original failed CI40215159984 remains failed; these controls are not a full-suite pass, forecast-accuracy result or deployed fix.

@@ -1,0 +1,37 @@
+{
+  "actual_combined_ci_or_release_acceptance": false,
+  "after_sha256": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+  "before_sha256": "3d53c3f74563ec4959b9bf4aa4b25b664cedcec0ea827efa92bb0a55109b735e",
+  "changed_paths": [
+    "tools/reliability.py"
+  ],
+  "changed_top_level_definitions": [
+    "main"
+  ],
+  "forecast_or_health_writes": 0,
+  "original_live_clock_test_before": "1 failed; --model unrecognized",
+  "patch_sha256": "e405b27dccbd9a9f8ff4e88dee773f1450b7ce5dd58bc62784e0ea42241fddab",
+  "production_source_checks_unchanged": true,
+  "source": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "strict_controlled_cli_cases": [
+    {
+      "exit_code": 1,
+      "expected_rejection": "UNKNOWN_CAPTURE_PROFILE",
+      "model": "unknown",
+      "observed": true
+    },
+    {
+      "exit_code": 1,
+      "expected_rejection": "Original engine changed",
+      "model": "original_sleeper_matchup_baseline",
+      "observed": true
+    },
+    {
+      "exit_code": 1,
+      "expected_rejection": "UNRECOGNIZED_CLASSIC_CURRENT_SOURCE",
+      "model": "sleeper-matchup-classic-fg-identity-v1",
+      "observed": true
+    }
+  ],
+  "unchanged_live_clock_test_after": "1 passed in0.18s"
+}
