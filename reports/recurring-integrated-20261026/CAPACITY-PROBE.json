@@ -1,0 +1,104 @@
+{
+  "code_commit": "9787f5cd4504b28dfad14dff6bb40fe9c99d007c",
+  "code_sha256": {
+    "nfl_lab/audit_weekly_archive_v1.py": "5708754b66682fbe7f25b90321cab4046952617720aee1933258957e42b4bcd7",
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py": "7164f7d096b443566574e1416c858a6d40175a623120314e57d78d286d6f4b6f",
+    "nfl_lab/audit_weekly_grade_v1.py": "18c9c1165bc5b98ea61d837abd12bf24c4006186a8acd6031b1c5961ed053566",
+    "nfl_lab/gha_private_checkpoint.py": "0a860949760959f9057bc08ad2c6b824bdec02ab31aadc000db65421d1bdcf78",
+    "nfl_lab/operational_storage.py": "8f9ba71dca00544149f69d46ca6a14db119c5263a5f20943dd69787d2343bee8",
+    "nfl_lab/owned_reference_batch.py": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+  },
+  "code_worktree": "/workspace/nfl-system-audit/grade-partition-repair",
+  "conditional_lower_bound": {
+    "additional_outcomes_or_revisions_assumed": 0,
+    "array_separator_bytes": 1,
+    "document_plus_one_capture_at_least_this_wide_bytes": 162231074,
+    "exceeds_decoded_limit": true,
+    "minimum_measured_capture_bytes": 50163542,
+    "over_limit_bytes": 28013346,
+    "statement": "Holding the original document intact, one additional capture encoded to at least the smaller measured capture size exceeds the decoded cap. This is arithmetic from independently measured bytes; no third capture is created or graded."
+  },
+  "encoder": {
+    "allow_nan": false,
+    "encoding": "UTF-8",
+    "ensure_ascii": false,
+    "implementation": "stdlib json.JSONEncoder.iterencode",
+    "no_join_or_full_row_materialization": true,
+    "one_shot": false,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "sort_keys": true
+  },
+  "fixture_seed": "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/two-full-native-seed.json",
+  "fixture_seed_sha256": "1bc7a22672eca1d936654b2f6f74f1fa8746fa9a851ad289ef38153cf7191392",
+  "integrity": {
+    "code_unchanged_during_probe": true,
+    "original_seed_and_local_manifest_unchanged": true,
+    "original_store_usage_and_registry_unchanged": true
+  },
+  "local_manifest": "/tmp/nfl-source31-cpu-followup-parent-20261026T0318/test_two_full_disjoint_capture0/worker/grade/GRADING_SNAPSHOT.json.gz",
+  "local_manifest_sha256": "69cf6310c004884417b278c7880cedecf0976d784a26bfe71a12237ca83286fd",
+  "measured": {
+    "captures": [
+      {
+        "bytes": 50163542,
+        "forecasts": 23000,
+        "index": 0,
+        "opportunities": 5000,
+        "selected": 5000,
+        "sha256": "17af559a60c6c9b51b42cbc53d9d798607be3da195c27c05ed4ada7ad53e1eca"
+      },
+      {
+        "bytes": 50163542,
+        "forecasts": 23000,
+        "index": 1,
+        "opportunities": 5000,
+        "selected": 5000,
+        "sha256": "7e78f55dfd2202f8b492fe1b9e3e6b9d5969384c7c45fd4639bb2e0fd3933fc6"
+      }
+    ],
+    "decoded_limit_bytes": 134217728,
+    "document": {
+      "bytes": 112067531,
+      "sha256": "54e9015495fba8188d11b8b114e7958a83ac9f92c3bc65da6e49a49dcb505281"
+    },
+    "remaining_decoded_bytes": 22150197
+  },
+  "model_fits": 0,
+  "private_GETs": 0,
+  "protected_outcomes_read": 0,
+  "qualifications": {
+    "capacity_36_captures_claim": false,
+    "duplicate_capture_admitted": false,
+    "fictional_selected_rows_per_game": 5000,
+    "real_selected_rows_per_week_owner_reported": 2605,
+    "real_week_or_three_day_failure_claim": false,
+    "serialization_capacity_only": true,
+    "third_capture_serialization_exercised": false,
+    "valid_third_capture_Ops": false
+  },
+  "remote_calls": 0,
+  "resources": {
+    "AS_limit_bytes": [
+      536870912,
+      536870912
+    ],
+    "CPU_limit_seconds": [
+      120,
+      120
+    ],
+    "CPU_seconds": 20.731482717,
+    "VmHWM": 57524224,
+    "VmPeak": 84508672,
+    "VmRSS": 56672256,
+    "VmSize": 83460096,
+    "wall_limit_seconds": 180,
+    "wall_seconds": 20.687701287999516
+  },
+  "schema_version": "fictional-recurring-serialization-capacity-probe-v1",
+  "source_edits": 0,
+  "status": "MEASURED_STDLIB_CANONICAL_BYTES_MATCH_ORIGINAL_MANIFEST"
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "audit-genuine-owner-ops12-failure-v1",
+  "run_id": 40266057468,
+  "source_sha": "1ff8637152ab93b3f3db4c3109af111365337156",
+  "root_go_sha256": "1277bffca2b6f5dfc92fa82b25b277d02fcc09aa7d3531f3dd8ebfdd69cdc909",
+  "producer_job_id": 121388635760,
+  "producer_conclusion": "failure",
+  "reason": "EXACT_CHECKPOINT_DESCRIPTOR",
+  "failed_phase": "operations-retained",
+  "new_models_or_source_acquisition_reached": false,
+  "failure_reader_job_id": 121389165744,
+  "failure_reader_conclusion": "success",
+  "restoration": {
+    "fits": 0,
+    "opaque_failed_capture_restored": true,
+    "original_attempt": {
+      "job_id": "audit-weekly-produce-v1",
+      "repository": "NickNicky19/NFL-forecasting",
+      "run_attempt": 1,
+      "run_id": "40266057468",
+      "source_sha": "1ff8637152ab93b3f3db4c3109af111365337156",
+      "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1"
+    },
+    "public_release": false,
+    "receipt_sha256": "1d9ea0ecf865eb857c934afae4ea17e40b2e3f18169e18fd06f94a70df9d2c85",
+    "state": "PRIVATE_FAILURE_RESTORED",
+    "successful_forecast": false
+  },
+  "successful_forecast": false,
+  "public_release": false,
+  "new_fits": 0,
+  "critical_path_status": "REPAIRED_IN_PR33_PENDING_ACTUAL_COMBINED_CI_AND_NEW_NATIVE_RUN"
+}

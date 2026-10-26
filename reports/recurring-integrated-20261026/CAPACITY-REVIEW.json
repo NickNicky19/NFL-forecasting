@@ -1,0 +1,94 @@
+{
+  "reviewed_source": "c9f86d3c436ecfccf150dc3de0ced1d0589eb54a",
+  "worktree": "/workspace/nfl-system-audit/producer-operations-final",
+  "finding": "One cumulative logical snapshot; two byte fragments; no history compactor",
+  "bounds": {
+    "v1_decoded_bytes": 67108864,
+    "v1_encoded_bytes": 8388608,
+    "v2_parts": 2,
+    "v2_decoded_bytes_per_part": 67108864,
+    "v2_encoded_bytes_per_part": 8388608,
+    "v2_decoded_bytes_total": 134217728,
+    "v2_encoded_bytes_total": 16777216,
+    "v2_root_metadata_bytes": 65536,
+    "captures": 36,
+    "primary_opportunities": 36000,
+    "projected_forecast_rows": 648000,
+    "revision_guard": 144000,
+    "private_runtime_bytes": 33554432,
+    "remote_asset_slots": 128,
+    "local_managed_bytes": 536870912,
+    "native_address_space_bytes": 536870912,
+    "native_CPU_seconds": 120,
+    "native_wall_seconds": 180,
+    "checkpoint_HTTP_calls_per_client": 40
+  },
+  "observed": {
+    "kind": "Existing fictional GHA trace at reviewed source; graded snapshot completed, writer later CPU-killed",
+    "run_id": 40260475697,
+    "captures": 2,
+    "decoded_bytes": 111959843,
+    "remaining_decoded_bytes": 22257885,
+    "encoded_part_bytes": [2520629, 2299810],
+    "encoded_part_bytes_total": 4820439,
+    "fixture_per_capture": {
+      "candidate_forecasts": 18000,
+      "R0_forecasts": 5000,
+      "selected_rows": 5000,
+      "opportunities": 5000,
+      "scope": "One disjoint fictional game per capture"
+    },
+    "evidence": "/tmp/nfl-grade-partition-gha-cpu-20261026/exact-failed-node-events.json"
+  },
+  "real_workload": {
+    "selected_rows_per_week": 2605,
+    "provenance": "Owner-reported aggregate; no protected outcomes/private inventory opened",
+    "daily_runs_reuse_existing_primary_assignments": true,
+    "remaining_real_days_or_captures": null
+  },
+  "estimated": {
+    "formula": "111959843 * 3 / 2",
+    "three_comparable_fictional_captures_approx_decoded_bytes": 167939765,
+    "approx_MiB": 160.16,
+    "measured_third_capture": false,
+    "limitations": "Linear average includes shared overhead; not a real-week model or hard three-day failure claim"
+  },
+  "retention": {
+    "all_prior_captures_and_revisions_carried_forward": true,
+    "resolved_capture_eviction": false,
+    "specified_duplicate_observations_deduplicated": true,
+    "original_archives_and_prior_checkpoints_retained": true,
+    "implemented_compactor": false,
+    "history_requires_embedded_captures": true,
+    "live_namespace_free_bytes": null,
+    "claim_36_capture_capacity": false
+  },
+  "parent_reported_followup": {
+    "kind": "New cold mixed native PASS; not independently rerun in this review",
+    "exact_source_revision": null,
+    "writer_CPU_seconds": 105.10,
+    "writer_peak_bytes": 511238144,
+    "writer_HTTP_calls": 39,
+    "writer_transfer_MB_rounded": 4.869,
+    "reader_CPU_seconds": 42.05,
+    "reader_HTTP_GETs": 33,
+    "genuine_combined_Source_CI_pending_in_update": true,
+    "capacity_caps_changed": false
+  },
+  "source_paths": {
+    "limits": "nfl_lab/audit_weekly_grade_v1.py:43",
+    "capture_retention": "nfl_lab/audit_weekly_grade_v1.py:1250",
+    "snapshot_assembly": "nfl_lab/audit_weekly_grade_v1.py:1329",
+    "history_reconstruction": "nfl_lab/audit_weekly_grade_v1.py:1422",
+    "worker_retention_guards": "nfl_lab/audit_weekly_operations_grade_v1.py:506",
+    "capture_reuse": "nfl_lab/audit_weekly_operations_grade_v1.py:552",
+    "multipart_append": "nfl_lab/audit_weekly_grade_checkpoint_v1.py:251",
+    "complete_restore": "nfl_lab/audit_weekly_grade_history_v1.py:1045",
+    "observation_deduplication": "nfl_lab/state.py:119",
+    "runtime_quota": "nfl_lab/private_draft_store.py:27"
+  },
+  "source_edits": 0,
+  "remote_calls": 0,
+  "private_GETs": 0,
+  "new_profiling_runs": 0
+}
