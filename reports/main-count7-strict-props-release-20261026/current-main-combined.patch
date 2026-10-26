@@ -1,0 +1,1665 @@
+diff --git a/.github/workflows/hourly.yml b/.github/workflows/hourly.yml
+index 11123ac..94cecb8 100644
+--- a/.github/workflows/hourly.yml
++++ b/.github/workflows/hourly.yml
+@@ -112,7 +112,7 @@ jobs:
+           PY
+       - name: Prepare isolated provisional overlay (default R0)
+         id: overlay
+-        run: python tools/weekly_adaptive_overlay.py --root . --website-source-sha "$(git rev-parse HEAD)" --feed-policy config/weekly-derived-selected-policy-v3.json --feed-policy-sha256 b1e9bcdf99acf3cfd65a7bf08f10839026bd9009077f6808531745541380c9b3
++        run: python tools/weekly_adaptive_overlay.py --root . --website-source-sha "$(git rev-parse HEAD)" --feed-policy config/weekly-derived-selected-policy-v4.json --feed-policy-sha256 ca5e959c1680f523b12fded72e2521fd02f2a5da1ed1d07f7c66dc320a923391
+       - name: Commit validated data and immutable receipts
+         id: commit
+         run: |
+diff --git a/config/weekly-derived-selected-policy-v4.json b/config/weekly-derived-selected-policy-v4.json
+new file mode 100644
+index 0000000..0ac4672
+--- /dev/null
++++ b/config/weekly-derived-selected-policy-v4.json
+@@ -0,0 +1 @@
++{"authority_kind":"AUTOMATED_REGISTERED_POLICY","current_execution":{"capture_schema":"baseline-capture-classic-v1","engine_sha256":{"pull/books.py":"0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8","pull/build.py":"1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1","pull/gamemodel.py":"2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f","pull/grade.py":"739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354","pull/matchup.py":"15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c","pull/news.py":"17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9","pull/scoring.py":"58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db","pull/sources.py":"36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"},"grading_version":"statistical-v3-identity-20261025","model":"sleeper-matchup-classic-fg-identity-v1","normalized_stats_cache":"stat-keys-fgm-v1","original_shadow_model":"original_sleeper_matchup_baseline","original_shadow_procedure":"original-builder-default-refresh-v1","original_shadow_source":"89512ed952308dacc1f6a930915ddbcdccd460d9","schema_version":"weekly-classic-current-execution-v1"},"engine_sha256":{"pull/books.py":"0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8","pull/build.py":"75bf99c55b5f2561a60a120c82db368ad3b996a8a64e9ab08828b586a9314419","pull/gamemodel.py":"2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f","pull/matchup.py":"15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c","pull/news.py":"17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9","pull/scoring.py":"31672c10d526d591db8951157b0ecd669b4d02b412a75deec337618bff18dab2","pull/sources.py":"36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"},"expected_categories":["anytime_td","pass_att","pass_cmp","pass_int","pass_td","pass_yd","rec","rec_yd","rush_att","rush_rec_yd","rush_yd"],"human_approval":false,"jobs":{"consume":"audit-weekly-export-v1","produce":"audit-weekly-produce-v1","restore":"audit-weekly-restore-v1"},"lab_public_policy_sha256":"8cf0df7f10842639f814daedb82231064fab0c4816cb4740bcc13c9263a06791","lab_recipe_registered_at_utc":"2026-10-25T14:42:09.438903+00:00","producer_policy_sha256":"3fa851684b04ec95d8c42c5a5a80e004be438797b819d4dac0f73bca4b443984","public_fields":["player_id","game_id","category","method_id","model_version","procedure_version","product","prediction_functional","forecast_value","horizon","source_cutoff_utc","issued_at","persistence_completed_at","kickoff_utc","valid_until_utc","selection_sha256","source_policy_sha256","query_source_sha256"],"public_raw_or_model_weights":false,"public_ref":"lab-state","public_roles":{"anytime_td":["RB","WR","TE"],"pass_att":["QB"],"pass_cmp":["QB"],"pass_int":["QB"],"pass_td":["QB"],"pass_yd":["QB"],"rec":["RB","WR","TE"],"rec_yd":["RB","WR","TE"],"rush_att":["RB"],"rush_rec_yd":["RB","WR","TE"],"rush_yd":["RB"]},"publication_authority":{"catalog_freezer_sha256":"6b2fbb371f7c1881beb473484a8d1e568409b4ccda93a0d049c5753e6d4a90cd","catalog_registration_rule":"DECLARED_EPOCH_METADATA_PROJECTION_ONLY_NO_VALUES_OR_RESELECTION","catalog_schema":"weekly-generic-future-producer-v1-selected-version-catalog","event":"workflow_dispatch","export_job":"audit-weekly-export-v1","public_ref":"lab-state","recipe_registration_sha256":"3fa851684b04ec95d8c42c5a5a80e004be438797b819d4dac0f73bca4b443984","repository":"NickNicky19/NFL-forecasting","run_attempt":1,"schema_version":"audit-weekly-publication-authority-v3","source_branch":"research/weekly-storage-probe-v1","source_sha":"c74812b441c15d8e45daa09021f428ed131ff7cf","state":"ROOT_REGISTERED","workflow_path":".github/workflows/lab.yml"},"r0_identities":["a21ccd21ad395da3487c5e084ab2865c54a357a191419cc4da9ce31c19f83660"],"recipe_registration_sha256":"3fa851684b04ec95d8c42c5a5a80e004be438797b819d4dac0f73bca4b443984","registered_at_utc":"2026-10-26T08:37:52.877788+00:00","registration_id":"weekly-adaptive-release-v1","rights_authorities":["e88955f3bfb4496180851c803a17bd8b5a25f39df3bdcbf34458659bdcc49069"],"schema_version":"weekly-derived-selected-policy-v4","source_policy_sha256":"e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441","state":"ROOT_REGISTERED","static_registration_sha256":"e8e037a00a22d3e0e07e41ed5816f2374e8f162a7fa78ea8cc45888ed2e2f094","website_code_sha256":{"config/release-mode.json":"02b5954e1b2c5139d683a2872262ad1e274df21120617d13fed3ee06a7605ce9","output/app.js":"21b21ad275338714b610f300aaddb26bfc33dd211b4a867f19c47c42c72b7a59","output/index.html":"cc7e76130908ec3936c4fe75fcec1c538d0b012792c24e82686cc7a3fb133143","output/weekly-adaptive-overlay.js":"d6657e82639aa001f64701672e25cc72bd6e55142127669a59396f9efe485a68","pull/books.py":"0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8","pull/build.py":"1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1","pull/gamemodel.py":"2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f","pull/grade.py":"739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354","pull/matchup.py":"15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c","pull/news.py":"17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9","pull/scoring.py":"58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db","pull/sources.py":"36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061","tools/classic_build_pair_v1.py":"e413b532eb71f05781419ad8ea1ef2aaa8a44aa7af32ea5acac9304d8fbe9cd1","tools/classic_failure_v1.py":"3e7a619a576a673d5e7ca6da2576daeec743be005888b1bb81111cc6de1c304b","tools/classic_model_v1.py":"07f35d758266cc9faf7ad37427d4987161bd642e79919a0df2a0d7610da0b044","tools/classic_source_replay_v1.py":"00e84c810c96e9fc4e4a3e9f9ba3b76502edc51e1c02a36aa80ea5327bc879d6","tools/publication_guard_v1.py":"cd5553f92c49ce3477333a60b3e43f77aa1340a88882a995d1da48329593ca9c","tools/reliability.py":"47d18202a5446c63ac789e6b999613bd13e2650dc7896af38731456af046d7ce","tools/weekly_adaptive_overlay.py":"6835d58efa3ccc88cff57a0cd55abea349387c49902d3bedd4d57b92274918cb","tools/weekly_public_feed.py":"cce406fd77c7e614bf2e52f9d849abfeb9da58aadbd94b4b0b0bdad1ab708ba7","tools/weekly_public_feed_v4.py":"0fd9d08bde30b7c7f21c18be9f170e54e30c10b3a3770eb5b4ef08135c64e47e","tools/weekly_selected_rankings.py":"9eb60aeeabee0e17f2a411745e77f4540b25a4df1daac3887e8f2e26e3f75ebc"},"workflow_sha256":"5bf10804854207876b3eae5b240d8cce67e50de6dfa66d9d89355da0470e3aba"}
+diff --git a/output/app.js b/output/app.js
+index 9f0edda..5e4572d 100644
+--- a/output/app.js
++++ b/output/app.js
+@@ -25,6 +25,8 @@ const S = {
+   data: null, track: null, generatedAt: null,
+   byId: {}, byKey: {},
+   games: {},           // game id -> schedule merged with the latest ESPN scoreboard
++  propEvents: {},      // Exact ESPN event/athlete evidence; separate from fantasy live stats.
++  propSleeper: null,   // Period-bound provisional feed, never a final outcome.
+   live: {},            // player id -> stat line from ESPN's box score (Sleeper field names)
+   boxLoaded: new Set(),
+   boxFinal: new Set(),
+@@ -252,16 +254,105 @@ function pv(p, prop) {
+ }
+ 
+ // Where a prop stands. dir is the side being tracked (a pick or lean), or null.
+-function propStatus(p, key, line, dir) {
+-  const c = current(p);
+-  if (!c) return null;
+-  const g = S.games[p.game_id];
+-  if (c.none) return { v: null, res: "dnp", final: true };
+-  const v = statValue(key, c.stats);
++function propFinal(g) {
++  return g?.state === "post" && typeof g.detail === "string" && /^Final(?:\/\d*OT)?$/i.test(g.detail.trim());
++}
++
++function propPickBound(m, p, g) {
++  const id = x => typeof x === "string" && Boolean(x.trim()) || Number.isSafeInteger(x) && x >= 0;
++  return !!(m && p && g && m.schema_version === "mypicks-player-game-v1"
++    && [m.pid, p.id, m.gid, p.game_id, g.id].every(id)
++    && String(m.pid) === String(p.id) && String(m.gid) === String(p.game_id) && String(m.gid) === String(g.id)
++    && m.season === S.data.season && m.week === S.data.week && m.team === p.team
++    && (m.espn_id == null || id(m.espn_id) && id(p.espn_id) && String(m.espn_id) === String(p.espn_id))
++    && typeof m.kickoff === "string" && Number.isFinite(Date.parse(m.kickoff)) && Date.parse(m.kickoff) === Date.parse(g.kickoff)
++    && m.period === "full_game_including_overtime" && m.stat_source === "ESPN_EVENT_BOXSCORE");
++}
++
++function propValue(stats, key) {
++  const fields = key === "rush_rec_yd" ? ["rush_yd", "rec_yd"] : key === "anytime_td" ? ["rush_td", "rec_td"] : [key];
++  if (!["pass_yd", "pass_td", "pass_cmp", "pass_att", "pass_int", "rush_yd", "rush_att", "rec", "rec_yd", "rush_rec_yd", "anytime_td"].includes(key)) return null;
++  if (!stats || !fields.every(k => Object.hasOwn(stats, k) && Number.isFinite(stats[k])
++    && (k.endsWith("_yd") || Number.isSafeInteger(stats[k]) && stats[k] >= 0))) return null;
++  return fields.reduce((sum, k) => sum + stats[k], 0);
++}
++
++function recordPropEvidence(id, summary, board) {
++  if (board !== S.data) return;
++  S.propEvents ||= {};
++  delete S.propEvents[id];
++  const g = S.games[id], header = summary.header;
++  const c = header?.competitions?.find(x => String(x.id) === String(id));
++  const week = typeof header?.week === "object" ? header.week?.number : header?.week;
++  if (board !== S.data || !g || String(g.id) !== String(id) || String(header?.id) !== String(id) || !c
++    || !Number.isSafeInteger(header.season?.year) || header.season.year !== board.season
++    || header.season.type !== 2
++    || !Number.isSafeInteger(week) || week !== board.week
++    || typeof c.date !== "string" || !/(?:Z|[+-]\d{2}:\d{2})$/i.test(c.date)
++    || !Number.isFinite(Date.parse(c.date)) || Date.parse(c.date) !== Date.parse(g.kickoff)) return;
++  const identities = new Map(), players = {};
++  for (const p of board.players || []) if (String(p.game_id) === String(id) && p.espn_id != null) {
++    const key = String(p.espn_id);
++    identities.set(key, identities.has(key) ? null : p);
++  }
++  const number = raw => typeof raw === "number" && Number.isFinite(raw) ? raw
++    : typeof raw === "string" && /^-?\d+(?:\.\d+)?$/.test(raw.trim()) ? Number(raw) : null;
++  for (const team of summary.boxscore?.players || []) {
++    const abbr = teamCode(team.team?.abbreviation);
++    if (![g.home, g.away].includes(abbr)) continue;
++    for (const group of team.statistics || []) for (const athlete of group.athletes || []) {
++      const p = identities.get(String(athlete.athlete?.id));
++      if (!p || p.team !== abbr) continue; // Never resolve a statistical outcome by name.
++      const row = players[p.id] ||= { stats: {}, played: false, dnp: false, conflict: false, espn_id: String(p.espn_id), team: abbr };
++      if (athlete.didNotPlay === true) row.dnp = true;
++      if (athlete.didNotPlay === false) row.played = true;
++      const vals = Object.fromEntries((group.labels || []).map((label, n) => [label, athlete.stats?.[n]]));
++      const pairs = group.name === "passing" ? { pass_yd: "YDS", pass_td: "TD", pass_int: "INT" }
++        : group.name === "rushing" ? { rush_yd: "YDS", rush_att: "CAR", rush_td: "TD" }
++        : group.name === "receiving" ? { rec: "REC", rec_yd: "YDS", rec_td: "TD", rec_tgt: "TGTS" } : {};
++      const values = Object.fromEntries(Object.entries(pairs).map(([key, label]) => [key, number(vals[label])]));
++      if (group.name === "passing") {
++        const parts = typeof vals["C/ATT"] === "string" ? vals["C/ATT"].split("/") : [];
++        values.pass_cmp = parts.length === 2 ? number(parts[0]) : null;
++        values.pass_att = parts.length === 2 ? number(parts[1]) : null;
++      }
++      for (const [key, value] of Object.entries(values)) {
++        if (Object.hasOwn(row.stats, key) && row.stats[key] !== value) row.conflict = true;
++        row.stats[key] = value;
++        if (Number.isSafeInteger(value) && (key.endsWith("_yd") ? value !== 0 : value > 0)) row.played = true;
++      }
++      if (row.dnp && row.played) row.conflict = true;
++    }
++  }
++  S.propEvents[id] = { gid: String(id), kickoff: g.kickoff, season: board.season, week: board.week, players, source: "ESPN_EVENT_BOXSCORE",
++    observed_at: new Date().toISOString(), final: propFinal(g) && propFinal({ state: c.status?.type?.state, detail: c.status?.type?.shortDetail })
++      && c.status?.type?.completed === true };
++}
++
++function propStatus(p, key, line, dir, saved = null) {
++  const unknown = reason => ({ v: null, res: "unresolved", final: false, reason });
++  const g = p && S.games[p.game_id];
++  if (saved && !propPickBound(saved, p, g)) return unknown("Saved player/game/period binding unavailable; stored record retained");
++  if (!p || !g || String(g.id) !== String(p.game_id)) return unknown("Player/game identity unavailable");
++  if (!Number.isFinite(line) || dir != null && !["over", "under"].includes(dir)) return unknown("Saved line or direction unavailable");
++  if (g.state === "pre") return null;
++  if (!["in", "post"].includes(g.state)) return unknown("Game status unavailable");
++  const event = S.propEvents?.[p.game_id];
++  const scoped = event?.season === S.data.season && event?.week === S.data.week
++    && event.gid === String(p.game_id) && Date.parse(event.kickoff) === Date.parse(g.kickoff) && event.source === "ESPN_EVENT_BOXSCORE";
++  const candidate = scoped ? event.players[p.id] : null;
++  const row = candidate?.team === p.team && candidate?.espn_id === String(p.espn_id) ? candidate : null;
++  if (row?.conflict) return unknown("Conflicting participation or statistical evidence");
++  if (row?.dnp && event.final && propFinal(g)) return { v: null, res: "dnp", final: true };
++  let v = row?.played ? propValue(row.stats, key) : null;
++  if (v == null && g.state === "in" && S.propSleeper?.board === S.data) {
++    const stats = S.propSleeper.players[p.id];
++    if (stats && (["gp", "off_snp", "pass_att", "rush_att", "rec"].some(k => Number.isSafeInteger(stats[k]) && stats[k] > 0))) v = propValue(stats, key);
++  }
++  if (v == null) return unknown("Requested statistic or confirmed participation unavailable");
++  if (g.state !== "post" || !propFinal(g) || !event?.final) return { v, res: g.state === "in" ? "live" : "pending", final: false };
+   const over = v > line;
+-  if (g.state === "post") return { v, res: v === line ? "push" : dir ? ((dir === "over") === over ? "hit" : "miss") : over ? "over" : "under", final: true };
+-  // Signed yards and statistical corrections can move down; live values are provisional.
+-  return { v, res: "live", final: false };
++  return { v, res: v === line ? "push" : dir ? ((dir === "over") === over ? "hit" : "miss") : over ? "over" : "under", final: true };
+ }
+ 
+ function twoPointScorers(text) {
+@@ -402,13 +493,18 @@ function liveLineText(p, key, line) {
+ async function pollSleeper() {
+   if (!Object.values(S.games).some((g) => g.state !== "pre")) return;
+   const pos = ["QB", "RB", "WR", "TE", "K", "DEF"].map((x) => `position[]=${x}`).join("&");
++  const board = S.data;
+   try {
+-    const rows = await getJSON(`https://api.sleeper.app/stats/nfl/${S.data.season}/${S.data.week}?season_type=regular&${pos}`);
++    const rows = await getJSON(`https://api.sleeper.app/stats/nfl/${board.season}/${board.week}?season_type=regular&${pos}`);
++    if (S.data !== board) return;
+     const next = {};
+     for (const r of rows || []) if (S.byId[r.player_id] && r.stats) next[r.player_id] = r.stats;
+     S.slp = next;
++    S.propSleeper = { board, players: next };
+     S.slpOk = true;
+   } catch (err) {
++    if (S.data !== board) return;
++    S.propSleeper = null;
+     S.slpOk = false;   // fall back to ESPN box scores for every live game
+     console.warn("sleeper live", err);
+   }
+@@ -417,23 +513,26 @@ async function pollSleeper() {
+ // ESPN game summaries: the open game is handled by gameTick. Here: pregame injury news for games kicking off
+ // soon, and box scores for live games only when Sleeper's feed is down.
+ async function pollBoxScores() {
++  const board = S.data;
+   const now = Date.now();
+   const soon = (g) => g.state === "pre" && new Date(g.kickoff) - now < 4 * 3600000 && now - (S.injAt[g.id] || 0) > 300000;
+-  const backup = (g) => !S.slpOk && (g.state === "in" || (g.state === "post" && !S.boxFinal.has(g.id)));
++  const backup = (g) => g.state === "post" || !S.slpOk && g.state === "in";
+   const ids = Object.values(S.games)
+     .filter((g) => g.id !== S.gameView && (backup(g) || soon(g)))
+     .map((g) => { if (g.state === "pre") S.injAt[g.id] = now; return g.id; });
+   await Promise.all(ids.map(async (id) => {
+     try {
+       const summary = await getJSON(`${ESPN}/summary?event=${id}`);
+-      applySummary(id, summary);
++      applySummary(id, summary, board);
+     } catch (err) {
+       console.warn("box score", id, err);
+     }
+   }));
+ }
+ 
+-function applySummary(id, summary) {
++function applySummary(id, summary, board = S.data) {
++  if (board !== S.data) return;
++  recordPropEvidence(id, summary, board);
+   S.sum[id] = summary;
+   if (!S.games[id]) return;   // a finished week's game: its box score is drawn straight from the summary
+   applyInjuries(summary);
+@@ -552,12 +651,13 @@ async function liveTick() {
+ }
+ 
+ async function pollOpenGame() {
++  const board = S.data;
+   const id = S.gameView;
+   const g = id && gameOf(id);
+-  if (!g || g.state === "pre" || (g.state === "post" && S.sum[id])) return;
++  if (!g || g.state === "pre" || (g.state === "post" && S.sum[id] && !S.games[id])) return;
+   try {
+-    applySummary(id, await getJSON(`${ESPN}/summary?event=${id}`));
+-    syncGameFromSummary(id);
++    applySummary(id, await getJSON(`${ESPN}/summary?event=${id}`), board);
++    if (S.data === board) syncGameFromSummary(id);
+   } catch (err) {
+     console.warn("game", id, err);
+   }
+@@ -618,6 +718,7 @@ async function load() {
+   S.weeklyOverlayBoardHash = null;
+   S.rosKey = null; S.gradeKey = null;
+   S.future = null; S.futureLoading = null; S.ideas = null; S.teamWeeksMap = null; S.teamOppsMap = null;
++  S.propEvents = {}; S.propSleeper = null;
+   S.generatedAt = S.data.generated_at;
+   try { S.track = await getJSON(`data/track_record.json?t=${Date.now()}`); } catch { S.track = null; }
+   try { S.dk = await getJSON(`data/dk_backtest.json?t=${Date.now()}`); } catch { S.dk = null; }
+@@ -1152,7 +1253,7 @@ function catCard(p, raw) {
+       ${st && !st.final && st.v != null && prop.adj != null && prop.key !== "anytime_td" ? `<div title="What he has so far plus our pregame projection for the time left">${ref} on pace<span class="n" style="color:var(--amber)">${fmt(st.v + prop.adj * remaining(S.games[p.game_id]), prop.key === "fpts" ? 2 : 1)}</span></div>` : ""}
+       ${prop.proj != null ? `<div>Sleeper proj<span class="n">${fmtStat(prop.key, prop.proj)}</span></div>` : ""}
+       ${avg != null ? `<div>Season avg<span class="n">${fmt(avg)}</span></div>` : ""}
+-      ${st ? `<div>${st.final ? "Final" : "Now"}<span class="n" style="color:var(--cyan)">${st.v == null ? "DNP" : fmtStat(prop.key, st.v)}</span></div>` : ""}
++      ${st ? `<div>${st.final ? "Final" : "Now"}<span class="n" style="color:var(--cyan)">${st.res === "dnp" ? "DNP" : st.v == null ? "Unavailable" : fmtStat(prop.key, st.v)}</span></div>` : ""}
+     </div>
+     ${vals.length ? `<div class="bars">${bars}<div class="lineat" style="bottom:${(100 * line) / top}%"></div></div><div class="bars-x">${xs}</div>` : ""}
+     <div class="foot-n">${note}${selectedNote}</div>
+@@ -4443,8 +4544,39 @@ function setCompare(slot, id) {
+ 
+ // ---------------------------------------------------------------- my picks
+ 
++function persistMine() {
++  // Explicit user edits preserve every unchanged record's original JSON bytes.
++  // Reads/renders never invoke this writer and never migrate old identities.
++  try {
++    const raw = localStorage.getItem("nflprops.mine");
++    if (raw == null) { localStorage.setItem("nflprops.mine", JSON.stringify(S.mine)); return; }
++    const old = JSON.parse(raw);
++    if (!Array.isArray(old)) return;
++    const start = raw.indexOf("["), end = raw.lastIndexOf("]"), pieces = [];
++    let from = start + 1, depth = 0, quoted = false, escaped = false;
++    for (let n = from; n < end; n++) {
++      const ch = raw[n];
++      if (quoted) { if (escaped) escaped = false; else if (ch === "\\") escaped = true; else if (ch === '"') quoted = false; continue; }
++      if (ch === '"') quoted = true;
++      else if (ch === "[" || ch === "{") depth++;
++      else if (ch === "]" || ch === "}") depth--;
++      else if (ch === "," && depth === 0) { pieces.push(raw.slice(from, n)); from = n + 1; }
++    }
++    if (old.length) pieces.push(raw.slice(from, end));
++    if (pieces.length !== old.length) return;
++    const used = new Set(), forms = old.map(x => JSON.stringify(x));
++    const next = S.mine.map(m => {
++      const form = JSON.stringify(m), n = forms.findIndex((x, i) => !used.has(i) && x === form);
++      if (n < 0) return form;
++      used.add(n); return pieces[n];
++    });
++    localStorage.setItem("nflprops.mine", raw.slice(0, start + 1) + next.join(",") + raw.slice(end));
++  } catch { /* A storage error must never replace an unreadable old collection. */ }
++}
++
+ function minePick(pid, key, dir) {
+-  return S.mine.find((m) => m.pid === pid && m.key === key && m.dir === dir && m.season === S.data.season && m.week === S.data.week);
++  const p = S.byId[pid], g = p && S.games[p.game_id];
++  return S.mine.find((m) => m.pid === pid && m.key === key && m.dir === dir && propPickBound(m, p, g));
+ }
+ 
+ function toggleMine(pid, key, dir, line) {
+@@ -4452,10 +4584,14 @@ function toggleMine(pid, key, dir, line) {
+   if (have) S.mine = S.mine.filter((m) => m !== have);
+   else {
+     // one side per prop: picking the over replaces an under on the same prop
+-    S.mine = S.mine.filter((m) => !(m.pid === pid && m.key === key && m.season === S.data.season && m.week === S.data.week));
+-    S.mine.push({ pid, key, dir, line: +line, season: S.data.season, week: S.data.week, at: Date.now() });
+-  }
+-  store("mine", S.mine);
++    const p = S.byId[pid], g = p && S.games[p.game_id];
++    if (!p || !g || !["string", "number"].includes(typeof line) || typeof line === "string" && !line.trim() || !Number.isFinite(+line) || !["over", "under"].includes(dir)) return;
++    S.mine = S.mine.filter((m) => !(m.pid === pid && m.key === key && propPickBound(m, p, g)));
++    S.mine.push({ pid, key, dir, line: +line, season: S.data.season, week: S.data.week, at: Date.now(),
++      schema_version: "mypicks-player-game-v1", gid: String(p.game_id), team: p.team, espn_id: p.espn_id ?? null,
++      kickoff: g.kickoff, period: "full_game_including_overtime", stat_source: "ESPN_EVENT_BOXSCORE" });
++  }
++  persistMine();
+   updateMineBadge();
+ }
+ 
+@@ -4472,7 +4608,7 @@ function toggleGame(gid, market, side, line, odds) {
+     S.mine = S.mine.filter((m) => !(m.kind === "game" && m.gid === gid && m.market === market && m.season === S.data.season && m.week === S.data.week));
+     S.mine.push({ kind: "game", gid, market, side, line: line === "" ? null : +line, odds: odds === "" ? null : +odds, season: S.data.season, week: S.data.week, at: Date.now() });
+   }
+-  store("mine", S.mine);
++  persistMine();
+   updateMineBadge();
+ }
+ 
+@@ -4532,7 +4668,7 @@ function renderMine() {
+   }
+   const validGameId = value => typeof value === "string" ? Boolean(value.trim()) : Number.isSafeInteger(value) && value >= 0;
+   const thisWeek = (m) => m.season === S.data.season && m.week === S.data.week;
+-  const now = S.mine.filter((m) => thisWeek(m) && (m.kind === "game" ? validGameId(m.gid) && S.games[m.gid] : validGameId(m.pid) && S.byId[m.pid]));
++  const now = S.mine.filter((m) => thisWeek(m) && (m.kind === "game" ? validGameId(m.gid) && S.games[m.gid] : true));
+   const old = S.mine.length - now.length;
+   const nonCurrent = S.mine.filter(m => !thisWeek(m)).length;
+   if (!now.length) {
+@@ -4547,9 +4683,9 @@ function renderMine() {
+       const g = S.games[m.gid];
+       return { m, g, st: gameBetStatus(m) };
+     }
+-    const p = S.byId[m.pid];
+-    const g = S.games[p.game_id];
+-    return { m, p, g, st: propStatus(p, m.key, m.line, m.dir), prop: p.props.find((x) => x.key === m.key) };
++    const p = validGameId(m.pid) ? S.byId[m.pid] : null;
++    const g = p && S.games[p.game_id] || { state: "unknown" };
++    return { m, p, g, st: m.schema_version === "mypicks-player-game-v1" ? propStatus(p, m.key, m.line, m.dir, m) : { v: null, res: "unresolved", final: false }, prop: p?.props?.find((x) => x.key === m.key) };
+   });
+   const rank = (r) => (r.g.state === "in" ? 0 : r.g.state === "pre" ? 1 : 2);
+   rows.sort((a, b) => rank(a) - rank(b) || String(a.g.kickoff || "").localeCompare(String(b.g.kickoff || "")) || a.m.at - b.m.at);
+@@ -4589,19 +4725,26 @@ function renderMine() {
+     </div>`;
+   };
+   const propRow = ({ m, p, g, st, prop }) => {
+-    const label = S.data.categories[m.key].label;
++    const label = typeof m.key === "string" ? S.data.categories?.[m.key]?.label || m.key : "Prop";
++    const index = S.mine.indexOf(m);
++    if (m.schema_version !== "mypicks-player-game-v1" || !propPickBound(m, p, g)) return `<div class="pick mine unresolved"><div class="av" aria-hidden="true"></div><div>
++      <b>${esc(p?.name || "Saved player selection unavailable")}</b>
++      <div class="what">${esc(m.dir === "over" ? "Over" : m.dir === "under" ? "Under" : "Saved direction unavailable")}
++      <label class="mline">line <input type="number" step="0.5" value="${Number.isFinite(m.line) ? m.line : ""}" data-mline="p" data-mine-index="${index}" aria-label="Your line"></label> ${esc(label)}</div>
++      <div class="small">Saved player/game/period binding unavailable; stored record retained</div></div>
++      <div class="side">${resBadge(st)}<button class="rm" data-rm="p" data-mine-index="${index}" aria-label="Remove">×</button></div></div>`;
+     const lineNow = prop?.line;
+     return `<div class="pick mine ${st?.res || ""}" data-open="${p.id}">
+         ${avatar(p)}
+         <div>
+           <div><b>${esc(p.name)}</b> <span class="pos ${p.pos}">${p.pos}</span>${injBadge(p)} <span class="muted">${oppText(p)}</span></div>
+-          <div class="what">${m.dir === "over" ? "Over" : "Under"} <label class="mline"><input type="number" step="0.5" inputmode="decimal" value="${m.line}" data-mline="p|${p.id}|${m.key}|${m.dir}" aria-label="Your line"></label> ${label}${lineNow != null && lineNow !== m.line ? ` <span class="muted">(DK line ${lineNow})</span>` : ""}</div>
++          <div class="what">${m.dir === "over" ? "Over" : "Under"} <label class="mline"><input type="number" step="0.5" inputmode="decimal" value="${m.line}" data-mline="p" data-mine-index="${index}" aria-label="Your line"></label> ${label}${lineNow != null && lineNow !== m.line ? ` <span class="muted">(DK line ${lineNow})</span>` : ""}</div>
+           <div class="small">${esc(gameStatus(g))}${liveLineText(p, m.key, m.line)}</div>
+           ${progress(st, m.line, m.dir, m.key)}
+         </div>
+         <div class="side">
+           ${st ? `<div class="big">${st.v == null ? "-" : fmtStat(m.key, st.v)}</div>${resBadge(st)}` : `<div class="small">${esc(kickoffText(g.kickoff))}</div>`}
+-          <button class="rm" data-rm="${p.id}|${m.key}|${m.dir}" title="Remove" aria-label="Remove">×</button>
++          <button class="rm" data-rm="p" data-mine-index="${index}" title="Remove" aria-label="Remove">×</button>
+         </div>
+       </div>`;
+   };
+@@ -4621,7 +4764,7 @@ function renderMine() {
+       <button class="tbtn" data-mine-clear="all">Clear all</button>
+       ${nonCurrent ? `<button class="tbtn" data-mine-clear="old">Clear ${nonCurrent} non-current period selections</button>` : ""}
+     </div>
+-    <p class="note">Counts describe individual selections, not a combined ticket. Game bets use your saved line and require a recorded Final status with valid whole-number scores. Live prop values remain provisional, including overs already above the line: signed yardage and corrections can move down. Final equality with an integer line is a push. Player-prop results still use the current statistics feed; missing player data is not fully resolved by this update. Venue settlement and combined-ticket results are unavailable.</p>`;
++    <p class="note">Counts describe individual selections, not a combined ticket. Game bets use your saved line and require a recorded Final status with valid whole-number scores. Live prop values remain provisional, including overs already above the line: signed yardage and corrections can move down. Final equality with an integer line is a push. Player-prop results still use the current statistics feed: confirmed final results require exact event/athlete evidence and the requested statistic. Missing participation or fields stay unresolved; legacy picks without saved game bindings are retained unresolved. Venue settlement and combined-ticket results are unavailable.</p>`;
+ }
+ 
+ // ---------------------------------------------------------------- render and events
+@@ -4888,8 +5031,10 @@ document.addEventListener("click", (e) => {
+   }
+   const rm = t.closest("[data-rm]");
+   if (rm) {
+-    const [pid, key, dir] = rm.dataset.rm.split("|");
+-    toggleMine(pid, key, dir);
++    const index = Number(rm.dataset.mineIndex);
++    if (!Number.isSafeInteger(index) || !S.mine[index] || S.mine[index].kind === "game") return;
++    S.mine = S.mine.filter((m, n) => n !== index);
++    persistMine(); updateMineBadge();
+     renderMine();
+     return;
+   }
+@@ -4900,8 +5045,8 @@ document.addEventListener("click", (e) => {
+     if (kind === "all" && !confirm("Remove all your picks for this week?")) return;
+     S.mine = S.mine.filter((m) => kind === "old" ? thisWeek(m)
+       : kind === "all" ? !thisWeek(m)
+-      : !(thisWeek(m) && (m.kind === "game" ? gameBetStatus(m)?.final : S.byId[m.pid] && propStatus(S.byId[m.pid], m.key, m.line, m.dir)?.final)));
+-    store("mine", S.mine);
++      : !(thisWeek(m) && (m.kind === "game" ? gameBetStatus(m)?.final : m.schema_version === "mypicks-player-game-v1" && ["string", "number"].includes(typeof m.pid) && S.byId[m.pid] && propStatus(S.byId[m.pid], m.key, m.line, m.dir, m)?.final)));
++    persistMine();
+     renderMine();
+     updateMineBadge();
+     return;
+@@ -5008,11 +5153,17 @@ document.addEventListener("change", (e) => {
+   if (e.target.matches("[data-mu-week]")) { S.muWeek = +e.target.value; renderLeagueTab(); return; }
+   const t = e.target;
+   if (t.dataset.mline) {
+-    const v = parseFloat(t.value);
+-    if (Number.isNaN(v)) return;
++    if (!t.value.trim()) return;
++    const v = Number(t.value);
++    if (!Number.isFinite(v)) return;
+     const [kind, a, b, c] = t.dataset.mline.split("|");
++    if (kind === "p") {
++      const index = Number(t.dataset.mineIndex), m = S.mine[index];
++      if (!Number.isSafeInteger(index) || !m || m.kind === "game" || m.season !== S.data.season || m.week !== S.data.week) return;
++      m.line = v; persistMine(); renderMine(); return;
++    }
+     const m = S.mine.find((x) => (kind === "g" ? x.kind === "game" && x.gid === a && x.market === b && x.side === c : x.kind !== "game" && x.pid === a && x.key === b && x.dir === c) && x.season === S.data.season && x.week === S.data.week);
+-    if (m) { m.line = v; store("mine", S.mine); renderMine(); }
++    if (m) { m.line = v; persistMine(); renderMine(); }
+     return;
+   }
+   if (t.dataset.tradeSide) {
+diff --git a/output/index.html b/output/index.html
+index 293da8f..e580c95 100644
+--- a/output/index.html
++++ b/output/index.html
+@@ -58,7 +58,7 @@
+   Data: Sleeper (projections, stats, injuries, Picks lines) and ESPN (DraftKings lines, live scores, play-by-play).
+ </footer>
+ <script src="reliability-ui.js?v=1"></script>
+-<script src="app.js?v=mypicks-game-finality-v2"></script>
++<script src="app.js?v=mypicks-player-evidence-v2"></script>
+ <script async src="weekly-adaptive-overlay.js?v=2"></script>
+ </body>
+ </html>
+diff --git a/tests/test-selected-rankings.cjs b/tests/test-selected-rankings.cjs
+index 77cb912..0fdaa3b 100644
+--- a/tests/test-selected-rankings.cjs
++++ b/tests/test-selected-rankings.cjs
+@@ -21,7 +21,7 @@ with tempfile.TemporaryDirectory() as d:
+  print(json.dumps(dict(board=board,overlay=overlay,ranking=ranking,pointer=pointer,frozen=frozen,frozen_pointer=frozen_pointer)))`;
+ const fixture = JSON.parse(execFileSync(process.env.PYTHON || "python3", ["-c", python], { cwd: root, timeout: 10000 }));
+ const helper = require("../output/weekly-adaptive-overlay.js");
+-const names = ["selectedRankingPolicy", "rankingCanonical", "selectedPropForecast", "effectivePropForecast", "selectedPropGap", "selectedPlayerGap", "visibleTopPicks", "compareSelectedRankingItems", "validateSelectedRankings", "startSelectedRankings", "displayedProps", "filteredPlayers", "propStatus"];
++const names = ["selectedRankingPolicy", "rankingCanonical", "selectedPropForecast", "effectivePropForecast", "selectedPropGap", "selectedPlayerGap", "visibleTopPicks", "compareSelectedRankingItems", "validateSelectedRankings", "startSelectedRankings", "displayedProps", "filteredPlayers", "propFinal", "propPickBound", "propValue", "recordPropEvidence", "propStatus"];
+ const functions = names.map(extract).join("\n");
+ let checks = 0;
+ const eq = (a, b, why) => { assert.deepEqual(a, b, why); checks++; };
+@@ -31,7 +31,7 @@ const S = { data: fixture.board, weeklyOverlay: helper.validate(fixture.overlay,
+   selectedRankings: null, lines: {}, games: {"fictional-game": fixture.board.games[0]}, f: { sort: "selected_edge", cat: "rush_yd", q: "", pos: "ALL", game: "", hideOut: false, favs: false },
+   favs: new Set(), tab: "props", gameView: null };
+ const context = { S, WeeklyAdaptiveOverlay: helper, Date: TestDate, crypto: webcrypto, TextEncoder,
+-  UNAVAILABLE: new Set(), normName: x => x.toLowerCase(), posMatch: () => true, injOf: () => ({status:""}),
++  UNAVAILABLE: new Set(), normName: x => x.toLowerCase(), teamCode: x => x, posMatch: () => true, injOf: () => ({status:""}),
+   projPts: p => p.proj_ppr, livePPR: () => null, current: () => ({stats:{rush_yd:30.5}}), statValue: (k,s) => s[k],
+   fetch: () => { throw Error("unexpected network request"); }, renderProps: () => {}, renderGame: () => {} };
+ vm.createContext(context); vm.runInContext(functions, context);
+@@ -53,12 +53,21 @@ const clone = value => JSON.parse(JSON.stringify(value));
+   eq(context.selectedPropGap(p, prop, true).lean, "under", "personal-line lean");
+   eq(context.visibleTopPicks("over")[0].line, 30.5, "personal line does not rewrite saved Top");
+   eq(context.selectedPropGap(p, prop).lean, "over", "official gap ignores custom line");
+-  S.games["fictional-game"].state = "post";
+-  eq(context.propStatus(p, "rush_yd", 30.5, "over").res, "push", "integer-line over push");
+-  eq(context.propStatus(p, "rush_yd", 30.5, "under").res, "push", "integer-line under push");
+-  S.games["fictional-game"].state = "in";
+-  eq(context.propStatus(p, "rush_yd", 20, "over").res, "live", "signed yardage not irreversibly cleared live");
+-  S.games["fictional-game"].state = "pre";
++  const rankingBoard=S.data,rankingGames=S.games;
++  const eventPlayer={...p,espn_id:'900000001',team:'QAA',opp:'QAB'};
++  const eventGame={...S.games[p.game_id],state:'post',detail:'Final',home:'QAA',away:'QAB'};
++  S.data={...rankingBoard,players:[eventPlayer]};S.games={[eventGame.id]:eventGame};
++  const event={header:{id:eventGame.id,season:{year:S.data.season,type:2},week:{number:S.data.week},
++    competitions:[{id:eventGame.id,date:eventGame.kickoff,status:{type:{state:'post',shortDetail:'Final',completed:true}}}]},
++    boxscore:{players:[{team:{abbreviation:eventPlayer.team},statistics:[{name:'rushing',labels:['CAR','YDS','TD'],
++      athletes:[{athlete:{id:eventPlayer.espn_id},stats:['1','30.5','0']}]}]}]}};
++  context.recordPropEvidence(eventGame.id,event,S.data);
++  eq(context.propStatus(eventPlayer, "rush_yd", 30.5, "over").res, "push", "integer-line over push");
++  eq(context.propStatus(eventPlayer, "rush_yd", 30.5, "under").res, "push", "integer-line under push");
++  eventGame.state="in";event.header.competitions[0].status.type={state:'in',shortDetail:'Q3',completed:false};
++  context.recordPropEvidence(eventGame.id,event,S.data);
++  eq(context.propStatus(eventPlayer, "rush_yd", 20, "over").res, "live", "signed yardage not irreversibly cleared live");
++  S.data=rankingBoard;S.games=rankingGames;
+   for (const change of [d => d.picks.over[0].score += 1, d => d.picks.over[0].line += 1,
+     d => d.picks.over[0].model_version = "f".repeat(64), d => d.picks.over[0].selected_row_sha256 = "f".repeat(64),
+     d => d.picks.over[0].selected_row_canonical = '{}', d => d.extra_public_field='not allowed',
+diff --git a/tests/test-ui.cjs b/tests/test-ui.cjs
+index 12e8669..88521a4 100644
+--- a/tests/test-ui.cjs
++++ b/tests/test-ui.cjs
+@@ -277,3 +277,286 @@ const source = fs.readFileSync(path.join(__dirname, '../output/app.js'), 'utf8')
+   });
+   console.log('Game-market finality: ' + checks + ' scoped source/render/storage checks passed; prop-evidence settlement remains separate.');
+ }
++
++// Player-prop evidence correction: fictional event bodies and device records.
++// Execute actual app functions/events; no network, provider outcomes or models.
++(async () => {
++  const legacyPins = {"current": "3657b210f1dbcc49a1a2339c8331a732e9eabe7a750b3df875578738747848b3", "slpPlayed": "938a0262a1f0e57b3412bf934c0749083bc3dc372d5a27477694cd123f1c7ad4"};
++  for (const [name, expected] of Object.entries(legacyPins)) {
++    const fn = source.match(new RegExp('^function '+name+'\\([\\s\\S]*?^\\}', 'm'))?.[0];
++    assert.equal(require('node:crypto').createHash('sha256').update(fn).digest('hex'), expected);
++  }
++  const failures = []; let checks = 0;
++  const test = async (name, run) => {
++    checks++;
++    try { await run(); } catch (error) { failures.push({ name, error: error.message }); }
++  };
++  const harness = () => {
++    const nodes = new Map(), saved = new Map(), events = {};
++    const node = name => {
++      if (!nodes.has(name)) nodes.set(name, { innerHTML: '', hidden: false, style: {},
++        addEventListener() {}, classList: { add() {}, remove() {}, toggle() {} }, querySelectorAll: () => [] });
++      return nodes.get(name);
++    };
++    const box = { console, Date, URL, URLSearchParams, setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1,
++      localStorage: { getItem: k => saved.get(k) ?? null, setItem: (k, v) => saved.set(k, String(v)) },
++      document: { hidden: true, querySelector: node, querySelectorAll: () => [], body: node('body'),
++        documentElement: node('html'), addEventListener: (kind, fn) => (events[kind] ||= []).push(fn) },
++      location: { hash: '' }, history: {}, navigator: {}, CSS: { escape: x => x },
++      addEventListener() {}, innerWidth: 390, scrollY: 0, scrollTo() {}, confirm: () => true,
++      fetch: async () => { throw new Error('ACTUAL_NETWORK_FORBIDDEN'); } };
++    box.window = box;
++    vm.createContext(box);
++    vm.runInContext(source.slice(0, source.indexOf('(async function start()')), box);
++    const S = vm.runInContext('S', box);
++    S.data = { season: 2099, week: 2, players: [], games: [], scoring: {}, categories: { rush_yd: { label: 'Rush Yds' } } };
++    const p = { id: 'fictional-player', espn_id: '900000001', name: 'Fictional Player', team: 'QAA', pos: 'RB',
++      game_id: '900000101', props: [{ key: 'rush_yd', line: 5.5 }], log: [], actual: null };
++    const g = { id: p.game_id, home: 'QAA', away: 'QAB', state: 'post', detail: 'Final',
++      kickoff: '2099-10-25T17:00:00Z', home_score: 0, away_score: 0 };
++    S.data.players = [p]; S.data.games = [g]; S.byId = { [p.id]: p }; S.games = { [g.id]: g };
++    S.byKey = { 'fictional player|QAA': p.id }; S.byEspn = { [p.espn_id]: p.id };
++    S.slpOk = false; S.slp = {}; S.live = {};
++    vm.runInContext('applyInjuries=()=>{}; defenseFromSummary=()=>({});', box);
++    const pick = () => ({ pid: p.id, key: 'rush_yd', dir: 'under', line: 5.5, season: 2099, week: 2, at: 1,
++      schema_version: 'mypicks-player-game-v1', gid: g.id, team: p.team, espn_id: p.espn_id,
++      kickoff: g.kickoff, period: 'full_game_including_overtime', stat_source: 'ESPN_EVENT_BOXSCORE' });
++    const summary = (yards = '0', attempts = '1', opts = {}) => ({
++      header: { id: g.id, season: { year: 2099, type: 2 }, week: { number: 2 }, competitions: [{ id: g.id, date: g.kickoff,
++        status: { type: { state: opts.state || 'post', shortDetail: opts.detail || 'Final', completed: opts.completed ?? true } } }] },
++      boxscore: { players: [{ team: { abbreviation: 'QAA' }, statistics: [{ name: 'rushing', labels: ['CAR', 'YDS', 'TD'],
++        athletes: [{ athlete: { id: opts.athlete || p.espn_id, displayName: 'Fictional Player' },
++          ...(opts.dnp == null ? {} : { didNotPlay: opts.dnp }), stats: [attempts, yards, '0'] }] }] }] } });
++    const apply = value => box.applySummary(g.id, value, S.data);
++    const status = (m = pick()) => box.propStatus(p, m.key, m.line, m.dir, m);
++    return { box, S, p, g, pick, summary, apply, status, saved, events, main: node('#main') };
++  };
++  for (const flag of ['missing', 'sleeper_ok', 'box_loaded', 'INA', 'gp_zero']) await test('unknown is not zero/DNP: ' + flag, () => {
++    const h = harness();
++    if (flag === 'sleeper_ok') h.S.slpOk = true;
++    if (flag === 'box_loaded') h.S.boxLoaded.add(h.g.id);
++    if (flag === 'INA') h.p.injury = 'Out';
++    if (flag === 'gp_zero') h.S.slp[h.p.id] = { gp: 0, pts_ppr: 0, rush_yd: 0 };
++    const st = h.status(); assert.equal(st.final, false); assert.equal(st.res, 'unresolved'); assert.equal(st.v, null);
++    // V2 deliberately restores the shared fantasy helpers; prop status above remains independently strict.
++  });
++  await test('played zero is a real final zero; integer equality is a push', () => {
++    const h = harness(); h.apply(h.summary('0', '1'));
++    assert.equal(h.status().v, 0); assert.equal(h.status().res, 'hit');
++    const m = h.pick(); m.line = 0; assert.equal(h.status(m).res, 'push'); assert.equal(h.status(m).final, true);
++  });
++  await test('positive explicit DNP is distinct from missing data', () => {
++    const h = harness(); h.apply(h.summary('--', '--', { dnp: true }));
++    assert.equal(h.status().res, 'dnp'); assert.equal(h.status().final, true); assert.equal(h.status().v, null);
++  });
++  await test('contradictory DNP and nonzero observed statistics stay unresolved', () => {
++    const h = harness(); h.apply(h.summary('4', '1', { dnp: true }));
++    assert.equal(h.status().res, 'unresolved'); assert.equal(h.status().final, false);
++  });
++  for (const value of [undefined, null, '--', '', 'NaN', 'Infinity']) await test('missing/malformed field: ' + String(value), () => {
++    const h = harness(); h.apply(h.summary(value, '1')); // Explicitly overwrite the defaulted parameter.
++    const body = h.summary('0', '1'); body.boxscore.players[0].statistics[0].athletes[0].stats[1] = value; h.apply(body);
++    assert.equal(h.status().res, 'unresolved'); assert.equal(h.status().final, false); assert.equal(h.status().v, null);
++  });
++  for (const detail of ['Postponed', 'Canceled', 'Suspended', '', null]) await test('post is not confirmed Final: ' + detail, () => {
++    const h = harness(); h.g.detail = detail; h.apply(h.summary('9', '1'));
++    assert.equal(h.status().final, false); assert.notEqual(h.status().res, 'hit'); assert.notEqual(h.status().res, 'miss');
++  });
++  await test('summary still live cannot finalize after scoreboard transitions to Final', () => {
++    const h = harness(); h.apply(h.summary('9', '1', { state: 'in', detail: 'Q4', completed: false }));
++    assert.equal(h.status().final, false);
++  });
++  for (const detail of ['Final', 'Final/OT', 'Final/2OT']) await test('confirmed final marker: ' + detail, () => {
++    const h = harness(); h.g.detail = detail; h.apply(h.summary('9', '1', { detail }));
++    assert.equal(h.status().final, true); assert.equal(h.status().res, 'miss');
++  });
++  await test('live over is provisional and signed-yardage corrections can reverse it', () => {
++    const h = harness(); h.g.state = 'in'; h.g.detail = 'Q3'; const m = h.pick(); m.dir = 'over'; m.line = 0;
++    h.apply(h.summary('7', '1', { state: 'in', detail: 'Q3', completed: false }));
++    assert.equal(h.status(m).final, false); assert.equal(h.status(m).res, 'live');
++    h.apply(h.summary('-1', '1', { state: 'in', detail: 'Q4', completed: false }));
++    assert.equal(h.status(m).v, -1); assert.equal(h.status(m).final, false);
++    h.g.state = 'post'; h.g.detail = 'Final'; h.apply(h.summary('-1', '1'));
++    assert.equal(h.status(m).res, 'miss'); assert.equal(h.status(m).final, true);
++    h.apply(h.summary('1', '1')); assert.equal(h.status(m).res, 'hit');
++  });
++  for (const field of ['gid', 'pid', 'team', 'espn_id', 'kickoff', 'week', 'season', 'period', 'stat_source', 'schema_version']) {
++    await test('saved binding cannot be repointed: ' + field, () => {
++      const h = harness(); h.apply(h.summary('0', '1')); const m = h.pick(); m[field] = typeof m[field] === 'number' ? -1 : 'wrong-binding';
++      assert.equal(h.status(m).res, 'unresolved'); assert.equal(h.status(m).final, false);
++    });
++  }
++  for (const type of ['wrong-event', 'wrong-athlete', 'wrong-team', 'same-name', 'wrong-season']) await test('source identity: ' + type, () => {
++    const h = harness(); const body = h.summary('0', '1');
++    if (type === 'wrong-event') body.header.id = '900000999';
++    if (type === 'wrong-athlete' || type === 'same-name') body.boxscore.players[0].statistics[0].athletes[0].athlete.id = '900000999';
++    if (type === 'wrong-team') body.boxscore.players[0].team.abbreviation = 'QAB';
++    if (type === 'wrong-season') body.header.season.year = 2098;
++    h.apply(body); assert.equal(h.status().res, 'unresolved'); assert.equal(h.status().final, false);
++  });
++  await test('partial combined categories never pad missing fields with zero', () => {
++    const h = harness(); h.apply(h.summary('0', '1')); const m = h.pick(); m.key = 'rush_rec_yd';
++    assert.equal(h.status(m).res, 'unresolved'); assert.equal(h.status(m).v, null);
++  });
++  for (const value of [{}, { toString: 'unsupported' }, [], true]) await test('malformed saved provider identity stays unresolved', () => {
++    const h = harness(); h.apply(h.summary('0', '1')); const m = h.pick(); m.espn_id = value;
++    assert.equal(h.status(m).res, 'unresolved'); assert.equal(h.status(m).final, false);
++    h.S.mine = [m]; const raw = JSON.stringify([m]); h.saved.set('nflprops.mine', raw);
++    assert.doesNotThrow(() => h.box.renderMine()); assert.equal(h.saved.get('nflprops.mine'), raw);
++  });
++  await test('duplicate provider identity cannot resolve a player by name', () => {
++    const h = harness(); h.S.data.players.push({ ...h.p, id: 'other-fictional-player' }); h.apply(h.summary('0', '1'));
++    assert.equal(h.status().res, 'unresolved'); assert.equal(h.status().final, false);
++  });
++  await test('provided wrong source week and wrong source kickoff cannot finalize', () => {
++    const h = harness(); let body = h.summary('0', '1'); body.header.week = 3; h.apply(body);
++    assert.equal(h.status().res, 'unresolved');
++    body = h.summary('0', '1'); body.header.competitions[0].date = '2099-10-26T17:00:00Z'; h.apply(body);
++    assert.equal(h.status().res, 'unresolved');
++  });
++  await test('source success followed by a missing field clears the prior final value', () => {
++    const h = harness(); h.apply(h.summary('0', '1')); assert.equal(h.status().res, 'hit');
++    h.apply(h.summary('--', '1')); assert.equal(h.status().res, 'unresolved'); assert.equal(h.status().v, null);
++  });
++  await test('legacy picks render unresolved and keep original storage bytes', () => {
++    const h = harness(); h.apply(h.summary('0', '1')); const m = { ...h.pick() }; delete m.gid; delete m.schema_version;
++    h.S.mine = [m]; const raw = ' \n[ ' + JSON.stringify(m) + ' ]\n'; h.saved.set('nflprops.mine', raw);
++    h.box.renderMine(); assert.match(h.main.innerHTML, /UNRESOLVED/); assert.equal(h.saved.get('nflprops.mine'), raw);
++    assert.equal(m.gid, undefined); assert.equal(m.line, 5.5);
++  });
++  await test('adding a bound new pick preserves an unbound record and its exact JSON bytes', () => {
++    const h = harness(); const old = '{ "pid":"fictional-player", "key":"rush_yd", "dir":"under", "line":5.50, "season":2099, "week":2, "at":0, "note":"comma, quote\\\" and slash\\\\" }';
++    h.saved.set('nflprops.mine', '[\n' + old + '\n]'); h.S.mine = JSON.parse(h.saved.get('nflprops.mine'));
++    assert.equal(h.box.minePick(h.p.id, 'rush_yd', 'under'), undefined);
++    h.box.toggleMine(h.p.id, 'rush_yd', 'over', 9.5);
++    const raw = h.saved.get('nflprops.mine'); assert.ok(raw.includes(old));
++    const records = JSON.parse(raw); assert.equal(records.length, 2); assert.equal(records[0].line, 5.5); assert.equal(records[0].gid, undefined);
++    assert.equal(records[1].gid, h.g.id); assert.equal(records[1].period, 'full_game_including_overtime');
++  });
++  await test('personal line edits target the exact record; unchanged legacy bytes survive reload', () => {
++    const h = harness(); const old = '{ "pid":"fictional-player", "key":"rush_yd", "dir":"under", "line":5.50, "season":2099, "week":2, "at":0 }';
++    const m = h.pick(); h.saved.set('nflprops.mine', '[\n' + old + ',\n' + JSON.stringify(m) + ']'); h.S.mine = JSON.parse(h.saved.get('nflprops.mine'));
++    const target = { dataset: { mline: 'p', mineIndex: '1' }, value: '0', matches: () => false };
++    for (const fn of h.events.change) fn({ target });
++    const raw = h.saved.get('nflprops.mine'); assert.ok(raw.includes(old));
++    const records = JSON.parse(raw); assert.equal(records[0].line, 5.5); assert.equal(records[1].line, 0);
++    assert.equal(records[0].gid, undefined); assert.equal(records[1].gid, h.g.id);
++    assert.equal(h.box.store('mine')[1].line, 0);
++  });
++  await test('late previous-period Sleeper response never contaminates a new board', async () => {
++    const h = harness(); h.g.state = 'in'; let finish;
++    h.box.fixtureGetJSON = () => new Promise(resolve => { finish = resolve; });
++    vm.runInContext('getJSON=(...args)=>fixtureGetJSON(...args)', h.box);
++    const pending = h.box.pollSleeper(); const old = h.S.data; h.S.data = { ...old, week: 3 };
++    finish([{ player_id: h.p.id, stats: { gp: 1, rush_yd: 99 } }]); await pending;
++    assert.equal(h.S.propSleeper, null); assert.equal(h.S.slp[h.p.id], undefined);
++  });
++  await test('completed events are refreshed despite healthy Sleeper/final cache, allowing corrections', async () => {
++    const h = harness(); h.S.slpOk = true; h.S.boxFinal.add(h.g.id); let gets = 0;
++    h.box.fixtureGetJSON = async () => { gets++; return h.summary(gets === 1 ? '9' : '0', '1'); };
++    vm.runInContext('getJSON=(...args)=>fixtureGetJSON(...args)', h.box);
++    await h.box.pollBoxScores(); assert.equal(h.status().res, 'miss');
++    await h.box.pollBoxScores(); assert.equal(h.status().res, 'hit'); assert.equal(gets, 2);
++  });
++  for (const [name, completed] of [['missing', undefined], ['null', null], ['zero', 0],
++    ['string-false', 'false'], ['false', false], ['true', true]]) {
++    await test('polled summary requires explicit boolean completion: ' + name, async () => {
++      const h = harness(), body = h.summary('0', '1');
++      const status = body.header.competitions[0].status.type;
++      if (name === 'missing') delete status.completed;
++      else status.completed = completed;
++      const original = JSON.stringify(body); let gets = 0;
++      h.box.fixtureGetJSON = async url => {
++        assert.equal(url, 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=' + h.g.id);
++        gets++; return body;
++      };
++      vm.runInContext('getJSON=(...args)=>fixtureGetJSON(...args)', h.box);
++      await h.box.pollBoxScores();
++      const result = h.status();
++      assert.equal(gets, 1); assert.equal(JSON.stringify(body), original);
++      assert.equal(result.v, 0);
++      assert.equal(result.final, completed === true);
++      assert.equal(result.res, completed === true ? 'hit' : 'pending');
++    });
++  }
++  console.log(JSON.stringify({ suite: 'player-prop-evidence-v1', fictional_cases: checks, failures }));
++  assert.equal(failures.length, 0, 'player-prop evidence regressions: ' + JSON.stringify(failures));
++})().catch(error => { console.error(error); process.exitCode = 1; });
++
++// V2: mandatory provider identity/scope; local observation time is not availability proof.
++{
++  const extract=(text,name)=>{const m=text.match(new RegExp('^function '+name+'\\([\\s\\S]*?^\\}', 'm'));assert.ok(m,name);return m[0];};
++function identityProbe(mutate){
++  const S={data:{season:2099,week:2,players:[]},games:{},propEvents:{},propSleeper:null};
++  const p={id:'fictional-p',espn_id:'900000001',game_id:'900000101',team:'QAA'};
++  const g={id:p.game_id,home:'QAA',away:'QAB',kickoff:'2099-10-25T17:00:00Z',state:'post',detail:'Final'};
++  S.data.players=[p];S.games[g.id]=g;
++  const body={header:{id:g.id,season:{year:2099,type:2},week:{number:2},competitions:[{id:g.id,date:g.kickoff,
++    status:{type:{state:'post',shortDetail:'Final',completed:true}}}]},boxscore:{players:[{team:{abbreviation:'QAA'},statistics:[{
++      name:'rushing',labels:['CAR','YDS','TD'],athletes:[{athlete:{id:p.espn_id},stats:['1','0','0']}]}]}]}};
++  mutate(body,S,g);
++  const c={S,teamCode:x=>x};vm.createContext(c);
++  vm.runInContext(['propFinal','propValue','propPickBound','recordPropEvidence','propStatus'].map(n=>extract(source,n)).join('\n'),c);
++  const m={pid:p.id,gid:g.id,team:p.team,espn_id:p.espn_id,kickoff:g.kickoff,season:S.data.season,week:S.data.week,
++    schema_version:'mypicks-player-game-v1',period:'full_game_including_overtime',stat_source:'ESPN_EVENT_BOXSCORE'};
++  c.recordPropEvidence(g.id,body,S.data);
++  const entry=S.propEvents[g.id];
++  return {status:c.propStatus(p,'rush_yd',5.5,'under',m),stored_scope:entry?{
++    season:entry.season,week:entry.week,kickoff:entry.kickoff,observed_at:entry.observed_at,final:entry.final}:null};
++}
++const invalid=[
++["missing-season",b=>{delete b.header.season;}],
++["missing-season-year",b=>{delete b.header.season.year;}],
++["missing-season-type",b=>{delete b.header.season.type;}],
++["null-season",b=>{b.header.season=null;}],
++["null-year",b=>{b.header.season.year=null;}],
++["string-year",b=>{b.header.season.year='2099';}],
++["wrong-season",b=>{b.header.season.year=2098;}],
++["wrong-season-type",b=>{b.header.season.type=3;}],
++["missing-week",b=>{delete b.header.week;}],
++["missing-week-number",b=>{delete b.header.week.number;}],
++["null-week",b=>{b.header.week=null;}],
++["string-week",b=>{b.header.week='2';}],
++["wrong-week",b=>{b.header.week.number=3;}],
++["missing-kickoff",b=>{delete b.header.competitions[0].date;}],
++["null-kickoff",b=>{b.header.competitions[0].date=null;}],
++["invalid-kickoff",b=>{b.header.competitions[0].date='not-a-date';}],
++["kickoff-without-timezone",b=>{b.header.competitions[0].date='2099-10-25T17:00:00';}],
++["wrong-kickoff",b=>{b.header.competitions[0].date='2099-10-26T17:00:00Z';}],
++["wrong-event-id",b=>{b.header.id='900000999';}],
++["wrong-competition-id",b=>{b.header.competitions[0].id='900000999';}],
++["wrong-team",b=>{b.boxscore.players[0].team.abbreviation='QAB';}],
++["wrong-athlete",b=>{b.boxscore.players[0].statistics[0].athletes[0].athlete.id='900000999';}],
++["all-required-scope-absent",b=>{delete b.header.season;delete b.header.week;delete b.header.competitions[0].date;}]
++];
++for(const [name,mutate]of invalid){
++  const result=identityProbe(mutate);
++  assert.equal(result.status.res,'unresolved',name);
++  assert.equal(result.status.final,false,name);
++  assert.equal(result.status.v,null,name);
++}
++const complete=identityProbe(()=>{});
++assert.equal(complete.status.res,'hit');assert.equal(complete.status.v,0);assert.equal(complete.status.final,true);
++const offset=identityProbe(b=>{b.header.competitions[0].date='2099-10-25T12:00:00-05:00';b.header.week=2;});
++assert.equal(offset.status.final,true);assert.equal(offset.status.v,0);
++console.log(JSON.stringify({suite:'v2-strict-provider-scope',invalid_cases:invalid.length,valid_cases:2,failures:0}));
++}
++
++// V2 preserves the legacy fantasy path, including separately recorded missing-data debt.
++{
++const policy={"scoring":{"pass_yd":0.04,"pass_td":4,"pass_int":-1,"pass_2pt":2,"rush_yd":0.1,"rush_td":6,"rush_2pt":2,"rec":1,"rec_yd":0.1,"rec_td":6,"rec_2pt":2,"fum_lost":-2,"st_td":6,"st_fum_rec":1,"st_ff":1,"fum_rec_td":6,"idp_blk_kick":2},"scoring_k":{"fgm_0_19":3,"fgm_20_29":3,"fgm_30_39":3,"fgm_40_49":4,"fgm_50_59":5,"fgm_60p":6,"xpm":1,"fgmiss":-1},"scoring_def":{"sack":1,"int":2,"fum_rec":2,"def_st_fum_rec":2,"blk_kick":2,"safe":2,"def_td":6,"def_st_td":6},"def_tiers":{"pts":[[0,5],[6,4],[13,3],[17,1],[27,0],[34,-1],[45,-3],[1000000,-5]],"yds":[[99,5],[199,3],[299,2],[349,0],[399,-1],[449,-3],[499,-5],[549,-6],[1000000,-7]]}};
++const cases=[{"name":"missing-player-row","pos":"WR","stats":null,"expected":{"participation":null,"current":{"stats":{},"none":true},"live_points":null,"week_points":0},"fallback":null},{"name":"gp-zero-points-zero-is-not-participation","pos":"WR","stats":{"gp":0,"pts_ppr":0},"expected":{"participation":true,"current":{"stats":{"gp":0,"pts_ppr":0},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"points-zero-alone-is-not-participation","pos":"WR","stats":{"pts_ppr":0},"expected":{"participation":true,"current":{"stats":{"pts_ppr":0},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"played-skill-zero","pos":"RB","stats":{"rush_att":1,"rush_yd":0,"pts_ppr":0},"expected":{"participation":true,"current":{"stats":{"rush_att":1,"rush_yd":0,"pts_ppr":0},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"kicker-positive-field-goal-no-gp","pos":"K","stats":{"fgm":1,"fgm_20_29":1,"pts_ppr":3},"expected":{"participation":true,"current":{"stats":{"fgm":1,"fgm_20_29":1,"pts_ppr":3},"none":false},"live_points":3,"week_points":3},"fallback":null},{"name":"kicker-positive-extra-point-no-gp","pos":"K","stats":{"xpm":1,"pts_ppr":1},"expected":{"participation":true,"current":{"stats":{"xpm":1,"pts_ppr":1},"none":false},"live_points":1,"week_points":1},"fallback":null},{"name":"kicker-played-zero-missed-XP","pos":"K","stats":{"xpmiss":1,"pts_ppr":0},"expected":{"participation":true,"current":{"stats":{"xpmiss":1,"pts_ppr":0},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"defense-positive-sack-no-gp","pos":"DEF","stats":{"sack":1,"pts_allow":7,"yds_allow":100,"pts_ppr":7},"expected":{"participation":true,"current":{"stats":{"sack":1,"pts_allow":7,"yds_allow":100,"pts_ppr":7},"none":false},"live_points":7,"week_points":7},"fallback":null},{"name":"defense-played-zero-known-allowances","pos":"DEF","stats":{"pts_allow":20,"yds_allow":320,"pts_ppr":0},"expected":{"participation":true,"current":{"stats":{"pts_allow":20,"yds_allow":320,"pts_ppr":0},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"receiving-two-point-only","pos":"TE","stats":{"rec_2pt":1,"pts_ppr":2},"expected":{"participation":true,"current":{"stats":{"rec_2pt":1,"pts_ppr":2},"none":false},"live_points":2,"week_points":2},"fallback":null},{"name":"passing-two-point-only","pos":"QB","stats":{"pass_2pt":1,"pts_ppr":2},"expected":{"participation":true,"current":{"stats":{"pass_2pt":1,"pts_ppr":2},"none":false},"live_points":2,"week_points":2},"fallback":null},{"name":"rushing-two-point-only","pos":"RB","stats":{"rush_2pt":1,"pts_ppr":2},"expected":{"participation":true,"current":{"stats":{"rush_2pt":1,"pts_ppr":2},"none":false},"live_points":2,"week_points":2},"fallback":null},{"name":"special-teams-touchdown-only","pos":"WR","stats":{"st_td":1,"pts_ppr":6},"expected":{"participation":true,"current":{"stats":{"st_td":1,"pts_ppr":6},"none":false},"live_points":6,"week_points":6},"fallback":null},{"name":"offensive-blocked-kick-only","pos":"TE","stats":{"idp_blk_kick":1,"pts_ppr":2},"expected":{"participation":true,"current":{"stats":{"idp_blk_kick":1,"pts_ppr":2},"none":false},"live_points":2,"week_points":2},"fallback":null},{"name":"fumble-negative-only","pos":"WR","stats":{"fum_lost":1,"pts_ppr":-2},"expected":{"participation":true,"current":{"stats":{"fum_lost":1,"pts_ppr":-2},"none":false},"live_points":-2,"week_points":-2},"fallback":null},{"name":"fresh-kicker-row-versus-older-build","pos":"K","stats":{"fgm":1,"fgm_20_29":1,"pts_ppr":3},"expected":{"participation":true,"current":{"stats":{"fgm":1,"fgm_20_29":1,"pts_ppr":3},"none":false},"live_points":3,"week_points":3},"fallback":{"xpm":1,"pts_ppr":1}},{"name":"skill-participation-without-scoring-fields","pos":"WR","stats":{"gp":1},"expected":{"current":{"stats":{"gp":1},"none":false},"live_points":0,"week_points":0},"fallback":null},{"name":"defense-participation-without-allowances","pos":"DEF","stats":{"gp":1},"expected":{"current":{"stats":{"gp":1},"none":false},"live_points":10,"week_points":10},"fallback":null}];
++const extract=(name)=>{const m=source.match(new RegExp('^function '+name+'\\([\\s\\S]*?^\\}', 'm'));assert.ok(m,name);return m[0];};
++const names=['current','slpPlayed','livePPR','ppr','fantasyPts','skillPts','currentLeague','scoreWith','derivedStat','weekPts'];
++for(const row of cases){
++  const S={data:{...policy,season:2099,week:2},sc:{mode:'sleeper',half:false},leagues:[],games:{g:{id:'g',state:'post',detail:'Final'}},
++    slp:row.stats==null?{}:{p:row.stats},live:{},slpOk:true,boxLoaded:new Set(),boxFinal:new Set()};
++  const p={id:'p',game_id:'g',pos:row.pos,actual:row.fallback?{stats:row.fallback}:null};
++  const c={S};vm.createContext(c);vm.runInContext(names.map(extract).join('\n'),c);
++  const actual={current:c.current(p),live_points:c.livePPR(p),week_points:c.weekPts(p)};
++  if(Object.hasOwn(row.expected,'participation'))actual.participation=row.stats?c.slpPlayed(row.stats):null;
++  assert.deepEqual(JSON.parse(JSON.stringify(actual)),row.expected,row.name);
++}
++console.log(JSON.stringify({suite:'v2-downstream-legacy-preservation',cases:cases.length,failures:0,
++  legacy_missing_data_debt_fixed:false,new_values_introduced:false}));
++}
+diff --git a/tests/test-weekly-overlay.cjs b/tests/test-weekly-overlay.cjs
+index 4583fb9..40e8e14 100644
+--- a/tests/test-weekly-overlay.cjs
++++ b/tests/test-weekly-overlay.cjs
+@@ -19,7 +19,30 @@ check(()=>{const d=doc({...row(),valid_until_utc:"2026-10-24T11:00:00Z"});assert
+ check(()=>{assert.equal(overlay.card(null,board.players[0],"rush_att"),"");const d=doc();assert.match(overlay.card(overlay.validate(d,board,H),board.players[0],"rush_att",Date.parse("2026-10-25T18:00:00Z")),/Frozen provisional forecast/);});
+ // Actual pinned website propStatus body: no imports, sources or real row values.
+ const appPath=process.env.WEEKLY_OVERLAY_PINNED_APP || (fs.existsSync(path.join(root,"output/app.js"))?path.join(root,"output/app.js"):"/tmp/weekly-website-source-78965e0/output/app.js");
+-if(fs.existsSync(appPath))check(()=>{const source=fs.readFileSync(appPath,"utf8"),start=source.indexOf("function propStatus("),end=source.indexOf("\nfunction twoPointScorers",start);assert(start>=0&&end>start);const fn=source.slice(start,end),modern=fn.includes("finalOutcomes"),context={S:{games:{g:{state:"post"}},finalOutcomes:new Map([["id",{status:"resolved",final_confirmed:true,actual:3}]])},finalIdentity:()=>"id",finalIdentityMatches:()=>true,current:()=>({stats:{rush_att:3}}),statValue:()=>3};vm.createContext(context);vm.runInContext(fn+"\nthis.status=propStatus({game_id:'g'},'rush_att',3,'over');",context);assert.equal(context.status.res,"push");});
++if(fs.existsSync(appPath))check(()=>{
++  const source=fs.readFileSync(appPath,"utf8"),start=source.indexOf("function propStatus("),end=source.indexOf("\nfunction twoPointScorers",start);
++  assert(start>=0&&end>start);
++  const fn=source.slice(start,end),context={S:{games:{g:{state:"post"}},finalOutcomes:new Map([["id",{status:"resolved",final_confirmed:true,actual:3}]])},
++    finalIdentity:()=>"id",finalIdentityMatches:()=>true,current:()=>({stats:{rush_att:3}}),statValue:()=>3};
++  vm.createContext(context);
++  let player={game_id:'g'};
++  if(source.includes('function recordPropEvidence(')) {
++    // The strict reader needs actual event evidence, not an unbound live-stat double.
++    player={id:'fictional-player',game_id:'g',espn_id:'900000001',team:'QAA'};
++    const game={id:'g',kickoff,state:'post',detail:'Final',home:'QAA',away:'QAB'};
++    context.S.data={season:2026,week:8,players:[player]};context.S.games={g:game};context.teamCode=x=>x;
++    const helpers=['propFinal','propPickBound','propValue','recordPropEvidence','propEventStatus']
++      .filter(name=>source.includes('function '+name+'(')).map(name=>{
++        const found=source.match(new RegExp('function '+name+'\\([^]*?\\n\\}'));assert(found,name);return found[0];
++      }).join('\n');
++    vm.runInContext(helpers+'\n'+fn,context);
++    context.recordPropEvidence('g',{header:{id:'g',season:{year:2026,type:2},week:{number:8},
++      competitions:[{id:'g',date:kickoff,status:{type:{state:'post',shortDetail:'Final',completed:true}}}]},
++      boxscore:{players:[{team:{abbreviation:'QAA'},statistics:[{name:'rushing',labels:['CAR','YDS','TD'],
++        athletes:[{athlete:{id:player.espn_id},stats:['3','0','0']}]}]}]}},context.S.data);
++  } else vm.runInContext(fn,context);
++  assert.equal(context.propStatus(player,'rush_att',3,'over').res,'push');
++});
+ (async()=>{const before=JSON.stringify(board);assert.equal(await overlay.load(board,H,async()=>new Response("bad",{status:404})),null);assert.equal(JSON.stringify(board),before);checks++;
+ const body=JSON.stringify(doc()),hash=require("node:crypto").createHash("sha256").update(body).digest("hex"),pointer={schema_version:"weekly-adaptive-overlay-pointer-v1",path:`data/weekly-adaptive/${hash}.json`,sha256:hash,bytes:Buffer.byteLength(body),display_board_sha256:H};
+ const mock=async url=>new Response(url.endsWith("weekly-adaptive-overlay.json")?JSON.stringify(pointer):body,{status:200});assert(await overlay.load(board,H,mock));checks++;
+diff --git a/tests/test_classic_build_pair_v1.py b/tests/test_classic_build_pair_v1.py
+index 6e5bd58..fca7ea8 100644
+--- a/tests/test_classic_build_pair_v1.py
++++ b/tests/test_classic_build_pair_v1.py
+@@ -16,6 +16,30 @@ import classic_build_pair_v1 as pair
+ import classic_model_v1 as model
+ 
+ class ActualBuildPairTests(unittest.TestCase):
++    def assert_workflow_feed_policy(self,workflow,*,candidate_policy=None):
++        import shlex
++        commands=[shlex.split(line.strip()[5:])for line in workflow.splitlines()
++                  if line.strip().startswith('run: python tools/weekly_adaptive_overlay.py ')]
++        self.assertEqual(len(commands),1)
++        command=commands[0]
++        path=command[command.index('--feed-policy')+1]
++        schemas={'config/weekly-derived-selected-policy-v3.json':'weekly-derived-selected-policy-v3',
++                 'config/weekly-derived-selected-policy-v4.json':'weekly-derived-selected-policy-v4'}
++        self.assertIn(path,schemas)
++        body=(ROOT/path).read_bytes()if candidate_policy is None else candidate_policy
++        self.assertEqual(command[command.index('--feed-policy-sha256')+1],hashlib.sha256(body).hexdigest())
++        value=json.loads(body)
++        self.assertEqual(value['schema_version'],schemas[path])
++        if path.endswith('-v3.json'):
++            import weekly_public_feed as feed
++            feed.policy_check_v3(value,root=ROOT)
++            self.assertEqual(value['historical_policy_sha256'],feed.HISTORICAL_POLICY_SHA256)
++        else:
++            import weekly_public_feed_v4 as feed
++            feed.policy_check(value,root=ROOT)
++            self.assertIn('tools/weekly_public_feed_v4.py',value['website_code_sha256'])
++        self.assertEqual(value['current_execution'],model.contract(ROOT))
++
+     def test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes(self):
+         import re
+         workflow=(ROOT/'.github/workflows/hourly.yml').read_text()
+@@ -28,12 +52,42 @@ class ActualBuildPairTests(unittest.TestCase):
+         self.assertEqual(commands[capture].count('--model '),1)
+         self.assertIn('--model '+model.MODEL,commands[capture])
+         self.assertIn('--mode live',commands[stage]);self.assertNotIn('--refresh',commands[stage])
+-        policy=(ROOT/'config/weekly-derived-selected-policy-v3.json').read_bytes()
+-        self.assertIn('--feed-policy config/weekly-derived-selected-policy-v3.json --feed-policy-sha256 '+hashlib.sha256(policy).hexdigest(),commands[feed])
++        self.assert_workflow_feed_policy(workflow)
+         self.assertIn('data/current-classic data/classic-r0-shadow',workflow)
+         for operation in ['begin','sealed','check --stage upload','check --stage deploy','check --stage retry','check --stage postdeploy']:
+             self.assertIn('tools/publication_guard_v1.py '+operation,workflow)
+ 
++    def test_explicit_v4_workflow_branch_requires_new_schema_scope_and_physical_policy(self):
++        from test_weekly_public_feed_v4 import fixture
++        p,*_=fixture();body=json.dumps(p,sort_keys=True,separators=(',',':')).encode()
++        import re
++        actual=(ROOT/'.github/workflows/hourly.yml').read_text()
++        candidate,count=re.subn(r'--feed-policy \S+ --feed-policy-sha256 [a-f0-9]{64}',
++            '--feed-policy config/weekly-derived-selected-policy-v4.json --feed-policy-sha256 '+hashlib.sha256(body).hexdigest(),actual)
++        self.assertEqual(count,1)
++        self.assert_workflow_feed_policy(candidate,candidate_policy=body)
++        with self.assertRaises(AssertionError):
++            self.assert_workflow_feed_policy(candidate.replace(hashlib.sha256(body).hexdigest(),'0'*64),candidate_policy=body)
++        with self.assertRaises(AssertionError):
++            self.assert_workflow_feed_policy(candidate.replace('-policy-v4.json','-policy-v3.json'),candidate_policy=body)
++        p['website_code_sha256'].pop('tools/weekly_public_feed_v4.py')
++        invalid=json.dumps(p,sort_keys=True,separators=(',',':')).encode()
++        candidate=candidate.replace(hashlib.sha256(body).hexdigest(),hashlib.sha256(invalid).hexdigest())
++        with self.assertRaises(ValueError):self.assert_workflow_feed_policy(candidate,candidate_policy=invalid)
++
++    def test_v4_unregistered_template_cannot_activate_actual_workflow_branch(self):
++        import re
++        import weekly_public_feed_v4 as feed
++        template=feed.template(ROOT)
++        self.assertEqual(template['state'],'PREPARED_UNREGISTERED')
++        body=json.dumps(template,sort_keys=True,separators=(',',':')).encode()
++        workflow,count=re.subn(r'--feed-policy \S+ --feed-policy-sha256 [a-f0-9]{64}',
++            '--feed-policy config/weekly-derived-selected-policy-v4.json --feed-policy-sha256 '+hashlib.sha256(body).hexdigest(),
++            (ROOT/'.github/workflows/hourly.yml').read_text())
++        self.assertEqual(count,1)
++        with self.assertRaisesRegex(ValueError,'V4_ROOT_REGISTRATION_REQUIRED'):
++            self.assert_workflow_feed_policy(workflow,candidate_policy=body)
++
+     def test_original_deployed_default_and_no_refresh_override(self):
+         import ast
+         repository=Path(os.environ.get('NFL_ORIGINAL_REPOSITORY',ROOT))
+diff --git a/tests/test_weekly_public_feed_v4.py b/tests/test_weekly_public_feed_v4.py
+new file mode 100644
+index 0000000..8ed3896
+--- /dev/null
++++ b/tests/test_weekly_public_feed_v4.py
+@@ -0,0 +1,355 @@
++"""Fictional V2-wire/new-authority cases against actual V4 and old consumers."""
++from copy import deepcopy
++import ast
++import gzip
++import json
++from pathlib import Path
++import shutil
++import socket
++import subprocess
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++
++ROOT=Path(__file__).resolve().parents[1]
++sys.path.insert(0,str(ROOT/'tools'))
++import weekly_public_feed as f
++import weekly_public_feed_v4 as v4
++
++NOW='2026-10-25T12:00:30Z'
++LAB='d'*40
++RUN='123456789'
++HEAD=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
++API='https://api.github.com/repos/'+f.REPOSITORY+'/actions/runs/'+RUN
++FIXTURES={}
++
++
++def fixture(tag='one'):
++    p=v4.template(ROOT)
++    recipe=f.digest('fictional ROOT registered recipe')
++    p.update(state='ROOT_REGISTERED',registered_at_utc='2026-10-25T12:00:25Z',lab_recipe_registered_at_utc='2026-10-25T09:00:00Z',
++        lab_public_policy_sha256=f.digest('fictional exact before-values lab policy'),
++        recipe_registration_sha256=recipe,producer_policy_sha256=recipe,workflow_sha256=f.digest('fictional fixed workflow'),
++        jobs=dict(produce='fictional-weekly-produce',restore='fictional-weekly-restore',consume='fictional-weekly-export'))
++    p['publication_authority'].update(state='ROOT_REGISTERED',source_sha=LAB,source_branch='research/fictional-weekly',
++        export_job=p['jobs']['consume'],catalog_freezer_sha256=f.digest('fictional reviewed epoch projection source'),
++        recipe_registration_sha256=recipe)
++    rows=[];players=[]
++    for category in p['expected_categories']:
++        pos=p['public_roles'][category][0]
++        pid='fictional-'+category
++        product,functional=f.overlay().PRODUCTS[category]
++        rows.append(dict(player_id=pid,game_id='fictional-game',category=category,method_id='P2_SELECTED',
++            model_version=f.digest([tag,category,'model']),procedure_version=f.digest([tag,category,'procedure']),
++            product=product,prediction_functional=functional,forecast_value=0,
++            horizon='player_game',source_cutoff_utc='2026-10-25T14:00:00Z',issued_at='2026-10-25T10:00:00Z',
++            persistence_completed_at='2026-10-25T11:55:00Z',kickoff_utc='2026-10-26T17:00:00Z',valid_until_utc='2026-10-26T17:00:00Z',
++            selection_sha256=f.digest(['fictional-selection',category]),source_policy_sha256=p['source_policy_sha256'],
++            query_source_sha256=f.digest(['fictional-query',category])))
++        players.append(dict(id=pid,game_id='fictional-game',team='AAA',opp='BBB',pos=pos,props=[dict(key=category,proj=10)]))
++    board=dict(season=2026,week=7,execution_model=p['current_execution'],
++        games=[dict(id='fictional-game',kickoff='2026-10-26T17:00:00Z',state='pre')],players=players)
++    catalog=dict(schema_version=f.CATALOG_V2,current_values_used=False,
++        public_policy_registration='REQUIRED_SEPARATELY; not automatic approval',
++        rows=[{k:r[k]for k in v4.CATALOG_ROW_KEYS}for r in rows])
++    # This is the publisher's existing unchanged metadata API, also called by
++    # audit_weekly_public_v1.export. No private JSONL/native body is constructed.
++    exporter=dict(execution_lane='github_actions',repository=f.REPOSITORY,source_sha=LAB,job_id=p['jobs']['consume'],
++        run_attempt=1,permission='write',api_job_id=789,run_id=RUN,
++        workflow_ref=f.REPOSITORY+'/.github/workflows/lab.yml@refs/heads/research/fictional-weekly')
++    publication=f.publication_metadata_v2(p,dict(authority_kind='ROOT_APPROVED_PROCEDURE_VERIFIED',exporter=exporter),
++        dict(completion=dict(binding=dict(sha256=f.digest('fictional selected source')))),catalog,f.canonical(catalog)+b'\n')
++    feed=dict(schema_version=f.VERSION_V2,state='DERIVED_SELECTED_ONLY',season=2026,week=7,created_at='2026-10-25T12:00:00Z',
++        expires_at=rows[0]['valid_until_utc'],producer_policy_sha256=recipe,rights_authority_sha256=p['rights_authorities'][0],
++        rights_receipt_sha256=f.digest('fictional rights receipt'),durability_receipt_sha256=f.digest('fictional full live acceptance'),
++        r0_identity_sha256=p['r0_identities'][0],identity_scope_sha256=f.identity_scope(rows,board),rows=rows,
++        coverage=dict(private_selected_rows=11,public_rows=11,fallback_counts={}),
++        publication=publication,publication_sha256=f.digest(publication))
++    run=dict(id=int(RUN),repository=dict(full_name=f.REPOSITORY),head_repository=dict(full_name=f.REPOSITORY),
++        head_sha=LAB,head_branch=p['publication_authority']['source_branch'],path='.github/workflows/lab.yml',
++        event='workflow_dispatch',run_attempt=1,status='completed',conclusion='success',updated_at='2026-10-25T12:00:25Z')
++    times=[('09:00:00','11:56:00'),('11:56:01','11:58:00'),('11:58:01','12:00:20')]
++    jobs=dict(total_count=3,jobs=[dict(id=787+i,name=p['jobs'][role],run_id=int(RUN),head_sha=LAB,status='completed',conclusion='success',
++        started_at='2026-10-25T'+times[i][0]+'Z',completed_at='2026-10-25T'+times[i][1]+'Z')
++        for i,role in enumerate(('produce','restore','consume'))])
++    FIXTURES[id(run)]=(p,feed)
++    return p,feed,board,run,jobs
++
++
++def rehash(feed):
++    pub=feed['publication'];pub['version_catalog_sha256']=f.digest(pub['version_catalog'])
++    pub['source_version_catalog_sha256']=f.sha(f.canonical(pub['version_catalog'])+b'\n')
++    feed['publication_sha256']=f.digest(pub)
++
++
++def receipt_fixture(p,feed,jobs):
++    r=dict(schema_version=v4.RECEIPT_SCHEMA,source_sha=LAB,run_id=RUN,root_go_sha256=f.digest('fictional root'),
++        policy_sha256=p['lab_public_policy_sha256'],policy_registered_at_utc='2026-10-25T09:00:01Z',
++        workflow_sha256=p['workflow_sha256'],recipe_registration_sha256=p['recipe_registration_sha256'],
++        rights_authority_sha256=feed['rights_authority_sha256'],r0_identity_sha256=feed['r0_identity_sha256'],
++        origin_choice_sha256=f.digest('fictional original choice'),feed_sha256=f.sha(f.canonical(feed)),feed_bytes=len(f.canonical(feed)),
++        rows=len(feed['rows']),categories=sorted({r['category']for r in feed['rows']}),
++        jobs={role:dict(job_id=p['jobs'][role],api_job_id=j['id']) for role,j in zip(('produce','restore','consume'),jobs['jobs'])},
++        created_at=feed['created_at'],verified_at='2026-10-25T11:59:59Z',fits=0,raw_or_models_public=False)
++    r.update({k:f.digest('fictional '+k)for k in v4.DISCOVERY_HASH_KEYS})
++    return r
++
++
++def transport(run,jobs,calls,final=None,receipt_change=None,raw_receipt=None):
++    reads=0
++    def fetch(url,cap):
++        nonlocal reads
++        calls.append((url,cap))
++        p,feed=FIXTURES[id(run)]
++        expected='https://raw.githubusercontent.com/'+f.REPOSITORY+'/lab-state/state/public/weekly-adaptive-v1/receipts/'+f.sha(f.canonical(feed))+'.json.gz'
++        if url==expected:
++            assert cap==64<<10
++            if raw_receipt is not None:return raw_receipt
++            receipt=receipt_fixture(p,feed,jobs)
++            if receipt_change:receipt_change(receipt)
++            return gzip.compress(f.canonical(receipt),mtime=0)
++        assert cap==1<<20
++        if url==API:
++            reads+=1
++            return f.canonical(final if final is not None and reads>1 else run)
++        if url==API+'/jobs?per_page=100&page=1':return f.canonical(jobs)
++        raise AssertionError('UNREGISTERED_METADATA_URL')
++    return fetch
++
++
++class V4ConsumerTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.network=patch.object(socket.socket,'connect',side_effect=AssertionError('REAL_NETWORK_FORBIDDEN'))
++        cls.network.start()
++    @classmethod
++    def tearDownClass(cls):cls.network.stop()
++
++    def validate(self,p,feed,board,run,jobs,**kwargs):
++        calls=[];result=v4.validate_feed(feed,p,board,root=ROOT,now=NOW,fetch=transport(run,jobs,calls,**kwargs))
++        return result,calls
++
++    def test_actual_v2_wire_all_eleven_known_zero_values_and_three_roles(self):
++        p,feed,board,run,jobs=fixture();(selected,proof),calls=self.validate(p,feed,board,run,jobs)
++        self.assertEqual(len(selected['rows']),11);self.assertTrue(all(r['forecast_value']==0 for r in selected['rows']))
++        self.assertEqual(proof['API_GETs'],3);self.assertEqual(proof['public_receipt_GETs'],1);self.assertEqual(len(calls),4)
++        self.assertTrue(proof['receipt_policy_and_workflow_checked'])
++        self.assertEqual(set(proof['registered_jobs']),{'produce','restore','consume'})
++        self.assertEqual(set(feed),f.META_FIELDS|{'publication','publication_sha256'})
++
++    def expired_offer_case(self):
++        p,feed,board,run,jobs=fixture()
++        future='fictional-future-game'
++        board['games'].append(dict(id=future,kickoff='2026-10-27T17:00:00Z',state='pre'))
++        for row in feed['rows']:
++            if row['category']=='rush_att':
++                row.update(game_id=future,kickoff_utc='2026-10-27T17:00:00Z',valid_until_utc='2026-10-27T17:00:00Z')
++                next(player for player in board['players'] if player['id']==row['player_id'])['game_id']=future
++        feed['expires_at']='2026-10-27T17:00:00Z'
++        feed['identity_scope_sha256']=f.identity_scope(feed['rows'],board)
++        next(player for player in board['players'] if player['id']=='fictional-rec')['props']=[]
++        return p,feed,board,run,jobs
++
++    def test_expired_missing_offer_does_not_discard_authentic_future_rows(self):
++        p,feed,board,run,jobs=self.expired_offer_case()
++        selected,_=v4.validate_feed(feed,p,board,root=ROOT,now='2026-10-26T18:00:00Z',
++                                  fetch=transport(run,jobs,[]))
++        self.assertEqual([row['category'] for row in selected['rows']],['rush_att'])
++        self.assertEqual(len(feed['rows']),11)
++
++    def test_expired_rows_still_require_valid_original_values_and_identity(self):
++        for kind in ('negative_count','missing_player','changed_team','active_missing_offer'):
++            with self.subTest(kind=kind):
++                p,feed,board,run,jobs=self.expired_offer_case()
++                rec=next(row for row in feed['rows'] if row['category']=='rec')
++                if kind=='negative_count':rec['forecast_value']=-1
++                elif kind=='missing_player':board['players']=[player for player in board['players'] if player['id']!=rec['player_id']]
++                elif kind=='changed_team':next(player for player in board['players'] if player['id']==rec['player_id'])['team']='OTHER'
++                else:next(player for player in board['players'] if player['id']=='fictional-rush_att')['props']=[]
++                with self.assertRaises((ValueError,KeyError)):
++                    v4.validate_feed(feed,p,board,root=ROOT,now='2026-10-26T18:00:00Z',
++                                     fetch=transport(run,jobs,[]))
++
++    def test_weekly_model_and_procedure_versions_change_under_same_registered_recipe(self):
++        results=[]
++        for tag in ('first','next'):
++            p,feed,board,run,jobs=fixture(tag);(selected,_),_=self.validate(p,feed,board,run,jobs)
++            results.append((p['recipe_registration_sha256'],selected['rows'][0]['model_version'],selected['rows'][0]['procedure_version']))
++        self.assertEqual(results[0][0],results[1][0]);self.assertNotEqual(results[0][1:],results[1][1:])
++
++    def test_first_website_install_after_genuine_feed_keeps_both_actual_clocks(self):
++        p,feed,board,run,jobs=fixture()
++        self.assertGreater(f.utc(p['registered_at_utc']),f.utc(feed['created_at']))
++        self.assertGreater(f.utc(p['registered_at_utc']),f.utc(feed['rows'][0]['issued_at']))
++        self.assertLess(f.utc(p['lab_recipe_registered_at_utc']),f.utc(feed['rows'][0]['issued_at']))
++        (selected,_),_=self.validate(p,feed,board,run,jobs)
++        self.assertEqual(len(selected['rows']),11)
++
++    def test_exact_static_public_policy_receipt_and_workflow_hash_are_required(self):
++        for key,value in [('policy_sha256','0'*64),('workflow_sha256','0'*64),('recipe_registration_sha256','0'*64),
++            ('source_sha','0'*40),('run_id','9'),('feed_sha256','0'*64),('feed_bytes',1),('rows',1),
++            ('categories',[]),('fits',False),('raw_or_models_public',True),('policy_registered_at_utc','2026-10-25T10:01:00Z'),
++            ('verified_at','2026-10-25T08:00:00Z'),('archive_index_sha256','not-a-hash')]:
++            p,feed,board,run,jobs=fixture()
++            with self.subTest(key=key),self.assertRaises(f.FeedError):
++                self.validate(p,feed,board,run,jobs,receipt_change=lambda r:r.update({key:value}))
++        p,feed,board,run,jobs=fixture();q=deepcopy(p);q['lab_public_policy_sha256']='0'*64
++        with self.assertRaisesRegex(f.FeedError,'V4_EXACT_PUBLIC_POLICY'):
++            self.validate(q,feed,board,run,jobs)
++
++    def test_public_receipt_closed_job_graph_and_bounded_gzip(self):
++        def wrong_job(r):r['jobs']['produce']['api_job_id']=1
++        def extra(r):r['unexpected']='extra'
++        def missing(r):r.pop('choice_sha256')
++        for change in (wrong_job,extra,missing):
++            p,feed,board,run,jobs=fixture()
++            with self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs,receipt_change=change)
++        for raw in (b'not-gzip',gzip.compress(b'x'*((64<<10)+1)),gzip.compress(b'{}')+b'trailing',b'x'*((64<<10)+1)):
++            p,feed,board,run,jobs=fixture()
++            with self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs,raw_receipt=raw)
++
++    def test_missing_public_opportunity_remains_missing_not_zero_and_unknown_value_rejects(self):
++        p,feed,board,run,jobs=fixture();missing=feed['rows'].pop(0)['player_id']
++        feed['coverage']=dict(private_selected_rows=11,public_rows=10,fallback_counts=dict(private_ineligible_R0=1))
++        feed['identity_scope_sha256']=f.identity_scope(feed['rows'],board)
++        (selected,_),_=self.validate(p,feed,board,run,jobs)
++        self.assertNotIn(missing,{r['player_id']for r in selected['rows']})
++        feed['rows'][0]['forecast_value']=None
++        with self.assertRaises(ValueError):self.validate(p,feed,board,run,jobs)
++
++    def test_no_role_product_ppr_or_source_policy_conversion(self):
++        for kind in ('role','product','ppr','source','functional','bool','nan'):
++            p,feed,board,run,jobs=fixture();row=feed['rows'][0]
++            if kind=='role':board['players'][0]['pos']='K'
++            if kind=='product':row['product']='point_legacy'
++            if kind=='ppr':row['category']='fantasy_ppr'
++            if kind=='source':row['source_policy_sha256']='0'*64
++            if kind=='functional':row['prediction_functional']='legacy_unknown'
++            if kind=='bool':row['forecast_value']=True
++            if kind=='nan':row['forecast_value']=float('nan')
++            with self.subTest(kind=kind),self.assertRaises((ValueError,KeyError)):
++                self.validate(p,feed,board,run,jobs)
++
++    def test_closed_catalog_all_categories_unique_four_fields_no_values(self):
++        for kind in ('missing_category','duplicate','extra_field','method','ppr','hash','current_values','extra_top','oversize','bad_type'):
++            p,feed,board,run,jobs=fixture();cat=feed['publication']['version_catalog']
++            if kind=='missing_category':cat['rows'].pop()
++            if kind=='duplicate':cat['rows'].append(deepcopy(cat['rows'][0]))
++            if kind=='extra_field':cat['rows'][0]['forecast_value']=0
++            if kind=='method':cat['rows'][0]['method_id']='RAW'
++            if kind=='ppr':cat['rows'][0]['category']='fantasy_ppr'
++            if kind=='hash':cat['rows'][0]['model_version']='not-a-hash'
++            if kind=='current_values':cat['current_values_used']=True
++            if kind=='extra_top':cat['selection_rule']='new reselection'
++            if kind=='oversize':cat['rows']*=24
++            if kind=='bad_type':cat['rows'][0]=[]
++            rehash(feed)
++            with self.subTest(kind=kind),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_catalog_and_publication_physical_bindings_cannot_be_rehashed_away(self):
++        for kind in ('source_catalog','catalog_digest','publication_digest','unlisted_row','recipe'):
++            p,feed,board,run,jobs=fixture()
++            if kind=='source_catalog':feed['publication']['source_version_catalog_sha256']='0'*64
++            if kind=='catalog_digest':feed['publication']['version_catalog_sha256']='0'*64
++            if kind=='publication_digest':feed['publication_sha256']='0'*64
++            if kind=='unlisted_row':feed['rows'][0]['model_version']='0'*64
++            if kind=='recipe':feed['producer_policy_sha256']='0'*64
++            if kind in ('source_catalog','catalog_digest'):feed['publication_sha256']=f.digest(feed['publication'])
++            with self.subTest(kind=kind),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_unregistered_template_and_wrong_static_scope_make_no_api_calls(self):
++        template=v4.template(ROOT)
++        self.assertEqual(template['state'],'PREPARED_UNREGISTERED')
++        p,feed,board,run,jobs=fixture();bad=[template]
++        for field in ('lab_public_policy_sha256','recipe_registration_sha256','workflow_sha256'):
++            q=deepcopy(p);q[field]=None;bad.append(q)
++        for field in ('public_roles','rights_authorities','r0_identities','engine_sha256','public_fields'):
++            q=deepcopy(p);q[field]={} if isinstance(q[field],dict)else[];bad.append(q)
++        for q in bad:
++            calls=[]
++            with self.assertRaises(f.FeedError):v4.validate_feed(feed,q,board,root=ROOT,now=NOW,fetch=transport(run,jobs,calls))
++            self.assertEqual(calls,[])
++
++    def test_wrong_source_authority_recipe_and_old_catalog_rule_reject(self):
++        for key,value in [('schema_version',f.AUTHORITY_V2),('recipe_registration_sha256','0'*64),
++            ('catalog_registration_rule','OWNED_SELECTED_VERSION_CATALOG_BEFORE_FEATURES_OR_VALUES'),
++            ('source_sha','0'*40),('export_job','unregistered-job'),('run_attempt',True)]:
++            p,feed,board,run,jobs=fixture();p['publication_authority'][key]=value
++            with self.subTest(key=key),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_failed_stale_restarted_or_wrong_source_run_rejects(self):
++        for key,value in [('head_sha','0'*40),('head_branch','other'),('event','push'),('run_attempt',2),
++            ('status','in_progress'),('conclusion','failure'),('path','.github/workflows/other.yml'),('updated_at','2026-10-25T12:01:00Z')]:
++            p,feed,board,run,jobs=fixture();run[key]=value
++            with self.subTest(key=key),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_all_three_actual_jobs_must_be_unique_successful_same_source_and_ordered(self):
++        for role in range(3):
++            for kind in ('missing','duplicate','failed','wrong_source','wrong_run','bool_id','out_of_order'):
++                p,feed,board,run,jobs=fixture();j=jobs['jobs'][role]
++                if kind=='missing':jobs['jobs'].pop(role);jobs['total_count']-=1
++                if kind=='duplicate':jobs['jobs'].append(deepcopy(j));jobs['total_count']+=1
++                if kind=='failed':j['conclusion']='failure'
++                if kind=='wrong_source':j['head_sha']='0'*40
++                if kind=='wrong_run':j['run_id']=1
++                if kind=='bool_id':j['id']=True
++                if kind=='out_of_order':j['completed_at']='2026-10-25T12:00:29Z'
++                with self.subTest(role=role,kind=kind),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_run_failure_or_restart_between_metadata_reads_rejects(self):
++        for key,value in [('conclusion','failure'),('run_attempt',2),('status','queued'),('head_sha','0'*40)]:
++            p,feed,board,run,jobs=fixture();final=deepcopy(run);final[key]=value
++            with self.subTest(key=key),self.assertRaisesRegex(f.FeedError,'V4_RUN_CHANGED'):
++                self.validate(p,feed,board,run,jobs,final=final)
++
++    def test_board_epoch_registration_and_expiry_clocks_reject(self):
++        for kind in ('period','stale','registered_after_values','crossed_model'):
++            p,feed,board,run,jobs=fixture()
++            if kind=='period':feed['week']-=1
++            if kind=='stale':feed['expires_at']='2026-10-25T12:00:00Z'
++            if kind=='registered_after_values':p['lab_recipe_registered_at_utc']='2026-10-25T11:00:00Z'
++            if kind=='crossed_model':board['execution_model']['model']='original_sleeper_matchup_baseline'
++            with self.subTest(kind=kind),self.assertRaises(f.FeedError):self.validate(p,feed,board,run,jobs)
++
++    def test_actual_dispatch_writer_approves_and_fallback_never_reuses_rows(self):
++        p,feed,board,run,jobs=fixture();calls=[]
++        selected,review,receipt=f.writer_input(ROOT,p,board,website_source_sha=HEAD,now=NOW,feed=feed,fetch=transport(run,jobs,calls))
++        self.assertTrue(review['approved']);self.assertEqual(receipt['rows'],11);self.assertEqual(len(selected['rows']),11)
++        self.assertEqual(review['recipe_registration_sha256'],p['recipe_registration_sha256'])
++        bad=deepcopy(feed);bad['publication_sha256']='0'*64
++        selected,review,receipt=f.writer_input(ROOT,p,board,website_source_sha=HEAD,now=NOW,feed=bad,fetch=transport(run,jobs,[]))
++        self.assertEqual((selected,review),({},{}));self.assertEqual(receipt['state'],'CURRENT_REFERENCE_FALLBACK')
++
++    def test_current_code_inventory_and_model_source_are_required_before_api(self):
++        p,feed,board,run,jobs=fixture()
++        for kind in ('inventory','scope','engine'):
++            q=deepcopy(p)
++            if kind=='inventory':q['website_code_sha256']['output/app.js']='0'*64
++            if kind=='scope':q['website_code_sha256'].pop('tools/weekly_public_feed_v4.py')
++            if kind=='engine':q['current_execution']['engine_sha256']['pull/build.py']='0'*64
++            calls=[]
++            with self.subTest(kind=kind),self.assertRaises(f.FeedError):v4.validate_feed(feed,q,board,root=ROOT,now=NOW,fetch=transport(run,jobs,calls))
++            self.assertEqual(calls,[])
++        with tempfile.TemporaryDirectory()as d:
++            root=Path(d)
++            for name in v4.CURRENT_CODE_FILES|{f.HISTORICAL_POLICY_PATH}:
++                target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes())
++            path=root/'pull/scoring.py';raw=path.read_bytes();path.write_bytes(b'!'+raw[1:])
++            with self.assertRaisesRegex(f.FeedError,'V4_CURRENT_ENGINE_SOURCE'):v4.policy_check(p,root=root,now=NOW)
++
++    def test_source_head_and_mid_verification_code_changes_prevent_approval(self):
++        p,feed,board,run,jobs=fixture();calls=[]
++        selected,review,_=f.writer_input(ROOT,p,board,website_source_sha='0'*40,now=NOW,feed=feed,fetch=transport(run,jobs,calls))
++        self.assertEqual((selected,review),({},{}));self.assertEqual(calls,[])
++        with patch.object(f,'code_review',side_effect=['first-inventory','changed-inventory']):
++            selected,review,receipt=f.writer_input(ROOT,p,board,website_source_sha=HEAD,now=NOW,feed=feed,fetch=transport(run,jobs,[]))
++        self.assertEqual((selected,review),({},{}));self.assertEqual(receipt['reason'],'V4_INVENTORY_CHANGED_DURING_VERIFICATION')
++
++    def test_old_authority_validator_does_not_accept_new_v4_policy(self):
++        p,*_=fixture()
++        with self.assertRaises(f.FeedError):f.policy_check_v2(p)
++        self.assertEqual(f.CURRENT_CODE_FILES|{'tools/weekly_public_feed_v4.py'},v4.CURRENT_CODE_FILES)
++        self.assertEqual(len(v4.CURRENT_CODE_FILES),len(f.CURRENT_CODE_FILES)+1)
++
++if __name__=='__main__':unittest.main(verbosity=2)
+diff --git a/tests/test_weekly_selected_rankings.py b/tests/test_weekly_selected_rankings.py
+index 6287f4a..082b757 100644
+--- a/tests/test_weekly_selected_rankings.py
++++ b/tests/test_weekly_selected_rankings.py
+@@ -135,6 +135,50 @@ class SelectedRankingsTests(unittest.TestCase):
+             with self.assertRaises(ValueError): r.write_public(out, td, atomic_json, clock=lambda: "2031-10-25T17:00:00+00:00")
+             self.assertFalse((Path(td) / "weekly-selected-rankings.json").exists())
+ 
++    def test_registered_current_policy_freeze_preserves_original_issued_bytes(self):
++        board, doc = fixture()
++        board["execution_model"] = {"model": r.CURRENT_MODEL}
++        for player in board["players"]:
++            player["reference_model"] = r.CURRENT_MODEL
++        doc["display_board_sha256"] = doc["canonical_board_sha256"] = o.digest(board)
++        doc["board_contract_sha256"] = o.digest(o.board_contract(board))
++        old = make(board, doc)
++        self.assertEqual(old["policy_sha256"], r.CURRENT_POLICY_SHA)
++        self.assertNotEqual(old["policy_sha256"], r.POLICY_SHA)
++        with tempfile.TemporaryDirectory() as td:
++            data = Path(td)
++            pointer = r.write_public(old, data, atomic_json, clock=lambda: PERSIST)
++            originals = {path: path.read_bytes() for path in data.rglob("*.json")}
++            frozen = make(board, doc, now="2031-10-25T18:00:00+00:00",
++                          previous=old, previous_receipt=pointer)
++            self.assertEqual(frozen["picks"], old["picks"])
++            current = r.write_public(frozen, data, atomic_json,
++                                     clock=lambda: "2031-10-25T18:00:01+00:00")
++            paths = r.validate_document(frozen, current, board, o.digest(board), doc, root=data)
++            self.assertIn(pointer["path"], paths)
++            for path, original in originals.items():
++                if path.name != "weekly-selected-rankings.json":
++                    self.assertEqual(path.read_bytes(), original)
++
++    def test_frozen_original_unknown_or_misbound_policy_still_rejects(self):
++        for kind in ("unknown", "misbound"):
++            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as td:
++                board, doc = fixture()
++                old = make(board, doc)
++                old["policy"] = {**old["policy"], "version": "UNREGISTERED_FICTIONAL_POLICY"}
++                if kind == "unknown":
++                    old["policy_sha256"] = o.digest(old["policy"])
++                pointer = r.write_public(old, td, atomic_json, clock=lambda: PERSIST)
++                frozen = make(board, doc)
++                frozen["prepared_at"] = "2031-10-25T18:00:00+00:00"
++                frozen["frozen_proofs"] = [dict(key=list(r.identity(item)),
++                    receipt_sha256=o.digest(pointer), persisted_at=PERSIST)
++                    for side in frozen["picks"].values() for item in side]
++                current = r.write_public(frozen, td, atomic_json,
++                                         clock=lambda: "2031-10-25T18:00:01+00:00")
++                with self.assertRaisesRegex(ValueError, "ranking original membership changed"):
++                    r.validate_document(frozen, current, board, o.digest(board), doc, root=td)
++
+     def test_bad_row_hash_and_previous_receipt_rejected(self):
+         board, doc = fixture(); out = make(board, doc)
+         bad = copy.deepcopy(out["picks"]["over"][0]); bad["selected_row_sha256"] = "f" * 64
+diff --git a/tools/weekly_public_feed.py b/tools/weekly_public_feed.py
+index 363ee9e..12e95e3 100644
+--- a/tools/weekly_public_feed.py
++++ b/tools/weekly_public_feed.py
+@@ -55,6 +55,9 @@ def overlay():return importlib.import_module("nfl_lab.weekly_website_overlay" if
+ 
+ 
+ def policy_check(policy):
++    if policy.get("schema_version")=="weekly-derived-selected-policy-v4":
++        from weekly_public_feed_v4 import policy_check as check_v4
++        return check_v4(policy)
+     if policy.get("schema_version")==POLICY_V3:return policy_check_v3(policy)
+     if policy.get("schema_version")==POLICY_V2:return policy_check_v2(policy)
+     require(policy.get("schema_version")==POLICY and policy.get("registration_id")=="weekly-adaptive-release-v1","POLICY_CONTRACT")
+@@ -171,6 +174,9 @@ def export_rows(rows,bundle,policy,board,*,now,durable_acceptance=None,version_c
+ 
+ 
+ def validate_feed(feed,policy,board,*,now,fetch=None):
++    if policy.get("schema_version")=="weekly-derived-selected-policy-v4":
++        from weekly_public_feed_v4 import validate_feed as validate_v4
++        return validate_v4(feed,policy,board,now=now,fetch=fetch or download)[0]
+     if policy.get("schema_version")==POLICY_V2:return validate_feed_v2(feed,policy,board,now=now,fetch=fetch or download)[0]
+     policy_check(policy);api=overlay();require(set(feed)==META_FIELDS and feed["schema_version"]==VERSION and feed["state"]=="DERIVED_SELECTED_ONLY","FEED_CONTRACT")
+     require((feed["season"],feed["week"])==(board["season"],board["week"]) and feed["producer_policy_sha256"]==policy["producer_policy_sha256"]
+@@ -243,6 +249,9 @@ def fetch_feed(policy,board,*,fetch=download):
+ 
+ def writer_input(root,policy,board,*,website_source_sha,now,feed=None,fetch=download):
+     """Optional feed failure returns in-memory empty input; never reuses a stale descriptor."""
++    if policy.get("schema_version")=="weekly-derived-selected-policy-v4":
++        from weekly_public_feed_v4 import writer_input as write_v4
++        return write_v4(root,policy,board,website_source_sha=website_source_sha,now=now,feed=feed,fetch=fetch)
+     if policy.get("schema_version")==POLICY_V3:
+         return writer_input_v3(root,policy,board,website_source_sha=website_source_sha,now=now,feed=feed,fetch=fetch)
+     if policy.get("schema_version")==POLICY_V2:
+diff --git a/tools/weekly_public_feed_v4.py b/tools/weekly_public_feed_v4.py
+new file mode 100644
+index 0000000..1c07dc5
+--- /dev/null
++++ b/tools/weekly_public_feed_v4.py
+@@ -0,0 +1,317 @@
++"""Source-bound correction-epoch consumer; existing feed wire remains V2.
++
++Only an owner-registered publisher/recipe may declare dynamic metadata versions.
++This module never fits, selects, reads outcomes or promotes an unregistered
++template. Historical website policies and their fixed recipes stay unchanged.
++"""
++from __future__ import annotations
++import copy
++from pathlib import Path
++import re
++import zlib
++
++import weekly_public_feed as old
++from classic_model_v1 import contract
++
++POLICY = "weekly-derived-selected-policy-v4"
++AUTHORITY = "audit-weekly-publication-authority-v3"
++RULE = "DECLARED_EPOCH_METADATA_PROJECTION_ONLY_NO_VALUES_OR_RESELECTION"
++ROOT = Path(__file__).resolve().parents[1]
++CURRENT_CODE_FILES = old.CURRENT_CODE_FILES | {"tools/weekly_public_feed_v4.py"}
++STATIC = {"registration_id", "source_policy_sha256", "public_fields", "public_roles",
++          "rights_authorities", "r0_identities", "engine_sha256", "public_ref"}
++KEYS = STATIC | {"schema_version", "state", "authority_kind", "human_approval",
++    "public_raw_or_model_weights", "static_registration_sha256", "registered_at_utc",
++    "lab_public_policy_sha256", "lab_recipe_registered_at_utc", "recipe_registration_sha256", "producer_policy_sha256",
++    "workflow_sha256", "jobs", "publication_authority", "expected_categories",
++    "current_execution", "website_code_sha256"}
++AUTHORITY_KEYS = {"schema_version", "state", "repository", "source_sha", "source_branch",
++    "workflow_path", "event", "export_job", "run_attempt", "public_ref", "catalog_schema",
++    "catalog_freezer_sha256", "catalog_registration_rule", "recipe_registration_sha256"}
++CATALOG_KEYS = {"schema_version", "rows", "current_values_used", "public_policy_registration"}
++CATALOG_ROW_KEYS = {"category", "method_id", "procedure_version", "model_version"}
++RECEIPT_SCHEMA = "audit-weekly-delivery-v1-public-receipt"
++RECEIPT_CAP = 64 << 10
++DISCOVERY_HASH_KEYS = {"archive_index_sha256", "archive_files_sha256", "reader_witness_sha256", "epoch_sha256", "choice_sha256"}
++RECEIPT_KEYS = {"schema_version", "source_sha", "run_id", "root_go_sha256", "policy_sha256", "policy_registered_at_utc",
++    "workflow_sha256", "recipe_registration_sha256", "rights_authority_sha256", "r0_identity_sha256", "origin_choice_sha256",
++    "feed_sha256", "feed_bytes", "rows", "categories", "jobs", "created_at", "verified_at", "fits", "raw_or_models_public"} | DISCOVERY_HASH_KEYS
++
++
++def current(root):
++    try:
++        return contract(root)
++    except (OSError, ValueError):
++        raise old.FeedError("V4_CURRENT_ENGINE_SOURCE") from None
++
++
++def inventory(root):
++    root = Path(root).resolve()
++    actual = {}
++    for name in sorted(CURRENT_CODE_FILES):
++        path = root / name
++        old.require(not path.is_symlink() and path.resolve().is_relative_to(root)
++                    and path.is_file() and path.stat().st_size <= 2 << 20, "V4_CODE_SCOPE")
++        actual[name] = old.sha(path.read_bytes())
++    return actual
++
++
++def template(root=ROOT):
++    """Public static scope only; required new authority inputs remain null."""
++    base = old.historical_policy_v2(root)
++    p = {k:copy.deepcopy(base[k]) for k in STATIC}
++    p.update(schema_version=POLICY, state="PREPARED_UNREGISTERED",
++        authority_kind="AUTOMATED_REGISTERED_POLICY", human_approval=False,
++        public_raw_or_model_weights=False, static_registration_sha256=old.digest(base),
++        registered_at_utc=None, lab_public_policy_sha256=None, lab_recipe_registered_at_utc=None, recipe_registration_sha256=None,
++        producer_policy_sha256=None, workflow_sha256=None,
++        jobs=dict(produce=None, restore=None, consume=None),
++        expected_categories=sorted(old.overlay().PRODUCTS), current_execution=current(root),
++        website_code_sha256=inventory(root),
++        publication_authority=dict(schema_version=AUTHORITY, state="PREPARED_UNREGISTERED",
++            repository=old.REPOSITORY, source_sha=None, source_branch=None,
++            workflow_path=".github/workflows/lab.yml", event="workflow_dispatch", export_job=None,
++            run_attempt=1, public_ref="lab-state", catalog_schema=old.CATALOG_V2,
++            catalog_freezer_sha256=None, catalog_registration_rule=RULE,
++            recipe_registration_sha256=None))
++    return p
++
++
++def policy_check(p, *, root=ROOT, now=None):
++    old.require(type(p) is dict and set(p) == KEYS and p["schema_version"] == POLICY
++        and p["state"] == "ROOT_REGISTERED" and p["authority_kind"] == "AUTOMATED_REGISTERED_POLICY"
++        and p["human_approval"] is p["public_raw_or_model_weights"] is False,
++        "V4_ROOT_REGISTRATION_REQUIRED")
++    old.require(len(old.canonical(p)) <= 1 << 20, "V4_POLICY_BOUND")
++    base = old.historical_policy_v2(root)
++    old.require(p["static_registration_sha256"] == old.digest(base)
++        and all(p[k] == base[k] for k in STATIC), "V4_ORIGINAL_STATIC_SCOPE_CHANGED")
++    old.require(p["expected_categories"] == sorted(old.overlay().PRODUCTS)
++        and len(p["expected_categories"]) == 11 and "fantasy_ppr" not in p["expected_categories"],
++        "V4_COMPLETE_SUPPORTED_SCOPE")
++    old.require(all(old.h(p[k]) for k in ("lab_public_policy_sha256", "recipe_registration_sha256",
++        "producer_policy_sha256", "workflow_sha256"))
++        and p["recipe_registration_sha256"] == p["producer_policy_sha256"], "V4_NEW_RECIPE_BINDING")
++    registered = old.utc(p["registered_at_utc"])
++    old.require(old.utc(p["lab_recipe_registered_at_utc"]) <= registered, "V4_DISTINCT_CAUSAL_REGISTRATION_CLOCKS")
++    if now is not None:
++        old.require(registered <= old.utc(now), "V4_POLICY_REGISTRATION_CLOCK")
++    jobs = p["jobs"]
++    old.require(type(jobs) is dict and set(jobs) == {"produce", "restore", "consume"}
++        and all(type(v) is str and re.fullmatch(r"[A-Za-z0-9_-]{1,100}", v) for v in jobs.values())
++        and len(set(jobs.values())) == 3, "V4_CLOSED_REGISTERED_JOBS")
++    a = p["publication_authority"]
++    old.require(type(a) is dict and set(a) == AUTHORITY_KEYS and a["schema_version"] == AUTHORITY
++        and a["state"] == "ROOT_REGISTERED" and a["repository"] == old.REPOSITORY
++        and type(a["source_sha"]) is str and re.fullmatch(r"[a-f0-9]{40}", a["source_sha"])
++        and type(a["source_branch"]) is str and re.fullmatch(r"[A-Za-z0-9_./-]+", a["source_branch"])
++        and all(x not in {"", ".", ".."} for x in a["source_branch"].split("/"))
++        and a["workflow_path"] == ".github/workflows/lab.yml" and a["event"] == "workflow_dispatch"
++        and a["export_job"] == jobs["consume"] and type(a["run_attempt"]) is int and a["run_attempt"] == 1
++        and a["public_ref"] == p["public_ref"] == "lab-state" and a["catalog_schema"] == old.CATALOG_V2
++        and old.h(a["catalog_freezer_sha256"]) and a["catalog_registration_rule"] == RULE
++        and a["recipe_registration_sha256"] == p["recipe_registration_sha256"], "V4_CLOSED_NEW_AUTHORITY")
++    execution = current(root)
++    old.require(p["current_execution"] == execution and type(p["website_code_sha256"]) is dict
++        and set(p["website_code_sha256"]) == CURRENT_CODE_FILES
++        and all(old.h(x) for x in p["website_code_sha256"].values())
++        and p["website_code_sha256"] == inventory(root)
++        and all(p["website_code_sha256"][k] == v for k,v in execution["engine_sha256"].items()),
++        "V4_CURRENT_EXECUTION_OR_INVENTORY")
++    return base
++
++
++def declared_catalog(catalog, p):
++    """Called after live job verification; no selection or version inference."""
++    old.require(type(catalog) is dict and set(catalog) == CATALOG_KEYS
++        and catalog["schema_version"] == old.CATALOG_V2 and catalog["current_values_used"] is False
++        and catalog["public_policy_registration"] == "REQUIRED_SEPARATELY; not automatic approval"
++        and type(catalog["rows"]) is list and 11 <= len(catalog["rows"]) <= 256,
++        "V4_DECLARED_METADATA_CATALOG")
++    allowed = set()
++    for r in catalog["rows"]:
++        old.require(type(r) is dict and set(r) == CATALOG_ROW_KEYS
++            and r["category"] in p["expected_categories"] and r["method_id"] == "P2_SELECTED"
++            and old.h(r["procedure_version"]) and old.h(r["model_version"]), "V4_CLOSED_CATALOG_ROW")
++        key = (r["category"], r["method_id"], r["procedure_version"], r["model_version"])
++        old.require(key not in allowed, "V4_DUPLICATE_CATALOG_ROW")
++        allowed.add(key)
++    old.require({r[0] for r in allowed} == set(p["expected_categories"]), "V4_ALL_ELEVEN_CATALOG_CATEGORIES")
++    return allowed
++
++
++def verify_public_receipt(feed, p, chain, *, fetch):
++    """Exactly one bounded new receipt; never an old receipt impersonation."""
++    body = old.canonical(feed)
++    feed_sha = old.sha(body)
++    url = "https://raw.githubusercontent.com/" + old.REPOSITORY + "/lab-state/state/public/weekly-adaptive-v1/receipts/" + feed_sha + ".json.gz"
++    raw = fetch(url, RECEIPT_CAP)
++    old.require(type(raw) is bytes and 0 < len(raw) <= RECEIPT_CAP, "V4_PUBLIC_RECEIPT_BOUND")
++    try:
++        decoder = zlib.decompressobj(16 + zlib.MAX_WBITS)
++        plain = decoder.decompress(raw, RECEIPT_CAP + 1)
++        old.require(len(plain) <= RECEIPT_CAP and decoder.eof and not decoder.unused_data
++                    and not decoder.unconsumed_tail, "V4_PUBLIC_RECEIPT_INFLATION_OR_TRAILING_BYTES")
++    except zlib.error:
++        raise old.FeedError("V4_PUBLIC_RECEIPT_COMPRESSION") from None
++    r = old.strict_public_json(plain)
++    old.require(type(r) is dict and set(r) == RECEIPT_KEYS and r["schema_version"] == RECEIPT_SCHEMA
++        and plain == old.canonical(r) and type(r["fits"]) is int and r["fits"] == 0
++        and r["raw_or_models_public"] is False, "V4_CLOSED_NEW_PUBLIC_RECEIPT")
++    old.require(all(old.h(r[k]) for k in DISCOVERY_HASH_KEYS | {"root_go_sha256", "policy_sha256", "workflow_sha256",
++        "recipe_registration_sha256", "rights_authority_sha256", "r0_identity_sha256", "origin_choice_sha256", "feed_sha256"}),
++        "V4_PUBLIC_RECEIPT_HASH_FIELDS")
++    old.require(r["policy_sha256"] == p["lab_public_policy_sha256"] and r["workflow_sha256"] == p["workflow_sha256"]
++        and r["recipe_registration_sha256"] == p["recipe_registration_sha256"]
++        and r["source_sha"] == p["publication_authority"]["source_sha"] and r["run_id"] == feed["publication"]["run_id"]
++        and r["rights_authority_sha256"] == feed["rights_authority_sha256"] and r["r0_identity_sha256"] == feed["r0_identity_sha256"],
++        "V4_EXACT_PUBLIC_POLICY_RECIPE_SOURCE_RECEIPT")
++    old.require(r["feed_sha256"] == feed_sha and type(r["feed_bytes"]) is int and r["feed_bytes"] == len(body)
++        and type(r["rows"]) is int and r["rows"] == len(feed["rows"])
++        and r["categories"] == sorted({row["category"] for row in feed["rows"]}) and r["created_at"] == feed["created_at"],
++        "V4_PUBLIC_RECEIPT_EXACT_FEED")
++    expected = {role:dict(job_id=p["jobs"][role], api_job_id=j["id"])
++                for role,j in zip(("produce", "restore", "consume"), chain)}
++    old.require(type(r["jobs"]) is dict and r["jobs"] == expected and all(type(j["api_job_id"]) is int
++        and set(j) == {"job_id", "api_job_id"} for j in r["jobs"].values()), "V4_PUBLIC_RECEIPT_ACTUAL_JOB_IDS")
++    old.require(old.utc(p["lab_recipe_registered_at_utc"]) <= old.utc(r["policy_registered_at_utc"])
++        <= min(old.utc(row["issued_at"]) for row in feed["rows"])
++        and old.utc(r["policy_registered_at_utc"]) <= old.utc(r["verified_at"])
++        and old.utc(chain[2]["started_at"]) <= old.utc(r["verified_at"]) <= old.utc(r["created_at"]),
++        "V4_PUBLIC_RECEIPT_HONEST_POLICY_CLOCKS")
++    return dict(public_receipt_sha256=old.sha(raw), public_receipt_body_sha256=old.sha(plain),
++        lab_public_policy_sha256=r["policy_sha256"], lab_policy_registered_at_utc=r["policy_registered_at_utc"],
++        workflow_sha256=r["workflow_sha256"], public_receipt_schema=r["schema_version"],
++        public_receipt_GETs=1, receipt_policy_and_workflow_checked=True)
++
++
++def verify_execution(feed, p, *, now, fetch):
++    responses = {}
++    pub = feed["publication"]
++    old.require(type(pub) is dict and type(pub.get("run_id")) is str
++        and re.fullmatch(r"[1-9][0-9]{0,19}", pub["run_id"]), "V4_PUBLICATION_RUN")
++    base = "https://api.github.com/repos/" + old.REPOSITORY + "/actions/runs/" + pub["run_id"]
++    jobs_url = base + "/jobs?per_page=100&page=1"
++    def tracked(url, cap):
++        old.require(url in {base, jobs_url} and cap == 1 << 20, "V4_FIXED_METADATA_ROUTES")
++        body = fetch(url, cap)
++        old.require(type(body) is bytes and 0 < len(body) <= cap, "PUBLICATION_METADATA_BOUND")
++        responses[url] = old.strict_public_json(body)
++        return body
++    proof = old.verify_publication_execution(feed, p, now=now, fetch=tracked)
++    run = responses[base]
++    data = responses[jobs_url]
++    chain = []
++    for role in ("produce", "restore", "consume"):
++        found = [j for j in data["jobs"] if j.get("name") == p["jobs"][role]]
++        old.require(len(found) == 1, "V4_UNIQUE_REGISTERED_WORKFLOW_ROLE")
++        j = found[0]
++        old.require(type(j.get("id")) is int and j["id"] > 0
++            and type(j.get("run_id")) is int and j["run_id"] == int(pub["run_id"])
++            and j.get("head_sha") == p["publication_authority"]["source_sha"]
++            and j.get("status") == "completed" and j.get("conclusion") == "success"
++            and old.utc(j["started_at"]) <= old.utc(j["completed_at"]), "V4_SUCCESSFUL_REGISTERED_WORKFLOW_ROLE")
++        chain.append(j)
++    old.require(len({j["id"] for j in chain}) == 3
++        and old.utc(chain[0]["completed_at"]) <= old.utc(chain[1]["started_at"])
++        and old.utc(chain[1]["completed_at"]) <= old.utc(chain[2]["started_at"]), "V4_PRODUCER_READER_EXPORTER_ORDER")
++    receipt = verify_public_receipt(feed, p, chain, fetch=fetch)
++    # Completed runs can be restarted. Reject a changed run before approval.
++    before = copy.deepcopy(run)
++    tracked(base, 1 << 20)
++    after = responses[base]
++    fields = ("id", "repository", "head_repository", "head_sha", "head_branch", "path",
++              "event", "run_attempt", "status", "conclusion", "updated_at")
++    old.require(all(after.get(k) == before.get(k) for k in fields), "V4_RUN_CHANGED_DURING_VERIFICATION")
++    proof.update(schema_version="weekly-derived-v4-publication-execution", API_GETs=3,
++        registered_jobs={r:j["id"] for r,j in zip(("produce", "restore", "consume"), chain)},
++        recipe_registration_sha256=p["recipe_registration_sha256"], final_run_response_sha256=old.digest(after),
++        verification_HTTP_GETs=4, **receipt)
++    return proof
++
++
++def validate_feed(feed, p, board, *, now, fetch, root=ROOT):
++    policy_check(p, root=root, now=now)
++    old.require(type(feed) is dict and set(feed) == old.META_FIELDS | {"publication", "publication_sha256"}
++        and feed["schema_version"] == old.VERSION_V2 and feed["state"] == "DERIVED_SELECTED_ONLY"
++        and len(old.canonical(feed)) <= old.MAX_BYTES, "V4_V2_WIRE_CONTRACT")
++    old.require(board.get("execution_model") == p["current_execution"], "V4_BOARD_CURRENT_EXECUTION")
++    old.require(type(feed["season"]) is int and type(feed["week"]) is int
++        and (feed["season"],feed["week"]) == (board["season"],board["week"])
++        and feed["producer_policy_sha256"] == p["recipe_registration_sha256"]
++        and feed["rights_authority_sha256"] in p["rights_authorities"] and feed["r0_identity_sha256"] in p["r0_identities"],
++        "V4_STATIC_SCOPE_OR_RECIPE")
++    old.require(all(old.h(feed[k]) for k in ("rights_receipt_sha256", "durability_receipt_sha256", "identity_scope_sha256"))
++        and old.utc(p["lab_recipe_registered_at_utc"]) <= old.utc(feed["created_at"]) <= old.utc(now) < old.utc(feed["expires_at"])
++        and type(feed["rows"]) is list and 0 < len(feed["rows"]) <= 5000, "V4_FEED_CLOCK_OR_BOUND")
++    old.require(all(type(r) is dict and set(r) == set(old.overlay().ROW_FIELDS) for r in feed["rows"]),
++                "CLOSED_UNIQUE_PUBLIC_ROWS")
++    c = feed["coverage"]
++    old.require(type(c) is dict and set(c) == {"private_selected_rows", "public_rows", "fallback_counts"}
++        and type(c["private_selected_rows"]) is int and 0 < c["private_selected_rows"] <= 5000
++        and type(c["public_rows"]) is int and c["public_rows"] == len(feed["rows"])
++        and type(c["fallback_counts"]) is dict and set(c["fallback_counts"]) <= {"private_ineligible_R0", "outside_board_R0", "started_R0"}
++        and all(type(v) is int and v >= 0 for v in c["fallback_counts"].values())
++        and c["private_selected_rows"] == c["public_rows"] + sum(c["fallback_counts"].values()), "CLOSED_PUBLIC_COVERAGE")
++    proof = verify_execution(feed, p, now=now, fetch=fetch)
++    allowed = declared_catalog(feed["publication"]["version_catalog"], p)
++    offers = old.overlay().board_offers(board)
++    games = {game["id"]:game for game in board["games"]}
++    players = {(player["game_id"],player["id"]):player for player in board["players"]}
++    old.require(len(games) == len(board["games"]) and len(players) == len(board["players"])
++        and all(row["game_id"] in games and (row["game_id"],row["player_id"]) in players for row in feed["rows"]),
++        "CURRENT_BOARD_SCOPE_CHANGED")
++    # The original scope commits identity, teams and kickoff, not market-offer
++    # availability. Keep that exact preimage even after an expired offer leaves.
++    scope = old.digest([dict(player_id=row["player_id"],game_id=row["game_id"],category=row["category"],
++        kickoff=games[row["game_id"]]["kickoff"],team=players[(row["game_id"],row["player_id"])]["team"],
++        opponent=players[(row["game_id"],row["player_id"])]["opp"])
++        for row in sorted(feed["rows"],key=old.overlay().key)])
++    old.require(feed["identity_scope_sha256"] == scope, "CURRENT_BOARD_SCOPE_CHANGED")
++    seen = set(); rows = []
++    for r in feed["rows"]:
++        old.require(type(r) is dict and set(r) == set(old.overlay().ROW_FIELDS), "CLOSED_UNIQUE_PUBLIC_ROWS")
++        key = old.overlay().key(r)
++        old.require(key not in seen, "CLOSED_UNIQUE_PUBLIC_ROWS"); seen.add(key)
++        old.require((r["category"],r["method_id"],r["procedure_version"],r["model_version"]) in allowed,
++                    "V4_ROW_NOT_IN_DECLARED_CATALOG")
++        old.require(r["source_policy_sha256"] == p["source_policy_sha256"]
++            and old.utc(p["lab_recipe_registered_at_utc"]) <= old.utc(r["issued_at"]), "V4_ROW_POLICY_AND_REGISTRATION")
++        player, game = players[(r["game_id"],r["player_id"])], games[r["game_id"]]
++        active = game.get("state") == "pre" and old.utc(r["valid_until_utc"]) > old.utc(now)
++        old.require(not active or key in offers, "V4_ACTIVE_OFFER_MISSING")
++        # Validate every original row's type, product, bounds, version and clock.
++        # Only expired rows may use their authenticated identity without an offer;
++        # they are never returned as eligible selections or given a fabricated prop.
++        row_context = offers if key in offers else {key:(player,game,{})}
++        old.overlay().validate_row(dict(r, first_prepared_at=feed["created_at"]), row_context)
++        old.require(player.get("pos", player.get("position")) in p["public_roles"][r["category"]], "V4_REGISTERED_PLAYER_ROLE")
++        if not active:
++            continue
++        rows.append(dict(r, season=board["season"],week=board["week"],team=player["team"],opponent=player["opp"],
++                         evidence_lane="original_pregame",operational_eligible=True))
++    return dict(rows=rows), proof
++
++
++def writer_input(root, p, board, *, website_source_sha, now, feed=None, fetch=old.download):
++    try:
++        with old.publication_deadline(4):
++            policy_check(p, root=root, now=now)
++            checked = old.code_review(root, p, website_source_sha)
++            if feed is None:
++                def strict_fetch(url, cap):
++                    raw = fetch(url, cap); old.strict_public_json(raw); return raw
++                feed = old.fetch_feed(p, board, fetch=strict_fetch)
++            selected, proof = validate_feed(feed, p, board, now=now, fetch=fetch, root=root)
++            old.require(old.code_review(root, p, website_source_sha) == checked, "V4_INVENTORY_CHANGED_DURING_VERIFICATION")
++        review = dict(schema_version=old.overlay().REVIEW, approved=True, selected_input_sha256=old.digest(selected),
++            website_source_sha=website_source_sha, authority_kind="AUTOMATED_REGISTERED_POLICY",human_approval=False,
++            authority_policy_sha256=old.digest(p),code_inventory_sha256=checked,feed_sha256=old.digest(feed),reviewed_at=now,
++            board_membership_sha256=feed["identity_scope_sha256"],publication_execution=proof,
++            current_reference_model=p["current_execution"]["model"],recipe_registration_sha256=p["recipe_registration_sha256"],
++            lab_public_policy_sha256=p["lab_public_policy_sha256"],static_registration_sha256=p["static_registration_sha256"])
++        return selected, review, dict(state="AUTOMATED_POLICY_ACCEPTED",rows=len(selected["rows"]),
++            website_source_sha=website_source_sha,policy_sha256=old.digest(p),review_sha256=old.digest(review),publication_execution=proof)
++    except Exception as error:
++        reason = str(error) if isinstance(error, old.FeedError) and re.fullmatch(r"[A-Z0-9_]+", str(error)) else "OPTIONAL_FEED_REJECTED"
++        return {}, {}, dict(state="CURRENT_REFERENCE_FALLBACK",reason=reason,rows=0,human_approval=False)
+diff --git a/tools/weekly_selected_rankings.py b/tools/weekly_selected_rankings.py
+index 1c64bd9..cf3d1d5 100644
+--- a/tools/weekly_selected_rankings.py
++++ b/tools/weekly_selected_rankings.py
+@@ -264,7 +264,9 @@ def validate_document(doc, pointer, board, board_hash, selected_doc, *, root=Non
+             original, _ = overlay.read_bound(root / receipt["path"], receipt["sha256"], limit=LIMIT)
+             old = [i for side in original["picks"].values() for i in side if identity(i) == k]
+             current = next(i for side in doc["picks"].values() for i in side if identity(i) == k)
+-            if len(old) != 1 or old[0] != current or original["policy_sha256"] != POLICY_SHA:
++            if (len(old) != 1 or old[0] != current
++                    or original["policy_sha256"] not in {POLICY_SHA, CURRENT_POLICY_SHA}
++                    or original["policy_sha256"] != overlay.digest(original["policy"])):
+                 raise ValueError("ranking original membership changed")
+             paths.update({receipt_path, receipt["path"]})
+     return paths

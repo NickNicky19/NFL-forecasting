@@ -1,0 +1,329 @@
+{
+  "schema_version": "independent-main-count7-strict-props-review-v1",
+  "state": "PASS_READ_ONLY_LOCAL_SOURCE_AND_FRESH_COUNT7_CONSUMPTION",
+  "completed_at_utc": "2026-10-26T12:45:07.905138+00:00",
+  "source": {
+    "root": "/workspace/nfl-system-audit/website-count7-strict-props",
+    "base": "5cc522422286dfa70a93f0dbee2aa48fa84b1249",
+    "head": "74dc2573ca1d34311482f918f25c084ca14a446b",
+    "tree": "1adc8eac8c2bafc0d20c60a6d5b1672162a96b8b",
+    "branch": "audit/main-count7-strict-props-20261026",
+    "clean": true,
+    "frozen_after_review": true,
+    "changed_paths": [
+      ".github/workflows/hourly.yml",
+      "config/weekly-derived-selected-policy-v4.json",
+      "output/app.js",
+      "output/index.html",
+      "tests/test-selected-rankings.cjs",
+      "tests/test-ui.cjs",
+      "tests/test-weekly-overlay.cjs"
+    ],
+    "new_commits_created_by_reviewer": 0,
+    "source_edits_by_reviewer": 0,
+    "new_worktrees_or_branches_created": 0
+  },
+  "existing_worker_handoff": {
+    "path": "/tmp/nfl-main-count7-strict-props-20261026/SOURCE-MANIFEST.json",
+    "sha256": "47e2df40d3dd46aef6ae8eed68a5b5085115997a40805db6b4473f5f012eed4f",
+    "all_changed_file_hashes_verified": true
+  },
+  "existing_patch": {
+    "path": "/tmp/nfl-main-count7-strict-props-20261026/main-count7-strict-props-from-5cc.patch",
+    "sha256": "5733a29ad2ea8b06e179e43fcc76a5027107bbadcaae76c3264373a72e9a8020",
+    "matches_exact_5cc_to_74dc_delta": true,
+    "reverse_apply_check_passed": true,
+    "new_or_duplicate_patch_created": false
+  },
+  "finality": {
+    "predicate": "c.status?.type?.completed === true",
+    "source": "output/app.js:329",
+    "actual_combined_app_sha256": "21b21ad275338714b610f300aaddb26bfc33dd211b4a867f19c47c42c72b7a59",
+    "actual_app_matches_e981_prototype_with_only_literal_true_change": true,
+    "cases_per_source": 6,
+    "false_final_counts": {
+      "base_5cc": 5,
+      "prepared_e981": 4,
+      "reviewed_74dc": 0
+    },
+    "reviewed_six_case_results": [
+      {
+        "case": "absent",
+        "res": "pending",
+        "final": false
+      },
+      {
+        "case": "null",
+        "res": "pending",
+        "final": false
+      },
+      {
+        "case": "zero",
+        "res": "pending",
+        "final": false
+      },
+      {
+        "case": "string_false",
+        "res": "pending",
+        "final": false
+      },
+      {
+        "case": "false",
+        "res": "pending",
+        "final": false
+      },
+      {
+        "case": "true",
+        "res": "hit",
+        "final": true
+      }
+    ],
+    "additional_independent_guard_cases_passed": 21,
+    "preserved_guards": [
+      "exact event and competition",
+      "exact athlete and team; no name settlement",
+      "season, regular-season type, week",
+      "explicit timezone and matching kickoff",
+      "played zero versus unknown or explicit DNP",
+      "requested field existence and numeric validity",
+      "Final marker on board and summary",
+      "saved player/game/team/athlete/kickoff/period/source binding",
+      "stale board response rejection and evidence replacement"
+    ]
+  },
+  "combined_policy": {
+    "physical_policy_sha256": "ca5e959c1680f523b12fded72e2521fd02f2a5da1ed1d07f7c66dc320a923391",
+    "canonical_policy_sha256": "32a8b60d04bbdb056c55699403d1dc84c8c25d0a2a73a6ac854c5a480afb61af",
+    "physical_hourly_workflow_sha256": "340465ebc9e06ccd23a9feb3e23a7ce3183c48080f24d063ff56eecd6d4fb280",
+    "hourly_workflow_change": "Only physical policy SHA pin; schedule and jobs unchanged",
+    "inventory_verified": true,
+    "inventory_changed_paths": [
+      "output/app.js",
+      "output/index.html"
+    ],
+    "registered_at_utc": "2026-10-26T08:37:52.877788+00:00",
+    "previous_registered_at_utc": "2026-10-26T02:26:02.389566+00:00",
+    "lab_recipe_registered_at_utc": "2026-10-25T14:42:09.438903+00:00",
+    "clock_qualification": "Stored local registration timestamp is consistent with retained observations and commit chronology; independent review does not prove a remote registration or backdate it.",
+    "old_policy_rejected_for_actual_changed_source": "V4_CURRENT_EXECUTION_OR_INVENTORY",
+    "all_other_policy_fields_unchanged": true
+  },
+  "validation": {
+    "python_tests_passed": 216,
+    "required_node_commands_passed": 7,
+    "python_syntax_passed": true,
+    "python_version": "Python 3.12.14",
+    "node_version": "v24.19.0",
+    "workflow_declared_node_version": "22",
+    "hosted_CI_run_for_74dc": false,
+    "original_worker_final_python_and_node_claims_reproduced": true,
+    "original_ui_test_prefix_preserved": true,
+    "ui_evidence_cases": 58,
+    "strict_provider_scope_negative_cases": 23,
+    "strict_provider_scope_positive_cases": 2,
+    "legacy_fantasy_cases": 18
+  },
+  "fresh_actual_consumer": {
+    "state": "AUTOMATED_POLICY_ACCEPTED",
+    "source_head": "74dc2573ca1d34311482f918f25c084ca14a446b",
+    "observed_at_utc": "2026-10-26T12:41:39.347777+00:00",
+    "selection_rows": 127,
+    "category_counts": {
+      "anytime_td": 27,
+      "pass_att": 3,
+      "pass_cmp": 3,
+      "pass_int": 3,
+      "pass_td": 3,
+      "pass_yd": 3,
+      "rec": 26,
+      "rec_yd": 26,
+      "rush_att": 7,
+      "rush_rec_yd": 19,
+      "rush_yd": 7
+    },
+    "consumer_elapsed_seconds": 3.67833315700409,
+    "strict_writer_input_deadline_seconds": 4,
+    "whole_invocation_including_board_fetch_seconds": 4.336679248983273,
+    "anonymous_HTTP": true,
+    "mock_HTTP_calls": 0,
+    "HTTP_feed_metadata_GETs": 6,
+    "HTTP_board_GETs": 1,
+    "board_sha256": "06da8f79ef2e0188bcbba5c137be5aeb6e01dda6ddacbc1d38a17c3afed3d80a",
+    "board_matches_retained_453_bytes": true,
+    "decoded_board_stat_or_outcome_rows": 0,
+    "unchanged_named_verifier_script": "/workspace/nfl-system-audit/continuation/verify_main_count7_consumer.py",
+    "verifier_sha256": "12e7643c7e26d3a42a83a3a82ba11bb4bdd705ba33b3fd83c95c4d984b62452b",
+    "argv": [
+      "/workspace/nfl-system-audit/continuation/verify_main_count7_consumer.py",
+      "--root",
+      "/workspace/nfl-system-audit/website-count7-strict-props",
+      "--output",
+      "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/fresh-count7-consumer.json"
+    ],
+    "runtime_adapter": "Only the second strict_public_json call: live-board metadata projection",
+    "adapter_limit": "Named verifier executed via runpy and the documented board-only parse adapter; not a literal unwrapped CLI invocation.",
+    "writer_input_policy_feed_guards_and_four_second_deadline_unmodified": true,
+    "source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+    "run_id": "40203512153",
+    "original_feed_sha256": "214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c",
+    "original_expiry_unchanged": "2026-10-27T00:15:00+00:00",
+    "installed_or_deployed": false
+  },
+  "fresh_genuine_2023_metadata": {
+    "receipt": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/fresh-2023-summary-metadata.json",
+    "receipt_sha256": "eaa38434e480182f68d1715d364ee161a91b0a2ab37dd54e492dbb7dfa4bad9b",
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=401547353",
+    "HTTP_status": 200,
+    "observed_at_utc": "2026-10-26T12:42:15.397223+00:00",
+    "body_sha256": "6426ad3158942d3e92bacc7b056dd00bcf75908104868305cdf342d584c2ea63",
+    "body_bytes": 489508,
+    "event_id": "401547353",
+    "competition_id": "401547353",
+    "season": 2023,
+    "season_type": 2,
+    "week": 1,
+    "kickoff": "2023-09-08T00:20Z",
+    "completed_type": "bool",
+    "completed": true,
+    "state": "post",
+    "shortDetail": "Final",
+    "matches_original_worker_metadata_fields": true,
+    "raw_body_retained": false,
+    "stats_or_scores_decoded": 0,
+    "positive_software_path_with_fictional_stats_passed": true,
+    "genuine_player_result_grading_qualified": false,
+    "2026_provider_schema_qualified": false
+  },
+  "preservation": {
+    "Main453_new_caption_and_selected_ranking_helpers_unchanged": true,
+    "legacy_fantasy_helpers_and_game_bet_status_unchanged": true,
+    "all_eight_engine_files_unchanged": true,
+    "Count7_source_18_models_recipe_rights_R0_and_scientific_lineage_not_changed": true,
+    "evidence_basis": "Exact preserved policy fields, unchanged whole pull/tools/data/reports/schemas/docs Git tree objects, identical original COUNT7 feed SHA; no model files or outcomes were read to retune anything.",
+    "original_5cc_worktree_and_packet_unchanged": true,
+    "source_functions_and_subtree_hashes_receipt": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/source-review.json"
+  },
+  "scope": {
+    "remote_writes": 0,
+    "git_fetch_push_or_PR_operations": 0,
+    "owner_lease_or_coordination_edits": 0,
+    "scheduler_edits": 0,
+    "deployment_or_installation": 0,
+    "public_raw_stats_saved_or_published": false,
+    "protected_2026_outcomes_decoded": 0,
+    "fits_or_selection_changes": 0,
+    "accuracy_gain_claimed": false,
+    "V3_storage_work": "Parent handles independently; no V3 storage edits or acceptance claimed"
+  },
+  "source_blockers": [],
+  "remaining_acceptance_and_limitations": [
+    "Checks are local Python 3.12 / Node 24; no hosted CI on this isolated head, and scheduled workflow specifies Node 22.",
+    "The named verifier ran through the documented live-board-only parse adapter to avoid decoding protected player outcomes; a literal unwrapped invocation would decode the full board. No consumer guard or HTTP response was mocked.",
+    "Four-second timing applies to writer_input; whole invocation including live-board retrieval took 4.3367 seconds. This one successful call is not a latency availability guarantee.",
+    "Genuine metadata is present-vintage resolved 2023 only; the positive grading path used fictional player/stat rows. No genuine player settlement, 2026 schema or accuracy improvement is qualified.",
+    "Original COUNT7 expires 2026-10-27T00:15Z without extension.",
+    "Parent owns integration publication, normal active-writer scope and post-integration CI/binding, and separate V3 storage work."
+  ],
+  "artifacts": [
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-01.log",
+      "bytes": 34829,
+      "sha256": "b623ed395ed3c8d974229a1b2733ab7ca6cccff921c4be6aaceb94ca6bcd768b"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-02.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-03.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-04.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-05.log",
+      "bytes": 504,
+      "sha256": "4667010a1db25db50e4742285815cde508cfe5a76199d57b2ba9373e7e78d6f0"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-06.log",
+      "bytes": 126,
+      "sha256": "e0658f53bd67dda970b9574bd2e9f1a2a16f98e8197302cdc0052e8cdfb2fd3b"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-07.log",
+      "bytes": 103,
+      "sha256": "b66017cd11bfbcc6e1debfab6baeade9ca84382f7a5b0efa2b7a6822d2173e7c"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-08.log",
+      "bytes": 127,
+      "sha256": "0a4a9d708c39d9bcd9d178fe70459772bb3f9748bf41706044ecc47d2696d795"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/check-09.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/consumer-invocation.json",
+      "bytes": 1939,
+      "sha256": "c96ad475072f3ee0addb3b87642bb5c7aa1e7efbb8ac97ded2f857db2f70c4fa"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/fetch_2023_metadata.py",
+      "bytes": 2950,
+      "sha256": "3f8f10235b4ddece9ad8030a37eeeac74f646c887aff578eae68c3c4acfa661c"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/fresh-2023-summary-metadata.json",
+      "bytes": 1512,
+      "sha256": "eaa38434e480182f68d1715d364ee161a91b0a2ab37dd54e492dbb7dfa4bad9b"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/fresh-count7-consumer.json",
+      "bytes": 4320,
+      "sha256": "7aaf79de47b58a3fb20f0e7ea76ab3060f0115db344e26475c472ef3c3b92a7d"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/metadata_projection.py",
+      "bytes": 3459,
+      "sha256": "baf385e7066fd274e161e76943c6f80b7e4d0930d59b0a38ab5fb0ead7162bf0"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/probe_production_path.cjs",
+      "bytes": 8764,
+      "sha256": "b5c196c04378af2c676137a9e1e681426d5b9494e7cc52b253e3097afec7cbc9"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/production-path.json",
+      "bytes": 10502,
+      "sha256": "fdf3687c42ae1deba55f7f505ee1ebff6da79ef2cb25cd50a1b8b183d1222f44"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/review-start.json",
+      "bytes": 288,
+      "sha256": "e4ebdd9f87af3e0cf9cdbb0b7b4e47818fc5b5ddaf90dbd4b445bdf6b5209606"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/run_consumer.py",
+      "bytes": 3490,
+      "sha256": "7b0547148b35a29e06b01bfb4394d3f773c1b379c569352035b1a288803d701d"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/source-review.json",
+      "bytes": 5514,
+      "sha256": "a26a5d5e24c1eeefce8bd296cdf23cb7691a86647a0391da6e2a81ec54688788"
+    },
+    {
+      "path": "/tmp/nfl-main-count7-strict-props-independent-review-20261026-10i2i2ff/validation.json",
+      "bytes": 5447,
+      "sha256": "3ec457ad74099123d3a63e0083c35ae6e34460772d0043c6fe2658527f56d24f"
+    }
+  ]
+}

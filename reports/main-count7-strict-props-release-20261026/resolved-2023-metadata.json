@@ -1,0 +1,50 @@
+{
+  "schema_version": "independent-resolved-2023-summary-metadata-v1",
+  "state": "PASS_ACTUAL_2023_COMPLETION_METADATA",
+  "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=401547353",
+  "HTTP_status": 200,
+  "retrieved_started_at": "2026-10-26T12:42:14.786294+00:00",
+  "retrieved_completed_at": "2026-10-26T12:42:15.397223+00:00",
+  "body_sha256": "6426ad3158942d3e92bacc7b056dd00bcf75908104868305cdf342d584c2ea63",
+  "body_bytes": 489508,
+  "event_id": "401547353",
+  "competition_id": "401547353",
+  "season_year": 2023,
+  "season_type": 2,
+  "week": 1,
+  "kickoff": "2023-09-08T00:20Z",
+  "completion_type": "bool",
+  "completed": true,
+  "status_state": "post",
+  "status_shortDetail": "Final",
+  "metadata_projection": {
+    "id": "401547353",
+    "season": {
+      "year": 2023,
+      "type": 2
+    },
+    "competitions": [
+      {
+        "id": "401547353",
+        "date": "2023-09-08T00:20Z",
+        "status": {
+          "type": {
+            "state": "post",
+            "completed": true,
+            "shortDetail": "Final"
+          }
+        }
+      }
+    ],
+    "week": 1
+  },
+  "actual_HTTP_requests": 1,
+  "decoded_player_stats": 0,
+  "decoded_scores": 0,
+  "raw_body_retained": false,
+  "raw_body_published": false,
+  "protected_2026_outcomes_read": false,
+  "schema_2026_qualified": false,
+  "real_player_grade_qualified": false,
+  "limitation": "Present-vintage resolved-2023 header observation only; no provider availability clock or 2026 schema claim."
+}
