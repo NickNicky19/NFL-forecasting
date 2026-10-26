@@ -1,0 +1,50 @@
+{
+  "containment": {
+    "matrix": "containment.csv",
+    "mismatches": 0,
+    "pairs": 2500
+  },
+  "counterpart_files_identical": true,
+  "counterpart_worktree": "/workspace/nfl-system-audit/research-storage-main",
+  "files_sha256": {
+    "nfl_lab/operational_storage.py": "fdec24fc89391506f3d99d1fedd04042442ec56f5495ef10ff7be9479381b3d8",
+    "tests/test_storage_path_guards.py": "bd1b3a4e98ccde868bc7c0fb2864d2001138122ae5358e057ee8c71414c6643d"
+  },
+  "fits": 0,
+  "grader_and_native_test_identical_to_baseline": true,
+  "native_tests_run": 0,
+  "observed_at_utc": "2026-10-26T05:15:15.932321+00:00",
+  "original_baseline_commit": "3341a9c2a339c141e8f4c87cd1d17515f5dc3d4d",
+  "other_storage_AST_identical_to_baseline": true,
+  "protected_outcome_reads": 0,
+  "python": "3.12.14",
+  "remote_calls": 0,
+  "repository_edits": 0,
+  "schema_version": "independent-storage-path-guards-review-v1",
+  "source_worktree": "/workspace/nfl-system-audit/producer-discovery-epoch",
+  "state": "PASS",
+  "symlink": {
+    "all_matched": true,
+    "checks": [
+      "leaf-to-root stat order",
+      "follow_symlinks=False",
+      "symlink rejection ancestor/message",
+      "errno suppression and propagation",
+      "winerror suppression and propagation",
+      "ValueError and UnicodeEncodeError handling"
+    ],
+    "differential_scenarios": 1407,
+    "original_ignored_errnos": [
+      2,
+      20,
+      9,
+      40
+    ],
+    "original_ignored_winerrors": [
+      21,
+      123,
+      1921
+    ],
+    "real_filesystem_cases": 9
+  }
+}
