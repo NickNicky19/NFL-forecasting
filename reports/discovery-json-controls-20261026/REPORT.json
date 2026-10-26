@@ -1,0 +1,127 @@
+{
+  "activation": false,
+  "base_source": "1ff8637152ab93b3f3db4c3109af111365337156",
+  "branch": "audit/recurring-discovery-json-control-20261026",
+  "evidence": {
+    "before.log": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/before.log",
+      "sha256": "ba9f9289411668cd692c9509875e7bbb0b79da10bcaba943e24bcece0499d414"
+    },
+    "before.xml": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/before.xml",
+      "sha256": "3c9b4c3be2b42aa8b693d3c89bb7fb986940fac83f11e421859e07b447b29b6c"
+    },
+    "discovery-after.log": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/discovery-after.log",
+      "sha256": "a79be8f3cb74525257b513e26af9024f17b3e6b6a1c6a25988a7061beaa91096"
+    },
+    "discovery-after.xml": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/discovery-after.xml",
+      "sha256": "8128372b9b14e2152f484ec813fbe03a129505a481f4688c7679dabf5603f174"
+    },
+    "invariants-and-counters.json": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/invariants-and-counters.json",
+      "sha256": "51e80da3d58166ff8a6d049a50b528f005c050eb942d1756d41334edd059b49b"
+    },
+    "related.log": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/related.log",
+      "sha256": "22612aa50b01a9753d3b57350a1ed50c536b9aa1e2c5f05341cc861743c4874c"
+    },
+    "related.xml": {
+      "path": "/tmp/nfl-discovery-json-control-repair-20261026/related.xml",
+      "sha256": "ea8b0f5ecb3cb28d3387486e65b38a5c63dd7af9f5158c247de9fc5fc46e5eb7"
+    }
+  },
+  "files": {
+    "nfl_lab/audit_weekly_discovery_v1.py": {
+      "before_sha256": "95c68bc2d82af5615cb9ca65b83ec5fe964a5ca3fdb1c66b648057a1d124b60a",
+      "bytes": 34210,
+      "sha256": "84f6821c41929c1cf6a9452ee96a9392ac16ff7da5496caa97c2ac339b227bf9"
+    },
+    "tests/test_audit_weekly_discovery_v1.py": {
+      "before_sha256": "c79aa8167a1d50d745a09b5e18d9a9ced55784b3bff8eb14a5ea9d8946c284e2",
+      "bytes": 22175,
+      "sha256": "4e6bddb7830e8702aa6e4f9ecb100a55938360e9fc514d533a282cbf22a63412"
+    }
+  },
+  "invariants": {
+    "all_existing_authentication_classes_and_functions_AST_identical": true,
+    "changed_definitions": [
+      "_namespace_descriptor",
+      "discover"
+    ],
+    "generic_cp_store_archive_retained_hosted_bootstrap_registration_unchanged": true,
+    "limits_schema_and_pin_path_inventory_unchanged": true,
+    "observed_mixed_namespace_metrics": [
+      {
+        "HTTP_calls": "50",
+        "inventory_assets": "11",
+        "native_clients": "2",
+        "per_client_calls": "[28, 22]",
+        "test": "test_actual_root_claim_json_is_metadata_only_and_preserves_original_native_proofs[False]"
+      },
+      {
+        "HTTP_calls": "88",
+        "inventory_assets": "83",
+        "native_clients": "3",
+        "per_client_calls": "[38, 28, 22]",
+        "test": "test_actual_root_claim_json_is_metadata_only_and_preserves_original_native_proofs[True]"
+      }
+    ]
+  },
+  "new_fits": 0,
+  "new_native_Root_jobs": 0,
+  "private_GETs": 0,
+  "problem": "Discovery applied gzip-only archive descriptor validation to every namespace manifest, including valid JSON Root consumption claims appended before discovery.",
+  "production_metadata_observation": {
+    "all_kinds": "runtime_manifest",
+    "all_source_policies": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    "artifact_payload_GETs": 0,
+    "assets": 83,
+    "gzip_manifests": 32,
+    "json_manifests": 9,
+    "manifests": 41,
+    "metadata_GETs": 44,
+    "provenance": "Owner-reported manifest-only scan; not independently fetched here"
+  },
+  "protected_NFL_outcome_reads": 0,
+  "remaining": [
+    "Integrate with the separately owned new create-only fixed registration slot and exact Main/shared source counterparts; preserve old published V2 record.",
+    "Run genuine combined Source CI and obtain fresh normal source-pinned native authority/registration. These fictional checks are not actual Root13 or Ops readiness.",
+    "Existing finite snapshot, runtime retention and native resource limits are unchanged."
+  ],
+  "remote_calls": 0,
+  "repair": {
+    "failures": "Malformed or unknown formats/kinds still fail closed; no catch-and-ignore, latest fallback, source migration, authority caching or rewritten original descriptors.",
+    "json_controls": "Closed unselected runtime_manifest/json native metadata with the original exact schema, type, hash, size, policy, canonical-byte, namespace-binding and payload-asset checks; metadata retained without fetching control payloads.",
+    "scope": "Discovery admission only",
+    "selected_archives": "Exact receipt-selected INDEX and WITNESS always use unchanged cp.descriptor_meta gzip validation before payload GET. Original unique selection, source/API/native-proof/clock checks remain."
+  },
+  "schema_version": "discovery-json-control-repair-review-v1",
+  "source_edits_outside_scope": 0,
+  "status": "LOCAL_FICTIONAL_REGRESSIONS_PASS_NEW_NATIVE_SOURCE_AUTHORITY_REQUIRED",
+  "tests": [
+    {
+      "case": "Actual Runner.claim JSON expressions: one claim and exact 83-asset/41-manifest census",
+      "reason": "EXACT_CHECKPOINT_DESCRIPTOR",
+      "result": "2 FAILED as expected in 6.98s before production change"
+    },
+    {
+      "modules": [
+        "tests/test_audit_weekly_discovery_v1.py"
+      ],
+      "result": "31 PASSED in 58.42s",
+      "scope": "Original regressions plus actual JSON claim census, exact original handoff/proofs and GET counters, selected JSON strict-validator rejection before payload GET, 22 malformed metadata guards and unchanged quota accounting"
+    },
+    {
+      "modules": [
+        "tests/test_audit_weekly_discovery_recurring_v1.py",
+        "tests/test_audit_weekly_discovery_actor_v1.py",
+        "tests/test_audit_weekly_operations_restore_v1.py",
+        "tests/test_audit_weekly_retained_v1.py"
+      ],
+      "result": "66 PASSED in 71.18s",
+      "scope": "Same-code recurrence, current/old native identities, owner and explicitly sealed BOT source/actor grants, original proofs/clock binding, GET-only full recovery and saved-authority rejection"
+    }
+  ]
+}

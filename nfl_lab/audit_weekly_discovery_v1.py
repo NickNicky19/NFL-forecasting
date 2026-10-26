@@ -243,6 +243,39 @@ def _members(assets):
     return sorted((a["id"],a["name"],a["size"],a.get("digest"),a["state"],a.get("url")) for a in assets)
 
 
+def _namespace_descriptor(descriptor, selected):
+    """Admit only closed unselected JSON controls alongside archive gzip.
+
+    Root consumption claims share this namespace. Their metadata retains every
+    native entry/hash/size check; the caller still checks canonical bytes,
+    namespace binding and actual payload asset metadata without fetching them.
+    Exact receipt-selected entries always use the original gzip-only validator.
+    """
+    entry=descriptor.get("entry") if type(descriptor) is dict else None
+    payload=entry.get("payload") if type(entry) is dict else None
+    if type(payload) is not dict or payload.get("format") != "json":
+        return cp.descriptor_meta(descriptor,store.ASSET_CAP)
+    require(set(descriptor)=={"entry","manifest_asset_id","manifest_sha256","manifest_bytes"}
+        and set(entry)=={"schema_version","payload","payload_asset_id","payload_name","producer_process","binding_sha256","writer_run_id"}
+        and set(payload)=={"schema_version","payload_kind","format","bytes","sha256","source_policy_sha256"},
+        "CLOSED_JSON_CONTROL_NATIVE_ENTRY")
+    require(payload["schema_version"]=="weekly-private-payload-v2" and payload["payload_kind"]=="runtime_manifest"
+        and payload["source_policy_sha256"]==cp.POLICY_SHA
+        and type(payload["bytes"]) is int and 0<payload["bytes"]<=store.ASSET_CAP
+        and type(payload["sha256"]) is str and store.HASH.fullmatch(payload["sha256"])
+        and entry["payload_name"]=="blob-"+payload["sha256"]+".bin"
+        and entry["schema_version"]=="weekly-private-restore-manifest-v2"
+        and all(type(entry[k]) is str and store.HASH.fullmatch(entry[k]) for k in ("producer_process","binding_sha256"))
+        and type(entry["writer_run_id"]) is str and entry["writer_run_id"].isdigit()
+        and all(type(v) is int and 0<v<10**20 for v in (entry["payload_asset_id"],descriptor["manifest_asset_id"]))
+        and type(descriptor["manifest_bytes"]) is int
+        and descriptor["manifest_bytes"]==len(store.canonical(entry))<=cp.ENTRY_CAP
+        and descriptor["manifest_sha256"]==store.sha(store.canonical(entry)),"EXACT_JSON_CONTROL_NATIVE_ENTRY")
+    if payload["sha256"] in selected:
+        return cp.descriptor_meta(descriptor,store.ASSET_CAP)
+    return entry
+
+
 def _origin(pool, value, historical, *, discovery_grant=None):
     require(type(historical) is dict and set(historical) == set(retained.HISTORICAL_FILES)
         and all(store.HASH.fullmatch(str(v)) for v in historical.values())
@@ -342,19 +375,20 @@ def discover(receipt_body, receipt_sha256, qualified_runtime, factory, *, storag
     require(qrun.get("status") == "completed" and qrun.get("conclusion") == "success", "COMPLETED_QUALIFIED_DISCOVERY_NAMESPACE")
     initial,_=_inventory(pool.client(reserve=5)); initial_members=_members(initial)
     output=archive.fresh(storage,output); descriptors={}
+    selected={value["archive_index_sha256"],value["reader_witness_sha256"]}
     by_id={a["id"]:a for a in initial}
     for asset in initial:
         if not asset["name"].startswith("manifest-"): continue
         require(re.fullmatch(r"manifest-[a-f0-9]{64}\.json",asset["name"]), "NATIVE_ENTRY_NAME_ONLY")
         body=pool.asset(asset,cp.ENTRY_CAP); entry=cp.strict_json(body)
         descriptor=dict(entry=entry,manifest_asset_id=asset["id"],manifest_sha256=store.sha(body),manifest_bytes=len(body))
-        cp.descriptor_meta(descriptor,store.ASSET_CAP)
+        _namespace_descriptor(descriptor,selected)
         require(body == store.canonical(entry) and asset["name"] == "manifest-"+store.sha(body)+".json"
             and entry["binding_sha256"] == store.sha(store.canonical(qualified_runtime["binding"])), "EXACT_CANONICAL_ORIGINAL_NATIVE_ENTRY")
         payload=by_id.get(entry["payload_asset_id"])
         require(payload is not None, "UNAVAILABLE_NATIVE_ENTRY_PAYLOAD")
         first.asset(payload,entry["payload_name"],entry["payload"]["bytes"],entry["payload"]["sha256"])
-        if entry["payload"]["sha256"] in {value["archive_index_sha256"],value["reader_witness_sha256"]}:
+        if entry["payload"]["sha256"] in selected:
             descriptors.setdefault(entry["payload"]["sha256"],[]).append(descriptor)
         storage.write_bytes(output/"entries"/(str(asset["id"])+".json"),body)
     require(value["archive_index_sha256"] != value["reader_witness_sha256"]

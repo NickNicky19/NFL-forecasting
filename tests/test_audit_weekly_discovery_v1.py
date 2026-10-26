@@ -5,6 +5,7 @@ Discovery requests are isolated from fixture setup POSTs and never fetch an
 archive group, forecast, model, raw-provider body or outcome.
 """
 from copy import copy, deepcopy
+import ast
 from datetime import datetime, timedelta, timezone
 import gzip
 from pathlib import Path
@@ -118,6 +119,134 @@ def payload_gets(c):
         if '/releases/assets/' in request.full_url and request.get_header('Accept')=='application/octet-stream':
             result.add(int(request.full_url.rsplit('/',1)[-1]))
     return result
+
+
+def claim_metadata(c, index=0):
+    # Read the two actual Runner.claim expressions; do not substitute a gzip
+    # fixture for the JSON control that production appends before discovery.
+    from nfl_lab import audit_weekly_hosted_v1 as hosted
+    tree=ast.parse((ROOT/'nfl_lab/audit_weekly_hosted_v1.py').read_text())
+    runner=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='Runner')
+    claim=next(n for n in runner.body if isinstance(n,ast.FunctionDef) and n.name=='claim')
+    nodes=[n for n in claim.body if isinstance(n,ast.Assign) and len(n.targets)==1
+        and isinstance(n.targets[0],ast.Name) and n.targets[0].id in {'body','manifest'}]
+    assert len(nodes)==2
+    scope=dict(store=s,cp=cp,VERSION=hosted.VERSION,
+        self=SimpleNamespace(go_sha='f'*64 if index==0 else s.sha(str(index).encode())))
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),'actual-Runner.claim-metadata','exec'),scope)
+    body,manifest=scope['body'],scope['manifest']
+    assert s.payload_manifest(manifest,body)==manifest
+    assert manifest['payload_kind']=='runtime_manifest' and manifest['format']=='json'
+    return body,manifest
+
+
+def add_native_entry(c,body,manifest):
+    payload=c.server.add('blob-'+s.sha(body)+'.bin',body)
+    entry=dict(schema_version='weekly-private-restore-manifest-v2',payload=manifest,
+        payload_asset_id=payload['id'],payload_name=payload['name'],producer_process='7'*64,
+        binding_sha256=s.sha(s.canonical(c.history.old.binding)),writer_run_id='40000000123')
+    raw=s.canonical(entry);asset=c.server.add('manifest-'+s.sha(raw)+'.json',raw)
+    return entry,asset,payload
+
+
+def replace_entry(asset,entry,*,noncanonical=False):
+    raw=s.canonical(entry)+(b' ' if noncanonical else b'')
+    asset.update(body=raw,name='manifest-'+s.sha(raw)+'.json',size=len(raw),digest='sha256:'+s.sha(raw))
+
+
+@pytest.mark.parametrize('full_namespace',[False,True])
+def test_actual_root_claim_json_is_metadata_only_and_preserves_original_native_proofs(original,tmp_path,full_namespace,record_property):
+    c=case(original,tmp_path);controls=[]
+    for i in range(9 if full_namespace else 1):
+        body,manifest=claim_metadata(c,i);_,asset,payload=add_native_entry(c,body,manifest)
+        controls.append((asset,payload))
+    if full_namespace:
+        while sum(a['name'].startswith('manifest-') for a in c.server.assets)<41:
+            body=gzip.compress(s.canonical(dict(fictional_template=len(c.server.assets))),mtime=0)
+            add_native_entry(c,body,cp.payload(body))
+        assert len(c.server.assets)==83
+        entries=[cp.strict_json(a['body']) for a in c.server.assets if a['name'].startswith('manifest-')]
+        assert sum(e['payload']['format']=='gzip' for e in entries)==32
+        assert sum(e['payload']['format']=='json' for e in entries)==9
+    result=execute(c);result.verify();doc=result.document
+    assert doc['reader_handoff']==original.reader and doc['original_receipt']==original.receipt
+    assert doc['current']['run_id']==CURRENT_RUN and doc['current']['source_sha']==CURRENT_SOURCE
+    assert all(proof['run_id']==CURRENT_RUN for proof in doc['metadata_get_proofs'])
+    assert doc['HTTP_calls']==len(c.history.calls)<=d.LIMITS['HTTP_calls']
+    assert len(c.clients)<=d.LIMITS['clients'] and all(client.calls<=s.MAX_CALLS for client in c.clients)
+    assert all(request.method=='GET' and request.data is None for request in c.history.calls)
+    assert doc['capture_body_restored'] is doc['capture_durability_established'] is doc['public_authority'] is False
+    allowed={a['id'] for a in c.server.assets if a['name'].startswith('manifest-')} | {
+        original.reader['archive']['index_descriptor']['entry']['payload_asset_id'],
+        original.reader['witness_descriptor']['entry']['payload_asset_id'],c.history.old.binding['canary_asset_id']}
+    assert payload_gets(c)<=allowed
+    for asset,payload in controls:
+        assert payload['id'] not in payload_gets(c)
+        ref=cp.binding(c.output/'entries'/(str(asset['id'])+'.json'))
+        assert cp.read_ref(ref)==asset['body']
+        c.p.storage.validate_reference(ref['path'],ref['sha256'])
+    record_property('inventory_assets',doc['inventory_assets'])
+    record_property('HTTP_calls',doc['HTTP_calls'])
+    record_property('native_clients',len(c.clients))
+    record_property('per_client_calls',[client.calls for client in c.clients])
+
+
+@pytest.mark.parametrize('selected',['archive_index_sha256','reader_witness_sha256'])
+def test_receipt_selected_json_still_uses_original_gzip_descriptor_guard_before_payload_GET(original,tmp_path,selected,monkeypatch):
+    c=case(original,tmp_path);body,manifest=claim_metadata(c);add_native_entry(c,body,manifest)
+    asset=next(a for a in c.server.assets if a['name'].startswith('manifest-')
+        and cp.strict_json(a['body'])['payload']['sha256']==c.value[selected])
+    entry=cp.strict_json(asset['body']);entry['payload']['format']='json';replace_entry(asset,entry)
+    actual=cp.descriptor_meta;checked=[]
+    def check(descriptor,cap):
+        checked.append(descriptor['manifest_asset_id']);return actual(descriptor,cap)
+    monkeypatch.setattr(cp,'descriptor_meta',check)
+    with pytest.raises(s.StoreError,match='EXACT_CHECKPOINT_DESCRIPTOR'):execute(c)
+    assert asset['id'] in checked
+    forbidden={original.reader['archive']['index_descriptor']['entry']['payload_asset_id'],
+        original.reader['witness_descriptor']['entry']['payload_asset_id']}
+    assert not payload_gets(c)&forbidden and not (c.output/'DISCOVERED.json').exists()
+
+
+@pytest.mark.parametrize('damage',['unknown_format','kind','payload_schema','entry_schema','extra_entry','extra_payload',
+    'missing_field','policy','bool_bytes','zero_bytes','oversize','payload_hash','payload_name','process','writer','binding',
+    'missing_asset','asset_digest','asset_size','bool_asset_id','noncanonical','manifest_name'])
+def test_unselected_json_keeps_all_original_schema_hash_binding_and_asset_checks(original,tmp_path,damage):
+    c=case(original,tmp_path);body,manifest=claim_metadata(c);entry,asset,payload=add_native_entry(c,body,manifest)
+    p=entry['payload']
+    if damage=='unknown_format':p['format']='npz'
+    elif damage=='kind':p['payload_kind']='forecast_batch'
+    elif damage=='payload_schema':p['schema_version']='future-payload-v3'
+    elif damage=='entry_schema':entry['schema_version']='future-entry-v3'
+    elif damage=='extra_entry':entry['authority']=True
+    elif damage=='extra_payload':p['authority']=True
+    elif damage=='missing_field':p.pop('source_policy_sha256')
+    elif damage=='policy':p['source_policy_sha256']='0'*64
+    elif damage=='bool_bytes':p['bytes']=True
+    elif damage=='zero_bytes':p['bytes']=0
+    elif damage=='oversize':p['bytes']=s.ASSET_CAP+1
+    elif damage=='payload_hash':p['sha256']='not-a-sha256'
+    elif damage=='payload_name':entry['payload_name']='blob-'+'0'*64+'.bin'
+    elif damage=='process':entry['producer_process']='not-a-process-hash'
+    elif damage=='writer':entry['writer_run_id']=123
+    elif damage=='binding':entry['binding_sha256']='0'*64
+    elif damage=='missing_asset':c.server.assets.remove(payload)
+    elif damage=='asset_digest':payload['digest']='sha256:'+'0'*64
+    elif damage=='asset_size':payload['size']+=1
+    elif damage=='bool_asset_id':entry['payload_asset_id']=True
+    replace_entry(asset,entry,noncanonical=damage=='noncanonical')
+    if damage=='manifest_name':asset['name']='manifest-'+'0'*64+'.json'
+    with pytest.raises(s.StoreError):execute(c)
+    forbidden={original.reader['archive']['index_descriptor']['entry']['payload_asset_id'],
+        original.reader['witness_descriptor']['entry']['payload_asset_id'],payload['id']}
+    assert not payload_gets(c)&forbidden and not (c.output/'DISCOVERED.json').exists()
+
+
+def test_unselected_json_still_charges_unknown_namespace_bytes(original,tmp_path):
+    c=case(original,tmp_path);body,manifest=claim_metadata(c);add_native_entry(c,body,manifest)
+    for i in range(5):c.server.add('charged-orphan-'+str(i),b'fictional-unread',size=s.ASSET_CAP)
+    with pytest.raises(s.StoreError,match='RUNTIME_BYTES_CAP'):execute(c)
+    assert not (c.output/'DISCOVERED.json').exists()
 
 
 def test_exact_original_handoff_from_128_asset_namespace_only_metadata_GETs(original,tmp_path):
