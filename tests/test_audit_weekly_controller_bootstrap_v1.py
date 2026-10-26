@@ -349,6 +349,24 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
         api(url, 100)
 
 
+def test_new_discovery_registration_route_is_literal_and_commit_bound():
+    calls = []
+    def get(url, cap):
+        calls.append((url, cap))
+        return c.Reply(200, b"[]")
+    api = b.Metadata({}, get)
+    literal = "state/controller-v1/bootstrap-v2-20261026-discovery.json"
+    assert api.get(c.contents_url(literal, old.A), 17) == []
+    assert len(calls) == 1
+    for path, ref in ((literal, "lab-state"),
+            (literal.replace("20261026", "20261025"), old.A),
+            (literal.replace(".json", "-extra.json"), old.A),
+            (literal.replace("bootstrap-v2", "../bootstrap-v2"), old.A)):
+        with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):
+            api(c.contents_url(path, ref), 17)
+    assert len(calls) == 1
+
+
 def test_actual_network_adapter_timeout_no_redirect_and_bounded_read(monkeypatch):
     observed = {}
     class Response:

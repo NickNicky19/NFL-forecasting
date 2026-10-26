@@ -1,0 +1,9 @@
+# Source-specific registration after the discovery correction
+
+Genuine owner Ops run40266057468 on producer1ff8637 failed before model recovery or publication: archive discovery applied the gzip descriptor contract to valid JSON control metadata, including the native Root-consumption record. Its failed attempt was privately appended and successfully restored in a fresh native job121389165744, receipt SHA2561d9ea0ecf865eb857c934afae4ea17e40b2e3f18169e18fd06f94a70df9d2c85. The producer correction is separate from this Main metadata counterpart.
+
+Corrected software requires a new current-source registration at the fixed literal `state/controller-v1/bootstrap-v2-20261026-discovery.json`. This retains the V2 wire protocol. It preserves the previously issued `bootstrap-v2.json` record and commit0f6d2bbd19b1628ee4ae3e1703a304e881b638f7. No old artifact, source hash, issue clock, forecast, failure, registration or scientific result is relabelled. New Main/producer commits, actual native jobs and a newly issued record remain prerequisites.
+
+Only this literal new contents route with a40-hex immutable commit reference is added. Existing routes remain read-only and all budgets, redirects, create-once history and genuine native/source checks remain strict. No Root-supplied registry selector is accepted. Main and Producer's two changed shared files match exactly.
+
+All82bootstrap checks pass in1.02s, including the new positive route and before-I/O rejection of neighboring dates, suffixes, mutable lab-state refs and traversal. Independent static review passes. The incomplete local path-only preparation's9failures/72passes are retained as preparation evidence; this was not a deployed source. Full actual combined-source CI is still required. Workflow, scheduler, activation gate, models, mathematics, data rights and original ledgers remain unchanged.

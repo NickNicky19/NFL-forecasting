@@ -1,0 +1,253 @@
+.........................................................FF......F...... [ 88%]
+FFFFFF...                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_v2_owner_cleared_exact_locators_after_minting_not_backdated _______
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f3560ec0>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f36bf2e0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f36bdee0>)
+
+    def test_v2_owner_cleared_exact_locators_after_minting_not_backdated(locator_system):
+>       x = locator_system; seal = x.load_locator()
+                                   ^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:590: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_controller_bootstrap_v1.py:582: in <lambda>
+    x.load_locator = lambda: b.load_seal(x.env, x.child_source, metadata_get=x.get, clock=lambda:old.AT,
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:361: in load_seal
+    raw = c.content(api, registry_path, commit_sha, cap=LIMITS["record_bytes"])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_v1.py:317: in content
+    value=api.get(contents_url(path,ref),min(1 << 20,2*cap+8192))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:263: in get
+    return c.decode(self(url, cap).body)
+                    ^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:235: in __call__
+    require(fixed_route(url) and type(cap) is int and 0 < cap <= LIMITS["response_bytes"]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, code = 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+    def require(value, code):
+        if not value:
+>           raise BootstrapError(code)
+E           nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP
+
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:112: BootstrapError
+__________ test_v2_child_unchanged_strict_controller_full_thirty_GETs __________
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f350f530>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2ebf2e0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2ebf060>)
+
+    def test_v2_child_unchanged_strict_controller_full_thirty_GETs(locator_system):
+>       x = locator_system; proof = x.verify_locator()
+                                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:605: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_controller_bootstrap_v1.py:584: in <lambda>
+    x.verify_locator = lambda: b.authorize_child(x.env, x.child_source, x.raw, metadata_get=x.get,
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:502: in authorize_child
+    seal = load_seal(env, source_root, metadata_get=metadata_get, clock=clock, read_head=read_head, registry_version=registry_version).verify()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:361: in load_seal
+    raw = c.content(api, registry_path, commit_sha, cap=LIMITS["record_bytes"])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_v1.py:317: in content
+    value=api.get(contents_url(path,ref),min(1 << 20,2*cap+8192))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:263: in get
+    return c.decode(self(url, cap).body)
+                    ^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:235: in __call__
+    require(fixed_route(url) and type(cap) is int and 0 < cap <= LIMITS["response_bytes"]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, code = 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+    def require(value, code):
+        if not value:
+>           raise BootstrapError(code)
+E           nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP
+
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:112: BootstrapError
+_______ test_locator_changed_without_real_SAFE_artifact_binding_rejected _______
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f34a82c0>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fc8cc0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fc8a40>)
+
+    def test_locator_changed_without_real_SAFE_artifact_binding_rejected(locator_system):
+        x = locator_system
+        x.locators["template_seal"]["descriptor"]["manifest_asset_id"] += 1
+        x.publish_locator(bind_locator=False)
+>       with pytest.raises(b.BootstrapError, match="EXACT_FINAL_OWNER_CLEARED_LOCATOR_REGISTRATION"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'EXACT_FINAL_OWNER_CLEARED_LOCATOR_REGISTRATION'
+E         Actual message: 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:626: AssertionError
+____ test_rehashed_native_descriptor_does_not_rewrite_original_writer_proof ____
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f357b800>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2ebe8e0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2ebede0>)
+
+    def test_rehashed_native_descriptor_does_not_rewrite_original_writer_proof(locator_system):
+        x = locator_system
+        x.template_seal["descriptor"]["manifest_asset_id"] += 1
+        from nfl_lab import private_draft_store as s
+        x.native["template_descriptor"]["private_descriptor_sha256"] = s.sha(s.canonical(x.template_seal["descriptor"]))
+        for which in ("writer", "reader"):
+            x.native[which]["private_descriptor_sha256"] = x.native["template_descriptor"]["private_descriptor_sha256"]
+        x.publish_locator()
+>       with pytest.raises(b.BootstrapError, match="UNCHANGED_ORIGINAL_WRITER_AND_READER_PROOFS_BEFORE_FINAL_SEAL"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'UNCHANGED_ORIGINAL_WRITER_AND_READER_PROOFS_BEFORE_FINAL_SEAL'
+E         Actual message: 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:650: AssertionError
+______ test_sealer_cannot_pretend_original_reader_knew_future_root_or_ids ______
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f34aa4b0>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fc9080>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fc8ae0>)
+
+    def test_sealer_cannot_pretend_original_reader_knew_future_root_or_ids(locator_system):
+        x = locator_system
+        x.locators["owner_root_go_sha256"] = old.h("rewritten original Root")
+        x.native["owner_root_go_sha256"] = x.locators["owner_root_go_sha256"]
+        x.publish_locator()
+>       with pytest.raises(b.BootstrapError, match="ORIGINAL_TEMPLATE_OWNER_ROOT_AND_LITERAL_SOURCE"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'ORIGINAL_TEMPLATE_OWNER_ROOT_AND_LITERAL_SOURCE'
+E         Actual message: 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:659: AssertionError
+_ test_final_registration_clock_is_inside_real_sealer_stage[2026-10-25T11:00:00Z] _
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f34ab260>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fc9a80>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fc9800>)
+clock = '2026-10-25T11:00:00Z'
+
+    @pytest.mark.parametrize("clock", ["2026-10-25T11:00:00Z", "2026-10-25T12:03:00Z"])
+    def test_final_registration_clock_is_inside_real_sealer_stage(locator_system, clock):
+        x = locator_system
+        x.native["registered_at_utc"] = clock
+        # Rebuild the controller bytes as well: a self-consistent backdated clock
+        # still cannot become an authentic final sealing clock.
+        x.p["registered_at_utc"] = clock; x.reg = c.canonical(x.p)
+        x.native["registration_sha256"] = c.sha(x.reg); x.locators["registered_at_utc"] = clock
+        x.publish_locator()
+>       with pytest.raises(b.BootstrapError, match="ACTUAL_FINAL_SEALER_REGISTRATION_CLOCK_REQUIRED"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'ACTUAL_FINAL_SEALER_REGISTRATION_CLOCK_REQUIRED'
+E         Actual message: 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:672: AssertionError
+_ test_final_registration_clock_is_inside_real_sealer_stage[2026-10-25T12:03:00Z] _
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f31c1010>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fcaac0>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fca840>)
+clock = '2026-10-25T12:03:00Z'
+
+    @pytest.mark.parametrize("clock", ["2026-10-25T11:00:00Z", "2026-10-25T12:03:00Z"])
+    def test_final_registration_clock_is_inside_real_sealer_stage(locator_system, clock):
+        x = locator_system
+        x.native["registered_at_utc"] = clock
+        # Rebuild the controller bytes as well: a self-consistent backdated clock
+        # still cannot become an authentic final sealing clock.
+        x.p["registered_at_utc"] = clock; x.reg = c.canonical(x.p)
+        x.native["registration_sha256"] = c.sha(x.reg); x.locators["registered_at_utc"] = clock
+        x.publish_locator()
+>       with pytest.raises(b.BootstrapError, match="ACTUAL_FINAL_SEALER_REGISTRATION_CLOCK_REQUIRED"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'ACTUAL_FINAL_SEALER_REGISTRATION_CLOCK_REQUIRED'
+E         Actual message: 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:672: AssertionError
+_____________ test_returned_locator_copies_cannot_mutate_live_seal _____________
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f31c02f0>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fcb380>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fcb1a0>)
+
+    def test_returned_locator_copies_cannot_mutate_live_seal(locator_system):
+>       seal = locator_system.load_locator()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:677: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_controller_bootstrap_v1.py:582: in <lambda>
+    x.load_locator = lambda: b.load_seal(x.env, x.child_source, metadata_get=x.get, clock=lambda:old.AT,
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:361: in load_seal
+    raw = c.content(api, registry_path, commit_sha, cap=LIMITS["record_bytes"])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_v1.py:317: in content
+    value=api.get(contents_url(path,ref),min(1 << 20,2*cap+8192))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:263: in get
+    return c.decode(self(url, cap).body)
+                    ^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:235: in __call__
+    require(fixed_route(url) and type(cap) is int and 0 < cap <= LIMITS["response_bytes"]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, code = 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+    def require(value, code):
+        if not value:
+>           raise BootstrapError(code)
+E           nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP
+
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:112: BootstrapError
+_ test_existing_native_schedule_ParentGETClient_receives_live_parent_not_fake_dispatch _
+
+locator_system = namespace(api=<fictional_controller_fixture.API object at 0x7f15f31c07a0>, root=PosixPath('/tmp/pytest-of-agent/pytest...tem.<locals>.<lambda> at 0x7f15f2fcbf60>, verify_locator=<function locator_system.<locals>.<lambda> at 0x7f15f2fcbce0>)
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-395/test_existing_native_schedule_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f15f31c35c0>
+
+    def test_existing_native_schedule_ParentGETClient_receives_live_parent_not_fake_dispatch(locator_system, tmp_path, monkeypatch):
+        from nfl_lab import audit_weekly_template_v1 as t
+        x = locator_system
+        x.api.data[c.run_url("100")].update(status="in_progress", conclusion=None, updated_at=old.PVERIFIED)
+        x.api.data[c.jobs_url("100")]["jobs"][0].update(status="in_progress", conclusion=None, completed_at=None)
+        env = dict(x.env, GITHUB_RUN_ID="100", GITHUB_EVENT_NAME="schedule", GITHUB_SHA=old.A, GITHUB_WORKFLOW_SHA=old.A,
+            GITHUB_WORKFLOW_REF=c.REPO + "/" + c.WORKFLOW + "@refs/heads/main", GITHUB_JOB="lab",
+            GITHUB_ACTOR=c.OWNER["login"], GITHUB_ACTOR_ID=str(c.OWNER["id"]))
+        clock = lambda:c.utc(old.PVERIFIED)
+        event = c.canonical(dict(repository=dict(full_name=c.REPO), schedule=c.CADENCE["cron"]))
+>       parent = b.authorize_parent(env, x.parent_source, metadata_get=x.get, event_bytes=event,
+            clock=clock, read_head=x.read_head, registry_version=2)
+
+tests/test_audit_weekly_controller_bootstrap_v1.py:695: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:530: in authorize_parent
+    seal = load_seal(env, source_root, metadata_get=metadata_get, clock=clock, read_head=read_head, registry_version=registry_version).verify()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:361: in load_seal
+    raw = c.content(api, registry_path, commit_sha, cap=LIMITS["record_bytes"])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_v1.py:317: in content
+    value=api.get(contents_url(path,ref),min(1 << 20,2*cap+8192))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:263: in get
+    return c.decode(self(url, cap).body)
+                    ^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:235: in __call__
+    require(fixed_route(url) and type(cap) is int and 0 < cap <= LIMITS["response_bytes"]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, code = 'BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'
+
+    def require(value, code):
+        if not value:
+>           raise BootstrapError(code)
+E           nfl_lab.audit_weekly_controller_bootstrap_v1.BootstrapError: BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP
+
+nfl_lab/audit_weekly_controller_bootstrap_v1.py:112: BootstrapError
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_v2_owner_cleared_exact_locators_after_minting_not_backdated
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_v2_child_unchanged_strict_controller_full_thirty_GETs
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_locator_changed_without_real_SAFE_artifact_binding_rejected
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_rehashed_native_descriptor_does_not_rewrite_original_writer_proof
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_sealer_cannot_pretend_original_reader_knew_future_root_or_ids
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_final_registration_clock_is_inside_real_sealer_stage[2026-10-25T11:00:00Z]
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_final_registration_clock_is_inside_real_sealer_stage[2026-10-25T12:03:00Z]
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_returned_locator_copies_cannot_mutate_live_seal
+FAILED tests/test_audit_weekly_controller_bootstrap_v1.py::test_existing_native_schedule_ParentGETClient_receives_live_parent_not_fake_dispatch
+9 failed, 72 passed in 2.93s
