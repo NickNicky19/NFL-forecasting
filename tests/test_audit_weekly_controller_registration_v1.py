@@ -571,3 +571,11 @@ assert cli.main(['controller-template-write', '--execute', '--request', '/PRIVAT
     result = json.loads(run.stdout)
     assert result["state"] == "FAILED_LOCAL" and result["registration_run_completed"] is False
     assert "PRIVATE_NEVER_READ" not in run.stdout
+
+
+def test_the_actual_complete_producer_inventory_passes_registration_path_admission():
+    from nfl_lab import audit_weekly_hosted_v1 as hosted
+    actual = hosted.pins()
+    assert len(actual) <= w.LIMITS["source_pins"]
+    assert "reports/private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json" in actual
+    w._pins(actual)
