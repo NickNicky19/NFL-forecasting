@@ -503,7 +503,7 @@ if phase=='writer':
  tree=ast.parse((ROOT/'tests/test_audit_weekly_grade_native_memory_v1.py').read_text());save=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_save_fictional_service')
  store=s;exec(compile(ast.fix_missing_locations(ast.Module(body=[save],type_ignores=[])),'fictional-service-save','exec'),globals())
  _save_fictional_service(service,Path(seed['saved_service']).parent)
- metric('TWO_FULL_PARTITION_CHECKPOINT_APPENDED',HTTP_calls=client.calls,logical_sha256=handoff['snapshot_sha256'],runtime_bytes=sum(a['size'] for a in service.server.assets),writer_process=client.process)
+ metric('TWO_FULL_PARTITION_CHECKPOINT_APPENDED',HTTP_calls=client.calls,transfer_bytes=client.transferred,logical_sha256=handoff['snapshot_sha256'],runtime_bytes=sum(a['size'] for a in service.server.assets),writer_process=client.process)
 else:
  operation['parent'].handoff=deepcopy(handoff)
  result,client=operation['restore'](handoff);result.verify();k.native_envelope()
@@ -517,7 +517,7 @@ else:
  evidence=snapshot_path=path/'restore/FRESH_READER_NATIVE_PROOF.json'
  proof=json.loads(evidence.read_bytes());assert len(proof['context']['multipart_readback']['parts'])==2
  assert proof['context']['multipart_readback']['completed_at_utc']<=result.proof['known_by_at']
- metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED',HTTP_calls=client.calls,all_GET=True,known_by_at=result.proof['known_by_at'],reader_process=client.process)
+ metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=True,known_by_at=result.proof['known_by_at'],reader_process=client.process)
 '''
 
 
@@ -540,6 +540,6 @@ def test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_proc
         assert result.returncode==0,result.stderr
         values=[json.loads(line) for line in result.stdout.splitlines()]
         assert all(v["VmPeak"]<=512<<20 and v["CPU_seconds"]<120 and v["wall_seconds"]<180 for v in values)
-        assert values[-1]["HTTP_calls"]<=40;phases.append(values[-1])
+        assert values[-1]["HTTP_calls"]<=40 and values[-1]["transfer_bytes"]<=40<<20;phases.append(values[-1])
     assert phases[0]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_APPENDED" and phases[1]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED"
     assert phases[0]["pid"]!=phases[1]["pid"] and phases[0]["runtime_bytes"]<32<<20

@@ -67,6 +67,7 @@ class Parent:
         self.handoff = None
         self.context = None
         self.native = None
+        self.approved_local_binding = None
     def __call__(self, request):
         self.calls.append(deepcopy(request))
         if not self.accept:
@@ -79,9 +80,19 @@ class Parent:
             if request["kind"] == "CHECKPOINT_APPEND_CURRENT_ROOT":
                 assert inputs["snapshot_sha256"] == self.q["snapshot"].sha256
                 assert inputs["body_sha256"] == self.q["snapshot"].binding["sha256"]
+                self.approved_local_binding = deepcopy(self.q["snapshot"].binding)
             elif request["kind"] == "CHECKPOINT_APPEND_NATIVE_HANDOFF":
                 self.handoff = deepcopy(inputs["handoff"])
                 assert inputs["handoff_sha256"] == state.digest(self.handoff)
+                if self.handoff["schema_version"] == k.MULTIPART_VERSION+"-handoff":
+                    binding = k.cp.binding(self.q["append_output"]/"CHECKPOINT_ROOT.json.gz")
+                    expected = k.append_root_link(self.q["snapshot"], self.handoff,
+                        storage=self.q["storage"], native_binding=binding)
+                    assert set(inputs["root_link"]) == k.APPEND_ROOT_LINK_KEYS and inputs["root_link"] == expected
+                    assert expected["local_binding"] == self.approved_local_binding == self.q["snapshot"].binding
+                    assert expected["native_binding"]["sha256"] == self.handoff["body_sha256"] != expected["local_binding"]["sha256"]
+                else:
+                    assert "root_link" not in inputs
             elif request["kind"] == "CHECKPOINT_RESTORE_CURRENT_ROOT_AND_ORIGINAL_HANDOFF":
                 assert inputs["handoff"] == self.handoff
                 assert inputs["handoff_sha256"] == state.digest(self.handoff)
@@ -135,10 +146,14 @@ def case(packet, tmp_path, monkeypatch):
                 workflow_sha=SOURCE, job_id=k.JOBS[role], permission="write", event_name="workflow_dispatch", api_job_id=0, run_authenticated=False),
             operation="append" if role == "writer" else "restore", qualification=service.q, readonly=role == "reader",
             process=s.sha((role + str(counter[0])).encode()))
-        c.bind(service.binding)
+        # The actual Ops _client authenticates this new native client before
+        # checkpoint.current performs its own complete live admission. Count
+        # those two real requests; do not reset the counter or invent evidence.
+        c.authenticate_actions_job(); c.bind(service.binding)
         return c
     def append():
         c = client("writer")
+        packet["append_output"] = tmp_path/"append"
         value = k.append(packet["snapshot"], c, service.package, storage=packet["storage"], output=tmp_path / "append",
             current_root_go_sha256=ROOT_SHA, authenticate=parent, pending_census=service.census, clock=lambda:service.now)
         service.writer_done = (service.now + timedelta(seconds=10)).isoformat()
@@ -317,6 +332,79 @@ def test_v2_native_all_parts_literal_bytes_reports_and_P2_are_lossless(case):
     reads = evidence["context"]["multipart_readback"]
     assert len(reads["parts"]) == 2 and reads["completed_at_utc"] <= result.proof["known_by_at"]
     assert all(p["root_native_proof_sha256"] == state.digest(evidence["native_restore_proof"]) for p in reads["parts"])
+
+
+def test_v2_two_real_final_GETs_replace_duplicate_checks_without_cached_metadata(case):
+    client = case["client"]("writer")
+    identity,job,_,_ = k.current(client,"writer",case["service"].package,case["service"].census,k.Budget())
+    before, requests = client.calls, len(case["service"].calls)
+    proof = k.recheck_v2(client,identity,job)
+    actual = case["service"].calls[requests:]
+    assert client.calls == before+2 and len(actual) == 2 and all(r.method == "GET" for r in actual)
+    assert [r.full_url for r in actual] == [s.API+"/actions/runs/"+RUN, s.API+"/actions/runs/"+RUN+"/jobs?per_page=100&page=1"]
+    assert set(proof) == {"run_sha256","jobs_sha256"} and all(k.hashed(v) for v in proof.values())
+
+
+@pytest.mark.parametrize("kind", ["source","branch","actor","trigger","attempt","conclusion","event","path","repository",
+    "census","duplicate_name","job_source","job_name","job_status","job_started","job_id","client_process","client_permission"])
+def test_v2_fresh_final_API_still_rejects_every_original_scope_change(case, monkeypatch, kind):
+    client = case["client"]("writer")
+    identity,job,_,_ = k.current(client,"writer",case["service"].package,case["service"].census,k.Budget())
+    actual = client.transport
+    def changed(request, timeout):
+        response = actual(request, timeout); value = k.cp.strict_json(response.body)
+        if "/jobs?" in request.full_url:
+            row = value["jobs"][0]
+            if kind == "census": value["total_count"] += 1
+            elif kind == "duplicate_name": value["jobs"].append(dict(row,id=999));value["total_count"] += 1
+            elif kind == "job_source": row["head_sha"] = "b"*40
+            elif kind == "job_name": row["name"] = "unapproved"
+            elif kind == "job_status": row["status"] = "completed"
+            elif kind == "job_started": row["started_at"] = "2001-01-01T00:00:00Z"
+            elif kind == "job_id": row["id"] = 999
+        else:
+            if kind == "source": value["head_sha"] = "b"*40
+            elif kind == "branch": value["head_branch"] = "unapproved"
+            elif kind == "actor": value["actor"] = dict(login="lookalike",id=208912933)
+            elif kind == "trigger": value["triggering_actor"] = dict(login="github-actions[bot]",id=41898282)
+            elif kind == "attempt": value["run_attempt"] = True
+            elif kind == "conclusion": value["conclusion"] = "success"
+            elif kind == "event": value["event"] = "schedule"
+            elif kind == "path": value["path"] = ".github/workflows/unapproved.yml"
+            elif kind == "repository": value["head_repository"]["full_name"] = "unapproved/repository"
+        return Response(value, response.status, response.headers)
+    monkeypatch.setattr(client,"transport",changed)
+    if kind == "client_process": client.process = "b"*64
+    if kind == "client_permission": client.job["permission"] = "read"
+    with pytest.raises(k.CheckpointError): k.recheck_v2(client,identity,job)
+
+
+def test_original_duplicate_final_pair_hits_41_after_real_worker_pre_auth(case, monkeypatch):
+    multipart(case); client = case["client"]("writer"); q = case["q"]; q["append_output"] = case["root"]/"append"
+    monkeypatch.setattr(k,"recheck_v2",k.recheck)
+    with pytest.raises(s.StoreError,match="OPERATION_LIMIT"):
+        k.append(q["snapshot"],client,case["service"].package,storage=q["storage"],output=q["append_output"],
+            current_root_go_sha256=ROOT_SHA,authenticate=case["parent"],pending_census=case["service"].census,clock=lambda:case["service"].now)
+    assert client.calls == 40 and len(case["service"].posts()) == 6
+    assert not (q["append_output"]/"HANDOFF.json").exists() and (q["append_output"]/"PART_00_APPEND.json").exists()
+
+
+@pytest.mark.parametrize("kind", ["sha","bytes","logical_snapshot","local_binding"])
+def test_v2_callback_root_link_needs_owned_exact_native_root_and_original_local_snapshot(case, kind):
+    multipart(case); h,_ = case["append"](); q = case["q"]
+    binding = k.cp.binding(case["root"]/"append/CHECKPOINT_ROOT.json.gz")
+    original = deepcopy(q["snapshot"].binding)
+    snapshot = q["snapshot"]
+    if kind == "sha": binding["sha256"] = "0"*64
+    elif kind == "bytes": binding["bytes"] += 1
+    elif kind == "logical_snapshot":
+        doc = deepcopy(snapshot.document);doc["actual_completed_at"] = "2001-01-01T00:00:00Z"
+        snapshot = g.Snapshot(doc,g._KEY);snapshot.binding = original;snapshot._binding_sha256 = state.digest(original)
+    else:
+        snapshot = g.Snapshot(snapshot.document,g._KEY);snapshot.binding = binding;snapshot._binding_sha256 = state.digest(binding)
+    with pytest.raises((k.CheckpointError,g.GradeError,s.StoreError)):
+        k.append_root_link(snapshot,h,storage=q["storage"],native_binding=binding)
+    assert q["snapshot"].binding == original
 
 
 def test_v2_keeps_played_zero_DNP_unknown_corrections_and_original_known_clocks(case):

@@ -48,6 +48,8 @@ APPEND_KEYS = {"schema_version", "current_root_go_sha256", "producer", "epoch_sh
     "started_at_utc", "completed_at_utc", "HTTP_calls", "transfer_bytes"}
 PART_APPEND_KEYS = {"schema_version", "index", "local_manifest_sha256", "body_sha256", "body_bytes", "descriptor_sha256",
     "producer", "current_root_go_sha256", "qualification_sha256", "started_at_utc", "completed_at_utc", "HTTP_calls", "transfer_bytes"}
+APPEND_ROOT_LINK_KEYS = {"schema_version", "current_root_go_sha256", "epoch_sha256", "snapshot_sha256",
+    "local_binding", "native_binding", "native_parts_sha256"}
 _KEY = object()
 
 
@@ -159,6 +161,45 @@ def recheck(client, identity, job):
     return dict(run_sha256=run_sha, jobs_sha256=jobs_sha)
 
 
+def recheck_v2(client, identity, job):
+    """One NEW actual run/jobs cohort applies both original recheck guards.
+
+    No previous response, authenticated flag or caller-supplied API body is
+    reused. V1 retains its original two-pair implementation above.
+    """
+    require(isinstance(client, store.Client) and cp.client_identity(client) == identity
+        and client.job.get("execution_lane") == "github_actions" and client.job.get("permission") == "write",
+        "GRADING_CURRENT_CLIENT_CHANGED_DURING_TRANSFER")
+    run, run_sha = api_body(client, "/actions/runs/" + client.run_id)
+    listing, jobs_sha = api_body(client, "/actions/runs/" + client.run_id + "/jobs?per_page=100&page=1")
+    actor = run.get("actor", {})
+    require(type(run.get("id")) is int and run["id"] == int(identity["run_id"])
+        and run.get("head_sha") == identity["source_sha"] == client.source_sha
+        and run.get("status") == "in_progress" and run.get("conclusion") is None
+        and type(run.get("run_attempt")) is int and run["run_attempt"] == 1
+        and run.get("path") == ".github/workflows/lab.yml" and run.get("event") == "workflow_dispatch"
+        and run.get("repository", {}).get("full_name") == run.get("head_repository", {}).get("full_name") == store.REPO
+        and run.get("head_branch") == identity["workflow_ref"].split("@refs/heads/", 1)[1]
+        and (actor.get("login"), actor.get("id")) in {("NickNicky19", 208912933), ("github-actions[bot]", 41898282)}
+        and ("triggering_actor" not in run or (run["triggering_actor"].get("login"), run["triggering_actor"].get("id"))
+            == (actor.get("login"), actor.get("id")))
+        and type(listing.get("total_count")) is int and type(listing.get("jobs")) is list
+        and listing["total_count"] == len(listing["jobs"]) <= 100
+        and all(type(row) is dict for row in listing["jobs"]), "CURRENT_GRADING_RUN_CHANGED_DURING_TRANSFER")
+    # The original Client authentication rejects duplicate running job names;
+    # the original checkpoint recheck separately binds the exact API job ID.
+    named = [row for row in listing["jobs"] if row.get("name") == client.job["job_id"]
+        and row.get("status") == "in_progress" and row.get("run_id") == int(client.run_id)
+        and row.get("head_sha") == client.source_sha]
+    found = [row for row in listing["jobs"] if row.get("id") == identity["api_job_id"]]
+    require(len(named) == len(found) == 1 and named[0] is found[0]
+        and type(found[0].get("id")) is int and found[0]["id"] > 0
+        and all(found[0].get(key) == job.get(key) for key in
+            ("id", "name", "head_sha", "run_id", "status", "conclusion", "started_at")),
+        "CURRENT_GRADING_JOB_CHANGED_DURING_TRANSFER")
+    return dict(run_sha256=run_sha, jobs_sha256=jobs_sha)
+
+
 def safe_handoff(handoff):
     version = MULTIPART_VERSION if type(handoff) is dict and handoff.get("schema_version") == MULTIPART_VERSION+"-handoff" else VERSION
     require(type(handoff) is dict and set(handoff) == HANDOFF_KEYS
@@ -263,6 +304,36 @@ def _private_parts(handoff, wire):
             <= state.utc(proof["started_at_utc"]) <= state.utc(proof["completed_at_utc"])
             <= state.utc(handoff["append_proof"]["completed_at_utc"]), "CLOSED_ORIGINAL_GRADING_PART_APPEND")
     return manifest
+
+
+def append_root_link(snapshot, handoff, *, storage, native_binding):
+    """Closed private callback metadata, not an authorization or new binding.
+
+    The parent derives native_binding from its own checkpoint output directory,
+    calls this validator with the original live Snapshot, and compares the
+    returned local binding with its approved CHECKPOINT_APPEND_CURRENT_ROOT
+    scope. The original Snapshot/binding is never rewritten.
+    """
+    require(type(snapshot) is grade.Snapshot, "LIVE_ORIGINAL_APPEND_SNAPSHOT_REQUIRED")
+    snapshot.verify(); safe_handoff(handoff)
+    require(handoff["schema_version"] == MULTIPART_VERSION+"-handoff"
+        and handoff["snapshot_sha256"] == snapshot.sha256
+        and handoff["epoch_sha256"] == snapshot.document["epoch_sha256"]
+        and type(native_binding) is dict and set(native_binding) == {"path", "bytes", "sha256"}
+        and native_binding["sha256"] == handoff["body_sha256"] and native_binding["bytes"] == handoff["body_bytes"],
+        "EXACT_ORIGINAL_LOCAL_AND_NATIVE_ROOT_SCOPE")
+    body = grade._read_owned(storage, native_binding, grade.PARTITION_LIMITS["manifest_bytes"], raw=True)
+    wire = grade._unpack(body, grade.PARTITION_LIMITS["manifest_bytes"])
+    manifest = _private_parts(handoff, wire)
+    local = grade._read_owned(storage, snapshot.binding, grade.PARTITION_LIMITS["manifest_bytes"], raw=True)
+    local_manifest = grade._partition_manifest(grade._unpack(local, grade.PARTITION_LIMITS["manifest_bytes"]))
+    require(wire["snapshot_body_sha256"] == snapshot.binding["sha256"] and manifest == local_manifest,
+        "UNCHANGED_APPROVED_LOCAL_GRADING_MANIFEST")
+    link = dict(schema_version=MULTIPART_VERSION+"-append-root-link", current_root_go_sha256=handoff["current_root_go_sha256"],
+        epoch_sha256=handoff["epoch_sha256"], snapshot_sha256=snapshot.sha256,
+        local_binding=deepcopy(snapshot.binding), native_binding=deepcopy(native_binding), native_parts_sha256=state.digest(wire["parts"]))
+    require(set(link) == APPEND_ROOT_LINK_KEYS and len(store.canonical(link)) <= 16 << 10, "CLOSED_PRIVATE_APPEND_ROOT_LINK")
+    return link
 
 
 def _restore_parts(handoff, client, storage, output, root_binding, root_proof, budget, clock):
@@ -377,7 +448,7 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
         with storage.transaction():
             storage._check(Path(client.journal) / "checkpoint-reservation-probe")
             descriptor = store.append(client, body, cp.payload(body), package["qualification"])
-    evidence["final"] = recheck(client, producer, job)
+    evidence["final"] = (recheck_v2 if multipart else recheck)(client, producer, job)
     budget.check(client)
     proof = dict(schema_version=version + "-native-append", current_root_go_sha256=current_root_go_sha256,
         producer=producer, epoch_sha256=doc["epoch_sha256"], snapshot_sha256=snapshot.sha256,
@@ -392,8 +463,11 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
         grade_code_pins_sha256=state.digest(grade.pins()), helper_sha256=pins(), descriptor=descriptor,
         append_proof=proof, append_proof_sha256=state.digest(proof), successful_forecast=False, public_release=False, fits=0)
     raw = safe_handoff(handoff)
-    _authenticate(authenticate, "CHECKPOINT_APPEND_NATIVE_HANDOFF", dict(handoff_sha256=store.sha(raw),
-        handoff=handoff, api_evidence=evidence), clock())
+    final_scope = dict(handoff_sha256=store.sha(raw), handoff=handoff, api_evidence=evidence)
+    if multipart:
+        final_scope["root_link"] = append_root_link(snapshot, handoff, storage=storage,
+            native_binding=cp.binding(output/"CHECKPOINT_ROOT.json.gz"))
+    _authenticate(authenticate, "CHECKPOINT_APPEND_NATIVE_HANDOFF", final_scope, clock())
     storage.write_bytes(output / "HANDOFF.json", raw)
     budget.check(client)
     return handoff
@@ -468,7 +542,8 @@ def _finish_restore(handoff, client, registered, storage, output, authenticate, 
     if handoff["schema_version"] == VERSION+"-handoff":
         storage.import_file(output / "NATIVE_READBACK.json.gz", output / "GRADING_SNAPSHOT.json.gz", expected_sha256=handoff["body_sha256"])
     ref = cp.binding(output / "GRADING_SNAPSHOT.json.gz")
-    context["final_api_evidence"] = recheck(client, reader, reader_job)
+    multipart = handoff["schema_version"] == MULTIPART_VERSION+"-handoff"
+    context["final_api_evidence"] = (recheck_v2 if multipart else recheck)(client, reader, reader_job)
     _authenticate(authenticate, "CHECKPOINT_NATIVE_RESTORED_BODY", dict(context,
         native_restore_proof=native, restored_binding=ref), clock())
     snapshot = grade.restore_snapshot(storage, ref, registered, authenticate=authenticate, at=clock())
