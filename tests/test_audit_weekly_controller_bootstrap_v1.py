@@ -453,6 +453,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
 @pytest.mark.parametrize("literal", [
     "state/controller-v1/bootstrap-v2-20261026-discovery.json",
     "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
+    "state/controller-v1/bootstrap-v2-20261026-registered-builder.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []

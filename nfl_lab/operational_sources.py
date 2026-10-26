@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
 
-from . import data, features
+from . import data, features, permitted_source_features as permitted
 from .operational_storage import OperationalStorage
 from .operational_io import operational_io
 
@@ -162,7 +162,6 @@ def _filtered_parquet(path: Path, columns: list[str], *, year: int, weeks: list[
 
 
 def _subsets(stage: Path, request: dict) -> tuple[dict, pd.DataFrame]:
-    from . import permitted_source_features as permitted
     sources, raw = stage / "sources", stage / "raw"
     raw.mkdir()
     schedule = pd.read_csv(sources / "schedules.csv", usecols=SCHEDULE_COLUMNS)
@@ -293,7 +292,6 @@ def acquire_operational_history(cache: Path, seasons: list[int], policy: Path | 
 
 
 def _acquire_operational_history(cache, seasons, policy, asof, *, source_cache, allowed_periods, storage):
-    from . import permitted_source_features as permitted
     started = time.monotonic()
     normalized = load_source_policy(policy)
     request = _request(seasons, normalized, asof, allowed_periods)

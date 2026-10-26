@@ -1,0 +1,77 @@
+{
+  "base": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+  "branch": "audit/registered-feature-builder-restore-20261026",
+  "changes_not_made": [
+    "No model manifests or model bytes edited.",
+    "No builder guard, model code, R0, epoch pins, mathematical function body, bootstrap/registry path, workflow or cap changed.",
+    "No new lazy boundary needed; permitted_source_features.py remains byte-unchanged."
+  ],
+  "created_at_utc": "2026-10-26T07:28:39.651412+00:00",
+  "evidence_sha256": {
+    "before-tests.log": "6bc7ff5c68047ec0aa056c71e475515b04c813fe4ab78608d73ac7cc126cd2eb",
+    "final-focused-tests.log": "e46dc5a26f0aff607c2b1c371f26748b7b1388de1e89178aa3e4f586f94b1a6c",
+    "focused-tests.log": "32f65f7a792f60d095ed61e0e970f6be0db44822afa306429cdb182c1d98f9c3",
+    "registered-query-tests.log": "13b4f41045bdf65c6b873e7e1201701b40cde1346f8c8cf168af451dda54923b",
+    "unchanged-identity-checks.json": "11556f8f85b6298ad35eefdada9c070574f126f3b3eec36687d5dbfb76964331"
+  },
+  "files": {
+    "nfl_lab/audit_weekly_provider_v1.py": {
+      "bytes": 27740,
+      "sha256": "ffbe666b1838998282286ad68640255962f2c047c800b64f9f476a161a3b900b"
+    },
+    "nfl_lab/operational_sources.py": {
+      "bytes": 30317,
+      "sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c"
+    },
+    "tests/test_audit_weekly_runtime_v1.py": {
+      "bytes": 30384,
+      "sha256": "df4a454823704a55215f128d9af2c4ac85395a7111c00baf3316dcc936b28845"
+    }
+  },
+  "identity": {
+    "builder_exact_original": true,
+    "builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+    "epoch_pin4_files_unchanged": {
+      "nfl_lab/audit_weekly_epoch_v1.py": true,
+      "nfl_lab/audit_weekly_origin_v1.py": true,
+      "nfl_lab/weekly_adaptive.py": true,
+      "nfl_lab/weekly_generic_producer.py": true
+    },
+    "model_files_unchanged": {
+      "baseline_correction.py": true,
+      "cdf_engine.py": true,
+      "direct_boosters.py": true,
+      "median_boosting.py": true,
+      "role_boosting.py": true,
+      "weekly_future_inference.py": true
+    },
+    "source_functions_math_unchanged": true
+  },
+  "limits": [
+    "Focused software tests only; no claim of genuine hosted Ops inference completion.",
+    "Full combined source CI and review remain required.",
+    "Capacity hold remains in force; no real private/native writes, source downloads, real outcome reads or fits performed.",
+    "Parent owns the new immutable registration slot and fresh literal-source qualification."
+  ],
+  "local_commit": "9a49916bde39a139187a9b1ef628a047c0920e50",
+  "prior_incompatible_builder_sha256": "069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e",
+  "problem": "Import-only source change broke the retained model feature-builder identity guard; frozen-feature replay did not execute this new-query guard.",
+  "registered_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+  "registered_source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "repair": [
+    "Restore operational_sources.py byte-for-byte to the immutable registered c748 Git blob.",
+    "Point the metadata policy loader integrity gate to that exact original file; its validator body is unchanged.",
+    "Add a real query-to-shared-feature-to-owned-feature-capture regression with the literal original contract, plus hash-drift rejection."
+  ],
+  "schema_version": "registered-feature-builder-restore-v1",
+  "tests": {
+    "before_log": "before-tests.log",
+    "cold_metadata": "Existing 512MiB AS/120CPU/180wall CAS, provider no-numerics and grading import smoke tests passed.",
+    "final_log": "final-focused-tests.log",
+    "fixture_correction": "Use the exact Runtime.infer game_id.map(cutoffs).map(utc) clock construction, retaining the hand-checked numeric assertions.",
+    "intermediate_fixture_failure_log": "focused-tests.log",
+    "passed": 98,
+    "seconds": 57.04
+  },
+  "worktree": "/workspace/nfl-system-audit/registered-feature-builder-restore"
+}

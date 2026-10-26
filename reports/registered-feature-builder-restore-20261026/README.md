@@ -1,0 +1,9 @@
+# Restore the feature builder registered in retained artifacts
+
+Actual Ops17 restored all18models and fresh inputs, then failed inference. Its immutable retained source contract requires builder0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c. A later import-only edit changed operational_sources.py to069c498e..., which the unchanged future-query guard rejects. Frozen-feature historical replay does not execute this check.
+
+Restore operational_sources.py byte-for-byte from registered sourcec74812b and update the metadata provider's separate integrity gate to that restored file. No model manifest, model byte, builder guard, R0, epoch pin or mathematical function body changes. The original seven-day historical availability assumption remains explicit; this does not establish actual upstream publication clocks.
+
+A real fictional Monday query passes through current query construction, the registered shared builder and owned feature capture. Expected means2and0 and prior-game counts1and1 are independently hand-checkable. Played zero and unknown future participation remain distinct. Wrong source hashes still reject. Author98checks and final combined222checks pass; independent review12focused checks passes. Before and intermediate fixture failures remain retained.
+
+The new fixed registration slot preserves issued0f6d/8a62/29112ff records and old routes. Full hosted CI and normal integration remain required. Further private/native writes are held: the old namespace has115of128slots, and fresh registration plus successful Ops needs at least16. Existing rotation supports a new private canary store, but cross-namespace prior capture/history continuation still needs a focused repair. No old evidence is deleted, quota relaxed, new fit run or successful native forecast claimed.

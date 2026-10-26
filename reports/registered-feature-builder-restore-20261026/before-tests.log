@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_registered_original_builder_new_monday_query_features_and_owned_capture _
+tests/test_audit_weekly_runtime_v1.py:66: in test_registered_original_builder_new_monday_query_features_and_owned_capture
+    frame=query.build_shared_features(loaded,packet,policy=policy,source_contract=contract)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/weekly_current_query.py:133: in build_shared_features
+    result = builder(history, queries, policy=policy, source_contract=source_contract)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/weekly_future_inference.py:614: in build_future_features
+    require(sha(Path(__file__).parent/'operational_sources.py')==source_contract['feature_builder_sha256'],
+nfl_lab/weekly_future_inference.py:32: in require
+    if not value: raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: feature builder identity changed
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_runtime_v1.py::test_registered_original_builder_new_monday_query_features_and_owned_capture
+1 failed in 3.40s

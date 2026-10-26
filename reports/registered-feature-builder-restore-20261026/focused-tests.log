@@ -1,0 +1,13 @@
+F....................................................................... [ 73%]
+..........................                                               [100%]
+=================================== FAILURES ===================================
+_ test_registered_original_builder_new_monday_query_features_and_owned_capture _
+tests/test_audit_weekly_runtime_v1.py:70: in test_registered_original_builder_new_monday_query_features_and_owned_capture
+    assert frame.f_player_rec_mean3.tolist()==[2.0,0.0]
+E   assert [nan, nan] == [2.0, 0.0]
+E     
+E     At index 0 diff: nan != 2.0
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_runtime_v1.py::test_registered_original_builder_new_monday_query_features_and_owned_capture
+1 failed, 97 passed in 54.57s
