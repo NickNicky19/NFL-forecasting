@@ -2,7 +2,7 @@
 
 ## Completed now
 
-**One genuine NFL NGBoost fit and inference completed**, plus a new passing-workload diagnostic and a fresh QB-only Week 7 outcome refresh. All received independent read-only post-execution acceptance. No live model replacement or deployment occurred in this wave.
+**One genuine NFL NGBoost fit, inference and scoring completed**, plus a new passing-workload diagnostic and a fresh QB-only Week 7 outcome refresh. Those received independent read-only post-execution acceptance. A further hierarchical interceptions fit converged but remains unscored after two retained archive-format failures. No live model replacement or deployment occurred in this wave.
 
 The [updated QB scorecard](QB_REFRESH.md) now grades frozen predictions on 12 final query games, while preserving Monday and unqueried non-QB outcomes as pending/previously supported. On the mixed-timing common rows, Count A reduces passing-TD MSE 5.09%, Response-CDF attempt MSE 3.18% and interception MSE 2.05% versus current selection. Passing yards and completions retain the current method's lowest captured lab loss. These are incomplete-week descriptive results; rare-event zero coverage and forecast-timing limitations prevent a complete-population/prospective superiority claim. Every arm remains in the [safe aggregate record](QB_REFRESH_AGGREGATES.json).
 
@@ -64,7 +64,7 @@ These are the existing served families, not newly proven champions. All retain d
 |Passing TDs|Leaf-CDF mean|Regression diagnostic completed; scoring-opportunity/conversion control remains distinct from tested count forests|Retain|
 |Completions|Leaf-CDF mean|Regression diagnostic completed; fixed-attempt conversion and qualified catchability work queued|Retain|
 |Passing attempts|Leaf-CDF mean|Regression diagnostic completed; team opportunity/QB role model needs timely participation evidence|Retain|
-|Interceptions|Leaf-CDF mean|One actual NGBoost pilot and FTN value/player/denominator qualification completed; official credit/publication and zero-label gates remain|Retain; pilot gain small and mixed|
+|Interceptions|Leaf-CDF mean|NGBoost scored; hierarchical fit converged but forecast archive failed before scoring; FTN source qualification completed with gates remaining|Retain; measured pilot gain small and mixed|
 |Rushing yards|Leaf-CDF median|Reuse completed direct/efficiency/workload losses; role and signed-gain additions need qualified inputs|Retain|
 |Rushing attempts|Legacy Count A intended mean|Corrected-mean COUNT7 consumer package ready with existing integrator; dynamic workload losses preserved|Retain pending integrated correction|
 |Receptions|Legacy Count A intended mean|COUNT7 correction pending; qualified target/catch-quality additions queued; rec-half unchanged|Retain pending integrated correction|
@@ -110,7 +110,13 @@ Differences against strong controls are small: CatBoost reception MSE is about 0
 
 All twelve release decisions remain retain/no new switch; exact PPR remains unsupported. No new deployment occurred. The 2022–2024 three-season minima and the current-season Week 7 scorecard remain distinct scopes.
 
+## Further hierarchical pilot: no measured accuracy result
+
+The [hierarchical interceptions pilot](HIERARCHICAL_INTERCEPTIONS.md) fitted one fixed, partially pooled player/team/opponent mean model. Its parameters are retained and converged, but neither the original prediction nor one no-refit replay could fit the required durable forecast archive within its fixed storage allowance. Both stopped before evaluation labels; no score or improvement exists. One optimizer fit, one fallback-prior estimate and two prediction passes were consumed. Actual cumulative runtime was 37.822 CPU / 37.690 wall seconds; retained files total 1,885 bytes. All failures, limits and exact version identities remain preserved. This is fitted-but-unscored, not a second completed accuracy comparison.
+
 ## Actual deployment and recurring operation
+
+The [fresh production status check](RELEASE_STATUS.md) at 17:46:43–45 UTC confirms the same served Main and software assets. The existing owner's two Reliability runs failed; PR and push checkout identities are explicitly distinguished. The prepared COUNT7 package has not reached production. Its immutable expiry precedes the next configured daily website run, so it cannot be extended to make that run eligible. The exact existing-writer scope/CI/integration actions and separate research/website schedules are recorded there.
 
 Fresh GitHub and TLS reads found website main **`453e7e6e843b0cb1ae611b0925063e0f96c70196`**, app SHA-256 **`409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec`**, existing overlay **`3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267`**. Readback completed October 26 at **13:07 UTC**. That verifies the existing deployment, not a new release by this wave.
 

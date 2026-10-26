@@ -34,6 +34,13 @@ PPR remains blocked. The incumbent anytime blend was also checked as an openly
 new reconstruction, not recovered old P4 rows. These runs added no model fits,
 live selection switches or deployments and retain their original source limits.
 
+The further [hierarchical interceptions pilot](accuracy-wave-20261026/HIERARCHICAL_INTERCEPTIONS.md)
+retained one converged fit but no scored forecast archive. Two prediction passes
+and both format failures are recorded; no accuracy gain or deployment is claimed.
+The [fresh production check](accuracy-wave-20261026/RELEASE_STATUS.md) records
+unchanged served assets, failed hosted CI and the existing integrator's concrete
+remaining scope/release actions.
+
 Updated 2026-10-23. Scope: recorded work in this lab and the earlier evidence
 actually recovered here. This index adds no forecasts, fits, outcomes or scores.
 It does not claim to recover every artifact from an earlier chat.
