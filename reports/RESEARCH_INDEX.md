@@ -26,6 +26,14 @@ The initial aggregate publication is
 Later local checkpoint additions are versioned separately. The prior index and
 study descriptions below retain their original dates and scientific claims.
 
+Subsequent work restored explicit historical zeros for 105 player-games, then
+[rescored 85 fixed procedure/output products](accuracy-wave-20261026/RESTORED_2024.md)
+on all 272 REG games/18 weeks of 2024. CatBoost controls matched the source,
+queries and old labels. Count medians remain separate from count means; exact
+PPR remains blocked. The incumbent anytime blend was also checked as an openly
+new reconstruction, not recovered old P4 rows. These runs added no model fits,
+live selection switches or deployments and retain their original source limits.
+
 Updated 2026-10-23. Scope: recorded work in this lab and the earlier evidence
 actually recovered here. This index adds no forecasts, fits, outcomes or scores.
 It does not claim to recover every artifact from an earlier chat.

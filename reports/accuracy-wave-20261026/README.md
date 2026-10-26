@@ -100,6 +100,16 @@ All four selected flags have zero actual null/invalid values in these retained a
 
 Outer runtime: **19.373 CPU / 19.268 wall seconds**, RSS 278,126,592 bytes. New immutable proof/metadata total **2,821 bytes**, within 8 KiB. Independent post-execution checks reproduce all counts and bindings. [Source details](FTN_QUALIFICATION.md) and [aggregate proof](FTN_AGGREGATES.json) retain the unmatched/context/denominator findings and source-rights distinctions.
 
+## Additional completed historical work: real zeros and 85 comparisons
+
+The [2024 appearance/zero qualification](FTN_2024_ZEROS.md) restored 444 overlapping target labels across **105 unique player-games** (12 RB, 35 WR, 58 TE), using positive FTN appearance evidence plus original explicit statistics. It added no passing labels and left 12,179 target incidences unknown. Old labels, forecasts and scientific registrations were not overwritten.
+
+The separately registered [restored-population comparison](RESTORED_2024.md) then actually rescored **85 procedure/output products on 2024 REG, all 272 games and 18 weeks**, with zero new fits or inference. All 11 CatBoost controls passed source/query/old-label/product compatibility; 24 CDF count medians were tested as separate MAE products. Every offered forecast remained finite, with fallbacks and missing outcomes retained. All scores, week intervals and probability diagnostics passed independent post-execution review. These are historical laboratory comparisons; contemporaneous SITE/R0 forecasts are unavailable.
+
+Differences against strong controls are small: CatBoost reception MSE is about 0.190% below corrected Count A, with average misses 1.3314 versus 1.3364 catches and slightly worse p95 error. A separate new reconstruction of the existing equal CDF/CatBoost anytime recipe puts CatBoost's Brier advantage at only **0.0305% against the blend**, with uncertainty crossing zero and slightly worse log loss. This does not support replacing the incumbent recipe. It does not recover missing original P4 row vectors or demonstrate equivalence to deployed 2026 parameters.
+
+All twelve release decisions remain retain/no new switch; exact PPR remains unsupported. No new deployment occurred. The 2022–2024 three-season minima and the current-season Week 7 scorecard remain distinct scopes.
+
 ## Actual deployment and recurring operation
 
 Fresh GitHub and TLS reads found website main **`453e7e6e843b0cb1ae611b0925063e0f96c70196`**, app SHA-256 **`409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec`**, existing overlay **`3691be0265c1d4e4f1a7ee0631168337c49f66ce80abd6005a5dc4fd4ccfc267`**. Readback completed October 26 at **13:07 UTC**. That verifies the existing deployment, not a new release by this wave.
