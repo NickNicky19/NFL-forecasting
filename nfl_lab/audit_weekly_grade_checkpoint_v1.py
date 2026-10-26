@@ -235,7 +235,8 @@ def output_root(storage, output, reserve):
     require(isinstance(storage, OperationalStorage) and storage.limit_bytes <= 512 << 20,
             "UNCHANGED_GLOBAL_GRADING_STORAGE_REQUIRED")
     output = store.parents_safe(output)
-    with storage.transaction():
+    with storage._locked():
+        storage._refresh()
         require(not output.exists(), "FRESH_GRADING_CHECKPOINT_OPERATION_NO_RETRY")
         storage._require(reserve)
         storage.register_root(output)
@@ -266,7 +267,7 @@ def _append_parts(snapshot, manifest, client, package, storage, output, producer
             qualification_sha256=state.digest(package["qualification"]), started_at_utc=started,
             completed_at_utc=state.utc(clock()).isoformat(), HTTP_calls=client.calls, transfer_bytes=client.transferred)
         record = dict(index=part["index"], descriptor=descriptor, append_proof=proof)
-        storage.write_bytes(output/f"PART_{part['index']:02d}_APPEND.json", store.canonical(record))
+        grade._write_owned(storage, output/f"PART_{part['index']:02d}_APPEND.json", store.canonical(record))
         records.append(record); del body
         budget.check(client)
     # The only root carrying private part locators is created after every
@@ -276,7 +277,7 @@ def _append_parts(snapshot, manifest, client, package, storage, output, producer
     plain = store.canonical(root)
     require(len(plain) <= grade.PARTITION_LIMITS["manifest_bytes"], "FINITE_PRIVATE_GRADING_ROOT")
     body = gzip.compress(plain, mtime=0)
-    storage.write_bytes(output/"CHECKPOINT_ROOT.json.gz", body)
+    grade._write_owned(storage, output/"CHECKPOINT_ROOT.json.gz", body)
     with storage.transaction():
         storage._check(Path(client.journal)/"checkpoint-reservation-probe")
         descriptor = store.append(client, body, cp.payload(body), package["qualification"])
@@ -362,9 +363,9 @@ def _restore_parts(handoff, client, storage, output, root_binding, root_proof, b
         encoded, manifest_api_sha = read(descriptor["manifest_asset_id"], "manifest-"+descriptor["manifest_sha256"]+".json",
             descriptor["manifest_bytes"], descriptor["manifest_sha256"])
         require(encoded == store.canonical(entry), "EXACT_NATIVE_GRADING_PART_MANIFEST")
-        storage.write_bytes(output/f"PART_{part['index']:02d}_NATIVE_MANIFEST.json", encoded)
+        grade._write_owned(storage, output/f"PART_{part['index']:02d}_NATIVE_MANIFEST.json", encoded)
         body, payload_api_sha = read(entry["payload_asset_id"], entry["payload_name"], part["bytes"], part["sha256"])
-        storage.write_bytes(output/part["name"], body); del body
+        grade._write_owned(storage, output/part["name"], body); del body
         proof = dict(schema_version=MULTIPART_VERSION+"-part-native-read", index=part["index"],
             descriptor_sha256=state.digest(descriptor), root_native_proof_sha256=state.digest(root_proof),
             root_body_sha256=handoff["body_sha256"], payload_sha256=part["sha256"], bytes=part["bytes"],
@@ -372,7 +373,7 @@ def _restore_parts(handoff, client, storage, output, root_binding, root_proof, b
             manifest_api_sha256=manifest_api_sha, payload_api_sha256=payload_api_sha,
             started_at_utc=started, completed_at_utc=state.utc(clock()).isoformat(),
             HTTP_calls=client.calls, transfer_bytes=client.transferred)
-        storage.write_bytes(output/f"PART_{part['index']:02d}_NATIVE_READ.json", store.canonical(proof))
+        grade._write_owned(storage, output/f"PART_{part['index']:02d}_NATIVE_READ.json", store.canonical(proof))
         proofs.append(proof)
     client.draft(); budget.check(client)
     return dict(schema_version=MULTIPART_VERSION+"-complete-part-read", parts=proofs,
@@ -442,7 +443,7 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
     output = output_root(storage, output, len(body) + (64 << 10))
     intent = dict(authenticate_inputs, schema_version=VERSION + "-append-intent", body_bytes=len(body),
         epoch_sha256=doc["epoch_sha256"], actual_started_at=state.utc(clock()).isoformat(), public_release=False, successful_forecast=False)
-    storage.write_bytes(output / "APPEND_INTENT.json", store.canonical(intent))
+    grade._write_owned(storage, output / "APPEND_INTENT.json", store.canonical(intent))
     if multipart:
         body, descriptor = _append_parts(snapshot, wire, client, package, storage, output, producer,
             current_root_go_sha256, budget, clock)
@@ -470,7 +471,7 @@ def append(snapshot, client, package, *, storage, output, current_root_go_sha256
         final_scope["root_link"] = append_root_link(snapshot, handoff, storage=storage,
             native_binding=cp.binding(output/"CHECKPOINT_ROOT.json.gz"))
     _authenticate(authenticate, "CHECKPOINT_APPEND_NATIVE_HANDOFF", final_scope, clock())
-    storage.write_bytes(output / "HANDOFF.json", raw)
+    grade._write_owned(storage, output / "HANDOFF.json", raw)
     budget.check(client)
     return handoff
 
@@ -517,7 +518,7 @@ def restore(handoff, client, package, registered, *, storage, output, current_ro
         handoff=handoff, reader=reader, api_evidence=evidence)
     _authenticate(authenticate, "CHECKPOINT_RESTORE_CURRENT_ROOT_AND_ORIGINAL_HANDOFF", context, clock())
     output = output_root(storage, output, 2 * handoff["body_bytes"] + (128 << 10))
-    storage.write_bytes(output / "RESTORE_INTENT.json", store.canonical(context))
+    grade._write_owned(storage, output / "RESTORE_INTENT.json", store.canonical(context))
     with storage.transaction():
         storage._check(Path(client.journal) / "checkpoint-reservation-probe")
         native = store.restore(client, handoff["descriptor"], output / "NATIVE_READBACK.json.gz")
@@ -555,7 +556,7 @@ def _finish_restore(handoff, client, registered, storage, output, authenticate, 
     version = MULTIPART_VERSION if handoff["schema_version"] == MULTIPART_VERSION+"-handoff" else VERSION
     proof_body = dict(schema_version=version + "-fresh-reader-native-evidence", context=context,
         native_restore_proof=native, restored_binding=ref, known_by_at=known)
-    storage.write_bytes(output / "FRESH_READER_NATIVE_PROOF.json", store.canonical(proof_body))
+    grade._write_owned(storage, output / "FRESH_READER_NATIVE_PROOF.json", store.canonical(proof_body))
     proof = dict(schema_version=grade.VERSION + "-durability", snapshot_sha256=snapshot.sha256,
         restored_body_sha256=ref["sha256"], known_by_at=known, producer=handoff["producer"], reader=reader,
         proof_sha256=state.digest(proof_body))

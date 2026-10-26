@@ -68,6 +68,67 @@ def _cohort_refs(packet):
     return storage,refs,bodies
 
 
+def test_single_write_matches_original_bytes_CAS_quota_and_fresh_scans(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage
+    body=gzip.compress(state.canonical(dict(text="fictional é🏈",value=-0.0,flags=[True,None])),mtime=0)
+    outputs=[]
+    for name,write in [("old",lambda s,p,b:s.write_bytes(p,b)),("new",grade._write_owned)]:
+        storage=OperationalStorage(tmp_path/name/"cache",ROOT/"config/operational-source-policy-v2.json",state=tmp_path/name/"state")
+        base=storage.register_root(tmp_path/name/"output");path=base/"record.json.gz";actual=storage._scan;scans=[0]
+        def scan():scans[0]+=1;return actual()
+        with monkeypatch.context() as patch:
+            patch.setattr(storage,"_scan",scan)
+            assert write(storage,path,body)==len(body)
+            assert scans[0]==(2 if name=="old" else 1)
+        ref=storage.validate_reference(path,store.sha(body));assert path.read_bytes()==body and not path.stat().st_mode&0o222
+        assert write(storage,path,body)==len(body)
+        with pytest.raises(FileExistsError):write(storage,path,b"changed")
+        outputs.append((ref['bytes'],ref['sha256'],storage.snapshot()['physical_bytes']))
+    assert outputs[0]==outputs[1]
+
+
+def test_single_write_preserves_quota_before_bytes_and_failed_alias(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage,StorageQuotaError
+    policy=json.loads((ROOT/"config/operational-source-policy-v2.json").read_bytes());policy['storage']['limit_bytes']=64<<10
+    storage=OperationalStorage(tmp_path/"cache",policy,state=tmp_path/"state");base=storage.register_root(tmp_path/"output")
+    with pytest.raises(StorageQuotaError):grade._write_owned(storage,base/"over-cap",b"x"*(64<<10))
+    assert not (base/"over-cap").exists() and not list(storage.control_root.glob('.incoming-*'))
+    actual=storage._alias;body=b"retained fictional partial evidence"
+    def fail(blob,path,replace):actual(blob,path,replace);raise OSError('FICTIONAL_AFTER_ALIAS')
+    monkeypatch.setattr(storage,'_alias',fail)
+    with pytest.raises(OSError,match='FICTIONAL_AFTER_ALIAS'):grade._write_owned(storage,base/"partial",body)
+    assert (base/"partial").read_bytes()==body and (storage.blob_root/store.sha(body)).read_bytes()==body
+    storage.validate_reference(base/"partial",store.sha(body))
+
+
+@pytest.mark.parametrize("encoding",['utf-8','utf-8-sig','utf-16','utf-16-be','utf-32'])
+def test_scalar_collector_C_decoder_matches_original_strict_parser(encoding):
+    doc=dict(player_id='00-0000001',game_id='espn:112',target='rec',actual=-0.0,participation_state='played',
+        source='fictional é🏈',source_sha256='a'*64,status_sha256='b'*64,observed_at='2026-10-28T08:00:00Z',source_timestamp=None)
+    raw=json.dumps(doc,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode(encoding)
+    before=grade._JSONStream(io.BytesIO(raw),grade.LIMITS['decoded_bytes']).load()
+    after=grade._observation_record(io.BytesIO(raw))
+    assert before==after and b''.join(grade._canonical_chunks(before))==b''.join(grade._canonical_chunks(after))==state.canonical(doc)
+    assert grade._digest(before)==grade._digest(after)
+
+
+@pytest.mark.parametrize('raw',[b'{"a":1,"a":2}',b'{"a":NaN}',b'{"a":Infinity}',b'{}{}',b'{"a":'])
+def test_scalar_collector_parser_retains_strict_JSON_rejections(raw):
+    with pytest.raises((ValueError,store.StoreError)):grade._observation_record(io.BytesIO(raw))
+    with pytest.raises((ValueError,store.StoreError)):grade._JSONStream(io.BytesIO(raw),grade.LIMITS['decoded_bytes']).load()
+
+
+def test_scalar_collector_fallback_retains_paging_full_limit_and_gzip_CRC(monkeypatch):
+    doc=dict(rows=[dict(value=-0.0,text='é🏈')],padding='x'*33000);raw=state.canonical(doc)
+    with gzip.GzipFile(fileobj=io.BytesIO(gzip.compress(raw,mtime=0))) as reader:parsed=grade._observation_record(reader)
+    assert isinstance(parsed['rows'],grade._PagedRows) and state.canonical(parsed)==raw
+    monkeypatch.setitem(grade.LIMITS,'decoded_bytes',32768)
+    with pytest.raises(grade.GradeError,match='FINITE_FULL_GRADING_SNAPSHOT'):grade._observation_record(io.BytesIO(raw))
+    for body in [gzip.compress(b'{}',mtime=0)[:-1],gzip.compress(b'{}',mtime=0)[:-8]+b'badcrc00']:
+        with gzip.GzipFile(fileobj=io.BytesIO(body)) as reader:
+            with pytest.raises((OSError,EOFError)):grade._observation_record(reader)
+
+
 def test_owned_read_cohort_keeps_literal_bytes_and_two_fresh_full_scans(packet, monkeypatch):
     storage,refs,bodies=_cohort_refs(packet);original=storage._scan;scans=[0]
     def scan(): scans[0]+=1;return original()

@@ -369,6 +369,56 @@ def _read_owned_many(storage, refs, cap=2 << 20):
     return bodies
 
 
+def _write_owned(storage, path, body):
+    """Same immutable publication, with one fresh quota census per write.
+
+    The original write_bytes scans immediately before computing the body SHA,
+    then _require repeats the census before any filesystem change. Under the
+    same exclusive flock the first physical count supplies that exact incoming
+    byte predicate. Never reuse it across calls or native transports. All CAS,
+    readonly, fsync, alias, existing-path and partial-failure checks remain.
+    """
+    require(isinstance(storage, OperationalStorage) and type(body) is bytes
+        and 0 < len(body) <= LIMITS["encoded_bytes"], "FINITE_IMMUTABLE_GRADING_WRITE")
+    with storage._locked():
+        storage._refresh(); path = storage._check(path); usage = storage._scan()
+        sha = store.sha(body); blob = storage.blob_root/sha
+        if path.exists():
+            if blob.exists() and os.path.samestat(path.stat(), blob.stat()):
+                storage._verify_blob(blob); return len(body)
+            raise FileExistsError(path)
+        if blob.exists(): storage._verify_blob(blob)
+        else:
+            if usage["physical_bytes"] + len(body) > storage.limit_bytes:
+                raise StorageQuotaError("incoming bytes exceed shared operational quota before write; evidence preserved")
+            temporary, descriptor = storage._temporary(storage.control_root, ".incoming-")
+            try:
+                storage._write_all(descriptor, body); os.fsync(descriptor)
+            finally: os.close(descriptor)
+            blob = storage._publish_blob(temporary, sha)
+        storage._alias(blob, path, False)
+        return len(body)
+
+
+def _observation_record(reader):
+    """C JSON decoding for bounded scalar collector metadata; same strict hooks.
+
+    Large, nested, or other record shapes retain the original paged parser.
+    No decoded/row ceiling changes, and gzip EOF/CRC is consumed before a fast
+    result. The caller still checks canonical identity and original CAS bytes.
+    """
+    ceiling = min(LIMITS["row_bytes"], LIMITS["decoded_bytes"])
+    body = reader.read(ceiling + 1)
+    if len(body) <= ceiling:
+        document = json.loads(body, object_pairs_hook=_JSONStream.pairs, parse_constant=_JSONStream.bad_constant)
+        required = {"player_id","game_id","target","actual","participation_state","source","source_sha256","status_sha256","observed_at","source_timestamp"}
+        if (type(document) is dict and required <= set(document) <= required | {"identity_quarantined","scoring_id","period"}
+            and all(value is None or type(value) in (str, bool, int, float) for value in document.values())):
+            return document
+    reader.seek(0)
+    return _JSONStream(reader, LIMITS["decoded_bytes"]).load()
+
+
 def pins():
     root = Path(__file__).resolve().parents[1]
     names = ("nfl_lab/audit_weekly_grade_v1.py", "tools/audit_weekly_grade_v1.py",
@@ -970,7 +1020,7 @@ def _write_snapshot_v2(storage, output, document, *, part_bytes=None):
         require(encoded.tell() <= LIMITS["encoded_bytes"], "FULL_GRADING_SNAPSHOT_ASSET_BOUND_NO_TRUNCATION")
         body = encoded.getvalue(); sha = store.sha(body); index = len(parts)
         name = f"GRADING_PART_{index:02d}_{sha}.json.gz"
-        storage.write_bytes(Path(output)/name, body)
+        _write_owned(storage, Path(output)/name, body)
         ref = storage.validate_reference(Path(output)/name, sha)
         require(ref["bytes"] == len(body), "EXACT_WRITTEN_GRADING_PART_BYTES")
         parts.append(dict(index=index, name=name, bytes=len(body), sha256=sha,
@@ -993,7 +1043,7 @@ def _write_snapshot_v2(storage, output, document, *, part_bytes=None):
     manifest = dict(schema_version=SNAPSHOT_WIRE_V2, logical_sha256=logical.hexdigest(), logical_bytes=total, parts=parts)
     body = _manifest_body(manifest)
     path = Path(output)/"GRADING_SNAPSHOT.json.gz"
-    storage.write_bytes(path, body)
+    _write_owned(storage, path, body)
     ref = storage.validate_reference(path, store.sha(body))
     return {k:ref[k] for k in ("path", "bytes", "sha256")}
 
@@ -1210,7 +1260,7 @@ def _record_batch(storage, root):
                     if str(path) in refs and refs[str(path)] != sha:
                         raise StorageIntegrityError("immutable grading record changed")
                     with gzip.open(path, "rb") as reader:
-                        document = _JSONStream(reader, LIMITS["decoded_bytes"]).load()
+                        document = _observation_record(reader) if kind == "outcomes" else _JSONStream(reader, LIMITS["decoded_bytes"]).load()
                     if _digest(document) != path.name.removesuffix(".json.gz"):
                         raise ValueError(f"immutable record hash mismatch: {path}")
                     if _digest_file(path) != sha:
