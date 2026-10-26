@@ -1,0 +1,3856 @@
+{
+  "coverage": {
+    "complete_primary5": 580,
+    "invalid_or_missing_probability_by_arm": {
+      "F_LEAF": 53,
+      "HALF_MARKET_H": 53,
+      "HALF_NEUTRAL_N": 53
+    },
+    "line_states": {
+      "halfpoint": 633
+    },
+    "offered": 633,
+    "price_invalid": 0,
+    "primary_halfpoint_offers": 580,
+    "secondary_integer_offers": 0,
+    "secondary_response_offers": 78
+  },
+  "evidence": "2026 Week 7 exposed development; accepted eight-final-game outcome snapshot from October 25 22:49 UTC. No new final outcomes acquired.",
+  "future_transform": {
+    "fresh_quote": false,
+    "games": 1,
+    "known_quote_clock": false,
+    "offers": 35,
+    "outcomes": "pending; not scored"
+  },
+  "identities": {
+    "artifacts": {
+      "FAILED.json": {
+        "bytes": 125,
+        "sha256": "a985622e73a1b9f5db387f2980e8dde0286b57972397638663cc7d84ddff1a01"
+      },
+      "FINISHED_RECOVERY.json": {
+        "bytes": 5167,
+        "sha256": "5c8c8a91b043bc48d4c96b361ad05a035c25a0d9679f1651a48b866a7ee6ee30"
+      },
+      "FORECAST_FREEZE.json": {
+        "bytes": 1495,
+        "sha256": "009cb57082cb47ea0471c2dffd54dd210279d1a5ed79bd5388594ee6c2c65e18"
+      },
+      "PREDICTIONS_BEFORE_LABEL_JOIN.json.gz": {
+        "bytes": 50495,
+        "sha256": "9951120eb96f665e347da89666510d3ec65a25035131d17c24240a82642f869d"
+      },
+      "PRICE_COMPARISON.csv.gz": {
+        "bytes": 29653,
+        "sha256": "e16b5ec305a3aa8a7940614caff9dbc00d6387d796d3f1b1529418f6ba71028b"
+      },
+      "RANK_SELECTION_FREEZE.json": {
+        "bytes": 970,
+        "sha256": "ea62ac54d0734bc30177da4793b210c1e9e8cb69ff10ac41d7709b9722eadb60"
+      },
+      "RESULTS.json.gz": {
+        "bytes": 39447,
+        "sha256": "dccb90cd7136f3a1244e16007443a93b786c6721f1919c711a95ae0d1da234fb"
+      }
+    },
+    "code_pins": {
+      "nfl_lab/forecast_json_projection.py": "0d29fd53fb80755248d22177a984df26111044fa1ab3a183f3e8d45c534d1f2d",
+      "nfl_lab/operational_storage.py": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad",
+      "nfl_lab/saved_price_metrics.py": "dfce6ba2c052e21c7cdc08f5695ac4d93b5a5ce1136f4ad1ae697e37d4f3a3e1",
+      "tools/saved_price_study.py": "fecedbea25a6f0eac1325c6c2c9bdbb9062af25f1a6cf5295d351730ab412cee"
+    },
+    "plan_sha256": "57d0327dd5b59ea9a2415bb60326b802a577428d4eff41ef4007f146d9908742",
+    "source_commit": "5061e4a807f896f48e23555b18e5af754c8f357d"
+  },
+  "operations": {
+    "HTTP": 0,
+    "actual_backend": "UNATTESTED",
+    "calibration_fits": 0,
+    "finish_CPU_seconds": 8.081,
+    "finish_wall_seconds": 7.969,
+    "football_inference": 0,
+    "model_fits": 0,
+    "original_CPU_seconds": 29.067,
+    "original_export_failure_retained": true,
+    "original_wall_seconds": 28.863,
+    "requested_backend": "GPT-6.1 Sol Extra High",
+    "scientifically_qualified": false,
+    "scoring_repeated_during_recovery": false,
+    "website_changed": false,
+    "weight_searches": 0
+  },
+  "primary_halfpoints": {
+    "all_modeled_offers": {
+      "methods": {
+        "CONSTANT_HALF": {
+          "AUC": 0.5,
+          "Brier": 0.25,
+          "bias_probability_minus_event": 0.023391812865497075,
+          "games": 8,
+          "log_loss": 0.6931471805599453,
+          "log_loss_denominator": 342,
+          "log_loss_state": "finite",
+          "mean_probability": 0.5,
+          "n": 342,
+          "observed_over_rate": 0.4766081871345029,
+          "positive_infinite_log_losses": 0
+        },
+        "F_LEAF": {
+          "AUC": 0.5861808959111628,
+          "Brier": 0.24915043369489637,
+          "bias_probability_minus_event": -0.03401590254567503,
+          "games": 8,
+          "log_loss": 0.695513399000582,
+          "log_loss_denominator": 342,
+          "log_loss_state": "finite",
+          "mean_probability": 0.44259228458882793,
+          "n": 342,
+          "observed_over_rate": 0.4766081871345029,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_MARKET_H": {
+          "AUC": 0.604585803886623,
+          "Brier": 0.24150267542057885,
+          "bias_probability_minus_event": -0.006770268016170847,
+          "games": 8,
+          "log_loss": 0.6758620402823386,
+          "log_loss_denominator": 342,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4698379191183321,
+          "n": 342,
+          "observed_over_rate": 0.4766081871345029,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_NEUTRAL_N": {
+          "AUC": 0.5861808959111628,
+          "Brier": 0.24418412595373903,
+          "bias_probability_minus_event": -0.0053120448400889725,
+          "games": 8,
+          "log_loss": 0.6814839552149595,
+          "log_loss_denominator": 342,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4712961422944139,
+          "n": 342,
+          "observed_over_rate": 0.4766081871345029,
+          "positive_infinite_log_losses": 0
+        },
+        "PRICE_PROXY_M": {
+          "AUC": 0.6039003324536449,
+          "Brier": 0.2440851490861478,
+          "bias_probability_minus_event": 0.020475366513333336,
+          "games": 8,
+          "log_loss": 0.6812156824751417,
+          "log_loss_denominator": 342,
+          "log_loss_state": "finite",
+          "mean_probability": 0.49708355364783624,
+          "n": 342,
+          "observed_over_rate": 0.4766081871345029,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 580,
+      "outcome_states": {
+        "pending_final_game": 216,
+        "played_missing_statistic": 11,
+        "played_nonzero": 317,
+        "played_zero": 25,
+        "unknown_participation": 11
+      },
+      "pushes": 0,
+      "scored_nonpush": 342,
+      "unresolved": 238
+    },
+    "by_category": {
+      "pass_att": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.125,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.8166666666666667,
+            "Brier": 0.20482789375373067,
+            "bias_probability_minus_event": 0.06428810199022289,
+            "games": 8,
+            "log_loss": 0.5945932363259588,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4392881019902229,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.8333333333333334,
+            "Brier": 0.22178541044049827,
+            "bias_probability_minus_event": 0.09678473704324231,
+            "games": 8,
+            "log_loss": 0.635463743533104,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4717847370432423,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.8166666666666667,
+            "Brier": 0.22354786970785373,
+            "bias_probability_minus_event": 0.09464405099511145,
+            "games": 8,
+            "log_loss": 0.6390139307384061,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4696440509951114,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.7,
+            "Brier": 0.24645688376392338,
+            "bias_probability_minus_event": 0.12928137209626175,
+            "games": 8,
+            "log_loss": 0.686056075557146,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5042813720962618,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 16
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_cmp": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.0,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.640625,
+            "Brier": 0.25230044203297297,
+            "bias_probability_minus_event": -0.04358979701767969,
+            "games": 8,
+            "log_loss": 0.7127978726848051,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4564102029823203,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.703125,
+            "Brier": 0.2420426702133012,
+            "bias_probability_minus_event": -0.01755776371078656,
+            "games": 8,
+            "log_loss": 0.6779193685964542,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.48244223628921346,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.640625,
+            "Brier": 0.24766648485432702,
+            "bias_probability_minus_event": -0.02179489850883984,
+            "games": 8,
+            "log_loss": 0.689499814582625,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.47820510149116013,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.8671875,
+            "Brier": 0.2393193656166359,
+            "bias_probability_minus_event": 0.008474269596106573,
+            "games": 8,
+            "log_loss": 0.6717667482823055,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5084742695961065,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 16
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_int": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.0,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.484375,
+            "Brier": 0.24319278761481525,
+            "bias_probability_minus_event": -0.03957704907199951,
+            "games": 8,
+            "log_loss": 0.6787819015077645,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4604229509280005,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.671875,
+            "Brier": 0.24372446529799546,
+            "bias_probability_minus_event": -0.023015971618714208,
+            "games": 8,
+            "log_loss": 0.6805449003358525,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4769840283812858,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.484375,
+            "Brier": 0.24579899881903353,
+            "bias_probability_minus_event": -0.01978852453599975,
+            "games": 8,
+            "log_loss": 0.6846407450297723,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4802114754640002,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.6640625,
+            "Brier": 0.24811296776359024,
+            "bias_probability_minus_event": -0.006454894165428892,
+            "games": 8,
+            "log_loss": 0.6897753950649802,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4935451058345711,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 8,
+          "played_zero": 8
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_td": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.1875,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.6,
+            "Brier": 0.24462219143011452,
+            "bias_probability_minus_event": 0.1708214286281076,
+            "games": 8,
+            "log_loss": 0.6827646278147218,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.48332142862810756,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.6,
+            "Brier": 0.24314857805321394,
+            "bias_probability_minus_event": 0.18565789388924778,
+            "games": 8,
+            "log_loss": 0.6798168525926437,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4981578938892478,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.6,
+            "Brier": 0.24321131177455205,
+            "bias_probability_minus_event": 0.17916071431405378,
+            "games": 8,
+            "log_loss": 0.6795026280735416,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4916607143140538,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.6,
+            "Brier": 0.2467584415077791,
+            "bias_probability_minus_event": 0.200494359150388,
+            "games": 8,
+            "log_loss": 0.6869012769466353,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5129943591503879,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 12,
+          "played_zero": 4
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_yd": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": -0.0625,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 16,
+            "observed_over_rate": 0.5625,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.6190476190476191,
+            "Brier": 0.2618064897113761,
+            "bias_probability_minus_event": -0.07021159348641218,
+            "games": 8,
+            "log_loss": 0.7408015922686484,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4922884065135878,
+            "n": 16,
+            "observed_over_rate": 0.5625,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.6507936507936508,
+            "Brier": 0.2512483297339179,
+            "bias_probability_minus_event": -0.0659609056406977,
+            "games": 8,
+            "log_loss": 0.6971644132165445,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4965390943593023,
+            "n": 16,
+            "observed_over_rate": 0.5625,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.6190476190476191,
+            "Brier": 0.2517208352998331,
+            "bias_probability_minus_event": -0.06635579674320609,
+            "games": 8,
+            "log_loss": 0.6981118257401145,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4961442032567939,
+            "n": 16,
+            "observed_over_rate": 0.5625,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.746031746031746,
+            "Brier": 0.24903921833672044,
+            "bias_probability_minus_event": -0.06171021779498319,
+            "games": 8,
+            "log_loss": 0.6912255956833679,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5007897822050168,
+            "n": 16,
+            "observed_over_rate": 0.5625,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 16
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "rec": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.03260869565217391,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 92,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 92,
+            "observed_over_rate": 0.4673913043478261,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.6644518272425249,
+            "Brier": 0.2278770931514197,
+            "bias_probability_minus_event": -0.03604159630460654,
+            "games": 8,
+            "log_loss": 0.6481611458241988,
+            "log_loss_denominator": 92,
+            "log_loss_state": "finite",
+            "mean_probability": 0.43134970804321954,
+            "n": 92,
+            "observed_over_rate": 0.4673913043478261,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.6957759848125297,
+            "Brier": 0.22401236632790292,
+            "bias_probability_minus_event": -0.007865711909770675,
+            "games": 8,
+            "log_loss": 0.6395830049573793,
+            "log_loss_denominator": 92,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4595255924380554,
+            "n": 92,
+            "observed_over_rate": 0.4673913043478261,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.6644518272425249,
+            "Brier": 0.23199758033462625,
+            "bias_probability_minus_event": -0.0017164503262163105,
+            "games": 8,
+            "log_loss": 0.6565312967283702,
+            "log_loss_denominator": 92,
+            "log_loss_state": "finite",
+            "mean_probability": 0.46567485402160974,
+            "n": 92,
+            "observed_over_rate": 0.4673913043478261,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.6813004271476032,
+            "Brier": 0.23189348979340424,
+            "bias_probability_minus_event": 0.020310172485065198,
+            "games": 8,
+            "log_loss": 0.6564474369176964,
+            "log_loss_denominator": 92,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4877014768328913,
+            "n": 92,
+            "observed_over_rate": 0.4673913043478261,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 156,
+        "outcome_states": {
+          "pending_final_game": 57,
+          "played_missing_statistic": 4,
+          "played_nonzero": 87,
+          "played_zero": 5,
+          "unknown_participation": 3
+        },
+        "pushes": 0,
+        "scored_nonpush": 92,
+        "unresolved": 64
+      },
+      "rec_yd": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.06179775280898876,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 89,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 89,
+            "observed_over_rate": 0.43820224719101125,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.5692307692307692,
+            "Brier": 0.2449299165534932,
+            "bias_probability_minus_event": 0.010648929936901731,
+            "games": 8,
+            "log_loss": 0.684738465201431,
+            "log_loss_denominator": 89,
+            "log_loss_state": "finite",
+            "mean_probability": 0.448851177127913,
+            "n": 89,
+            "observed_over_rate": 0.43820224719101125,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.5723076923076923,
+            "Brier": 0.24246050992536702,
+            "bias_probability_minus_event": 0.03597933517306597,
+            "games": 8,
+            "log_loss": 0.6779891969533346,
+            "log_loss_denominator": 89,
+            "log_loss_state": "finite",
+            "mean_probability": 0.47418158236407726,
+            "n": 89,
+            "observed_over_rate": 0.43820224719101125,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.5692307692307692,
+            "Brier": 0.24269827171369815,
+            "bias_probability_minus_event": 0.03622334137294524,
+            "games": 8,
+            "log_loss": 0.6784384290385446,
+            "log_loss_denominator": 89,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4744255885639565,
+            "n": 89,
+            "observed_over_rate": 0.43820224719101125,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.5282051282051282,
+            "Brier": 0.24954246875171815,
+            "bias_probability_minus_event": 0.06130974040923021,
+            "games": 8,
+            "log_loss": 0.6922318783318206,
+            "log_loss_denominator": 89,
+            "log_loss_state": "finite",
+            "mean_probability": 0.49951198760024146,
+            "n": 89,
+            "observed_over_rate": 0.43820224719101125,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 151,
+        "outcome_states": {
+          "pending_final_game": 55,
+          "played_missing_statistic": 4,
+          "played_nonzero": 82,
+          "played_zero": 7,
+          "unknown_participation": 3
+        },
+        "pushes": 0,
+        "scored_nonpush": 89,
+        "unresolved": 62
+      },
+      "rush_att": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": -0.1956521739130435,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 23,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 23,
+            "observed_over_rate": 0.6956521739130435,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.48214285714285715,
+            "Brier": 0.33536853292517504,
+            "bias_probability_minus_event": -0.2821157823438506,
+            "games": 8,
+            "log_loss": 0.8925915931765946,
+            "log_loss_denominator": 23,
+            "log_loss_state": "finite",
+            "mean_probability": 0.41353639156919286,
+            "n": 23,
+            "observed_over_rate": 0.6956521739130435,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.42857142857142855,
+            "Brier": 0.28367726546473876,
+            "bias_probability_minus_event": -0.24103728195023819,
+            "games": 8,
+            "log_loss": 0.7620434493610031,
+            "log_loss_denominator": 23,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4546148919628053,
+            "n": 23,
+            "observed_over_rate": 0.6956521739130435,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.48214285714285715,
+            "Brier": 0.2834330151433241,
+            "bias_probability_minus_event": -0.23888397812844706,
+            "games": 8,
+            "log_loss": 0.7616954744130444,
+            "log_loss_denominator": 23,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4567681957845965,
+            "n": 23,
+            "observed_over_rate": 0.6956521739130435,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.5044642857142857,
+            "Brier": 0.25117360472603756,
+            "bias_probability_minus_event": -0.19995878155662578,
+            "games": 8,
+            "log_loss": 0.695500685247863,
+            "log_loss_denominator": 23,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4956933923564177,
+            "n": 23,
+            "observed_over_rate": 0.6956521739130435,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 41,
+        "outcome_states": {
+          "pending_final_game": 16,
+          "played_nonzero": 23,
+          "unknown_participation": 2
+        },
+        "pushes": 0,
+        "scored_nonpush": 23,
+        "unresolved": 18
+      },
+      "rush_rec_yd": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": -0.029411764705882353,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 17,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 17,
+            "observed_over_rate": 0.5294117647058824,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.5833333333333334,
+            "Brier": 0.2741199151534094,
+            "bias_probability_minus_event": -0.10697128039087005,
+            "games": 8,
+            "log_loss": 0.7418655178469473,
+            "log_loss_denominator": 17,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4224404843150123,
+            "n": 17,
+            "observed_over_rate": 0.5294117647058824,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.5833333333333334,
+            "Brier": 0.2563238010373686,
+            "bias_probability_minus_event": -0.06781916607108603,
+            "games": 8,
+            "log_loss": 0.7056208692065961,
+            "log_loss_denominator": 17,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4615925986347963,
+            "n": 17,
+            "observed_over_rate": 0.5294117647058824,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.5833333333333334,
+            "Brier": 0.2565950481690151,
+            "bias_probability_minus_event": -0.0681915225483762,
+            "games": 8,
+            "log_loss": 0.7061695283991524,
+            "log_loss_denominator": 17,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4612202421575061,
+            "n": 17,
+            "observed_over_rate": 0.5294117647058824,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.5972222222222222,
+            "Brier": 0.24960324457430255,
+            "bias_probability_minus_event": -0.028667051751301992,
+            "games": 8,
+            "log_loss": 0.6923537198039185,
+            "log_loss_denominator": 17,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5007447129545803,
+            "n": 17,
+            "observed_over_rate": 0.5294117647058824,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 33,
+        "outcome_states": {
+          "pending_final_game": 13,
+          "played_missing_statistic": 2,
+          "played_nonzero": 17,
+          "unknown_participation": 1
+        },
+        "pushes": 0,
+        "scored_nonpush": 17,
+        "unresolved": 16
+      },
+      "rush_yd": {
+        "methods": {
+          "CONSTANT_HALF": {
+            "AUC": 0.5,
+            "Brier": 0.25,
+            "bias_probability_minus_event": 0.012195121951219513,
+            "games": 8,
+            "log_loss": 0.6931471805599453,
+            "log_loss_denominator": 41,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5,
+            "n": 41,
+            "observed_over_rate": 0.4878048780487805,
+            "positive_infinite_log_losses": 0
+          },
+          "F_LEAF": {
+            "AUC": 0.5357142857142857,
+            "Brier": 0.2625483290948272,
+            "bias_probability_minus_event": -0.055265591978141015,
+            "games": 8,
+            "log_loss": 0.7218508659354933,
+            "log_loss_denominator": 41,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4325392860706395,
+            "n": 41,
+            "observed_over_rate": 0.4878048780487805,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_MARKET_H": {
+            "AUC": 0.5380952380952381,
+            "Brier": 0.25103704695527196,
+            "bias_probability_minus_event": -0.022236378721149377,
+            "games": 8,
+            "log_loss": 0.6952448835957402,
+            "log_loss_denominator": 41,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4655684993276311,
+            "n": 41,
+            "observed_over_rate": 0.4878048780487805,
+            "positive_infinite_log_losses": 0
+          },
+          "HALF_NEUTRAL_N": {
+            "AUC": 0.5357142857142857,
+            "Brier": 0.25109376410767553,
+            "bias_probability_minus_event": -0.021535235013460753,
+            "games": 8,
+            "log_loss": 0.695352004857529,
+            "log_loss_denominator": 41,
+            "log_loss_state": "finite",
+            "mean_probability": 0.46626964303531976,
+            "n": 41,
+            "observed_over_rate": 0.4878048780487805,
+            "positive_infinite_log_losses": 0
+          },
+          "PRICE_PROXY_M": {
+            "AUC": 0.5297619047619048,
+            "Brier": 0.249717124616733,
+            "bias_probability_minus_event": 0.010792834535842273,
+            "games": 8,
+            "log_loss": 0.6925812579663402,
+            "log_loss_denominator": 41,
+            "log_loss_state": "finite",
+            "mean_probability": 0.49859771258462277,
+            "n": 41,
+            "observed_over_rate": 0.4878048780487805,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 69,
+        "outcome_states": {
+          "pending_final_game": 25,
+          "played_missing_statistic": 1,
+          "played_nonzero": 40,
+          "played_zero": 1,
+          "unknown_participation": 2
+        },
+        "pushes": 0,
+        "scored_nonpush": 41,
+        "unresolved": 28
+      }
+    },
+    "paired": [
+      {
+        "Brier_delta_candidate_minus_control": -0.007647758274317518,
+        "candidate": "HALF_MARKET_H",
+        "control": "F_LEAF",
+        "equal_game_mean_delta": -0.008504797014328875,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.012574326006155389,
+          -0.005525687792596633
+        ],
+        "n": 342,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": -0.0026814505331601702,
+        "candidate": "HALF_MARKET_H",
+        "control": "HALF_NEUTRAL_N",
+        "equal_game_mean_delta": -0.0027472471042461425,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.003275356132872771,
+          -0.002248085088925637
+        ],
+        "n": 342,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": -0.005065284608748568,
+        "candidate": "PRICE_PROXY_M",
+        "control": "F_LEAF",
+        "equal_game_mean_delta": -0.007121093383545856,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.014983104750635412,
+          -0.0007848414893609225
+        ],
+        "n": 342,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      }
+    ],
+    "paired_by_category": {
+      "pass_att": [
+        {
+          "Brier_delta_candidate_minus_control": 0.016957516686767593,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.016957516686767593,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            0.010535377033171867,
+            0.02110540798504922
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.001762459267355459,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.001762459267355459,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.0027126033591936124,
+            -0.0008790136530459436
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.04162899001019272,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.04162899001019272,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            0.027169047624978744,
+            0.0507781176954467
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_cmp": [
+        {
+          "Brier_delta_candidate_minus_control": -0.010257771819671746,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.01025777181967175,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.017739100887897086,
+            0.008670290070866171
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.005623814641025803,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.005623814641025803,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.007252723212636209,
+            -0.004221517526441896
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.012981076416337051,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.012981076416337051,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.02849474109374414,
+            0.020823827703844482
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_int": [
+        {
+          "Brier_delta_candidate_minus_control": 0.0005316776831801951,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.0005316776831801951,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.00787547510903197,
+            0.006420245651269598
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.002074533521038072,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.002074533521038072,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.005471647763608887,
+            0.002184132569356252
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.004920180148774976,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.004920180148774976,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.014688336292162554,
+            0.016761292143030546
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_td": [
+        {
+          "Brier_delta_candidate_minus_control": -0.0014736133769005962,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.0014736133769005962,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.006504547979875214,
+            0.003988110190089865
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -6.273372133810528e-05,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -6.273372133810528e-05,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.00528867558886844,
+            0.006668293983445516
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.0021362500776645798,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.0021362500776645798,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.011045988278968652,
+            0.01347957679172205
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_yd": [
+        {
+          "Brier_delta_candidate_minus_control": -0.01055815997745819,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.010558159977458192,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.017643337332352214,
+            0.006465379938660735
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.00047250556591513226,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.00047250556591513226,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.0006240612945767947,
+            -0.00033127055694889433
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.0127672713746557,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.012767271374655699,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.026714569789126084,
+            0.016803328485315745
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "rec": [
+        {
+          "Brier_delta_candidate_minus_control": -0.003864726823516767,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.004906581228501964,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.009499601669109889,
+            0.0026617464668698483
+          ],
+          "n": 92,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.007985214006723322,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.008269004258219602,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.009328269943047791,
+            -0.0071218056239264055
+          ],
+          "n": 92,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.004016396641984555,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.0019284587666957135,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.00721917642369606,
+            0.016657678133897597
+          ],
+          "n": 92,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "rec_yd": [
+        {
+          "Brier_delta_candidate_minus_control": -0.0024694066281262025,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.0035043167840582406,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.007562064770567313,
+            0.0010712589959109807
+          ],
+          "n": 89,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.0002377617883311479,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.00020431536234284415,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.0003697757796160111,
+            -0.00015444165486242536
+          ],
+          "n": 89,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.004612552198224953,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": 0.002656780019416965,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.005391269392334713,
+            0.012002424902987944
+          ],
+          "n": 89,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "rush_att": [
+        {
+          "Brier_delta_candidate_minus_control": -0.05169126746043625,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.06280577389753943,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.06807538602560355,
+            -0.038216960051773316
+          ],
+          "n": 23,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.00024425032141468914,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": 0.0010903811429476334,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.001639848959499769,
+            0.0020973384382801086
+          ],
+          "n": 23,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.08419492819913747,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.10678700500981583,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.11477643451907472,
+            -0.05839082372488673
+          ],
+          "n": 23,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "rush_rec_yd": [
+        {
+          "Brier_delta_candidate_minus_control": -0.01779611411604079,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.02780770064816044,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.031139131855477644,
+            -0.0048048566785871775
+          ],
+          "n": 17,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.00027124713164649824,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.0004577865223481803,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.0007778821781718657,
+            -0.00010276561006553846
+          ],
+          "n": 17,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.02451667057910689,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.04426065659416546,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.05341341824930094,
+            0.0006774650797855553
+          ],
+          "n": 17,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "rush_yd": [
+        {
+          "Brier_delta_candidate_minus_control": -0.011511282139555252,
+          "candidate": "HALF_MARKET_H",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.011273351262418806,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.018087736344074675,
+            -0.00045669380190915343
+          ],
+          "n": 41,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -5.671715240357367e-05,
+          "candidate": "HALF_MARKET_H",
+          "control": "HALF_NEUTRAL_N",
+          "equal_game_mean_delta": -0.00013659748705242863,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.00021318630261890086,
+            0.00021477273492088886
+          ],
+          "n": 41,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.012831204478094233,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_LEAF",
+          "equal_game_mean_delta": -0.013057810948902493,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.025251997256602567,
+            0.009343554358865308
+          ],
+          "n": 41,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ]
+    },
+    "pooling": "Pooled Brier is equal-row-weighted across categories; all losses are dimensionless probability losses.",
+    "primary_role_secondary": {
+      "methods": {
+        "CONSTANT_HALF": {
+          "AUC": 0.5,
+          "Brier": 0.25,
+          "bias_probability_minus_event": 0.01524390243902439,
+          "games": 8,
+          "log_loss": 0.6931471805599453,
+          "log_loss_denominator": 328,
+          "log_loss_state": "finite",
+          "mean_probability": 0.5,
+          "n": 328,
+          "observed_over_rate": 0.4847560975609756,
+          "positive_infinite_log_losses": 0
+        },
+        "F_LEAF": {
+          "AUC": 0.5802538052175208,
+          "Brier": 0.2512824987512011,
+          "bias_probability_minus_event": -0.03992170324260217,
+          "games": 8,
+          "log_loss": 0.700273133478788,
+          "log_loss_denominator": 328,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4448343943183734,
+          "n": 328,
+          "observed_over_rate": 0.4847560975609756,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_MARKET_H": {
+          "AUC": 0.5993450187934949,
+          "Brier": 0.2424658741290905,
+          "bias_probability_minus_event": -0.013812346825945242,
+          "games": 8,
+          "log_loss": 0.6778276315564731,
+          "log_loss_denominator": 328,
+          "log_loss_state": "finite",
+          "mean_probability": 0.47094375073503036,
+          "n": 328,
+          "observed_over_rate": 0.4847560975609756,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_NEUTRAL_N": {
+          "AUC": 0.5802538052175208,
+          "Brier": 0.24522531215484755,
+          "bias_probability_minus_event": -0.01233890040178889,
+          "games": 8,
+          "log_loss": 0.6836139684977345,
+          "log_loss_denominator": 328,
+          "log_loss_state": "finite",
+          "mean_probability": 0.47241719715918673,
+          "n": 328,
+          "observed_over_rate": 0.4847560975609756,
+          "positive_infinite_log_losses": 0
+        },
+        "PRICE_PROXY_M": {
+          "AUC": 0.6036619403818243,
+          "Brier": 0.24391633119717906,
+          "bias_probability_minus_event": 0.012297009590711696,
+          "games": 8,
+          "log_loss": 0.6808737216263696,
+          "log_loss_denominator": 328,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4970531071516873,
+          "n": 328,
+          "observed_over_rate": 0.4847560975609756,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 561,
+      "outcome_states": {
+        "pending_final_game": 211,
+        "played_missing_statistic": 11,
+        "played_nonzero": 304,
+        "played_zero": 24,
+        "unknown_participation": 11
+      },
+      "pushes": 0,
+      "scored_nonpush": 328,
+      "unresolved": 233
+    }
+  },
+  "ranking_summaries": {
+    "F_LEAF:over:pass_att:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.23417848071205516,
+      "side": "over"
+    },
+    "F_LEAF:over:pass_cmp:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2507952218561073,
+      "side": "over"
+    },
+    "F_LEAF:over:pass_int:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 0,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 0,
+      "selected": 1,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "F_LEAF:over:pass_td:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.313908219368209,
+      "side": "over"
+    },
+    "F_LEAF:over:pass_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2158225750481091,
+      "side": "over"
+    },
+    "F_LEAF:over:rec:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 5,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.04317065822597425,
+      "side": "over"
+    },
+    "F_LEAF:over:rec_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.14686547609478684,
+      "side": "over"
+    },
+    "F_LEAF:over:rush_att:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.31301106991258637,
+      "side": "over"
+    },
+    "F_LEAF:over:rush_rec_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.34839169872340886,
+      "side": "over"
+    },
+    "F_LEAF:over:rush_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.27235088049442846,
+      "side": "over"
+    },
+    "F_LEAF:over:top12": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 7,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 9,
+      "selected": 12,
+      "selected_side_Brier": 0.1667802615537536,
+      "side": "over"
+    },
+    "F_LEAF:under:pass_att:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.03656175965150713,
+      "side": "under"
+    },
+    "F_LEAF:under:pass_cmp:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.3159798995812531,
+      "side": "under"
+    },
+    "F_LEAF:under:pass_int:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.21680804585333688,
+      "side": "under"
+    },
+    "F_LEAF:under:pass_td:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.1062519191187995,
+      "side": "under"
+    },
+    "F_LEAF:under:pass_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.4558858967993124,
+      "side": "under"
+    },
+    "F_LEAF:under:rec:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.3774897708141412,
+      "side": "under"
+    },
+    "F_LEAF:under:rec_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 0,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.6402747268521062,
+      "side": "under"
+    },
+    "F_LEAF:under:rush_att:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.4152947484264757,
+      "side": "under"
+    },
+    "F_LEAF:under:rush_rec_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.26172099431131185,
+      "side": "under"
+    },
+    "F_LEAF:under:rush_yd:top5": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.3537410876375593,
+      "side": "under"
+    },
+    "F_LEAF:under:top12": {
+      "arm": "F_LEAF",
+      "results": {
+        "HIT": 3,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 6
+      },
+      "scored_nonpush": 6,
+      "selected": 12,
+      "selected_side_Brier": 0.4010968890555255,
+      "side": "under"
+    },
+    "HALF_MARKET_H:over:pass_att:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 4,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2278584460383396,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:pass_cmp:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2376903243115409,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:pass_int:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.23495145318471694,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:pass_td:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.29934656402388593,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:pass_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.22711136548635744,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:rec:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 4,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.08767594742071076,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:rec_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.18083342739948466,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:rush_att:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2557444347075125,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:rush_rec_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.29217396204206697,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:rush_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2491110154469685,
+      "side": "over"
+    },
+    "HALF_MARKET_H:over:top12": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 8,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 11,
+      "selected": 12,
+      "selected_side_Brier": 0.19503143864297998,
+      "side": "over"
+    },
+    "HALF_MARKET_H:under:pass_att:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.11610115812143126,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:pass_cmp:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2576888378777132,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:pass_int:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.22953134017976576,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:pass_td:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.13574299611464988,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:pass_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.33139847564082814,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:rec:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.08049042298064343,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:rec_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 0,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.42502988628466487,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:rush_att:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.33794799535071846,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:rush_rec_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2387794822294786,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:rush_yd:top5": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.27176632911502835,
+      "side": "under"
+    },
+    "HALF_MARKET_H:under:top12": {
+      "arm": "HALF_MARKET_H",
+      "results": {
+        "HIT": 3,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 7
+      },
+      "scored_nonpush": 5,
+      "selected": 12,
+      "selected_side_Brier": 0.24611700948065746,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:over:pass_att:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2418476549236614,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:pass_cmp:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2494652963274592,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:pass_int:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 0,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 0,
+      "selected": 1,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:pass_td:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.27604335814563363,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:pass_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.22671910912987978,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:rec:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 5,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.1217892509919456,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:rec_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.1794800888704223,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:rush_att:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2684648157560039,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:rush_rec_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.293972885508832,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:rush_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.25049733808305547,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:over:top12": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 7,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 9,
+      "selected": 12,
+      "selected_side_Brier": 0.18862872081795257,
+      "side": "over"
+    },
+    "HALF_NEUTRAL_N:under:pass_att:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.11683830478102813,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:pass_cmp:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2676382992707449,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:pass_int:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.23062840864912298,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:pass_td:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.17049815335160678,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:pass_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.33200122447810476,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:rec:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2809491225246494,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:rec_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 0,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.4225828453062069,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:rush_att:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2986330640101893,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:rush_rec_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.23961839602937834,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:rush_yd:top5": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2705463751874149,
+      "side": "under"
+    },
+    "HALF_NEUTRAL_N:under:top12": {
+      "arm": "HALF_NEUTRAL_N",
+      "results": {
+        "HIT": 3,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 6
+      },
+      "scored_nonpush": 6,
+      "selected": 12,
+      "selected_side_Brier": 0.293281451316601,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:over:pass_att:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.24220870826336147,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:pass_cmp:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 4,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.23335605895528078,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:pass_int:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.26813424754202625,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:pass_td:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.34138537208563613,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:pass_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 4,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.24719890165383163,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:rec:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 4,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.13721800810902118,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:rec_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 4
+      },
+      "scored_nonpush": 1,
+      "selected": 5,
+      "selected_side_Brier": 0.2334301224592854,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:rush_att:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2150057738522518,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:rush_rec_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2430288158060851,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:rush_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.25150312460547913,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:over:top12": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 6,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 9,
+      "selected": 12,
+      "selected_side_Brier": 0.22977697507880393,
+      "side": "over"
+    },
+    "PRICE_PROXY_M:under:pass_att:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.23073159954551187,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:pass_cmp:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 4
+      },
+      "scored_nonpush": 1,
+      "selected": 5,
+      "selected_side_Brier": 0.2176040073655628,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:pass_int:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.19587029471221853,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:pass_td:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.14148032027411087,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:pass_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.2490715608298615,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:rec:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.25158881907855324,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:rec_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.24945807313434593,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:rush_att:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2596864549767462,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:rush_rec_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.25330527309416806,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:rush_yd:top5": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 4,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.2406216624168202,
+      "side": "under"
+    },
+    "PRICE_PROXY_M:under:top12": {
+      "arm": "PRICE_PROXY_M",
+      "results": {
+        "HIT": 6,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 5
+      },
+      "scored_nonpush": 7,
+      "selected": 12,
+      "selected_side_Brier": 0.17616049991554528,
+      "side": "under"
+    }
+  },
+  "schema_version": "saved-payout-proxy-public-aggregates-v1",
+  "secondary_integer_nonpush": {
+    "all_modeled_offers": {
+      "methods": {
+        "CONSTANT_HALF": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "F_LEAF": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_MARKET_H": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_NEUTRAL_N": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "PRICE_PROXY_M": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 0,
+      "outcome_states": {},
+      "pushes": 0,
+      "scored_nonpush": 0,
+      "unresolved": 0
+    },
+    "by_category": {},
+    "paired": [
+      {
+        "Brier_delta_candidate_minus_control": null,
+        "candidate": "HALF_MARKET_H",
+        "control": "F_LEAF",
+        "equal_game_mean_delta": null,
+        "games": 0,
+        "leave_one_game_out_pooled_delta_range": null,
+        "n": 0,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": null,
+        "candidate": "HALF_MARKET_H",
+        "control": "HALF_NEUTRAL_N",
+        "equal_game_mean_delta": null,
+        "games": 0,
+        "leave_one_game_out_pooled_delta_range": null,
+        "n": 0,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": null,
+        "candidate": "PRICE_PROXY_M",
+        "control": "F_LEAF",
+        "equal_game_mean_delta": null,
+        "games": 0,
+        "leave_one_game_out_pooled_delta_range": null,
+        "n": 0,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      }
+    ],
+    "paired_by_category": {},
+    "pooling": "Pooled Brier is equal-row-weighted across categories; all losses are dimensionless probability losses.",
+    "primary_role_secondary": {
+      "methods": {
+        "CONSTANT_HALF": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "F_LEAF": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_MARKET_H": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "HALF_NEUTRAL_N": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        },
+        "PRICE_PROXY_M": {
+          "AUC": null,
+          "Brier": null,
+          "bias_probability_minus_event": null,
+          "games": 0,
+          "log_loss": null,
+          "log_loss_denominator": 0,
+          "log_loss_state": "unavailable",
+          "mean_probability": null,
+          "n": 0,
+          "observed_over_rate": null,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 0,
+      "outcome_states": {},
+      "pushes": 0,
+      "scored_nonpush": 0,
+      "unresolved": 0
+    }
+  },
+  "secondary_response_halfpoints": {
+    "all_modeled_offers": {
+      "methods": {
+        "F_RESPONSE": {
+          "AUC": 0.6606170598911071,
+          "Brier": 0.23215242673682068,
+          "bias_probability_minus_event": 0.06812114018421912,
+          "games": 8,
+          "log_loss": 0.6554964472363579,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4639544735175525,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        },
+        "H_RESPONSE": {
+          "AUC": 0.6987295825771325,
+          "Brier": 0.23644434861746152,
+          "bias_probability_minus_event": 0.08794737627231303,
+          "games": 8,
+          "log_loss": 0.6661504094760274,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.48378070960564634,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        },
+        "N_RESPONSE": {
+          "AUC": 0.6606170598911071,
+          "Brier": 0.23781272688311947,
+          "bias_probability_minus_event": 0.08614390342544288,
+          "games": 8,
+          "log_loss": 0.6683669966414674,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.48197723675877624,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 78,
+      "outcome_states": {
+        "pending_final_game": 30,
+        "played_nonzero": 36,
+        "played_zero": 12
+      },
+      "pushes": 0,
+      "scored_nonpush": 48,
+      "unresolved": 30
+    },
+    "by_category": {
+      "pass_att": {
+        "methods": {
+          "F_RESPONSE": {
+            "AUC": 0.9166666666666666,
+            "Brier": 0.19685511598827887,
+            "bias_probability_minus_event": 0.06195606455021145,
+            "games": 8,
+            "log_loss": 0.5779537250982254,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.43695606455021146,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "H_RESPONSE": {
+            "AUC": 0.9166666666666666,
+            "Brier": 0.2176219186290961,
+            "bias_probability_minus_event": 0.0956187183232366,
+            "games": 8,
+            "log_loss": 0.6270302471288283,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4706187183232366,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          },
+          "N_RESPONSE": {
+            "AUC": 0.9166666666666666,
+            "Brier": 0.21940710199900598,
+            "bias_probability_minus_event": 0.09347803227510573,
+            "games": 8,
+            "log_loss": 0.6306284202879832,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4684780322751057,
+            "n": 16,
+            "observed_over_rate": 0.375,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 16
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_int": {
+        "methods": {
+          "F_RESPONSE": {
+            "AUC": 0.484375,
+            "Brier": 0.2421825022413824,
+            "bias_probability_minus_event": -0.04230828648457535,
+            "games": 8,
+            "log_loss": 0.6760823621725505,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.45769171351542465,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "H_RESPONSE": {
+            "AUC": 0.734375,
+            "Brier": 0.24269400128552895,
+            "bias_probability_minus_event": -0.024381590325002128,
+            "games": 8,
+            "log_loss": 0.678458733335492,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.47561840967499786,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          },
+          "N_RESPONSE": {
+            "AUC": 0.484375,
+            "Brier": 0.24494672089585762,
+            "bias_probability_minus_event": -0.021154143242287687,
+            "games": 8,
+            "log_loss": 0.6828377467717852,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4788458567577123,
+            "n": 16,
+            "observed_over_rate": 0.5,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 8,
+          "played_zero": 8
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      },
+      "pass_td": {
+        "methods": {
+          "F_RESPONSE": {
+            "AUC": 0.5272727272727272,
+            "Brier": 0.2574196619808008,
+            "bias_probability_minus_event": 0.18471564248702127,
+            "games": 8,
+            "log_loss": 0.712453254438298,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.49721564248702127,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "H_RESPONSE": {
+            "AUC": 0.6,
+            "Brier": 0.24901712593775951,
+            "bias_probability_minus_event": 0.19260500081870463,
+            "games": 8,
+            "log_loss": 0.6929622479637619,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.5051050008187046,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          },
+          "N_RESPONSE": {
+            "AUC": 0.5272727272727272,
+            "Brier": 0.2490843577544948,
+            "bias_probability_minus_event": 0.18610782124351063,
+            "games": 8,
+            "log_loss": 0.6916348228646336,
+            "log_loss_denominator": 16,
+            "log_loss_state": "finite",
+            "mean_probability": 0.4986078212435106,
+            "n": 16,
+            "observed_over_rate": 0.3125,
+            "positive_infinite_log_losses": 0
+          }
+        },
+        "offers": 26,
+        "outcome_states": {
+          "pending_final_game": 10,
+          "played_nonzero": 12,
+          "played_zero": 4
+        },
+        "pushes": 0,
+        "scored_nonpush": 16,
+        "unresolved": 10
+      }
+    },
+    "paired": [
+      {
+        "Brier_delta_candidate_minus_control": 0.004291921880640831,
+        "candidate": "H_RESPONSE",
+        "control": "F_RESPONSE",
+        "equal_game_mean_delta": 0.00429192188064083,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.0021825439844908377,
+          0.007557924828226941
+        ],
+        "n": 48,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": -0.0013683782656579366,
+        "candidate": "H_RESPONSE",
+        "control": "N_RESPONSE",
+        "equal_game_mean_delta": -0.0013683782656579364,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.002613979519472727,
+          0.0007690441226742403
+        ],
+        "n": 48,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      },
+      {
+        "Brier_delta_candidate_minus_control": 0.014957004274943548,
+        "candidate": "PRICE_PROXY_M",
+        "control": "F_RESPONSE",
+        "equal_game_mean_delta": 0.014957004274943547,
+        "games": 8,
+        "leave_one_game_out_pooled_delta_range": [
+          -0.0019144872523689635,
+          0.022223388750259566
+        ],
+        "n": 48,
+        "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+      }
+    ],
+    "paired_by_category": {
+      "pass_att": [
+        {
+          "Brier_delta_candidate_minus_control": 0.020766802640817247,
+          "candidate": "H_RESPONSE",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": 0.020766802640817247,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            0.015039591296165363,
+            0.023407710224589953
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.0017851833699098502,
+          "candidate": "H_RESPONSE",
+          "control": "N_RESPONSE",
+          "equal_game_mean_delta": -0.0017851833699098502,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.002714365694341866,
+            -0.0009044392438921851
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.049601767775644526,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": 0.04960176777564452,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            0.03641543869471962,
+            0.05579807331032322
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_int": [
+        {
+          "Brier_delta_candidate_minus_control": 0.0005114990441465635,
+          "candidate": "H_RESPONSE",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": 0.0005114990441465635,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.008471001067930872,
+            0.006809421828502189
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.002252719610328649,
+          "candidate": "H_RESPONSE",
+          "control": "N_RESPONSE",
+          "equal_game_mean_delta": -0.002252719610328649,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.00545236611586823,
+            0.002001827581092404
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": 0.005930465522207835,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": 0.005930465522207834,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.0157590435912498,
+            0.018672417905956345
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ],
+      "pass_td": [
+        {
+          "Brier_delta_candidate_minus_control": -0.008402536043041316,
+          "candidate": "H_RESPONSE",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": -0.008402536043041316,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.01444660625937011,
+            -0.0032199238833167565
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -6.723181673531052e-05,
+          "candidate": "H_RESPONSE",
+          "control": "N_RESPONSE",
+          "equal_game_mean_delta": -6.723181673531052e-05,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.005645119022378575,
+            0.006865111089370189
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        },
+        {
+          "Brier_delta_candidate_minus_control": -0.010661220473021715,
+          "candidate": "PRICE_PROXY_M",
+          "control": "F_RESPONSE",
+          "equal_game_mean_delta": -0.010661220473021715,
+          "games": 8,
+          "leave_one_game_out_pooled_delta_range": [
+            -0.026498825886926477,
+            0.00014220340423342994
+          ],
+          "n": 16,
+          "uncertainty": "Descriptive game summaries and leave-one-game-out range; no confidence interval or p-value"
+        }
+      ]
+    },
+    "pooling": "Pooled Brier is equal-row-weighted across categories; all losses are dimensionless probability losses.",
+    "primary_role_secondary": {
+      "methods": {
+        "F_RESPONSE": {
+          "AUC": 0.6606170598911071,
+          "Brier": 0.23215242673682068,
+          "bias_probability_minus_event": 0.06812114018421912,
+          "games": 8,
+          "log_loss": 0.6554964472363579,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.4639544735175525,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        },
+        "H_RESPONSE": {
+          "AUC": 0.6987295825771325,
+          "Brier": 0.23644434861746152,
+          "bias_probability_minus_event": 0.08794737627231303,
+          "games": 8,
+          "log_loss": 0.6661504094760274,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.48378070960564634,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        },
+        "N_RESPONSE": {
+          "AUC": 0.6606170598911071,
+          "Brier": 0.23781272688311947,
+          "bias_probability_minus_event": 0.08614390342544288,
+          "games": 8,
+          "log_loss": 0.6683669966414674,
+          "log_loss_denominator": 48,
+          "log_loss_state": "finite",
+          "mean_probability": 0.48197723675877624,
+          "n": 48,
+          "observed_over_rate": 0.3958333333333333,
+          "positive_infinite_log_losses": 0
+        }
+      },
+      "offers": 78,
+      "outcome_states": {
+        "pending_final_game": 30,
+        "played_nonzero": 36,
+        "played_zero": 12
+      },
+      "pushes": 0,
+      "scored_nonpush": 48,
+      "unresolved": 30
+    }
+  },
+  "secondary_response_ranking_summaries": {
+    "F_RESPONSE:over:pass_att:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.23610785743802856,
+      "side": "over"
+    },
+    "F_RESPONSE:over:pass_int:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 0,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 1,
+      "selected": 1,
+      "selected_side_Brier": 0.25241027535191385,
+      "side": "over"
+    },
+    "F_RESPONSE:over:pass_td:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.3569955255646996,
+      "side": "over"
+    },
+    "F_RESPONSE:over:top12": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 4,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 7,
+      "selected": 10,
+      "selected_side_Brier": 0.3263518999904696,
+      "side": "over"
+    },
+    "F_RESPONSE:under:pass_att:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.032706557466642174,
+      "side": "under"
+    },
+    "F_RESPONSE:under:pass_int:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.20948806550646493,
+      "side": "under"
+    },
+    "F_RESPONSE:under:pass_td:top5": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.10577050133918281,
+      "side": "under"
+    },
+    "F_RESPONSE:under:top12": {
+      "arm": "F_RESPONSE",
+      "results": {
+        "HIT": 5,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 6
+      },
+      "scored_nonpush": 6,
+      "selected": 12,
+      "selected_side_Brier": 0.1304072761365483,
+      "side": "under"
+    },
+    "H_RESPONSE:over:pass_att:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.22732280704901273,
+      "side": "over"
+    },
+    "H_RESPONSE:over:pass_int:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.2359737141655575,
+      "side": "over"
+    },
+    "H_RESPONSE:over:pass_td:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.3198618414054467,
+      "side": "over"
+    },
+    "H_RESPONSE:over:top12": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 5,
+        "MISS": 4,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 9,
+      "selected": 12,
+      "selected_side_Brier": 0.28301124515609544,
+      "side": "over"
+    },
+    "H_RESPONSE:under:pass_att:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.1126519296186643,
+      "side": "under"
+    },
+    "H_RESPONSE:under:pass_int:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.22759763542442632,
+      "side": "under"
+    },
+    "H_RESPONSE:under:pass_td:top5": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.14107905224062764,
+      "side": "under"
+    },
+    "H_RESPONSE:under:top12": {
+      "arm": "H_RESPONSE",
+      "results": {
+        "HIT": 6,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 5
+      },
+      "scored_nonpush": 7,
+      "selected": 12,
+      "selected_side_Brier": 0.16951056843891293,
+      "side": "under"
+    },
+    "N_RESPONSE:over:pass_att:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.24278383220948538,
+      "side": "over"
+    },
+    "N_RESPONSE:over:pass_int:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 0,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 1,
+      "selected": 1,
+      "selected_side_Brier": 0.2512036922783944,
+      "side": "over"
+    },
+    "N_RESPONSE:over:pass_td:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": 0.2951031677663816,
+      "side": "over"
+    },
+    "N_RESPONSE:over:top12": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 4,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 7,
+      "selected": 10,
+      "selected_side_Brier": 0.28213012807125487,
+      "side": "over"
+    },
+    "N_RESPONSE:under:pass_att:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": 0.11337757126597389,
+      "side": "under"
+    },
+    "N_RESPONSE:under:pass_int:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": 0.22556575585494937,
+      "side": "under"
+    },
+    "N_RESPONSE:under:pass_td:top5": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 3,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": 0.17013314461205753,
+      "side": "under"
+    },
+    "N_RESPONSE:under:top12": {
+      "arm": "N_RESPONSE",
+      "results": {
+        "HIT": 5,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 6
+      },
+      "scored_nonpush": 6,
+      "selected": 12,
+      "selected_side_Brier": 0.1777057466334573,
+      "side": "under"
+    }
+  },
+  "site_gap_comparison_coverage": {
+    "common_finite_gap_offers": 580,
+    "contract": "Compare SITE_GAP only with matched_site_gap_probability_rankings on the same finite-gap subset; main rankings remain separate.",
+    "missing_gap_offers": 0,
+    "primary_price_offers": 580
+  },
+  "site_gap_ranking_summaries": {
+    "SITE_GAP:over:pass_att:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 3,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:pass_cmp:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:pass_int:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:pass_td:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:pass_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:rec:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 4,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:rec_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 3,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 0
+      },
+      "scored_nonpush": 5,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:rush_att:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:rush_rec_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:rush_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 3,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 4,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:over:top12": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 5,
+        "MISS": 6,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 11,
+      "selected": 12,
+      "selected_side_Brier": null,
+      "side": "over"
+    },
+    "SITE_GAP:under:pass_att:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:pass_cmp:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:pass_int:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 1
+      },
+      "scored_nonpush": 1,
+      "selected": 2,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:pass_td:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:pass_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:rec:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 4
+      },
+      "scored_nonpush": 1,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:rec_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 0,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:rush_att:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 2,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:rush_rec_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 2,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 2
+      },
+      "scored_nonpush": 3,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:rush_yd:top5": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 1,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 3
+      },
+      "scored_nonpush": 2,
+      "selected": 5,
+      "selected_side_Brier": null,
+      "side": "under"
+    },
+    "SITE_GAP:under:top12": {
+      "arm": "SITE_GAP",
+      "results": {
+        "HIT": 4,
+        "MISS": 1,
+        "PUSH": 0,
+        "pending": 7
+      },
+      "scored_nonpush": 5,
+      "selected": 12,
+      "selected_side_Brier": null,
+      "side": "under"
+    }
+  },
+  "source": "Saved Sleeper payout multipliers; not authenticated The Odds API or standard standalone decimal bookmaker odds."
+}
