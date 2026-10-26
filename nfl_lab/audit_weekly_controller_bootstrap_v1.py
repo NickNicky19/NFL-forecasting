@@ -119,16 +119,20 @@ def verify_artifact_upload_clock(native_created_at, artifact_created_at, artifac
 
     Whole-second RFC3339 Z metadata denotes the interval [t, t + 1 second).
     floor(native) <= t checks compatibility with that interval; it does not
-    prove point-time upload ordering within the second. Explicit fractional
-    metadata keeps its exact comparison. Native clocks are never rewritten,
-    and the remaining API timestamp chain stays strict.
+    prove point-time upload ordering within the second. Compare each creation
+    and update observation independently: fractional metadata keeps the exact
+    native comparison even when the other observation has whole seconds.
+    Native clocks and the remaining API timestamp chain stay unchanged.
     """
     native = c.utc(native_created_at)
     created = c.utc(artifact_created_at)
-    if type(artifact_created_at) is str and re.fullmatch(
-            r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", artifact_created_at):
-        native = native.replace(microsecond=0)
-    require(native <= created <= c.utc(artifact_updated_at) <= c.utc(seal_completed_at),
+    for observed in (artifact_created_at, artifact_updated_at):
+        comparable = native
+        if type(observed) is str and re.fullmatch(
+                r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", observed):
+            comparable = native.replace(microsecond=0)
+        require(comparable <= c.utc(observed), "NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB")
+    require(created <= c.utc(artifact_updated_at) <= c.utc(seal_completed_at),
         "NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB")
 
 
