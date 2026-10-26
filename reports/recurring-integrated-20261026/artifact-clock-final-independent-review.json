@@ -1,0 +1,129 @@
+{
+  "V1_V2_integrated_negative_probes": [
+    {
+      "GETs": 7,
+      "previous_counterexample_rejected": true,
+      "registry_version": 1
+    },
+    {
+      "GETs": 7,
+      "previous_counterexample_rejected": true,
+      "registry_version": 2
+    }
+  ],
+  "all_other_bootstrap_AST_identical_to_c17": true,
+  "commit": "74a649178e9c1528223c869a6645e60143f2ba70",
+  "files_sha256": {
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "729641af04da510d21319c29eb1779ddd4111440b4226383e4d01da4a779ff45",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": "29963973087c4a228a69ee17356ca9cf8cc0833c2cdf968bc7475c7875d24824"
+  },
+  "findings": [],
+  "full_suite_run": false,
+  "module_bytes": 57638,
+  "native_Root_freshness_identity_routes_caps_unchanged": true,
+  "native_registration_or_Ops_qualification_claimed": false,
+  "new_fits": 0,
+  "protected_outcome_reads": 0,
+  "reference": "Independent Decimal seconds and half-open intervals; no production UTC parser, flooring or helper used to derive expectations. Reported API ordering and exact native job bound retained.",
+  "reference_cases": [
+    {
+      "Decimal_reference": true,
+      "candidate_accepted": true,
+      "case": "reported_native15_same_bucket",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:56Z"
+    },
+    {
+      "Decimal_reference": true,
+      "candidate_accepted": true,
+      "case": "last_microsecond_in_bucket",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.999999+00:00",
+      "updated": "2026-10-26T06:19:56Z"
+    },
+    {
+      "Decimal_reference": false,
+      "candidate_accepted": false,
+      "case": "exclusive_bucket_upper_bound",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:57.000000+00:00",
+      "updated": "2026-10-26T06:19:56Z"
+    },
+    {
+      "Decimal_reference": false,
+      "candidate_accepted": false,
+      "case": "previous_mixed_precision_blocker",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:56.008168Z"
+    },
+    {
+      "Decimal_reference": true,
+      "candidate_accepted": true,
+      "case": "exact_updated_equal_native",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:56.008169Z"
+    },
+    {
+      "Decimal_reference": true,
+      "candidate_accepted": true,
+      "case": "exact_updated_one_microsecond_later",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:56.008170Z"
+    },
+    {
+      "Decimal_reference": false,
+      "candidate_accepted": false,
+      "case": "fractional_creation_before_native",
+      "created": "2026-10-26T06:19:56.008168Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:57Z"
+    },
+    {
+      "Decimal_reference": false,
+      "candidate_accepted": false,
+      "case": "API_updated_before_created",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:19:55Z"
+    },
+    {
+      "Decimal_reference": false,
+      "candidate_accepted": false,
+      "case": "API_updated_after_job_end",
+      "created": "2026-10-26T06:19:56Z",
+      "job_completed": "2026-10-26T06:19:59Z",
+      "match": true,
+      "native": "2026-10-26T06:19:56.008169+00:00",
+      "updated": "2026-10-26T06:20:00Z"
+    }
+  ],
+  "reference_cases_passed": 9,
+  "reference_mismatches": 0,
+  "remote_calls": 0,
+  "reviewed_at_utc": "2026-10-26T06:44:03.708828+00:00",
+  "schema_version": "independent-artifact-clock-followup-review-v1",
+  "source_edits": 0,
+  "source_file_cap_bytes": 2097152,
+  "state": "PASS",
+  "worktree_clean": true
+}
