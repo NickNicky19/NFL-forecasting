@@ -32,7 +32,7 @@ from . import weekly_grading as grading, weekly_adaptive as selector
 from . import gha_private_checkpoint as cp, private_draft_store as store, state
 from . import audit_weekly_retained_v1 as retained, weekly_durable_acceptance as acceptance
 from .operational_io import operational_io
-from .operational_storage import StorageIntegrityError, StorageQuotaError, _digest_file, _no_symlinks
+from .operational_storage import OperationalStorage, StorageIntegrityError, StorageQuotaError, _digest_file, _no_symlinks
 from .owned_reference_batch import validate_owned_references
 
 VERSION = "audit-weekly-grade-v1"
@@ -322,6 +322,51 @@ def _read_owned(storage, ref, cap=2 << 20, *, raw=False):
     require(type(ref) is dict and set(ref) == {"path", "bytes", "sha256"}
         and type(ref["bytes"]) is int and 0 < ref["bytes"] <= cap, "EXACT_CHECKPOINT_REFERENCE")
     return archive.read_owned(storage, ref, ref["bytes"], raw=raw)
+
+
+def _read_owned_many(storage, refs, cap=2 << 20):
+    """Read one finite grading cohort under the unchanged global quota flock.
+
+    Only redundant full scans between at most two immutable reads are removed.
+    Every original validate_reference check runs before and after each exact
+    byte read, and again before return. Fresh registry/full scans bracket the
+    complete cohort, including failures. These bytes confer no Root authority.
+    """
+    require(isinstance(storage, OperationalStorage)
+        and type(refs) in (list, tuple) and 0 < len(refs) <= PARTITION_LIMITS["parts"]
+        and type(cap) is int and 0 < cap <= LIMITS["encoded_bytes"], "FINITE_PRIVATE_GRADING_READ_COHORT")
+    for ref in refs:
+        require(type(ref) is dict and set(ref) == {"path", "bytes", "sha256"}
+            and type(ref["bytes"]) is int and 0 < ref["bytes"] <= cap
+            and isinstance(ref["path"], (str, Path)) and Path(ref["path"]).is_absolute()
+            and type(ref["sha256"]) is str and store.HASH.fullmatch(ref["sha256"]), "EXACT_CHECKPOINT_REFERENCE")
+    def checked(ref):
+        # Same per-reference body as the original owned-reference validator;
+        # retain it at each actual read rather than trusting an earlier census.
+        path = storage._check(ref["path"]); info = path.lstat()
+        if info.st_mode & 0o222 or not stat.S_ISREG(info.st_mode):
+            raise StorageIntegrityError("published reference must be readonly")
+        sha = _digest_file(path)
+        if sha != ref["sha256"] or info.st_size != ref["bytes"]:
+            raise StorageIntegrityError("published reference hash or size mismatch")
+        blob = storage.blob_root/sha; storage._verify_blob(blob)
+        if not os.path.samestat(info, blob.lstat()):
+            raise StorageIntegrityError("reference is not an owned blob alias")
+        return path
+    bodies = []; completed = []
+    with storage._locked():
+        try:
+            storage._refresh(); storage._scan()
+            paths = set()
+            for ref in refs:
+                path = checked(ref)
+                require(path not in paths, "UNIQUE_PRIVATE_GRADING_READ_COHORT"); paths.add(path)
+                bodies.append(cp.read_ref(ref, ref["bytes"]))
+                checked(ref); completed.append(ref)
+        finally:
+            storage._refresh(); storage._scan()
+            for ref in completed: checked(ref)
+    return bodies
 
 
 def pins():
@@ -985,6 +1030,9 @@ class _PartitionStream:
     """Bounded reads verify every compressed/decoded fragment and whole stream."""
     def __init__(self, storage, directory, manifest):
         self.storage, self.directory, self.manifest = storage, directory, manifest
+        refs = [dict(path=str(directory/part["name"]), bytes=part["bytes"], sha256=part["sha256"])
+            for part in manifest["parts"]]
+        self.encoded = _read_owned_many(storage, refs, LIMITS["encoded_bytes"])
         self.index = 0; self.stream = None; self.total = 0; self.digest = hashlib.sha256()
         self.decoded = 0; self.part_digest = None; self.done = False
     def read(self, size):
@@ -996,8 +1044,7 @@ class _PartitionStream:
                         "COMPLETE_GRADING_LOGICAL_BYTE_HASH")
                     self.done = True; return b""
                 part = self.manifest["parts"][self.index]
-                ref = dict(path=str(self.directory/part["name"]), bytes=part["bytes"], sha256=part["sha256"])
-                body = _read_owned(self.storage, ref, LIMITS["encoded_bytes"], raw=True)
+                body = self.encoded.pop(0)
                 self.stream = gzip.GzipFile(fileobj=io.BytesIO(body)); self.decoded = 0; self.part_digest = hashlib.sha256()
             part = self.manifest["parts"][self.index]
             block = self.stream.read(min(size, part["decoded_bytes"]-self.decoded+1))

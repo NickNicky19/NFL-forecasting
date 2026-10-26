@@ -249,10 +249,13 @@ def _binding_context(root_sha, package, snapshot_sha, body_sha):
 
 def _append_parts(snapshot, manifest, client, package, storage, output, producer, root_sha, budget, clock):
     records = []
-    for part in grade._partition_manifest(manifest)["parts"]:
+    parts = grade._partition_manifest(manifest)["parts"]
+    refs = [dict(path=str(Path(snapshot.binding["path"]).parent/part["name"]), bytes=part["bytes"], sha256=part["sha256"])
+        for part in parts]
+    bodies = grade._read_owned_many(storage, refs, 8 << 20)
+    for part in parts:
         budget.check(client)
-        ref = dict(path=str(Path(snapshot.binding["path"]).parent/part["name"]), bytes=part["bytes"], sha256=part["sha256"])
-        body = grade._read_owned(storage, ref, 8 << 20, raw=True)
+        body = bodies.pop(0)
         started = state.utc(clock()).isoformat()
         with storage.transaction():
             storage._check(Path(client.journal)/"checkpoint-reservation-probe")
@@ -322,10 +325,9 @@ def append_root_link(snapshot, handoff, *, storage, native_binding):
         and type(native_binding) is dict and set(native_binding) == {"path", "bytes", "sha256"}
         and native_binding["sha256"] == handoff["body_sha256"] and native_binding["bytes"] == handoff["body_bytes"],
         "EXACT_ORIGINAL_LOCAL_AND_NATIVE_ROOT_SCOPE")
-    body = grade._read_owned(storage, native_binding, grade.PARTITION_LIMITS["manifest_bytes"], raw=True)
+    body, local = grade._read_owned_many(storage, [native_binding, snapshot.binding], grade.PARTITION_LIMITS["manifest_bytes"])
     wire = grade._unpack(body, grade.PARTITION_LIMITS["manifest_bytes"])
     manifest = _private_parts(handoff, wire)
-    local = grade._read_owned(storage, snapshot.binding, grade.PARTITION_LIMITS["manifest_bytes"], raw=True)
     local_manifest = grade._partition_manifest(grade._unpack(local, grade.PARTITION_LIMITS["manifest_bytes"]))
     require(wire["snapshot_body_sha256"] == snapshot.binding["sha256"] and manifest == local_manifest,
         "UNCHANGED_APPROVED_LOCAL_GRADING_MANIFEST")

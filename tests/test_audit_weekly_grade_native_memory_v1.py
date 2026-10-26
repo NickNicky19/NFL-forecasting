@@ -58,6 +58,112 @@ def test_incremental_snapshot_is_exact_original_canonical_and_gzip(packet, size)
     assert restored == ordinary and grade._digest(restored) == state.digest(ordinary)
 
 
+def _cohort_refs(packet):
+    storage=packet["storage"];base=packet["base"]/"read-cohort"
+    bodies=[gzip.compress(state.canonical(dict(n=i,text="fictional é🏈",value=-0.0)),mtime=0) for i in range(2)]
+    refs=[]
+    for i,body in enumerate(bodies):
+        path=base/(str(i)+".json.gz");storage.write_bytes(path,body)
+        refs.append(dict(path=str(path),bytes=len(body),sha256=store.sha(body)))
+    return storage,refs,bodies
+
+
+def test_owned_read_cohort_keeps_literal_bytes_and_two_fresh_full_scans(packet, monkeypatch):
+    storage,refs,bodies=_cohort_refs(packet);original=storage._scan;scans=[0]
+    def scan(): scans[0]+=1;return original()
+    monkeypatch.setattr(storage,"_scan",scan)
+    assert [grade._read_owned(storage,ref,raw=True) for ref in refs]==bodies
+    assert scans[0]==4;scans[0]=0
+    before=storage.snapshot();scans[0]=0
+    assert grade._read_owned_many(storage,refs)==bodies and scans[0]==2
+    assert grade._read_owned_many(storage,refs)==bodies and scans[0]==4
+    assert storage.snapshot()==before
+
+
+def test_owned_read_cohort_requires_actual_storage_before_private_IO(packet):
+    from types import SimpleNamespace
+    storage,refs,_=_cohort_refs(packet)
+    def forbidden():raise AssertionError("PRIVATE_IO_BEFORE_ACTUAL_STORAGE_CHECK")
+    proxy=SimpleNamespace(_locked=forbidden,_refresh=storage._refresh,_scan=storage._scan,
+        _check=storage._check,_verify_blob=storage._verify_blob,blob_root=storage.blob_root)
+    with pytest.raises(grade.GradeError,match="FINITE_PRIVATE_GRADING_READ_COHORT"):grade._read_owned_many(proxy,refs)
+
+
+@pytest.mark.parametrize("kind", ["empty","many","relative","extra","bool_size","oversized","duplicate"])
+def test_owned_read_cohort_rejects_open_or_unbounded_references(packet,kind):
+    storage,refs,_=_cohort_refs(packet)
+    if kind=="empty":refs=[]
+    elif kind=="many":refs=refs+[refs[0]]
+    elif kind=="relative":refs[0]["path"]="relative.json.gz"
+    elif kind=="extra":refs[0]["authority"]=True
+    elif kind=="bool_size":refs[0]["bytes"]=True
+    elif kind=="oversized":refs[0]["bytes"]=(8<<20)+1
+    else:refs=[refs[0],refs[0]]
+    with pytest.raises(grade.GradeError):grade._read_owned_many(storage,refs)
+
+
+@pytest.mark.parametrize("kind", ["writable","unowned","symlink","external_link","size","sha","missing"])
+def test_owned_read_cohort_keeps_every_original_CAS_and_path_guard(packet,kind):
+    import os
+    from nfl_lab.operational_storage import StorageIntegrityError
+    storage,refs,bodies=_cohort_refs(packet);path=Path(refs[0]["path"])
+    if kind=="writable":path.chmod(0o600)
+    elif kind=="unowned":path.unlink();path.write_bytes(bodies[0]);path.chmod(0o444)
+    elif kind=="symlink":path.unlink();path.symlink_to(refs[1]["path"])
+    elif kind=="external_link":os.link(path,packet["base"].parent/"unaccounted-external-alias")
+    elif kind=="size":refs[0]["bytes"]+=1
+    elif kind=="sha":refs[0]["sha256"]="0"*64
+    else:path.unlink()
+    with pytest.raises((StorageIntegrityError,FileNotFoundError)):grade._read_owned_many(storage,refs)
+
+
+@pytest.mark.parametrize("when", ["before_second_read","after_final_read"])
+def test_owned_read_cohort_rechecks_actual_aliases_through_final_scan(packet,monkeypatch,when):
+    from nfl_lab.operational_storage import StorageIntegrityError
+    storage,refs,bodies=_cohort_refs(packet);actual=grade.cp.read_ref;calls=[0]
+    def read(ref,cap):
+        value=actual(ref,cap);calls[0]+=1
+        if calls[0]==(1 if when=="before_second_read" else 2):
+            index=1 if when=="before_second_read" else 0;path=Path(refs[index]["path"])
+            path.unlink();path.write_bytes(bodies[index]);path.chmod(0o444)
+        return value
+    monkeypatch.setattr(grade.cp,"read_ref",read)
+    with pytest.raises(StorageIntegrityError,match="not an owned blob alias"):grade._read_owned_many(storage,refs)
+
+
+def test_owned_read_cohort_final_scan_charges_new_unknown_bytes(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage,StorageQuotaError
+    policy=json.loads((ROOT/"config/operational-source-policy-v2.json").read_bytes());policy["storage"]["limit_bytes"]=64<<10
+    storage=OperationalStorage(tmp_path/"cache",policy,state=tmp_path/"state")
+    base=storage.register_root(tmp_path/"capture");storage,refs,_=_cohort_refs(dict(storage=storage,base=base))
+    actual=grade.cp.read_ref;orphan=base/"charged-orphan"
+    def read(ref,cap):
+        value=actual(ref,cap)
+        if not orphan.exists():orphan.write_bytes(b"x"*storage.limit_bytes)
+        return value
+    monkeypatch.setattr(grade.cp,"read_ref",read)
+    with pytest.raises(StorageQuotaError,match="retained managed bytes"):grade._read_owned_many(storage,refs)
+    assert orphan.stat().st_size==storage.limit_bytes
+
+
+@pytest.mark.parametrize("kind", ["scalar","page","negative_zero","utf8","binding"])
+def test_snapshot_verify_still_hashes_all_original_bytes_and_binding(kind):
+    import zlib
+    row=dict(value=-0.0,text="é🏈",nested=[dict(original=True)])
+    snapshot=grade.Snapshot(dict(rows=grade._PagedRows([row]),scalar="original"),grade._KEY)
+    snapshot.binding=dict(path="/fictional/original.json.gz",bytes=1,sha256="a"*64)
+    snapshot._binding_sha256=state.digest(snapshot.binding);snapshot.verify()
+    if kind=="scalar":snapshot.document["scalar"]="changed"
+    elif kind=="binding":snapshot.binding["sha256"]="b"*64
+    else:
+        changed=deepcopy(row)
+        if kind=="negative_zero":changed["value"]=0.0
+        elif kind=="utf8":changed["text"]="e\u0301🏈"
+        else:changed["nested"][0]["original"]=False
+        object.__setattr__(snapshot.document["rows"],"_pages",(zlib.compress(state.canonical([changed]),1),))
+    with pytest.raises(grade.GradeError,match="SEALED_OPERATIONAL_INPUT_CHANGED|SNAPSHOT_BYTE_BINDING_CHANGED"):snapshot.verify()
+
+
 def test_v2_fragments_are_literal_original_canonical_bytes_across_utf8(packet):
     document = dict(a="x"*100, b="é🏈", c="x"*50, forecasts=[dict(value=-0.0, actual=None)], retained=[0,"DNP","played_corrected"])
     raw = state.canonical(document)
