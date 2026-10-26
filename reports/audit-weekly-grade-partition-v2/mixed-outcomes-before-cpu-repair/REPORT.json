@@ -1,0 +1,186 @@
+{
+  "base_commit": "96eab624985fac5c2518cbd62c745d63a9b17365",
+  "boundary": "Fictional data and transport under installed native limits. Whole Ops and cross-source migration remain unqualified. No source, Root, registry, scheduler or production activation.",
+  "caps": {
+    "CPU_seconds": 120,
+    "HTTP_calls": 40,
+    "address_space_bytes": 536870912,
+    "decoded_bytes_per_part": 67108864,
+    "encoded_bytes_per_part": 8388608,
+    "global_bytes": 536870912,
+    "parts": 2,
+    "runtime_bytes": 33554432,
+    "transfer_bytes": 41943040,
+    "wall_seconds": 180
+  },
+  "changed_definitions": [
+    "TWO_CAPTURE_NATIVE_SCRIPT",
+    "test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes"
+  ],
+  "changed_file": "tests/test_audit_weekly_grade_native_memory_v1.py",
+  "changed_file_sha256": "3ee334279a0b756ecc758e1c1acd0ee91da8ed5e70bd2c0e33ece49cb56fb825",
+  "checks": {
+    "corrected_reader_only_attempt": "PASSED_NATIVE_BOUNDS_BYTE_CENSUS_AND_HAND_LOSS_ASSERTIONS",
+    "final_full_case_rerun": false,
+    "final_full_case_rerun_reason": "Writer CPU failure already reproduced twice; only corrected reader phase repeated against exact retained original parts. No overall native or CI pass is claimed.",
+    "first_full_attempt": "FAILED_120_CPU_ASSERTION_134_094_SECONDS",
+    "original_capture_alias_bindings_verified_after_readback": 92,
+    "second_full_attempt": "WRITER_122_997_CPU_THEN_READER_LOSS_FIXTURE_CLOCK_ASSERTION_FAILED"
+  },
+  "commits_in_this_followup": 0,
+  "final_Client_counters": {
+    "fresh_reader": {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 50.275981314,
+      "HTTP_calls": 33,
+      "P2_losses": {
+        "pass_att": 2.0,
+        "pass_cmp": 2.0,
+        "pass_int": 2.0,
+        "pass_td": 2.0,
+        "pass_yd": 1.0
+      },
+      "R0_loss": 1,
+      "VmHWM": 181755904,
+      "VmPeak": 209223680,
+      "VmRSS": 176349184,
+      "VmSize": 203481088,
+      "all_GET": true,
+      "fictional": true,
+      "known_by_at": "2026-10-28T08:03:00+00:00",
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "pass_td_candidate_loss": 2,
+      "phase": "reader",
+      "pid": 489938,
+      "reader_process": "399ab7f68715ac40498861ad50f8de8fe3d3edc09cd7a3f9f2322b14fb6928a6",
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED",
+      "transfer_bytes": 4863682,
+      "wall_seconds": 49.83219320900389
+    },
+    "writer_attempt1": {
+      "CPU_seconds": 134.094436225,
+      "HTTP_calls": 39,
+      "VmHWM": 189845504,
+      "VmPeak": 512303104,
+      "VmRSS": 189706240,
+      "VmSize": 503910400,
+      "fictional": true,
+      "logical_sha256": "f0229e3a8f0933c2fb3c24f0d5600b895e812561ae7d66ef49d18db3b2eff829",
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "phase": "writer",
+      "pid": 485511,
+      "runtime_bytes": 4823856,
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED",
+      "transfer_bytes": 4869479,
+      "wall_seconds": 133.48638040799415,
+      "writer_process": "095e2c52e1fabb954a099a81152b7cebcfb4c3a748d4bc269842a2e4511bd3cd"
+    },
+    "writer_attempt2": {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 122.99677275,
+      "HTTP_calls": 39,
+      "VmHWM": 190349312,
+      "VmPeak": 512901120,
+      "VmRSS": 190349312,
+      "VmSize": 504508416,
+      "fictional": true,
+      "logical_sha256": "d351d213b5d593940862e0913077266f5d8cb3170ee035eacd897cb630da4e57",
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "phase": "writer",
+      "pid": 489715,
+      "runtime_bytes": 4823285,
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED",
+      "transfer_bytes": 4868908,
+      "wall_seconds": 122.46154608800134,
+      "writer_process": "9e7a782090ca18a2e8ba5b816bf039e3b7da5e87be45df7c2ea73e8ec915649c"
+    }
+  },
+  "legacy_pending_single_capture_test_unchanged": true,
+  "losses": {
+    "LAB_CDF_pass_td": 2,
+    "P2": {
+      "pass_att": 2.0,
+      "pass_cmp": 2.0,
+      "pass_int": 2.0,
+      "pass_td": 2.0,
+      "pass_yd": 1.0
+    },
+    "R0_all_five_targets": 1,
+    "post_known_view": "one fictional second after unchanged actual known_by proof; no proof/publication clock rewritten",
+    "strict_causal_view_at_known_by": "empty metrics required"
+  },
+  "material_blocker": {
+    "AS_qualification": "Local writer peak under unchanged 512 MiB; genuine GHA full mixed-case AS/CPU/wall qualification remains outstanding.",
+    "attempt1_CPU_seconds": 134.094436225,
+    "attempt2_CPU_seconds": 122.99677275,
+    "attempt2_append_interval_CPU_seconds": 38.361010976,
+    "kind": "writer cumulative CPU exceeds original 120-second bound",
+    "scope_note": "Includes controlled test callback and byte-oracle overhead; no production function-level root cause is claimed. Production checkpoint/grade code was not edited."
+  },
+  "new_NFL_fits": 0,
+  "patch": {
+    "file": "mixed-outcomes.patch",
+    "sha256": "af82802ca09a25c1d5662ed636d11a6e65c9282aaff994bf38d29482fc5a8656"
+  },
+  "preserved_failure_logs": [
+    "mixed-full-two-native.log",
+    "mixed-full-two-native-attempt2.log",
+    "retained-reader-diagnostic.log"
+  ],
+  "protected_real_outcome_reads": 0,
+  "real_provider_calls": 0,
+  "remote_actions": 0,
+  "status": "TEST_EXTENSION_FROZEN_WRITER_CPU_BLOCKED_NOT_QUALIFIED",
+  "unchanged_production_files_sha256": {
+    "config/audit-weekly-numerical-runtime-v1.json": "1edc3d47e9c2adb45efab75ff0483d1624419e54721b96636dd23beadad07e5a",
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py": "316b567695db46ac26e78b1cd0a42bce38a9b8bc6c4728e00ce08e958e75e3ab",
+    "nfl_lab/audit_weekly_grade_v1.py": "c63e3a8a428cfe0eb6f7792cad79d1cec02ed9fe07f45c72378b6be7cf598c8e",
+    "nfl_lab/operational_storage.py": "8f9ba71dca00544149f69d46ca6a14db119c5263a5f20943dd69787d2343bee8",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+  },
+  "workload": {
+    "R0_forecasts_per_capture": 5000,
+    "candidate_forecasts_per_capture": 18000,
+    "captures": 2,
+    "explicit_observations": 5000,
+    "missing_pending_observations": 5000,
+    "outcome_states": {
+      "DNP": 1250,
+      "played_nonzero": 1250,
+      "played_zero": 1250,
+      "unknown": 6250
+    },
+    "retained_outcome_rows": 10000,
+    "selected_per_capture": 5000
+  },
+  "worktree": "/workspace/nfl-system-audit/grade-partition-repair"
+}

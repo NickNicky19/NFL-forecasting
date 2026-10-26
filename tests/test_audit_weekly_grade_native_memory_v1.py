@@ -1,9 +1,10 @@
 """Lossless fictional rows, exact legacy codec bytes and actual native limits.
 
 No outcome/source/model body from production is opened. The full-census native
-test uses the existing 18k-candidate/5k-selected fixture, the real bind/grade and
-checkpoint helpers, and the existing fictional private transport. Unknown
-outcomes stay unknown. This tests a finite capture, not 36 full-history captures.
+tests use the existing 18k-candidate/5k-selected fixture, the real bind/grade and
+checkpoint helpers, and the existing fictional private transport. The two-game
+case retains resolved losses, played zero, DNP and explicit/missing unknowns.
+This tests finite captures, not 36 full-history captures.
 """
 from copy import copy, deepcopy
 import gzip
@@ -453,7 +454,25 @@ ROOT=Path.cwd();ROOT_SHA='d'*64;GRADE=state.utc('2026-10-28T08:00:00Z')
 seed=json.loads(Path(sys.argv[1]).read_bytes());phase=sys.argv[2];began=time.monotonic()
 def metric(stage,**extra):
  memory={line.partition(':')[0]:int(line.partition(':')[2].split()[0])*1024 for line in Path('/proc/self/status').read_text().splitlines() if line.partition(':')[0] in {'VmPeak','VmSize','VmRSS','VmHWM'}}
- print(json.dumps(dict(stage=stage,phase=phase,pid=__import__('os').getpid(),CPU_seconds=time.process_time(),wall_seconds=time.monotonic()-began,**memory,**extra)),flush=True)
+ print(json.dumps(dict(fictional=True,stage=stage,phase=phase,pid=__import__('os').getpid(),CPU_seconds=time.process_time(),wall_seconds=time.monotonic()-began,CPU_limit=resource.getrlimit(resource.RLIMIT_CPU),AS_limit=resource.getrlimit(resource.RLIMIT_AS),**memory,**extra)),flush=True)
+def outcome_census(document):
+ from collections import Counter
+ states=Counter();sources=Counter()
+ for version in document['versions']:
+  for row in version['snapshot']['rows']:
+   states[row['outcome_state']]+=1
+   if row['game_id']=='fictional-sunday':
+    assert len(row['source_observation_refs'])==len(row['source_body_sha256s'])==len(row['source_status_sha256s'])==1
+    assert row['participation_state']==('played','played','DNP','unknown')[(int(row['player_id'][3:])-1)%4]
+    assert row['actual']==(0,2,None,None)[(int(row['player_id'][3:])-1)%4]
+    sources['explicit_observation']+=1
+   else:
+    assert row['game_id']=='fictional-monday' and row['actual'] is None and row['participation_state']=='unknown'
+    assert row['source_observation_refs']==row['source_body_sha256s']==row['source_status_sha256s']==[]
+    sources['missing_pending']+=1
+ assert dict(states)==dict(played_zero=1250,played_nonzero=1250,DNP=1250,unknown=6250)
+ assert dict(sources)==dict(explicit_observation=5000,missing_pending=5000)
+ return dict(states)
 ns=globals()
 for filename,names in [('test_audit_weekly_archive_v1.py',{'Service'}),('test_audit_weekly_grade_checkpoint_v1.py',{'Service','Parent','case'})]:
  nodes=[n for n in ast.parse((ROOT/'tests'/filename).read_text()).body if isinstance(n,(ast.ClassDef,ast.FunctionDef)) and n.name in names]
@@ -482,14 +501,39 @@ if phase=='writer':
  captures=[g.bind_capture(r,c,population,item['restored'],storage=storage,capture_id=item['capture_id'],role_catalog=seed['roles'],frozen_schedule=seed['schedule'],authenticate=lambda _:True,at=GRADE) for item in seed['captures']]
  assert len(captures)==2 and all(len(x.document['forecasts'])==23000 and len(x.document['selected'])==5000 for x in captures)
  metric('TWO_FULL_CAPTURES_BOUND')
- doc=dict(schema_version=g.VERSION+'-provider-observations',source_policy_sha256=g.cp.POLICY_SHA,captured_at=GRADE.isoformat(),observations=[],finality=[dict(season=2026,week=7,status_source_sha256='a'*64,observed_at=(GRADE-timedelta(hours=1)).isoformat(),games=[dict(game_id='espn:'+x['website_game_id'],kickoff_utc=x['kickoff_utc'],home=x['home'],away=x['away'],final=True) for x in seed['schedule']])])
+ # The first complete fictional game has real observation rows in this
+ # controlled fixture. The other game's statistics remain genuinely missing;
+ # neither game completion nor absence of a row is treated as a played zero.
+ status_sha=state.digest('fictional-two-game-final-status')
+ observations=[]
+ for offer in captures[0].document['opportunities']:
+  cohort=(int(offer['player_id'][3:])-1)%4
+  observations.append(dict(player_id=offer['player_id'],game_id=offer['game_id'],target=offer['target'],
+   actual=(0,2,None,None)[cohort],participation_state=('played','played','DNP','unknown')[cohort],
+   source='fictional-Sleeper-same-origin',source_sha256=state.digest('fictional-first-game-observation-body'),status_sha256=status_sha,
+   observed_at=(GRADE-timedelta(minutes=30)).isoformat(),source_timestamp=(GRADE-timedelta(hours=1)).isoformat()))
+ assert len(observations)==5000 and {o['game_id'] for o in observations}=={'espn:112'}
+ doc=dict(schema_version=g.VERSION+'-provider-observations',source_policy_sha256=g.cp.POLICY_SHA,captured_at=GRADE.isoformat(),observations=observations,finality=[dict(season=2026,week=7,status_source_sha256=status_sha,observed_at=(GRADE-timedelta(hours=1)).isoformat(),games=[dict(game_id='espn:'+x['website_game_id'],kickoff_utc=x['kickoff_utc'],home=x['home'],away=x['away'],final=True) for x in seed['schedule']])])
  batch=g.bind_observations(captures,doc,authenticate=lambda _:True,at=GRADE)
  snapshot=g.grade(r,captures,[batch],storage=storage,output=Path(seed['output'])/'grade',clock=lambda:GRADE)
  manifest=g._unpack(Path(snapshot.binding['path']).read_bytes(),64<<20)
  assert manifest['schema_version']==g.SNAPSHOT_WIRE_V2 and len(manifest['parts'])==2
  assert manifest['logical_bytes']>64<<20 and manifest['logical_sha256']==snapshot.sha256
  assert sum(len(v['snapshot']['rows']) for v in snapshot.document['versions'])==10000
- metric('TWO_FULL_CAPTURES_GRADED',logical_bytes=manifest['logical_bytes'],part_bytes=[p['bytes'] for p in manifest['parts']])
+ states=outcome_census(snapshot.document)
+ assert len(snapshot.document['collector_records'])==5000
+ values={}
+ for capture in snapshot.document['captures']:
+  for row in capture['selected']: values.setdefault(row['category'],set()).add(row['forecast_value'])
+ assert set(values)=={'pass_yd','pass_td','pass_cmp','pass_att','pass_int'} and all(len(v)==1 and v<={0,1} for v in values.values())
+ # Hand calculation for the balanced played outcomes {0,2}, independent of
+ # the production loss/evaluate functions. Keep every losing selected week.
+ p2_losses={target:(abs(next(iter(v)))+abs(next(iter(v))-2))/2 if target=='pass_yd' else (next(iter(v))**2+(next(iter(v))-2)**2)/2 for target,v in values.items()}
+ expected=dict(outcome_states=states,p2_losses=p2_losses,
+  captures_sha256=g._digest(snapshot.document['captures']),collector_sha256=g._digest(snapshot.document['collector_records']),
+  versions_sha256=g._digest(snapshot.document['versions']),week_revisions_sha256=g._digest(snapshot.document['week_revisions']))
+ Path(seed['expected']).write_bytes(s.canonical(expected))
+ metric('TWO_FULL_CAPTURES_GRADED',logical_bytes=manifest['logical_bytes'],part_bytes=[p['bytes'] for p in manifest['parts']],outcome_states=states,collector_rows=5000)
  q=dict(storage=storage,snapshot=snapshot,r=r)
 else:
  handoff=json.loads(Path(seed['handoff']).read_bytes());q=dict(storage=storage,snapshot=SimpleNamespace(sha256=handoff['snapshot_sha256']),r=r)
@@ -503,43 +547,71 @@ if phase=='writer':
  tree=ast.parse((ROOT/'tests/test_audit_weekly_grade_native_memory_v1.py').read_text());save=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_save_fictional_service')
  store=s;exec(compile(ast.fix_missing_locations(ast.Module(body=[save],type_ignores=[])),'fictional-service-save','exec'),globals())
  _save_fictional_service(service,Path(seed['saved_service']).parent)
- metric('TWO_FULL_PARTITION_CHECKPOINT_APPENDED',HTTP_calls=client.calls,transfer_bytes=client.transferred,logical_sha256=handoff['snapshot_sha256'],runtime_bytes=sum(a['size'] for a in service.server.assets),writer_process=client.process)
+ metric('TWO_FULL_PARTITION_CHECKPOINT_APPENDED',HTTP_calls=client.calls,transfer_bytes=client.transferred,logical_sha256=handoff['snapshot_sha256'],runtime_bytes=sum(a['size'] for a in service.server.assets),writer_process=client.process,outcome_states=states)
 else:
  operation['parent'].handoff=deepcopy(handoff)
  result,client=operation['restore'](handoff);result.verify();k.native_envelope()
+ metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=all(request.method=='GET' for request in service.calls))
  assert len(result.durable.document['captures'])==2 and all(len(x['forecasts'])==23000 and len(x['selected'])==5000 for x in result.durable.document['captures'])
  assert sum(len(v['snapshot']['rows']) for v in result.durable.document['versions'])==10000
- assert all(v['actual'] is None for version in result.durable.document['versions'] for v in version['snapshot']['rows'])
- assert all(request.method=='GET' for request in service.calls)
+ expected=json.loads(Path(seed['expected']).read_bytes());states=outcome_census(result.durable.document)
+ assert states==expected['outcome_states']
+ for field,digest in [('captures','captures_sha256'),('collector_records','collector_sha256'),('versions','versions_sha256'),('week_revisions','week_revisions_sha256')]:
+  assert g._digest(result.durable.document[field])==expected[digest]
+ assert result.durable.document['legacy_history_binding']==seed['history_binding']
+ # A frozen clock exactly equal to known_by cannot expose a causal grade.
+ # Advance only this fictional evaluation view, never an original proof or
+ # publication/availability clock, to test the actual resolved loss branch.
+ assert result.report['metrics']==[]
+ report=g.report(result.durable,r,at=state.utc(result.proof['known_by_at'])+timedelta(seconds=1))
+ metrics={(m['category'],m['method_id']):m for m in report['metrics']}
+ for target,loss in expected['p2_losses'].items():
+  for method in ('R0','P2_SELECTED'):
+   m=metrics[(target,method)];coverage=m['coverage']
+   assert coverage['offered']==coverage['forecast']==2000 and coverage['scored']==500
+   assert coverage['played_zero']==coverage['scored_played_zero']==250 and coverage['DNP']==250 and coverage['unknown']==1250
+   assert m['no_selection_rewrite'] is True and m['primary_loss']==(1 if method=='R0' else loss) and m['primary_loss']>0
+  assert metrics[(target,'R0')]['signed_bias']==0 and metrics[(target,'R0')]['absolute_error_p90_nearest_rank']==1
+ assert metrics[('pass_td','LAB_CDF')]['primary_loss']==2>metrics[('pass_td','R0')]['primary_loss']
+ assert any(w['category']=='pass_td' and w['scheduled_games']==3 for w in result.durable.document['week_revisions'])
+ assert client.readonly is True and all(request.method=='GET' for request in service.calls)
  assert result.proof['producer']['process_identity']!=result.proof['reader']['process_identity']
  assert result.report['all_negative_weeks_retained'] is True and result.report['public_release'] is False
  assert all('catboost' not in name for name in sys.modules)
  evidence=snapshot_path=path/'restore/FRESH_READER_NATIVE_PROOF.json'
  proof=json.loads(evidence.read_bytes());assert len(proof['context']['multipart_readback']['parts'])==2
  assert proof['context']['multipart_readback']['completed_at_utc']<=result.proof['known_by_at']
- metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=True,known_by_at=result.proof['known_by_at'],reader_process=client.process)
+ metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=True,known_by_at=result.proof['known_by_at'],reader_process=client.process,outcome_states=states,R0_loss=1,pass_td_candidate_loss=2,P2_losses=expected['p2_losses'])
 '''
 
 
 def test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes(tmp_path):
     from test_audit_weekly_grade_checkpoint_v1 import Service
     left,right=two_full_scope_fixture(tmp_path/"fixture");q=left;f=q["f"]
+    originals=[{name:store.sha(Path(ref['path']).read_bytes()) for name,ref in item['restored']['aliases'].items()} for item in (left,right)]
     remote=tmp_path/"remote";remote.mkdir(mode=0o700);service=Service(remote)
     initial=_save_fictional_service(service,tmp_path/"initial-remote")
     seed=dict(cache=str(q["storage"].cache),state_root=str(q["storage"].state_root),epoch=q["r"].epoch.document,
         completion=q["r"].completion,original_choice=f["raw"].decode(),original_completion=f["completion"],slate=f["slate"],catalog=f["catalog"],policy=f["policy"],history_binding=f["history_binding"],
         choice=q["c"].document,population=q["pop"],roles=q["roles"],schedule=q["schedule"],captures=[dict(restored=x["restored"],capture_id=x["capture_id"]) for x in (left,right)],
-        initial_service=initial,saved_service=str(tmp_path/"writer-remote/service.json"),handoff=str(tmp_path/"handoff.json"),output=str(tmp_path/"worker"))
+        initial_service=initial,saved_service=str(tmp_path/"writer-remote/service.json"),handoff=str(tmp_path/"handoff.json"),expected=str(tmp_path/"expected-mixed-outcomes.json"),output=str(tmp_path/"worker"))
     path=tmp_path/"two-full-native-seed.json";path.write_bytes(state.canonical(seed))
     profile=json.loads((ROOT/"config/audit-weekly-numerical-runtime-v1.json").read_bytes())["environment"]
-    phases=[]
+    phases=[];measurements=[]
     for phase in ("writer","reader"):
         result=subprocess.run([sys.executable,"-B","-c",TWO_CAPTURE_NATIVE_SCRIPT,str(path),phase],cwd=ROOT,
             env=dict(PYTHONDONTWRITEBYTECODE="1",**profile),capture_output=True,text=True,timeout=185)
         print(result.stdout,end="",flush=True)
         assert result.returncode==0,result.stderr
         values=[json.loads(line) for line in result.stdout.splitlines()]
-        assert all(v["VmPeak"]<=512<<20 and v["CPU_seconds"]<120 and v["wall_seconds"]<180 for v in values)
+        measurements.extend(values)
         assert values[-1]["HTTP_calls"]<=40 and values[-1]["transfer_bytes"]<=40<<20;phases.append(values[-1])
     assert phases[0]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_APPENDED" and phases[1]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED"
     assert phases[0]["pid"]!=phases[1]["pid"] and phases[0]["runtime_bytes"]<32<<20
+    assert [item['outcome_states'] for item in phases]==[dict(played_zero=1250,played_nonzero=1250,DNP=1250,unknown=6250)]*2
+    assert [{name:store.sha(Path(ref['path']).read_bytes()) for name,ref in item['restored']['aliases'].items()} for item in (left,right)]==originals
+    # Collect the independent GET-only reader diagnostics even when a completed
+    # writer exceeded CPU. Every original bound still must pass for this test
+    # to pass; a partial/failed native append never starts a reader.
+    assert all(v['CPU_limit']==[120,120] and v['AS_limit']==[512<<20,512<<20] for v in measurements)
+    assert all(v["VmPeak"]<=512<<20 and v["CPU_seconds"]<120 and v["wall_seconds"]<180 for v in measurements), phases
