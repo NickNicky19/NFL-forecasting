@@ -1,0 +1,82 @@
+{
+  "schema_version": "genuine-weekly-operations-failed-attempt-v1",
+  "observed_at_utc": "2026-10-26T05:52:41.069079+00:00",
+  "run_id": 40276030466,
+  "source_sha": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+  "producer_job_id": 121418863463,
+  "reader_job_id": 121419760333,
+  "public_forecast_export_skipped": true,
+  "model_fits": 0,
+  "forecast_qualification": false,
+  "producer_summary": [
+    {
+      "diagnostic": {
+        "error_type": "StoreError",
+        "source_frames": [
+          {
+            "file": "tools/audit_weekly_hosted_v1.py",
+            "line": 46
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 1473
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 939
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 484
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 402
+          }
+        ]
+      },
+      "fits": 0,
+      "public_release": false,
+      "reason": "EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED",
+      "state": "FAILED_RETAINED",
+      "successful_forecast": false
+    },
+    {
+      "fits": 0,
+      "partial_forecast_archive_state": "FAILURE_EVIDENCE",
+      "public_release": false,
+      "state": "FAILED_ATTEMPT_APPENDED_READER_REQUIRED",
+      "successful_forecast": false
+    }
+  ],
+  "reader_summary": [
+    {
+      "fits": 0,
+      "opaque_failed_capture_restored": true,
+      "original_attempt": {
+        "job_id": "audit-weekly-produce-v1",
+        "repository": "NickNicky19/NFL-forecasting",
+        "run_attempt": 1,
+        "run_id": "40276030466",
+        "source_sha": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+        "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1"
+      },
+      "public_release": false,
+      "receipt_sha256": "de251ce8a4a247a03f0db6d2d780b5ab3fd21c1b4b93da850ecb1e55c8c96ef3",
+      "state": "PRIVATE_FAILURE_RESTORED",
+      "successful_forecast": false
+    }
+  ],
+  "private_logs": {
+    "producer": {
+      "bytes": 57735,
+      "sha256": "f336b454ed725ad62ab5cd9b42def68141d5037785d05a85601e6bd0b17fc148",
+      "literal_root_and_prefix_absent": true
+    },
+    "reader": {
+      "bytes": 42857,
+      "sha256": "d7f22ea1205b6875d37b06c4f9bd77fb4daa486ac876b8affdf8fee01770d917",
+      "literal_root_and_prefix_absent": true
+    }
+  }
+}

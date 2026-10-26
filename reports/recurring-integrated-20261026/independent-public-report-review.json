@@ -1,0 +1,432 @@
+{
+  "coverage": {
+    "actual_SYS_ids": [
+      "SYS-001",
+      "SYS-002",
+      "SYS-003",
+      "SYS-004",
+      "SYS-005",
+      "SYS-006",
+      "SYS-007",
+      "SYS-008",
+      "SYS-009",
+      "SYS-010",
+      "SYS-011",
+      "SYS-012",
+      "SYS-013",
+      "SYS-014"
+    ],
+    "exact_14_unique_statuses": true,
+    "expected_SYS_ids": [
+      "SYS-001",
+      "SYS-002",
+      "SYS-003",
+      "SYS-004",
+      "SYS-005",
+      "SYS-006",
+      "SYS-007",
+      "SYS-008",
+      "SYS-009",
+      "SYS-010",
+      "SYS-011",
+      "SYS-012",
+      "SYS-013",
+      "SYS-014"
+    ],
+    "original_fields_interpreted_as_historical": true,
+    "overall_completion": "PARTIAL"
+  },
+  "current_evidence": {
+    "COUNT7_website_installed": false,
+    "Ops14": {
+      "new_model_fits": 0,
+      "public_forecast_export_skipped": true,
+      "reader_job_id": 121419760333,
+      "reason": "EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED",
+      "restoration_receipt_sha256": "de251ce8a4a247a03f0db6d2d780b5ab3fd21c1b4b93da850ecb1e55c8c96ef3",
+      "run_id": 40276030466,
+      "state": "CAPTURE_FAILED_FAILURE_EVIDENCE_RESTORED",
+      "successful_forecast": false
+    },
+    "active_writer_source": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "consumer": {
+      "commit": "41d1636",
+      "python_tests": 216,
+      "status": "PREVIEW_PREPARATION_ONLY_NOT_RELEASE_QUALIFIED",
+      "website_installed": false
+    },
+    "native_registration": {
+      "record_commit": "8a62c67c8e6bf8297619456f54294400c80a89d6",
+      "record_path": "state/controller-v1/bootstrap-v2-20261026-discovery.json",
+      "record_sha256": "79ecf805626822ca169073595def093a4d9fc21390016bb492aa5d6beb53545e",
+      "run_id": 40274920423,
+      "three_jobs_successful": true
+    },
+    "producer_merge": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+    "research_main_merge": "a45bbc92cf44b716863c6d950363b1463cf87c96",
+    "source_CI": {
+      "attempted": 2136,
+      "passed": 2135,
+      "run_id": 40273587281,
+      "skipped": 1,
+      "subtests": 319,
+      "subtests_basis": "User-provided summary and README; local coverage receipt supplies node counts."
+    },
+    "website_source": "453e7e6e843b0cb1ae611b0925063e0f96c70196"
+  },
+  "findings": [
+    {
+      "category": "unlabelled_superseded_pending_CI_claims",
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/source33-final-coverage.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/source33-final-merged.json"
+      ],
+      "file": "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/README.md",
+      "id": "REPORT-001",
+      "occurrences": [
+        {
+          "latest_evidence": "This run already failed; README later records the authority-test failure.",
+          "line": 21,
+          "quote": "full hosted run40268428846 on5eefb12289778beddfd07c60b5f16635304a3489 remains pending"
+        },
+        {
+          "latest_evidence": "Final exact-head CI40273587281 is complete and passed.",
+          "line": 31,
+          "quote": "exact final-head hosted acceptance is still required"
+        },
+        {
+          "latest_evidence": "That CI completed successfully before producer416 merged.",
+          "line": 33,
+          "quote": "is under full CI40273587281"
+        }
+      ],
+      "recommendation": "Make the earlier sections explicitly dated historical checkpoints, or replace current-tense pending phrases with past-tense facts. Preserve original failures and receipts.",
+      "severity": "medium"
+    },
+    {
+      "category": "Ops14_in_progress_claim_superseded_by_failure",
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/owner-ops14-genuine-failure-and-restoration.json",
+        "README.md:53",
+        "SYS-STATUS.json:/findings/6/current/verified"
+      ],
+      "file": "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/README.md",
+      "id": "REPORT-002",
+      "latest_evidence": {
+        "public_forecast_export_skipped": true,
+        "reader_job_id": 121419760333,
+        "reader_receipt_sha256": "de251ce8a4a247a03f0db6d2d780b5ab3fd21c1b4b93da850ecb1e55c8c96ef3",
+        "reason": "EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED",
+        "run_id": 40276030466
+      },
+      "lines": [
+        46
+      ],
+      "quote": "It is still in progress at this checkpoint.",
+      "recommendation": "Update the current execution paragraph or explicitly label it as the 05:46 historical dispatch checkpoint. The current summary must say capture failed and failure evidence was separately restored; no successful forecast/export.",
+      "severity": "medium"
+    },
+    {
+      "category": "activation_state_needs_observation_qualifier",
+      "evidence": "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/parent-activation-current-access-20261026.json",
+      "file": "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/SYS-STATUS.json",
+      "id": "REPORT-003",
+      "json_pointer": "/findings/6/current/released",
+      "lines": [
+        135
+      ],
+      "observed": {
+        "activation_performed": false,
+        "http_status": 403,
+        "write_attempted": false
+      },
+      "quote": "bounded source only; automatic activation disabled",
+      "recommendation": "Say activation not performed/verified, latest variable-read403; retain disabled only with a separate current observation establishing that state.",
+      "severity": "low"
+    }
+  ],
+  "historical_exclusions": [
+    "Frozen original expected/actual/repair_status fields retain their original_public_ledger_ref provenance; they were not treated as new current claims.",
+    "Explicit prior-run observations and immutable failure/registration receipts were preserved; recommendations concern unlabelled current-tense wording."
+  ],
+  "input_files": {
+    "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/README.md": {
+      "bytes": 13931,
+      "sha256": "43f39aa5300eec008a418c90bb21adee852fd5433801f876c179b4e31cc3a874"
+    },
+    "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/SYS-STATUS.json": {
+      "bytes": 16599,
+      "sha256": "6fd86274c8e717e749517cb5759782a78d69c94f1ab7b666161d8e5627ec31f5"
+    }
+  },
+  "limitations": [
+    "Evidence is retained local public metadata and user updates; remote current state was not independently reauthenticated.",
+    "Earlier website/research behavior was checked against prior public verification, without rerunning tests/browser checks or reading private historical rows."
+  ],
+  "per_SYS": [
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "producer; website pending",
+        "released": "COUNT7 producer only",
+        "remaining_boundary": "Website selected COUNT7 installation and actual deployed consumption remain with active writer.",
+        "repaired": "yes",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "18 retained warm replays,14 independent cold means; real Main preview127rows/11categories"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/live-website-identity-20261026T0420.json"
+      ],
+      "id": "SYS-001",
+      "review_note": "COUNT7 producer qualification stays separate from pending website installation; original model evidence is not relabelled as source416.",
+      "title": "Count fallback functional mismatch"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "yes",
+        "released": "website453",
+        "remaining_boundary": "No new forecast accuracy qualification follows.",
+        "repaired": "yes",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "live served assets retain the previously verified repair"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-002",
+      "review_note": "Previously verified website453 field-goal repair remains scoped to that release; unchanged served hashes are not a new browser test.",
+      "title": "Projected field goals lost"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "core Classic yes",
+        "released": "core Classic website453",
+        "remaining_boundary": "Strict props/broader Phase2 grading require actual owner combined-source CI/release.",
+        "repaired": "partial",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "core live; strict props fixtures only"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-003",
+      "review_note": "Core Classic repair/release is distinguished from unqualified strict props/Phase2 work.",
+      "title": "Contradictory grading identity accepted"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "core and game-market yes",
+        "released": "core website453",
+        "remaining_boundary": "The source-specific strict props variant is not yet installed.",
+        "repaired": "partial",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "core live; props finality prepared"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-004",
+      "review_note": "Core finality repair is distinguished from uninstalled source-specific props work.",
+      "title": "Canceled post treated as final"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "website453 and producer416/Maina45",
+        "released": "reviewed website/producer paths",
+        "remaining_boundary": "New recurring forecast publication remains unverified pending successful actual Ops.",
+        "repaired": "yes for reviewed fences",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "website failed attempt did not publish; genuine COUNT7 export and native registry CAS verified"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/controller-registration-13-publication.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/source33-final-coverage.json"
+      ],
+      "id": "SYS-005",
+      "review_note": "Reviewed fences and native registry CAS are not used to claim successful recurring forecast publication.",
+      "title": "Old workflow newer source race"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "yes",
+        "released": "website failure ref and native producer failure lane",
+        "remaining_boundary": "A restored failed attempt is not a successful forecast.",
+        "repaired": "yes for stated lanes",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "Remote website1558-row restoration; genuine Ops12 and Ops14 fresh failure restorations; successful forecast/export false."
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/owner-ops12-genuine-failure-and-restoration.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/owner-ops14-genuine-failure-and-restoration.json"
+      ],
+      "id": "SYS-006",
+      "review_note": "Website failure recovery and actual Ops12/Ops14 failure-lane restorations remain distinct from forecast success.",
+      "title": "New failed-attempt evidence durability"
+    },
+    {
+      "assessment": "CORE_STATUS_CONSISTENT_ACTIVATION_WORDING_QUALIFIER_NEEDED",
+      "current": {
+        "integrated": "Main a45 and producer416; PR33/34 normal merges verified",
+        "released": "bounded source only; automatic activation disabled",
+        "remaining_boundary": "Historical epoch code-pin compatibility repair, successful actual Ops/fresh restoration/export, activation API403, cumulative-history capacity and horizon gaps, website installation.",
+        "repaired": "partial",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "Final actual CI2135pass/1optional skip; native registration13 passed3jobs and record8a62 published/readback. Genuine Ops14 failed EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED before forecasts; actual fresh reader121419760333 restored failure receiptde251ce8. No public export."
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/source33-final-coverage.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/main34-ready.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/controller-registration-13-publication.json",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/owner-ops14-genuine-failure-and-restoration.json"
+      ],
+      "id": "SYS-007",
+      "review_note": "Current ledger correctly records final integration, registration13 and Ops14 failure/restoration; remaining operational/deployment boundaries are explicit. Activation wording needs the qualifier described in REPORT-003.",
+      "title": "Recurring orchestration/horizon gap"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "pooled research PR4 ca4de",
+        "released": "research code",
+        "remaining_boundary": "Seven-day historical fallback assumption remains supported; actual publication clocks and all operational freshness are not proved.",
+        "repaired": "yes for chronology/unknown clock",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "registered tests and independent clock examples"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-008",
+      "review_note": "Research chronology repair preserves the explicit seven-day reconstruction assumption and does not prove actual publication clocks.",
+      "title": "Feature availability andchronology"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "pooled research PR4 ca4de",
+        "released": "research code",
+        "remaining_boundary": "Private historical accuracy results remain unreproduced; weekly Brier procedure unchanged.",
+        "repaired": "yes",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "proper infinite log-loss calculations checked"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-009",
+      "review_note": "Proper infinite-loss handling is research/code evidence; private historical accuracy remains unreproduced.",
+      "title": "Infinite logloss population loss"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "pooled research PR4 ca4de; later executable-pin fixes integrated",
+        "released": "research code and stated native paths",
+        "remaining_boundary": "This does not reproduce missing private historical accuracy data or imply all Ops succeeded.",
+        "repaired": "yes",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "declared test dependencies/relative paths/state guards; actual fresh native receipts"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/source33-final-coverage.json"
+      ],
+      "id": "SYS-010",
+      "review_note": "Portability and stated native acceptance are not equated with private accuracy reproduction or universal Ops success.",
+      "title": "Freshcheckout acceptance portability"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "no",
+        "released": "no",
+        "remaining_boundary": "Current Main not applicable; active Phase2 owner must integrate and qualify its correct variant.",
+        "repaired": "prepared Phase2 variant",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "source-specific scratch regression only"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-011",
+      "review_note": "Phase2 negative-count variant remains prepared, unintegrated and unreleased.",
+      "title": "Negativecount expectations accepted"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "yes",
+        "released": "website453",
+        "remaining_boundary": "Broader Phase2 fantasy paths pending; exact research PPR remains label/component unsupported.",
+        "repaired": "yes for current Main",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "known-zero versus missing half-PPR live checks"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md"
+      ],
+      "id": "SYS-012",
+      "review_note": "Website453 half-PPR behavior remains separate from broader Phase2 and unsupported exact research PPR.",
+      "title": "MissinghalfPPR labeledHalfPPR"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "no actual complete Phase2 assembly",
+        "released": "no",
+        "remaining_boundary": "Active owner protected-source reconciliation, actual combined CI and normal release remain blocked externally.",
+        "repaired": "partial concrete repairs prepared",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "original484d CI failure retained; retained caller/CLI/cohort/model-contract subsets pass"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/website-active-writer-scope-delta.json"
+      ],
+      "id": "SYS-013",
+      "review_note": "No complete Phase2 assembly/release is claimed; active writer remains484. Listed scope does not establish the other session's uncommitted progress.",
+      "title": "IncompletePhase2releaseassembly"
+    },
+    {
+      "assessment": "CONSISTENT_WITH_RETAINED_EVIDENCE",
+      "current": {
+        "integrated": "container/caption yes; freeze no",
+        "released": "container/caption website453",
+        "remaining_boundary": "Additional actual daily-refresh policy-freeze defect remains unreleased in the ready Main eight-path package.",
+        "repaired": "container/caption yes; freeze repair prepared",
+        "reproduced": "yes; original/current-version evidence distinguished",
+        "verified": "live identities and original browser checks; new freeze before/after tests"
+      },
+      "evidence": [
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/../continuation-status-20261026/README.md",
+        "/workspace/nfl-system-audit/count-binding-packet/reports/recurring-integrated-20261026/website-active-writer-scope-delta.json"
+      ],
+      "id": "SYS-014",
+      "review_note": "Earlier live container/caption repair stays separate from the unreleased policy-freeze correction and ready eight-path Main package.",
+      "title": "Successor Python ranking validation does not bind side container"
+    }
+  ],
+  "reviewed_at_utc": "2026-10-26T05:56:07.547804+00:00",
+  "reviewed_report_cutoff_utc": "2026-10-26T05:54:05.722362+00:00",
+  "safety_and_claim_boundaries": {
+    "literal_Root_or_private_row_dump_encountered_in_reviewed_documents": false,
+    "no_accuracy_gain_claim": true,
+    "no_new_NFL_fits_claim": true,
+    "no_unsupported_new_deployment_or_successful_native_Ops_claim_in_current_SYS_entries": true,
+    "protected_outcome_reads": 0,
+    "remote_calls": 0,
+    "repository_edits": 0
+  },
+  "schema_version": "independent-recurring-public-report-review-v1",
+  "scope": "Local public reporting only; no tests, implementation review, remote API requests or remote writes.",
+  "snapshot_change_during_review": {
+    "change": "Initial user/report state was Ops14 in progress; newly added public receipt and updated ledger now record actual capture failure plus separate failure restoration. The review incorporates the later local evidence.",
+    "final_SYS_cutoff_utc": "2026-10-26T05:54:05.722362+00:00",
+    "initial_SYS_cutoff_utc": "2026-10-26T05:47:36.742332+00:00"
+  },
+  "status": "WORDING_UPDATES_NEEDED"
+}

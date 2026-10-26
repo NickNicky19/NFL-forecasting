@@ -1,0 +1,87 @@
+{
+  "Root13": {
+    "code_and_epoch_pin_paths_verified": 14,
+    "policy_sha256": "cab04af364564825e8fe2f640e430755f962fb12bfe4e9d12f26316d4de9739c",
+    "producer_source": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+    "producer_workflow_sha256": "2e4e9744d9ee53b59f99fba6c2e1a49cf335a5e0004bf4c756cab386dc98fd6e",
+    "public_policy_matches_consumer": true,
+    "recipe_commitment": "411529a23629636b6d027b6e1833c80ac3bb2aeab65223ecfd781c8b76231d03",
+    "registered_at_utc": "2026-10-26T05:33:01.489364+00:00"
+  },
+  "activation": false,
+  "checks": {
+    "actual_code_review_pass": true,
+    "actual_v4_policy_check_pass": true,
+    "all_22_inventory_hashes_match": true,
+    "all_consumer_validator_code_and_clock_guards_unchanged": true,
+    "inventory_and_current_classic_execution_unchanged": true,
+    "new_registration_clocks_causal": true,
+    "old_COUNT7_original_anchor_sha256": "a6ebda8372e0d2527a6c857863ae93d98051e63082e34214a31f93b2df174061",
+    "old_COUNT7_policy_hash_verified": true,
+    "old_COUNT7_preserved_fields": [
+      "origin_choice_sha256",
+      "approved_candidates",
+      "rights_authorities",
+      "r0_identities",
+      "source_policy_sha256",
+      "engine_sha256",
+      "website_code_sha256",
+      "public_fields",
+      "public_roles",
+      "expected_categories",
+      "jobs"
+    ],
+    "only_workflow_policy_hash_replaced": true,
+    "original_18_procedure_records_unchanged": true,
+    "physical_workflow_exact_policy_hash": true,
+    "producer_workflow_and_recipe_code_pins_match_exact_git_source": true,
+    "recipe_commitment_recomputed": true,
+    "rights_R0_and_static_scope_unchanged": true,
+    "six_registered_model_source_files_unchanged": true
+  },
+  "evidence": {
+    "consumer_validator": "tools/weekly_public_feed_v4.py:80",
+    "original_COUNT7_public_policy": "acfef26c0eb2aa9114724055b75b306847ab3183:reports/count-consumer-binding-20261025/phase2-484d/PUBLIC-native-policy.json",
+    "permitted_Root13_policy": "/workspace/nfl-system-audit/continuation/private/weekly-public-policy-13.json",
+    "workflow": ".github/workflows/hourly.yml"
+  },
+  "forecast_or_outcome_rows_read": 0,
+  "full_suite_reruns": 0,
+  "limitations": [
+    "This checks code, policy and immutable references, not private model artifact bodies or fresh restore integrity.",
+    "Root13 three-job success/public record and Ops14 running status are owner-reported here; no Actions/remote query performed.",
+    "No qualified current-source feed or operational/publication success is asserted. Genuine Ops14 success and fresh real consumer verification remain required."
+  ],
+  "model_artifact_bodies_read": 0,
+  "private_GETs": 0,
+  "remote_calls": 0,
+  "reviewed_at_utc": "2026-10-26T05:51:46.368222+00:00",
+  "schema_version": "main-recurring13-binding-readonly-review-v1",
+  "source_mutations": 0,
+  "status": "PASS_SOURCE_AND_POLICY_BINDING_ONLY",
+  "website": {
+    "base": "5cc522422286dfa70a93f0dbee2aa48fa84b1249",
+    "changed_paths": [
+      ".github/workflows/hourly.yml",
+      "config/weekly-derived-selected-policy-v4.json"
+    ],
+    "changed_policy_fields": [
+      "/lab_public_policy_sha256",
+      "/lab_recipe_registered_at_utc",
+      "/producer_policy_sha256",
+      "/publication_authority/recipe_registration_sha256",
+      "/publication_authority/source_sha",
+      "/recipe_registration_sha256",
+      "/registered_at_utc",
+      "/workflow_sha256"
+    ],
+    "clean": true,
+    "commit": "41d16368efe1d0c879d146c21a99ddcd2164e2da",
+    "inventory_commitment": "155ab81dfdf17401fcaefb6f0a13742dc8d2265fa091ad5dc12cbce03e0ec09f",
+    "inventory_paths": 22,
+    "policy_sha256": "d755b21ed07808107be7f504cb74b4b4cf876b2c45d38c2e0c832ec68b5291bf",
+    "registered_at_utc": "2026-10-26T05:41:21.633900+00:00",
+    "workflow_sha256": "f9c5211999b5f8a69623847bd1f839abf831b086118f4f3bbb5f89c278464836",
+    "worktree": "/workspace/nfl-system-audit/website-main-recurring-runtime"
+  }
+}
