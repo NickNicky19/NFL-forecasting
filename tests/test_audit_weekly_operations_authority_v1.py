@@ -32,11 +32,12 @@ def client(x, p):
 
 def test_current_bot_needs_actual_registered_metadata_before_client_scope(locator_system):
     x=locator_system;p=proof(x);q=client(x,p)
-    history = c.API + "/commits?sha=lab-state&path=state/controller-v1/bootstrap-v2-20261026-discovery.json&per_page=2&page=1"
-    record = c.contents_url("state/controller-v1/bootstrap-v2-20261026-discovery.json", x.public_commit)
+    history = c.API + "/commits?sha=lab-state&path=state/controller-v1/bootstrap-v2-20261026-retained-epoch.json&per_page=2&page=1"
+    record = c.contents_url("state/controller-v1/bootstrap-v2-20261026-retained-epoch.json", x.public_commit)
     assert any(url == history for url,_ in x.calls)
     assert any(url == record for url,_ in x.calls)
     assert not any("/bootstrap-v2.json" in url for url,_ in x.calls)
+    assert not any("/bootstrap-v2-20261026-discovery.json" in url for url,_ in x.calls)
     assert any("/actions/runs/300/jobs" in url for url,_ in x.calls)
     a.attach(q,p,x.env,x.raw)
     assert a.authorize_client_actor(q,x.api.data[c.run_url(q.run_id)]) is True

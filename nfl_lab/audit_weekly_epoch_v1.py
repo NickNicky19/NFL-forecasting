@@ -30,6 +30,20 @@ HASH = re.compile(r"[a-f0-9]{64}\Z")
 CAP = 512 << 10
 CAS_ROLES = {"EPOCH_METADATA": {"epoch"}, "CHOICE_AND_SELECTED_VERSIONS": {"choice", "selected_versions"}}
 
+# Reviewed metadata compatibility for the qualified COUNT7 source only. These
+# are original file bytes, not pins selected by an archived document. The sole
+# later origin change delegates current execution authority to the genuine
+# operations child; its metadata interpretation and both selector files stayed
+# unchanged. Current Root/archive authentication remains the caller's job.
+RETAINED_SOURCE = "c74812b441c15d8e45daa09021f428ed131ff7cf"
+_RETAINED_PINS = (
+    ("nfl_lab/audit_weekly_epoch_v1.py", "9b9d9179ad6235364c0d10551d44e08fe5b4379160a9376447bcf322e6701789"),
+    ("nfl_lab/audit_weekly_origin_v1.py", "c512f4ba2ebbd44764f79c5367d21cfb61359870a809aa8996efcd91b04f728d"),
+    ("nfl_lab/weekly_generic_producer.py", "0ea49ed836d8f6210ece0feedd58641534a98983ede261430a98d19ef41f670b"),
+    ("nfl_lab/weekly_adaptive.py", "9f88ca724f472a34ca010d3245ce42053d1550d1b55fabefd0eab2bff3bd5522"),
+)
+_CURRENT_ORIGIN = "5ba343df8a16eee9edb58bca1213110d6c7628f3fce23f18825f21af44af5929"
+
 
 class EpochError(ValueError):
     """Fixed ASCII guards only; never include private library/input text."""
@@ -43,6 +57,18 @@ def require(condition, code):
 def implementation_pins():
     root = Path(__file__).resolve().parents[1]
     return {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in PIN_PATHS}
+
+
+def _retained_pins(supplied, current):
+    original = dict(_RETAINED_PINS)
+    require(type(supplied) is dict and supplied == original,
+        "EXACT_RETAINED_EPOCH_SOURCE_PINS_REQUIRED")
+    require(set(current) == set(PIN_PATHS) and all(_hash(value) for value in current.values())
+        and current["nfl_lab/audit_weekly_origin_v1.py"] == _CURRENT_ORIGIN
+        and all(current[name] == original[name] for name in
+            ("nfl_lab/weekly_generic_producer.py", "nfl_lab/weekly_adaptive.py")),
+        "RETAINED_EPOCH_METADATA_IMPLEMENTATION_CHANGED")
+    return original
 
 
 def _hash(value):
@@ -189,11 +215,17 @@ class CorrectionEpoch:
     sha256: str
     origin: dict
     origin_sha256: str
+    _restored_execution_pins: tuple | None = None
 
     def verify(self):
         require(digest(self.document) == self.sha256 and digest(self.origin) == self.origin_sha256,
             "CORRECTION_EPOCH_OR_ORIGINALS_CHANGED")
-        require(self.document["selection_recipe"]["code_pins"] == implementation_pins(), "EPOCH_IMPLEMENTATION_PINS_CHANGED")
+        current = implementation_pins()
+        if self._restored_execution_pins is None:
+            require(self.document["selection_recipe"]["code_pins"] == current, "EPOCH_IMPLEMENTATION_PINS_CHANGED")
+        else:
+            require(self._restored_execution_pins == tuple(sorted(current.items())), "EPOCH_IMPLEMENTATION_PINS_CHANGED")
+            _retained_pins(self.document["selection_recipe"]["code_pins"], current)
 
 
 def _prepare(origin, replay, registered, controls):
@@ -229,7 +261,14 @@ def restore_epoch(document, original_choice_bytes, original_completion, original
     require(registered <= utc(now), "FUTURE_CORRECTION_REGISTRATION")
     origin = _origin(original_choice_bytes, original_completion, original_slate, original_catalog, policy, history_binding, registered)
     result = _prepare(origin, _replay(document["replay_catalog"]), registered.isoformat(), document["effective_controls"])
+    if document["selection_recipe"]["code_pins"] != result.document["selection_recipe"]["code_pins"]:
+        current = result.document["selection_recipe"]["code_pins"]
+        # Only substitute the literal reviewed interpretation pins. Rebuild and
+        # compare every other original field, including clocks and history.
+        result.document["selection_recipe"]["code_pins"] = _retained_pins(document["selection_recipe"]["code_pins"], current)
+        result = CorrectionEpoch(result.document, digest(result.document), origin, digest(origin), tuple(sorted(current.items())))
     require(result.document == document, "EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED")
+    result.verify()
     return result
 
 

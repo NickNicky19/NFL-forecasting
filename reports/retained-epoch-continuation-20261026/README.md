@@ -1,0 +1,9 @@
+# Preserve qualified historical epoch metadata during current execution
+
+Actual integrated Ops40276030466 failed before forecasts with EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED. COUNT7's original four-file interpretation pins include the old origin authority adapter; a later scheduler repair changed that file while leaving its metadata interpretation intact. Rebuilding the archived epoch with current file pins changed its identity.
+
+The correction restores only the exact known c748 four-pin metadata set. It rebuilds and exactly compares every other original field, preserving epoch, registration, choices, clocks, weights and history. A separate in-memory binding continues checking current implementation bytes; current origin/selector/generic compatibility is closed, and existing Root executable/model/source/actor/native authority checks remain mandatory. New epochs still use current pins. Unknown, mixed, partial and altered fingerprints fail. No historical executable is loaded, model fitted, old artifact relabelled or issued forecast overwritten.
+
+Independent original references were recorded before editing the production module. Meaningful regressions cover typed resume and the actual grading/delivery metadata helpers, current authentication/source rejection and unchanged original commitments. Author validation passes66tests/77subtests. Combined-source and hosted qualification are recorded separately; these fictional checks do not establish native forecast execution or accuracy gains.
+
+The matching new fixed V2 registration slot is state/controller-v1/bootstrap-v2-20261026-retained-epoch.json, already reviewed and integrated on Main35. Earlier registration paths and issued records remain readable and immutable. A fresh actual source-specific native registration and separate Ops run remain required.

@@ -1,0 +1,70 @@
+{
+  "base": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+  "before_error": "EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED",
+  "before_module_sha256": "9b9d9179ad6235364c0d10551d44e08fe5b4379160a9376447bcf322e6701789",
+  "before_reference": "Recorded before edits using unchanged 416 epoch code, byte-identical to c748; only file-pin lookup substituted with four Git-derived original hashes.",
+  "branch": "audit/retained-epoch-continuation-20261026",
+  "contract": {
+    "HTTP_calls_added": 0,
+    "caller_API_changes": false,
+    "current_execution": "Bound current implementation tuple plus unchanged selector/generic and exact qualified origin bytes; current Root/live archive authority remains mandatory.",
+    "historical_pinset": "literal full c748 four-file set only",
+    "metadata": "Full reconstruction and exact original document, registration, choice, clock and history commitments retained.",
+    "new_epochs": "Continue using current implementation pins.",
+    "runtime_historical_code_loading": false
+  },
+  "created_at_utc": "2026-10-26T06:02:40.115290+00:00",
+  "evidence": {
+    "after.json": "4853bf9c4f0ac8f6d4ceaef82b16d1a270046efd4a3dd25f9bc960ea76e3cacc",
+    "before.json": "4c2c32509377520076cd4201415dfbb9ff4378265649100db1bd65cc2b869df6",
+    "final-epoch-callers-tests.log": "ca6b4fca400a06c3cd5e54ebbd9b85eb1698ccb3241b62acfe9a4e25f1b1d5b8",
+    "resume-tests.log": "fad8f4b07a93740e7b3c30d02d9a44d1e177b028ab3b0cfaa684b274aca4d1be",
+    "unchanged-algorithms.json": "910be4f53aa90c5ff3871020ea71afd18ec486801cea31f21e1da933112e2390"
+  },
+  "files": {
+    "nfl_lab/audit_weekly_epoch_v1.py": {
+      "bytes": 45488,
+      "sha256": "1b963703b498aadf5ef3f4da59269e30d6f0c7912e73f3cd29b7b4de9503d20b"
+    },
+    "tests/test_audit_weekly_epoch_v1.py": {
+      "bytes": 44664,
+      "sha256": "a1f9d0ac08af1e522f1f51f141c899ca06fd8370d6ace0e17bd30abeed17055b"
+    },
+    "tests/test_audit_weekly_resume_v1.py": {
+      "bytes": 28450,
+      "sha256": "ef59575c9745e301f01bff7819a7a06276741bb1d0a2974b6728cc31137d3528"
+    }
+  },
+  "historical_source": "c74812b441c15d8e45daa09021f428ed131ff7cf",
+  "limits": [
+    "Independent review and combined hosted source CI pending.",
+    "No genuine Ops completion, model execution, new artifact or registry qualification claimed.",
+    "Different legacy pins or changed current origin/selector/generic bytes require separate explicit compatibility review."
+  ],
+  "local_commit": "1d3cfb2c93d5f5e0dd2afc5c6755f222308e4965",
+  "schema_version": "retained-epoch-continuation-repair-v1",
+  "tests": {
+    "logs": {
+      "final-epoch-callers-tests.log": "42 passed, 77 subtests passed",
+      "resume-tests.log": "24 passed"
+    },
+    "passed": 66,
+    "subtests_passed": 77
+  },
+  "unchanged_algorithm_AST_checks": {
+    "_binding": true,
+    "_completion": true,
+    "_decode": true,
+    "_hash": true,
+    "_new_catalog": true,
+    "_origin": true,
+    "_prepare": true,
+    "_replay": true,
+    "_signature": true,
+    "bind_registration": true,
+    "continue_week": true,
+    "prepare_epoch": true,
+    "select_next_week": true
+  },
+  "worktree": "/workspace/nfl-system-audit/retained-epoch-continuation"
+}

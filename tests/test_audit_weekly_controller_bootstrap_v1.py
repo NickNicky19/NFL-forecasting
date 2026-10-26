@@ -349,13 +349,16 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
         api(url, 100)
 
 
-def test_new_discovery_registration_route_is_literal_and_commit_bound():
+@pytest.mark.parametrize("literal", [
+    "state/controller-v1/bootstrap-v2-20261026-discovery.json",
+    "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
+])
+def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
     def get(url, cap):
         calls.append((url, cap))
         return c.Reply(200, b"[]")
     api = b.Metadata({}, get)
-    literal = "state/controller-v1/bootstrap-v2-20261026-discovery.json"
     assert api.get(c.contents_url(literal, old.A), 17) == []
     assert len(calls) == 1
     for path, ref in ((literal, "lab-state"),

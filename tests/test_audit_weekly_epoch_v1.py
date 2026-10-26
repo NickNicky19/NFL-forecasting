@@ -16,6 +16,15 @@ from nfl_lab.state import canonical, digest, utc
 REGISTERED = utc("2026-10-25T10:00:00Z")
 CONTINUED = REGISTERED + timedelta(minutes=3)
 
+# Literal qualified c74812b441c15d8e45daa09021f428ed131ff7cf file preimages.
+# Kept independent of the production compatibility constants.
+COUNT7_PINS = {
+    "nfl_lab/audit_weekly_epoch_v1.py": "9b9d9179ad6235364c0d10551d44e08fe5b4379160a9376447bcf322e6701789",
+    "nfl_lab/audit_weekly_origin_v1.py": "c512f4ba2ebbd44764f79c5367d21cfb61359870a809aa8996efcd91b04f728d",
+    "nfl_lab/weekly_generic_producer.py": "0ea49ed836d8f6210ece0feedd58641534a98983ede261430a98d19ef41f670b",
+    "nfl_lab/weekly_adaptive.py": "9f88ca724f472a34ca010d3245ce42053d1550d1b55fabefd0eab2bff3bd5522",
+}
+
 
 def h(value):
     return digest(value)
@@ -206,6 +215,95 @@ class EpochChecks(unittest.TestCase):
         with self.assertRaises(epoch.EpochError):
             epoch.restore_epoch(wrong, self.f["raw"], self.f["completion"], self.f["slate"], self.f["catalog"], self.f["policy"],
                 history_binding=self.f["history_binding"], now=CONTINUED)
+
+    def _retained(self):
+        f = fixture()
+        with patch.object(epoch, "implementation_pins", return_value=deepcopy(COUNT7_PINS)):
+            e = prepare(f); r = registered(e); choice = continuation(f, r)
+        return f, e, r, choice
+
+    def _restore_retained(self, f, document):
+        return epoch.restore_epoch(document, f["raw"], f["completion"], f["slate"], f["catalog"], f["policy"],
+            history_binding=f["history_binding"], now=CONTINUED)
+
+    def test_retained_count7_literal_preimages_keep_exact_epoch_registration_choice_and_losses(self):
+        f, original, registration, choice = self._retained()
+        # Independently recorded BEFORE the repair, not newly derived expected
+        # hashes from the compatibility implementation.
+        self.assertEqual(original.sha256, "860ecb71e49a69840416e22f5a3b96fb23dcebf153bfb715a33a25c4ab6e8169")
+        self.assertEqual(registration.completion_sha256, "3aa19889adaab16df5f1f1ed83de9889fc35ba133f437365e5bb1d00b60d6cdf")
+        self.assertEqual(choice.sha256, "4e0980dd33381b19dd2d22d1eb3033e245949706baf92902cd891a3060baf4c4")
+        before = canonical(original.document), canonical(registration.completion), canonical(choice.document), f["old_history"]
+        with patch("socket.socket", side_effect=AssertionError("no network")), \
+                patch.object(selector, "select", side_effect=AssertionError("no reselection")):
+            restored = self._restore_retained(f, original.document)
+            bound = epoch.bind_registration(restored, registration.completion, now=CONTINUED)
+            choice.verify(bound, CONTINUED)
+            again = continuation(f, bound)
+        self.assertEqual((restored.sha256, bound.completion_sha256, again.sha256),
+            (original.sha256, registration.completion_sha256, choice.sha256))
+        self.assertEqual(before, (canonical(restored.document), canonical(bound.completion), canonical(choice.document), f["old_history"]))
+        self.assertEqual(restored.origin, original.origin)
+        self.assertEqual(restored.document["selection_recipe"]["code_pins"], COUNT7_PINS)
+        self.assertNotEqual(COUNT7_PINS, epoch.implementation_pins())
+        self.assertNotIn("_restored_execution_pins", restored.document)
+
+    def test_retained_compatibility_never_trusts_arbitrary_saved_pinsets(self):
+        f, original, _, _ = self._retained()
+        variants = []
+        for name in COUNT7_PINS:
+            pins = deepcopy(COUNT7_PINS); pins[name] = "0" * 64; variants.append(pins)
+        pins = deepcopy(COUNT7_PINS); pins.pop(next(iter(pins))); variants.append(pins)
+        variants.append(dict(COUNT7_PINS, unregistered="0" * 64))
+        current = epoch.implementation_pins()
+        for name in ("nfl_lab/audit_weekly_epoch_v1.py", "nfl_lab/audit_weekly_origin_v1.py"):
+            pins = deepcopy(COUNT7_PINS); pins[name] = current[name]; variants.append(pins)
+        for pins in variants:
+            changed = deepcopy(original.document); changed["selection_recipe"]["code_pins"] = pins
+            with self.subTest(pins=pins), self.assertRaisesRegex(epoch.EpochError, "EXACT_RETAINED_EPOCH_SOURCE_PINS"):
+                self._restore_retained(f, changed)
+        # A saved document/hash alone cannot construct the live restoration
+        # binding, even when its interpretation pins are the known old set.
+        unbound = epoch.CorrectionEpoch(original.document, original.sha256, original.origin, original.origin_sha256)
+        with self.assertRaisesRegex(epoch.EpochError, "EPOCH_IMPLEMENTATION_PINS_CHANGED"):
+            unbound.verify()
+
+    def test_retained_compatibility_keeps_current_selector_origin_and_later_source_checks(self):
+        f, original, _, _ = self._retained()
+        current = epoch.implementation_pins()
+        for name in ("nfl_lab/weekly_generic_producer.py", "nfl_lab/weekly_adaptive.py", "nfl_lab/audit_weekly_origin_v1.py"):
+            changed = dict(current); changed[name] = "0" * 64
+            with self.subTest(before_restore=name), patch.object(epoch, "implementation_pins", return_value=changed), \
+                    self.assertRaisesRegex(epoch.EpochError, "RETAINED_EPOCH_METADATA_IMPLEMENTATION_CHANGED"):
+                self._restore_retained(f, original.document)
+        restored = self._restore_retained(f, original.document)
+        for name in current:
+            changed = dict(current); changed[name] = "0" * 64
+            with self.subTest(after_restore=name), patch.object(epoch, "implementation_pins", return_value=changed), \
+                    self.assertRaisesRegex(epoch.EpochError, "EPOCH_IMPLEMENTATION_PINS_CHANGED"):
+                restored.verify()
+
+    def test_retained_source_match_does_not_relax_original_metadata_or_registration(self):
+        f, original, registration, _ = self._retained()
+        for field, value in (("fits", 1), ("original_evidence_preserved", False),
+                ("registered_at_utc", "2026-10-25T10:00:01+00:00")):
+            changed = deepcopy(original.document); changed[field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(epoch.EpochError, "EXACT_ORIGINAL_CORRECTION_METADATA"):
+                self._restore_retained(f, changed)
+        changed = deepcopy(original.document); changed["original"]["history_binding"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(epoch.EpochError, "EXACT_ORIGINAL_CORRECTION_METADATA"):
+            self._restore_retained(f, changed)
+        restored = self._restore_retained(f, original.document)
+        for field, value in (("epoch_sha256", "0" * 64), ("selection_recipe_sha256", "0" * 64)):
+            changed = deepcopy(registration.completion); changed[field] = value
+            with self.subTest(registration_field=field), self.assertRaisesRegex(epoch.EpochError, "EXACT_AUTHENTICATED_EPOCH_COMPLETION"):
+                epoch.bind_registration(restored, changed, now=CONTINUED)
+        # Even a structurally valid different replay source cannot claim the
+        # archived registration, whose exact epoch commitment remains binding.
+        changed = deepcopy(original.document); changed["replay_catalog"]["source_sha"] = "0" * 40
+        other_source = self._restore_retained(f, changed)
+        with self.assertRaisesRegex(epoch.EpochError, "EXACT_AUTHENTICATED_EPOCH_COMPLETION"):
+            epoch.bind_registration(other_source, registration.completion, now=CONTINUED)
 
     def test_replay_requires_all18_warm_bits_and_independent_count_oracle(self):
         for field, index in (("warm_bits_identical", 0), ("fallback_oracle_passed", 11)):
