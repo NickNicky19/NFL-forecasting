@@ -42,6 +42,7 @@ FILES = ("nfl_lab/audit_weekly_controller_registration_v1.py",
 REQUIRED_PINS = set(FILES) | {c.MODULE, c.TOOL, c.WORKFLOW, bootstrap.MODULE,
     bootstrap.TOOL, bootstrap.TEST, bootstrap.TEMPLATE_MODULE} | bootstrap.SHARED_EXECUTABLE_PINS
 SEPARATE_CONTEXT_SCHEMA = VERSION + "-context-v2"
+HISTORY_CONTEXT_SCHEMA = VERSION + "-context-v3"
 REQUEST_KEYS = {"schema_version", "phase", "code_pins", "limits", "cache", "state_root", "output", "inputs"}
 INPUT_KEYS = {
     "controller-template-write": {"readiness"},
@@ -73,16 +74,20 @@ def require(ok, code):
 def context(value):
     """Closed Root.effective_epoch; no registration digest self-reference."""
     require(type(value) is dict, "CLOSED_CONTROLLER_REGISTRATION_CONTEXT")
-    separate = value.get("schema_version") == SEPARATE_CONTEXT_SCHEMA
-    keys = {"schema_version", "parent_source_sha", "previous_capture"} | ({"parent_code_pins"} if separate else set())
+    modern=value.get("schema_version")==HISTORY_CONTEXT_SCHEMA
+    separate = value.get("schema_version") == SEPARATE_CONTEXT_SCHEMA or modern
+    keys = {"schema_version", "parent_source_sha", "previous_capture"} | ({"parent_code_pins"} if separate else set()) | ({"history_protocol"} if modern else set())
     require(set(value) == keys
-        and value["schema_version"] == (SEPARATE_CONTEXT_SCHEMA if separate else VERSION + "-context")
+        and value["schema_version"] == (HISTORY_CONTEXT_SCHEMA if modern else SEPARATE_CONTEXT_SCHEMA if separate else VERSION + "-context")
         and c.hashed(value["parent_source_sha"], 40)
         and type(value["previous_capture"]) is dict
         and set(value["previous_capture"]) == {"feed_sha256", "receipt_sha256"}
         and all(c.hashed(v) for v in value["previous_capture"].values()), "CLOSED_CONTROLLER_REGISTRATION_CONTEXT")
     if separate:
         _pins(value["parent_code_pins"], required=bootstrap.PARENT_EXECUTABLE_PINS)
+    if modern:
+        from . import audit_weekly_grade_history_v1 as history
+        require(value["history_protocol"]==history.LOCATOR_VERSION,"EXPLICIT_CLOSED_HISTORY_LOCATOR_PROTOCOL")
     return value
 
 
@@ -152,7 +157,7 @@ def prepare_template(go, readiness):
     """Pure static derivative of the FULL Root; this confers no IO authority."""
     require(type(go) is dict and set(go) == template.ROOT_KEYS and go["approved"] is True
         and go["operation"] == "CONTROLLER_REGISTRATION", "FULL_OWNER_REGISTRATION_ROOT_REQUIRED")
-    context(go["effective_epoch"])
+    ctx=context(go["effective_epoch"])
     _pins(go["code_pins"])
     _source_specs(go)
     require(len(store.canonical(go)) <= 60 << 10, "BOUNDED_FULL_REGISTRATION_ROOT")
@@ -160,7 +165,7 @@ def prepare_template(go, readiness):
     root["approved"] = False
     for key in ("issued_at_utc", "expires_at_utc", "operation", "effective_epoch"):
         root[key] = None
-    return template.prepare(dict(schema_version=template.VERSION + "-static", source_sha=go["source_sha"],
+    return template.prepare(dict(schema_version=template.VERSION + ("-static-v2" if ctx["schema_version"]==HISTORY_CONTEXT_SCHEMA else "-static"), source_sha=go["source_sha"],
         code_pins=deepcopy(go["code_pins"]), readiness=deepcopy(readiness), root_template=root))
 
 

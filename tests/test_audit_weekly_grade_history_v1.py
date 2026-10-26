@@ -65,7 +65,7 @@ def original_seed(tmp_path_factory):
             assets=[dict(a,body=base64.b64encode(a['body']).decode()) for a in x.service.server.assets],
             writer_done=x.service.writer_done,roles=q['roles'],population=pop,schedule=q['schedule'],query=q['query'])
 
-def recovery_case(root,seed,patch,*,native=False,role='produce'):
+def recovery_case(root,seed,patch,*,native=False,role='produce',current_run=NEW_RUN):
     from nfl_lab import audit_weekly_grade_checkpoint_v1 as checkpoint,audit_weekly_operations_worker_v1 as shared
     from nfl_lab import audit_weekly_operations_authority_v1 as authority,private_draft_store as store,state
     from nfl_lab import gha_private_checkpoint as cp,audit_weekly_archive_v1 as archive
@@ -111,9 +111,11 @@ def recovery_case(root,seed,patch,*,native=False,role='produce'):
                     times=[(state.utc(h['snapshot_completed_at'])-timedelta(hours=2),state.utc(h['snapshot_completed_at'])-timedelta(hours=1)),
                         (state.utc(h['snapshot_completed_at'])-timedelta(minutes=2),state.utc(seed['writer_done'])),
                         (state.utc(seed['writer_done'])+timedelta(seconds=50),state.utc(seed['old_complete']))]
-                    jobs=[dict(id=777+i,name=name,run_id=int(rid),head_sha=seed['source'],status='completed',
+                    if 'job_times' in seed:times=[(state.utc(a),state.utc(b)) for a,b in seed['job_times']]
+                    refs=(seed.get('locator') or {}).get('cohort',seed['receipt'])['jobs']
+                    jobs=[dict(id=refs[r]['api_job_id'],name=name,run_id=int(rid),head_sha=seed['source'],status='completed',
                         conclusion='failure' if damage.get('job') and i==1 else 'success',started_at=a.isoformat(),completed_at=b.isoformat())
-                        for i,((_,name),(a,b)) in enumerate(zip(JOBS.items(),times))]
+                        for i,((r,name),(a,b)) in enumerate(zip(JOBS.items(),times))]
                 else:jobs=[dict(id=900,name=JOBS[role],run_id=int(rid),head_sha=seed['source'],status='in_progress',conclusion=None,
                     started_at=(current_at-timedelta(minutes=1)).isoformat(),completed_at=None)]
                 return Response(dict(total_count=len(jobs),jobs=jobs))
@@ -128,7 +130,7 @@ def recovery_case(root,seed,patch,*,native=False,role='produce'):
     sidecar_body=gzip.compress(store.canonical(seed['sidecar']),mtime=0);receipt_body=gzip.compress(store.canonical(seed['receipt']),mtime=0)
     storage.write_bytes(root/'sidecar.json.gz',sidecar_body);storage.write_bytes(root/'receipt.json.gz',receipt_body)
     journal=root/'journal';journal.mkdir(mode=0o700)
-    client=store.Client('ghs_FICTIONAL',NEW_RUN,journal=journal,source_sha=seed['source'],transport=api,
+    client=store.Client('ghs_FICTIONAL',current_run,journal=journal,source_sha=seed['source'],transport=api,
         job=dict(execution_lane='github_actions',workflow_ref=seed['sidecar']['workflow_ref'],workflow_sha=seed['source'],job_id=JOBS[role],
             permission='write',event_name='workflow_dispatch',api_job_id=0,run_authenticated=False),operation='metadata')
     client.authenticate_actions_job()
@@ -153,6 +155,116 @@ def recovery_case(root,seed,patch,*,native=False,role='produce'):
 @pytest.fixture
 def case(tmp_path,original_seed,monkeypatch):
     return recovery_case(tmp_path,original_seed,monkeypatch)
+
+
+@pytest.fixture
+def locator_seed(tmp_path,original_seed,monkeypatch):
+    """Real grade/CAS/append/read, fictional authority/API and no new labels.
+
+    The prior fixture is an input to this codec test, not an old-source
+    migration or a genuine hosted Root. All original snapshots and receipts
+    remain in the in-memory release. The new grading run has its own identity.
+    """
+    from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_grade_checkpoint_v1 as checkpoint
+    from nfl_lab import audit_weekly_archive_v1 as archive,audit_weekly_template_v1 as template
+    from nfl_lab import private_draft_store as store,state,gha_private_checkpoint as cp
+    from test_private_draft_store_v2 import Response
+    x=recovery_case(tmp_path/'writer',original_seed,monkeypatch)
+    previous=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    began=state.utc(original_seed['current_at']);actual=[began+timedelta(seconds=30)];done=[None]
+    class Clock(datetime):
+        @classmethod
+        def now(cls,tz=None):return actual[0] if tz else actual[0].replace(tzinfo=None)
+    monkeypatch.setattr(store,'datetime',Clock);monkeypatch.setattr(history,'now',lambda:actual[0])
+    x.api.allow_append=True
+    def api(request,timeout):
+        if '/actions/runs/'+NEW_RUN in request.full_url:
+            if '/jobs?' not in request.full_url:
+                return Response(dict(id=int(NEW_RUN),head_sha=original_seed['source'],run_attempt=1,event='workflow_dispatch',
+                    path='.github/workflows/lab.yml',head_branch='fictional',status='in_progress',conclusion=None,
+                    repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
+            jobs=[dict(id=888,name=JOBS['produce'],run_id=int(NEW_RUN),head_sha=original_seed['source'],status='completed',conclusion='success',
+                started_at=(began+timedelta(seconds=1)).isoformat(),completed_at=(began+timedelta(seconds=5)).isoformat()),
+                dict(id=889,name=JOBS['restore'],run_id=int(NEW_RUN),head_sha=original_seed['source'],status='completed' if done[0] else 'in_progress',
+                    conclusion='success' if done[0] else None,started_at=(began+timedelta(seconds=10)).isoformat(),completed_at=done[0])]
+            if done[0]:jobs.append(dict(id=890,name=JOBS['consume'],run_id=int(NEW_RUN),head_sha=original_seed['source'],status='in_progress',conclusion=None,
+                started_at=(began+timedelta(seconds=70)).isoformat(),completed_at=None))
+            return Response(dict(total_count=len(jobs),jobs=jobs))
+        return x.api(request,timeout)
+    captures=grade.retained_captures(previous.durable,previous.registered,at=actual[0])
+    # Missing finality/observations remains missing. Prior originals, versions,
+    # negative results, known-by clocks and assignments are retained by grade().
+    batch=grade.bind_observations(captures,dict(schema_version=grade.VERSION+'-provider-observations',source_policy_sha256=cp.POLICY_SHA,
+        captured_at=actual[0].isoformat(),observations=[],finality=[]),authenticate=lambda _:True,at=actual[0])
+    snapshot=grade.grade(previous.registered,captures,[batch],storage=x.storage,output=tmp_path/'writer/regrade',previous=previous.durable,clock=lambda:actual[0])
+    schedule=[{k:dict(r,game_type='REG')[k] for k in ('season','week','game_type','game_id','kickoff_utc')} for r in original_seed['schedule']]
+    current=dict(season=2026,week=7,schedule=schedule,game_cutoffs=original_seed['choice']['slate']['game_cutoffs'],
+        canonical_choice_sha256=state.digest(original_seed['choice']))
+    seed=dict(schema_version=history.LOCATOR_VERSION+'-planning',epoch_sha256=previous.registered.epoch.sha256,current=current,next=None,
+        resolved_weeks=[],known_by_at=(began+timedelta(seconds=3)).isoformat(),calendar=dict(url='https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv',
+            sha256=store.sha(b'FICTIONAL_CALENDAR_ONLY'),bytes=23,retrieved_utc=(began+timedelta(seconds=3)).isoformat()))
+    pins={p:store.sha((ROOT/p).read_bytes()) for p in set(history.FILES)|history._GRADE_PIN_PATHS|history._CHECKPOINT_PIN_PATHS|history.LOCATOR_HELPERS}
+    pins['.github/workflows/lab.yml']=original_seed['receipt']['workflow_sha256']
+    root={p:None for p in template.ROOT_KEYS}
+    anchor=dict(feed_sha256=original_seed['receipt']['feed_sha256'],receipt_sha256=x.receipt['sha256'])
+    root.update(approved=True,operation='RECURRING_CAPTURE',source_sha=original_seed['source'],code_pins=pins,jobs=JOBS,
+        qualified_runtime=original_seed['package'],pending_census=original_seed['census'],issued_at_utc=began.isoformat(),expires_at_utc=(began+timedelta(hours=1)).isoformat(),
+        effective_epoch=dict(schema_version=history.CONTEXT_V4,controller_context=None,previous_capture=anchor,
+            previous_checkpoint=dict(schema_version=history.LOCATOR_REF,path='20261028T080300.000000Z--40000000001--'+'a'*64+'.json.gz',sha256='b'*64),
+            plan=dict(kind='GRADE_ONLY',season=2026,week=7,deadline_utc=None,calendar_sha256=state.digest(schedule),game_cutoffs={})))
+    def client(role,operation):
+        journal=tmp_path/('journal-'+role+'-'+operation);x.storage.register_root(journal)
+        c=archive.Client('ghs_FICTIONAL',NEW_RUN,journal=journal,source_sha=original_seed['source'],operation=operation,transport=api,readonly=operation=='restore',
+            process=store.sha((role+operation).encode()),qualification=original_seed['package']['qualification'],job=dict(execution_lane='github_actions',workflow_ref=original_seed['sidecar']['workflow_ref'],
+                workflow_sha=original_seed['source'],job_id=JOBS[role],permission='write',event_name='workflow_dispatch',api_job_id=0,run_authenticated=False))
+        c.bind(original_seed['package']['binding']);return c
+    root_sha=state.digest(root);writer=client('restore','append')
+    handoff=checkpoint.append(snapshot,writer,original_seed['package'],storage=x.storage,output=tmp_path/'writer/checkpoint-write',
+        current_root_go_sha256=root_sha,authenticate=lambda _:True,pending_census=original_seed['census'],clock=lambda:actual[0])
+    done[0]=(began+timedelta(seconds=50)).isoformat();actual[0]=began+timedelta(seconds=90)
+    reader=client('consume','restore')
+    result=checkpoint.restore(handoff,reader,original_seed['package'],previous.registered,storage=x.storage,output=tmp_path/'writer/checkpoint-read',
+        current_root_go_sha256=root_sha,authenticate=lambda _:True,pending_census=original_seed['census'],clock=lambda:actual[0])
+    native=cp.binding(tmp_path/'writer/checkpoint-read/FRESH_READER_NATIVE_PROOF.json')
+    ref=history.prepare_envelope(result,handoff,native,storage=x.storage,output=tmp_path/'writer/envelope',planning=seed,root_go=root)
+    envelope=history.metadata_document(archive.read_owned(x.storage,ref,history.LIMITS['envelope_bytes'],raw=True),cap=history.LIMITS['envelope_bytes'])
+    appender=client('consume','append');appender.authenticate_actions_job()
+    encoded=archive.read_owned(x.storage,ref,history.LIMITS['envelope_bytes'],raw=True)
+    descriptor=store.append(appender,encoded,cp.payload(encoded),original_seed['package']['qualification'])
+    completed=began+timedelta(seconds=120)
+    cohort=dict(schema_version=history.LOCATOR_VERSION+'-cohort',kind='GRADING_ONLY',repository=store.REPO,source_sha=original_seed['source'],run_id=NEW_RUN,
+        root_go_sha256=root_sha,workflow_sha256=pins['.github/workflows/lab.yml'],epoch_sha256=previous.registered.epoch.sha256,feed_sha256=anchor['feed_sha256'],
+        jobs={r:dict(job_id=JOBS[r],api_job_id=888+i) for i,r in enumerate(JOBS)},root_issued_at_utc=began.isoformat(),verified_at=result.proof['known_by_at'],
+        created_at=(began+timedelta(seconds=100)).isoformat(),fits=0,public_release=False,successful_forecast=False)
+    locator=history.locator_document(anchor,cohort,handoff,result.proof,descriptor,cp.client_identity(appender),envelope['planning'],code_pins=pins)
+    modified=deepcopy(original_seed)
+    modified.update(sidecar=locator['sidecar'],locator=locator,original_root=root,old_run=NEW_RUN,old_complete=completed.isoformat(),writer_done=done[0],
+        current_at=(completed+timedelta(days=1)).isoformat(),durable_sha256=grade._digest(result.durable.document),
+        assets=[dict(a,body=base64.b64encode(a['body']).decode()) for a in x.server.assets])
+    modified['job_times']=[((began+timedelta(seconds=a)).isoformat(),(began+timedelta(seconds=b)).isoformat()) for a,b in ((1,5),(10,50),(70,120))]
+    modified['sources'].update({p:base64.b64encode((ROOT/p).read_bytes()).decode() for p in history.LOCATOR_HELPERS})
+    assert result.durable.document['known_versions']==previous.durable.document['known_versions']
+    assert result.durable.document['captures']==previous.durable.document['captures']
+    return modified
+
+
+def test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history(tmp_path,locator_seed,monkeypatch,record_property):
+    from nfl_lab import audit_weekly_grade_v1 as grade,private_draft_store as store,state,gha_private_checkpoint as cp
+    x=recovery_case(tmp_path/'next-reader',locator_seed,monkeypatch,current_run='45000000003')
+    raw=gzip.compress(store.canonical(locator_seed['locator']),mtime=0)
+    path=tmp_path/'next-reader/locator.json.gz';x.storage.write_bytes(path,raw);x.sidecar=cp.binding(path)
+    root=deepcopy(locator_seed['original_root']);root['issued_at_utc']=locator_seed['current_at']
+    root['expires_at_utc']=(state.utc(root['issued_at_utc'])+timedelta(hours=1)).isoformat()
+    root['effective_epoch']['previous_checkpoint']=dict(schema_version=history.LOCATOR_REF,path=history.locator_filename(locator_seed['locator']),sha256=store.sha(raw))
+    x.context.go=root
+    result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert grade._digest(result.durable.document)==locator_seed['durable_sha256']
+    assert result.proof['planning']==locator_seed['locator']['planning']
+    assert result.proof['current']['run_id']=='45000000003'
+    assert result.proof['original_grade_read_proof']['reader']['run_id']==NEW_RUN
+    assert result.durable.document['known_versions']==locator_seed['known_versions']
+    assert all(r.method=='GET' for r in x.calls)
+    record_property('actual_fictional_GET_calls',len(x.calls))
 
 def test_cross_run_native_restore_retains_original_clocks_and_primary_assignment(case):
     from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_operations_v1 as ops,state

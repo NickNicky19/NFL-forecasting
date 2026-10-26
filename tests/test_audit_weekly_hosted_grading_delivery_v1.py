@@ -10,6 +10,7 @@ from nfl_lab import audit_weekly_operations_grade_v1 as worker, audit_weekly_arc
 from nfl_lab import private_draft_store as store, gha_private_checkpoint as cp
 from tools import persist_state
 import test_audit_weekly_operations_grade_v1 as bridge
+from test_audit_weekly_grade_history_v1 import locator_seed,original_seed
 
 
 def test_real_produce_grade_only_route_never_reaches_capture_reference_or_publication(monkeypatch,tmp_path):
@@ -119,3 +120,50 @@ def test_grade_only_reader_evidence_is_privately_retained_without_any_feed_or_lo
     assert saved['public_release'] is saved['successful_forecast'] is False
     assert result['public_feed_written'] is result['scheduled_parent_discoverable'] is False
     assert not (r.root/'grade-only-evidence/public-state').exists()
+
+
+def test_new_grade_only_publication_is_only_a_closed_nonforecast_locator(locator_seed,tmp_path,monkeypatch):
+    """Real codec/private append in seed; fictional API and publisher boundary."""
+    from nfl_lab.operational_storage import OperationalStorage
+    from test_private_draft_store_v2 import Response
+    seed=locator_seed;v=seed['locator'];cohort=v['cohort'];root=tmp_path/'metadata-only'
+    storage=OperationalStorage(root/'cache',Path(__file__).resolve().parents[1]/'config/operational-source-policy-v2.json',state=root/'state')
+    storage.register_root(root);journal=storage.register_root(root/'journal')
+    def api(request,timeout):
+        assert request.method=='GET'
+        if '/jobs?' not in request.full_url:return Response(dict(id=int(cohort['run_id']),head_sha=seed['source'],event='workflow_dispatch',run_attempt=1,
+            path='.github/workflows/lab.yml',head_branch='fictional',status='in_progress',conclusion=None,repository=dict(full_name=store.REPO),
+            head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
+        return Response(dict(total_count=3,jobs=[dict(id=cohort['jobs'][role]['api_job_id'],name=name,run_id=int(cohort['run_id']),head_sha=seed['source'],
+            status='in_progress' if role=='consume' else 'completed',conclusion=None if role=='consume' else 'success',started_at=a,completed_at=None if role=='consume' else b)
+            for (role,name),(a,b) in zip(hosted.JOBS.items(),seed['job_times'])]))
+    identity=v['sidecar']['evidence_producer']
+    client=archive.Client('ghs_FICTIONAL',cohort['run_id'],journal=journal,source_sha=seed['source'],operation='append',transport=api,process=identity['process_identity'],
+        job=dict(execution_lane='github_actions',workflow_ref=identity['workflow_ref'],workflow_sha=seed['source'],job_id=hosted.JOBS['consume'],permission='write',
+            event_name='workflow_dispatch',api_job_id=identity['api_job_id'],run_authenticated=True))
+    r=object.__new__(hosted.Runner);r.go=seed['original_root'];r.go_sha=cohort['root_go_sha256'];r.identity=identity;r.storage=storage;r.root=root
+    r.phase='consume';r.client=None;r.check=lambda:None  # expired/absent boot client cannot be used
+    body=next(a['body'] for a in seed['assets'] if a['id']==v['sidecar']['evidence_descriptor']['entry']['payload_asset_id'])
+    import base64
+    envelope=history.metadata_document(base64.b64decode(body),cap=history.LIMITS['envelope_bytes'])
+    from nfl_lab import state
+    monkeypatch.setattr(hosted,'now_utc',lambda:state.utc(cohort['created_at']))  # explicit fictional clock, not hosted evidence
+    seen=[]
+    def persist(_root,state,**kwargs):
+        assert len(kwargs['files'])==1
+        name=next(iter(kwargs['files']));assert name.startswith('controller-v1/history-v2/')
+        raw=(state/name).read_bytes();assert store.sha(raw)==kwargs['files'][name]
+        doc=history.metadata_document(raw)
+        assert doc['anchor']==v['anchor'] and doc['cohort']['kind']=='GRADING_ONLY'
+        assert doc['cohort']['successful_forecast'] is doc['cohort']['public_release'] is False
+        assert doc['sidecar']['checkpoint_handoff']==v['sidecar']['checkpoint_handoff']
+        assert not any(key in doc for key in ('rows','outcomes','forecast_rows','native_read_evidence','root_go'))
+        seen.append(doc)
+    monkeypatch.setattr(persist_state,'persist',persist);monkeypatch.setattr(hosted,'ROOT',storage.register_root(root/'checkout'))
+    result=r.publish_history_locator(envelope,v['sidecar']['checkpoint_handoff'],v['sidecar']['grade_read_proof'],v['sidecar']['evidence_descriptor'],identity,
+        anchor=v['anchor'],kind='GRADING_ONLY',folder=storage.register_root(root/'publication'),append_client=client)
+    assert len(seen)==1 and result['path'].endswith(history.locator_filename(seen[0]))
+    assert not (root/'publication/history-public-state/public').exists()
+    with pytest.raises(store.StoreError,match='EXACT_NONFORECAST_LOCATOR_KIND'):
+        r.publish_history_locator(envelope,v['sidecar']['checkpoint_handoff'],v['sidecar']['grade_read_proof'],v['sidecar']['evidence_descriptor'],identity,
+            anchor=v['anchor'],kind='CAPTURE_AND_GRADE',folder=root/'rejected',append_client=client)

@@ -42,6 +42,22 @@ def test_grade_only_v2_reference_requires_explicit_root_and_owned_history_pair(t
     with pytest.raises(worker.GradeBridgeError):worker.validate_request(bad,worker.PHASES[0],go=go)
 
 
+def test_grade_only_new_protocol_requires_owned_planning_and_explicit_request_v3(tmp_path):
+    p=request(tmp_path,worker.PHASES[0]);p['schema_version']=worker.VERSION+'-request-v3'
+    p['inputs']['archive_restored']['path']=str(tmp_path/'retained/RETAINED_RESULT.json')
+    ref=lambda name:dict(path=str(tmp_path/name),bytes=20,sha256='a'*64)
+    p['inputs'].update(previous_history=dict(sidecar=ref('locator.gz'),public_receipt=ref('receipt.gz')),planning=ref('HISTORY_PLANNING.json'))
+    go=dict(effective_epoch=dict(schema_version='audit-weekly-recurring-v4-context',plan=dict(kind='GRADE_ONLY')))
+    assert worker.validate_request(p,p['phase'],go=go) is p
+    for damage in ('missing','outside','legacy','future'):
+        bad=deepcopy(p);root=deepcopy(go)
+        if damage=='missing':del bad['inputs']['planning']
+        elif damage=='outside':bad['inputs']['planning']['path']='/outside/private.json'
+        elif damage=='legacy':bad['schema_version']=worker.VERSION+'-request-v2';del bad['inputs']['planning']
+        else:root['effective_epoch']['plan']['kind']='FUTURE_CAPABLE'
+        with pytest.raises(worker.GradeBridgeError if damage!='outside' else ValueError):worker.validate_request(bad,bad['phase'],go=root)
+
+
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))

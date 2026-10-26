@@ -26,6 +26,7 @@ CONTEXT_SCHEMA = "audit-weekly-recurring-v1-context"
 CONTEXT_KEYS = {"schema_version", "controller_context", "previous_capture"}
 CONTEXT_V2 = "audit-weekly-recurring-v2-context"
 CONTEXT_V3 = "audit-weekly-recurring-v3-context"
+CONTEXT_V4 = "audit-weekly-recurring-v4-context"
 FILES = ("nfl_lab/audit_weekly_operations_v1.py", "tests/test_audit_weekly_operations_v1.py")
 STREAM = "weekly-corrected-primary-player-game-v1"
 PLAN_KEYS = {"schema_version", "kind", "reason", "epoch_sha256", "canonical_choice_sha256",
@@ -43,9 +44,9 @@ def require(value, code):
 
 
 def context(value):
-    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2,CONTEXT_V3}
+    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}
         and set(value)==(CONTEXT_KEYS if value["schema_version"]==CONTEXT_SCHEMA
-            else CONTEXT_KEYS|{"previous_checkpoint"}|({"plan"} if value["schema_version"]==CONTEXT_V3 else set())),
+            else CONTEXT_KEYS|{"previous_checkpoint"}|({"plan"} if value["schema_version"] in {CONTEXT_V3,CONTEXT_V4} else set())),
         "CLOSED_RECURRING_CONTEXT_REQUIRED")
     previous = value["previous_capture"]
     require(type(previous) is dict and set(previous) == {"feed_sha256", "receipt_sha256"}
@@ -53,11 +54,18 @@ def context(value):
         "EXACT_PRIOR_SUCCESSFUL_CAPTURE_LOCATOR_REQUIRED")
     require(value["controller_context"] is None or type(value["controller_context"]) is dict,
         "EXPLICIT_OWNER_OR_SEALED_CONTROLLER_CONTEXT")
-    if value["schema_version"] in {CONTEXT_V2,CONTEXT_V3}:
+    if value["schema_version"] in {CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}:
         checkpoint=value["previous_checkpoint"]
-        require(checkpoint is None or type(checkpoint) is dict and set(checkpoint)=={"sha256"}
+        modern=value["schema_version"]==CONTEXT_V4 and type(checkpoint) is dict and checkpoint.get("schema_version") is not None
+        if modern:
+            from .audit_weekly_grade_history_v1 import locator_reference
+            locator_reference(checkpoint)
+        require(modern or checkpoint is None or type(checkpoint) is dict and set(checkpoint)=={"sha256"}
             and type(checkpoint["sha256"]) is str and store.HASH.fullmatch(checkpoint["sha256"]),
             "EXACT_REGISTERED_PREVIOUS_GRADING_SIDECAR_HASH")
+    if value["schema_version"]==CONTEXT_V4:
+        from .audit_weekly_grade_history_v1 import validate_root_plan
+        validate_root_plan(value["plan"])
     if value["schema_version"] == CONTEXT_V3:
         plan = value["plan"]
         require(type(plan) is dict and set(plan) == {"kind", "season", "week"}
@@ -234,3 +242,26 @@ def recurring_plan(registered, original, full_schedule, *, authenticate, durable
         capture_allowed=bool(available), publication_allowed=bool(available), current_values_used=False, fits=0)
     require(set(plan) == PLAN_KEYS, "CLOSED_RECURRING_EXECUTION_PLAN")
     return choice, plan
+
+
+def planning_seed(registered, choice, full_schedule, raw_calendar, receipt, *, cutoff_lead_seconds):
+    """Project calendar-only data before values; reader later adds causal weeks."""
+    from . import audit_weekly_grade_history_v1 as history
+    slate=choice.document["slate"]
+    current=dict(season=slate["season"],week=slate["week"],schedule=deepcopy(full_schedule),
+        game_cutoffs=deepcopy(slate["game_cutoffs"]),canonical_choice_sha256=choice.sha256)
+    later=None
+    if slate["week"]<18:
+        # Test presence using metadata columns only. Malformed present rows go
+        # through the same strict complete-calendar parser, never get ignored.
+        present=any(int(r["season"])==slate["season"] and int(r["week"])==slate["week"]+1 and r["game_type"]=="REG"
+            for r in csv.DictReader(io.StringIO(raw_calendar.decode("utf-8-sig"))))
+        if present:
+            rows=calendar(raw_calendar,season=slate["season"],week=slate["week"]+1)
+            projected=[{k:r[k] for k in ("season","week","game_type","game_id","kickoff_utc")} for r in rows]
+            later=dict(season=slate["season"],week=slate["week"]+1,schedule=projected,
+                game_cutoffs={r["game_id"]:(state.utc(r["kickoff_utc"])-timedelta(seconds=cutoff_lead_seconds)).isoformat() for r in rows})
+    value=dict(schema_version=history.LOCATOR_VERSION+"-planning",epoch_sha256=registered.epoch.sha256,
+        current=current,next=later,resolved_weeks=[],known_by_at=receipt["retrieved_utc"],
+        calendar={k:receipt[k] for k in ("url","sha256","bytes","retrieved_utc")})
+    return history.validate_planning(value)

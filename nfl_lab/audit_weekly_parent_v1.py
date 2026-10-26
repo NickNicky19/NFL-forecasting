@@ -358,7 +358,7 @@ def _recover(parent, env, source_root, read_head, clock, ledger, workspace, jour
     require(document["source_sha"] == p["producer"]["source_sha"] and document["code_pins"] == p["producer"]["code_pins"]
         and document["readiness"] == p["readiness"] and document["root_template"]["qualified_runtime"] == locators["qualified_runtime_package"],
         "EXACT_RECOVERED_STATIC_ROOT_AND_REGISTERED_INVENTORY")
-    return document
+    return document, client, storage
 
 
 def _listing(api, path, head):
@@ -520,6 +520,94 @@ def _discover(parent, document, api, clock):
     return selected
 
 
+class _HistoryCapture:
+    """Process-only result of completed API/source and fresh private reads."""
+    def __init__(self, receipt, packed_sha256, locator, checkpoint, state_head, parent, cohorts, key):
+        require(key is _KEY,"LIVE_PARENT_HISTORY_DISCOVERY_REQUIRED")
+        self.receipt,self.packed_sha256=deepcopy(receipt),packed_sha256
+        self.locator,self.checkpoint=deepcopy(locator),deepcopy(checkpoint)
+        self.state_head,self.registration_sha256=state_head,parent.seal.registration_sha256
+        self.cohorts=deepcopy(cohorts);self.process=store.process_identity()
+        self._sha=c.digest(self._state())
+
+    def _state(self):
+        return [self.receipt,self.packed_sha256,self.locator,self.checkpoint,self.state_head,self.registration_sha256,self.cohorts,self.process]
+
+    def verify(self,parent):
+        require(self._sha==c.digest(self._state()) and self.process==store.process_identity()
+            and self.registration_sha256==parent.seal.registration_sha256,"LIVE_PARENT_HISTORY_SCOPE_OR_INTEGRITY_CHANGED")
+        p=c.decode(parent.registration_bytes)
+        require(self.locator["anchor"]==dict(feed_sha256=self.receipt["feed_sha256"],receipt_sha256=self.packed_sha256)
+            and self.receipt["source_sha"]==self.locator["cohort"]["source_sha"]==p["producer"]["source_sha"]
+            and self.receipt["policy_sha256"]==parent.seal.document["static_public_policy_sha256"],"SAME_SOURCE_HISTORY_AND_ORIGINAL_ANCHOR")
+        return self
+
+    def recheck(self,parent,api):
+        self.verify(parent);p=c.decode(parent.registration_bytes)
+        for receipt,jobs,run in self.cohorts:
+            c.stable(run,api.get(c.run_url(receipt["run_id"])))
+            listing=api.get(c.jobs_url(receipt["run_id"]))
+            for role in c.ROLES:
+                ref=receipt["jobs"][role]
+                require(c.job(listing,receipt["run_id"],p["producer"],ref["job_id"],status="completed",
+                    api_id=ref["api_job_id"])==jobs[role],"HISTORY_COHORT_CHANGED_BEFORE_ROOT_BUILD")
+
+    def __reduce__(self):raise ParentError("SAVED_HISTORY_METADATA_IS_NOT_PARENT_AUTHORITY")
+
+
+def _discover_history(parent,document,api,clock,client,storage,workspace):
+    """V2 opt-in; no successful new feed is required for a grading-only run."""
+    from . import audit_weekly_grade_history_v1 as history
+    p,policy=c.decode(parent.registration_bytes),_policy(parent,document)
+    head=api.state_head();entries=_listing(api,history.LOCATOR_ROOT,head)
+    name=history.latest_locator(entries)
+    raw=api.content(history.LOCATOR_ROOT+"/"+name,head,LIMITS["sidecar_bytes"])
+    value=history.metadata_document(raw)
+    require(type(value) is dict and set(value)==history.LOCATOR_KEYS
+        and history.locator_filename(value)==name,"EXACT_LATEST_HISTORY_FILENAME_AND_READER_CLOCK")
+    anchor=value["anchor"];cohort=value["cohort"]
+    history.validate_cohort(cohort)
+    receipt_raw=api.content(PUBLIC_ROOT+"/receipts/"+anchor["feed_sha256"]+".json.gz",head,LIMITS["receipt_bytes"])
+    receipt=_receipt(receipt_raw)
+    require(c.sha(receipt_raw)==anchor["receipt_sha256"] and receipt["feed_sha256"]==anchor["feed_sha256"]
+        and receipt["source_sha"]==cohort["source_sha"]==p["producer"]["source_sha"]
+        and receipt["policy_sha256"]==document["root_template"]["publication_registration"]["policy_sha256"]
+        and receipt["recipe_registration_sha256"]==policy["producer_policy_sha256"]
+        and receipt["run_id"]!=p["readiness"]["run_id"] and cohort["run_id"]!=parent.proof.document["run_id"],
+        "SAME_SOURCE_POLICY_OPS_HISTORY_NO_COUNT7_OR_IMPLICIT_MIGRATION")
+    before=parent.proof.document["scheduled_parent"]["job_started_at"]
+    jobs,run=_completed(api,p,cohort,initial=False,before=before,clock=clock)
+    cohorts=[(cohort,jobs,run)]
+    if receipt["run_id"]!=cohort["run_id"]:
+        old_jobs,old_run=_completed(api,p,receipt,initial=False,before=before,clock=clock)
+        cohorts.append((receipt,old_jobs,old_run))
+    else:require(cohort["kind"]=="CAPTURE_AND_GRADE" and receipt["jobs"]==cohort["jobs"],"DISTINCT_GRADE_ONLY_RUN_NO_RELABELING")
+    history.locator_metadata(raw,receipt=receipt,qualified_runtime=document["root_template"]["qualified_runtime"],
+        code_pins=p["producer"]["code_pins"],jobs=jobs,at=clock())
+    pins={**value["sidecar"]["grade_code_pins"],**value["sidecar"]["checkpoint_helper_sha256"],
+        **value["helper_sha256"],c.WORKFLOW:cohort["workflow_sha256"]}
+    # Authenticate literal commit/blob bytes BEFORE any private history GET.
+    for path,sha in sorted(pins.items()):
+        require(c.sha(api.content(path,cohort["source_sha"],history.LIMITS["source_bytes"]))==sha,
+            "HISTORY_EXECUTABLE_SOURCE_CHANGED_OR_ADAPTER_REQUIRED")
+    require(type(client) is template.ParentGETClient,"ACTUAL_PRIVATE_TEMPLATE_READER_REUSED")
+    descriptor=value["sidecar"]["evidence_descriptor"];entry=descriptor["entry"]
+    client.asset_ids.update({descriptor["manifest_asset_id"],entry["payload_asset_id"]})
+    client.guard();client.draft()
+    saved=client.read_asset(descriptor["manifest_asset_id"],"manifest-"+descriptor["manifest_sha256"]+".json",
+        descriptor["manifest_bytes"],descriptor["manifest_sha256"])
+    require(saved==store.canonical(entry),"EXACT_HISTORY_EVIDENCE_NATIVE_MANIFEST")
+    payload=entry["payload"]
+    packed=client.read_asset(entry["payload_asset_id"],entry["payload_name"],payload["bytes"],payload["sha256"])
+    client.draft();client.guard()
+    history.validate_parent_envelope(packed,value,client,jobs,code_pins=p["producer"]["code_pins"],
+        static_root=document["root_template"],at=clock())
+    storage.register_root(workspace/"history-metadata")
+    storage.write_bytes(workspace/"history-metadata/ORIGINAL_READER_EVIDENCE.json.gz",packed)
+    reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
+    return _HistoryCapture(receipt,c.sha(receipt_raw),value,reference,head,parent,cohorts,_KEY).verify(parent)
+
+
 def daily_claim_id(registration_sha256, producer_source_sha, at):
     """Pure daily ID; no Root or claim-body SHA creates a self-reference."""
     require(c.hashed(registration_sha256) and c.hashed(producer_source_sha, 40), "LITERAL_DAILY_CLAIM_SOURCE_BINDINGS")
@@ -529,7 +617,7 @@ def daily_claim_id(registration_sha256, producer_source_sha, at):
 
 
 def _build_root(parent, document, capture, at, *, plan=None):
-    require(type(parent) is bootstrap.Parent and type(capture) is _Capture, "LIVE_PARENT_AND_CAPTURE_REQUIRED")
+    require(type(parent) is bootstrap.Parent and type(capture) in {_Capture,_HistoryCapture}, "LIVE_PARENT_AND_CAPTURE_REQUIRED")
     capture.verify(parent)
     parent.seal.verify()
     p = c.decode(parent.registration_bytes)
@@ -547,7 +635,12 @@ def _build_root(parent, document, capture, at, *, plan=None):
                 parent.proof.document["scheduled_parent"], claim_id),
             previous_capture=dict(feed_sha256=capture.receipt["feed_sha256"], receipt_sha256=capture.packed_sha256),
             previous_checkpoint=deepcopy(capture.checkpoint)))
-    if plan is not None:
+    if type(capture) is _HistoryCapture:
+        from . import audit_weekly_grade_history_v1 as history
+        require(document["schema_version"]==template.VERSION+"-static-v2" and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
+        root["effective_epoch"].update(schema_version=history.CONTEXT_V4,
+            plan=history.next_plan(capture.locator["planning"],at=at))
+    elif plan is not None:
         require(type(plan) is dict and set(plan)=={"kind","season","week"}
             and plan["kind"] in {"GRADE_ONLY","FUTURE_CAPABLE"}
             and type(plan["season"]) is int and 2019<=plan["season"]<=2100
@@ -659,9 +752,10 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     p = _live(parent, env, source_root, read_head, clock)
     workspace, journal = _workspace(env, work_root)
     ledger.journal = journal
-    document = _recover(parent, env, source_root, read_head, clock, ledger, workspace, journal)
+    document,private_client,storage = _recover(parent, env, source_root, read_head, clock, ledger, workspace, journal)
     api = _API(ledger)
-    capture = _discover(parent, document, api, clock)
+    capture = (_discover_history(parent,document,api,clock,private_client,storage,workspace)
+        if document["schema_version"]==template.VERSION+"-static-v2" else _discover(parent, document, api, clock))
     # Refresh through the unchanged actual verifier, using a separately counted
     # GET lane. The original bootstrap's 32-call cap is not enlarged or reset.
     parent.proof = c.verify_parent(parent.registration_bytes, sealed_sha256=parent.seal.registration_sha256,
@@ -678,6 +772,9 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     _fast_guard(parent, env, api, source_root, read_head, clock, before_run=before)
     live_check()
     require(c.utc(clock()) < c.utc(root["expires_at_utc"]), "PARENT_ROOT_EXPIRED_BEFORE_ENQUEUE")
+    if root["effective_epoch"]["schema_version"]=="audit-weekly-recurring-v4-context":
+        plan=root["effective_epoch"]["plan"]
+        require(plan["kind"]=="GRADE_ONLY" or c.utc(clock())<c.utc(plan["deadline_utc"]),"FROZEN_DEADLINE_ELAPSED_BEFORE_ENQUEUE")
     response = ledger.request(DISPATCH_URL, lane="state", method="POST", cap=4096, value=dict(ref=p["producer"]["branch"],
         inputs=dict(mode=c.MODE, inference_builder_go_json=raw_root.decode(), inference_builder_go_sha256=c.sha(raw_root))))
     require(response.status == 204 and response.body == b"", "DISPATCH_POST_UNCONFIRMED_NO_RETRY")

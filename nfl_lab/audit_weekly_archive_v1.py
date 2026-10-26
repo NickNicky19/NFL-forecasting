@@ -36,7 +36,7 @@ LIMITS = dict(wall_seconds=180, CPU_seconds=120, address_space_bytes=512 << 20,
     groups=8, native_clients=10, HTTP_per_client=40, fits=0, retries=0)
 CONTEXT = {"epoch", "epoch_registration", "original_choice", "origin_witness", "original_slate",
     "original_catalog", "original_policy", "retained_models", "prepared", "source"}
-OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope"}
+OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope", "ops_planning"}
 OPERATIONS_HISTORY_CONTEXT = {"ops_previous_checkpoint_sidecar", "ops_previous_public_receipt"}
 CONTROL_FILES = {"CONSUMED.json", "RUNTIME_RECIPE.json", "WEEKLY_CHOICE.json", "ARTIFACT_CATALOG.json",
     "SELECTED_VERSION_CATALOG.json", "POPULATION.json", "MODEL_ATTEMPTS.json", "FINISHED.json",

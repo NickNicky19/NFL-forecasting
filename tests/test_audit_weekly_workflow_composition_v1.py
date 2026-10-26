@@ -77,6 +77,11 @@ def test_grade_only_can_reach_existing_read_jobs_without_fabricating_archive_out
     jobs=workflow['jobs'];producer=jobs['audit-weekly-produce-v1'];reader=jobs['audit-weekly-restore-v1'];exporter=jobs['audit-weekly-export-v1']
     assert producer['outputs']['grade_only_plan_json']=='${{ steps.weekly.outputs.grade_only_plan_json }}'
     assert producer['outputs']['grade_only_plan_sha256']=='${{ steps.weekly.outputs.grade_only_plan_sha256 }}'
+    for name in ('history_planning_json','history_planning_sha256'):
+        assert producer['outputs'][name]=='${{ steps.weekly.outputs.'+name+' }}'
+        for job in (reader,exporter):
+            step=next(s for s in job['steps'] if s.get('id')=='weekly')
+            assert step['env']['AUDIT_WEEKLY_'+name.upper()]=='${{ needs.audit-weekly-produce-v1.outputs.'+name+' }}'
     assert "needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != ''" in reader['if']
     assert "needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '' && needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json != ''" in exporter['if']
     assert "needs.audit-weekly-produce-v1.result == 'success'" in exporter['if']

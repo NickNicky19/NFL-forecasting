@@ -57,10 +57,14 @@ def native_envelope():
 def validate_request(p,phase,*,go=None):
     grade_only = type(go) is dict and (go.get("effective_epoch") or {}).get("plan", {}).get("kind") == "GRADE_ONLY"
     v2 = type(p) is dict and p.get("schema_version") == VERSION+"-request-v2"
+    v3 = type(p) is dict and p.get("schema_version") == VERSION+"-request-v3"
+    modern=type(go) is dict and (go.get("effective_epoch") or {}).get("schema_version")=="audit-weekly-recurring-v4-context"
+    retained_request=v2 or v3
     require(phase in PHASES and type(p) is dict and set(p)==REQUEST_KEYS
-        and (p["schema_version"]==VERSION+"-request" or v2 and grade_only)
+        and (p["schema_version"]==VERSION+"-request" or v2 and grade_only or v3 and grade_only and modern)
+        and (not modern or not grade_only or v3)
         and p["phase"]==phase and canonical(p["limits"])==canonical(LIMITS)
-        and type(p["inputs"]) is dict and set(p["inputs"])==INPUT_KEYS[phase] | ({"previous_history"} if v2 else set()),
+        and type(p["inputs"]) is dict and set(p["inputs"])==INPUT_KEYS[phase] | ({"previous_history"} if retained_request else set()) | ({"planning"} if v3 else set()),
         "CLOSED_OPERATIONS_GRADE_REQUEST")
     cache,state,output=(Path(p[k]) for k in ("cache","state_root","output"))
     require(all(x.is_absolute() and ".." not in x.parts for x in (cache,state,output))
@@ -69,15 +73,16 @@ def validate_request(p,phase,*,go=None):
     require(type(ref) is dict and set(ref)=={"path","bytes","sha256"} and type(ref["path"]) is str
         and Path(ref["path"]).is_absolute() and ".." not in Path(ref["path"]).parts
         and Path(ref["path"]).is_relative_to(cache.parent)
-        and Path(ref["path"]).name==("RETAINED_RESULT.json" if v2 else "RESTORED.json")
+        and Path(ref["path"]).name==("RETAINED_RESULT.json" if retained_request else "RESTORED.json")
         and type(ref["bytes"]) is int and 0<ref["bytes"]<=LIMITS["archive_metadata_bytes"]
         and type(ref["sha256"]) is str and len(ref["sha256"])==64 and all(c in "0123456789abcdef" for c in ref["sha256"]),
         "ACTUAL_CURRENT_ARCHIVE_RESTORED_REFERENCE_REQUIRED")
-    if v2:
+    if retained_request:
         from .audit_weekly_operations_worker_v1 import _reference
         pair=p["inputs"]["previous_history"]
         require(type(pair) is dict and set(pair)=={"sidecar","public_receipt"},"CLOSED_GRADE_ONLY_HISTORY_INPUTS")
         for r in pair.values():_reference(r,cache.parent,64 << 10)
+        if v3:_reference(p["inputs"]["planning"],cache.parent,64 << 10)
     if phase==PHASES[0]:
         require(p["inputs"]["previous_snapshot"] is None,"LIVE_CROSS_RUN_HISTORY_RESTORE_REQUIRED")
     else:
@@ -152,7 +157,7 @@ def _archive(context,storage,clock):
     from . import weekly_durable_acceptance as acceptance,state
     context.verify();ref=context.request["inputs"]["archive_restored"]
     restored=archive.read_owned(storage,ref,LIMITS["archive_metadata_bytes"])
-    if context.request["schema_version"] == VERSION+"-request-v2":
+    if context.request["schema_version"] in {VERSION+"-request-v2",VERSION+"-request-v3"}:
         from . import audit_weekly_resume_v1 as resume,audit_weekly_discovery_v1 as discovery
         from . import audit_weekly_operations_v1 as operations
         operations.context(context.go["effective_epoch"])
@@ -460,7 +465,7 @@ def _same_capture(restored,registered,choice,durable,storage,*,capture_id=None):
 def _previous(context,restored,storage,transport):
     from . import audit_weekly_grade_history_v1 as history
     if context.go.get("effective_epoch") is None or history.previous_checkpoint(context.go) is None:return None
-    if context.request["schema_version"]==VERSION+"-request-v2":
+    if context.request["schema_version"] in {VERSION+"-request-v2",VERSION+"-request-v3"}:
         pair=context.request["inputs"]["previous_history"]
         return history.restore_previous(context.shared,storage,pair["sidecar"],pair["public_receipt"],transport=transport)
     aliases=restored["aliases"]
@@ -584,7 +589,22 @@ def execute(context,*,transport=None,fetch=None,clock=None):
                     _reuse_assignment(capture,population,roles,[{k:r[k] for k in provider.GAME_KEYS} for r in full],choice)
         durable_ref=grade.persist_snapshot(result.durable,storage=storage,output=output/"durable")
         from . import audit_weekly_grade_history_v1 as history
-        envelope=history.prepare_envelope(result,handoff,cp.binding(context.checkpoint_proof_path),storage=storage,output=output/"history-evidence")
+        planning=None
+        if (context.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4:
+            ref=p["inputs"].get("planning") or restored["aliases"].get("context/ops_planning.json")
+            require(ref is not None,"ORIGINAL_ROOT_PLANNING_REQUIRED")
+            planning=archive.read_owned(storage,ref,64 << 10)
+            history.validate_planning(planning)
+            canonical=archive.read_owned(storage,restored["aliases"].get("context/canonical_weekly_choice.json",restored["aliases"]["runtime/WEEKLY_CHOICE.json"]),512 << 10)
+            schedule=archive.read_owned(storage,restored["aliases"]["context/ops_schedule.json"],64 << 10)
+            projected=[{k:r[k] for k in ("season","week","game_type","game_id","kickoff_utc")} for r in schedule]
+            # Original ops_schedule lacks game_type in some old captures; a V4
+            # planning view still uses its original literal REG declaration.
+            require(planning["current"]["canonical_choice_sha256"]==state.digest(canonical)
+                and planning["current"]["game_cutoffs"]==canonical["slate"]["game_cutoffs"]
+                and planning["current"]["schedule"]==projected,"EXACT_ORIGINAL_CANONICAL_PLANNING_CONTEXT")
+        envelope=history.prepare_envelope(result,handoff,cp.binding(context.checkpoint_proof_path),storage=storage,output=output/"history-evidence",
+            planning=planning,root_go=context.go if planning is not None else None)
         report=dict(schema_version=VERSION+"-read",state="PRIVATE_OPERATIONAL_GRADING_FRESH_READER_VERIFIED",durable_history=durable_ref,
             evidence_envelope=envelope,grade_read_proof=result.proof,checkpoint_handoff=handoff,
             report=archive.write(storage,output/"REPORT.json",result.report),proof=archive.write(storage,output/"PROOF.json",result.proof),

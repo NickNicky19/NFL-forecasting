@@ -204,7 +204,7 @@ def case(locator_system, tmp_path, monkeypatch):
     x.locators["qualified_runtime_package"] = x.package
     for role, source in (("parent", x.parent_source), ("producer", x.child_source)):
         pins = x.p[role]["code_pins"]
-        for name in sorted(w.REQUIRED_PINS | set(history.FILES) | history._GRADE_PIN_PATHS | history._CHECKPOINT_PIN_PATHS):
+        for name in sorted(w.REQUIRED_PINS | set(history.FILES) | history._GRADE_PIN_PATHS | history._CHECKPOINT_PIN_PATHS | history.LOCATOR_HELPERS):
             path = source / name
             path.parent.mkdir(parents=True, exist_ok=True)
             if name == "config/operational-source-policy-v2.json": body = (ROOT / name).read_bytes()
@@ -225,7 +225,7 @@ def case(locator_system, tmp_path, monkeypatch):
         policy_sha256=s.sha(body), rights_authority=dict(fixture="UNCHANGED_RIGHTS"), r0=dict(fixture="UNCHANGED_R0"))
 
     def reseal():
-        x.prepared = t.prepare(dict(schema_version=t.VERSION + "-static", source_sha=old.B,
+        x.prepared = t.prepare(dict(schema_version=getattr(x,"template_schema",t.VERSION + "-static"), source_sha=old.B,
             code_pins=deepcopy(x.p["producer"]["code_pins"]), readiness=deepcopy(x.p["readiness"]), root_template=deepcopy(root)))
         ts = x.template_seal
         entry = ts["descriptor"]["entry"]
@@ -823,3 +823,177 @@ def test_actual_parent_root_can_bind_explicit_v3_plan_without_changing_static_te
     assert root['effective_epoch']['plan']==plan
     assert len(root['code_pins'])<=128 and len(c.canonical(root))<=60 << 10
     assert all(root[k]==case.root[k] for k in set(root)-w.DYNAMIC_FIELDS)
+
+
+@pytest.fixture
+def history_case(case):
+    """Self-contained Main metadata; native bytes are explicitly fictional.
+
+    The real Parent/GET/CAS pipeline is used. No Producer grader, numerical
+    worker, snapshot body, provider, or forecast rows are imported or decoded.
+    """
+    x=case.x;x.template_schema=t.VERSION+"-static-v2";case.reseal()
+    case.service.assets[:]=[a for a in case.service.assets if a["id"] not in {701,702}]
+    case.service.add_exact(x.template_seal["descriptor"]["entry"]["payload_name"],x.prepared.body,701)
+    case.service.add_exact("manifest-"+x.template_seal["descriptor"]["manifest_sha256"]+".json",s.canonical(x.template_seal["descriptor"]["entry"]),702)
+    current=dict(season=2026,week=8,schedule=[dict(season=2026,week=8,game_type="REG",game_id="fictional-current",kickoff_utc="2026-10-25T12:00:00Z")],
+        game_cutoffs={"fictional-current":"2026-10-25T10:30:00Z"},canonical_choice_sha256=old.h("canonical choice, immutable"))
+    later=dict(season=2026,week=9,schedule=[dict(season=2026,week=9,game_type="REG",game_id="fictional-next",kickoff_utc="2026-11-01T18:00:00Z")],
+        game_cutoffs={"fictional-next":"2026-11-01T16:30:00Z"})
+    planning=dict(schema_version=history.LOCATOR_VERSION+"-planning",epoch_sha256=case.ops["epoch_sha256"],current=current,next=later,
+        resolved_weeks=[],known_by_at="2026-10-25T12:34:10Z",calendar=dict(url="https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+            sha256=old.h("calendar bytes, no outcome columns read"),bytes=321,retrieved_utc="2026-10-25T12:31:10Z"))
+    prior=dict(feed_sha256=case.ops["feed_sha256"],receipt_sha256=s.sha(case.ops_packed))
+    original_root=deepcopy(case.root)
+    original_root.update(approved=True,operation="RECURRING_CAPTURE",issued_at_utc="2026-10-25T12:30:45Z",expires_at_utc="2026-10-25T13:30:45Z",
+        effective_epoch=dict(schema_version=history.CONTEXT_V4,controller_context=None,previous_capture=prior,
+            previous_checkpoint=dict(schema_version=history.LOCATOR_REF,path="20261025T122300.000000Z--600--"+"a"*64+".json.gz",sha256="b"*64),
+            plan=dict(kind="GRADE_ONLY",season=2026,week=8,deadline_utc=None,calendar_sha256=c.digest(current["schedule"]),game_cutoffs={})))
+    cohort=dict(schema_version=history.LOCATOR_VERSION+"-cohort",kind="GRADING_ONLY",repository=c.REPO,source_sha=old.B,run_id="700",
+        root_go_sha256=c.digest(original_root),workflow_sha256=x.p["producer"]["workflow_sha256"],epoch_sha256=case.ops["epoch_sha256"],
+        feed_sha256=case.ops["feed_sha256"],jobs={role:dict(job_id=x.p["producer"]["jobs"][role],api_job_id=701+i) for i,role in enumerate(c.ROLES)},
+        root_issued_at_utc=original_root["issued_at_utc"],verified_at=planning["known_by_at"],created_at="2026-10-25T12:34:30Z",
+        fits=0,public_release=False,successful_forecast=False)
+    core=ops_sidecar(cohort,x.package,x.p["producer"]["code_pins"],x.p["producer"]["branch"])
+    handoff=core["checkpoint_handoff"];proof=core["grade_read_proof"];append=handoff["append_proof"]
+    handoff["snapshot_completed_at"]="2026-10-25T12:33:00Z"
+    append.update(started_at_utc="2026-10-25T12:33:10Z",completed_at_utc="2026-10-25T12:33:20Z")
+    handoff["append_proof_sha256"]=c.digest(append);proof["known_by_at"]=planning["known_by_at"]
+    reader=proof["reader"]
+    native=dict(schema_version="weekly-private-proof-v2.1",phase="restore",operation="restore",repository=c.REPO,run_id=cohort["run_id"],run_attempt=1,
+        started_at_utc="2026-10-25T12:34:01Z",created_at_utc="2026-10-25T12:34:05Z",source_sha=old.B,binding_sha256=c.digest(x.package["binding"]),
+        config_sha256=s.CONFIG_SHA256,process_identity=reader["process_identity"],HTTP_calls=10,transfer_bytes=2000,
+        job=dict(execution_lane="github_actions",workflow_ref=reader["workflow_ref"],workflow_sha=old.B,job_id=reader["job_id"],permission="write",
+            event_name="workflow_dispatch",api_job_id=reader["api_job_id"],run_authenticated=True),
+        exact_readback=True,payload_sha256=handoff["body_sha256"],bytes=handoff["body_bytes"],separate_process=True,draft_before_after=True)
+    apis=dict(run_sha256=old.h("actual fictional run response"),jobs_sha256=old.h("actual fictional jobs response"))
+    body=dict(schema_version="audit-weekly-grade-checkpoint-v1-fresh-reader-native-evidence",known_by_at=proof["known_by_at"],native_restore_proof=native,
+        restored_binding=dict(path="/FICTIONAL/owned/GRADING_SNAPSHOT.json.gz",bytes=handoff["body_bytes"],sha256=handoff["body_sha256"]),
+        context=dict(current_root_go_sha256=cohort["root_go_sha256"],handoff_sha256=c.digest(handoff),handoff=deepcopy(handoff),reader=deepcopy(reader),
+            api_evidence=apis,final_api_evidence=apis))
+    proof["proof_sha256"]=c.digest(body)
+    envelope=dict(schema_version=history.LOCATOR_VERSION+"-evidence-envelope",handoff_sha256=c.digest(handoff),grade_read_proof=deepcopy(proof),
+        native_read_evidence=body,durable_sha256=old.h("opaque durable digest only"),grade_code_pins=core["grade_code_pins"],
+        checkpoint_helper_sha256=core["checkpoint_helper_sha256"],planning=planning,root_go=original_root)
+    locator=dict(schema_version=history.LOCATOR_VERSION,repository=c.REPO,anchor=prior,cohort=cohort,sidecar=core,planning=planning,
+        helper_sha256={n:x.p["producer"]["code_pins"][n] for n in history.LOCATOR_HELPERS})
+    x.api.data[c.run_url("700")]=old.run("700",old.B,x.p["producer"]["branch"],c.OWNER,updated="2026-10-25T12:35:10Z")
+    x.api.data[c.jobs_url("700")]=dict(total_count=3,jobs=[old.job("700",old.B,cohort["jobs"][role]["job_id"],cohort["jobs"][role]["api_job_id"],a,b)
+        for role,a,b in (("produce","2026-10-25T12:31:00Z","2026-10-25T12:32:00Z"),
+            ("restore","2026-10-25T12:32:10Z","2026-10-25T12:33:30Z"),("consume","2026-10-25T12:34:00Z","2026-10-25T12:35:00Z"))])
+    for path in set(core["grade_code_pins"])|set(core["checkpoint_helper_sha256"])|history.LOCATOR_HELPERS:
+        x.api.data[c.contents_url(path,old.B)]=old.content(path,(x.child_source/path).read_bytes())
+    def publish():
+        packed=gzip.compress(s.canonical(envelope),mtime=0)
+        descriptor=core["evidence_descriptor"];entry=descriptor["entry"]
+        entry["payload"].update(sha256=s.sha(packed),bytes=len(packed));entry["payload_name"]="blob-"+s.sha(packed)+".bin"
+        descriptor.update(manifest_sha256=c.digest(entry),manifest_bytes=len(s.canonical(entry)))
+        case.service.assets[:]=[a for a in case.service.assets if a["id"] not in {entry["payload_asset_id"],descriptor["manifest_asset_id"]}]
+        case.service.add_exact(entry["payload_name"],packed,entry["payload_asset_id"])
+        case.service.add_exact("manifest-"+descriptor["manifest_sha256"]+".json",s.canonical(entry),descriptor["manifest_asset_id"])
+        raw=gzip.compress(s.canonical(locator),mtime=0);name=history.locator_filename(locator)
+        x.api.data[c.contents_url(history.LOCATOR_ROOT,STATE)]=directory(history.LOCATOR_ROOT,[(name,"file",len(raw))])
+        x.api.data[c.contents_url(history.LOCATOR_ROOT+"/"+name,STATE)]=old.content(history.LOCATOR_ROOT+"/"+name,raw)
+        return raw
+    publish()
+    return SimpleNamespace(case=case,locator=locator,envelope=envelope,publish=publish)
+
+
+@pytest.mark.parametrize("resolved,expected,week",[(False,"GRADE_ONLY",8),(True,"FUTURE_CAPABLE",9)])
+def test_new_parent_discovers_grade_only_without_new_feed_and_routes_once(history_case,resolved,expected,week,record_property):
+    h=history_case;case=h.case;original=bytes(case.ops_packed)
+    if resolved:h.locator["planning"]["resolved_weeks"]=[8];h.publish()
+    result=case.execute()
+    root=c.decode(case.service.dispatch_body["inputs"]["inference_builder_go_json"])
+    ctx=root["effective_epoch"]
+    assert ctx["schema_version"]==history.CONTEXT_V4 and ctx["plan"]["kind"]==expected and ctx["plan"]["week"]==week
+    assert ctx["previous_capture"]==h.locator["anchor"]
+    assert ctx["previous_checkpoint"]["path"]==history.locator_filename(h.locator)
+    assert result["HTTP_calls"]==len(case.service.calls)<=140 and result["HTTP_by_lane"]["private"]<=40
+    record_property("HTTP_calls",result["HTTP_calls"])
+    record_property("HTTP_by_lane",json.dumps(result["HTTP_by_lane"],sort_keys=True))
+    assert case.service.calls[-1].full_url==w.DISPATCH_URL and result["dispatches"]==1
+    assert case.ops_packed==original and h.locator["cohort"]["successful_forecast"] is False
+    assert h.locator["cohort"]["run_id"]!=case.ops["run_id"]
+    assert not any("/contents/"+w.PUBLIC_ROOT+"/2026-W" in r.full_url for r in case.service.calls)
+    assert not any("/releases/assets/801" in r.full_url or "/releases/assets/802" in r.full_url for r in case.service.calls)
+
+
+@pytest.mark.parametrize("damage",["private_planning","private_native","root_preimage","source_blob","helper_pin","incomplete_job","late_history","newest_failed","state_race"])
+def test_new_history_discovery_authenticates_before_any_claim_or_enqueue(history_case,damage):
+    h=history_case;case=h.case
+    if damage=="private_planning":h.envelope["planning"]=deepcopy(h.envelope["planning"]);h.envelope["planning"]["resolved_weeks"]=[8]
+    elif damage=="private_native":h.envelope["native_read_evidence"]["native_restore_proof"]["exact_readback"]=False
+    elif damage=="root_preimage":h.envelope["root_go"]["cutoff_lead_seconds"]=99999
+    elif damage=="source_blob":
+        path=sorted(history.LOCATOR_HELPERS)[0];case.x.api.data[c.contents_url(path,old.B)]=old.content(path,b"CHANGED_LITERAL_COMMIT_BYTES")
+    elif damage=="helper_pin":h.locator["helper_sha256"][sorted(history.LOCATOR_HELPERS)[0]]="0"*64
+    elif damage=="incomplete_job":case.x.api.data[c.jobs_url("700")]["jobs"][-1].update(status="in_progress",conclusion=None,completed_at=None)
+    elif damage=="late_history":h.locator["sidecar"]["grade_read_proof"]["known_by_at"]="2026-10-25T12:40:00Z"
+    elif damage=="newest_failed":case.x.api.data[c.run_url("700")]["conclusion"]="failure"
+    elif damage=="state_race":case.service.stale_at=2
+    h.publish()
+    with pytest.raises((w.ParentError,c.ControllerError,history.HistoryError,t.TemplateError,s.StoreError)):
+        case.execute()
+    assert not any(r.get_method() in {"POST","PATCH"} for r in case.service.calls)
+    assert case.service.dispatch_body is None
+    if damage in {"source_blob","helper_pin","incomplete_job","late_history","newest_failed"}:
+        assert not any("/releases/assets/803" in r.full_url or "/releases/assets/804" in r.full_url for r in case.service.calls)
+
+
+def test_old_parent_sidecar_reader_rejects_new_nonforecast_locator(history_case):
+    h=history_case;case=h.case
+    data=dict(receipt=case.ops,qualified_runtime=case.x.package,code_pins=case.x.p["producer"]["code_pins"],
+        jobs={r:j for r,j in zip(c.ROLES,case.x.api.data[c.jobs_url("700")]["jobs"])},at=case.clock())
+    with pytest.raises(history.HistoryError):history.validate_parent_sidecar(h.publish(),**data)
+    with pytest.raises(history.HistoryError):history.validate_parent_sidecar(gzip.compress(s.canonical(h.locator["sidecar"]),mtime=0),
+        **dict(data,receipt=h.locator["cohort"]))
+
+
+def test_new_locator_metadata_cold_import_does_not_need_producer_numerical_code(history_case,tmp_path):
+    h=history_case;case=h.case
+    payload=dict(packed=base64.b64encode(h.publish()).decode(),receipt=case.ops,qualified_runtime=case.x.package,
+        code_pins=case.x.p["producer"]["code_pins"],jobs=dict(zip(c.ROLES,case.x.api.data[c.jobs_url("700")]["jobs"])),at=case.clock().isoformat())
+    path=tmp_path/"closed-fictional-history.json";path.write_bytes(c.canonical(payload))
+    script='''import sys,json,base64,socket
+from pathlib import Path
+from unittest.mock import patch
+from nfl_lab import audit_weekly_grade_history_v1 as h,private_draft_store as store
+v=json.loads(Path(sys.argv[1]).read_bytes());v['packed']=base64.b64decode(v['packed'])
+def forbidden(*args,**kwargs):raise AssertionError('METADATA_IO_FORBIDDEN')
+with patch.object(store,'read_local',forbidden),patch.object(Path,'read_bytes',forbidden),patch('builtins.open',forbidden),patch.object(socket.socket,'connect',forbidden):
+    result=h.locator_metadata(**v)
+assert result['cohort']['kind']=='GRADING_ONLY'
+assert not any(n in sys.modules for n in ('nfl_lab.audit_weekly_grade_v1','nfl_lab.audit_weekly_grade_checkpoint_v1','numpy','scipy','pandas','sklearn','pyarrow'))
+print('COLD_LOCATOR_METADATA_OK')
+'''
+    result=subprocess.run([sys.executable,"-B","-c",script,str(path)],cwd=ROOT,capture_output=True,text=True,timeout=15)
+    assert result.returncode==0,result.stderr
+    assert result.stdout.strip()=="COLD_LOCATOR_METADATA_OK"
+
+
+def test_routing_preserves_same_week_canonical_cutoffs_and_honest_missed_deadline(history_case):
+    p=deepcopy(history_case.locator['planning']);at=history_case.case.clock()
+    p['current']['schedule'][0]['kickoff_utc']='2026-10-26T18:00:00Z'
+    p['current']['game_cutoffs']={'fictional-current':'2026-10-26T16:30:00Z'}
+    plan=history.next_plan(p,at=at)
+    assert plan['kind']=='FUTURE_CAPABLE' and plan['week']==8 and plan['game_cutoffs']==p['current']['game_cutoffs']
+    assert plan['deadline_utc']=='2026-10-26T16:30:00Z'
+    assert history.next_plan(p,at='2026-10-26T16:30:00Z')['kind']=='GRADE_ONLY'
+    p['resolved_weeks']=[8]
+    assert history.next_plan(p,at='2026-11-01T16:30:00Z')['kind']=='GRADE_ONLY'
+    with pytest.raises(history.HistoryError):history.next_plan(p,at=p['known_by_at'])
+    bad=deepcopy(p);bad['current']['schedule'][0]['outcome']=1
+    with pytest.raises(history.HistoryError):history.validate_planning(bad)
+
+
+def test_newer_or_ambiguous_locator_fails_before_any_new_decision(history_case):
+    from types import SimpleNamespace
+    ref=dict(schema_version=history.LOCATOR_REF,path=history.locator_filename(history_case.locator),sha256='a'*64)
+    newer=ref['path'].replace('20261025T123410.000000Z','20261025T123411.000000Z')
+    rows=directory(history.LOCATOR_ROOT,[(ref['path'],'file',100),(newer,'file',100)])
+    client=SimpleNamespace(allowed=set(),json=lambda _:rows)
+    with pytest.raises(history.HistoryError,match='NEWER_KNOWN_HISTORY'):history.require_latest(client,ref)
+    tied=ref['path'].replace('--700--','--701--')
+    with pytest.raises(history.HistoryError,match='AMBIGUOUS_FRESHEST'):
+        history.latest_locator(directory(history.LOCATOR_ROOT,[(ref['path'],'file',100),(tied,'file',100)]))
