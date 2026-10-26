@@ -1,0 +1,37 @@
+{
+  "schema_version": "website-active-writer-scope-reconciliation-v1",
+  "observed_at_utc": "2026-10-26T05:25:34.568515+00:00",
+  "coordination_blob": "e93222980872ad4491734c8c15f5b2f0641f795b",
+  "revision": 168,
+  "active_run_id": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+  "active_source_head": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "active_writer_kind": "manual_owner",
+  "owner": {
+    "id": 208912933,
+    "login": "NickNicky19"
+  },
+  "human_confirmed_still_running": true,
+  "ready_main_base": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+  "ready_main_commit": "5cc522422286dfa70a93f0dbee2aa48fa84b1249",
+  "ready_main_patch_sha256": "669f2381e7b10bcf9d687621ef736768e2d07d331bb4df3761638f5033b3be5e",
+  "main_package_paths": 8,
+  "main_paths_not_in_active_scope": [
+    ".github/workflows/hourly.yml",
+    "config/weekly-derived-selected-policy-v4.json",
+    "tests/test_weekly_public_feed_v4.py",
+    "tools/weekly_public_feed_v4.py"
+  ],
+  "phase2_prerequisite_paths": 10,
+  "phase2_paths_not_in_active_scope": [
+    ".github/workflows/hourly.yml",
+    "config/phase2.json",
+    "config/weekly-derived-selected-policy-v3.json",
+    "config/weekly-derived-selected-policy-v4.json",
+    "tests/test_weekly_public_feed_phase2_v4.py",
+    "tests/test_weekly_public_feed_v4.py",
+    "tools/weekly_public_feed_v4.py"
+  ],
+  "authorization": "Current owner instruction authorizes integration and eligible release; normal single-writer scope/branch procedure remains required.",
+  "scope_change_or_writer_takeover_performed": false,
+  "uncertainty": "Listed scope alone does not reveal current uncommitted work or the separate session's internal progress."
+}
