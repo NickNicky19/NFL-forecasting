@@ -1,0 +1,20 @@
+{
+  "id": "SYS-007-CONTINUATION-04",
+  "severity": "high",
+  "source": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+  "file_function": "nfl_lab/weekly_future_inference.py:build_future_features and nfl_lab/operational_sources.py import-only source change",
+  "runtime": "Runtime.infer -> weekly_current_query.build_shared_features -> build_future_features",
+  "actual_qualified_contract_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+  "immutable_c748_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+  "current_builder_sha256": "069c498ebef85fee291f7f9913bebc6d157988d2242de5feb6b066d6ba68e11e",
+  "expected": "Retained artifact contract agrees with actual registered feature builder; full future-query path remains enabled",
+  "actual": "Import-only lazy dependency change alters registered builder bytes; unchanged strict guard rejects future feature construction",
+  "minimal_reproduction": "Load actual Root17 recipe.source_contract; call build_future_features with current E7 policy and placeholder frames. Before frame access it raises ValueError(feature builder identity changed). The independently Git-derived original source hash exactly matches the retained contract.",
+  "reproduced": true,
+  "original_native_failure": "Ops17 infer generic UPSTREAM_OPERATION_FAILED; original generic status does not identify its first internal exception",
+  "impact": "Guaranteed future feature-construction blocker for all18retained artifacts/all11supported categories; historical warm replays using frozen features can still pass. No new public forecast was issued.",
+  "proposed_correction": "Restore exact registered operational_sources.py bytes; relocate metadata-only import optimization without altering model manifests or the strict builder check. Verify real future features and metadata-only startup.",
+  "repair_status": "FOCUSED_IMPLEMENTATION_IN_PROGRESS",
+  "new_fits": 0,
+  "remaining": "Review and combined CI; resolve exact private namespace admission before any next native run; new immutable source registration; actual successful future-query inference/export/consumer/deployment."
+}

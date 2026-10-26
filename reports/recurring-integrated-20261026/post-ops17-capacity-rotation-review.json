@@ -1,0 +1,239 @@
+{
+  "schema_version": "independent-post-ops17-capacity-rotation-review-v1",
+  "created_at_utc": "2026-10-26T07:35:19.606605+00:00",
+  "result": "BLOCKED_CAPACITY_AND_RECURRING_PRIOR_CAPTURE_BINDING",
+  "source": {
+    "root": "/workspace/nfl-system-audit/producer-controller-native",
+    "head": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+    "sha256": {
+      "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+      "nfl_lab/audit_private_rotation_v1.py": "9c012dfdea76ce2cefd490d6a0cadd71336e6c652e2fdeacbc18cd08580c2851",
+      "nfl_lab/audit_weekly_controller_registration_v1.py": "5db0c93a3d31a1a3879ea86143577211ab7fba114554c5b1ec823e7d295be825",
+      "nfl_lab/audit_weekly_template_v1.py": "8250cc02ac5be06b7c547638dddb8b5be625d5f6b4c33962dbcedeac89c5fd64",
+      "nfl_lab/audit_weekly_hosted_v1.py": "711073e61d478faf422ed61238393f385ec9c19cd7241eded549ddcff9f01a9c",
+      "nfl_lab/audit_weekly_archive_v1.py": "7e4ff297b86cb9c13dc7c6d2dc21a408bd859e048f7f60c89b259bf014287594",
+      "nfl_lab/audit_weekly_grade_checkpoint_v1.py": "7164f7d096b443566574e1416c858a6d40175a623120314e57d78d286d6f4b6f",
+      "nfl_lab/audit_weekly_grade_v1.py": "18c9c1165bc5b98ea61d837abd12bf24c4006186a8acd6031b1c5961ed053566",
+      "nfl_lab/audit_weekly_operations_restore_v1.py": "a9140c131a8cebd343bdd94119d966817707b6e08c172540e5d57913d4044608",
+      "nfl_lab/audit_weekly_discovery_v1.py": "84f6821c41929c1cf6a9452ee96a9392ac16ff7da5496caa97c2ac339b227bf9",
+      "nfl_lab/audit_weekly_retained_v1.py": "d58fccac8298f72785c1dc8120147f6667be0a1c51528a486ae1b825ee63d0a6",
+      "nfl_lab/audit_count_retained_v1.py": "5c4d234e8d9817c6302bf1a4a64e97f64643dc652bb54a6534c9ad5923903966",
+      "nfl_lab/audit_weekly_origin_v1.py": "5ba343df8a16eee9edb58bca1213110d6c7628f3fce23f18825f21af44af5929",
+      "nfl_lab/audit_weekly_grade_history_v1.py": "8bc3f1a04cdb683dc13e316b253e19cb35000041ab4caf51550e48727db61a06",
+      ".github/workflows/lab.yml": "2e4e9744d9ee53b59f99fba6c2e1a49cf335a5e0004bf4c756cab386dc98fd6e"
+    }
+  },
+  "inventory": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/qualified-root7-namespace-after-ops17.json",
+    "file_sha256": "c26ab5ef23696c5e21720b821a47abec6a17485dd45eacf2990bd0dd88445dd1",
+    "observed_at_utc": "2026-10-26T07:22:54.346610+00:00",
+    "binding_sha256": "96ec9669cc57e965ec6e58dfc210e0fa0c0f2216be6044861f02ca0e2caa9e44",
+    "inventory_sha256": "f1932fd8b715b0cf042ff6d8be17185e888eec54fc8c2839f7c27aa3d6cef012",
+    "observed_assets": 115,
+    "max_assets": 128,
+    "free_slots_upper_bound": 13,
+    "uploaded_bytes": 11258699,
+    "quota_bytes": 33554432,
+    "byte_headroom_upper_bound": 22295733,
+    "pending_reservations": "NOT_INSPECTED; neither headroom is an admission or durability qualification"
+  },
+  "asset_accounting": {
+    "unit": "Private draft release assets. Actions artifacts, public Git objects and local owned files excluded.",
+    "variables": {
+      "G": "actual capture_groups packing count, at most 8; complete current capture requires at least 2",
+      "K": "checkpoint append count: 1 for v1, P+1 for v2, P in 1..2",
+      "r": "0..P byte-identical v2 part payloads actually reused after exact metadata/body readback; every new manifest and current native checkpoint root remain new"
+    },
+    "stages": [
+      {
+        "stage": "fresh successful native controller registration",
+        "assets": 2,
+        "source": "nfl_lab/audit_weekly_controller_registration_v1.py:516; nfl_lab/audit_weekly_template_v1.py:355",
+        "reason": "exactly two created assets asserted; duplicate template body refused"
+      },
+      {
+        "stage": "fresh Ops Root claim",
+        "assets": 2,
+        "source": "nfl_lab/audit_weekly_hosted_v1.py:405",
+        "reason": "ClaimClient explicitly forbids reuse and duplicate Root claim"
+      },
+      {
+        "stage": "capture groups and index",
+        "assets": "2G+2",
+        "source": "nfl_lab/audit_weekly_archive_v1.py:550",
+        "reason": "group blob reuse forbidden; index carries current run/root/proof/clock"
+      },
+      {
+        "stage": "fresh restore witness",
+        "assets": 2,
+        "source": "nfl_lab/audit_weekly_archive_v1.py:694",
+        "reason": "fresh reader/current index and Root; subsequent exporter reads witness without append"
+      },
+      {
+        "stage": "grade checkpoint",
+        "assets": "2K-r",
+        "source": "nfl_lab/audit_weekly_grade_checkpoint_v1.py:251,410",
+        "reason": "one new manifest per append; v1 includes current completion clock; v2 root includes new part append proofs; exact prior part blobs can be reused"
+      },
+      {
+        "stage": "private grading-reader evidence",
+        "assets": 2,
+        "source": "nfl_lab/audit_weekly_hosted_v1.py:805,845; nfl_lab/audit_weekly_delivery_v1.py:256",
+        "reason": "current native grade-read proof envelope is appended before public feed publication"
+      },
+      {
+        "stage": "next registered private static template",
+        "assets": 2,
+        "source": "nfl_lab/audit_weekly_template_v1.py:355",
+        "reason": "separate subsequent CONTROLLER_REGISTRATION; Ops has no automatic next-template upload"
+      }
+    ],
+    "exact_formulas": {
+      "ops_only": "2G+2K+8-r",
+      "new_native_plus_ops": "2G+2K+10-r",
+      "new_native_plus_ops_plus_next_template": "2G+2K+12-r"
+    },
+    "minimum_packing_evidence": {
+      "required_runtime_files": 72,
+      "candidate_payloads_and_completions": 36,
+      "model_status_files": 18,
+      "controls": 18,
+      "group_file_cap": 64,
+      "note": "Source closed census alone forces at least two groups. Extra context, prepared/source controls, R0 state and observations can force more. No next successful capture body was read or created, so two groups is an optimistic lower bound, not its measured packing."
+    },
+    "optimistic_two_group_v1_minimum": {
+      "ops_only": 14,
+      "new_native_plus_ops": 16,
+      "new_native_plus_ops_plus_next_template": 18
+    },
+    "conditional_scenarios_no_payload_reuse": [
+      {
+        "groups": 2,
+        "checkpoint": "v1_single",
+        "checkpoint_appends": 1,
+        "reused_part_payloads": 0,
+        "ops_only": 14,
+        "new_native_plus_ops": 16,
+        "new_native_plus_ops_plus_next_template": 18,
+        "resulting_observed_assets": 133
+      },
+      {
+        "groups": 2,
+        "checkpoint": "v2_two_parts_plus_root",
+        "checkpoint_appends": 3,
+        "reused_part_payloads": 0,
+        "ops_only": 18,
+        "new_native_plus_ops": 20,
+        "new_native_plus_ops_plus_next_template": 22,
+        "resulting_observed_assets": 137
+      },
+      {
+        "groups": 3,
+        "checkpoint": "v1_single",
+        "checkpoint_appends": 1,
+        "reused_part_payloads": 0,
+        "ops_only": 16,
+        "new_native_plus_ops": 18,
+        "new_native_plus_ops_plus_next_template": 20,
+        "resulting_observed_assets": 135
+      },
+      {
+        "groups": 3,
+        "checkpoint": "v2_two_parts_plus_root",
+        "checkpoint_appends": 3,
+        "reused_part_payloads": 0,
+        "ops_only": 20,
+        "new_native_plus_ops": 22,
+        "new_native_plus_ops_plus_next_template": 24,
+        "resulting_observed_assets": 139
+      },
+      {
+        "groups": 8,
+        "checkpoint": "v1_single",
+        "checkpoint_appends": 1,
+        "reused_part_payloads": 0,
+        "ops_only": 26,
+        "new_native_plus_ops": 28,
+        "new_native_plus_ops_plus_next_template": 30,
+        "resulting_observed_assets": 145
+      },
+      {
+        "groups": 8,
+        "checkpoint": "v2_two_parts_plus_root",
+        "checkpoint_appends": 3,
+        "reused_part_payloads": 0,
+        "ops_only": 30,
+        "new_native_plus_ops": 32,
+        "new_native_plus_ops_plus_next_template": 34,
+        "resulting_observed_assets": 149
+      }
+    ],
+    "typical": "No exact empirical typical G or future partition count follows from a namespace summary. Two-group/v1 is 18 slots for all requested stages; two-group/two-part-v2 is 22 minus actual reused part payloads. Exact source formulas above replace a guessed typical capacity.",
+    "byte_delta": "Sum each appended canonical native manifest length and each genuinely new payload length. Future exact byte delta is unknown without actual immutable preencoding; 22,295,733 observed bytes free does not overcome the slot cap or unknown pending reservations.",
+    "admission": {
+      "archive_reserved_slots": "2(G+1)+2 witness+2 failure = 2G+6",
+      "optimistic_total_after_fresh_native_and_claim": 129,
+      "calculation": "115+2 native+2 claim+(2*2+6) reserved =129>128 before archive POST",
+      "note": "Failure reserve is an admission requirement, not a successful-upload delta. Later checkpoint/evidence/template uploads are not all pre-reserved here; skipping registration still cannot make the complete success path fit."
+    }
+  },
+  "rotation": {
+    "procedure": [
+      "Seal a fresh exact-source owner Root for audit-private-rotation-v1 with original preserved bindings and complete fresh owner-bound pending census; reject existing target/retries.",
+      "Run existing single-writer write/read/qualify jobs with actual API source/job/permission and clock checks. Metadata-only global inventory charges every draft, starter/orphan and unresolved allocation.",
+      "Reserve another full32MiB under global512MiB, create one private draft and exactly one117-byte canary asset. Pin/boundary/qualification create no additional runtime assets. Old releases/assets remain intact.",
+      "Retain the actual final qualified-runtime package outside transient runner outputs. Its qualification is engineering canary only, private_durability_qualified=false, zero private forecast payloads/fits/publication; new scoped writes need separate authority."
+    ],
+    "new_runtime_assets": 1,
+    "new_runtime_uploaded_bytes": 117,
+    "new_global_reserved_bytes": 33554432,
+    "fresh_global_admission_proven": false,
+    "sources": [
+      "nfl_lab/audit_private_rotation_v1.py:94,218,445",
+      "nfl_lab/private_draft_store.py:380,450,526",
+      ".github/workflows/lab.yml:887"
+    ],
+    "historical_caution": "continuation/evidence/rotation-runtime-1-public-safe.json says three jobs succeeded but final package was not retained, usable_for_new_capture=false. This is not current capture authority.",
+    "separate_original_model_recovery_supported": {
+      "value": true,
+      "source": "nfl_lab/audit_weekly_hosted_v1.py:1395-1421; nfl_lab/audit_count_retained_v1.py:334-347",
+      "reason": "model child binds archived ACTUAL_HOSTED_RESULT qualification, original registered handoff and unchanged six model pins independently of go.qualified_runtime"
+    },
+    "separate_original_origin_recovery_supported": {
+      "value": true,
+      "source": "nfl_lab/audit_weekly_origin_v1.py:458-475",
+      "reason": "archived selected handoff/qualification and original GET-only binding are retained"
+    },
+    "new_write_namespace_with_old_count7_prior_discovery_supported": false,
+    "exact_incompatibilities": [
+      {
+        "source": "nfl_lab/audit_weekly_operations_restore_v1.py:67-101",
+        "issue": "Prior COUNT7 discovery and retained restore use only context.go[qualified_runtime], also used by claim/capture/grade/evidence writes; no independent prior-capture package is wired."
+      },
+      {
+        "source": "nfl_lab/audit_weekly_discovery_v1.py:373-394",
+        "issue": "Inventories that one package binding and requires matching native manifest binding hashes and unique original receipt-selected index/witness. A new canary/template namespace has neither old selected asset; UNIQUE_INDEX_AND_WITNESS_NO_LATEST_OR_FALLBACK rejects it."
+      },
+      {
+        "source": "nfl_lab/audit_weekly_retained_v1.py:200",
+        "issue": "QUALIFIED_PACKAGE_MUST_COVER_ORIGINAL_ARCHIVE_RUNTIME explicitly requires old original archive binding. New qualification with old descriptors cannot be relabelled."
+      },
+      {
+        "source": "nfl_lab/audit_weekly_grade_history_v1.py:447,956",
+        "issue": "Existing prior checkpoint/evidence history is also tied to go.qualified_runtime binding and complete package digest; rotation cannot silently reinterpret old history locators."
+      }
+    ],
+    "conclusion": "Existing rotation is history-preserving namespace qualification, not currently an end-to-end dual-binding recurring capture continuation. Preserve COUNT7/models/all failed attempts under original identities. No new architecture, deletion, transfer, cap relaxation or namespace creation performed."
+  },
+  "scope": {
+    "method": "Local source trace, static AST constant census and independent stage-sum arithmetic. Parent-supplied fresh metadata not re-fetched.",
+    "source_edits": 0,
+    "remote_calls": 0,
+    "remote_writes": 0,
+    "private_payload_or_row_or_model_body_reads": 0,
+    "application_executions": 0,
+    "tests": 0,
+    "new_fits": 0,
+    "only_written_artifact": "this /tmp receipt"
+  }
+}

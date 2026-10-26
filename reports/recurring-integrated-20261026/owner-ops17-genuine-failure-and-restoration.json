@@ -1,0 +1,151 @@
+{
+  "schema_version": "genuine-weekly-operations-failed-attempt-v1",
+  "run_id": 40282870113,
+  "source_sha": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+  "producer_job_id": 121439815563,
+  "reader_job_id": 121442096959,
+  "public_forecast_export_skipped": true,
+  "model_fits": 0,
+  "forecast_qualification": false,
+  "producer_summary": [
+    {
+      "diagnostic": {
+        "error_type": "StoreError",
+        "source_frames": [
+          {
+            "file": "tools/audit_weekly_hosted_v1.py",
+            "line": 46
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 1473
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 971
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 582
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 402
+          }
+        ]
+      },
+      "fits": 0,
+      "public_release": false,
+      "reason": "UPSTREAM_OPERATION_FAILED",
+      "state": "FAILED_RETAINED",
+      "successful_forecast": false
+    },
+    {
+      "fits": 0,
+      "partial_forecast_archive_state": "FAILURE_EVIDENCE",
+      "public_release": false,
+      "state": "FAILED_ATTEMPT_APPENDED_READER_REQUIRED",
+      "successful_forecast": false
+    }
+  ],
+  "reader_summary": [
+    {
+      "fits": 0,
+      "opaque_failed_capture_restored": true,
+      "original_attempt": {
+        "job_id": "audit-weekly-produce-v1",
+        "repository": "NickNicky19/NFL-forecasting",
+        "run_attempt": 1,
+        "run_id": "40282870113",
+        "source_sha": "f12bccca16463933d579f3fd15bf67f3c41efcb2",
+        "workflow_ref": "NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1"
+      },
+      "public_release": false,
+      "receipt_sha256": "1ce9f9f0d5b97cb9e3dfa77de732160438f0e21422ec4de802ad2d099468ae3a",
+      "state": "PRIVATE_FAILURE_RESTORED",
+      "successful_forecast": false
+    }
+  ],
+  "phases": [
+    {
+      "label": "phase-00",
+      "exit_code": 0,
+      "state": "PRIVATE_PRIOR_CAPTURE_RECOVERED_FOR_RECURRING",
+      "phase": null,
+      "reason": null
+    },
+    {
+      "label": "phase-01",
+      "exit_code": 0,
+      "state": "CROSS_RUN_EFFECTIVE18_RESTORED_AND_REPLAYED_PRIVATE",
+      "phase": null,
+      "reason": null
+    },
+    {
+      "label": "phase-02",
+      "exit_code": 0,
+      "state": "SAME_WEEK_PREVALUE_METADATA_READY_LOCAL",
+      "phase": null,
+      "reason": null
+    },
+    {
+      "label": "phase-03",
+      "exit_code": 0,
+      "state": "ORIGINALS_RECOVERED_GET_ONLY",
+      "phase": null,
+      "reason": null
+    },
+    {
+      "label": "phase-04",
+      "exit_code": 0,
+      "state": "METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION",
+      "phase": "prepare",
+      "reason": null
+    },
+    {
+      "label": "phase-05",
+      "exit_code": 0,
+      "state": "FRESH_E7_SOURCE_PREPARED",
+      "phase": "acquire",
+      "reason": null
+    },
+    {
+      "label": "phase-06",
+      "exit_code": 1,
+      "state": "FAILED_RETAINED",
+      "phase": "infer",
+      "reason": "UPSTREAM_OPERATION_FAILED"
+    },
+    {
+      "label": "phase-07",
+      "exit_code": null,
+      "state": null,
+      "phase": null,
+      "reason": null
+    }
+  ],
+  "private_original_failure_download": {
+    "bytes": 43970,
+    "sha256": "11eca77a67d49e225aac524459080863d136218194de46db774bfa80730a0640",
+    "matches_native_descriptor": true,
+    "opaque_index_and_group_hashes_verified": true,
+    "original_files": 61,
+    "diagnostic_controls_extracted": 29,
+    "model_decodes": 0,
+    "outcome_decodes": 0,
+    "new_hosted_proof_claimed": false
+  },
+  "private_logs": {
+    "producer": {
+      "bytes": 58310,
+      "sha256": "df9ca57f7ef75c478b752f765a6010b686930da15b905774f713fcc96f3b07b4",
+      "literal_root_and_prefix_absent": true
+    },
+    "reader": {
+      "bytes": 43452,
+      "sha256": "62aa7c5bedbf609a840fea1625ad0a84ad16da93d97dc211e7856d6aafd2d232",
+      "literal_root_and_prefix_absent": true
+    }
+  },
+  "observed_at_utc": "2026-10-26T07:29:54.583014+00:00"
+}
