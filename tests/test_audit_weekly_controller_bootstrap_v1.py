@@ -21,6 +21,42 @@ old = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(old)
 
 
+def fictional_runtime_metadata(package, census, number=2):
+    """New fictional qualification metadata, never actual hosted evidence."""
+    from nfl_lab import audit_weekly_template_v1 as t,private_draft_store as s
+    result=deepcopy(package); binding=result['binding']; q=result['qualification']
+    runtime=format(number,'032x'); run=str(int(binding['origin_run_id'])+number)
+    binding.update(runtime_id=runtime,origin_run_id=run,release_id=binding['release_id']+1000*number,
+        tag_name='weekly-private-runtime-v2-'+runtime,browser_tag='weekly-private-runtime-v2-'+runtime,
+        canary_asset_id=binding['canary_asset_id']+10000*number)
+    body=s.probe.fixture(run);binding.update(canary_sha256=s.sha(body),canary_name='canary-'+s.sha(body)+'.txt')
+    for i,proof in enumerate((q['before_proof'],q['read_proof'],q)):
+        proof.update(run_id=run,binding_sha256=t.digest(binding),process_identity=s.sha(str([number,i]).encode()))
+        proof['job']['api_job_id']+=10000*number
+    before,read=q['before_proof'],q['read_proof']
+    read['before_sha256']=t.digest(before)
+    q.update(before_sha256=t.digest(before),read_sha256=t.digest(read),
+        before_process_identity=before['process_identity'],read_process_identity=read['process_identity'])
+    result.update(runtime_id=runtime,run_id=run)
+    quota=result['quota_reservation'];count=quota['existing_draft_runtimes']+1
+    quota.update(existing_draft_runtimes=count,reserved_before_bytes=(count+quota['pending_unlocated_runtimes'])*(32<<20),
+        reserved_after_bytes=(count+quota['pending_unlocated_runtimes']+1)*(32<<20),new_runtime_id=runtime,
+        pending_census_sha256=t.digest(census),pending_records=len(census['reservations']))
+    if 'root_go_sha256' in result:result['root_go_sha256']=s.sha(('fictional rotation '+str(number)).encode())
+    return result
+
+
+def dual_runtime_root(root, package, census, anchor, *, original_root=None):
+    from nfl_lab import audit_weekly_template_v1 as t
+    result=deepcopy(root);result['schema_version']=t.ROOT_V3
+    result['qualified_runtime']=fictional_runtime_metadata(package,census)
+    result['pending_census']=deepcopy(census)
+    result['prior_capture_qualified_runtime']=dict(schema_version=t.PRIOR_RUNTIME,purpose='PRIOR_CAPTURE_QUALIFIED_RUNTIME',
+        anchor=deepcopy(anchor),qualified_runtime=deepcopy(package),pending_census=deepcopy(census),
+        root_static_sha256=None if original_root is None else t.static_root_sha256(original_root))
+    return result
+
+
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket, "connect", lambda *_: pytest.fail("REAL_NETWORK_FORBIDDEN"))
@@ -646,7 +682,7 @@ def locator_system(system):
     root = {key: None for key in t.ROOT_KEYS}
     slots = [dict(target=target, family=family, method_id=method, procedure_version="1" * 64, model_sha256="2" * 64,
         manifest_sha256="3" * 64, transport_manifest_sha256="4" * 64) for target, family, method in t.JOBS]
-    root.update(schema_version="audit-weekly-hosted-v3-root-GO", approved=False, repository=c.REPO, mode=c.MODE,
+    root.update(schema_version="audit-weekly-hosted-v2-root-GO", approved=False, repository=c.REPO, mode=c.MODE,
         source_sha=old.B, code_pins=deepcopy(x.p["producer"]["code_pins"]), single_writer_group=c.GROUP,
         workflow_ref=x.go["workflow_ref"], retained_registration=dict(schema_version="audit-count-retained-v1-registration",
             approved=True, maximum_new_fits=0, public_release=False, origin=dict(replay_catalog=dict(slots=slots))))

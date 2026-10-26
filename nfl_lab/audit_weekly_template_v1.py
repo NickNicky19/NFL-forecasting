@@ -43,6 +43,11 @@ ROOT_KEYS = {'schema_version','approved','repository','mode','operation','source
     'owner_authorization','issued_at_utc','expires_at_utc','single_writer_group','code_pins','limits',
     'jobs','failure_restorer','retained_registration','original_selected_handoff','qualified_runtime',
     'pending_census','source_config','cutoff_lead_seconds','publication','publication_registration','effective_epoch'}
+ROOT_V3 = 'audit-weekly-hosted-v3-root-GO'
+ROOT_V3_KEYS = ROOT_KEYS | {'prior_capture_qualified_runtime'}
+STATIC_V3 = VERSION + '-static-v3'
+PRIOR_RUNTIME = 'audit-weekly-prior-capture-qualified-runtime-v1'
+DYNAMIC_FIELDS = {'approved','issued_at_utc','expires_at_utc','operation','effective_epoch'}
 DOCUMENT_KEYS = {'schema_version','source_sha','code_pins','readiness','root_template'}
 HANDOFF_KEYS = {'schema_version','repository','binding','descriptor','template_sha256','template_bytes',
     'writer','root_go_sha256','appended_at_utc'}
@@ -69,6 +74,90 @@ def hashed(value, n=64): return type(value) is str and re.fullmatch('[a-f0-9]{'+
 def identifier(value): return type(value) is str and re.fullmatch('[1-9][0-9]{0,19}', value) is not None
 def label(value): return type(value) is str and re.fullmatch('[A-Za-z0-9_-]{1,100}', value) is not None
 def decode_json(body): return controller.decode(body)
+
+
+def root_keys(root):
+    require(type(root) is dict and root.get('schema_version') in {'audit-weekly-hosted-v2-root-GO', ROOT_V3},
+        'EXPLICIT_STATIC_ROOT_VERSION')
+    return ROOT_V3_KEYS if root['schema_version'] == ROOT_V3 else ROOT_KEYS
+
+
+def static_root_sha256(root):
+    """Original Root interpretation commitment, never execution authority."""
+    require(set(root) == root_keys(root), 'EXACT_ORIGINAL_STATIC_ROOT_KEYS')
+    value = deepcopy(root); value['approved'] = False
+    for name in DYNAMIC_FIELDS - {'approved'}: value[name] = None
+    return digest(value)
+
+
+def prior_runtime(root, *, before=None):
+    """Closed owner-sealed metadata. Live API/canary checks remain mandatory."""
+    require(type(root) is dict, 'EXPLICIT_RUNTIME_ROOT')
+    if root.get('schema_version') != ROOT_V3:
+        require('prior_capture_qualified_runtime' not in root, 'NO_PRIOR_RUNTIME_ON_LEGACY_ROOT')
+        return None
+    require(set(root) == ROOT_V3_KEYS, 'CLOSED_DUAL_RUNTIME_ROOT')
+    value = root['prior_capture_qualified_runtime']
+    require(type(value) is dict and set(value) == {'schema_version','purpose','anchor','qualified_runtime','pending_census','root_static_sha256'}
+        and value['schema_version'] == PRIOR_RUNTIME and value['purpose'] == 'PRIOR_CAPTURE_QUALIFIED_RUNTIME'
+        and type(value['anchor']) is dict and set(value['anchor']) == {'feed_sha256','receipt_sha256'}
+        and all(hashed(v) for v in value['anchor'].values())
+        and (value['root_static_sha256'] is None or hashed(value['root_static_sha256'])), 'CLOSED_PRIOR_CAPTURE_RUNTIME')
+    from . import audit_weekly_controller_bootstrap_v1 as bootstrap
+    for package in (root['qualified_runtime'], value['qualified_runtime']):
+        require(type(package) is dict and type(package.get('binding')) is dict
+            and type(package.get('qualification')) is dict, 'CLOSED_PRIOR_QUALIFIED_PACKAGE')
+        bootstrap._qualified_locator_package(package, package['binding'],
+            before=before or package['qualification']['created_at_utc'])
+    old, current = value['qualified_runtime']['binding'], root['qualified_runtime']['binding']
+    require(old['runtime_id'] != current['runtime_id'] and old['release_id'] != current['release_id'],
+        'DISTINCT_PRIOR_AND_CURRENT_RUNTIME')
+    pending = value['pending_census']; package = value['qualified_runtime']
+    require(type(pending) is dict and set(pending) == {'schema_version','complete','as_of_utc','owner_evidence_sha256','reservations'}
+        and pending['schema_version'] == 'audit-private-rotation-v1-pending-census' and pending['complete'] is True
+        and hashed(pending['owner_evidence_sha256']) and type(pending['reservations']) is list
+        and len(pending['reservations']) <= 128
+        and digest(pending) == package['quota_reservation']['pending_census_sha256']
+        and len(pending['reservations']) == package['quota_reservation']['pending_records']
+        and store.utc(pending['as_of_utc']) <= store.utc(package['qualification']['created_at_utc']),
+        'ORIGINAL_PRIOR_QUALIFICATION_CENSUS')
+    seen = set()
+    for row in pending['reservations']:
+        require(type(row) is dict and set(row) == {'reservation_sha256','runtime_id','release_id','pending_bytes','pending_assets'}
+            and hashed(row['reservation_sha256']) and row['reservation_sha256'] not in seen
+            and (row['runtime_id'] is None or hashed(row['runtime_id'],32))
+            and (row['release_id'] is None or type(row['release_id']) is int and row['release_id'] > 0)
+            and type(row['pending_bytes']) is int and 0 <= row['pending_bytes'] <= 32 << 20
+            and type(row['pending_assets']) is int and 0 <= row['pending_assets'] <= 128,
+            'CLOSED_PRIOR_PENDING_RESERVATION')
+        seen.add(row['reservation_sha256'])
+    return deepcopy(value)
+
+
+def capture_runtime(root, *, anchor=None):
+    """Select exactly one sealed namespace; never search/fallback or authorize."""
+    prior = prior_runtime(root, before=root.get('issued_at_utc'))
+    anchor = anchor if anchor is not None else (root.get('effective_epoch') or {}).get('previous_capture')
+    if prior is not None and anchor == prior['anchor']:
+        return prior['qualified_runtime'], prior['pending_census']
+    return deepcopy(root['qualified_runtime']), deepcopy(root['pending_census'])
+
+
+def checkpoint_runtime(root, handoff, *, anchor=None, checkpoint=None):
+    prior = prior_runtime(root, before=root.get('issued_at_utc'))
+    current = (deepcopy(root['qualified_runtime']), deepcopy(root['pending_census']))
+    if prior is None: return current
+    candidates = [current, (prior['qualified_runtime'], prior['pending_census'])]
+    matches = [p for p in candidates if handoff.get('runtime_binding_sha256') == digest(p[0]['binding'])
+        and handoff.get('qualified_package_sha256') == digest(p[0])]
+    require(len(matches) == 1, 'UNIQUE_SEALED_CHECKPOINT_RUNTIME')
+    if matches[0][0] == prior['qualified_runtime']:
+        epoch = root.get('effective_epoch') or {}
+        anchor = anchor if anchor is not None else epoch.get('previous_capture')
+        checkpoint = checkpoint if checkpoint is not None else epoch.get('previous_checkpoint')
+        require(anchor == prior['anchor'] and type(checkpoint) is dict and hashed(checkpoint.get('sha256'))
+            and prior['root_static_sha256'] is not None, 'EXACT_REGISTERED_PRIOR_CHECKPOINT_RUNTIME')
+    return matches[0]
 
 
 def _descriptor(value):
@@ -209,13 +298,17 @@ def _readiness(value):
 
 
 def _document(value):
-    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] in {VERSION+'-static',VERSION+'-static-v2'}
+    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] in {VERSION+'-static',VERSION+'-static-v2',STATIC_V3}
         and hashed(value['source_sha'],40), 'CLOSED_STATIC_TEMPLATE_DOCUMENT')
     _pins(value['code_pins']); _readiness(value['readiness'])
     root = value['root_template']
-    require(type(root) is dict and set(root) == ROOT_KEYS and root['approved'] is False
+    require(type(root) is dict and set(root) == root_keys(root) and root['approved'] is False
         and all(root[k] is None for k in ('issued_at_utc','expires_at_utc','operation','effective_epoch')),
         'STATIC_PLACEHOLDERS_ONLY_NO_EXPIRED_OR_ACTIVE_GO')
+    require((value['schema_version'] == STATIC_V3) == (root['schema_version'] == ROOT_V3), 'MATCHING_STATIC_ROOT_VERSION')
+    if value['schema_version'] == STATIC_V3:
+        require(len(value['code_pins']) <= 128 and len(store.canonical(root)) <= 60 << 10, 'BOUNDED_DUAL_RUNTIME_STATIC_ROOT')
+        prior_runtime(root)
     require(root['repository'] == store.REPO and root['mode'] == 'audit-weekly-producer-v1'
         and root['source_sha'] == value['source_sha'] and root['code_pins'] == value['code_pins']
         and root['single_writer_group'] == 'nfl-lab-single-writer'
