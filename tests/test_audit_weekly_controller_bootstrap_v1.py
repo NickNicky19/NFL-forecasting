@@ -200,6 +200,77 @@ def test_native_artifact_metadata_source_and_physical_digest_required(system, ch
         x.verify()
 
 
+@pytest.mark.parametrize("fixture_name", ["system", "locator_system"])
+def test_fractional_native_seal_same_second_artifact_preserves_exact_ZIP_and_clocks(request, fixture_name):
+    x = request.getfixturevalue(fixture_name)
+    x.native["created_at_utc"] = "2026-10-25T12:02:21.008169+00:00"
+    x.api.data[x.artifact_url].update(created_at="2026-10-25T12:02:21Z", updated_at="2026-10-25T12:02:21Z")
+    if fixture_name == "system":
+        x.publish(); record = x.record; load = x.load
+    else:
+        x.publish_locator(); record = x.locator_record; load = x.load_locator
+    native = c.canonical(x.native)
+    packed = base64.b64decode(record["native_artifact_zip_base64"], validate=True)
+    seal = load()
+    assert seal.document["artifact_sha256"] == c.sha(packed)
+    assert c.canonical(x.native) == native
+    assert b.safe_seal(packed, registry_version=seal.registry_version)["created_at_utc"] == x.native["created_at_utc"]
+    assert len(x.calls) == 10
+
+
+@pytest.mark.parametrize("native,created,accepted", [
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56Z", True),
+    ("2026-10-26T06:19:56.999999+00:00", "2026-10-26T06:19:56Z", True),
+    ("2026-10-26T06:19:57.000000+00:00", "2026-10-26T06:19:56Z", False),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:55Z", False),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:57Z", True),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56.001Z", False),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56.008168Z", False),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56.008169Z", True),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56.000000Z", False),
+    ("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56+00:00", False),
+])
+def test_actual_native15_precision_boundary_without_rewriting_native_clock(native, created, accepted):
+    # Literal owner-reported native15 counterexample. This is timestamp
+    # compatibility testing, not a new claim of actual artifact qualification.
+    before = native
+    if accepted:
+        b.verify_artifact_upload_clock(native, created, created, "2026-10-26T06:19:59Z")
+    else:
+        with pytest.raises(b.BootstrapError, match="NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB"):
+            b.verify_artifact_upload_clock(native, created, created, "2026-10-26T06:19:59Z")
+    assert native == before
+
+
+@pytest.mark.parametrize("updated,completed", [
+    ("2026-10-26T06:19:55Z", "2026-10-26T06:19:59Z"),
+    ("2026-10-26T06:20:00Z", "2026-10-26T06:19:59Z"),
+])
+def test_whole_second_compatibility_keeps_strict_API_updated_and_job_order(updated, completed):
+    with pytest.raises(b.BootstrapError, match="NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB"):
+        b.verify_artifact_upload_clock("2026-10-26T06:19:56.008169+00:00", "2026-10-26T06:19:56Z", updated, completed)
+
+
+@pytest.mark.parametrize("fixture_name", ["system", "locator_system"])
+@pytest.mark.parametrize("damage", ["digest", "run", "source", "current_clock", "job_completion"])
+def test_same_second_compatibility_cannot_replace_artifact_identity_or_native_freshness(request, fixture_name, damage):
+    x = request.getfixturevalue(fixture_name)
+    x.native["created_at_utc"] = "2026-10-25T12:02:21.008169+00:00"
+    x.api.data[x.artifact_url].update(created_at="2026-10-25T12:02:21Z", updated_at="2026-10-25T12:02:21Z")
+    version = 1 if fixture_name == "system" else 2
+    (x.publish if version == 1 else x.publish_locator)()
+    artifact = x.api.data[x.artifact_url]
+    at = old.AT
+    if damage == "digest": artifact["digest"] = "sha256:" + "0" * 64
+    elif damage == "run": artifact["workflow_run"]["id"] = 999
+    elif damage == "source": artifact["workflow_run"]["head_sha"] = old.A
+    elif damage == "current_clock": at = c.utc("2026-10-25T12:02:21.008168+00:00")
+    else: x.api.data[c.jobs_url("400")]["jobs"][2]["completed_at"] = "2026-10-25T12:02:21Z"
+    with pytest.raises(c.ControllerError):
+        b.load_seal(x.env, x.child_source, metadata_get=x.get, clock=lambda:at,
+            read_head=x.read_head, registry_version=version)
+
+
 @pytest.mark.parametrize("field,value", [("successful_private_creates", 2), ("successful_private_creates", True),
     ("template_bytes", 0), ("operation", "ALREADY_EXISTED_REUSED"), ("private_descriptor_sha256", "0" * 64)])
 def test_one_native_create_closed_receipt_not_JSON_success_flags(system, field, value):
