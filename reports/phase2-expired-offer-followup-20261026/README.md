@@ -1,0 +1,11 @@
+# Phase 2 expired-offer follow-up
+
+This five-path follow-up applies after the exact ten-path Phase 2 COUNT7 prerequisite at `acfef26c0eb2aa9114724055b75b306847ab3183`, whose patch SHA256 is `95b801aff46c0c1c18057ecd69e2729f564dba7c98c29add0ee595cbc5bf9432`. It is not the Main eight-path alternative and must not receive Main's ranking-only change. The original Phase 2 source is `484dbeff5c3fb34673380bf52b0f30ee0354a521`.
+
+The real Main consumer test exposed expired category offers disappearing while their player/game associations remain valid. The same focused correction validates the identical committed identity preimage from actual player/game metadata, preserves all forecast semantic checks, and requires an actual offer for each active row. Expired rows never become eligible. Unknown identities, changed teams, invalid expired values and absent active offers still reject the feed.
+
+The Phase 2 version retains its current data-integrity execution and 32-file inventory. Only `tools/weekly_public_feed_v4.py` changes within that inventory. Its new effective policy clock is `2026-10-26T02:58:20.898176Z`; both the actual Phase 2 configuration and workflow reference physical policy SHA256 `e5f95ceea962d72de62b2e0ee9ff9157cf6c3caa77563f972304b0b03e3299aa`. Original producer source, 18 model artifacts, native COUNT7 receipt, V3 scientific fields, R0 and historical registrations remain intact. This does not extend COUNT7's `2026-10-27T00:15Z` expiry.
+
+Supporting checks on this actual isolated combined source: 42 feed/overlay/input checks and 86 subtests passed in 12.45s. After binding the physical Phase 2 configuration, all 24 V4 and Phase 2 binding checks and 86 subtests passed in 11.97s. The original three Classic pair/workflow incompatibilities remain explicit failures in the broader nine-case run (six passed); this packet does not claim full Phase 2 CI readiness. Full logs are retained alongside this report. Strict patch application against the exact prerequisite preview passes. `HANDOFF.json` gives all five before/after hashes.
+
+No website remote source, lease, scheduler or deployment was changed. The existing writer must reconcile its actual combined source, register any further protected-code changes, pass actual CI and verify deployed selected-feed consumption. Main can release its separately qualified correction independently.

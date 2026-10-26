@@ -1,0 +1,93 @@
+...F.F..F                                                                [100%]
+=================================== FAILURES ===================================
+_ ActualBuildPairTests.test_actual_default_original_then_current_with_qualified_history_extension _
+
+self = <test_classic_build_pair_v1.ActualBuildPairTests testMethod=test_actual_default_original_then_current_with_qualified_history_extension>
+
+    def test_actual_default_original_then_current_with_qualified_history_extension(self):
+        with tempfile.TemporaryDirectory()as d:
+            root=Path(d);source=self.source(root);run=root/'private'
+            before={p.relative_to(source).as_posix():p.read_bytes()for p in source.rglob('*')if p.is_file()}
+>           result=self.run_fixture(root,source,run)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_classic_build_pair_v1.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_classic_build_pair_v1.py:86: in run_fixture
+    return pair.run_pair(source,run,repository,mode='replay')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/classic_build_pair_v1.py:260: in run_pair
+    current = seed(source, run, repository, prior_r0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/classic_build_pair_v1.py:77: in seed
+    current = contract(source)
+              ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmp10cb40sg/source')
+model = 'sleeper-matchup-classic-fg-identity-v1'
+
+    def contract(root, *, model=MODEL):
+        if model != MODEL:
+            raise ValueError("UNRECOGNIZED_CLASSIC_MODEL")
+        root = Path(root).resolve()
+        actual = {}
+        for name, expected in ENGINE.items():
+            path = root / name
+            if path.is_symlink() or not path.resolve().is_relative_to(root) or path.stat().st_size > 2 << 20:
+                raise ValueError("CURRENT_ENGINE_SCOPE")
+            actual[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+            if actual[name] != expected:
+>               raise ValueError("UNRECOGNIZED_CLASSIC_CURRENT_SOURCE: " + name)
+E               ValueError: UNRECOGNIZED_CLASSIC_CURRENT_SOURCE: pull/build.py
+
+tools/classic_model_v1.py:183: ValueError
+_ ActualBuildPairTests.test_current_board_cannot_bootstrap_an_original_shadow __
+
+self = <test_classic_build_pair_v1.ActualBuildPairTests testMethod=test_current_board_cannot_bootstrap_an_original_shadow>
+
+    def test_current_board_cannot_bootstrap_an_original_shadow(self):
+        with tempfile.TemporaryDirectory()as d:
+            root=Path(d);source=self.source(root)
+>           (source/'output/data/week.json').write_text(json.dumps(dict(execution_model=model.contract(source))))
+                                                                                        ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_classic_build_pair_v1.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmp_hzy_nqv/source')
+model = 'sleeper-matchup-classic-fg-identity-v1'
+
+    def contract(root, *, model=MODEL):
+        if model != MODEL:
+            raise ValueError("UNRECOGNIZED_CLASSIC_MODEL")
+        root = Path(root).resolve()
+        actual = {}
+        for name, expected in ENGINE.items():
+            path = root / name
+            if path.is_symlink() or not path.resolve().is_relative_to(root) or path.stat().st_size > 2 << 20:
+                raise ValueError("CURRENT_ENGINE_SCOPE")
+            actual[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+            if actual[name] != expected:
+>               raise ValueError("UNRECOGNIZED_CLASSIC_CURRENT_SOURCE: " + name)
+E               ValueError: UNRECOGNIZED_CLASSIC_CURRENT_SOURCE: pull/build.py
+
+tools/classic_model_v1.py:183: ValueError
+_ ActualBuildPairTests.test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes _
+
+self = <test_classic_build_pair_v1.ActualBuildPairTests testMethod=test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes>
+
+    def test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes(self):
+        import re
+        workflow=(ROOT/'.github/workflows/hourly.yml').read_text()
+        commands=[line.strip()for line in workflow.splitlines()if 'run:'in line]
+>       stage=next(i for i,line in enumerate(commands)if 'classic_build_pair_v1.py'in line and '--install-staged-output'not in line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_classic_build_pair_v1.py:23: StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_classic_build_pair_v1.py::ActualBuildPairTests::test_actual_default_original_then_current_with_qualified_history_extension
+FAILED tests/test_classic_build_pair_v1.py::ActualBuildPairTests::test_current_board_cannot_bootstrap_an_original_shadow
+FAILED tests/test_classic_build_pair_v1.py::ActualBuildPairTests::test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes
+3 failed, 6 passed in 0.82s
