@@ -1,0 +1,248 @@
+{
+  "Root_jobs_started": 0,
+  "base_commit": "810be9b1f55bb90f9683bb510d49db954b2e4aa8",
+  "baseline_reproduction": {
+    "captures": 2,
+    "error": "FINITE_FULL_GRADING_SNAPSHOT",
+    "fictional": true,
+    "logical_bytes": 107881965,
+    "logical_sha256": "d99faba2d920221238b153816cbeb0e8d000abec70c1c50af7d80fbd330a7182",
+    "original_decoded_cap": 67108864,
+    "snapshot_written": false,
+    "state": "REPRODUCED_ORIGINAL_64_MIB_GUARD",
+    "wall_seconds": 16.036148562008748
+  },
+  "branch": "audit/grade-partition-20261025",
+  "changed_files": {
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py": {
+      "bytes": 35575,
+      "frozen_path": "/tmp/nfl-grade-partition-repair-20261025/frozen/166dab7dc57e9974adf0133af315e3e39cb0e714796ba2b8d4b79414b5da4ea4/nfl_lab/audit_weekly_grade_checkpoint_v1.py",
+      "sha256": "166dab7dc57e9974adf0133af315e3e39cb0e714796ba2b8d4b79414b5da4ea4"
+    },
+    "nfl_lab/audit_weekly_grade_v1.py": {
+      "bytes": 93934,
+      "frozen_path": "/tmp/nfl-grade-partition-repair-20261025/frozen/c63e3a8a428cfe0eb6f7792cad79d1cec02ed9fe07f45c72378b6be7cf598c8e/nfl_lab/audit_weekly_grade_v1.py",
+      "sha256": "c63e3a8a428cfe0eb6f7792cad79d1cec02ed9fe07f45c72378b6be7cf598c8e"
+    },
+    "tests/test_audit_weekly_grade_checkpoint_v1.py": {
+      "bytes": 30693,
+      "frozen_path": "/tmp/nfl-grade-partition-repair-20261025/frozen/8e6b198444734aad56d42699a5bb6a60ede695abe70e854b9ce48996b2e5d5ab/tests/test_audit_weekly_grade_checkpoint_v1.py",
+      "sha256": "8e6b198444734aad56d42699a5bb6a60ede695abe70e854b9ce48996b2e5d5ab"
+    },
+    "tests/test_audit_weekly_grade_native_memory_v1.py": {
+      "bytes": 37395,
+      "frozen_path": "/tmp/nfl-grade-partition-repair-20261025/frozen/1c2ceb4ede4531b18601d8534a97b2801c2065d0130c5e71470db71245b6033a/tests/test_audit_weekly_grade_native_memory_v1.py",
+      "sha256": "1c2ceb4ede4531b18601d8534a97b2801c2065d0130c5e71470db71245b6033a"
+    }
+  },
+  "commits": 0,
+  "evidence": {
+    "before.log": {
+      "bytes": 508,
+      "path": "/tmp/nfl-grade-partition-repair-20261025/before.log",
+      "sha256": "e43b6619b31aeb878cf0d0a56cac040f332c15046e4ea57a393b7d6134b1c7d4"
+    },
+    "final-full-two-native.log": {
+      "bytes": 1833,
+      "path": "/tmp/nfl-grade-partition-repair-20261025/final-full-two-native.log",
+      "sha256": "da3682313c5c35f80f41022d27b261ce0cc69d202b9a838b00d2124c8c8d2acc"
+    },
+    "final-related-tests.log": {
+      "bytes": 192,
+      "path": "/tmp/nfl-grade-partition-repair-20261025/final-related-tests.log",
+      "sha256": "c8f159c45d9a314ddeab28b313b659553f488a406b4afa56ee53c22837ec30f5"
+    },
+    "remaining-tests-command.json": {
+      "bytes": 2413,
+      "path": "/tmp/nfl-grade-partition-repair-20261025/remaining-tests-command.json",
+      "sha256": "a7de47bce0190b5f9fbcaa426ec1215f5129e4b1f2989a7656a156cc4f992310"
+    },
+    "unchanged-guards-and-pins.json": {
+      "bytes": 782,
+      "path": "/tmp/nfl-grade-partition-repair-20261025/unchanged-guards-and-pins.json",
+      "sha256": "ab120f395aecddacec3cc737091c4fa200995f0b82c5ac777265c1702dcf6b73"
+    }
+  },
+  "interfaces": {
+    "grade_write": "grade.grade(..., wire_version=None) keeps v1 for <=64 MiB; explicit 1 preserves strict v1; explicit 2 uses bounded v2.",
+    "history_reader": "checkpoint.restore_parts(handoff, client, *, storage, root_binding, native_root_proof, authenticate, clock=...)",
+    "history_reader_live_auth_kind": "CHECKPOINT_RESTORE_PRIVATE_PARTS",
+    "history_reader_returns": "Private complete-part-read receipts; never DurableHistory. Original historical availability proof remains a separate caller obligation.",
+    "known_clocks": "Fresh known_by_at is minted after every part GET/hash, complete decode and final API checks; prior known_versions/known_weeks use original setdefault behavior.",
+    "logical_hash": "SHA256 of the exact original canonical logical document; fragments concatenate byte-for-byte, including UTF-8 boundaries."
+  },
+  "limits_remaining": [
+    "Only two parts are admitted. Three full captures or high-width records may exceed 128 MiB decoded, 16 MiB encoded, the actual remaining 32 MiB runtime, or 40 calls; fail closed without truncation/eviction.",
+    "The redirect regression completes exactly at 40 with one hop per relevant asset; extra hops retain partial evidence and fail rather than extending the budget.",
+    "These are genuine OS/native-envelope fictional-transport resource proofs, not genuine Actions/source/provider/public-delivery qualification.",
+    "Same-source/code-pin checks remain; old source/history is not silently migrated. New literal source qualification/bootstrap or a separately authenticated source-version adapter remains required."
+  ],
+  "native_workload": {
+    "candidate_rows_per_capture": 18000,
+    "captures": 2,
+    "disjoint_games": [
+      "fictional-sunday",
+      "fictional-monday"
+    ],
+    "grading_rows": 10000,
+    "models_or_real_outcomes": 0,
+    "opportunities_per_capture": 5000,
+    "original_R0_rows_per_capture": 5000,
+    "outcomes": "Explicitly fictional unknowns in capacity case; played zero/DNP/unknown/corrections and P2 parity covered separately.",
+    "retained_forecasts_per_capture": 23000,
+    "same_actual_process": false,
+    "selected_rows_per_capture": 5000
+  },
+  "new_NFL_fits": 0,
+  "patch": {
+    "bytes": 64556,
+    "path": "/tmp/nfl-grade-partition-repair-20261025/partition.patch",
+    "sha256": "dab4780657897368f5c60a1efcfd0e296cc6de981eb6b2c819e5f96acd1621e4"
+  },
+  "protected_real_outcome_reads": 0,
+  "real_provider_calls": 0,
+  "remote_actions": 0,
+  "required_parent_integration": [
+    {
+      "code": "CURRENT_WORKER_PREAUTH_CONSUMES_TWO_CALLS",
+      "details": "The actual worker authenticates the new checkpoint client before checkpoint.current reauthenticates it. Add these two calls to the proven 39/33: writer requires at least 41 and the one-hop reader requires 42. Reconcile duplicate authentication without removing any live Owner/run/source/job gate, resetting counters, or raising 40. No overlapping worker edit is included.",
+      "file": "nfl_lab/audit_weekly_operations_grade_v1.py",
+      "function": "_client"
+    },
+    {
+      "code": "V2_APPEND_LOCAL_ROOT_TO_NATIVE_ROOT_BINDING",
+      "details": "The current callback requires handoff.body_sha256 == context.snapshot.binding.sha256. V2 publishes a private native root containing actual part descriptors, so its hash differs from the initial local manifest. Verify the owned native root bytes against handoff.body_sha256, validate checkpoint._private_parts(handoff, root), and require root.snapshot_body_sha256 == original append_scope.body_sha256 plus the exact logical snapshot SHA. Preserve the original input binding; do not relabel it.",
+      "file": "nfl_lab/audit_weekly_operations_grade_v1.py",
+      "function": "_checkpoint_auth/CHECKPOINT_APPEND_NATIVE_HANDOFF"
+    },
+    {
+      "code": "EXPLICIT_V2_NATIVE_EVIDENCE_ADMISSION",
+      "details": "Admit the explicit v2 handoff/evidence schema and closed multipart_readback context; validate all original part receipts and completed read clocks. After the historical native root GET, call restore_parts through a live current Root/source/API authenticator before grade.restore_snapshot. Keep private part descriptors/evidence out of public sidecars; preserve old v1 validation and original old availability proofs.",
+      "file": "nfl_lab/audit_weekly_operations_grade_v1.py and nfl_lab/audit_weekly_grade_history_v1.py",
+      "function": "_checkpoint_auth, _native_evidence, restore_previous, parent sidecar validation"
+    }
+  ],
+  "status": "FROZEN_CODEC_AND_NATIVE_CAPACITY_PASS_PARENT_INTEGRATION_REQUIRED",
+  "tests": {
+    "combined_cases": 137,
+    "coverage": "All tests in the four related modules; the full two-capture node ran separately and was not repeated in the related command.",
+    "full_two_native_metrics": [
+      {
+        "CPU_seconds": 0.528988067,
+        "VmHWM": 38936576,
+        "VmPeak": 65515520,
+        "VmRSS": 37064704,
+        "VmSize": 64466944,
+        "phase": "writer",
+        "pid": 464431,
+        "stage": "TYPED_TWO_CAPTURE_METADATA_READY",
+        "wall_seconds": 0.1000873420125572
+      },
+      {
+        "CPU_seconds": 28.169958207,
+        "VmHWM": 129355776,
+        "VmPeak": 424763392,
+        "VmRSS": 129355776,
+        "VmSize": 424763392,
+        "phase": "writer",
+        "pid": 464431,
+        "stage": "TWO_FULL_CAPTURES_BOUND",
+        "wall_seconds": 27.700075002008816
+      },
+      {
+        "CPU_seconds": 47.935689857,
+        "VmHWM": 163147776,
+        "VmPeak": 475795456,
+        "VmRSS": 163147776,
+        "VmSize": 475795456,
+        "logical_bytes": 107905722,
+        "part_bytes": [
+          2520640,
+          1637769
+        ],
+        "phase": "writer",
+        "pid": 464431,
+        "stage": "TWO_FULL_CAPTURES_GRADED",
+        "wall_seconds": 47.465982463007094
+      },
+      {
+        "CPU_seconds": 51.982309872,
+        "HTTP_calls": 39,
+        "VmHWM": 163164160,
+        "VmPeak": 475795456,
+        "VmRSS": 163164160,
+        "VmSize": 475795456,
+        "logical_sha256": "8b17f922810fc229d0e848249627d73dd68aa0ad3b4f3c8c9d2fbcc7a6614199",
+        "phase": "writer",
+        "pid": 464431,
+        "runtime_bytes": 4161883,
+        "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED",
+        "wall_seconds": 51.51346040300268,
+        "writer_process": "a751d6d4cdfc8b5464573fc6088de88466ae2350a72c26da04520549b856192c"
+      },
+      {
+        "CPU_seconds": 0.526905927,
+        "VmHWM": 43089920,
+        "VmPeak": 69677056,
+        "VmRSS": 41218048,
+        "VmSize": 68628480,
+        "phase": "reader",
+        "pid": 464533,
+        "stage": "TYPED_TWO_CAPTURE_METADATA_READY",
+        "wall_seconds": 0.13521447499806527
+      },
+      {
+        "CPU_seconds": 12.334398354,
+        "HTTP_calls": 33,
+        "VmHWM": 102498304,
+        "VmPeak": 128372736,
+        "VmRSS": 84348928,
+        "VmSize": 109608960,
+        "all_GET": true,
+        "known_by_at": "2026-10-28T08:03:00+00:00",
+        "phase": "reader",
+        "pid": 464533,
+        "reader_process": "e919b5bcf314616309789c594eae44d17e519d224fe29760620ee4a8394e2228",
+        "stage": "TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED",
+        "wall_seconds": 11.942514966998715
+      }
+    ],
+    "related": "136 passed in 305.90s",
+    "separate_full_two_capture_native": "1 passed in 96.84s"
+  },
+  "untouched": [
+    "canonical producer worktree",
+    "Pascal rollover worktree",
+    "generic private store/storage",
+    "feature builder 069c",
+    "six model code",
+    "R0",
+    "Root/scheduler/workflows",
+    "canonical ledger"
+  ],
+  "wire": {
+    "CPU_seconds_cap": 120,
+    "HTTP_calls_cap": 40,
+    "Root_pin_paths": 128,
+    "actual_root_publish": "After every part append, with partial descriptors/proofs retained on failure.",
+    "address_space_bytes_cap": 536870912,
+    "global_private_bytes_cap": 536870912,
+    "logical_schema_unchanged": "audit-weekly-grade-v1-snapshot",
+    "native_reader": "Original store.restore root receipt retained unchanged. Each part manifest and payload gets actual metadata+byte GETs from one fresh inventory; all compressed/decoded/whole logical hashes checked.",
+    "new_handoff_schema": "audit-weekly-grade-checkpoint-v2-handoff",
+    "new_local_schema": "audit-weekly-grade-snapshot-v2",
+    "new_native_root_schema": "audit-weekly-grade-checkpoint-v2-root",
+    "part_locators": "Only inside private native root; handoff has the same closed key set and only the root descriptor.",
+    "parts_maximum": 2,
+    "per_part_decoded_bytes": 67108864,
+    "per_part_encoded_bytes": 8388608,
+    "private_manifest_bytes_maximum": 65536,
+    "runtime_bytes_cap": 33554432,
+    "v1_decoded_bytes": 67108864,
+    "v1_encoded_bytes": 8388608,
+    "v2_logical_bytes_maximum": 134217728,
+    "v2_part_encoded_bytes_maximum": 16777216,
+    "wall_seconds_cap": 180
+  },
+  "worktree": "/workspace/nfl-system-audit/grade-partition-repair"
+}
