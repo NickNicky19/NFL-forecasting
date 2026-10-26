@@ -39,6 +39,7 @@ import base64
 from copy import deepcopy
 import io
 from pathlib import Path
+import re
 import resource
 import struct
 import time
@@ -111,6 +112,24 @@ class BootstrapError(c.ControllerError):
 def require(value, code):
     if not value:
         raise BootstrapError(code)
+
+
+def verify_artifact_upload_clock(native_created_at, artifact_created_at, artifact_updated_at, seal_completed_at):
+    """Compare native creation at the precision GitHub actually reports.
+
+    Whole-second RFC3339 Z metadata denotes the interval [t, t + 1 second).
+    floor(native) <= t checks compatibility with that interval; it does not
+    prove point-time upload ordering within the second. Explicit fractional
+    metadata keeps its exact comparison. Native clocks are never rewritten,
+    and the remaining API timestamp chain stays strict.
+    """
+    native = c.utc(native_created_at)
+    created = c.utc(artifact_created_at)
+    if type(artifact_created_at) is str and re.fullmatch(
+            r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", artifact_created_at):
+        native = native.replace(microsecond=0)
+    require(native <= created <= c.utc(artifact_updated_at) <= c.utc(seal_completed_at),
+        "NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB")
 
 
 def closed(body, keys, schema, cap):
@@ -450,9 +469,8 @@ def load_seal(env, source_root, *, metadata_get=None, clock=c.now, read_head=c.g
             and artifact["workflow_run"].get("head_repository_id") == artifact["workflow_run"].get("repository_id")
             and type(artifact["workflow_run"].get("repository_id")) is int,
             "GENUINE_OWNER_RUN_NATIVE_ARTIFACT_DIGEST_REQUIRED")
-    require(c.utc(native["created_at_utc"]) <= c.utc(artifact["created_at"])
-            <= c.utc(artifact["updated_at"]) <= c.utc(actual["seal"]["completed_at"]),
-            "NATIVE_SEAL_UPLOAD_INSIDE_THIRD_JOB")
+    verify_artifact_upload_clock(native["created_at_utc"], artifact["created_at"],
+        artifact["updated_at"], actual["seal"]["completed_at"])
     c.stable(run, api.get(c.run_url(identifier)))
     after = api.get(c.jobs_url(identifier))
     for role in JOBS:
