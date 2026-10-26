@@ -1,0 +1,267 @@
+{
+  "available_packets": [
+    {
+      "commit": "4c07009eabcd4f853c79695db19c74a9e8d7b596",
+      "name": "retained_caller",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-assembly-484d-20261025/phase2-484d-retained-replay/patch/retained-source-context.patch",
+      "paths": [
+        "tools/selection_strategies.py"
+      ],
+      "sha256": "1cd0e8e54fcf150ea418cdb59c4a2d649a1649c3d37521d28e88ea807e8ea78e",
+      "strict_index_apply": true
+    },
+    {
+      "commit": "961930615822ac0726ff2091fa0e4433356e8163",
+      "name": "CLI",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-assembly-484d-20261025/cli-compatibility/compatibility.patch",
+      "paths": [
+        "tools/reliability.py"
+      ],
+      "sha256": "e405b27dccbd9a9f8ff4e88dee773f1450b7ce5dd58bc62784e0ea42241fddab",
+      "strict_index_apply": true
+    },
+    {
+      "commit": "6235101477c411b1e1c516184144ccf3cf29bf05",
+      "name": "cohort_contract",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-assembly-484d-20261025/cohort-model-contract/correction.patch",
+      "paths": [
+        "tests/test_operating_campaign.py",
+        "tools/operating_campaign.py"
+      ],
+      "sha256": "04504443873e4ccd739ebd842f73a9d76b72d86ab85330d88f09e801efb1a32e",
+      "strict_index_apply": true
+    },
+    {
+      "commit": "acfef26c0eb2aa9114724055b75b306847ab3183",
+      "name": "COUNT_prerequisite",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/count-consumer-binding-20261025/phase2-484d/binding.patch.gz",
+      "paths": [
+        ".github/workflows/hourly.yml",
+        "config/phase2.json",
+        "config/weekly-derived-selected-policy-v3.json",
+        "config/weekly-derived-selected-policy-v4.json",
+        "tests/test_classic_build_pair_v1.py",
+        "tests/test_weekly_public_feed_phase2_v4.py",
+        "tests/test_weekly_public_feed_v4.py",
+        "tools/phase2_capture.py",
+        "tools/weekly_public_feed.py",
+        "tools/weekly_public_feed_v4.py"
+      ],
+      "sha256": "95b801aff46c0c1c18057ecd69e2729f564dba7c98c29add0ee595cbc5bf9432",
+      "strict_index_apply": true
+    },
+    {
+      "commit": "5804bb394181fc59307dba546f310c248649e6a2",
+      "name": "expired_offers",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-expired-offer-followup-20261026/followup.patch.gz",
+      "paths": [
+        ".github/workflows/hourly.yml",
+        "config/phase2.json",
+        "config/weekly-derived-selected-policy-v4.json",
+        "tests/test_weekly_public_feed_v4.py",
+        "tools/weekly_public_feed_v4.py"
+      ],
+      "sha256": "34604eedba7aa6b040b929425985925f34a706ba70487fa8f1a7bb76c9e2860a",
+      "strict_index_apply": true
+    },
+    {
+      "commit": null,
+      "name": "strict_prop_grading_presentation",
+      "patch": "/workspace/nfl-system-audit/count-binding-packet/reports/player-prop-finality-20261025/phase2-484d/player-prop-phase2-484d.patch.gz",
+      "paths": [
+        "output/app.js",
+        "output/index.html",
+        "tests/test-ui.cjs"
+      ],
+      "sha256": "a533ac8872b008389bcbfffbd4dee2cc8262cde59346b1b6ac36065e0c6d6ce9",
+      "strict_index_apply": true
+    }
+  ],
+  "base_source": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+  "base_tree": "c204f48961749715301a5133b2518ee8e8c829fb",
+  "base_worktree": "/workspace/nfl-system-audit/website-combined-484d",
+  "concrete_remaining_bindings": [
+    {
+      "action": "Register the combined current helper/UI hashes under the existing Phase2 profile, preserving historical registrations and scientific/static fields.",
+      "path": "config/weekly-derived-selected-policy-v3.json"
+    },
+    {
+      "action": "Register the exact final 32-path current inventory and actual effective clock, preserving the approved COUNT procedure/rights/R0/ancestor bindings.",
+      "path": "config/weekly-derived-selected-policy-v4.json"
+    },
+    {
+      "action": "Bind weekly_publication.sha256 to the physical final V4 policy bytes after inventory registration.",
+      "path": "config/phase2.json"
+    },
+    {
+      "action": "Bind --feed-policy-sha256 to those same physical final V4 bytes; preserve Phase2 conditionals/driver/lease/source/publication protections. Do not copy Main workflow/state.",
+      "path": ".github/workflows/hourly.yml"
+    }
+  ],
+  "current_physical_references": {
+    "config_reference_matches": true,
+    "policy_sha256": "e5f95ceea962d72de62b2e0ee9ff9157cf6c3caa77563f972304b0b03e3299aa",
+    "workflow_reference_matches": true
+  },
+  "exact_current_inventory_mismatches": {
+    "config/weekly-derived-selected-policy-v3.json": [
+      {
+        "actual": "ad88dd4b78314d041485275acc9f0e69ac09fb0a27fb7e9aa3c1e635df02e14c",
+        "path": "output/app.js",
+        "registered": "1fe57a6451925ced2f4afebc3eeae68022152d7bbf2f7c216394136526c1edb9"
+      },
+      {
+        "actual": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+        "path": "output/index.html",
+        "registered": "480b7678e0a842960fd74ce7fbf65b230fe027e71bd9da8c29a5cb3d7fb0b3d1"
+      },
+      {
+        "actual": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+        "path": "tools/reliability.py",
+        "registered": "3d53c3f74563ec4959b9bf4aa4b25b664cedcec0ea827efa92bb0a55109b735e"
+      },
+      {
+        "actual": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+        "path": "tools/selection_strategies.py",
+        "registered": "f47a811dbcc1419167d1a826d16d062f907941a5b0177b25ffe2f8bb6af26162"
+      }
+    ],
+    "config/weekly-derived-selected-policy-v4.json": [
+      {
+        "actual": "ad88dd4b78314d041485275acc9f0e69ac09fb0a27fb7e9aa3c1e635df02e14c",
+        "path": "output/app.js",
+        "registered": "1fe57a6451925ced2f4afebc3eeae68022152d7bbf2f7c216394136526c1edb9"
+      },
+      {
+        "actual": "646728326f8c5cb8c0c11cbaefd7712e84407a2f74fd744d73ec06d3cb87b52b",
+        "path": "output/index.html",
+        "registered": "480b7678e0a842960fd74ce7fbf65b230fe027e71bd9da8c29a5cb3d7fb0b3d1"
+      },
+      {
+        "actual": "edb8d1f737f8c25087c071bc558f0a5e44cc66941b31e96c87b7419b8a251d61",
+        "path": "tools/reliability.py",
+        "registered": "3d53c3f74563ec4959b9bf4aa4b25b664cedcec0ea827efa92bb0a55109b735e"
+      },
+      {
+        "actual": "7156c3f7d73e7ee8c106f3b5edde57338620f3969d297dcd3e1f7c229b1e66f9",
+        "path": "tools/selection_strategies.py",
+        "registered": "f47a811dbcc1419167d1a826d16d062f907941a5b0177b25ffe2f8bb6af26162"
+      }
+    ]
+  },
+  "existing_full_CI_evidence": {
+    "conclusion": "FAILURE",
+    "errors": 18,
+    "evidence": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-assembly-484d-20261025/website-484d-source-ci-failure.json",
+    "failures": 12,
+    "fresh_combined_full_CI_for_six_patch_source": false,
+    "job_id": 121234602816,
+    "run_id": 40215159984,
+    "source": "484dbeff5c3fb34673380bf52b0f30ee0354a521",
+    "tests": 1337
+  },
+  "finite_owner_actions": [
+    "Choose the exact 484d successor scope with the existing owner; keep its lease, original backups and immutable receipts.",
+    "Replay the six pinned packets into an isolated scratch source, not an existing writer or dirty parent checkout.",
+    "Finish coherent source/profile fixture after-bodies and rebind the four listed policy/config/workflow files to final actual bytes.",
+    "Obtain actual full combined Phase2 CI, then normal owner integration/release and operational acceptance."
+  ],
+  "grading_variant_scope": {
+    "kind": "Prepared strict prop/grading presentation Phase2 variant; no pull/grade.py backend edit in this packet",
+    "located_packet": "/workspace/nfl-system-audit/count-binding-packet/reports/player-prop-finality-20261025/phase2-484d/MANIFEST.json",
+    "paths": [
+      "output/app.js",
+      "output/index.html",
+      "tests/test-ui.cjs"
+    ],
+    "separate_backend_grading_variant_not_identified_in_named_handoffs": true
+  },
+  "local_composition": {
+    "all_eight_engine_files_unchanged": true,
+    "all_six_strict_cached_checks_pass": true,
+    "can_assemble_locally_without_touching_writer_or_dirty_sources": true,
+    "changed_source_path_count": 17,
+    "changed_source_paths": [
+      ".github/workflows/hourly.yml",
+      "config/phase2.json",
+      "config/weekly-derived-selected-policy-v3.json",
+      "config/weekly-derived-selected-policy-v4.json",
+      "output/app.js",
+      "output/index.html",
+      "tests/test-ui.cjs",
+      "tests/test_classic_build_pair_v1.py",
+      "tests/test_operating_campaign.py",
+      "tests/test_weekly_public_feed_phase2_v4.py",
+      "tests/test_weekly_public_feed_v4.py",
+      "tools/operating_campaign.py",
+      "tools/phase2_capture.py",
+      "tools/reliability.py",
+      "tools/selection_strategies.py",
+      "tools/weekly_public_feed.py",
+      "tools/weekly_public_feed_v4.py"
+    ],
+    "dry_run_evidence": "/tmp/nfl-phase2-assembly-inventory-dryrun-20261026.json",
+    "dry_run_sha256": "45f950aab2273522c3d62c192654e7f99833c8325a50b39a56cf8eb64ebfe447",
+    "prospective_unbound_tree": "dd81798d4806c2aa69993a760b014642148fe000",
+    "source_checkout_created": false,
+    "temporary_index_only_fixture": "/tmp/nfl-phase2-assembly-inventory-20261026-8khjk1ti"
+  },
+  "new_fits": 0,
+  "private_or_protected_outcome_reads": 0,
+  "provider_requests": 0,
+  "readiness_boundaries": {
+    "Main_Source36_CI_queried": false,
+    "Main_readiness_prerequisite": false,
+    "Phase2_ready": false,
+    "hidden_missing_historical_source_blob_demonstrated": false,
+    "no_new_scientific_model_or_fit_required_by_this_six_patch_composition": true,
+    "no_release_or_deployment_claim": true
+  },
+  "remaining_fixture_prerequisites": {
+    "actual_acceptance_required": "After final binding and scoped fixture corrections, run the exact combined full Phase2 Python/syntax/UI/About/Node CI. Focused results are not that evidence.",
+    "confirmed_COUNT_expired_preview_failures": {
+      "action": "Use coherent frozen Classic1 fixtures for original controls and parse actual YAML block-script ordering; current Phase2 source must keep its own profile.",
+      "cases": [
+        "test_actual_default_original_then_current_with_qualified_history_extension",
+        "test_current_board_cannot_bootstrap_an_original_shadow",
+        "test_workflow_installs_pair_before_current_policy_and_publishes_both_lanes"
+      ],
+      "failed": 3,
+      "log": "/workspace/nfl-system-audit/count-binding-packet/reports/phase2-expired-offer-followup-20261026/phase2-expired-config-bindings.log",
+      "passed": 6,
+      "path": "tests/test_classic_build_pair_v1.py"
+    },
+    "known_baseline_fixture_work_not_certified_resolved": {
+      "complete_reviewed_after_bodies_not_present_in_the_six_packets": true,
+      "new_failure_counts_not_inferred": true,
+      "paths": [
+        "tests/test_classic_build_pair_v1.py",
+        "tests/test_classic_transition_v1.py",
+        "tests/test_data_integrity_v2.py",
+        "tests/test_phase2_e2e.py",
+        "tests/test_operating_campaign.py",
+        "tests/test_fgm_cache_contract.py",
+        "tests/test_grading_identity_v3.py",
+        "tests/test_weekly_phase2_integration.py"
+      ],
+      "scope": "Current Classic-presence vs frozen Classic1/modern source-profile fixtures; record_build(run=...) double; cache/grading-version expectations; actual Phase2 current inventory/static contract. Existing caller/CLI/cohort fixes address their named failures, not all these classes."
+    }
+  },
+  "remote_calls": 0,
+  "reviewed_at_utc": "2026-10-26T06:20:19.989791+00:00",
+  "reviewed_base_source_paths_clean": true,
+  "schema_version": "phase2-remaining-assembly-inventory-v1",
+  "source_mutations": 0,
+  "stale_handoffs": {
+    "do_not_import_candidate_combined_model_or_unresolved_workflows": true,
+    "old_131160f_missing_output_setup_error_not_an_unresolved_missing_prerequisite_for_484d": true,
+    "phase2_ci_continuation": "/workspace/nfl-system-audit/phase2-ci-continuation",
+    "phase2_main_reconcile": "/workspace/nfl-system-audit/phase2-main-reconcile",
+    "reconcile_A_source": "a247b378bd05bbb4cd93cb20c88c1498fecef523",
+    "reconcile_candidate_not_current_484d": true,
+    "retained_inventory_fix_already_in_484d_commit": "67c1c4a202d22b316e719446010ba1b39e66f9e4"
+  },
+  "status": "LOCAL_PATCH_COMPOSITION_AVAILABLE_FINAL_BINDINGS_AND_COMBINED_CI_MISSING",
+  "tests_run": 0,
+  "writer_or_lease_operations": 0
+}
