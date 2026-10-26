@@ -1,0 +1,36 @@
+{
+  "id": "SYS-007-CONTINUATION-02",
+  "parent_finding": "SYS-007",
+  "severity": "high",
+  "status": "IMPLEMENTED_IN_PR36_NOT_YET_INTEGRATED_OR_NATIVE_VERIFIED",
+  "affected_source": "41697b2f31c87a95b7d24e91665fdda3e5cab278",
+  "affected_function": "nfl_lab/audit_weekly_epoch_v1.py:restore_epoch; CorrectionEpoch.verify",
+  "runtime": "recurring_prepare -> operations-worker -> resume._restore_anchor; also grading/delivery typed metadata readers",
+  "expected": "Restore exact authenticated COUNT7 archived metadata while independently checking current execution authority and source",
+  "actual": "Reconstructed metadata substitutes current origin source hash, failing EXACT_ORIGINAL_CORRECTION_METADATA_REQUIRED before forecasting",
+  "reproduced_native_run": 40276030466,
+  "original_failed_attempt_preserved": true,
+  "independent_before_reference": {
+    "epoch": "860ecb71e49a69840416e22f5a3b96fb23dcebf153bfb715a33a25c4ab6e8169",
+    "registration": "3aa19889adaab16df5f1f1ed83de9889fc35ba133f437365e5bb1d00b60d6cdf",
+    "choice": "4e0980dd33381b19dd2d22d1eb3033e245949706baf92902cd891a3060baf4c4",
+    "scope": "fictional fixture under independently Git-derived original full4pinset, saved before edit"
+  },
+  "impact": "Blocks new recurring capture across all11supported categories; no partial feed published; older qualified COUNT7 forecasts retained",
+  "repair": "Closed literal known c748 four-pin metadata compatibility, full independent metadata rebuild and exact comparison, original bytes/hashes unchanged, current in-memory source binding and existing Root/model/actor/native proof guards kept",
+  "repair_commit": "1d3cfb2c93d5f5e0dd2afc5c6755f222308e4965",
+  "combined_head": "43c74df7c182959ec4a095c665b621380d3d1d24",
+  "combined_local_checks": {
+    "passed": 180,
+    "subtests": 77,
+    "seconds": 33.59,
+    "numerical_profile": "declared"
+  },
+  "ci_run": 40277891751,
+  "ci_state": "IN_PROGRESS",
+  "new_fits": 0,
+  "old_forecast_or_scientific_registration_changes": 0,
+  "remaining": "Independent review; actual combined hosted CI; normal integration; fresh actual native registration and separate genuine Ops/restoration/export/consumer checks",
+  "observed_at_utc": "2026-10-26T06:13:11.591811+00:00",
+  "independent_review": "PASS; exactcurrent/legacy Git hashes, preserved commitments, strict current authority/models,4epochtests+20subtests and3profiledresume tests"
+}
