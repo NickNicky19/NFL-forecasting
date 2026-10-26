@@ -1,3 +1,17 @@
+Update — 2026-10-26 15:02 UTC (PARTIAL)
+
+Genuine OwnerOps19 (`40338427888`, producer `47b24db6d89a73ae77fb04f5200e730a937a2aec`) finished with a failure during the normal forecast archive append. Before that failure, the actual hosted run restored/replayed all 18 retained model pairs, acquired fresh permitted inputs, completed future-query inference and completed the original R0 capture. The audit ran no new NFL fits. These are actual production-path results, not disposable-copy tests.
+
+The archive child returned `HTTP_OR_RATE_AMBIGUITY` at 14:28:36 UTC. Its original admission was below the unchanged limits: 9,564,807 admitted bytes under 33,554,432, with 7 existing and 18 reserved asset slots. The first 657,667-byte upload intent is retained; a subsequent inventory found no exact uploaded match. Its pending reservation must remain charged before a fresh attempt. Root19 is not retried, relabelled or backdated. The fixed error does not retain the HTTP status, so a specific vendor failure or rate limit is not established.
+
+The genuine failure path appended the original failed attempt, and fresh reader job `121633621275` successfully restored its opaque forecast/control evidence by 14:34:02 UTC. Its receipt is `639271621be697af585d4bb78059647a8b16cc38818b5e31f7cf32f70dc4b995`. Export was skipped; no partial forecast became successful public output. A separate owner GET diagnosis authenticated the original opaque index and extracted only five archive control files, without interpreting forecast/outcome rows. [Actual run, phases, jobs, admission and recovery receipt](evidence/ops19-native-failure-restoration.json).
+
+Main remains `77d8f1f` and producer `47b24db6`; their exact-source CI and genuine Rotation5/Registration18 successes remain valid within their stated scope. The archive reservation carry-forward is under review before another execution. A successful complete operations/restore/grade/export sequence and matching website consumption are still unverified. Website packages Main `74dc257` and Phase2 `9c16805` remain alternatives for the existing production writer; neither is claimed deployed. Automatic activation remains unverified after the existing integration returned 403. Horizon gaps, source-timing limits, finite capacity and unreproduced private accuracy claims remain explicit. Software checks establish no forecast-accuracy gain.
+
+The 14 main SYS findings include related operational continuation defects. Their current states are in [SYS-STATUS.json](SYS-STATUS.json). Earlier dated checkpoints below remain unchanged historical evidence.
+
+---
+
 Update — 2026-10-26 14:27 UTC (PARTIAL)
 
 The rotation corrections are merged atProducer `47b24db6d89a73ae77fb04f5200e730a937a2aec`, with2207passes/oneoptional skip and all2208nodes completed. Main remains77d8f1f. GenuineRotation5 (`40334867331`) passed all three jobs; its complete package is retained outside the runner, the literalRoot is masked in every log, and handoffs survived transport. Oldstores are preserved; reservedglobalcapacity is192MiB/512MiB. This canary result does not qualify forecast durability.
