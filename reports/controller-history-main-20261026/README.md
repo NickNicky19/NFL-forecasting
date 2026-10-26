@@ -1,0 +1,7 @@
+# Guarded Main history controller compatibility
+
+Main44784bb receives the five-file role-correct counterpart of the isolated producer history/discovery repair: controller bootstrap, metadata history, Parent wrapper, static template and Parent tests. All20 shared executable files match the combined producer exactly. Main workflow, scientific state, cadence, resource limits and current public-canary path admission remain unchanged.
+
+The updated metadata Parent recognizes explicit grading-only history locators, separately authenticates original forecast and later grading cohorts, and plans next-week choices from prior resolved evidence under the original deadline. Its API remains metadata-only; no models, snapshots or outcome rows are decoded. Same-source historical reader boundaries remain strict.
+
+Full actual Main checkout checks:680 passed,1 optional real-cache skip,33 subtests,65.65seconds. Source-specific metadata checks were also provided by the isolated author. Required hosted Main CI and exact-head review/merge remain necessary. Existing original readiness guard and AUDIT_WEEKLY_PARENT_ENABLED gate stay intact; this does not activate capture, publish a fixed bootstrap, issue forecasts, run fits or complete producer native readiness. The full mixed two-capture writer CPU repair remains separate and unqualified. Original forecasts, failures, scientific registrations and ledger are untouched.
