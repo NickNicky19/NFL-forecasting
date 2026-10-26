@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 import csv
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import io
 from pathlib import Path
 import re
@@ -25,8 +25,13 @@ VERSION = "audit-weekly-operations-v1"
 CONTEXT_SCHEMA = "audit-weekly-recurring-v1-context"
 CONTEXT_KEYS = {"schema_version", "controller_context", "previous_capture"}
 CONTEXT_V2 = "audit-weekly-recurring-v2-context"
+CONTEXT_V3 = "audit-weekly-recurring-v3-context"
+CONTEXT_V4 = "audit-weekly-recurring-v4-context"
 FILES = ("nfl_lab/audit_weekly_operations_v1.py", "tests/test_audit_weekly_operations_v1.py")
 STREAM = "weekly-corrected-primary-player-game-v1"
+PLAN_KEYS = {"schema_version", "kind", "reason", "epoch_sha256", "canonical_choice_sha256",
+    "target_choice_sha256", "season", "week", "planned_at", "history_sha256", "future_game_ids",
+    "capture_allowed", "publication_allowed", "current_values_used", "fits"}
 
 
 class OperationsError(ValueError):
@@ -39,20 +44,35 @@ def require(value, code):
 
 
 def context(value):
-    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2}
+    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}
         and set(value)==(CONTEXT_KEYS if value["schema_version"]==CONTEXT_SCHEMA
-            else CONTEXT_KEYS|{"previous_checkpoint"}), "CLOSED_RECURRING_CONTEXT_REQUIRED")
+            else CONTEXT_KEYS|{"previous_checkpoint"}|({"plan"} if value["schema_version"] in {CONTEXT_V3,CONTEXT_V4} else set())),
+        "CLOSED_RECURRING_CONTEXT_REQUIRED")
     previous = value["previous_capture"]
     require(type(previous) is dict and set(previous) == {"feed_sha256", "receipt_sha256"}
         and all(type(v) is str and store.HASH.fullmatch(v) for v in previous.values()),
         "EXACT_PRIOR_SUCCESSFUL_CAPTURE_LOCATOR_REQUIRED")
     require(value["controller_context"] is None or type(value["controller_context"]) is dict,
         "EXPLICIT_OWNER_OR_SEALED_CONTROLLER_CONTEXT")
-    if value["schema_version"]==CONTEXT_V2:
+    if value["schema_version"] in {CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}:
         checkpoint=value["previous_checkpoint"]
-        require(checkpoint is None or type(checkpoint) is dict and set(checkpoint)=={"sha256"}
+        modern=value["schema_version"]==CONTEXT_V4 and type(checkpoint) is dict and checkpoint.get("schema_version") is not None
+        if modern:
+            from .audit_weekly_grade_history_v1 import locator_reference
+            locator_reference(checkpoint)
+        require(modern or checkpoint is None or type(checkpoint) is dict and set(checkpoint)=={"sha256"}
             and type(checkpoint["sha256"]) is str and store.HASH.fullmatch(checkpoint["sha256"]),
             "EXACT_REGISTERED_PREVIOUS_GRADING_SIDECAR_HASH")
+    if value["schema_version"]==CONTEXT_V4:
+        from .audit_weekly_grade_history_v1 import validate_root_plan
+        validate_root_plan(value["plan"])
+    if value["schema_version"] == CONTEXT_V3:
+        plan = value["plan"]
+        require(type(plan) is dict and set(plan) == {"kind", "season", "week"}
+            and plan["kind"] in {"GRADE_ONLY", "FUTURE_CAPABLE"}
+            and type(plan["season"]) is int and 2019 <= plan["season"] <= 2100
+            and type(plan["week"]) is int and 1 <= plan["week"] <= 18,
+            "CLOSED_ROOT_RECURRING_PLAN_REQUIRED")
     return deepcopy(value)
 
 
@@ -159,3 +179,89 @@ def primary_population(registered, choice, roles, *, capture_id, authenticate,
         state="FIRST_PREVALUE_PRIMARY_CAPTURE" if new else "REFRESH_NOT_ANOTHER_PRIMARY_OBSERVATION",
         primary_game_ids=sorted(new), preserved_assignment_game_ids=sorted(set(document["assignments"])-set(new)),
         population_sha256=population.sha256, current_values_used=False, fits=0)
+
+
+def recurring_plan(registered, original, full_schedule, *, authenticate, durable=None,
+        cutoff_lead_seconds, relocated_replays=(), clock=state.now_utc):
+    """Choose a closed execution path from authenticated calendar metadata.
+
+    A grade-only plan carries the original choice unchanged and creates no
+    issuance population. A later-week choice requires actual durable resolved
+    history; an absent history never falls back to the legacy research anchor.
+    The caller separately authenticates/restores original capture bytes.
+    """
+    at = state.utc(clock())
+    require(type(registered) is epoch.RegisteredEpoch and type(original) is epoch.EpochChoice,
+        "TYPED_RECURRING_EPOCH_AND_CANONICAL_CHOICE_REQUIRED")
+    original.verify(registered, at)
+    resume._calendar_fields(full_schedule)
+    weeks = {(r["season"], r["week"]) for r in full_schedule}
+    require(len(weeks) == 1 and type(cutoff_lead_seconds) is int and 0 < cutoff_lead_seconds <= 86400,
+        "EXACT_ONE_REG_WEEK_AND_REGISTERED_CUTOFF_LEAD")
+    season, week = next(iter(weeks)); old = original.document["slate"]
+    require(season == old["season"] and old["week"] <= week <= 18, "CURRENT_OR_LATER_SAME_SEASON_REG_WEEK")
+    grade._authenticate(authenticate, "RECURRING_EXECUTION_PLAN_BEFORE_VALUES",
+        dict(original_choice_sha256=original.sha256, full_schedule=full_schedule,
+            cutoff_lead_seconds=cutoff_lead_seconds), at)
+    choice = original; history_sha = None
+    if week == old["week"]:
+        identity = state.digest(sorted((r["game_id"], state.utc(r["kickoff_utc"]).isoformat()) for r in full_schedule))
+        require(identity == old["schedule_identity_sha256"] and len(full_schedule) == old["scheduled_games"],
+            "CHANGED_OR_INCOMPLETE_FULL_CALENDAR_REJECTED")
+        future = {r["game_id"]: r for r in full_schedule if state.utc(r["kickoff_utc"]) > at}
+        require(set(future) <= set(old["game_cutoffs"]), "ALL_FUTURE_GAMES_MUST_HAVE_ORIGINAL_CUTOFFS")
+        available = bool(future) and all(at < state.utc(old["game_cutoffs"][g]) < state.utc(r["kickoff_utc"])
+            for g, r in future.items())
+        reason = "ORIGINAL_SAME_WEEK_CAPTURE_WINDOW" if available else "FROZEN_CAPTURE_WINDOW_ELAPSED_GRADE_ORIGINALS_ONLY"
+        if available:
+            resume._calendar(full_schedule, original, at)  # Unchanged future-only validation.
+    else:
+        require(type(durable) is grade.DurableHistory, "DURABLE_CAUSAL_HISTORY_REQUIRED_NO_FALLBACK")
+        durable.verify()
+        require(state.utc(durable.document["actual_completed_at"]) < at
+            and all(state.utc(t["known_by_at"]) < at for k in ("known_versions", "known_weeks") for t in durable.document[k].values()),
+            "HISTORY_MUST_BE_DURABLE_BEFORE_ACTUAL_DECISION")
+        require(durable.document["epoch_sha256"] == registered.epoch.sha256
+            and any(w["season"] == season and registered.epoch.origin["slate"]["week"] <= w["week"] < week
+                for w in durable.document["weeks"]),
+            "COMPLETE_PRIOR_CURRENT_EPOCH_WEEK_REQUIRED")
+        from . import weekly_generic_producer as generic
+        cutoffs = {r["game_id"]:(state.utc(r["kickoff_utc"])-timedelta(seconds=cutoff_lead_seconds)).isoformat()
+            for r in full_schedule}
+        slate = generic.prepare_slate(full_schedule, season=season, week=week, game_cutoffs=cutoffs, now=at)
+        require(at < state.utc(slate["weekly_deadline_utc"]) and slate["elapsed_games"] == 0,
+            "NEW_WEEK_DECISION_DEADLINE_ALREADY_ELAPSED")
+        choice = grade.select_next(registered, durable, slate, original, full_schedule=full_schedule,
+            authenticate=authenticate, relocated_replays=relocated_replays, clock=lambda:at)
+        history_sha = durable.sha256; available = True; future = cutoffs
+        reason = "NEW_WEEK_P2_FROM_PRIOR_DURABLE_RESOLVED_HISTORY"
+    plan = dict(schema_version=VERSION+"-execution-plan", kind="FUTURE_CAPTURE" if available else "GRADE_ONLY",
+        reason=reason, epoch_sha256=registered.epoch.sha256, canonical_choice_sha256=original.sha256,
+        target_choice_sha256=choice.sha256, season=season, week=week, planned_at=at.isoformat(),
+        history_sha256=history_sha, future_game_ids=sorted(future) if available else [],
+        capture_allowed=bool(available), publication_allowed=bool(available), current_values_used=False, fits=0)
+    require(set(plan) == PLAN_KEYS, "CLOSED_RECURRING_EXECUTION_PLAN")
+    return choice, plan
+
+
+def planning_seed(registered, choice, full_schedule, raw_calendar, receipt, *, cutoff_lead_seconds):
+    """Project calendar-only data before values; reader later adds causal weeks."""
+    from . import audit_weekly_grade_history_v1 as history
+    slate=choice.document["slate"]
+    current=dict(season=slate["season"],week=slate["week"],schedule=deepcopy(full_schedule),
+        game_cutoffs=deepcopy(slate["game_cutoffs"]),canonical_choice_sha256=choice.sha256)
+    later=None
+    if slate["week"]<18:
+        # Test presence using metadata columns only. Malformed present rows go
+        # through the same strict complete-calendar parser, never get ignored.
+        present=any(int(r["season"])==slate["season"] and int(r["week"])==slate["week"]+1 and r["game_type"]=="REG"
+            for r in csv.DictReader(io.StringIO(raw_calendar.decode("utf-8-sig"))))
+        if present:
+            rows=calendar(raw_calendar,season=slate["season"],week=slate["week"]+1)
+            projected=[{k:r[k] for k in ("season","week","game_type","game_id","kickoff_utc")} for r in rows]
+            later=dict(season=slate["season"],week=slate["week"]+1,schedule=projected,
+                game_cutoffs={r["game_id"]:(state.utc(r["kickoff_utc"])-timedelta(seconds=cutoff_lead_seconds)).isoformat() for r in rows})
+    value=dict(schema_version=history.LOCATOR_VERSION+"-planning",epoch_sha256=registered.epoch.sha256,
+        current=current,next=later,resolved_weeks=[],known_by_at=receipt["retrieved_utc"],
+        calendar={k:receipt[k] for k in ("url","sha256","bytes","retrieved_utc")})
+    return history.validate_planning(value)

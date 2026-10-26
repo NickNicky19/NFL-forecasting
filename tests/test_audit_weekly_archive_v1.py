@@ -373,3 +373,19 @@ print('FICTIONAL_NATIVE_ARCHIVE_CONTEXT_AND_CODEC_PASSED')
     result=subprocess.run([sys.executable,'-B','-c',code,manifest['path']],cwd=ROOT,env={**os.environ,**numerical},capture_output=True,text=True,timeout=40)
     assert result.returncode==0,result.stderr
     assert result.stdout.strip()=='FICTIONAL_NATIVE_ARCHIVE_CONTEXT_AND_CODEC_PASSED'
+
+
+@pytest.mark.parametrize('planning',[False,True])
+def test_literal_original_five_operational_roles_pass_context_admission(tmp_path,monkeypatch,planning):
+    original={'ops_population','ops_roles','ops_schedule','canonical_weekly_choice','capture_scope'}
+    assert a.OPERATIONS_CONTEXT==original
+    roles=a.CONTEXT|original|({'ops_planning'} if planning else set())
+    context={role:dict(path=str(tmp_path/(role+'.json')),bytes=1,sha256='a'*64) for role in roles}
+    class ReachedFilesystem(Exception):pass
+    monkeypatch.setattr(a,'fresh',lambda *_a,**_k:(_ for _ in ()).throw(ReachedFilesystem()))
+    with pytest.raises(ReachedFilesystem):
+        a.collect(tmp_path,context,storage=object(),output=tmp_path/'not-created')
+    assert not (tmp_path/'not-created').exists()
+    del context['ops_schedule']
+    with pytest.raises(s.StoreError,match='COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED'):
+        a.collect(tmp_path,context,storage=object(),output=tmp_path/'still-not-created')

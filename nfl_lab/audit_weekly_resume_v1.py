@@ -242,7 +242,7 @@ class Resumed:
         raise ResumeError("RESUME_JSON_IS_NOT_LIVE_AUTHORITY")
 
 
-def resume(retained_result, retained_ref, full_schedule, *, storage, output,
+def _restore_anchor(retained_result, retained_ref, full_schedule, *, storage, output,
         original_weekly_choice_sha256, authenticate, authenticate_calendar, clock=now):
     """Return sealed typed metadata for unchanged Runtime; acquisition is later.
 
@@ -310,6 +310,28 @@ def resume(retained_result, retained_ref, full_schedule, *, storage, output,
     require(expected_prior == prior_doc and set(prior_doc["slate"]["game_cutoffs"]) <= set(original_doc["slate"]["game_cutoffs"])
         and all(v == original_doc["slate"]["game_cutoffs"][g] for g, v in prior_doc["slate"]["game_cutoffs"].items()),
         "PRIOR_CAPTURE_CANNOT_REWRITE_FROZEN_WEEKLY_METADATA")
+    return dict(corrected=corrected, registered=registered, original=original, original_doc=original_doc,
+        prior=prior, canonical_raw=canonical_raw,
+        replay=replay, context=context, reader=reader, authority=authority, history_binding=history_binding,
+        at=at)
+
+
+def resume(retained_result, retained_ref, full_schedule, *, storage, output,
+        original_weekly_choice_sha256, authenticate, authenticate_calendar, clock=now):
+    """Future capture only; the original complete-calendar guards stay strict."""
+    anchor = _restore_anchor(retained_result, retained_ref, full_schedule, storage=storage, output=output,
+        original_weekly_choice_sha256=original_weekly_choice_sha256, authenticate=authenticate,
+        authenticate_calendar=authenticate_calendar, clock=clock)
+    return _resume_anchor(anchor, retained_result, retained_ref, full_schedule, storage=storage,
+        output=output, authenticate_calendar=authenticate_calendar, clock=clock)
+
+
+def _resume_anchor(anchor, retained_result, retained_ref, full_schedule, *, storage, output,
+        authenticate_calendar, clock=now):
+    corrected, registered, original, original_doc, replay, context, reader, authority, history_binding, at = (
+        anchor[k] for k in ("corrected", "registered", "original", "original_doc", "replay", "context",
+            "reader", "authority", "history_binding", "at"))
+    prior, canonical_raw = anchor["prior"], anchor["canonical_raw"]
     calendar_request = _auth(authenticate_calendar, "CURRENT_COMPLETE_SAME_WEEK_CALENDAR", dict(
         full_schedule=full_schedule, original_weekly_choice_sha256=original.sha256, epoch_sha256=corrected.sha256,
         current_root_go_sha256=retained_result["current_root_go_sha256"]), at)
@@ -352,3 +374,42 @@ def resume(retained_result, retained_ref, full_schedule, *, storage, output,
     binding = archive.write(storage, output / "RESUMED.json", document)
     reader.guard()
     return Resumed(registered, original, choice, replay, inputs, document, binding, _LIVE)
+
+
+def prepare_next(anchor, choice, full_schedule, retained_ref, *, storage, output, clock=now):
+    """Persist a choice already selected from a live durable current history.
+
+    This is a metadata writer, never a history authenticator. Its caller must
+    obtain ``choice`` from grade.select_next in the current guarded process.
+    The original same-week resume entry point still uses _calendar unchanged.
+    """
+    registered, old, replay, at = (anchor[k] for k in ("registered", "original", "replay", "at"))
+    require(type(choice) is epoch.EpochChoice and choice.document["mode"] == "ROUTINE_P2_CURRENT_EPOCH"
+        and choice.document["slate"]["week"] > old.document["slate"]["week"], "LIVE_LATER_WEEK_CHOICE_REQUIRED")
+    choice.verify(registered, at)
+    identity, cutoffs, elapsed = _calendar(full_schedule, choice, at)
+    require(not elapsed and utc(choice.document["choice"]["actual_frozen_at"]) == at,
+        "ACTUAL_FULL_NEW_WEEK_DECISION_BEFORE_VALUES")
+    versions = epoch.selected_versions(registered, choice, relocated_replays=(replay,), now=at)
+    scope = dict(schema_version=VERSION+"-capture-scope", original_weekly_choice_sha256=choice.sha256,
+        prior_capture_choice_sha256=old.sha256, scoped_choice_sha256=choice.sha256,
+        weekly_payload_sha256=digest(choice.document["choice"]), epoch_sha256=registered.epoch.sha256,
+        actual_scoped_at=at.isoformat(), active_game_ids=sorted(cutoffs), elapsed_game_ids=[],
+        schedule_identity_sha256=identity, no_reselection=True, no_cutoff_extension=True, current_values_used=False, fits=0)
+    output = archive.fresh(storage, output)
+    canonical_ref = archive.write(storage, output/"CANONICAL_WEEKLY_CHOICE.json", choice.document)
+    scope_ref = archive.write(storage, output/"CAPTURE_SCOPE.json", scope)
+    version_ref = archive.write(storage, output/"SELECTED_VERSION_CATALOG.json", versions)
+    inputs = {k:anchor["context"][k] for k in ("epoch", "epoch_registration", "original_choice", "original_slate", "original_catalog", "original_policy")}
+    inputs.update(original_completion=anchor["context"]["origin_witness"], choice=canonical_ref, retained_restore=deepcopy(retained_ref))
+    completed = utc(clock())
+    require(at <= completed < min(map(utc, cutoffs.values())), "CUTOFF_EXPIRED_BEFORE_RESUME_COMPLETION")
+    document = dict(schema_version=VERSION+"-result", state="NEXT_WEEK_CAPTURE_METADATA_READY",
+        actual_completed_at=completed.isoformat(), capture_scope=scope, capture_scope_binding=scope_ref,
+        canonical_weekly_choice=canonical_ref, inputs=inputs, history_binding=anchor["history_binding"],
+        metadata_bytes_read=anchor["reader"].bytes, selected_versions=version_ref,
+        archive_context=dict(canonical_weekly_choice=canonical_ref, capture_scope=scope_ref),
+        source_refresh_required=True, capture_authorized=False, fits=0, public_release=False, successful_forecast=False)
+    binding = archive.write(storage, output/"RESUMED.json", document)
+    anchor["reader"].guard()
+    return Resumed(registered, choice, choice, replay, inputs, document, binding, _LIVE)

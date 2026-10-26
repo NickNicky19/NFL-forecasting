@@ -1,9 +1,10 @@
 """Lossless fictional rows, exact legacy codec bytes and actual native limits.
 
 No outcome/source/model body from production is opened. The full-census native
-test uses the existing 18k-candidate/5k-selected fixture, the real bind/grade and
-checkpoint helpers, and the existing fictional private transport. Unknown
-outcomes stay unknown. This tests a finite capture, not 36 full-history captures.
+tests use the existing 18k-candidate/5k-selected fixture, the real bind/grade and
+checkpoint helpers, and the existing fictional private transport. The two-game
+case retains resolved losses, played zero, DNP and explicit/missing unknowns.
+This tests finite captures, not 36 full-history captures.
 """
 from copy import copy, deepcopy
 import gzip
@@ -55,6 +56,208 @@ def test_incremental_snapshot_is_exact_original_canonical_and_gzip(packet, size)
     assert actual == gzip.compress(state.canonical(ordinary), mtime=0)
     restored = grade._unpack(actual, len(state.canonical(ordinary)))
     assert restored == ordinary and grade._digest(restored) == state.digest(ordinary)
+
+
+def _cohort_refs(packet):
+    storage=packet["storage"];base=packet["base"]/"read-cohort"
+    bodies=[gzip.compress(state.canonical(dict(n=i,text="fictional é🏈",value=-0.0)),mtime=0) for i in range(2)]
+    refs=[]
+    for i,body in enumerate(bodies):
+        path=base/(str(i)+".json.gz");storage.write_bytes(path,body)
+        refs.append(dict(path=str(path),bytes=len(body),sha256=store.sha(body)))
+    return storage,refs,bodies
+
+
+def test_single_write_matches_original_bytes_CAS_quota_and_fresh_scans(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage
+    body=gzip.compress(state.canonical(dict(text="fictional é🏈",value=-0.0,flags=[True,None])),mtime=0)
+    outputs=[]
+    for name,write in [("old",lambda s,p,b:s.write_bytes(p,b)),("new",grade._write_owned)]:
+        storage=OperationalStorage(tmp_path/name/"cache",ROOT/"config/operational-source-policy-v2.json",state=tmp_path/name/"state")
+        base=storage.register_root(tmp_path/name/"output");path=base/"record.json.gz";actual=storage._scan;scans=[0]
+        def scan():scans[0]+=1;return actual()
+        with monkeypatch.context() as patch:
+            patch.setattr(storage,"_scan",scan)
+            assert write(storage,path,body)==len(body)
+            assert scans[0]==(2 if name=="old" else 1)
+        ref=storage.validate_reference(path,store.sha(body));assert path.read_bytes()==body and not path.stat().st_mode&0o222
+        assert write(storage,path,body)==len(body)
+        with pytest.raises(FileExistsError):write(storage,path,b"changed")
+        outputs.append((ref['bytes'],ref['sha256'],storage.snapshot()['physical_bytes']))
+    assert outputs[0]==outputs[1]
+
+
+def test_single_write_preserves_quota_before_bytes_and_failed_alias(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage,StorageQuotaError
+    policy=json.loads((ROOT/"config/operational-source-policy-v2.json").read_bytes());policy['storage']['limit_bytes']=64<<10
+    storage=OperationalStorage(tmp_path/"cache",policy,state=tmp_path/"state");base=storage.register_root(tmp_path/"output")
+    with pytest.raises(StorageQuotaError):grade._write_owned(storage,base/"over-cap",b"x"*(64<<10))
+    assert not (base/"over-cap").exists() and not list(storage.control_root.glob('.incoming-*'))
+    actual=storage._alias;body=b"retained fictional partial evidence"
+    def fail(blob,path,replace):actual(blob,path,replace);raise OSError('FICTIONAL_AFTER_ALIAS')
+    monkeypatch.setattr(storage,'_alias',fail)
+    with pytest.raises(OSError,match='FICTIONAL_AFTER_ALIAS'):grade._write_owned(storage,base/"partial",body)
+    assert (base/"partial").read_bytes()==body and (storage.blob_root/store.sha(body)).read_bytes()==body
+    storage.validate_reference(base/"partial",store.sha(body))
+
+
+@pytest.mark.parametrize("encoding",['utf-8','utf-8-sig','utf-16','utf-16-be','utf-32'])
+def test_scalar_collector_C_decoder_matches_original_strict_parser(encoding):
+    doc=dict(player_id='00-0000001',game_id='espn:112',target='rec',actual=-0.0,participation_state='played',
+        source='fictional é🏈',source_sha256='a'*64,status_sha256='b'*64,observed_at='2026-10-28T08:00:00Z',source_timestamp=None)
+    raw=json.dumps(doc,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode(encoding)
+    before=grade._JSONStream(io.BytesIO(raw),grade.LIMITS['decoded_bytes']).load()
+    after=grade._observation_record(io.BytesIO(raw))
+    assert before==after and b''.join(grade._canonical_chunks(before))==b''.join(grade._canonical_chunks(after))==state.canonical(doc)
+    assert grade._digest(before)==grade._digest(after)
+
+
+@pytest.mark.parametrize('raw',[b'{"a":1,"a":2}',b'{"a":NaN}',b'{"a":Infinity}',b'{}{}',b'{"a":'])
+def test_scalar_collector_parser_retains_strict_JSON_rejections(raw):
+    with pytest.raises((ValueError,store.StoreError)):grade._observation_record(io.BytesIO(raw))
+    with pytest.raises((ValueError,store.StoreError)):grade._JSONStream(io.BytesIO(raw),grade.LIMITS['decoded_bytes']).load()
+
+
+def test_scalar_collector_fallback_retains_paging_full_limit_and_gzip_CRC(monkeypatch):
+    doc=dict(rows=[dict(value=-0.0,text='é🏈')],padding='x'*33000);raw=state.canonical(doc)
+    with gzip.GzipFile(fileobj=io.BytesIO(gzip.compress(raw,mtime=0))) as reader:parsed=grade._observation_record(reader)
+    assert isinstance(parsed['rows'],grade._PagedRows) and state.canonical(parsed)==raw
+    monkeypatch.setitem(grade.LIMITS,'decoded_bytes',32768)
+    with pytest.raises(grade.GradeError,match='FINITE_FULL_GRADING_SNAPSHOT'):grade._observation_record(io.BytesIO(raw))
+    for body in [gzip.compress(b'{}',mtime=0)[:-1],gzip.compress(b'{}',mtime=0)[:-8]+b'badcrc00']:
+        with gzip.GzipFile(fileobj=io.BytesIO(body)) as reader:
+            with pytest.raises((OSError,EOFError)):grade._observation_record(reader)
+
+
+def test_owned_read_cohort_keeps_literal_bytes_and_two_fresh_full_scans(packet, monkeypatch):
+    storage,refs,bodies=_cohort_refs(packet);original=storage._scan;scans=[0]
+    def scan(): scans[0]+=1;return original()
+    monkeypatch.setattr(storage,"_scan",scan)
+    assert [grade._read_owned(storage,ref,raw=True) for ref in refs]==bodies
+    assert scans[0]==4;scans[0]=0
+    before=storage.snapshot();scans[0]=0
+    assert grade._read_owned_many(storage,refs)==bodies and scans[0]==2
+    assert grade._read_owned_many(storage,refs)==bodies and scans[0]==4
+    assert storage.snapshot()==before
+
+
+def test_owned_read_cohort_requires_actual_storage_before_private_IO(packet):
+    from types import SimpleNamespace
+    storage,refs,_=_cohort_refs(packet)
+    def forbidden():raise AssertionError("PRIVATE_IO_BEFORE_ACTUAL_STORAGE_CHECK")
+    proxy=SimpleNamespace(_locked=forbidden,_refresh=storage._refresh,_scan=storage._scan,
+        _check=storage._check,_verify_blob=storage._verify_blob,blob_root=storage.blob_root)
+    with pytest.raises(grade.GradeError,match="FINITE_PRIVATE_GRADING_READ_COHORT"):grade._read_owned_many(proxy,refs)
+
+
+@pytest.mark.parametrize("kind", ["empty","many","relative","extra","bool_size","oversized","duplicate"])
+def test_owned_read_cohort_rejects_open_or_unbounded_references(packet,kind):
+    storage,refs,_=_cohort_refs(packet)
+    if kind=="empty":refs=[]
+    elif kind=="many":refs=refs+[refs[0]]
+    elif kind=="relative":refs[0]["path"]="relative.json.gz"
+    elif kind=="extra":refs[0]["authority"]=True
+    elif kind=="bool_size":refs[0]["bytes"]=True
+    elif kind=="oversized":refs[0]["bytes"]=(8<<20)+1
+    else:refs=[refs[0],refs[0]]
+    with pytest.raises(grade.GradeError):grade._read_owned_many(storage,refs)
+
+
+@pytest.mark.parametrize("kind", ["writable","unowned","symlink","external_link","size","sha","missing"])
+def test_owned_read_cohort_keeps_every_original_CAS_and_path_guard(packet,kind):
+    import os
+    from nfl_lab.operational_storage import StorageIntegrityError
+    storage,refs,bodies=_cohort_refs(packet);path=Path(refs[0]["path"])
+    if kind=="writable":path.chmod(0o600)
+    elif kind=="unowned":path.unlink();path.write_bytes(bodies[0]);path.chmod(0o444)
+    elif kind=="symlink":path.unlink();path.symlink_to(refs[1]["path"])
+    elif kind=="external_link":os.link(path,packet["base"].parent/"unaccounted-external-alias")
+    elif kind=="size":refs[0]["bytes"]+=1
+    elif kind=="sha":refs[0]["sha256"]="0"*64
+    else:path.unlink()
+    with pytest.raises((StorageIntegrityError,FileNotFoundError)):grade._read_owned_many(storage,refs)
+
+
+@pytest.mark.parametrize("when", ["before_second_read","after_final_read"])
+def test_owned_read_cohort_rechecks_actual_aliases_through_final_scan(packet,monkeypatch,when):
+    from nfl_lab.operational_storage import StorageIntegrityError
+    storage,refs,bodies=_cohort_refs(packet);actual=grade.cp.read_ref;calls=[0]
+    def read(ref,cap):
+        value=actual(ref,cap);calls[0]+=1
+        if calls[0]==(1 if when=="before_second_read" else 2):
+            index=1 if when=="before_second_read" else 0;path=Path(refs[index]["path"])
+            path.unlink();path.write_bytes(bodies[index]);path.chmod(0o444)
+        return value
+    monkeypatch.setattr(grade.cp,"read_ref",read)
+    with pytest.raises(StorageIntegrityError,match="not an owned blob alias"):grade._read_owned_many(storage,refs)
+
+
+def test_owned_read_cohort_final_scan_charges_new_unknown_bytes(tmp_path,monkeypatch):
+    from nfl_lab.operational_storage import OperationalStorage,StorageQuotaError
+    policy=json.loads((ROOT/"config/operational-source-policy-v2.json").read_bytes());policy["storage"]["limit_bytes"]=64<<10
+    storage=OperationalStorage(tmp_path/"cache",policy,state=tmp_path/"state")
+    base=storage.register_root(tmp_path/"capture");storage,refs,_=_cohort_refs(dict(storage=storage,base=base))
+    actual=grade.cp.read_ref;orphan=base/"charged-orphan"
+    def read(ref,cap):
+        value=actual(ref,cap)
+        if not orphan.exists():orphan.write_bytes(b"x"*storage.limit_bytes)
+        return value
+    monkeypatch.setattr(grade.cp,"read_ref",read)
+    with pytest.raises(StorageQuotaError,match="retained managed bytes"):grade._read_owned_many(storage,refs)
+    assert orphan.stat().st_size==storage.limit_bytes
+
+
+@pytest.mark.parametrize("kind", ["scalar","page","negative_zero","utf8","binding"])
+def test_snapshot_verify_still_hashes_all_original_bytes_and_binding(kind):
+    import zlib
+    row=dict(value=-0.0,text="é🏈",nested=[dict(original=True)])
+    snapshot=grade.Snapshot(dict(rows=grade._PagedRows([row]),scalar="original"),grade._KEY)
+    snapshot.binding=dict(path="/fictional/original.json.gz",bytes=1,sha256="a"*64)
+    snapshot._binding_sha256=state.digest(snapshot.binding);snapshot.verify()
+    if kind=="scalar":snapshot.document["scalar"]="changed"
+    elif kind=="binding":snapshot.binding["sha256"]="b"*64
+    else:
+        changed=deepcopy(row)
+        if kind=="negative_zero":changed["value"]=0.0
+        elif kind=="utf8":changed["text"]="e\u0301🏈"
+        else:changed["nested"][0]["original"]=False
+        object.__setattr__(snapshot.document["rows"],"_pages",(zlib.compress(state.canonical([changed]),1),))
+    with pytest.raises(grade.GradeError,match="SEALED_OPERATIONAL_INPUT_CHANGED|SNAPSHOT_BYTE_BINDING_CHANGED"):snapshot.verify()
+
+
+def test_v2_fragments_are_literal_original_canonical_bytes_across_utf8(packet):
+    document = dict(a="x"*100, b="é🏈", c="x"*50, forecasts=[dict(value=-0.0, actual=None)], retained=[0,"DNP","played_corrected"])
+    raw = state.canonical(document)
+    split = raw.index("é".encode())+1
+    if split < (len(raw)+1)//2:
+        document["a"] += "x"*len(raw); raw = state.canonical(document); split = raw.index("é".encode())+1
+    output = packet["base"]/"literal-parts"; packet["storage"].register_root(output)
+    ref = grade._write_snapshot_v2(packet["storage"], output, document, part_bytes=split)
+    manifest = grade._unpack(Path(ref["path"]).read_bytes(), 64 << 20)
+    assert len(manifest["parts"]) == 2 and manifest["logical_sha256"] == store.sha(raw)
+    assert b"".join(gzip.decompress((output/p["name"]).read_bytes()) for p in manifest["parts"]) == raw
+    actual = grade._load_snapshot(packet["storage"], ref)
+    assert actual == json.loads(raw) and grade._digest(actual) == store.sha(raw)
+    assert grade.LIMITS["decoded_bytes"] == 64 << 20 and grade.LIMITS["encoded_bytes"] == 8 << 20
+
+
+@pytest.mark.parametrize("kind", ["missing", "reordered", "duplicate", "decoded_hash", "decoded_size", "logical_hash", "oversized_part"])
+def test_v2_local_manifest_rejects_incomplete_reordered_or_false_parts(packet, kind):
+    document = dict(forecasts=[dict(n=i, text="fictional") for i in range(10)])
+    raw = state.canonical(document); output = packet["base"]/("bad-parts-"+kind); packet["storage"].register_root(output)
+    ref = grade._write_snapshot_v2(packet["storage"], output, document, part_bytes=(len(raw)+1)//2)
+    manifest = grade._unpack(Path(ref["path"]).read_bytes(), 64 << 20)
+    if kind == "missing": manifest["parts"].pop()
+    elif kind == "reordered": manifest["parts"].reverse()
+    elif kind == "duplicate": manifest["parts"][1] = deepcopy(manifest["parts"][0])
+    elif kind == "decoded_hash": manifest["parts"][0]["decoded_sha256"] = "0"*64
+    elif kind == "decoded_size": manifest["parts"][0]["decoded_bytes"] += 1; manifest["logical_bytes"] += 1
+    elif kind == "logical_hash": manifest["logical_sha256"] = "0"*64
+    else: manifest["parts"][0]["decoded_bytes"] = (64 << 20)+1
+    body = gzip.compress(state.canonical(manifest), mtime=0); path = output/"FORGED.json.gz"
+    packet["storage"].write_bytes(path, body)
+    forged = dict(path=str(path), bytes=len(body), sha256=store.sha(body))
+    with pytest.raises((grade.GradeError, store.StoreError)): grade._load_snapshot(packet["storage"], forged)
 
 
 @pytest.mark.parametrize("read_size", range(1, 10))
@@ -331,3 +534,251 @@ def test_full_capture_grade_and_checkpoint_under_actual_native_limits(tmp_path):
     assert metrics[-1]["stage"] == "FULL_CHECKPOINT_RESTORED_AND_REPORTED"
     assert all(m["VmPeak"] <= 512 << 20 and m["CPU_seconds"] < 120 and m["wall_seconds"] < 180 for m in metrics)
     assert {name: store.sha(Path(ref["path"]).read_bytes()) for name, ref in q["restored"]["aliases"].items()} == originals
+
+
+def two_full_scope_fixture(root):
+    """Two disjoint original games, assigned to distinct captures before values."""
+    import ast
+    import test_audit_weekly_grade_v1 as original
+    from nfl_lab.operational_storage import OperationalStorage
+    storage = OperationalStorage(root/"cache", ROOT/"config/operational-source-policy-v2.json", state=root/"state")
+    packet = next(n for n in ast.parse(Path(original.__file__).read_text()).body if isinstance(n,ast.FunctionDef) and n.name=="packet")
+    results = []
+    for number, game in enumerate(("sunday", "monday")):
+        node = deepcopy(packet); node.decorator_list = []
+        class Fixture(ast.NodeTransformer):
+            def visit_Constant(self, node):
+                if number and node.value == "fictional-sunday": node.value = "fictional-monday"
+                if number and node.value == "112": node.value = "113"
+                if node.value == "fictional-prevalue-root-capture-id": node.value = "fictional-prevalue-"+game
+                return node
+            def visit_Subscript(self, node):
+                self.generic_visit(node)
+                if number and isinstance(node.value,ast.Subscript) and isinstance(node.value.slice,ast.Constant) and node.value.slice.value=="schedule" and isinstance(node.slice,ast.Constant) and node.slice.value==1:
+                    node.slice = ast.Constant(2)
+                return node
+            def visit_Delete(self, node):
+                self.generic_visit(node)
+                if len(node.targets)==1 and isinstance(node.targets[0],ast.Subscript) and isinstance(node.targets[0].slice,ast.Constant) and node.targets[0].slice.value=="scientific_qualification":
+                    extra=deepcopy(node.targets[0]);extra.slice=ast.Constant("public_export_authorized");node.targets.append(extra)
+                return node
+            def visit_Call(self, node):
+                self.generic_visit(node)
+                if isinstance(node.func,ast.Name) and node.func.id=="range" and len(node.args)==1 and isinstance(node.args[0],ast.Constant) and node.args[0].value==3:
+                    node.args[0]=ast.Constant(1000)
+                if isinstance(node.func,ast.Name) and node.func.id=="dict":
+                    for key in node.keywords:
+                        if key.arg=="position" and isinstance(key.value,ast.Constant) and key.value.value=="RB": key.value=ast.Constant("QB")
+                        if key.arg in {"rows","expected_rows","issued_rows"} and isinstance(key.value,ast.Constant) and key.value.value==3: key.value=ast.Constant(1000)
+                for key in node.keywords:
+                    if key.arg=="assignments":
+                        key.value=ast.Dict(keys=[ast.Constant("fictional-sunday"),ast.Constant("fictional-monday")],
+                            values=[ast.Call(func=ast.Name(id="h",ctx=ast.Load()),args=[ast.Constant("fictional-prevalue-"+s)],keywords=[]) for s in ("sunday","monday")])
+                return node
+        scope=dict(vars(original));scope["OperationalStorage"]=lambda *_a,**_k:storage
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[Fixture().visit(node)],type_ignores=[])),"two-full-capture-fixture","exec"),scope)
+        q=scope["packet"](root/game); results.append(q)
+        assert len(q["capture"].document["forecasts"])==23000 and len(q["capture"].document["selected"])==5000
+        assert len(q["capture"].document["opportunities"])==5000
+    left,right=results
+    assert left["r"].epoch.sha256==right["r"].epoch.sha256 and left["c"].document==right["c"].document
+    assert left["pop"]["assignments"]==right["pop"]["assignments"]
+    assert {o["offered_id"] for o in left["capture"].document["opportunities"]}.isdisjoint(o["offered_id"] for o in right["capture"].document["opportunities"])
+    return results
+
+
+def _save_fictional_service(service, path):
+    path.mkdir(parents=True, exist_ok=True)
+    from datetime import datetime
+    attributes = {k:dict(datetime=v.isoformat()) if isinstance(v,datetime) else v
+        for k,v in vars(service).items() if k not in {"server","calls"}}
+    server = {k:v for k,v in vars(service.server).items() if k not in {"assets","calls"}}
+    assets=[]
+    for asset in service.server.assets:
+        body=path/(str(asset["id"])+".bin");body.write_bytes(asset["body"])
+        assets.append(dict(metadata={k:v for k,v in asset.items() if k!="body"},path=str(body),sha256=store.sha(asset["body"])))
+    metadata=path/"service.json";metadata.write_bytes(state.canonical(dict(attributes=attributes,server=server,assets=assets)))
+    return str(metadata)
+
+
+TWO_CAPTURE_NATIVE_SCRIPT = r'''
+import ast,json,socket,sys,time,resource
+from pathlib import Path
+from datetime import datetime,timedelta,timezone
+from copy import deepcopy
+from types import SimpleNamespace
+from tools.private_draft_store_v2 import limits
+limits()
+from nfl_lab import audit_weekly_grade_v1 as g,audit_weekly_grade_checkpoint_v1 as k,audit_weekly_epoch_v1 as epoch,state,private_draft_store as s
+from nfl_lab import audit_private_rotation_v1 as rotation
+from nfl_lab.operational_storage import OperationalStorage
+sys.path.insert(0,str(Path.cwd()/'tests'))
+import pytest
+from test_private_draft_store_v2 import Server,Response,RUN,SOURCE
+from test_owner_private_bootstrap import qualification
+socket.socket.connect=lambda *_:(_ for _ in ()).throw(AssertionError('NO_REAL_NETWORK'))
+ROOT=Path.cwd();ROOT_SHA='d'*64;GRADE=state.utc('2026-10-28T08:00:00Z')
+seed=json.loads(Path(sys.argv[1]).read_bytes());phase=sys.argv[2];began=time.monotonic()
+def metric(stage,**extra):
+ memory={line.partition(':')[0]:int(line.partition(':')[2].split()[0])*1024 for line in Path('/proc/self/status').read_text().splitlines() if line.partition(':')[0] in {'VmPeak','VmSize','VmRSS','VmHWM'}}
+ print(json.dumps(dict(fictional=True,stage=stage,phase=phase,pid=__import__('os').getpid(),CPU_seconds=time.process_time(),wall_seconds=time.monotonic()-began,CPU_limit=resource.getrlimit(resource.RLIMIT_CPU),AS_limit=resource.getrlimit(resource.RLIMIT_AS),**memory,**extra)),flush=True)
+def outcome_census(document):
+ from collections import Counter
+ states=Counter();sources=Counter()
+ for version in document['versions']:
+  for row in version['snapshot']['rows']:
+   states[row['outcome_state']]+=1
+   if row['game_id']=='fictional-sunday':
+    assert len(row['source_observation_refs'])==len(row['source_body_sha256s'])==len(row['source_status_sha256s'])==1
+    assert row['participation_state']==('played','played','DNP','unknown')[(int(row['player_id'][3:])-1)%4]
+    assert row['actual']==(0,2,None,None)[(int(row['player_id'][3:])-1)%4]
+    sources['explicit_observation']+=1
+   else:
+    assert row['game_id']=='fictional-monday' and row['actual'] is None and row['participation_state']=='unknown'
+    assert row['source_observation_refs']==row['source_body_sha256s']==row['source_status_sha256s']==[]
+    sources['missing_pending']+=1
+ assert dict(states)==dict(played_zero=1250,played_nonzero=1250,DNP=1250,unknown=6250)
+ assert dict(sources)==dict(explicit_observation=5000,missing_pending=5000)
+ return dict(states)
+ns=globals()
+for filename,names in [('test_audit_weekly_archive_v1.py',{'Service'}),('test_audit_weekly_grade_checkpoint_v1.py',{'Service','Parent','case'})]:
+ nodes=[n for n in ast.parse((ROOT/'tests'/filename).read_text()).body if isinstance(n,(ast.ClassDef,ast.FunctionDef)) and n.name in names]
+ # This test uses real per-process native identities in the unchanged service ABI.
+ class Process(ast.NodeTransformer):
+  def visit_keyword(self,n):
+   self.generic_visit(n)
+   if n.arg=='process':n.value=ast.Call(func=ast.Attribute(value=ast.Name(id='s',ctx=ast.Load()),attr='process_identity',ctx=ast.Load()),args=[],keywords=[])
+   return n
+ nodes=[Process().visit(n) for n in nodes]
+ exec(compile(ast.fix_missing_locations(ast.Module(body=nodes,type_ignores=[])),filename,'exec'),ns)
+ if filename=='test_audit_weekly_archive_v1.py':ArchiveService=Service
+service_path=seed['initial_service'] if phase=='writer' else seed['saved_service']
+saved=json.loads(Path(service_path).read_bytes());service=Service.__new__(Service);service.calls=[];service.server=Server()
+for name,value in saved['attributes'].items():setattr(service,name,state.utc(value['datetime']) if isinstance(value,dict) and set(value)=={'datetime'} else value)
+for name,value in saved['server'].items():setattr(service.server,name,value)
+service.server.assets=[]
+for asset in saved['assets']:
+ body=Path(asset['path']).read_bytes();assert s.sha(body)==asset['sha256'];service.server.assets.append(dict(asset['metadata'],body=body))
+e=epoch.restore_epoch(seed['epoch'],seed['original_choice'].encode(),seed['original_completion'],seed['slate'],seed['catalog'],seed['policy'],history_binding=seed['history_binding'],now=GRADE)
+r=epoch.bind_registration(e,seed['completion'],now=GRADE);c=epoch.EpochChoice(seed['choice'],state.digest(seed['choice']));c.verify(r,GRADE)
+storage=OperationalStorage(seed['cache'],ROOT/'config/operational-source-policy-v2.json',state=seed['state_root'])
+metric('TYPED_TWO_CAPTURE_METADATA_READY')
+if phase=='writer':
+ population=g.bind_population(seed['population'],r,c,authenticate=lambda _:True,at=GRADE)
+ captures=[g.bind_capture(r,c,population,item['restored'],storage=storage,capture_id=item['capture_id'],role_catalog=seed['roles'],frozen_schedule=seed['schedule'],authenticate=lambda _:True,at=GRADE) for item in seed['captures']]
+ assert len(captures)==2 and all(len(x.document['forecasts'])==23000 and len(x.document['selected'])==5000 for x in captures)
+ metric('TWO_FULL_CAPTURES_BOUND')
+ # The first complete fictional game has real observation rows in this
+ # controlled fixture. The other game's statistics remain genuinely missing;
+ # neither game completion nor absence of a row is treated as a played zero.
+ status_sha=state.digest('fictional-two-game-final-status')
+ observations=[]
+ for offer in captures[0].document['opportunities']:
+  cohort=(int(offer['player_id'][3:])-1)%4
+  observations.append(dict(player_id=offer['player_id'],game_id=offer['game_id'],target=offer['target'],
+   actual=(0,2,None,None)[cohort],participation_state=('played','played','DNP','unknown')[cohort],
+   source='fictional-Sleeper-same-origin',source_sha256=state.digest('fictional-first-game-observation-body'),status_sha256=status_sha,
+   observed_at=(GRADE-timedelta(minutes=30)).isoformat(),source_timestamp=(GRADE-timedelta(hours=1)).isoformat()))
+ assert len(observations)==5000 and {o['game_id'] for o in observations}=={'espn:112'}
+ doc=dict(schema_version=g.VERSION+'-provider-observations',source_policy_sha256=g.cp.POLICY_SHA,captured_at=GRADE.isoformat(),observations=observations,finality=[dict(season=2026,week=7,status_source_sha256=status_sha,observed_at=(GRADE-timedelta(hours=1)).isoformat(),games=[dict(game_id='espn:'+x['website_game_id'],kickoff_utc=x['kickoff_utc'],home=x['home'],away=x['away'],final=True) for x in seed['schedule']])])
+ batch=g.bind_observations(captures,doc,authenticate=lambda _:True,at=GRADE)
+ snapshot=g.grade(r,captures,[batch],storage=storage,output=Path(seed['output'])/'grade',clock=lambda:GRADE)
+ manifest=g._unpack(Path(snapshot.binding['path']).read_bytes(),64<<20)
+ assert manifest['schema_version']==g.SNAPSHOT_WIRE_V2 and len(manifest['parts'])==2
+ assert manifest['logical_bytes']>64<<20 and manifest['logical_sha256']==snapshot.sha256
+ assert sum(len(v['snapshot']['rows']) for v in snapshot.document['versions'])==10000
+ states=outcome_census(snapshot.document)
+ assert len(snapshot.document['collector_records'])==5000
+ values={}
+ for capture in snapshot.document['captures']:
+  for row in capture['selected']: values.setdefault(row['category'],set()).add(row['forecast_value'])
+ assert set(values)=={'pass_yd','pass_td','pass_cmp','pass_att','pass_int'} and all(len(v)==1 and v<={0,1} for v in values.values())
+ # Hand calculation for the balanced played outcomes {0,2}, independent of
+ # the production loss/evaluate functions. Keep every losing selected week.
+ p2_losses={target:(abs(next(iter(v)))+abs(next(iter(v))-2))/2 if target=='pass_yd' else (next(iter(v))**2+(next(iter(v))-2)**2)/2 for target,v in values.items()}
+ expected=dict(outcome_states=states,p2_losses=p2_losses,
+  captures_sha256=g._digest(snapshot.document['captures']),collector_sha256=g._digest(snapshot.document['collector_records']),
+  versions_sha256=g._digest(snapshot.document['versions']),week_revisions_sha256=g._digest(snapshot.document['week_revisions']))
+ Path(seed['expected']).write_bytes(s.canonical(expected))
+ metric('TWO_FULL_CAPTURES_GRADED',logical_bytes=manifest['logical_bytes'],part_bytes=[p['bytes'] for p in manifest['parts']],outcome_states=states,collector_rows=5000)
+ q=dict(storage=storage,snapshot=snapshot,r=r)
+else:
+ handoff=json.loads(Path(seed['handoff']).read_bytes());q=dict(storage=storage,snapshot=SimpleNamespace(sha256=handoff['snapshot_sha256']),r=r)
+path=Path(seed['output'])/phase;path.mkdir(parents=True,mode=0o700)
+patch=pytest.MonkeyPatch();actual_envelope=k.native_envelope
+# Use the already initialized fictional remote; no extra native client/budget.
+original_service=Service;Service=lambda unused:service
+operation=ns['case'].__wrapped__(q,path,patch);Service=original_service;patch.setattr(k,'native_envelope',actual_envelope)
+if phase=='writer':
+ handoff,client=operation['append']();Path(seed['handoff']).write_bytes(s.canonical(handoff))
+ tree=ast.parse((ROOT/'tests/test_audit_weekly_grade_native_memory_v1.py').read_text());save=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_save_fictional_service')
+ store=s;exec(compile(ast.fix_missing_locations(ast.Module(body=[save],type_ignores=[])),'fictional-service-save','exec'),globals())
+ _save_fictional_service(service,Path(seed['saved_service']).parent)
+ metric('TWO_FULL_PARTITION_CHECKPOINT_APPENDED',HTTP_calls=client.calls,transfer_bytes=client.transferred,logical_sha256=handoff['snapshot_sha256'],runtime_bytes=sum(a['size'] for a in service.server.assets),writer_process=client.process,outcome_states=states)
+else:
+ operation['parent'].handoff=deepcopy(handoff)
+ result,client=operation['restore'](handoff);result.verify();k.native_envelope()
+ metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=all(request.method=='GET' for request in service.calls))
+ assert len(result.durable.document['captures'])==2 and all(len(x['forecasts'])==23000 and len(x['selected'])==5000 for x in result.durable.document['captures'])
+ assert sum(len(v['snapshot']['rows']) for v in result.durable.document['versions'])==10000
+ expected=json.loads(Path(seed['expected']).read_bytes());states=outcome_census(result.durable.document)
+ assert states==expected['outcome_states']
+ for field,digest in [('captures','captures_sha256'),('collector_records','collector_sha256'),('versions','versions_sha256'),('week_revisions','week_revisions_sha256')]:
+  assert g._digest(result.durable.document[field])==expected[digest]
+ assert result.durable.document['legacy_history_binding']==seed['history_binding']
+ # A frozen clock exactly equal to known_by cannot expose a causal grade.
+ # Advance only this fictional evaluation view, never an original proof or
+ # publication/availability clock, to test the actual resolved loss branch.
+ assert result.report['metrics']==[]
+ report=g.report(result.durable,r,at=state.utc(result.proof['known_by_at'])+timedelta(seconds=1))
+ metrics={(m['category'],m['method_id']):m for m in report['metrics']}
+ for target,loss in expected['p2_losses'].items():
+  for method in ('R0','P2_SELECTED'):
+   m=metrics[(target,method)];coverage=m['coverage']
+   assert coverage['offered']==coverage['forecast']==2000 and coverage['scored']==500
+   assert coverage['played_zero']==coverage['scored_played_zero']==250 and coverage['DNP']==250 and coverage['unknown']==1250
+   assert m['no_selection_rewrite'] is True and m['primary_loss']==(1 if method=='R0' else loss) and m['primary_loss']>0
+  assert metrics[(target,'R0')]['signed_bias']==0 and metrics[(target,'R0')]['absolute_error_p90_nearest_rank']==1
+ assert metrics[('pass_td','LAB_CDF')]['primary_loss']==2>metrics[('pass_td','R0')]['primary_loss']
+ assert any(w['category']=='pass_td' and w['scheduled_games']==3 for w in result.durable.document['week_revisions'])
+ assert client.readonly is True and all(request.method=='GET' for request in service.calls)
+ assert result.proof['producer']['process_identity']!=result.proof['reader']['process_identity']
+ assert result.report['all_negative_weeks_retained'] is True and result.report['public_release'] is False
+ assert all('catboost' not in name for name in sys.modules)
+ evidence=snapshot_path=path/'restore/FRESH_READER_NATIVE_PROOF.json'
+ proof=json.loads(evidence.read_bytes());assert len(proof['context']['multipart_readback']['parts'])==2
+ assert proof['context']['multipart_readback']['completed_at_utc']<=result.proof['known_by_at']
+ metric('TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED',HTTP_calls=client.calls,transfer_bytes=client.transferred,all_GET=True,known_by_at=result.proof['known_by_at'],reader_process=client.process,outcome_states=states,R0_loss=1,pass_td_candidate_loss=2,P2_losses=expected['p2_losses'])
+'''
+
+
+def test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes(tmp_path):
+    from test_audit_weekly_grade_checkpoint_v1 import Service
+    left,right=two_full_scope_fixture(tmp_path/"fixture");q=left;f=q["f"]
+    originals=[{name:store.sha(Path(ref['path']).read_bytes()) for name,ref in item['restored']['aliases'].items()} for item in (left,right)]
+    remote=tmp_path/"remote";remote.mkdir(mode=0o700);service=Service(remote)
+    initial=_save_fictional_service(service,tmp_path/"initial-remote")
+    seed=dict(cache=str(q["storage"].cache),state_root=str(q["storage"].state_root),epoch=q["r"].epoch.document,
+        completion=q["r"].completion,original_choice=f["raw"].decode(),original_completion=f["completion"],slate=f["slate"],catalog=f["catalog"],policy=f["policy"],history_binding=f["history_binding"],
+        choice=q["c"].document,population=q["pop"],roles=q["roles"],schedule=q["schedule"],captures=[dict(restored=x["restored"],capture_id=x["capture_id"]) for x in (left,right)],
+        initial_service=initial,saved_service=str(tmp_path/"writer-remote/service.json"),handoff=str(tmp_path/"handoff.json"),expected=str(tmp_path/"expected-mixed-outcomes.json"),output=str(tmp_path/"worker"))
+    path=tmp_path/"two-full-native-seed.json";path.write_bytes(state.canonical(seed))
+    profile=json.loads((ROOT/"config/audit-weekly-numerical-runtime-v1.json").read_bytes())["environment"]
+    phases=[];measurements=[]
+    for phase in ("writer","reader"):
+        result=subprocess.run([sys.executable,"-B","-c",TWO_CAPTURE_NATIVE_SCRIPT,str(path),phase],cwd=ROOT,
+            env=dict(PYTHONDONTWRITEBYTECODE="1",**profile),capture_output=True,text=True,timeout=185)
+        print(result.stdout,end="",flush=True)
+        assert result.returncode==0,result.stderr
+        values=[json.loads(line) for line in result.stdout.splitlines()]
+        measurements.extend(values)
+        assert values[-1]["HTTP_calls"]<=40 and values[-1]["transfer_bytes"]<=40<<20;phases.append(values[-1])
+    assert phases[0]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_APPENDED" and phases[1]["stage"]=="TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED"
+    assert phases[0]["pid"]!=phases[1]["pid"] and phases[0]["runtime_bytes"]<32<<20
+    assert [item['outcome_states'] for item in phases]==[dict(played_zero=1250,played_nonzero=1250,DNP=1250,unknown=6250)]*2
+    assert [{name:store.sha(Path(ref['path']).read_bytes()) for name,ref in item['restored']['aliases'].items()} for item in (left,right)]==originals
+    # Collect the independent GET-only reader diagnostics even when a completed
+    # writer exceeded CPU. Every original bound still must pass for this test
+    # to pass; a partial/failed native append never starts a reader.
+    assert all(v['CPU_limit']==[120,120] and v['AS_limit']==[512<<20,512<<20] for v in measurements)
+    assert all(v["VmPeak"]<=512<<20 and v["CPU_seconds"]<120 and v["wall_seconds"]<180 for v in measurements), phases

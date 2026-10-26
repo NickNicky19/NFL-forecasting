@@ -1,0 +1,223 @@
+{
+  "Snapshot_verify_unchanged": true,
+  "actual_hosted_ci_accepted": false,
+  "actual_native_operations_accepted": false,
+  "files": {
+    "nfl_lab/audit_weekly_grade_checkpoint_v1.py": "7164f7d096b443566574e1416c858a6d40175a623120314e57d78d286d6f4b6f",
+    "nfl_lab/audit_weekly_grade_v1.py": "18c9c1165bc5b98ea61d837abd12bf24c4006186a8acd6031b1c5961ed053566",
+    "tests/test_audit_weekly_grade_native_memory_v1.py": "9478877e00365a77edaf224632795bffc1e217c824592e6b4eb3dd5d09db150d"
+  },
+  "focused_subset": "13 passed0.94seconds; overlaps core",
+  "generic_storage_unchanged": true,
+  "independent_review": {
+    "evidence_scope": "Reviewer tool stdout receipts5e6a04,074397; no standalone reviewer logs saved",
+    "parser_differential": {
+      "accepted": 21,
+      "cases": 30,
+      "rejected": 9
+    },
+    "result": "PASS",
+    "reviewer": "Pauli",
+    "storage_probes": "original/new CAS,physical quota,atomic partial evidence and output-root parity",
+    "targeted": "18 passed,73 deselected0.30seconds; overlaps core"
+  },
+  "local_core": "190 passed,2 separately tested native cases deselected275.20seconds",
+  "local_full_mixed": "1 passed187.34seconds",
+  "longer_cumulative_history_capacity_qualified": false,
+  "model_mathematics_unchanged": true,
+  "new_nfl_fits": 0,
+  "original_failed_hosted_run": 40260475697,
+  "original_failed_source": "c9f86d3c436ecfccf150dc3de0ced1d0589eb54a",
+  "original_patch_commit": "9787f5cd4504b28dfad14dff6bb40fe9c99d007c",
+  "resource_limits_unchanged": true,
+  "schema_version": "grade-checkpoint-cpu-followup-v1",
+  "stage_metrics": [
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 0.453777875,
+      "VmHWM": 39243776,
+      "VmPeak": 65413120,
+      "VmRSS": 37335040,
+      "VmSize": 64364544,
+      "fictional": true,
+      "phase": "writer",
+      "pid": 516159,
+      "stage": "TYPED_TWO_CAPTURE_METADATA_READY",
+      "wall_seconds": 0.09525540100003127
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 32.640119629,
+      "VmHWM": 128413696,
+      "VmPeak": 425119744,
+      "VmRSS": 128413696,
+      "VmSize": 425119744,
+      "fictional": true,
+      "phase": "writer",
+      "pid": 516159,
+      "stage": "TWO_FULL_CAPTURES_BOUND",
+      "wall_seconds": 32.174252883996814
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 80.214085241,
+      "VmHWM": 188915712,
+      "VmPeak": 504229888,
+      "VmRSS": 183582720,
+      "VmSize": 497938432,
+      "collector_rows": 5000,
+      "fictional": true,
+      "logical_bytes": 112067531,
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "part_bytes": [
+        2520648,
+        2299227
+      ],
+      "phase": "writer",
+      "pid": 516159,
+      "stage": "TWO_FULL_CAPTURES_GRADED",
+      "wall_seconds": 79.75923975899059
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 105.100228975,
+      "HTTP_calls": 39,
+      "VmHWM": 188915712,
+      "VmPeak": 511238144,
+      "VmRSS": 186511360,
+      "VmSize": 502845440,
+      "fictional": true,
+      "logical_sha256": "54e9015495fba8188d11b8b114e7958a83ac9f92c3bc65da6e49a49dcb505281",
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "phase": "writer",
+      "pid": 516159,
+      "runtime_bytes": 4823349,
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED",
+      "transfer_bytes": 4868972,
+      "wall_seconds": 104.68022965198907,
+      "writer_process": "3860c07318ae69ca8d5797f01497e0c2cc285e38768a5a720da5fdb1ba9c961f"
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 2.029342772,
+      "VmHWM": 67989504,
+      "VmPeak": 95404032,
+      "VmRSS": 61902848,
+      "VmSize": 89112576,
+      "fictional": true,
+      "phase": "reader",
+      "pid": 516430,
+      "stage": "TYPED_TWO_CAPTURE_METADATA_READY",
+      "wall_seconds": 1.7579920240095817
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 31.360901309,
+      "HTTP_calls": 33,
+      "VmHWM": 124936192,
+      "VmPeak": 151588864,
+      "VmRSS": 117944320,
+      "VmSize": 143835136,
+      "all_GET": true,
+      "fictional": true,
+      "phase": "reader",
+      "pid": 516430,
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_RESTORED",
+      "transfer_bytes": 4863746,
+      "wall_seconds": 31.099280130001716
+    },
+    {
+      "AS_limit": [
+        536870912,
+        536870912
+      ],
+      "CPU_limit": [
+        120,
+        120
+      ],
+      "CPU_seconds": 42.049908868,
+      "HTTP_calls": 33,
+      "P2_losses": {
+        "pass_att": 2.0,
+        "pass_cmp": 2.0,
+        "pass_int": 2.0,
+        "pass_td": 2.0,
+        "pass_yd": 1.0
+      },
+      "R0_loss": 1,
+      "VmHWM": 180920320,
+      "VmPeak": 208072704,
+      "VmRSS": 174641152,
+      "VmSize": 201281536,
+      "all_GET": true,
+      "fictional": true,
+      "known_by_at": "2026-10-28T08:03:00+00:00",
+      "outcome_states": {
+        "DNP": 1250,
+        "played_nonzero": 1250,
+        "played_zero": 1250,
+        "unknown": 6250
+      },
+      "pass_td_candidate_loss": 2,
+      "phase": "reader",
+      "pid": 516430,
+      "reader_process": "febc1a724e7c39d26c4337d583fec174102750dcbae0705f8a47ded97e628322",
+      "stage": "TWO_FULL_PARTITION_CHECKPOINT_RESTORED_AND_REPORTED",
+      "transfer_bytes": 4863746,
+      "wall_seconds": 41.790389649002464
+    }
+  ],
+  "state": "LOCAL_COMBINED_SOURCE_VERIFIED_HOSTED_PENDING"
+}

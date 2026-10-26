@@ -1,0 +1,19 @@
+{"fictional": true, "stage": "TYPED_TWO_CAPTURE_METADATA_READY", "phase": "writer", "pid": 489715, "CPU_seconds": 0.554286034, "wall_seconds": 0.105848794002668, "CPU_limit": [120, 120], "AS_limit": [536870912, 536870912], "VmPeak": 65572864, "VmSize": 64524288, "VmHWM": 39407616, "VmRSS": 37531648}
+{"fictional": true, "stage": "TWO_FULL_CAPTURES_BOUND", "phase": "writer", "pid": 489715, "CPU_seconds": 30.113315488, "wall_seconds": 29.563934063000488, "CPU_limit": [120, 120], "AS_limit": [536870912, 536870912], "VmPeak": 425152512, "VmSize": 425152512, "VmHWM": 128487424, "VmRSS": 128487424}
+{"fictional": true, "stage": "TWO_FULL_CAPTURES_GRADED", "phase": "writer", "pid": 489715, "CPU_seconds": 84.635761774, "wall_seconds": 84.09276130299259, "CPU_limit": [120, 120], "AS_limit": [536870912, 536870912], "VmPeak": 504221696, "VmSize": 497930240, "VmHWM": 189677568, "VmRSS": 183746560, "logical_bytes": 112123941, "part_bytes": [2520619, 2299194], "outcome_states": {"played_zero": 1250, "played_nonzero": 1250, "DNP": 1250, "unknown": 6250}, "collector_rows": 5000}
+{"fictional": true, "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED", "phase": "writer", "pid": 489715, "CPU_seconds": 122.99677275, "wall_seconds": 122.46154608800134, "CPU_limit": [120, 120], "AS_limit": [536870912, 536870912], "VmPeak": 512901120, "VmSize": 504508416, "VmHWM": 190349312, "VmRSS": 190349312, "HTTP_calls": 39, "transfer_bytes": 4868908, "logical_sha256": "d351d213b5d593940862e0913077266f5d8cb3170ee035eacd897cb630da4e57", "runtime_bytes": 4823285, "writer_process": "9e7a782090ca18a2e8ba5b816bf039e3b7da5e87be45df7c2ea73e8ec915649c", "outcome_states": {"played_zero": 1250, "played_nonzero": 1250, "DNP": 1250, "unknown": 6250}}
+{"fictional": true, "stage": "TYPED_TWO_CAPTURE_METADATA_READY", "phase": "reader", "pid": 489781, "CPU_seconds": 2.561073995, "wall_seconds": 2.1771493359992746, "CPU_limit": [120, 120], "AS_limit": [536870912, 536870912], "VmPeak": 96612352, "VmSize": 90320896, "VmHWM": 69373952, "VmRSS": 63348736}
+F
+=================================== FAILURES ===================================
+_ test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes _
+tests/test_audit_weekly_grade_native_memory_v1.py:599: in test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes
+    assert result.returncode==0,result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 128, in <module>
+E     KeyError: ('pass_att', 'R0')
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['/workspace/nfl-system-audit/venv/bin/python', '-B', '-c', "\nimport ast,json,socket,sys,time,r...err='Traceback (most recent call last):\n  File "<string>", line 128, in <module>\nKeyError: (\'pass_att\', \'R0\')\n').returncode
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_grade_native_memory_v1.py::test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes
+1 failed in 209.37s (0:03:29)

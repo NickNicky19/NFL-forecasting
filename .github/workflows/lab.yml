@@ -971,6 +971,10 @@ jobs:
       actions: read
     outputs:
       archive_handoff_json: ${{ steps.weekly.outputs.archive_handoff_json || steps.preserve.outputs.archive_handoff_json }}
+      grade_only_plan_json: ${{ steps.weekly.outputs.grade_only_plan_json }}
+      grade_only_plan_sha256: ${{ steps.weekly.outputs.grade_only_plan_sha256 }}
+      history_planning_json: ${{ steps.weekly.outputs.history_planning_json }}
+      history_planning_sha256: ${{ steps.weekly.outputs.history_planning_sha256 }}
       controller_template_handoff_json: ${{ steps.weekly.outputs.controller_template_handoff_json }}
       controller_template_handoff_sha256: ${{ steps.weekly.outputs.controller_template_handoff_sha256 }}
       controller_writer_native_json: ${{ steps.weekly.outputs.controller_writer_native_json }}
@@ -1039,7 +1043,7 @@ jobs:
 
   audit-weekly-restore-v1:
     needs: audit-weekly-produce-v1
-    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json != '') }}
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 && (needs.audit-weekly-produce-v1.outputs.archive_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.failure_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json != '' || needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '') }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:
@@ -1091,6 +1095,8 @@ jobs:
           AUDIT_WEEKLY_ROOT_GO_SHA256: ${{ inputs.inference_builder_go_sha256 }}
           GITHUB_TOKEN: ${{ github.token }}
           AUDIT_WEEKLY_ARCHIVE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.archive_handoff_json }}
+          AUDIT_WEEKLY_HISTORY_PLANNING_JSON: ${{ needs.audit-weekly-produce-v1.outputs.history_planning_json }}
+          AUDIT_WEEKLY_HISTORY_PLANNING_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.history_planning_sha256 }}
           AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json }}
           AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_sha256 }}
           AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_json }}
@@ -1117,7 +1123,7 @@ jobs:
 
   audit-weekly-export-v1:
     needs: [audit-weekly-produce-v1, audit-weekly-restore-v1]
-    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && (needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' || needs.audit-weekly-restore-v1.outputs.controller_template_seal_json != '') && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
+    if: ${{ !cancelled() && needs.audit-weekly-produce-v1.result == 'success' && needs.audit-weekly-restore-v1.result == 'success' && (needs.audit-weekly-restore-v1.outputs.reader_handoff_json != '' || needs.audit-weekly-restore-v1.outputs.controller_template_seal_json != '' || (needs.audit-weekly-produce-v1.outputs.grade_only_plan_json != '' && needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json != '')) && github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-producer-v1' && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 13
     permissions:
@@ -1163,6 +1169,8 @@ jobs:
           AUDIT_WEEKLY_READER_HANDOFF_JSON: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_json }}
           AUDIT_WEEKLY_READER_HANDOFF_SHA256: ${{ needs.audit-weekly-restore-v1.outputs.reader_handoff_sha256 }}
           AUDIT_WEEKLY_GRADE_HANDOFF_JSON: ${{ needs.audit-weekly-restore-v1.outputs.grade_checkpoint_handoff_json }}
+          AUDIT_WEEKLY_HISTORY_PLANNING_JSON: ${{ needs.audit-weekly-produce-v1.outputs.history_planning_json }}
+          AUDIT_WEEKLY_HISTORY_PLANNING_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.history_planning_sha256 }}
           AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_json }}
           AUDIT_WEEKLY_CONTROLLER_TEMPLATE_HANDOFF_SHA256: ${{ needs.audit-weekly-produce-v1.outputs.controller_template_handoff_sha256 }}
           AUDIT_WEEKLY_CONTROLLER_WRITER_NATIVE_JSON: ${{ needs.audit-weekly-produce-v1.outputs.controller_writer_native_json }}

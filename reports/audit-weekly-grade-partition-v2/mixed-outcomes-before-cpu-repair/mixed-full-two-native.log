@@ -1,0 +1,14 @@
+{"fictional": true, "stage": "TYPED_TWO_CAPTURE_METADATA_READY", "phase": "writer", "pid": 485511, "CPU_seconds": 0.659006593, "wall_seconds": 0.12316789399483241, "VmPeak": 64856064, "VmSize": 63807488, "VmHWM": 38699008, "VmRSS": 36827136}
+{"fictional": true, "stage": "TWO_FULL_CAPTURES_BOUND", "phase": "writer", "pid": 485511, "CPU_seconds": 39.63487558, "wall_seconds": 39.01971195900114, "VmPeak": 427114496, "VmSize": 427114496, "VmHWM": 130543616, "VmRSS": 130543616}
+{"fictional": true, "stage": "TWO_FULL_CAPTURES_GRADED", "phase": "writer", "pid": 485511, "CPU_seconds": 96.04811218, "wall_seconds": 95.43855586199788, "VmPeak": 504152064, "VmSize": 501006336, "VmHWM": 189845504, "VmRSS": 186871808, "logical_bytes": 111964971, "part_bytes": [2520630, 2299753], "outcome_states": {"played_zero": 1250, "played_nonzero": 1250, "DNP": 1250, "unknown": 6250}, "collector_rows": 5000}
+{"fictional": true, "stage": "TWO_FULL_PARTITION_CHECKPOINT_APPENDED", "phase": "writer", "pid": 485511, "CPU_seconds": 134.094436225, "wall_seconds": 133.48638040799415, "VmPeak": 512303104, "VmSize": 503910400, "VmHWM": 189845504, "VmRSS": 189706240, "HTTP_calls": 39, "transfer_bytes": 4869479, "logical_sha256": "f0229e3a8f0933c2fb3c24f0d5600b895e812561ae7d66ef49d18db3b2eff829", "runtime_bytes": 4823856, "writer_process": "095e2c52e1fabb954a099a81152b7cebcfb4c3a748d4bc269842a2e4511bd3cd", "outcome_states": {"played_zero": 1250, "played_nonzero": 1250, "DNP": 1250, "unknown": 6250}}
+F
+=================================== FAILURES ===================================
+_ test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes _
+tests/test_audit_weekly_grade_native_memory_v1.py:601: in test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes
+    assert all(v["VmPeak"]<=512<<20 and v["CPU_seconds"]<120 and v["wall_seconds"]<180 for v in values)
+E   assert False
+E    +  where False = all(<generator object test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes.<locals>.<genexpr> at 0x7fc9d65c2190>)
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_grade_native_memory_v1.py::test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes
+1 failed in 170.98s (0:02:50)

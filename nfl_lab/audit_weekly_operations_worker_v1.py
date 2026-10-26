@@ -5,7 +5,9 @@ retention/replay happen UPSTREAM; this worker accepts their authenticated owned
 metadata references. Root v2 history is independently recovered through live
 native GETs before population reconciliation. No calendar download, model
 restore/inference, new labels, grading, dispatch or publication occurs here.
-Same-week scope uses unchanged resume/calendar/role/population APIs.
+Same-week scope uses unchanged resume/calendar/role/population APIs. An explicit
+Root v3 plan can instead grade original preassigned captures or select a later
+REG week from independently recovered durable current-epoch history.
 
 The hosted child_context and operations_authority modules are parent-owned.
 They must accept recurring ROOTs and this phase before genuine execution. No
@@ -231,6 +233,9 @@ def prepare(context, *, clock=None, transport=None):
     validate_request(request, PHASE)
     operations.context(context.go["effective_epoch"])
     locator = history.previous_checkpoint(context.go)
+    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4 and locator is not None:
+        require(locator.get("schema_version")==history.LOCATOR_REF,"EXPLICIT_V4_HISTORY_LOCATOR_REQUIRED")
+        history.require_latest(context.client,locator)
     pair = inputs["previous_grade_snapshot"]
     require((locator is None) == (pair is None), "EXACT_ROOT_HISTORY_INPUT_PAIR_REQUIRED")
     if pair is not None:
@@ -290,9 +295,71 @@ def prepare(context, *, clock=None, transport=None):
     require(not Path(request["output"]).exists(), "ONE_OPERATIONS_PREPARE_NO_RETRY")
     output = Path(request["output"])
     storage.register_root(output)
-    resumed = resume.resume(retained, inputs["retained_models"], schedule, storage=storage, output=output / "resume",
+    declared = context.go["effective_epoch"].get("plan")
+    if declared is None:
+        declared = dict(kind="FUTURE_CAPABLE", season=old_choice["slate"]["season"], week=old_choice["slate"]["week"])
+    require(declared["season"] == old_choice["slate"]["season"] and declared["week"] >= old_choice["slate"]["week"],
+        "ROOT_PLAN_CANNOT_CHANGE_SEASON_OR_RETURN_TO_OLD_WEEK")
+    anchor = resume._restore_anchor(retained, inputs["retained_models"], schedule, storage=storage, output=output/"resume",
         original_weekly_choice_sha256=inputs["canonical_weekly_choice_sha256"], authenticate=auth,
         authenticate_calendar=calendar_auth, clock=clock)
+    full = operations.calendar(raw, season=declared["season"], week=declared["week"])
+    target_schedule = [{key:row[key] for key in ("season", "week", "game_type", "game_id", "kickoff_utc")} for row in full]
+    lead = context.go.get("cutoff_lead_seconds", 900)
+    expected_plan = dict(original_choice_sha256=anchor["original"].sha256, full_schedule=target_schedule,
+        cutoff_lead_seconds=lead)
+    def plan_auth(value):
+        context.verify()
+        if value.get("kind") == "RECURRING_EXECUTION_PLAN_BEFORE_VALUES":
+            return value.get("inputs_sha256") == grade._digest(expected_plan)
+        if value.get("kind") == "NEXT_FULL_WEEK_SLATE_BEFORE_VALUES":
+            from .weekly_generic_producer import prepare_slate
+            from datetime import timedelta
+            cutoffs = {r["game_id"]:(state.utc(r["kickoff_utc"])-timedelta(seconds=lead)).isoformat() for r in target_schedule}
+            slate = prepare_slate(target_schedule, season=declared["season"], week=declared["week"], game_cutoffs=cutoffs, now=anchor["at"])
+            return value.get("inputs_sha256") == grade._digest(dict(slate=slate, full_schedule=target_schedule))
+        return False
+    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4 and locator is not None:
+        history.require_latest(context.client,locator)
+        require(verified is not None and "planning" in verified.proof,"LIVE_PRIVATE_HISTORY_PLANNING_REQUIRED")
+        expected=history.next_plan(verified.proof["planning"],at=state.utc(context.go["issued_at_utc"]))
+        require(expected==declared,"EXACT_PARENT_ROUTING_FROM_FRESHEST_PRIVATE_CAUSAL_HISTORY")
+    target, execution = operations.recurring_plan(anchor["registered"], anchor["original"], target_schedule,
+        authenticate=plan_auth, durable=previous, cutoff_lead_seconds=lead,
+        relocated_replays=(anchor["replay"],), clock=lambda:anchor["at"])
+    planning=None
+    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4:
+        require(state.digest(target_schedule)==declared["calendar_sha256"],"ROOT_FROZEN_COMPLETE_CALENDAR_CHANGED")
+        if declared["kind"]=="FUTURE_CAPABLE":
+            expected=target.document["slate"]["game_cutoffs"]
+            if declared["week"]==anchor["original"].document["slate"]["week"]:
+                expected={r["game_id"]:expected[r["game_id"]] for r in target_schedule if state.utc(r["kickoff_utc"])>anchor["at"]}
+            require(expected==declared["game_cutoffs"] and state.utc(clock())<state.utc(declared["deadline_utc"]),
+                "ACTUAL_FROZEN_DEADLINE_AND_CUTOFFS_BEFORE_NEW_VALUES")
+        planning=operations.planning_seed(anchor["registered"],target,target_schedule,raw,receipt,cutoff_lead_seconds=lead)
+    if context.go["effective_epoch"].get("schema_version") not in {operations.CONTEXT_V3,operations.CONTEXT_V4} and execution["kind"] == "GRADE_ONLY":
+        resume._calendar(schedule, anchor["original"], anchor["at"])
+    require(declared["kind"] != "GRADE_ONLY" or execution["kind"] == "GRADE_ONLY", "EXPLICIT_GRADE_ONLY_PLAN_CANNOT_CAPTURE")
+    if execution["kind"] == "GRADE_ONLY":
+        require(declared["kind"] == "GRADE_ONLY", "EXPLICIT_ROOT_GRADE_ONLY_PLAN_REQUIRED")
+        require(previous is not None and pair is not None and {"context/ops_population.json", "context/ops_roles.json", "context/ops_schedule.json"} <= set(retained["aliases"]),
+            "ORIGINAL_PREVALUE_PRIMARY_CAPTURES_REQUIRED_NO_POSTHOC_ASSIGNMENT")
+        require(declared["week"] == old_choice["slate"]["week"], "GRADE_ONLY_RETAINS_ORIGINAL_WEEK")
+        manifest = dict(schema_version=VERSION+"-prepared", state="ORIGINAL_CAPTURES_GRADE_ONLY_READY_LOCAL",
+            current_root_go_sha256=context.root_sha256, execution_plan=execution, current_values_used=False,
+            inputs=None, archive_context={}, grade_inputs=dict(retained_result=inputs["retained_result"], previous_grade_snapshot=pair),
+            actual_completed_at=state.utc(clock()).isoformat(), no_reselection=True, no_cutoff_extension=True,
+            fits=0, model_decodes=0, source_acquisitions=0, label_acquisitions=0, public_release=False, successful_forecast=False)
+        if planning is not None:manifest["history_planning"]=planning
+        context.verify(); verified.verify()
+        ref = runtime.write(storage, output/"PREPARED.json", manifest)
+        return dict(state=manifest["state"], manifest=ref, fits=0, public_release=False, successful_forecast=False)
+    if target.document["slate"]["week"] > anchor["original"].document["slate"]["week"]:
+        resumed = resume.prepare_next(anchor, target, target_schedule, inputs["retained_models"], storage=storage,
+            output=output/"resume", clock=clock)
+    else:
+        resumed = resume._resume_anchor(anchor, retained, inputs["retained_models"], schedule, storage=storage,
+            output=output / "resume", authenticate_calendar=calendar_auth, clock=clock)
     require(verified is None or verified.registered.epoch.sha256 == resumed.registered.epoch.sha256,
             "EXACT_RESUMED_REGISTERED_HISTORY_EPOCH_REQUIRED")
     require(read_bytes[0] + resumed.document["metadata_bytes_read"] + sum(ref["bytes"] for ref in models["models"])
@@ -342,6 +409,7 @@ def prepare(context, *, clock=None, transport=None):
         canonical_weekly_choice=resumed.document["canonical_weekly_choice"],
         capture_scope=resumed.document["capture_scope_binding"],
         ops_previous_checkpoint=verified.binding if verified is not None else None)
+    if planning is not None:refs["ops_planning"]=runtime.write(storage,output/"HISTORY_PLANNING.json",planning)
     if verified is not None:
         refs.update(zip(HISTORY_ARCHIVE_ROLES, (pair["sidecar"], pair["public_receipt"])))
     assignment_ref = runtime.write(storage, output / "ASSIGNMENT.json", assignment)
@@ -350,6 +418,7 @@ def prepare(context, *, clock=None, transport=None):
         verified.verify()
     scope = resumed.document["capture_scope"]
     manifest = dict(schema_version=VERSION + "-prepared", state="SAME_WEEK_PREVALUE_METADATA_READY_LOCAL",
+        execution_plan=execution,
         current_root_go_sha256=context.root_sha256, native_authority_sha256=state.digest(context.authority),
         request_sha256=state.digest(request), actual_completed_at=state.utc(clock()).isoformat(),
         capture_id=inputs["capture_id"], epoch_sha256=resumed.registered.epoch.sha256, choice_sha256=resumed.choice.sha256,
@@ -372,7 +441,9 @@ def run(args, env, *, transport=None):
 def contract():
     return dict(schema_version=VERSION + "-contract", state="PARENT_ROOT_AND_NATIVE_PHASE_WIRING_REQUIRED",
         supported_phases=[PHASE], unimplemented_phases=list(PENDING_PHASES), request_keys=sorted(REQUEST_KEYS),
-        input_keys=sorted(INPUT_KEYS), limits=LIMITS, same_week_only=True, upstream_exact_receipt_discovery_required=True,
+        input_keys=sorted(INPUT_KEYS), limits=LIMITS, same_week_only=False, upstream_exact_receipt_discovery_required=True,
+        same_week_future_guards_unchanged=True, later_week_requires_durable_resolved_history=True,
+        grade_only_requires_original_prevalue_population=True, scheduled_grade_only_discovery_ready=False,
         previous_checkpoint_requires_unimplemented_live_native_restore=False,
         history_input_keys=sorted(HISTORY_INPUT_KEYS), history_archive_roles=list(HISTORY_ARCHIVE_ROLES),
         history_requires_live_native_restore=True, history_json_is_authority=False,

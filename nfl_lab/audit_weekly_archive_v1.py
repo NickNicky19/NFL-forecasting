@@ -37,6 +37,7 @@ LIMITS = dict(wall_seconds=180, CPU_seconds=120, address_space_bytes=512 << 20,
 CONTEXT = {"epoch", "epoch_registration", "original_choice", "origin_witness", "original_slate",
     "original_catalog", "original_policy", "retained_models", "prepared", "source"}
 OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope"}
+OPERATIONS_PLANNING_CONTEXT = {"ops_planning"}
 OPERATIONS_HISTORY_CONTEXT = {"ops_previous_checkpoint_sidecar", "ops_previous_public_receipt"}
 CONTROL_FILES = {"CONSUMED.json", "RUNTIME_RECIPE.json", "WEEKLY_CHOICE.json", "ARTIFACT_CATALOG.json",
     "SELECTED_VERSION_CATALOG.json", "POPULATION.json", "MODEL_ATTEMPTS.json", "FINISHED.json",
@@ -209,10 +210,10 @@ origin witness and the separately qualified retained-model restore receipt.
 No old completion is invented. Missing files force a failure archive.
 """
     require(type(context) is dict and CONTEXT <= set(context)
-        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
     history=set(context) & OPERATIONS_HISTORY_CONTEXT
     require(not history or history == OPERATIONS_HISTORY_CONTEXT,"PAIRED_OPERATIONAL_HISTORY_REFERENCES_REQUIRED")
-    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
+    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
     require(not operations or OPERATIONS_CONTEXT <= set(context), "COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED")
     root=store.parents_safe(runtime_root);output=fresh(storage,output)
     entries={};physical_origins={}

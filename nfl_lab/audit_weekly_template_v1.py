@@ -209,7 +209,7 @@ def _readiness(value):
 
 
 def _document(value):
-    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] == VERSION+'-static'
+    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] in {VERSION+'-static',VERSION+'-static-v2'}
         and hashed(value['source_sha'],40), 'CLOSED_STATIC_TEMPLATE_DOCUMENT')
     _pins(value['code_pins']); _readiness(value['readiness'])
     root = value['root_template']

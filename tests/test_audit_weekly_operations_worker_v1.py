@@ -347,7 +347,10 @@ def test_closed_request_does_not_admit_scope_caps_paths_or_authority_flags(compo
 def test_contract_lists_pending_phases_and_previous_checkpoint_boundary(capsys):
     assert cli.main(["contract"]) == 2
     value = json.loads(capsys.readouterr().out)
-    assert value["supported_phases"] == [w.PHASE] and value["same_week_only"] is True
+    assert value["supported_phases"] == [w.PHASE] and value["same_week_only"] is False
+    assert value["same_week_future_guards_unchanged"] is value["later_week_requires_durable_resolved_history"] is True
+    assert value["grade_only_requires_original_prevalue_population"] is True
+    assert value["scheduled_grade_only_discovery_ready"] is False
     assert value["previous_checkpoint_requires_unimplemented_live_native_restore"] is False
     assert value["history_requires_live_native_restore"] is True and value["history_json_is_authority"] is False
     assert set(value["history_input_keys"]) == {"sidecar", "public_receipt"}

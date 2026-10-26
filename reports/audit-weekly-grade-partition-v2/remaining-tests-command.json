@@ -1,0 +1,27 @@
+{
+  "whole_modules": [
+    "tests/test_audit_weekly_grade_v1.py",
+    "tests/test_audit_weekly_grade_checkpoint_v1.py",
+    "tests/test_audit_weekly_grade_recurring_v1.py"
+  ],
+  "native_nodes": [
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_paged_originals_keep_all_values_and_read_operations",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_incremental_snapshot_is_exact_original_canonical_and_gzip",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_v2_fragments_are_literal_original_canonical_bytes_across_utf8",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_v2_local_manifest_rejects_incomplete_reordered_or_false_parts",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_json_stream_handles_split_utf8_numbers_and_bounded_reads",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_restore_keeps_original_json_byte_encoding_support",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_streaming_decode_keeps_strict_json_rejections",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_gzip_crc_truncation_multiple_members_and_decoded_cap",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_source_stream_limits_and_immutable_original_bytes",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_snapshot_caps_reject_whole_history_without_publishing_or_deleting",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_record_batch_preserves_original_records_bytes_order_and_digests",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_record_batch_existing_gzip_header_and_noop_cap_match_original",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_record_batch_failure_keeps_published_evidence_and_restores_seams",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_record_batch_keeps_logical_and_global_quota_checks",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_record_batch_does_not_accept_matching_unowned_record",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_compact_scans_preserve_full_census_hashes_roots_and_guards",
+    "tests/test_audit_weekly_grade_native_memory_v1.py::test_full_capture_grade_and_checkpoint_under_actual_native_limits"
+  ],
+  "native_node_already_running": "tests/test_audit_weekly_grade_native_memory_v1.py::test_two_full_disjoint_captures_partition_checkpoint_in_separate_native_processes"
+}

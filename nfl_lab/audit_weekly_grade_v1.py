@@ -32,10 +32,16 @@ from . import weekly_grading as grading, weekly_adaptive as selector
 from . import gha_private_checkpoint as cp, private_draft_store as store, state
 from . import audit_weekly_retained_v1 as retained, weekly_durable_acceptance as acceptance
 from .operational_io import operational_io
-from .operational_storage import StorageIntegrityError, StorageQuotaError, _digest_file, _no_symlinks
+from .operational_storage import OperationalStorage, StorageIntegrityError, StorageQuotaError, _digest_file, _no_symlinks
 from .owned_reference_batch import validate_owned_references
 
 VERSION = "audit-weekly-grade-v1"
+SNAPSHOT_WIRE_V2 = "audit-weekly-grade-snapshot-v2"
+CHECKPOINT_WIRE_V2 = "audit-weekly-grade-checkpoint-v2-root"
+# The original single-document guards below remain unchanged. The separate
+# v2 wire has at most two bounded fragments and one small private root.
+PARTITION_LIMITS = dict(parts=2, decoded_bytes=128 << 20, encoded_bytes=16 << 20, manifest_bytes=64 << 10)
+PART_KEYS = {"index", "name", "bytes", "sha256", "decoded_bytes", "decoded_sha256"}
 LIMITS = dict(captures=36, forecast_rows=648000, opportunities=36000,
     observation_rows=36000, revisions=144000, games=576, encoded_bytes=8 << 20,
     decoded_bytes=64 << 20, row_bytes=32768, wall_seconds=180, CPU_seconds=120,
@@ -316,6 +322,101 @@ def _read_owned(storage, ref, cap=2 << 20, *, raw=False):
     require(type(ref) is dict and set(ref) == {"path", "bytes", "sha256"}
         and type(ref["bytes"]) is int and 0 < ref["bytes"] <= cap, "EXACT_CHECKPOINT_REFERENCE")
     return archive.read_owned(storage, ref, ref["bytes"], raw=raw)
+
+
+def _read_owned_many(storage, refs, cap=2 << 20):
+    """Read one finite grading cohort under the unchanged global quota flock.
+
+    Only redundant full scans between at most two immutable reads are removed.
+    Every original validate_reference check runs before and after each exact
+    byte read, and again before return. Fresh registry/full scans bracket the
+    complete cohort, including failures. These bytes confer no Root authority.
+    """
+    require(isinstance(storage, OperationalStorage)
+        and type(refs) in (list, tuple) and 0 < len(refs) <= PARTITION_LIMITS["parts"]
+        and type(cap) is int and 0 < cap <= LIMITS["encoded_bytes"], "FINITE_PRIVATE_GRADING_READ_COHORT")
+    for ref in refs:
+        require(type(ref) is dict and set(ref) == {"path", "bytes", "sha256"}
+            and type(ref["bytes"]) is int and 0 < ref["bytes"] <= cap
+            and isinstance(ref["path"], (str, Path)) and Path(ref["path"]).is_absolute()
+            and type(ref["sha256"]) is str and store.HASH.fullmatch(ref["sha256"]), "EXACT_CHECKPOINT_REFERENCE")
+    def checked(ref):
+        # Same per-reference body as the original owned-reference validator;
+        # retain it at each actual read rather than trusting an earlier census.
+        path = storage._check(ref["path"]); info = path.lstat()
+        if info.st_mode & 0o222 or not stat.S_ISREG(info.st_mode):
+            raise StorageIntegrityError("published reference must be readonly")
+        sha = _digest_file(path)
+        if sha != ref["sha256"] or info.st_size != ref["bytes"]:
+            raise StorageIntegrityError("published reference hash or size mismatch")
+        blob = storage.blob_root/sha; storage._verify_blob(blob)
+        if not os.path.samestat(info, blob.lstat()):
+            raise StorageIntegrityError("reference is not an owned blob alias")
+        return path
+    bodies = []; completed = []
+    with storage._locked():
+        try:
+            storage._refresh(); storage._scan()
+            paths = set()
+            for ref in refs:
+                path = checked(ref)
+                require(path not in paths, "UNIQUE_PRIVATE_GRADING_READ_COHORT"); paths.add(path)
+                bodies.append(cp.read_ref(ref, ref["bytes"]))
+                checked(ref); completed.append(ref)
+        finally:
+            storage._refresh(); storage._scan()
+            for ref in completed: checked(ref)
+    return bodies
+
+
+def _write_owned(storage, path, body):
+    """Same immutable publication, with one fresh quota census per write.
+
+    The original write_bytes scans immediately before computing the body SHA,
+    then _require repeats the census before any filesystem change. Under the
+    same exclusive flock the first physical count supplies that exact incoming
+    byte predicate. Never reuse it across calls or native transports. All CAS,
+    readonly, fsync, alias, existing-path and partial-failure checks remain.
+    """
+    require(isinstance(storage, OperationalStorage) and type(body) is bytes
+        and 0 < len(body) <= LIMITS["encoded_bytes"], "FINITE_IMMUTABLE_GRADING_WRITE")
+    with storage._locked():
+        storage._refresh(); path = storage._check(path); usage = storage._scan()
+        sha = store.sha(body); blob = storage.blob_root/sha
+        if path.exists():
+            if blob.exists() and os.path.samestat(path.stat(), blob.stat()):
+                storage._verify_blob(blob); return len(body)
+            raise FileExistsError(path)
+        if blob.exists(): storage._verify_blob(blob)
+        else:
+            if usage["physical_bytes"] + len(body) > storage.limit_bytes:
+                raise StorageQuotaError("incoming bytes exceed shared operational quota before write; evidence preserved")
+            temporary, descriptor = storage._temporary(storage.control_root, ".incoming-")
+            try:
+                storage._write_all(descriptor, body); os.fsync(descriptor)
+            finally: os.close(descriptor)
+            blob = storage._publish_blob(temporary, sha)
+        storage._alias(blob, path, False)
+        return len(body)
+
+
+def _observation_record(reader):
+    """C JSON decoding for bounded scalar collector metadata; same strict hooks.
+
+    Large, nested, or other record shapes retain the original paged parser.
+    No decoded/row ceiling changes, and gzip EOF/CRC is consumed before a fast
+    result. The caller still checks canonical identity and original CAS bytes.
+    """
+    ceiling = min(LIMITS["row_bytes"], LIMITS["decoded_bytes"])
+    body = reader.read(ceiling + 1)
+    if len(body) <= ceiling:
+        document = json.loads(body, object_pairs_hook=_JSONStream.pairs, parse_constant=_JSONStream.bad_constant)
+        required = {"player_id","game_id","target","actual","participation_state","source","source_sha256","status_sha256","observed_at","source_timestamp"}
+        if (type(document) is dict and required <= set(document) <= required | {"identity_quarantined","scoring_id","period"}
+            and all(value is None or type(value) in (str, bool, int, float) for value in document.values())):
+            return document
+    reader.seek(0)
+    return _JSONStream(reader, LIMITS["decoded_bytes"]).load()
 
 
 def pins():
@@ -873,6 +974,153 @@ def _write_snapshot(storage, output, document):
     return {key:owned[key] for key in ("path", "bytes", "sha256")}
 
 
+def _partition_manifest(value):
+    require(type(value) is dict and set(value) == {"schema_version", "logical_sha256", "logical_bytes", "parts"}
+        and value["schema_version"] == SNAPSHOT_WIRE_V2
+        and type(value["logical_sha256"]) is str and store.HASH.fullmatch(value["logical_sha256"])
+        and type(value["logical_bytes"]) is int and 0 < value["logical_bytes"] <= PARTITION_LIMITS["decoded_bytes"]
+        and type(value["parts"]) is list and 0 < len(value["parts"]) <= PARTITION_LIMITS["parts"],
+        "CLOSED_BOUNDED_GRADING_PARTITION_MANIFEST")
+    for index, part in enumerate(value["parts"]):
+        require(type(part) is dict and set(part) == PART_KEYS and type(part["index"]) is int and part["index"] == index
+            and all(type(part[k]) is str and store.HASH.fullmatch(part[k]) for k in ("sha256", "decoded_sha256"))
+            and part["name"] == f"GRADING_PART_{index:02d}_{part['sha256']}.json.gz"
+            and type(part["bytes"]) is int and 0 < part["bytes"] <= LIMITS["encoded_bytes"]
+            and type(part["decoded_bytes"]) is int and 0 < part["decoded_bytes"] <= LIMITS["decoded_bytes"],
+            "EXACT_ORDERED_GRADING_PARTITION")
+    require(sum(p["decoded_bytes"] for p in value["parts"]) == value["logical_bytes"]
+        and sum(p["bytes"] for p in value["parts"]) <= PARTITION_LIMITS["encoded_bytes"]
+        and len(state.canonical(value)) <= PARTITION_LIMITS["manifest_bytes"], "FINITE_COMPLETE_GRADING_PARTITIONS")
+    return value
+
+
+def _manifest_body(value):
+    _partition_manifest(value)
+    body = gzip.compress(state.canonical(value), mtime=0)
+    require(len(body) <= PARTITION_LIMITS["manifest_bytes"], "FINITE_GRADING_PARTITION_ROOT")
+    return body
+
+
+def _write_snapshot_v2(storage, output, document, *, part_bytes=None):
+    """Lossless canonical byte fragments; publish the local root last.
+
+    part_bytes may only lower the original per-part ceiling. It is a framing
+    parameter, never permission to exceed the decoded/encoded/count guards.
+    """
+    part_bytes = LIMITS["decoded_bytes"] if part_bytes is None else part_bytes
+    require(type(part_bytes) is int and 0 < part_bytes <= LIMITS["decoded_bytes"], "ORIGINAL_GRADING_PART_CEILING")
+    parts = []; logical = hashlib.sha256(); total = 0
+    compressor = zlib.compressobj(9, zlib.DEFLATED, -15)
+    encoded = io.BytesIO(); encoded.write(gzip.compress(b"", mtime=0)[:10])
+    decoded = crc = 0; digest = hashlib.sha256()
+    def finish():
+        nonlocal compressor, encoded, decoded, crc, digest
+        require(len(parts) < PARTITION_LIMITS["parts"], "FINITE_GRADING_PART_COUNT_NO_ROW_DROPS")
+        encoded.write(compressor.flush()); encoded.write(struct.pack("<LL", crc, decoded))
+        require(encoded.tell() <= LIMITS["encoded_bytes"], "FULL_GRADING_SNAPSHOT_ASSET_BOUND_NO_TRUNCATION")
+        body = encoded.getvalue(); sha = store.sha(body); index = len(parts)
+        name = f"GRADING_PART_{index:02d}_{sha}.json.gz"
+        _write_owned(storage, Path(output)/name, body)
+        ref = storage.validate_reference(Path(output)/name, sha)
+        require(ref["bytes"] == len(body), "EXACT_WRITTEN_GRADING_PART_BYTES")
+        parts.append(dict(index=index, name=name, bytes=len(body), sha256=sha,
+            decoded_bytes=decoded, decoded_sha256=digest.hexdigest()))
+        require(sum(p["bytes"] for p in parts) <= PARTITION_LIMITS["encoded_bytes"], "FINITE_GRADING_PARTITION_BYTES")
+        compressor = zlib.compressobj(9, zlib.DEFLATED, -15)
+        encoded = io.BytesIO(); encoded.write(gzip.compress(b"", mtime=0)[:10])
+        decoded = crc = 0; digest = hashlib.sha256()
+    for chunk in _canonical_chunks(document):
+        offset = 0
+        while offset < len(chunk):
+            require(len(parts) < PARTITION_LIMITS["parts"], "FINITE_GRADING_PART_COUNT_NO_ROW_DROPS")
+            block = chunk[offset:offset+min(len(chunk)-offset, part_bytes-decoded)]; offset += len(block)
+            logical.update(block); digest.update(block); total += len(block); decoded += len(block)
+            require(total <= PARTITION_LIMITS["decoded_bytes"], "FINITE_V2_GRADING_LOGICAL_BYTES")
+            crc = zlib.crc32(block, crc); encoded.write(compressor.compress(block))
+            require(encoded.tell() <= LIMITS["encoded_bytes"], "FULL_GRADING_SNAPSHOT_ASSET_BOUND_NO_TRUNCATION")
+            if decoded == part_bytes: finish()
+    if decoded: finish()
+    manifest = dict(schema_version=SNAPSHOT_WIRE_V2, logical_sha256=logical.hexdigest(), logical_bytes=total, parts=parts)
+    body = _manifest_body(manifest)
+    path = Path(output)/"GRADING_SNAPSHOT.json.gz"
+    _write_owned(storage, path, body)
+    ref = storage.validate_reference(path, store.sha(body))
+    return {k:ref[k] for k in ("path", "bytes", "sha256")}
+
+
+def _write_snapshot_wire(storage, output, document, wire_version=None):
+    require(wire_version is None or type(wire_version) is int and wire_version in {1, 2}, "EXPLICIT_GRADING_SNAPSHOT_WIRE")
+    if wire_version is None:
+        size = 0
+        for chunk in _canonical_chunks(document):
+            size += len(chunk)
+            if size > LIMITS["decoded_bytes"]: break
+        wire_version = 2 if size > LIMITS["decoded_bytes"] else 1
+    return (_write_snapshot_v2 if wire_version == 2 else _write_snapshot)(storage, output, document)
+
+
+def _wire_manifest(wire):
+    if wire.get("schema_version") == SNAPSHOT_WIRE_V2: return _partition_manifest(wire)
+    require(set(wire) == {"schema_version", "snapshot_manifest", "snapshot_body_sha256", "parts"}
+        and wire["schema_version"] == CHECKPOINT_WIRE_V2, "CLOSED_PRIVATE_GRADING_CHECKPOINT_ROOT")
+    manifest = _partition_manifest(wire["snapshot_manifest"])
+    require(wire["snapshot_body_sha256"] == store.sha(_manifest_body(manifest))
+        and type(wire["parts"]) is list and len(wire["parts"]) == len(manifest["parts"]),
+        "EXACT_LOCAL_AND_NATIVE_GRADING_ROOT")
+    for part, record in zip(manifest["parts"], wire["parts"]):
+        require(type(record) is dict and set(record) == {"index", "descriptor", "append_proof"}
+            and type(record["index"]) is int and record["index"] == part["index"], "ORDERED_PRIVATE_GRADING_DESCRIPTORS")
+        entry = cp.descriptor_meta(record["descriptor"], LIMITS["encoded_bytes"])
+        require(entry["payload"]["sha256"] == part["sha256"] and entry["payload"]["bytes"] == part["bytes"],
+            "PRIVATE_GRADING_PART_DESCRIPTOR_BYTES")
+    return manifest
+
+
+class _PartitionStream:
+    """Bounded reads verify every compressed/decoded fragment and whole stream."""
+    def __init__(self, storage, directory, manifest):
+        self.storage, self.directory, self.manifest = storage, directory, manifest
+        refs = [dict(path=str(directory/part["name"]), bytes=part["bytes"], sha256=part["sha256"])
+            for part in manifest["parts"]]
+        self.encoded = _read_owned_many(storage, refs, LIMITS["encoded_bytes"])
+        self.index = 0; self.stream = None; self.total = 0; self.digest = hashlib.sha256()
+        self.decoded = 0; self.part_digest = None; self.done = False
+    def read(self, size):
+        require(type(size) is int and 0 < size <= 32768, "BOUNDED_GRADING_PART_READ")
+        while not self.done:
+            if self.stream is None:
+                if self.index == len(self.manifest["parts"]):
+                    require(self.total == self.manifest["logical_bytes"] and self.digest.hexdigest() == self.manifest["logical_sha256"],
+                        "COMPLETE_GRADING_LOGICAL_BYTE_HASH")
+                    self.done = True; return b""
+                part = self.manifest["parts"][self.index]
+                body = self.encoded.pop(0)
+                self.stream = gzip.GzipFile(fileobj=io.BytesIO(body)); self.decoded = 0; self.part_digest = hashlib.sha256()
+            part = self.manifest["parts"][self.index]
+            block = self.stream.read(min(size, part["decoded_bytes"]-self.decoded+1))
+            if block:
+                self.decoded += len(block); self.total += len(block); self.part_digest.update(block); self.digest.update(block)
+                require(self.decoded <= part["decoded_bytes"] <= LIMITS["decoded_bytes"]
+                    and self.total <= self.manifest["logical_bytes"] <= PARTITION_LIMITS["decoded_bytes"], "EXACT_BOUNDED_GRADING_PART_DECODE")
+                return block
+            require(self.decoded == part["decoded_bytes"] and self.part_digest.hexdigest() == part["decoded_sha256"],
+                "EXACT_DECODED_GRADING_PART_HASH")
+            self.stream.close(); self.stream = None; self.index += 1
+        return b""
+
+
+def _load_snapshot(storage, ref):
+    encoded = _read_owned(storage, ref, LIMITS["encoded_bytes"], raw=True)
+    wire = _unpack(encoded, LIMITS["decoded_bytes"])
+    if type(wire) is not dict or wire.get("schema_version") not in {SNAPSHOT_WIRE_V2, CHECKPOINT_WIRE_V2}: return wire
+    require(len(encoded) <= PARTITION_LIMITS["manifest_bytes"], "FINITE_GRADING_PARTITION_ROOT")
+    manifest = _wire_manifest(wire)
+    stream = _PartitionStream(storage, Path(ref["path"]).parent, manifest)
+    document = _JSONStream(stream, manifest["logical_bytes"]).load()
+    require(stream.done and _digest(document) == manifest["logical_sha256"], "EXACT_ASSEMBLED_GRADING_DOCUMENT")
+    return document
+
+
 def _record_body(document, maximum):
     """The unchanged state.save canonical digest and gzip bytes, streamed."""
     digest = hashlib.sha256(); compressor = zlib.compressobj(9, zlib.DEFLATED, -15)
@@ -1012,7 +1260,7 @@ def _record_batch(storage, root):
                     if str(path) in refs and refs[str(path)] != sha:
                         raise StorageIntegrityError("immutable grading record changed")
                     with gzip.open(path, "rb") as reader:
-                        document = _JSONStream(reader, LIMITS["decoded_bytes"]).load()
+                        document = _observation_record(reader) if kind == "outcomes" else _JSONStream(reader, LIMITS["decoded_bytes"]).load()
                     if _digest(document) != path.name.removesuffix(".json.gz"):
                         raise ValueError(f"immutable record hash mismatch: {path}")
                     if _digest_file(path) != sha:
@@ -1035,7 +1283,7 @@ def _record_batch(storage, root):
 
 
 @_scanned_storage
-def grade(registered, captures, batches, *, storage, output, previous=None, clock=now):
+def grade(registered, captures, batches, *, storage, output, previous=None, clock=now, wire_version=None):
     """Append existing resolver revisions. Local completion grants NO durability.
 
     Previous pending snapshots are allowed so interruptions/failures survive.
@@ -1136,7 +1384,7 @@ def grade(registered, captures, batches, *, storage, output, previous=None, cloc
         scientific_qualification=False,public_release=False,fits=0,searches=0,code_pins=pins())
     for version in versions:
         version["snapshot"]["rows"] = _PagedRows(version["snapshot"]["rows"])
-    ref = _write_snapshot(storage,output,document)
+    ref = _write_snapshot_wire(storage,output,document,wire_version)
     result = Snapshot(document,_KEY); result.binding = ref; result._binding_sha256 = state.digest(ref)
     return result
 
@@ -1146,8 +1394,7 @@ def restore_snapshot(storage, ref, registered, *, authenticate, at):
     """Authenticate a parent-restored grading snapshot before decoding bytes."""
     require(type(registered) is epoch.RegisteredEpoch, "TYPED_REGISTERED_EPOCH_REQUIRED"); registered.verify(state.utc(at))
     _authenticate(authenticate,"QUALIFIED_PREVIOUS_GRADING_SNAPSHOT",dict(binding=ref,epoch_sha256=registered.epoch.sha256),at)
-    encoded = _read_owned(storage,ref,LIMITS["encoded_bytes"],raw=True)
-    doc = _unpack(encoded,LIMITS["decoded_bytes"])
+    doc = _load_snapshot(storage,ref)
     require(set(doc) == SNAPSHOT_KEYS and doc["schema_version"] == VERSION+"-snapshot" and doc["epoch_sha256"] == registered.epoch.sha256
         and doc["legacy_history_binding"] == registered.epoch.origin["history_binding"] and doc["code_pins"] == pins(),
         "EXACT_PARENT_RESTORED_CURRENT_EPOCH_GRADING_STATE")
@@ -1160,11 +1407,11 @@ def restore_snapshot(storage, ref, registered, *, authenticate, at):
 
 
 @_scanned_storage
-def persist_snapshot(snapshot, *, storage, output):
+def persist_snapshot(snapshot, *, storage, output, wire_version=None):
     """Save exact local metadata for parent checkpointing, without a POST."""
     require(type(snapshot) in {Snapshot,DurableHistory}, "LIVE_GRADING_STATE_REQUIRED"); snapshot.verify()
     output = archive.fresh(storage,output)
-    return _write_snapshot(storage,output,snapshot.document)
+    return _write_snapshot_wire(storage,output,snapshot.document,wire_version)
 
 
 def retained_captures(snapshot, registered, *, at):

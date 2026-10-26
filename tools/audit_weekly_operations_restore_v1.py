@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("phase",choices=["operations-retained"])
+    parser.add_argument("phase",choices=["operations-retained","operations-grade-retained-write","operations-grade-retained-read"])
     parser.add_argument("--execute",action="store_true")
     parser.add_argument("--request");parser.add_argument("--request-sha256")
     args=parser.parse_args(argv)

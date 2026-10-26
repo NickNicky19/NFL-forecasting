@@ -286,6 +286,21 @@ def test_static_template_is_full_root_with_only_five_placeholders_cleared(case):
     assert prepared.document["root_template"]["publication_registration"] == case.root["publication_registration"]
 
 
+def test_history_locator_protocol_requires_new_explicit_owner_registration_context(case):
+    from nfl_lab import audit_weekly_grade_history_v1 as history
+    go=deepcopy(case.root)
+    go['effective_epoch'].update(schema_version=w.HISTORY_CONTEXT_SCHEMA,parent_code_pins=deepcopy(case.pins),history_protocol=history.LOCATOR_VERSION)
+    prepared=w.prepare_template(go,case.readiness)
+    assert prepared.document['schema_version']==t.VERSION+'-static-v2'
+    assert prepared.document['root_template']==w.prepare_template(case.root,case.readiness).document['root_template']
+    assert w.prepare_template(case.root,case.readiness).document['schema_version']==t.VERSION+'-static'
+    for version in (w.VERSION+'-context',w.SEPARATE_CONTEXT_SCHEMA):
+        bad=deepcopy(go['effective_epoch']);bad['schema_version']=version
+        with pytest.raises(w.RegistrationError):w.context(bad)
+    bad=deepcopy(go['effective_epoch']);bad['history_protocol']='implicit-old-history-migration'
+    with pytest.raises(w.RegistrationError):w.context(bad)
+
+
 def test_generated_documents_pass_unchanged_bootstrap_after_actual_completed_three_job_chain(case):
     _, _, inputs = writer_reader(case)
     sealed = case.execute(PHASES[2], inputs)

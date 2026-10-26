@@ -28,6 +28,36 @@ ACTUAL_ARCHIVE=worker._archive
 ACTUAL_EPOCH=worker._epoch
 
 
+def test_grade_only_v2_reference_requires_explicit_root_and_owned_history_pair(tmp_path):
+    base=tmp_path/'owned';p=request(base,worker.PHASES[0])
+    p['schema_version']=worker.VERSION+'-request-v2'
+    p['inputs']['archive_restored']['path']=str(base/'recovered'/'RETAINED_RESULT.json')
+    pair={name:dict(path=str(base/(name+'.json.gz')),bytes=10,sha256='a'*64) for name in ('sidecar','public_receipt')}
+    p['inputs']['previous_history']=pair
+    go=dict(effective_epoch=dict(plan=dict(kind='GRADE_ONLY')))
+    assert worker.validate_request(p,worker.PHASES[0],go=go) is p
+    for root in (None,dict(effective_epoch=None),dict(effective_epoch=dict(plan=dict(kind='FUTURE_CAPABLE')))):
+        with pytest.raises(worker.GradeBridgeError):worker.validate_request(p,worker.PHASES[0],go=root)
+    bad=deepcopy(p);bad['inputs']['previous_history']['outcomes']=[]
+    with pytest.raises(worker.GradeBridgeError):worker.validate_request(bad,worker.PHASES[0],go=go)
+
+
+def test_grade_only_new_protocol_requires_owned_planning_and_explicit_request_v3(tmp_path):
+    p=request(tmp_path,worker.PHASES[0]);p['schema_version']=worker.VERSION+'-request-v3'
+    p['inputs']['archive_restored']['path']=str(tmp_path/'retained/RETAINED_RESULT.json')
+    ref=lambda name:dict(path=str(tmp_path/name),bytes=20,sha256='a'*64)
+    p['inputs'].update(previous_history=dict(sidecar=ref('locator.gz'),public_receipt=ref('receipt.gz')),planning=ref('HISTORY_PLANNING.json'))
+    go=dict(effective_epoch=dict(schema_version='audit-weekly-recurring-v4-context',plan=dict(kind='GRADE_ONLY')))
+    assert worker.validate_request(p,p['phase'],go=go) is p
+    for damage in ('missing','outside','legacy','future'):
+        bad=deepcopy(p);root=deepcopy(go)
+        if damage=='missing':del bad['inputs']['planning']
+        elif damage=='outside':bad['inputs']['planning']['path']='/outside/private.json'
+        elif damage=='legacy':bad['schema_version']=worker.VERSION+'-request-v2';del bad['inputs']['planning']
+        else:root['effective_epoch']['plan']['kind']='FUTURE_CAPABLE'
+        with pytest.raises(worker.GradeBridgeError if damage!='outside' else ValueError):worker.validate_request(bad,bad['phase'],go=root)
+
+
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))
@@ -587,3 +617,114 @@ print(json.dumps(dict(fictional=True,phase=phase,state=result["state"],AS_bytes=
         assert result.returncode==0,(phase,result.stderr)
         report=json.loads(result.stdout.splitlines()[-1])
         assert report['AS_bytes']==512 << 20 and report['VmPeak']<=512 << 20
+
+
+def test_cold_multipart_worker_real_preauth_callbacks_and_resolved_pending_under_native_caps(pipeline,tmp_path):
+    """Actual worker/kernel/native transport; explicit fictional Root/API data.
+
+    Three timed Arrow queries and all original forecast/control rows remain.
+    Source statistics include played zero, a positive value and a missing
+    player. The framing seam only lowers part size so this small fixture
+    exercises two real parts; production guards and callbacks are unchanged.
+    """
+    import ast
+    x=pipeline;q=x.q;f=q['f']
+    seed=dict(root=str(x.root),work=str(tmp_path/'multipart-cold-transport'),cache=str(q['storage'].cache),state_root=str(q['storage'].state_root),
+        restored=x.restored,restored_ref=x.context(worker.PHASES[0]).request['inputs']['archive_restored'],
+        epoch=q['r'].epoch.document,completion=q['r'].completion,original_choice=f['raw'].decode(),original_completion=f['completion'],
+        slate=f['slate'],catalog=f['catalog'],policy=f['policy'],history_binding=f['history_binding'],choice=q['c'].document,
+        replay=f['replay'],schedule=q['schedule'],query=q['query'])
+    seed_path=tmp_path/'fictional-multipart-worker.json';seed_path.write_bytes(store.canonical(seed))
+    tree=ast.parse(Path(__file__).read_text())
+    fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='test_cold_provider_grade_write_and_fresh_read_each_under_actual_512MiB')
+    script=next(ast.literal_eval(n.value) for n in fn.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='script' for t in n.targets))
+    injection=r'''
+from types import SimpleNamespace
+import time
+from nfl_lab import audit_weekly_grade_history_v1 as history
+actual_factory=worker._client
+def real_preauth(context,operation,transport,*,readonly=False):
+    base=client(context,operation,transport,readonly=readonly)
+    base.authenticate_actions_job()
+    context.client=base;context.proof=None;context.root_bytes=store.canonical(context.go)
+    context.env=dict(GITHUB_TOKEN='ghs_FICTIONAL',GITHUB_ACTOR='NickNicky19',GITHUB_ACTOR_ID='208912933')
+    current=actual_factory(context,operation,service.transport,readonly=readonly)
+    assert current.calls==2 and current.job['run_authenticated'] is True
+    clients.append(current)
+    return current
+worker._client=real_preauth
+actual_grade=grade.grade;actual_parts=grade._write_snapshot_v2
+def two_parts(storage,output,document,*,part_bytes=None):
+    # Exact same logical bytes/rows; lower framing limit, never a raised cap.
+    count=sum(len(chunk) for chunk in grade._canonical_chunks(document))
+    return actual_parts(storage,output,document,part_bytes=min(64 << 20,(count+1)//2))
+grade._write_snapshot_v2=two_parts
+def v2_grade(*args,**kwargs):return actual_grade(*args,**kwargs,wire_version=2)
+grade.grade=v2_grade
+def mixed_fetch(cache,name,url,*,day,storage):
+    fetch_calls.append(url)
+    if name.startswith('schedule'):
+        events=[]
+        for i,game in enumerate(q['schedule']):
+            final=i<len(q['schedule'])-1
+            status=dict(completed=final,state='post' if final else 'in',name='STATUS_FINAL' if final else 'STATUS_IN_PROGRESS')
+            events.append(dict(id=game['website_game_id'],date=game['kickoff_utc'],status=dict(type=status),competitions=[dict(status=dict(type=status),
+                competitors=[dict(homeAway='home',team=dict(abbreviation=game['home'])),dict(homeAway='away',team=dict(abbreviation=game['away']))])]))
+        value=dict(season=dict(year=2026,type=2),week=dict(number=7),events=events)
+    else:
+        value=[dict(player_id=r['sleeper_id'],season=2026,week=7,team=r['team'],stats=dict(gp=1,rec=0 if i==0 else 2))
+            for i,r in enumerate(q['query'][:2])]
+    raw=state.canonical(value);path=storage.live_root/day/(name+'.json')
+    receipt=dict(name=name+'.json',url=url,status='acquired',bytes=len(raw),sha256=store.sha(raw),retrieved_utc=service.now.isoformat(),
+        original_publication_utc=None,cache_reused=False)
+    storage.write_bytes(path,raw);storage.write_bytes(path.with_name(path.name+'.receipt.json'),state.canonical(receipt))
+    return value,receipt
+fetch=mixed_fetch
+callbacks=[];actual_auth=worker._checkpoint_auth
+def traced_auth(context,clock):
+    callback=actual_auth(context,clock)
+    def check(request):
+        accepted=callback(request);callbacks.append((request['kind'],accepted))
+        return accepted
+    return check
+worker._checkpoint_auth=traced_auth
+'''
+    assert script.count('worker._client=client')==1
+    script=script.replace('worker._client=client',injection)
+    script=script.replace('limits()\n','limits()\nimport time\nnative_started=time.monotonic()\n',1)
+    checks=r'''
+assert callbacks and all(ok is True for _,ok in callbacks)
+report=archive.read_owned(storage,result['manifest'])
+handoff=report['checkpoint_handoff']
+assert handoff['schema_version']==checkpoint.MULTIPART_VERSION+'-handoff'
+if phase=='write':
+    assert report['snapshot']['sha256']!=handoff['body_sha256']
+    local=archive.read_owned(storage,report['snapshot'],64 << 10,raw=True)
+    assert grade._unpack(local,64 << 10)['schema_version']==grade.SNAPSHOT_WIRE_V2
+    assert len(grade._unpack(local,64 << 10)['parts'])==2
+else:
+    durable=grade._load_snapshot(storage,report['durable_history'])
+    rows=[r for v in durable['versions'] for r in v['snapshot']['rows'] if r['category']=='rec']
+    assert any(r['actual']==0 and r['participation_state']=='played' for r in rows)
+    assert any(r['actual']==2 and r['participation_state']=='played' for r in rows)
+    assert any(r['actual'] is None for r in rows) and durable['pending_weeks'],dict(pending_weeks=len(durable['pending_weeks']),actuals=[r['actual'] for r in rows])
+    encoded=archive.read_owned(storage,report['evidence_envelope'],256 << 10,raw=True)
+    envelope=history.metadata_document(encoded,cap=256 << 10)
+    body=envelope['native_read_evidence'];parts=body['context']['multipart_readback']
+    assert len(parts['parts'])==2
+    assert state.utc(parts['completed_at_utc'])<=state.utc(report['grade_read_proof']['known_by_at'])
+    assert all(state.utc(p['completed_at_utc'])<=state.utc(parts['completed_at_utc']) for p in parts['parts'])
+print(json.dumps(dict(fictional=True,worker_native_phase=phase,checkpoint_HTTP_calls=clients[-1].calls,
+    metadata_HTTP_calls=clients[0].calls,callback_kinds=[kind for kind,_ in callbacks],
+    CPU_seconds=time.process_time(),wall_seconds=time.monotonic()-native_started)),flush=True)
+'''
+    anchor='worker.native_envelope();checkpoint.native_envelope()'
+    assert script.count(anchor)==1;script=script.replace(anchor,checks+'\n'+anchor)
+    profile=json.loads((ROOT/'config/audit-weekly-numerical-runtime-v1.json').read_bytes())['environment']
+    for phase in ('write','read'):
+        r=subprocess.run([sys.executable,'-B','-c',script,str(seed_path),phase],cwd=ROOT,
+            env=dict(PYTHONDONTWRITEBYTECODE='1',**profile),capture_output=True,text=True,timeout=185)
+        print(r.stdout,end='',flush=True)
+        if r.returncode:print(r.stderr,end='',file=sys.stderr,flush=True)
+        assert r.returncode==0,(phase,r.stderr)
+        metrics=json.loads(r.stdout.splitlines()[-1]);assert metrics['AS_bytes']==512 << 20 and metrics['VmPeak']<=512 << 20

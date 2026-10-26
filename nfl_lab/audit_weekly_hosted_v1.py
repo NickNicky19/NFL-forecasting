@@ -45,6 +45,8 @@ FAILURE_JOB = "audit-weekly-failure-restore-v1"
 EXECUTION_JOBS = dict(JOBS, evidence=FAILURE_JOB)
 OPERATIONS_PHASES = {"operations-prepare":("produce","operations-prepared"),
     "operations-retained":("produce","operations-retained"),
+    "operations-grade-retained-write":("restore","operations-grade-retained-write"),
+    "operations-grade-retained-read":("consume","operations-grade-retained-read"),
     "operations-grade-write":("restore","operations-grade-write"),
     "operations-grade-read":("consume","operations-grade-read"),
     "controller-template-write":("produce","controller-template-write"),
@@ -523,7 +525,10 @@ class Runner:
         checkpoint=history.previous_checkpoint(self.go)
         pair=None
         if checkpoint is not None:
-            path="state/controller-v1/grade-checkpoints/"+previous["feed_sha256"]+".json.gz"
+            if checkpoint.get("schema_version")==history.LOCATOR_REF:
+                history.require_latest(self.client,checkpoint)
+                path=history.LOCATOR_ROOT+"/"+checkpoint["path"]
+            else:path="state/controller-v1/grade-checkpoints/"+previous["feed_sha256"]+".json.gz"
             packed=content(path,"lab-state",history.LIMITS["sidecar_bytes"])
             require(store.sha(packed)==checkpoint["sha256"],"EXACT_ROOT_PRIOR_GRADING_SIDECAR_HASH_BEFORE_VALUES")
             self.storage.write_bytes(folder/"PREVIOUS_GRADE_CHECKPOINT.json.gz",packed)
@@ -608,7 +613,7 @@ class Runner:
         result=self.child("audit_weekly_archive_v1",phase,request,self.native(archive.VERSION,phase,request),"AUDIT_WEEKLY_ARCHIVE_AUTHORITY",190)
         return result
 
-    def grading_phase(self, phase, restored, *, handoff=None):
+    def grading_phase(self, phase, restored, *, handoff=None, previous_history=None, planning=None):
         """Use independent guarded workers; grading failure stops export."""
         from . import audit_weekly_operations_grade_v1 as grading
         from . import audit_weekly_grade_checkpoint_v1 as checkpoint
@@ -624,6 +629,15 @@ class Runner:
             inputs["checkpoint_handoff"]=handoff
         request=dict(schema_version=grading.VERSION+"-request",phase=phase,code_pins=pins(),limits=grading.LIMITS,
             cache=str(self.storage.cache),state_root=str(self.root/"state"),output=str(self.root/phase),inputs=inputs)
+        if previous_history is not None:
+            require(self.go["effective_epoch"].get("plan",{}).get("kind")=="GRADE_ONLY", "EXPLICIT_GRADE_ONLY_HISTORY")
+            request["schema_version"]=grading.VERSION+"-request-v2"
+            inputs["previous_history"]=previous_history
+            if planning is not None:
+                from . import audit_weekly_grade_history_v1 as history
+                require(self.go["effective_epoch"]["schema_version"]==history.CONTEXT_V4,"EXPLICIT_V4_PLANNING_INPUT")
+                request["schema_version"]=grading.VERSION+"-request-v3"
+                inputs["planning"]=planning
         result=self.child("audit_weekly_operations_grade_v1",phase,request,self.native(VERSION,phase,request),
             "AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
         expected="PRIVATE_GRADE_APPENDED_FRESH_READER_REQUIRED" if phase==grading.PHASES[0] \
@@ -639,6 +653,152 @@ class Runner:
                     "grade_checkpoint_handoff_sha256="+store.sha(body)+"\n")
                 stream.flush();os.fsync(stream.fileno())
         return result
+
+    def grade_only(self, *, handoff=None):
+        """Fresh native original-body GETs in each grading job; no inference/feed.
+
+        The returned checkpoint is private. It cannot masquerade as the
+        per-feed public sidecar consumed by the current scheduled Parent.
+        """
+        from . import audit_weekly_operations_restore_v1 as recovery
+        from . import audit_weekly_grade_checkpoint_v1 as checkpoint
+        from . import audit_weekly_operations_v1 as operations
+        value=operations.context(self.go["effective_epoch"])
+        require(value.get("plan",{}).get("kind")=="GRADE_ONLY" and self.phase in {"restore","consume"},
+            "EXPLICIT_CURRENT_GRADE_ONLY_JOB_REQUIRED")
+        metadata=self.prior_public_metadata()
+        require(metadata["previous_grade_snapshot"] is not None,"QUALIFIED_ORIGINAL_PRIMARY_HISTORY_REQUIRED")
+        phase=recovery.PHASES[1 if self.phase=="restore" else 2]
+        request=dict(schema_version=recovery.VERSION+"-request",phase=phase,code_pins=pins(),limits=recovery.LIMITS,
+            cache=str(self.storage.cache),state_root=str(self.root/"state"),output=str(self.root/phase),
+            inputs={k:metadata[k] for k in ("receipt","historical_source_sha256")})
+        recovered=self.child("audit_weekly_operations_restore_v1",phase,request,self.native(VERSION,phase,request),
+            "AUDIT_WEEKLY_NATIVE_AUTHORITY",190)
+        require(recovered["state"]=="PRIVATE_PRIOR_CAPTURE_RECOVERED_FOR_RECURRING", "ACTUAL_GRADE_ONLY_ORIGINAL_RECOVERY")
+        restored=read_owned(self.storage,recovered["retained_result"])
+        aliases=restored["aliases"]
+        canonical=read_owned(self.storage,aliases.get("context/canonical_weekly_choice.json",aliases["runtime/WEEKLY_CHOICE.json"]))
+        require((canonical["slate"]["season"],canonical["slate"]["week"])==(value["plan"]["season"],value["plan"]["week"])
+            and all(utc(t)<=now_utc() for t in canonical["slate"]["game_cutoffs"].values()),
+            "GRADE_ONLY_ORIGINAL_FROZEN_CAPTURE_WINDOW_MUST_HAVE_ELAPSED")
+        planning=None
+        if value["schema_version"]==operations.CONTEXT_V4:
+            from . import audit_weekly_grade_history_v1 as history
+            raw=self.env.get("AUDIT_WEEKLY_HISTORY_PLANNING_JSON","").encode()
+            require(0<len(raw)<=32<<10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_HISTORY_PLANNING_SHA256"),
+                "EXACT_PRODUCER_HISTORY_PLANNING_OUTPUT")
+            marker=cp.strict_json(raw)
+            require(type(marker) is dict and set(marker)=={"root_go_sha256","planning"}
+                and marker["root_go_sha256"]==self.go_sha,"CLOSED_SAME_ROOT_HISTORY_PLANNING_OUTPUT")
+            seed=history.validate_planning(marker["planning"])
+            require(digest(seed["current"]["schedule"])==value["plan"]["calendar_sha256"]
+                and seed["current"]["canonical_choice_sha256"]==digest(canonical),"ORIGINAL_CANONICAL_PLANNING_ONLY")
+            planning=write(self.storage,self.root/"grade-only-planning/HISTORY_PLANNING.json",seed)
+        result=self.grading_phase("operations-grade-write" if self.phase=="restore" else "operations-grade-read",
+            recovered["retained_result"],handoff=handoff,previous_history=metadata["previous_grade_snapshot"],
+            **({"planning":planning} if planning is not None else {}))
+        evidence=None
+        if self.phase=="consume":evidence=self.retain_grade_only_evidence(result["manifest"])
+        self.check()
+        return dict(state="PRIVATE_GRADE_ONLY_APPENDED_FRESH_READER_REQUIRED" if self.phase=="restore"
+            else "PRIVATE_GRADE_ONLY_FRESH_READER_VERIFIED",grading=result,
+            checkpoint_handoff=result.get("checkpoint_handoff",handoff),fits=0,public_release=False,successful_forecast=False,
+            evidence=evidence,public_feed_written=False,
+            scheduled_parent_discoverable=bool(evidence and evidence.get("scheduled_parent_discoverable")))
+
+    def publish_history_locator(self, envelope, handoff, proof, descriptor, producer, *, anchor, kind, folder, append_client):
+        """Publish metadata only. Later Parent requires the completed API run."""
+        from . import audit_weekly_grade_history_v1 as history
+        from .audit_weekly_delivery_v1 import quiet_publisher
+        from .operational_io import operational_io
+        from tools import persist_state
+        require((self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+            and envelope["root_go"]==self.go,"EXACT_CURRENT_ROOT_HISTORY_ENVELOPE")
+        require(kind==("GRADING_ONLY" if self.go["effective_epoch"]["plan"]["kind"]=="GRADE_ONLY" else "CAPTURE_AND_GRADE")
+            and (kind!="GRADING_ONLY" or anchor==self.go["effective_epoch"]["previous_capture"]),"EXACT_NONFORECAST_LOCATOR_KIND_AND_ORIGINAL_ANCHOR")
+        require(isinstance(append_client,archive.Client) and append_client.operation=="append"
+            and cp.client_identity(append_client)==producer and producer["job_id"]==JOBS["consume"],
+            "ACTUAL_SAME_JOB_NATIVE_EVIDENCE_APPENDER_REQUIRED")
+        # Reuse the just-authenticated native appender and its original finite
+        # budget. Runner's initial metadata client may already be 180s old.
+        jobs=archive.jobs_for(append_client)
+        refs={}
+        for role,name in JOBS.items():
+            matches=[j for j in jobs if j.get("name")==name and j.get("head_sha")==self.identity["source_sha"]
+                and j.get("run_id")==int(self.identity["run_id"])]
+            require(len(matches)==1,"ACTUAL_CURRENT_HISTORY_THREE_JOB_IDENTITIES")
+            j=matches[0]
+            require((j.get("status")=="in_progress" and j.get("conclusion") is None) if role=="consume"
+                else (j.get("status")=="completed" and j.get("conclusion")=="success"),"ORIGINAL_HISTORY_JOB_PHASES")
+            refs[role]=dict(job_id=name,api_job_id=j["id"])
+        cohort=dict(schema_version=history.LOCATOR_VERSION+"-cohort",kind=kind,repository=store.REPO,
+            source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],root_go_sha256=self.go_sha,
+            workflow_sha256=self.go["code_pins"][".github/workflows/lab.yml"],epoch_sha256=handoff["epoch_sha256"],
+            feed_sha256=anchor["feed_sha256"],jobs=refs,root_issued_at_utc=self.go["issued_at_utc"],
+            verified_at=proof["known_by_at"],created_at=now_utc().isoformat(),fits=0,public_release=False,successful_forecast=False)
+        value=history.locator_document(anchor,cohort,handoff,proof,descriptor,producer,envelope["planning"],code_pins=self.go["code_pins"])
+        encoded=gzip.compress(store.canonical(value),mtime=0)
+        require(len(encoded)<=history.LIMITS["sidecar_bytes"],"BOUNDED_PUBLIC_HISTORY_LOCATOR")
+        name=history.LOCATOR_ROOT.removeprefix("state/")+"/"+history.locator_filename(value)
+        public_state=self.storage.register_root(folder/"history-public-state")
+        self.storage.write_bytes(public_state/name,encoded)
+        write(self.storage,folder/"LOCATOR_INTENT.json",dict(path=name,sha256=store.sha(encoded),
+            evidence_descriptor_sha256=store.sha(store.canonical(descriptor)),public_feed_written=False))
+        self.check()
+        with quiet_publisher(ROOT),operational_io(self.storage,run_root=ROOT/"runs"):
+            persist_state.persist(ROOT,public_state,storage=self.storage,
+                policy_path=ROOT/"config/operational-source-policy-v2.json",files={name:store.sha(encoded)})
+        self.check()
+        return dict(path=name,sha256=store.sha(encoded))
+
+    def retain_grade_only_evidence(self, manifest_ref):
+        """Retain the original reader evidence privately without a feed receipt."""
+        from . import audit_weekly_grade_history_v1 as history,audit_weekly_grade_checkpoint_v1 as checkpoint
+        self.check()
+        require(self.phase=="consume" and self.go["effective_epoch"]["plan"]["kind"]=="GRADE_ONLY",
+            "EXPLICIT_GRADE_ONLY_EVIDENCE_APPEND")
+        report=read_owned(self.storage,manifest_ref,128 << 10)
+        require(report["schema_version"]=="audit-weekly-operations-grade-v1-read"
+            and report["state"]=="PRIVATE_OPERATIONAL_GRADING_FRESH_READER_VERIFIED"
+            and report["root_go_sha256"]==self.go_sha and report["fits"]==0
+            and report["public_release"] is report["successful_forecast"] is False,
+            "ORIGINAL_GRADE_ONLY_NATIVE_READ_MANIFEST")
+        handoff=report["checkpoint_handoff"];checkpoint.safe_handoff(handoff)
+        proof=read_owned(self.storage,report["proof"],128 << 10)
+        require(proof==report["grade_read_proof"] and handoff["current_root_go_sha256"]==self.go_sha
+            and proof["snapshot_sha256"]==handoff["snapshot_sha256"]
+            and proof["restored_body_sha256"]==handoff["body_sha256"]
+            and all(proof["reader"][k]==self.identity[k] for k in ("repository","run_id","source_sha","job_id","api_job_id"))
+            and proof["reader"]["job_id"]==JOBS["consume"], "SAME_CURRENT_GRADE_ONLY_READER")
+        body=read_owned(self.storage,report["evidence_envelope"],history.LIMITS["envelope_bytes"],raw=True)
+        envelope=history._unpack(body,history.LIMITS["envelope_bytes"])
+        modern=(self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+        require(set(envelope)==(history.ENVELOPE_V2_KEYS if modern else history.ENVELOPE_KEYS)
+            and envelope["schema_version"]==(history.LOCATOR_VERSION if modern else history.VERSION)+"-evidence-envelope"
+            and envelope["handoff_sha256"]==store.sha(checkpoint.safe_handoff(handoff))
+            and envelope["grade_read_proof"]==proof,"COMPLETE_ORIGINAL_GRADE_ONLY_READER_EVIDENCE")
+        folder=self.storage.register_root(self.root/"grade-only-evidence")
+        intent=dict(schema_version="audit-weekly-grade-only-evidence-v1",root_go_sha256=self.go_sha,
+            previous_capture=self.go["effective_epoch"]["previous_capture"],evidence_sha256=store.sha(body),
+            checkpoint_handoff=handoff,grade_read_proof=proof,fits=0,public_release=False,successful_forecast=False)
+        write(self.storage,folder/"APPEND_INTENT.json",intent)
+        client=self.failure_client("append")
+        assets,total=client.inventory()
+        require(total+len(body)+cp.ENTRY_CAP<=store.TOTAL_CAP and client.inventory_slots+2<=store.MAX_ASSETS,
+            "GRADING_EVIDENCE_APPEND_QUOTA_BEFORE_POST")
+        self.check()
+        descriptor=store.append(client,body,cp.payload(body),self.go["qualified_runtime"]["qualification"])
+        identity=cp.client_identity(client)
+        require(all(identity[k]==self.identity[k] for k in ("repository","run_id","source_sha","job_id","api_job_id")),
+            "ACTUAL_CURRENT_GRADE_ONLY_EVIDENCE_APPEND")
+        ref=write(self.storage,folder/"APPENDED.json",dict(intent,descriptor=descriptor,producer=identity,
+            actual_completed_at=now_utc().isoformat()))
+        self.check()
+        locator=None
+        if modern:locator=self.publish_history_locator(envelope,handoff,proof,descriptor,identity,
+            anchor=self.go["effective_epoch"]["previous_capture"],kind="GRADING_ONLY",folder=folder,append_client=client)
+        return dict(receipt=ref,evidence_descriptor_sha256=store.sha(store.canonical(descriptor)),locator=locator,
+            public_feed_written=False,scheduled_parent_discoverable=modern)
 
     def grading_delivery(self, manifest_ref, public_receipt):
         """Append original reader evidence, then publish its closed locator.
@@ -671,7 +831,9 @@ class Runner:
         envelope_ref=report["evidence_envelope"]
         body=read_owned(self.storage,envelope_ref,history.LIMITS["envelope_bytes"],raw=True)
         envelope=history._unpack(body,history.LIMITS["envelope_bytes"])
-        require(set(envelope)==history.ENVELOPE_KEYS and envelope["schema_version"]==history.VERSION+"-evidence-envelope"
+        modern=(self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+        require(set(envelope)==(history.ENVELOPE_V2_KEYS if modern else history.ENVELOPE_KEYS)
+            and envelope["schema_version"]==(history.LOCATOR_VERSION if modern else history.VERSION)+"-evidence-envelope"
             and envelope["handoff_sha256"]==store.sha(checkpoint.safe_handoff(handoff))
             and envelope["grade_read_proof"]==proof,
             "COMPLETE_ORIGINAL_NATIVE_READ_EVIDENCE_REQUIRED")
@@ -705,6 +867,9 @@ class Runner:
             persist_state.persist(ROOT,public_state,storage=self.storage,
                 policy_path=ROOT/"config/operational-source-policy-v2.json",files={name:store.sha(encoded)})
         self.check()
+        if modern:self.publish_history_locator(envelope,handoff,proof,descriptor,current,
+            anchor=dict(feed_sha256=public_receipt["feed_sha256"],receipt_sha256=store.sha(gzip.compress(store.canonical(public_receipt),mtime=0))),
+            kind="CAPTURE_AND_GRADE",folder=folder,append_client=client)
         return dict(schema_version="audit-weekly-grading-delivery-v1",feed_sha256=public_receipt["feed_sha256"],
             sidecar_sha256=store.sha(encoded),sidecar_path=name,evidence_descriptor_sha256=store.sha(store.canonical(descriptor)))
 
@@ -772,6 +937,29 @@ class Runner:
         recurring=self.go["operation"]=="RECURRING_CAPTURE"
         if recurring:
             prior,operations=self.recurring_prepare()
+            if operations.get("execution_plan",{}).get("kind")=="GRADE_ONLY":
+                require(self.go["effective_epoch"].get("plan",{}).get("kind")=="GRADE_ONLY", "EXPLICIT_GRADE_ONLY_ROOT_BEFORE_NO_FEED")
+                self.check()
+                # Job coordination metadata only. Every following job still
+                # obtains its own live Root/API proof and restores originals.
+                marker=dict(schema_version=VERSION+"-grade-only-plan",root_go_sha256=self.go_sha,
+                    plan=operations["execution_plan"],fits=0,public_release=False,successful_forecast=False)
+                encoded=store.canonical(marker)
+                require(len(encoded)<=4 << 10,"BOUNDED_GRADE_ONLY_JOB_CONTROL")
+                with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+                    stream.write("grade_only_plan_json="+encoded.decode()+"\n"
+                        "grade_only_plan_sha256="+store.sha(encoded)+"\n")
+                    stream.flush();os.fsync(stream.fileno())
+                if "history_planning" in operations:
+                    from . import audit_weekly_grade_history_v1 as history
+                    history.validate_planning(operations["history_planning"])
+                    encoded=store.canonical(dict(root_go_sha256=self.go_sha,planning=operations["history_planning"]))
+                    require(len(encoded)<=32<<10,"BOUNDED_PUBLIC_SAFE_HISTORY_PLANNING_OUTPUT")
+                    with open(self.env["GITHUB_OUTPUT"],"a") as stream:
+                        stream.write("history_planning_json="+encoded.decode()+"\n"+"history_planning_sha256="+store.sha(encoded)+"\n")
+                        stream.flush();os.fsync(stream.fileno())
+                return dict(state="ORIGINAL_CAPTURE_RECOVERED_GRADE_ONLY_NO_NEW_FORECAST",execution_plan=operations["execution_plan"],
+                    fits=0,public_release=False,successful_forecast=False,public_feed_written=False)
             origin_ref=self.recover_origin()
             inputs=operations["inputs"];retained_ref=inputs["retained_restore"]
         else:
@@ -801,6 +989,8 @@ class Runner:
 
     def restore(self):
         failure_text=self.env.get("AUDIT_WEEKLY_FAILURE_HANDOFF_JSON","").encode()
+        if not failure_text and (self.go.get("effective_epoch") or {}).get("plan",{}).get("kind")=="GRADE_ONLY":
+            return self.grade_only()
         if self.go["operation"]=="CONTROLLER_REGISTRATION" and not failure_text:
             return self.controller_registration("controller-template-read")
         if failure_text:
@@ -836,6 +1026,11 @@ class Runner:
     def consume(self):
         if self.go["operation"]=="CONTROLLER_REGISTRATION":
             return self.controller_registration("controller-template-seal")
+        if (self.go.get("effective_epoch") or {}).get("plan",{}).get("kind")=="GRADE_ONLY":
+            raw=self.env.get("AUDIT_WEEKLY_GRADE_HANDOFF_JSON","").encode()
+            require(0<len(raw)<=16 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_GRADE_HANDOFF_SHA256"),
+                "EXACT_NATIVE_GRADING_WRITER_HANDOFF_REQUIRED")
+            return self.grade_only(handoff=cp.strict_json(raw))
         raw=self.env.get("AUDIT_WEEKLY_READER_HANDOFF_JSON","").encode()
         require(0<len(raw)<=32 << 10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_READER_HANDOFF_SHA256"),"EXACT_READER_JOB_HANDOFF")
         reader=cp.strict_json(raw)
