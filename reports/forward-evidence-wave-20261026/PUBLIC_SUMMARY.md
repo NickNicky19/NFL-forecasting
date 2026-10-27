@@ -58,3 +58,17 @@ complete supported labels. Count-median MAE products stay separate from count
 means and probability forecasts. The next bounded source prerequisite concerns
 participation and rushing/reception credit completeness; it has no new accuracy
 result yet.
+
+## Follow-on source qualification — October 27
+
+Independent review now qualifies **115 rushing-attempt and 859 reception
+derived-zero cases across 859 unique player-games** for separately registered
+research intake. These are
+source-qualified cases, not new predictions or demonstrated model gains. The
+original forecasts and all failures remain preserved. A separately registered
+intake and cached comparison must run before new accuracy results are reported.
+
+See the [complete aggregate source report](../role-count-source-info-v4/RESULTS.md).
+Its source-only study performed no fitting, prediction or scoring. The latest
+locked census leaves 509,468,417 bytes free in the new allocation; joint storage
+is 564,268,990 bytes, below 1 GiB. No external storage purchase was needed.
