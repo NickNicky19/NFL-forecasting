@@ -233,7 +233,7 @@ def prepare(context, *, clock=None, transport=None):
     validate_request(request, PHASE)
     operations.context(context.go["effective_epoch"])
     locator = history.previous_checkpoint(context.go)
-    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4 and locator is not None:
+    if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5} and locator is not None:
         require(locator.get("schema_version")==history.LOCATOR_REF,"EXPLICIT_V4_HISTORY_LOCATOR_REQUIRED")
         history.require_latest(context.client,locator)
     pair = inputs["previous_grade_snapshot"]
@@ -319,7 +319,7 @@ def prepare(context, *, clock=None, transport=None):
             slate = prepare_slate(target_schedule, season=declared["season"], week=declared["week"], game_cutoffs=cutoffs, now=anchor["at"])
             return value.get("inputs_sha256") == grade._digest(dict(slate=slate, full_schedule=target_schedule))
         return False
-    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4 and locator is not None:
+    if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5} and locator is not None:
         history.require_latest(context.client,locator)
         require(verified is not None and "planning" in verified.proof,"LIVE_PRIVATE_HISTORY_PLANNING_REQUIRED")
         expected=history.next_plan(verified.proof["planning"],at=state.utc(context.go["issued_at_utc"]))
@@ -328,7 +328,7 @@ def prepare(context, *, clock=None, transport=None):
         authenticate=plan_auth, durable=previous, cutoff_lead_seconds=lead,
         relocated_replays=(anchor["replay"],), clock=lambda:anchor["at"])
     planning=None
-    if context.go["effective_epoch"]["schema_version"]==operations.CONTEXT_V4:
+    if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5}:
         require(state.digest(target_schedule)==declared["calendar_sha256"],"ROOT_FROZEN_COMPLETE_CALENDAR_CHANGED")
         if declared["kind"]=="FUTURE_CAPABLE":
             expected=target.document["slate"]["game_cutoffs"]
@@ -337,7 +337,7 @@ def prepare(context, *, clock=None, transport=None):
             require(expected==declared["game_cutoffs"] and state.utc(clock())<state.utc(declared["deadline_utc"]),
                 "ACTUAL_FROZEN_DEADLINE_AND_CUTOFFS_BEFORE_NEW_VALUES")
         planning=operations.planning_seed(anchor["registered"],target,target_schedule,raw,receipt,cutoff_lead_seconds=lead)
-    if context.go["effective_epoch"].get("schema_version") not in {operations.CONTEXT_V3,operations.CONTEXT_V4} and execution["kind"] == "GRADE_ONLY":
+    if context.go["effective_epoch"].get("schema_version") not in {operations.CONTEXT_V3,operations.CONTEXT_V4,operations.CONTEXT_V5} and execution["kind"] == "GRADE_ONLY":
         resume._calendar(schedule, anchor["original"], anchor["at"])
     require(declared["kind"] != "GRADE_ONLY" or execution["kind"] == "GRADE_ONLY", "EXPLICIT_GRADE_ONLY_PLAN_CANNOT_CAPTURE")
     if execution["kind"] == "GRADE_ONLY":

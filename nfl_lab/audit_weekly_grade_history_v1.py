@@ -27,6 +27,7 @@ PART_READ_KEYS = {"schema_version","index","descriptor_sha256","root_native_proo
     "started_at_utc","completed_at_utc","HTTP_calls","transfer_bytes"}
 CONTEXT_V2 = "audit-weekly-recurring-v2-context"
 CONTEXT_V4 = "audit-weekly-recurring-v4-context"
+CONTEXT_V5 = "audit-weekly-recurring-v5-context"
 LOCATOR_VERSION = "audit-weekly-grade-history-v2-locator"
 LOCATOR_REF = LOCATOR_VERSION + "-reference"
 LOCATOR_ROOT = "state/controller-v1/history-v2"
@@ -107,12 +108,16 @@ def previous_checkpoint(go):
     if value.get("schema_version") == "audit-weekly-recurring-v1-context":
         require(set(value) == {"schema_version", "controller_context", "previous_capture"}, "CLOSED_HISTORY_V1_CONTEXT")
         return None
-    require(value.get("schema_version") in {CONTEXT_V2, "audit-weekly-recurring-v3-context",CONTEXT_V4}
+    require(value.get("schema_version") in {CONTEXT_V2, "audit-weekly-recurring-v3-context",CONTEXT_V4,CONTEXT_V5}
         and set(value) == {"schema_version", "controller_context", "previous_capture", "previous_checkpoint"}
-            | ({"plan"} if value.get("schema_version") in {"audit-weekly-recurring-v3-context",CONTEXT_V4} else set()),
+            | ({"plan"} if value.get("schema_version") in {"audit-weekly-recurring-v3-context",CONTEXT_V4,CONTEXT_V5} else set())
+            | ({"pending_post_recovery"} if value.get("schema_version")==CONTEXT_V5 else set()),
         "CLOSED_HISTORY_V2_CONTEXT")
+    if value["schema_version"]==CONTEXT_V5:
+        from .audit_weekly_template_v1 import pending_recovery
+        pending_recovery(go)
     locator = value["previous_checkpoint"]
-    if value["schema_version"]==CONTEXT_V4 and type(locator) is dict and locator.get("schema_version")==LOCATOR_REF:
+    if value["schema_version"] in {CONTEXT_V4,CONTEXT_V5} and type(locator) is dict and locator.get("schema_version")==LOCATOR_REF:
         return locator_reference(locator)
     require(locator is None or type(locator) is dict and set(locator) == {"sha256"}
         and type(locator["sha256"]) is str and store.HASH.fullmatch(locator["sha256"]), "EXACT_ROOT_HISTORY_SIDECAR_HASH")
@@ -655,7 +660,7 @@ def prepare_envelope(result, handoff, native_evidence_ref, *, storage, output, p
         grade_read_proof=deepcopy(result.proof), native_read_evidence=body, durable_sha256=grade._digest(result.durable.document),
         grade_code_pins=grade.pins(), checkpoint_helper_sha256=checkpoint.pins())
     if planning is not None:
-        require(type(root_go) is dict and root_go["effective_epoch"]["schema_version"]==CONTEXT_V4
+        require(type(root_go) is dict and root_go["effective_epoch"]["schema_version"] in {CONTEXT_V4,CONTEXT_V5}
             and store.sha(store.canonical(root_go))==handoff["current_root_go_sha256"],"EXACT_PRIVATE_ROOT_FOR_HISTORY_PLANNING")
         planning=deepcopy(planning)
         planning["known_by_at"]=result.proof["known_by_at"]
@@ -884,7 +889,7 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
         and root["operation"]=="RECURRING_CAPTURE" and root["source_sha"]==cohort["source_sha"]
         and root["code_pins"]==code_pins
         and store.sha(store.canonical(root))==cohort["root_go_sha256"] and root["issued_at_utc"]==cohort["root_issued_at_utc"]
-        and root["effective_epoch"]["schema_version"]==CONTEXT_V4,"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
+        and root["effective_epoch"]["schema_version"] in {CONTEXT_V4,CONTEXT_V5},"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
     package,_=template.checkpoint_runtime(static_root,locator['sidecar']['checkpoint_handoff'],
         anchor=locator['anchor'],checkpoint={'sha256':store.sha(store.canonical(locator))})
     prior=template.prior_runtime(static_root)
@@ -911,6 +916,7 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
             and root["effective_epoch"]["plan"]["kind"]=="GRADE_ONLY","ORIGINAL_GRADE_ONLY_ROOT_AND_CAPTURE_ANCHOR")
         locator_reference(root["effective_epoch"]["previous_checkpoint"])
     else:require(plan["kind"]=="FUTURE_CAPABLE" and state.utc(root["issued_at_utc"])<state.utc(plan["deadline_utc"]),"ORIGINAL_CAPTURE_CAPABLE_ROOT")
+    template.pending_recovery(root)
     return envelope
 
 

@@ -43,6 +43,7 @@ REQUIRED_PINS = set(FILES) | {c.MODULE, c.TOOL, c.WORKFLOW, bootstrap.MODULE,
     bootstrap.TOOL, bootstrap.TEST, bootstrap.TEMPLATE_MODULE} | bootstrap.SHARED_EXECUTABLE_PINS
 SEPARATE_CONTEXT_SCHEMA = VERSION + "-context-v2"
 HISTORY_CONTEXT_SCHEMA = VERSION + "-context-v3"
+RECOVERY_CONTEXT_SCHEMA = VERSION + "-context-v4"
 REQUEST_KEYS = {"schema_version", "phase", "code_pins", "limits", "cache", "state_root", "output", "inputs"}
 INPUT_KEYS = {
     "controller-template-write": {"readiness"},
@@ -74,11 +75,12 @@ def require(ok, code):
 def context(value):
     """Closed Root.effective_epoch; no registration digest self-reference."""
     require(type(value) is dict, "CLOSED_CONTROLLER_REGISTRATION_CONTEXT")
-    modern=value.get("schema_version")==HISTORY_CONTEXT_SCHEMA
+    recovery=value.get("schema_version")==RECOVERY_CONTEXT_SCHEMA
+    modern=value.get("schema_version") in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}
     separate = value.get("schema_version") == SEPARATE_CONTEXT_SCHEMA or modern
-    keys = {"schema_version", "parent_source_sha", "previous_capture"} | ({"parent_code_pins"} if separate else set()) | ({"history_protocol"} if modern else set())
+    keys = {"schema_version", "parent_source_sha", "previous_capture"} | ({"parent_code_pins"} if separate else set()) | ({"history_protocol"} if modern else set()) | ({"pending_post_recovery"} if recovery else set())
     require(set(value) == keys
-        and value["schema_version"] == (HISTORY_CONTEXT_SCHEMA if modern else SEPARATE_CONTEXT_SCHEMA if separate else VERSION + "-context")
+        and value["schema_version"] == (RECOVERY_CONTEXT_SCHEMA if recovery else HISTORY_CONTEXT_SCHEMA if modern else SEPARATE_CONTEXT_SCHEMA if separate else VERSION + "-context")
         and c.hashed(value["parent_source_sha"], 40)
         and type(value["previous_capture"]) is dict
         and set(value["previous_capture"]) == {"feed_sha256", "receipt_sha256"}
@@ -88,6 +90,8 @@ def context(value):
     if modern:
         from . import audit_weekly_grade_history_v1 as history
         require(value["history_protocol"]==history.LOCATOR_VERSION,"EXPLICIT_CLOSED_HISTORY_LOCATOR_PROTOCOL")
+    if recovery:
+        template.validate_pending_recovery(value['pending_post_recovery'])
     return value
 
 
@@ -165,8 +169,8 @@ def prepare_template(go, readiness):
     root["approved"] = False
     for key in ("issued_at_utc", "expires_at_utc", "operation", "effective_epoch"):
         root[key] = None
-    version = template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"]==HISTORY_CONTEXT_SCHEMA else "-static")
-    require(version != template.STATIC_V3 or ctx['schema_version'] == HISTORY_CONTEXT_SCHEMA, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
+    version = template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA} else "-static")
+    require(version != template.STATIC_V3 or ctx['schema_version'] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
     return template.prepare(dict(schema_version=version, source_sha=go["source_sha"],
         code_pins=deepcopy(go["code_pins"]), readiness=deepcopy(readiness), root_template=root))
 

@@ -489,7 +489,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
 @pytest.mark.parametrize("literal", [
     "state/controller-v1/bootstrap-v2-20261026-discovery.json",
     "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
-    "state/controller-v1/bootstrap-v2-20261026-registered-builder.json",
+    "state/controller-v1/bootstrap-v2-20261027-pending-posts.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -500,7 +500,7 @@ def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     assert api.get(c.contents_url(literal, old.A), 17) == []
     assert len(calls) == 1
     for path, ref in ((literal, "lab-state"),
-            (literal.replace("20261026", "20261025"), old.A),
+            (literal.replace("20261026", "20261025").replace("20261027", "20261025"), old.A),
             (literal.replace(".json", "-extra.json"), old.A),
             (literal.replace("bootstrap-v2", "../bootstrap-v2"), old.A)):
         with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):

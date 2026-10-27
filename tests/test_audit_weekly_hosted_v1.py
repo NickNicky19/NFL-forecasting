@@ -18,6 +18,184 @@ from nfl_lab.owned_reference_batch import validate_owned_references
 from test_audit_weekly_template_v1 import dual_document
 
 
+@pytest.fixture
+def pending_failure(tmp_path):
+    """Invented completed job and opaque core envelope; no native authority."""
+    import base64,gzip
+    from nfl_lab import audit_weekly_template_v1 as t
+    binding=dict(schema_version='weekly-private-draft-binding-v2',repository=store.REPO,runtime_id='d'*32,
+        origin_run_id='100',release_id=91,tag_name='weekly-private-runtime-v2-'+'d'*32,
+        canary_asset_id=5,canary_name='canary-'+'a'*64+'.txt',canary_sha256='a'*64,canary_bytes=117,
+        browser_tag='untagged-'+'e'*20,config_sha256=store.config_sha())
+    record=dict(schema_version='weekly-private-POST-reservation-v2',key='asset:blob-'+store.sha(b'abc')+'.bin',
+        bytes=3,sha256=store.sha(b'abc'),name='blob-'+store.sha(b'abc')+'.bin')
+    source='a'*40;workflow=store.REPO+'/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1'
+    old=dict(approved=True,repository=store.REPO,mode=hosted.MODE,owner_authorization='OWNER_NFL_AUDIT_CONTINUATION_20261025',
+        source_sha=source,workflow_ref=workflow,jobs=hosted.JOBS,qualified_runtime=dict(binding=binding),
+        issued_at_utc='2025-12-31T23:59:00Z',effective_epoch=dict(controller_context=None))
+    def wrap(prefix, item=None):
+        item=record if item is None else item
+        raw=store.canonical(item)
+        return dict(relative_path=prefix+store.sha(item['key'].encode())+'.reservation.json',
+            bytes=len(raw),sha256=store.sha(raw),body_base64=base64.b64encode(raw).decode())
+    old_record=dict(record,sha256=store.sha(b'old'),name='blob-'+store.sha(b'old')+'.bin',key='asset:blob-'+store.sha(b'old')+'.bin')
+    journals=dict(schema_version=hosted.VERSION+'-original-post-journals',records=[wrap('journal/'),
+        wrap('archive-produce/journal/'),wrap('origin/old/journal/',old_record)])
+    def pack():
+        root_raw=store.canonical(old);journal_raw=store.canonical(journals)
+        attachments=[];encoded=[]
+        for label,kind,raw in [('owner-root','control',root_raw),('original-post-reservations','post_reservation',journal_raw)]:
+            attachments.append(dict(label=label,kind=kind,reference=dict(path='/fictional/'+label+'.json',
+                bytes=len(raw),sha256=store.sha(raw))))
+            encoded.append(dict(label=label,base64=base64.b64encode(raw).decode()))
+        request=dict(schema_version=failure.VERSION+'-request',operation='producer',state='FAILED',
+            attempt=dict(repository=store.REPO,run_id='200',run_attempt=1,source_sha=source,
+                job_id=hosted.JOBS['produce'],workflow_ref=workflow),input_contract_sha256=store.sha(root_raw),
+            failure=dict(kind='AMBIGUOUS_POST',code='HTTP_OR_RATE_AMBIGUITY',exit_code=1),
+            clocks=dict(started_at_utc='2026-01-01T00:00:01Z',observed_at_utc='2026-01-01T00:00:30Z',original={}),
+            attachments=attachments)
+        body=gzip.compress(store.canonical(dict(schema_version=failure.VERSION+'-envelope',
+            classification='FAILURE_EVIDENCE_ONLY',request=request,attachments=encoded,gates=failure.NEGATIVE_GATES)),mtime=0)
+        entry=dict(schema_version='weekly-private-restore-manifest-v2',payload=failure.payload_manifest(body),
+            payload_asset_id=7,payload_name='blob-'+store.sha(body)+'.bin',producer_process='c'*64,
+            binding_sha256=t.digest(binding),writer_run_id='200')
+        manifest=store.canonical(entry)
+        handoff=dict(schema_version=hosted.VERSION+'-failure-handoff',binding=binding,root_go_sha256=store.sha(root_raw),
+            descriptor=dict(entry=entry,manifest_asset_id=8,manifest_sha256=store.sha(manifest),manifest_bytes=len(manifest)))
+        assets=[dict(id=7,name=entry['payload_name'],size=len(body),digest='sha256:'+store.sha(body),state='uploaded'),
+            dict(id=8,name='manifest-'+store.sha(manifest)+'.json',size=len(manifest),digest='sha256:'+store.sha(manifest),state='uploaded')]
+        return handoff,assets,{7:body,8:manifest}
+    handoff,assets,bodies=pack()
+    run=dict(id=200,head_sha=source,run_attempt=1,event='workflow_dispatch',path='.github/workflows/lab.yml',
+        head_branch='research/weekly-storage-probe-v1',repository=dict(full_name=store.REPO),
+        head_repository=dict(full_name=store.REPO),status='completed',conclusion='failure',actor=dict(login='NickNicky19',id=208912933))
+    job=dict(id=201,run_id=200,head_sha=source,name=hosted.JOBS['produce'],status='completed',conclusion='failure',
+        started_at='2026-01-01T00:00:00Z',completed_at='2026-01-01T00:01:00Z')
+    class Metadata:
+        def __init__(self):self.binding=binding;self.calls=[]
+        def allow(self,url):return url
+        def draft(self):self.calls.append('draft')
+        def inventory(self):return assets,sum(a['size'] for a in assets)
+        def read_asset(self,identity,name,size,digest):
+            self.calls.append('GET');value=bodies[identity]
+            assert len(value)==size and store.sha(value)==digest
+            return value
+        def json(self,url):
+            self.calls.append('GET')
+            if '/workflows/' in url:return dict(total_count=2,workflow_runs=[run,dict(run,id=100,conclusion='success')])
+            if '/jobs?' in url:return dict(total_count=1,jobs=[job])
+            return run
+    spec=dict(schema_version=t.PENDING_RECOVERY,handoffs=[handoff],pending_reservations=[record])
+    runner=hosted.Runner.__new__(hosted.Runner);runner.journal=tmp_path/'fresh-journal';runner.journal.mkdir()
+    runner.go=dict(qualified_runtime=dict(binding=binding),issued_at_utc='2026-01-01T00:02:00Z',
+        effective_epoch=dict(schema_version=t.RECURRING_V5,pending_post_recovery=spec))
+    runner.client=Metadata();runner.pending_scope_authenticated=False
+    return SimpleNamespace(runner=runner,record=record,spec=spec,assets=assets,run=run,job=job,
+        old=old,journals=journals,pack=pack,handoff=handoff)
+
+
+def test_pending_recovery_authenticates_exact_failure_and_deduplicates_current_scopes(pending_failure):
+    q=pending_failure;r=q.runner
+    actual=hosted.authenticated_pending_records(r.client,q.handoff,q.assets,before=r.go['issued_at_utc'])
+    assert actual==[q.record] and q.record['bytes']==len(b'abc')
+    r.authenticate_pending_posts()
+    assert r.pending_scope_authenticated and len(list(r.journal.glob('*.reservation.json')))==1
+    assert all(call in {'GET','draft'} for call in r.client.calls)
+
+
+@pytest.mark.parametrize('damage',['actor','source','job_clock','namespace','membership','omitted','conflict','unknown_failed_run','short_census','missing_origin'])
+def test_pending_recovery_damage_fails_before_any_write(pending_failure,damage):
+    q=pending_failure;r=q.runner
+    if damage=='actor':q.run['actor']['id']=123
+    elif damage=='source':q.run['head_sha']='f'*40
+    elif damage=='job_clock':q.job['completed_at']='2026-01-01T00:00:10Z'
+    elif damage=='namespace':r.go['qualified_runtime']['binding']=dict(r.go['qualified_runtime']['binding'],release_id=92)
+    elif damage=='membership':q.assets.pop()
+    elif damage=='omitted':q.spec['pending_reservations']=[]
+    elif damage=='conflict':q.spec['pending_reservations']=[dict(q.record,bytes=4)]
+    elif damage=='unknown_failed_run':
+        original=r.client.json
+        r.client.json=lambda url:dict(total_count=3,workflow_runs=[dict(q.run,id=300),q.run,dict(q.run,id=100,conclusion='success')]) if '/workflows/' in url else original(url)
+    else:
+        original=r.client.json
+        r.client.json=lambda url:dict(total_count=2 if damage=='short_census' else 1,workflow_runs=[q.run]) if '/workflows/' in url else original(url)
+    with pytest.raises((ValueError,store.StoreError)):r.authenticate_pending_posts()
+    assert not r.pending_scope_authenticated and not list(r.journal.glob('*.reservation.json'))
+    for action in [lambda:r.claim(),lambda:r.failure_client('append'),lambda:r.preserve_opaque_outputs()]:
+        with pytest.raises(store.StoreError,match='PENDING_SCOPE_NOT_AUTHENTICATED_NO_WRITE'):action()
+
+
+def test_pending_records_survive_fresh_process_count_once_and_never_retry(pending_failure,tmp_path):
+    q=pending_failure;r=q.runner;r.authenticate_pending_posts()
+    configuration=tmp_path/'quota.json';configuration.write_text(json.dumps(dict(binding=r.client.binding,assets=q.assets,record=q.record)))
+    script='''import json,sys
+from pathlib import Path
+from nfl_lab import private_draft_store as s
+x=json.loads(Path(sys.argv[2]).read_text());c=s.Client.__new__(s.Client)
+c.binding=x['binding'];c.journal=Path(sys.argv[1]);c.allow=lambda u:u
+c.json=lambda *a,**k:x['assets']
+_,charged=c.inventory();base=sum(a['size'] for a in x['assets'])
+assert charged==base+3 and c.inventory_slots==len(x['assets'])+1
+x['assets'].append(dict(id=99,name=x['record']['name'],size=3,digest='sha256:'+x['record']['sha256'],state='uploaded'))
+_,matched=c.inventory();assert matched==base+3 and c.inventory_slots==len(x['assets'])
+try:c.reserve(x['record']['key'],b'abc',name=x['record']['name'])
+except s.StoreError as e:assert e.code=='POST_ALREADY_RESERVED_NO_RETRY'
+else:raise AssertionError('ambiguous POST was retried')
+print('fresh-process pending accounting and no-retry PASS')
+'''
+    p=subprocess.run([sys.executable,'-c',script,str(r.journal),str(configuration)],capture_output=True,text=True)
+    assert p.returncode==0,p.stderr
+
+
+def test_archive_request_carries_root_pending_and_child_rejects_omission(pending_failure,tmp_path):
+    from tools import audit_weekly_archive_v1 as cli
+    from nfl_lab import audit_weekly_archive_v1 as archive
+    q=pending_failure;r=q.runner;r.root=tmp_path/'runner';r.storage=SimpleNamespace(cache=tmp_path/'cache');r.package_ref={}
+    r.go['pending_census']={}
+    request=r.archive_request('produce',context={},r0={})
+    assert request['pending_reservations']==[q.record]
+    request['pending_reservations']=[]
+    raw=store.canonical(request);path=tmp_path/'request.json';path.write_bytes(raw)
+    args=SimpleNamespace(phase='produce',request=str(path),request_sha256=store.sha(raw))
+    with patch.object(cli,'guard',return_value=({},dict(job_id=hosted.JOBS['produce']),None,store.canonical(r.go))):
+        with pytest.raises(store.StoreError,match='EXACT_ROOT_PRIOR_PENDING_RECORDS_IN_ARCHIVE_CHILD'):
+            cli.run(args,{})
+
+
+def test_real_pending_metadata_client_routes_are_exact_and_get_only(pending_failure,tmp_path):
+    q=pending_failure;journal=tmp_path/'real-client-journal';journal.mkdir(mode=0o700)
+    client=hosted.PendingMetadataClient('ghs_FICTIONAL','300',source_sha='b'*40,journal=journal,
+        root_go=q.runner.go,operation='metadata',transport=lambda *_:pytest.fail('NO_NETWORK_IN_ROUTE_TEST'))
+    base=store.API+'/actions/runs/200'
+    assert client.allow(base)==base
+    assert client.allow(base+'/jobs?per_page=100&page=1').startswith(base)
+    for page in range(1,5):
+        url=store.API+'/actions/workflows/lab.yml/runs?event=workflow_dispatch&branch=research%2Fweekly-storage-probe-v1&per_page=5&page='+str(page)
+        assert client.allow(url)==url
+        with pytest.raises(store.StoreError,match='ROOT_METADATA_GET_ONLY'):client.request(url,method='POST',data=b'{}')
+    with pytest.raises(store.StoreError,match='ROUTE_FORBIDDEN'):client.allow(store.API+'/actions/runs/999')
+    with pytest.raises(store.StoreError,match='ROUTE_FORBIDDEN'):client.allow(url.replace('page=4','page=5'))
+
+
+def test_root_claim_reserves_manifest_slots_in_addition_to_pending_slots(pending_failure):
+    q=pending_failure;r=q.runner
+    r.env={};r.identity=dict(run_id='300',source_sha='b'*40);r.job={};r.go_sha='e'*64
+    r.operations_proof=None;r.pending_scope_authenticated=True
+    r.go['qualified_runtime']['qualification']={}
+    r.go['pending_census']={}
+    class NearCapacity:
+        def __init__(self,*a,**k):self.inventory_slots=127
+        def authenticate_actions_job(self):pass
+        def bind(self,b):self.binding=b
+        def inventory(self):return [dict(name='existing-'+str(n)) for n in range(126)],0
+    # 126 uploaded + 1 unresolved + payload/manifest 2 = 129 > 128.
+    with patch.object(hosted.archive,'Client',NearCapacity),patch.object(hosted.operations_authority,'attach'),\
+            patch.object(hosted.archive,'authenticate_qualification'),\
+            patch.object(store,'append',side_effect=AssertionError('PAYLOAD_POST_BEFORE_FULL_CLAIM_ADMISSION')) as append:
+        with pytest.raises(store.StoreError,match='ROOT_CLAIM_CAPACITY'):r.claim()
+    append.assert_not_called()
+
+
 def test_calendar_uses_new_york_kickoff_clock_across_both_dst_offsets_and_not_scores():
     raw=("season,week,game_type,game_id,gameday,gametime,home_score\n"
         "2026,7,REG,oct,2026-10-25,09:30,DO_NOT_READ_OUTCOME\n"
@@ -134,6 +312,12 @@ def test_actual_root_v3_admission_keeps_exact_sealed_prior_package_and_v2_keys(d
     for name in ('schema_version','qualified_runtime','pending_census','prior_capture_qualified_runtime'):
         root[name]=deepcopy(dual_document['root_template'][name])
     old=store.canonical(root['prior_capture_qualified_runtime'])
+    with patch.object(hosted.retained,'validate_registration'),pytest.raises(store.StoreError,match='EXPLICIT_DUAL_RUNTIME_PENDING_REGISTRATION'):
+        hosted.validate_root(root,now=at)
+    from nfl_lab import audit_weekly_controller_registration_v1 as registration, audit_weekly_grade_history_v1 as history
+    root['effective_epoch'].update(schema_version=registration.RECOVERY_CONTEXT_SCHEMA,
+        history_protocol=history.LOCATOR_VERSION,
+        pending_post_recovery=dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]))
     with patch.object(hosted.retained,'validate_registration'):
         assert hosted.validate_root(root,now=at) is root
     assert store.canonical(root['prior_capture_qualified_runtime'])==old
