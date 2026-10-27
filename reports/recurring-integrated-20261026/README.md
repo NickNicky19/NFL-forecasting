@@ -1,3 +1,11 @@
+Update — October27,2026,20:24UTC (PARTIAL)
+
+Final website PR9 is f9f3056; exact-head CI40576824120 passes with200Python/all4requiredNode suites. A longer live browser check reproduced a loaded-snapshot caption defect: zero selected overlay rows/all23 baseline picks were described as selected forecasts. The final source corrects the caption, including mixed and empty lists; a Chromium source preview confirms truthful fallback at1280/390/320px. It remains unmerged and undeployed under the existing writer. Fresh Week8 data remains live.
+
+[Public-safe actual-served versus source-preview browser evidence](evidence/current-browser-caption-summary-20261027.json). Main44 is merged; Producer45 head77ecb07 full CI40575294634 has three partitions passed and one still running. The first-primary history startup gap is confirmed and a focused prospective successor is being implemented; COUNT7 remains frozen and unassigned.
+
+---
+
 Update — October 27, 2026, 20:04 UTC (PARTIAL)
 
 The site now serves fresh Week 8 data from Main e336, while its application code remains the older build. Main website PR9 is ready at f85885c with200 Python/all4 Node suites and exact-head CI passed; existing production ownership is preserved. Research Main44 is merged at3f96a4b; Producer45 fixture corrections and full CI/integration remain in progress. No fresh selected feed or completed recurring release is claimed.

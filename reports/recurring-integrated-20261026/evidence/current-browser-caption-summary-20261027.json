@@ -1,0 +1,126 @@
+{
+  "schema_version": "audit-actual-browser-source-caption-v1",
+  "observed_at_utc": "2026-10-27T20:23:50.583065+00:00",
+  "served_app_sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
+  "website_PR9_head": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+  "preview_app_sha256": "64253f93f62e5f4c6c0a73381ba1b1e15e823ce47d821e7d837835af5dfae9b6",
+  "CI": 40576824120,
+  "CI_result": "success",
+  "source_python_pass": 200,
+  "source_Node_suites": 4,
+  "source_caption_cases": 6,
+  "production_deployment": false,
+  "actual_served": [
+    {
+      "width": 1280,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": true,
+      "selected_overlay_rows": 0,
+      "source_caption": "Selected forecasts \u00b7 provisional",
+      "page_errors": 0,
+      "failed_requests": [],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": true,
+      "selected_overlay_rows": 0,
+      "source_caption": "Selected forecasts \u00b7 provisional",
+      "page_errors": 0,
+      "failed_requests": [],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": true,
+      "selected_overlay_rows": 0,
+      "source_caption": "Selected forecasts \u00b7 provisional",
+      "page_errors": 0,
+      "failed_requests": [],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    }
+  ],
+  "source_preview": [
+    {
+      "width": 1280,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": true,
+      "selected_overlay_rows": 0,
+      "source_caption": "Current baseline fallback",
+      "page_errors": 0,
+      "failed_requests": [],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": true,
+      "selected_overlay_rows": 0,
+      "source_caption": "Current baseline fallback",
+      "page_errors": 0,
+      "failed_requests": [],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "week": 8,
+      "generated_at": "2026-10-27T18:39:19Z",
+      "category_filters": 12,
+      "routes": 10,
+      "all_routes_have_content": true,
+      "loaded_ranking_snapshot": false,
+      "selected_overlay_rows": null,
+      "source_caption": "Current baseline fallback",
+      "page_errors": 0,
+      "failed_requests": [
+        {
+          "host": "nicknicky19.github.io",
+          "path": "/nicks-expert-nfl-picks/data/weekly-adaptive/275d356379c90e38ed9dd4d6fc2863c955437b18bb0c70ecbf2533e5bacda9ae.json",
+          "reason": "net::ERR_ABORTED"
+        }
+      ],
+      "empty_search": true,
+      "refresh_props_loaded": true,
+      "horizontal_overflow": false
+    }
+  ],
+  "limitations": [
+    "Source preview serves only the unmerged app code locally in Chromium, with unchanged public live data and assets; it is not a deployed release.",
+    "320px source preview observed the existing bounded overlay abort and correctly retained baseline fallback.",
+    "Ranking-snapshot presence is not evidence of any installed selected forecast. Actual overlay has zero selected rows; all23 snapshot picks are CURRENT_BASELINE.",
+    "Configured environment CA public-key trust only; independently TLS-verified asset receipts retained.",
+    "No physical iPhone/Safari, account submission, optional service activation, model fit or accuracy-gain claim."
+  ]
+}
