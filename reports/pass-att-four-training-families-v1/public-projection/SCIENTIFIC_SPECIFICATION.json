@@ -1,0 +1,138 @@
+{
+  "REG_population_contract": "Byte-pinned schedules.csv metadata game_id/season/week/game_type/home_team/away_team only; every query/training row must match REG schedule identity and team/opponent. Schedule scores/odds/QB results not consumed.",
+  "chronology": {
+    "global_freeze": "Freeze/read back2025 family/control forecasts before2025 full labels may enter2026 training; freeze/read back all candidate/control forecasts before the single evaluation phase. Rolling history reads project only rows strictly prior to their particular forecast cutoff.",
+    "observability": "UTC estimation-consumption receipts precede shared arithmetic estimation; durable/readback FORECASTS_2025 frozen_at precedes2026 estimation/2025full-label extension; GLOBAL_FORECAST_FREEZE and EVALUATION_CONSUMED UTC precede single grading phase. Rolling earlier2025 labels legitimately read for later2025 forecasts, so no total2025-unread claim.",
+    "original_source_clocks": "Retain authentic original capture/publication uncertainty; original-clock unsupported rows abstain rather than borrow reconstructed claims",
+    "protected_outcomes": "2026 Week7+ and all protected future inputs/outcomes closed; no source/network",
+    "source_lane": "Current-vintage reconstruction using unchanged original query cutoff and seven-day assumed label lag",
+    "source_selection": "Accepted current-vintage qualified W1\u20136 2026 labels are authoritative for every new arm/control; old unqualified outcomes are not decoded. No original historical publication claim.",
+    "strict_history_rule": "Every used label has prior kickoff and declared outcome_available strictly before that query cutoff; equality excluded; no same-game or later outcome. Retain original seven-day availability assumptions, no claim of historical publication proof.",
+    "within_year_refits": 0,
+    "year_fit_rules": {
+      "2025": "Supported earlier seasons2019\u20132024, all available before earliest2025 query cutoff",
+      "2026": "Supported earlier seasons2019\u20132025, all available before earliest2026 query cutoff"
+    }
+  },
+  "comparison_interpretation": "Complete procedures, not isolation of only training-window/recency or context effects. F4/new shared controls use cached lagged-role/team features from earlier provider/reconstruction information. Qualified 2026 labels do not imply complete participation panel.",
+  "controls": {
+    "2025_LAB_CDF": "Byte-pinned original counts MEAN comparator only on exact original finite common keys/outcomes; retain source-vintage distinctions",
+    "2026_LAB_CDF": "BLOCKED; do not infer or regenerate old vector",
+    "POOLED8": "Existing shared pooled/recent-window8 mean procedure with strength5 and same earlier-only prior; same explicit reconstruction label",
+    "RECENT3": "Existing shared recent mean procedure with strength3 and same earlier-only prior; newly applied at exact existing query features, clearly labeled new reconstruction, zero optimizer fits",
+    "SITE_R0": "UNAVAILABLE; never synthesize from current app, raw estimates, point gaps or other products"
+  },
+  "evaluation": {
+    "cohorts": [
+      "all original QB offers",
+      "supported played0/nonzero with every unknown/DNP/missing retained in denominator/coverage",
+      "current-year-history warm",
+      "current-year-history empty, retaining native older-history branches",
+      "per-procedure native fallback",
+      "exact common finite all-four means",
+      "exact pairwise originalCDF only where authentic"
+    ],
+    "durable_rows": "Complete method/key/context/cutoff/point/actual/participation/fallback/source-reason rows, with unknowns preserved; single evaluation only.",
+    "paired_comparison": "Report every family/control on the same eligible label pool; never compare different resolved-only cohorts as an algorithm gain. Preserve all losses and worsened bias/tails.",
+    "per_week_source_coverage": "Report all offered weekly QB rows, supported played counts, unknown, DNP, played missing, label reasons. Partial participation must be prominent.",
+    "selection": "No winner-based recipe changes, no deployment/promotion/default switch",
+    "shared_evaluator": "Use unchanged nfl_lab.evaluation.summarize(point,no distribution) and shared session_scorecard.losses for MSE/MAE/RMSE/bias/tails; one postfreeze evaluation phase",
+    "uncertainty": "Fixed per-game and all offered per-week paired MSE/MAE deltas plus min/max/median observed week MSE delta; no CI, bootstrap or significance claim."
+  },
+  "families": [
+    {
+      "fit_calls": 0,
+      "id": "F1_CURRENT_SEASON_PLAYER_MEAN",
+      "status": "NEW exact design, not an original recovered recipe",
+      "warm_formula": "Arithmetic mean of all eligible supported played passing-attempt observations for the same canonical player in query season before cutoff; no shrinkage in warm branch"
+    },
+    {
+      "fit_calls": 0,
+      "id": "F2_PRIOR_PLUS_CURRENT_PLAYER_MEAN",
+      "status": "NEW exact two-season pool, no claimed original parameters",
+      "warm_formula": "Arithmetic mean of eligible supported played observations for the same canonical player in query season and immediately prior season, equal weight per appearance"
+    },
+    {
+      "alternate_decays": 0,
+      "fit_calls": 0,
+      "fixed_half_life_days": 365,
+      "id": "F3_FIXED_TIME_WEIGHTED_MULTI_SEASON",
+      "parameter_origin": "NEW predeclared fixed choice before any new numerical work, not user-original or chosen from2025 losses",
+      "warm_formula": "Same-player eligible supported played history from2019 through query season; weights2**(-(query_cutoff-prior_kickoff).total_seconds()/(86400*365)); weighted arithmetic mean. Use older history when no current-season record exists."
+    },
+    {
+      "annual_pipeline_fits": 2,
+      "exact_existing_formula": "Earlier training global share=sum(y)/sum(positive finite lagged team attempts); role share=(sum_role_y+90*global_share)/(sum_role_lagged_team_attempts+90). Query H3 player/team share mixed with role prior using min(n3,3)/(min(n3,3)+3), clipped share[0,1], multiplied by lagged team attempts. Existing recent mean fallback remains explicit. Procedure-native qualified older lagged H3 remains usable; no forced current-year cold override.",
+      "id": "F4_EARLIER_TRAINED_SHARED_WORKLOAD",
+      "new_parameters_fitted": "Two fold-specific prior/share estimation pipelines, including shared cold mean; no optimizer, no within-year refit",
+      "optimizer_fits": 0,
+      "parameters": "Existing shared engine90 and3 constants, not missing original two-season method parameters",
+      "query_state": "Unchanged lagged QB role/H3 mean+support/team-volume feature columns and strict source clocks; no actual current team volume",
+      "shared_engine": "nfl_lab.models._workload with targetpass_att and same supported annual earlier QB fold, via existing shared model fit/predict entry"
+    }
+  ],
+  "fitting_and_arithmetic_accounting": {
+    "arithmetic_history_reductions_upper_bound": 5622,
+    "calibration_fits": 0,
+    "candidate_forecast_rows_upper_bound": 7496,
+    "hyperparameter_search": 0,
+    "known2025_results_used_to_choose_params": false,
+    "maximum_new_model_estimation_pipelines": 2,
+    "maximum_optimizer_calls": 0,
+    "new_control_rows_upper_bound": 3748,
+    "probabilities_from_means": false,
+    "shared_prior_estimates_included_in_each_pipeline": true
+  },
+  "identity": "Public scientific specification projection, not the complete private operational execution plan",
+  "original_private_execution_plan_sha256": "24bb0cbad523cddedf5ac21503fee62af3c02959edd88e618d92e0b7ed8cf36f",
+  "parameter_origin": "All new window/decay choices are explicit new preregistered designs, not recovered parameters. Workload constants are the existing shared engine3/90. No2025 performance used for choices.",
+  "schema_version": "pass-att-four-training-families-new-pilot-v1-20261027",
+  "scope": {
+    "do_not_select_resolved_only": true,
+    "evaluation_seasons": {
+      "2025": "REG Weeks1\u201318",
+      "2026": "REG Weeks1\u20136 only"
+    },
+    "original_QB_offers": {
+      "2025": 1359,
+      "2026": 515
+    },
+    "original_query_games": {
+      "2025": 272,
+      "2026": 93
+    },
+    "primary_metric": "MSE",
+    "product": "Conditional played passing-attempt mean estimate",
+    "secondary": [
+      "MAE",
+      "RMSE",
+      "signed bias",
+      "p95 absolute error",
+      "coverage and fallbacks"
+    ],
+    "target": "pass_att"
+  },
+  "shared_cold_policy": {
+    "consequence": "F1 is current-season-only in its warm branch with older shared cold fallback; never call its all-row procedure purely current-season. Report procedure-native fallback masks and current-year-history warm/cold diagnostic cohorts.",
+    "current_only_empty_window": "F1 uses the disclosed earlier-only training QB arithmetic mean only when its current-season player window has no supported values",
+    "extra_common_cold_controlled_ablation": "NONE in this bounded pilot; do not add output arms or suppress older-history benefit",
+    "history_unknowns": "Missing/unknown/DNP are never zero-valued target observations; keep state/coverage. Supported played0 stays in means. No playing inferred from active roster.",
+    "native_history_fallbacks": "F2 uses eligible prior+current player history even in Week1; F3 uses eligible multi-season weighted player history; each uses the SAME older QB mean value only when its own window is empty",
+    "same_population": "All four procedures forecast the SAME original offered rows/cutoffs; native availability/fallback masks are part of each full procedure, not standardized away",
+    "workload_native_fallback": "F4 retains the actual shared earlier-trained relation evaluated at eligible lagged H3/role/team-volume state, including older-season H3. Its declared existing recent fallback can use that qualified older history. No forced current-season cold override."
+  },
+  "source_files_unmodified": {
+    "pass_att_four_families_loader_v1.py": {
+      "bytes": 12069,
+      "sha256": "3f6272c2b8b5aaddf04fac60aa3b15b80f75b7194f8481bc0acd2564a02dc6eb"
+    },
+    "pass_att_four_families_v1.py": {
+      "bytes": 10004,
+      "sha256": "121b8307c219f7fa37cd3d78cc8b95e9b6b3af0b2f68a0b3a6ab52cc5432ff79"
+    },
+    "run_pass_att_four_families_v1.py": {
+      "bytes": 22996,
+      "sha256": "c79d2914b36a3838abc21e88170ac6f6033b9b4bce059154cd1217511877407c"
+    }
+  }
+}
