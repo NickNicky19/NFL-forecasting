@@ -21,11 +21,13 @@ import pytest
 from nfl_lab import audit_weekly_operations_worker_v1 as w
 from nfl_lab import audit_weekly_runtime_v1 as runtime, private_draft_store as store, state, gha_private_checkpoint as cp
 from nfl_lab import audit_weekly_operations_authority_v1 as authority
+from nfl_lab.weekly_adaptive import select as ORIGINAL_WEEKLY_SELECT
 from tools import audit_weekly_operations_worker_v1 as cli
 from test_audit_weekly_runtime_v1 import packet as runtime_packet
 from test_audit_weekly_resume_v1 import case as resume_case, DAILY
 from test_audit_weekly_controller_bootstrap_v1 import system, locator_system
 from test_audit_weekly_grade_history_v1 import original_seed as native_history_seed
+from test_audit_weekly_operations_v1 import first_future_metadata
 import test_audit_weekly_controller_v1 as original
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -111,6 +113,96 @@ def test_real_prepare_writes_prevalue_roles_calendar_and_scoped_population(compo
     assert manifest["fits"] == manifest["source_acquisitions"] == manifest["label_acquisitions"] == manifest["model_decodes"] == 0
     assert manifest["current_values_used"] is manifest["public_release"] is manifest["successful_forecast"] is False
     with pytest.raises(w.WorkerError):pickle.dumps(q.context())
+
+
+@pytest.fixture
+def first_future_composed(composed,first_future_metadata,monkeypatch):
+    """Real original-index/epoch/resume/CAS and real synthetic GET transport.
+
+    Only the current OWNER proof seam is fictional. Original forecast/model
+    bodies remain opaque throughout the metadata preparation.
+    """
+    from nfl_lab import audit_weekly_operations_v1 as operations
+    q=composed;m=first_future_metadata
+    old_raw=store.read_local(q.request['inputs']['calendar']['body']['path'],8<<20)
+    raw=old_raw+b'2026,8,REG,fictional-week-8,2026-10-29,16:00,20001,ATL,NO\n'
+    path=q.c.root/'worker-input/FIRST_CALENDAR.csv';q.c.storage.write_bytes(path,raw)
+    q.request['inputs']['calendar']=dict(body=cp.binding(path),receipt=q.c.put('worker-input/FIRST_RECEIPT.json',
+        dict(url=w.CALENDAR_URL,status='acquired',sha256=store.sha(raw),bytes=len(raw),
+            retrieved_utc=(m.at-timedelta(seconds=15)).isoformat())))
+    full=operations.calendar(raw,season=2026,week=8)
+    projected=[{k:r[k] for k in ('season','week','game_type','game_id','kickoff_utc')} for r in full]
+    epoch_doc=runtime.read_owned(q.c.storage,q.c.restored['aliases']['context/epoch.json'])
+    m.root['effective_epoch']['controller_context'].update(retained_epoch_sha256=state.digest(epoch_doc),
+        retained_choice_sha256=q.c.original_choice['sha256'],
+        retained_root_go_sha256=q.c.restored['original_archive']['root_go_sha256'])
+    m.root['effective_epoch']['plan'].update(calendar_sha256=state.digest(projected),
+        game_cutoffs={'fictional-week-8':'2026-10-29T19:45:00+00:00'},
+        deadline_utc='2026-10-29T19:45:00+00:00')
+    q.seed['go']=m.root
+    q.seed['native'].update(issued_at_utc=m.root['issued_at_utc'],expires_at_utc=m.root['expires_at_utc'])
+    context=q.context()
+    m.client.run_id=context.client.run_id;m.client.source_sha=context.client.source_sha
+    m.client.process=context.client.process;m.client.job=context.client.job
+    context.client=m.client
+    # The shared same-week fixture forbids selection as well as fitting. This
+    # new week must execute the original startup selector; fitting stays forbidden.
+    monkeypatch.setattr(runtime.selector,'select',ORIGINAL_WEEKLY_SELECT)
+    monkeypatch.setattr(w,'_first_primary_authority',lambda context:None)  # explicit current OWNER seam only
+    return SimpleNamespace(q=q,m=m,context=context)
+
+
+def test_first_future_real_prepare_preserves_epoch_and_registers_only_week8(first_future_composed):
+    from nfl_lab import audit_weekly_operations_v1 as operations
+    x=first_future_composed;q=x.q
+    original=store.read_local(q.c.original_choice['path'],512<<10)
+    result=w.prepare(x.context,clock=lambda:x.m.at)
+    value=runtime.read_owned(q.c.storage,result['manifest'])
+    assert value['state']=='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL'
+    population=runtime.read_owned(q.c.storage,value['archive_context']['ops_population'])
+    assert population['assignments']=={'fictional-week-8':'a'*64}
+    assert population['stream_id']==operations.STREAM
+    assert value['epoch_sha256']==x.m.root['effective_epoch']['controller_context']['retained_epoch_sha256']
+    assert value['history_binding']==q.c.p.runtime.registered.epoch.origin['history_binding']
+    assert store.read_local(q.c.original_choice['path'],512<<10)==original
+    assert value['archive_context']['ops_previous_checkpoint'] is None
+    assert {'ops_population','ops_roles','ops_schedule','ops_planning','canonical_weekly_choice','capture_scope'}<=set(value['archive_context'])
+    choice=runtime.read_owned(q.c.storage,value['archive_context']['canonical_weekly_choice'])
+    assert choice['resolved_prior_keys']==[] and choice['slate']['week']==8
+    assert not value['elapsed_game_ids'] and value['active_game_ids']==['fictional-week-8']
+    assert len(x.m.calls)==6 and value['fits']==value['source_acquisitions']==value['label_acquisitions']==0
+
+
+def test_first_future_cannot_forget_even_an_archived_unqualified_primary(first_future_composed):
+    x=first_future_composed;q=x.q
+    prior=deepcopy(q.c.restored)
+    prior['aliases']['context/ops_population.json']=q.c.put('worker-input/PRIOR_PRIMARY.json',{'preserve_failed_assignment':True})
+    x.context.request['inputs']['retained_result']=q.c.put('worker-input/NO_RESET.json',prior)
+    x.context._sha=w._digest(dict(request=x.context.request,authority=x.context.authority,job=x.context.job,go=x.context.go))
+    with pytest.raises(w.WorkerError,match='QUALIFIED_PREVIOUS_PRIMARY_ASSIGNMENT_REQUIRED'):
+        w.prepare(x.context,clock=lambda:x.m.at)
+    assert x.m.calls==[]
+
+
+def test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets():
+    context=SimpleNamespace(verify=lambda:None,env={'GITHUB_ACTOR':'github-actions[bot]','GITHUB_ACTOR_ID':'41898282'},proof={})
+    with pytest.raises(w.WorkerError,match='LIVE_OWNER_FIRST_PRIMARY_PROOF_REQUIRED'):
+        w._first_primary_authority(context)
+
+
+def test_first_future_owner_path_forwards_exact_root_to_current_verifier(monkeypatch):
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    proof=bootstrap.Owner.__new__(bootstrap.Owner)
+    env={'GITHUB_ACTOR':'NickNicky19','GITHUB_ACTOR_ID':'208912933'}
+    calls=[]
+    context=SimpleNamespace(verify=lambda:calls.append('context'),env=env,proof=proof,
+        go={'fictional':'exact-root'})
+    def current_verifier(actual,actual_env,body):
+        assert actual is proof and actual_env is env and body==b'{"fictional":"exact-root"}'
+        calls.append('current-owner-verifier')
+    monkeypatch.setattr(authority,'_verify',current_verifier)  # Explicit verifier seam, no live grant.
+    w._first_primary_authority(context)
+    assert calls==['context','current-owner-verifier']
 
 
 def test_prepare_never_decodes_model_or_forecast_bodies(composed, monkeypatch):

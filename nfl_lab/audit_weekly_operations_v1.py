@@ -30,6 +30,7 @@ CONTEXT_V4 = "audit-weekly-recurring-v4-context"
 CONTEXT_V5 = "audit-weekly-recurring-v5-context"
 FILES = ("nfl_lab/audit_weekly_operations_v1.py", "tests/test_audit_weekly_operations_v1.py")
 STREAM = "weekly-corrected-primary-player-game-v1"
+_FIRST_PRIMARY_KEY = object()
 PLAN_KEYS = {"schema_version", "kind", "reason", "epoch_sha256", "canonical_choice_sha256",
     "target_choice_sha256", "season", "week", "planned_at", "history_sha256", "future_game_ids",
     "capture_allowed", "publication_allowed", "current_values_used", "fits"}
@@ -69,8 +70,9 @@ def context(value):
         from .audit_weekly_grade_history_v1 import validate_root_plan
         validate_root_plan(value["plan"])
     if value["schema_version"]==CONTEXT_V5:
-        from .audit_weekly_template_v1 import validate_pending_recovery
+        from .audit_weekly_template_v1 import validate_pending_recovery, first_primary_context
         validate_pending_recovery(value['pending_post_recovery'])
+        first_primary_context(value)
     if value["schema_version"] == CONTEXT_V3:
         plan = value["plan"]
         require(type(plan) is dict and set(plan) == {"kind", "season", "week"}
@@ -79,6 +81,119 @@ def context(value):
             and type(plan["week"]) is int and 1 <= plan["week"] <= 18,
             "CLOSED_ROOT_RECURRING_PLAN_REQUIRED")
     return deepcopy(value)
+
+
+class FirstPrimaryAbsence:
+    """Current-process actual GET evidence, never a supplied empty-history flag."""
+    def __init__(self, document, root, client, authenticate, clock, key):
+        require(key is _FIRST_PRIMARY_KEY, 'LIVE_FIRST_PRIMARY_ABSENCE_REQUIRED')
+        self.document=deepcopy(document);self._sha=state.digest(self.document)
+        self.root_sha256=state.digest(root);self.client=client
+        self.identity=cp.client_identity(client);self.process=store.process_identity()
+        self.authenticate,self.clock=authenticate,clock
+
+    def verify(self, root):
+        from . import audit_weekly_template_v1 as template
+        require(state.digest(self.document)==self._sha and state.digest(root)==self.root_sha256
+            and self.process==store.process_identity() and self.identity==cp.client_identity(self.client),
+            'FIRST_PRIMARY_ABSENCE_INTEGRITY')
+        require(template.first_primary_root(root) is not None
+            and self.client.binding==root['qualified_runtime']['binding']
+            and self.client.source_sha==root['source_sha']
+            and state.utc(root['issued_at_utc'])<=state.utc(self.document['observed_at'])
+            <=state.utc(self.clock())<min(state.utc(root['expires_at_utc']),state.utc(root['effective_epoch']['plan']['deadline_utc']))
+            and self.authenticate() is None, 'LIVE_OWNER_FIRST_PRIMARY_ABSENCE_REQUIRED')
+        return self
+
+    def __reduce__(self):
+        raise OperationsError('FIRST_PRIMARY_ABSENCE_CANNOT_BE_SERIALIZED')
+
+
+def first_primary_absence(client, root, *, authenticate, clock=state.now_utc):
+    """Six bounded GETs: immutable path absence, no deleted history, stable head.
+
+    Only metadata is read. Neither an empty local snapshot nor a 404 without
+    an authenticated existing state commit establishes an empty primary lane.
+    The caller enforces the live OWNER proof before every exchange.
+    """
+    from . import audit_weekly_template_v1 as template
+    require(template.first_primary_root(root) is not None and callable(authenticate),
+        'EXPLICIT_OWNER_FIRST_PRIMARY_REQUIRED')
+    require(client.binding==root['qualified_runtime']['binding'] and client.source_sha==root['source_sha']
+        and client.job.get('run_authenticated') is True and client.job.get('execution_lane')=='github_actions',
+        'FIRST_PRIMARY_ACTUAL_CURRENT_CLIENT_REQUIRED')
+    observations=[]
+    def get(path, status=200):
+        require(authenticate() is None and state.utc(root['issued_at_utc'])<=state.utc(clock())
+            <min(state.utc(root['expires_at_utc']),state.utc(root['effective_epoch']['plan']['deadline_utc'])),
+            'LIVE_OWNER_FIRST_PRIMARY_ABSENCE_REQUIRED')
+        url=store.API+path;client.allowed.add(url)
+        observed,headers,body=client.request(url,method='GET',cap=store.META_CAP)
+        require(observed==status and headers.get('x-ratelimit-remaining')!='0'
+            and 'retry-after' not in headers, 'FIRST_PRIMARY_METADATA_ABSENCE_OR_RATE_FAILED')
+        value=cp.strict_json(body)
+        observations.append(dict(path=path,status=observed,sha256=store.sha(body)))
+        return value
+    def head():
+        value=get('/git/ref/heads/lab-state')
+        require(type(value) is dict and value.get('ref')=='refs/heads/lab-state'
+            and type(value.get('object')) is dict and value['object'].get('type')=='commit'
+            and type(value['object'].get('sha')) is str and re.fullmatch(r'[a-f0-9]{40}',value['object']['sha']),
+            'ACTUAL_FIRST_PRIMARY_STATE_COMMIT_REQUIRED')
+        return value['object']['sha']
+    initial=head()
+    for path in ('state/controller-v1/grade-checkpoints','state/controller-v1/history-v2'):
+        absent=get('/contents/'+path+'?ref='+initial,404)
+        require(type(absent) is dict and absent.get('message')=='Not Found',
+            'ACTUAL_FIRST_PRIMARY_PATH_ABSENCE_REQUIRED')
+        census=get('/commits?sha='+initial+'&path='+path+'&per_page=1&page=1')
+        require(type(census) is list and not census, 'PRIOR_PRIMARY_HISTORY_MAY_NOT_BE_RESET')
+    require(head()==initial, 'FIRST_PRIMARY_STATE_CHANGED_NO_WRITE')
+    proof=FirstPrimaryAbsence(dict(schema_version=template.FIRST_PRIMARY+'-absence',state_head=initial,
+        observations=observations,observed_at=state.utc(clock()).isoformat()),root,client,authenticate,clock,_FIRST_PRIMARY_KEY)
+    return proof.verify(root)
+
+
+def first_future_plan(registered, original, full_schedule, root, absence, *, authenticate,
+        cutoff_lead_seconds, relocated_replays=(), clock=state.now_utc):
+    """Manual first full Week8 primary, preserving the exact existing epoch.
+
+    This entry point is separate from recurring_plan's unchanged durable-week
+    guard. Absence is actual GET evidence, not a synthetic DurableHistory.
+    """
+    from . import audit_weekly_template_v1 as template, weekly_generic_producer as generic
+    spec=template.first_primary_root(root);at=state.utc(clock())
+    require(spec is not None and type(absence) is FirstPrimaryAbsence,
+        'LIVE_FIRST_PRIMARY_ABSENCE_REQUIRED')
+    absence.verify(root)
+    require(type(registered) is epoch.RegisteredEpoch and type(original) is epoch.EpochChoice
+        and registered.epoch.sha256==spec['retained_epoch_sha256']
+        and original.sha256==spec['retained_choice_sha256']
+        and (original.document['slate']['season'],original.document['slate']['week'])==(2026,7),
+        'EXACT_RETAINED_COUNT7_EPOCH_AND_CHOICE_REQUIRED')
+    original.verify(registered,at);resume._calendar_fields(full_schedule)
+    plan=root['effective_epoch']['plan']
+    require(all((r['season'],r['week'],r['game_type'])==(2026,8,'REG') for r in full_schedule)
+        and type(cutoff_lead_seconds) is int and 0<cutoff_lead_seconds<=86400,
+        'FIRST_PRIMARY_FULL_FUTURE_WEEK8_REQUIRED')
+    cutoffs={r['game_id']:(state.utc(r['kickoff_utc'])-timedelta(seconds=cutoff_lead_seconds)).isoformat() for r in full_schedule}
+    slate=generic.prepare_slate(full_schedule,season=2026,week=8,game_cutoffs=cutoffs,now=at)
+    require(state.digest(full_schedule)==plan['calendar_sha256'] and cutoffs==plan['game_cutoffs']
+        and at<state.utc(plan['deadline_utc'])==min(map(state.utc,cutoffs.values()))
+        and at<state.utc(slate['weekly_deadline_utc'])
+        and slate['elapsed_games']==0, 'FIRST_PRIMARY_ACTUAL_FULL_WEEK_DEADLINE_REQUIRED')
+    grade._authenticate(authenticate,'NEXT_FULL_WEEK_SLATE_BEFORE_VALUES',dict(slate=slate,full_schedule=full_schedule),at)
+    empty=dict(schema_version=epoch.VERSION+'-history',epoch_sha256=registered.epoch.sha256,
+        legacy_history_binding=deepcopy(registered.epoch.origin['history_binding']),
+        bundle=dict(schema_version=grade.selector.VERSION,offers=[],forecasts=[],outcomes=[],decisions=[],weeks=[]))
+    choice=epoch.select_next_week(registered,empty,slate,original,relocated_replays=relocated_replays,clock=lambda:at)
+    execution=dict(schema_version=VERSION+'-execution-plan',kind='FUTURE_CAPTURE',
+        reason='OWNER_FIRST_FUTURE_PRIMARY_BEFORE_VALUES',epoch_sha256=registered.epoch.sha256,
+        canonical_choice_sha256=original.sha256,target_choice_sha256=choice.sha256,season=2026,week=8,
+        planned_at=at.isoformat(),history_sha256=None,future_game_ids=sorted(cutoffs),
+        capture_allowed=True,publication_allowed=True,current_values_used=False,fits=0)
+    require(set(execution)==PLAN_KEYS, 'CLOSED_RECURRING_EXECUTION_PLAN')
+    return choice,execution
 
 
 def roles_from_manifests(storage, restored_ref, *, authenticate):
