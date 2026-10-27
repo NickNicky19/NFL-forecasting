@@ -58,7 +58,7 @@ def validate_request(p,phase,*,go=None):
     grade_only = type(go) is dict and (go.get("effective_epoch") or {}).get("plan", {}).get("kind") == "GRADE_ONLY"
     v2 = type(p) is dict and p.get("schema_version") == VERSION+"-request-v2"
     v3 = type(p) is dict and p.get("schema_version") == VERSION+"-request-v3"
-    modern=type(go) is dict and (go.get("effective_epoch") or {}).get("schema_version")=="audit-weekly-recurring-v4-context"
+    modern=type(go) is dict and (go.get("effective_epoch") or {}).get("schema_version") in {"audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}
     retained_request=v2 or v3
     require(phase in PHASES and type(p) is dict and set(p)==REQUEST_KEYS
         and (p["schema_version"]==VERSION+"-request" or v2 and grade_only or v3 and grade_only and modern)
@@ -261,7 +261,7 @@ def _archive(context,storage,clock):
         require(acceptance.restored_identity(p)==current and state.utc(p["created_at_utc"])<=state.utc(clock()),"ACTUAL_CURRENT_ARCHIVE_PROOF_IDENTITY")
     require(set(EPOCH_ROLES|OPS_ROLES)<={n.removeprefix("context/").removesuffix(".json") for n in aliases if n.startswith("context/")},
         "REGISTERED_OPERATIONAL_CONTEXT_MISSING_NO_POSTHOC_POPULATION")
-    if (context.go.get("effective_epoch") or {}).get("schema_version")=="audit-weekly-recurring-v4-context":
+    if (context.go.get("effective_epoch") or {}).get("schema_version") in {"audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}:
         require("context/ops_planning.json" in aliases,"V4_OPERATIONAL_PREVALUE_PLANNING_CONTEXT_REQUIRED")
     context.verify()
     return restored,index
@@ -620,7 +620,7 @@ def execute(context,*,transport=None,fetch=None,clock=None):
         durable_ref=grade.persist_snapshot(result.durable,storage=storage,output=output/"durable")
         from . import audit_weekly_grade_history_v1 as history
         planning=None
-        if (context.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4:
+        if (context.go.get("effective_epoch") or {}).get("schema_version") in {history.CONTEXT_V4,history.CONTEXT_V5}:
             ref=p["inputs"].get("planning") or restored["aliases"].get("context/ops_planning.json")
             require(ref is not None,"ORIGINAL_ROOT_PLANNING_REQUIRED")
             planning=archive.read_owned(storage,ref,64 << 10)

@@ -27,6 +27,7 @@ CONTEXT_KEYS = {"schema_version", "controller_context", "previous_capture"}
 CONTEXT_V2 = "audit-weekly-recurring-v2-context"
 CONTEXT_V3 = "audit-weekly-recurring-v3-context"
 CONTEXT_V4 = "audit-weekly-recurring-v4-context"
+CONTEXT_V5 = "audit-weekly-recurring-v5-context"
 FILES = ("nfl_lab/audit_weekly_operations_v1.py", "tests/test_audit_weekly_operations_v1.py")
 STREAM = "weekly-corrected-primary-player-game-v1"
 PLAN_KEYS = {"schema_version", "kind", "reason", "epoch_sha256", "canonical_choice_sha256",
@@ -44,9 +45,10 @@ def require(value, code):
 
 
 def context(value):
-    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}
+    require(type(value) is dict and value.get("schema_version") in {CONTEXT_SCHEMA,CONTEXT_V2,CONTEXT_V3,CONTEXT_V4,CONTEXT_V5}
         and set(value)==(CONTEXT_KEYS if value["schema_version"]==CONTEXT_SCHEMA
-            else CONTEXT_KEYS|{"previous_checkpoint"}|({"plan"} if value["schema_version"] in {CONTEXT_V3,CONTEXT_V4} else set())),
+            else CONTEXT_KEYS|{"previous_checkpoint"}|({"plan"} if value["schema_version"] in {CONTEXT_V3,CONTEXT_V4,CONTEXT_V5} else set())
+                | ({"pending_post_recovery"} if value["schema_version"]==CONTEXT_V5 else set())),
         "CLOSED_RECURRING_CONTEXT_REQUIRED")
     previous = value["previous_capture"]
     require(type(previous) is dict and set(previous) == {"feed_sha256", "receipt_sha256"}
@@ -54,18 +56,21 @@ def context(value):
         "EXACT_PRIOR_SUCCESSFUL_CAPTURE_LOCATOR_REQUIRED")
     require(value["controller_context"] is None or type(value["controller_context"]) is dict,
         "EXPLICIT_OWNER_OR_SEALED_CONTROLLER_CONTEXT")
-    if value["schema_version"] in {CONTEXT_V2,CONTEXT_V3,CONTEXT_V4}:
+    if value["schema_version"] in {CONTEXT_V2,CONTEXT_V3,CONTEXT_V4,CONTEXT_V5}:
         checkpoint=value["previous_checkpoint"]
-        modern=value["schema_version"]==CONTEXT_V4 and type(checkpoint) is dict and checkpoint.get("schema_version") is not None
+        modern=value["schema_version"] in {CONTEXT_V4,CONTEXT_V5} and type(checkpoint) is dict and checkpoint.get("schema_version") is not None
         if modern:
             from .audit_weekly_grade_history_v1 import locator_reference
             locator_reference(checkpoint)
         require(modern or checkpoint is None or type(checkpoint) is dict and set(checkpoint)=={"sha256"}
             and type(checkpoint["sha256"]) is str and store.HASH.fullmatch(checkpoint["sha256"]),
             "EXACT_REGISTERED_PREVIOUS_GRADING_SIDECAR_HASH")
-    if value["schema_version"]==CONTEXT_V4:
+    if value["schema_version"] in {CONTEXT_V4,CONTEXT_V5}:
         from .audit_weekly_grade_history_v1 import validate_root_plan
         validate_root_plan(value["plan"])
+    if value["schema_version"]==CONTEXT_V5:
+        from .audit_weekly_template_v1 import validate_pending_recovery
+        validate_pending_recovery(value['pending_post_recovery'])
     if value["schema_version"] == CONTEXT_V3:
         plan = value["plan"]
         require(type(plan) is dict and set(plan) == {"kind", "season", "week"}

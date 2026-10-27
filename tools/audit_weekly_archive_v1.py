@@ -92,6 +92,9 @@ def run(args,env,*,transport=None):
         and p["schema_version"]==archive.VERSION+"-request" and p["repository"]==store.REPO and p["phase"]==args.phase
         and p["helper_sha256"]==archive.pins() and p["limits"]==archive.LIMITS
         and set(p["jobs"])=={"produce","restore","consume"} and p["jobs"][args.phase]==job["job_id"],"SEALED_CLOSED_ARCHIVE_REQUEST")
+    from nfl_lab.audit_weekly_template_v1 import pending_recovery
+    archive.require(p['pending_reservations']==pending_recovery(cp.strict_json(root_bytes))['pending_reservations'],
+        'EXACT_ROOT_PRIOR_PENDING_RECORDS_IN_ARCHIVE_CHILD')
     numerical=cp.strict_json(store.read_local(ROOT/"config/weekly-owner-private-bootstrap-v1.json",1 << 20))["numerical_environment"]
     archive.require(all(env.get(k)==v for k,v in numerical.items()),"EXACT_ARCHIVE_NUMERICAL_STARTUP_ENVIRONMENT")
     package=cp.strict_json(cp.read_ref(p["qualified_runtime"],64 << 10))

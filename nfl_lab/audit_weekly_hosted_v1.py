@@ -194,14 +194,17 @@ def validate_root(go, *, now):
     if go["operation"]=="RECURRING_CAPTURE":
         from . import audit_weekly_operations_v1 as operations
         operations.context(go["effective_epoch"])
-        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==operations.CONTEXT_V4,
+        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==operations.CONTEXT_V5,
             'EXPLICIT_DUAL_RUNTIME_HISTORY_PROTOCOL')
     elif go["operation"]=="CONTROLLER_REGISTRATION":
         from . import audit_weekly_controller_registration_v1 as registration
         try:registration.context(go["effective_epoch"])
         except registration.RegistrationError:
             raise store.StoreError("EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT") from None
+        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==registration.RECOVERY_CONTEXT_SCHEMA,
+            'EXPLICIT_DUAL_RUNTIME_PENDING_REGISTRATION')
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
+    template.pending_recovery(go)
     retained.validate_registration(retained_registration(go))
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
         and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
@@ -257,6 +260,118 @@ def error_diagnostic(error):
     return dict(error_type=kind,source_frames=frames[-5:])
 
 
+class PendingMetadataClient(archive.Client):
+    """GET-only additions bound to the actual approved Root's exact evidence."""
+    def __init__(self,*args,root_go,**kwargs):
+        super().__init__(*args,**kwargs)
+        from . import audit_weekly_template_v1 as template
+        spec=template.pending_recovery(root_go)
+        self.pending_metadata_urls=set()
+        if (root_go.get('effective_epoch') or {}).get('schema_version') in {
+                template.RECURRING_V5,template.REGISTRATION_RECOVERY}:
+            for handoff in spec['handoffs']:
+                base=store.API+'/actions/runs/'+handoff['descriptor']['entry']['writer_run_id']
+                self.pending_metadata_urls.update({base,base+'/jobs?per_page=100&page=1'})
+            self.pending_metadata_urls.update(store.API+'/actions/workflows/lab.yml/runs?event=workflow_dispatch&branch=research%2Fweekly-storage-probe-v1&per_page=5&page='+str(page)
+                for page in range(1,5))
+
+    def allow(self,url):
+        if url in self.pending_metadata_urls:
+            self.allowed.add(url);return url
+        return super().allow(url)
+
+    def request(self,url,*,method='GET',**kwargs):
+        require(method=='GET' and kwargs.get('data') is None,'ROOT_METADATA_GET_ONLY')
+        return super().request(url,method=method,**kwargs)
+
+
+def authenticated_pending_records(client, handoff, assets, *, before):
+    """Authenticate old failure metadata without retrying its POST or job."""
+    import base64
+    from pathlib import PurePosixPath
+    from . import audit_weekly_template_v1 as template
+    entry=cp.descriptor_meta(handoff['descriptor'],failure.PACKAGE_CAP)
+    require(handoff['binding']==client.binding and entry['binding_sha256']==store.sha(store.canonical(client.binding)),
+        'PENDING_POST_NAMESPACE_MISMATCH')
+    expected=[(handoff['descriptor']['manifest_asset_id'],'manifest-'+handoff['descriptor']['manifest_sha256']+'.json',
+        handoff['descriptor']['manifest_bytes'],handoff['descriptor']['manifest_sha256']),
+        (entry['payload_asset_id'],entry['payload_name'],entry['payload']['bytes'],entry['payload']['sha256'])]
+    for identity,name,size,digest in expected:
+        matches=[a for a in assets if a['id']==identity]
+        require(len(matches)==1 and matches[0]['name']==name and matches[0]['size']==size
+            and matches[0]['state']=='uploaded' and matches[0].get('digest')=='sha256:'+digest,
+            'PRIOR_FAILURE_ASSETS_IN_EXACT_PRIVATE_RELEASE')
+    client.draft()
+    saved=client.read_asset(*expected[0])
+    require(saved==store.canonical(entry),'EXACT_PRIOR_FAILURE_MANIFEST')
+    body=client.read_asset(*expected[1])
+    require(entry['payload']==failure.payload_manifest(body),'EXACT_PRIOR_CORE_FAILURE_PAYLOAD')
+    request,values=failure.unpack(body)
+    controls={a['label']:(a,v) for a,v in zip(request['attachments'],values)}
+    require({'owner-root','original-post-reservations'}<=set(controls)
+        and controls['owner-root'][0]['kind']=='control'
+        and controls['original-post-reservations'][0]['kind']=='post_reservation','EXACT_PRIOR_PENDING_CONTROL_ATTACHMENTS')
+    root_raw=controls['owner-root'][1];old=cp.strict_json(root_raw)
+    require(root_raw==store.canonical(old) and store.sha(root_raw)==handoff['root_go_sha256']==request['input_contract_sha256']
+        and old['approved'] is True and old['repository']==store.REPO and old['mode']==MODE
+        and old['owner_authorization']=='OWNER_NFL_AUDIT_CONTINUATION_20261025'
+        and old['jobs']==JOBS and old['qualified_runtime']['binding']==client.binding,
+        'EXACT_HISTORICAL_FAILED_ROOT_AND_NAMESPACE')
+    attempt=request['attempt'];run_id=attempt['run_id']
+    require(run_id==entry['writer_run_id'] and attempt['source_sha']==old['source_sha']
+        and attempt['workflow_ref']==old['workflow_ref'] and attempt['job_id']==JOBS['produce'],
+        'ORIGINAL_FAILURE_RUN_SOURCE_AND_PRODUCER')
+    base=store.API+'/actions/runs/'+run_id
+    run=client.json(client.allow(base));listing=client.json(client.allow(base+'/jobs?per_page=100&page=1'))
+    require(run.get('id')==int(run_id) and run.get('head_sha')==old['source_sha']
+        and run.get('run_attempt')==1 and run.get('event')=='workflow_dispatch'
+        and run.get('path')=='.github/workflows/lab.yml' and run.get('head_branch')=='research/weekly-storage-probe-v1'
+        and run.get('repository',{}).get('full_name')==store.REPO
+        and run.get('head_repository',{}).get('full_name')==store.REPO
+        and run.get('status')=='completed' and run.get('conclusion') in {'failure','cancelled','timed_out'}
+        and ((run.get('actor',{}).get('login'),run.get('actor',{}).get('id'))==('NickNicky19',208912933)
+            or (run.get('actor',{}).get('login'),run.get('actor',{}).get('id'))==('github-actions[bot]',41898282)
+                and (old.get('effective_epoch') or {}).get('controller_context') is not None),
+        'ACTUAL_COMPLETED_FAILED_PRIOR_RUN')
+    require(type(listing.get('jobs')) is list and listing.get('total_count')==len(listing['jobs'])<=100,
+        'COMPLETE_PRIOR_FAILURE_JOB_LISTING')
+    jobs=[j for j in listing['jobs'] if j.get('name')==attempt['job_id']]
+    require(len(jobs)==1,'UNIQUE_PRIOR_FAILED_PRODUCER_JOB');job=jobs[0]
+    require(job.get('run_id')==int(run_id) and job.get('head_sha')==old['source_sha'] and job.get('status')=='completed'
+        and job.get('conclusion') in {'failure','cancelled','timed_out'}
+        and utc(old['issued_at_utc'])<=utc(job['started_at'])<=utc(request['clocks']['started_at_utc'])
+        <=utc(request['clocks']['observed_at_utc'])<=utc(job['completed_at'])<=utc(before),
+        'CAUSAL_ORIGINAL_FAILED_JOB_CLOCKS')
+    doc=cp.strict_json(controls['original-post-reservations'][1])
+    require(type(doc) is dict and set(doc)=={'schema_version','records'}
+        and doc['schema_version']==VERSION+'-original-post-journals' and type(doc['records']) is list
+        and len(doc['records'])<=1024,'CLOSED_ORIGINAL_PENDING_POST_CENSUS')
+    records={};paths=set()
+    for wrapper in doc['records']:
+        require(type(wrapper) is dict and set(wrapper)=={'relative_path','bytes','sha256','body_base64'},
+            'CLOSED_ORIGINAL_PENDING_WRAPPER')
+        name=wrapper['relative_path']
+        require(type(name) is str and 0<len(name)<=1024,'ORIGINAL_PENDING_PATH_SCOPE')
+        path=PurePosixPath(name)
+        require(not path.is_absolute() and '..' not in path.parts and '\\' not in name
+            and path.as_posix()==name and name not in paths,'ORIGINAL_PENDING_PATH_SCOPE');paths.add(name)
+        current=(len(path.parts)==2 and path.parts[0]=='journal'
+            or len(path.parts)==3 and path.parts[:2]==('archive-produce','journal'))
+        if not current:continue
+        raw=base64.b64decode(wrapper['body_base64'],validate=True)
+        require(type(wrapper['bytes']) is int and len(raw)==wrapper['bytes']<=32 << 10
+            and store.sha(raw)==wrapper['sha256'],'ORIGINAL_PENDING_WRAPPER_BYTES')
+        record=cp.strict_json(raw)
+        template.validate_pending_recovery(dict(schema_version=template.PENDING_RECOVERY,
+            handoffs=[handoff],pending_reservations=[record]),binding=client.binding)
+        require(raw==store.canonical(record) and path.name==store.sha(record['key'].encode())+'.reservation.json',
+            'EXACT_ORIGINAL_PENDING_RECORD_NAME')
+        require(record['key'] not in records or records[record['key']]==record,'CONFLICTING_ORIGINAL_PENDING_RECORDS')
+        records[record['key']]=record
+    client.draft()
+    return [records[k] for k in sorted(records)]
+
+
 class Runner:
     def __init__(self, phase, env, *, existing=False):
         from tools.private_draft_store_v2 import actions_context
@@ -289,6 +404,7 @@ class Runner:
         self.storage.register_root(self.root)
         self.journal=self.root/"journal"
         if not existing:self.journal.mkdir(mode=0o700)
+        self.pending_scope_authenticated=False
         self.job=actions_context(env,"write")
         if existing:
             self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
@@ -308,13 +424,13 @@ class Runner:
             and start["job_id"]==EXECUTION_JOBS[phase] and start["workflow_ref"]==env["GITHUB_WORKFLOW_REF"]
             and start["actual_actions_api_authenticated"] is False
             and utc(self.go["issued_at_utc"])<=utc(start["actual_started_at"])<=now_utc(),"EXACT_ORIGINAL_STATIC_BOOTSTRAP_START")
-        class Metadata(archive.Client):
+        class Metadata(PendingMetadataClient):
             def request(self,url,*,method="GET",**kw):
                 require(method=="GET" and kw.get("data") is None,"ROOT_METADATA_GET_ONLY")
                 return super().request(url,method=method,**kw)
         try:
             self.client=Metadata(env.get("GITHUB_TOKEN"),env["GITHUB_RUN_ID"],source_sha=env["GITHUB_SHA"],journal=self.journal,
-                job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"])
+                job=self.job,operation="metadata",qualification=self.go["qualified_runtime"]["qualification"],root_go=self.go)
             self.client.authenticate_actions_job();self.client.bind(self.go["qualified_runtime"]["binding"])
             operations_authority.attach(self.client,self.operations_proof,env,raw)
             archive.authenticate_qualification(self.client,self.go["qualified_runtime"],self.go["pending_census"])
@@ -322,6 +438,7 @@ class Runner:
             current=[j for j in jobs if j.get("id")==self.identity["api_job_id"]]
             require(len(current)==1 and utc(current[0]["started_at"])<=utc(start["actual_started_at"])<=now_utc(),
                 "ORIGINAL_LOCAL_START_WITHIN_GENUINE_CURRENT_JOB")
+            self.authenticate_pending_posts()
         except Exception as error:
             code=error.code if isinstance(error,store.StoreError) else "WEEKLY_BOOTSTRAP_AUTHENTICATION_FAILED"
             if type(code) is not str or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code):code="WEEKLY_BOOTSTRAP_AUTHENTICATION_FAILED"
@@ -408,8 +525,58 @@ class Runner:
             raise store.StoreError(code if type(code) is str and re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code) else "WEEKLY_CHILD_FAILED")
         self.check();return result
 
+    def authenticate_pending_posts(self):
+        """Charge authenticated old intents before the first private write."""
+        from . import audit_weekly_template_v1 as template
+        spec=template.pending_recovery(self.go)
+        records={}
+        modern=(self.go.get('effective_epoch') or {}).get('schema_version') in {
+            template.RECURRING_V5,template.REGISTRATION_RECOVERY}
+        if modern:
+            assets,_=self.client.inventory()
+            for handoff in spec['handoffs']:
+                for record in authenticated_pending_records(self.client,handoff,assets,before=self.go['issued_at_utc']):
+                    require(record['key'] not in records or records[record['key']]==record,'CONFLICTING_PRIOR_PENDING_EVIDENCE')
+                    records[record['key']]=record
+            exact=[records[k] for k in sorted(records)]
+            require(exact==spec['pending_reservations'],'COMPLETE_AUTHENTICATED_PRIOR_PENDING_LIST')
+            # A completed failed dispatch after namespace creation cannot be
+            # silently omitted merely because its absent POST is not listed.
+            origin=int(self.go['qualified_runtime']['binding']['origin_run_id'])
+            runs=[];total=None;complete=False
+            for page in range(1,5):
+                url=store.API+'/actions/workflows/lab.yml/runs?event=workflow_dispatch&branch=research%2Fweekly-storage-probe-v1&per_page=5&page='+str(page)
+                listing=self.client.json(self.client.allow(url));members=listing.get('workflow_runs')
+                require(type(members) is list and type(listing.get('total_count')) is int
+                    and listing['total_count']>=len(members) and len(members)<=5,
+                    'BOUNDED_COMPLETE_PENDING_RUN_CENSUS')
+                require(total is None or total==listing['total_count'],'PENDING_RUN_CENSUS_CHANGED_NO_WRITE')
+                require(len(members)==min(5,max(listing['total_count']-(page-1)*5,0)),
+                    'PENDING_RUN_CENSUS_INCOMPLETE_PAGE_NO_WRITE')
+                total=listing['total_count'];runs.extend(members)
+                identities=[r.get('id') for r in runs]
+                require(all(type(v) is int and v>0 for v in identities)
+                    and identities==sorted(set(identities),reverse=True),'ORDERED_UNIQUE_PENDING_RUN_CENSUS')
+                if len(members)<5 or identities[-1]<=origin:
+                    complete=True;break
+            require(complete,'PENDING_RUN_CENSUS_NEEDS_OWNER_RECOVERY')
+            known={int(h['descriptor']['entry']['writer_run_id']) for h in spec['handoffs']}
+            require(origin in identities and known<=set(identities),'PENDING_CENSUS_OMITS_NAMESPACE_OR_KNOWN_FAILURE')
+            unknown=[r for r in runs if r['id']>origin and r.get('status')=='completed'
+                and r.get('conclusion') in {'failure','cancelled','timed_out'} and r['id'] not in known]
+            require(not unknown,'UNRECOVERED_PRIOR_FAILED_DISPATCH_NO_WRITE')
+        cp.seed_pending(self.journal,spec['pending_reservations'])
+        self.pending_scope_authenticated=True
+
+    def require_pending_scope(self):
+        from . import audit_weekly_template_v1 as template
+        modern=(self.go.get('effective_epoch') or {}).get('schema_version') in {
+            template.RECURRING_V5,template.REGISTRATION_RECOVERY}
+        require(getattr(self,'pending_scope_authenticated',not modern),'PENDING_SCOPE_NOT_AUTHENTICATED_NO_WRITE')
+
     def claim(self):
         """A fixed root-dependent blob makes duplicate GO use detectable."""
+        self.require_pending_scope()
         package=self.go["qualified_runtime"]
         class ClaimClient(archive.Client):
             def upload(self,name,body,*,reuse_completed=False):
@@ -424,7 +591,7 @@ class Runner:
         body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
         assets,total=client.inventory()
         require(not any(a["name"]=="blob-"+store.sha(body)+".bin" for a in assets),"OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY")
-        require(total+len(body)+(32 << 10)<store.TOTAL_CAP and len(assets)+2<=store.MAX_ASSETS,"ROOT_CLAIM_CAPACITY")
+        require(total+len(body)+(32 << 10)<store.TOTAL_CAP and client.inventory_slots+2<=store.MAX_ASSETS,"ROOT_CLAIM_CAPACITY")
         manifest=dict(schema_version="weekly-private-payload-v2",payload_kind="runtime_manifest",format="json",bytes=len(body),sha256=store.sha(body),source_policy_sha256=cp.POLICY_SHA)
         ref=store.append(client,body,manifest,package["qualification"])
         write(self.storage,self.root/"ROOT_CONSUMED.json",dict(descriptor=ref,actual_identity=cp.client_identity(client),actual_completed_at=now_utc().isoformat()))
@@ -608,10 +775,12 @@ class Runner:
 
     def archive_request(self, phase, *, context=None, r0=None, handoff=None, reader_handoff=None):
         from tools.audit_weekly_archive_v1 import template
+        from .audit_weekly_template_v1 import pending_recovery
         local=self.root/("archive-"+phase)
         request=template();request.update(approved=True,phase=phase,jobs=JOBS,cache=str(self.storage.cache),
             state_root=str(self.root/"state"),local_root=str(local),output=str(local/"transport"),qualified_runtime=self.package_ref,
-            pending_census=self.go["pending_census"],runtime_root=str(self.root/"runtime"),context=context,r0=r0,
+            pending_census=self.go["pending_census"],pending_reservations=pending_recovery(self.go)['pending_reservations'],
+            runtime_root=str(self.root/"runtime"),context=context,r0=r0,
             handoff=handoff,reader_handoff=reader_handoff)
         return request
 
@@ -641,7 +810,7 @@ class Runner:
             inputs["previous_history"]=previous_history
             if planning is not None:
                 from . import audit_weekly_grade_history_v1 as history
-                require(self.go["effective_epoch"]["schema_version"]==history.CONTEXT_V4,"EXPLICIT_V4_PLANNING_INPUT")
+                require(self.go["effective_epoch"]["schema_version"] in {history.CONTEXT_V4,history.CONTEXT_V5},"EXPLICIT_V4_PLANNING_INPUT")
                 request["schema_version"]=grading.VERSION+"-request-v3"
                 inputs["planning"]=planning
         result=self.child("audit_weekly_operations_grade_v1",phase,request,self.native(VERSION,phase,request),
@@ -688,7 +857,7 @@ class Runner:
             and all(utc(t)<=now_utc() for t in canonical["slate"]["game_cutoffs"].values()),
             "GRADE_ONLY_ORIGINAL_FROZEN_CAPTURE_WINDOW_MUST_HAVE_ELAPSED")
         planning=None
-        if value["schema_version"]==operations.CONTEXT_V4:
+        if value["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5}:
             from . import audit_weekly_grade_history_v1 as history
             raw=self.env.get("AUDIT_WEEKLY_HISTORY_PLANNING_JSON","").encode()
             require(0<len(raw)<=32<<10 and store.sha(raw)==self.env.get("AUDIT_WEEKLY_HISTORY_PLANNING_SHA256"),
@@ -718,7 +887,7 @@ class Runner:
         from .audit_weekly_delivery_v1 import quiet_publisher
         from .operational_io import operational_io
         from tools import persist_state
-        require((self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+        require((self.go.get("effective_epoch") or {}).get("schema_version") in {history.CONTEXT_V4,history.CONTEXT_V5}
             and envelope["root_go"]==self.go,"EXACT_CURRENT_ROOT_HISTORY_ENVELOPE")
         require(kind==("GRADING_ONLY" if self.go["effective_epoch"]["plan"]["kind"]=="GRADE_ONLY" else "CAPTURE_AND_GRADE")
             and (kind!="GRADING_ONLY" or anchor==self.go["effective_epoch"]["previous_capture"]),"EXACT_NONFORECAST_LOCATOR_KIND_AND_ORIGINAL_ANCHOR")
@@ -778,7 +947,7 @@ class Runner:
             and proof["reader"]["job_id"]==JOBS["consume"], "SAME_CURRENT_GRADE_ONLY_READER")
         body=read_owned(self.storage,report["evidence_envelope"],history.LIMITS["envelope_bytes"],raw=True)
         envelope=history._unpack(body,history.LIMITS["envelope_bytes"])
-        modern=(self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+        modern=(self.go.get("effective_epoch") or {}).get("schema_version") in {history.CONTEXT_V4,history.CONTEXT_V5}
         require(set(envelope)==(history.ENVELOPE_V2_KEYS if modern else history.ENVELOPE_KEYS)
             and envelope["schema_version"]==(history.LOCATOR_VERSION if modern else history.VERSION)+"-evidence-envelope"
             and envelope["handoff_sha256"]==store.sha(checkpoint.safe_handoff(handoff))
@@ -837,7 +1006,7 @@ class Runner:
         envelope_ref=report["evidence_envelope"]
         body=read_owned(self.storage,envelope_ref,history.LIMITS["envelope_bytes"],raw=True)
         envelope=history._unpack(body,history.LIMITS["envelope_bytes"])
-        modern=(self.go.get("effective_epoch") or {}).get("schema_version")==history.CONTEXT_V4
+        modern=(self.go.get("effective_epoch") or {}).get("schema_version") in {history.CONTEXT_V4,history.CONTEXT_V5}
         require(set(envelope)==(history.ENVELOPE_V2_KEYS if modern else history.ENVELOPE_KEYS)
             and envelope["schema_version"]==(history.LOCATOR_VERSION if modern else history.VERSION)+"-evidence-envelope"
             and envelope["handoff_sha256"]==store.sha(checkpoint.safe_handoff(handoff))
@@ -1078,6 +1247,7 @@ class Runner:
         return result
 
     def failure_client(self, operation):
+        if operation=='append':self.require_pending_scope()
         proof=self.fresh_operations_proof()
         client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],source_sha=self.identity["source_sha"],
             journal=self.journal,job=self.job,operation=operation,qualification=self.go["qualified_runtime"]["qualification"],
@@ -1222,6 +1392,8 @@ class Runner:
         Raw HTTP/source intermediates and qualified model weights remain outside
         this declared capture scope; every included byte is bounded and owned.
         """
+        self.require_pending_scope()
+        from .audit_weekly_template_v1 import pending_recovery
         import base64
         import re
         files=[];physical_origins={};observations=[];observation_bytes=0
@@ -1319,7 +1491,8 @@ class Runner:
         # A failed normal archive is immutable. This is a separate failure-only
         # append with its own intent, never a retry of that normal archive.
         handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"failure-archive-produce",
-            root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"])
+            root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"],
+            pending=pending_recovery(self.go)['pending_reservations'])
         body=archive.safe_handoff(handoff)
         with open(self.env["GITHUB_OUTPUT"],"a") as stream:
             stream.write("archive_handoff_json="+body.decode()+"\narchive_handoff_sha256="+store.sha(body)+"\n");stream.flush();os.fsync(stream.fileno())
