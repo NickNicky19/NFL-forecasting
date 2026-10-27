@@ -1,3 +1,11 @@
+Update — October 27, 2026, 20:04 UTC (PARTIAL)
+
+The site now serves fresh Week 8 data from Main e336, while its application code remains the older build. Main website PR9 is ready at f85885c with200 Python/all4 Node suites and exact-head CI passed; existing production ownership is preserved. Research Main44 is merged at3f96a4b; Producer45 fixture corrections and full CI/integration remain in progress. No fresh selected feed or completed recurring release is claimed.
+
+[Current integration, live identity and operational boundaries](CONTINUATION-20261027.md). Earlier checkpoints below are retained dated history.
+
+---
+
 Update — October 27, 2026, 18:12 UTC evidence (PARTIAL)
 
 The priority order has been reassessed against current user impact. Live index/app/board bytes still match Main453, and the board is generated October25T10:15:15Z/week7. The latest observed scheduled refresh40384120613 failed ranking validation before commit/deployment. Restoring a valid website refresh and releasing remaining grading corrections have greater immediate observed user impact than the pending-upload accounting defect alone.
