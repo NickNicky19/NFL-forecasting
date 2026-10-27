@@ -1,3 +1,11 @@
+Update — October27,2026,20:35UTC (PARTIAL)
+
+Pending-POST recovery is integrated in Main3f96a4b and Producer6e22254. Exact-source CI passed721Main and2223Producer tests, one existing optional skip each; all2224Producer nodes were attempted/completed. Genuine nativeRegistration20run40577951818 passed writer, separate fresh reader and sealer. The1349-byte seal was independently hashed/API-verified; the new create-only registration was committed/read back at a3d609b30118ea7c4a0c2feeeac0ff247846a182. All three logs were checked for literal/escaped private Root disclosure. This proves current-source registration/recovery, not completed forecast operations or automatic activation.
+
+[Actual producer integration](evidence/pending-recovery-producer45-merged.json), [new registration/readback](evidence/registration20-publication.json), [log masking checks](evidence/registration20-log-masking.json). The prospective first-primary startup correction is under implementation. Final website Main9f9f3056 remains green, unmerged and undeployed under the active existing writer; no fresh selected feed is claimed.
+
+---
+
 Update — October27,2026,20:24UTC (PARTIAL)
 
 Final website PR9 is f9f3056; exact-head CI40576824120 passes with200Python/all4requiredNode suites. A longer live browser check reproduced a loaded-snapshot caption defect: zero selected overlay rows/all23 baseline picks were described as selected forecasts. The final source corrects the caption, including mixed and empty lists; a Chromium source preview confirms truthful fallback at1280/390/320px. It remains unmerged and undeployed under the existing writer. Fresh Week8 data remains live.

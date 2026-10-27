@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-27T20:24:00Z",
+  "observed_at_utc": "2026-10-27T20:35:00Z",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL",
   "findings": [
@@ -120,7 +120,7 @@
         "integrated": "yes",
         "released": "website failure ref and native producer failure lane",
         "verified": "Genuine Ops12/14/17 failures remain retained. Ops19 failed normal archive after successful future inference/R0; failure evidence appended and fresh reader121633621275 restored original opaque capture, receipt639271621be697af585d4bb78059647a8b16cc38818b5e31f7cf32f70dc4b995. Export skipped. Rotation5 Root masking and complete cross-job handoffs verified.",
-        "remaining_boundary": "Original failure durability verified. Pending POST carry-forward repair Main44 merged; Producer45 CI/integration and new native qualification remain pending. Failed Root remains immutable and is not retried."
+        "remaining_boundary": "Pending POST accounting is now integrated and genuinely native-registered; no old upload was retried. Prospective first-primary bootstrap and successful complete operations/export remain separate SYS-007 work."
       },
       "original_checkpoint_repair_status": "unresolved contract;no speculativealways change"
     },
@@ -136,11 +136,11 @@
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "Pending POST carry-forward correction implemented and independently reviewed; producer full CI fixture corrections in progress.",
-        "integrated": "Main44 merged3f96a4b; Producer45 not yet merged. Earlier genuine47b24db operations evidence retained.",
-        "released": "Bounded integrated software and genuine Rotation5/Registration18 only. Ops19 failed normal archive; no successful new export, automatic activation or website installation.",
-        "verified": "Main44 CI40573190736:721 passes/one existing optional skip/33 subtests. GET-only original failure diagnostic:13 authenticated records/1 unresolved657667-byte POST/3429171bytes/22slots/9GET0POST. Producer first full CI40573202730 fixture failures retained, not PASS.",
-        "remaining_boundary": "Finish Producer45 CI/integration and fresh native registration. Elapsed COUNT7 has no qualified primary grading snapshot; authentic initial-history bootstrap, successful native operations+reader+grade/export and matching website installation remain unresolved. Activation read403; documented horizon/source timing/capacity boundaries remain. Independent metadata/source review confirms original COUNT7 lacks ops_population/ops_roles/ops_schedule and qualified primary checkpoint. Existing components support prospective startup; an explicit first-future-primary successor is being implemented without weakening ordinary history guards or resetting eligibility."
+        "repaired": "Authenticated prior POST carry-forward repaired; prospective first-primary bootstrap correction under implementation.",
+        "integrated": "Main44merged3f96a4b /Producer45merged6e22254; exact reviewed/CI/current merge trees match.",
+        "released": "Genuine current-source Registration20 and create-only native recorda3d609b; no new successful complete capture/grade/export or website selected installation.",
+        "verified": "Main CI40573190736:721pass/1existingoptional skip. Producer CI40575294634:2223pass/1optional skip; all2224attempted/completed. Native40577951818 writer122449318233, freshreader122450085536 andsealer122450499710 allPASS. Exact1349B sealSHA22acb1af3394d58bebd0d3cd9b3cccd700e94fe2a37a48da253a630152d0ab42; cleared record39232BSHA7188386c35d8b5994e5a420e05f875df0dc87ba01e7ab941951f38c331a028b9 committed/readback. No newfits.",
+        "remaining_boundary": "Complete explicitly versioned prospective first-primary bootstrap without retroassigning COUNT7, then genuine future capture/native checkpoint reader/grade/export and matching website consumption. Activation read403; daily-horizon gaps, actual source publication timing and finite capacity remain explicit."
       },
       "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
@@ -304,18 +304,18 @@
   },
   "source": {
     "research_main": "3f96a4b49c6610e812ba5ea42d62d8970fca8f30",
-    "producer": "47b24db6d89a73ae77fb04f5200e730a937a2aec",
+    "producer": "6e22254bbf65fbec16b37be1ae988691b0951b63",
     "producer_PR33_head": "65f3fac53887d29297f1b1164997eae20702ae32",
     "producer_PR33_CI": 40273587281,
-    "controller_record_commit": "29112ffdcbc2e74da2846b8bdbc4bad447626bde",
-    "native_registration_run": 40282380261,
+    "controller_record_commit": "a3d609b30118ea7c4a0c2feeeac0ff247846a182",
+    "native_registration_run": 40577951818,
     "owner_operations_run": 40282870113,
-    "current_source_pair_ready": false,
+    "current_source_pair_ready": true,
     "producer_PR36_CI": 40277891751,
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
     "producer_PR40_CI": 40287547040,
-    "native_registration_current_source": false,
+    "native_registration_current_source": true,
     "main44_CI": 40573190736,
     "producer_PR45_head": "77ecb07bb39e4d3adf41fe30eb801796812b6a0d",
     "producer_PR45_CI": 40575294634
@@ -331,7 +331,9 @@
     "evidence/website-1955-live.json",
     "evidence/pending-recovery-main44-merged.json",
     "evidence/pending-recovery-owner-get-20261027.json",
-    "evidence/current-browser-caption-summary-20261027.json"
+    "evidence/current-browser-caption-summary-20261027.json",
+    "evidence/registration20-publication.json",
+    "evidence/registration20-log-masking.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -347,5 +349,47 @@
     "website_installed": false,
     "private_real_preview": "CURRENT_REFERENCE_FALLBACK",
     "source_preview_caption": "Current baseline fallback"
-  }
+  },
+  "continuation_findings": [
+    {
+      "id": "SYS-007-CONTINUATION-05",
+      "title": "Cross-process ambiguous POST reservation carry-forward",
+      "severity": "high",
+      "reproduced": true,
+      "repaired": true,
+      "integrated": true,
+      "native_registration_verified": true,
+      "forecast_operation_verified": false,
+      "commits": [
+        "3f96a4b49c6610e812ba5ea42d62d8970fca8f30",
+        "6e22254bbf65fbec16b37be1ae988691b0951b63"
+      ],
+      "native_run": 40577951818,
+      "record_commit": "a3d609b30118ea7c4a0c2feeeac0ff247846a182"
+    },
+    {
+      "id": "SYS-007-CONTINUATION-06",
+      "title": "Missing first-future-primary route from authentic COUNT7 without a qualified primary checkpoint",
+      "severity": "high",
+      "reproduced": true,
+      "repaired": "implementation in progress",
+      "integrated": false,
+      "released": false,
+      "verified": false,
+      "historical_limit": "Original ops population, roles, schedule and primary checkpoint are absent; no retrospective assignment or invented history permitted."
+    },
+    {
+      "id": "SYS-014-CONTINUATION-01",
+      "title": "Loaded all-baseline rankings misleadingly captioned selected forecasts",
+      "severity": "medium",
+      "reproduced": true,
+      "repaired": true,
+      "integrated": false,
+      "released": false,
+      "source_verified": true,
+      "website_PR": 9,
+      "head": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+      "CI": 40576824120
+    }
+  ]
 }
