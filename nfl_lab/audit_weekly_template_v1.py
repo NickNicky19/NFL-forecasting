@@ -14,6 +14,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import gzip
+import zlib
 import io
 from pathlib import Path
 import re
@@ -48,6 +49,7 @@ ROOT_V3_KEYS = ROOT_KEYS | {'prior_capture_qualified_runtime'}
 STATIC_V3 = VERSION + '-static-v3'
 PRIOR_RUNTIME = 'audit-weekly-prior-capture-qualified-runtime-v1'
 PENDING_RECOVERY = 'audit-weekly-pending-post-recovery-v1'
+PENDING_RECOVERY_ENVELOPE = 'audit-weekly-pending-post-recovery-v1-transport'
 RECURRING_V5 = 'audit-weekly-recurring-v5-context'
 REGISTRATION_RECOVERY = 'audit-weekly-controller-registration-v1-context-v4'
 FIRST_PRIMARY = 'audit-weekly-owner-first-future-primary-v1'
@@ -191,6 +193,26 @@ NumPy/pandas. Actual reads/writes still execute unchanged store.append/restore.
 
 def validate_pending_recovery(value, *, binding=None):
     """Closed accounting metadata; remote evidence must still be authenticated."""
+    if type(value) is dict and value.get('schema_version')==PENDING_RECOVERY_ENVELOPE:
+        require(set(value)=={'schema_version','body_sha256','body_bytes','gzip_base64'}
+            and hashed(value['body_sha256']) and type(value['body_bytes']) is int
+            and 0<value['body_bytes']<=128<<10 and type(value['gzip_base64']) is str
+            and 0<len(value['gzip_base64'])<=64<<10,'CLOSED_BOUNDED_PENDING_RECOVERY_TRANSPORT')
+        try:
+            packed=base64.b64decode(value['gzip_base64'],validate=True)
+            decoder=zlib.decompressobj(31)
+            raw=decoder.decompress(packed,value['body_bytes']+1)
+            require(decoder.eof and not decoder.unused_data and not decoder.unconsumed_tail
+                and len(raw)==value['body_bytes'] and store.sha(raw)==value['body_sha256'],
+                'EXACT_PENDING_RECOVERY_TRANSPORT_BYTES')
+            body=decode_json(raw)
+            require(type(body) is dict and body.get('schema_version')==PENDING_RECOVERY
+                and store.canonical(body)==raw,'CANONICAL_UNNESTED_PENDING_RECOVERY_TRANSPORT')
+            return validate_pending_recovery(body,binding=binding)
+        except TemplateError:
+            raise
+        except Exception:
+            raise TemplateError('INVALID_PENDING_RECOVERY_TRANSPORT') from None
     require(type(value) is dict and set(value)=={'schema_version','handoffs','pending_reservations'}
         and value['schema_version']==PENDING_RECOVERY and type(value['handoffs']) is list
         and len(value['handoffs'])<=8 and type(value['pending_reservations']) is list
@@ -218,6 +240,19 @@ def validate_pending_recovery(value, *, binding=None):
     require(keys==sorted(set(keys)) and total<=store.TOTAL_CAP
         and (bool(value['handoffs']) or not keys), 'BOUNDED_UNIQUE_COMPLETE_PENDING_RECORDS')
     return deepcopy(value)
+
+
+def pending_recovery_envelope(value):
+    """Lossless bounded transport; preserve every original handoff/reservation."""
+    body=validate_pending_recovery(value)
+    raw=store.canonical(body)
+    if len(raw)<=4096:
+        return body
+    require(len(raw)<=128<<10,'BOUNDED_PENDING_RECOVERY_PLAIN_BYTES')
+    encoded=dict(schema_version=PENDING_RECOVERY_ENVELOPE,body_sha256=store.sha(raw),body_bytes=len(raw),
+        gzip_base64=base64.b64encode(gzip.compress(raw,mtime=0)).decode())
+    require(validate_pending_recovery(encoded)==body,'LOSSLESS_PENDING_RECOVERY_TRANSPORT')
+    return encoded
 
 
 def pending_recovery(root):
