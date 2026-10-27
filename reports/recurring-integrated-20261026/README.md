@@ -1,3 +1,17 @@
+Update — 2026-10-27T22:49:15.101814+00:00 (PARTIAL)
+
+The request-budget repair is normally integrated: Main50fec873a and Producer51 6796416. Exact-source CI40594427543 collected,attempted andcompleted all2266nodes;2265passed and one explicitly optional ignored real-cache test skipped. The actual CI checkoutf290e1a, reviewed056a741 and merge6796416 sharetreec6b6adf. The local full-suite partial log is preserved and is not counted as complete; genuine hostedCI supplies full coverage. Independent final64hosted tests/review and all unchanged40call/180second guards pass. [Integration and fullCI receipt](evidence/metadata-phase-producer51-merged.json).
+
+Genuine registration25run40596468952 passed writer122513539895, fresh reader122514030850 and sealer122514468829. The1351B ZIPSHAdc1625fc… was verified against the actual artifact/API/source/clocks. All3logs were checked for raw/escaped Root leakage. New create-only39236B recordSHA6e795dfe… is committed/read back at a0290fd2, preserving previous records. [Native registration/readback](evidence/registration25-publication.json).
+
+New prospective capture26run40597080516 is genuinely running for all14futureWeek8games, issued22:44:09UTC. Its original epoch/choice hashes, scientific clocks, prior failures and21original reservations are retained; no oldRoot/POST is retried. It has no previous primary checkpoint because COUNT7was never assigned one. Successful complete capture/freshrestoration/grade/export/currentconsumer acceptance are not yet claimed. [Actual new preparation](evidence/first-primary26-prepared.json).
+
+Consumer10c6f7f29 now has a fresh actual-clock binding to producer6796416, with223localPython and exact-head hostedCI40596656658 passing. It remainsdraft pending actual newfeed acceptance and all11category traces. Existing websiteMain9f9f3056 remains ready for the active writer independently. Fresh22:47TLS checks still match Main e336/indexe1822882/app409dcb48/weekb83a8a2e; generatedWeek8data18:39:19UTC. Neither PR9nor a new selected feed is live. No public writer acknowledgment to manual handoff6454946166 has been observed. [Actual live receipt](evidence/website-live-2247.json).
+
+All original failures/losingweeks and unsupported-PPR, private-accuracy, cadence/horizon, source-timing, finite-census and activation-access boundaries remain explicit; no newNFLfit or accuracygain is claimed.
+
+---
+
 Update — 2026-10-27T22:25:24.652481+00:00 (PARTIAL)
 
 Main48/Producer49 merged at097bc33/4202d75. Genuine source-bound registration23run40591071685 passed all3jobs; the1356B native seal SHAcf34256d… and39,240B cleared record were checked against actualAPI/source/clocks and committed/read back at535cff844, with original records preserved. This registration is specific to that source pair.
