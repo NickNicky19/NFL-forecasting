@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-27T23:34:21.662864+00:00",
+  "observed_at_utc": "2026-10-27T23:53:50.067696+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL",
   "findings": [
@@ -116,11 +116,11 @@
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "Core failure lane works; shared planner also blocked Root26 opaque forecast preservation, requiring the committed PR52 correction.",
-        "integrated": "Prior Core lanes integrated; oversized-file opaque correction PR52 committed, fullCI running.",
+        "repaired": "Large-file planner correction integratedPR52e386efc; Core-only Root26gap remains permanent.",
+        "integrated": "yes for packing; explicit failed-first future-issuance recovery not yet complete.",
         "released": "Root26 Core diagnostics only; original complete forecast bodies not durably restored.",
         "verified": "Actual failed producer122515613148 preserved Core; fresh reader122523994578 restored Core at23:05:59UTC, receiptfd848f87f4f49e76074ddb153691101cd5fd5f99080f8fad0ddc044b1b42056d; opaque_failed_capture_restored=false. Original models/earlier captures remain retained; actual Root26 missing bodies are never reconstructed as issued.",
-        "remaining_boundary": "Integrate and native-verify PR52 packing in both normal and failure paths. Preserve Root26 missing-body/choice-document gap; repair explicit Owner recovery before new future capture."
+        "remaining_boundary": "New combined recovery source/nativecapture needed; actual old Root26bodies remain missing. Fullnewnormal/failurebyte recovery acceptance pending."
       },
       "original_checkpoint_repair_status": "unresolved contract;no speculativealways change"
     },
@@ -137,7 +137,7 @@
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
         "repaired": "Metadata budget corrections integrated/native25verified. New archive planning bug PR52 committed; consumed-first-primary failure recovery is being implemented separately.",
-        "integrated": "Main50fec873a/Producer51 6796416; PR52dc6dffc fullCI40602136533 pending.",
+        "integrated": "Metadata fixes and packingPR52e386efc integrated. ExplicitOwnerrecovery code/test under review; source-current registration/newcapture stillrequired.",
         "released": "Native25 source registration only. Root26 completed warmreplays/currentinference/R0 but FAILED normalarchive; no new qualified feed, grading checkpoint or website installation.",
         "verified": "Authenticated Core phase controls: effective18 warmreplay, new prevalueWeek8 metadata, fresh source, currentepoch capture and R0 allcompleted. R0 recorded1860available/1084unavailable rows. Both normal and opaque archive failed SINGLE_FILE_BUNDLE_CAP. All23 originalreservations/old consumedfirstclaim verified by35OWNERGETs; no POSTretry.",
         "remaining_boundary": "PR52fullCI/integration; explicit closed Owner recovery path and stable one-successor claim; new source-bound native registration/new future issue, full capture/grade/export/currentconsumer. Active website writer integration/liveverification, access/cadence/horizon/source timing/finite capacity remain."
@@ -305,7 +305,7 @@
   },
   "source": {
     "research_main": "fec873a02de6c180be7b85e569002ae4185654ff",
-    "producer": "679641686337bf48020826754bd6ea6b90f88fb8",
+    "producer": "e386efc1adaad73bd3efafc153c90667c44856c3",
     "producer_PR33_head": "65f3fac53887d29297f1b1164997eae20702ae32",
     "producer_PR33_CI": 40273587281,
     "controller_record_commit": "a0290fd2a9f17272fbc1721b6cc7cde7e4f9dafb",
@@ -316,7 +316,7 @@
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
     "producer_PR40_CI": 40287547040,
-    "native_registration_current_source": true,
+    "native_registration_current_source": false,
     "main44_CI": 40573190736,
     "producer_PR45_head": "77ecb07bb39e4d3adf41fe30eb801796812b6a0d",
     "producer_PR45_CI": 40575294634,
@@ -329,7 +329,8 @@
     "producer51_CI": 40594427543,
     "archive_PR52_head": "dc6dffc391f4d5321b95b2ae804b250a2009438a",
     "archive_PR52_CI": 40602136533,
-    "owner_operations_state": "FAILED_CORE_RESTORED_OPAQUE_BODIES_MISSING"
+    "owner_operations_state": "FAILED_CORE_RESTORED_OPAQUE_BODIES_MISSING",
+    "archive_PR52_CI_status": "PASS_ALL2275COMPLETE_2274PASS_1OPTIONAL_SKIP"
   },
   "evidence": [
     "README.md",
@@ -373,7 +374,10 @@
     "evidence/first-primary26-recovery-review.json",
     "evidence/archive26-independent-review.json",
     "evidence/archive26-independent-before-after.json",
-    "evidence/archive26-independent-combined-review-stamp.json"
+    "evidence/archive26-independent-combined-review-stamp.json",
+    "evidence/archive52-ready-exact-source.json",
+    "evidence/archive52-merged.json",
+    "evidence/website-owner-successor-2344.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -498,13 +502,14 @@
       "committed": "dc6dffc391f4d5321b95b2ae804b250a2009438a",
       "PR": 52,
       "CI": 40602136533,
-      "integrated": false,
-      "released": false,
+      "integrated": true,
+      "released": "Corrected source merged; new actual capture/restore not yet qualified.",
       "native_verified": false,
-      "regression": "23combinedpackingchecks; independent119archive+75contract checks; exact6,318,636fictionalbyte freshCAS subprocess roundtrip; incompressible8MiB failsbeforePOST.",
+      "regression": "All2275actualCI nodes collected/attempted/completed;2274PASS/1existingoptional skip. Exacthead/tested/mergetreeed9b756; sameexistingguards/wire.",
       "caps_raised": false,
       "wire_changed": false,
-      "remaining": "FullCI/normalintegration; newactualnativecapture fullcensus/compression/completefreshrestore; actualoldbody unavailable."
+      "remaining": "FullCI/normalintegration; newactualnativecapture fullcensus/compression/completefreshrestore; actualoldbody unavailable.",
+      "producer_commit": "e386efc1adaad73bd3efafc153c90667c44856c3"
     },
     {
       "id": "SYS-007-CONTINUATION-10",
@@ -546,5 +551,11 @@
     "originalstableclaim": "EXACT_NATIVE_FORMAT_MANIFEST_AND_ORIGINAL_POST_PAIR_OWNER_GET_VERIFIED",
     "future_issuance": "NEW_ROOT_NEW_CLOCK_NEW_VALUES_REQUIRED",
     "no_old_forecasts_fabricated": true
+  },
+  "website_owner_latest": {
+    "head": "e6b9dc777dd8c31e1c3e97739c3a3e5b1a2113d8",
+    "observed_at_utc": "2026-10-27T23:45:27.723372+00:00",
+    "status": "Legitimate coherent-generation-binding successor; deployment not verified; PR9 remainsopen.",
+    "scope": "10paths; no app.js change in successor; preserve active writer lease."
   }
 }

@@ -1,3 +1,13 @@
+Update — 2026-10-27T23:53:50.067696+00:00 (PARTIAL)
+
+PackingPR52 is normally merged at e386efc1adaad73bd3efafc153c90667c44856c3. ActualCI40602136533 completed all2275collected/attempted nodes:2274passed/oneexistingoptional source-cache skip. Head dc6dffc, actualtested d05aa875 and merge sharetreeed9b756; reviewthreads/reviewswereempty. The expected-head normalGitHub merge used the existing linkedaccount, with no admin/protection bypass orforce. Existing compressed/inflated/file/group/quota/time guards and wire remain unchanged. This is source integration, not newforecast orwebsiteinstallation. [Exact integration receipt](evidence/archive52-merged.json).
+
+ExplicitOwnerfailed-first recovery code is under combined review. Its newRoot marker declares oldWeek8choice/forecastbodies missing, preserves the originalclaim and oldRoot, authenticates exactCore/claim/journals/independentreader lineage, and permits one newfutureissue with currentclocks/same14cutoffs beforevalues. Review identified a42-versus40request worst-case at two inventorypages/tworedirects; that bounded-client issue is being corrected before any nativeattempt. Root26 remainsFAILED; no missing forecasts are fabricated or qualified.
+
+The activewebsitewriter pushed successor e6b9dc7 at23:43UTC, changing10coherent-generation/resource/bootstrap paths. Its legitimatework is preserved; PR9 remainsopen/unreleased and Main e336 isstill the latest examinedproductionhead. Actualnewsource registration, newfuturecapture/grade/export/consumer, automaticroute checks and ownedwebsite deployment/liveverification remain outstanding. No newNFLfit or accuracygain is claimed.
+
+---
+
 Update — 2026-10-27T23:34:21.662864+00:00 (PARTIAL)
 
 Actual first-primary26run40597080516 FAILED normal archive at22:59:48UTC withSINGLE_FILE_BUNDLE_CAP. Authenticated Core controls show that all18retained models were recovered/replayed, newWeek8choice metadata was prepared beforevalues, fresh inputs/current inference completed, and originalR0capture completed at22:59:20UTC(1860available/1084unavailable rows). The6,318,636B R0control expands beyond the planner's8,323,072B conservative Base64 target, though below the existing codec's12,582,912B inflation cap. [Exact metadata and phase evidence](evidence/first-primary26-large-file-diagnostic.json).
