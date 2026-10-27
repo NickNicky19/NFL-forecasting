@@ -507,7 +507,7 @@ def test_original_zero_length_file_stays_in_census_and_out_of_encoded_groups(tmp
     assert files[1]["sha256"] == hashlib.sha256(b"").hexdigest()
 
 
-@pytest.mark.parametrize("case", ["duplicate", "duplicate-logical", "duplicate-path", "single-too-large", "nine-bins", "over512"])
+@pytest.mark.parametrize("case", ["duplicate", "duplicate-logical", "duplicate-path", "single-over-asset-cap", "nine-bins", "over512"])
 def test_packing_rejects_closed_invalid_or_infeasible_metadata(tmp_path, case):
     first = _item(tmp_path, "one.bin", 128)
     files = [first]
@@ -516,7 +516,7 @@ def test_packing_rejects_closed_invalid_or_infeasible_metadata(tmp_path, case):
         second = _item(tmp_path / "other", "one.bin", 128); files = [first, second]
     elif case == "duplicate-path":
         second = a.cp.file_item({k: first[k] for k in ("path", "bytes", "sha256")}, "other.bin", "control"); files = [first, second]
-    elif case == "single-too-large": files = [_item(tmp_path, "large.bin", 6 << 20)]
+    elif case == "single-over-asset-cap": files = [_item(tmp_path, "large.bin", a.store.ASSET_CAP+1)]
     elif case == "nine-bins":
         files = [_item(tmp_path, f"large/{n:03}.bin", 5 << 20) for n in range(9)]
         assert all(a.codec.GROUP_JSON / 2 < _wire_size([f]) <= a.codec.GROUP_JSON for f in files)
