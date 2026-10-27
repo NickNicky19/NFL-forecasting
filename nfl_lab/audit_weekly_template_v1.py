@@ -50,6 +50,7 @@ PRIOR_RUNTIME = 'audit-weekly-prior-capture-qualified-runtime-v1'
 PENDING_RECOVERY = 'audit-weekly-pending-post-recovery-v1'
 RECURRING_V5 = 'audit-weekly-recurring-v5-context'
 REGISTRATION_RECOVERY = 'audit-weekly-controller-registration-v1-context-v4'
+FIRST_PRIMARY = 'audit-weekly-owner-first-future-primary-v1'
 DYNAMIC_FIELDS = {'approved','issued_at_utc','expires_at_utc','operation','effective_epoch'}
 DOCUMENT_KEYS = {'schema_version','source_sha','code_pins','readiness','root_template'}
 HANDOFF_KEYS = {'schema_version','repository','binding','descriptor','template_sha256','template_bytes',
@@ -226,6 +227,44 @@ def pending_recovery(root):
     if modern:
         return validate_pending_recovery(context['pending_post_recovery'],binding=root['qualified_runtime']['binding'])
     return dict(schema_version=PENDING_RECOVERY,handoffs=[],pending_reservations=[])
+
+
+def first_primary_context(context):
+    """Versioned manual OWNER intent inside the unchanged V5 field envelope.
+
+    A scheduled controller context is a different closed protocol. This marker
+    never grants authority by itself, changes an epoch, or supplies history.
+    """
+    value=(context or {}).get('controller_context')
+    if type(value) is not dict or value.get('schema_version') != FIRST_PRIMARY:
+        return None
+    require(context.get('schema_version') == RECURRING_V5
+        and set(value) == {'schema_version','retained_epoch_sha256','retained_choice_sha256',
+            'retained_root_go_sha256','claim_binding_sha256'}
+        and all(hashed(value[k]) for k in set(value)-{'schema_version'})
+        and context.get('previous_checkpoint') is None
+        and type(context.get('plan')) is dict
+        and context['plan'].get('kind') == 'FUTURE_CAPABLE'
+        and (context['plan'].get('season'),context['plan'].get('week')) == (2026,8),
+        'CLOSED_OWNER_FIRST_FUTURE_PRIMARY_SCOPE')
+    return deepcopy(value)
+
+
+def first_primary_root(root):
+    value=first_primary_context(root.get('effective_epoch'))
+    if value is not None:
+        require(root.get('operation') == 'RECURRING_CAPTURE'
+            and value['claim_binding_sha256'] == digest(root['qualified_runtime']['binding']),
+            'OWNER_FIRST_PRIMARY_EXACT_REGISTERED_NAMESPACE')
+    return value
+
+
+def first_primary_claim(root):
+    """Stable epoch/stream intent: changing Root clocks cannot retry bootstrap."""
+    value=first_primary_root(root)
+    require(value is not None, 'EXPLICIT_OWNER_FIRST_PRIMARY_REQUIRED')
+    return dict(schema_version=FIRST_PRIMARY+'-claim',epoch_sha256=value['retained_epoch_sha256'],
+        stream_id='weekly-corrected-primary-player-game-v1')
 
 
 def _client_identity(client):
