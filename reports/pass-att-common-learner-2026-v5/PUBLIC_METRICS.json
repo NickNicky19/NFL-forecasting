@@ -1,0 +1,1309 @@
+{
+  "2025_common_learner": "QUEUED_NOT_RUN",
+  "HTTP": 0,
+  "actual_new_forest_fits": 17,
+  "candidate_forecasts": 2575,
+  "coverage": {
+    "confirmed_DNP": 0,
+    "games": 93,
+    "planned": 515,
+    "played_zero": 6,
+    "supported": 211,
+    "supported_players": 56,
+    "unknown_participation": 304,
+    "weeks": 6
+  },
+  "current_website_gain_established": false,
+  "decision": "retain strong laboratory control; no new replacement selected from this wave",
+  "evidence_lane": "exposed2026REGW1-6 current-vintage reconstruction; old7day assumption unchanged; role upstream-load-clock not publication",
+  "forecast_archive_sha256": "dd7f18e34363a15a9d985f0f36af129cf915d678e0dae9a5cfbe9a44036e2bf9",
+  "grade_archive_sha256": "2266254a7930d6f412d6e81a5880dbff7a5bb0a40d04bf286141348f42021a5b",
+  "independent_review": {
+    "RSS_bytes": 209285120,
+    "actual_CPU_wall_including_preflight_debit": [
+      8.15283322,
+      8.15313473
+    ],
+    "additional_NFL_observations": 0,
+    "budget_CPU_wall": [
+      30,
+      60
+    ],
+    "checks": [
+      "all2575frozenpointbits",
+      "all4120gradecontexts_and_qualifiedlabels",
+      "all13paired_contrasts_weekly_bootstraps",
+      "20opportunities_19capsules_17forests_544trees",
+      "all515role_joins_cutoffs_provenance",
+      "source_bound_control_fallback_correction"
+    ],
+    "models_fits_predict_HTTP_writes": 0,
+    "state": "PASS_WITH_REPORTING_CORRECTION"
+  },
+  "metrics": {
+    "CDF_H1_CURRENT_SEASON_TRAINING": {
+      "MAE": 8.248873634036398,
+      "MSE": 116.17528496721053,
+      "RMSE": 10.778463942845034,
+      "bias": -1.7401032312742755,
+      "dnp": 0,
+      "fallback_offered": 266,
+      "fallback_played_losses": {
+        "MAE": 7.646126233748445,
+        "MSE": 101.66072344161901,
+        "RMSE": 10.08269425508971,
+        "bias": -0.03302237927941603,
+        "n": 112,
+        "p95_absolute_error": 21.28225834413245
+      },
+      "fallback_rows": 266,
+      "mae": 8.248873634036398,
+      "n": 211,
+      "p95_absolute_error": 21.93819875776397,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.778463942845034,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING": {
+      "MAE": 8.381572950841708,
+      "MSE": 119.82387544675292,
+      "RMSE": 10.946409249007317,
+      "bias": -2.8399621522635297,
+      "dnp": 0,
+      "fallback_offered": 30,
+      "fallback_played_losses": {
+        "MAE": 11.190404797601186,
+        "MSE": 125.22515953417565,
+        "RMSE": 11.190404797601186,
+        "bias": 11.190404797601186,
+        "n": 1,
+        "p95_absolute_error": 11.190404797601186
+      },
+      "fallback_rows": 30,
+      "mae": 8.381572950841708,
+      "n": 211,
+      "p95_absolute_error": 22.898598804986936,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.946409249007317,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "CDF_H3_TIME_WEIGHTED_TRAINING": {
+      "MAE": 7.9585839835430425,
+      "MSE": 105.66231628631478,
+      "RMSE": 10.279217688438882,
+      "bias": -2.0252982852005665,
+      "dnp": 0,
+      "fallback_offered": 30,
+      "fallback_played_losses": {
+        "MAE": 11.718866898276652,
+        "MSE": 137.33184137952423,
+        "RMSE": 11.718866898276652,
+        "bias": 11.718866898276652,
+        "n": 1,
+        "p95_absolute_error": 11.718866898276652
+      },
+      "fallback_rows": 30,
+      "mae": 7.9585839835430425,
+      "n": 211,
+      "p95_absolute_error": 21.077734208588712,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.279217688438882,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE": {
+      "MAE": 7.898496860891531,
+      "MSE": 104.07847224438218,
+      "RMSE": 10.201885720021675,
+      "bias": -1.4222163420585896,
+      "dnp": 0,
+      "fallback_offered": 30,
+      "fallback_played_losses": {
+        "MAE": 12.991312096235198,
+        "MSE": 168.77418998178698,
+        "RMSE": 12.991312096235198,
+        "bias": 12.991312096235198,
+        "n": 1,
+        "p95_absolute_error": 12.991312096235198
+      },
+      "fallback_rows": 30,
+      "mae": 7.89849686089153,
+      "n": 211,
+      "p95_absolute_error": 20.740355373633818,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.201885720021675,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "CDF_H4_PLUS_TIMESTAMPED_DEPTH": {
+      "MAE": 7.818085945989444,
+      "MSE": 105.2147964295957,
+      "RMSE": 10.257426403810836,
+      "bias": -2.3030300184458365,
+      "dnp": 0,
+      "fallback_offered": 30,
+      "fallback_played_losses": {
+        "MAE": 12.991312096235198,
+        "MSE": 168.77418998178698,
+        "RMSE": 12.991312096235198,
+        "bias": 12.991312096235198,
+        "n": 1,
+        "p95_absolute_error": 12.991312096235198
+      },
+      "fallback_rows": 30,
+      "mae": 7.818085945989444,
+      "n": 211,
+      "p95_absolute_error": 21.272580910553582,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.257426403810836,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "FROZEN_CDF_MEAN": {
+      "MAE": 7.898496860891531,
+      "MSE": 104.07847224438218,
+      "RMSE": 10.201885720021675,
+      "bias": -1.4222163420585896,
+      "dnp": 0,
+      "fallback_offered": 30,
+      "fallback_played_losses": {
+        "MAE": 12.991312096235198,
+        "MSE": 168.77418998178698,
+        "RMSE": 12.991312096235198,
+        "bias": 12.991312096235198,
+        "n": 1,
+        "p95_absolute_error": 12.991312096235198
+      },
+      "fallback_rows": 30,
+      "mae": 7.89849686089153,
+      "n": 211,
+      "p95_absolute_error": 20.740355373633818,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 10.201885720021675,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "POOLED8": {
+      "MAE": 8.42480059395484,
+      "MSE": 125.4916972252188,
+      "RMSE": 11.202307674100851,
+      "bias": -0.8293214281075602,
+      "dnp": 0,
+      "fallback_offered": 148,
+      "fallback_played_losses": {
+        "MAE": 15.07754139749016,
+        "MSE": 304.5198460299057,
+        "RMSE": 17.450497013836188,
+        "bias": 13.24131209623524,
+        "n": 12,
+        "p95_absolute_error": 25.89131209623524
+      },
+      "fallback_rows": 148,
+      "mae": 8.42480059395484,
+      "n": 211,
+      "p95_absolute_error": 24.190875620258556,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 11.202307674100851,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    },
+    "RECENT3": {
+      "MAE": 8.738523746127537,
+      "MSE": 133.8821313583523,
+      "RMSE": 11.570744632838126,
+      "bias": -0.9805262609636983,
+      "dnp": 0,
+      "fallback_offered": 218,
+      "fallback_played_losses": {
+        "MAE": 15.401937245777743,
+        "MSE": 326.8170189546683,
+        "RMSE": 18.07808117457902,
+        "bias": 12.657978762901907,
+        "n": 27,
+        "p95_absolute_error": 27.99131209623524
+      },
+      "fallback_rows": 218,
+      "mae": 8.738523746127536,
+      "n": 211,
+      "p95_absolute_error": 24.89304967698819,
+      "played_missing_statistic": 0,
+      "played_zero_rows": 6,
+      "population_rows": 515,
+      "rmse": 11.570744632838126,
+      "scored_rows": 211,
+      "selected_line_performance": "unavailable_no_recorded_offers",
+      "supported_played_outcomes": 211,
+      "unique_games": 93,
+      "unique_players": 56,
+      "unique_weeks": 6,
+      "unknown_participation": 304
+    }
+  },
+  "model_loads": 0,
+  "model_packages": 19,
+  "new_pregame_capture_or_deployment": false,
+  "new_probabilities_or_ranking_result": false,
+  "operationally_ready": false,
+  "output": "conditional_on_played_expected_count",
+  "paired": [
+    {
+      "MSE_delta_candidate_minus_control": 12.09681272282835,
+      "adequately_trained_delta_MSE": 25.78209580319982,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "comparator": "FROZEN_CDF_MEAN",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            3.198002791465935,
+            21.561090272602105
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": 0.0,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 25.017190860300474,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": 35.64381484131533,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 14.436746930317735,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -17.706846391141763,
+      "adequately_trained_delta_MSE": 1.8077921710783775,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "comparator": "RECENT3",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -32.272311123534585,
+            -4.067708086488766
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -22.74897434583086,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -50.171404560127016,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -31.01997735630487,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": -3.0994127399495417,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -20.36491054063561,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 35.08580129510088,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -9.316412258008276,
+      "adequately_trained_delta_MSE": 9.138598298956845,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "comparator": "POOLED8",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -21.62029060393917,
+            2.781556810207623
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -21.358242943185353,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -29.438946808295032,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -25.891952878197486,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 28.289634917881823,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -19.071528254733934,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 21.705126260660954,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": 15.745403202370746,
+      "adequately_trained_delta_MSE": 14.243036515869695,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "comparator": "FROZEN_CDF_MEAN",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            8.307370153480248,
+            24.019964365200376
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": 18.05856100129899,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": 16.604488749412884,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": 16.56882339872118,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 24.9254246334623,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": 2.8930062821808296,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 15.808550047409371,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -14.058255911599371,
+      "adequately_trained_delta_MSE": -9.73126711625175,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "comparator": "RECENT3",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -32.41303633063063,
+            5.168907464399591
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -4.6904133445318665,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -33.56691581071414,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -14.451153957583703,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": -3.1911789667877115,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -53.11571909977012,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 36.45760441219252,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -5.667821778465884,
+      "adequately_trained_delta_MSE": -2.400460988373285,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "comparator": "POOLED8",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -21.32540297120719,
+            11.442010907273312
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -3.299681941886367,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -12.834458058882142,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -9.323129479476314,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 28.19786869104364,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -51.82233681386845,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 23.07692937775259,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": 1.5838440419325996,
+      "adequately_trained_delta_MSE": 2.899223564586435,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "comparator": "FROZEN_CDF_MEAN",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -1.4336481001375714,
+            5.133216681539048
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -2.3086329944372737,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": 1.8380158271517149,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": 1.6917989858051004,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 10.105535900744215,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -2.099047834781954,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 0.655194286927728,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -28.219815072037512,
+      "adequately_trained_delta_MSE": -21.07508006753501,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "comparator": "RECENT3",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -43.57639732395306,
+            -11.493532528328624
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -25.05760734026814,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -48.33338873297529,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -29.328178370499774,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": -18.011067699505787,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -58.10777321673291,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 21.304248651710875,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -19.829380938904027,
+      "adequately_trained_delta_MSE": -13.74427393965654,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "comparator": "POOLED8",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -33.08507767078387,
+            -4.616217481522798
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -23.666875937622628,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -27.600930981143318,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -24.20015389239239,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 13.377979958325568,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -56.814390930831216,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 7.923573617270946,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": 0.0,
+      "adequately_trained_delta_MSE": 0.0,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "comparator": "FROZEN_CDF_MEAN",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            0.0,
+            0.0
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": 0.0,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 0.0,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -29.803659113970113,
+      "adequately_trained_delta_MSE": -23.97430363212145,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "comparator": "RECENT3",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -44.34031280122851,
+            -13.595450708130004
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -22.74897434583086,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -50.171404560127016,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -31.01997735630487,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": -28.116603600250006,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -56.00872538195095,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 20.64905436478314,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": -21.413224980836624,
+      "adequately_trained_delta_MSE": -16.643497504242976,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "comparator": "POOLED8",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -34.17105224501433,
+            -6.5166122493696506
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": -21.358242943185353,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": -29.438946808295032,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": -25.891952878197486,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 3.272444057581353,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -54.71534309604928,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 7.268379330343227,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "MSE_delta_candidate_minus_control": 1.1363241852135126,
+      "adequately_trained_delta_MSE": 0.4551384719647106,
+      "adequately_trained_n": 99,
+      "candidate": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "comparator": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "intervals": [
+        {
+          "cluster": "week",
+          "clusters": 6,
+          "generator": "PCG64",
+          "interval": null,
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "reason": "fewer_than_8_clusters",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "N/A"
+        },
+        {
+          "cluster": "game",
+          "clusters": 93,
+          "generator": "PCG64",
+          "interval": [
+            -5.4270139396412365,
+            7.529080276991484
+          ],
+          "level": 0.95,
+          "paired_rows": 211,
+          "percentile_method": "linear",
+          "replicates": 500,
+          "seed": 1703,
+          "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+          "state": "DESCRIPTIVE"
+        }
+      ],
+      "n": 211,
+      "weekly": [
+        {
+          "delta_MSE": 3.3159775058465772,
+          "n": 37,
+          "week": 1
+        },
+        {
+          "delta_MSE": 0.5736197773149205,
+          "n": 39,
+          "week": 2
+        },
+        {
+          "delta_MSE": 1.3789820923316523,
+          "n": 36,
+          "week": 3
+        },
+        {
+          "delta_MSE": 16.449071836476882,
+          "n": 34,
+          "week": 4
+        },
+        {
+          "delta_MSE": -18.093907583850687,
+          "n": 36,
+          "week": 5
+        },
+        {
+          "delta_MSE": 4.730032389755763,
+          "n": 29,
+          "week": 6
+        }
+      ],
+      "year": 2026
+    }
+  ],
+  "primary": "MSE",
+  "procedure_opportunities": 20,
+  "registered_main_plan_sha256": "fb412b8ec82d715046600fe3b1e595dbc74914b1f421bfe6447494e911ef9027",
+  "reporting_correction": {
+    "authenticated_source_fallback_count": 30,
+    "cause": "Control projection copied points and discarded its existing fallback reasons. The publication restores source-bound coverage metadata.",
+    "fits_prediction_calls": 0,
+    "forecast_values_labels_losses_paired_populations_unchanged": true,
+    "id": "frozen-cdf-fallback-reporting-correction-v1",
+    "independent_verification": "PASS",
+    "original_frozen_control_fallback_count": 0,
+    "original_grade_sha256": "2266254a7930d6f412d6e81a5880dbff7a5bb0a40d04bf286141348f42021a5b",
+    "original_record_unchanged": true,
+    "supported_fallback_rows": 1
+  },
+  "role_coverage": {
+    "2025": {
+      "known_role_rows": 1357,
+      "meaning": "source role coverage, not participation; upstream-loaded time, historical publication UNKNOWN",
+      "original_QB_queries": 1359,
+      "reasons": {
+        "PLAYER_ABSENT_OR_DUPLICATE_IN_LATEST_GROUP": 2,
+        "RECONSTRUCTED_LOAD_CLOCK_ROLE": 1357
+      },
+      "unknown_role_rows": 2
+    },
+    "2026": {
+      "known_role_rows": 514,
+      "meaning": "source role coverage, not participation; upstream-loaded time, historical publication UNKNOWN",
+      "original_QB_queries": 515,
+      "reasons": {
+        "PLAYER_ABSENT_OR_DUPLICATE_IN_LATEST_GROUP": 1,
+        "RECONSTRUCTED_LOAD_CLOCK_ROLE": 514
+      },
+      "unknown_role_rows": 1
+    }
+  },
+  "scientifically_qualified": false,
+  "storage": {
+    "admissible_new_peak_bytes": 479334388,
+    "final_census_sha256": "9e220f65898d99d5a2d03074c714c7a1e244333c2ff24169325842c9a3d14ab2",
+    "forward_cap": 536870912,
+    "forward_physical_bytes": 57536524,
+    "joint_cap": 1073741824,
+    "joint_physical_bytes": 594403019,
+    "legacy_bytes_unchanged": 536866495,
+    "model_wave_complete_peak_cap": 33554432,
+    "off_host_restoration": "NOT_ESTABLISHED",
+    "source_complete_peak_cap": 12582912,
+    "source_fresh_process_readback": "PASS",
+    "terminal_pack_bytes": 19231,
+    "terminal_pack_sha256": "53c093dc5e1ca827d1de3217cb71259a60f4678cf15dddc4275e8231335a364e",
+    "unique_evidence_deleted": false
+  },
+  "stored_candidate_and_control_rows": 4120,
+  "support_prior_formations": 19,
+  "target": "pass_att",
+  "tree_estimators": 544,
+  "worker_sha256": "7a2dd66660426adadc0338c89af8ec49676c2b6b162c829b5d070436f738b737"
+}
