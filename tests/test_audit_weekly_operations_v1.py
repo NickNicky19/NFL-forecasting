@@ -7,10 +7,126 @@ import pytest
 
 from nfl_lab import audit_weekly_operations_v1 as o, audit_weekly_grade_v1 as grade
 from nfl_lab import audit_weekly_epoch_v1 as epoch, gha_private_checkpoint as cp, state
+from nfl_lab import private_draft_store as store
 from nfl_lab.operational_storage import OperationalStorage
 from test_audit_weekly_epoch_v1 import fixture, prepare, registered, continuation, CONTINUED
 from test_audit_weekly_grade_v1 import packet as grade_packet
 import test_audit_weekly_grade_v1 as fictional_grade
+
+
+@pytest.fixture
+def first_future_metadata(tmp_path):
+    """Real GET/client guards, invented metadata; no network or outcome body."""
+    import json
+    from types import SimpleNamespace
+    from nfl_lab import audit_weekly_hosted_v1 as hosted, audit_weekly_template_v1 as template
+    from test_audit_weekly_hosted_v1 import pending_failure
+    seed = pending_failure.__wrapped__(tmp_path)
+    root = seed.runner.go
+    root.update(operation='RECURRING_CAPTURE', source_sha='b'*40,
+        issued_at_utc='2026-10-27T20:00:00Z', expires_at_utc='2026-10-27T21:00:00Z')
+    root['effective_epoch'].update(controller_context=dict(
+        schema_version='audit-weekly-owner-first-future-primary-v1',
+        retained_epoch_sha256='1'*64, retained_choice_sha256='2'*64,
+        retained_root_go_sha256='3'*64,
+        claim_binding_sha256=store.sha(store.canonical(root['qualified_runtime']['binding']))),
+        previous_checkpoint=None, previous_capture=dict(feed_sha256='a'*64,receipt_sha256='b'*64),
+        plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,deadline_utc='2026-10-29T19:45:00Z',
+            calendar_sha256='4'*64,game_cutoffs={'fictional-week-8':'2026-10-29T19:45:00Z'}))
+    journal=tmp_path/'first-client-journal';journal.mkdir(mode=0o700)
+    calls=[];damage={};head='a'*40
+    class Response:
+        def __init__(self,status,value,headers=None):
+            self.status=status;self.body=store.canonical(value)
+            self.headers={'content-length':str(len(self.body)),'x-ratelimit-remaining':'100',**(headers or {})}
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,limit):return self.body[:limit]
+    def transport(request,timeout):
+        assert request.get_method()=='GET' and request.data is None
+        url=request.full_url;calls.append(url)
+        if '/git/ref/' in url:
+            current='c'*40 if damage.get('changed_head') and len(calls)>1 else head
+            return Response(200,dict(ref='refs/heads/lab-state',object=dict(type='commit',sha=current)))
+        if '/contents/' in url:
+            if damage.get('existing_directory'):return Response(200,[])
+            if damage.get('forbidden'):return Response(403,dict(message='Forbidden'))
+            headers={'x-ratelimit-remaining':'0'} if damage.get('rate') else {}
+            return Response(404,dict(message='Not Found' if not damage.get('malformed') else 'Wrong'),headers)
+        assert '/commits?' in url
+        return Response(200,[dict(sha='d'*40)] if damage.get('historical_deleted') else [])
+    job=dict(execution_lane='github_actions',workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1',
+        workflow_sha='b'*40,job_id=hosted.JOBS['produce'],permission='write',event_name='workflow_dispatch',api_job_id=301,run_authenticated=True)
+    client=hosted.PendingMetadataClient('ghs_FICTIONAL','300',source_sha='b'*40,journal=journal,
+        root_go=root,job=job,operation='metadata',transport=transport)
+    client.bind(root['qualified_runtime']['binding'])
+    return SimpleNamespace(root=root,client=client,calls=calls,damage=damage,
+        at=state.utc('2026-10-27T20:01:00Z'),authorize=lambda:None,template=template)
+
+
+def test_first_future_requires_actual_get_absence_and_undeleted_history(first_future_metadata):
+    q=first_future_metadata
+    proof=o.first_primary_absence(q.client,q.root,authenticate=q.authorize,clock=lambda:q.at)
+    assert proof.verify(q.root) is proof
+    assert proof.document['state_head']=='a'*40
+    assert len(q.calls)==6 and sum('/contents/' in u for u in q.calls)==2
+    assert sum('/commits?' in u for u in q.calls)==2
+    import pickle
+    with pytest.raises(o.OperationsError,match='CANNOT_BE_SERIALIZED'):pickle.dumps(proof)
+    proof.document['state_head']='e'*40
+    with pytest.raises(o.OperationsError,match='INTEGRITY'):proof.verify(q.root)
+
+
+@pytest.mark.parametrize('damage',['existing_directory','historical_deleted','forbidden','rate','changed_head','malformed'])
+def test_first_future_absence_fails_closed_on_actual_metadata(first_future_metadata,damage):
+    q=first_future_metadata;q.damage[damage]=True
+    with pytest.raises((o.OperationsError,store.StoreError)):
+        o.first_primary_absence(q.client,q.root,authenticate=q.authorize,clock=lambda:q.at)
+    assert not list(q.client.journal.glob('*.reservation.json'))
+
+
+def test_first_future_scope_is_closed_future_only_and_namespace_bound(first_future_metadata):
+    q=first_future_metadata;t=q.template
+    assert t.first_primary_root(q.root)['schema_version']==t.FIRST_PRIMARY
+    for edit in (lambda r:r['effective_epoch'].update(previous_checkpoint={'sha256':'a'*64}),
+                 lambda r:r['effective_epoch']['plan'].update(kind='GRADE_ONLY'),
+                 lambda r:r['effective_epoch']['plan'].update(week=7),
+                 lambda r:r['effective_epoch']['controller_context'].update(allow_reset=True),
+                 lambda r:r['effective_epoch']['controller_context'].update(claim_binding_sha256='0'*64)):
+        bad=deepcopy(q.root);edit(bad)
+        with pytest.raises(ValueError):t.first_primary_root(bad)
+    ordinary=deepcopy(q.root);ordinary['effective_epoch']['controller_context']=None
+    assert t.first_primary_root(ordinary) is None
+    with pytest.raises(o.OperationsError):
+        o.first_primary_absence(q.client,ordinary,authenticate=q.authorize,clock=lambda:q.at)
+
+
+def test_first_future_reuses_original_startup_without_synthetic_durable_history(first_future_metadata):
+    q=first_future_metadata;f=fixture();r=registered(prepare(f));c=continuation(f,r)
+    q.root['effective_epoch']['controller_context'].update(retained_epoch_sha256=r.epoch.sha256,retained_choice_sha256=c.sha256)
+    full=_next_calendar();cuts={row['game_id']:(state.utc(row['kickoff_utc'])-timedelta(minutes=15)).isoformat() for row in full}
+    q.root['effective_epoch']['plan'].update(calendar_sha256=state.digest(full),game_cutoffs=cuts,deadline_utc=min(cuts.values()))
+    proof=o.first_primary_absence(q.client,q.root,authenticate=q.authorize,clock=lambda:q.at)
+    before=state.canonical(r.epoch.document);old_choice=state.canonical(c.document)
+    choice,plan=o.first_future_plan(r,c,full,q.root,proof,authenticate=lambda _:True,
+        cutoff_lead_seconds=900,clock=lambda:q.at)
+    assert choice.document['resolved_prior_keys']==[] and plan['history_sha256'] is None
+    assert choice.document['epoch_sha256']==r.epoch.sha256
+    assert choice.document['legacy_history_binding']==r.epoch.origin['history_binding']
+    assert choice.document['slate']['week']==8 and plan['kind']=='FUTURE_CAPTURE'
+    assert state.canonical(r.epoch.document)==before and state.canonical(c.document)==old_choice
+    assert not choice.document['slate']['elapsed_games']
+    with pytest.raises(o.OperationsError,match='DURABLE_CAUSAL_HISTORY_REQUIRED_NO_FALLBACK'):
+        o.recurring_plan(r,c,full,authenticate=lambda _:True,cutoff_lead_seconds=900,clock=lambda:q.at)
+
+
+def test_first_future_claim_is_stable_across_root_clock_and_source_changes(first_future_metadata):
+    q=first_future_metadata;t=q.template
+    claim=t.first_primary_claim(q.root)
+    other=deepcopy(q.root);other.update(source_sha='c'*40,issued_at_utc='2026-10-27T20:02:00Z')
+    other['effective_epoch']['controller_context']['retained_choice_sha256']='f'*64
+    assert t.first_primary_claim(other)==claim
+    assert set(claim)=={'schema_version','epoch_sha256','stream_id'}
 
 
 def test_calendar_independent_DST_offsets_aliases_and_poison_outcomes():

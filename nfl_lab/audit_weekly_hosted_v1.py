@@ -205,6 +205,7 @@ def validate_root(go, *, now):
             'EXPLICIT_DUAL_RUNTIME_PENDING_REGISTRATION')
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
     template.pending_recovery(go)
+    template.first_primary_root(go)
     retained.validate_registration(retained_registration(go))
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
         and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
@@ -577,6 +578,22 @@ class Runner:
     def claim(self):
         """A fixed root-dependent blob makes duplicate GO use detectable."""
         self.require_pending_scope()
+        from . import audit_weekly_template_v1 as template, audit_weekly_operations_v1 as operations
+        first=template.first_primary_root(self.go)
+        if first is not None:
+            from . import audit_weekly_controller_bootstrap_v1 as bootstrap
+            proof=self.fresh_operations_proof()
+            require(operations_authority.owner(self.env) and type(proof) is bootstrap.Owner,
+                'LIVE_OWNER_FIRST_PRIMARY_PROOF_REQUIRED')
+            prepared=read_owned(self.storage,cp.binding(self.root/'operations-prepared/PREPARED.json'))
+            require(prepared['current_root_go_sha256']==self.go_sha
+                and prepared.get('first_primary',{}).get('scope')==first
+                and prepared['epoch_sha256']==first['retained_epoch_sha256']
+                and prepared['state']=='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL',
+                'AUTHENTICATED_FIRST_PRIMARY_PREPARATION_BEFORE_CLAIM')
+            def owner():
+                operations_authority._verify(proof,self.env,store.canonical(self.go))
+            operations.first_primary_absence(self.client,self.go,authenticate=owner).verify(self.go)
         package=self.go["qualified_runtime"]
         class ClaimClient(archive.Client):
             def upload(self,name,body,*,reuse_completed=False):
@@ -589,6 +606,7 @@ class Runner:
         operations_authority.attach(client,self.operations_proof,self.env,store.canonical(self.go))
         archive.authenticate_qualification(client,package,self.go["pending_census"])
         body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
+        if first is not None:body=store.canonical(template.first_primary_claim(self.go))
         assets,total=client.inventory()
         require(not any(a["name"]=="blob-"+store.sha(body)+".bin" for a in assets),"OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY")
         require(total+len(body)+(32 << 10)<store.TOTAL_CAP and client.inventory_slots+2<=store.MAX_ASSETS,"ROOT_CLAIM_CAPACITY")
@@ -622,7 +640,9 @@ class Runner:
         from .operational_io import quota_downloader
         require(self.go["operation"]=="RECURRING_CAPTURE" and self.operations_proof is not None,
             "LIVE_RECURRING_CAPTURE_ROOT_REQUIRED")
-        self.claim()
+        from . import audit_weekly_template_v1 as template
+        first=template.first_primary_root(self.go)
+        if first is None:self.claim()
         prior_metadata=self.prior_public_metadata()
         request=dict(schema_version=recovery.VERSION+"-request",phase=recovery.PHASE,code_pins=pins(),
             limits=recovery.LIMITS,cache=str(self.storage.cache),state_root=str(self.root/"state"),
@@ -660,6 +680,7 @@ class Runner:
         require(manifest["current_root_go_sha256"]==self.go_sha and manifest["current_values_used"] is False
             and manifest["no_reselection"] is manifest["no_cutoff_extension"] is True,
             "ACTUAL_PREVALUE_RECURRING_METADATA_REQUIRED")
+        if first is not None:self.claim()
         return retained_result,manifest
 
     def prior_public_metadata(self):

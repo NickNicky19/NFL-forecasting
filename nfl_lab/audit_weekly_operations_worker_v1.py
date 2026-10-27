@@ -220,18 +220,31 @@ def _match_callback(kind, document, *, context, clock):
     return authenticate
 
 
+def _first_primary_authority(context):
+    """Only the actual manual OWNER proof may enter the new procedure."""
+    from . import audit_weekly_controller_bootstrap_v1 as bootstrap
+    from . import audit_weekly_operations_authority_v1 as authority
+    from . import private_draft_store as store
+    context.verify()
+    require(authority.owner(context.env) and type(context.proof) is bootstrap.Owner,
+        'LIVE_OWNER_FIRST_PRIMARY_PROOF_REQUIRED')
+    authority._verify(context.proof,context.env,store.canonical(context.go))
+
+
 def prepare(context, *, clock=None, transport=None):
     require(type(context) is Authenticated, "LIVE_OPERATIONS_CONTEXT_REQUIRED")
     context.verify()
     from . import audit_weekly_operations_v1 as operations, audit_weekly_resume_v1 as resume
     from . import audit_weekly_grade_v1 as grade, audit_weekly_runtime_v1 as runtime
     from . import audit_weekly_grade_history_v1 as history
+    from . import audit_weekly_template_v1 as template, audit_weekly_archive_v1 as archive
     from . import private_draft_store as store, gha_private_checkpoint as cp, state
     from .operational_storage import OperationalStorage
     clock = clock or state.now_utc
     request, inputs = context.request, context.request["inputs"]
     validate_request(request, PHASE)
     operations.context(context.go["effective_epoch"])
+    first=template.first_primary_root(context.go)
     locator = history.previous_checkpoint(context.go)
     if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5} and locator is not None:
         require(locator.get("schema_version")==history.LOCATOR_REF,"EXPLICIT_V4_HISTORY_LOCATOR_REQUIRED")
@@ -303,6 +316,19 @@ def prepare(context, *, clock=None, transport=None):
     anchor = resume._restore_anchor(retained, inputs["retained_models"], schedule, storage=storage, output=output/"resume",
         original_weekly_choice_sha256=inputs["canonical_weekly_choice_sha256"], authenticate=auth,
         authenticate_calendar=calendar_auth, clock=clock)
+    if first is not None:
+        require(previous is None and pair is None
+            and not ({'context/'+role+'.json' for role in archive.OPERATIONS_CONTEXT}|prior_operations) & set(retained['aliases'])
+            and retained['original_archive']['root_go_sha256']==first['retained_root_go_sha256']
+            and anchor['registered'].epoch.sha256==first['retained_epoch_sha256']
+            and anchor['original'].sha256==first['retained_choice_sha256'],
+            'EXACT_LEGACY_COUNT7_WITHOUT_PRIMARY_ASSIGNMENT_REQUIRED')
+        context.client.bind(context.go['qualified_runtime']['binding'])
+        absence=operations.first_primary_absence(context.client,context.go,
+            authenticate=lambda:_first_primary_authority(context),clock=clock)
+        # The new weekly choice clock follows the actual absence GETs. The
+        # historical restore clock must not become a backdated new decision.
+        anchor=dict(anchor,at=state.utc(clock()))
     full = operations.calendar(raw, season=declared["season"], week=declared["week"])
     target_schedule = [{key:row[key] for key in ("season", "week", "game_type", "game_id", "kickoff_utc")} for row in full]
     lead = context.go.get("cutoff_lead_seconds", 900)
@@ -324,9 +350,14 @@ def prepare(context, *, clock=None, transport=None):
         require(verified is not None and "planning" in verified.proof,"LIVE_PRIVATE_HISTORY_PLANNING_REQUIRED")
         expected=history.next_plan(verified.proof["planning"],at=state.utc(context.go["issued_at_utc"]))
         require(expected==declared,"EXACT_PARENT_ROUTING_FROM_FRESHEST_PRIVATE_CAUSAL_HISTORY")
-    target, execution = operations.recurring_plan(anchor["registered"], anchor["original"], target_schedule,
-        authenticate=plan_auth, durable=previous, cutoff_lead_seconds=lead,
-        relocated_replays=(anchor["replay"],), clock=lambda:anchor["at"])
+    if first is not None:
+        target, execution = operations.first_future_plan(anchor['registered'],anchor['original'],target_schedule,
+            context.go,absence,authenticate=plan_auth,cutoff_lead_seconds=lead,
+            relocated_replays=(anchor['replay'],),clock=lambda:anchor['at'])
+    else:
+        target, execution = operations.recurring_plan(anchor["registered"], anchor["original"], target_schedule,
+            authenticate=plan_auth, durable=previous, cutoff_lead_seconds=lead,
+            relocated_replays=(anchor["replay"],), clock=lambda:anchor["at"])
     planning=None
     if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5}:
         require(state.digest(target_schedule)==declared["calendar_sha256"],"ROOT_FROZEN_COMPLETE_CALENDAR_CHANGED")
@@ -428,6 +459,10 @@ def prepare(context, *, clock=None, transport=None):
         elapsed_game_ids=scope["elapsed_game_ids"], active_game_ids=scope["active_game_ids"],
         no_reselection=True, no_cutoff_extension=True, current_values_used=False, metadata_remote_durability_qualified=False,
         model_decodes=0, source_acquisitions=0, label_acquisitions=0, fits=0, public_release=False, successful_forecast=False)
+    if first is not None:
+        absence.verify(context.go)
+        manifest.update(state='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL',
+            first_primary=dict(scope=first,absence=deepcopy(absence.document)))
     require(len(store.canonical(manifest)) <= LIMITS["manifest_bytes"], "FINITE_COMPLETE_OPERATIONS_MANIFEST")
     ref = runtime.write(storage, output / "PREPARED.json", manifest)
     return dict(state=manifest["state"], manifest=ref, capture_id=inputs["capture_id"],
