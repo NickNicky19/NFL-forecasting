@@ -522,16 +522,20 @@ def _discover(parent, document, api, clock):
 
 class _HistoryCapture:
     """Process-only result of completed API/source and fresh private reads."""
-    def __init__(self, receipt, packed_sha256, locator, checkpoint, state_head, parent, cohorts, key):
+    def __init__(self, receipt, packed_sha256, locator, checkpoint, state_head, parent, cohorts, key, *, pending_recovery=None):
         require(key is _KEY,"LIVE_PARENT_HISTORY_DISCOVERY_REQUIRED")
         self.receipt,self.packed_sha256=deepcopy(receipt),packed_sha256
         self.locator,self.checkpoint=deepcopy(locator),deepcopy(checkpoint)
         self.state_head,self.registration_sha256=state_head,parent.seal.registration_sha256
         self.cohorts=deepcopy(cohorts);self.process=store.process_identity()
+        self.pending_recovery=deepcopy(pending_recovery if pending_recovery is not None else
+            dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]))
+        template.validate_pending_recovery(self.pending_recovery)
         self._sha=c.digest(self._state())
 
     def _state(self):
-        return [self.receipt,self.packed_sha256,self.locator,self.checkpoint,self.state_head,self.registration_sha256,self.cohorts,self.process]
+        return [self.receipt,self.packed_sha256,self.locator,self.checkpoint,self.state_head,self.registration_sha256,
+            self.cohorts,self.process,self.pending_recovery]
 
     def verify(self,parent):
         require(self._sha==c.digest(self._state()) and self.process==store.process_identity()
@@ -631,13 +635,15 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
     h=value["sidecar"]["checkpoint_handoff"]
     private_root=private_metadata(h["descriptor"]) if history.checkpoint_version(h)==history.CHECKPOINT_V2 else None
     client.draft();client.guard()
-    history.validate_parent_envelope(packed,value,client,jobs,code_pins=p["producer"]["code_pins"],
+    authenticated_envelope=history.validate_parent_envelope(packed,value,client,jobs,code_pins=p["producer"]["code_pins"],
         static_root=document["root_template"],at=clock(),private_root=private_root)
     storage.register_root(workspace/"history-metadata")
     storage.write_bytes(workspace/"history-metadata/ORIGINAL_READER_EVIDENCE.json.gz",packed)
     if private_root is not None:storage.write_bytes(workspace/"history-metadata/ORIGINAL_NATIVE_ROOT_METADATA.json.gz",private_root)
     reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
-    return _HistoryCapture(receipt,c.sha(receipt_raw),value,reference,head,parent,cohorts,_KEY).verify(parent)
+    recovery=template.pending_recovery(authenticated_envelope['root_go'])
+    return _HistoryCapture(receipt,c.sha(receipt_raw),value,reference,head,parent,cohorts,_KEY,
+        pending_recovery=recovery).verify(parent)
 
 
 def daily_claim_id(registration_sha256, producer_source_sha, at):
@@ -670,8 +676,10 @@ def _build_root(parent, document, capture, at, *, plan=None):
     if type(capture) is _HistoryCapture:
         from . import audit_weekly_grade_history_v1 as history
         require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
-        root["effective_epoch"].update(schema_version=history.CONTEXT_V4,
-            plan=history.next_plan(capture.locator["planning"],at=at))
+        root["effective_epoch"].update(schema_version=history.CONTEXT_V5,
+            plan=history.next_plan(capture.locator["planning"],at=at),
+            pending_post_recovery=template.validate_pending_recovery(capture.pending_recovery,
+                binding=root['qualified_runtime']['binding']))
     elif plan is not None:
         require(type(plan) is dict and set(plan)=={"kind","season","week"}
             and plan["kind"] in {"GRADE_ONLY","FUTURE_CAPABLE"}
@@ -807,7 +815,7 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     _fast_guard(parent, env, api, source_root, read_head, clock, before_run=before)
     live_check()
     require(c.utc(clock()) < c.utc(root["expires_at_utc"]), "PARENT_ROOT_EXPIRED_BEFORE_ENQUEUE")
-    if root["effective_epoch"]["schema_version"]=="audit-weekly-recurring-v4-context":
+    if root["effective_epoch"]["schema_version"] in {"audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}:
         plan=root["effective_epoch"]["plan"]
         require(plan["kind"]=="GRADE_ONLY" or c.utc(clock())<c.utc(plan["deadline_utc"]),"FROZEN_DEADLINE_ELAPSED_BEFORE_ENQUEUE")
     response = ledger.request(DISPATCH_URL, lane="state", method="POST", cap=4096, value=dict(ref=p["producer"]["branch"],

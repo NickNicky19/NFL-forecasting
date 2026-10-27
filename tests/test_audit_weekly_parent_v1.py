@@ -849,6 +849,9 @@ def history_case(case):
         effective_epoch=dict(schema_version=history.CONTEXT_V4,controller_context=None,previous_capture=prior,
             previous_checkpoint=dict(schema_version=history.LOCATOR_REF,path="20261025T122300.000000Z--600--"+"a"*64+".json.gz",sha256="b"*64),
             plan=dict(kind="GRADE_ONLY",season=2026,week=8,deadline_utc=None,calendar_sha256=c.digest(current["schedule"]),game_cutoffs={})))
+    if getattr(case,'pending_recovery_spec',None) is not None:
+        original_root['effective_epoch'].update(schema_version=history.CONTEXT_V5,
+            pending_post_recovery=deepcopy(case.pending_recovery_spec))
     cohort=dict(schema_version=history.LOCATOR_VERSION+"-cohort",kind="GRADING_ONLY",repository=c.REPO,source_sha=old.B,run_id="700",
         root_go_sha256=c.digest(original_root),workflow_sha256=x.p["producer"]["workflow_sha256"],epoch_sha256=case.ops["epoch_sha256"],
         feed_sha256=case.ops["feed_sha256"],jobs={role:dict(job_id=x.p["producer"]["jobs"][role],api_job_id=701+i) for i,role in enumerate(c.ROLES)},
@@ -916,7 +919,8 @@ def test_v3_parent_routes_current_checkpoint_with_separate_sealed_old_capture_ru
     result=case.execute()
     root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
     assert root['schema_version']==t.ROOT_V3
-    assert root['effective_epoch']['schema_version']==history.CONTEXT_V4
+    assert root['effective_epoch']['schema_version']==history.CONTEXT_V5
+    assert root['effective_epoch']['pending_post_recovery']==dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
     assert root['effective_epoch']['previous_capture']==h.locator['anchor']
     assert root['prior_capture_qualified_runtime']==case.root['prior_capture_qualified_runtime']
     assert root['qualified_runtime']==x.package
@@ -998,7 +1002,8 @@ def test_new_parent_discovers_grade_only_without_new_feed_and_routes_once(histor
     result=case.execute()
     root=c.decode(case.service.dispatch_body["inputs"]["inference_builder_go_json"])
     ctx=root["effective_epoch"]
-    assert ctx["schema_version"]==history.CONTEXT_V4 and ctx["plan"]["kind"]==expected and ctx["plan"]["week"]==week
+    assert ctx["schema_version"]==history.CONTEXT_V5 and ctx["plan"]["kind"]==expected and ctx["plan"]["week"]==week
+    assert ctx["pending_post_recovery"]==dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
     assert ctx["previous_capture"]==h.locator["anchor"]
     assert ctx["previous_checkpoint"]["path"]==history.locator_filename(h.locator)
     assert result["HTTP_calls"]==len(case.service.calls)<=140 and result["HTTP_by_lane"]["private"]<=40
@@ -1169,3 +1174,19 @@ def test_parent_multipart_rejects_incomplete_or_unbound_part_evidence_before_cla
     h.publish()
     with pytest.raises(history.HistoryError):h.case.execute()
     assert not any(r.get_method() in {'POST','PATCH'} for r in h.case.service.calls)
+
+
+def test_parent_preserves_nonempty_pending_evidence_from_authenticated_history(case):
+    """Fictional metadata propagation, not a native core-failure qualification."""
+    x=case.x;digest=s.sha(b'abc')
+    record=dict(schema_version='weekly-private-POST-reservation-v2',key='asset:blob-'+digest+'.bin',
+        bytes=3,sha256=digest,name='blob-'+digest+'.bin')
+    case.pending_recovery_spec=dict(schema_version=t.PENDING_RECOVERY,pending_reservations=[record],
+        handoffs=[dict(schema_version='audit-weekly-hosted-v2-failure-handoff',binding=deepcopy(x.package['binding']),
+            descriptor=deepcopy(x.template_seal['descriptor']),root_go_sha256='a'*64)])
+    history_case.__wrapped__(case)
+    result=case.execute()
+    root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert root['effective_epoch']['schema_version']==history.CONTEXT_V5
+    assert root['effective_epoch']['pending_post_recovery']==case.pending_recovery_spec
+    assert result['dispatches']==1 and result['HTTP_by_lane']['private']<=40 and result['HTTP_calls']<=140

@@ -47,6 +47,9 @@ ROOT_V3 = 'audit-weekly-hosted-v3-root-GO'
 ROOT_V3_KEYS = ROOT_KEYS | {'prior_capture_qualified_runtime'}
 STATIC_V3 = VERSION + '-static-v3'
 PRIOR_RUNTIME = 'audit-weekly-prior-capture-qualified-runtime-v1'
+PENDING_RECOVERY = 'audit-weekly-pending-post-recovery-v1'
+RECURRING_V5 = 'audit-weekly-recurring-v5-context'
+REGISTRATION_RECOVERY = 'audit-weekly-controller-registration-v1-context-v4'
 DYNAMIC_FIELDS = {'approved','issued_at_utc','expires_at_utc','operation','effective_epoch'}
 DOCUMENT_KEYS = {'schema_version','source_sha','code_pins','readiness','root_template'}
 HANDOFF_KEYS = {'schema_version','repository','binding','descriptor','template_sha256','template_bytes',
@@ -160,7 +163,7 @@ def checkpoint_runtime(root, handoff, *, anchor=None, checkpoint=None):
     return matches[0]
 
 
-def _descriptor(value):
+def _descriptor(value, *, payload_cap=PACKED_CAP):
     """Metadata-only checks of the unchanged native v2 restore descriptor.
 
 No checkpoint module import: that module's owned-storage dependency imports
@@ -174,7 +177,7 @@ NumPy/pandas. Actual reads/writes still execute unchanged store.append/restore.
     p=entry['payload']
     require(type(p) is dict and set(p) == {'schema_version','payload_kind','format','bytes','sha256','source_policy_sha256'}
         and p['schema_version'] == 'weekly-private-payload-v2' and p['payload_kind'] == 'runtime_manifest'
-        and p['format'] == 'gzip' and type(p['bytes']) is int and 0 < p['bytes'] <= PACKED_CAP
+        and p['format'] == 'gzip' and type(p['bytes']) is int and 0 < p['bytes'] <= payload_cap
         and hashed(p['sha256']) and p['source_policy_sha256'] == POLICY_SHA, 'STATIC_TEMPLATE_NATIVE_PAYLOAD_SCOPE')
     require(entry['schema_version'] == 'weekly-private-restore-manifest-v2' and hashed(entry['producer_process'])
         and hashed(entry['binding_sha256']) and identifier(entry['writer_run_id'])
@@ -183,6 +186,46 @@ NumPy/pandas. Actual reads/writes still execute unchanged store.append/restore.
         and type(value['manifest_bytes']) is int and value['manifest_bytes'] == len(store.canonical(entry)) <= ENTRY_CAP
         and value['manifest_sha256'] == digest(entry), 'EXACT_TEMPLATE_NATIVE_ENTRY_HASH')
     return entry
+
+
+def validate_pending_recovery(value, *, binding=None):
+    """Closed accounting metadata; remote evidence must still be authenticated."""
+    require(type(value) is dict and set(value)=={'schema_version','handoffs','pending_reservations'}
+        and value['schema_version']==PENDING_RECOVERY and type(value['handoffs']) is list
+        and len(value['handoffs'])<=8 and type(value['pending_reservations']) is list
+        and len(value['pending_reservations'])<=128, 'CLOSED_PENDING_POST_RECOVERY')
+    seen=set()
+    for handoff in value['handoffs']:
+        require(type(handoff) is dict and set(handoff)=={'schema_version','binding','descriptor','root_go_sha256'}
+            and handoff['schema_version']=='audit-weekly-hosted-v2-failure-handoff'
+            and hashed(handoff['root_go_sha256']), 'CLOSED_PRIOR_FAILURE_HANDOFF')
+        current=store.checked_binding(handoff['binding'])
+        require(binding is None or current==binding, 'PENDING_POST_NAMESPACE_MISMATCH')
+        entry=_descriptor(handoff['descriptor'],payload_cap=store.ASSET_CAP)
+        require(entry['binding_sha256']==digest(current) and entry['writer_run_id'] not in seen,
+            'UNIQUE_PRIOR_FAILURE_IN_EXACT_NAMESPACE')
+        seen.add(entry['writer_run_id'])
+    keys=[];total=0
+    for record in value['pending_reservations']:
+        require(type(record) is dict and set(record)=={'schema_version','key','bytes','sha256','name'}
+            and record['schema_version']=='weekly-private-POST-reservation-v2'
+            and type(record['bytes']) is int and 0<record['bytes']<=store.ASSET_CAP
+            and hashed(record['sha256']) and record['name'] in {
+                'blob-'+record['sha256']+'.bin','manifest-'+record['sha256']+'.json'}
+            and record['key']=='asset:'+record['name'], 'CLOSED_PRIOR_POST_RESERVATION')
+        keys.append(record['key']);total+=record['bytes']
+    require(keys==sorted(set(keys)) and total<=store.TOTAL_CAP
+        and (bool(value['handoffs']) or not keys), 'BOUNDED_UNIQUE_COMPLETE_PENDING_RECORDS')
+    return deepcopy(value)
+
+
+def pending_recovery(root):
+    context=root.get('effective_epoch') or {}
+    modern=context.get('schema_version') in {RECURRING_V5,REGISTRATION_RECOVERY}
+    require(modern or 'pending_post_recovery' not in context, 'EXPLICIT_PENDING_RECOVERY_VERSION')
+    if modern:
+        return validate_pending_recovery(context['pending_post_recovery'],binding=root['qualified_runtime']['binding'])
+    return dict(schema_version=PENDING_RECOVERY,handoffs=[],pending_reservations=[])
 
 
 def _client_identity(client):
