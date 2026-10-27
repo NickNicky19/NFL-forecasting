@@ -678,8 +678,8 @@ def _build_root(parent, document, capture, at, *, plan=None):
         require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
         root["effective_epoch"].update(schema_version=history.CONTEXT_V5,
             plan=history.next_plan(capture.locator["planning"],at=at),
-            pending_post_recovery=template.validate_pending_recovery(capture.pending_recovery,
-                binding=root['qualified_runtime']['binding']))
+            pending_post_recovery=template.pending_recovery_envelope(template.validate_pending_recovery(capture.pending_recovery,
+                binding=root['qualified_runtime']['binding'])))
     elif plan is not None:
         require(type(plan) is dict and set(plan)=={"kind","season","week"}
             and plan["kind"] in {"GRADE_ONLY","FUTURE_CAPABLE"}

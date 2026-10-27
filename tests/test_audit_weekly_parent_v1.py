@@ -1176,7 +1176,8 @@ def test_parent_multipart_rejects_incomplete_or_unbound_part_evidence_before_cla
     assert not any(r.get_method() in {'POST','PATCH'} for r in h.case.service.calls)
 
 
-def test_parent_preserves_nonempty_pending_evidence_from_authenticated_history(case):
+@pytest.mark.parametrize('records_count',[1,16])
+def test_parent_preserves_nonempty_pending_evidence_from_authenticated_history(case,records_count):
     """Fictional metadata propagation, not a native core-failure qualification."""
     x=case.x;digest=s.sha(b'abc')
     record=dict(schema_version='weekly-private-POST-reservation-v2',key='asset:blob-'+digest+'.bin',
@@ -1184,9 +1185,17 @@ def test_parent_preserves_nonempty_pending_evidence_from_authenticated_history(c
     case.pending_recovery_spec=dict(schema_version=t.PENDING_RECOVERY,pending_reservations=[record],
         handoffs=[dict(schema_version='audit-weekly-hosted-v2-failure-handoff',binding=deepcopy(x.package['binding']),
             descriptor=deepcopy(x.template_seal['descriptor']),root_go_sha256='a'*64)])
+    if records_count>1:
+        records=[]
+        for n in range(records_count):
+            digest=s.sha(('preserved-pending-'+str(n)).encode())
+            records.append(dict(record,key='asset:blob-'+digest+'.bin',sha256=digest,name='blob-'+digest+'.bin'))
+        case.pending_recovery_spec['pending_reservations']=sorted(records,key=lambda r:r['key'])
     history_case.__wrapped__(case)
     result=case.execute()
     root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
     assert root['effective_epoch']['schema_version']==history.CONTEXT_V5
-    assert root['effective_epoch']['pending_post_recovery']==case.pending_recovery_spec
+    assert t.pending_recovery(root)==case.pending_recovery_spec
+    if records_count==1:assert root['effective_epoch']['pending_post_recovery']==case.pending_recovery_spec
+    else:assert root['effective_epoch']['pending_post_recovery']['schema_version']==t.PENDING_RECOVERY_ENVELOPE
     assert result['dispatches']==1 and result['HTTP_by_lane']['private']<=40 and result['HTTP_calls']<=140

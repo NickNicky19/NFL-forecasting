@@ -58,7 +58,7 @@ REGISTRY_PATH = "state/controller-v1/bootstrap-v1.json"
 # The first V2 wire registration remains immutable at bootstrap-v2.json.
 # All issued registration records remain immutable. Restoring the registered
 # feature builder requires its own native registration on the corrected source.
-LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261027-first-primary.json"
+LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json"
 LOCATOR_CAP = 64 << 10
 TEMPLATE_MODULE = "nfl_lab/audit_weekly_template_v1.py"
 # Shared executable bytes are checked in BOTH literal source inventories.
@@ -235,6 +235,7 @@ def fixed_route(url):
         r"contents/state/controller-v1/bootstrap-v2-20261026-retained-epoch\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261027-pending-posts\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261027-first-primary\.json\?ref=[a-f0-9]{40}",
+        r"contents/state/controller-v1/bootstrap-v2-20261027-fresh-first-primary\.json\?ref=[a-f0-9]{40}",
         r"actions/artifacts/[1-9][0-9]{0,19}"))
 
 
