@@ -58,7 +58,7 @@ REGISTRY_PATH = "state/controller-v1/bootstrap-v1.json"
 # The first V2 wire registration remains immutable at bootstrap-v2.json.
 # All issued registration records remain immutable. Restoring the registered
 # feature builder requires its own native registration on the corrected source.
-LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261026-registered-builder.json"
+LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261027-pending-posts.json"
 LOCATOR_CAP = 64 << 10
 TEMPLATE_MODULE = "nfl_lab/audit_weekly_template_v1.py"
 # Shared executable bytes are checked in BOTH literal source inventories.
@@ -233,7 +233,7 @@ def fixed_route(url):
         r"contents/state/controller-v1/bootstrap-v[12]\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261026-discovery\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261026-retained-epoch\.json\?ref=[a-f0-9]{40}",
-        r"contents/state/controller-v1/bootstrap-v2-20261026-registered-builder\.json\?ref=[a-f0-9]{40}",
+        r"contents/state/controller-v1/bootstrap-v2-20261027-pending-posts\.json\?ref=[a-f0-9]{40}",
         r"actions/artifacts/[1-9][0-9]{0,19}"))
 
 
@@ -617,25 +617,29 @@ def _recurring(root_bytes, *, bot):
     require(type(root) is dict and root_bytes == c.canonical(root) and root.get("operation") == "RECURRING_CAPTURE",
             "EXPLICIT_RECURRING_CAPTURE_ROOT_REQUIRED")
     epoch = root.get("effective_epoch")
-    require(type(epoch) is dict and epoch.get("schema_version") in {"audit-weekly-recurring-v1-context","audit-weekly-recurring-v2-context","audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context"}
+    require(type(epoch) is dict and epoch.get("schema_version") in {"audit-weekly-recurring-v1-context","audit-weekly-recurring-v2-context","audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}
             and (type(epoch.get("controller_context")) is dict if bot else epoch.get("controller_context") is None)
             and type(epoch.get("previous_capture")) is dict
             and set(epoch["previous_capture"]) == {"feed_sha256", "receipt_sha256"}
             and all(c.hashed(v) for v in epoch["previous_capture"].values()), "RECURRING_CONTEXT_AND_PRIOR_CAPTURE_LOCATOR")
-    if epoch["schema_version"] in {"audit-weekly-recurring-v2-context", "audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context"}:
+    if epoch["schema_version"] in {"audit-weekly-recurring-v2-context", "audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}:
         locator=epoch.get("previous_checkpoint")
-        modern=epoch["schema_version"]=="audit-weekly-recurring-v4-context"
+        modern=epoch["schema_version"] in {"audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"}
         reference=modern and type(locator) is dict and locator.get("schema_version") is not None
         if reference:
             from .audit_weekly_grade_history_v1 import locator_reference
             locator_reference(locator)
         require(set(epoch)=={"schema_version","controller_context","previous_capture","previous_checkpoint"}
-                | ({"plan"} if epoch["schema_version"] in {"audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context"} else set())
+                | ({"plan"} if epoch["schema_version"] in {"audit-weekly-recurring-v3-context","audit-weekly-recurring-v4-context","audit-weekly-recurring-v5-context"} else set())
+                | ({"pending_post_recovery"} if epoch["schema_version"]=="audit-weekly-recurring-v5-context" else set())
             and (reference or locator is None or type(locator) is dict and set(locator)=={"sha256"} and c.hashed(locator["sha256"])),
             "RECURRING_V2_EXACT_PREVIOUS_GRADING_LOCATOR")
         if modern:
             from .audit_weekly_grade_history_v1 import validate_root_plan
             validate_root_plan(epoch["plan"])
+        if epoch["schema_version"]=="audit-weekly-recurring-v5-context":
+            from .audit_weekly_template_v1 import pending_recovery
+            pending_recovery(root)
         if epoch["schema_version"] == "audit-weekly-recurring-v3-context":
             plan = epoch["plan"]
             require(type(plan) is dict and set(plan) == {"kind", "season", "week"}
