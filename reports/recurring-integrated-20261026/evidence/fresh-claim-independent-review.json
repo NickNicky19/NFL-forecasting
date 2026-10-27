@@ -1,0 +1,282 @@
+{
+  "blocking_findings": [],
+  "client_budget_review": {
+    "absence_guards_unchanged": [
+      "actual namespace/source/job binding",
+      "owner verification before each exchange",
+      "existing state commit",
+      "two immutable-path absences",
+      "no deleted primary history",
+      "stable state head",
+      "root/deadline freshness",
+      "epoch-dependent atomic duplicate claim"
+    ],
+    "bound_derivation": "2 current-job GETs + 2 qualification GETs + (p+4+d) canary requests + 6 absence GETs + p preclaim inventory GETs + 2*(p+3) upload requests = 20+4p+d; successful p<=2 because MAX_ASSETS=128 and pages contain 100 items, download redirects d<=2. This is a static successful-path bound, not observed native usage.",
+    "claim_client_count": 1,
+    "new_unbounded_client_loop": false,
+    "old_client_resets": false,
+    "ordering": "Owner preparation proof; construct existing ClaimClient once; authenticate current Actions job; bind namespace; attach current authority; authenticate qualification/canary; six owner-checked absence GETs; duplicate/capacity inventory; first store.append POST.",
+    "source": "nfl_lab/audit_weekly_hosted_v1.py:claim; nfl_lab/audit_weekly_archive_v1.py:authenticate_qualification; nfl_lab/owner_private_bootstrap.py:verify_canary; nfl_lab/private_draft_store.py:Client",
+    "static_success_path_request_bound": 30,
+    "successful_inventory_pages_bound": 2,
+    "unchanged_per_client_caps": {
+      "HTTP_calls": 40,
+      "wall_seconds": 180
+    },
+    "wall_behavior": "Fresh claim scope still fails closed at 180 seconds; latency success is not established by fixture clocks."
+  },
+  "first_recorded_review_clock_utc": "2026-10-27T21:37:38+00:00",
+  "generated_at_utc": "2026-10-27T21:41:46.241758+00:00",
+  "instructions_read": [
+    "/workspace/nfl-system-audit/fresh-first-primary-claim-20261027/AGENTS.md",
+    "/workspace/nfl-system-audit/fresh-first-primary-claim-main-20261027/AGENTS.md",
+    "skill://plugin_connector_1p_c5b7d5df5d7081918f2c4be5a633ed5d/cloud-environment-runtime/SKILL.md"
+  ],
+  "owner_supplied_native_context_not_independently_fetched": {
+    "first_primary_claim_and_forecasts": "Not yet produced, as supplied by user.",
+    "fresh_failure_reader_run_id": "122478324667",
+    "known_failure22_handoff_bytes": 1595,
+    "native22_failure": "OPERATION_LIMIT at final first_primary_absence(self.client) after restoration beyond 180 seconds",
+    "native22_run_id": "40585481152",
+    "next_unpacked_root_bytes": 61781,
+    "preservation_requirement": "Do not omit Native22 handoff or original journals. This reviewer examined lossless propagation, without duplicating the parent Root22 owner GET/authentication/absence work.",
+    "restored_failure_digest_prefix": "e355557c",
+    "root_cap_bytes": 61440
+  },
+  "passing_suite_test_count_excluding_initial_repeats": 344,
+  "registration_and_change_scope": {
+    "create_only_verification_unchanged": "Exactly one registry history commit, one added file, immutable original parent history.",
+    "new_fits": 0,
+    "new_fixed_create_only_locator_path": "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
+    "old_literal_routes_retained_and_tested": true,
+    "remote_registration_writes_by_reviewer": 0,
+    "shared_changed_file_and_patch_count_equal": 5,
+    "source_math_research_storage_policy_scheduler_changes": false,
+    "source_snapshot_stable_at_report_write": true
+  },
+  "regression_reproduction": {
+    "after_result": "Both parameters pass; exactly one claim Client performs six real inherited Client GET exchanges against injected fictional metadata. The obsolete original Client counters stay unchanged.",
+    "before_method": "Read Runner.claim from git show 4a48a34:nfl_lab/audit_weekly_hosted_v1.py, select its AST FunctionDef, compile only that function and replace hosted.Runner.claim in memory. Run the unchanged new test with pytest under run_numerical_profile.py; no worktree edits.",
+    "before_result": "Both parameters fail at real private_draft_store.Client.request with StoreError OPERATION_LIMIT before append; pytest exit 1 was expected and observed.",
+    "node": "tests/test_audit_weekly_hosted_v1.py::test_first_primary_claim_checks_absence_with_fresh_bounded_client",
+    "parameters": [
+      "wall",
+      "calls"
+    ],
+    "test_boundary": "Authentication/qualification/owner attachment/inventory are mocked in this regression, and append is stopped at a sentinel. It proves correct Client selection and real request-budget enforcement, not native authority or a successful remote POST."
+  },
+  "remaining_validation": [
+    "Parent owns full Main plus focused Producer integration, real CI, and native23/native24 validation.",
+    "Exact next real Root size, full native authority, preserved original journals, and completed native first claim are not established by these fixtures.",
+    "No native qualification, successful forecast, scientific gate, or promotion is claimed by this report."
+  ],
+  "review_status": "PASS_CODE_REVIEW_NATIVE_VALIDATION_PENDING",
+  "reviewer": {
+    "agents_spawned": 0,
+    "credential_value_reads": 0,
+    "live_api_requests": 0,
+    "output_exception": "Only this user-requested public-safe report; fixture scratch and ordinary test artifacts are local.",
+    "private_forecast_or_outcome_row_reads": 0,
+    "remote_service_mutations": 0,
+    "review_agents_used": 1,
+    "role": "independent readonly reviewer",
+    "runtime_identity": "Codex; developer-described GPT-6 basis. Exact deployed model and sampling settings are not exposed.",
+    "source_edits": 0
+  },
+  "schema_version": "fresh-claim-independent-readonly-review-v1",
+  "scope": {
+    "counterpart_file_equality": {
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py": true,
+      "nfl_lab/audit_weekly_parent_v1.py": true,
+      "nfl_lab/audit_weekly_template_v1.py": true,
+      "tests/test_audit_weekly_controller_bootstrap_v1.py": true,
+      "tests/test_audit_weekly_parent_v1.py": true
+    },
+    "counterpart_patch_equality": {
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py": true,
+      "nfl_lab/audit_weekly_parent_v1.py": true,
+      "nfl_lab/audit_weekly_template_v1.py": true,
+      "tests/test_audit_weekly_controller_bootstrap_v1.py": true,
+      "tests/test_audit_weekly_parent_v1.py": true
+    },
+    "main": {
+      "base": "ae011f068c6b3b6064ec982d18c07e73b452bdff",
+      "diff_sha256": "1f3e49d126bc7bcf39fdc0a54415722006578cece8e4911b55dd7c7f421bf4ef",
+      "files": {
+        "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "2b7ec1e8a2f7555b9167a7e738b2465828d96838848cdae7f311ecda86bbb26a",
+        "nfl_lab/audit_weekly_parent_v1.py": "447cec793b8a4a8589195f2395680af085f693627a8d1be3b540575070bd50ab",
+        "nfl_lab/audit_weekly_template_v1.py": "617a6269f9af5e55d3c126806396290594b8c8a3779fb0c71233db70407b70e6",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "6ef07797069a82b5fd9208143ce4856b70d472f1a925bfc1a84a2335a800e959",
+        "tests/test_audit_weekly_parent_v1.py": "fe1cd204df85f7792fbc3d61bf512961d00fade2ffc258a3e318490af4b5620d"
+      },
+      "head": "ae011f068c6b3b6064ec982d18c07e73b452bdff",
+      "root": "/workspace/nfl-system-audit/fresh-first-primary-claim-main-20261027",
+      "scope_outside_python_source_tests": []
+    },
+    "producer": {
+      "base": "4a48a3489b9503a73f0af7ef9fde9ef95ecd80c4",
+      "diff_sha256": "061273ed2e544610ed7fb72b87a8c81dba9287700729d2146fd4e38ec0ef7e59",
+      "files": {
+        "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "2b7ec1e8a2f7555b9167a7e738b2465828d96838848cdae7f311ecda86bbb26a",
+        "nfl_lab/audit_weekly_hosted_v1.py": "9ccead8601ec6937df5e47dd75b1e693b8739367ee93882d1a00106417991238",
+        "nfl_lab/audit_weekly_parent_v1.py": "447cec793b8a4a8589195f2395680af085f693627a8d1be3b540575070bd50ab",
+        "nfl_lab/audit_weekly_template_v1.py": "617a6269f9af5e55d3c126806396290594b8c8a3779fb0c71233db70407b70e6",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "6ef07797069a82b5fd9208143ce4856b70d472f1a925bfc1a84a2335a800e959",
+        "tests/test_audit_weekly_hosted_v1.py": "e32ec945f1c8e303308e9871dd8e5e207c7047fc44a1838e27909b54f5e407d9",
+        "tests/test_audit_weekly_operations_authority_v1.py": "b10ed57ba2335c5dbaaebb540767768011c11da68bdd3ef2d2f9f39c82523c0d",
+        "tests/test_audit_weekly_parent_v1.py": "fe1cd204df85f7792fbc3d61bf512961d00fade2ffc258a3e318490af4b5620d"
+      },
+      "head": "4a48a3489b9503a73f0af7ef9fde9ef95ecd80c4",
+      "root": "/workspace/nfl-system-audit/fresh-first-primary-claim-20261027",
+      "scope_outside_python_source_tests": []
+    },
+    "protected_sources": {
+      ".github/workflows/lab.yml": {
+        "main": "de670e28b0b143813b26e2c46ff47267404d3c1dd74275da56506b334122b11d",
+        "producer": "2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384"
+      },
+      "config/private-draft-storage-v2.json": {
+        "main": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+        "producer": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b"
+      },
+      "config/research.json": {
+        "main": "7d30b4a1a50cc45ec575b11ca1e023dd8d1c64376cd31677e018ad12dfb5e406",
+        "producer": "7d30b4a1a50cc45ec575b11ca1e023dd8d1c64376cd31677e018ad12dfb5e406"
+      },
+      "nfl_lab/private_draft_store.py": {
+        "main": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+        "producer": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+      }
+    }
+  },
+  "tests": [
+    {
+      "argv": [
+        "/workspace/nfl-system-audit/venv/bin/python",
+        "/workspace/nfl-system-audit/continuation/run_numerical_profile.py",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_audit_weekly_hosted_v1.py",
+        "tests/test_audit_weekly_operations_v1.py",
+        "tests/test_audit_weekly_operations_authority_v1.py",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py"
+      ],
+      "exit_code": 0,
+      "repository": "producer",
+      "result": "219 passed",
+      "seconds": 13.93
+    },
+    {
+      "argv": [
+        "/workspace/nfl-system-audit/venv/bin/python",
+        "/workspace/nfl-system-audit/continuation/run_numerical_profile.py",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_audit_weekly_parent_v1.py"
+      ],
+      "exit_code": 0,
+      "repository": "producer",
+      "result": "109 passed",
+      "seconds": 61.69
+    },
+    {
+      "argv": [
+        "/workspace/nfl-system-audit/venv/bin/python",
+        "/workspace/nfl-system-audit/continuation/run_numerical_profile.py",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py::test_large_pending_metadata_transport_preserves_original_bytes_and_records",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py::test_pending_metadata_transport_rejects_corruption_or_hidden_scope",
+        "tests/test_audit_weekly_parent_v1.py::test_parent_preserves_nonempty_pending_evidence_from_authenticated_history",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py::test_issued_registration_routes_are_literal_and_commit_bound"
+      ],
+      "exit_code": 0,
+      "repository": "main",
+      "result": "16 passed",
+      "seconds": 1.18
+    },
+    {
+      "exit_code": 0,
+      "repository": "producer",
+      "result": "Initial changed-branch targeted run: 13 passed in 1.32s; included in the later Producer suites, not added to the aggregate."
+    },
+    {
+      "exit_code": 0,
+      "repository": "both",
+      "result": "git diff --check passed against each supplied base"
+    }
+  ],
+  "transport_review": {
+    "all_record_counts_and_bytes_preserved": true,
+    "base64_characters_cap": 65536,
+    "checks": [
+      "exact integer length, excluding boolean",
+      "strict base64 validation",
+      "bounded zlib output",
+      "gzip EOF required",
+      "no unused trailing data",
+      "no unconsumed compressed tail",
+      "exact SHA-256",
+      "canonical JSON bytes",
+      "V1 inner schema only",
+      "original namespace binding",
+      "unchanged V1 record/handoff validators"
+    ],
+    "closed_envelope_keys": [
+      "schema_version",
+      "body_sha256",
+      "body_bytes",
+      "gzip_base64"
+    ],
+    "data_scope": "Same closed V1 handoffs and pending POST reservations; no forecasts, outcomes, model bodies, or hidden extra fields accepted.",
+    "independent_adversarial_reproduction": {
+      "kind": "FICTIONAL_METADATA_ONLY_NO_NATIVE_CLAIM",
+      "max_handoffs": 8,
+      "max_records": 128,
+      "negative_checks": [
+        "plain_bound",
+        "encoded_bound",
+        "zero_plain",
+        "short_claimed_length",
+        "long_claimed_length",
+        "boolean_bytes",
+        "invalid_base64",
+        "non_gzip",
+        "bad_digest",
+        "extra_envelope_field",
+        "truncated_header",
+        "truncated_trailer",
+        "raw_tail",
+        "zero_tail",
+        "extra_member",
+        "bad_crc",
+        "nested_envelope",
+        "noncanonical_plain",
+        "duplicate_json_key",
+        "unknown_plain_field",
+        "namespace_mismatch"
+      ],
+      "network_calls": 0,
+      "pass_": true,
+      "plain_bytes": 52692,
+      "small_v1_unchanged": true,
+      "transport_bytes": 10849
+    },
+    "method": "Only validated pending-recovery metadata is canonically serialized, gzip compressed with mtime=0 and base64 encoded. Parent wraps its already captured metadata without new GETs.",
+    "plain_bytes_cap": 131072,
+    "root_caps_unchanged": {
+      "Actions_dispatch_bytes": 65535,
+      "canonical_root_bytes": 61440
+    },
+    "small_v1_passthrough_max_bytes": 4096
+  }
+}

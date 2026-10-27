@@ -1,3 +1,23 @@
+Update — 2026-10-27T21:51:40.440717+00:00 (PARTIAL)
+
+First-primary22run40585481152 failedOPERATION_LIMIT in the final pre-claim absence GET. It had restored retained evidence and prepared the newWeek8metadata but issued no current-game forecasts. Actualfreshreader122478324667 restored original core/opaque failure evidence, receipte355557c…. OwnerGET authenticates17uniqueoriginal reservations and verifies the stable first-primary claim absent; no old Root is retried.
+
+The focused fresh-claim fix uses the existing newly authenticated claim client, preserving40calls/180seconds and old counters. Lossless pending-metadata transport keeps all8743original bytes/17records in2904bytes, below the unchanged Rootcap. Main48c6e5848/Producer49 5669265 are in the normal integration workflow; local735Main/oneoptional skip,301focusedProducer, independent344checks/21adversarial tests pass. Actual-Client regressions fail before/pass after for both exhausted time and calls. [Failure and restoration](evidence/first-primary22-native-failure-restoration.json), [original reservation authentication and absent claim](evidence/pending-recovery-through22-owner-get.json), [independent review](evidence/fresh-claim-independent-review.json).
+
+WebsiteMain9f9f3056 remains ready and unmerged under the existing active writer. Draft10af19acb passes223Python/all4Node/CI40586271952, but its binding must be regenerated for the next actual producer source. It is not approved as fresh selected installation. Genuine newNative23, prospective capture24, complete grade/readback/export, current consumer validation and actual owned website deployment/live verification remain outstanding. All original records, failed attempts, scientific clocks and losing weeks are preserved. No NFL fit or accuracy gain is claimed.
+
+---
+
+Update — 2026-10-27T21:22:35.144894+00:00 (PARTIAL)
+
+Main46 ae011f0 and Producer47 4a48a34 are merged. Actual sourceCI40582262306 passed724Main tests/oneoptional skip; ProducerCI40582286894 passed2240/oneoptional skip with all2241nodes attempted/completed. Genuine Registration21run40584423400 passed all3jobs; its1349B sealSHA2e1914f7… was verified, and create-only source-bound record7fe5c174 was committed/read back, preserving Native20.
+
+Prospective first-primary22run40585481152 is now genuinely executing, for all14futureWeek8games. It preserves the actual original epoch, prior choices/eligibility and unassignedCOUNT7history. Root58519/61440B andActions61710/65535B stay underunchangedlimits;0newfits are permitted. No successful capture/grade/export is yetclaimed. [Native21readback](evidence/registration21-publication.json), [actualnewRootpreparation](evidence/first-primary22-prepared.json).
+
+The isolated current consumer has223Python/all4Node checks passed and a newly created sourcebinding to actualProducer4a48a34. Its6fileMainvariant depends on Main9f9f3056; the existing website writer retains production integration. Neither is installed or deployed. Actual fresh-feed acceptance and actual assets/browser consumption remain required.
+
+---
+
 Update — October27,2026,21:02UTC (PARTIAL)
 
 The prospective first-primary correction is implemented and independently reviewed: no open blockers,55offline checks and3budget probes passed. It preserves the actual COUNT7 epoch, prior choices/eligibility clocks, scientific registrations and original evidence. Research PR46 is merged at ae011f068c6b3b6064ec982d18c07e73b452bdff after724passes/oneexistingoptional skip/33subtests and hostedCI40582262306. Producer PR47head375d6e4 is in full hostedCI40582286894; no Native21/first-primary22 is yet dispatched.

@@ -1,0 +1,37 @@
+{
+  "schema_version": "audit-first-primary22-native-failure-v1",
+  "run": 40585481152,
+  "source": "4a48a3489b9503a73f0af7ef9fde9ef95ecd80c4",
+  "state": "FAILED_RETAINED_NO_CURRENT_FORECAST",
+  "reason": "OPERATION_LIMIT",
+  "affected_path": "Runner.claim final first_primary_absence using initial metadata client",
+  "writer_job": 122475665776,
+  "fresh_reader_job": 122478324667,
+  "restoration_receipt": "e355557c27eca390061c01c749c9a28df4e9b60e7984f8625e9fb2311ce8b1d6",
+  "opaque_failure_restored": true,
+  "new_fits": 0,
+  "partial_forecasts_published": false,
+  "old_Root_retried": false,
+  "first_primary_claim_absence_independently_GET_verified": true,
+  "limits_preserved": {
+    "HTTP_calls_per_client": 40,
+    "seconds_per_client": 180,
+    "root_bytes": 61440
+  },
+  "repair": {
+    "research_PR": 48,
+    "producer_PR": 49,
+    "fresh_existing_claim_client": true,
+    "complete_lossless_pending_metadata": true,
+    "before_real_client_regression": "OPERATION_LIMIT",
+    "after_time_and_request_regressions": "PASS",
+    "main_checks": "735passed/1existingoptionalskip/33subtests",
+    "focused_checks": 301,
+    "independent_checks": 344,
+    "adversarial_checks": 21
+  },
+  "limitations": [
+    "Actual failed native execution is retained; corrected native forecast execution is still pending.",
+    "Software checks establish no forecast accuracy gain."
+  ]
+}
