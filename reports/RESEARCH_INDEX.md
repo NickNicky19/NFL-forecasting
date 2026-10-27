@@ -1,5 +1,31 @@
 # Forecasting research: complete navigation index
 
+## Recent-season category completion — October 27, 2026
+
+[Current-era category decisions](recent-season-category-decisions-20261027/README.md)
+separates the 2025 and 2026 comparisons, Week 7 genuine pregame forecasts,
+post-start reconstructions and the actual website fallback. The older
+2022–2024 leaderboard remains a separate exposed historical benchmark.
+
+- [Seven restored modern CDF controls, with separate mean and median products](https://github.com/NickNicky19/NFL-forecasting/blob/e3b86c86286512ebfd904f01ee0d809a1252d68a/reports/modern-cdf-control-completion-v1/PUBLIC_RESULTS.md):
+  zero fits; fourteen new reconstructed products from seven retained models.
+  Corrected Count A mean MSE advantages over these CDF controls are small,
+  0.14%–0.54%, and the available paired intervals cross zero.
+- [Completed available Week 7 nonpassing comparisons](https://github.com/NickNicky19/NFL-forecasting/blob/92cac4e187a21eaf5757d0f753fb40151cc8091a/reports/week7-nonpassing-completion-20261027/PUBLIC_RESULTS.md):
+  thirteen retained final summaries, 971 newly attributed claims and no new
+  forecasts. Genuine pregame and post-start lanes remain distinct. The full
+  fourteen-game schedule includes a Thursday game outside the original query;
+  it was not backfilled.
+- [Fixed equal anytime-TD probability blend](https://github.com/NickNicky19/NFL-forecasting/blob/e2cefe973d5f4dbf88eef38937f0413e799270f0/reports/modern-anytime-equal-blend-v1/PUBLIC_RESULTS.md):
+  it loses the stronger component on primary Brier in both 2025 and 2026 W1–6.
+  The original CPU-cap failure remains failed; the successful continuation
+  graded the retained frozen vectors with no new inference or fitting.
+
+These results are not new website-relative or ranking-probability gains. All
+three packets passed independent arithmetic and local fresh-process storage
+checks; off-host restoration is not established by those checks. No selected
+research-model deployment is claimed by this checkpoint.
+
 ## Latest actual work — October 26, 2026
 
 The [accuracy wave](accuracy-wave-20261026/README.md) supersedes earlier
