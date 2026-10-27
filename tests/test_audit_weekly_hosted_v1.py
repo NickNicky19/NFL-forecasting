@@ -90,6 +90,7 @@ def pending_failure(tmp_path):
     runner.go=dict(qualified_runtime=dict(binding=binding),issued_at_utc='2026-01-01T00:02:00Z',
         effective_epoch=dict(schema_version=t.RECURRING_V5,pending_post_recovery=spec))
     runner.client=Metadata();runner.pending_scope_authenticated=False
+    runner.pending_metadata_client=lambda:runner.client
     return SimpleNamespace(runner=runner,record=record,spec=spec,assets=assets,run=run,job=job,
         old=old,journals=journals,pack=pack,handoff=handoff)
 
@@ -242,6 +243,83 @@ def test_first_primary_claim_checks_absence_with_fresh_bounded_client(tmp_path,e
     assert len(clients)==1 and clients[0].calls==6 and len(q.calls)==6
     assert (r.client.started,r.client.calls)==old_counters  # Never reset an expired scope.
     assert store.MAX_CALLS==40 and append.call_count==1
+
+
+@pytest.mark.parametrize('exhausted',['wall','calls'])
+@pytest.mark.parametrize('checkpoint',['none','legacy','locator'])
+def test_prior_public_metadata_uses_its_own_bounded_get_client(tmp_path,exhausted,checkpoint):
+    import base64,gzip
+    from nfl_lab import audit_weekly_discovery_v1 as discovery, audit_weekly_grade_history_v1 as history
+    from nfl_lab import gha_private_checkpoint as cp
+    from test_audit_weekly_operations_v1 import first_future_metadata
+    q=first_future_metadata.__wrapped__(tmp_path)
+    r=hosted.Runner.__new__(hosted.Runner);r.go=q.root
+    r.root=tmp_path/'prior-public'
+    r.storage=OperationalStorage(r.root/'cache',hosted.ROOT/'config/operational-source-policy-v2.json',state=r.root/'state')
+    r.storage.register_root(r.root);r.journal=r.root/'journal';r.journal.mkdir(mode=0o700)
+    r.client=q.client;r.client.started=0;r.client.calls=40 if exhausted=='calls' else 0
+    r.client.clock=lambda:181 if exhausted=='wall' else 0
+    old_counters=(r.client.started,r.client.calls)
+    r.env=dict(GITHUB_TOKEN='ghs_FICTIONAL');r.job=deepcopy(q.client.job)
+    r.identity=cp.client_identity(q.client);r.operations_proof=object()
+    r.check=lambda:None;r.fresh_operations_proof=lambda:r.operations_proof
+    hashes={'root_go_sha256','policy_sha256','workflow_sha256','recipe_registration_sha256',
+        'rights_authority_sha256','r0_identity_sha256','origin_choice_sha256','feed_sha256',
+        'archive_index_sha256','archive_files_sha256','reader_witness_sha256','epoch_sha256','choice_sha256'}
+    value={k:'a'*64 for k in hashes}
+    value.update(schema_version=discovery.delivery.VERSION+'-public-receipt',source_sha='a'*40,run_id='200',
+        policy_registered_at_utc='2026-01-01T00:00:00Z',verified_at='2026-01-01T00:01:00Z',
+        created_at='2026-01-01T00:02:00Z',feed_bytes=100,rows=1,categories=['pass_att'],fits=0,
+        raw_or_models_public=False,jobs={role:dict(job_id=name,api_job_id=100+n)
+            for n,(role,name) in enumerate(hosted.JOBS.items())})
+    compressed=gzip.compress(store.canonical(value),mtime=0)
+    r.go['effective_epoch']['previous_capture']=dict(feed_sha256='a'*64,receipt_sha256=store.sha(compressed))
+    files={name:('fictional original '+name).encode() for name in hosted.weekly_retained.HISTORICAL_FILES}
+    prior_path='state/public/weekly-adaptive-v1/receipts/'+'a'*64+'.json.gz';files[prior_path]=compressed
+    checkpoint_body=b'fictional exact original grading sidecar'
+    locator='20261027T190000.000000Z--200--'+'d'*64+'.json.gz'
+    if checkpoint!='none':
+        r.go['effective_epoch']['controller_context']=None
+        path=history.LOCATOR_ROOT+'/'+locator if checkpoint=='locator' else 'state/controller-v1/grade-checkpoints/'+'a'*64+'.json.gz'
+        files[path]=checkpoint_body
+        r.go['effective_epoch']['previous_checkpoint']=dict(sha256=store.sha(checkpoint_body))
+        if checkpoint=='locator':r.go['effective_epoch']['previous_checkpoint'].update(schema_version=history.LOCATOR_REF,path=locator)
+    calls=[];clients=[]
+    class Response:
+        status=200
+        def __init__(self,value):self.body=store.canonical(value);self.headers={'x-ratelimit-remaining':'100'}
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,cap):return self.body[:cap]
+    def transport(request,timeout):
+        assert request.get_method()=='GET' and request.data is None
+        url=request.full_url;calls.append(url)
+        if '/contents/'+history.LOCATOR_ROOT+'?' in url:
+            return Response([dict(type='file',name=locator,path=history.LOCATOR_ROOT+'/'+locator,size=len(checkpoint_body))])
+        if '/contents/' in url:
+            path=url.split('/contents/',1)[1].split('?',1)[0];body=files[path]
+            from nfl_lab import audit_weekly_controller_v1 as controller
+            return Response(dict(type='file',path=path,encoding='base64',size=len(body),
+                content=base64.b64encode(body).decode(),sha=controller.blob_sha(body)))
+        run=dict(id=300,head_sha='b'*40,event='workflow_dispatch',run_attempt=1,status='in_progress',
+            path='.github/workflows/lab.yml',repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO))
+        return Response(dict(jobs=[dict(id=301,name=hosted.JOBS['produce'],status='in_progress',run_id=300,head_sha='b'*40)],total_count=1)
+            if '/jobs?' in url else run)
+    r.client.transport=transport
+    real_client=hosted.archive.Client
+    class FreshPublicClient(real_client):
+        def __init__(self,*args,**kwargs):
+            assert kwargs.get('readonly') is True
+            super().__init__(*args,**kwargs,transport=transport,clock=lambda:10);clients.append(self)
+    with patch.object(hosted.archive,'Client',FreshPublicClient),patch.object(hosted.operations_authority,'attach') as attach:
+        actual=r.prior_public_metadata()
+    expected_calls=11+(1 if checkpoint=='legacy' else 2 if checkpoint=='locator' else 0)
+    assert len(clients)==1 and clients[0].calls==len(calls)==expected_calls<=store.MAX_CALLS==40
+    assert (r.client.started,r.client.calls)==old_counters
+    assert actual['historical_source_sha256']=={name:store.sha(files[name]) for name in hosted.weekly_retained.HISTORICAL_FILES}
+    assert Path(actual['receipt']['path']).read_bytes()==compressed
+    assert (actual['previous_grade_snapshot'] is None)==(checkpoint=='none')
+    assert attach.call_count==1 and not list(r.journal.glob('*.reservation.json'))
 
 
 def test_calendar_uses_new_york_kickoff_clock_across_both_dst_offsets_and_not_scores():
@@ -609,3 +687,238 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
     assert json.loads(out.stdout)==dict(state='FAILED',files=6 if has_delivery else 5)
     with pytest.raises(store.StoreError,match='FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED'):
         r.preserve_failure()
+
+
+"""Paste into a separate tests/test_pending_budget_independent.py.
+
+Independent scratch regression. No private files, credentials, network or native
+claims. Uses fictional existing fixtures, REAL Client authentication, qualified
+canary, inventory pagination, two CDN redirects per download, original failure
+validation and 40-call guard. Only the nonserializable native owner proof bridge
+is mocked. No budget or authenticated_pending_records mocks.
+
+Run via the existing venv and run_numerical_profile.py. On Source4202 the three
+positive cases MUST fail with OPERATION_LIMIT. On the repair they MUST pass;
+the two last-handoff negative cases must fail for their specific guard, never
+seed any reservation, and never send a POST. Do not add xfail to hide baseline.
+"""
+import base64
+from copy import deepcopy
+import gzip
+import json
+from pathlib import Path
+from types import SimpleNamespace
+from urllib.parse import parse_qs,urlsplit
+from unittest.mock import Mock
+import pytest
+from nfl_lab import audit_weekly_hosted_v1 as h,audit_weekly_archive_v1 as a
+from nfl_lab import private_draft_store as s,audit_weekly_template_v1 as t
+from nfl_lab import gha_private_checkpoint as cp,operational_failure_v1 as failure
+from test_audit_weekly_controller_bootstrap_v1 import system,locator_system
+
+@pytest.fixture
+def _pending_budget_forbid_network(monkeypatch):
+    import socket
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:pytest.fail('REAL_NETWORK_FORBIDDEN'))
+
+@pytest.fixture
+def _pending_budget_metadata(locator_system,_pending_budget_forbid_network):
+    package=deepcopy(locator_system.package)
+    proof=package['qualification'];before=proof['before_proof'];read=proof['read_proof']
+    for p,key in [(before,'write'),(read,'read'),(proof,'qualify')]:
+        p['job']['job_id']=a.rotation.JOBS[key]
+    read['before_sha256']=s.sha(s.canonical(before))
+    proof.update(before_sha256=s.sha(s.canonical(before)),read_sha256=s.sha(s.canonical(read)))
+    return package,dict(reservations=[])
+
+def _pending_budget_case(tmp_path, package, census, handoff_count=8, asset_count=101, redirects=2, damage=None):
+    temp = tmp_path
+    origin = int(package['binding']['origin_run_id'])
+    current = '99999999999'
+    job = dict(execution_lane='github_actions', workflow_ref=s.REPO+'/.github/workflows/lab.yml@refs/heads/fictional',
+        workflow_sha='b'*40, job_id=h.JOBS['produce'], permission='write', event_name='workflow_dispatch',
+        api_job_id=9001, run_authenticated=False)
+    q = pending_failure.__wrapped__(temp)
+    q.old['qualified_runtime']['binding'].clear()
+    q.old['qualified_runtime']['binding'].update(deepcopy(package['binding']))
+    records = [q.record]
+    for n in range(16):
+        digest = s.sha(('fictional-record-' + str(n)).encode())
+        record = dict(schema_version='weekly-private-POST-reservation-v2', key='asset:blob-' + digest + '.bin',
+                      bytes=n+1, sha256=digest, name='blob-' + digest + '.bin')
+        records.append(record)
+        raw = s.canonical(record)
+        q.journals['records'].append(dict(relative_path='journal/' + s.sha(record['key'].encode()) + '.reservation.json',
+             bytes=len(raw), sha256=s.sha(raw), body_base64=base64.b64encode(raw).decode()))
+    original, _, bodies0 = q.pack()
+    original_body = bodies0[original['descriptor']['entry']['payload_asset_id']]
+    handoffs = []
+    bodies = {package['binding']['canary_asset_id']: s.probe.fixture(str(origin))}
+    assets = []
+    def add(asset_id, name, body):
+        bodies[asset_id] = body
+        assets.append(dict(id=asset_id, name=name, size=len(body), state='uploaded',
+                           digest='sha256:' + s.sha(body), url=s.API+'/releases/assets/'+str(asset_id)))
+    add(package['binding']['canary_asset_id'], package['binding']['canary_name'], bodies[package['binding']['canary_asset_id']])
+    for n in range(handoff_count):
+        run_id = str(origin+n+1)
+        envelope = json.loads(gzip.decompress(original_body))
+        envelope['request']['attempt']['run_id'] = run_id
+        body = gzip.compress(s.canonical(envelope), mtime=0)
+        handoff = deepcopy(original)
+        entry = handoff['descriptor']['entry']
+        entry.update(writer_run_id=run_id, payload=failure.payload_manifest(body), payload_asset_id=10001+2*n,
+                     payload_name='blob-'+s.sha(body)+'.bin')
+        raw = s.canonical(entry)
+        handoff['descriptor'].update(manifest_asset_id=10002+2*n, manifest_sha256=s.sha(raw), manifest_bytes=len(raw))
+        add(entry['payload_asset_id'], entry['payload_name'], body)
+        add(handoff['descriptor']['manifest_asset_id'], 'manifest-'+s.sha(raw)+'.json', raw)
+        handoffs.append(handoff)
+    for n in range(asset_count-len(assets)):
+        body = ('fictional filler '+str(n)).encode()
+        add(20000+n, 'blob-'+s.sha(body)+'.bin', body)
+    root = dict(qualified_runtime=deepcopy(package), pending_census=deepcopy(census), source_sha=job['workflow_sha'], issued_at_utc='2026-01-01T00:02:00Z',
+                effective_epoch=dict(schema_version=t.RECURRING_V5, pending_post_recovery=dict(
+                    schema_version=t.PENDING_RECOVERY, handoffs=handoffs,
+                    pending_reservations=sorted(records, key=lambda x:x['key']))))
+    journal = temp/'counted-journal'; journal.mkdir(mode=0o700)
+    exchanges = []
+    class Response:
+        def __init__(self, value, status=200, headers=None):
+            self.body = value if isinstance(value, bytes) else s.canonical(value)
+            self.status = status
+            self.headers = {'content-length':str(len(self.body)), 'x-ratelimit-remaining':'999', **(headers or {})}
+        def __enter__(self): return self
+        def __exit__(self,*args): pass
+        def read(self,limit): return self.body[:limit]
+    def download_body(asset_id):
+        body = bodies[asset_id]
+        if damage=='hash' and asset_id==handoffs[-1]['descriptor']['entry']['payload_asset_id']:
+            body=body[:-1]+bytes([body[-1]^1])
+        return body
+    def transport(request, timeout):
+        assert request.get_method() == 'GET' and request.data is None
+        url = request.full_url; p = urlsplit(url); exchanges.append(p.path)
+        if p.hostname == 'objects.githubusercontent.com':
+            parts = p.path.strip('/').split('/'); asset_id = int(parts[0]); hop = int(parts[1])
+            if hop < redirects:
+                return Response(b'',302,{'location':'https://objects.githubusercontent.com/'+str(asset_id)+'/'+str(hop+1)})
+            return Response(download_body(asset_id))
+        if '/actions/runs/' in url:
+            run_id = p.path.split('/runs/')[1].split('/')[0]
+            if run_id == current:
+                if '/jobs' in url:
+                    return Response(dict(total_count=1, jobs=[dict(id=9001, name=job['job_id'], run_id=int(current),
+                        head_sha=job['workflow_sha'], status='in_progress')]))
+                return Response(dict(id=int(current), head_sha=job['workflow_sha'], event='workflow_dispatch', run_attempt=1,
+                    status='in_progress', path='.github/workflows/lab.yml', repository={'full_name':s.REPO},
+                    head_repository={'full_name':s.REPO}, head_branch=job['workflow_ref'].split('@refs/heads/')[1],
+                    actor={'login':'NickNicky19','id':208912933}))
+            if run_id == package['qualification']['run_id']:
+                proof = package['qualification']; proofs = [proof['before_proof'],proof['read_proof'],proof]
+                if '/jobs' in url:
+                    return Response(dict(total_count=3,jobs=[dict(id=x['job']['api_job_id'],name=x['job']['job_id'],
+                        run_id=int(run_id),head_sha=proof['source_sha'],status='completed',conclusion='success',
+                        started_at=x['started_at_utc'],completed_at=x['created_at_utc']) for x in proofs]))
+                return Response(dict(id=int(run_id),head_sha=proof['source_sha'],run_attempt=1,event='workflow_dispatch',
+                    path='.github/workflows/lab.yml',status='completed',repository={'full_name':s.REPO},
+                    head_repository={'full_name':s.REPO}, head_branch=proof['job']['workflow_ref'].split('@refs/heads/')[1],
+                    actor={'login':'NickNicky19','id':208912933}))
+            if '/jobs' in url:
+                return Response(dict(total_count=1,jobs=[dict(q.job,run_id=int(run_id))]))
+            run=dict(q.run,id=int(run_id))
+            if damage=='actor' and run_id==handoffs[-1]['descriptor']['entry']['writer_run_id']:
+                run['actor']=dict(login='FICTIONAL_WRONG_ACTOR',id=123)
+            return Response(run)
+        if '/actions/workflows/' in url:
+            runs=[dict(id=int(current),status='in_progress'), *[dict(q.run,id=int(x['descriptor']['entry']['writer_run_id'])) for x in reversed(handoffs)], dict(q.run,id=origin,conclusion='success')]
+            page=int(parse_qs(p.query)['page'][0])
+            return Response(dict(total_count=len(runs),workflow_runs=runs[(page-1)*5:page*5]))
+        if p.path.endswith('/releases/'+str(package['binding']['release_id'])):
+            return Response(dict(id=package['binding']['release_id'],draft=True,published_at=None,
+                 tag_name=package['binding']['tag_name'],url=s.API+'/releases/'+str(package['binding']['release_id'])))
+        if p.path.endswith('/assets'):
+            page=int(parse_qs(p.query)['page'][0]); return Response(assets[(page-1)*100:page*100])
+        if '/releases/assets/' in url:
+            asset_id=int(p.path.rsplit('/',1)[-1])
+            if request.get_header('Accept') == 'application/octet-stream':
+                if redirects: return Response(b'',302,{'location':'https://objects.githubusercontent.com/'+str(asset_id)+'/1'})
+                return Response(download_body(asset_id))
+            return Response(next(x for x in assets if x['id']==asset_id))
+        if '/contents/fictional-public-' in url: return Response({})
+        raise AssertionError('UNEXPECTED_FIXTURE_ROUTE')
+    def new_client(qualify=True):
+        client=h.PendingMetadataClient('ghs_FICTIONAL',current,source_sha=job['workflow_sha'],journal=journal,
+            job=job,operation='metadata',qualification=package['qualification'],root_go=root,transport=transport,clock=lambda:0)
+        client.authenticate_actions_job();client.bind(package['binding'])
+        if qualify:a.authenticate_qualification(client,package,census)
+        assert cp.client_identity(client)['api_job_id']==9001
+        return client
+    return SimpleNamespace(root=root,journal=journal,exchanges=exchanges,new_client=new_client,
+        transport=transport,job=job,current=current,package=package)
+
+def _pending_budget_runner(case,monkeypatch):
+    old=case.new_client();a.jobs_for(old)
+    runner=h.Runner.__new__(h.Runner)
+    runner.go=case.root;runner.go_sha=s.sha(s.canonical(case.root))
+    runner.journal=case.journal;runner.client=old;runner.job=deepcopy(case.job)
+    runner.identity=cp.client_identity(old)
+    runner.env=dict(GITHUB_TOKEN='ghs_FICTIONAL',GITHUB_ACTOR='NickNicky19',GITHUB_ACTOR_ID='208912933')
+    runner.operations_proof=object();runner.check=lambda:None
+    runner.fresh_operations_proof=lambda:runner.operations_proof
+    runner.pending_scope_authenticated=False
+    runner.pending_metadata_clients=[]
+    originals=(old.started,old.calls)
+    readers=[];real_client=h.PendingMetadataClient
+    class InjectedPendingClient(real_client):
+        def __init__(self,*args,**kwargs):
+            super().__init__(*args,**kwargs,transport=case.transport,clock=lambda:0)
+            readers.append(self)
+    def attach(client,proof,env,raw):
+        assert proof is runner.operations_proof and env is runner.env
+        assert raw==s.canonical(runner.go)
+        assert client.job['run_authenticated'] is True
+        assert cp.client_identity(client)['api_job_id']==runner.identity['api_job_id']
+        return client
+    monkeypatch.setattr(h,'PendingMetadataClient',InjectedPendingClient)
+    monkeypatch.setattr(h.operations_authority,'attach',attach)
+    seeded=Mock(wraps=cp.seed_pending);monkeypatch.setattr(cp,'seed_pending',seeded)
+    return runner,old,originals,readers,seeded
+
+
+@pytest.mark.parametrize('handoff_count',[2,3,8])
+def test_pending_full_handoff_budget_uses_independent_real_clients(tmp_path,monkeypatch,_pending_budget_metadata,handoff_count):
+    package,census=_pending_budget_metadata
+    case=_pending_budget_case(tmp_path,package,census,handoff_count=handoff_count)
+    runner,old,originals,readers,seeded=_pending_budget_runner(case,monkeypatch)
+    runner.authenticate_pending_posts()
+    assert runner.pending_scope_authenticated and seeded.call_count==1
+    assert len(readers)==handoff_count<=8
+    # 101 uploaded assets => 2 inventory pages; 2 CDN redirects per read.
+    # Old client: 14 startup GETs + 2 inventory + census (1 or 2 pages).
+    assert old.started==originals[0]
+    assert old.calls==originals[1]+2+(2 if handoff_count==8 else 1)<=20
+    # Each fresh scope: 2 auth + 10 qualification/canary + 16 handoff GETs.
+    assert all(c.calls==28 and c.started==0 for c in readers)
+    assert all(c.job['api_job_id']==9001 and c.binding==package['binding'] for c in readers)
+    assert s.MAX_CALLS==40
+    records=[s.read_local(p,16384) for p in sorted(case.journal.glob('*.reservation.json'))]
+    assert len(records)==17
+    assert sorted(records)==sorted(s.canonical(r) for r in case.root['effective_epoch']['pending_post_recovery']['pending_reservations'])
+    assert not old.posts and all(not c.posts for c in readers)
+    # Every transport exchange asserts GET and no request body.
+    assert len(case.exchanges)==old.calls+sum(c.calls for c in readers)
+
+
+@pytest.mark.parametrize('damage,code',[('actor','ACTUAL_COMPLETED_FAILED_PRIOR_RUN'),('hash','READBACK_MISMATCH')])
+def test_last_pending_handoff_guard_prevents_all_seeding(tmp_path,monkeypatch,_pending_budget_metadata,damage,code):
+    package,census=_pending_budget_metadata
+    case=_pending_budget_case(tmp_path,package,census,handoff_count=8,damage=damage)
+    runner,old,originals,readers,seeded=_pending_budget_runner(case,monkeypatch)
+    with pytest.raises((s.StoreError,ValueError),match=code):runner.authenticate_pending_posts()
+    assert not runner.pending_scope_authenticated
+    seeded.assert_not_called()
+    assert not list(case.journal.glob('*.reservation.json'))
+    assert len(readers)==8 and all(c.calls<=40 for c in readers)
+    assert old.started==originals[0] and old.calls==originals[1]+2
+    assert not old.posts and all(not c.posts for c in readers)

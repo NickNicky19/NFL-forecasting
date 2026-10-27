@@ -32,8 +32,8 @@ def client(x, p):
 
 def test_current_bot_needs_actual_registered_metadata_before_client_scope(locator_system):
     x=locator_system;p=proof(x);q=client(x,p)
-    history = c.API + "/commits?sha=lab-state&path=state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json&per_page=2&page=1"
-    record = c.contents_url("state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json", x.public_commit)
+    history = c.API + "/commits?sha=lab-state&path=state/controller-v1/bootstrap-v2-20261027-metadata-phases.json&per_page=2&page=1"
+    record = c.contents_url("state/controller-v1/bootstrap-v2-20261027-metadata-phases.json", x.public_commit)
     assert any(url == history for url,_ in x.calls)
     assert any(url == record for url,_ in x.calls)
     assert not any("/bootstrap-v2.json" in url for url,_ in x.calls)
