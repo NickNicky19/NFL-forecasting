@@ -1,0 +1,78 @@
+{
+  "completed_grading_only_model_loads": 0,
+  "coverage": {
+    "games": 93,
+    "offered": 515,
+    "played_zero": 6,
+    "supported": 211,
+    "unknown": 304,
+    "weeks": 6
+  },
+  "current_website_gain_established": false,
+  "evidence_lane": "current_vintage_7day_reconstruction_exposed_2026W1_6",
+  "independent_row_arithmetic": "PASS",
+  "metrics": {
+    "F1_CURRENT_ONLY": {
+      "MAE": 9.66002823471945,
+      "MSE": 164.66535901527504,
+      "RMSE": 12.83220008475846,
+      "bias": -0.7742361440305021,
+      "fallback_rows": 338,
+      "p95_absolute_error": 27.5
+    },
+    "F2_PRIOR_CURRENT": {
+      "MAE": 8.739592262159475,
+      "MSE": 133.98391736515393,
+      "RMSE": 11.575142217923455,
+      "bias": -1.6942090586825338,
+      "fallback_rows": 126,
+      "p95_absolute_error": 24.726190476190474
+    },
+    "F3_TIME_WEIGHTED": {
+      "MAE": 8.55377654643018,
+      "MSE": 128.67199353481817,
+      "RMSE": 11.343367821543044,
+      "bias": -1.044980744490009,
+      "fallback_rows": 97,
+      "p95_absolute_error": 24.786676019943158
+    },
+    "F4_HISTORICAL_RELATION": {
+      "MAE": 9.14498662766316,
+      "MSE": 144.63339632347834,
+      "RMSE": 12.02636255579709,
+      "bias": -2.3153825160758243,
+      "fallback_rows": 0,
+      "p95_absolute_error": 24.804751127601
+    },
+    "NEW_RETAINED_CDF_MEAN": {
+      "MAE": 7.898496860891531,
+      "MSE": 104.07847224438218,
+      "RMSE": 10.201885720021675,
+      "bias": -1.4222163420585896,
+      "fallback_rows": 30,
+      "p95_absolute_error": 20.740355373633818
+    },
+    "POOLED8": {
+      "MAE": 8.42480059395484,
+      "MSE": 125.4916972252188,
+      "RMSE": 11.202307674100851,
+      "bias": -0.8293214281075602,
+      "fallback_rows": 148,
+      "p95_absolute_error": 24.190875620258556
+    },
+    "RECENT3": {
+      "MAE": 8.738523746127537,
+      "MSE": 133.8821313583523,
+      "RMSE": 11.570744632838126,
+      "bias": -0.9805262609636983,
+      "fallback_rows": 218,
+      "p95_absolute_error": 24.89304967698819
+    }
+  },
+  "model_loads_original_run": 1,
+  "new_deployment": false,
+  "new_fits": 0,
+  "original_partial_score_phase_preserved": true,
+  "output": "conditional_played_expected_count",
+  "target": "pass_att"
+}
