@@ -1,3 +1,11 @@
+Update — October27,2026,21:02UTC (PARTIAL)
+
+The prospective first-primary correction is implemented and independently reviewed: no open blockers,55offline checks and3budget probes passed. It preserves the actual COUNT7 epoch, prior choices/eligibility clocks, scientific registrations and original evidence. Research PR46 is merged at ae011f068c6b3b6064ec982d18c07e73b452bdff after724passes/oneexistingoptional skip/33subtests and hostedCI40582262306. Producer PR47head375d6e4 is in full hostedCI40582286894; no Native21/first-primary22 is yet dispatched.
+
+[Exact-source independent review](evidence/first-primary-independent-review.json). Current native20 remains valid for its earlier3f96/6e222source pair, not this newer Main. The existing website writer remains active and Main9f9f3056 is still unmerged/undeployed. No fresh selected feed, automatic activation, completed new capture or accuracy gain is claimed.
+
+---
+
 Update — October27,2026,20:35UTC (PARTIAL)
 
 Pending-POST recovery is integrated in Main3f96a4b and Producer6e22254. Exact-source CI passed721Main and2223Producer tests, one existing optional skip each; all2224Producer nodes were attempted/completed. Genuine nativeRegistration20run40577951818 passed writer, separate fresh reader and sealer. The1349-byte seal was independently hashed/API-verified; the new create-only registration was committed/read back at a3d609b30118ea7c4a0c2feeeac0ff247846a182. All three logs were checked for literal/escaped private Root disclosure. This proves current-source registration/recovery, not completed forecast operations or automatic activation.

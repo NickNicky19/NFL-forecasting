@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-27T20:35:00Z",
+  "observed_at_utc": "2026-10-27T21:02:00Z",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL",
   "findings": [
@@ -303,22 +303,25 @@
     "caption_status": "CONFIRMED_MISLEADING;PR9corrected_not_live"
   },
   "source": {
-    "research_main": "3f96a4b49c6610e812ba5ea42d62d8970fca8f30",
+    "research_main": "ae011f068c6b3b6064ec982d18c07e73b452bdff",
     "producer": "6e22254bbf65fbec16b37be1ae988691b0951b63",
     "producer_PR33_head": "65f3fac53887d29297f1b1164997eae20702ae32",
     "producer_PR33_CI": 40273587281,
     "controller_record_commit": "a3d609b30118ea7c4a0c2feeeac0ff247846a182",
     "native_registration_run": 40577951818,
     "owner_operations_run": 40282870113,
-    "current_source_pair_ready": true,
+    "current_source_pair_ready": false,
     "producer_PR36_CI": 40277891751,
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
     "producer_PR40_CI": 40287547040,
-    "native_registration_current_source": true,
+    "native_registration_current_source": false,
     "main44_CI": 40573190736,
     "producer_PR45_head": "77ecb07bb39e4d3adf41fe30eb801796812b6a0d",
-    "producer_PR45_CI": 40575294634
+    "producer_PR45_CI": 40575294634,
+    "main46_CI": 40582262306,
+    "producer_PR47_head": "375d6e4e4d5208b5301d4eff89bdbf0b9537c0ba",
+    "producer_PR47_CI": 40582286894
   },
   "evidence": [
     "README.md",
@@ -372,11 +375,14 @@
       "title": "Missing first-future-primary route from authentic COUNT7 without a qualified primary checkpoint",
       "severity": "high",
       "reproduced": true,
-      "repaired": "implementation in progress",
-      "integrated": false,
+      "repaired": true,
+      "integrated": "Main46yes;Producer47pendingCI",
       "released": false,
       "verified": false,
-      "historical_limit": "Original ops population, roles, schedule and primary checkpoint are absent; no retrospective assignment or invented history permitted."
+      "historical_limit": "Original ops population, roles, schedule and primary checkpoint are absent; no retrospective assignment or invented history permitted.",
+      "source_verified": "Independent55offlinechecks+3budgetprobes;noopenblockers",
+      "main_commit": "ae011f068c6b3b6064ec982d18c07e73b452bdff",
+      "producer_head": "375d6e4e4d5208b5301d4eff89bdbf0b9537c0ba"
     },
     {
       "id": "SYS-014-CONTINUATION-01",

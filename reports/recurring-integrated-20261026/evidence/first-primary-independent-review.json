@@ -1,0 +1,515 @@
+{
+  "cleared_findings": [
+    {
+      "cleared_at_utc": "2026-10-27T20:55:37.644620+00:00",
+      "id": "R1",
+      "original_severity": "P1",
+      "path": "nfl_lab/audit_weekly_operations_worker_v1.py",
+      "resolution": "The actual helper now lazily imports both authority and store. The positive OWNER delegation test executes it and asserts the current verifier receives the exact proof, env object, and canonical literal Root bytes. The existing bot/serialized-proof rejection case still passes.",
+      "status": "CLEARED",
+      "verified_by": [
+        "test_first_future_owner_path_forwards_exact_root_to_current_verifier",
+        "test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets"
+      ]
+    },
+    {
+      "cleared_at_utc": "2026-10-27T20:55:37.644620+00:00",
+      "id": "R2",
+      "original_severity": "P2",
+      "path": "tests/test_audit_weekly_controller_bootstrap_v1.py",
+      "resolution": "The final bootstrap test reuses same-file locator_system and its qualified package, explicitly passes registry_version=2, and executes successfully. It produces an Owner proof without a fake parent and still rejects scheduled use. No external dual_document fixture dependency remains.",
+      "status": "CLEARED",
+      "verified_by": [
+        "test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_parent"
+      ]
+    }
+  ],
+  "critical_dependency_hashes": {
+    "nfl_lab/audit_weekly_grade_history_v1.py": "5c19dc304438e402b0649162505be92aee40b56ea507ae2a0b0bed19ec82ee45",
+    "nfl_lab/audit_weekly_operations_authority_v1.py": "b4641d8a75057346a5bd72a0ba69f62d33aee8e0402fbccdd3bdbbf3a0e15583",
+    "nfl_lab/audit_weekly_operations_grade_v1.py": "d6d2c5de96eb29787b5a1ea4cdf2906396a157e3be6fe74782deb644b4322d72",
+    "nfl_lab/audit_weekly_parent_v1.py": "4bae508912d326be0e163f3b45e598318c4be5cd440f19aef8e9e5d02fc46221",
+    "nfl_lab/audit_weekly_provider_v1.py": "ffbe666b1838998282286ad68640255962f2c047c800b64f9f476a161a3b900b",
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+  },
+  "excluded": {
+    "main": "9f9f3056 and other writer are outside this review.",
+    "native20": "User reports all three jobs passed, run 40577951818, record a3d609b; not rerun.",
+    "outside_repository_preparation_helper": "prepare_first_primary_ops.py is outside this repository review; no native qualification claim is made for it.",
+    "parent_regressions": "Full parent focused/Main reruns and sibling Main changes are outside this independent result; no success is inferred from their pending status.",
+    "pending_POST_repair": "Not repeated or changed."
+  },
+  "final_verification_summary": {
+    "independent_budget_probes_passed": 3,
+    "open_findings": 0,
+    "pytest_errors": 0,
+    "pytest_failed": 0,
+    "pytest_passed": 55,
+    "pytest_skipped": 0
+  },
+  "findings": [],
+  "generated_at_utc": "2026-10-27T20:55:37.644620+00:00",
+  "limits": {
+    "implementation_edits_by_reviewer": 0,
+    "live_first_primary_end_to_end_executed": false,
+    "new_fits": 0,
+    "note": "Final verification is offline against fictional sources, metadata, providers and temporary stores. The positive helper test explicitly substitutes only its current-verifier seam; separate bootstrap and guard tests exercise actual verifier functions with fictional metadata. No live first-primary run or protected outcomes were opened.",
+    "offline_only": true,
+    "private_or_protected_outcome_rows_read": 0,
+    "real_native_calls": 0,
+    "remote_mutations": 0
+  },
+  "open_findings": [],
+  "public_safe": true,
+  "resolved_during_review": [
+    {
+      "issue": "Both missing lazy imports in _first_primary_authority",
+      "resolution": "Parent supplied authority and store imports; positive exact-Root delegation and negative bot cases passed on final source."
+    },
+    {
+      "issue": "Week8 frozen cutoff fixture string representation",
+      "resolution": "Parent aligned exact frozen +00:00 strings; final Week8 preparation passed without changing deadline guards."
+    },
+    {
+      "issue": "Inherited same-week fixture forbade intended new-week selection",
+      "resolution": "The fixture restores the original selector for Week8; fitting remains forbidden. Final complete metadata preparation passed."
+    },
+    {
+      "issue": "New OWNER bootstrap runtime metadata and fixture lookup",
+      "resolution": "The final test reuses valid same-file locator_system metadata and explicitly exercises registry_version=2; final case passed."
+    },
+    {
+      "issue": "Distinct fixed registration slot while preserving pending-posts record",
+      "resolution": "Current fixed path is bootstrap-v2-20261027-first-primary.json. Both old pending-posts and new first-primary commit-bound routes remain readable. The effective current-authority lookup uses only the new path; all twelve authority tests passed."
+    }
+  ],
+  "review_conclusions": {
+    "absence": "Six actual client GET exchanges enforce an existing immutable state head, exact 404 Not Found on both history directories, empty path commit history, and final matching state head; malformed/status/rate/changed-head/deleted-history cases reject.",
+    "authentication": "The final positive helper case verifies exact literal Root-byte delegation to the current verifier; bot rejection remains enforced. The V2 OWNER bootstrap case passes with FIRST_PRIMARY inside V5 and no scheduled parent. Discovery and retained-source grants continue to classify bootstrap.Owner by actual type.",
+    "claim": "First-primary claim is keyed by retained epoch plus stream, independent of Root clocks and source changes; uniqueness stays enforced through the existing no-reuse asset append.",
+    "documentation": "The committed README explicitly distinguishes local fictional checks from native qualification and does not claim an executed successful native first-primary run.",
+    "grade": "Source trace confirms FUTURE_CAPABLE first capture uses the base grade request with previous_snapshot=None. _previous returns None for this marker; first writer grade(previous=None) and fresh-reader _same_capture remain on the normal path. V5 planning is recovered from archived ops_planning and included in the evidence envelope.",
+    "marker": "Closed FIRST_PRIMARY protocol remains inside existing nullable V5 controller_context; no added Root fields or new runtime files.",
+    "parent": "Normal locator validation and parent routing tests passed; the parent still requires durable private history and does not itself invent first-primary state.",
+    "prevalues": "Corrected composed Week8 preparation passed with unchanged retained epoch/history/original-choice bytes, frozen target choice, ops planning, roles, population and schedule; previous checkpoint remains None.",
+    "registration": "The effective fixed registration lookup uses first-primary.json. Existing pending-posts commit-bound read route remains allowed and its record is preserved. The twelve authority cases include both required new-route lookups and rejection of selecting the old pending-posts path.",
+    "unchanged": "ordinary recurring_plan durable-week guard, GradeOnly guards, scientific registration, epoch implementation, grading/provider/locator implementation and old forecast identities have no diff."
+  },
+  "review_history": [
+    {
+      "findings_at_detection": [
+        {
+          "current_status": "CLEARED",
+          "id": "R1",
+          "impact": "After OWNER and typed bootstrap.Owner checks pass, evaluation of store.canonical(context.go) raises NameError before the six absence GETs. The bot rejection test exits earlier and does not cover this branch.",
+          "kind": "runtime",
+          "line": 230,
+          "minimal_repro": "from types import SimpleNamespace; from nfl_lab import audit_weekly_operations_worker_v1 as w, audit_weekly_controller_bootstrap_v1 as b; w._first_primary_authority(SimpleNamespace(verify=lambda:None,env={\"GITHUB_ACTOR\":\"NickNicky19\",\"GITHUB_ACTOR_ID\":\"208912933\"},proof=object.__new__(b.Owner),go={}))",
+          "observed": "NameError: name store is not defined",
+          "path": "nfl_lab/audit_weekly_operations_worker_v1.py",
+          "severity": "P1",
+          "status_at_detection": "OPEN",
+          "suggested_minimal_change": "Import private_draft_store as store inside _first_primary_authority and cover the positive OWNER branch.",
+          "title": "Manual OWNER path still uses unimported store"
+        },
+        {
+          "current_status": "CLEARED",
+          "id": "R2",
+          "impact": "Affected regression aborts at setup, so it does not establish OWNER bootstrap compatibility.",
+          "kind": "test_setup",
+          "line": 581,
+          "minimal_repro": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_controller_bootstrap_v1.py::test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_parent",
+          "observed": "fixture dual_document not found",
+          "path": "tests/test_audit_weekly_controller_bootstrap_v1.py",
+          "severity": "P2",
+          "status_at_detection": "OPEN",
+          "suggested_minimal_change": "Register/import the existing dual_document fixture in this test module.",
+          "title": "New OWNER bootstrap test requests unregistered dual_document fixture"
+        }
+      ],
+      "generated_at_utc": "2026-10-27T20:47:49.658117+00:00",
+      "historical_test_runs": [
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_operations_v1.py tests/test_audit_weekly_operations_worker_v1.py tests/test_audit_weekly_controller_bootstrap_v1.py tests/test_audit_weekly_template_v1.py tests/test_audit_weekly_hosted_v1.py",
+          "duration_seconds": 104.68,
+          "failed": 3,
+          "name": "initial_five_module_regression",
+          "passed": 270,
+          "source_state": "Earlier parent source, before in-session fixes; failures reported immediately."
+        },
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_operations_v1.py tests/test_audit_weekly_operations_worker_v1.py -k first_future -x",
+          "failed": 1,
+          "name": "metadata_and_first_future_target",
+          "passed": 10,
+          "source_state": "Before fixture fixes; all six-GET absence guards passed."
+        },
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_operations_worker_v1.py::test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets tests/test_audit_weekly_controller_bootstrap_v1.py::test_issued_registration_routes_are_literal_and_commit_bound tests/test_audit_weekly_operations_grade_v1.py::test_real_provider_grade_native_append_and_distinct_job_restore_remain_private tests/test_audit_weekly_hosted_grading_delivery_v1.py tests/test_audit_weekly_grade_recurring_v1.py",
+          "duration_seconds": 73.33,
+          "failed": 1,
+          "name": "native_provider_reader_and_locator_delivery",
+          "note": "The only failure was the then-unfixed authority import; provider/checkpoint/fresh-reader/delivery/recurring-grade cases passed using fictional metadata and providers.",
+          "passed": 19
+        },
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_grade_history_v1.py::test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history tests/test_audit_weekly_parent_v1.py -k \"grade_only_locator_recovers or plan or latest or locator or freeze or eligible\"",
+          "deselected": 101,
+          "duration_seconds": 10.4,
+          "failed": 0,
+          "name": "locator_recovery_and_parent_routing",
+          "passed": 8
+        },
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_operations_grade_v1.py::test_epoch_preserves_original_registration_and_exact_archived_choice tests/test_audit_weekly_operations_grade_v1.py::test_guard_verifies_fresh_typed_Root_API_and_attaches_actual_client_before_private_read tests/test_audit_weekly_grade_v1.py::test_manual_capture_cannot_get_posthoc_population_and_empty_week8_uses_startup tests/test_audit_weekly_discovery_recurring_v1.py -k \"Owner or owner or source or epoch_preserves or guard_verifies or empty_week8\"",
+          "deselected": 5,
+          "duration_seconds": 9.55,
+          "failed": 0,
+          "name": "original_epoch_owner_source_and_empty_week8_startup",
+          "passed": 3
+        },
+        {
+          "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider tests/test_audit_weekly_operations_worker_v1.py::test_first_future_real_prepare_preserves_epoch_and_registers_only_week8 tests/test_audit_weekly_operations_worker_v1.py::test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets tests/test_audit_weekly_controller_bootstrap_v1.py::test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_parent tests/test_audit_weekly_controller_bootstrap_v1.py::test_issued_registration_routes_are_literal_and_commit_bound",
+          "duration_seconds": 3.95,
+          "errors": 1,
+          "failed": 0,
+          "name": "latest_affected_cases_after_parent_fixture_selection_fix",
+          "note": "Week8 metadata preparation and manual bot rejection passed. Only R2 remained in this selection; R1 requires positive OWNER branch.",
+          "passed": 6
+        },
+        {
+          "failed": 0,
+          "implementation": "Used the real store.Client.request with the existing fictional transport and blocked socket.connect; no API request was made.",
+          "name": "actual_store_Client_GET_and_budget_probe",
+          "observations": [
+            {
+              "final_calls": 6,
+              "initial_calls": 0,
+              "requests": 6,
+              "statuses": [
+                200,
+                404,
+                200,
+                404,
+                200,
+                200
+              ]
+            },
+            {
+              "final_calls": 40,
+              "initial_calls": 34,
+              "requests": 6,
+              "statuses": [
+                200,
+                404,
+                200,
+                404,
+                200,
+                200
+              ]
+            },
+            {
+              "POST_reservations": 0,
+              "error": "OPERATION_LIMIT",
+              "final_calls": 40,
+              "initial_calls": 35,
+              "requests": 5
+            }
+          ],
+          "passed": 3
+        },
+        {
+          "name": "positive_OWNER_missing_store_minimal_repro",
+          "note": "Typed empty bootstrap.Owner stub is used only to reach name resolution. No authorization succeeds and no client or remote call is reached.",
+          "status": "CONFIRMED_R1"
+        },
+        {
+          "name": "git_diff_check",
+          "status": "PASS"
+        }
+      ],
+      "historical_verdict": "BLOCKED",
+      "note": "Earlier failures are preserved as historical evidence only. Both R1 and R2 are cleared by the final verification above.",
+      "superseded_by_final_verification": true
+    }
+  ],
+  "reviewed_file_hashes": {
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 58526,
+      "sha256": "d9ac11f54f4d50a822d69ee47aed02fada447540ed658731f605808079d9afc5"
+    },
+    "nfl_lab/audit_weekly_hosted_v1.py": {
+      "bytes": 124245,
+      "sha256": "23a7d355356e7bde475d2e750404eff73799767d11cca8f6a7c22e82ec3966f9"
+    },
+    "nfl_lab/audit_weekly_operations_v1.py": {
+      "bytes": 24789,
+      "sha256": "7788948ed33590c1361af2271ee4aed2a01348b16f8146b17f983058337a6095"
+    },
+    "nfl_lab/audit_weekly_operations_worker_v1.py": {
+      "bytes": 32606,
+      "sha256": "4a9e42fb28477282f03c8ca7cf4aef1194549852624daec1bfb649d326bc99d3"
+    },
+    "nfl_lab/audit_weekly_template_v1.py": {
+      "bytes": 44236,
+      "sha256": "fb7b7d39edb5a4b691605281e0d7350c57873c631a6519740a6653be25f21c75"
+    },
+    "reports/first-primary-bootstrap-20261027/README.md": {
+      "bytes": 2994,
+      "sha256": "8fbdaa2e29bef88d9a96a3ab087a759b680b7dca034855363a31781fff7812f2"
+    },
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 50432,
+      "sha256": "3001f7b9c45dea5d6c8bdc2e29d4ed6f69e008627e389ba9bca8825d1c35f4bb"
+    },
+    "tests/test_audit_weekly_operations_authority_v1.py": {
+      "bytes": 4882,
+      "sha256": "e403c9ec8c04937b3edcf59d8a3e2f57688be74e1b28b7e3104c38d19f1fe126"
+    },
+    "tests/test_audit_weekly_operations_v1.py": {
+      "bytes": 18397,
+      "sha256": "35fb9c6a32d7b9fe9164c69c9e3bff6447d1462f4339f31e6325939d78a61c51"
+    },
+    "tests/test_audit_weekly_operations_worker_v1.py": {
+      "bytes": 38583,
+      "sha256": "814305de78df3d490640050e75f5fdd6ae5d3bd9bd05ed07242e5654554fe4f0"
+    }
+  },
+  "reviewer": {
+    "agents_spawned": 0,
+    "model_setting": "Not independently exposed",
+    "reasoning_setting": "Not independently exposed",
+    "role": "independent read-only reviewer"
+  },
+  "schema_version": "first-primary-independent-review-v1",
+  "scope": {
+    "base_head": "77ecb07bb39e4d3adf41fe30eb801796812b6a0d",
+    "canonical_commit": "6e22254bbf65fbec16b37be1ae988691b0951b63",
+    "canonical_tree_equal": false,
+    "changed_files": [
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+      "nfl_lab/audit_weekly_hosted_v1.py",
+      "nfl_lab/audit_weekly_operations_v1.py",
+      "nfl_lab/audit_weekly_operations_worker_v1.py",
+      "nfl_lab/audit_weekly_template_v1.py",
+      "reports/first-primary-bootstrap-20261027/README.md",
+      "tests/test_audit_weekly_controller_bootstrap_v1.py",
+      "tests/test_audit_weekly_operations_authority_v1.py",
+      "tests/test_audit_weekly_operations_v1.py",
+      "tests/test_audit_weekly_operations_worker_v1.py"
+    ],
+    "code_pin_count": 128,
+    "head": "375d6e4e4d5208b5301d4eff89bdbf0b9537c0ba",
+    "new_runtime_files": [],
+    "original_reviewed_files": [
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+      "nfl_lab/audit_weekly_hosted_v1.py",
+      "nfl_lab/audit_weekly_operations_v1.py",
+      "nfl_lab/audit_weekly_operations_worker_v1.py",
+      "nfl_lab/audit_weekly_template_v1.py",
+      "tests/test_audit_weekly_controller_bootstrap_v1.py",
+      "tests/test_audit_weekly_operations_v1.py",
+      "tests/test_audit_weekly_operations_worker_v1.py"
+    ],
+    "repository": "/workspace/nfl-system-audit/first-primary-bootstrap-20261027",
+    "review_base_tree_equal_to_canonical": true,
+    "source_inventory_sha256": "33e7938c19acb7df47c961263caf0c0478eafc51891ce5d362a44592e534e2c2",
+    "supplementary_reviewed_files": [
+      "reports/first-primary-bootstrap-20261027/README.md",
+      "tests/test_audit_weekly_operations_authority_v1.py"
+    ],
+    "worktree_clean": true
+  },
+  "source_hash_verification": {
+    "all_reviewed_worktree_bytes_match_committed_HEAD": true,
+    "critical_dependencies_unchanged_through_all_final_tests": true,
+    "original_eight_files_unchanged_during_final_V2_authorization_rerun": true,
+    "production_files_unchanged_through_all_final_tests": true,
+    "test_only_change_between_groups": {
+      "affected_group_rerun": true,
+      "before_sha256": "df0936c5a26aab57248403bc0a66347e6cf04c999ebbbe0e5d2541679efc180d",
+      "change": "Use existing same-file locator_system fixture with registry_version=2",
+      "final_sha256": "3001f7b9c45dea5d6c8bdc2e29d4ed6f69e008627e389ba9bca8825d1c35f4bb",
+      "path": "tests/test_audit_weekly_controller_bootstrap_v1.py"
+    },
+    "verified_at_utc": "2026-10-27T20:55:37.644620+00:00"
+  },
+  "tests": [
+    {
+      "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider --junitxml=/tmp/first-primary-independent-final-auth-v2.xml tests/test_audit_weekly_operations_v1.py tests/test_audit_weekly_operations_worker_v1.py tests/test_audit_weekly_controller_bootstrap_v1.py -k 'first_future or first_primary or issued_registration_routes_are_literal_and_commit_bound'",
+      "duration_seconds": 15.101,
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "8b285d8c3617639f04a2f7818d7896b01ec28fc51d72a5cf3d09562076456065",
+      "name": "final_OWNER_Week8_absence_and_V2_fixed_routes",
+      "passed": 20,
+      "skipped": 0,
+      "source_state": "Final committed hashes, including locator_system registry_version=2 bootstrap test; original eight reviewed files unchanged through evidence write.",
+      "status": "PASS",
+      "test_cases": [
+        "tests.test_audit_weekly_operations_v1::test_first_future_requires_actual_get_absence_and_undeleted_history",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[existing_directory]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[historical_deleted]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[forbidden]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[rate]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[changed_head]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_absence_fails_closed_on_actual_metadata[malformed]",
+        "tests.test_audit_weekly_operations_v1::test_first_future_scope_is_closed_future_only_and_namespace_bound",
+        "tests.test_audit_weekly_operations_v1::test_first_future_reuses_original_startup_without_synthetic_durable_history",
+        "tests.test_audit_weekly_operations_v1::test_first_future_claim_is_stable_across_root_clock_and_source_changes",
+        "tests.test_audit_weekly_operations_worker_v1::test_first_future_real_prepare_preserves_epoch_and_registers_only_week8",
+        "tests.test_audit_weekly_operations_worker_v1::test_first_future_cannot_forget_even_an_archived_unqualified_primary",
+        "tests.test_audit_weekly_operations_worker_v1::test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets",
+        "tests.test_audit_weekly_operations_worker_v1::test_first_future_owner_path_forwards_exact_root_to_current_verifier",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_issued_registration_routes_are_literal_and_commit_bound[state/controller-v1/bootstrap-v2-20261026-discovery.json]",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_issued_registration_routes_are_literal_and_commit_bound[state/controller-v1/bootstrap-v2-20261026-retained-epoch.json]",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_issued_registration_routes_are_literal_and_commit_bound[state/controller-v1/bootstrap-v2-20261027-pending-posts.json]",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_issued_registration_routes_are_literal_and_commit_bound[state/controller-v1/bootstrap-v2-20261027-first-primary.json]",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_parent",
+        "tests.test_audit_weekly_controller_bootstrap_v1::test_first_future_marker_does_not_make_an_unversioned_manual_context_valid"
+      ],
+      "tested_file_hashes": {
+        "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "d9ac11f54f4d50a822d69ee47aed02fada447540ed658731f605808079d9afc5",
+        "nfl_lab/audit_weekly_hosted_v1.py": "23a7d355356e7bde475d2e750404eff73799767d11cca8f6a7c22e82ec3966f9",
+        "nfl_lab/audit_weekly_operations_v1.py": "7788948ed33590c1361af2271ee4aed2a01348b16f8146b17f983058337a6095",
+        "nfl_lab/audit_weekly_operations_worker_v1.py": "4a9e42fb28477282f03c8ca7cf4aef1194549852624daec1bfb649d326bc99d3",
+        "nfl_lab/audit_weekly_template_v1.py": "fb7b7d39edb5a4b691605281e0d7350c57873c631a6519740a6653be25f21c75",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "3001f7b9c45dea5d6c8bdc2e29d4ed6f69e008627e389ba9bca8825d1c35f4bb",
+        "tests/test_audit_weekly_operations_v1.py": "35fb9c6a32d7b9fe9164c69c9e3bff6447d1462f4339f31e6325939d78a61c51",
+        "tests/test_audit_weekly_operations_worker_v1.py": "814305de78df3d490640050e75f5fdd6ae5d3bd9bd05ed07242e5654554fe4f0"
+      },
+      "tests": 20
+    },
+    {
+      "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider --junitxml=/tmp/first-primary-independent-final-grade.xml tests/test_audit_weekly_operations_grade_v1.py::test_real_provider_grade_native_append_and_distinct_job_restore_remain_private tests/test_audit_weekly_operations_grade_v1.py::test_provider_failure_retains_native_sources_without_checkpoint_POST tests/test_audit_weekly_operations_grade_v1.py::test_epoch_preserves_original_registration_and_exact_archived_choice tests/test_audit_weekly_operations_grade_v1.py::test_guard_verifies_fresh_typed_Root_API_and_attaches_actual_client_before_private_read tests/test_audit_weekly_hosted_grading_delivery_v1.py tests/test_audit_weekly_grade_recurring_v1.py tests/test_audit_weekly_grade_history_v1.py::test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history tests/test_audit_weekly_parent_v1.py::test_latest_current_source_checkpoint_cannot_be_replaced_by_json_flags tests/test_audit_weekly_parent_v1.py::test_actual_parent_root_can_bind_explicit_v3_plan_without_changing_static_template tests/test_audit_weekly_parent_v1.py::test_newer_or_ambiguous_locator_fails_before_any_new_decision",
+      "duration_seconds": 69.342,
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "05b3a4d61f49e9a3de7dba44e0870d9569020130dd1124adf6cb90e13397010c",
+      "name": "final_native_grade_provider_fresh_reader_locator_and_parent",
+      "passed": 23,
+      "skipped": 0,
+      "source_state": "Production files and critical dependencies exactly match final committed hashes. The bootstrap test alone was subsequently strengthened to V2; authorization group was rerun after that test-only change.",
+      "status": "PASS",
+      "test_cases": [
+        "tests.test_audit_weekly_operations_grade_v1::test_real_provider_grade_native_append_and_distinct_job_restore_remain_private",
+        "tests.test_audit_weekly_operations_grade_v1::test_provider_failure_retains_native_sources_without_checkpoint_POST",
+        "tests.test_audit_weekly_operations_grade_v1::test_epoch_preserves_original_registration_and_exact_archived_choice",
+        "tests.test_audit_weekly_operations_grade_v1::test_guard_verifies_fresh_typed_Root_API_and_attaches_actual_client_before_private_read",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_real_produce_grade_only_route_never_reaches_capture_reference_or_publication",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_grade_only_real_phase_router_requires_no_fake_archive_handoff[restore]",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_grade_only_real_phase_router_requires_no_fake_archive_handoff[consume]",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_grade_only_consume_rejects_corrupt_native_handoff_before_any_restore",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_hosted_native_reader_evidence_is_private_and_publication_is_one_closed_locator",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_sidecar_publish_failure_retains_actual_evidence_append_and_original_manifest",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_grade_only_reader_evidence_is_privately_retained_without_any_feed_or_locator",
+        "tests.test_audit_weekly_hosted_grading_delivery_v1::test_new_grade_only_publication_is_only_a_closed_nonforecast_locator",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_native_recovery_keeps_original_grade_availability_and_all_proofs",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_cannot_reuse_original_grade_identity_or_relabel_proofs[same_run]",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_cannot_reuse_original_grade_identity_or_relabel_proofs[producer_process]",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_cannot_reuse_original_grade_identity_or_relabel_proofs[reader_process]",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_cannot_reuse_original_grade_identity_or_relabel_proofs[reused_api_job]",
+        "tests.test_audit_weekly_grade_recurring_v1::test_same_source_cannot_reuse_original_grade_identity_or_relabel_proofs[wrong_current_proof_source]",
+        "tests.test_audit_weekly_grade_history_v1::test_grade_only_locator_recovers_actual_new_checkpoint_with_original_anchor_and_full_history",
+        "tests.test_audit_weekly_parent_v1::test_latest_current_source_checkpoint_cannot_be_replaced_by_json_flags",
+        "tests.test_audit_weekly_parent_v1::test_actual_parent_root_can_bind_explicit_v3_plan_without_changing_static_template[GRADE_ONLY-7]",
+        "tests.test_audit_weekly_parent_v1::test_actual_parent_root_can_bind_explicit_v3_plan_without_changing_static_template[FUTURE_CAPABLE-8]",
+        "tests.test_audit_weekly_parent_v1::test_newer_or_ambiguous_locator_fails_before_any_new_decision"
+      ],
+      "tested_file_hashes": {
+        "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "d9ac11f54f4d50a822d69ee47aed02fada447540ed658731f605808079d9afc5",
+        "nfl_lab/audit_weekly_hosted_v1.py": "23a7d355356e7bde475d2e750404eff73799767d11cca8f6a7c22e82ec3966f9",
+        "nfl_lab/audit_weekly_operations_v1.py": "7788948ed33590c1361af2271ee4aed2a01348b16f8146b17f983058337a6095",
+        "nfl_lab/audit_weekly_operations_worker_v1.py": "4a9e42fb28477282f03c8ca7cf4aef1194549852624daec1bfb649d326bc99d3",
+        "nfl_lab/audit_weekly_template_v1.py": "fb7b7d39edb5a4b691605281e0d7350c57873c631a6519740a6653be25f21c75",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py": "df0936c5a26aab57248403bc0a66347e6cf04c999ebbbe0e5d2541679efc180d",
+        "tests/test_audit_weekly_operations_v1.py": "35fb9c6a32d7b9fe9164c69c9e3bff6447d1462f4339f31e6325939d78a61c51",
+        "tests/test_audit_weekly_operations_worker_v1.py": "814305de78df3d490640050e75f5fdd6ae5d3bd9bd05ed07242e5654554fe4f0"
+      },
+      "tests": 23
+    },
+    {
+      "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider --junitxml=/tmp/first-primary-independent-final-authority.xml tests/test_audit_weekly_operations_authority_v1.py",
+      "duration_seconds": 0.794,
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "568ee6ba864eb6945cb604d083f96eb89341174798e0c135dc1ad4998005342f",
+      "name": "final_authority_namespace_literal_and_existing_guards",
+      "passed": 12,
+      "skipped": 0,
+      "source_state": "Final clean committed HEAD; includes explicit new first-primary metadata routes and rejection of the old pending-posts registration as the effective lookup.",
+      "status": "PASS",
+      "test_cases": [
+        "tests.test_audit_weekly_operations_authority_v1::test_current_bot_needs_actual_registered_metadata_before_client_scope",
+        "tests.test_audit_weekly_operations_authority_v1::test_attached_current_authority_cannot_move_to_other_identity[run_id]",
+        "tests.test_audit_weekly_operations_authority_v1::test_attached_current_authority_cannot_move_to_other_identity[source_sha]",
+        "tests.test_audit_weekly_operations_authority_v1::test_attached_current_authority_cannot_move_to_other_identity[process]",
+        "tests.test_audit_weekly_operations_authority_v1::test_attached_current_authority_cannot_move_to_other_identity[job_id]",
+        "tests.test_audit_weekly_operations_authority_v1::test_attached_current_authority_cannot_move_to_other_identity[api_job_id]",
+        "tests.test_audit_weekly_operations_authority_v1::test_json_flags_cannot_authorize_current_bot[None]",
+        "tests.test_audit_weekly_operations_authority_v1::test_json_flags_cannot_authorize_current_bot[True]",
+        "tests.test_audit_weekly_operations_authority_v1::test_json_flags_cannot_authorize_current_bot[value2]",
+        "tests.test_audit_weekly_operations_authority_v1::test_json_flags_cannot_authorize_current_bot[value3]",
+        "tests.test_audit_weekly_operations_authority_v1::test_registered_owner_and_ordinary_owner_stay_distinct",
+        "tests.test_audit_weekly_operations_authority_v1::test_bot_actor_body_alone_or_a_copied_client_grants_nothing"
+      ],
+      "tested_file_hashes": {
+        "tests/test_audit_weekly_operations_authority_v1.py": "e403c9ec8c04937b3edcf59d8a3e2f57688be74e1b28b7e3104c38d19f1fe126"
+      },
+      "tests": 12
+    },
+    {
+      "duration_seconds": 0.081,
+      "failed": 0,
+      "implementation": "Real store.Client.request, existing fictional transport, and socket.connect blocked. No live native/API calls.",
+      "name": "actual_store_Client_GET_and_budget_probe",
+      "observations": [
+        {
+          "final_calls": 6,
+          "initial_calls": 0,
+          "requests": 6,
+          "result": "PASS",
+          "statuses": [
+            200,
+            404,
+            200,
+            404,
+            200,
+            200
+          ]
+        },
+        {
+          "final_calls": 40,
+          "initial_calls": 34,
+          "requests": 6,
+          "result": "PASS",
+          "statuses": [
+            200,
+            404,
+            200,
+            404,
+            200,
+            200
+          ]
+        },
+        {
+          "POST_reservations": 0,
+          "error": "OPERATION_LIMIT",
+          "final_calls": 40,
+          "initial_calls": 35,
+          "requests": 5,
+          "result": "PASS_FAIL_CLOSED"
+        }
+      ],
+      "passed": 3,
+      "source_state": "Final unchanged production hashes",
+      "status": "PASS"
+    },
+    {
+      "name": "git_diff_check",
+      "range": "6e22254bbf65fbec16b37be1ae988691b0951b63..375d6e4e4d5208b5301d4eff89bdbf0b9537c0ba",
+      "status": "PASS"
+    }
+  ],
+  "verdict": "NO_BLOCKERS_FOUND"
+}
