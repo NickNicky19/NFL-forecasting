@@ -406,6 +406,7 @@ class Runner:
         self.journal=self.root/"journal"
         if not existing:self.journal.mkdir(mode=0o700)
         self.pending_scope_authenticated=False
+        self.pending_metadata_clients=[]
         self.job=actions_context(env,"write")
         if existing:
             self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
@@ -526,6 +527,22 @@ class Runner:
             raise store.StoreError(code if type(code) is str and re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}",code) else "WEEKLY_CHILD_FAILED")
         self.check();return result
 
+    def pending_metadata_client(self):
+        """One GET-only, qualified exchange for each of at most eight failures."""
+        require(len(self.pending_metadata_clients)<8,"EIGHT_PENDING_FAILURE_METADATA_CLIENTS")
+        proof=self.fresh_operations_proof()
+        package=self.go["qualified_runtime"]
+        client=PendingMetadataClient(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],
+            source_sha=self.identity["source_sha"],journal=self.journal,job=self.job,
+            operation="metadata",qualification=package["qualification"],root_go=self.go)
+        self.pending_metadata_clients.append(client)
+        client.authenticate_actions_job();client.bind(package["binding"])
+        operations_authority.attach(client,proof,self.env,store.canonical(self.go))
+        require(cp.client_identity(client)["api_job_id"]==self.identity["api_job_id"],
+            "SAME_AUTHENTICATED_PENDING_METADATA_JOB")
+        archive.authenticate_qualification(client,package,self.go["pending_census"])
+        return client
+
     def authenticate_pending_posts(self):
         """Charge authenticated old intents before the first private write."""
         from . import audit_weekly_template_v1 as template
@@ -536,7 +553,8 @@ class Runner:
         if modern:
             assets,_=self.client.inventory()
             for handoff in spec['handoffs']:
-                for record in authenticated_pending_records(self.client,handoff,assets,before=self.go['issued_at_utc']):
+                client=self.pending_metadata_client()
+                for record in authenticated_pending_records(client,handoff,assets,before=self.go['issued_at_utc']):
                     require(record['key'] not in records or records[record['key']]==record,'CONFLICTING_PRIOR_PENDING_EVIDENCE')
                     records[record['key']]=record
             exact=[records[k] for k in sorted(records)]
@@ -694,12 +712,23 @@ class Runner:
         from . import audit_weekly_grade_history_v1 as history
         context=operations.context(self.go["effective_epoch"])
         require(self.operations_proof is not None,"LIVE_RECURRING_ROOT_REQUIRED")
+        # Pending-failure authentication has its own finite exchange. Do not
+        # spend that client's remaining calls or reuse its earlier wall clock
+        # for this separate, GET-only original-source metadata phase.
+        proof=self.fresh_operations_proof()
+        client=archive.Client(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],
+            source_sha=self.identity["source_sha"],journal=self.journal,job=self.job,
+            operation="metadata",readonly=True)
+        client.authenticate_actions_job()
+        operations_authority.attach(client,proof,self.env,store.canonical(self.go))
+        require(cp.client_identity(client)["api_job_id"]==self.identity["api_job_id"],
+            "SAME_AUTHENTICATED_PRIOR_METADATA_JOB")
         previous=context["previous_capture"]
         def content(path,ref,cap):
             url=store.API+"/contents/"+path+"?ref="+ref
             # Fixed repository, registered hash and fixed eight source names.
             # Metadata client rejects every method other than GET.
-            self.client.allowed.add(url);value=self.client.json(url)
+            client.allowed.add(url);value=client.json(url)
             require(type(value) is dict and value.get("type")=="file" and value.get("path")==path
                 and value.get("encoding")=="base64" and type(value.get("size")) is int
                 and 0<value["size"]<=cap,"BOUNDED_RECURRING_PUBLIC_METADATA_FILE")
@@ -724,7 +753,7 @@ class Runner:
         pair=None
         if checkpoint is not None:
             if checkpoint.get("schema_version")==history.LOCATOR_REF:
-                history.require_latest(self.client,checkpoint)
+                history.require_latest(client,checkpoint)
                 path=history.LOCATOR_ROOT+"/"+checkpoint["path"]
             else:path="state/controller-v1/grade-checkpoints/"+previous["feed_sha256"]+".json.gz"
             packed=content(path,"lab-state",history.LIMITS["sidecar_bytes"])
