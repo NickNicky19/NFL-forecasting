@@ -77,23 +77,28 @@ def capture_groups(files):
 
     The codec's lexical next-fit order can exhaust eight groups even when the
     same full census fits. Balance larger encoded members across a bounded
-    number of groups, keeping the codec, file-count and inflated-size bounds. This
-    chooses a finite packing, never promises an optimal solution or drops a
-    file that does not fit. All grouping/encoding completes before any POST.
+    number of groups. GROUP_JSON is the conservative multi-file planning bound;
+    a larger member is isolated under the codec's unchanged INFLATED bound.
+    Encoding must still pass the unchanged compressed asset cap before any POST.
+    This chooses a finite packing, never promises an optimal solution or drops
+    a file that does not fit.
     """
     validate_files(files)
     members=[item for item in files if item["bytes"]]
     empty=codec.inflated_size([])
     costs={item["logical_path"]:codec.inflated_size([item])-empty for item in members}
     ordered=sorted(members,key=lambda item:(-costs[item["logical_path"]],item["logical_path"]))
-    require(all(empty+cost<=codec.GROUP_JSON for cost in costs.values()),"SINGLE_FILE_BUNDLE_CAP")
+    require(all(empty+cost<=codec.INFLATED for cost in costs.values()),"SINGLE_FILE_BUNDLE_CAP")
     if not ordered:return []
+    isolated=[[item] for item in ordered if empty+costs[item["logical_path"]]>codec.GROUP_JSON]
+    ordered=[item for item in ordered if empty+costs[item["logical_path"]]<=codec.GROUP_JSON]
+    require(len(isolated)<=MAX_GROUPS,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
     # Filling early groups to their byte cap can strand their file slots and
     # consume too many groups for the remaining small original receipts.
     lower=max((len(ordered)+codec.MAX_FILES-1)//codec.MAX_FILES,
-        (sum(costs.values())+codec.GROUP_JSON-empty-1)//(codec.GROUP_JSON-empty))
+        (sum(costs[item["logical_path"]] for item in ordered)+codec.GROUP_JSON-empty-1)//(codec.GROUP_JSON-empty))
     groups=[];sizes=[]
-    for count in range(lower,MAX_GROUPS+1):
+    for count in range(lower,MAX_GROUPS-len(isolated)+1):
         bins=[[] for _ in range(count)];loads=[empty]*count
         for item in ordered:
             cost=costs[item["logical_path"]]
@@ -106,12 +111,16 @@ def capture_groups(files):
             groups=[group for group in bins if group]
             sizes=[load for group,load in zip(bins,loads) if group]
             break
-    require(groups,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
-    require(sorted(item["logical_path"] for group in groups for item in group)
-        ==sorted(item["logical_path"] for item in members),"EXACT_COMPLETE_ARCHIVE_PACKING_CENSUS")
+    require(groups or not ordered,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
     require(all(len(group)<=codec.MAX_FILES and codec.inflated_size(group)==size<=codec.GROUP_JSON
         for group,size in zip(groups,sizes)),"UNCHANGED_ARCHIVE_CODEC_GROUP_BOUNDS")
-    return groups
+    result=isolated+groups
+    require(len(result)<=MAX_GROUPS,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
+    require(sorted(item["logical_path"] for group in result for item in group)
+        ==sorted(item["logical_path"] for item in members),"EXACT_COMPLETE_ARCHIVE_PACKING_CENSUS")
+    require(all(len(group)==1 and codec.GROUP_JSON<codec.inflated_size(group)<=codec.INFLATED
+        for group in isolated),"ISOLATED_ARCHIVE_CODEC_GROUP_BOUNDS")
+    return result
 
 
 def write(storage,path,value):
