@@ -1,0 +1,307 @@
+{
+  "schema_version": "first-primary-recovery-read-only-review-v1",
+  "reviewed_at_utc": "2026-10-27T23:16:57.002672+00:00",
+  "state": "CONDITIONAL_NEW_FUTURE_ISSUANCE_PROTOCOL_ACCEPTABLE_NOT_IMPLEMENTED",
+  "source": {
+    "commit": "679641686337bf48020826754bd6ea6b90f88fb8",
+    "checkout": "/workspace/nfl-system-audit/producer-native25-20261027",
+    "checkout_clean_before_and_after_tests": true
+  },
+  "scope": {
+    "independent_read_only_review": true,
+    "repository_edits": 0,
+    "remote_mutations": 0,
+    "dispatches": 0,
+    "leases": 0,
+    "new_NFL_fits": 0,
+    "actual_forecast_row_reads": 0,
+    "protected_outcome_reads": 0,
+    "actual_model_weight_reads": 0,
+    "private_identifiers_in_report": false,
+    "temporary_fictional_test_files_only": true,
+    "root26_file_use": "Metadata shape only; no saved Root used as live execution authority.",
+    "output_path_mapping": {
+      "requested": "/continuation/evidence/first-primary26-recovery-review.json",
+      "actual": "/workspace/nfl-system-audit/continuation/evidence/first-primary26-recovery-review.json",
+      "reason": "/continuation does not exist in this executor; the existing continuation directory is under /workspace/nfl-system-audit."
+    }
+  },
+  "conclusion": {
+    "supported_now": "Preserve and independently restore Core failure evidence. The existing failed-archive path could restore opaque bodies only if that archive had actually been appended. Here it was not.",
+    "old_archive_promotion": "UNSUPPORTED: normal archive and opaque preservation both failed; forecast bodies are not known durably retained. Preserve the failed issuance and missing-body gap permanently.",
+    "fresh_issuance": "Acceptable only through a new explicit manual OWNER failed-first-primary recovery context and independently authenticated lineage. It creates new prevalue Week8 choice bytes and new current forecasts at actual new clocks, retaining the original failed claim and gap.",
+    "existing_code_supports_requested_recovery_context": false,
+    "ordinary_resume_must_remain_strict": true,
+    "old_choice_body_required_for_new_protocol": "No, if the scope explicitly declares it unavailable and authorizes only a newly frozen choice derived from authenticated original COUNT7 startup methods. A hash is not the lost document. Recover and verify the old document if available; never invent it.",
+    "ready_to_dispatch": false,
+    "parent_owns_implementation_and_issuance_decision": true
+  },
+  "observations": {
+    "actual_attempt": {
+      "producer": "failure",
+      "failure_preservation_step": "success",
+      "fresh_reader": "success",
+      "export": "skipped",
+      "normal_archive_error": "SINGLE_FILE_BUNDLE_CAP",
+      "opaque_preservation_error": "SINGLE_FILE_BUNDLE_CAP",
+      "opaque_failed_capture_restored": false,
+      "core_state": "ACTUAL_CAPTURE_FAILED_CORE_RESTORED",
+      "successful_forecast": false,
+      "public_release": false,
+      "old_root_retried": false
+    },
+    "phase_controls": {
+      "prior_capture_restore": "success",
+      "effective18_warm_restore_and_replay": "success",
+      "Week8_prevalue_preparation": "FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL",
+      "metadata_prepare": "success",
+      "fresh_source": "success",
+      "current_capture": "PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE",
+      "R0": "ORIGINAL_R0_CAPTURE_COMPLETE_PRIVATE",
+      "normal_archive": "failure"
+    },
+    "metadata_only_size_reproduction": {
+      "member": "reference/R0_CONTROL_FORECAST_ROWS.json",
+      "original_bytes": 6318636,
+      "canonical_single_member_inflated_bytes": 8425373,
+      "current_planning_limit_bytes": 8323072,
+      "existing_codec_hard_inflated_limit_bytes": 12582912,
+      "forecast_body_opened": false,
+      "finding": "The member exceeds the conservative planner limit but fits the existing codec inflated bound. Both archive paths call the same planner."
+    },
+    "Core_file_graph": {
+      "entries": 580,
+      "is_original_file_content_archive": false,
+      "locally_available_control_attachments": 14,
+      "choice_reference": "runtime/WEEKLY_CHOICE.json",
+      "choice_bytes_committed": 14111,
+      "choice_hash_reference_present": true,
+      "choice_document_in_recovered_attachments": false,
+      "original_choice_path_exists_in_this_executor": false,
+      "original_runtime_recipe_bytes_committed": 6862,
+      "runtime_recipe_document_recovered": false,
+      "operations_prepared_stdout": "Manifest reference plus capture identity/status; no choice document or method list.",
+      "root_consumed_record_in_graph_or_auxiliary": false,
+      "original_post_reservations_attachment_decoded_by_this_review": false
+    },
+    "claim_semantics": {
+      "claim_payload_keys": [
+        "schema_version",
+        "epoch_sha256",
+        "stream_id"
+      ],
+      "stream": "weekly-corrected-primary-player-game-v1",
+      "claim_contains_COUNT7_choice_hash": false,
+      "claim_contains_Week8_choice_hash": false,
+      "COUNT7_choice_hash_location": "The first-primary controller_context.retained_choice_sha256; it scopes the original retained COUNT7 choice.",
+      "Week8_commitment_location": "Core file graph commits runtime/WEEKLY_CHOICE.json; operations preparation stdout commits its separate manifest reference. Neither supplies lost choice bytes.",
+      "stable_across_new_root_clocks_and_source": true,
+      "upload_strongly_implied_by_phase_order": true,
+      "actual_blob_readable_reported_by_parent": true,
+      "independently_verified_remote_claim_membership_by_this_review": false,
+      "required_next_check": "Parent authenticates exact claim payload, descriptor/manifest, original writer/source/Root membership and original POST journal; presence or a saved flag alone is insufficient."
+    },
+    "calendar": {
+      "target_season": 2026,
+      "target_week": 8,
+      "scheduled_games": 14,
+      "registered_deadline_utc": "2026-10-29T22:45:00+00:00",
+      "cutoff_extension_needed": false,
+      "fresh_full_calendar_and_all_original_cutoffs_must_be_rechecked": true
+    },
+    "observation_limits": "Live Actions job summaries were independently read. Core diagnostic attachments and graph were read locally as metadata only. Parent must authenticate their native receipt/descriptor/hash chain and claim/journal membership; this review did not perform that private GET chain."
+  },
+  "existing_route_boundaries": [
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py:1219",
+      "finding": "Failure restore returns PRIVATE_FAILURE_RESTORED; opaque restoration is a separate boolean. A successful Core reader does not assert forecast-body durability."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py:1344",
+      "finding": "preserve_failure keeps Core separately even if preserve_opaque_outputs fails; SECONDARY_PRESERVATION_FAILURE explicitly preserves the original failure and denies partial forecast durability."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py:1441",
+      "finding": "Opaque snapshot is failure evidence, not repaired success. It uses archive.append_capture and therefore the same current packing limit."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_restore_v1.py:37",
+      "finding": "Only the exact previously registered successful capture receipt and source inventory feed qualified native retention. It does not discover or promote this failed Root."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_resume_v1.py:126",
+      "finding": "UNCHANGED_COMPLETE_RETAINED_RESULT_REQUIRED and FAILED_CAPTURE_CANNOT_RESUME reject failures. Keep both guards unchanged."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_worker_v1.py:247",
+      "finding": "A missing checkpoint requires a missing history-input pair. Archived operational assignments with no authenticated previous history are rejected; null does not mean no failed issuance existed."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_worker_v1.py:320",
+      "finding": "Original first-primary bootstrap accepts exact legacy COUNT7 metadata without operational assignments. It is not an existing consumed-first-claim recovery API."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_v1.py:112",
+      "finding": "Six bounded GETs require a stable existing lab-state commit, exact path absence and no deleted path history. No local empty snapshot can replace that proof."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_operations_v1.py:304",
+      "finding": "Ordinary later-week recurring planning without real DurableHistory fails DURABLE_CAUSAL_HISTORY_REQUIRED_NO_FALLBACK."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_template_v1.py:297",
+      "finding": "The first-primary claim is stable epoch/stream intent, independent of Root clocks and choices. It cannot be retried by changing source, clocks or the retained choice hash."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py:596",
+      "finding": "Actual inventory presence of the stable claim rejects OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY before append. No delete, overwrite, namespace rotation or reuse_completed bypass is acceptable."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_controller_bootstrap_v1.py:617",
+      "finding": "The manual OWNER boundary recognizes only absent controller_context or the exact existing first-primary marker. A new recovery marker requires explicit admission; a saved marker alone cannot grant authority."
+    },
+    {
+      "path": "nfl_lab/audit_weekly_epoch_v1.py:622",
+      "finding": "The original next-week selector already accepts the original prior selections and an empty operational startup view. It freezes new choices at its actual call clock. This can derive new startup metadata, not establish lost historical bytes."
+    },
+    {
+      "path": ".github/workflows/lab.yml:1165",
+      "finding": "Export requires producer and reader success. A failed producer plus successful Core restore cannot reach the normal successful export lane."
+    }
+  ],
+  "minimal_proposed_changes_not_applied": [
+    {
+      "order": 1,
+      "files": [
+        "nfl_lab/audit_weekly_template_v1.py",
+        "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+        "nfl_lab/audit_weekly_operations_v1.py"
+      ],
+      "change": "Add one closed, explicitly versioned manual OWNER failed-first-primary recovery marker inside the existing context envelope. Admit it in Root/OWNER validation only. Bind original COUNT7 lineage, failed Root26 source/identity/hash, exact Core failure receipt and missing-body state, original consumed stable claim, target calendar and unchanged cutoffs. Keep previous_capture pointed to qualified COUNT7, not to the failure; previous_checkpoint remains null only after authenticated absence.",
+      "limit": "Do not relax the existing first-primary, ordinary recurring, controller, failed-resume or grade-only schemas."
+    },
+    {
+      "order": 2,
+      "files": [
+        "nfl_lab/audit_weekly_operations_worker_v1.py",
+        "nfl_lab/audit_weekly_operations_v1.py",
+        "nfl_lab/audit_weekly_hosted_v1.py"
+      ],
+      "change": "Before any new provider values, authenticate the failed lineage and old claim with a fresh current OWNER/API proof. Restore the original qualified COUNT7 epoch/choice/models using existing pathways, verify genuinely absent primary-state history, and derive the original startup method projection without outcomes. Freeze a NEW full Week8 choice at the current clock, require the same method/procedure/model identities and full original cutoffs, and bind new population/capture metadata. Declare old Week8 document unavailable unless exact committed bytes are recovered.",
+      "limit": "No synthetic DurableHistory, no discarded failure assignment, no old choice/forecast reconstruction claim, no new fit or method tuning. Metadata for the failed gap travels separately from qualified forecast history."
+    },
+    {
+      "order": 3,
+      "files": [
+        "nfl_lab/audit_weekly_template_v1.py",
+        "nfl_lab/audit_weekly_hosted_v1.py"
+      ],
+      "change": "Retain and verify the old stable claim. Add a distinct atomic create-only recovery-intent claim tied stably to the exact failed predecessor, old epoch/stream and owner recovery scope; its identity must not change with replacement Root clocks/source. Recheck state and claim immediately before consuming it, bind the prepared new choice in the associated immutable prevalue record, and allow only one successor attempt. Continue normal no-retry POST accounting.",
+      "limit": "The old first-primary claim never becomes unused or successful. Parent must check original-post-reservations and charge every unresolved/ambiguous POST. No claim deletion or alternate namespace escape."
+    },
+    {
+      "order": 4,
+      "files": [
+        "nfl_lab/audit_weekly_archive_v1.py",
+        "tests/test_audit_weekly_archive_packing_v1.py"
+      ],
+      "change": "Repair packing before any new capture. Minimal candidate: isolate members above conservative GROUP_JSON into singleton groups only when they fit the already existing codec.INFLATED hard bound; pack remaining members under the existing conservative target and count those singleton groups within the same eight-group budget. Adjust the final planner assertion for these bounded singleton groups. Preencode and verify every group and the complete index before any append.",
+      "limit": "Keep 8 MiB compressed assets, 12 MiB existing codec inflation, 64 files/group, eight groups, 512 logical files, all quota/client/time/index/witness/failure reserves and exact byte/hash/origin/census checks. No truncation, omitted failures or row-dependent exception. This proposal was not implemented or validated against lost bodies."
+    },
+    {
+      "order": 5,
+      "files": [
+        "existing pinned tests and registration preparation paths"
+      ],
+      "change": "Extend existing pinned tests to stay within the 128-source-pin budget. Prepare a new exact-source create-only registration and new Root only after checks pass; preserve every older registration, Root and failure. Archive the recovery lineage/gap in the new capture and keep native reader/publication/grade/locator gates.",
+      "limit": "No need for a new scheduler, lease, scientific registration, NFL model source change or cutoff extension. Source allowlists and generated pins must be exact for the eventual implementation."
+    }
+  ],
+  "blockers_before_new_issuance": [
+    "The explicit recovery context, OWNER admission, authenticated preparation and duplicate-safe recovery claim do not exist at the reviewed source.",
+    "Parent must verify original failed Root/Core receipt hashes, original stable claim bytes and original POST journal membership/reservations. This review has not authenticated that remote private chain.",
+    "The exact old Week8 choice body is absent from inspected controls. Explicitly declare that missing body; authenticate only the original COUNT7 startup inputs for the NEW choice, and do not assert byte identity or knowledge of the old Week8 method list.",
+    "Both forecast archives failed. Keep Root26 FAILED with a missing-forecast-body gap; it cannot be qualified, graded as retained evidence or fed to ordinary resume.",
+    "The shared planner still rejects the known large member. New normal and failure preservation must satisfy existing hard caps and full preflight; otherwise another issue could lose bodies again.",
+    "A fresh Owner process must recheck stable absence of primary state and deleted history, the entire Week8 calendar and original cutoff deadline before values, then use a new Root and attempt with fresh source/model replay proofs and unchanged scientific/model contracts."
+  ],
+  "verification": {
+    "repository_test_result": {
+      "passed": 46,
+      "failed": 0,
+      "groups": [
+        {
+          "selection": "first_future or first_primary across operations, operations_worker and hosted tests",
+          "passed": 16,
+          "deselected": 117
+        },
+        {
+          "selection": "resume, failed_scope and failure_wire modules",
+          "passed": 30
+        }
+      ]
+    },
+    "environment": "Existing /workspace/nfl-system-audit/venv/bin/python, bytecode disabled, pytest cache disabled, original audit_numerical_runtime_v1.ENVIRONMENT applied before numerical imports; all fixture files in /tmp.",
+    "initial_environment_retry": "Default Python lacked pytest. First venv attempt passed 14 cases but two fixture setups rejected missing registered numerical startup flags. Repeating under the unchanged registered startup environment passed all 16; no guard was patched or weakened.",
+    "independent_in_memory_probes": [
+      {
+        "case": "consumed first-primary claim",
+        "passed": true,
+        "assertion": "Actual Runner.claim duplicate guard rejects before append after six real-client synthetic absence GETs; append calls zero."
+      },
+      {
+        "case": "consumed claim with changed Root clock and retained-choice commitment",
+        "passed": true,
+        "assertion": "Stable claim remains identical; OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY; append calls zero. Existing test also covers source changes."
+      },
+      {
+        "case": "failed capture with supplied successful result flags",
+        "passed": true,
+        "assertion": "FAILED_CAPTURE_CANNOT_RESUME fires before metadata-body reads. Handoff-shape authentication was isolated for this guard probe; no claim of native authority."
+      },
+      {
+        "case": "previous primary checkpoint absent / no DurableHistory",
+        "passed": true,
+        "assertion": "Ordinary later-week recurring_plan rejects DURABLE_CAUSAL_HISTORY_REQUIRED_NO_FALLBACK. Existing composed worker regression also rejects an archived unqualified primary with no previous checkpoint."
+      },
+      {
+        "case": "new-clock startup metadata from original COUNT7",
+        "passed": true,
+        "assertion": "Synthetic original COUNT7 methods/procedures/weights match both newly frozen choices; choice hashes differ at different actual clocks, cutoffs match, resolved prior rows and fits are zero. This is not an implementation of recovery authority."
+      },
+      {
+        "case": "actual large-member size metadata",
+        "passed": true,
+        "assertion": "Current planner reproduces SINGLE_FILE_BUNDLE_CAP from the Core graph reference alone; canonical inflated size is below the existing codec hard bound. No forecast body opened."
+      }
+    ],
+    "independent_probe_count": 6,
+    "new_protocol_tests_passed": false,
+    "native_fresh_capture_qualified": false
+  },
+  "required_implementation_tests": [
+    "Closed schema/OWNER admission: reject bot/scheduled callers, serialized proofs, unknown fields, mismatched predecessor/epoch/COUNT7/claim/Core receipt and any unregistered source.",
+    "Historical failure authentication: exact original Root/source/job/clock and independent Core-reader proof; treat old Root expiry as historical evidence only, never renewed execution authority.",
+    "Consumed original claim and journals: verify exact payload, descriptor/manifest/writer and original POST membership; altered or missing claim, ambiguous reservations and unauthorized namespace changes fail before values/POST.",
+    "Recovery duplicate/race tests: old claim stays consumed; changed Root clocks/source cannot create a second recovery intent; concurrent successors yield at most one create-only claim and one prospective attempt; no POST retry.",
+    "previous_checkpoint=None: require stable existing state head, both exact404 directory absences and empty path commit histories; existing/deleted paths, 403/rate limits/malformed bodies or changed head fail. Ordinary unqualified-primary and durable-history guards remain strict.",
+    "Missing old Week8 bytes: permitted only by the explicit NEW-issuance scope, marked unavailable; no requirement or assertion of invented exact old document. Recovered exact old bytes must match the committed hash if used.",
+    "No tuning/identity drift: derive method, procedure, weight and model identities from authenticated original COUNT7 plus the original empty resolved startup policy; reject changed methods, weights, eligibility/scientific/model contracts or new outcome inputs.",
+    "Prevalue current clocks: persist new choice/population before acquiring current values, with distinct new choice/capture/Root identity and true current frozen/completion clocks; reject all backdating.",
+    "All fourteen Week8 games and original cutoffs: fresh full calendar identity must match; reject elapsed/expired deadlines, dropped games or extended cutoffs; verify no protected outcome read, forecast-row read in metadata preparation, source acquisition there or NFL fit.",
+    "Packing: exact known-size member, conservative-target and existing 12 MiB inflation boundaries, compressed 8 MiB boundary, singleton counting within eight groups, 512-file/index/quota bounds, pathological compressibility, exact owned fresh-reader roundtrip and no first POST on infeasible input; preserve all failures.",
+    "Both future failure paths: a new archive interruption remains FAILED, Core/opaque status is explicit and gap metadata survives; no successful flags from Core-only restoration.",
+    "Native success only: first checkpoint with previous=None follows the NEW complete capture and independent reader/export chain, carries the failed-predecessor gap and has no fabricated old forecasts, old resolved observations or scientific qualification.",
+    "Original FAILED_CAPTURE_CANNOT_RESUME, original consumed-first-claim, unqualified-primary, schema/leakage/replay/scheduler and publication protections remain green; exact-source allowlists/pins and new create-only registration fit existing bounds."
+  ],
+  "evidence_paths": [
+    "continuation/evidence/first-primary26-large-file-diagnostic.json",
+    "continuation/evidence/first-primary26-native-failure-restoration.json",
+    "continuation/evidence/first-primary26-prepared.json",
+    "continuation/private/first-primary26-control-diagnostic/file-graph.json",
+    "continuation/private/first-primary26-control-diagnostic/complete-auxiliary-controls.json",
+    "continuation/private/first-primary26-control-diagnostic/phase-00.json through phase-09.json",
+    "continuation/private/weekly-go-26.json (metadata shape only)",
+    "Live Actions job and step summaries (private identifiers intentionally omitted)"
+  ]
+}

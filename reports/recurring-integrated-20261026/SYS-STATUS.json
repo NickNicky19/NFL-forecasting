@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-27T22:49:15.101814+00:00",
+  "observed_at_utc": "2026-10-27T23:34:21.662864+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL",
   "findings": [
@@ -19,7 +19,7 @@
         "repaired": "yes",
         "integrated": "producer; website pending",
         "released": "COUNT7 producer only",
-        "verified": "18 retained warm replays,14 independent cold means; real Main preview127rows/11categories; genuine Ops19 future-query inference passed after registered-builder restoration, normal archive failed separately.",
+        "verified": "18retainedwarmreplays/14independentcold means; genuine Root26 recovered/replayed18 pairs and completed futurequery inference before archive failed. No new NFL fits. Websitefreshselectedfeed remains uninstalled.",
         "remaining_boundary": "COUNT7 expired2026-10-27T00:15Z; original evidence remains qualified within scope. A fresh compatible selected feed and actual deployed consumption remain unverified; no expiry extension or backfill."
       },
       "original_checkpoint_repair_status": "implemented isolated producer;not integrated"
@@ -116,11 +116,11 @@
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "Core website/producer failure lanes integrated; rotation first-step control masking now integratedProducer43.",
-        "integrated": "yes",
-        "released": "website failure ref and native producer failure lane",
-        "verified": "Original Ops12/14/17/19/22 and first-primary24 failures retained. Native24 fresh reader122498223302 restored original core/opaque failure, receiptfe0b33e6138a0386902a6d61b75435f336fc225000036256a60c6d2cf5ac3e0c. Export skipped; no partial forecasts published. OWNERGET verifies21 original reservations across3handoffs; unresolved657667B remains charged, no POST retry.",
-        "remaining_boundary": "Full new successful capture/archive/grading/export remains separate SYS-007 acceptance; no success inferred from failure durability."
+        "repaired": "Core failure lane works; shared planner also blocked Root26 opaque forecast preservation, requiring the committed PR52 correction.",
+        "integrated": "Prior Core lanes integrated; oversized-file opaque correction PR52 committed, fullCI running.",
+        "released": "Root26 Core diagnostics only; original complete forecast bodies not durably restored.",
+        "verified": "Actual failed producer122515613148 preserved Core; fresh reader122523994578 restored Core at23:05:59UTC, receiptfd848f87f4f49e76074ddb153691101cd5fd5f99080f8fad0ddc044b1b42056d; opaque_failed_capture_restored=false. Original models/earlier captures remain retained; actual Root26 missing bodies are never reconstructed as issued.",
+        "remaining_boundary": "Integrate and native-verify PR52 packing in both normal and failure paths. Preserve Root26 missing-body/choice-document gap; repair explicit Owner recovery before new future capture."
       },
       "original_checkpoint_repair_status": "unresolved contract;no speculativealways change"
     },
@@ -136,11 +136,11 @@
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "Request-budget repairs integrated in Main50fec873a/Producer51 6796416; all older immutable records retained.",
-        "integrated": "yes for prepared corrections; actual capture26 now running.",
-        "released": "Genuine Native25 source registration passed all3jobs and its new recorda0290fd2 committed/read back. Capture26 not yet complete; no successful new feed or automatic activation claimed.",
-        "verified": "Producer CI40594427543: all2266nodes collected/attempted/completed;2265passed/1optional-cache skip. Head056a741, actual testedf290e1a and merge6796416 sharetreec6b6adf. Main736passed/1optional/33subtests. Native25 exact1351B sealSHAdc1625fc\u2026,record39236B/SHA6e795dfe\u2026,all3Rootmaskchecks.",
-        "remaining_boundary": "Complete actual capture26, fresh restoration/grading/export and anonymous consumer/all11category traces; owned website integration/deployment/live checks; existing automatic route/settings/window, cadence horizons, finite census/source-timing boundaries remain."
+        "repaired": "Metadata budget corrections integrated/native25verified. New archive planning bug PR52 committed; consumed-first-primary failure recovery is being implemented separately.",
+        "integrated": "Main50fec873a/Producer51 6796416; PR52dc6dffc fullCI40602136533 pending.",
+        "released": "Native25 source registration only. Root26 completed warmreplays/currentinference/R0 but FAILED normalarchive; no new qualified feed, grading checkpoint or website installation.",
+        "verified": "Authenticated Core phase controls: effective18 warmreplay, new prevalueWeek8 metadata, fresh source, currentepoch capture and R0 allcompleted. R0 recorded1860available/1084unavailable rows. Both normal and opaque archive failed SINGLE_FILE_BUNDLE_CAP. All23 originalreservations/old consumedfirstclaim verified by35OWNERGETs; no POSTretry.",
+        "remaining_boundary": "PR52fullCI/integration; explicit closed Owner recovery path and stable one-successor claim; new source-bound native registration/new future issue, full capture/grade/export/currentconsumer. Active website writer integration/liveverification, access/cadence/horizon/source timing/finite capacity remain."
       },
       "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
@@ -311,7 +311,7 @@
     "controller_record_commit": "a0290fd2a9f17272fbc1721b6cc7cde7e4f9dafb",
     "native_registration_run": 40596468952,
     "owner_operations_run": 40597080516,
-    "current_source_pair_ready": true,
+    "current_source_pair_ready": false,
     "producer_PR36_CI": 40277891751,
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
@@ -326,7 +326,10 @@
     "main50_head": "26f3f8824d9088c4b12fd31ce85a9463ac62aede",
     "main50_CI": 40593936272,
     "producer51_head": "056a74114aeb48dca0f38ea2c7753422da14b3a5",
-    "producer51_CI": 40594427543
+    "producer51_CI": 40594427543,
+    "archive_PR52_head": "dc6dffc391f4d5321b95b2ae804b250a2009438a",
+    "archive_PR52_CI": 40602136533,
+    "owner_operations_state": "FAILED_CORE_RESTORED_OPAQUE_BODIES_MISSING"
   },
   "evidence": [
     "README.md",
@@ -363,7 +366,14 @@
     "evidence/first-primary26-prepared.json",
     "evidence/first-primary26-dispatch-result.json",
     "evidence/website-live-2247.json",
-    "evidence/consumer23-pre-feed-fallback.json"
+    "evidence/consumer23-pre-feed-fallback.json",
+    "evidence/first-primary26-native-failure-restoration.json",
+    "evidence/first-primary26-large-file-diagnostic.json",
+    "evidence/pending-recovery-through26-owner-get.json",
+    "evidence/first-primary26-recovery-review.json",
+    "evidence/archive26-independent-review.json",
+    "evidence/archive26-independent-before-after.json",
+    "evidence/archive26-independent-combined-review-stamp.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -384,8 +394,8 @@
     "consumer_policy_sha256": "307938a782a321410546aa4192e28432594c92361ea4b5d6f7db04dbce0ef82f",
     "consumer_PR": 10,
     "consumer_CI": 40596656658,
-    "consumer_CI_status": "PASS",
-    "requires_new_actual_source_binding": false
+    "consumer_CI_status": "PASS for c6f7f29/Source679 only; new repair source binding required",
+    "requires_new_actual_source_binding": true
   },
   "continuation_findings": [
     {
@@ -411,7 +421,7 @@
       "reproduced": true,
       "repaired": true,
       "integrated": true,
-      "released": "Native25 registered; prospective full14gameWeek8capture26 actuallyrunning.",
+      "released": "Native25 registered; Root26failedarchive afteractualfutureinference/R0, noqualifiedprimarycheckpoint.",
       "verified": false,
       "historical_limit": "Original ops population, roles, schedule and primary checkpoint are absent; no retrospective assignment or invented history permitted.",
       "source_verified": "Independent55offlinechecks+3budgetprobes;noopenblockers",
@@ -464,8 +474,8 @@
       "producer_PR": 51,
       "producer_CI": 40594427543,
       "integrated": true,
-      "released": "Native25 exact-source registration; no completed forecast operation yet.",
-      "native_verified": false,
+      "released": "Native25andRoot26pastmetadata-limit paths verified; separatearchive failure remains.",
+      "native_verified": "Budget paths passed in actualRoot26; fullforecastoperationfailedseparately.",
       "math_or_model_change": false,
       "regression": "All2266actualCI nodes complete,2265PASS/1existingoptionalcache skip;64focusedhosted tests and independent review PASS.",
       "failure_receipt": "fe0b33e6138a0386902a6d61b75435f336fc225000036256a60c6d2cf5ac3e0c",
@@ -473,6 +483,45 @@
       "main_commit": "fec873a02de6c180be7b85e569002ae4185654ff",
       "producer_commit": "679641686337bf48020826754bd6ea6b90f88fb8",
       "native_registration_verified": true
+    },
+    {
+      "id": "SYS-007-CONTINUATION-09",
+      "title": "Conservative archive planner rejects a codec-valid large reference control and its failure preservation",
+      "severity": "high",
+      "reproduced": true,
+      "affected_commit": "679641686337bf48020826754bd6ea6b90f88fb8",
+      "affected_path": "nfl_lab/audit_weekly_archive_v1.py:capture_groups",
+      "expected": "All original bytes fitting unchanged codec inflation/compressed/file/group/quota bounds survive normal or failure transport.",
+      "actual": "6,318,636B original R0 JSON inflates to about8.425MB Base64, exceeding8,323,072B conservative planning target while below existing12,582,912B codec cap. Both archive paths reject before POST.",
+      "impact": "No qualified new feed; Core diagnostics retained but Root26 forecast/old Week8 choice bodies missing. Do not fabricate or promote those forecasts.",
+      "repaired": true,
+      "committed": "dc6dffc391f4d5321b95b2ae804b250a2009438a",
+      "PR": 52,
+      "CI": 40602136533,
+      "integrated": false,
+      "released": false,
+      "native_verified": false,
+      "regression": "23combinedpackingchecks; independent119archive+75contract checks; exact6,318,636fictionalbyte freshCAS subprocess roundtrip; incompressible8MiB failsbeforePOST.",
+      "caps_raised": false,
+      "wire_changed": false,
+      "remaining": "FullCI/normalintegration; newactualnativecapture fullcensus/compression/completefreshrestore; actualoldbody unavailable."
+    },
+    {
+      "id": "SYS-007-CONTINUATION-10",
+      "title": "Consumed first-primary intent has no supported new-issuance recovery after archive failure",
+      "severity": "high",
+      "reproduced": true,
+      "affected_commit": "679641686337bf48020826754bd6ea6b90f88fb8",
+      "affected_path": "template.first_primary_claim;hosted.claim;operations_worker;resume",
+      "expected": "Explicit authorized new future issue after authenticating failed predecessor/consumedclaim/absent primaryhistory; original failure/claim/unknownbodies preserved.",
+      "actual": "Oldstableepoch/streamclaim exists; changingRootclock/source cannot create a new firstclaim. Ordinaryresume correctlyrejectsfailedcaptures; noqualifiedprimarycheckpoint exists.",
+      "repaired": false,
+      "integrated": false,
+      "released": false,
+      "native_verified": false,
+      "implementation_status": "Explicit manualOwnernewfutureissuance scope and stableone-successor recoveryclaim under implementation, separate from unchanged FAILED_CAPTURE_CANNOT_RESUME guard.",
+      "independent_review": "46existingtests+6probes pass and reproduceboundary. OldWeek8choicebodyisnotrecoverable fromhash alone. Newchoice mustuse authenticCOUNT7startupmethods/newclock/samecutoffs beforecurrentvalues.",
+      "remaining": "Implement/test/review closed OWNER recovery, exact historical Core/claim/journal/native lineage and missing-body gap; normalCI/integration/newnative/newfuturecapture. No failedarchivepromotion/newfit/backdating."
     }
   ],
   "operational_boundaries_20261027": {
@@ -487,5 +536,15 @@
     "scheduler_changed": false,
     "retired_ticker_preserved": true,
     "horizon_gaps_preserved": true
+  },
+  "owner_operations26_missing_evidence": {
+    "normal_archive": "FAILED_SINGLE_FILE_BUNDLE_CAP",
+    "opaque_archive": "FAILED_SAME_REASON",
+    "fresh_reader": "CORE_ONLY",
+    "original_complete_forecast_bodies": "NOT_RESTORED_NOT_AVAILABLE_IN_INSPECTED_EVIDENCE",
+    "originalWeek8choice": "HASH_AND_REFERENCE_RETAINED_BODY_UNAVAILABLE",
+    "originalstableclaim": "EXACT_NATIVE_FORMAT_MANIFEST_AND_ORIGINAL_POST_PAIR_OWNER_GET_VERIFIED",
+    "future_issuance": "NEW_ROOT_NEW_CLOCK_NEW_VALUES_REQUIRED",
+    "no_old_forecasts_fabricated": true
   }
 }

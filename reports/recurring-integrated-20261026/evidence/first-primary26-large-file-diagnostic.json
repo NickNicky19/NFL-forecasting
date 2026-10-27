@@ -1,0 +1,219 @@
+{
+  "state": "CORE_FAILURE_METADATA_ONLY",
+  "large_files": [
+    {
+      "path": "reference/R0_CONTROL_FORECAST_ROWS.json",
+      "bytes": 6318636,
+      "sha256": "b26a6ad19eec33b90c1b05b28ac9674e3de9e62969c8d44916a707e3d9d312c4"
+    },
+    {
+      "path": "reference/worker/output/data/week.json",
+      "bytes": 1945014,
+      "sha256": "621d6c00264a5d83314d59ec02509d1a6e20dcd1c4bcf3397d0992ff3c0f1702"
+    },
+    {
+      "path": "reference/worker/output/data/weekly-adaptive/6b400cfd96fffaf967f1d02a199fc9e38938fee82414a5fdce5e79a33c441aa2.json",
+      "bytes": 1670747,
+      "sha256": "6b400cfd96fffaf967f1d02a199fc9e38938fee82414a5fdce5e79a33c441aa2"
+    },
+    {
+      "path": "reference/worker/output/data/weekly-adaptive/99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9.json",
+      "bytes": 1670747,
+      "sha256": "99d168d264d62fed763991861b4ba6cd8798b137dadbd52a82be245c191857f9"
+    },
+    {
+      "path": "reference/worker/output/data/weekly-adaptive/ba0b7fc14846a1e19aa7c4c03bb76bad4f01529534d29479371c9aceb3a589f5.json",
+      "bytes": 1670747,
+      "sha256": "ba0b7fc14846a1e19aa7c4c03bb76bad4f01529534d29479371c9aceb3a589f5"
+    },
+    {
+      "path": "reference/PREPARED.json",
+      "bytes": 1492569,
+      "sha256": "a80383ae95d1b96bc1812a47fe2e901f7757b03f5afcfe573e49e355bb236bcb"
+    },
+    {
+      "path": "reference/worker/output/data/future.json",
+      "bytes": 742452,
+      "sha256": "2906f6bd6a6d37a7a25b19bb43a751849cb61021c9b951227b27b3f20dfe5def"
+    },
+    {
+      "path": "runtime/selected.jsonl.gz",
+      "bytes": 536274,
+      "sha256": "0fe2ed9492a4d37c0c89b107a5e9f739a4e4a01e828d74b96a485a8b94762739"
+    }
+  ],
+  "phases": [
+    {
+      "control": "phase-00",
+      "state": null,
+      "status_state": "PRIVATE_PRIOR_CAPTURE_RECOVERED_FOR_RECURRING",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-01",
+      "state": null,
+      "status_state": "CROSS_RUN_EFFECTIVE18_RESTORED_AND_REPLAYED_PRIVATE",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-02",
+      "state": null,
+      "status_state": "FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-03",
+      "state": null,
+      "status_state": "ORIGINALS_RECOVERED_GET_ONLY",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-04",
+      "state": null,
+      "status_state": "METADATA_PREPARED_PENDING_PARENT_AUTHENTICATED_COMPLETION",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-05",
+      "state": null,
+      "status_state": "FRESH_E7_SOURCE_PREPARED",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-06",
+      "state": null,
+      "status_state": "PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-07",
+      "state": null,
+      "status_state": "ORIGINAL_R0_CAPTURE_COMPLETE_PRIVATE",
+      "exit_code": 0,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-08",
+      "state": null,
+      "status_state": "FAILED_ARCHIVE_RETAINED",
+      "exit_code": 1,
+      "reason": null,
+      "stdout_sha256": null
+    },
+    {
+      "control": "phase-09",
+      "state": "FAILED_RETAINED",
+      "status_state": null,
+      "exit_code": null,
+      "reason": "SINGLE_FILE_BUNDLE_CAP",
+      "stdout_sha256": null
+    }
+  ],
+  "auxiliary_controls": [
+    {
+      "path": "BOOTSTRAP_STARTED.json",
+      "bytes": 537
+    },
+    {
+      "path": "PARENT_STARTED.json",
+      "bytes": 531
+    },
+    {
+      "path": "phase-status/01-operations-retained.stdout",
+      "bytes": 645
+    },
+    {
+      "path": "phase-status/02-models.stdout",
+      "bytes": 140
+    },
+    {
+      "path": "phase-status/03-operations-prepare.stdout",
+      "bytes": 464
+    },
+    {
+      "path": "phase-status/04-recover.stdout",
+      "bytes": 437
+    },
+    {
+      "path": "phase-status/05-prepare.stdout",
+      "bytes": 247
+    },
+    {
+      "path": "phase-status/06-acquire.stdout",
+      "bytes": 214
+    },
+    {
+      "path": "phase-status/07-infer.stdout",
+      "bytes": 226
+    },
+    {
+      "path": "phase-status/08-reference.stdout",
+      "bytes": 136
+    },
+    {
+      "path": "phase-status/09-produce.stdout",
+      "bytes": 128
+    },
+    {
+      "path": "phase-status/01-operations-retained.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/02-models.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/03-operations-prepare.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/04-recover.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/05-prepare.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/06-acquire.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/07-infer.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/08-reference.stderr",
+      "bytes": 0
+    },
+    {
+      "path": "phase-status/09-produce.stderr",
+      "bytes": 0
+    }
+  ],
+  "secondary": {
+    "original_failure_replaced": false,
+    "partial_forecast_durability_established": false,
+    "public_release": false,
+    "reason": "SINGLE_FILE_BUNDLE_CAP",
+    "state": "FAILED_RETAINED",
+    "successful_forecast": false
+  },
+  "forecast_or_outcome_row_decodes": 0,
+  "new_fits": 0
+}

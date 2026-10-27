@@ -1,0 +1,338 @@
+{
+  "schema_version": "archive26-independent-review-v1",
+  "state": "INDEPENDENT_REVIEW_AND_EXACT_PATCH_READY_LOCAL_ONLY",
+  "source_sha": "679641686337bf48020826754bd6ea6b90f88fb8",
+  "source_worktree": "/workspace/nfl-system-audit/producer-native25-20261027",
+  "isolated_worktree": "/workspace/nfl-system-audit/archive26-independent-review-679",
+  "parent_metadata": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/first-primary26-large-file-diagnostic.json",
+    "sha256": "b3bea9fb4844b716261009265eeaeb54c4dc78f583e090ebc87d36ac348c409b",
+    "scope": "METADATA_ONLY_PARENT_PROVIDED"
+  },
+  "culprit": {
+    "path": "reference/R0_CONTROL_FORECAST_ROWS.json",
+    "bytes": 6318636,
+    "sha256": "b26a6ad19eec33b90c1b05b28ac9674e3de9e62969c8d44916a707e3d9d312c4",
+    "base64_bytes": 8424848,
+    "actual_body_read": false,
+    "actual_body_compression_measured": false
+  },
+  "recommendation": "Isolate members above the conservative GROUP_JSON planning target and at or below existing INFLATED; unchanged codec.encode must succeed under CappedBuffer ASSET_CAP before any POST. Retain existing wire and every full original file.",
+  "caps": {
+    "GROUP_JSON": 8323072,
+    "INFLATED": 12582912,
+    "ASSET_CAP": 8388608,
+    "MAX_GROUPS": 8,
+    "codec_MAX_FILES": 64,
+    "capture_MAX_FILES": 512,
+    "MAX_ASSETS": 128,
+    "TOTAL_CAP": 33554432,
+    "global_bytes": 536870912
+  },
+  "wire_change": false,
+  "source_changes": [
+    "nfl_lab/audit_weekly_archive_v1.py"
+  ],
+  "test_changes": [
+    "tests/test_audit_weekly_archive_packing_v1.py",
+    "tests/test_audit_weekly_archive_singleton_v1.py"
+  ],
+  "focused_tests": {
+    "result": "9 passed",
+    "wall_seconds": 7.95,
+    "log": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-singleton-tests.log",
+    "native_processes": [
+      {
+        "phase": "encode",
+        "pid": 29699,
+        "original_bytes": 6318636,
+        "original_sha256": "41f2ee620d8c937b63b10f9e3f3b690068dcaa543245703244873852247298e3",
+        "inflated_bytes": 8425364,
+        "compressed_bytes": 8568,
+        "global_physical_bytes": 6329345,
+        "wall_seconds": 0.2932089690002613,
+        "CPU_seconds": 0.290864252,
+        "RSS_peak_KiB": 80560,
+        "independent_CAS": true,
+        "model_decodes": 0,
+        "fits": 0
+      },
+      {
+        "phase": "restore",
+        "pid": 29700,
+        "original_bytes": 6318636,
+        "original_sha256": "41f2ee620d8c937b63b10f9e3f3b690068dcaa543245703244873852247298e3",
+        "inflated_bytes": 8425364,
+        "compressed_bytes": 8568,
+        "global_physical_bytes": 6319901,
+        "wall_seconds": 0.5357768200010469,
+        "CPU_seconds": 0.5357175160000001,
+        "RSS_peak_KiB": 57376,
+        "independent_CAS": true,
+        "model_decodes": 0,
+        "fits": 0
+      }
+    ],
+    "independent_empty_restore_CAS": true,
+    "source_and_restored_inodes_differ": true,
+    "worst_case_8MiB_incompressible_original": "COMPRESSED_BUNDLE_CAP_BEFORE_ANY_POST",
+    "normal_archive_transport": "PASSED_FULL_PRODUCE_AND_RESTORE",
+    "actual_failure_opaque_collector_path": "PASSED_LARGE_SINGLETON_CODEC_ROUNDTRIP_BEFORE_POST",
+    "old_planner_guard": "REPRODUCED_SINGLE_FILE_BUNDLE_CAP"
+  },
+  "regressions": {
+    "state": "PASSED",
+    "tests": 119,
+    "wall_seconds": 290.71,
+    "log": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-regressions.log",
+    "scope": [
+      "archive producer/reader/exporter",
+      "383-file native scale under unchanged limits",
+      "353-file and 383-file packing fixtures",
+      "owner bundle/checkpoint compatibility",
+      "private storage guards",
+      "actual failure opaque collector",
+      "lossless original source-receipt bundle"
+    ],
+    "note": "Production patch unchanged throughout. After strengthening only the cold-CAS fixture, all 9 focused tests passed again against the final test source."
+  },
+  "protected": {
+    "math6_sha256": {
+      "baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+      "cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+      "direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+      "median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+      "role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+      "weekly_future_inference.py": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+    },
+    "math6_unchanged": true,
+    "model_artifact_reads": 0,
+    "model_artifact_writes": 0,
+    "model_fits": 0,
+    "private_forecast_row_decodes": 0,
+    "outcome_decodes": 0,
+    "ledger_writes": 0,
+    "receipts_overwritten": 0,
+    "pushes": 0,
+    "merges": 0,
+    "dispatches": 0,
+    "messages_sent": 0,
+    "subagents_started": 0,
+    "source_worktree_clean_at_original_commit": true,
+    "owner_bootstrap_bundle_unchanged": true,
+    "R0_scoring_unchanged": true,
+    "artifact18_policy": "No actual retained model artifact or replay fixture opened, deserialized, fitted, edited or restored by this review. Existing 18 expected replay hashes and six math source pins unchanged.",
+    "numerical_profile_sha256": "1edc3d47e9c2adb45efab75ff0483d1624419e54721b96636dd23beadad07e5a",
+    "original18_expected_replay_hashes_unchanged": true
+  },
+  "limitations": [
+    "Actual large JSON body has not been retained or examined by this review. Actual compressed size and whole authenticated census fit remain unproven.",
+    "Existing core-only fresh reader receipt does not establish opaque forecast byte durability."
+  ],
+  "patch": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.patch",
+    "sha256": "66c8c6afdcce95cd1fc58c0970398169c6801ca911eee5a1cd80f79c2bc54563",
+    "bytes": 15905,
+    "prior_draft_preserved": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review-initial.patch",
+    "base_apply_check": "PASSED_AGAINST_CLEAN_679641686337bf48020826754bd6ea6b90f88fb8"
+  },
+  "before_after": {
+    "state": "FICTIONAL_BEFORE_AFTER_CONFIRMED",
+    "runs": [
+      {
+        "source": "/workspace/nfl-system-audit/producer-native25-20261027",
+        "planning_result": "SINGLE_FILE_BUNDLE_CAP",
+        "fictional_original_bytes": 6318636,
+        "fictional_original_sha256": "41f2ee620d8c937b63b10f9e3f3b690068dcaa543245703244873852247298e3",
+        "base64_bytes": 8424848,
+        "inflated_bytes": 8425310,
+        "compressed_bytes": 8551,
+        "wire_version": "weekly-owner-bootstrap-file-bundle-v1",
+        "independent_gzip_and_base64_exact": true,
+        "codec_verifier_exact": true,
+        "actual_private_body_read": false
+      },
+      {
+        "source": "/workspace/nfl-system-audit/archive26-independent-review-679",
+        "planning_result": "ACCEPTED_ISOLATED_SINGLETON",
+        "fictional_original_bytes": 6318636,
+        "fictional_original_sha256": "41f2ee620d8c937b63b10f9e3f3b690068dcaa543245703244873852247298e3",
+        "base64_bytes": 8424848,
+        "inflated_bytes": 8425310,
+        "compressed_bytes": 8552,
+        "wire_version": "weekly-owner-bootstrap-file-bundle-v1",
+        "independent_gzip_and_base64_exact": true,
+        "codec_verifier_exact": true,
+        "actual_private_body_read": false
+      }
+    ]
+  },
+  "contracts": {
+    "result": "75 passed",
+    "wall_seconds": 2.5,
+    "log": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-contracts.log",
+    "scope": [
+      "consumer schema",
+      "live schema",
+      "cutoff leakage",
+      "scoring",
+      "scheduler"
+    ],
+    "actual_dispatches": 0
+  },
+  "test_environment": {
+    "python": "3.12.14",
+    "registered_startup_environment_matches": true,
+    "packages": {
+      "pytest": "8.3.5",
+      "pyarrow": "23.0.1",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "scipy": "1.17.0",
+      "scikit-learn": "1.8.0",
+      "catboost": null,
+      "joblib": "1.5.3"
+    },
+    "profile_launcher": "/workspace/nfl-system-audit/continuation/run_numerical_profile.py",
+    "model_execution_qualification_claim": false
+  },
+  "diagnosis": {
+    "failure": "SINGLE_FILE_BUNDLE_CAP",
+    "stage": "metadata-only capture_groups before codec.encode or payload POST",
+    "base64_payload_excess_over_GROUP_JSON_before_headers": 101776,
+    "existing_CHUNK": "49152-byte source reads / 65536-byte base64 blocks within one gzip bundle; no file fragmentation",
+    "resource_vs_planning": "GROUP_JSON is the ordinary packing target. INFLATED and CappedBuffer ASSET_CAP remain the encoding and decoding hard bounds.",
+    "required_scope": "capture_groups only; owner_bootstrap_bundle codec and wire unchanged",
+    "all_originals_retained": "Input full-file metadata, origin, hashes, bytes, index schema, validation and immutable owned extraction unchanged."
+  },
+  "references": [
+    {
+      "path": "nfl_lab/owner_bootstrap_bundle.py",
+      "line": 16,
+      "finding": "Original 12MiB inflated cap, GROUP_JSON planning target, 64-file cap and streaming CHUNK"
+    },
+    {
+      "path": "nfl_lab/owner_bootstrap_bundle.py",
+      "line": 71,
+      "finding": "CappedBuffer enforces unchanged 8MiB compressed asset cap while streaming"
+    },
+    {
+      "path": "nfl_lab/owner_bootstrap_bundle.py",
+      "line": 77,
+      "finding": "Existing encoder already admits singleton inflated size up to INFLATED"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "line": 75,
+      "finding": "Only production change: isolate oversized members and subtract their slots from existing eight-group budget"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "line": 546,
+      "finding": "Every group encoded and exact index/quota preflight completed before first payload POST"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "line": 1441,
+      "finding": "Actual preserve_opaque_outputs ultimately calls shared archive.produce -> capture_groups"
+    },
+    {
+      "path": "nfl_lab/owner_bootstrap_bundle.py",
+      "line": 146,
+      "finding": "Unchanged closed bundle/hash/base64/origin validation before immutable owned extraction"
+    }
+  ],
+  "parent_reported_run": {
+    "run_id": "40597080516",
+    "producer_job_id": "122515613148",
+    "normal_archive_failed_at_utc": "2026-10-27T22:59:48Z",
+    "failure_preservation_completed_at_utc": "2026-10-27T23:04:47Z",
+    "reader_job_id": "122523994578",
+    "reader_scope": "CORE_ONLY_OPAQUE_FALSE",
+    "reader_receipt_sha256": "fd848f87f4f49e76074ddb153691101cd5fd5f99080f8fad0ddc044b1b42056d",
+    "verification": "Parent-provided metadata; no remote job or private body fetched by this reviewer"
+  },
+  "readiness": "ENGINEERING_PATCH_PREPARED; genuine original large-body compression and whole census admission remain unproven",
+  "completed_at_utc": "2026-10-27T23:20:00.594963+00:00",
+  "requested_destination": "/continuation/evidence/archive26-independent-review.json",
+  "actual_saved_path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.json",
+  "verification_commands": [
+    {
+      "cwd": "/workspace/nfl-system-audit/archive26-independent-review-679",
+      "command": "/tmp/archive26-independent-test-env/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -B -m pytest -q -s tests/test_audit_weekly_archive_v1.py tests/test_audit_weekly_archive_scale_v1.py tests/test_audit_weekly_archive_packing_v1.py tests/test_audit_weekly_archive_singleton_v1.py tests/test_owner_private_bootstrap.py tests/test_gha_private_checkpoint.py tests/test_private_draft_store_v2.py tests/test_audit_weekly_failed_scope_v1.py tests/test_audit_weekly_receipt_bundle_v1.py",
+      "result": "119 passed"
+    },
+    {
+      "cwd": "/workspace/nfl-system-audit/archive26-independent-review-679",
+      "command": "/tmp/archive26-independent-test-env/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -B -m pytest -q tests/test_consumer_schema.py tests/test_live_contract.py tests/test_skill_scoring.py tests/test_audit_weekly_schedule_v1.py",
+      "result": "75 passed"
+    },
+    {
+      "cwd": "/workspace/nfl-system-audit/archive26-independent-review-679",
+      "command": "/tmp/archive26-independent-test-env/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -B -m pytest -q -s tests/test_audit_weekly_archive_singleton_v1.py",
+      "result": "9 passed including separate empty restore CAS"
+    },
+    {
+      "cwd": "/workspace/nfl-system-audit/producer-native25-20261027",
+      "command": "git apply --check /workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.patch",
+      "result": "PASSED; no patch applied to source"
+    }
+  ],
+  "acceptance": {
+    "single_function_production_fix": true,
+    "fragment_wire_added": false,
+    "wire_version": "weekly-owner-bootstrap-file-bundle-v1",
+    "ordinary_group_target_unchanged": true,
+    "all_actual_resource_caps_unchanged": true,
+    "exact_input_and_origin_census_retained": true,
+    "no_semantic_JSON_split_or_columns_dropped": true,
+    "full_file_hash_checked_before_restore_write": true,
+    "all_encoding_precedes_first_POST": true,
+    "oversized_singletons_charge_existing_eight_group_budget": true,
+    "normal_and_failure_packing_reached": true,
+    "incompressible_cap_failure_preserves_original_and_no_POST": true,
+    "fresh_reader_exact_bytes_into_independent_empty_CAS": true
+  },
+  "evidence_files": {
+    "first-primary26-large-file-diagnostic.json": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/first-primary26-large-file-diagnostic.json",
+      "bytes": 5637,
+      "sha256": "b3bea9fb4844b716261009265eeaeb54c4dc78f583e090ebc87d36ac348c409b"
+    },
+    "archive26-independent-review.patch": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.patch",
+      "bytes": 15905,
+      "sha256": "66c8c6afdcce95cd1fc58c0970398169c6801ca911eee5a1cd80f79c2bc54563"
+    },
+    "archive26-independent-review-initial.patch": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review-initial.patch",
+      "bytes": 15773,
+      "sha256": "cc7a8749d8629833c4ea3c5ca261c618cabf0cfc51f08ae0e90fe2967e8e23f9"
+    },
+    "archive26-independent-before-after.json": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-before-after.json",
+      "bytes": 1213,
+      "sha256": "089d5716ae4d06c86f233f82015f06073a06d8ae52721352e1c13d45e8a188e3"
+    },
+    "archive26-independent-singleton-tests.log": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-singleton-tests.log",
+      "bytes": 792,
+      "sha256": "7cbb416073f7542bb636b9afe82cf6381083c601ffa23cd42ead7596c1d5c82a"
+    },
+    "archive26-independent-regressions.log": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-regressions.log",
+      "bytes": 15230,
+      "sha256": "2607f0d44e03f8e739104e4fba0ec948fe129adf8efcefdc3a3973658eab0bdd"
+    },
+    "archive26-independent-contracts.log": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-contracts.log",
+      "bytes": 179,
+      "sha256": "6aa16735601ddaf46c89baeaa1ddd62194b7711de8cf091cb6a1251379e7dd36"
+    },
+    "archive26-independent-test-environment.json": {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-test-environment.json",
+      "bytes": 425,
+      "sha256": "75fdbb462dd00ad4a4a01dfae34be39c8e44c6d28b20a2d114694caf6c51051f"
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "schema_version": "archive26-independent-combined-review-stamp-v1",
+  "state": "PASS_READ_ONLY_EXACT_VALIDATED_REPAIR_BYTES_NO_GUARD_CAPS_RAISED",
+  "observed_at_utc": "2026-10-27T23:24:19.228623+00:00",
+  "combined_worktree": "/workspace/nfl-system-audit/archive-first-recovery-20261027",
+  "combined_branch": "audit/archive-first-recovery-20261027",
+  "combined_head_sha": "679641686337bf48020826754bd6ea6b90f88fb8",
+  "validated_worktree": "/workspace/nfl-system-audit/archive26-independent-review-679",
+  "base_sha": "679641686337bf48020826754bd6ea6b90f88fb8",
+  "source_and_test_files": {
+    "nfl_lab/audit_weekly_archive_v1.py": {
+      "bytes": 55035,
+      "combined_sha256": "ce5771414331ac97bc169f1caaf56202b9fd749789f80d2c0849055888d7fd91",
+      "validated_sha256": "ce5771414331ac97bc169f1caaf56202b9fd749789f80d2c0849055888d7fd91",
+      "equal_validated_bytes": true
+    },
+    "tests/test_audit_weekly_archive_packing_v1.py": {
+      "bytes": 21253,
+      "combined_sha256": "15fa30f977a7c70a6c285fe98bd3b1aa78c4e18bdfbcaa932f307b852dc06dee",
+      "validated_sha256": "15fa30f977a7c70a6c285fe98bd3b1aa78c4e18bdfbcaa932f307b852dc06dee",
+      "equal_validated_bytes": true
+    },
+    "tests/test_audit_weekly_archive_singleton_v1.py": {
+      "bytes": 10198,
+      "combined_sha256": "d17e96ae9a89e0048a3851d3a0ea290610c62fba9a07e1833af957d393f88288",
+      "validated_sha256": "d17e96ae9a89e0048a3851d3a0ea290610c62fba9a07e1833af957d393f88288",
+      "equal_validated_bytes": true
+    }
+  },
+  "all_three_equal_validated_bytes": true,
+  "packing_only_production_change": true,
+  "production_bytes_outside_capture_groups_identical_to_base": true,
+  "no_guard_caps_raised": true,
+  "caps": {
+    "GROUP_JSON": 8323072,
+    "INFLATED": 12582912,
+    "ASSET_CAP": 8388608,
+    "MAX_GROUPS": 8,
+    "codec_MAX_FILES": 64,
+    "capture_MAX_FILES": 512,
+    "MAX_ASSETS": 128,
+    "TOTAL_CAP": 33554432,
+    "global_bytes": 536870912
+  },
+  "native_caps": {
+    "wall_seconds": 180,
+    "CPU_seconds": 120,
+    "address_space_bytes": 536870912,
+    "HTTP_per_client": 40,
+    "native_clients": 10,
+    "retries": 0,
+    "fits": 0
+  },
+  "guard_implementation_files": {
+    "nfl_lab/owner_bootstrap_bundle.py": {
+      "bytes": 12495,
+      "sha256": "31d7daaa72ad5d2924c4e73cae43d5622f3a6035e864a316548fb0fb92ec58b8",
+      "byte_identical_to_base": true
+    },
+    "nfl_lab/private_draft_store.py": {
+      "bytes": 37072,
+      "sha256": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+      "byte_identical_to_base": true
+    },
+    "nfl_lab/operational_storage.py": {
+      "bytes": 33370,
+      "sha256": "fdec24fc89391506f3d99d1fedd04042442ec56f5495ef10ff7be9479381b3d8",
+      "byte_identical_to_base": true
+    },
+    "tools/private_draft_store_v2.py": {
+      "bytes": 6969,
+      "sha256": "abb6330e881bdf872a3da89a135c76d3256952ee184f652b22d4b58457009487",
+      "byte_identical_to_base": true
+    }
+  },
+  "ordinary_groups_still_bounded_by_GROUP_JSON": true,
+  "oversized_members_isolated_as_singletons_under_existing_INFLATED": true,
+  "unchanged_codec_CappedBuffer_enforces_ASSET_CAP_before_POST": true,
+  "singletons_consume_existing_eight_group_budget": true,
+  "wire_and_full_file_census_unchanged": true,
+  "math6_sha256": {
+    "baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+    "cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "weekly_future_inference.py": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+  },
+  "math6_and_original18_replay_profile_unchanged": true,
+  "actual_model_artifact_reads": 0,
+  "actual_model_artifact_writes": 0,
+  "patch": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.patch",
+    "bytes": 15905,
+    "sha256": "66c8c6afdcce95cd1fc58c0970398169c6801ca911eee5a1cd80f79c2bc54563",
+    "reverse_apply_check_in_combined": "PASSED_CHECK_ONLY"
+  },
+  "prior_validation": {
+    "review_path": "/workspace/nfl-system-audit/continuation/evidence/archive26-independent-review.json",
+    "review_sha256": "eda89ff32f1d6260ba869f5536fc34160a3e65c01f836b41f7f797170354c65c",
+    "archive_regressions": "119 passed",
+    "contracts": "75 passed",
+    "final_cold_CAS_focused_tests": "9 passed",
+    "rerun_this_turn": false,
+    "reason": "Combined repair bytes exactly equal validated files; no concrete new concern found."
+  },
+  "owner_GET_evidence": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/pending-recovery-through26-owner-get.json",
+    "sha256": "604d301010a4661db60f74d2f4e86caebf570343de95febec3cff865b5ea586d",
+    "metadata": {
+      "state": "OWNER_GET_DIAGNOSTIC_NOT_NEW_NATIVE_QUALIFICATION",
+      "observed_at_utc": "2026-10-27T23:19:11.265622+00:00",
+      "original_runs": [
+        40338427888,
+        40585481152,
+        40591715349,
+        40597080516
+      ],
+      "authenticated_records_per_handoff": [
+        13,
+        17,
+        21,
+        23
+      ],
+      "unique_original_records": 23,
+      "unresolved_records": 1,
+      "unresolved_bytes": 657667,
+      "uploaded_assets": 57,
+      "charged_slots": 58,
+      "charged_bytes": 3889761,
+      "prior_first_primary_claim_present_and_native_manifest_matched": true,
+      "plain_metadata_bytes": 13859,
+      "compact_metadata_bytes": 3893,
+      "estimated_registration_root_bytes": 58214,
+      "root_cap": 61440,
+      "GET_calls": 35,
+      "POST_calls": 0,
+      "new_fits": 0,
+      "forecast_or_outcome_row_decodes": 0
+    },
+    "scope": "Public-safe owner GET diagnostic only; no new native qualification",
+    "parent_reported_additional_match": "Original Root26 POST pair matched; recorded as parent report, not independently refetched by this reviewer."
+  },
+  "review_limits": [
+    "Stamp covers the three packing repair files and unchanged guard/math pins at this observation time; separate mandatory OwnerRecovery implementation is outside this stamp.",
+    "Actual missing private bodies, actual R0 compression and complete authenticated census admission remain unproven.",
+    "No new Root or native operation authorized or started by this review."
+  ],
+  "actions_this_turn": {
+    "source_edits": 0,
+    "source_test_reruns": 0,
+    "ledger_writes": 0,
+    "receipt_overwrites": 0,
+    "private_body_reads": 0,
+    "forecast_or_outcome_row_decodes": 0,
+    "new_fits": 0,
+    "pushes": 0,
+    "merges": 0,
+    "dispatches": 0,
+    "messages_sent": 0,
+    "subagents_started": 0
+  },
+  "disposition": "Packing review closed with exact validated bytes and unchanged actual guard caps; integration and OwnerRecovery readiness remain with Parent."
+}
