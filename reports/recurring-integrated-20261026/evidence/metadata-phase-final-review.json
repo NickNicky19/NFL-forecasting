@@ -1,0 +1,50 @@
+{
+  "attestation": {
+    "method": "Reviewer attribution plus SHA-256 of canonical review JSON; no cryptographic key signature asserted.",
+    "review_sha256": "f0245ac56de07ca35a3efbfa4b617de26e456d05207d77bea013db1408e904a8",
+    "signed_by": "Codex independent read-only reviewer"
+  },
+  "review": {
+    "base_and_current_head": "4202d7525fb60d14c847f3509027de21570f05e1",
+    "blocking_findings": [],
+    "files_sha256": {
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "2ff6f53ce12982d8dbf78fc4805529e9119a503c7186a3cb6ee8874ca1421cd9",
+      "nfl_lab/audit_weekly_hosted_v1.py": "c53e886f1fe542ce82f4ad8b7306cbab73d5780e005af7301922bba7b1dd39af",
+      "tests/test_audit_weekly_controller_bootstrap_v1.py": "6abd7296dbc6ca89acb9c6075ee7a1d67fb6a2b1bda1329b695ecccc6a3ed011",
+      "tests/test_audit_weekly_hosted_v1.py": "680a27e9ecb91d42163ef132a5d6e5b2c81a3043cd11966c68189089bfcdac10",
+      "tests/test_audit_weekly_operations_authority_v1.py": "9aba2e27a0ae1c01fdf41771f3507ce1f218dc866bb193ed21fe46dbe31ed762"
+    },
+    "findings": [
+      "Final runtime diff retains fresh current proof, real Actions authentication and exact API-job binding for each new scope.",
+      "Pending Clients are GET-only, separately qualified, capped at eight, and consume at most 28 requests each in the tested two-page/two-redirect case.",
+      "Original Client remains at 18 calls in the max-eight test; exact aggregate and census guards precede all seeding. Bad actor/hash on the last handoff prevents every seed and POST.",
+      "Public metadata uses its own GET-only scope: 11/12/13 requests for no checkpoint, legacy checkpoint, or latest locator.",
+      "Combined regression uses newly constructed Runners and real inherited Client transport guards. The fake fixture factory is not used by these five tests; network denial is scoped to their fixture dependency.",
+      "Storage 40-call/180-second caps, research configuration, workflow and source-pin inventory remain unchanged. Issued registration route is retained beside the new metadata-phases route."
+    ],
+    "limits": "Code and fixture review only. Parent owns full Producer/Main results, CI, PR integration and native validation. No native success is inferred. Original census scope still fails closed if cumulative work exceeds its unchanged wall limit.",
+    "reviewed_at_utc": "2026-10-27T22:22:29.225027+00:00",
+    "reviewer": "Codex independent read-only reviewer",
+    "reviewer_remote_actions": 0,
+    "reviewer_source_edits": 0,
+    "schema_version": "metadata-phase-final-independent-review-v1",
+    "validation": {
+      "baseline_log": "Three genuine StoreError OPERATION_LIMIT failures on Source4202; no xfail substitution.",
+      "baseline_log_sha256": "669bee8ec4a2597f4f08dd7ae1884adb4c7f5aca7e33b56967f615e8568ebcd5",
+      "command": "/workspace/nfl-system-audit/venv/bin/python /workspace/nfl-system-audit/continuation/run_numerical_profile.py -m pytest -q -p no:cacheprovider --tb=short tests/test_audit_weekly_hosted_v1.py",
+      "diff_check": "PASS",
+      "integrated_regression_AST_matches_validated_scratch": {
+        "_pending_budget_case": true,
+        "_pending_budget_runner": true,
+        "test_last_pending_handoff_guard_prevents_all_seeding": true,
+        "test_pending_full_handoff_budget_uses_independent_real_clients": true
+      },
+      "result": "64 passed in 3.02s",
+      "source_pins": 128,
+      "source_snapshot_stable": true
+    },
+    "verdict": "PASS_FOCUSED_FINAL_REVIEW",
+    "working_diff_sha256": "6e54aea5b4c67205e1415f0d8bd6902e14a454ae86bddd4dab14cad6e0310a11",
+    "worktree": "/workspace/nfl-system-audit/metadata-phase-budgets-20261027"
+  }
+}

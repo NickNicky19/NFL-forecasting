@@ -1,3 +1,17 @@
+Update — 2026-10-27T22:25:24.652481+00:00 (PARTIAL)
+
+Main48/Producer49 merged at097bc33/4202d75. Genuine source-bound registration23run40591071685 passed all3jobs; the1356B native seal SHAcf34256d… and39,240B cleared record were checked against actualAPI/source/clocks and committed/read back at535cff844, with original records preserved. This registration is specific to that source pair.
+
+The subsequent actual first-primary24run40591715349 passed initialization then failedOPERATION_LIMIT while reading prior original-source metadata, before the first child request or current-game forecast. Its original core/opaque failure was restored by fresh reader122498223302, receiptfe0b33e6…. Export was skipped. OWNERGET authenticates21 original reservations across3handoffs and keeps the unresolved657667B upload charged; no oldRoot orPOST is retried. [Exact native failure/restoration](evidence/first-primary24-native-failure-restoration.json).
+
+The focused correction is Producer51head056a741: maximum8 separately authenticated/qualified GET-only failure exchanges, plus a fresh current-job GET-only public-metadata exchange. Per-client40call/180second guards, exact identities, hashes, original records and aggregate-before-seeding remain strict. Six exhausted-clock/call public-metadata regressions and three2/3/8-handoff tests fail on the old source and pass after; a bad final actor/hash prevents every seed/POST. Independent final64hosted tests/review pass, with28calls per handoff and11/12/13public-metadata calls. Main50's create-only slot counterpart mergedfec873a after736passes/oneexistingoptional skip/33subtests andCI40593936272; Producer51 fullCI40594427543 is pending. Earlier literal registry routes remain readable. New native25/capture26 and actual export/consumer remain required. [Independent review](evidence/metadata-phase-final-review.json).
+
+Website9f9f3056 remains ready/unmerged under the owner-confirmed active writer. A structured manual handoff6454946166 requests its independent current-production release. Both owner Phase2a4815f7 CI runs now pass; its operating qualification/deployment remain separate. Consumer10d8948c4 passes223Python/all4JavaScript andCI40591777260 but staysdraft; a new source binding and successful fresh producer feed remain required. Live Main e336/app409dcb48 still shows reference fallback, not fresh selected installation.
+
+[Operational review](evidence/recurring-readiness-2205.json): the next configured Parent window isOctober28,07:36–07:57America/Chicago (12:36–12:57UTC,endexclusive). Activation-variable access remains403; its value is unknown and actual automation unverified. Finite20-run census longevity, original horizon gaps, source-timing assumptions, exact-PPR label boundary and unreproduced private accuracy claims remain explicit. No newNFLfits, backdating, competingwriter/scheduler, discardedlosses oraccuracygains are claimed.
+
+---
+
 Update — 2026-10-27T21:51:40.440717+00:00 (PARTIAL)
 
 First-primary22run40585481152 failedOPERATION_LIMIT in the final pre-claim absence GET. It had restored retained evidence and prepared the newWeek8metadata but issued no current-game forecasts. Actualfreshreader122478324667 restored original core/opaque failure evidence, receipte355557c…. OwnerGET authenticates17uniqueoriginal reservations and verifies the stable first-primary claim absent; no old Root is retried.

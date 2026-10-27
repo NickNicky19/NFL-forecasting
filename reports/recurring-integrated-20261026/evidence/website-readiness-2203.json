@@ -1,0 +1,185 @@
+{
+  "schema_version": "website-readiness-bounded-audit-v1",
+  "recorded_at": "2026-10-27T22:05:21.301514Z",
+  "audit_window_utc": "2026-10-27T22:01Z/2026-10-27T22:05Z",
+  "scope": "Read-only refresh of PR9, active PR1 and owner coordination, handoff acknowledgment, actual main and public deployment. No unrelated feature re-audit.",
+  "conclusion": {
+    "pr9_technically_eligible_for_existing_owner_integration": true,
+    "summary": "PR9 remains open, clean and mergeable at the requested exact head with passing exact-head CI and zero review threads. All seven changed paths are covered by the existing active owner authorization. Integration remains with that owner under the existing release controls.",
+    "owner_request_status": "ACTIVE",
+    "handoff_public_acknowledgment_found": false,
+    "pr9_merged": false,
+    "pr9_live": false,
+    "immediate_dependency": "Existing owner acknowledgment and integration/release follow-through; the published PR1 checkpoint continues to await its own final CI and operating qualification. No published owner response to the request to integrate PR9 separately was found."
+  },
+  "pr9": {
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/9",
+    "head_sha": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+    "base_branch": "main",
+    "base_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "state": "OPEN",
+    "draft": false,
+    "mergeable": "MERGEABLE",
+    "merge_state": "CLEAN",
+    "merged_at": null,
+    "auto_merge_enabled": false,
+    "review_thread_count": 0,
+    "review_decision": null,
+    "ci": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40576824120",
+      "head_sha": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-10-27T20:18:40Z"
+    },
+    "changed_paths": [
+      "output/app.js",
+      "output/index.html",
+      "tests/test-selected-rankings.cjs",
+      "tests/test-ui.cjs",
+      "tests/test-weekly-overlay.cjs",
+      "tests/test_weekly_selected_rankings.py",
+      "tools/weekly_selected_rankings.py"
+    ],
+    "all_changed_paths_in_active_authorized_scope": true,
+    "scope_authorization_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6397619947",
+    "expected_app_sha256": "64253f93f62e5f4c6c0a73381ba1b1e15e823ce47d821e7d837835af5dfae9b6",
+    "verification_basis": "Refreshed GitHub PR, run, review-thread, authorized-scope and source-asset data. Existing combined-test/browser evidence in the handoff was not rerun."
+  },
+  "active_implementation": {
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1",
+    "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+    "base_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "state": "OPEN",
+    "draft": false,
+    "mergeable": "MERGEABLE",
+    "merge_state": "UNSTABLE",
+    "ci": [
+      {
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40585130090",
+        "event": "push",
+        "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-27T21:14:47Z"
+      },
+      {
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40585138743",
+        "event": "pull_request",
+        "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-27T21:14:51Z"
+      }
+    ],
+    "pr9_head_is_ancestor": false,
+    "comparison": {
+      "status": "diverged",
+      "merge_base_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/compare/f9f3056e23d1f62c1fc85828adc5a666cd52ea35...a4815f7ce47720922c30f98c441ca561605bba48"
+    },
+    "comparison_limit": "Ancestry does not establish whether individual equivalent changes have been composed into PR1."
+  },
+  "owner_status": {
+    "coordination_branch": "coordination/phase2-writer",
+    "coordination_sha": "b9cf08fd36e39cfc247a2e444681969abae577a4",
+    "state_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/blob/coordination/phase2-writer/coordination/writer-state.json",
+    "state_revision": 173,
+    "state_updated_at": "2026-10-27T21:21:13.059357Z",
+    "active_owner_login": "NickNicky19",
+    "active_request_status": "ACTIVE",
+    "active_source_head": "a4815f7ce47720922c30f98c441ca561605bba48",
+    "user_confirmed_separate_writer_still_running_at": "2026-10-27T21:57:00Z",
+    "latest_public_checkpoint": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6453863657",
+      "created_at": "2026-10-27T21:21:12Z",
+      "checkpoint_status": "COMPLETED",
+      "milestone": "CONNECTED_UI_SOURCE_BINDING_AND_COMPLETE_REQUIRED_UPDATER_ACCOUNTING_PUBLISHED; FINAL_CI_RUNNING",
+      "summary": "Historical ranking fixture and required-work accounting corrections published; owner reports 147 helper tests and local JavaScript/UI/About checks passing. Final exact-head and current-base CI still running. The genuine nondeploy updater case remains NOT_RUN_NOT_QUALIFIED.",
+      "goal_complete": false,
+      "lease_released": false,
+      "deployed": false,
+      "next": "Await final source/current-base CI, run the existing genuine nondeploy updater case with current ownership/Main checks, verify operating measurements and retained production-rooted artifact, and complete browser/content acceptance before release."
+    },
+    "interpretation": "COMPLETED labels the published source checkpoint, not the release goal or ownership. The active request remains ACTIVE; there is no basis for takeover or an abandoned-writer claim."
+  },
+  "handoff": {
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6454416886",
+    "created_at": "2026-10-27T21:46:55Z",
+    "updated_at": "2026-10-27T21:46:55Z",
+    "request": "Acknowledge and integrate eligible current-main PR9 through the existing writer workflow independently of remaining Phase2 work; return integrated commit, deployment run and actual asset identity.",
+    "public_acknowledgment_found": false,
+    "evidence": {
+      "latest_pr1_issue_comment_is_handoff_itself": true,
+      "subsequent_pr1_issue_comments": 0,
+      "subsequent_pr9_issue_comments": 0,
+      "subsequent_pr1_inline_review_comments": 0,
+      "subsequent_pr9_inline_review_comments": 0,
+      "handoff_reference_in_current_writer_state": false,
+      "pr9_exact_head_reference_in_current_writer_state": false,
+      "generic_report_audit_ack_readback_verified": false,
+      "generic_owner_handoff_complete": true
+    },
+    "limit": "The generic owner_handoff_complete flag does not acknowledge this later handoff. These public sources cannot establish whether the active writer has read it privately."
+  },
+  "actual_main_and_deployment": {
+    "main_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "main_committed_at": "2026-10-27T18:39:26Z",
+    "main_message": "Scheduled update (phase1)",
+    "main_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/commit/e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "latest_deployment": {
+      "workflow_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40561894375",
+      "workflow_name": "Hourly update",
+      "event": "schedule",
+      "workflow_head_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+      "environment": "github-pages",
+      "state": "success",
+      "succeeded_at": "2026-10-27T18:39:55Z",
+      "identity_note": "Workflow/deployment metadata records the pre-update run head; the published assets independently match the generated main commit e336bf7."
+    },
+    "live_observed_at": "2026-10-27T22:03:29Z",
+    "site_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/",
+    "assets": [
+      {
+        "path": "app.js",
+        "http_status": 200,
+        "bytes": 342038,
+        "sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
+        "matches_main": true,
+        "matches_pr9": false
+      },
+      {
+        "path": "index.html",
+        "http_status": 200,
+        "bytes": 3491,
+        "sha256": "e182288210162aa9ef6733474a62b18a033b685b16b7b043838c6c4348930a9a",
+        "matches_main": true
+      },
+      {
+        "path": "data/week.json",
+        "http_status": 200,
+        "bytes": 1979180,
+        "sha256": "b83a8a2e630cfbcca6c47e3851b438d657fbbd42366492754b3646bcad84896a",
+        "season": 2026,
+        "week": 8,
+        "generated_at": "2026-10-27T18:39:19Z"
+      }
+    ],
+    "asset_last_modified": "2026-10-27T18:39:33Z"
+  },
+  "limits_and_actions": {
+    "snapshot_only": true,
+    "separate_parent_work": "Native producer23/24 and current consumer rebind are outside this bounded refresh; no new consumer-release readiness is inferred.",
+    "remote_actions": "Read-only GitHub and public HTTP queries only.",
+    "local_action": "Create this report exclusively without overwriting any existing file.",
+    "code_edits": false,
+    "pushes": false,
+    "posts": false,
+    "merges": false,
+    "deployments": false,
+    "lease_acquire_or_release": false,
+    "workflow_dispatches": false,
+    "private_logs_or_opaque_operation_identifiers_included": false
+  }
+}

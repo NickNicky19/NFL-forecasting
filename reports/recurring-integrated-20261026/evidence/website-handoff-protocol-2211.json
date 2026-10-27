@@ -1,0 +1,156 @@
+{
+  "schema_version": "website-handoff-protocol-evidence-v1",
+  "recorded_at": "2026-10-27T22:13:40.167912Z",
+  "evidence_snapshot_at": "2026-10-27T22:11:04.522212Z",
+  "purpose": "Persist the completed bounded read-only coordination-protocol audit and 22:11 CI snapshot. No new remote refresh or action.",
+  "protocol": {
+    "repository": "https://github.com/NickNicky19/nicks-expert-nfl-picks",
+    "inspected_source_head": "a4815f7ce47720922c30f98c441ca561605bba48",
+    "gate_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/blob/a4815f7ce47720922c30f98c441ca561605bba48/tools/writer_gate.py#L374-L445",
+    "handoff_contract_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/blob/a4815f7ce47720922c30f98c441ca561605bba48/docs/IMPLEMENTATION_HANDOFF.md#L632-L647",
+    "recognized_gate_operations": [
+      "show",
+      "claim",
+      "claim-manual",
+      "check",
+      "checkpoint",
+      "finish"
+    ],
+    "comment_consumption": "The gate explicitly fetches supplied comment IDs; it does not poll a command queue or automatically resume the active writer.",
+    "codex_command_handler_found": false,
+    "pr1_comments_examined": 450,
+    "codex_command_mentions_in_examined_comments": 0,
+    "latest_pr1_comment_at": "2026-10-27T21:46:55Z",
+    "repository_request_ledger": {
+      "COMPLETED": 59,
+      "BLOCKED": 11,
+      "ACTIVE": 1,
+      "pending_or_queued": 0
+    },
+    "queue_named_state_fields_found": false,
+    "non_pr_issues_found": 0,
+    "comment_or_repository_dispatch_trigger_workflows_found": false,
+    "workflow_counts_inspected": {
+      "main": 6,
+      "pr1_exact_head": 8
+    },
+    "automatic_implementation_enabled": false,
+    "source_lease_is_production_release_permission": false,
+    "source_gate_boundaries": {
+      "main_writes": false,
+      "merge": false,
+      "deployment": false,
+      "model_promotion": false,
+      "force_push": false
+    },
+    "manual_readback_contract": "The manual owner reads SHA-specific AUDIT_REPORT evidence, acknowledges findings and reads that acknowledgment back. A posted request alone does not establish delivery, acknowledgment or completed work."
+  },
+  "owner_and_handoff": {
+    "coordination_branch": "coordination/phase2-writer",
+    "coordination_sha": "b9cf08fd36e39cfc247a2e444681969abae577a4",
+    "revision": 173,
+    "updated_at": "2026-10-27T21:21:13.059357Z",
+    "active_request_status": "ACTIVE",
+    "active_source_head": "a4815f7ce47720922c30f98c441ca561605bba48",
+    "latest_public_owner_checkpoint_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6453863657",
+    "latest_public_owner_checkpoint_at": "2026-10-27T21:21:12Z",
+    "user_confirmed_writer_still_running_at": "2026-10-27T21:57:00Z",
+    "handoff_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6454416886",
+    "public_acknowledgment_found": false,
+    "parent_can_message_other_conversation_with_available_tools": false,
+    "delivery_limit": "The parent will use the established PR1 WEBSITE_RELEASE_HANDOFF_REQUEST convention. No automated delivery, acknowledgment or consumption claim is supported."
+  },
+  "recommended_request": {
+    "destination": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1",
+    "surface": "Top-level PR Conversation comment",
+    "marker": "### WEBSITE_RELEASE_HANDOFF_REQUEST",
+    "precedent_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6391216944",
+    "interpretation": "Existing manual coordination convention, not a machine-consumed command schema or a new authorization.",
+    "status": "Prepared recommendation only; not posted by this audit.",
+    "body": "### WEBSITE_RELEASE_HANDOFF_REQUEST\n\nFollow-up to handoff comment 6454416886 for the existing active WEBSITE writer, under the owner's existing release instruction.\n\nPlease acknowledge and process PR9 independently:\nhttps://github.com/NickNicky19/nicks-expert-nfl-picks/pull/9\nExact head: f9f3056e23d1f62c1fc85828adc5a666cd52ea35\nCurrent Main: e336bf7a68c32267c3c3eec48892aeadcd03a90e\n\nPR9 is clean/mergeable, exact-head CI passes, and all seven paths are covered by your existing authorized source scope. Its strict grading, ranking refresh and actual selected/baseline source-caption corrections work with current production data; they require neither Phase2 activation nor a fresh selected capture. Preserve the ongoing Phase2 work. Phase2 CI completion and production cutover are not prerequisites for integrating this independently eligible current-Main PR9 correction.\n\nReturn accepted/queued/blocked with the specific reason in your next CODEX_RESULT. After integration/release, return the integrated commit, deployment run and actual app SHA256.\n\nPR10 remains draft pending repaired capture evidence and consumer rebind. This request changes no ownership, source scope or release controls.\n",
+    "no_impersonation_or_extra_approval": "Do not supply the active writer's run identity, claim or release its lease, issue a new approval, reset attempts, or assert an automated ACK."
+  },
+  "pr9_independent_readiness": {
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/9",
+    "head_sha": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+    "base_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "state": "OPEN",
+    "merged": false,
+    "mergeable": true,
+    "merge_state": "CLEAN",
+    "exact_head_ci": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40576824120",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "all_seven_paths_in_existing_authorized_scope": true,
+    "ready_corrections": [
+      "Strict grading and finality",
+      "Frozen ranking refresh",
+      "Caption derived from actual visible selected/baseline source"
+    ],
+    "phase2_ci_completion_is_pr9_production_cutover_prerequisite": false,
+    "phase2_activation_required": false,
+    "fresh_selected_capture_required": false,
+    "reason": "PR9 is a separate patch rooted in actual current Main, using current production data and unchanged baseline fallback. It does not depend on Phase2 activation or PR10's fresh-capture evidence.",
+    "release_execution": "Existing active owner follows the existing owner production instruction and release controls; source-scope coverage alone is not production approval.",
+    "expected_app_sha256": "64253f93f62e5f4c6c0a73381ba1b1e15e823ce47d821e7d837835af5dfae9b6"
+  },
+  "pr1_ci_at_2211": {
+    "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+    "current_base_pr_run": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40585138743",
+      "event": "pull_request",
+      "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+      "status": "completed",
+      "conclusion": "success",
+      "test_job_completed_at": "2026-10-27T22:06:05Z",
+      "passed_steps": [
+        "Retained baseline and Phase 2 regression suites",
+        "Python syntax",
+        "JavaScript and UI checks",
+        "About comparison states"
+      ],
+      "skipped_steps": [
+        "Fingerprint Phase 2 source checks",
+        "Seal complete Phase 2 source checks"
+      ]
+    },
+    "push_run": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40585130090",
+      "event": "push",
+      "head_sha": "a4815f7ce47720922c30f98c441ca561605bba48",
+      "status": "in_progress",
+      "conclusion": null,
+      "running_step": "Retained baseline and Phase 2 regression suites",
+      "fingerprint_step": "success",
+      "pending_steps": [
+        "Python syntax",
+        "JavaScript and UI checks",
+        "About comparison states",
+        "Seal complete Phase 2 source checks"
+      ]
+    },
+    "interpretation": "The PR check passed; complete push/source-seal success was not yet observed. This Phase2 CI status is not a prerequisite for independent PR9 integration."
+  },
+  "separate_pr10_context": {
+    "user_reported_local_current_consumer_tests": 223,
+    "user_reported_ci": "PASS",
+    "draft": true,
+    "remaining_blocker": "Capture24 failed due to the metadata40-call bug; repair and fresh capture/consumer rebind are proceeding separately.",
+    "independently_reaudited_in_protocol_task": false
+  },
+  "actions": {
+    "mode": "Persist existing public-safe evidence only, then stop.",
+    "local_write": "Exclusive creation of this JSON file; no overwrite.",
+    "posts": false,
+    "implementation_edits": false,
+    "pushes": false,
+    "dispatches": false,
+    "lease_acquire_or_release": false,
+    "merges": false,
+    "production_writes": false,
+    "deployments": false,
+    "private_logs_or_opaque_operation_identifiers_included": false
+  }
+}

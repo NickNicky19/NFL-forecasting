@@ -1,0 +1,103 @@
+{
+  "actual_source": "4202d7525fb60d14c847f3509027de21570f05e1",
+  "blocking_findings": [],
+  "budget": {
+    "caps_unchanged": {
+      "HTTP_calls_per_client": 40,
+      "wall_seconds_per_client": 180
+    },
+    "max8_fixture_per_client_calls": [
+      18,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28
+    ],
+    "original_metadata_client": {
+      "formula": "startup p+10+d_canary + initial inventory p + census c = 2p+10+c+d_canary <=20; p<=2,c<=4,d_canary<=2.",
+      "observed_max8_fixture_calls": 18,
+      "upper_bound_calls": 20
+    },
+    "per_handoff": {
+      "extra_inventory_variant_bound": 30,
+      "formula": "2 Actions auth + (p+6+d_canary) qualification + (2p+8+d_manifest+d_payload) failure authentication = 3p+16+D <= 28; p<=2, D<=6.",
+      "upper_bound_calls": 28
+    },
+    "public_metadata": {
+      "includes_actions_authentication": 2,
+      "legacy": 12,
+      "locator": 13,
+      "none": 11,
+      "private_qualification_reads_required": false
+    },
+    "wall_limit": "Each scope remains bounded. Slow cumulative handoff work can still age the original census Client to 180 seconds; it must fail closed. Fixture clocks establish request counts, not native latency."
+  },
+  "capture_run_id": "40591715349",
+  "code_review": [
+    "Fresh public GET-only Client retains owner proof, actual Actions auth, same API job, content/blob hashes, receipt/source and latest-sidecar guards.",
+    "One fresh qualified GET-only Client per handoff with hard cap eight; failed allocations count toward the cap.",
+    "Exact aggregate/deduplication, failed-run census and all-handoff checks remain before seed_pending.",
+    "No Client timer/counter reset, POST retry, old Root reuse, failure deletion, model/source math or scheduler change.",
+    "Old fresh-first-primary literal route was initially removed, identified independently, then restored alongside metadata-phases."
+  ],
+  "diagnosis": "Authenticated controls establish initialization passed and no restore child was requested. Original metadata Client exhausted 40 calls in prior_public_metadata. Four additional journals are preservation writes; no model replay or forecast is claimed.",
+  "evidence_sha256": {
+    "evidence/pending-recovery-through24-owner-get.json": "daae6209c717adc0a820dcfa521a6d39c38e19d7f824bffdd884842e6f9c19c7",
+    "private/first-primary24-control-diagnostic/complete-auxiliary-controls.json": "387b637f78a811c92453771664551c7d3b730a74dce171a0f891e14384793327",
+    "private/first-primary24-control-diagnostic/file-graph.json": "ae7d4aef4e3acbdf179c545ed68253994b598d2e330fb78e08d44d881ec34c5c",
+    "private/first-primary24-control-diagnostic/phase-00.json": "08c49a0401c51f17f1319522e3cd20e4daf7657fe8345138d7a4a0fc6f3adba8",
+    "private/first-primary24-producer.log": "e28d80d1bce6074aecee9e4435319058dfeb42b787ec09e15068412d3b928245",
+    "private/weekly-go-24.json": "cb5b4d3dc313d893d0e167ab4ff1dd50a7a3b9288bde1afffe3948fcb8ad33bc"
+  },
+  "generated_at_utc": "2026-10-27T22:19:22.550138+00:00",
+  "limits": "Focused code and fixture review. Parent owns integration, full Main, real CI and native validation; no claim, fit, dispatch or publication performed.",
+  "producer_job_id": "122497369032",
+  "regression": {
+    "baseline": "Source4202: all three positive cases fail at the actual inherited Client request OPERATION_LIMIT. Negative cases cannot reach the intended last-handoff guard before budget exhaustion.",
+    "fixture_boundary": "The existing fake pending_failure fixture supplies fictional metadata only. Its Runner and its fake pending_metadata_client override are not used by these tests.",
+    "implementation": "Separate newly allocated Runner; constructor injects fictional transport and clock into real PendingMetadataClient subclasses. Real Actions authentication, qualified canary, paginated inventories, double CDN redirects, failure validation and 40-call enforcement execute. Native owner-proof bridge is mocked; no native qualification claimed.",
+    "integration": "Copy scratch contents to a separate test module. For /tmp execution use PYTHONPATH=.:tests and the venv through continuation/run_numerical_profile.py.",
+    "negative_guarantees": [
+      "no seeding at all",
+      "no reservation files",
+      "no POST",
+      "old Client counters not reset"
+    ],
+    "negative_last_handoff": [
+      "wrong actor: ACTUAL_COMPLETED_FAILED_PRIOR_RUN",
+      "bad payload hash: READBACK_MISMATCH"
+    ],
+    "path": "/workspace/nfl-system-audit/continuation/pending-budget-regression.txt",
+    "positive_parameters_handoffs": [
+      2,
+      3,
+      8
+    ],
+    "result": "5 passed directly against the parent implementation in 0.71s",
+    "sha256": "160132df725010d97559932b556d6641b0dbf503f918693951fa9ba65333a21d"
+  },
+  "reviewed_runtime_sha256": "c53e886f1fe542ce82f4ad8b7306cbab73d5780e005af7301922bba7b1dd39af",
+  "reviewer": {
+    "agents_spawned": 0,
+    "model_settings": "Exact runtime model/sampling settings not exposed.",
+    "parent_source_edits": 0,
+    "private_forecast_or_outcome_reads": 0,
+    "remote_calls": 0
+  },
+  "schema_version": "first-primary24-budget-independent-review-v1",
+  "status": "PASS_FOCUSED_RUNTIME_CODE_REVIEW_NATIVE_NOT_CLAIMED",
+  "tests": [
+    {
+      "result": "82 passed in 3.09s",
+      "scope": "parent Producer: independent scratch + hosted + operations authority + literal registry routes"
+    },
+    {
+      "result": "6 passed in 0.09s",
+      "scope": "Main counterpart literal registry routes"
+    }
+  ]
+}

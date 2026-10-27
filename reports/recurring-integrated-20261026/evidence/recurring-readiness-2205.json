@@ -1,0 +1,394 @@
+{
+  "schema_version": "bounded-recurring-readiness-review-v1",
+  "reviewed_at_utc": "2026-10-27T22:15:44.118101+00:00",
+  "remote_snapshot_checked_at_utc": "2026-10-27T22:13:10.314503+00:00",
+  "scope": "Read-only operational review of the named Main/Producer, Parent route/cadence, two cited runs and bounded pending-census lifecycle; no model audit.",
+  "verdict": "CONFIGURED_SINGLE_SCHEDULER; GENUINE_AUTOMATIC_PARENT_FUTURE_OPERATION_NOT_READY",
+  "sources": {
+    "Main": "097bc33f38993a718a8f6ce4fd4f088ed964079e",
+    "Producer": "4202d7525fb60d14c847f3509027de21570f05e1",
+    "tips_rechecked_unchanged": true,
+    "public_v2_registry_path": "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
+    "registry_ref": "lab-state",
+    "registry_registered_at_utc": "2026-10-27T22:00:58.163955+00:00",
+    "registry_unchanged_during_review": true,
+    "literal_source_inventory_checks": {
+      "files_checked": 11,
+      "all_match_registry": true,
+      "paths_by_role": {
+        "parent": [
+          ".github/workflows/lab.yml",
+          "nfl_lab/cadence.py",
+          "nfl_lab/audit_weekly_parent_v1.py",
+          "nfl_lab/audit_weekly_template_v1.py",
+          "nfl_lab/audit_weekly_grade_history_v1.py",
+          "nfl_lab/audit_weekly_controller_bootstrap_v1.py"
+        ],
+        "producer": [
+          ".github/workflows/lab.yml",
+          "nfl_lab/audit_weekly_hosted_v1.py",
+          "nfl_lab/audit_weekly_template_v1.py",
+          "nfl_lab/audit_weekly_archive_v1.py",
+          "nfl_lab/audit_private_rotation_v1.py"
+        ]
+      }
+    },
+    "qualification_limit": "Public registry/source bindings checked; no live Parent qualification or private-template readiness claimed."
+  },
+  "next_automatic_parent": {
+    "location": "research repository / refs/heads/main / .github/workflows/lab.yml / jobs.lab / weekly_parent",
+    "workflow_state": "active",
+    "trigger": "schedule on the default branch",
+    "route_requires": "AUDIT_WEEKLY_PARENT_ENABLED == 'true' AND refs/heads/main AND (schedule OR workflow_dispatch mode=daily)",
+    "single_cron": "36 12,13,14 * * *",
+    "concurrency": {
+      "group": "nfl-lab-single-writer",
+      "cancel_in_progress": false
+    },
+    "only_other_default_branch_workflow": "audit-source-checks.yml: pull_request/main or workflow_dispatch; no schedule",
+    "policy": "audit-weekly-parent-0736-v1",
+    "timezone": "America/Chicago",
+    "next_nominal_tick_utc": "2026-10-28T12:36:00+00:00",
+    "eligible_window_utc": {
+      "start_inclusive": "2026-10-28T12:36:00+00:00",
+      "end_exclusive": "2026-10-28T12:57:00+00:00"
+    },
+    "eligible_window_local": {
+      "start_inclusive": "2026-10-28T07:36:00-05:00",
+      "end_exclusive": "2026-10-28T07:57:00-05:00"
+    },
+    "other_next_day_cron_ticks_utc": [
+      "2026-10-28T13:36:00Z",
+      "2026-10-28T14:36:00Z"
+    ],
+    "other_ticks_parent_due": false,
+    "missed_window_backfill": false,
+    "future_run_id": null,
+    "run_id_note": "No future run ID or guaranteed automatic Parent execution can be established. This is the next configured eligible window, conditional on activation and live readiness.",
+    "cited_run_is_automatic_parent": false,
+    "cited_run_role": "Owner workflow_dispatch of Producer audit-weekly-producer-v1, not a scheduled Main jobs.lab Parent.",
+    "delivery_evidence": "Latest scheduled execution observed at 2026-10-27T18:11:49Z on an older Main revision; it is not current-window readiness evidence.",
+    "freshness": "Existing local-window and live proof checks remain required; no later-slot substitution."
+  },
+  "variable_access": {
+    "check": "GET repos/{research}/actions/variables/AUDIT_WEEKLY_PARENT_ENABLED",
+    "http_status": 403,
+    "message": "Resource not accessible by integration",
+    "current_value": null,
+    "required_repository_permission": "Variables: read for this repository on the GitHub App installation or fine-grained token",
+    "actual_response_header": "X-Accepted-Github-Permissions: actions_variables=read",
+    "actions_permission_is_sufficient": false,
+    "historical_log_observation": {
+      "run_id": 40590096863,
+      "at_utc": "2026-10-27T21:50:40Z",
+      "PARENT_ENABLED": "",
+      "meaning": "Empty workflow-resolved value at that time; does not establish the current repository variable value."
+    }
+  },
+  "main_push_guard": {
+    "run_id": 40590096863,
+    "event": "push",
+    "conclusion": "failure",
+    "failed_step": "Enforce source and publication handover safety",
+    "exit_code": 78,
+    "classification": "INTENTIONAL_PRESERVED_LEGACY_HANDOVER_GUARD",
+    "actual_receipt_state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+    "actual_receipt_reasons": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "actual_receipt_effects": {
+      "acquisition_started": false,
+      "capture_started": false,
+      "new_fits_predictions": 0,
+      "state_publication_started": false
+    },
+    "selector_fact": "push is excluded from Parent selection regardless of variable value.",
+    "source_correctness": "The fixed guard deliberately returns 78; this run is not evidence of a source-correctness regression. PR 48 offline source check succeeded before merge.",
+    "interpretation_limit": "Guard reasons include fixed legacy assertions, not fresh independent findings about current private durability. Successful legacy retirement/handover is not claimed.",
+    "sources": [
+      "Main:tools/hosted_safety_guard.py:21",
+      "Main:config/hosted-safety-handover-guard-v1.json",
+      "Main:.github/workflows/lab.yml"
+    ],
+    "actual_log_privately_inspected": true
+  },
+  "first_future_primary": {
+    "run_id": 40591715349,
+    "week": 8,
+    "event": "workflow_dispatch",
+    "source_sha": "4202d7525fb60d14c847f3509027de21570f05e1",
+    "status": "completed",
+    "conclusion": "failure",
+    "completed_at_utc": "2026-10-27T22:06:09Z",
+    "failed_step": "Capture all effective candidates, selected rows and original R0",
+    "actual_failure": {
+      "state": "FAILED_RETAINED",
+      "reason": "OPERATION_LIMIT",
+      "error_type": "StoreError",
+      "phase": "initial metadata authentication",
+      "configured_metadata_call_cap": 40,
+      "configured_wall_cap_seconds": 180,
+      "actual_HTTP_call_count_not_emitted": true,
+      "source_frames": [
+        {
+          "file": "nfl_lab/private_draft_store.py",
+          "line": 283
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 431
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 286
+        },
+        {
+          "file": "nfl_lab/audit_weekly_archive_v1.py",
+          "line": 453
+        },
+        {
+          "file": "nfl_lab/private_draft_store.py",
+          "line": 251
+        }
+      ]
+    },
+    "separate_review": "Owner reports two carried handoffs and an independent review of the metadata-40-call failure; this review does not diagnose or alter that bug.",
+    "preservation_step": "success",
+    "fresh_reader_step": "success",
+    "actual_reader_state": "PRIVATE_FAILURE_RESTORED",
+    "export_job": "skipped",
+    "fits": 0,
+    "public_release": false,
+    "successful_forecast": false,
+    "actual_log_privately_inspected": true
+  },
+  "pending_census_lifecycle": {
+    "verdict": "NO_AUTOMATIC_CENSUS_REANCHOR_OR_ROTATION_IN_THE_REVIEWED_PARENT",
+    "observed_bounded_census": {
+      "query_scope": "lab.yml; workflow_dispatch; Producer branch; per_page=5; pages=1..4",
+      "pages_read": 4,
+      "all_requests_succeeded": true,
+      "page_sizes": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "consistent_total_count": true,
+      "ordered_unique": true,
+      "namespace_origin_found": true,
+      "namespace_origin_rank_1based": 8,
+      "additional_matching_dispatches_before_origin_is_evicted_from_20": 12,
+      "scope_dispatches_at_or_newer_than_origin": 8,
+      "failed_completed_dispatches_after_origin": 3,
+      "latest_cited_run_is_newest": true,
+      "oldest_visible_is_older_than_origin": true,
+      "observed_at_utc": "2026-10-27T22:10:37.781775+00:00"
+    },
+    "fixed_bound": {
+      "pages": 4,
+      "rows_per_page": 5,
+      "maximum_visible_matching_dispatches": 20
+    },
+    "counting_rule": "All lab.yml workflow_dispatch runs on the Producer branch count, including NativeRegistration, manual and automatic children, regardless of actor or success. Main schedule runs themselves are outside this query.",
+    "exact_lifecycle": [
+      "A separately qualified private rotation creates the namespace binding and its original creation run. NativeRegistration seals the existing package/template; it does not reset that origin.",
+      "Producer authenticates each carried failure handoff and exact deduplicated reservation list, then reads at most four pages of five ordered unique matching dispatches. Stable totals, the original namespace run and every known failure writer must be present.",
+      "Every completed failure/cancellation/timeout newer than the origin must have an explicit carried handoff. Missing failures block before pending reservations are seeded and before normal private writes.",
+      "Successful capture/grade history stores the original authenticated operation metadata. Parent discovers the latest qualified successful history cohort and copies pending recovery from that original metadata into its next dispatch.",
+      "Parent rebuilds only five dynamic fields. The qualified-runtime binding, origin, original pending census and sealed prior-runtime relationship remain static. Recompressing handoffs/reservations preserves their bytes; it does not authenticate a new run-census baseline.",
+      "Failed runs preserve original controls/journals and a fresh reader restores failure evidence. Parent has no failed-run handoff discovery/absorption path; a failed run does not advance its successful history baseline.",
+      "The existing Owner rotation plus a newly sealed registration can establish a distinct qualified namespace while retaining the sealed prior runtime/history and complete census. Parent does not invoke that lifecycle automatically."
+    ],
+    "capacity_result": "Origin is currently row 8. Twelve more matching dispatches fit; the thirteenth additional dispatch places it at row 21 and fails PENDING_RUN_CENSUS_NEEDS_OWNER_RECOVERY. This is not a budget of 20 future daily captures.",
+    "earlier_failure_result": "There are three completed failed dispatches newer than the origin, including the cited newly failed run. Future operations also need its explicit authenticated failure accounting; automatic carry-forward of an older successful history does not add it.",
+    "other_preserved_bounds": {
+      "maximum_failure_handoffs": 8,
+      "maximum_pending_reservations": 128,
+      "pending_recovery_plain_bytes": 131072
+    },
+    "source_references": [
+      "Producer:nfl_lab/audit_weekly_hosted_v1.py:264",
+      "Producer:nfl_lab/audit_weekly_hosted_v1.py:289",
+      "Producer:nfl_lab/audit_weekly_hosted_v1.py:529",
+      "Main:nfl_lab/audit_weekly_parent_v1.py:582",
+      "Main:nfl_lab/audit_weekly_parent_v1.py:657",
+      "Main:nfl_lab/audit_weekly_parent_v1.py:790",
+      "Main:nfl_lab/audit_weekly_template_v1.py:99",
+      "Main:nfl_lab/audit_weekly_template_v1.py:194",
+      "Main:nfl_lab/audit_weekly_grade_history_v1.py:883",
+      "Producer:nfl_lab/audit_private_rotation_v1.py:448"
+    ]
+  },
+  "verification": {
+    "actual_run_and_job_metadata": "GET metadata for both cited runs and their relevant jobs; completed run logs privately inspected.",
+    "current_configuration": "Effective Main workflow/cadence/guard/config and current v2 registry read; final Main/Producer tips and registry rechecked unchanged.",
+    "cadence_boundaries": [
+      {
+        "case": "before",
+        "utc": "2026-10-28T12:35:59.999999+00:00",
+        "due": false,
+        "mode": "grade",
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"
+      },
+      {
+        "case": "window_start",
+        "utc": "2026-10-28T12:36:00+00:00",
+        "due": true,
+        "mode": "daily",
+        "reason": "DUE"
+      },
+      {
+        "case": "last_inclusive_minute_end",
+        "utc": "2026-10-28T12:56:59.999999+00:00",
+        "due": true,
+        "mode": "daily",
+        "reason": "DUE"
+      },
+      {
+        "case": "window_end_exclusive",
+        "utc": "2026-10-28T12:57:00+00:00",
+        "due": false,
+        "mode": "grade",
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"
+      },
+      {
+        "case": "second_cron_tick",
+        "utc": "2026-10-28T13:36:00+00:00",
+        "due": false,
+        "mode": "grade",
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"
+      },
+      {
+        "case": "third_cron_tick",
+        "utc": "2026-10-28T14:36:00+00:00",
+        "due": false,
+        "mode": "grade",
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED"
+      }
+    ],
+    "literal_pending_method_memory_checks": {
+      "source": "nfl_lab/audit_weekly_hosted_v1.py:529",
+      "method_sha256": "82b0342d29388c94463712b274cdd2a29b24660f30bcf85a98de2a72f0dadf7c",
+      "method_executed_unmodified": true,
+      "scope": "memory-only census logic; private evidence transport stubbed; not a native readiness proof",
+      "checks": [
+        {
+          "case": "origin_is_20th_row",
+          "matching_rows_including_origin": 20,
+          "pages_requested": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "result": "PASS",
+          "seed_pending_reached": true,
+          "network_calls": 0,
+          "repository_writes": 0
+        },
+        {
+          "case": "origin_would_be_21st_row",
+          "matching_rows_including_origin": 21,
+          "pages_requested": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "result": "PENDING_RUN_CENSUS_NEEDS_OWNER_RECOVERY",
+          "seed_pending_reached": false,
+          "network_calls": 0,
+          "repository_writes": 0
+        },
+        {
+          "case": "completed_unknown_failed_dispatch",
+          "matching_rows_including_origin": 8,
+          "pages_requested": [
+            1,
+            2
+          ],
+          "result": "UNRECOVERED_PRIOR_FAILED_DISPATCH_NO_WRITE",
+          "seed_pending_reached": false,
+          "network_calls": 0,
+          "repository_writes": 0
+        },
+        {
+          "case": "same_failure_explicitly_carried",
+          "matching_rows_including_origin": 8,
+          "pages_requested": [
+            1,
+            2
+          ],
+          "result": "PASS",
+          "seed_pending_reached": true,
+          "network_calls": 0,
+          "repository_writes": 0
+        }
+      ]
+    },
+    "test_limit": "Memory checks use stubbed private evidence transport; they prove census boundary logic, not native end-to-end readiness. No new CI or model tests executed."
+  },
+  "blockers": [
+    {
+      "code": "VARIABLE_READ_PERMISSION_MISSING",
+      "detail": "Current Parent flag cannot be verified: HTTP 403; repository Variables read is required."
+    },
+    {
+      "code": "FIRST_FUTURE_PRIMARY_FAILED",
+      "detail": "The actual same-source Week 8 operation failed initial metadata authentication with OPERATION_LIMIT; no successful forecast/export or qualifying new checkpoint from this run."
+    },
+    {
+      "code": "NEW_FAILED_DISPATCH_ACCOUNTING_REQUIRED",
+      "detail": "The newly failed dispatch must remain explicitly authenticated in subsequent failure accounting; Parent does not automatically absorb its handoff."
+    },
+    {
+      "code": "AUTOMATIC_BOUNDED_CENSUS_LIFECYCLE_MISSING",
+      "detail": "No authenticated census reanchor/namespace rotation is implemented by Parent before original creation leaves its 20-row view; failure handoff and reservation limits also remain finite."
+    },
+    {
+      "code": "GENUINE_AUTOMATIC_PARENT_READINESS_UNPROVEN",
+      "detail": "Current registry bindings and an active cron do not prove a live qualified Parent enqueue, successful child, complete failure lifecycle or on-time recurring delivery."
+    }
+  ],
+  "actual_settings": {
+    "agent_declared_family": "GPT-6",
+    "actual_deployment_model_id": null,
+    "actual_reasoning_effort": null,
+    "research_config_requested_only": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "producer_job_environment_observed_in_actual_logs": {
+      "OMP_NUM_THREADS": "2",
+      "OMP_THREAD_LIMIT": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "OPENBLAS_CORETYPE": "Haswell",
+      "MKL_NUM_THREADS": "2",
+      "NUMEXPR_NUM_THREADS": "2",
+      "NPY_DISABLE_CPU_FEATURES": "AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL,AVX512_SPR,AVX2,FMA3,AVX,F16C,SSE41,SSE42,SSSE3,POPCNT",
+      "MALLOC_ARENA_MAX": "2",
+      "ARROW_IO_THREADS": "2",
+      "ARROW_DEFAULT_MEMORY_POOL": "system",
+      "VECLIB_MAXIMUM_THREADS": "2"
+    },
+    "limit": "No actual predictive-model execution settings inferred from requests, package registrations or job environment; initialization failed and the logs report zero fits."
+  },
+  "preservation": {
+    "remote_methods_used": [
+      "GET"
+    ],
+    "remote_mutations": 0,
+    "dispatches": 0,
+    "cancellations": 0,
+    "activation_changes": 0,
+    "repository_writes": 0,
+    "worktree_clean": true,
+    "existing_scheduler_preserved": true,
+    "bounds_and_freshness_preserved": true,
+    "existing_artifacts_and_versions_preserved": true,
+    "report_mode": "create-only"
+  }
+}
