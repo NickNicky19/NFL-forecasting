@@ -4,6 +4,9 @@ from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 import importlib.util
 import io
+import gzip
+import hashlib
+import json
 from pathlib import Path
 import pickle
 import socket
@@ -491,6 +494,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
     "state/controller-v1/bootstrap-v2-20261027-pending-posts.json",
     "state/controller-v1/bootstrap-v2-20261027-first-primary.json",
+    "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -507,6 +511,53 @@ def test_issued_registration_routes_are_literal_and_commit_bound(literal):
         with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):
             api(c.contents_url(path, ref), 17)
     assert len(calls) == 1
+
+
+@pytest.fixture
+def large_pending_metadata(locator_system):
+    from nfl_lab import audit_weekly_template_v1 as t
+    records=[]
+    for n in range(16):
+        digest=hashlib.sha256(('independent-pending-'+str(n)).encode()).hexdigest()
+        records.append(dict(schema_version='weekly-private-POST-reservation-v2',key='asset:blob-'+digest+'.bin',
+            bytes=n+1,sha256=digest,name='blob-'+digest+'.bin'))
+    x=locator_system
+    return dict(schema_version=t.PENDING_RECOVERY,pending_reservations=sorted(records,key=lambda r:r['key']),
+        handoffs=[dict(schema_version='audit-weekly-hosted-v2-failure-handoff',binding=deepcopy(x.package['binding']),
+            descriptor=deepcopy(x.template_seal['descriptor']),root_go_sha256='a'*64)])
+
+
+def test_large_pending_metadata_transport_preserves_original_bytes_and_records(large_pending_metadata):
+    from nfl_lab import audit_weekly_template_v1 as t
+    value=large_pending_metadata
+    original=json.dumps(value,sort_keys=True,separators=(',',':')).encode()
+    packed=t.pending_recovery_envelope(value)
+    assert packed['schema_version']==t.PENDING_RECOVERY_ENVELOPE
+    assert packed['body_bytes']==len(original) and packed['body_sha256']==hashlib.sha256(original).hexdigest()
+    assert gzip.decompress(base64.b64decode(packed['gzip_base64']))==original
+    assert t.validate_pending_recovery(packed)==value and t.validate_pending_recovery(value)==value
+    assert len(c.canonical(packed))<len(original)
+    assert json.dumps(value,sort_keys=True,separators=(',',':')).encode()==original
+    assert t.pending_recovery_envelope(dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[]))==dict(
+        schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
+
+
+@pytest.mark.parametrize('damage',['digest','boolean_bytes','truncated','trailing_member','extra','nested','noncanonical','unknown_plain_field'])
+def test_pending_metadata_transport_rejects_corruption_or_hidden_scope(large_pending_metadata,damage):
+    from nfl_lab import audit_weekly_template_v1 as t
+    encoded=t.pending_recovery_envelope(large_pending_metadata)
+    if damage=='digest':encoded['body_sha256']='0'*64
+    elif damage=='boolean_bytes':encoded['body_bytes']=True
+    elif damage=='truncated':encoded['gzip_base64']=base64.b64encode(base64.b64decode(encoded['gzip_base64'])[:-1]).decode()
+    elif damage=='trailing_member':encoded['gzip_base64']=base64.b64encode(base64.b64decode(encoded['gzip_base64'])+gzip.compress(b'',mtime=0)).decode()
+    elif damage=='extra':encoded['hidden_scope']=True
+    else:
+        value=encoded if damage=='nested' else deepcopy(large_pending_metadata)
+        if damage=='unknown_plain_field':value['forecast_rows']=[{'never_allowed':True}]
+        raw=json.dumps(value,sort_keys=True,separators=(',',':')).encode()+(b'\n' if damage=='noncanonical' else b'')
+        encoded=dict(schema_version=t.PENDING_RECOVERY_ENVELOPE,body_sha256=hashlib.sha256(raw).hexdigest(),
+            body_bytes=len(raw),gzip_base64=base64.b64encode(gzip.compress(raw,mtime=0)).decode())
+    with pytest.raises(t.TemplateError):t.validate_pending_recovery(encoded)
 
 
 def test_actual_network_adapter_timeout_no_redirect_and_bounded_read(monkeypatch):

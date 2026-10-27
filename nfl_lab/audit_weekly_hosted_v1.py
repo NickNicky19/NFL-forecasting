@@ -593,7 +593,6 @@ class Runner:
                 'AUTHENTICATED_FIRST_PRIMARY_PREPARATION_BEFORE_CLAIM')
             def owner():
                 operations_authority._verify(proof,self.env,store.canonical(self.go))
-            operations.first_primary_absence(self.client,self.go,authenticate=owner).verify(self.go)
         package=self.go["qualified_runtime"]
         class ClaimClient(archive.Client):
             def upload(self,name,body,*,reuse_completed=False):
@@ -605,6 +604,11 @@ class Runner:
         client.authenticate_actions_job();client.bind(package["binding"])
         operations_authority.attach(client,self.operations_proof,self.env,store.canonical(self.go))
         archive.authenticate_qualification(client,package,self.go["pending_census"])
+        if first is not None:
+            # Restoration may outlive the original metadata client's bounded
+            # scope. Use this already authenticated claim operation; never
+            # reset a previous client's timer or request counters.
+            operations.first_primary_absence(client,self.go,authenticate=owner).verify(self.go)
         body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
         if first is not None:body=store.canonical(template.first_primary_claim(self.go))
         assets,total=client.inventory()

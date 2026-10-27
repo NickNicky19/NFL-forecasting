@@ -196,6 +196,54 @@ def test_root_claim_reserves_manifest_slots_in_addition_to_pending_slots(pending
     append.assert_not_called()
 
 
+@pytest.mark.parametrize('exhausted',['wall','calls'])
+def test_first_primary_claim_checks_absence_with_fresh_bounded_client(tmp_path,exhausted):
+    from nfl_lab import audit_weekly_operations_v1 as operations
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    from nfl_lab import audit_weekly_template_v1 as template
+    from test_audit_weekly_operations_v1 import first_future_metadata
+    q=first_future_metadata.__wrapped__(tmp_path)
+    r=hosted.Runner.__new__(hosted.Runner)
+    r.go=q.root;r.go['qualified_runtime']['qualification']={'run_id':'100'};r.go['pending_census']={}
+    r.go_sha=store.sha(store.canonical(r.go));r.root=tmp_path/'late-claim'
+    r.storage=OperationalStorage(r.root/'cache',Path(hosted.__file__).resolve().parents[1]/'config/operational-source-policy-v2.json',state=r.root/'state')
+    r.storage.register_root(r.root)
+    r.journal=r.root/'journal';r.journal.mkdir(mode=0o700)
+    r.storage.write_bytes(r.root/'operations-prepared/PREPARED.json',store.canonical(dict(
+        current_root_go_sha256=r.go_sha,first_primary=dict(scope=template.first_primary_root(r.go)),
+        epoch_sha256=r.go['effective_epoch']['controller_context']['retained_epoch_sha256'],
+        state='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL')))
+    r.client=q.client;r.client.started=0;r.client.clock=lambda:181 if exhausted=='wall' else 0
+    r.client.calls=40 if exhausted=='calls' else 0
+    old_counters=(r.client.started,r.client.calls)
+    r.env=dict(GITHUB_ACTOR='NickNicky19',GITHUB_ACTOR_ID='208912933',GITHUB_TOKEN='ghs_FICTIONAL')
+    r.identity=dict(run_id='300',source_sha='b'*40);r.job=deepcopy(q.client.job)
+    r.pending_scope_authenticated=True
+    proof=bootstrap.Owner.__new__(bootstrap.Owner);r.operations_proof=proof;r.fresh_operations_proof=lambda:proof
+    clients=[];real_client=hosted.archive.Client;real_absence=operations.first_primary_absence
+    class FreshClaimClient(real_client):
+        def __init__(self,*args,**kwargs):
+            super().__init__(*args,**kwargs,transport=q.client.transport,clock=lambda:10)
+            clients.append(self)
+        def authenticate_actions_job(self):assert self.job['run_authenticated'] is True
+        def inventory(self):self.inventory_slots=0;return [],0
+    class BeforeAppend(Exception):pass
+    def actual_absence(client,root,*,authenticate):
+        return real_absence(client,root,authenticate=authenticate,clock=lambda:q.at)
+    def verify_owner(actual,env,body):
+        assert actual is proof and env is r.env and body==store.canonical(r.go)
+    with patch.object(hosted.archive,'Client',FreshClaimClient),\
+            patch.object(hosted.archive,'authenticate_qualification'),\
+            patch.object(hosted.operations_authority,'attach'),\
+            patch.object(hosted.operations_authority,'_verify',side_effect=verify_owner),\
+            patch.object(operations,'first_primary_absence',side_effect=actual_absence),\
+            patch.object(store,'append',side_effect=BeforeAppend) as append:
+        with pytest.raises(BeforeAppend):r.claim()
+    assert len(clients)==1 and clients[0].calls==6 and len(q.calls)==6
+    assert (r.client.started,r.client.calls)==old_counters  # Never reset an expired scope.
+    assert store.MAX_CALLS==40 and append.call_count==1
+
+
 def test_calendar_uses_new_york_kickoff_clock_across_both_dst_offsets_and_not_scores():
     raw=("season,week,game_type,game_id,gameday,gametime,home_score\n"
         "2026,7,REG,oct,2026-10-25,09:30,DO_NOT_READ_OUTCOME\n"
