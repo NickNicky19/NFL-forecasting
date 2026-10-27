@@ -490,6 +490,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261026-discovery.json",
     "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
     "state/controller-v1/bootstrap-v2-20261027-pending-posts.json",
+    "state/controller-v1/bootstrap-v2-20261027-first-primary.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -575,6 +576,34 @@ def test_genuine_manual_owner_recurring_smoke_uses_prior_capture_no_fake_parent(
     assert b.authorize_policy(proof, x.raw, x.static_policy)["policy_sha256"] == c.sha(x.static_policy)
     with pytest.raises(b.BootstrapError):
         pickle.dumps(proof)
+
+
+def test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_parent(locator_system):
+    from nfl_lab import audit_weekly_template_v1 as template
+    x=locator_system
+    x.go['qualified_runtime']=deepcopy(x.package)
+    x.go['effective_epoch'].update(schema_version=template.RECURRING_V5,previous_checkpoint=None,
+        pending_post_recovery=dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]),
+        plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,deadline_utc='2026-10-29T18:15:00Z',
+            calendar_sha256='a'*64,game_cutoffs={'fictional-week8':'2026-10-29T18:15:00Z'}),
+        controller_context=dict(schema_version=template.FIRST_PRIMARY,retained_epoch_sha256='1'*64,
+            retained_choice_sha256='2'*64,retained_root_go_sha256='3'*64,
+            claim_binding_sha256=template.digest(x.go['qualified_runtime']['binding'])))
+    x.bind_root()
+    x.env.update(GITHUB_ACTOR=c.OWNER['login'],GITHUB_ACTOR_ID=str(c.OWNER['id']))
+    x.api.data[c.run_url('300')].update(actor=deepcopy(c.OWNER),triggering_actor=deepcopy(c.OWNER))
+    proof=b.authorize_owner(x.env,x.child_source,x.raw,metadata_get=x.get,event_bytes=x.event,
+        clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
+    assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
+    with pytest.raises(b.BootstrapError,match='OWNER_FIRST_PRIMARY_CANNOT_BE_SCHEDULED'):
+        b._recurring(x.raw,bot=True)
+
+
+def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
+    x=system;x.go['effective_epoch']['controller_context']={'schema_version':'UNREGISTERED_STARTUP'}
+    x.bind_root()
+    with pytest.raises(b.BootstrapError,match='RECURRING_CONTEXT_AND_PRIOR_CAPTURE_LOCATOR'):
+        b._recurring(x.raw,bot=False)
 
 
 @pytest.mark.parametrize("field", ["feed_sha256", "receipt_sha256"])
