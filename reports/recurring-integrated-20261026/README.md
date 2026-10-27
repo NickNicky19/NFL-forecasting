@@ -1,3 +1,13 @@
+Update — October 27, 2026, 18:12 UTC evidence (PARTIAL)
+
+The priority order has been reassessed against current user impact. Live index/app/board bytes still match Main453, and the board is generated October25T10:15:15Z/week7. The latest observed scheduled refresh40384120613 failed ranking validation before commit/deployment. Restoring a valid website refresh and releasing remaining grading corrections have greater immediate observed user impact than the pending-upload accounting defect alone.
+
+That accounting defect remains confirmed and unrepaired: it blocks another safe producer attempt and should proceed independently while the existing website writer handles integration. Neither a separately valid current-Main website correction nor a truthful fresh reference fallback needs to wait for every Phase2 feature or a new selected feed. COUNT7 has expired and must not be relabelled as fresh. No global highest-value or accuracy-gain claim is established.
+
+[Priority reassessment and release dependencies](PRIORITY-REASSESSMENT-20261027.md), [fresh live assets and actual failed-refresh evidence](evidence/priority-refresh-20261027.json). Earlier checkpoints below remain dated history.
+
+---
+
 Update — 2026-10-26 15:02 UTC (PARTIAL)
 
 Genuine OwnerOps19 (`40338427888`, producer `47b24db6d89a73ae77fb04f5200e730a937a2aec`) finished with a failure during the normal forecast archive append. Before that failure, the actual hosted run restored/replayed all 18 retained model pairs, acquired fresh permitted inputs, completed future-query inference and completed the original R0 capture. The audit ran no new NFL fits. These are actual production-path results, not disposable-copy tests.

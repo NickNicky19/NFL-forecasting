@@ -1,0 +1,87 @@
+{
+  "observed_at_utc": "2026-10-27T18:12:54.864221+00:00",
+  "assets": [
+    {
+      "asset": "index",
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/index.html",
+      "HTTP_status": 200,
+      "bytes": 3491,
+      "sha256": "e182288210162aa9ef6733474a62b18a033b685b16b7b043838c6c4348930a9a",
+      "last_modified": "Sun, 25 Oct 2026 10:15:31 GMT",
+      "cache_age": "0"
+    },
+    {
+      "asset": "app",
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/app.js",
+      "HTTP_status": 200,
+      "bytes": 342038,
+      "sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
+      "last_modified": "Sun, 25 Oct 2026 10:15:31 GMT",
+      "cache_age": "0"
+    },
+    {
+      "asset": "week",
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/week.json",
+      "HTTP_status": 200,
+      "bytes": 1866026,
+      "sha256": "06da8f79ef2e0188bcbba5c137be5aeb6e01dda6ddacbc1d38a17c3afed3d80a",
+      "last_modified": "Sun, 25 Oct 2026 10:15:31 GMT",
+      "cache_age": "0",
+      "metadata": {
+        "generated_at": "2026-10-25T10:15:15Z",
+        "season": 2026,
+        "week": 7
+      },
+      "row_values_examined": false
+    }
+  ],
+  "refresh_runs": [
+    {
+      "id": 40384120613,
+      "name": "Hourly update",
+      "event": "schedule",
+      "head_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-26T19:08:59Z",
+      "updated_at": "2026-10-26T19:09:50Z",
+      "html_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40384120613"
+    },
+    {
+      "id": 40214438233,
+      "name": "Hourly update",
+      "event": "schedule",
+      "head_sha": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-25T17:01:15Z",
+      "updated_at": "2026-10-25T17:02:02Z",
+      "html_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40214438233"
+    },
+    {
+      "id": 40183962653,
+      "name": "Hourly update",
+      "event": "push",
+      "head_sha": "0f03af20226c17c54f27f930eccea162ab331c4c",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-25T10:14:41Z",
+      "updated_at": "2026-10-25T10:15:39Z",
+      "html_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40183962653"
+    }
+  ],
+  "latest_failed_job": {
+    "run": 40384120613,
+    "job": 121787742279,
+    "failed_step": "Prepare isolated provisional overlay (default R0)",
+    "fixed_log_error_verified": "ranking original membership changed",
+    "commit_and_deployment_steps": "SKIPPED",
+    "raw_log_not_published": true
+  },
+  "ranking_patch": {
+    "commit": "7943212a425c927f0efa7030f2627f5bcfa2dc6b",
+    "path": "reports/website-ranking-repair-20261027/public-software/PERMITTED_REPAIR.patch",
+    "status": "PREPARED_NOT_INTEGRATED",
+    "actual_composition_required": "Preserve newer Main74dc or Phase2 9c168 validation and choose applicable variant; do not stack blindly."
+  }
+}
