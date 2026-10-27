@@ -163,7 +163,7 @@ def test_archive_request_carries_root_pending_and_child_rejects_omission(pending
 
 
 def test_real_pending_metadata_client_routes_are_exact_and_get_only(pending_failure,tmp_path):
-    q=pending_failure;journal=tmp_path/'real-client-journal';journal.mkdir()
+    q=pending_failure;journal=tmp_path/'real-client-journal';journal.mkdir(mode=0o700)
     client=hosted.PendingMetadataClient('ghs_FICTIONAL','300',source_sha='b'*40,journal=journal,
         root_go=q.runner.go,operation='metadata',transport=lambda *_:pytest.fail('NO_NETWORK_IN_ROUTE_TEST'))
     base=store.API+'/actions/runs/200'

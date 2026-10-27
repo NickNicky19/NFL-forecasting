@@ -40,7 +40,8 @@ def parent_preserver():
         and any(isinstance(target, ast.Name) and target.id == 'JOBS' for target in node.targets))
     # Only the actual method and its closed metadata dependencies are compiled;
     # the root initializer, services, credentials and execution modes never run.
-    namespace = dict(archive=archive, cp=cp, store=store, _OWNER=_OWNER, now_utc=now_utc)
+    namespace = dict(__name__='nfl_lab.audit_weekly_hosted_fixture',
+        archive=archive, cp=cp, store=store, _OWNER=_OWNER, now_utc=now_utc)
     exec(compile(ast.Module(body=[jobs, require, method], type_ignores=[]), str(source), 'exec'), namespace)
     return namespace['preserve_opaque_outputs'], namespace['JOBS']
 
@@ -97,8 +98,9 @@ def fixture(tmp_path, *, partial):
         excluded[relative] = body
     package = dict(fixture_only=True, authentication_or_qualification_claim=False)
     # Collection stops before the client factory; this legacy fixture supplies no live grant.
+    # Authentication gates are exercised separately by the real Runner tests.
     runner = SimpleNamespace(root=root, storage=storage, started=now_utc()-timedelta(seconds=30),
-        fresh_operations_proof=lambda: None,
+        fresh_operations_proof=lambda: None, require_pending_scope=lambda: None,
         go=dict(qualified_runtime=package, pending_census=dict(fixture_no_remote_census=True)),
         go_sha=store.sha(b'FICTIONAL_OWNER_ROOT'), env=dict(GITHUB_OUTPUT=str(tmp_path/'unused-output')))
     return SimpleNamespace(runner=runner, included=included, excluded=excluded, package=package)
