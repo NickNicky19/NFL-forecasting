@@ -495,6 +495,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261027-pending-posts.json",
     "state/controller-v1/bootstrap-v2-20261027-first-primary.json",
     "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
+    "state/controller-v1/bootstrap-v2-20261027-metadata-phases.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
