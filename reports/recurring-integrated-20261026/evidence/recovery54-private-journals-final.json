@@ -1,0 +1,22 @@
+{
+  "schema_version": "recovery-ci-private-journals-final-v1",
+  "at": "2026-10-28T00:23:03.546041+00:00",
+  "head": "4e1c255a5f3d18182c53feb7af5a89b81e868a68",
+  "production_source_all_unchanged": true,
+  "changed_since_independent_review": [
+    "tests/test_audit_weekly_hosted_v1.py",
+    "tests/test_audit_weekly_operations_worker_v1.py"
+  ],
+  "delta": "Two fixture journal mkdir calls now specify mode0700; assertions unchanged",
+  "before_failures": {
+    "hosted": "PRIVATE_JOURNAL_REQUIRED under022,0.47s",
+    "worker": "PRIVATE_JOURNAL_REQUIRED under022,3.86s"
+  },
+  "after": "All340 affected cases PASS together under022 in100.71s",
+  "original_runs_preserved": [
+    40606518156,
+    40607009220
+  ],
+  "full_final_native_CI_required": true,
+  "new_fits": 0
+}

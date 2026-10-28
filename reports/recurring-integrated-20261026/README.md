@@ -1,3 +1,19 @@
+Update — 2026-10-28T01:00:21.632369+00:00 (PARTIAL)
+
+The corrective source is integrated: Main53 `f365a55189d0ca2e2ad3e52564d10478617cd0a3`, Producer54 `5278c1a46987e1676a39c9aff500d820d417a733`. Final exact-source CI40608365832 completed all2304 collected/attempted nodes:2303pass and one existing optional real-cache skip. Downloaded635-byte coverage artifact12782332059 matches API SHA25616a5a33f…; reviewed4e1c255, actual checkout9d689b1 and merged5278c1a share tree9a8eacfb. Main CI40606329853 passes737tests/33subtests/oneoptional skip. [Final integration receipt](evidence/recovery54-merged.json).
+
+Original CI40606518156 is fully retained, including two fictional journal-permission failures under GitHub umask022. Both setup calls now explicitly use0700; independent before reproductions fail and all340 affected cases pass together after under022. Only this audit's superseded read-only software CI40607009220 was cancelled after its source became obsolete; its partial results are not counted as passes. No production/native/website or other session job was cancelled, and no guard, assertion or quota was weakened.
+
+Genuine registration27run40610246063 passed writer122559777468, reader122560244992 and sealer122560755827. The1358-byte native ZIP matches SHA256cec362d5…; actual source, API jobs, clocks and all3private-input masking checks pass. New39244-byte cleared recordSHA97b86971… is create-only committed and read back ate3a283a46d0e4f5f62ff1a98d6a4ccf0ee9353b6, retaining every prior slot. [Registration publication](evidence/registration27-publication.json). Registration is not forecast success.
+
+New Root28 was issued00:52:27UTC and dispatched once00:54UTC as genuine capture40611698210. It retains all14original future Week8cutoff strings and5400-second lead, the authentic COUNT7 startup methods, old consumed claim and explicit missing-body gap. The local one-off preparer’s registration-context field mismatch was corrected strictly before any Root28 was issued; malformed/injected checkpoints are rejected. No old forecast/choice was recreated, oldRoot/POST retried or model refitted. Capture/fresh restoration/grading/export/checkpoint remain running and unqualified. [New issue contract](evidence/failed-first-recovery28-root-contract.json); [reproducible preparer code](tools/prepare_failed_first_recovery_ops.py).
+
+Consumer PR10 `f90ded196e13170c6ccfd7b4d603226f2b3d789b` now binds the actual registered5278c1a source. All223localPython/fourrequiredNode suites/syntax and exact-head hostedCI40611061347 pass;22executable inventory files and cadence are unchanged. Its registration00:46:40UTC precedes Root28. It remains DRAFT until the actual anonymous four-second consumer accepts a fresh compatible feed and all11category traces pass. Website Main9 remains independently ready/unmerged under the active owner; no new website release or selected installation is inferred.
+
+The result remains PARTIAL. Parent enablement/actual automatic execution, declared horizon/source-timing/finite-capacity limits, unsupported exact research PPR and unreproduced private historical accuracy claims remain explicit. No newNFL fits, scientific reset or forecast-accuracy gain is claimed.
+
+---
+
 Update — 2026-10-28T00:13:58.502139+00:00 (PARTIAL)
 
 Main recovery PR53 is normally merged as `f365a55189d0ca2e2ad3e52564d10478617cd0a3`. Actual hosted CI40606329853/job122546634130 passes all737 tests/33 subtests with one existing optional real-PPR-cache skip; the tested merge, reviewed head and integrated source share tree1f760803. Its metadata-only parent contract passes. [Exact integration](evidence/recovery-main53-merged.json).

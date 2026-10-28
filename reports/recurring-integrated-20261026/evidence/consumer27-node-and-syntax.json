@@ -1,0 +1,73 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "output/app.js"
+    ],
+    "exit": 0,
+    "seconds": 0.1645243839993782
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "output/reliability-ui.js"
+    ],
+    "exit": 0,
+    "seconds": 0.06413753699962399
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "output/weekly-adaptive-overlay.js"
+    ],
+    "exit": 0,
+    "seconds": 0.064557177000097
+  },
+  {
+    "command": [
+      "node",
+      "tests/test-ui.cjs"
+    ],
+    "exit": 0,
+    "seconds": 0.4161907730012899
+  },
+  {
+    "command": [
+      "node",
+      "tests/test-weekly-overlay.cjs"
+    ],
+    "exit": 0,
+    "seconds": 0.31539635300214286
+  },
+  {
+    "command": [
+      "node",
+      "tests/test-selected-rankings.cjs"
+    ],
+    "exit": 0,
+    "seconds": 0.26451072600320913
+  },
+  {
+    "command": [
+      "node",
+      "tests/test-classic-ranking-model.cjs"
+    ],
+    "exit": 0,
+    "seconds": 0.2645139209998888
+  },
+  {
+    "command": [
+      "/workspace/nfl-system-audit/venv/bin/python",
+      "-m",
+      "compileall",
+      "-q",
+      "pull",
+      "tools"
+    ],
+    "exit": 0,
+    "seconds": 0.06393377399945166
+  }
+]

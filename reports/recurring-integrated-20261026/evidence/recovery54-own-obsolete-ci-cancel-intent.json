@@ -1,0 +1,45 @@
+{
+  "state": "OWN_SUPERSEDED_READ_ONLY_SOFTWARE_CI_CANCEL_INTENT",
+  "at": "2026-10-28T00:24:20.857802+00:00",
+  "run_id": 40607009220,
+  "old_source": "cc2a5e7d02e1160868e908d3ef73e5258bed252a",
+  "final_source": "4e1c255a5f3d18182c53feb7af5a89b81e868a68",
+  "workflow": ".github/workflows/audit-source-checks.yml",
+  "pr": 54,
+  "reason": "Original fully completed failed run40606518156 is retained; obsoletecc2 misses second fixture correction, final4e requires full exact-source CI. Not a production/website/native job.",
+  "jobs_before": [
+    {
+      "id": 122551934692,
+      "name": "collect",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122551934956,
+      "name": "source-shard-2",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 122551935046,
+      "name": "source-shard-0",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122551935076,
+      "name": "source-shard-1",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 122551935196,
+      "name": "source-shard-3",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "original_failure_erased": false,
+  "partial_cancelled_results_will_not_be_counted_as_pass": true,
+  "other_session_jobs_cancelled": false
+}

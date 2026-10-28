@@ -1,0 +1,16 @@
+{
+  "state": "PREPARER_SOURCE_REGISTRATION_SCHEMA_CORRECTION_CHECKED",
+  "before": "Actual Native27 registration context has no previous_checkpoint key; old helper wrongly indexed it and raised KeyError before output/POST.",
+  "after": "Require exact six-field registration context-v4 and absent checkpoint key; old failed recurring context still explicitly requires null checkpoint; new future Root sets null checkpoint.",
+  "negative_checks_passed": [
+    "injected_null_checkpoint",
+    "injected_checkpoint",
+    "wrong_registration_schema"
+  ],
+  "production_source_changed": false,
+  "original_diagnostics_preserved": true,
+  "new_fits": 0,
+  "Root_persisted_by_these_checks": false,
+  "corrected_helper_sha256": "607dc9ef206f12fec0f1164d3603b1663e3f4a0f2c9d1395df6f667c762c9b20",
+  "corrected_helper_bytes": 21066
+}
