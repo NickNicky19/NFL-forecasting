@@ -744,7 +744,67 @@ def test_parent_validator_rejects_unbound_or_noncanonical_metadata(parent_metada
     elif damage=='oversize_packed':data['packed']=b'X'*(history.LIMITS['sidecar_bytes']+1)
     with pytest.raises(history.HistoryError):history.validate_parent_sidecar(**data)
 
-def test_parent_validator_cold_import_does_not_load_grade_or_read_sources(parent_metadata,tmp_path):
+def _full_parent_runtime(data):
+    """Keep the original full-package digest, including its closed flags."""
+    data=deepcopy(data)
+    data['qualified_runtime'].update(root_go_sha256='a'*64,private_payload_bytes=0,
+        private_durability_qualified=False,strict_v1_unchanged='INCONCLUSIVE')
+    value=json.loads(gzip.decompress(data['packed']))
+    value['checkpoint_handoff']['qualified_package_sha256']=hashlib.sha256(json.dumps(
+        data['qualified_runtime'],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+    data['packed']=gzip.compress(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode(),mtime=0)
+    return data
+
+
+def test_parent_full_runtime_preserves_original_package_commitment(parent_metadata):
+    data=_full_parent_runtime(parent_metadata)
+    expected=json.loads(gzip.decompress(data['packed']))
+    assert history.validate_parent_sidecar(**data)==expected
+    # The legacy eight-field projection is not the package that was issued.
+    for key in ('root_go_sha256','private_payload_bytes','private_durability_qualified','strict_v1_unchanged'):
+        del data['qualified_runtime'][key]
+    with pytest.raises(history.HistoryError):history.validate_parent_sidecar(**data)
+
+
+@pytest.mark.parametrize('field,bad',[
+    ('root_go_sha256','bad'),('root_go_sha256',None),
+    ('private_payload_bytes',1),('private_payload_bytes',True),('private_payload_bytes',0.0),
+    ('private_durability_qualified',True),('private_durability_qualified',0),
+    ('strict_v1_unchanged','QUALIFIED'),('strict_v1_unchanged',None),
+    ('unexpected_authority',False)])
+def test_parent_full_runtime_rejects_invalid_flags_even_with_matching_digest(parent_metadata,field,bad):
+    data=_full_parent_runtime(parent_metadata)
+    data['qualified_runtime'][field]=bad
+    value=json.loads(gzip.decompress(data['packed']))
+    value['checkpoint_handoff']['qualified_package_sha256']=hashlib.sha256(json.dumps(
+        data['qualified_runtime'],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+    data['packed']=gzip.compress(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode(),mtime=0)
+    with pytest.raises(history.HistoryError):history.validate_parent_sidecar(**data)
+
+
+@pytest.mark.parametrize('omitted',[tuple(key for index,key in enumerate(
+    ('root_go_sha256','private_payload_bytes','private_durability_qualified','strict_v1_unchanged'))
+    if mask & (1<<index)) for mask in range(1,15)])
+def test_parent_full_runtime_rejects_partial_flag_sets(parent_metadata,omitted):
+    data=_full_parent_runtime(parent_metadata)
+    for key in omitted:del data['qualified_runtime'][key]
+    value=json.loads(gzip.decompress(data['packed']))
+    value['checkpoint_handoff']['qualified_package_sha256']=hashlib.sha256(json.dumps(
+        data['qualified_runtime'],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+    data['packed']=gzip.compress(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode(),mtime=0)
+    with pytest.raises(history.HistoryError,match='^CLOSED_PARENT_HISTORY_RUNTIME_PACKAGE$'):
+        history.validate_parent_sidecar(**data)
+
+
+def test_parent_runtime_forms_match_original_bootstrap_inventories(parent_metadata):
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    assert set(parent_metadata['qualified_runtime'])==bootstrap.PACKAGE_KEYS
+    assert set(_full_parent_runtime(parent_metadata)['qualified_runtime'])==bootstrap.PACKAGE_FULL_KEYS
+
+
+@pytest.mark.parametrize('full',[False,True])
+def test_parent_validator_cold_import_does_not_load_grade_or_read_sources(parent_metadata,tmp_path,full):
+    if full:parent_metadata=_full_parent_runtime(parent_metadata)
     data=deepcopy(parent_metadata);data['packed']=base64.b64encode(data['packed']).decode()
     path=tmp_path/'parent-metadata.json';path.write_text(json.dumps(data))
     script='''import sys,json,base64,socket
