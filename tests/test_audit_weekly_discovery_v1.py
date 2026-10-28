@@ -19,6 +19,7 @@ from tools import audit_weekly_discovery_v1 as cli
 from test_audit_weekly_archive_v1 import capture, produce, ROOT, ROLES
 from test_audit_weekly_retained_v1 import History, full_r0, CURRENT_RUN, CURRENT_SOURCE, CURRENT_JOB, WORKFLOW
 from test_private_draft_store_v2 import Response, RUN, SOURCE
+from test_audit_weekly_operations_restore_v1 import operational_case
 
 
 @pytest.fixture(scope='module')
@@ -323,3 +324,69 @@ def test_closed_new_receipt_and_entry_size_bound_without_payload_decode(original
     assert entry['id'] not in payload_gets(c)
     assert cli.main(['discover','--execute'])==2
     assert 'LIVE_PARENT_FACTORY' in capsys.readouterr().out
+
+
+def pending_read_fault(fault,server,actual):
+    """Inject one adversarial input after the real index/grant checks.
+
+    The native entry fixture supplies the actual typed Owner/BOT proof, Seal,
+    source-history grant and ReadClient; no authorization verifier is replaced.
+    """
+    expected={
+        'extra_reservation':'EXACT_ORIGINAL_INDEX_PENDING_JOURNAL_NO_ADDITIONS',
+        'unsealed':'UNRESOLVED_PENDING_DISCOVERY_NAMESPACE',
+        'preserve':'UNRESOLVED_PENDING_DISCOVERY_NAMESPACE',
+        'current_namespace':'SEALED_PRIOR_NAMESPACE_READ_ONLY_PENDING_SCOPE',
+        'namespace_changed':'DISCOVERY_NAMESPACE_CHANGED_NO_RETRY',
+        'pending_bytes_cap':'RUNTIME_BYTES_CAP',
+        'duplicate_index_keys':'UNIQUE_ORIGINAL_INDEX_PENDING_KEYS',
+        **{k:'EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE' for k in (
+            'missing_row','wrong_runtime','wrong_release','insufficient_bytes','insufficient_slots')},
+    }
+    calls=0
+    def inventory(client,grant,scope,index):
+        nonlocal calls
+        calls+=1
+        inventory.group_ids.update(g['descriptor']['entry']['payload_asset_id'] for g in index['groups'])
+        assert type(grant)is d.DiscoverySourceGrant and type(client)is retained.ReadClient
+        if calls==1:
+            if fault=='extra_reservation':
+                body=b'FICTIONAL unrelated reservation';digest=s.sha(body);name='blob-'+digest+'.bin'
+                cp.seed_pending(client.journal,[dict(schema_version='weekly-private-POST-reservation-v2',
+                    key='asset:'+name,bytes=len(body),sha256=digest,name=name)])
+            elif fault=='unsealed':grant=None
+            elif fault=='current_namespace':client.bind(grant._source_history_root['qualified_runtime']['binding'])
+            elif fault=='duplicate_index_keys':
+                index=deepcopy(index)
+                index['pending_reservations'].append(deepcopy(index['pending_reservations'][0]))
+            elif fault=='pending_bytes_cap':
+                # Physical assets alone fit. The ORIGINAL unresolved record
+                # must push the real inventory exactly one byte over its cap.
+                remaining=s.TOTAL_CAP-index['pending_reservations'][0]['bytes']+1-sum(a['size'] for a in server.assets)
+                assert remaining>0
+                while remaining:
+                    size=min(remaining,s.ASSET_CAP)
+                    server.add('fictional-charged-orphan-'+str(len(server.assets)),b'FICTIONAL unread',size=size)
+                    remaining-=size
+        if calls==2 and fault=='namespace_changed':
+            # Preserve counts/bytes and exact census coverage. Snapshot
+            # comparison must still catch changed original asset metadata.
+            group=next(a for a in server.assets if a['id'] in inventory.group_ids)
+            group['digest']='sha256:'+'0'*64
+        return actual(client,grant,scope,index)
+    inventory.group_ids=set()
+    return expected[fault],inventory
+
+
+@pytest.mark.parametrize('operational_case',['source-history'],indirect=True)
+@pytest.mark.parametrize('fault',['extra_reservation','unsealed','preserve','current_namespace',
+    'namespace_changed','pending_bytes_cap','duplicate_index_keys','missing_row','wrong_runtime',
+    'wrong_release','insufficient_bytes','insufficient_slots'])
+def test_prior_pending_exception_cannot_widen_authority_journal_snapshot_or_quota(operational_case,tmp_path,fault):
+    from test_audit_weekly_operations_restore_v1 import _source_history_seed,_run_source_history
+    seed=_source_history_seed(operational_case,
+        runtime_transition='PRESERVE' if fault=='preserve' else 'DUAL_RUNTIME_ROTATE',coverage_damage=fault)
+    value=_run_source_history(seed,tmp_path,discovery_fault=fault)
+    assert value['state']=='PASS_PRIOR_PENDING_DISCOVERY_REJECTED' and value['fault']==fault
+    assert value['original_pending_preserved']is True and value['retained_restore_started']is False
+    assert value['remote_writes']==0
