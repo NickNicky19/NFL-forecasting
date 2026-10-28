@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-28T07:34:06.798250+00:00",
+  "observed_at_utc": "2026-10-28T07:42:11.052487+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL_PRODUCER_CURRENT32_VERIFIED_WEBSITE_READY_NOT_DEPLOYED_PARENT_ACTIVATION_BLOCKED",
   "findings": [
@@ -301,7 +301,7 @@
     "all23_top_picks": "CURRENT_BASELINE",
     "caption": "Selected forecasts \u00b7 provisional",
     "caption_status": "CONFIRMED_MISLEADING;PR9corrected_not_live",
-    "last_TLS_observation_utc": "2026-10-27T22:47:09.095807+00:00"
+    "last_TLS_observation_utc": "2026-10-28T07:31:33.267768+00:00"
   },
   "source": {
     "research_main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
@@ -310,8 +310,8 @@
     "producer_PR33_CI": 40273587281,
     "controller_record_commit": "4f2cafd906b2d83dd045f48fae61dff5e08d4453",
     "native_registration_run": 40644020277,
-    "owner_operations_run": 40611698210,
-    "current_source_pair_ready": "SOURCE_AND_NATIVE31_REGISTERED;GENUINE32_RUNNING_NOT_YET_QUALIFIED",
+    "owner_operations_run": 40644670107,
+    "current_source_pair_ready": "NATIVE31_AND_GENUINE32_VERIFIED;WEBSITE_AND_PARENT_PENDING",
     "producer_PR36_CI": 40277891751,
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
@@ -329,7 +329,7 @@
     "producer51_CI": 40594427543,
     "archive_PR52_head": "dc6dffc391f4d5321b95b2ae804b250a2009438a",
     "archive_PR52_CI": 40602136533,
-    "owner_operations_state": "CURRENT_SOURCE_CONTINUATION32_RUNNING_FROM_ORIGINAL28_NO_OLD_ROOT_RETRY",
+    "owner_operations_state": "PUBLIC_DERIVED_DELIVERY_COMPLETE",
     "archive_PR52_CI_status": "PASS_ALL2275COMPLETE_2274PASS_1OPTIONAL_SKIP",
     "recovery_Main53_head": "835808d112e79ba7f1c79187f99c5304060de135",
     "recovery_Main53_CI": 40606329853,
@@ -338,7 +338,9 @@
     "recovery_Producer54_CI_state": "PASS_ALL2304_COMPLETE_2303PASS_1OPTIONAL",
     "current_source_pair_registered": true,
     "source57_head": "e3b0091563b45ff748d97d28510d30619e1d8ae1",
-    "source57_CI": 40635632808
+    "source57_CI": 40635632808,
+    "current_main_CI": 40640349535,
+    "current_producer_CI": 40642527286
   },
   "evidence": [
     "README.md",
@@ -399,7 +401,10 @@
     "evidence/parent32-checkpoint-metadata-preflight.json",
     "evidence/parent-current32-daily-activation-block.json",
     "evidence/website-actual-live-resumed-0728.json",
-    "evidence/website-live-assets-current32.json"
+    "evidence/website-live-assets-current32.json",
+    "evidence/parent-variable-write-access-result.json",
+    "evidence/current32-website-handoff-readback.json",
+    "evidence/parent-current32-original-readiness.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -1086,7 +1091,13 @@
         "conclusion": "skipped"
       }
     ],
-    "existing_owner_action": "Set existing Actions variable AUDIT_WEEKLY_PARENT_ENABLED to literal true; then run existing daily route once with current guards."
+    "existing_owner_action": "Set existing Actions variable AUDIT_WEEKLY_PARENT_ENABLED to literal true; then run existing daily route once with current guards.",
+    "write_API_status": 403,
+    "write_API_error": "Resource not accessible by integration",
+    "existing_variable_write_attempted": true,
+    "variable_changed": false,
+    "original_readiness_artifact": 12799252699,
+    "original_readiness_artifact_sha256": "34dac92c9728d0ed16c1e1e54fb4c919a90d4679064c7375b776f359a7952e05"
   },
   "latest_actual_live": {
     "observed_at_utc": "2026-10-28T07:31:33.267768+00:00",
@@ -1142,5 +1153,18 @@
       "sha256": "275d356379c90e38ed9dd4d6fc2863c955437b18bb0c70ecbf2533e5bacda9ae"
     },
     "new_source_or_selected_release_verified": false
+  },
+  "current_website_handoff": {
+    "observed_at_utc": "2026-10-28T07:39:58.335928+00:00",
+    "comment_id": 6463432072,
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6463432072",
+    "body_sha256": "7f20aa2e66e48144ecdabb02442657c86679d2bdb97e58089f5d9d9e00c24255",
+    "exact_body_readback": true,
+    "owner_lease_unchanged": true,
+    "PR10_head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+    "PR10_ready": true,
+    "PR10_body_exact": true,
+    "report_commit": "bd9c204b78e1060480e19d69a661d11cfb2445e9",
+    "release_verified": false
   }
 }

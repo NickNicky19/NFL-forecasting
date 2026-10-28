@@ -12,6 +12,8 @@ The latest grading sidecar and history locator pass the current-source metadata 
 
 Remaining limits include the separate website status-expiry repair, operating qualification and publication race acceptance; declared 40/42 horizon gaps; original26's missing full forecast and Week8 choice bodies; unsupported exact research PPR; the retained seven-day historical availability assumption; and private historical accuracy results not fully reproduced. Original issues remain intact. Software checks establish no accuracy gain or scientific qualification. [All SYS states](SYS-STATUS.json) · [Finite coverage map](coverage-current-20261028.csv).
 
+The exact integration handoff was posted and read back at [comment6463432072](https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6463432072). PR10 is confirmed ready at e12. An authorized PATCH of the existing Parent variable also returned403 at07:38UTC; the variable did not change. The original blocked-run readiness artifact was downloaded and digest-verified, and confirms no publication began.
+
 ---
 
 Update — 2026-10-28T06:36:51.596893+00:00 (PARTIAL; current-source continuation running)
