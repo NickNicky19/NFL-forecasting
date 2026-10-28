@@ -1,0 +1,372 @@
+{
+  "schema_version": "resume-production-readback-readonly-v1",
+  "observed_at_utc": "2026-10-28T19:14:00Z",
+  "investigator": {
+    "task": "/root/resume_production_readback",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "xhigh",
+    "actual_backend": "UNATTESTED",
+    "role": "READ_ONLY_SUPPORT_EXISTING_PRODUCTION_OWNER"
+  },
+  "source_files_read": [
+    "AGENTS.md",
+    "reports/next-nfl-checkpoint-20261028/PRODUCTION_RECONCILIATION.json",
+    "docs/NEXT_CHECKPOINT_PRODUCTION_HANDOFF_20261028.md"
+  ],
+  "network": {
+    "skill": "cloud-environment-runtime",
+    "observations_current": true,
+    "state": "enforced",
+    "mode": "unrestricted",
+    "vpn_configured": false,
+    "secrets_bound": 0,
+    "credential_values_read": 0
+  },
+  "website_main": {
+    "sha": "dbf4a05de77e3abcd497125fa0cb0479ac4c327a",
+    "title": "Scheduled update (phase1)",
+    "parent": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "created_at": "2026-10-28T18:46:45Z",
+    "changed_paths": 64,
+    "all_paths_under_data_or_output_data": true,
+    "source_or_workflow_changes": 0,
+    "preserve_new_data_publication": true
+  },
+  "pull_requests": [
+    {
+      "number": 9,
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/9",
+      "head": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+      "base": "main",
+      "base_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "changed_files": 7,
+      "CI": [
+        {
+          "id": 40576824120,
+          "name": "Reliability tests",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 203,
+          "jobs_url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/actions/runs/40576824120/jobs",
+          "logs_url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/actions/runs/40576824120/logs",
+          "workflow_id": 383746306
+        }
+      ],
+      "limit": "CI is exact old PR head; combined source against new data Main has not been checked here."
+    },
+    {
+      "number": 10,
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/10",
+      "head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+      "base": "audit/main-critical-release-20261027",
+      "base_sha": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "changed_files": 6,
+      "CI": [
+        {
+          "id": 40648049705,
+          "name": "Reliability tests",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 218,
+          "jobs_url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/actions/runs/40648049705/jobs",
+          "logs_url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/actions/runs/40648049705/logs",
+          "workflow_id": 383746306
+        }
+      ],
+      "limit": "CI is exact old PR head; combined source against new data Main has not been checked here."
+    }
+  ],
+  "writer": {
+    "revision": 178,
+    "updated_at": "2026-10-28T03:58:28.617439Z",
+    "blob_sha": "93543d6462440ad5fa65a701d1b622fc1c1bf85b",
+    "active_run": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+    "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5",
+    "manual_boundaries": {
+      "deployment": false,
+      "force_push": false,
+      "main_writes": false,
+      "merge": false,
+      "model_promotion": false
+    },
+    "last_owner_result_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6460288311",
+    "last_owner_result_state": "PAUSED_AT_OWNER_REQUESTED_STOP; RELEASE_INCOMPLETE; FAIL_73.603_SECONDS_AGAINST_60_SECONDS",
+    "new_owner_acknowledgement_after_0737_handoff_found": false,
+    "latest_audit_handoff_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6476073933",
+    "lease_released": false,
+    "PR9_all_seven_paths_in_scope": true,
+    "PR10_four_exception_paths": [
+      ".github/workflows/hourly.yml",
+      "config/weekly-derived-selected-policy-v4.json",
+      "tools/weekly_public_feed_v4.py",
+      "tests/test_weekly_public_feed_v4.py"
+    ],
+    "scope_change_found": false
+  },
+  "producer": {
+    "source": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+    "prior_run_40644670107": "SUCCESS_HISTORICAL_1960_PREVIEW; retained",
+    "parent_run": 40729788942,
+    "child_run": 40729906573,
+    "all_three_child_jobs_successful": true,
+    "jobs": {
+      "consume": {
+        "api_job_id": 122974673980,
+        "job_id": "audit-weekly-export-v1"
+      },
+      "produce": {
+        "api_job_id": 122963146111,
+        "job_id": "audit-weekly-produce-v1"
+      },
+      "restore": {
+        "api_job_id": 122973253202,
+        "job_id": "audit-weekly-restore-v1"
+      }
+    },
+    "published_at": "2026-10-28T17:15:18.110729+00:00",
+    "issued_at": "2026-10-28T17:14:38.260601Z",
+    "feed_path": "state/public/weekly-adaptive-v1/2026-W08/20261028T171438.260601Z--3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json",
+    "feed_sha256": "3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452",
+    "public_rows": 1951,
+    "category_row_counts": {
+      "anytime_td": 430,
+      "rec": 403,
+      "rec_yd": 403,
+      "rush_rec_yd": 291,
+      "rush_att": 112,
+      "rush_yd": 112,
+      "pass_att": 40,
+      "pass_cmp": 40,
+      "pass_int": 40,
+      "pass_td": 40,
+      "pass_yd": 40
+    },
+    "private_candidate_rows": 11466,
+    "private_selected_rows": 2956,
+    "retained_model_pairs": 18,
+    "new_fits": 0,
+    "consumer_preview": {
+      "source": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+      "policy_sha256": "d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8",
+      "elapsed_seconds": 3.3525590659992304,
+      "requests": 6,
+      "rows": 1951,
+      "categories": {
+        "anytime_td": 430,
+        "rec": 403,
+        "rec_yd": 403,
+        "rush_rec_yd": 291,
+        "rush_att": 112,
+        "rush_yd": 112,
+        "pass_att": 40,
+        "pass_cmp": 40,
+        "pass_int": 40,
+        "pass_td": 40,
+        "pass_yd": 40
+      },
+      "chosen_nonreference_rows": 1951,
+      "R0_only_rows": 0,
+      "category_functionals": {
+        "intended_median": 4,
+        "expected_mean": 6,
+        "event_probability": 1
+      },
+      "board_sha256": "1c3c37b30a2f2ea4f6dc10c731687a88644b999c6f17f0ba936d26e49b14f7db",
+      "installed_on_live_website": false
+    },
+    "grading_checkpoint": {
+      "evidence_descriptor_sha256": "b90a38a31ec7aba8b8d60b9275dee58fc90f2d3339efe60acf972dbf477b8a73",
+      "feed_sha256": "3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452",
+      "schema_version": "audit-weekly-grading-delivery-v1",
+      "sidecar_path": "controller-v1/grade-checkpoints/3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json.gz",
+      "sidecar_sha256": "4da2e4bb17386de86805409707c03d0187fda5c9ae62351b88b730e570cb4eb6"
+    },
+    "evidence_url": "https://github.com/NickNicky19/NFL-forecasting/blob/e0e7f94f01894482360581ed0c172fa4ef0d57c8/reports/recurring-integrated-20261026/evidence/enabled-parent40729788942-full-delivery-verification.json",
+    "evidence_blob_sha": "95694dad22f6da6a98fa2596f584c41cb71f6ec6",
+    "evidence_body_hash_not_independently_recomputed": true,
+    "scientific_qualification": false
+  },
+  "parent": {
+    "activation_blocker": "RESOLVED_BY_OWNER; successful guarded Parent40729788942 and observed PARENT_ENABLED true in later run",
+    "old_40718723483": "Retained historical pre-activation safety failure",
+    "successful_parent_job_id": 122962686106,
+    "latest_run": {
+      "id": 40745398328,
+      "event": "schedule",
+      "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+      "created_at": "2026-10-28T18:28:09Z",
+      "completed_at": "2026-10-28T18:28:24Z",
+      "conclusion": "failure",
+      "job_id": 123017710437,
+      "cadence": {
+        "observed_chicago": "2026-10-28T13:28:20.420341-05:00",
+        "due": false,
+        "mode": "grade",
+        "pregame_issuance_allowed": false,
+        "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED",
+        "policy_version": "audit-weekly-parent-0736-v1"
+      },
+      "enqueue": "skipped",
+      "failed_step": "Keep original handover block when parent qualification fails",
+      "safety_receipt": {
+        "acquisition_started": false,
+        "capture_started": false,
+        "exit_code": 78,
+        "new_fits_predictions": 0,
+        "observed_at": "2026-10-28T18:28:20.473894+00:00",
+        "reasons": [
+          "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+          "PRIVATE_DURABILITY_NOT_VERIFIED",
+          "EXACT_PUBLICATION_REVIEW_ABSENT"
+        ],
+        "repository": "NickNicky19/NFL-forecasting",
+        "run_attempt": "1",
+        "run_id": "40745398328",
+        "scheduler": "EXISTING_CRON_AND_SINGLE_WRITER_RETAINED",
+        "schema_version": "lab-hosted-safety-readiness-v1",
+        "scientific_confirmation": "NO_NEW_EVIDENCE",
+        "source_commit": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+        "state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+        "state_publication_started": false
+      }
+    },
+    "scheduled_trigger_observed": true,
+    "qualified_scheduled_capture_observed": false,
+    "next_configured_window_start": "2026-10-29T12:36:00Z",
+    "next_configured_window_end_exclusive": "2026-10-29T12:57:00Z",
+    "weekly_decision_deadline": "2026-10-29T18:15:00Z",
+    "first_game_input_cutoff": "2026-10-29T22:45:00Z",
+    "lead_seconds": 5400,
+    "next_history_locator_metadata": {
+      "schema_version": "audit-enabled-parent-next-current-metadata-preflight-v1",
+      "observed_at_utc": "2026-10-28T17:26:56.174616+00:00",
+      "state": "CURRENT_SOURCE_PARENT_SIDECAR_METADATA_PASS",
+      "source": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+      "capture_run": 40729906573,
+      "lab_state_commit": "aa7999b954a6e455f3a53465e1bd1091af77bb15",
+      "sidecar_path": "state/controller-v1/grade-checkpoints/3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json.gz",
+      "sidecar_sha256": "4da2e4bb17386de86805409707c03d0187fda5c9ae62351b88b730e570cb4eb6",
+      "receipt_sha256": "b8ac97b3dde799e6050e5359327b3b979a53d0b462a43a16571673d10d2ed790",
+      "three_actual_completed_successful_jobs": true,
+      "exact_root_workflow_epoch_feed_bindings": true,
+      "checkpoint_or_outcome_bodies_decoded": false,
+      "private_assets_read": 0,
+      "remote_writes": 0,
+      "parent_execution_pass": false,
+      "private_restore_authority_minted": false,
+      "limitation": "Offline metadata preflight only. Actual Parent must authenticate the latest history locator, private native evidence, current capacity/source/clock and one-issue claim before enqueue.",
+      "validator_checkout": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+      "validator_module_sha256": "76c92309bb87cb916f236a6ce1f0819fd7239f1ff7f2ff461d2e32e11bf55f21",
+      "compatibility_check_only": true,
+      "actual_latest_history_locator_metadata": "PASS",
+      "history_locator_path": "state/controller-v1/history-v2/20261028T171323.535719Z--40729906573--dc66e91fad1e68d1fbc384d70c91a6aa41255274337004358107b559a2108468.json.gz",
+      "history_locator_sha256": "7b71c4b1837fba5e7a767a2038f62eec072420e0d0d3cc0cd93d1a9f886909f8"
+    },
+    "next_actual_qualified_run_or_sealed_output_root_unverified": true
+  },
+  "live": {
+    "observed_at_utc": "2026-10-28T19:10:12.319596+00:00",
+    "base_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/",
+    "meta": {
+      "path": "data/meta.json",
+      "bytes": 1215,
+      "sha256": "e7751342437caff093fd091b7fce2d27728131d6134ae3e0b2b606992dd8dbe3",
+      "generated_at": "2026-10-28T18:46:38Z",
+      "season": 2026,
+      "week": 8
+    },
+    "pointer": {
+      "path": "data/weekly-adaptive-overlay.json",
+      "bytes": 333,
+      "sha256": "2581eb86b4ab00cc5dfcfc8ab91bedf689225dd57191ee5ee12ae321f6c1fc23"
+    },
+    "payload": {
+      "path": "data/weekly-adaptive/91d6471029ec76839650b24b9996a5ae9886d5c83bfe32dc6a1556effe7e6a1b.json",
+      "bytes": 790,
+      "sha256": "91d6471029ec76839650b24b9996a5ae9886d5c83bfe32dc6a1556effe7e6a1b",
+      "pointer_hash_matches": true,
+      "state": "DISABLED_USE_R0",
+      "selected_rows": 0,
+      "frozen_rows": 0,
+      "fallback_counts": {
+        "PPR_or_unsupported_R0": 449,
+        "publication_not_approved_R0": 2019
+      },
+      "website_source_sha": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+      "prepared_at": "2026-10-28T18:46:44.516176+00:00"
+    },
+    "board": {
+      "path": "data/week.json",
+      "bytes": 2000122,
+      "sha256": "5997049de49551c2d0588336ea04cbf08ee89cae36f18bddfe50f60be7dc6faa",
+      "generated_at": "2026-10-28T18:46:38Z",
+      "players": 535,
+      "games": 14,
+      "overlay_display_board_matches": true,
+      "category_fallback_row_counts": {
+        "anytime_td": 438,
+        "fpts": 449,
+        "pass_att": 40,
+        "pass_cmp": 40,
+        "pass_int": 40,
+        "pass_td": 40,
+        "pass_yd": 40,
+        "rec": 409,
+        "rec_yd": 409,
+        "rush_att": 114,
+        "rush_rec_yd": 295,
+        "rush_yd": 154
+      },
+      "earliest_kickoff": "2026-10-30T00:15Z",
+      "last_kickoff": "2026-11-03T01:15Z"
+    },
+    "PR9_or_PR10_deployed": false,
+    "interpretation": "Actual refreshed baseline data publication; zero selected rows. The historical 17:44 snapshot is preserved and superseded only for current state.",
+    "read_bounds_bytes": {
+      "meta": 16384,
+      "pointer": 8192,
+      "payload": 262144,
+      "board": 6291456
+    },
+    "raw_bodies_saved": false
+  },
+  "private_odds": {
+    "status": "UNCHANGED_NOT_VERIFIED_BY_THIS_REFRESH",
+    "credential": "Existing authorized website producer only; no key read",
+    "approved_private_transport": "Owner-runtime binding and restore remain required before raw acquisition",
+    "prior_176_credit_consumption": "UNVERIFIED; preserve",
+    "smallest_route_reservation_bytes": 8388608,
+    "provider_calls_this_refresh": 0
+  },
+  "next_actions": [
+    "Retained owner preserves dbf4 data update, reconciles legitimate Main, integrates PR9 first, then retargets/reconciles stacked PR10. Record exact new heads and normal scope/landing/deployment review; keep four PR10 exceptions explicit.",
+    "Run the normal fresh paired build and unchanged strict overlay consumer; verify actual served source/build/pointer/payload/category counts. Current 1951-row consumer result is an undeployed preview.",
+    "Observe next qualified existing Parent invocation and authenticate latest source/capacity/clock/history locator/one-issue claim; keep missed-window failure and original safety guards. Do not ask to enable the already enabled flag or backfill.",
+    "Retained owner binds and verifies approved private Odds transport before acquisition; privately establish quota/entitlement and reserve upcoming capacity within existing budget."
+  ],
+  "activity": {
+    "external_writes": 0,
+    "comments": 0,
+    "dispatches": 0,
+    "retries": 0,
+    "merges": 0,
+    "deployments": 0,
+    "lease_changes": 0,
+    "scheduler_changes": 0,
+    "key_values_read": 0,
+    "OddsAPI_calls": 0,
+    "tests_run": 0,
+    "private_forecast_or_outcome_rows_decoded": 0,
+    "raw_public_bodies_saved": 0,
+    "files_written_only": [
+      "reports/next-nfl-checkpoint-20261028/RESUME_PRODUCTION_READBACK.json",
+      "reports/next-nfl-checkpoint-20261028/RESUME_PRODUCTION_READBACK.md"
+    ]
+  }
+}

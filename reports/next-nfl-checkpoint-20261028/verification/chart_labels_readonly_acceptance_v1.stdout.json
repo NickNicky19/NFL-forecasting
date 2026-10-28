@@ -1,0 +1,151 @@
+{
+  "actual_backend": "UNATTESTED",
+  "capsule": {
+    "artifact_name": "CHART_LABELS_COMPLETE.json.gz",
+    "bytes": 838547,
+    "sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82"
+  },
+  "counters": {
+    "HTTP": 0,
+    "accuracy_comparisons": 0,
+    "calibration": 0,
+    "complete_components_but_unknown_participation_rows": 900,
+    "fits": 0,
+    "forecast_inference": 0,
+    "invocations": 1,
+    "label_capsules_decoded": 1,
+    "managed_writes": 0,
+    "new_forecasts": 0,
+    "numeric_chart_scores_checked": 13235,
+    "original_source_NFL_table_decodes": 0,
+    "planned_label_rows_checked": 14160,
+    "played_missing_rows_preserved": 23,
+    "rare_positive_numeric_labels": 12,
+    "rare_positive_planned_rows": 38,
+    "unknown_participation_rows_preserved": 902
+  },
+  "evaluation_population_admissible": false,
+  "interpretation": "Partially complete new chart labels are accepted as retained source reconstructions;13235 numeric labels exist. Missing/rare-positive/unknown rows remain in the full14160-row planned panel. Predictive evaluation population is not admitted.",
+  "limits": [
+    "Rowwise linear arithmetic and capsule coverage acceptance only; no event mapping was restudied and no original weekly/PBP NFL table was decoded",
+    "The quarantined original payload was base64-decoded for hash/size only; its Parquet content was not parsed",
+    "No source-listed or unknown-participation rows are silently dropped or zero-imputed; original offered/statless-player completeness remains outside this label panel",
+    "Rare positive unresolved classifications and unknown participation block admission of a predictive evaluation population; this does not imply all chart PPR labels are impossible",
+    "No PPR forecasts, measured accuracy, calibration, live use, scientific qualification, independent official-truth attestation or offhost restoration established"
+  ],
+  "preserved_old_contracts": {
+    "new_chart_scorer_sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e",
+    "old_pinned_site_scorer_sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13",
+    "old_target_claims_unchanged": true
+  },
+  "public_metadata_projection_source_sha256": "46f93cdf876d5f7b8ca0e18ebf7975982ad7233020f582d05c38ccd99a09d4f5",
+  "requested_backend": "gpt-6.1-sol xhigh",
+  "resources": {
+    "CPU_limit_seconds": 15,
+    "CPU_seconds": 0.669024206,
+    "RSS_limit_bytes": 536870912,
+    "RSS_peak_bytes": 201179136,
+    "wall_limit_seconds": 30,
+    "wall_seconds": 0.6692082480003592
+  },
+  "safe_aggregate": {
+    "artifact_name": "SAFE_AGGREGATE_TECHNICAL_V2.json",
+    "bytes": 5174,
+    "sha256": "2f2ad9e7b436544a91028af425c28b1f199fe0751a6fa1d48432212b068f2884"
+  },
+  "sealed_plan_sha256": "b1c4675144bfe03a84bad3446256750d5ce6273cbd22648a178234876378ffd1",
+  "season_coverage": {
+    "2024": {
+      "numeric": 5589,
+      "planned": 5935,
+      "played_missing": 1,
+      "rare_numeric": 12,
+      "rare_planned": 16,
+      "states": {
+        "played_missing": 1,
+        "played_score": 4955,
+        "played_zero": 634,
+        "unknown_participation": 345
+      },
+      "unknown": 345,
+      "week_rows": {
+        "1": 344,
+        "10": 294,
+        "11": 312,
+        "12": 289,
+        "13": 349,
+        "14": 287,
+        "15": 345,
+        "16": 345,
+        "17": 359,
+        "18": 348,
+        "2": 346,
+        "3": 355,
+        "4": 341,
+        "5": 296,
+        "6": 303,
+        "7": 339,
+        "8": 355,
+        "9": 328
+      }
+    },
+    "2025": {
+      "numeric": 5693,
+      "planned": 6108,
+      "played_missing": 21,
+      "rare_numeric": 0,
+      "rare_planned": 21,
+      "states": {
+        "played_missing": 21,
+        "played_score": 4977,
+        "played_zero": 716,
+        "unknown_participation": 394
+      },
+      "unknown": 394,
+      "week_rows": {
+        "1": 359,
+        "10": 318,
+        "11": 336,
+        "12": 314,
+        "13": 352,
+        "14": 329,
+        "15": 350,
+        "16": 365,
+        "17": 359,
+        "18": 356,
+        "2": 353,
+        "3": 356,
+        "4": 358,
+        "5": 323,
+        "6": 326,
+        "7": 343,
+        "8": 295,
+        "9": 316
+      }
+    },
+    "2026": {
+      "numeric": 1953,
+      "planned": 2117,
+      "played_missing": 1,
+      "rare_numeric": 0,
+      "rare_planned": 1,
+      "states": {
+        "played_missing": 1,
+        "played_score": 1685,
+        "played_zero": 268,
+        "unknown_participation": 163
+      },
+      "unknown": 163,
+      "week_rows": {
+        "1": 360,
+        "2": 364,
+        "3": 367,
+        "4": 362,
+        "5": 346,
+        "6": 318
+      }
+    }
+  },
+  "state": "PASS_READONLY_CHART_LABEL_ARITHMETIC_AND_COVERAGE_ACCEPTANCE",
+  "target": "nick-chart-ppr-v1"
+}

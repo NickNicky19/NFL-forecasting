@@ -1,0 +1,54 @@
+{
+  "NFL_numerical_decode_or_test_execution": 0,
+  "actual_backend": "UNATTESTED",
+  "code": [
+    {
+      "artifact_name": "next_checkpoint_chart_ppr_run.py",
+      "bytes": 16694,
+      "sha256": "48cf4d3aa147bd0eb8a20081da7820ba6b7593ef7408126f0e5208b3ffa5054c"
+    },
+    {
+      "artifact_name": "next_checkpoint_chart_ppr_labels.py",
+      "bytes": 16246,
+      "sha256": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    },
+    {
+      "artifact_name": "next_checkpoint_chart_ppr.py",
+      "bytes": 11779,
+      "sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e"
+    }
+  ],
+  "findings": [
+    {
+      "location": "tools/next_checkpoint_chart_ppr_run.py except BaseException failure retention",
+      "problem": "The exception handler stops the watchdog and cancels ITIMER_REAL before inherited managed failure retention. It never calls check() in that path. CPU hard61 remains, but lock waits/scans/publication can exceed the declared90-second total wall budget.",
+      "required_resolution": "Keep consumed/native failure receipt, then enforce an absolute90-total wall deadline for optional failure retention without recursive retention. Stop or skip managed retention at the deadline.",
+      "severity": "BLOCKING_FOR_EXACT_GO"
+    }
+  ],
+  "metadata": {
+    "artifact_name": "next-checkpoint-metadata-v4.json",
+    "bytes": 5235,
+    "sha256": "b399375437d6569aba6704d25ddad843f4445b0f0fb9427845d8be6a54c548bb"
+  },
+  "otherwise_accepted": [
+    "All implementation hashes match the requested identities",
+    "Four-argument inherited storage construction and selected package/frozen lock identity are compatible",
+    "validate_reference(path, expected_sha256) supports exact immutable owned blob/alias readback",
+    "Shared16MiB metadataV4 is pinned; original caps/store controls remain inherited",
+    "Single <=2MiB gzip publication attempt includes failed writes; <=3MiB retained and<=6MiB staged peak incl control delta",
+    "Consumed receipt precedes source numerical decode; one fresh native root and private destination forbid retries",
+    "Builder keeps all planned source-listed player-games and unknown/rare-positive unsupported states; zero predictive fits/inference/accuracy/HTTP",
+    "Root sealed plan must add exact wrapper caps, storage binding, native and aggregate paths; current proposed source plan is not executable yet"
+  ],
+  "prior_source_review_scope": "Existing source-native mapping/scorer fictional preflight is retained; this review read builder/scorer code but performed no real-label execution or independent official-truth attestation",
+  "proposed_plan": {
+    "artifact_name": "next-checkpoint-chart-ppr-label-plan-v1.json",
+    "bytes": 5483,
+    "sha256": "e000c322b060cb9f86cf7f98aed15ba54b67e1466df8add281cfa159c0174ef3"
+  },
+  "public_metadata_projection_source_sha256": "2f76c88d7c05fd60086206a83df3feb9ea40d69ebedccc94d4ce6050917b86d6",
+  "requested_backend": "gpt-6.1-sol xhigh",
+  "scope": "NEW_CHART_LABEL_INHERITED_CAS_WRAPPER_ONLY",
+  "state": "STATIC_REVIEW_BLOCKED_PENDING_FINITE_FAILURE_WALL_FIX"
+}

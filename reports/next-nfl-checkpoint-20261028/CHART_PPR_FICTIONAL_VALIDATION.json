@@ -1,0 +1,145 @@
+{
+  "NFL_rows_read": 0,
+  "accuracy_experiments": 0,
+  "cases": [
+    {
+      "actual": 44.04,
+      "expected": 44.04,
+      "name": "ordinary production, fractional final score",
+      "passed": true
+    },
+    {
+      "actual": -0.9000000000000001,
+      "expected": -0.9,
+      "name": "signed official yards",
+      "passed": true
+    },
+    {
+      "actual": 0.0,
+      "expected": 0,
+      "name": "recovered fumble and unlisted bonuses score zero",
+      "passed": true
+    },
+    {
+      "actual": -1.0,
+      "expected": -1,
+      "name": "unique lost fumble across phase duplicates",
+      "passed": true
+    },
+    {
+      "actual": 2.0,
+      "expected": 2,
+      "name": "passing conversion credit",
+      "passed": true
+    },
+    {
+      "actual": 2.0,
+      "expected": 2,
+      "name": "rushing conversion credit",
+      "passed": true
+    },
+    {
+      "actual": 2.0,
+      "expected": 2,
+      "name": "receiving conversion has no ordinary reception",
+      "passed": true
+    },
+    {
+      "actual": 6.0,
+      "expected": 6,
+      "name": "offensive recovery TD ignores old IDP exception",
+      "passed": true
+    },
+    {
+      "actual": 6.0,
+      "expected": 6,
+      "name": "kick return TD",
+      "passed": true
+    },
+    {
+      "actual": 6.0,
+      "expected": 6,
+      "name": "punt return TD",
+      "passed": true
+    },
+    {
+      "actual": 6.0,
+      "expected": 6,
+      "name": "field goal return TD",
+      "passed": true
+    },
+    {
+      "actual": {
+        "error": "ValueError",
+        "message": "one touchdown overlaps disjoint chart categories"
+      },
+      "expected": "ValueError",
+      "name": "same TD cannot overlap scorer classes",
+      "passed": true
+    },
+    {
+      "actual": 12.0,
+      "expected": 12,
+      "name": "qualified three-class return aggregate used once",
+      "passed": true
+    },
+    {
+      "actual": {
+        "error": "ValueError",
+        "message": "return aggregate and primitive return credits overlap"
+      },
+      "expected": "ValueError",
+      "name": "aggregate cannot overlap primitive return credits",
+      "passed": true
+    },
+    {
+      "actual": null,
+      "expected": null,
+      "name": "missing field remains unsupported despite generic total",
+      "passed": true
+    },
+    {
+      "actual": 1.9,
+      "expected": 1.9,
+      "name": "fractional component means give linear expectation",
+      "passed": true
+    },
+    {
+      "actual": {
+        "error": "ValueError",
+        "message": "chart expectation requires component conditional means"
+      },
+      "expected": "ValueError",
+      "name": "component medians rejected",
+      "passed": true
+    },
+    {
+      "actual": "played_zero",
+      "expected": "played_zero",
+      "name": "played supported zero",
+      "passed": true
+    },
+    {
+      "actual": "known_dnp",
+      "expected": "known_dnp",
+      "name": "known DNP distinct from zero",
+      "passed": true
+    },
+    {
+      "actual": [
+        "unknown_participation",
+        "played_missing"
+      ],
+      "expected": [
+        "unknown_participation",
+        "played_missing"
+      ],
+      "name": "unknown and played-missing remain distinct",
+      "passed": true
+    }
+  ],
+  "fictional_cases": 20,
+  "predictive_fits": 0,
+  "scorer_sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e",
+  "state": "PASS"
+}

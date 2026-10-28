@@ -1,0 +1,57 @@
+{
+  "HTTP": 0,
+  "NFL_table_decodes": 0,
+  "actual_backend": "UNATTESTED",
+  "category_policy_records_checked": 90,
+  "fits": 0,
+  "limits": [
+    "Static producer/immutable selection checks are retained; this pass does not replay3800 individual offers",
+    "Outer endpoints assume each unresolved selection independently wins or loses at its frozen payout; may not be jointly attainable",
+    "Known outcomes remain unchanged; all-selected ROI includes unresolved stakes, while known-only ROI conditions on known-settled stakes",
+    "Deterministic settlement sensitivity, not a confidence interval or authenticated book profitability or live-selection claim"
+  ],
+  "managed_writes": 0,
+  "new_forecasts": 0,
+  "new_grades": 0,
+  "new_selections": 0,
+  "omitted_zero_selection_original_cells": 30,
+  "original_summary_container": {
+    "artifact_name": "PAPER_SCORECARD.zip",
+    "bytes": 6342665,
+    "sha256": "3e1b90297c5536eabd78b10928e70c972b874264bb901c12d871c740ab8be775"
+  },
+  "original_summary_member": {
+    "bytes": 1961386,
+    "compressed_bytes": 155637,
+    "member": "SUMMARY.json",
+    "sha256": "7df137ff84bec1f50381da06d478c341a5947ae9d3d8467999f269b54c6fdbb0"
+  },
+  "public_metadata_projection_source_sha256": "43cf52b7afcce1087c1fe0cf7c8f12e54fc19498de47dc2dd1d4a268df571df7",
+  "public_original": {
+    "artifact_name": "PAPER_PUBLIC_RESULTS.json",
+    "bytes": 24461,
+    "sha256": "d510f22d80e3b4eb39fe42eb53b8eb665ee71c6be6db92522101baf4ea085413"
+  },
+  "requested_backend": "gpt-6.1-sol xhigh",
+  "resources": {
+    "CPU_seconds": 0.034912475,
+    "RSS_bytes": 19501056,
+    "wall_seconds": 0.0349576629960211
+  },
+  "review_scope": "Static formula review plus independent arithmetic on existing authenticated aggregate JSON only",
+  "sealed_plan": {
+    "artifact_name": "next-checkpoint-paper-sensitivity-v1.sealed.json",
+    "bytes": 3089,
+    "sha256": "2c5179f66123c034b71f98b0a0e8e77f964e975ab9000c19c2abb1b1dc5adcf9"
+  },
+  "season_policy_records_checked": 10,
+  "selected_row_replays": 0,
+  "selected_unit_stakes": 3800,
+  "sensitivity": {
+    "artifact_name": "SENSITIVITY.json",
+    "bytes": 58520,
+    "sha256": "5c7c4fd91f61bb8d8860d29285907a3b58710da132cb150ad3c77e6a8f1979b2"
+  },
+  "state": "PASS_INDEPENDENT_AGGREGATE_FORMULA_QA",
+  "unresolved_unit_stakes": 102
+}

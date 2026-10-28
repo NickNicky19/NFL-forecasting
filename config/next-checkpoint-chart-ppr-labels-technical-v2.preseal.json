@@ -1,0 +1,378 @@
+{
+  "auxiliary_sources": [
+    {
+      "bytes": 29754,
+      "kind": "generator_source",
+      "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/06-calculate-stats.source",
+      "sha256": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28"
+    },
+    {
+      "bytes": 53238,
+      "kind": "tidy_credit_source",
+      "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/08-tidy-play-stats.source",
+      "sha256": "45e070dcd061fbcfe1e381ccd742d27c4ed57687c053dee2d9527d5acd29e9d0"
+    },
+    {
+      "bytes": 380427,
+      "kind": "quarantine_original",
+      "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet",
+      "sha256": "963c09479474b6c3a7dba8a88b6cae6931d077d424617df15cc06dd669211602"
+    },
+    {
+      "bytes": 648,
+      "kind": "quarantine_receipt",
+      "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2026.parquet.receipt.json",
+      "sha256": "60faa748f72679b05573999e066d9b82df252a7012ef8f39030f9faaf0be86f8"
+    }
+  ],
+  "canonical_binding_changes": [
+    {
+      "canonical_ref": {
+        "bytes": 849243,
+        "kind": "weekly",
+        "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2024.parquet",
+        "season": 2024,
+        "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+      },
+      "group": "sources",
+      "kind": "weekly",
+      "original_ref": {
+        "bytes": 849243,
+        "kind": "weekly",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2024.parquet",
+        "season": 2024,
+        "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+      },
+      "same_source_bytes_and_hash": true,
+      "season": 2024
+    },
+    {
+      "canonical_ref": {
+        "bytes": 855077,
+        "kind": "weekly",
+        "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2025.parquet",
+        "season": 2025,
+        "sha256": "2a461becaa9adb3c93a3074a3a31f1e960162a50163371a2d34e28393b5fff10"
+      },
+      "group": "sources",
+      "kind": "weekly",
+      "original_ref": {
+        "bytes": 855077,
+        "kind": "weekly",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2025.parquet",
+        "season": 2025,
+        "sha256": "2a461becaa9adb3c93a3074a3a31f1e960162a50163371a2d34e28393b5fff10"
+      },
+      "same_source_bytes_and_hash": true,
+      "season": 2025
+    },
+    {
+      "canonical_ref": {
+        "bytes": 648,
+        "kind": "quarantine_receipt",
+        "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2026.parquet.receipt.json",
+        "sha256": "60faa748f72679b05573999e066d9b82df252a7012ef8f39030f9faaf0be86f8"
+      },
+      "group": "auxiliary_sources",
+      "kind": "quarantine_receipt",
+      "original_ref": {
+        "bytes": 648,
+        "kind": "quarantine_receipt",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet.receipt.json",
+        "sha256": "60faa748f72679b05573999e066d9b82df252a7012ef8f39030f9faaf0be86f8"
+      },
+      "same_source_bytes_and_hash": true,
+      "season": null
+    }
+  ],
+  "continuation_version": "next-checkpoint-chart-ppr-canonical-binding-technical-v2",
+  "execution_authorized": false,
+  "failures_preserved": [
+    "median-boosting permitted-source 2026 bytes/hash mismatch before decode",
+    "initial schema inspection used system Python lacking pyarrow; no NFL rows decoded",
+    "V1 root invocation consumed and failed before NFL source decode at canonical-path guard; one private failure write and exact readback retained; no budget refund."
+  ],
+  "implementation_bindings": [
+    {
+      "bytes": 11779,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/next_checkpoint_chart_ppr.py",
+      "sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e"
+    },
+    {
+      "bytes": 16246,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_ppr_labels.py",
+      "sha256": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    },
+    {
+      "bytes": 19440,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_ppr_run_technical_v2.py",
+      "sha256": "51b2f9d3239a0d32187cab48a079b10c48a8b6d597662641380727a336ad8b2b"
+    },
+    {
+      "bytes": 7856,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_outcomes.py",
+      "sha256": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0"
+    },
+    {
+      "bytes": 10983,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_sources.py",
+      "sha256": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899"
+    },
+    {
+      "bytes": 5384,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/scoring.py",
+      "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13"
+    }
+  ],
+  "independent_review": null,
+  "mapping": {
+    "2025_2026_rare_positive": "preserve explicit dependencies if no retained qualified event inventory; no blanket football-history exclusion",
+    "common_components": "twelve explicit weekly fields; signed yards, separate conversion credits, unique all-phase fumbles_lost_total",
+    "rare_positive": "2024 exact unique PBP TD-player/game/team inventory reconciles to the weekly broad total; disjoint ordinary pass/rush/reception, recovery and return classification; any unknown/ambiguous/overlapping credit stays unsupported",
+    "recovery_zero": "complete nonnegative fumble_recovery_tds superset equals zero; includes lateral-recipient TD IDs56,58,60,62",
+    "return_zero": "complete nonnegative special_teams_tds superset equals zero; native kick/punt/other return TD IDs34,36,46,48,64; aggregate positive is not chart-equivalent"
+  },
+  "native_control_root": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/LABEL_BUILD_NATIVE_TECHNICAL_V2",
+  "original_v1_source_references": {
+    "auxiliary_sources": [
+      {
+        "bytes": 29754,
+        "kind": "generator_source",
+        "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/06-calculate-stats.source",
+        "sha256": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28"
+      },
+      {
+        "bytes": 53238,
+        "kind": "tidy_credit_source",
+        "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/08-tidy-play-stats.source",
+        "sha256": "45e070dcd061fbcfe1e381ccd742d27c4ed57687c053dee2d9527d5acd29e9d0"
+      },
+      {
+        "bytes": 380427,
+        "kind": "quarantine_original",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet",
+        "sha256": "963c09479474b6c3a7dba8a88b6cae6931d077d424617df15cc06dd669211602"
+      },
+      {
+        "bytes": 648,
+        "kind": "quarantine_receipt",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet.receipt.json",
+        "sha256": "60faa748f72679b05573999e066d9b82df252a7012ef8f39030f9faaf0be86f8"
+      }
+    ],
+    "sources": [
+      {
+        "bytes": 849243,
+        "kind": "weekly",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2024.parquet",
+        "season": 2024,
+        "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+      },
+      {
+        "bytes": 855077,
+        "kind": "weekly",
+        "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2025.parquet",
+        "season": 2025,
+        "sha256": "2a461becaa9adb3c93a3074a3a31f1e960162a50163371a2d34e28393b5fff10"
+      },
+      {
+        "bytes": 386908,
+        "kind": "weekly",
+        "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261024T083337210719Z/01ec1f6f199cf3eb617697e0845c0899c159bca437a59dd623ffeddc06066339/sources/stats_player_week_2026.parquet",
+        "season": 2026,
+        "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd"
+      },
+      {
+        "bytes": 20597560,
+        "kind": "PBP",
+        "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/role-count-full-pbp2024-recovery-gate-network-v2-20261026/FULL_PBP2024.parquet",
+        "season": 2024,
+        "sha256": "3fd2896bc0b911b615142d2f1fabae54a4bbba5ab7b73b28187b118ef8af6a3b"
+      }
+    ]
+  },
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-chart-ppr-technical-v2",
+  "participation": "Use explicit positive compatible attempts/carries/targets/receptions/return/fumble/TD evidence; a missing statistical row or an all-zero row alone is not DNP or played evidence.",
+  "population": "Every source-listed REG QB/RB/FB/WR/TE player-game from authenticated weekly 2024, 2025, and completed 2026 through Week 6; preserve all source-listed positive rare events, missing components, duplicate/identity conflicts and unknown participation. No original offered-player or statless-player zero expansion is authorized.",
+  "prior_consumed_attempt": {
+    "GO": {
+      "bytes": 919,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-chart-ppr-labels-v1-GO.json",
+      "sha256": "83952ca28fc6a52507c2fb80f8e2ba6ffc48105325c06a2c3288ac27a59de831"
+    },
+    "NFL_numerical_rows_decoded": 0,
+    "accuracy_comparisons": 0,
+    "failure_reason": "Original weekly2024 path was a symlink; canonical guard rejected it before reading source bytes.",
+    "fits": 0,
+    "forecasts": 0,
+    "managed_write_attempts_consumed": 1,
+    "native_log": {
+      "bytes": 781,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/MAIN_NATIVE.log",
+      "sha256": "db3778ba7df15114676d03ec581aa18174f3bf768f3b6aadbcc45e5bc8923909"
+    },
+    "native_receipts": [
+      {
+        "bytes": 325,
+        "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/LABEL_BUILD_NATIVE/CONSUMED.json",
+        "sha256": "a337a43c84a096ae3badcdceabab7f6596c17c2f89a1f87d3aab64b926df645c"
+      },
+      {
+        "bytes": 711,
+        "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/LABEL_BUILD_NATIVE/FAILED.json",
+        "sha256": "35f4f86749d39656ac72fdeb1593808f18a81f1208f3b32a693b224267fa0c7a"
+      },
+      {
+        "bytes": 706,
+        "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/LABEL_BUILD_NATIVE/FAILED_RETENTION.json",
+        "sha256": "a97c1a8aec5e8c7cbbecaf6653eca86ff431f7fb8f84dadf0b22e45959e6ccb5"
+      }
+    ],
+    "original_budget_not_refunded": true,
+    "plan": {
+      "bytes": 9524,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-chart-ppr-labels-v1.sealed.json",
+      "sha256": "a8c1ac187ec8cdd8f8978cd09f880f30c26cacdcd6abd60efb02805db5366f5d"
+    },
+    "private_failure_blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4",
+    "private_failure_capsule": {
+      "bytes": 489,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-chart-ppr-v1/CHART_LABELS_FAILED.json.gz",
+      "sha256": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4"
+    },
+    "resources_after_exact_failure_readback": {
+      "CPU_seconds": 32.793554310000005,
+      "peak_RSS_bytes": 153366528,
+      "wall_seconds": 32.771854060003534
+    },
+    "retained_charged_bytes": 754,
+    "state": "FAILED_BEFORE_NFL_DECODE_CANONICAL_SOURCE_PATH"
+  },
+  "purpose": "source component qualification and observed-label reconstruction only",
+  "resources": {
+    "CPU_seconds": 60,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "accuracy_comparisons": 0,
+    "aggregate_metadata_bytes": 262144,
+    "fits": 0,
+    "forecast_inference": 0,
+    "invocations": 1,
+    "maximum_PBP_source_rows": 50000,
+    "maximum_input_bytes": 33554432,
+    "maximum_managed_write_attempts_including_failure": 1,
+    "maximum_weekly_source_rows": 48000,
+    "native_control_bytes_cap": 65536,
+    "peak_private_bytes_cap": 6291456,
+    "private_label_bytes": 2097152,
+    "retained_private_bytes_cap": 3145728,
+    "retries": 0,
+    "threads": 1,
+    "wall_seconds": 90
+  },
+  "root_registration": null,
+  "runtime": {
+    "CPU_seconds": 60,
+    "RSS_bytes": 536870912,
+    "absolute_total_wall_seconds": 90,
+    "actual_model_and_reasoning": "UNATTESTED",
+    "bytecode": "-B and PYTHONDONTWRITEBYTECODE=1",
+    "compute_threads": 1,
+    "early_retention_wall_seconds": 80,
+    "hard_CPU_signal_and_stop": "60/61",
+    "python": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "requested_model": "gpt-6.1-sol",
+    "requested_reasoning": "xhigh",
+    "runner": "tools/next_checkpoint_chart_ppr_run_technical_v2.py --plan PLAN --sha256 SHA --go ROOT_GO"
+  },
+  "safe_aggregate_path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/SAFE_AGGREGATE_TECHNICAL_V2.json",
+  "schema_and_source_inspection_already_done": "V1 failed before any NFL numerical decode. TechnicalV2 authenticates canonical source bytes, hashes, sizes and code/policy/failure bindings without importing Arrow, reading Parquet numerical rows, fitting, inference or accuracy evaluation; original mapping and footer inspection remain unchanged.",
+  "source_limits": "Current-vintage reconstructed official/provider outcomes. Acquisition/file clocks are not historical publication clocks. Generator semantics are source mapping evidence, not producer binary or independent-truth attestation.",
+  "sources": [
+    {
+      "bytes": 849243,
+      "kind": "weekly",
+      "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2024.parquet",
+      "season": 2024,
+      "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+    },
+    {
+      "bytes": 855077,
+      "kind": "weekly",
+      "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2025.parquet",
+      "season": 2025,
+      "sha256": "2a461becaa9adb3c93a3074a3a31f1e960162a50163371a2d34e28393b5fff10"
+    },
+    {
+      "bytes": 386908,
+      "kind": "weekly",
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261024T083337210719Z/01ec1f6f199cf3eb617697e0845c0899c159bca437a59dd623ffeddc06066339/sources/stats_player_week_2026.parquet",
+      "season": 2026,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd"
+    },
+    {
+      "bytes": 20597560,
+      "kind": "PBP",
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/role-count-full-pbp2024-recovery-gate-network-v2-20261026/FULL_PBP2024.parquet",
+      "season": 2024,
+      "sha256": "3fd2896bc0b911b615142d2f1fabae54a4bbba5ab7b73b28187b118ef8af6a3b"
+    }
+  ],
+  "state": "PROPOSED_PENDING_ROOT_AND_INDEPENDENT_GO",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 5649,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v5.json",
+      "sha256": "6d672f36fee6acf5745135ff9dfcfbbd6fe1d16edf49e24e95eec0c0d761791f"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "target": "nick-chart-ppr-v1",
+  "technical_continuation": {
+    "automatic_retries": 0,
+    "one_separately_registered_technical_attempt_pending_GO": true,
+    "original_attempt_or_write_budget_refunded": false,
+    "original_v1_plan_schema_version_retained_for_unchanged_builder": true,
+    "preparation_only_authorized_by": "/root",
+    "private_caps_include_original_754_retained_bytes": true,
+    "same_source_bytes_new_canonical_path_bindings_only": true,
+    "scientific_mapping_and_scoring_unchanged": true
+  },
+  "transitive_binding_preflight": {
+    "bytes": 20131,
+    "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/CANONICAL_BINDING_PREFLIGHT_TECHNICAL_V2.json",
+    "sha256": "75b63925f1f3af87ca9dd6646879d61f0563df5f431b916aa9ed7a025592146f"
+  },
+  "version": "next-checkpoint-chart-ppr-label-plan-v1"
+}

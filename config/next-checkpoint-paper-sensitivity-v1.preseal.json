@@ -1,0 +1,65 @@
+{
+  "execution_authorized": false,
+  "formula": "lower=knownnet-unresolvedcount;upper=knownnet+sum(unresolved(decimal_odds-1)); allselecteddenominator forouterROI. Voidrefund0liesinside. Notnecessarilyjointlyattainable,notastatisticalinterval.",
+  "implementation_bindings": [
+    {
+      "bytes": 8331,
+      "path": "/workspace/nfl-methods-integration/tools/next_checkpoint_paper_sensitivity.py",
+      "sha256": "4cde062a19f8d96bbca3584911ce08ec2af2dea4fb9267bacebcc0640ec60968"
+    },
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    },
+    {
+      "bytes": 19791,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_paper_completion.py",
+      "sha256": "f469974649953fda99ea5551119f16679b90940b931d97eefe60155808c6fd83"
+    }
+  ],
+  "inputs": {
+    "frozen": {
+      "bytes": 387207,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "PAPER_LISTS_FROZEN.parquet",
+      "sha256": "7860dce29e4469de3f342085c44b9f1b3e37d18d6e0dcb93e77d7908391cd355"
+    },
+    "graded": {
+      "bytes": 399832,
+      "container": {
+        "bytes": 4472594,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/SCORES_COMPLETE.zip",
+        "sha256": "28637969b530edbd7cc919a013014cfb3e0b9011fc3125b6b888a1d11f60b0b3"
+      },
+      "member": "PAPER_ASSUMED_SETTLEMENT.parquet",
+      "sha256": "e911798ce18fbcb5c9389ba44796a2ff5443e0a3e6d085462a88599c49c03258"
+    }
+  },
+  "metadata_descriptor": {
+    "bytes": 5235,
+    "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v4.json",
+    "sha256": "b399375437d6569aba6704d25ddad843f4445b0f0fb9427845d8be6a54c548bb"
+  },
+  "output": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/PAPER_SENSITIVITY_RUN_V1",
+  "primary_metrics_unchanged": true,
+  "resources": {
+    "CPU_seconds": 15,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "fits": 0,
+    "invocations": 1,
+    "max_selected_rows": 10000,
+    "maximum_aggregate_bytes": 131072,
+    "new_forecasts": 0,
+    "new_selection": 0,
+    "wall_seconds": 30
+  },
+  "scope": "Deterministic broad outerbounds only on immutable already-selected2024/2026paper stakes; no fits/newforecasts/selection/grades/imputation. Finished no2025market unchanged.",
+  "state": "PRESEAL_REVIEW_PENDING",
+  "version": "next-checkpoint-frozen-paper-sensitivity-v1"
+}

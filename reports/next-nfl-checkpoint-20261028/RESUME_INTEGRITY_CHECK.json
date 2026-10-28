@@ -1,0 +1,287 @@
+{
+  "activity": {
+    "NFL_row_decodes": 0,
+    "fits": 0,
+    "forecasts": 0,
+    "ledger_writes": 0,
+    "model_loads": 0,
+    "network_requests": 0,
+    "production_writes": 0,
+    "report_writes": 1,
+    "scientific_or_source_writes": 0,
+    "scores": 0
+  },
+  "actual_backend": "UNATTESTED",
+  "checked_at_utc": "2026-10-28T19:09:55.089149+00:00",
+  "checkpoint_report_inventory": {
+    "bytes": 7200166,
+    "files": 73,
+    "inventory_sha256": "c5dafd5dae5c22c3c17130ebf8502117001f36e342952fa947cbc88ae9002c67"
+  },
+  "complete_local_owner_addendum": {
+    "artifact_name": "1-NFL_Roles_NGS_Chart_PPR_Research_Addendum_2026-10-28.txt",
+    "bytes": 36397,
+    "expected_bytes": 36397,
+    "expected_sha256": "fd3fe66f2f1fb5a9662f8e5da8e3654052f8231581aefcf2fbc02488d0d58982",
+    "match": true,
+    "sha256": "fd3fe66f2f1fb5a9662f8e5da8e3654052f8231581aefcf2fbc02488d0d58982"
+  },
+  "conclusion": "Scientific vectors, retained parameters and persistence capsules are intact at their recorded hashes. The ephemeral publication cursor may have been lost; this does not invalidate the completed scientific wave.",
+  "counted_metadata_destination": "reports/next-nfl-checkpoint-20261028/RESUME_INTEGRITY_CHECK.json",
+  "failures": [],
+  "implementation_copies": {
+    "all_root_and_source_bytes_match": true,
+    "checked_files": 22,
+    "expected_files": 22,
+    "identities_sha256": "9b9fff9902f45bbafad598d1c7564167ae7812f9e50dedea2485b2c971800066",
+    "receipt": {
+      "bytes": 5467,
+      "sha256": "114a3427292c13c245975afd8f065909da2d665ea5922242ceb4b0fdf1f6051d"
+    }
+  },
+  "limits": [
+    "Byte identity verifies retention against saved records, not source truth or historical availability.",
+    "Scientific content was not decoded or recomputed.",
+    "Off-host restoration remains UNPROVEN.",
+    "Research remains paused at the completed wave. Production lease and original failed canonical V1 records remain unchanged."
+  ],
+  "native_record_inventories": {
+    "chart_v1": {
+      "bytes": 1742,
+      "files": 3,
+      "inventory_sha256": "e4c77620fdefd5970363209a5218073e7791c356c0898d2ed67b8eafb54ed033"
+    },
+    "chart_v2": {
+      "bytes": 2446,
+      "files": 3,
+      "inventory_sha256": "c068b5451e3deca47011ec223c71ac06af89c790f5a8140b740a52cf143c87a1"
+    },
+    "contemporary": {
+      "bytes": 5313,
+      "files": 3,
+      "inventory_sha256": "e22f1d90785e2ca6278b7ee20d8855f9c891680b043fb86265fe732edec523ed"
+    },
+    "lad": {
+      "bytes": 34514,
+      "files": 51,
+      "inventory_sha256": "801da973d2331be1f172013bea66c458da892463cdf7226468c2e4b1584d359f"
+    }
+  },
+  "original_chart_V1_failure_and_consumed_budget_preserved": true,
+  "original_chart_V1_source_aliases": [
+    {
+      "artifact_name": "stats_player_week_2024.parquet",
+      "exists": true,
+      "is_symlink": true,
+      "modified": false
+    },
+    {
+      "artifact_name": "stats_player_week_2025.parquet",
+      "exists": true,
+      "is_symlink": true,
+      "modified": false
+    },
+    {
+      "artifact_name": "stats_player_week_2026.parquet.receipt.json",
+      "exists": true,
+      "is_symlink": true,
+      "modified": false
+    }
+  ],
+  "original_contemporary_checker_failure_preserved": true,
+  "preserved_QA_and_failure_records": [
+    {
+      "bytes": 990,
+      "path": "verification/lad_readonly_acceptance_v1.stdout.json",
+      "sha256": "0b326addb04d94bec9b3e589d63dd6f76c224489383d75f6be10c9b26656bc6b",
+      "state": "PASS"
+    },
+    {
+      "bytes": 546,
+      "path": "verification/contemporary_readonly_acceptance_v1.stdout.json",
+      "sha256": "4b7fcd597a6691aef5392665e0a1550406351ccf8f012a338c9850c4db12c5dd",
+      "state": "FAIL_READONLY_NUMERICAL_ACCEPTANCE_NO_RETRY"
+    },
+    {
+      "bytes": 23485,
+      "path": "verification/contemporary_readonly_acceptance_technical_v2.stdout.json",
+      "sha256": "7d8b15b4d42276fc26897ead80dedceb95d5535a489e114ac8e28df58d4a8f0a",
+      "state": "PASS_CACHED_CONTEMPORARY_READONLY_NUMERICAL_ACCEPTANCE"
+    },
+    {
+      "bytes": 2500,
+      "path": "verification/contemporary_readonly_acceptance_technical_v2.RESOURCE_RECEIPT.json",
+      "sha256": "379bb1868266562a918fe5cfb8013399e6d5bcc451eba61ca022ce4a84a446eb",
+      "state": "PASS_TECHNICAL_V2_RESOURCES"
+    },
+    {
+      "bytes": 5124,
+      "path": "verification/chart_labels_readonly_acceptance_v1.stdout.json",
+      "sha256": "46f93cdf876d5f7b8ca0e18ebf7975982ad7233020f582d05c38ccd99a09d4f5",
+      "state": "PASS_READONLY_CHART_LABEL_ARITHMETIC_AND_COVERAGE_ACCEPTANCE"
+    },
+    {
+      "bytes": 2742,
+      "path": "verification/paper_aggregate_formula_QA_v1.stdout.json",
+      "sha256": "43cf52b7afcce1087c1fe0cf7c8f12e54fc19498de47dc2dd1d4a268df571df7",
+      "state": "PASS_INDEPENDENT_AGGREGATE_FORMULA_QA"
+    }
+  ],
+  "public_projection_original_sha256": "37db7eada9e3e9dee0905553321015a69e2eebca0eb4dd8bb5c9eb8cccec4862",
+  "publication": {
+    "allowlist": {
+      "artifact_name": "PUBLICATION_ALLOWLIST.json",
+      "bytes": 2035,
+      "expected_bytes": 2035,
+      "expected_sha256": "98cd96bdde7a084b52057b9fd7eb99af48398e475a586b49f36ea79a131d8ede",
+      "match": true,
+      "sha256": "98cd96bdde7a084b52057b9fd7eb99af48398e475a586b49f36ea79a131d8ede"
+    },
+    "bundle": {
+      "artifact_name": "PUBLICATION_BUNDLE.json",
+      "bytes": 1935058,
+      "expected_bytes": 1935058,
+      "expected_sha256": "29e35aed1266411ca40921ced7447cffc2737783761844801ab8c3184714f5e7",
+      "match": true,
+      "sha256": "29e35aed1266411ca40921ced7447cffc2737783761844801ab8c3184714f5e7"
+    },
+    "final_review": {
+      "artifact_name": "FINAL_PUBLICATION_BUNDLE_REVIEW.json",
+      "bytes": 4367,
+      "expected_bytes": 4367,
+      "expected_sha256": "38c46933fe04c90e6fa62e7a346473b44f6610388e2a018ac84897698210aaad",
+      "match": true,
+      "sha256": "38c46933fe04c90e6fa62e7a346473b44f6610388e2a018ac84897698210aaad"
+    },
+    "manifest": {
+      "artifact_name": "PUBLICATION_MANIFEST.json",
+      "bytes": 30573,
+      "expected_bytes": 30573,
+      "expected_sha256": "574acaefb6669cff824c529a3638e21a44ada12520660f6010b95b0560c671ff",
+      "match": true,
+      "sha256": "574acaefb6669cff824c529a3638e21a44ada12520660f6010b95b0560c671ff"
+    }
+  },
+  "requested_backend": "gpt-6.1-sol xhigh",
+  "resources": {
+    "CPU_limit_seconds": 15,
+    "CPU_seconds": 0.029872364000000005,
+    "RSS_limit_bytes": 536870912,
+    "peak_RSS_bytes": 13488128,
+    "wall_limit_seconds": 30,
+    "wall_seconds": 0.03247168900270481
+  },
+  "root_commit": "e7469b1755cf7c54b51d80e1ff29d4789c096800",
+  "scientific_capsules": {
+    "chart_v1_failure": {
+      "CAS": {
+        "artifact_name": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4",
+        "bytes": 489,
+        "expected_bytes": 489,
+        "expected_sha256": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4",
+        "match": true,
+        "sha256": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4"
+      },
+      "output": {
+        "artifact_name": "CHART_LABELS_FAILED.json.gz",
+        "bytes": 489,
+        "expected_bytes": 489,
+        "expected_sha256": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4",
+        "match": true,
+        "sha256": "8471add0af8208aac9390e5a96db74ab06c9000ba5053bdff8842e97cc03c2d4"
+      }
+    },
+    "chart_v2_labels": {
+      "CAS": {
+        "artifact_name": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82",
+        "bytes": 838547,
+        "expected_bytes": 838547,
+        "expected_sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82",
+        "match": true,
+        "sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82"
+      },
+      "output": {
+        "artifact_name": "CHART_LABELS_COMPLETE.json.gz",
+        "bytes": 838547,
+        "expected_bytes": 838547,
+        "expected_sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82",
+        "match": true,
+        "sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82"
+      }
+    },
+    "contemporary_freeze": {
+      "CAS": {
+        "artifact_name": "f761be42f44bb46b86b11731ef426abd48e19d68dabbdf68544be1643b358bca",
+        "bytes": 212647,
+        "expected_bytes": 212647,
+        "expected_sha256": "f761be42f44bb46b86b11731ef426abd48e19d68dabbdf68544be1643b358bca",
+        "match": true,
+        "sha256": "f761be42f44bb46b86b11731ef426abd48e19d68dabbdf68544be1643b358bca"
+      },
+      "output": {
+        "artifact_name": "FORECASTS_FROZEN.zip",
+        "bytes": 212647,
+        "expected_bytes": 212647,
+        "expected_sha256": "f761be42f44bb46b86b11731ef426abd48e19d68dabbdf68544be1643b358bca",
+        "match": true,
+        "sha256": "f761be42f44bb46b86b11731ef426abd48e19d68dabbdf68544be1643b358bca"
+      }
+    },
+    "contemporary_scores": {
+      "CAS": {
+        "artifact_name": "b307e0a99a832863a7d7a9a2bccf1919da900e8ecbf89e35c47a9a9a2a05b111",
+        "bytes": 691217,
+        "expected_bytes": 691217,
+        "expected_sha256": "b307e0a99a832863a7d7a9a2bccf1919da900e8ecbf89e35c47a9a9a2a05b111",
+        "match": true,
+        "sha256": "b307e0a99a832863a7d7a9a2bccf1919da900e8ecbf89e35c47a9a9a2a05b111"
+      },
+      "output": {
+        "artifact_name": "SCORES_COMPLETE.zip",
+        "bytes": 691217,
+        "expected_bytes": 691217,
+        "expected_sha256": "b307e0a99a832863a7d7a9a2bccf1919da900e8ecbf89e35c47a9a9a2a05b111",
+        "match": true,
+        "sha256": "b307e0a99a832863a7d7a9a2bccf1919da900e8ecbf89e35c47a9a9a2a05b111"
+      }
+    },
+    "lad_freeze": {
+      "CAS": {
+        "artifact_name": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc",
+        "bytes": 453840,
+        "expected_bytes": 453840,
+        "expected_sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc",
+        "match": true,
+        "sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc"
+      },
+      "output": {
+        "artifact_name": "FORECASTS_FROZEN.zip",
+        "bytes": 453840,
+        "expected_bytes": 453840,
+        "expected_sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc",
+        "match": true,
+        "sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc"
+      }
+    },
+    "lad_scores": {
+      "CAS": {
+        "artifact_name": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8",
+        "bytes": 603829,
+        "expected_bytes": 603829,
+        "expected_sha256": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8",
+        "match": true,
+        "sha256": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8"
+      },
+      "output": {
+        "artifact_name": "SCORES_COMPLETE.zip",
+        "bytes": 603829,
+        "expected_bytes": 603829,
+        "expected_sha256": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8",
+        "match": true,
+        "sha256": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8"
+      }
+    }
+  },
+  "scope": "Opaque byte/hash and saved receipt check only; no ZIP/gzip/Parquet decode or source-table reads.",
+  "state": "PASS_BOUNDED_RESUME_INTEGRITY_ONLY"
+}

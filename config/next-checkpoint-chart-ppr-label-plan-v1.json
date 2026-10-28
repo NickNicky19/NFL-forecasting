@@ -1,0 +1,29 @@
+{
+  "version": "next-checkpoint-chart-ppr-label-plan-v1",
+  "state": "PROPOSED_PENDING_ROOT_AND_INDEPENDENT_GO",
+  "execution_authorized": false,
+  "target": "nick-chart-ppr-v1",
+  "purpose": "source component qualification and observed-label reconstruction only",
+  "resources": {"fits": 0, "forecast_inference": 0, "accuracy_comparisons": 0, "HTTP": 0, "retries": 0, "threads": 1, "CPU_seconds": 60, "wall_seconds": 90, "RSS_bytes": 536870912, "maximum_input_bytes": 33554432, "maximum_weekly_source_rows": 48000, "maximum_PBP_source_rows": 50000, "aggregate_metadata_bytes": 262144, "private_label_bytes": 2097152},
+  "population": "Every source-listed REG QB/RB/FB/WR/TE player-game from authenticated weekly 2024, 2025, and completed 2026 through Week 6; preserve all source-listed positive rare events, missing components, duplicate/identity conflicts and unknown participation. No original offered-player or statless-player zero expansion is authorized.",
+  "sources": [
+    {"kind": "weekly", "season": 2024, "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2024.parquet", "bytes": 849243, "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"},
+    {"kind": "weekly", "season": 2025, "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2025.parquet", "bytes": 855077, "sha256": "2a461becaa9adb3c93a3074a3a31f1e960162a50163371a2d34e28393b5fff10"},
+    {"kind": "weekly", "season": 2026, "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261024T083337210719Z/01ec1f6f199cf3eb617697e0845c0899c159bca437a59dd623ffeddc06066339/sources/stats_player_week_2026.parquet", "bytes": 386908, "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd"},
+    {"kind": "PBP", "season": 2024, "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/role-count-full-pbp2024-recovery-gate-network-v2-20261026/FULL_PBP2024.parquet", "bytes": 20597560, "sha256": "3fd2896bc0b911b615142d2f1fabae54a4bbba5ab7b73b28187b118ef8af6a3b"}
+  ],
+  "auxiliary_sources": [
+    {"kind": "generator_source", "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/06-calculate-stats.source", "bytes": 29754, "sha256": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28"},
+    {"kind": "tidy_credit_source", "path": "/workspace/website-methods-research/resumed/role-count-20261023/ppr-generator-probe/08-tidy-play-stats.source", "bytes": 53238, "sha256": "45e070dcd061fbcfe1e381ccd742d27c4ed57687c053dee2d9527d5acd29e9d0"},
+    {"kind": "quarantine_original", "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet", "bytes": 380427, "sha256": "963c09479474b6c3a7dba8a88b6cae6931d077d424617df15cc06dd669211602"},
+    {"kind": "quarantine_receipt", "path": "/workspace/website-methods-research/resumed/median-boosting-20261023/permitted-source/cache/raw/stats_player_week_2026.parquet.receipt.json", "bytes": 648, "sha256": "60faa748f72679b05573999e066d9b82df252a7012ef8f39030f9faaf0be86f8"}
+  ],
+  "schema_and_source_inspection_already_done": "Hashes and Parquet footers only; no real source numerical rows or chart labels decoded before GO. Prior source capsule metadata reviewed but its count-zero admission is not PPR admission.",
+  "mapping": {"common_components": "twelve explicit weekly fields; signed yards, separate conversion credits, unique all-phase fumbles_lost_total", "recovery_zero": "complete nonnegative fumble_recovery_tds superset equals zero; includes lateral-recipient TD IDs56,58,60,62", "return_zero": "complete nonnegative special_teams_tds superset equals zero; native kick/punt/other return TD IDs34,36,46,48,64; aggregate positive is not chart-equivalent", "rare_positive": "2024 exact unique PBP TD-player/game/team inventory reconciles to the weekly broad total; disjoint ordinary pass/rush/reception, recovery and return classification; any unknown/ambiguous/overlapping credit stays unsupported", "2025_2026_rare_positive": "preserve explicit dependencies if no retained qualified event inventory; no blanket football-history exclusion"},
+  "participation": "Use explicit positive compatible attempts/carries/targets/receptions/return/fumble/TD evidence; a missing statistical row or an all-zero row alone is not DNP or played evidence.",
+  "output": "Full planned source-listed panel remains accounted for, including unsupported rare-positive players. Aggregate coverage may be exported. Complete chart labels may be retained privately through root's inherited CAS only; no raw NFL datasets in metadata scopes and no accuracy experiment on an event-free subset.",
+  "source_limits": "Current-vintage reconstructed official/provider outcomes. Acquisition/file clocks are not historical publication clocks. Generator semantics are source mapping evidence, not producer binary or independent-truth attestation.",
+  "failures_preserved": ["median-boosting permitted-source 2026 bytes/hash mismatch before decode", "initial schema inspection used system Python lacking pyarrow; no NFL rows decoded"],
+  "root_registration": null,
+  "independent_review": null
+}

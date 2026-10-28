@@ -1,0 +1,1576 @@
+{
+  "actual_backend": "UNATTESTED",
+  "calibration_training_seasons": [
+    2023
+  ],
+  "cohort": "Original2026primary common F/FC/M/H point eligibility then original book priority68/69/79 BEFORE modern value admission; ATD original F probability eligible pool separately; same keys/contexts/cutoff required; missing/invalid modern value keeps aged F and corresponding frozen old correction. No subset winner.",
+  "evaluation_seasons": [
+    2026
+  ],
+  "evaluation_weeks": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "event_controls": {
+    "CAT_ATD": {
+      "authority": {
+        "bytes": 8317,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/future-inference.json",
+        "sha256": "20d76ff2e6eb57e6015c91cef093fe565e204591fbe642ac104b7f1d2047a6dd"
+      },
+      "authority_checks": {
+        "family": "catboost_medium",
+        "model": {
+          "bytes": 44493,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/trained.joblib",
+          "sha256": "b5ff6a18b49fd3baf72a08e198a05ae0b682d09834418f05b2b3669177eb4000"
+        },
+        "product": "binary_probability",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 45465,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/anytime_td/CATBOOST_MEDIUM.parquet",
+        "sha256": "783daec2fd3b7db3c13108901ff494eedb00c672907ed44bf5bdbeeb4970b0b2"
+      },
+      "functional": "event_probability",
+      "target": "anytime_td",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "point"
+    },
+    "EQUAL_ATD": {
+      "authority": {
+        "bytes": 702,
+        "container": {
+          "bytes": 258361,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-anytime-equal-blend-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "ba585ff37fc0101ae4b58b3f2498c37ad7b21a0ecc4114edbbb484711d7cc6cf"
+        },
+        "member": "MANIFEST.json",
+        "sha256": "0086b51587721c82e63dcff97512a71da17700893584e675f7c1ddd43e033eff"
+      },
+      "authority_checks": {
+        "state": "BOTH_NEW_EQUAL_BLEND_VECTORS_FROZEN",
+        "target_labels_decoded": 0,
+        "weights": {
+          "CATBOOST_MEDIUM": 0.5,
+          "LAB_CDF": 0.5
+        }
+      },
+      "fallback_column": "TD_EQUAL_CDF_CAT_CACHED_MODERN_RECONSTRUCTION_V1_fallback",
+      "forecast": {
+        "bytes": 70823,
+        "container": {
+          "bytes": 258361,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-anytime-equal-blend-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "ba585ff37fc0101ae4b58b3f2498c37ad7b21a0ecc4114edbbb484711d7cc6cf"
+        },
+        "member": "2026.parquet",
+        "sha256": "b45348724176bea1ea16456cc1fe50079eaabba3cc70ea50a02db1675bd0f5d4"
+      },
+      "functional": "event_probability",
+      "target": "anytime_td",
+      "target_column": false,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "TD_EQUAL_CDF_CAT_CACHED_MODERN_RECONSTRUCTION_V1"
+    }
+  },
+  "excluded_market_seasons": [
+    2025
+  ],
+  "execution_authorized": false,
+  "fictional_contrast_verification": {
+    "bytes": 422,
+    "path": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-contemporary-v1/FICTIONAL_CONTRAST_CHECKS.json",
+    "sha256": "51a7660d7a8171f60d67e063ac4804e38aa2e341da629bed32194894c71d41c3"
+  },
+  "fictional_verification": {
+    "bytes": 791,
+    "path": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-contemporary-v1/FICTIONAL_CHECKS.json",
+    "sha256": "65846b8e3c7af84edb2642693ccee1f70ae4769473258a33d2a1c5df511924c5"
+  },
+  "football_lineage": "Existing qualified fitted2019\u20132025 football permitted by owner Oct28addendumC; outside old no2025wave; no new2025fits/market/evaluation",
+  "implementation_bindings": [
+    {
+      "bytes": 21015,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/next_checkpoint_contemporary.py",
+      "sha256": "7bc68d2ef654ca641f9d716ba6618b9321756755ed5cf07ded17089b26bbecf8"
+    },
+    {
+      "bytes": 10785,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_contemporary_run.py",
+      "sha256": "b6ec145237be739baf5015cce2898bdfaa0cb0db96f1e0bac9f27ae6d165a015"
+    },
+    {
+      "bytes": 5796,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_contemporary_checks.py",
+      "sha256": "e1f87e32fce62b4b86fc5567a46b6bf71f55b4ad2bae9c28617512ae7ed0ce22"
+    },
+    {
+      "bytes": 3626,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_contemporary_contrast_checks.py",
+      "sha256": "76ddc3de5466cde6051a82c51601e7b7f57fee32f67412168eb4078cfe41a5d1"
+    },
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    }
+  ],
+  "input_binding": {
+    "/workspace/nfl-common-learner-cdf-role-20261027/config/pass-att-retained-cdf-control-v1.json": {
+      "bytes": 16259,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/config/pass-att-retained-cdf-control-v1.json",
+      "sha256": "7b962da8ccddfc9f45131dea172fd67ddf9487faf5428143695990f2a7a736fe"
+    },
+    "/workspace/nfl-methods-integration/config/historical-market-comparison-no2025-technical-v3.sealed.json": {
+      "bytes": 100025,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-comparison-no2025-technical-v3.sealed.json",
+      "sha256": "062628a3b961c6cc27abf0b40bc37f0c7cb3b48caeffaf1d3b8aaf6e6c542049"
+    },
+    "/workspace/nfl-methods-integration/config/modern-2026-cold-grade-v2.sealed.json": {
+      "bytes": 87080,
+      "path": "/workspace/nfl-methods-integration/config/modern-2026-cold-grade-v2.sealed.json",
+      "sha256": "d800c7e095b8702351f4bc95ce991b3109f43439886183314098b60e1c144994"
+    },
+    "/workspace/nfl-methods-integration/config/modern-anytime-equal-blend-grade-v2.sealed.json": {
+      "bytes": 26121,
+      "path": "/workspace/nfl-methods-integration/config/modern-anytime-equal-blend-grade-v2.sealed.json",
+      "sha256": "8efed7f1a716e122a23eae9f918c94635f689c4f8eb3bea56ee7440b00dcf520"
+    },
+    "/workspace/nfl-methods-integration/config/modern-cdf-control-completion-v1.sealed.json": {
+      "bytes": 64936,
+      "path": "/workspace/nfl-methods-integration/config/modern-cdf-control-completion-v1.sealed.json",
+      "sha256": "99344eac269d3cb91ae405fbffa3b1fa74f58d4d2f42978a2cd2cb01ad3b63fd"
+    },
+    "/workspace/nfl-methods-integration/config/next-checkpoint-lad-v1.sealed.json": {
+      "bytes": 17125,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-lad-v1.sealed.json",
+      "sha256": "2646bd5135ff1e85c3388870bcdabb131234572ed2ea0e9adb30c1c85f654246"
+    },
+    "/workspace/nfl-methods-integration/reports/recent-season-category-decisions-20261027/README.md": {
+      "bytes": 42226,
+      "path": "/workspace/nfl-methods-integration/reports/recent-season-category-decisions-20261027/README.md",
+      "sha256": "7a2412654d92478833f11d8af24e406c3221bb6d7f220dab912034f2e3de2492"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/future-inference.json": {
+      "bytes": 8330,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/future-inference.json",
+      "sha256": "89bf0cdd5d7d88784ea2d388aa52d5c0acf9b68739200453067bd6e8cbb3398a"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/trained.joblib": {
+      "bytes": 309070,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/trained.joblib",
+      "sha256": "59ff99d89549a9d53e1b70b2fdebefa2562f8e9e31c6a2b67290995c6ad0e173"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/future-inference.json": {
+      "bytes": 8666,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/future-inference.json",
+      "sha256": "e0f60b951026b96ba1ac64eef71c144bb98a8da4bc62a15ff5d677b9ae82f0c7"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/trained.joblib": {
+      "bytes": 223157,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/trained.joblib",
+      "sha256": "2609f3c2461e155058655b82b63bc824d1955c7ce2268007189e0a7a48eab9c6"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/future-inference.json": {
+      "bytes": 8666,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/future-inference.json",
+      "sha256": "c35b6c5725ba3d922be78b2d1c459852232ed5b314b031e1643b365908e9a760"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/trained.joblib": {
+      "bytes": 211435,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/trained.joblib",
+      "sha256": "0dc368d6f8890ed37049af28381b338af32734aa3a271d8ac657db2f0f351ce3"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/future-inference.json": {
+      "bytes": 8666,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/future-inference.json",
+      "sha256": "49e02be68349b82302f53a6bea2352fbceaa4429b74f2ecdef1a374108e226cd"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/trained.joblib": {
+      "bytes": 107778,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/trained.joblib",
+      "sha256": "3d8436e467c77531a7928eb788caba2231d82b518517453b53cc13e99f4bae47"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/future-inference.json": {
+      "bytes": 8664,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/future-inference.json",
+      "sha256": "1511aeac5a099ffa78dd2e61ae942073fdcd1fc2fa809dd619a901301883ea7a"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/trained.joblib": {
+      "bytes": 166361,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/trained.joblib",
+      "sha256": "471dc5a0fcd04055d1a5b0600dbddbb2085e71f3b8608ac8a2164ff50886d5f1"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/future-inference.json": {
+      "bytes": 8675,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/future-inference.json",
+      "sha256": "14c3da8aff3a8f2a958f75d45cdcd4cc99d28ea4fd82a3d1eeb272a206352bdd"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/trained.joblib": {
+      "bytes": 349426,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/trained.joblib",
+      "sha256": "dffd0a2f82dd8f542177f666c0dc9f4a1c15942e885fd82eb25b6b1ee6b8a0b4"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/count_A/future-inference.json": {
+      "bytes": 7059,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/count_A/future-inference.json",
+      "sha256": "9d8e3f52f1607bd980385a150e3ace8332d7195a4dc70319eb75df86439d2e8b"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/count_A/trained.joblib": {
+      "bytes": 41288,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/count_A/trained.joblib",
+      "sha256": "8ed78a4e696b4d11be99b4f455a42f7bbb13f0e1208ec6165b9464b65ad348df"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/future-inference.json": {
+      "bytes": 7090,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/future-inference.json",
+      "sha256": "49085bae17ff5233027e4ed032385563b684c989a7993f1bcb7b73de0e473890"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/trained.joblib": {
+      "bytes": 491401,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/trained.joblib",
+      "sha256": "8465955423f642def6e6a691872250746eb01a31f31aee10893db87bdccb1a15"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/future-inference.json": {
+      "bytes": 7107,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/future-inference.json",
+      "sha256": "7f9b56d6caf55e87abe0597ad2a60c817e60456f8bf2a62443309237db3f08de"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/trained.joblib": {
+      "bytes": 907101,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/trained.joblib",
+      "sha256": "9afc353d862b2c961e804ea4171941423241c9170e624fce2d295f3bbf6ab9d6"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/count_A/future-inference.json": {
+      "bytes": 7891,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/count_A/future-inference.json",
+      "sha256": "ae0becbedd67559ff5ef8bb3cae59f6473be8531e4b00edc33e04dce7a1ec349"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/count_A/trained.joblib": {
+      "bytes": 49200,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/count_A/trained.joblib",
+      "sha256": "7c4f532660b86a77e2fc579f53565a0c06beffe9242dbe411f4787560d0d0a31"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/future-inference.json": {
+      "bytes": 7922,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/future-inference.json",
+      "sha256": "c291bad10f3197b6aebb78962330551b486c1b1bc1cbb7a8541c867c441ee8be"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/trained.joblib": {
+      "bytes": 463286,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/trained.joblib",
+      "sha256": "7ad62239d3918217d2910600156f3fd7e5b788e082621dabefdaeb705ad16ab0"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/future-inference.json": {
+      "bytes": 7963,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/future-inference.json",
+      "sha256": "220fc5c49c037caa55dd593dd005bc74c63427f17bd39d36848a90d5174b4062"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/trained.joblib": {
+      "bytes": 979552,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/trained.joblib",
+      "sha256": "14d9781edf4d54b7bd668e75e0c790cae018b182b52f75e420128da88ac13459"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/future-inference.json": {
+      "bytes": 7931,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/future-inference.json",
+      "sha256": "90a4473f148ad07ed18e8a282396fec45c0cb0407de15a17c8539cc4d4863891"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/trained.joblib": {
+      "bytes": 692432,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/trained.joblib",
+      "sha256": "3ccae17979c67319de20bc2ce31c69c54740564c2cf5b02a7f3d1fa4e553ff24"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/future-inference.json": {
+      "bytes": 8317,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/future-inference.json",
+      "sha256": "20d76ff2e6eb57e6015c91cef093fe565e204591fbe642ac104b7f1d2047a6dd"
+    },
+    "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/trained.joblib": {
+      "bytes": 44493,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/trained.joblib",
+      "sha256": "b5ff6a18b49fd3baf72a08e198a05ae0b682d09834418f05b2b3669177eb4000"
+    },
+    "owner_addendum": {
+      "bytes": 36397,
+      "path": "/tmp/codex-remote-attachments/01a1635e-caa4-7372-ba7a-2af0e2c7c02e/57F7C975-62A8-4373-83B5-449353669121/1-NFL_Roles_NGS_Chart_PPR_Research_Addendum_2026-10-28.txt",
+      "sha256": "fd3fe66f2f1fb5a9662f8e5da8e3654052f8231581aefcf2fbc02488d0d58982"
+    }
+  },
+  "inputs": {
+    "annual_query": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    },
+    "lad_forecasts": {
+      "bytes": 431510,
+      "container": {
+        "bytes": 453840,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-lad-v1/FORECASTS_FROZEN.zip",
+        "sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc"
+      },
+      "member": "YARDAGE_FORECASTS.parquet",
+      "sha256": "a7cfced33168cab5fd84ec562c73263afec03da56ab724946fb6909b4cd9a5e5"
+    },
+    "lad_parameters": {
+      "bytes": 21118,
+      "container": {
+        "bytes": 453840,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-lad-v1/FORECASTS_FROZEN.zip",
+        "sha256": "ad006576876c8d70609c784f64e444782f96f937b76d8c7466a6a6b2a6e314bc"
+      },
+      "member": "PARAMETERS.json",
+      "sha256": "523bd13e2825cbfb1c2752b2b18eb67b5169bdee93f85ff7b17173aca218e289"
+    },
+    "original_evaluation": {
+      "bytes": 3565072,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "EVALUATION_FORECASTS.parquet",
+      "sha256": "2b84a1394b44c0e6e300e4f65a33e38e59bdcca02626378b9f18edb2568b138f"
+    },
+    "original_matched": {
+      "bytes": 3624399,
+      "container": {
+        "bytes": 4472594,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/SCORES_COMPLETE.zip",
+        "sha256": "28637969b530edbd7cc919a013014cfb3e0b9011fc3125b6b888a1d11f60b0b3"
+      },
+      "member": "MATCHED_SCORES.parquet",
+      "sha256": "7032500cc7dc41be800194ef766525a895eba13de3cc7621d767357fec6576f8"
+    },
+    "original_parameters": {
+      "bytes": 24405,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "CALIBRATORS.json",
+      "sha256": "5df77744de33a93b4f673b95736b31dc796baf2fbdb63ac7f8f8f3eb1d95e22b"
+    },
+    "original_primitive": {
+      "bytes": 5070165,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet",
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+    }
+  },
+  "modern_cdf": {
+    "anytime_td": {
+      "authority": {
+        "bytes": 8330,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/future-inference.json",
+        "sha256": "89bf0cdd5d7d88784ea2d388aa52d5c0acf9b68739200453067bd6e8cbb3398a"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_anytime_td_mean3",
+          "f_player_anytime_td_n3",
+          "f_player_anytime_td_mean8",
+          "f_player_anytime_td_n8",
+          "f_player_rush_td_mean3",
+          "f_player_rush_td_n3",
+          "f_player_rush_td_mean8",
+          "f_player_rush_td_n8",
+          "f_player_rec_td_mean3",
+          "f_player_rec_td_n3",
+          "f_player_rec_td_mean8",
+          "f_player_rec_td_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "model": {
+          "bytes": 309070,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/anytime_td/leaf_cdf_base/trained.joblib",
+          "sha256": "59ff99d89549a9d53e1b70b2fdebefa2562f8e9e31c6a2b67290995c6ad0e173"
+        },
+        "product": "binary_probability",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 76268,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/anytime_td/LAB_CDF.parquet",
+        "sha256": "b26c5b952cd1cbe7941bc93828bf401376e31b5b585612fca59d848b4f1c6ffb"
+      },
+      "functional": "event_probability",
+      "point_bit_identity": true,
+      "target": "anytime_td",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "pass_att": {
+      "authority": {
+        "bytes": 8666,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/future-inference.json",
+        "sha256": "e0f60b951026b96ba1ac64eef71c144bb98a8da4bc62a15ff5d677b9ae82f0c7"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "model": {
+          "bytes": 223157,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/trained.joblib",
+          "sha256": "2609f3c2461e155058655b82b63bc824d1955c7ce2268007189e0a7a48eab9c6"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 27363,
+        "container": {
+          "bytes": 29221,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/pass-att-retained-cdf-control-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "2ea0d9bccbedc789caadc92a1e9c54ca553147c7cbc729e90221701f520af3bc"
+        },
+        "member": "FORECASTS.parquet",
+        "sha256": "588828303041b735c9275a9462de27f9f4fb152f8e71a89a07d95a109e701ca4"
+      },
+      "functional": "count_mean",
+      "law_mean_registration": {
+        "bytes": 16259,
+        "path": "/workspace/nfl-common-learner-cdf-role-20261027/config/pass-att-retained-cdf-control-v1.json",
+        "sha256": "7b962da8ccddfc9f45131dea172fd67ddf9487faf5428143695990f2a7a736fe"
+      },
+      "point_bit_identity": false,
+      "target": "pass_att",
+      "target_column": false,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "point"
+    },
+    "pass_cmp": {
+      "authority": {
+        "bytes": 8666,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/future-inference.json",
+        "sha256": "c35b6c5725ba3d922be78b2d1c459852232ed5b314b031e1643b365908e9a760"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "model": {
+          "bytes": 211435,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_cmp/leaf_cdf_base/trained.joblib",
+          "sha256": "0dc368d6f8890ed37049af28381b338af32734aa3a271d8ac657db2f0f351ce3"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 26090,
+        "container": {
+          "bytes": 385849,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-cdf-control-completion-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "e84da01f62f0669a8caff5f84f884228f20e42ce642e89ca878f8202ff428581"
+        },
+        "member": "2026/pass_cmp.parquet",
+        "sha256": "1202b5bc385731bce0bd899c37110be3ee782ea6dd031ca86f69af5ecf9a3c0d"
+      },
+      "functional": "count_mean",
+      "point_bit_identity": false,
+      "target": "pass_cmp",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "pass_int": {
+      "authority": {
+        "bytes": 8666,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/future-inference.json",
+        "sha256": "49e02be68349b82302f53a6bea2352fbceaa4429b74f2ecdef1a374108e226cd"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "model": {
+          "bytes": 107778,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_int/leaf_cdf_base/trained.joblib",
+          "sha256": "3d8436e467c77531a7928eb788caba2231d82b518517453b53cc13e99f4bae47"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 40722,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_int/LAB_CDF.parquet",
+        "sha256": "bd8d2d76f4d99d8156e94bd80bc8875ebcb9b4bb077b5ec56e512036bb02fe19"
+      },
+      "functional": "count_mean",
+      "point_bit_identity": true,
+      "target": "pass_int",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "pass_td": {
+      "authority": {
+        "bytes": 8664,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/future-inference.json",
+        "sha256": "1511aeac5a099ffa78dd2e61ae942073fdcd1fc2fa809dd619a901301883ea7a"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "model": {
+          "bytes": 166361,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_td/leaf_cdf_base/trained.joblib",
+          "sha256": "471dc5a0fcd04055d1a5b0600dbddbb2085e71f3b8608ac8a2164ff50886d5f1"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 41214,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_td/LAB_CDF.parquet",
+        "sha256": "71c105e4bf3844cf5397c3b0e619ed65573590ce628145e47f72181e9294d9d5"
+      },
+      "functional": "count_mean",
+      "point_bit_identity": true,
+      "target": "pass_td",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "pass_yd": {
+      "authority": {
+        "bytes": 8675,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/future-inference.json",
+        "sha256": "14c3da8aff3a8f2a958f75d45cdcd4cc99d28ea4fd82a3d1eeb272a206352bdd"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_pass_yd_mean3",
+          "f_player_pass_yd_n3",
+          "f_player_pass_yd_mean8",
+          "f_player_pass_yd_n8",
+          "f_player_pass_att_mean3",
+          "f_player_pass_att_n3",
+          "f_player_pass_att_mean8",
+          "f_player_pass_att_n8",
+          "f_player_pass_cmp_mean3",
+          "f_player_pass_cmp_n3",
+          "f_player_pass_cmp_mean8",
+          "f_player_pass_cmp_n8",
+          "f_player_pass_td_mean3",
+          "f_player_pass_td_n3",
+          "f_player_pass_td_mean8",
+          "f_player_pass_td_n8",
+          "f_player_pass_int_mean3",
+          "f_player_pass_int_n3",
+          "f_player_pass_int_mean8",
+          "f_player_pass_int_n8",
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_pass_ypa3",
+          "f_player_comp_rate3",
+          "f_player_rush_ypa3"
+        ],
+        "model": {
+          "bytes": 349426,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_yd/leaf_cdf_base/trained.joblib",
+          "sha256": "dffd0a2f82dd8f542177f666c0dc9f4a1c15942e885fd82eb25b6b1ee6b8a0b4"
+        },
+        "product": "point_median",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 42082,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_yd/LAB_CDF.parquet",
+        "sha256": "e1ba960b1c295b2a5f0fd67c6848357d94afc51948b52595c35a4b0b1792d7e1"
+      },
+      "functional": "yard_median",
+      "point_bit_identity": true,
+      "target": "pass_yd",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "median"
+    },
+    "rec": {
+      "authority": {
+        "bytes": 7090,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/future-inference.json",
+        "sha256": "49085bae17ff5233027e4ed032385563b684c989a7993f1bcb7b73de0e473890"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_targets_mean3",
+          "f_player_targets_n3",
+          "f_player_targets_mean8",
+          "f_player_targets_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_rec_catch_rate3",
+          "f_player_rec_ypt3",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8"
+        ],
+        "model": {
+          "bytes": 491401,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec/leaf_cdf_base/trained.joblib",
+          "sha256": "8465955423f642def6e6a691872250746eb01a31f31aee10893db87bdccb1a15"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 39483,
+        "container": {
+          "bytes": 385849,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-cdf-control-completion-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "e84da01f62f0669a8caff5f84f884228f20e42ce642e89ca878f8202ff428581"
+        },
+        "member": "2026/rec.parquet",
+        "sha256": "9bf6af4ec50fd90dd01fc5b9ca472f2cf0e445917a19c8ca13a8c1ed44eceaac"
+      },
+      "functional": "count_mean",
+      "point_bit_identity": false,
+      "target": "rec",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "rec_yd": {
+      "authority": {
+        "bytes": 7107,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/future-inference.json",
+        "sha256": "7f9b56d6caf55e87abe0597ad2a60c817e60456f8bf2a62443309237db3f08de"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "model": {
+          "bytes": 907101,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rec_yd/leaf_cdf_base/trained.joblib",
+          "sha256": "9afc353d862b2c961e804ea4171941423241c9170e624fce2d295f3bbf6ab9d6"
+        },
+        "product": "point_median",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 73187,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/rec_yd/LAB_CDF.parquet",
+        "sha256": "7a19c651691f6a96abe373dc547013ddb2748c15785c2c1a15da1c32877a887a"
+      },
+      "functional": "yard_median",
+      "point_bit_identity": true,
+      "target": "rec_yd",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "median"
+    },
+    "rush_att": {
+      "authority": {
+        "bytes": 7922,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/future-inference.json",
+        "sha256": "c291bad10f3197b6aebb78962330551b486c1b1bc1cbb7a8541c867c441ee8be"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "model": {
+          "bytes": 463286,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_att/leaf_cdf_base/trained.joblib",
+          "sha256": "7ad62239d3918217d2910600156f3fd7e5b788e082621dabefdaeb705ad16ab0"
+        },
+        "product": "point_mean",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 34864,
+        "container": {
+          "bytes": 385849,
+          "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-cdf-control-completion-v1-20261027/FORECAST_FREEZE.zip",
+          "sha256": "e84da01f62f0669a8caff5f84f884228f20e42ce642e89ca878f8202ff428581"
+        },
+        "member": "2026/rush_att.parquet",
+        "sha256": "5fa6750be2be83ac3b3096815bc8d617647a917d0a80735d3eda6c80870ff83e"
+      },
+      "functional": "count_mean",
+      "point_bit_identity": false,
+      "target": "rush_att",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "mean"
+    },
+    "rush_rec_yd": {
+      "authority": {
+        "bytes": 7963,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/future-inference.json",
+        "sha256": "220fc5c49c037caa55dd593dd005bc74c63427f17bd39d36848a90d5174b4062"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "model": {
+          "bytes": 979552,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_rec_yd/leaf_cdf_base/trained.joblib",
+          "sha256": "14d9781edf4d54b7bd668e75e0c790cae018b182b52f75e420128da88ac13459"
+        },
+        "product": "point_median",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 74931,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/rush_rec_yd/LAB_CDF.parquet",
+        "sha256": "39304365ff0c4329c2efd810889534c2e29d09de29948b3464baf708b35a4999"
+      },
+      "functional": "yard_median",
+      "point_bit_identity": true,
+      "target": "rush_rec_yd",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "median"
+    },
+    "rush_yd": {
+      "authority": {
+        "bytes": 7931,
+        "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/future-inference.json",
+        "sha256": "90a4473f148ad07ed18e8a282396fec45c0cb0407de15a17c8539cc4d4863891"
+      },
+      "authority_checks": {
+        "family": "leaf_cdf_base",
+        "features": [
+          "f_player_rush_att_mean3",
+          "f_player_rush_att_n3",
+          "f_player_rush_att_mean8",
+          "f_player_rush_att_n8",
+          "f_player_rush_yd_mean3",
+          "f_player_rush_yd_n3",
+          "f_player_rush_yd_mean8",
+          "f_player_rush_yd_n8",
+          "f_player_rec_tgt_mean3",
+          "f_player_rec_tgt_n3",
+          "f_player_rec_tgt_mean8",
+          "f_player_rec_tgt_n8",
+          "f_player_rec_mean3",
+          "f_player_rec_n3",
+          "f_player_rec_mean8",
+          "f_player_rec_n8",
+          "f_player_rec_yd_mean3",
+          "f_player_rec_yd_n3",
+          "f_player_rec_yd_mean8",
+          "f_player_rec_yd_n8",
+          "f_player_offense_snaps_mean3",
+          "f_player_offense_snaps_n3",
+          "f_player_offense_snaps_mean8",
+          "f_player_offense_snaps_n8",
+          "f_player_games_prior",
+          "f_player_play_rate8",
+          "f_player_known_participation_n8",
+          "f_player_rush_ypa3",
+          "f_player_rec_ypt3",
+          "f_player_rec_catch_rate3"
+        ],
+        "model": {
+          "bytes": 692432,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/rush_yd/leaf_cdf_base/trained.joblib",
+          "sha256": "3ccae17979c67319de20bc2ce31c69c54740564c2cf5b02a7f3d1fa4e553ff24"
+        },
+        "product": "point_median",
+        "source_contract": {
+          "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+          "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+          "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+        },
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+      },
+      "fallback_column": "fallback",
+      "forecast": {
+        "bytes": 62436,
+        "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/rush_yd/LAB_CDF.parquet",
+        "sha256": "1472dacb0f5a2f1cfc37e40c6379ddf9dffd20730fe62794710817a6399e58f2"
+      },
+      "functional": "yard_median",
+      "point_bit_identity": true,
+      "target": "rush_yd",
+      "target_column": true,
+      "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+      "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+      "value_column": "median"
+    }
+  },
+  "native_control_root": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-contemporary-v1/RUN_V1",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-contemporary-v1",
+  "prespecified_primary_contrasts": {
+    "ATD_pairs_each_Brier_primary_and_logloss_secondary": [
+      [
+        "MODERN_CDF",
+        "CAT_ATD"
+      ],
+      [
+        "EQUAL_ATD",
+        "MODERN_CDF"
+      ],
+      [
+        "EQUAL_ATD",
+        "CAT_ATD"
+      ]
+    ],
+    "all10point_targets": [
+      [
+        "MODERN_H_L2",
+        "MODERN_FC_L2"
+      ],
+      [
+        "MODERN_H_L2",
+        "MODERN_CDF"
+      ],
+      [
+        "MODERN_H_L2",
+        "M"
+      ],
+      [
+        "MODERN_H_L2",
+        "RECENT_LEADER"
+      ]
+    ],
+    "four_yard_targets_additional": [
+      [
+        "MODERN_H_LAD",
+        "MODERN_FC_LAD"
+      ],
+      [
+        "MODERN_H_LAD",
+        "MODERN_H_L2"
+      ],
+      [
+        "MODERN_H_LAD",
+        "M"
+      ]
+    ],
+    "intervals": "Unchanged game AND whole-week500replicates/seed1703/minimum8clusters; five-week2026 interval isN/A",
+    "loss": "MAE yards, MSE counts; left-minus-right, positive favorsright; full original fixedcohort includingdeclared agedfallbacks",
+    "multiplicity": "All52point contrasts and6event proper-score contrasts retained; descriptive nominal exposed intervals only",
+    "nonfinite_logloss": "Keep all original cases and infinite-loss counts; if paired logloss difference undefined/nonfinite, reportintervalN/A rather than clipping/dropping"
+  },
+  "probability_scope": "No ordinary arbitrary-line probabilities without new laws. ATD binary event probability only, no market No side or fairM/EV claim.",
+  "recent_leader_prespecification": {
+    "report": {
+      "bytes": 42226,
+      "path": "/workspace/nfl-methods-integration/reports/recent-season-category-decisions-20261027/README.md",
+      "sha256": "7a2412654d92478833f11d8af24e406c3221bb6d7f220dab912034f2e3de2492"
+    },
+    "rule": "Fixed from existing2026 report before offered-cohort evaluation; Response TD/ATT, Count A carries/receptions, CatATD, annualCDF elsewhere. No result-driven switch."
+  },
+  "recent_leaders": {
+    "anytime_td": {
+      "recipe": "CATBOOST_MEDIUM_BINARY_PROBABILITY",
+      "source": {
+        "authority": {
+          "bytes": 8317,
+          "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/future-inference.json",
+          "sha256": "20d76ff2e6eb57e6015c91cef093fe565e204591fbe642ac104b7f1d2047a6dd"
+        },
+        "authority_checks": {
+          "family": "catboost_medium",
+          "model": {
+            "bytes": 44493,
+            "path": "/workspace/website-methods-research/resumed/weekly-future-training-v4-20261024/anytime_td/catboost_medium/trained.joblib",
+            "sha256": "b5ff6a18b49fd3baf72a08e198a05ae0b682d09834418f05b2b3669177eb4000"
+          },
+          "product": "binary_probability",
+          "source_contract": {
+            "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+            "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+            "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+          },
+          "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+          "training_max_available_utc": "2026-01-12T01:20:00+00:00"
+        },
+        "fallback_column": "fallback",
+        "forecast": {
+          "bytes": 45465,
+          "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/anytime_td/CATBOOST_MEDIUM.parquet",
+          "sha256": "783daec2fd3b7db3c13108901ff494eedb00c672907ed44bf5bdbeeb4970b0b2"
+        },
+        "functional": "event_probability",
+        "target": "anytime_td",
+        "target_column": true,
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+        "value_column": "point"
+      }
+    },
+    "pass_att": {
+      "recipe": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+      "source": {
+        "authority": {
+          "bytes": 15761,
+          "container": {
+            "bytes": 40555,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-ten-control-pipeline-v4-20261027/cold_2026_v2/pass_att/NEW_FORECAST_2026_pass_att.zip",
+            "sha256": "c653ec7507830d5f4b1bd58049d399f7d41c666422fe5bca8f859629122baf6b"
+          },
+          "member": "MANIFEST.json",
+          "sha256": "19d51fccf4f270f3e281da0214f19c33952a3fe822a0dee5563ccdc18cfed18a"
+        },
+        "authority_checks": {
+          "family": "response_cdf",
+          "method": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+          "query": {
+            "bytes": 274362,
+            "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+            "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+          },
+          "source_contract": {
+            "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+            "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+            "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+          },
+          "state": "NEW_RECONSTRUCTION_IMMEDIATELY_FROZEN",
+          "target": "pass_att",
+          "training_source_identity.source_training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+          "year": 2026
+        },
+        "fallback_column": "fallback",
+        "forecast": {
+          "bytes": 24562,
+          "container": {
+            "bytes": 40555,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-ten-control-pipeline-v4-20261027/cold_2026_v2/pass_att/NEW_FORECAST_2026_pass_att.zip",
+            "sha256": "c653ec7507830d5f4b1bd58049d399f7d41c666422fe5bca8f859629122baf6b"
+          },
+          "member": "pass_att.parquet",
+          "sha256": "27928fa3d2260c8824fbb6ace787af328ce416661c18c46a87d603da2146f7d1"
+        },
+        "functional": "count_mean",
+        "target": "pass_att",
+        "target_column": true,
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+        "value_column": "point"
+      }
+    },
+    "pass_cmp": {
+      "recipe": "ANNUAL_CDF"
+    },
+    "pass_int": {
+      "recipe": "ANNUAL_CDF"
+    },
+    "pass_td": {
+      "recipe": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+      "source": {
+        "authority": {
+          "bytes": 15755,
+          "container": {
+            "bytes": 40447,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-ten-control-pipeline-v4-20261027/cold_2026_v2/pass_td/NEW_FORECAST_2026_pass_td.zip",
+            "sha256": "827d5baa26153e546ffba1e4263ed211241ea60c71669ca6cdc6cb4d3ce33dd4"
+          },
+          "member": "MANIFEST.json",
+          "sha256": "9ead1c0d7242ddf4a5b7dd906808ec611f9261eb565a4c14f6647a27ba45f172"
+        },
+        "authority_checks": {
+          "family": "response_cdf",
+          "method": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+          "query": {
+            "bytes": 274362,
+            "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+            "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+          },
+          "source_contract": {
+            "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+            "feature_builder_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+            "source_policy_sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+          },
+          "state": "NEW_RECONSTRUCTION_IMMEDIATELY_FROZEN",
+          "target": "pass_td",
+          "training_source_identity.source_training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+          "year": 2026
+        },
+        "fallback_column": "fallback",
+        "forecast": {
+          "bytes": 24462,
+          "container": {
+            "bytes": 40447,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-ten-control-pipeline-v4-20261027/cold_2026_v2/pass_td/NEW_FORECAST_2026_pass_td.zip",
+            "sha256": "827d5baa26153e546ffba1e4263ed211241ea60c71669ca6cdc6cb4d3ce33dd4"
+          },
+          "member": "pass_td.parquet",
+          "sha256": "f8156c96f59e478ebcd2d58119ad121083cde64bb1b22da9697a31a0163b4dad"
+        },
+        "functional": "count_mean",
+        "target": "pass_td",
+        "target_column": true,
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+        "value_column": "point"
+      }
+    },
+    "pass_yd": {
+      "recipe": "ANNUAL_CDF"
+    },
+    "rec": {
+      "recipe": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+      "source": {
+        "authority": {
+          "bytes": 16440,
+          "container": {
+            "bytes": 342358,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-count-A-prior-mean-v2-20261027/technical-v3/FORECAST_FREEZE.zip",
+            "sha256": "64ddc18d9400b3ef226ad76e7347737b16f08a6d0364cbe04c11996c2f96e2b9"
+          },
+          "member": "MANIFEST.json",
+          "sha256": "225c0cc3e6c85c24cbd486ff0076b3e1326954f54a9edd09997e6ba7a16593c4"
+        },
+        "authority_checks": {
+          "plan_sha256": "85957e7485db66862110656ad60ad55580881517299f87a285528eecc0ed5c93",
+          "state": "ALL_FOUR_CORRECTED_VECTORS_FROZEN",
+          "target_label_columns_decoded": 0
+        },
+        "fallback_column": "fallback",
+        "forecast": {
+          "bytes": 325684,
+          "container": {
+            "bytes": 342358,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-count-A-prior-mean-v2-20261027/technical-v3/FORECAST_FREEZE.zip",
+            "sha256": "64ddc18d9400b3ef226ad76e7347737b16f08a6d0364cbe04c11996c2f96e2b9"
+          },
+          "member": "FORECASTS.parquet",
+          "sha256": "5c4a9605015e2414f030fbae861306b013406cf815d0b2a5b454c2f18f707e00"
+        },
+        "functional": "count_mean",
+        "target": "rec",
+        "target_column": true,
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+        "value_column": "point"
+      }
+    },
+    "rec_yd": {
+      "recipe": "ANNUAL_CDF"
+    },
+    "rush_att": {
+      "recipe": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+      "source": {
+        "authority": {
+          "bytes": 16440,
+          "container": {
+            "bytes": 342358,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-count-A-prior-mean-v2-20261027/technical-v3/FORECAST_FREEZE.zip",
+            "sha256": "64ddc18d9400b3ef226ad76e7347737b16f08a6d0364cbe04c11996c2f96e2b9"
+          },
+          "member": "MANIFEST.json",
+          "sha256": "225c0cc3e6c85c24cbd486ff0076b3e1326954f54a9edd09997e6ba7a16593c4"
+        },
+        "authority_checks": {
+          "plan_sha256": "85957e7485db66862110656ad60ad55580881517299f87a285528eecc0ed5c93",
+          "state": "ALL_FOUR_CORRECTED_VECTORS_FROZEN",
+          "target_label_columns_decoded": 0
+        },
+        "fallback_column": "fallback",
+        "forecast": {
+          "bytes": 325684,
+          "container": {
+            "bytes": 342358,
+            "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/modern-count-A-prior-mean-v2-20261027/technical-v3/FORECAST_FREEZE.zip",
+            "sha256": "64ddc18d9400b3ef226ad76e7347737b16f08a6d0364cbe04c11996c2f96e2b9"
+          },
+          "member": "FORECASTS.parquet",
+          "sha256": "5c4a9605015e2414f030fbae861306b013406cf815d0b2a5b454c2f18f707e00"
+        },
+        "functional": "count_mean",
+        "target": "rush_att",
+        "target_column": true,
+        "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+        "training_max_available_utc": "2026-01-12T01:20:00+00:00",
+        "value_column": "point"
+      }
+    },
+    "rush_rec_yd": {
+      "recipe": "ANNUAL_CDF"
+    },
+    "rush_yd": {
+      "recipe": "ANNUAL_CDF"
+    }
+  },
+  "reporting": {
+    "ATD_primary": "Brier",
+    "counts_primary": "MSE",
+    "secondary": [
+      "MAE",
+      "RMSE",
+      "bias",
+      "p95/max abs",
+      "strict/inclusive precision",
+      "side/all/decisive/ties/push",
+      "source/fallback coverage",
+      "full system and modern-admitted-only",
+      "every2026week"
+    ],
+    "uncertainty": "500 whole-game replicates seed1703 nominal exposed intervals; week interval N/A fiveweeks; all comparisons retained without scientific winner selection",
+    "yards_primary": "MAE"
+  },
+  "requested_effort": "xhigh",
+  "requested_model": "gpt-6.1-sol",
+  "resources": {
+    "CPU_seconds": 60,
+    "HTTP_calls": 0,
+    "RSS_bytes": 536870912,
+    "automatic_retries": 0,
+    "base_CDF_fits": 0,
+    "invocations": 1,
+    "law_queries": 0,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "maximum_meta_fits": 0,
+    "model_loads": 0,
+    "native_control_bytes_cap": 131072,
+    "peak_private_bytes_cap": 12582912,
+    "per_capsule_bytes_cap": 2097152,
+    "retained_private_bytes_cap": 6291456,
+    "threads": 2,
+    "wall_seconds": 90
+  },
+  "runtime": {
+    "env": {
+      "MKL_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/workspace/nfl-next-correction-20261028"
+    },
+    "outer": "Bash time-p, timeout KILL90s; whole CPU60/61 hard, softwall80, RSS512MiB; includes persistence",
+    "python": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "runner": "tools/next_checkpoint_contemporary_run.py --plan PLAN --sha256 SHA --go ROOT_GO"
+  },
+  "source_materialization": "Projection/Arrow predicates BEFORE pandas:2026 forecasts/outcomes only; Count A sharedmember predicate2026+target; no2025 numeric evaluation frame. Modern fullquery2999 metadata only, original2026marketF9485rows,0model objects.",
+  "state": "PRESEAL_READY_FOR_EXACT_REVIEW",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 5048,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v3.json",
+      "sha256": "c55e89607e351266eb00857f3d8b62a5f640dbabdf354083b0742ea5b246f98e"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "transport": "Original2023 L2 standardized coefficients unchanged. Four yards additionally use frozen2023LAD coefficients. Apply corrections only to matching CDF functional/units. Count L2 point retains original nonnegative clamp. No law identity for adjusted point.",
+  "version": "next-nfl-checkpoint-contemporary-v1-20261028"
+}

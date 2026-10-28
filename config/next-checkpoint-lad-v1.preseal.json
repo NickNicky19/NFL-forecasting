@@ -1,0 +1,447 @@
+{
+  "2022_status": "No qualifying named-book forecasts; no invented training observations",
+  "actual_backend": "UNATTESTED",
+  "controls": [
+    "F",
+    "FC_original_L2",
+    "M",
+    "H_original_L2",
+    "OFFERED_LINE_HEURISTIC"
+  ],
+  "evaluation_2026_weeks": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "evaluation_seasons": [
+    2024,
+    2026
+  ],
+  "excluded_seasons": [
+    2025
+  ],
+  "execution_authorized": false,
+  "exposure": "Both evaluation seasons already exposed; timing-unverified archive exploration, no current-website or scientific-confirmation claim",
+  "fictional_contract_verification": {
+    "bytes": 508,
+    "path": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-lad-v1/FICTIONAL_CONTRACT_CHECKS.json",
+    "sha256": "098568d5cd3e68625dfc678074d928bebff9f3390aa457a8b6adceab2b353526"
+  },
+  "fictional_verification": {
+    "bytes": 1806,
+    "path": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-lad-v1/FICTIONAL_SOLVER_CHECKS.json",
+    "sha256": "41c9b05b38815b180f8080f0a917709e5c63106675ce7b3e41597b0a36a19d3e"
+  },
+  "fictional_verification_history": {
+    "NFL_fits": 0,
+    "NFL_reads": 0,
+    "all_failures_preserved": true,
+    "contract_invocations": 1,
+    "failed_linear_solve_attempts": 1,
+    "independent_epigraph_QP_fits": 6,
+    "solver_ADMM_fit_attempts": 7,
+    "solver_invocations": 1
+  },
+  "implementation_bindings": [
+    {
+      "bytes": 14679,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/next_checkpoint_lad.py",
+      "sha256": "8870849471f767ff8cb8a1d8bcf8c5d850b336935b2947124cd68da7f81d1222"
+    },
+    {
+      "bytes": 10892,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_lad_run.py",
+      "sha256": "ff48d4db2e18d27e8bccc3849dd4c3e84ff681a9592ebd653a2f0bac64016a10"
+    },
+    {
+      "bytes": 4812,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_solver_checks.py",
+      "sha256": "2cd2783633cff851e6ddd4924db3949d24c5ae58e8c8d987150315061a30e342"
+    },
+    {
+      "bytes": 3636,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_contract_checks.py",
+      "sha256": "3263ec3bb44d3b53415d176808b9122b13e58a3505a3af2f166a7e2b692af019"
+    },
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    },
+    {
+      "bytes": 27618,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    {
+      "bytes": 32004,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/operational_storage.py",
+      "sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad"
+    }
+  ],
+  "input_binding": {
+    "original_complete": {
+      "bytes": 8051,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v3/COMPLETE_NATIVE.json",
+      "sha256": "b40903f3bc6055d775d83ba00215e3637cd5a186e84d2b3d267cd8d83164c1a3"
+    },
+    "original_plan": {
+      "bytes": 100025,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-comparison-no2025-technical-v3.sealed.json",
+      "sha256": "062628a3b961c6cc27abf0b40bc37f0c7cb3b48caeffaf1d3b8aaf6e6c542049"
+    }
+  },
+  "inputs": {
+    "calibrators": {
+      "bytes": 24405,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "CALIBRATORS.json",
+      "sha256": "5df77744de33a93b4f673b95736b31dc796baf2fbdb63ac7f8f8f3eb1d95e22b"
+    },
+    "evaluation": {
+      "bytes": 3565072,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "EVALUATION_FORECASTS.parquet",
+      "sha256": "2b84a1394b44c0e6e300e4f65a33e38e59bdcca02626378b9f18edb2568b138f"
+    },
+    "football": {
+      "bytes": 3387619,
+      "container": {
+        "bytes": 9177660,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/FORECASTS_FROZEN.zip",
+        "sha256": "8e28bbfea4c63e6b932123009ec4dcf2e6c009661921e6da4e23f7b70aee0f78"
+      },
+      "member": "F_THRESHOLD_FORECASTS.parquet",
+      "sha256": "e08f79c656eef3b29dfb28a2b06f7248cb8fbca947a2526089a7e3564e27bfa7"
+    },
+    "matched_scores": {
+      "bytes": 3624399,
+      "container": {
+        "bytes": 4472594,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3/SCORES_COMPLETE.zip",
+        "sha256": "28637969b530edbd7cc919a013014cfb3e0b9011fc3125b6b888a1d11f60b0b3"
+      },
+      "member": "MATCHED_SCORES.parquet",
+      "sha256": "7032500cc7dc41be800194ef766525a895eba13de3cc7621d767357fec6576f8"
+    }
+  },
+  "native_control_root": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-lad-v1/RUN_V1",
+  "offering_books": [
+    68,
+    69,
+    79
+  ],
+  "original_development_contract": [
+    2022,
+    2023
+  ],
+  "original_fit_budgets": "144 completed original meta fits remain consumed; this new24-fit study is additional, no refund",
+  "original_panel_rows": {
+    "pass_yd": [
+      231,
+      227,
+      231
+    ],
+    "rec_yd": [
+      1680,
+      1528,
+      1711
+    ],
+    "rush_rec_yd": [
+      1209,
+      364,
+      1176
+    ],
+    "rush_yd": [
+      492,
+      446,
+      493
+    ]
+  },
+  "original_plan": {
+    "category_dependencies": {
+      "pass_yd": {
+        "label_components": [
+          "pass_yd"
+        ],
+        "modeled_roles": [
+          "QB"
+        ],
+        "primary_roles": [
+          "QB"
+        ],
+        "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+        "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+        "support": "signed_integer"
+      },
+      "rec_yd": {
+        "label_components": [
+          "rec_yd"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+        "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+        "support": "signed_integer"
+      },
+      "rush_rec_yd": {
+        "label_components": [
+          "rush_yd",
+          "rec_yd"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+        "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+        "support": "signed_integer"
+      },
+      "rush_yd": {
+        "label_components": [
+          "rush_yd"
+        ],
+        "modeled_roles": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "primary_roles": [
+          "RB"
+        ],
+        "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+        "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+        "support": "signed_integer"
+      }
+    },
+    "historical_label_inputs": {
+      "2023": {
+        "pass_yd": {
+          "bytes": 123878,
+          "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_yd/leaf_cdf/rows.parquet",
+          "sha256": "6ec48a3693bbb637fb0b7e710720261a791275ea292f7e1a9102c4e051435f56"
+        },
+        "rec_yd": {
+          "bytes": 373289,
+          "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rec_yd/leaf_cdf/rows.parquet",
+          "sha256": "c18d9cb21ce61236a09df2f0c24d41c3d21691f5d190c56b68fdd36545b4885c"
+        },
+        "rush_rec_yd": {
+          "bytes": 411013,
+          "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rush_rec_yd/leaf_cdf/rows.parquet",
+          "sha256": "09f91440c6cc5eb2c764fe80ca8a340ff1add31dabb6f13803bff3c40d0d5c41"
+        },
+        "rush_yd": {
+          "bytes": 282747,
+          "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rush_yd/leaf_cdf/rows.parquet",
+          "sha256": "92c65af31e06d2a9013569a45c9203490f53761ba73daca94099f60035e7fa02"
+        }
+      }
+    }
+  },
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-lad-v1",
+  "persistence_order": [
+    "consume one attempt",
+    "authenticate exact inputs and implementations",
+    "fit only2023 labels",
+    "freeze all20212 forecast rows and24parameter records",
+    "managed exact readback",
+    "only then read original matched outer outcomes",
+    "score unchanged cohorts",
+    "managed exact score readback"
+  ],
+  "population": {
+    "all_original_fallbacks_and_timing_contracts_preserved": true,
+    "forecast_primary_yardage_book_rows": 20212,
+    "no_coverage_selection": true,
+    "primary_roles": {
+      "pass_yd": [
+        "QB"
+      ],
+      "rec_yd": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "rush_rec_yd": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "rush_yd": [
+        "RB"
+      ]
+    },
+    "scored_cohort": "original supported outcomes, original finite F/FC/M/H common pool, then original primary_offers priority68/69/79 BEFORE any new availability test"
+  },
+  "recipe": {
+    "FC_inputs": [
+      "F_point"
+    ],
+    "H_inputs": [
+      "F_point",
+      "M_point"
+    ],
+    "acceptance": "physical primal-dual gap >= -1e-9*(1+abs(primal)) and <=1e-7*(1+primal); abs(sum dual)<=1e-8, box<=1; all values finite",
+    "alpha_search": 0,
+    "candidate_recipes": 1,
+    "dimensionless_objective": "sum(abs(y-Xb))/s + 10*sum((slopes/s)**2)",
+    "disclosure": "Deterministic response scaling changes the relative penalty compared with unnormalized residual-loss replacement; this does not isolate unnormalized residual loss alone",
+    "failures": "retain each failed fit and use corresponding ORIGINAL frozen L2 point on original existing rows; do not change chosen book or cohort",
+    "feature_scaling": "original per-arm x mean/std(ddof0), zero std set1",
+    "intercept": "unpenalized unbounded signed",
+    "max_iterations": 20000,
+    "maximum_new_fit_attempts": 24,
+    "minimum_unique_rows": 100,
+    "new_arms": [
+      "FC_LAD",
+      "H_LAD"
+    ],
+    "original_L2_equivalence": "sum((r/s)**2)+10*sum((slopes/s)**2) multiplies the original L2 objective by a positive constant; original L2 controls unchanged",
+    "physical_objective": "sum(abs(y-Xb)) + (10/s)*sum(slopes**2)",
+    "response_scale": "s=max(1 yard,1.4826*median(abs(y-median(y)))) within each original2023 target/book common training panel; np.median midpoint convention",
+    "response_scale_search": 0,
+    "rho": 1,
+    "signed_yards": "no output clipping",
+    "slope_bounds": [
+      0,
+      "positive_infinity"
+    ],
+    "solver": "ADMM with exact precomputed tiny active-set ridge updates, soft threshold, every25iterations finite feasible dual bound",
+    "solver_search": 0,
+    "training_pool": "same original supported_played primary-role unique player-game finite F/M panel for both arms"
+  },
+  "reporting": {
+    "multiple_comparisons": "all8 target/season cells and both new arms disclosed; exploratory nominal intervals, no winner selection or familywise scientific qualification",
+    "primary": "paired MAE yards versus corresponding original L2 arm per target and season",
+    "secondary": [
+      "MAE all controls",
+      "MSE",
+      "RMSE",
+      "signed bias",
+      "strict/inclusive10yard close",
+      "side-and-close",
+      "model-only and system fallback counts"
+    ],
+    "uncertainty": {
+      "2026_week_interval": "N/A five weeks",
+      "game_bootstrap_replicates": 500,
+      "minimum_clusters": 8,
+      "seed": 1703,
+      "week_bootstrap_replicates": 500
+    }
+  },
+  "requested_effort": "xhigh",
+  "requested_model": "gpt-6.1-sol",
+  "research_only": true,
+  "resources": {
+    "CPU_seconds": 180,
+    "HTTP_calls": 0,
+    "RSS_bytes": 536870912,
+    "automatic_retries": 0,
+    "base_CDF_fits": 0,
+    "invocations": 1,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "maximum_meta_fits": 24,
+    "model_loads": 0,
+    "native_control_bytes_cap": 131072,
+    "peak_private_bytes_cap": 16777216,
+    "per_capsule_bytes_cap": 4194304,
+    "retained_private_bytes_cap": 9437184,
+    "threads": 2,
+    "wall_seconds": 240
+  },
+  "runtime": {
+    "backend_attestation": "UNATTESTED",
+    "env": {
+      "MKL_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/workspace/nfl-next-correction-20261028"
+    },
+    "outer_hard_wrapper": "Bash builtin time -p env declared two-thread settings /usr/bin/timeout --signal=KILL 240s approvedvenv worker; capture whole-wrapper real/user/sys; RLIMIT_CPU180/181 and wall soft230/watchdog; persistence included",
+    "python": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "runner": "tools/next_checkpoint_lad_run.py --plan PLAN --sha256 SHA --go ROOT_GO"
+  },
+  "state": "PRESEAL_READY_FOR_EXACT_REVIEW",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 2758,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v1.json",
+      "sha256": "2d601a864634624d7d0ff901da3f005425836ce66234d3941fffac8d00f59f3a"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "targets": [
+    "pass_yd",
+    "rush_yd",
+    "rec_yd",
+    "rush_rec_yd"
+  ],
+  "training_seasons": [
+    2023
+  ],
+  "version": "next-nfl-checkpoint-lad-v1-20261028"
+}

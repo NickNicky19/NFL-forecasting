@@ -1,0 +1,17 @@
+{
+  "version": "next-checkpoint-chart-ppr-contract-v1",
+  "target": "nick-chart-ppr-v1",
+  "input_schema": "nick-chart-ppr-components-v1",
+  "output_schema": "nick-chart-ppr-result-v1",
+  "observed_label_version": "nick-chart-ppr-observed-label-v1",
+  "source_adapter_version": "nick-chart-ppr-nflverse-weekly-v1",
+  "authority": {"attachment_bytes": 36397, "attachment_lines": 382, "attachment_sha256": "fd3fe66f2f1fb5a9662f8e5da8e3654052f8231581aefcf2fbc02488d0d58982", "complete_transcription_read": true, "referenced_image": "IMG_4712.jpeg", "image_inspected": false, "transcription_is_sufficient_authority": true},
+  "weights": {"pass_yd": 0.04, "pass_td": 4, "pass_int": -1, "rush_yd": 0.1, "rush_td": 6, "rec": 1, "rec_yd": 0.1, "rec_td": 6, "fum_lost": -1, "pass_2pt": 2, "rush_2pt": 2, "rec_2pt": 2, "off_fum_rec_td": 6, "kick_return_td": 6, "punt_return_td": 6, "fg_return_td": 6},
+  "observed_support": {"signed_official_yards": ["pass_yd", "rush_yd", "rec_yd"], "event_counts": "finite nonnegative integers", "missing_null_nonfinite_boolean": "unsupported or invalid; never repaired to zero", "lost_fumbles": "unique credited all-phase fumbles lost; sum disjoint phase credits only with event identity deduplication", "two_point_credit": "passing, rushing and receiving each earn two; conversion catch does not add ordinary reception", "offensive_recovery": "credited offensive recovery TD disjoint from ordinary rushing/receiving and return TD classes; no IDP exception", "returns": "three explicit disjoint classes or independently verified exactly-three-class aggregate used once", "unlisted_fields": "forced fumbles, ordinary recoveries, blocked kicks and return yards add no points"},
+  "products": {"observed_score": "all required observed components and played evidence", "conditional_mean": "sum weights times compatible component conditional means; fractional expected event counts allowed; joint simulator not required", "median_quantile_interval_threshold": "not supplied by sum of component medians; needs a qualified direct target or joint law", "anytime_probability": "not expected TD count and cannot fill a touchdown expectation"},
+  "participation": ["known_dnp", "played_zero", "played_score", "played_missing", "unknown_participation", "participation_conflict"],
+  "generic_provider_total": "fantasy_points_ppr / pts_ppr is excluded unless separately established exact parity for this target",
+  "preserved_old_scorer": {"path": "nfl_lab/scoring.py", "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13", "modified": false},
+  "website_migration": {"state": "NOT_DEPLOYED", "owner": "existing production integrator", "required": "explicit target version and source qualification; component attribution; matched chart-target forecast validation; consumer and fallback checks; preserve old product identity", "current_fallback": "chart PPR unsupported; existing old-contract display must retain its old version"},
+  "research": {"new_predictive_fits": 0, "new_forecasts": 0, "accuracy_experiments": 0, "requested_model": "gpt-6.1-sol", "requested_reasoning": "xhigh", "actual_model_and_reasoning": "UNATTESTED", "old_no2025_market_wave": "unchanged", "new_2025_football_labels": "explicitly allowed by addendum section C"}
+}

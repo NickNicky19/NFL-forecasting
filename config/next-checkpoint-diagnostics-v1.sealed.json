@@ -1,0 +1,78 @@
+{
+  "actual_backend": "UNATTESTED",
+  "execution_authorized": true,
+  "expected_cells": {
+    "2024/pass_yd": 465,
+    "2024/rec_yd": 2950,
+    "2024/rush_rec_yd": 1773,
+    "2024/rush_yd": 848,
+    "2026/pass_yd": 81,
+    "2026/rec_yd": 482,
+    "2026/rush_rec_yd": 119,
+    "2026/rush_yd": 153
+  },
+  "fictional_verification": {
+    "bytes": 328,
+    "path": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-diagnostics-v1/FICTIONAL_CHECKS.json",
+    "sha256": "57ab55720cdace155919909fd321e4ce0967b1aaeafeef56b892bfd9decec0c9"
+  },
+  "implementation_bindings": [
+    {
+      "bytes": 3341,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/next_checkpoint_diagnostics.py",
+      "sha256": "329d8ce9254300653cc4b61b69e475e9935d5b1239c2667ae26bafde6bc601c3"
+    },
+    {
+      "bytes": 3023,
+      "path": "/workspace/nfl-next-correction-20261028/tools/next_checkpoint_diagnostics_run.py",
+      "sha256": "80df2784d30c18917940e878f4b6ef17beb6dbe6e8a826a56ad1bc46fb91643f"
+    },
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-next-correction-20261028/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    }
+  ],
+  "input": {
+    "bytes": 573078,
+    "container": {
+      "bytes": 603829,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-lad-v1/SCORES_COMPLETE.zip",
+      "sha256": "fb142a2f811d55c59c7137c0c9cf079b8019a91fdab7ec1aab181014e6c409b8"
+    },
+    "member": "MATCHED_YARDAGE_SCORES.parquet",
+    "sha256": "39c7b5c3773ad4671b711c2554953958d5d62a2123e577af63a6005aea72bb28"
+  },
+  "metadata_descriptor": {
+    "bytes": 5048,
+    "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v3.json",
+    "sha256": "c55e89607e351266eb00857f3d8b62a5f640dbabdf354083b0742ea5b246f98e"
+  },
+  "output": "/workspace/nfl-next-correction-20261028/reports/next-nfl-checkpoint-diagnostics-v1/RUN_V1",
+  "requested_effort": "xhigh",
+  "requested_model": "gpt-6.1-sol",
+  "resources": {
+    "CPU_seconds": 10,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "fits": 0,
+    "invocations": 1,
+    "law_queries": 0,
+    "maximum_aggregate_bytes": 65536,
+    "maximum_meta_fits": 0,
+    "maximum_native_metadata_bytes": 131072,
+    "model_loads": 0,
+    "new_forecasts": 0,
+    "wall_seconds": 15
+  },
+  "retention": "safe aggregate metadata in shared16MiB reserve; original rowevidence retained managed; no new private datasets, fits, forecasts or outcome acquisition",
+  "root_registration": {
+    "independent_static_review": "PASS",
+    "one_invocation_only": true,
+    "preseal_sha256": "4fc01dea9064c1f74658ccf14c02390db71f699d780a51eed0638c79c526ec60",
+    "root": "/root"
+  },
+  "scope": "Only fixed6871 existing LAD scoredrows,56aggregate records, linear p90/p95/maxabs and side/tie/push/precision diagnostics; no paper or financial settlement work here",
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "version": "next-nfl-checkpoint-lad-diagnostics-v1-20261028"
+}

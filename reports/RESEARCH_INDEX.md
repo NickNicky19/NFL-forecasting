@@ -1,5 +1,19 @@
 # Forecasting research: complete navigation index
 
+## Reconciled category/market/chart checkpoint — October28
+
+[Current twelve-category decisions, actual comparisons and served status](next-nfl-checkpoint-20261028/README.md)
+add24 objective-matched yardage correction fits, a zero-fit current2026-football
+comparison on the original offered cohort, frozen tail/paper sensitivity and
+13,235 supported newchart-PPR labels across2024/2025/2026. Mixed/negative results,
+unknowns and consumed failures remain. Newchart labels are not a predictive
+model. SectionC now permits qualified2025football in newstudies; the completed
+no2025market wave below is unchanged. The livepointer still serves Classic
+fallback with0selectedrows; latestproducerpreview1951 is not deployment.
+[Exact product record](next-nfl-checkpoint-20261028/PUBLIC_CATEGORY_DECISIONS.json)
+and [roles/NGS mechanism matrix](next-nfl-checkpoint-20261028/INFORMATION_MECHANISM_MATRIX.md)
+supersede only dated pending statuses with new actual receipts.
+
 ## Latest completed market-information wave — October 28, 2026
 
 [All twelve category decisions and paper results](historical-market-no2025-v1/README.md)

@@ -1,0 +1,95 @@
+{
+  "JSON_reports_checked_for_private_rows_parameters_and_lookup_paths": 37,
+  "activity": {
+    "HTTP_calls": 0,
+    "NFL_row_or_table_decodes": 0,
+    "fits": 0,
+    "managed_writes": 0,
+    "model_loads": 0,
+    "new_forecasts": 0,
+    "publication_writes": 0,
+    "source_or_report_edits": 0,
+    "test_suite_executions": 0
+  },
+  "actual_backend": "UNATTESTED",
+  "all_file_hashes_sizes_match_manifest": true,
+  "all_nonprojection_bytes_match_current_sources": true,
+  "all_projection_numeric_null_boolean_leaves_preserved": true,
+  "allowlist": {
+    "bytes": 2035,
+    "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/PUBLICATION_ALLOWLIST.json",
+    "sha256": "98cd96bdde7a084b52057b9fd7eb99af48398e475a586b49f36ea79a131d8ede"
+  },
+  "bundle": {
+    "bytes": 1935058,
+    "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/PUBLICATION_BUNDLE.json",
+    "sha256": "29e35aed1266411ca40921ced7447cffc2737783761844801ab8c3184714f5e7"
+  },
+  "capacity": {
+    "combined_limit_bytes": 1358954496,
+    "conservative_snapshot_plus_bundle_manifest_allowlist_64KiB_review_bytes": 7068632,
+    "final_snapshot_global_accounted_bytes": 706432803,
+    "market_accounted_bytes": 79356251,
+    "market_limit_bytes": 268435456,
+    "new_metadata_actual_at_snapshot": 5035430,
+    "new_metadata_reserved_bytes": 16777216,
+    "new_private_CAS_writes": 0,
+    "offhost_restoration": "UNPROVEN",
+    "old_metadata_actual_bytes": 4179949,
+    "old_metadata_limit_bytes": 4194304
+  },
+  "expected_base_sha": "5fcc2e45d47e6e9785054950beff389df323d038",
+  "expected_base_tree": "5884fa0143aef9dab649355022087bfef2647745",
+  "expected_public_branch": "research/accuracy-wave-20261026",
+  "files_checked": 88,
+  "findings": [],
+  "limits": [
+    "Static review of the exact corrected bundle only; no scientific fits or NFL rows were replayed.",
+    "Authenticated public baseline Git blob identities were supplied by root GitHub connector readback and independently matched retained bytes; base commit object is not present in this local clone.",
+    "Root must refresh and enforce the expected5fcc branch head immediately before public ref mutation; this receipt does not attest subsequent remote publication or deployment.",
+    "Owner handoff documents required actions and actual controls; it does not complete or authorize PR landing, main writes, production deployment or scheduler activation."
+  ],
+  "manifest": {
+    "bytes": 30573,
+    "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/PUBLICATION_MANIFEST.json",
+    "sha256": "574acaefb6669cff824c529a3638e21a44ada12520660f6010b95b0560c671ff"
+  },
+  "metadata_path_projections_checked": 8,
+  "ownership": {
+    "PR9_then_reconcile_PR10_no_new_authority_or_mainwrite": true,
+    "Parent_guard_and_existing_scheduler_preserved": true,
+    "initial_prefix_and_all_local_tracked_owner_continuations_preserved": true,
+    "latest_scoped2025football_chart_authority_present": true,
+    "no_production_or_scheduler_files_in_bundle": true,
+    "public_original_AGENTS_bytes": 1349,
+    "public_original_AGENTS_git_blob": "d675dd3d23832de09bc71a2b7989d62a7d49056b",
+    "same_retained_writer_lease_revision": 178
+  },
+  "privacy": {
+    "all_JSON_report_path_blob_private_lookup_fields_omitted": true,
+    "controlled_scientific_source_config_replay_paths_retained_intentionally": true,
+    "literal_token_private_key_patterns_absent": true,
+    "private_CAS_capsules_model_files_fitted_coefficients_native_FIT_records_absent": true,
+    "rowlevel_NFL_labels_forecasts_quotes_quarantine_base64_absent": true
+  },
+  "public_index": {
+    "all_existing_public_bytes_preserved": true,
+    "baseline_bytes": 38322,
+    "baseline_git_blob": "0018aaf29b8f1418b11ab03b35d9b723e537dfdc",
+    "full_local_private_index_not_copied": true,
+    "published_bytes": 39280,
+    "single_new_entry_bytes": 958
+  },
+  "report_allowlist_entries": 39,
+  "requested_backend": "gpt-6.1-sol xhigh",
+  "resources": {
+    "CPU_limit_seconds": 15,
+    "CPU_seconds": 0.060176429000000003,
+    "RSS_limit_bytes": 402653184,
+    "RSS_peak_bytes": 16916480,
+    "wall_limit_seconds": 30,
+    "wall_seconds": 0.06418268899142276
+  },
+  "reviewed_at_utc": "2026-10-28T18:19:45.199778+00:00",
+  "state": "PASS_FINAL_STATIC_PUBLICATION_BUNDLE_PRIVACY_OWNERSHIP_REVIEW"
+}

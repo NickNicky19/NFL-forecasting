@@ -1,0 +1,378 @@
+{
+  "admission": {
+    "2025_football_lineage": "pre-existing qualified annual model lineage; no2025 market quotes, new fits, or evaluation",
+    "audits": [
+      {
+        "cached_model_fallback_reasons": {
+          "": 1024,
+          "cold_start_role_prior": 1
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 1025
+        },
+        "modern_admitted_rows": 1025,
+        "original_fixed_rows": 1025,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 1025
+        },
+        "recent_leader_recipe": "CATBOOST_MEDIUM_BINARY_PROBABILITY",
+        "target": "anytime_td"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 79
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 79
+        },
+        "modern_admitted_rows": 79,
+        "original_fixed_rows": 79,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 79
+        },
+        "recent_leader_recipe": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+        "target": "pass_att"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 79
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 79
+        },
+        "modern_admitted_rows": 79,
+        "original_fixed_rows": 79,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 79
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "pass_cmp"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 77
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 77
+        },
+        "modern_admitted_rows": 77,
+        "original_fixed_rows": 77,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 77
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "pass_int"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 76
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 76
+        },
+        "modern_admitted_rows": 76,
+        "original_fixed_rows": 76,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 76
+        },
+        "recent_leader_recipe": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+        "target": "pass_td"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 81
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 81
+        },
+        "modern_admitted_rows": 81,
+        "original_fixed_rows": 81,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 81
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "pass_yd"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 496
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 496
+        },
+        "modern_admitted_rows": 496,
+        "original_fixed_rows": 496,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 496
+        },
+        "recent_leader_recipe": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+        "target": "rec"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 517
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 517
+        },
+        "modern_admitted_rows": 517,
+        "original_fixed_rows": 517,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 517
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "rec_yd"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 101
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 101
+        },
+        "modern_admitted_rows": 101,
+        "original_fixed_rows": 101,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 101
+        },
+        "recent_leader_recipe": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+        "target": "rush_att"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 120
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 120
+        },
+        "modern_admitted_rows": 120,
+        "original_fixed_rows": 120,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 120
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "rush_rec_yd"
+      },
+      {
+        "cached_model_fallback_reasons": {
+          "": 154
+        },
+        "modern_admission_reasons": {
+          "ACCEPTED_CACHED": 154
+        },
+        "modern_admitted_rows": 154,
+        "original_fixed_rows": 154,
+        "recent_leader_reasons": {
+          "ACCEPTED_CACHED": 154
+        },
+        "recent_leader_recipe": "ANNUAL_CDF",
+        "target": "rush_yd"
+      }
+    ],
+    "calibration": "fixed original2023 parameters only; transport is a new exposed research procedure, not refit or calibration qualification",
+    "fits": 0,
+    "fixed_original_ATD_UNIT_rows": 1025,
+    "fixed_original_point_UNIT_rows": 1780,
+    "law_queries": 0,
+    "models_loaded": 0,
+    "new_source_acquisition": 0,
+    "original_primary_book_offers": 8818,
+    "state": "CACHED_2026_TRANSPORT_POINTS_READY_UNSCORED"
+  },
+  "category_files": [
+    {
+      "bytes": 74607,
+      "path": "anytime_td.json",
+      "sha256": "457332e63d707472844168838a037bd4d744325207a73fbf1fe7f3c00ace0d24",
+      "target": "anytime_td"
+    },
+    {
+      "bytes": 51558,
+      "path": "pass_att.json",
+      "sha256": "bac6b42066f3613eb38ce34da419f38cdce3e6983bdc55862758a17bb67d8ff3",
+      "target": "pass_att"
+    },
+    {
+      "bytes": 51328,
+      "path": "pass_cmp.json",
+      "sha256": "d5ee1d20ef4e54fda9b213416a79050def90b106f76f865000c0cc87fa3b5898",
+      "target": "pass_cmp"
+    },
+    {
+      "bytes": 51547,
+      "path": "pass_int.json",
+      "sha256": "04b4f935c2633a296c59204031a16ade9ca5384b65dbb4f5270b8242cb7d8558",
+      "target": "pass_int"
+    },
+    {
+      "bytes": 51995,
+      "path": "pass_td.json",
+      "sha256": "fd36d6cf9cc61c7731e0b26fdd8b86a01bfa9e71d6d55fb189667a292af021a7",
+      "target": "pass_td"
+    },
+    {
+      "bytes": 74963,
+      "path": "pass_yd.json",
+      "sha256": "e354e62f6d81e275f14fc6ec2aecb3cfdab7033bf5a21ce1bdbeb2fd46d536bf",
+      "target": "pass_yd"
+    },
+    {
+      "bytes": 53591,
+      "path": "rec.json",
+      "sha256": "f8b892c1fe273cb93809bdbf135fdcc43a8dca0af15b647298dcd1fed134759f",
+      "target": "rec"
+    },
+    {
+      "bytes": 78174,
+      "path": "rec_yd.json",
+      "sha256": "83879236afe2bbee216bcb593961db5745a3544ada4f9140f76268cd1ac2d5e4",
+      "target": "rec_yd"
+    },
+    {
+      "bytes": 52221,
+      "path": "rush_att.json",
+      "sha256": "63c6d4a92801c0e63ebdf603408c39b7d862d37296f0daa7f9e6a6635942b8af",
+      "target": "rush_att"
+    },
+    {
+      "bytes": 76637,
+      "path": "rush_rec_yd.json",
+      "sha256": "046887b7ce34054068051b93b727333a291427700876a59c3ef6f2414244779f",
+      "target": "rush_rec_yd"
+    },
+    {
+      "bytes": 77216,
+      "path": "rush_yd.json",
+      "sha256": "b6a17fb4c03295a2e0bdf54c90df1eccdd878e500730000ee8c16bfa98a42257",
+      "target": "rush_yd"
+    }
+  ],
+  "coverage": {
+    "ATD_forecast_rows": 1025,
+    "ATD_proper_score_contrasts": 6,
+    "ATD_supported_scored_rows": 829,
+    "category_coverage": [
+      {
+        "games": 62,
+        "primary_loss": "Brier",
+        "rows": 829,
+        "target": "anytime_td",
+        "weeks": 5
+      },
+      {
+        "games": 46,
+        "primary_loss": "MSE",
+        "rows": 79,
+        "target": "pass_att",
+        "weeks": 5
+      },
+      {
+        "games": 46,
+        "primary_loss": "MSE",
+        "rows": 79,
+        "target": "pass_cmp",
+        "weeks": 5
+      },
+      {
+        "games": 44,
+        "primary_loss": "MSE",
+        "rows": 77,
+        "target": "pass_int",
+        "weeks": 5
+      },
+      {
+        "games": 44,
+        "primary_loss": "MSE",
+        "rows": 76,
+        "target": "pass_td",
+        "weeks": 5
+      },
+      {
+        "games": 46,
+        "primary_loss": "MAE",
+        "rows": 81,
+        "target": "pass_yd",
+        "weeks": 5
+      },
+      {
+        "games": 48,
+        "primary_loss": "MSE",
+        "rows": 461,
+        "target": "rec",
+        "weeks": 5
+      },
+      {
+        "games": 48,
+        "primary_loss": "MAE",
+        "rows": 482,
+        "target": "rec_yd",
+        "weeks": 5
+      },
+      {
+        "games": 45,
+        "primary_loss": "MSE",
+        "rows": 101,
+        "target": "rush_att",
+        "weeks": 5
+      },
+      {
+        "games": 47,
+        "primary_loss": "MAE",
+        "rows": 119,
+        "target": "rush_rec_yd",
+        "weeks": 5
+      },
+      {
+        "games": 48,
+        "primary_loss": "MAE",
+        "rows": 153,
+        "target": "rush_yd",
+        "weeks": 5
+      }
+    ],
+    "fixed_point_contrasts": 52,
+    "ordinary_forecast_rows": 1780,
+    "ordinary_supported_scored_rows": 1708,
+    "source": "S17",
+    "weeks": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "data_and_product_limits": {
+    "ATD_market_fair_probability": "UNAVAILABLE_NO_AUTHENTIC_NO_SIDE",
+    "adjusted_point_semantics": "Empirical frozen-parameter transports, not CDF mean/median/probability claims",
+    "multiplicity": "All52 fixed point contrasts and6 ATD proper-score contrasts retained; nominal exposed intervals, no independent scientific winner selection",
+    "ordinary_prop_probabilities": "UNAVAILABLE_WITHOUT_NEW_LAW_QUERIES; point summaries are insufficient",
+    "recent_leaders": {
+      "anytime_td": "CATBOOST_MEDIUM_BINARY_PROBABILITY",
+      "pass_att": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+      "pass_cmp": "ANNUAL_CDF",
+      "pass_int": "ANNUAL_CDF",
+      "pass_td": "ANNUAL_RESPONSE_CDF_STABLE_MEAN_V1",
+      "pass_yd": "ANNUAL_CDF",
+      "rec": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+      "rec_yd": "ANNUAL_CDF",
+      "rush_att": "CORRECTED_COUNT_A_STORED_PRIOR_MEAN",
+      "rush_rec_yd": "ANNUAL_CDF",
+      "rush_yd": "ANNUAL_CDF"
+    },
+    "state": "CACHED_CONTEMPORARY_2026_COMPARISON_COMPLETE",
+    "timing": "timing-unverified exposed current-vintage reconstruction; original7day assumption; no historical SITE or live claim",
+    "version": "next-nfl-checkpoint-contemporary-v1-20261028"
+  },
+  "independent_acceptance": {
+    "original_import_failure_preserved": true,
+    "receipt": "verification/contemporary_readonly_acceptance_technical_v2.stdout.json",
+    "state": "PASS"
+  },
+  "no_row_level_records_model_parameters_or_source_feeds": true,
+  "period": "2026REGWeeks1-5;exposedcurrentvintagereconstruction;quotes_timing_unverified",
+  "schema_version": "contemporary-cached-v1-safe-public-metrics",
+  "scope": "New exposed cached2026 Weeks1-5 fixed common original market cohort. It is separate from2025 football, annual2026 Weeks1-6, Week7 genuine capture and original no2025 archive/LAD panels.",
+  "selection": "Nonewweeklychoice,replacement,probabilityrankingorliveactivation",
+  "state": "RESEARCH_COMPLETE_NOT_SELECTED_OR_DEPLOYED"
+}
