@@ -1,0 +1,198 @@
+{
+  "schema_version": "current-public32-model-reference-reconciliation-v1",
+  "state": "ACTUAL_SELECTED_MODELS_AND_REFERENCE_FALLBACK_IDENTITIES_RECONCILED",
+  "feed_sha256": "73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8",
+  "public_rows": 1960,
+  "actual_public_rows_using_only_fixed_R0": 0,
+  "all_rows_match_all_chosen_nonreference_component_versions": true,
+  "fixed_R0_model_version": "565cbc7dfcef50b6905e1de3b53f644ee0067dcbb81bcfd6287d53f8646b87fc",
+  "full_reference_wrapper_versions": [
+    "4ae4e699d842699a40f547d583af545f8534cdd134c93650bb7b1d39c2f6fac9",
+    "fce99d1f540eaa34140960e68e2fcf55411bb2ac56efdd9d7a224aedf4d69ec5"
+  ],
+  "epoch_sha256": "e756c03f1ed1d8e6d5d095d8429f8b499780853c50baf5c2c6228fcc94f465ee",
+  "choice_sha256": "e0f2d2c566704a539bf1a5516cac451a9abe169ac2920878876417abbb6f40e9",
+  "frozen_epoch_and_choice_bytes_identical_to_original28": true,
+  "original_and_current_artifact_catalogs_differ_only_by_declared_relocated_manifest_versions": true,
+  "slots_with_one_preserved_original_and_one_new_relocated_manifest": 18,
+  "explanation": "Artifact catalogs retain each original model-manifest identity and add the current restored-path manifest identity. The relocation validator preserves effective model, procedure, model-byte and transport-manifest hashes. The selected wrapper hash includes component manifest versions, so its identity changes without a refit or reselection.",
+  "independent_reference_calculation": "Standalone SHA256 of canonical JSON [[method_id, manifest_version, frozen_weight], ...], enumerated from authenticated control metadata; no production hash/catalog helper called.",
+  "categories": [
+    {
+      "category": "pass_yd",
+      "rows": 40,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "81700eb772efb348ee899f46390834c730ec31c42a7e6a4f4edf5068b99450c1": 40
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "pass_td",
+      "rows": 40,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "904a16ee1419fe0078ce76bcb42265f165cae6e46a8bd4ca2e4b4c15bfc05ff0": 40
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "pass_cmp",
+      "rows": 40,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "e631e4f75d508185054e7db58d3f96b34af422a09eae1b42f0de552727b2ae0d": 40
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "pass_att",
+      "rows": 40,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "66617b323958acb259ef5e56433df7d751abd2e61722646efd99344f1b7c1092": 40
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "pass_int",
+      "rows": 40,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "07ed7896ccf0b23265b5391be03da932e82cb72d1b20bd7d1175e2775344695f": 40
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "rush_yd",
+      "rows": 114,
+      "selected_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "61c7e402a608b6a7553fe9274fd71d5b095402d673042eaa073136dcd7eef371": 114
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "rush_att",
+      "rows": 114,
+      "selected_families": [
+        "COUNT_A"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "1ab845c1e3336a361923dd68eb1d995b16d0b5fee1218a4095365c5fd1639276": 114
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "rec",
+      "rows": 404,
+      "selected_families": [
+        "COUNT_A"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "f1180b0c43551fbc1132509af5684f7b4e040b352fcf91c9b6476bd2ad9eb16a": 404
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "rec_yd",
+      "rows": 404,
+      "selected_families": [
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "c42edc5147dbf726688d14ced661db175942b8108bf45bd9ab20ee2376b02459": 404
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "rush_rec_yd",
+      "rows": 293,
+      "selected_families": [
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        1.0
+      ],
+      "actual_model_versions": {
+        "91d677f1f3742613aed342094fbc307b77d3985b52f432ffe99a98808e30697f": 293
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    },
+    {
+      "category": "anytime_td",
+      "rows": 431,
+      "selected_families": [
+        "LAB_CDF",
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "actual_model_versions": {
+        "acab8ea8fb8803ca2c65ce889feafb732af098b40abb6de1bc160d3e1ee5e844": 431
+      },
+      "all_public_rows_match_chosen_nonreference_components": true
+    }
+  ],
+  "coverage": {
+    "fallback_counts": {
+      "outside_board_R0": 992,
+      "private_ineligible_R0": 4
+    },
+    "private_selected_rows": 2956,
+    "public_rows": 1960
+  },
+  "created_at": "2026-10-28T06:57:46.024682+00:00",
+  "expires_at": "2026-11-03T01:15:00+00:00",
+  "consumer_seconds": 3.0433837399978074,
+  "consumer_policy_sha256": "d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8",
+  "source_preview_only": true,
+  "website_installed": false,
+  "new_NFL_fits": 0,
+  "model_weight_decodes": 0,
+  "scientific_accuracy_claim": false,
+  "reviewer": "Parent; independent reviewer capacity failure retained",
+  "private_forecast_or_outcome_rows_decoded": 0,
+  "public_forecast_rows_examined": 1960
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "current32-release-readiness-v1",
+  "observed_at_utc": "2026-10-28T07:30:51.457657+00:00",
+  "state": "PARTIAL_PRODUCER_VERIFIED_WEBSITE_READY_NOT_DEPLOYED",
+  "main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+  "producer": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+  "main_CI": 40640349535,
+  "producer_CI": 40642527286,
+  "producer_complete_nodes": 2503,
+  "producer_passed": 2502,
+  "producer_existing_optional_skip": 1,
+  "native_registration31": 40644020277,
+  "native_registry_commit": "4f2cafd906b2d83dd045f48fae61dff5e08d4453",
+  "capture32": {
+    "run": 40644670107,
+    "jobs": {
+      "consume": {
+        "api_job_id": 122677024481,
+        "job_id": "audit-weekly-export-v1"
+      },
+      "produce": {
+        "api_job_id": 122670588922,
+        "job_id": "audit-weekly-produce-v1"
+      },
+      "restore": {
+        "api_job_id": 122676255204,
+        "job_id": "audit-weekly-restore-v1"
+      }
+    },
+    "state": "PUBLIC_DERIVED_DELIVERY_COMPLETE",
+    "feed_path": "state/public/weekly-adaptive-v1/2026-W08/20261028T065746.024682Z--73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8.json",
+    "feed_sha256": "73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8",
+    "published_at": "2026-10-28T06:58:16.022271+00:00",
+    "private_candidates": 11466,
+    "private_selected": 2956,
+    "public_selected": 1960,
+    "model_pairs": 18,
+    "archive_index_sha256": "31e6fc2025bdf0830e30daa8c23b2b8e111a56480bc070caf8ae0f8cf515f8e9",
+    "archive_files_sha256": "f9183de586f35917f5109c7570ca297ac567483dec5ebd69d327b47b6c27b0df",
+    "reader_witness_sha256": "7499ddc618d84a53d25964e8ab7caf155d194fc0a64547a4a4bc875383f09503",
+    "grading_checkpoint": {
+      "evidence_descriptor_sha256": "b0c732d6d1b2d71b4537d7085269f1368a8cbcd702c88715adc7701e10322a19",
+      "feed_sha256": "73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8",
+      "schema_version": "audit-weekly-grading-delivery-v1",
+      "sidecar_path": "controller-v1/grade-checkpoints/73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8.json.gz",
+      "sidecar_sha256": "6f3d4919a085c4a414fe7aab448a2d3aee2646bb74dfd8393e77d8a2c5984cdd"
+    }
+  },
+  "consumer": {
+    "head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+    "CI": 40648049705,
+    "ready": true,
+    "stacked_on_PR9": true,
+    "policy_sha256": "d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8",
+    "rows": 1960,
+    "elapsed_seconds": 3.0433837399978074,
+    "requests": 6,
+    "chosen_nonreference_identity_check": "ALL_1960_PASS",
+    "exact_committed_source_install_and_browser_preview": "PASS",
+    "viewports": [
+      1280,
+      390,
+      320
+    ],
+    "deployed": false
+  },
+  "remaining": [
+    "Existing website writer integration, deployment and actual live-selected verification",
+    "Parent activation access (403), actual daily route and subsequent recurring execution",
+    "Separate Phase2 operating qualification and its remaining deployment race acceptance"
+  ],
+  "original_forecasts_failures_and_losing_weeks_preserved": true,
+  "new_NFL_fits": 0,
+  "scientific_qualification": false,
+  "accuracy_gain_claim": false
+}

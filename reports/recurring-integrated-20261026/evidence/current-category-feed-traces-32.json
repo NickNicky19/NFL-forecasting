@@ -1,0 +1,324 @@
+{
+  "schema_version": "actual-current-feed-category-trace-v2",
+  "observed_at_utc": "2026-10-28T07:30:51.457657+00:00",
+  "state": "ACTUAL_SOURCE_PREVIEW_CONSUMER_ACCEPTED_NOT_DEPLOYED",
+  "run": 40644670107,
+  "source": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+  "consumer_head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+  "feed_sha256": "73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8",
+  "selected_rows": 1960,
+  "elapsed_seconds": 3.0433837399978074,
+  "network_calls": 6,
+  "board_sha256": "a267a15db3985f710267fe63b74e0949c7afcd325b4ffde86ac8328864c70ccf",
+  "categories": [
+    {
+      "category": "anytime_td",
+      "rows": 431,
+      "chosen_families": [
+        "LAB_CDF",
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "acab8ea8fb8803ca2c65ce889feafb732af098b40abb6de1bc160d3e1ee5e844",
+      "procedure_version": "e16886f8a95732f8433548da5fd776a4aa4fff06c971767593ac58d732edb664",
+      "product": "binary_probability",
+      "prediction_functional": "event_probability",
+      "units": "percent",
+      "public_player_id": "10212",
+      "public_game_id": "401873023",
+      "public_row_sha256": "a1c1244cc2acf458638a4410e9482333831a420034d27dadbda32a8c1963713e",
+      "rendered_card_sha256": "cd020fdbab74db788f1389e4ff8ec2931b68bcbdf90d6767f8e32352397a0cd0",
+      "issued_at": "2026-10-28T06:44:40.831122+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "pass_att",
+      "rows": 40,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "66617b323958acb259ef5e56433df7d751abd2e61722646efd99344f1b7c1092",
+      "procedure_version": "8036241e6dc11ee50f630dcd1858c7c15ef5faabc9a3aa29d328fcb6329a4e75",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "6804",
+      "public_game_id": "401873023",
+      "public_row_sha256": "3c09176295788bbd84093ff0b2ef6e9b5b396667a588d9764851ddd99bbae93d",
+      "rendered_card_sha256": "dcc71eeb2eb4ba8eae39fb60e014fb88bf089eb57acb11fb746cbdb0f6c84162",
+      "issued_at": "2026-10-28T06:44:32.530879+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "pass_cmp",
+      "rows": 40,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "e631e4f75d508185054e7db58d3f96b34af422a09eae1b42f0de552727b2ae0d",
+      "procedure_version": "935a49265a81d44a21ebd6c79f67b22945a649c5176111fdc3ab59ff7490079e",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "6804",
+      "public_game_id": "401873023",
+      "public_row_sha256": "27c8cbaa86e440e7a889a29af33e61b9a1f43382f94a8a5ee1a6a50f512a3acc",
+      "rendered_card_sha256": "adb390c108ce201d647ef6f63f2924f23b65a78dce0c25740a8adf3c03e89ace",
+      "issued_at": "2026-10-28T06:44:32.187606+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "pass_int",
+      "rows": 40,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "07ed7896ccf0b23265b5391be03da932e82cb72d1b20bd7d1175e2775344695f",
+      "procedure_version": "a19ca418522418dcd42765700f20cae7cc19063489a2517945ba693f7203b37e",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "6804",
+      "public_game_id": "401873023",
+      "public_row_sha256": "1460d05fcc7e7de57bcb49e881d8876ef5d83656e7eb07ba50f8fd2e0bdffd08",
+      "rendered_card_sha256": "73437e5e0cc1c91db4b55d4b8ba3dbf0ddb9fb22c7811ad48a5dd371d937a725",
+      "issued_at": "2026-10-28T06:44:32.833811+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "pass_td",
+      "rows": 40,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "904a16ee1419fe0078ce76bcb42265f165cae6e46a8bd4ca2e4b4c15bfc05ff0",
+      "procedure_version": "9098170124985c38e0c317b8bd1ef4a44b4aa3c2e6fbb9344d74e99ba757e29d",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "6804",
+      "public_game_id": "401873023",
+      "public_row_sha256": "dc3787420fd2e0fe78c01442cb057031ee3b78c808297a81fa49e591f454cc8f",
+      "rendered_card_sha256": "0c7d3c724230219cd47dce2610a375de7e702306956e2bf7fb164921afc6c3fd",
+      "issued_at": "2026-10-28T06:44:31.739785+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "pass_yd",
+      "rows": 40,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "81700eb772efb348ee899f46390834c730ec31c42a7e6a4f4edf5068b99450c1",
+      "procedure_version": "2ced2a3d88822d200dec59bb6485356044b8733353c87c91f3fa6825f963ba12",
+      "product": "point_median",
+      "prediction_functional": "intended_median",
+      "units": "yards",
+      "public_player_id": "6804",
+      "public_game_id": "401873023",
+      "public_row_sha256": "9a34a5c2fb291bb3a7485560d007714b8faead23c8944512c0a11a58f0956f2a",
+      "rendered_card_sha256": "2c1a6526e5c78aecc4cd9cd9b5cc461c7ec15e94092bedcb70f6d9541e7496e6",
+      "issued_at": "2026-10-28T06:44:31.484906+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "rec",
+      "rows": 404,
+      "chosen_families": [
+        "COUNT_A"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "f1180b0c43551fbc1132509af5684f7b4e040b352fcf91c9b6476bd2ad9eb16a",
+      "procedure_version": "49e96640fac97556fcafd63570f45e240f970faf17cf1aca4f3936bdd50e939f",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "10212",
+      "public_game_id": "401873023",
+      "public_row_sha256": "e3ba882787c0b11c99e0b5fe64b1123c4759ba7a84bf5281ff7263def17c9e41",
+      "rendered_card_sha256": "38bba6f4e1cfc8fa56864bd7f05e8fac3486c1dc9069d32e66819c17b8a7d00e",
+      "issued_at": "2026-10-28T06:44:35.229245+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "rec_yd",
+      "rows": 404,
+      "chosen_families": [
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "c42edc5147dbf726688d14ced661db175942b8108bf45bd9ab20ee2376b02459",
+      "procedure_version": "cd08ff51b1ff61c39834a9aad9cda67c73743bc1e03a82abd78bff1cc44fc825",
+      "product": "point_median",
+      "prediction_functional": "intended_median",
+      "units": "yards",
+      "public_player_id": "10212",
+      "public_game_id": "401873023",
+      "public_row_sha256": "ef104f63342fccb86d3457e7e259d9e794c0d819d814b7ec8a64b6ddfd7f8786",
+      "rendered_card_sha256": "689e422d9668273ec17af17b10c4caed82207a1c21b3b6b2afe8b1a80df2c6d2",
+      "issued_at": "2026-10-28T06:44:37.346150+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "rush_att",
+      "rows": 114,
+      "chosen_families": [
+        "COUNT_A"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "1ab845c1e3336a361923dd68eb1d995b16d0b5fee1218a4095365c5fd1639276",
+      "procedure_version": "178469d87333edd3c3a615bb925792338f789cb44c6c38b6d9b9466cdeeffd7b",
+      "product": "point_mean",
+      "prediction_functional": "expected_mean",
+      "units": "count",
+      "public_player_id": "11370",
+      "public_game_id": "401873023",
+      "public_row_sha256": "c285346ca563f6dea883199f0a8d29479285f03db7c48df47ee07738ec6f9213",
+      "rendered_card_sha256": "b6ba3e511322dc2bb1be5ee9c8eea02618a2ade4b8717303317ef022b2a289bd",
+      "issued_at": "2026-10-28T06:44:33.756804+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "rush_rec_yd",
+      "rows": 293,
+      "chosen_families": [
+        "CATBOOST_MEDIUM"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "91d677f1f3742613aed342094fbc307b77d3985b52f432ffe99a98808e30697f",
+      "procedure_version": "80edf4fe057928f748c21ad652573cf2f78c29120d2e87e63f6d959d3c1fa877",
+      "product": "point_median",
+      "prediction_functional": "intended_median",
+      "units": "yards",
+      "public_player_id": "10222",
+      "public_game_id": "401873023",
+      "public_row_sha256": "c2813a78f71872a16ebeec0b4ddd4e1c30139c01b5520cacb66384353a156d4f",
+      "rendered_card_sha256": "10801ede7122ce8738543f833949b42f1ba758d26ef0c6e44ff6e31074833a76",
+      "issued_at": "2026-10-28T06:44:38.114036+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    },
+    {
+      "category": "rush_yd",
+      "rows": 114,
+      "chosen_families": [
+        "LAB_CDF"
+      ],
+      "weights": [
+        1.0
+      ],
+      "method_id": "P2_SELECTED",
+      "model_version": "61c7e402a608b6a7553fe9274fd71d5b095402d673042eaa073136dcd7eef371",
+      "procedure_version": "30d664e1d0d015708bd52f59ed8d90a8cf1a4079884f7e4f3acc42e0f03a7aa5",
+      "product": "point_median",
+      "prediction_functional": "intended_median",
+      "units": "yards",
+      "public_player_id": "11370",
+      "public_game_id": "401873023",
+      "public_row_sha256": "9456ac08dccd63a00081503df4429f74d76def897cbc8b9a2ffd8a300bb3d565",
+      "rendered_card_sha256": "a1b473757ca85e53f900afa40e522f23d8ad9411d583de8272a524c62339e404",
+      "issued_at": "2026-10-28T06:44:33.290138+00:00",
+      "persistence_completed_at": "2026-10-28T06:57:36.931981+00:00",
+      "source_cutoff_utc": "2026-10-29T22:45:00+00:00",
+      "valid_until_utc": "2026-10-30T00:15:00+00:00",
+      "query_source_sha256": "fbe5aa5473a53036017f8737dfdce6e7b1a7820911354b95ace9453f1b67ee88",
+      "selected_components_and_display_checked": true,
+      "real_game_grading": "PENDING_FUTURE_GAME; controlled identity/finality/zero/missing tests are separate"
+    }
+  ],
+  "unsupported_exact_research_PPR": "No selected research product; declared website reference boundary remains",
+  "fixed_R0_only_accepted_rows": 0,
+  "public_only": true,
+  "deployed": false,
+  "functional_categories": {
+    "event_probability": 1,
+    "expected_mean": 6,
+    "intended_median": 4
+  },
+  "limitation": "Point and probability contracts are checked; these rows do not establish a full predictive distribution, historical accuracy or future outcome grading."
+}

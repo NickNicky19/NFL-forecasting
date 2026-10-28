@@ -1,0 +1,33 @@
+{
+  "schema_version": "current-parent-activation-block-v1",
+  "observed_at_utc": "2026-10-28T07:28:41.447013+00:00",
+  "run": 40650140425,
+  "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+  "status": "completed",
+  "conclusion": "failure",
+  "job": 122688061713,
+  "activation_variable": "AUDIT_WEEKLY_PARENT_ENABLED",
+  "variable_API_status": 403,
+  "variable_error": "Resource not accessible by integration",
+  "parent_selected": false,
+  "child_enqueued": false,
+  "acquisition_started": false,
+  "forecast_published": false,
+  "guard_preserved": true,
+  "private_log_sha256": "ddf5ca9de7e8ee37810a2a784ce33fe81a784aa3e7da8c8235f5c4c3ce5c4d6e",
+  "steps": [
+    {
+      "name": "Select explicit main parent route without granting readiness",
+      "conclusion": "success"
+    },
+    {
+      "name": "Enforce source and publication handover safety",
+      "conclusion": "failure"
+    },
+    {
+      "name": "Enqueue one qualified same-source Ops capture and return",
+      "conclusion": "skipped"
+    }
+  ],
+  "existing_owner_action": "Set existing Actions variable AUDIT_WEEKLY_PARENT_ENABLED to literal true; then run existing daily route once with current guards."
+}
