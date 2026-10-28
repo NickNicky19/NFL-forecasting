@@ -12,6 +12,7 @@ from nfl_lab.operational_storage import OperationalStorage
 from test_audit_weekly_epoch_v1 import fixture, prepare, registered, continuation, CONTINUED
 from test_audit_weekly_grade_v1 import packet as grade_packet
 import test_audit_weekly_grade_v1 as fictional_grade
+from test_audit_weekly_hosted_v1 import failed_first_recovery, pending_failure
 
 
 @pytest.fixture
@@ -127,6 +128,55 @@ def test_first_future_claim_is_stable_across_root_clock_and_source_changes(first
     other['effective_epoch']['controller_context']['retained_choice_sha256']='f'*64
     assert t.first_primary_claim(other)==claim
     assert set(claim)=={'schema_version','epoch_sha256','stream_id'}
+
+
+def test_recovery_schema_is_closed_and_claim_is_one_successor(failed_first_recovery):
+    from nfl_lab import audit_weekly_template_v1 as t
+    q=failed_first_recovery
+    assert t.first_primary_root(q.root) is None
+    assert t.failed_first_recovery_root(q.root)['schema_version']==t.FAILED_FIRST_RECOVERY
+    claim=t.failed_first_recovery_claim(q.root);other=deepcopy(q.root)
+    other.update(source_sha='c'*40,issued_at_utc='2026-10-27T20:04:00Z')
+    other['effective_epoch']['controller_context']['retained_choice_sha256']='f'*64
+    assert t.failed_first_recovery_claim(other)==claim
+    assert set(claim)=={'schema_version','failed_root_go_sha256','epoch_sha256','stream_id'}
+    for field,value in [('old_week8_choice_body_missing',False),('old_forecast_bodies_missing',False),('allow_reset',True)]:
+        bad=deepcopy(q.root);bad['effective_epoch']['controller_context'][field]=value
+        with pytest.raises(ValueError):t.failed_first_recovery_root(bad)
+    for change in ('checkpoint','cutoff_count','pending'):
+        bad=deepcopy(q.root)
+        if change=='checkpoint':bad['effective_epoch']['previous_checkpoint']={'sha256':'f'*64}
+        elif change=='cutoff_count':bad['effective_epoch']['plan']['game_cutoffs'].popitem()
+        else:bad['effective_epoch']['pending_post_recovery']['handoffs']=[]
+        with pytest.raises(ValueError):t.failed_first_recovery_root(bad)
+    with pytest.raises(o.OperationsError):
+        o.first_primary_absence(q.client,q.root,authenticate=lambda:None,clock=lambda:q.at)
+
+
+def test_recovery_freezes_new_startup_methods_not_lost_choice(first_future_metadata,tmp_path):
+    from test_audit_weekly_hosted_v1 import pending_failure,_failed_first_recovery_case
+    from nfl_lab import audit_weekly_template_v1 as t
+    q=first_future_metadata;f=fixture();r=registered(prepare(f));old=continuation(f,r)
+    full=[dict(season=2026,week=8,game_type='REG',game_id=f'fictional-{n}',kickoff_utc='2026-10-29T20:00:00+00:00') for n in range(14)]
+    cuts={v['game_id']:'2026-10-29T19:45:00+00:00' for v in full}
+    plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,calendar_sha256=state.digest(full),game_cutoffs=cuts,deadline_utc=min(cuts.values()))
+    base=tmp_path/'failure';base.mkdir()
+    x=_failed_first_recovery_case(pending_failure.__wrapped__(base),calendar_plan=plan,
+        original_scope=dict(retained_epoch_sha256=r.epoch.sha256,retained_choice_sha256=old.sha256))
+    proof=o.authenticate_failed_first_recovery(x.client,x.root,authenticate=lambda:None,claim_reader=x.claim_reader,clock=lambda:x.at)
+    q.root=x.root;q.client.binding=x.client.binding;q.client.source_sha=x.root['source_sha']
+    absent=o.failed_first_absence(q.client,q.root,proof,authenticate=lambda:None,clock=lambda:x.at)
+    choice,execution=o.failed_first_future_plan(r,old,full,x.root,absent,proof,
+        authenticate=lambda _:True,cutoff_lead_seconds=900,clock=lambda:x.at)
+    project=lambda c:[s['members'] for s in c.document['choice']['selections']]
+    assert project(choice)==project(old) and choice.sha256!=proof.document['original_week8_choice_commitment']['sha256']
+    assert state.utc(choice.document['choice']['actual_frozen_at'])==x.at
+    assert choice.document['slate']['game_cutoffs']==cuts and choice.document['resolved_prior_keys']==[]
+    assert execution['reason']=='OWNER_FAILED_FIRST_RECOVERY_NEW_FUTURE_ISSUE' and execution['fits']==0
+    with pytest.raises(o.OperationsError):
+        o.first_future_plan(r,old,full,x.root,absent,authenticate=lambda _:True,cutoff_lead_seconds=900,clock=lambda:x.at)
+    with pytest.raises(o.OperationsError,match='LIVE_FAILED_FIRST_RECOVERY_REQUIRED'):
+        o.failed_first_future_plan(r,old,full,x.root,absent,{},authenticate=lambda _:True,cutoff_lead_seconds=900,clock=lambda:x.at)
 
 
 def test_calendar_independent_DST_offsets_aliases_and_poison_outcomes():

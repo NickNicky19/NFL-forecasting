@@ -25,6 +25,10 @@ ROLES=dict(produce='fictional_capture_writer',restore='fictional_capture_reader'
 
 @pytest.fixture
 def capture(tmp_path):
+    return capture_case(tmp_path)
+
+
+def capture_case(tmp_path, *, epoch_document=None, choice_document=None):
     policy=cp.strict_json((ROOT/'config/operational-source-policy-v2.json').read_bytes())
     storage=OperationalStorage(tmp_path/'cache',policy,state=tmp_path/'state');storage.register_root(tmp_path)
     root=tmp_path/'runtime';storage.register_root(root)
@@ -33,10 +37,10 @@ def capture(tmp_path):
     def put(name,doc):return a.write(storage,tmp_path/name,doc)
     def runtime(name,doc):return a.write(storage,root/name,doc)
     def body(name,raw):storage.write_bytes(tmp_path/name,raw);return cp.binding(tmp_path/name)
-    epoch={'schema_version':'audit-weekly-correction-epoch-v1','registered_at_utc':ts(-600),'fits':0}
+    epoch=deepcopy(epoch_document) if epoch_document is not None else {'schema_version':'audit-weekly-correction-epoch-v1','registered_at_utc':ts(-600),'fits':0}
     epoch_ref=put('context/epoch.json',epoch)
     epoch_sha=s.sha(s.canonical(epoch))
-    choice={'schema_version':'audit-weekly-correction-epoch-v1-choice','mode':'SOFTWARE_CORRECTION_CONTINUATION','epoch_sha256':epoch_sha,'current_values_used':False}
+    choice=deepcopy(choice_document) if choice_document is not None else {'schema_version':'audit-weekly-correction-epoch-v1-choice','mode':'SOFTWARE_CORRECTION_CONTINUATION','epoch_sha256':epoch_sha,'current_values_used':False}
     choice_ref=runtime('WEEKLY_CHOICE.json',choice);choice_sha=choice_ref['sha256']
     versions=dict(schema_version='audit-weekly-correction-epoch-v1-selected-version-catalog',epoch_sha256=epoch_sha,choice_sha256=choice_sha,rows=[],current_values_used=False)
     version_ref=runtime('SELECTED_VERSION_CATALOG.json',versions)

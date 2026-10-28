@@ -38,6 +38,7 @@ CONTEXT = {"epoch", "epoch_registration", "original_choice", "origin_witness", "
     "original_catalog", "original_policy", "retained_models", "prepared", "source"}
 OPERATIONS_CONTEXT = {"ops_population", "ops_roles", "ops_schedule", "canonical_weekly_choice", "capture_scope"}
 OPERATIONS_PLANNING_CONTEXT = {"ops_planning"}
+OPERATIONS_RECOVERY_CONTEXT = {"ops_failed_recovery"}
 OPERATIONS_HISTORY_CONTEXT = {"ops_previous_checkpoint_sidecar", "ops_previous_public_receipt"}
 CONTROL_FILES = {"CONSUMED.json", "RUNTIME_RECIPE.json", "WEEKLY_CHOICE.json", "ARTIFACT_CATALOG.json",
     "SELECTED_VERSION_CATALOG.json", "POPULATION.json", "MODEL_ATTEMPTS.json", "FINISHED.json",
@@ -219,10 +220,10 @@ origin witness and the separately qualified retained-model restore receipt.
 No old completion is invented. Missing files force a failure archive.
 """
     require(type(context) is dict and CONTEXT <= set(context)
-        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
+        <= CONTEXT | OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_RECOVERY_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"public_policy", "ops_previous_checkpoint"},"EXACT_ARCHIVE_CONTEXT_ROLES")
     history=set(context) & OPERATIONS_HISTORY_CONTEXT
     require(not history or history == OPERATIONS_HISTORY_CONTEXT,"PAIRED_OPERATIONAL_HISTORY_REFERENCES_REQUIRED")
-    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
+    operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_RECOVERY_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
     require(not operations or OPERATIONS_CONTEXT <= set(context), "COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED")
     root=store.parents_safe(runtime_root);output=fresh(storage,output)
     entries={};physical_origins={}
@@ -378,6 +379,15 @@ def validate_capture(snapshot,path,*,complete):
         <=store.utc(source["actual_completed_at"])<=store.utc(terminal["actual_completed_at"])
         and capture["source_contract"]["source_policy_sha256"]==cp.POLICY_SHA
         and matches(capture["feature_binding"],"runtime/features.parquet"),"PREVALUES_CATALOG_CAS_SOURCE_FEATURE_CLOCKS_REQUIRED")
+    if "context/ops_failed_recovery.json" in names:
+        from . import audit_weekly_operations_v1 as operations
+        gap=operations.validate_failed_first_gap(doc("context/ops_failed_recovery.json"),choice=choice,
+            epoch_sha256=terminal["epoch_sha256"],root_go_sha256=snapshot.get("root_go_sha256"),
+            producer=snapshot.get("producer"))
+        population=doc("context/ops_population.json")
+        require(set(population["assignments"])==set(choice["slate"]["game_cutoffs"])
+            and set(population["assignments"].values())=={gap["new_capture_id"]},
+            "FAILED_FIRST_GAP_NEW_CAPTURE_POPULATION_ONLY")
     candidate=doc("runtime/CANDIDATES.json");slots=candidate["slots"]
     require(len(slots)==18 and {(s["target"],s["method_id"]) for s in slots}=={(t,m) for t,_,m in cp.JOBS},"ALL18_LOSERS_AND_WINNERS_REQUIRED")
     total=0;semantic=0
