@@ -295,6 +295,55 @@ def _inventory(client):
     return assets,total
 
 
+def _prior_read_inventory(client, grant, scope, index):
+    """Read an authenticated retired namespace without resolving its failures.
+
+    Only the sealed V4 dual-runtime transition can use this after the exact
+    receipt-selected index has been read. Every original pending reservation
+    stays charged; the physical asset snapshot must still remain unchanged.
+    Legacy and caller-supplied pending discovery keep the strict guard above.
+    """
+    from . import audit_weekly_template_v1 as template, audit_weekly_grade_history_v1 as history
+    if type(grant) is not DiscoverySourceGrant or grant._source_history_root is None:
+        return _inventory(client)
+    grant.verify(scope,cp.client_identity(client))
+    root=grant._source_history_root
+    transition=history.validate_source_history_binding(root)
+    if transition["runtime_transition"]!="DUAL_RUNTIME_ROTATE":
+        return _inventory(client)
+    prior=template.prior_runtime(root,before=root["issued_at_utc"])
+    require(type(client) is retained.ReadClient and prior is not None
+        and client.binding==prior["qualified_runtime"]["binding"]
+        and client.binding!=root["qualified_runtime"]["binding"]
+        and index["root_go_sha256"]==grant._value["root_go_sha256"]
+        and index["producer"]["run_id"]==grant._value["run_id"],
+        "SEALED_PRIOR_NAMESPACE_READ_ONLY_PENDING_SCOPE")
+    history._source_history_rotation_quota(root["qualified_runtime"],root["pending_census"],before=root["issued_at_utc"])
+    records=index["pending_reservations"]
+    expected={store.sha(q["key"].encode())+".reservation.json":store.canonical(q) for q in records}
+    require(len(expected)==len(records),"UNIQUE_ORIGINAL_INDEX_PENDING_KEYS")
+    actual={}
+    for entry in Path(client.journal).iterdir():
+        if entry.name.endswith(".reservation.json"):
+            require(len(actual)<store.MAX_ASSETS,"RESERVATION_COUNT_CAP")
+            actual[entry.name]=store.read_local(entry,16384)
+    require(actual==expected,"EXACT_ORIGINAL_INDEX_PENDING_JOURNAL_NO_ADDITIONS")
+    client.draft();assets,total=client.inventory()
+    unresolved=[q for q in records if not any(a["name"]==q["name"] and a["size"]==q["bytes"]
+        and a.get("digest")=="sha256:"+q["sha256"] for a in assets)]
+    if unresolved:
+        coverage=[q for q in root["pending_census"]["reservations"]
+            if (q["runtime_id"],q["release_id"])==(client.binding["runtime_id"],client.binding["release_id"])]
+        require(len(coverage)==1
+            and sum(a["size"] for a in assets)+coverage[0]["pending_bytes"]==store.TOTAL_CAP
+            and len(assets)+coverage[0]["pending_assets"]==store.MAX_ASSETS,
+            "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE")
+    require(client.inventory_slots==len(assets)+len(unresolved)<=LIMITS["assets"]
+        and total==sum(a["size"] for a in assets)+sum(q["bytes"] for q in unresolved)<=store.TOTAL_CAP,
+        "ALL_PRIOR_PENDING_RESERVATIONS_REMAIN_CHARGED")
+    return assets,total
+
+
 def _members(assets):
     return sorted((a["id"],a["name"],a["size"],a.get("digest"),a["state"],a.get("url")) for a in assets)
 
@@ -492,7 +541,7 @@ def discover(receipt_body, receipt_sha256, qualified_runtime, factory, *, storag
     for name,key in (("context/public_policy.json","policy_sha256"),("context/epoch.json","epoch_sha256"),("prepared/choice.json","choice_sha256")):
         require(name in originals and originals[name]["sha256"] == value[key], "PUBLIC_IDENTITY_MUST_MATCH_ORIGINAL_CANONICAL_METADATA_FILE")
     cp.seed_pending(first.journal,index["pending_reservations"])
-    _inventory(pool.client(reserve=5))
+    _prior_read_inventory(pool.client(reserve=5),discovery_grant,scope,index)
     witness=get(witness_descriptor,"reader-witness.gz",archive.WITNESS_CAP,archive.WITNESS_CAP)
     require(type(witness) is dict and set(witness) == retained.WITNESS_KEYS and witness["schema_version"] == archive.VERSION+"-witness"
         and witness["index_sha256"] == value["archive_index_sha256"] and witness["files_sha256"] == value["archive_files_sha256"]
@@ -513,7 +562,7 @@ def discover(receipt_body, receipt_sha256, qualified_runtime, factory, *, storag
         require(acceptance.restored_identity(proof) == reader
             and store.utc(evidence["restore"]["started_at"]) <= store.utc(proof["started_at_utc"]) <= store.utc(proof["created_at_utc"])
             <= store.utc(witness["actual_completed_at"]) <= store.utc(evidence["restore"]["completed_at"]), "ORIGINAL_NATIVE_READER_PROOF_CLOCKS")
-    final,_=_inventory(pool.client(reserve=5))
+    final,_=_prior_read_inventory(pool.client(reserve=5),discovery_grant,scope,index)
     require(_members(final) == initial_members, "DISCOVERY_NAMESPACE_CHANGED_NO_RETRY")
     reader_handoff=dict(schema_version=archive.VERSION+"-reader-handoff",archive=handoff,restorer=reader,witness_descriptor=witness_descriptor)
     document=dict(schema_version=VERSION+"-derived",state="DERIVED_FROM_ORIGINAL_METADATA",derived_at_utc=now().isoformat(),

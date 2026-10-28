@@ -28,7 +28,8 @@ def no_actual_network(monkeypatch):
     monkeypatch.setattr(socket.socket,"connect",lambda *_:pytest.fail("REAL_NETWORK_FORBIDDEN"))
 
 
-def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,closed_census=False,history_seed=None):
+def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,closed_census=False,history_seed=None,
+        unresolved_pending=False):
     """Generate original native bytes under a fictional earlier acquisition clock."""
     from contextlib import ExitStack
     import test_audit_weekly_archive_v1 as old
@@ -96,8 +97,13 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
                 owner_evidence_sha256=store.sha(b"FICTIONAL original COUNT7 reservation evidence"))
             history.old.package["quota_reservation"]["pending_census_sha256"]=store.sha(store.canonical(history.old.census))
         history.codes[".github/workflows/lab.yml"]=workflow
+        pending=[];failed_name=None;failed_posts=[]
         original_transport=history.transport
         def historical_transport(req,timeout):
+            if getattr(req,"method","GET")=="POST" and failed_name is not None and req.full_url.endswith("/assets?name="+failed_name):
+                from urllib.error import URLError
+                failed_posts.append(req)
+                raise URLError("FICTIONAL ambiguous upload, no returned asset")
             response=original_transport(req,timeout)
             if req.full_url==store.API+"/actions/runs/"+old.RUN:
                 from test_private_draft_store_v2 import Response
@@ -112,6 +118,7 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         history.transport=historical_transport
         def factory(journal,role):
             journal.mkdir(mode=0o700)
+            cp.seed_pending(journal,pending)
             class Factory:
                 def __init__(self):self.clients=[]
                 def __call__(self,operation):
@@ -132,8 +139,25 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         census["logical_files"]=len(snapshot["files"]);census["logical_bytes"]=sum(f["bytes"]for f in snapshot["files"])
         census["context_roles"].append("public_policy");census["context_roles"].sort()
         history.begin("produce")
+        if unresolved_pending:
+            # Exercise the real write-ahead POST journal before producing the
+            # original index. The fictional transport loses this upload before
+            # an asset is returned; no index/receipt bytes are edited afterward.
+            failed_body=b"F"*657667;failed_name="blob-"+store.sha(failed_body)+".bin"
+            failed=factory(base/"failed-post-journal","produce")("append")
+            archive.checked(failed,roles["produce"])
+            with pytest.raises(store.StoreError,match="^TRANSPORT_FAILURE_NO_RETRY$"):
+                failed.upload(failed_name,failed_body)
+            pending=[cp.strict_json(path.read_bytes()) for path in failed.journal.glob("*.reservation.json")]
+            assert len(failed_posts)==len(pending)==1 and pending[0]["bytes"]==657667
+            assert pending[0]["sha256"]==store.sha(failed_posts[0].data)
+            assert not any(a["name"]==failed_name for a in history.old.server.assets)
         handoff=archive.produce(snapshot,factory(base/"producer-journal","produce"),history.old.package,
-            storage=p.storage,output=base/"producer",root_go_sha256=root_sha,jobs=roles,pending_census=history.old.census)
+            storage=p.storage,output=base/"producer",root_go_sha256=root_sha,jobs=roles,pending_census=history.old.census,pending=pending)
+        index_asset=next(a for a in history.old.server.assets
+            if a["id"]==handoff["index_descriptor"]["entry"]["payload_asset_id"])
+        index=archive.unpack(index_asset["body"],archive.INDEX_PLAIN_CAP)
+        assert index["pending_reservations"]==pending
         history.old.writer_completed=HistoricalClock.now(timezone.utc);history.end()
         if history_seed is not None:phase_seconds[0]=12;phase_start[0]=datetime.now(timezone.utc)
         history.begin("restore")
@@ -181,7 +205,8 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         item={k:v for k,v in asset.items()if k!="body"};item["body_base64"]=base64.b64encode(asset["body"]).decode();assets.append(item)
     return dict(package=history.old.package,census=history.old.census,receipt=receipt,reader=reader,
         historical={name:store.sha(body)for name,body in history.codes.items()},api=api,assets=assets,
-        tag=server.tag,original_files={f["logical_path"]:dict(bytes=f["bytes"],sha256=f["sha256"])for f in snapshot["files"]})
+        tag=server.tag,pending_reservations=pending,
+        original_files={f["logical_path"]:dict(bytes=f["bytes"],sha256=f["sha256"])for f in snapshot["files"]})
 
 
 def _register_fixture_readiness(x,old,fixture):
@@ -235,7 +260,8 @@ def operational_case(tmp_path,monkeypatch,request):
         old=_fictional_archive(tmp_path/"old",x.workflow,
             store.canonical(dict(fictional_original_policy=True)) if transition else x.static_policy,
             "8"*40 if transition else x.go["source_sha"],roles,x.go["workflow_ref"],
-            hour=10 if mode in {"dual-runtime","source-history"} else 13,closed_census=mode in {"dual-runtime","source-history"})
+            hour=10 if mode in {"dual-runtime","source-history"} else 13,closed_census=mode in {"dual-runtime","source-history"},
+            unresolved_pending=transition)
     else:
         spec=x.p["readiness"];roles={k:v["job_id"]for k,v in spec["jobs"].items()}
         ref=store.REPO+"/.github/workflows/lab.yml@refs/heads/"+spec["branch"]
@@ -332,7 +358,7 @@ def _dual_runtime_seed(case,damage=None,*,root_override=None):
         dual_runtime=True,damage=damage,parent_pid=os.getpid())
 
 
-def _source_history_seed(case,*,actor="bot"):
+def _source_history_seed(case,*,actor="bot",runtime_transition="DUAL_RUNTIME_ROTATE",coverage_damage=None):
     """Actual entry with a distinct non-readiness predecessor and sealed V4.
 
     Fictional Root/template/API IDs only. No saved JSON substitutes for the
@@ -364,8 +390,24 @@ def _source_history_seed(case,*,actor="bot"):
         plan=dict(kind="FUTURE_CAPABLE",season=2026,week=7,deadline_utc="2026-10-25T14:00:00Z",
             calendar_sha256=store.sha(b"FICTIONAL calendar"),game_cutoffs={"fictional-future":"2026-10-25T14:00:00Z"}))
     from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
-    root["qualified_runtime"]=fictional_runtime_metadata(old["package"],old["census"],number=6)
-    root["pending_census"]=deepcopy(old["census"])
+    # Reserve the entire old namespace in the CURRENT census, after its
+    # successful original producer/reader/exporter archive is complete. Keep
+    # the original qualification census untouched in the prior-runtime slot.
+    current_census=deepcopy(old["census"])
+    physical_bytes=sum(a["size"] for a in old["assets"])
+    row=dict(reservation_sha256=store.sha(store.canonical(dict(fictional_full_namespace_reservation=True,
+        binding=old["package"]["binding"],physical_bytes=physical_bytes,physical_assets=len(old["assets"])))),
+        runtime_id=old["package"]["runtime_id"],release_id=old["package"]["binding"]["release_id"],
+        pending_bytes=store.TOTAL_CAP-physical_bytes,pending_assets=store.MAX_ASSETS-len(old["assets"]))
+    current_census["reservations"]=[row]
+    current_census["owner_evidence_sha256"]=row["reservation_sha256"]
+    if coverage_damage=="missing_row":current_census["reservations"]=[]
+    elif coverage_damage=="wrong_runtime":row["runtime_id"]="1"*32
+    elif coverage_damage=="wrong_release":row["release_id"]+=1
+    elif coverage_damage=="insufficient_bytes":row["pending_bytes"]-=1
+    elif coverage_damage=="insufficient_slots":row["pending_assets"]-=1
+    root["pending_census"]=current_census
+    root["qualified_runtime"]=fictional_runtime_metadata(old["package"],current_census,number=6)
     root["prior_capture_qualified_runtime"]=dict(schema_version=template.PRIOR_RUNTIME,purpose="PRIOR_CAPTURE_QUALIFIED_RUNTIME",
         anchor=deepcopy(root["effective_epoch"]["previous_capture"]),qualified_runtime=deepcopy(old["package"]),
         pending_census=deepcopy(old["census"]),root_static_sha256="d"*64)
@@ -379,7 +421,7 @@ def _source_history_seed(case,*,actor="bot"):
         code_pins_sha256=store.sha(store.canonical(original_pins)),locator={k:root["effective_epoch"]["previous_checkpoint"][k]for k in ("path","sha256")})
     body=dict(schema_version=history.SOURCE_HISTORY_BINDING,target_source_sha=root["source_sha"],
         target_policy_sha256=root["publication_registration"]["policy_sha256"],predecessor=predecessor,
-        pin_overrides=overrides,runtime_transition="DUAL_RUNTIME_ROTATE")
+        pin_overrides=overrides,runtime_transition=runtime_transition)
     root["source_history_binding"]=history.source_history_envelope(body)
     assert len(root["code_pins"])==128 and history.source_history_scope(root,old["receipt"])==original_pins
     assert old["receipt"]["source_sha"] not in {root["source_sha"],x.p["readiness"]["source_sha"]}
@@ -399,7 +441,7 @@ def _source_history_seed(case,*,actor="bot"):
     return seed
 
 
-def _native(seed,failure=None):
+def _native(seed,failure=None,*,discovery_fault=None):
     """Native positive body + real typed auth, only raw fictional transports."""
     from nfl_lab import audit_weekly_operations_worker_v1 as worker,audit_weekly_operations_authority_v1 as authority
     from nfl_lab import audit_weekly_hosted_v1 as hosted,audit_weekly_controller_v1 as controller
@@ -449,7 +491,21 @@ def _native(seed,failure=None):
     def record_grant(callback,kind,document,at):
         grants.append((kind,deepcopy(document)))
         return real_grant(callback,kind,document,at)
-    real_client=retained.ReadClient;real_init=real_client.__init__
+    real_client=retained.ReadClient;real_init=real_client.__init__;real_inventory=real_client.inventory
+    pending_snapshots=[]
+    expected_pending={store.sha(q["key"].encode())+".reservation.json":store.canonical(q)
+        for q in seed["old"].get("pending_reservations",[])}
+    def pending_journal(client):
+        return {p.name:p.read_bytes() for p in client.journal.glob("*.reservation.json")}
+    def inventory(client):
+        assets,total=real_inventory(client)
+        if source_history and discovery_fault is None and (pending_journal(client) or pending_snapshots):
+            assert pending_journal(client)==expected_pending
+            physical_bytes=sum(a["size"] for a in assets)
+            assert client.inventory_slots==len(assets)+1 and total==physical_bytes+657667
+            pending_snapshots.append(dict(physical_assets=len(assets),physical_bytes=physical_bytes,
+                charged_slots=client.inventory_slots,charged_bytes=total))
+        return assets,total
     def init(c,*a,**kw):real_init(c,*a,**kw);clients.append(c)
     # These are fixed fictional October25 13:38 jobs. Keep every protocol
     # clock in that same scenario while native wall/CPU/resource timers remain
@@ -485,6 +541,12 @@ def _native(seed,failure=None):
         clock_scope.enter_context(patch.object(archive,"authenticate_qualification",qualify))
         clock_scope.enter_context(patch.object(retained,"prepare_request",prepare))
         clock_scope.enter_context(patch.object(retained,"bind_historical_source",bind))
+    if source_history:
+        clock_scope.enter_context(patch.object(real_client,"inventory",inventory))
+    if discovery_fault is not None:
+        from test_audit_weekly_discovery_v1 import pending_read_fault
+        expected_error,fault=pending_read_fault(discovery_fault,server,discovery._prior_read_inventory)
+        clock_scope.enter_context(patch.object(discovery,"_prior_read_inventory",fault))
     with clock_scope,patch.object(authority,"current",current),patch.object(hosted,"validate_root",validate),\
          patch.object(hosted,"child_context",child),patch.object(hosted,"pins",lambda:deepcopy(go["code_pins"])),\
          patch.object(retained,"_grant_authenticate",record_grant),patch.object(real_client,"__init__",init):
@@ -511,6 +573,18 @@ def _native(seed,failure=None):
         try:
             result=recovery.restore(context,transport=transport)
         except (store.StoreError,template.TemplateError,bootstrap.BootstrapError) as error:
+            if discovery_fault is not None:
+                assert str(error)==expected_error
+                assert not prepared_requests and not historical_grants
+                assert not (Path(request["output"])/"discovery/DISCOVERED.json").exists()
+                assert not (Path(request["output"])/"restored").exists()
+                assert expected_pending and all(pending_journal(clients[-1]).get(k)==v for k,v in expected_pending.items())
+                assert all(req.method=="GET" and req.data is None for req in server.calls)
+                assert not fault.group_ids & {int(url.rsplit("/",1)[-1]) for url,accept in calls
+                    if "/releases/assets/" in url and accept=="application/octet-stream"}
+                worker.native_envelope()
+                return dict(state="PASS_PRIOR_PENDING_DISCOVERY_REJECTED",fault=discovery_fault,error=str(error),
+                    original_pending_preserved=True,retained_restore_started=False,remote_writes=0)
             if dual and seed["damage"] is not None:
                 expected={"census":"ORIGINAL_PRIOR_QUALIFICATION_CENSUS","package":"CLOSED_OWNER_CLEARED_QUALIFIED_RUNTIME_PACKAGE"}
                 if seed["damage"] in expected:
@@ -548,6 +622,18 @@ def _native(seed,failure=None):
     assert len([name for name in manifest["aliases"]if name.startswith("runtime/candidates/")and name.endswith(".jsonl.gz")])==18
     assert len({str(c.journal)for c in clients})==1 and sum(c.calls for c in clients)<=640
     assert all(c.calls<=40 for c in clients)and len(clients)<=17
+    if source_history:
+        discovered=cp.strict_json((Path(request["output"])/"discovery/DISCOVERED.json").read_bytes())
+        original_pending=seed["old"]["pending_reservations"]
+        assert len(original_pending)==1 and original_pending[0]["bytes"]==657667
+        assert discovered["pending_reservations"]==prepared_requests[0]["pending_reservations"]==original_pending
+        assert pending_journal(clients[-1])==expected_pending
+        assert len(pending_snapshots)>2 and all(s==pending_snapshots[0] for s in pending_snapshots)
+        coverage=go["pending_census"]["reservations"]
+        assert len(coverage)==1 and coverage[0]["runtime_id"]==seed["old"]["package"]["runtime_id"]
+        assert coverage[0]["release_id"]==seed["old"]["package"]["binding"]["release_id"]
+        assert pending_snapshots[-1]["physical_bytes"]+coverage[0]["pending_bytes"]==store.TOTAL_CAP
+        assert pending_snapshots[-1]["physical_assets"]+coverage[0]["pending_assets"]==store.MAX_ASSETS
     if dual:
         assert selected and all(p==seed["old"]["package"] for p in selected) and len(qualification_checks)>=2 and len(prepared_requests)==1
         assert all(package==seed["old"]["package"] and census==seed["old"]["census"] for package,census in qualification_checks)
@@ -581,7 +667,11 @@ def _native(seed,failure=None):
             pins=len(go["code_pins"]),HTTP_calls=len(calls)+len(metadata_calls),
             bootstrap_metadata_GETs=len(metadata_calls),private_GETs=len(server.calls),
             original_runtime_id=seed["old"]["package"]["runtime_id"],current_runtime_id=go["qualified_runtime"]["runtime_id"],
-            restored_original_bytes=True,native_wall_seconds=180,native_CPU_seconds=120,native_address_space_bytes=512<<20)
+            restored_original_bytes=True,native_wall_seconds=180,native_CPU_seconds=120,native_address_space_bytes=512<<20,
+            **(dict(pending_reservations=1,unresolved_pending_bytes=657667,pending_journal_preserved=True,
+                charged_inventory=pending_snapshots[-1],charged_inventory_checks=len(pending_snapshots),
+                reserved_prior_namespace_bytes=coverage[0]["pending_bytes"],
+                reserved_prior_namespace_slots=coverage[0]["pending_assets"]) if source_history else {}))
             if dual else {}))
 
 
@@ -662,8 +752,28 @@ print(json.dumps(probe._native(seed),sort_keys=True))
 
 @pytest.mark.parametrize("operational_case",["source-history"],indirect=True)
 @pytest.mark.parametrize("actor",["bot","owner"])
-def test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority(operational_case,tmp_path,actor):
+def test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority(operational_case,tmp_path,actor,record_property):
     seed=_source_history_seed(operational_case,actor=actor)
+    value=_run_source_history(seed,tmp_path)
+    assert value["state"]=="PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY" and value["restored_original_bytes"]is True
+    assert value["original_runtime_id"]!=value["current_runtime_id"] and value["private_GETs"]>0
+    assert value["fits"]==value["model_decodes"]==value["outcome_decodes"]==value["remote_writes"]==0
+    assert value["genuine_Actions_evidence"]is value["public_release"]is False
+    assert value["pins"]==128 and value["root_bytes"]<=60<<10 and value["dispatch_input_bytes"]<=65535
+    assert value["pending_reservations"]==1 and value["unresolved_pending_bytes"]==657667
+    assert value["pending_journal_preserved"]is True and value["charged_inventory_checks"]>2
+    inventory=value["charged_inventory"]
+    assert inventory["charged_slots"]==inventory["physical_assets"]+1
+    assert inventory["charged_bytes"]==inventory["physical_bytes"]+657667
+    assert inventory["physical_bytes"]+value["reserved_prior_namespace_bytes"]==store.TOTAL_CAP
+    assert inventory["physical_assets"]+value["reserved_prior_namespace_slots"]==store.MAX_ASSETS
+    expected=["BIND_SEALED_DISCOVERY_SOURCE","LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET"]
+    if actor=="bot":expected += ["BIND_SEALED_HISTORICAL_SOURCE","LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"]
+    assert value["grant_kinds"]==expected
+    record_property("prior_pending_read_result",store.canonical(value).decode())
+
+
+def _run_source_history(seed,tmp_path,*,discovery_fault=None):
     path=tmp_path/"fictional-source-history-seed.json";path.write_bytes(store.canonical(seed))
     script='''
 import sys,json,socket
@@ -673,21 +783,13 @@ limits()
 sys.path.insert(0,str(Path.cwd()/'tests'))
 import test_audit_weekly_operations_restore_v1 as probe
 socket.socket.connect=lambda *_:(_ for _ in ()).throw(AssertionError('REAL_NETWORK_FORBIDDEN'))
-print(json.dumps(probe._native(json.loads(Path(sys.argv[1]).read_bytes())),sort_keys=True))
+print(json.dumps(probe._native(json.loads(Path(sys.argv[1]).read_bytes()),discovery_fault=sys.argv[2] or None),sort_keys=True))
 '''
     profile=json.loads((ROOT/"config/audit-weekly-numerical-runtime-v1.json").read_bytes())["environment"]
-    result=subprocess.run([sys.executable,"-B","-c",script,str(path)],cwd=ROOT,
+    result=subprocess.run([sys.executable,"-B","-c",script,str(path),discovery_fault or ""],cwd=ROOT,
         env={"PYTHONDONTWRITEBYTECODE":"1",**profile},capture_output=True,text=True,timeout=185)
     assert result.returncode==0,result.stderr
-    value=json.loads(result.stdout)
-    assert value["state"]=="PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY" and value["restored_original_bytes"]is True
-    assert value["original_runtime_id"]!=value["current_runtime_id"] and value["private_GETs"]>0
-    assert value["fits"]==value["model_decodes"]==value["outcome_decodes"]==value["remote_writes"]==0
-    assert value["genuine_Actions_evidence"]is value["public_release"]is False
-    assert value["pins"]==128 and value["root_bytes"]<=60<<10 and value["dispatch_input_bytes"]<=65535
-    expected=["BIND_SEALED_DISCOVERY_SOURCE","LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET"]
-    if actor=="bot":expected += ["BIND_SEALED_HISTORICAL_SOURCE","LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"]
-    assert value["grant_kinds"]==expected
+    return json.loads(result.stdout)
 
 
 def test_restore_preparation_has_no_runtime_or_credential_dependency():
