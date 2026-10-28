@@ -1,3 +1,21 @@
+Latest verified integration package — 2026-10-28T17:30:25.521868+00:00
+
+This supersedes the old feed counts and activation blockers below. The current ready website commits remain PR9 `f9f3056e23d1f62c1fc85828adc5a666cd52ea35` and stacked PR10 `e12de4763d048f6dec8e2d6cc0f89f43e18f2736`; source/CI/policy bindings are unchanged. Existing exact-head CI40576824120 and40648049705 remain passing. The existing production owner retains lease178; no takeover is authorized or requested.
+
+The actual Parent40729788942 and automatic BOT40729906573 now passed capture, independent restoration, grading and export. Current public feed: `state/public/weekly-adaptive-v1/2026-W08/20261028T171438.260601Z--3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json` on `lab-state`, SHA256 `3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452`. It contains1,951forecasts across11categories. Its immutable receipt compressed SHA256 is `b8ac97b3dde799e6050e5359327b3b979a53d0b462a43a16571673d10d2ed790`. Current producer remains0409; consumer policy remains `d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8`. No rebinding, refit, reselection or new scientific registration is needed for this unchanged software/procedure.
+
+The unchanged ordinary consumer genuinely accepts all1,951rows in3.353seconds on a fresh normal paired board. Independent hashes prove all chosen nonreference component identities and zero R0-only rows. Exact e12 installed-output preview passes all three browser widths,11selected categories/12filters/10routes/refresh/empty states, with no errors or overflow. The audit preview board was generated16:53:55UTC, SHA256 `1c3c37b30a2f2ea4f6dc10c731687a88644b999c6f17f0ba936d26e49b14f7db`; build completed16:53:58UTC with535players/14games/2,364paired pregame rows. Build a fresh ordinary paired board in the actual release; do not copy an aging preview or relax identity/freshness checks.
+
+Integrate PR9, reconcile applicable stacked PR10 against actual Main, run required combined-source checks, then release through the existing authorized Main workflow. Keep Main/Phase2 alternatives distinct. Four PR10 paths are outside the current Phase2 lease: `.github/workflows/hourly.yml`, `config/weekly-derived-selected-policy-v4.json`, `tests/test_weekly_public_feed_v4.py`, `tools/weekly_public_feed_v4.py`. Use the applicable existing release authority; do not silently fold them into a Phase2 checkpoint or weaken its gate. This is not a new blanket approval requirement or a prerequisite to independently valid PR9.
+
+After release, publish exact merged/generated/deployment IDs and the actual consumed feed/fallback result. The audit will independently verify served code/data, selected forecasts, fallbacks and grading. Current actual17:27UTC site still serves app409dcb48 andzero selected rows; neither PR is released. Actual future scheduled triggering, weekly decision, original horizon gaps and documented source/PPR/private-accuracy/Phase2 limits remain unverified or unresolved as stated. The next operation should discover the exact latest locator in [the next-checkpoint receipt](evidence/enabled-parent-next-checkpoint-metadata-preflight.json), not replay a consumed Root or backfill missed captures.
+
+[Complete actual chain](evidence/enabled-parent40729788942-full-delivery-verification.json) · [Current models/categories](evidence/parent-child40729906573-model-reconciliation.json) · [Exact browser preview](evidence/parent-child40729906573-committed-preview-browser.json).
+
+---
+
+Historical packages below are retained; the latest verified package above takes precedence.
+
 Current integration package — October28,2026,07:35UTC
 
 PARTIAL. The current producer is integrated and has completed genuine future capture, independent restoration, grading and public export. Website PR9 and current PR10 are ready and unmerged. The existing production writer retains integration and deployment. This package supersedes the old5278 binding for the latest default feed; the earlier package below is historical evidence.

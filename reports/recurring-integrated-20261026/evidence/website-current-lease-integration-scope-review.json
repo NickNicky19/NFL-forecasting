@@ -1,0 +1,26 @@
+{
+  "schema_version": "website-current-lease-integration-scope-review-v1",
+  "observed_at_utc": "2026-10-28T17:04:50.047814+00:00",
+  "lease_revision": 178,
+  "owner_source": "81c3fc2a612ced916f4c54814f978c509058bca5",
+  "authenticated_current_control_files": {
+    "config/handoff-policy.json": {
+      "sha256": "4d5c1bd1fc84a84113277fe4165760ec8c90fb87cb7c0c72ac525b7cb7e39631",
+      "equals_examined_local_bytes": true
+    },
+    "tools/writer_gate.py": {
+      "sha256": "4b651a5f19bf2cdbc32bb4de6528a746fa7c9e81f77ba1630fb549492ae98104",
+      "equals_examined_local_bytes": true
+    }
+  },
+  "PR9_paths_outside_current_Phase2_lease": [],
+  "PR10_paths_outside_current_Phase2_lease": [
+    ".github/workflows/hourly.yml",
+    "config/weekly-derived-selected-policy-v4.json",
+    "tests/test_weekly_public_feed_v4.py",
+    "tools/weekly_public_feed_v4.py"
+  ],
+  "scope_or_policy_changed": false,
+  "production_lease_taken_over": false,
+  "interpretation": "These four PR10 paths cannot be silently folded into a Phase2 checkpoint under the present path scope. The existing owner must use its applicable authorized Main release route or reconcile the alternative variant under the existing controls. This is not an inferred new approval requirement or a reason to delay independently valid PR9."
+}

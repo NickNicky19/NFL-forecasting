@@ -1,0 +1,100 @@
+{
+  "schema_version": "enabled-parent-full-delivery-verification-v1",
+  "observed_at_utc": "2026-10-28T17:26:54.129162+00:00",
+  "state": "PARENT_CAPTURE_RESTORE_GRADE_EXPORT_AND_PREVIEW_CONSUMER_VERIFIED",
+  "main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+  "producer": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+  "parent_run": 40729788942,
+  "child_run": 40729906573,
+  "parent_claim_commit": "9a98d1d3868e1bb52e675b3bb508a126fd8b41c7",
+  "root_go_sha256": "34743ce66f1c23ac0f45c6a910af734c9084693a2f4b2e314636283e423b58bc",
+  "jobs": {
+    "consume": {
+      "api_job_id": 122974673980,
+      "job_id": "audit-weekly-export-v1"
+    },
+    "produce": {
+      "api_job_id": 122963146111,
+      "job_id": "audit-weekly-produce-v1"
+    },
+    "restore": {
+      "api_job_id": 122973253202,
+      "job_id": "audit-weekly-restore-v1"
+    }
+  },
+  "public_feed_path": "state/public/weekly-adaptive-v1/2026-W08/20261028T171438.260601Z--3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json",
+  "feed_sha256": "3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452",
+  "published_at": "2026-10-28T17:15:18.110729+00:00",
+  "export_receipt_sha256": "b8ac97b3dde799e6050e5359327b3b979a53d0b462a43a16571673d10d2ed790",
+  "grading_checkpoint": {
+    "evidence_descriptor_sha256": "b90a38a31ec7aba8b8d60b9275dee58fc90f2d3339efe60acf972dbf477b8a73",
+    "feed_sha256": "3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452",
+    "schema_version": "audit-weekly-grading-delivery-v1",
+    "sidecar_path": "controller-v1/grade-checkpoints/3907ca38138ed633556d894b90a347e8f6db68b9f3275a0c5621fbd952e23452.json.gz",
+    "sidecar_sha256": "4da2e4bb17386de86805409707c03d0187fda5c9ae62351b88b730e570cb4eb6"
+  },
+  "reader_witness_sha256": "551870da7727fc9a94508caacd72f9f65af1602ef78e3694c72898b392051451",
+  "archive_index_sha256": "fde369550858b70a2812e9a51f654304f2883210eedc58f59492baeff1e59caa",
+  "archive_files_sha256": "44808d36838f16a8fcd92dcde2d34394302d1e04e5402b8ff8f8df5aa68adce5",
+  "counts": {
+    "state": "PRIVATE_CAPTURE_APPENDED_RESTORE_REQUIRED",
+    "fits": 0,
+    "candidate_rows": 11466,
+    "selected_rows": 2956,
+    "model_pairs": 18,
+    "public_release": false,
+    "successful_forecast": false
+  },
+  "public_rows": 1951,
+  "public_coverage": {
+    "fallback_counts": {
+      "outside_board_R0": 1001,
+      "private_ineligible_R0": 4
+    },
+    "private_selected_rows": 2956,
+    "public_rows": 1951
+  },
+  "consumer": {
+    "source": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+    "policy_sha256": "d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8",
+    "elapsed_seconds": 3.3525590659992304,
+    "requests": 6,
+    "rows": 1951,
+    "categories": {
+      "anytime_td": 430,
+      "rec": 403,
+      "rec_yd": 403,
+      "rush_rec_yd": 291,
+      "rush_att": 112,
+      "rush_yd": 112,
+      "pass_att": 40,
+      "pass_cmp": 40,
+      "pass_int": 40,
+      "pass_td": 40,
+      "pass_yd": 40
+    },
+    "chosen_nonreference_rows": 1951,
+    "R0_only_rows": 0,
+    "category_functionals": {
+      "intended_median": 4,
+      "expected_mean": 6,
+      "event_probability": 1
+    },
+    "board_sha256": "1c3c37b30a2f2ea4f6dc10c731687a88644b999c6f17f0ba936d26e49b14f7db",
+    "installed_on_live_website": false
+  },
+  "exact_source_installed_preview_browser": "PASS_1280_390_320_12FILTERS_10ROUTES_REFRESH_EMPTY_NO_ERRORS_OR_OVERFLOW",
+  "automatic_Parent_dispatch_verified": true,
+  "actual_scheduled_trigger_after_enable_observed": false,
+  "website_PR9_or_PR10_merged": false,
+  "website_new_deployment_verified": false,
+  "new_NFL_fits": 0,
+  "scientific_qualification": false,
+  "accuracy_gain_claim": false,
+  "original_forecasts_failures_losing_weeks_and_registrations_preserved": true,
+  "remaining": [
+    "Existing website owner integrates/releases ready PR9 and current PR10, then actual live selected-feed/grading verification",
+    "Next configured scheduled Parent window:2026-10-29T12:36UTC; future trigger and weekly decision not yet observed",
+    "Previously documented horizon/source-timing/private-accuracy/PPR/Phase2 operating limits remain"
+  ]
+}
