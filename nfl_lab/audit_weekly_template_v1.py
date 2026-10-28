@@ -47,6 +47,9 @@ ROOT_KEYS = {'schema_version','approved','repository','mode','operation','source
 ROOT_V3 = 'audit-weekly-hosted-v3-root-GO'
 ROOT_V3_KEYS = ROOT_KEYS | {'prior_capture_qualified_runtime'}
 STATIC_V3 = VERSION + '-static-v3'
+ROOT_V4 = 'audit-weekly-hosted-v4-root-GO'
+ROOT_V4_KEYS = ROOT_V3_KEYS | {'source_history_binding'}
+STATIC_V4 = VERSION + '-static-v4'
 PRIOR_RUNTIME = 'audit-weekly-prior-capture-qualified-runtime-v1'
 PENDING_RECOVERY = 'audit-weekly-pending-post-recovery-v1'
 PENDING_RECOVERY_ENVELOPE = 'audit-weekly-pending-post-recovery-v1-transport'
@@ -84,9 +87,9 @@ def decode_json(body): return controller.decode(body)
 
 
 def root_keys(root):
-    require(type(root) is dict and root.get('schema_version') in {'audit-weekly-hosted-v2-root-GO', ROOT_V3},
+    require(type(root) is dict and root.get('schema_version') in {'audit-weekly-hosted-v2-root-GO', ROOT_V3, ROOT_V4},
         'EXPLICIT_STATIC_ROOT_VERSION')
-    return ROOT_V3_KEYS if root['schema_version'] == ROOT_V3 else ROOT_KEYS
+    return ROOT_V4_KEYS if root['schema_version'] == ROOT_V4 else ROOT_V3_KEYS if root['schema_version'] == ROOT_V3 else ROOT_KEYS
 
 
 def static_root_sha256(root):
@@ -100,10 +103,10 @@ def static_root_sha256(root):
 def prior_runtime(root, *, before=None):
     """Closed owner-sealed metadata. Live API/canary checks remain mandatory."""
     require(type(root) is dict, 'EXPLICIT_RUNTIME_ROOT')
-    if root.get('schema_version') != ROOT_V3:
+    if root.get('schema_version') not in {ROOT_V3,ROOT_V4}:
         require('prior_capture_qualified_runtime' not in root, 'NO_PRIOR_RUNTIME_ON_LEGACY_ROOT')
         return None
-    require(set(root) == ROOT_V3_KEYS, 'CLOSED_DUAL_RUNTIME_ROOT')
+    require(set(root) == root_keys(root), 'CLOSED_DUAL_RUNTIME_ROOT')
     value = root['prior_capture_qualified_runtime']
     require(type(value) is dict and set(value) == {'schema_version','purpose','anchor','qualified_runtime','pending_census','root_static_sha256'}
         and value['schema_version'] == PRIOR_RUNTIME and value['purpose'] == 'PRIOR_CAPTURE_QUALIFIED_RUNTIME'
@@ -456,17 +459,21 @@ def _readiness(value):
 
 
 def _document(value):
-    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] in {VERSION+'-static',VERSION+'-static-v2',STATIC_V3}
+    require(type(value) is dict and set(value) == DOCUMENT_KEYS and value['schema_version'] in {VERSION+'-static',VERSION+'-static-v2',STATIC_V3,STATIC_V4}
         and hashed(value['source_sha'],40), 'CLOSED_STATIC_TEMPLATE_DOCUMENT')
     _pins(value['code_pins']); _readiness(value['readiness'])
     root = value['root_template']
     require(type(root) is dict and set(root) == root_keys(root) and root['approved'] is False
         and all(root[k] is None for k in ('issued_at_utc','expires_at_utc','operation','effective_epoch')),
         'STATIC_PLACEHOLDERS_ONLY_NO_EXPIRED_OR_ACTIVE_GO')
-    require((value['schema_version'] == STATIC_V3) == (root['schema_version'] == ROOT_V3), 'MATCHING_STATIC_ROOT_VERSION')
-    if value['schema_version'] == STATIC_V3:
+    require((value['schema_version'] == STATIC_V3) == (root['schema_version'] == ROOT_V3)
+        and (value['schema_version'] == STATIC_V4) == (root['schema_version'] == ROOT_V4), 'MATCHING_STATIC_ROOT_VERSION')
+    if value['schema_version'] in {STATIC_V3,STATIC_V4}:
         require(len(value['code_pins']) <= 128 and len(store.canonical(root)) <= 60 << 10, 'BOUNDED_DUAL_RUNTIME_STATIC_ROOT')
         prior_runtime(root)
+    if value['schema_version']==STATIC_V4:
+        from .audit_weekly_grade_history_v1 import validate_source_history_binding
+        validate_source_history_binding(root)
     require(root['repository'] == store.REPO and root['mode'] == 'audit-weekly-producer-v1'
         and root['source_sha'] == value['source_sha'] and root['code_pins'] == value['code_pins']
         and root['single_writer_group'] == 'nfl-lab-single-writer'

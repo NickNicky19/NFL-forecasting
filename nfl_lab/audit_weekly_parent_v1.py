@@ -522,12 +522,13 @@ def _discover(parent, document, api, clock):
 
 class _HistoryCapture:
     """Process-only result of completed API/source and fresh private reads."""
-    def __init__(self, receipt, packed_sha256, locator, checkpoint, state_head, parent, cohorts, key, *, pending_recovery=None):
+    def __init__(self, receipt, packed_sha256, locator, checkpoint, state_head, parent, cohorts, key, *, pending_recovery=None, source_document=None):
         require(key is _KEY,"LIVE_PARENT_HISTORY_DISCOVERY_REQUIRED")
         self.receipt,self.packed_sha256=deepcopy(receipt),packed_sha256
         self.locator,self.checkpoint=deepcopy(locator),deepcopy(checkpoint)
         self.state_head,self.registration_sha256=state_head,parent.seal.registration_sha256
         self.cohorts=deepcopy(cohorts);self.process=store.process_identity()
+        self.source_document=deepcopy(source_document)
         self.pending_recovery=deepcopy(pending_recovery if pending_recovery is not None else
             dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]))
         template.validate_pending_recovery(self.pending_recovery)
@@ -535,25 +536,46 @@ class _HistoryCapture:
 
     def _state(self):
         return [self.receipt,self.packed_sha256,self.locator,self.checkpoint,self.state_head,self.registration_sha256,
-            self.cohorts,self.process,self.pending_recovery]
+            self.cohorts,self.process,self.pending_recovery,self.source_document]
 
     def verify(self,parent):
         require(self._sha==c.digest(self._state()) and self.process==store.process_identity()
             and self.registration_sha256==parent.seal.registration_sha256,"LIVE_PARENT_HISTORY_SCOPE_OR_INTEGRITY_CHANGED")
         p=c.decode(parent.registration_bytes)
         require(self.locator["anchor"]==dict(feed_sha256=self.receipt["feed_sha256"],receipt_sha256=self.packed_sha256)
-            and self.receipt["source_sha"]==self.locator["cohort"]["source_sha"]==p["producer"]["source_sha"]
-            and self.receipt["policy_sha256"]==parent.seal.document["static_public_policy_sha256"],"SAME_SOURCE_HISTORY_AND_ORIGINAL_ANCHOR")
+            and self.receipt["source_sha"]==self.locator["cohort"]["source_sha"],"SAME_SOURCE_HISTORY_AND_ORIGINAL_ANCHOR")
+        if self.receipt['source_sha']==p['producer']['source_sha']:
+            require(self.receipt['policy_sha256']==parent.seal.document['static_public_policy_sha256'],
+                'SAME_SOURCE_HISTORY_AND_ORIGINAL_ANCHOR')
+        else:
+            from . import audit_weekly_grade_history_v1 as history
+            parent.seal.verify()
+            require(type(self.source_document) is dict
+                and c.sha(store.canonical(self.source_document))==parent.template_descriptor['template_sha256']
+                and len(store.canonical(self.source_document))==parent.template_descriptor['template_bytes'],
+                'ORIGINAL_OWNER_SEALED_SOURCE_TRANSITION_DOCUMENT')
+            _policy(parent,self.source_document)
+            root=self.source_document['root_template']
+            require(root['source_sha']==p['producer']['source_sha'] and root['code_pins']==p['producer']['code_pins'],
+                'CURRENT_PARENT_SOURCE_REMAINS_INDEPENDENTLY_BOUND')
+            history.source_history_scope(root,self.receipt,locator=self.locator,locator_sha256=self.checkpoint['sha256'])
         return self
 
     def recheck(self,parent,api):
         self.verify(parent);p=c.decode(parent.registration_bytes)
+        spec=p['producer']
+        if self.receipt['source_sha']!=spec['source_sha']:
+            from . import audit_weekly_grade_history_v1 as history
+            spec=deepcopy(spec)
+            spec['code_pins']=history.source_history_scope(self.source_document['root_template'],self.receipt,
+                locator=self.locator,locator_sha256=self.checkpoint['sha256'])
+            spec['source_sha']=self.receipt['source_sha']
         for receipt,jobs,run in self.cohorts:
             c.stable(run,api.get(c.run_url(receipt["run_id"])))
             listing=api.get(c.jobs_url(receipt["run_id"]))
             for role in c.ROLES:
                 ref=receipt["jobs"][role]
-                require(c.job(listing,receipt["run_id"],p["producer"],ref["job_id"],status="completed",
+                require(c.job(listing,receipt["run_id"],spec,ref["job_id"],status="completed",
                     api_id=ref["api_job_id"])==jobs[role],"HISTORY_COHORT_CHANGED_BEFORE_ROOT_BUILD")
 
     def __reduce__(self):raise ParentError("SAVED_HISTORY_METADATA_IS_NOT_PARENT_AUTHORITY")
@@ -593,24 +615,30 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
     history.validate_cohort(cohort)
     receipt_raw=api.content(PUBLIC_ROOT+"/receipts/"+anchor["feed_sha256"]+".json.gz",head,LIMITS["receipt_bytes"])
     receipt=_receipt(receipt_raw)
+    old_pins=history.source_history_scope(document['root_template'],receipt,locator=value,locator_sha256=c.sha(raw))
+    historical=receipt['source_sha']!=p['producer']['source_sha']
+    source_spec=deepcopy(p)
+    if historical:
+        source_spec['producer']['source_sha']=receipt['source_sha']
+        source_spec['producer']['code_pins']=old_pins
     require(c.sha(receipt_raw)==anchor["receipt_sha256"] and receipt["feed_sha256"]==anchor["feed_sha256"]
-        and receipt["source_sha"]==cohort["source_sha"]==p["producer"]["source_sha"]
-        and receipt["policy_sha256"]==document["root_template"]["publication_registration"]["policy_sha256"]
-        and receipt["recipe_registration_sha256"]==policy["producer_policy_sha256"]
+        and receipt["source_sha"]==cohort["source_sha"]
+        and (historical or receipt["policy_sha256"]==document["root_template"]["publication_registration"]["policy_sha256"]
+            and receipt["recipe_registration_sha256"]==policy["producer_policy_sha256"])
         and receipt["run_id"]!=p["readiness"]["run_id"] and cohort["run_id"]!=parent.proof.document["run_id"],
         "SAME_SOURCE_POLICY_OPS_HISTORY_NO_COUNT7_OR_IMPLICIT_MIGRATION")
     before=parent.proof.document["scheduled_parent"]["job_started_at"]
-    jobs,run=_completed(api,p,cohort,initial=False,before=before,clock=clock)
+    jobs,run=_completed(api,source_spec,cohort,initial=False,before=before,clock=clock)
     cohorts=[(cohort,jobs,run)]
     if receipt["run_id"]!=cohort["run_id"]:
-        old_jobs,old_run=_completed(api,p,receipt,initial=False,before=before,clock=clock)
+        old_jobs,old_run=_completed(api,source_spec,receipt,initial=False,before=before,clock=clock)
         cohorts.append((receipt,old_jobs,old_run))
     else:require(cohort["kind"]=="CAPTURE_AND_GRADE" and receipt["jobs"]==cohort["jobs"],"DISTINCT_GRADE_ONLY_RUN_NO_RELABELING")
     reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
     package,_=template.checkpoint_runtime(document['root_template'],value['sidecar']['checkpoint_handoff'],
         anchor=anchor,checkpoint=reference)
     history.locator_metadata(raw,receipt=receipt,qualified_runtime=package,
-        code_pins=p["producer"]["code_pins"],jobs=jobs,at=clock())
+        code_pins=old_pins,jobs=jobs,at=clock())
     pins={**value["sidecar"]["grade_code_pins"],**value["sidecar"]["checkpoint_helper_sha256"],
         **value["helper_sha256"],c.WORKFLOW:cohort["workflow_sha256"]}
     # Authenticate literal commit/blob bytes BEFORE any private history GET.
@@ -635,15 +663,15 @@ def _discover_history(parent,document,api,clock,client,storage,workspace):
     h=value["sidecar"]["checkpoint_handoff"]
     private_root=private_metadata(h["descriptor"]) if history.checkpoint_version(h)==history.CHECKPOINT_V2 else None
     client.draft();client.guard()
-    authenticated_envelope=history.validate_parent_envelope(packed,value,client,jobs,code_pins=p["producer"]["code_pins"],
-        static_root=document["root_template"],at=clock(),private_root=private_root)
+    authenticated_envelope=history.validate_parent_envelope(packed,value,client,jobs,code_pins=old_pins,
+        static_root=document["root_template"],at=clock(),private_root=private_root,locator_sha256=c.sha(raw))
     storage.register_root(workspace/"history-metadata")
     storage.write_bytes(workspace/"history-metadata/ORIGINAL_READER_EVIDENCE.json.gz",packed)
     if private_root is not None:storage.write_bytes(workspace/"history-metadata/ORIGINAL_NATIVE_ROOT_METADATA.json.gz",private_root)
     reference=dict(schema_version=history.LOCATOR_REF,path=name,sha256=c.sha(raw))
-    recovery=template.pending_recovery(authenticated_envelope['root_go'])
+    recovery=history.continued_pending_recovery(document['root_template'],authenticated_envelope['root_go'])
     return _HistoryCapture(receipt,c.sha(receipt_raw),value,reference,head,parent,cohorts,_KEY,
-        pending_recovery=recovery).verify(parent)
+        pending_recovery=recovery,source_document=document if historical else None).verify(parent)
 
 
 def daily_claim_id(registration_sha256, producer_source_sha, at):
@@ -675,7 +703,7 @@ def _build_root(parent, document, capture, at, *, plan=None):
             previous_checkpoint=deepcopy(capture.checkpoint)))
     if type(capture) is _HistoryCapture:
         from . import audit_weekly_grade_history_v1 as history
-        require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
+        require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
         root["effective_epoch"].update(schema_version=history.CONTEXT_V5,
             plan=history.next_plan(capture.locator["planning"],at=at),
             pending_post_recovery=template.pending_recovery_envelope(template.validate_pending_recovery(capture.pending_recovery,
@@ -798,7 +826,7 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     document,private_client,storage = _recover(parent, env, source_root, read_head, clock, ledger, workspace, journal)
     api = _API(ledger)
     capture = (_discover_history(parent,document,api,clock,private_client,storage,workspace)
-        if document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3} else _discover(parent, document, api, clock))
+        if document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4} else _discover(parent, document, api, clock))
     # Refresh through the unchanged actual verifier, using a separately counted
     # GET lane. The original bootstrap's 32-call cap is not enlarged or reset.
     parent.proof = c.verify_parent(parent.registration_bytes, sealed_sha256=parent.seal.registration_sha256,

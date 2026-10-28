@@ -227,7 +227,7 @@ def case(locator_system, tmp_path, monkeypatch, request):
         policy_sha256=s.sha(body), rights_authority=dict(fixture="UNCHANGED_RIGHTS"), r0=dict(fixture="UNCHANGED_R0"))
 
     def reseal():
-        x.prepared = t.prepare(dict(schema_version=getattr(x,"template_schema",t.VERSION + "-static"), source_sha=old.B,
+        x.prepared = t.prepare(dict(schema_version=getattr(x,"template_schema",t.VERSION + "-static"), source_sha=x.p["producer"]["source_sha"],
             code_pins=deepcopy(x.p["producer"]["code_pins"]), readiness=deepcopy(x.p["readiness"]), root_template=deepcopy(root)))
         ts = x.template_seal
         entry = ts["descriptor"]["entry"]
@@ -1248,3 +1248,402 @@ def test_parent_preserves_nonempty_pending_evidence_from_authenticated_history(c
     if records_count==1:assert root['effective_epoch']['pending_post_recovery']==case.pending_recovery_spec
     else:assert root['effective_epoch']['pending_post_recovery']['schema_version']==t.PENDING_RECOVERY_ENVELOPE
     assert result['dispatches']==1 and result['HTTP_by_lane']['private']<=40 and result['HTTP_calls']<=140
+
+
+@pytest.fixture
+def source_transition_case(case, request):
+    """Freeze a fictional Root V3 capture before registering a different source.
+
+    Every API, native proof and byte commitment uses the normal verifier. Only
+    metadata/orchestration source bytes change; no validator grants are mocked.
+    """
+    from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
+    x=case.x
+    census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+        as_of_utc=x.package['qualification']['before_proof']['started_at_utc'],
+        owner_evidence_sha256=old.h('original census evidence'),reservations=[])
+    x.package['quota_reservation'].update(pending_census_sha256=c.digest(census),pending_records=0)
+    x.locators['qualified_runtime_package']=deepcopy(x.package)
+    case.root.update(schema_version=t.ROOT_V3,pending_census=deepcopy(census),qualified_runtime=deepcopy(x.package),
+        prior_capture_qualified_runtime=dict(schema_version=t.PRIOR_RUNTIME,purpose='PRIOR_CAPTURE_QUALIFIED_RUNTIME',
+            anchor=dict(feed_sha256='1'*64,receipt_sha256='2'*64),
+            qualified_runtime=fictional_runtime_metadata(x.package,census,number=2),
+            pending_census=deepcopy(census),root_static_sha256=None))
+    h=history_case.__wrapped__(case)
+    planning=h.locator['planning'];current=planning['current']
+    current['schedule']=[dict(season=2026,week=8,game_type='REG',game_id='fictional-week8-'+str(i),
+        kickoff_utc='2026-10-26T18:00:00Z') for i in range(14)]
+    current['game_cutoffs']={row['game_id']:'2026-10-26T16:30:00Z' for row in current['schedule']}
+    current['canonical_choice_sha256']=case.ops['choice_sha256']
+    original_root=h.envelope['root_go']
+    original_root['effective_epoch'].update(schema_version=history.CONTEXT_V5,
+        controller_context=None,previous_capture=deepcopy(case.root['prior_capture_qualified_runtime']['anchor']),
+        pending_post_recovery=dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[]),
+        plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,deadline_utc='2026-10-26T16:30:00Z',
+            calendar_sha256=c.digest(current['schedule']),game_cutoffs=deepcopy(current['game_cutoffs'])))
+    cohort=h.locator['cohort']
+    cohort.update(kind='CAPTURE_AND_GRADE',root_go_sha256=c.digest(original_root))
+    receipt=deepcopy(case.ops)
+    receipt.update({k:deepcopy(cohort[k]) for k in ('source_sha','run_id','root_go_sha256','workflow_sha256',
+        'epoch_sha256','feed_sha256','jobs','verified_at','created_at')})
+    case.ops=receipt;case.ops_packed=gzip.compress(s.canonical(receipt),mtime=0)
+    h.locator['anchor'].update(feed_sha256=receipt['feed_sha256'],receipt_sha256=s.sha(case.ops_packed))
+    core=h.locator['sidecar'];core.clear()
+    core.update(ops_sidecar(receipt,x.package,x.p['producer']['code_pins'],x.p['producer']['branch']))
+    handoff=core['checkpoint_handoff'];proof=core['grade_read_proof']
+    handoff['snapshot_completed_at']='2026-10-25T12:33:00Z'
+    handoff['append_proof'].update(started_at_utc='2026-10-25T12:33:10Z',completed_at_utc='2026-10-25T12:33:20Z')
+    handoff['append_proof_sha256']=c.digest(handoff['append_proof']);proof['known_by_at']=planning['known_by_at']
+    native=h.envelope['native_read_evidence']
+    native['context'].update(current_root_go_sha256=cohort['root_go_sha256'],handoff_sha256=c.digest(handoff),
+        handoff=deepcopy(handoff))
+    proof['proof_sha256']=c.digest(native)
+    h.envelope.update(handoff_sha256=c.digest(handoff),grade_read_proof=deepcopy(proof))
+    receipt_path=w.PUBLIC_ROOT+'/receipts/'+receipt['feed_sha256']+'.json.gz'
+    x.api.data[c.contents_url(receipt_path,STATE)]=old.content(receipt_path,case.ops_packed)
+    original_raw=h.publish();original_pins=deepcopy(x.p['producer']['code_pins'])
+    locator_path=history.LOCATOR_ROOT+'/'+history.locator_filename(h.locator)
+    if getattr(request,'param',False):
+        # The original compressed bytes are committed, including valid header
+        # metadata that a different Python/zlib version need not reproduce.
+        wire=bytearray(original_raw);wire[9]=255 if wire[9]!=255 else 3
+        original_raw=bytes(wire)
+        assert gzip.decompress(original_raw)==s.canonical(h.locator)
+        x.api.data[c.contents_url(locator_path,STATE)]=old.content(locator_path,original_raw)
+    old_api_keys={c.contents_url(path,old.B) for path in original_pins}
+    old_api_keys|={c.run_url('700'),c.jobs_url('700'),c.contents_url(receipt_path,STATE),
+        c.contents_url(locator_path,STATE),c.contents_url(history.LOCATOR_ROOT,STATE)}
+    frozen_api={key:deepcopy(x.api.data[key]) for key in old_api_keys if key in x.api.data}
+    frozen=dict(root=s.canonical(original_root),locator=original_raw,receipt=bytes(case.ops_packed),
+        pins=original_pins,api=frozen_api,qualified_runtime=deepcopy(original_root['qualified_runtime']),
+        prior_runtime=deepcopy(original_root['prior_capture_qualified_runtime']),
+        retained_registration=deepcopy(original_root['retained_registration']),
+        history_assets={asset['id']:asset['body'] for asset in case.service.assets if asset['id'] in {803,804}})
+
+    new_source='9'*40
+    changed={'nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py',
+        'nfl_lab/audit_weekly_controller_bootstrap_v1.py','nfl_lab/audit_weekly_parent_v1.py',
+        'tests/test_audit_weekly_parent_v1.py'}
+    for path in changed:
+        body=('FICTIONAL new orchestration source '+path).encode()
+        for role,source in (('parent',x.parent_source),('producer',x.child_source)):
+            if path in x.p[role]['code_pins']:
+                (source/path).write_bytes(body);x.p[role]['code_pins'][path]=s.sha(body)
+    x.p['producer']['source_sha']=new_source
+    x.api.data[c.head_url(x.p)]['object']['sha']=new_source
+    for path in x.p['producer']['code_pins']:
+        x.api.data[c.contents_url(path,new_source)]=old.content(path,(x.child_source/path).read_bytes())
+    policy=deepcopy(case.policy);policy.update(source_sha=new_source)
+    policy_raw=s.canonical(policy)
+    case.root.update(schema_version=t.ROOT_V4,source_sha=new_source,code_pins=deepcopy(x.p['producer']['code_pins']))
+    case.root['publication_registration'].update(policy_sha256=s.sha(policy_raw),
+        policy_gzip_base64=base64.b64encode(gzip.compress(policy_raw,mtime=0)).decode())
+    predecessor={k:receipt[k] for k in ('source_sha','workflow_sha256','policy_sha256','recipe_registration_sha256',
+        'run_id','feed_sha256','root_go_sha256','epoch_sha256','choice_sha256')}
+    predecessor.update(receipt_sha256=s.sha(case.ops_packed),root_static_sha256=t.static_root_sha256(original_root),
+        code_pins_sha256=c.digest(original_pins),locator=dict(path=history.locator_filename(h.locator),sha256=s.sha(original_raw)))
+    binding=dict(schema_version='audit-weekly-source-history-binding-v1',target_source_sha=new_source,
+        target_policy_sha256=s.sha(policy_raw),runtime_transition='PRESERVE',predecessor=predecessor,
+        pin_overrides={path:original_pins[path] for path in original_pins
+            if original_pins[path]!=x.p['producer']['code_pins'][path]})
+    x.template_schema=t.STATIC_V4
+    # A new, completed native registration follows the original historical read.
+    x.p['registered_at_utc']='2026-10-25T12:35:30Z'
+    x.locators.update(registered_at_utc=x.p['registered_at_utc'],owner_root_issued_at_utc='2026-10-25T12:34:45Z')
+    x.native.update(source_sha=new_source,registered_at_utc=x.p['registered_at_utc'],
+        owner_root_issued_at_utc=x.locators['owner_root_issued_at_utc'],created_at_utc='2026-10-25T12:35:31Z')
+    for role,start,end in (('writer','00','10'),('reader','12','22'),('sealer','24','30')):
+        x.native[role].update(started_at_utc='2026-10-25T12:35:'+start+'Z',completed_at_utc='2026-10-25T12:35:'+end+'Z')
+        if role!='sealer':x.template_seal[role]['source_sha']=new_source
+    x.template_seal.update(appended_at_utc='2026-10-25T12:35:05Z',verified_at_utc='2026-10-25T12:35:20Z')
+    x.api.data[c.run_url('400')]=old.run('400',new_source,x.p['producer']['branch'],c.OWNER,updated='2026-10-25T12:35:40Z')
+    x.api.data[c.jobs_url('400')]=dict(total_count=3,jobs=[old.job('400',new_source,b.JOBS[role],41+i,
+        x.native[field]['started_at_utc'],x.native[field]['completed_at_utc'])
+        for i,(role,field) in enumerate((('write','writer'),('read','reader'),('seal','sealer')))])
+    x.api.data[c.jobs_url('400')]['jobs'][-1]['completed_at']='2026-10-25T12:35:34Z'
+    x.api.data[x.artifact_url]['workflow_run']['head_sha']=new_source
+    x.api.data[x.artifact_url].update(created_at='2026-10-25T12:35:32Z',updated_at='2026-10-25T12:35:33Z')
+
+    def reseal():
+        if case.root['schema_version']==t.ROOT_V4:
+            case.root['source_history_binding']=history.source_history_envelope(binding)
+        case.reseal()
+        descriptor=x.template_seal['descriptor'];entry=descriptor['entry']
+        asset_ids={entry['payload_asset_id'],descriptor['manifest_asset_id']}
+        case.service.assets[:]=[asset for asset in case.service.assets if asset['id'] not in asset_ids]
+        case.service.add_exact(entry['payload_name'],x.prepared.body,entry['payload_asset_id'])
+        case.service.add_exact('manifest-'+descriptor['manifest_sha256']+'.json',s.canonical(entry),descriptor['manifest_asset_id'])
+    reseal()
+    return SimpleNamespace(case=case,history=h,binding=binding,frozen=frozen,new_source=new_source,
+        reseal=reseal,receipt_path=receipt_path,locator_path=locator_path)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+@pytest.mark.parametrize('source_transition_case',[False,True],indirect=True,
+    ids=['native-gzip','preserved-gzip-header'])
+def test_source_transition_parent_preserves_original_history_and_fourteen_cutoffs(source_transition_case,monkeypatch):
+    z=source_transition_case;case=z.case;observed={};discover=w._discover_history
+    def capture(parent,*args,**kwargs):
+        assert type(parent) is b.Parent
+        result=discover(parent,*args,**kwargs)
+        observed.update(parent=parent,capture=result)
+        return result
+    monkeypatch.setattr(w,'_discover_history',capture)
+    result=case.execute();root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT' and result['dispatches']==1
+    assert root['schema_version']==t.ROOT_V4 and root['source_sha']==z.new_source!=old.B
+    assert root['code_pins']==case.x.p['producer']['code_pins']!=z.frozen['pins']
+    assert root['source_history_binding']['schema_version']=='audit-weekly-source-history-binding-v1-transport'
+    for path in history._GRADE_PIN_PATHS|history._CHECKPOINT_PIN_PATHS|{c.WORKFLOW}:
+        assert root['code_pins'][path]==z.frozen['pins'][path]
+    assert history.validate_source_history_binding(root)==z.binding
+    assert history.source_history_scope(root,case.ops,locator=z.history.locator,
+        locator_sha256=s.sha(z.frozen['locator']))==z.frozen['pins']
+    ctx=root['effective_epoch'];plan=ctx['plan']
+    assert ctx['schema_version']==history.CONTEXT_V5 and plan['kind']=='FUTURE_CAPABLE' and plan['week']==8
+    assert len(plan['game_cutoffs'])==14 and plan['game_cutoffs']==z.history.locator['planning']['current']['game_cutoffs']
+    assert plan['calendar_sha256']==c.digest(z.history.locator['planning']['current']['schedule'])
+    assert ctx['previous_checkpoint']==dict(schema_version=history.LOCATOR_REF,**z.binding['predecessor']['locator'])
+    assert ctx['previous_capture']==z.history.locator['anchor']
+    assert root['qualified_runtime']==z.frozen['qualified_runtime']
+    assert root['prior_capture_qualified_runtime']==z.frozen['prior_runtime']
+    assert root['retained_registration']==z.frozen['retained_registration']
+    original_root=c.decode(z.frozen['root'])
+    assert plan==original_root['effective_epoch']['plan']
+    for field in ('original_selected_handoff','source_config','cutoff_lead_seconds'):
+        assert root[field]==original_root[field]
+    assert z.binding['predecessor']['choice_sha256']==case.ops['choice_sha256']==z.history.locator['planning']['current']['canonical_choice_sha256']
+    assert s.canonical(z.history.envelope['root_go'])==z.frozen['root']
+    assert case.ops_packed==z.frozen['receipt']
+    for key,value in z.frozen['api'].items():assert case.x.api.data[key]==value
+    for asset in case.service.assets:
+        if asset['id'] in z.frozen['history_assets']:
+            assert asset['body']==z.frozen['history_assets'][asset['id']]
+    capture=observed['capture'];parent=observed['parent']
+    assert type(capture) is w._HistoryCapture and capture.source_document==case.x.prepared.document
+    assert s.sha(s.canonical(capture.source_document))==parent.template_descriptor['template_sha256']
+    claim=c.decode(case.service.claim_body)
+    assert claim['producer_source_sha']==z.new_source and claim['parent_source_sha']==old.A
+    assert claim['root_go_sha256']==c.digest(root) and claim['registration_sha256']==parent.seal.registration_sha256
+    assert result['HTTP_calls']<=140 and result['HTTP_by_lane']['private']<=40
+    assert len(root['code_pins'])<=128 and len(c.canonical(root))<=60<<10
+    assert len(c.canonical(case.service.dispatch_body))<=65535
+    assert all(r.get_method()=='GET' for r in case.service.calls if '/releases/' in r.full_url)
+    for path in z.history.locator['helper_sha256']:
+        assert any(r.full_url==c.contents_url(path,old.B) for r in case.service.calls)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+def test_source_transition_parent_rotates_current_runtime_and_preserves_original_history(source_transition_case,monkeypatch):
+    """Fresh qualified metadata; actual Parent verifiers and two GET-only stores."""
+    from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
+    z=source_transition_case;case=z.case;x=case.x
+    original=c.decode(z.frozen['root']);old_package=deepcopy(original['qualified_runtime'])
+    old_census=deepcopy(original['pending_census']);old_binding=old_package['binding']
+    old_assets=deepcopy(case.service.assets)
+    while len(old_assets)<85:
+        index=len(old_assets);body=('FICTIONAL preserved old metadata '+str(index)).encode()
+        asset=deepcopy(old_assets[0]);asset.update(id=900000+index,name='preserved-'+str(index)+'.txt',
+            body=body,size=len(body),digest='sha256:'+s.sha(body),url=s.API+'/releases/assets/'+str(900000+index))
+        old_assets.append(asset)
+    frozen_assets=deepcopy(old_assets)
+    census=dict(schema_version='audit-private-rotation-v1-pending-census',complete=True,
+        as_of_utc='2026-10-25T12:34:11Z',owner_evidence_sha256=old.h('fresh rotation census'),reservations=[])
+    package=fictional_runtime_metadata(old_package,census,number=5)
+    q=package['qualification'];before,read=q['before_proof'],q['read_proof']
+    for i,proof in enumerate((before,read,q)):
+        proof.update(started_at_utc='2026-10-25T12:34:'+str(12+6*i)+'Z',
+            created_at_utc='2026-10-25T12:34:'+str(14+6*i)+'Z')
+    read['before_sha256']=c.digest(before)
+    q.update(before_sha256=c.digest(before),read_sha256=c.digest(read),
+        before_completed_at_utc=before['created_at_utc'],read_completed_at_utc=read['created_at_utc'])
+    package['quota_reservation'].update(charged_existing_assets=86,
+        charged_existing_bytes=sum(asset['size'] for asset in old_assets)+117,
+        inventory_sha256=c.digest([case.service.metadata(asset) for asset in old_assets]))
+    case.root.update(qualified_runtime=deepcopy(package),pending_census=deepcopy(census),
+        prior_capture_qualified_runtime=dict(schema_version=t.PRIOR_RUNTIME,purpose='PRIOR_CAPTURE_QUALIFIED_RUNTIME',
+            anchor=deepcopy(z.history.locator['anchor']),qualified_runtime=deepcopy(old_package),
+            pending_census=deepcopy(old_census),root_static_sha256=t.static_root_sha256(original)))
+    z.binding['runtime_transition']='DUAL_RUNTIME_ROTATE'
+    x.package=deepcopy(package);x.locators['qualified_runtime_package']=deepcopy(package)
+    current=package['binding'];x.template_seal['binding']=deepcopy(current)
+    descriptor=x.template_seal['descriptor'];descriptor['manifest_asset_id']=1702
+    descriptor['entry'].update(binding_sha256=c.digest(current),payload_asset_id=1701)
+    case.service.assets=[];case.service.q=q;case.service.tag=current['tag_name']
+    case.service.add_exact(current['canary_name'],s.probe.fixture(current['origin_run_id']),current['canary_asset_id'])
+    z.reseal()
+    for qualification in (old_package['qualification'],q):
+        rid=qualification['run_id']
+        x.api.data[c.run_url(rid)]=old.run(rid,qualification['source_sha'],'fictional',c.OWNER,updated='2026-10-25T12:34:27Z')
+        x.api.data[c.jobs_url(rid)]=dict(total_count=3,jobs=[old.job(rid,qualification['source_sha'],p['job']['job_id'],
+            p['job']['api_job_id'],p['started_at_utc'],p['created_at_utc']) for p in
+            (qualification['before_proof'],qualification['read_proof'],qualification)])
+    original_call=Service.__call__
+    def two_stores(service,request,timeout):
+        url=request.full_url
+        if service is case.service and '/releases/' in url:
+            assert request.get_method()=='GET' and request.data is None and service.parent_verified
+            service.calls.append(request)
+            for binding,assets in ((old_binding,old_assets),(current,service.assets)):
+                release=s.API+'/releases/'+str(binding['release_id'])
+                if url==release:return Response(dict(id=binding['release_id'],draft=True,published_at=None,
+                    tag_name=binding['tag_name'],url=release,assets=[service.metadata(a) for a in assets]))
+                if url==release+'/assets?per_page=100&page=1':return Response([service.metadata(a) for a in assets])
+            asset_id=int(url.rsplit('/',1)[-1]);matches=[a for a in old_assets+service.assets if a['id']==asset_id]
+            assert len(matches)==1
+            return Response(matches[0]['body'] if request.get_header('Accept')=='application/octet-stream' else service.metadata(matches[0]))
+        return original_call(service,request,timeout)
+    monkeypatch.setattr(Service,'__call__',two_stores)
+    result=case.execute();root=c.decode(case.service.dispatch_body['inputs']['inference_builder_go_json'])
+    assert result['state']=='ENQUEUE_ONCE_AND_EXIT' and result['dispatches']==1
+    assert root['source_sha']==z.new_source and history.validate_source_history_binding(root)==z.binding
+    assert root['qualified_runtime']==package and root['pending_census']==census
+    assert current['runtime_id']!=old_binding['runtime_id'] and current['release_id']!=old_binding['release_id']
+    prior=t.prior_runtime(root)
+    assert prior['qualified_runtime']==old_package and prior['pending_census']==old_census
+    assert prior['root_static_sha256']==t.static_root_sha256(original) and prior['anchor']==z.history.locator['anchor']
+    assert t.capture_runtime(root)==(old_package,old_census)
+    assert t.checkpoint_runtime(root,z.history.locator['sidecar']['checkpoint_handoff'])==(old_package,old_census)
+    ctx=root['effective_epoch']
+    assert ctx['previous_checkpoint']==dict(schema_version=history.LOCATOR_REF,**z.binding['predecessor']['locator'])
+    assert ctx['previous_capture']==z.history.locator['anchor'] and ctx['plan']==original['effective_epoch']['plan']
+    assert len(ctx['plan']['game_cutoffs'])==14 and root['retained_registration']==z.frozen['retained_registration']
+    assert s.canonical(z.history.envelope['root_go'])==z.frozen['root'] and case.ops_packed==z.frozen['receipt']
+    for key,value in z.frozen['api'].items():assert x.api.data[key]==value
+    assert old_assets==frozen_assets and len(old_assets)==85
+    quota=package['quota_reservation']
+    assert quota['global_cap_bytes']==512<<20 and quota['new_runtime_reserved_bytes']==32<<20
+    assert quota['reserved_after_bytes']<=512<<20 and quota['old_assets_deleted']==0
+    claim=c.decode(case.service.claim_body)
+    assert claim['producer_source_sha']==z.new_source and claim['parent_source_sha']==old.A
+    assert claim['root_go_sha256']==c.digest(root) and result['claim_id']==claim['claim_id']
+    assert len(root['code_pins'])<=128 and len(c.canonical(root))<=60<<10
+    assert len(c.canonical(case.service.dispatch_body))<=65535
+    assert result['HTTP_calls']<=140 and result['HTTP_by_lane']['private']<=40
+    assert all(r.get_method()=='GET' for r in case.service.calls if '/releases/' in r.full_url)
+    for binding in (old_binding,current):
+        assert any(r.full_url==s.API+'/releases/'+str(binding['release_id']) for r in case.service.calls)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+@pytest.mark.parametrize('damage',[
+    'target_source','target_policy','predecessor_source','policy','recipe','root_digest','static_digest',
+    'pins_digest','epoch','choice','receipt_digest','locator_digest','locator_path','numerical_pin','workflow_pin',
+    'old_source_blob','old_api_source','old_job_source','old_clock','current_parent_source',
+    'retained_assignment','cutoff_lead','locator_cutoffs','original_root_preimage','current_namespace','rights',
+])
+def test_source_transition_rejects_unbound_history_before_claim_or_dispatch(source_transition_case,damage):
+    z=source_transition_case;case=z.case;binding=z.binding;predecessor=binding['predecessor']
+    changed=old.h('changed commitment')
+    with pytest.raises((history.HistoryError,t.TemplateError,b.BootstrapError,c.ControllerError,w.ParentError,s.StoreError)) as failure:
+        if damage=='target_source':binding['target_source_sha']=old.C
+        elif damage=='target_policy':binding['target_policy_sha256']=changed
+        elif damage=='predecessor_source':predecessor['source_sha']=old.C
+        elif damage in {'policy','recipe','root_digest','static_digest','pins_digest','epoch','choice','receipt_digest'}:
+            key=dict(policy='policy_sha256',recipe='recipe_registration_sha256',root_digest='root_go_sha256',
+                static_digest='root_static_sha256',pins_digest='code_pins_sha256',epoch='epoch_sha256',
+                choice='choice_sha256',receipt_digest='receipt_sha256')[damage]
+            predecessor[key]=changed
+        elif damage=='locator_digest':predecessor['locator']['sha256']=changed
+        elif damage=='locator_path':predecessor['locator']['path']=predecessor['locator']['path'].replace('--700--','--701--')
+        elif damage in {'numerical_pin','workflow_pin'}:
+            path='nfl_lab/weekly_grading.py' if damage=='numerical_pin' else c.WORKFLOW
+            binding['pin_overrides'][path]=changed
+        elif damage=='old_source_blob':
+            path='nfl_lab/audit_weekly_grade_history_v1.py'
+            case.x.api.data[c.contents_url(path,old.B)]=old.content(path,b'CHANGED HISTORICAL SOURCE')
+        elif damage=='old_api_source':case.x.api.data[c.run_url('700')]['head_sha']=z.new_source
+        elif damage=='old_job_source':case.x.api.data[c.jobs_url('700')]['jobs'][1]['head_sha']=z.new_source
+        elif damage=='old_clock':case.x.api.data[c.jobs_url('700')]['jobs'][-1]['completed_at']='2026-10-25T12:40:00Z'
+        elif damage=='current_parent_source':case.x.api.data[c.run_url('100')]['head_sha']=old.B
+        elif damage=='retained_assignment':case.root['retained_registration']['origin']['replay_catalog']['slots'][0]['model_sha256']=changed
+        elif damage=='cutoff_lead':case.root['cutoff_lead_seconds']=1
+        elif damage=='locator_cutoffs':
+            cuts=z.history.locator['planning']['current']['game_cutoffs']
+            cuts[sorted(cuts)[0]]='2026-10-26T16:00:00Z'
+            z.history.publish()
+        elif damage=='rights':case.root['publication_registration']['rights_authority']={'fixture':'CHANGED_RIGHTS'}
+        elif damage=='current_namespace':case.root['qualified_runtime']['binding']['release_id']+=1
+        elif damage=='original_root_preimage':
+            z.history.envelope['root_go']['cutoff_lead_seconds']=1
+            raw=z.history.publish();predecessor['locator']['sha256']=s.sha(raw)
+        z.reseal();case.execute()
+    expected={
+        'target_source':'EXACT_SOURCE_HISTORY_TARGET_SOURCE_AND_POLICY',
+        'target_policy':'EXACT_SOURCE_HISTORY_TARGET_SOURCE_AND_POLICY',
+        'predecessor_source':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT',
+        'policy':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT','recipe':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT',
+        'root_digest':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT',
+        'static_digest':'EXACT_SOURCE_HISTORY_ORIGINAL_ROOT_COMMITMENTS',
+        'pins_digest':'EXACT_ORIGINAL_SOURCE_HISTORY_PIN_INVENTORY',
+        'epoch':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT','choice':'EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT',
+        'receipt_digest':'EXACT_SOURCE_HISTORY_ORIGINAL_COHORT_AND_ANCHOR',
+        'locator_digest':'EXACT_SOURCE_HISTORY_LOCATOR_BYTES_AND_PATH','locator_path':'EXACT_SOURCE_HISTORY_LOCATOR_RUN',
+        'numerical_pin':'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES',
+        'workflow_pin':'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES',
+        'old_source_blob':'HISTORY_EXECUTABLE_SOURCE_CHANGED_OR_ADAPTER_REQUIRED',
+        'old_api_source':'ACTUAL_GHA_RUN_SOURCE_EVENT_ACTOR_STATUS','old_job_source':'ACTUAL_REGISTERED_GHA_JOB',
+        'old_clock':'ACTUAL_COMPLETED_PRIOR_CAPTURE_CHAIN_CLOCKS','current_parent_source':'ACTUAL_GHA_RUN_SOURCE_EVENT_ACTOR_STATUS',
+        'retained_assignment':'SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED',
+        'cutoff_lead':'SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED',
+        'locator_cutoffs':'EXACT_SOURCE_HISTORY_LOCATOR_BYTES_AND_PATH',
+        'original_root_preimage':'ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE',
+        'current_namespace':'ARCHIVED_QUALIFICATION_BINDING',
+        'rights':'SOURCE_HISTORY_ORIGINAL_POLICY_AND_UNCHANGED_RIGHTS_R0',
+    }[damage]
+    assert str(failure.value)==expected
+    assert case.service.dispatch_body is None
+    assert not any(r.get_method() in {'POST','PATCH'} for r in case.service.calls)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+def test_source_transition_cannot_be_enabled_by_legacy_same_source_protocol(source_transition_case):
+    z=source_transition_case
+    z.case.root.update(schema_version=t.ROOT_V3)
+    del z.case.root['source_history_binding']
+    z.case.x.template_schema=t.STATIC_V3
+    z.reseal()
+    with pytest.raises(history.HistoryError,match='^SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED$'):
+        z.case.execute()
+    assert not any(r.get_method() in {'POST','PATCH'} for r in z.case.service.calls)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+@pytest.mark.parametrize('rehash,error',[(False,'LIVE_PARENT_HISTORY_SCOPE_OR_INTEGRITY_CHANGED'),
+    (True,'ORIGINAL_OWNER_SEALED_SOURCE_TRANSITION_DOCUMENT')])
+def test_source_transition_capture_rejects_in_process_source_document_changes(source_transition_case,monkeypatch,rehash,error):
+    z=source_transition_case;discover=w._discover_history
+    def changed_document(*args,**kwargs):
+        capture=discover(*args,**kwargs)
+        capture.source_document['root_template']['source_sha']=old.B
+        if rehash:capture._sha=c.digest(capture._state())
+        return capture
+    monkeypatch.setattr(w,'_discover_history',changed_document)
+    with pytest.raises(w.ParentError,match='^'+error+'$'):
+        z.case.execute()
+    assert not any(r.get_method() in {'POST','PATCH'} for r in z.case.service.calls)
+
+
+@pytest.mark.parametrize('case',[b.PACKAGE_FULL_KEYS],indirect=True)
+def test_source_transition_scope_is_cold_metadata_without_io_or_numerical_code(source_transition_case,tmp_path):
+    z=source_transition_case
+    payload=dict(root=z.case.root,receipt=z.case.ops,locator=z.history.locator,
+        locator_sha256=s.sha(z.frozen['locator']),binding=z.binding,pins=z.frozen['pins'])
+    path=tmp_path/'fictional-source-transition-metadata.json';path.write_bytes(s.canonical(payload))
+    script='''import sys,json,socket,resource,signal
+from pathlib import Path
+from unittest.mock import patch
+resource.setrlimit(resource.RLIMIT_CPU,(120,120));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20));signal.alarm(180)
+from nfl_lab import audit_weekly_grade_history_v1 as history,private_draft_store as store
+v=json.loads(Path(sys.argv[1]).read_bytes());before=store.canonical(v)
+def forbidden(*args,**kwargs):raise AssertionError('SOURCE_HISTORY_METADATA_IO_FORBIDDEN')
+with patch.object(store,'read_local',forbidden),patch.object(Path,'read_bytes',forbidden),patch.object(Path,'read_text',forbidden),patch('builtins.open',forbidden),patch.object(socket.socket,'connect',forbidden),patch.object(socket,'create_connection',forbidden):
+ assert history.validate_source_history_binding(v['root'])==v['binding']
+ assert history.source_history_scope(v['root'],v['receipt'],locator=v['locator'],locator_sha256=v['locator_sha256'])==v['pins']
+ assert store.canonical(v)==before
+assert not any(n in sys.modules for n in ('nfl_lab.audit_weekly_grade_v1','nfl_lab.audit_weekly_grade_checkpoint_v1','numpy','pandas','scipy','sklearn','pyarrow'))
+print('COLD_SOURCE_HISTORY_SCOPE_OK')
+'''
+    result=subprocess.run([sys.executable,'-B','-c',script,str(path)],cwd=ROOT,capture_output=True,text=True,timeout=30)
+    assert result.returncode==0,result.stderr
+    assert result.stdout.strip()=='COLD_SOURCE_HISTORY_SCOPE_OK'
