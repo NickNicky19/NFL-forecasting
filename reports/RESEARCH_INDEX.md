@@ -33,6 +33,22 @@ research-model deployment is claimed by this checkpoint.
   Exposed reconstruction, with adverse tails and missing coverage retained;
   no new website issuance or prospective qualification.
 
+- [Five completed 2026 fixed challengers and composite verification](https://github.com/NickNicky19/NFL-forecasting/blob/2967cf24593b156b0dc1fd1ba37f82f23e3075d2/reports/modern-2026-cold-grade-v2/PUBLIC_RESULTS_v2.md):
+  five fixed fits and 14,995 new reconstructed forecasts. Supported primary
+  populations cover 93 games and six weeks: 211 QB rows per passing target and
+  526 RB rows for carries. Passing TD and attempt MSE reductions versus CDF
+  are only 0.0967% and 0.0220%; interceptions, completions and carries lose.
+  Original arithmetic-QA failure and the separate successful metadata check
+  remain distinct. The complete ten-fit budget is consumed; the failed 2025
+  carry fit was not retried. Fresh local archive readback passed; off-host
+  research-packet restoration remains unproven.
+
+The [all-twelve-category closing report](recent-season-category-decisions-20261027/README.md)
+records the completed comparisons, retained failures and owner-requested pause.
+The existing production producer, private restoration and derived export have
+succeeded, but website consumption of the selected research forecasts remains
+unverified. This checkpoint makes no new live-deployment claim.
+
 ## Latest actual work — October 26, 2026
 
 The [accuracy wave](accuracy-wave-20261026/README.md) supersedes earlier
