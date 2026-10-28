@@ -415,11 +415,22 @@ complete original native read evidence is still mandatory at restore_previous.
         require(all(value[k] == receipt[k] for k in ("feed_sha256","source_sha","run_id","root_go_sha256","workflow_sha256","epoch_sha256")),
             "EXACT_PARENT_HISTORY_RECEIPT_BINDINGS")
         require(value["workflow_sha256"] == code_pins[".github/workflows/lab.yml"], "EXACT_PARENT_HISTORY_WORKFLOW_PIN")
-        require(type(qualified_runtime) is dict and set(qualified_runtime) == {"schema_version","runtime_reserved_bytes","runtime_id",
+        runtime_keys={"schema_version","runtime_reserved_bytes","runtime_id",
             "binding","qualification","quota_reservation","run_id","source_sha"}
+        full_runtime_keys=runtime_keys|{"root_go_sha256","private_payload_bytes",
+            "private_durability_qualified","strict_v1_unchanged"}
+        require(type(qualified_runtime) is dict and set(qualified_runtime) in (runtime_keys,full_runtime_keys)
             and qualified_runtime["schema_version"] == "audit-private-rotation-v1-qualified-runtime"
             and type(qualified_runtime["runtime_reserved_bytes"]) is int and qualified_runtime["runtime_reserved_bytes"] == store.TOTAL_CAP,
             "CLOSED_PARENT_HISTORY_RUNTIME_PACKAGE")
+        # Bootstrap permits these two closed forms. Keep the complete original
+        # package for its hash below; projecting away flags would change evidence.
+        if set(qualified_runtime)==full_runtime_keys:
+            require(hashed(qualified_runtime["root_go_sha256"])
+                and type(qualified_runtime["private_payload_bytes"]) is int and qualified_runtime["private_payload_bytes"]==0
+                and qualified_runtime["private_durability_qualified"] is False
+                and qualified_runtime["strict_v1_unchanged"]=="INCONCLUSIVE",
+                "ORIGINAL_PARENT_HISTORY_QUALIFICATION_FLAGS_UNCHANGED")
         binding = qualified_runtime["binding"]; qualification = qualified_runtime["qualification"]
         require(type(binding) is dict and set(binding) == {"schema_version","repository","runtime_id","origin_run_id","release_id","tag_name",
             "canary_asset_id","canary_name","canary_sha256","canary_bytes","browser_tag","config_sha256"}
