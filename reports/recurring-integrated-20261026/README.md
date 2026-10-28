@@ -1,3 +1,15 @@
+Update — 2026-10-28T03:32:44.260951+00:00 (PARTIAL; continuation active)
+
+The owner resumed the audit. Main PR56 is normally merged as`085adb68be936947303b1dde96ab0e1d8bf053c3` and Producer PR55 as`771fc762b73cd35d36b10b11e82268b41ee682b0`. The corrected metadata reader accepts exactly bootstrap's existing8-/12-field runtime inventories, validates all full-package flags, and preserves the complete original package/hash. Actual checkpoint28 and latest history-locator compatibility passed with unchanged hashes. Final MainCI40624508111 passed746tests/oneexistingoptional skip/33subtests. ProducerCI40625354690 completed2331collected/attempted nodes:2330pass and oneexistingoptional cache skip; all6jobs passed. Original failedCI40624137355 is retained; its one stale registration-path test was corrected with an additional old-slot negative assertion. [Exact integration](evidence/history55-56-integrated.json).
+
+Actual existing daily invocation40623037720 checked the Mainf365 source and exited78 at the unchanged legacy handover guard: the Parent route was not selected. It started no acquisition/capture/publication. AUDIT_WEEKLY_PARENT_ENABLED was not exactlytrue at runtime; Variables GET403 prevents this connection from changing it. No scheduler, guard or flag was changed.
+
+Independent review also confirmed a separate missing source-history adapter: the corrected source cannot relabel the successful5278-source capture28 or restart its consumed first/recovery claims. A versioned owner-sealed RootV4 transition and paired Parent/worker regression checks are in progress. This must retain all original28Root/source/job/pin/hash/selection/clock/history bindings while independently authenticating current execution. No new-source native/capture/Parent pass is claimed. Root28metadata inventory currently records85assets/11,860,195uploaded bytes of128assets/32MiB; unresolved reservations remain separately charged, so that inventory is not admission authority.
+
+Website PR9/stackedPR10 remain independently ready under the existing writer. Latest actualTLS observation02:50UTC still serves app409dcb48…/weekb83a8a2e… and534players; no new website release or selected installation is claimed. Existing1959row/11category fresh-board preview and immutable source5278feed remain valid evidence for their declared scope. ExactresearchPPR, source publication-time/seven-day assumption, private historical-accuracy, daily-horizon and finite-capacity limits remain explicit. NoNFLfit, backdating, old-evidence reconstruction or forecast-accuracy gain.
+
+---
+
 Update — 2026-10-28T01:57:46.341546+00:00 (PARTIAL; owner-requested stopping point)
 
 Current producer run40611698210 is complete: genuine capture, independent fresh-process restoration/grading and derived export all succeeded. The actual anonymous consumer accepted1959 forecasts across all11supported categories in3.069seconds on a fresh normal paired board; zero accepted rows use an R0-only wrapper. Exact-source desktop/mobile preview passed all3widths,12filters,10routes, refresh and empty state with no browser/network errors or overflow. This is not a deployed selected installation.

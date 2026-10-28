@@ -1,8 +1,8 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-28T01:57:46.341546+00:00",
+  "observed_at_utc": "2026-10-28T03:32:44.260951+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
-  "status": "PARTIAL",
+  "status": "PARTIAL_IN_PROGRESS",
   "findings": [
     {
       "id": "SYS-001",
@@ -136,11 +136,11 @@
       "historical_effect": "Unmeasured from private rows;original forecasts/reports retained",
       "current": {
         "reproduced": "yes; original/current-version evidence distinguished",
-        "repaired": "Closed owner recovery implemented, reviewed and integrated; two distinct40-call recovery scopes, unchanged8-handoff pool and all original guards. Both fictional private journal setups corrected for hostumask022.",
-        "integrated": "Main53 f365a551/Producer54 5278c1a; exact finalCI40608365832 all2304complete/2303PASS1optional. Genuine native27 registration40610246063 and create-only recorde3a283a46d read back.",
-        "released": "Current producer capture28, independent restore/grading and qualified derived feed published; website and automatic Parent pending.",
-        "verified": "Genuine40611698210 all3required jobsSUCCESS; actual1959row anonymous consumer/all11traces and desktop/mobile previewPASS; noNFLfits. New grading checkpoint recorded in stopping-point receipt.",
-        "remaining_boundary": "Website single-writer release/live verification and existing Parent execution remain pending; flag access403, CLI401. Daily cadence/horizon gaps, actual source publication clocks and finite capacity limits remain explicit."
+        "repaired": "Eight/twelve-field reader compatibility normally merged in Main56 and Producer55. Explicit source-history transition remains in implementation.",
+        "integrated": "Main085adb68 / Producer771fc762; exact-source CI746pass and2331collected/2330pass1optional.",
+        "released": "Source software integrated. Existing5278-source feed28 retained; no new-source registration, recurring Parent success or website release claimed.",
+        "verified": "Actual original checkpoint+latest locator immutable hashes pass corrected metadata reading; real daily40623037720 exited78 before acquisition because Parent route not enabled. Existing23hundredcheck source CI and independent Parent tests passed.",
+        "remaining_boundary": "New source-history binding must authenticate original28jobs/pins/Root/history separately from new execution; prepare normal continuation with non-null checkpoint, native registration/capture/reader/export. Activation Variables GET403. Existing website owner retains release; cadence/horizon/capacity/source timing boundaries remain."
       },
       "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
@@ -304,19 +304,19 @@
     "last_TLS_observation_utc": "2026-10-27T22:47:09.095807+00:00"
   },
   "source": {
-    "research_main": "f365a55189d0ca2e2ad3e52564d10478617cd0a3",
-    "producer": "5278c1a46987e1676a39c9aff500d820d417a733",
+    "research_main": "085adb68be936947303b1dde96ab0e1d8bf053c3",
+    "producer": "771fc762b73cd35d36b10b11e82268b41ee682b0",
     "producer_PR33_head": "65f3fac53887d29297f1b1164997eae20702ae32",
     "producer_PR33_CI": 40273587281,
     "controller_record_commit": "e3a283a46d0e4f5f62ff1a98d6a4ccf0ee9353b6",
     "native_registration_run": 40610246063,
     "owner_operations_run": 40611698210,
-    "current_source_pair_ready": false,
+    "current_source_pair_ready": "SOFTWARE_ONLY; SOURCE_HISTORY_TRANSITION_AND_NATIVE_QUALIFICATION_PENDING",
     "producer_PR36_CI": 40277891751,
     "producer_PR38_CI": 40281454412,
     "shared_executable_bytes_match": true,
     "producer_PR40_CI": 40287547040,
-    "native_registration_current_source": true,
+    "native_registration_current_source": false,
     "main44_CI": 40573190736,
     "producer_PR45_head": "77ecb07bb39e4d3adf41fe30eb801796812b6a0d",
     "producer_PR45_CI": 40575294634,
@@ -541,6 +541,26 @@
       "implementation_status": "Integrated Main53 f365a551/Producer54 5278c1a; native27 source registration verified, new Root28 actual capture running.",
       "independent_review": "Bounded final-source review PASS; original single scope reproducedfailure40 against42-required path; distinct Core30/claim28 scopes pass128chargedslots/twopages/tworedirects, unchangedlimits. Local Main737/33subtests/1optional and Producer340 pass.",
       "remaining": "Full capture/fresh restoration/grading/export/currentconsumer/ownedwebsite acceptance. Old missing forecasts remain unavailable and unqualified."
+    },
+    {
+      "id": "SYS-007-CONTINUATION-11",
+      "severity": "high",
+      "title": "Issued full qualified-runtime package rejected by recurring metadata reader",
+      "detail": "OriginalRoot28/package12fields and original checkpoint hash agree exactly; reader required8fields. Fixed by accepting only the two existing bootstrap inventories and validating four full-package flags, while retaining complete original hashes.",
+      "status": "REPRODUCED_REPAIRED_INTEGRATED; NATIVE_NEW_SOURCE_AND_RECURRING_NOT_YET_VERIFIED",
+      "evidence": "evidence/history55-56-integrated.json; evidence/history-runtime-main-actual28-locator-compatibility.json",
+      "new_fits": 0,
+      "accuracy_gain_claim": false
+    },
+    {
+      "id": "SYS-007-CONTINUATION-12",
+      "severity": "high",
+      "title": "No supported source-history transition after successful capture28",
+      "detail": "Current strict same-source receipt/policy/helper-pin/Root gates prevent a corrected producer from continuing retained28. First-primary and failed26successor claims cannot be reused. Explicit RootV4 owner-sealed transition is being implemented; original source/job/Root/hash/selection/clock remain original, current execution stays independently authenticated.",
+      "status": "CONFIRMED_IMPLEMENTATION_AND_TESTING_IN_PROGRESS",
+      "evidence": "evidence/history55-56-integrated.json; evidence/history-runtime-main-actual28-locator-compatibility.json",
+      "new_fits": 0,
+      "accuracy_gain_claim": false
     }
   ],
   "operational_boundaries_20261027": {
@@ -837,5 +857,16 @@
     "accuracy_gain_claim": false,
     "private_rows_published": false,
     "user_requested_stop_after_next_task": true
+  },
+  "source_history_transition_20261028": {
+    "state": "IN_PROGRESS_NOT_READY",
+    "Main_worktree": "source-transition-main-20261028",
+    "Producer_worktree": "source-transition-producer-20261028",
+    "original_capture28_preserved": true,
+    "old_first_or_recovery_claim_reused": false,
+    "new_fits": 0,
+    "registration_preparer": "continuation/prepare_source_transition_registration.py",
+    "Parent_activation": "NOT_EXACTLY_TRUE_AT_ACTUAL_DAILY_RUN; VARIABLES_GET403",
+    "website_source_or_scheduler_changed_by_audit": false
   }
 }
