@@ -28,7 +28,7 @@ def no_actual_network(monkeypatch):
     monkeypatch.setattr(socket.socket,"connect",lambda *_:pytest.fail("REAL_NETWORK_FORBIDDEN"))
 
 
-def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,closed_census=False):
+def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,closed_census=False,history_seed=None):
     """Generate original native bytes under a fictional earlier acquisition clock."""
     from contextlib import ExitStack
     import test_audit_weekly_archive_v1 as old
@@ -36,18 +36,27 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
     import test_owner_private_bootstrap as qualifier
     from nfl_lab import audit_weekly_archive_v1 as archive,gha_private_checkpoint as cp
     from nfl_lab import owner_private_bootstrap as owner
-    start=datetime.now(timezone.utc)
+    start=datetime.now(timezone.utc);phase_start=[start];phase_seconds=[2]
+    root_sha="d"*64 if history_seed is None else store.sha(store.canonical(history_seed["original_root"]))
+    began=None if history_seed is None else store.utc(history_seed["original_root"]["issued_at_utc"])
     class HistoricalClock(datetime):
         @classmethod
         def now(cls,tz=None):
-            value=datetime(2026,10,25,hour,10,tzinfo=timezone.utc)+(datetime.now(timezone.utc)-start)
+            value=(datetime(2026,10,25,hour,10,tzinfo=timezone.utc)+(datetime.now(timezone.utc)-start) if began is None else
+                began+timedelta(seconds=phase_seconds[0])+(datetime.now(timezone.utc)-phase_start[0]))
             return value if tz is not None else value.replace(tzinfo=None)
     with ExitStack() as scope:
         for module in (old,historical,qualifier,store,archive,owner):
             if hasattr(module,"datetime"):scope.enter_context(patch.object(module,"datetime",HistoricalClock))
         for module in (old,historical,qualifier):scope.enter_context(patch.object(module,"SOURCE",source))
         for module in (old,historical):scope.enter_context(patch.object(module,"ROLES",roles))
-        p=old.capture.__wrapped__(base)
+        if history_seed is not None:
+            for module in (old,historical):scope.enter_context(patch.object(module,"RUN",history_seed["old_run"]))
+            p=old.capture_case(base,epoch_document=history_seed["docs"]["epoch"],choice_document=history_seed["choice"])
+            for name,doc in history_seed["docs"].items():
+                raw=doc.encode() if name=="original_choice" else store.canonical(doc)
+                p.context[name]=p.body("history-context/"+name+".json",raw)
+        else:p=old.capture.__wrapped__(base)
         # The controller's readiness contract requires all eleven categories.
         # Construct that actual fictional selected body BEFORE the first
         # append, rather than relabelling a one-category receipt as complete.
@@ -74,6 +83,13 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         replace_json("EXPORT_INPUTS.json",export)
         public_body=store.canonical(dict(schema_version="FICTIONAL_DERIVED_CATEGORY_ROWS",rows=rows))
         history=historical.History(p)
+        if history_seed is not None:
+            history.old.package=deepcopy(history_seed["package"]);history.old.q=history.old.package["qualification"]
+            history.old.binding=history.old.package["binding"];history.old.qrun=history.old.q["run_id"]
+            history.old.census=deepcopy(history_seed["census"])
+            server=history.old.server;server.tag=history_seed["tag"]
+            server.assets=[dict(a,body=base64.b64decode(a["body"])) for a in history_seed["assets"]]
+            history.old.started=began+timedelta(seconds=1)
         if closed_census:
             history.old.census.update(schema_version="audit-private-rotation-v1-pending-census",complete=True,
                 as_of_utc=history.old.q["before_proof"]["started_at_utc"],
@@ -86,6 +102,11 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
             if req.full_url==store.API+"/actions/runs/"+old.RUN:
                 from test_private_draft_store_v2 import Response
                 body=json.loads(response.body);body["head_branch"]=workflow_ref.split("@refs/heads/",1)[1]
+                return Response(body)
+            if history_seed is not None and req.full_url==store.API+"/actions/runs/"+old.RUN+"/jobs?per_page=100&page=1":
+                from test_private_draft_store_v2 import Response
+                body=json.loads(response.body)
+                for i,job in enumerate(body["jobs"]):job["id"]=888+i
                 return Response(body)
             return response
         history.transport=historical_transport
@@ -110,14 +131,19 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         census=snapshot["census"];census["physical_origins"][item["logical_path"]]=policy_ref
         census["logical_files"]=len(snapshot["files"]);census["logical_bytes"]=sum(f["bytes"]for f in snapshot["files"])
         census["context_roles"].append("public_policy");census["context_roles"].sort()
-        history.begin("produce");handoff,_,_=old.produce(p,history.old,snapshot=snapshot);history.end()
+        history.begin("produce")
+        handoff=archive.produce(snapshot,factory(base/"producer-journal","produce"),history.old.package,
+            storage=p.storage,output=base/"producer",root_go_sha256=root_sha,jobs=roles,pending_census=history.old.census)
+        history.old.writer_completed=HistoricalClock.now(timezone.utc);history.end()
+        if history_seed is not None:phase_seconds[0]=12;phase_start[0]=datetime.now(timezone.utc)
         history.begin("restore")
         archive.restore(handoff,factory(base/"old-reader-journal","restore"),history.old.package,
-            storage=p.storage,output=base/"old-reader",root_go_sha256="d"*64,pending_census=history.old.census)
+            storage=p.storage,output=base/"old-reader",root_go_sha256=root_sha,pending_census=history.old.census)
         history.end();reader=cp.strict_json((base/"old-reader/READER_HANDOFF.json").read_bytes())
+        if history_seed is not None:phase_seconds[0]=72;phase_start[0]=datetime.now(timezone.utc)
         history.begin("consume");verified=HistoricalClock.now(timezone.utc)
         archive.consume(reader,factory(base/"old-export-journal","consume"),history.old.package,
-            storage=p.storage,output=base/"old-export",root_go_sha256="d"*64,pending_census=history.old.census)
+            storage=p.storage,output=base/"old-export",root_go_sha256=root_sha,pending_census=history.old.census)
         created=HistoricalClock.now(timezone.utc);history.end();history.finished=True
         api={}
         for run_id in (old.RUN,history.old.qrun):
@@ -126,6 +152,12 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
                 value=json.loads(history.transport(SimpleNamespace(full_url=url),20).body)
                 if run_id==old.RUN and not tail:value["head_branch"]=workflow_ref.split("@refs/heads/",1)[1]
                 api[url]=value
+        if history_seed is not None:
+            jobs=api[store.API+"/actions/runs/"+old.RUN+"/jobs?per_page=100&page=1"]["jobs"]
+            for job,(started,completed) in zip(jobs,history_seed["job_times"]):
+                job.update(started_at=started,completed_at=completed)
+            verified=store.utc(history_seed["locator"]["cohort"]["verified_at"])
+            created=store.utc(history_seed["locator"]["cohort"]["created_at"])
         from nfl_lab import audit_weekly_retained_v1 as retained,audit_weekly_discovery_v1 as discovery
         for name,body in history.codes.items():
             import hashlib
@@ -134,11 +166,11 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
                 sha=blob_sha,content=base64.b64encode(body).decode())
         files={f["logical_path"]:f for f in snapshot["files"]}
         receipt=dict(schema_version=discovery.delivery.VERSION+"-public-receipt",source_sha=source,run_id=old.RUN,
-            root_go_sha256="d"*64,policy_sha256=store.sha(policy),policy_registered_at_utc=f"2026-10-25T{hour-2:02d}:00:00Z",
+            root_go_sha256=root_sha,policy_sha256=store.sha(policy),policy_registered_at_utc=f"2026-10-25T{hour-2:02d}:00:00Z",
             workflow_sha256=store.sha(workflow),recipe_registration_sha256="1"*64,rights_authority_sha256="2"*64,
             r0_identity_sha256="3"*64,origin_choice_sha256="4"*64,feed_sha256=store.sha(public_body),
             feed_bytes=len(public_body),rows=len(rows),categories=sorted({r["category"] for r in rows}),
-            jobs={role:dict(job_id=name,api_job_id=777+i)for i,(role,name)in enumerate(roles.items())},
+            jobs={role:dict(job_id=name,api_job_id=(777 if history_seed is None else 888)+i)for i,(role,name)in enumerate(roles.items())},
             created_at=created.isoformat(),verified_at=verified.isoformat(),fits=0,raw_or_models_public=False,
             archive_index_sha256=handoff["index_descriptor"]["entry"]["payload"]["sha256"],archive_files_sha256=handoff["files_sha256"],
             reader_witness_sha256=reader["witness_descriptor"]["entry"]["payload"]["sha256"],epoch_sha256=files["context/epoch.json"]["sha256"],
@@ -190,7 +222,7 @@ def operational_case(tmp_path,monkeypatch,request):
     locator=fixture.locator_system.__wrapped__(bootstrap)
     q=fixture.guard_case.__wrapped__(locator,tmp_path/"live",monkeypatch)
     x=q.x;mode=getattr(request,"param","bot-operational")
-    if mode in {"bot-operational","dual-runtime"}:
+    if mode in {"bot-operational","dual-runtime","source-history"}:
         if mode=="dual-runtime":
             # Establish the fictional policy before COUNT7 and the original
             # template registration, rather than backdating retained bytes.
@@ -199,8 +231,11 @@ def operational_case(tmp_path,monkeypatch,request):
             x.native["static_public_policy_sha256"]=store.sha(x.static_policy)
             x.go["publication_registration"]["policy_sha256"]=store.sha(x.static_policy)
         roles={k:x.p["producer"]["jobs"][k]for k in ("produce","restore","consume")}
-        old=_fictional_archive(tmp_path/"old",x.workflow,x.static_policy,x.go["source_sha"],roles,x.go["workflow_ref"],
-            hour=10 if mode=="dual-runtime" else 13,closed_census=mode=="dual-runtime")
+        transition=mode=="source-history"
+        old=_fictional_archive(tmp_path/"old",x.workflow,
+            store.canonical(dict(fictional_original_policy=True)) if transition else x.static_policy,
+            "8"*40 if transition else x.go["source_sha"],roles,x.go["workflow_ref"],
+            hour=10 if mode in {"dual-runtime","source-history"} else 13,closed_census=mode in {"dual-runtime","source-history"})
     else:
         spec=x.p["readiness"];roles={k:v["job_id"]for k,v in spec["jobs"].items()}
         ref=store.REPO+"/.github/workflows/lab.yml@refs/heads/"+spec["branch"]
@@ -238,7 +273,7 @@ def operational_case(tmp_path,monkeypatch,request):
     return SimpleNamespace(q=q,old=old,seed=seed,storage=storage)
 
 
-def _dual_runtime_seed(case,damage=None):
+def _dual_runtime_seed(case,damage=None,*,root_override=None):
     """Seal invented V3 metadata around an actually appended COUNT7 archive.
 
     Malformed package/census cases intentionally enter the existing incomplete
@@ -250,15 +285,19 @@ def _dual_runtime_seed(case,damage=None):
     from nfl_lab import audit_weekly_operations_v1 as operations
     q=case.q;x=q.x;old=case.old
     root=deepcopy(x.prepared.document["root_template"]);root.update(deepcopy(x.go))
-    root=dual_runtime_root(root,old["package"],old["census"],root["effective_epoch"]["previous_capture"])
-    root["approved"]=True
-    root["effective_epoch"].update(schema_version=operations.CONTEXT_V4,previous_checkpoint=None,
-        plan=dict(kind="FUTURE_CAPABLE",season=2026,week=7,deadline_utc="2026-10-25T14:00:00Z",
-            calendar_sha256=store.sha(b"FICTIONAL calendar"),game_cutoffs={"fictional-future":"2026-10-25T14:00:00Z"}))
+    if root_override is None:
+        root=dual_runtime_root(root,old["package"],old["census"],root["effective_epoch"]["previous_capture"])
+        root["approved"]=True
+        root["effective_epoch"].update(schema_version=operations.CONTEXT_V4,previous_checkpoint=None,
+            plan=dict(kind="FUTURE_CAPABLE",season=2026,week=7,deadline_utc="2026-10-25T14:00:00Z",
+                calendar_sha256=store.sha(b"FICTIONAL calendar"),game_cutoffs={"fictional-future":"2026-10-25T14:00:00Z"}))
+    else:root=deepcopy(root_override)
     if damage in {"feed-anchor","receipt-anchor"}:
         key="feed_sha256" if damage=="feed-anchor" else "receipt_sha256"
         root["prior_capture_qualified_runtime"]["anchor"][key]="0"*64
-    document=deepcopy(x.prepared.document);document["schema_version"]=template.STATIC_V3
+    document=deepcopy(x.prepared.document)
+    document["schema_version"]=template.STATIC_V4 if root["schema_version"]==template.ROOT_V4 else template.STATIC_V3
+    document.update(source_sha=root["source_sha"],code_pins=deepcopy(root["code_pins"]),readiness=deepcopy(x.p["readiness"]))
     document["root_template"]=deepcopy(root);document["root_template"]["approved"]=False
     for key in template.DYNAMIC_FIELDS-{"approved"}:document["root_template"][key]=None
     x.prepared=template.prepare(document)
@@ -293,6 +332,73 @@ def _dual_runtime_seed(case,damage=None):
         dual_runtime=True,damage=damage,parent_pid=os.getpid())
 
 
+def _source_history_seed(case,*,actor="bot"):
+    """Actual entry with a distinct non-readiness predecessor and sealed V4.
+
+    Fictional Root/template/API IDs only. No saved JSON substitutes for the
+    current typed proof or its native registration seal.
+    """
+    from nfl_lab import audit_weekly_grade_history_v1 as history,audit_weekly_hosted_v1 as hosted
+    from nfl_lab import audit_weekly_template_v1 as template,audit_weekly_controller_v1 as controller
+    from nfl_lab import audit_weekly_retained_v1 as retained
+    q=case.q;x=q.x;old=case.old
+    # Authenticate all 128 current literal fixture pins, including unchanged
+    # old archive/checkpoint kernels. Only declared orchestration pins differ.
+    bodies={p:(x.child_source/p).read_bytes() if (x.child_source/p).exists() else ("FICTIONAL "+p).encode()
+        for p in hosted.PINS}
+    for path in retained.HISTORICAL_FILES:
+        bodies[path]=base64.b64decode(old["api"][retained.source_url(old["receipt"]["source_sha"],path)]["content"])
+    assert set(x.p["producer"]["code_pins"])<=set(bodies)
+    for role,source in (("parent",x.parent_source),("producer",x.child_source)):
+        names=set(bodies) if role=="producer" else set(x.p[role]["code_pins"])
+        for name in names:
+            body=bodies.get(name,(source/name).read_bytes() if (source/name).exists() else b"FICTIONAL parent")
+            path=source/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(body)
+            x.p[role]["code_pins"][name]=store.sha(body)
+    root=deepcopy(x.prepared.document["root_template"]);root.update(deepcopy(x.go))
+    root.update(schema_version=history.ROOT_V4,approved=True,code_pins=deepcopy(x.p["producer"]["code_pins"]))
+    root["effective_epoch"].update(schema_version=history.CONTEXT_V5,
+        pending_post_recovery=dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]),
+        previous_checkpoint=dict(schema_version=history.LOCATOR_REF,
+            path="20261025T101100.000000Z--"+old["receipt"]["run_id"]+"--"+"a"*64+".json.gz",sha256="b"*64),
+        plan=dict(kind="FUTURE_CAPABLE",season=2026,week=7,deadline_utc="2026-10-25T14:00:00Z",
+            calendar_sha256=store.sha(b"FICTIONAL calendar"),game_cutoffs={"fictional-future":"2026-10-25T14:00:00Z"}))
+    from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
+    root["qualified_runtime"]=fictional_runtime_metadata(old["package"],old["census"],number=6)
+    root["pending_census"]=deepcopy(old["census"])
+    root["prior_capture_qualified_runtime"]=dict(schema_version=template.PRIOR_RUNTIME,purpose="PRIOR_CAPTURE_QUALIFIED_RUNTIME",
+        anchor=deepcopy(root["effective_epoch"]["previous_capture"]),qualified_runtime=deepcopy(old["package"]),
+        pending_census=deepcopy(old["census"]),root_static_sha256="d"*64)
+    original_pins=deepcopy(root["code_pins"])
+    overrides={p:store.sha(("FICTIONAL old orchestration "+p).encode()) for p in (
+        "nfl_lab/audit_weekly_discovery_v1.py","nfl_lab/audit_weekly_operations_restore_v1.py")}
+    original_pins.update(overrides)
+    predecessor={k:old["receipt"][k]for k in ("source_sha","workflow_sha256","policy_sha256","recipe_registration_sha256",
+        "run_id","feed_sha256","root_go_sha256","epoch_sha256","choice_sha256")}
+    predecessor.update(receipt_sha256=root["effective_epoch"]["previous_capture"]["receipt_sha256"],root_static_sha256="d"*64,
+        code_pins_sha256=store.sha(store.canonical(original_pins)),locator={k:root["effective_epoch"]["previous_checkpoint"][k]for k in ("path","sha256")})
+    body=dict(schema_version=history.SOURCE_HISTORY_BINDING,target_source_sha=root["source_sha"],
+        target_policy_sha256=root["publication_registration"]["policy_sha256"],predecessor=predecessor,
+        pin_overrides=overrides,runtime_transition="DUAL_RUNTIME_ROTATE")
+    root["source_history_binding"]=history.source_history_envelope(body)
+    assert len(root["code_pins"])==128 and history.source_history_scope(root,old["receipt"])==original_pins
+    assert old["receipt"]["source_sha"] not in {root["source_sha"],x.p["readiness"]["source_sha"]}
+    assert old["receipt"]["policy_sha256"]!=root["publication_registration"]["policy_sha256"]
+    q.request["code_pins"]=deepcopy(root["code_pins"])
+    q.native["request_sha256"]=store.sha(store.canonical(q.request))
+    if actor=="owner":
+        root["effective_epoch"]["controller_context"]=None
+        q.env.update(GITHUB_ACTOR=controller.OWNER["login"],GITHUB_ACTOR_ID=str(controller.OWNER["id"]))
+        x.api.data[controller.run_url("300")].update(actor=deepcopy(controller.OWNER),triggering_actor=deepcopy(controller.OWNER))
+    x.reg=store.canonical(x.p);x.seal=store.sha(x.reg)
+    x.native.update(registration_sha256=x.seal,code_pins_sha256=store.sha(store.canonical(root["code_pins"])))
+    if actor=="bot":root["effective_epoch"]["controller_context"]["registration_sha256"]=x.seal
+    x.claim["registration_sha256"]=x.seal
+    seed=_dual_runtime_seed(case,root_override=root)
+    seed.update(source_history=True,actor=actor)
+    return seed
+
+
 def _native(seed,failure=None):
     """Native positive body + real typed auth, only raw fictional transports."""
     from nfl_lab import audit_weekly_operations_worker_v1 as worker,audit_weekly_operations_authority_v1 as authority
@@ -304,7 +410,7 @@ def _native(seed,failure=None):
     server.assets=[dict(a,body=base64.b64decode(a["body_base64"]))for a in seed["old"]["assets"]]
     for asset in server.assets:asset.pop("body_base64")
     calls=[];grants=[];clients=[];metadata_calls=[];selected=[];qualification_checks=[];prepared_requests=[];historical_grants=[]
-    dual=seed.get("dual_runtime",False)
+    dual=seed.get("dual_runtime",False);source_history=seed.get("source_history",False)
     context=None
     def metadata(url,cap):
         assert url in api and bootstrap.fixed_route(url)
@@ -322,7 +428,7 @@ def _native(seed,failure=None):
                 # no current qualification API evidence exists in this test.
                 assert req.full_url==store.API+"/actions/runs/"+go["qualified_runtime"]["run_id"]
                 return Response(status=404)
-            assert selected==[seed["old"]["package"]]
+            assert selected and all(p==seed["old"]["package"] for p in selected)
         return Response(api[req.full_url])if req.full_url in api else server(req,timeout)
     source=Path(seed["child_source"])
     real_current=authority.current
@@ -386,17 +492,18 @@ def _native(seed,failure=None):
             env,phase=recovery.PHASE,transport=transport)
         assert context.verify()is context
         if dual:
-            assert type(context)is worker.Authenticated and type(context.proof)is controller.Proof
+            expected_proof=bootstrap.Owner if source_history and seed["actor"]=="owner" else controller.Proof
+            assert type(context)is worker.Authenticated and type(context.proof)is expected_proof
             assert type(context.proof.bootstrap_seal)is bootstrap.Seal
-            assert context.proof.document["actor"]==controller.BOT
+            assert context.proof.document["actor"]==(controller.OWNER if expected_proof is bootstrap.Owner else controller.BOT)
             assert context.proof.document["root_go_sha256"]==store.sha(store.canonical(go))
             prepared=bootstrap.verify_template_payload(context.proof.bootstrap_seal,base64.b64decode(seed["static_template_base64"]))
-            assert prepared.document["schema_version"]==template.STATIC_V3
+            assert prepared.document["schema_version"]==(template.STATIC_V4 if source_history else template.STATIC_V3)
             sealed=prepared.document["root_template"]["prior_capture_qualified_runtime"]
             assert sealed["qualified_runtime"]==seed["old"]["package"] and sealed["pending_census"]==seed["old"]["census"]
             if seed["damage"] not in {"census","package"}:
                 assert template.static_root_sha256(go)==template.digest(prepared.document["root_template"])
-            assert sealed["root_static_sha256"]is None and go["effective_epoch"]["previous_checkpoint"]is None
+            if not source_history:assert sealed["root_static_sha256"]is None and go["effective_epoch"]["previous_checkpoint"]is None
             assert os.getpid()!=seed["parent_pid"]
             assert len(store.canonical(go))<=60<<10 and len(go["code_pins"])<=128
             dispatch_bytes=len(store.canonical(cp.strict_json(base64.b64decode(seed["event_base64"]))["inputs"]))
@@ -442,7 +549,7 @@ def _native(seed,failure=None):
     assert len({str(c.journal)for c in clients})==1 and sum(c.calls for c in clients)<=640
     assert all(c.calls<=40 for c in clients)and len(clients)<=17
     if dual:
-        assert selected==[seed["old"]["package"]] and len(qualification_checks)>=2 and len(prepared_requests)==1
+        assert selected and all(p==seed["old"]["package"] for p in selected) and len(qualification_checks)>=2 and len(prepared_requests)==1
         assert all(package==seed["old"]["package"] and census==seed["old"]["census"] for package,census in qualification_checks)
         assert prepared_requests[0]["qualified_runtime"]==seed["old"]["package"]
         assert prepared_requests[0]["pending_census"]==seed["old"]["census"]
@@ -450,11 +557,16 @@ def _native(seed,failure=None):
         bindings=[c._audit_operations_current for c in clients if hasattr(c,"_audit_operations_current")]
         assert bindings and all(type(binding)is authority.CurrentClient and binding.proof is context.proof for binding in bindings)
         assert all(cp.client_identity(c)==cp.client_identity(context.client) for c in clients)
-        assert len(historical_grants)==1
-        grant,approved,native=historical_grants[0]
-        assert type(grant)is retained.HistoricalSourceGrant and grant._proof is context.proof
-        assert approved==dict(prepared_requests[0],approved=True)
-        assert grant.verify(approved,native,ScenarioClock.now(timezone.utc))is grant
+        if not (source_history and seed["actor"]=="owner"):
+            assert len(historical_grants)==1
+            grant,approved,native=historical_grants[0]
+            assert type(grant)is retained.HistoricalSourceGrant and grant._proof is context.proof
+            assert approved==dict(prepared_requests[0],approved=True)
+            assert grant.verify(approved,native,ScenarioClock.now(timezone.utc))is grant
+            if source_history:
+                assert grant.document["scope"]["public_policy_sha256"]==go["publication_registration"]["policy_sha256"]
+                assert grant.document["scope"]["public_policy_sha256"]!=seed["old"]["receipt"]["policy_sha256"]
+        else:assert not historical_grants
         assert all(c.extra_routes==frozenset(discovery.routes(seed["old"]["receipt"],seed["old"]["package"])) for c in clients)
         assert all(req.method=="GET" and req.data is None for req in server.calls)
         assert server.assets==[dict({k:v for k,v in a.items()if k!="body_base64"},body=base64.b64decode(a["body_base64"]))for a in seed["old"]["assets"]]
@@ -546,6 +658,36 @@ print(json.dumps(probe._native(seed),sort_keys=True))
     assert value["native_address_space_bytes"]==512<<20
     assert value["grant_kinds"]==["BIND_SEALED_DISCOVERY_SOURCE","LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET",
         "BIND_SEALED_HISTORICAL_SOURCE","LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"]
+
+
+@pytest.mark.parametrize("operational_case",["source-history"],indirect=True)
+@pytest.mark.parametrize("actor",["bot","owner"])
+def test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority(operational_case,tmp_path,actor):
+    seed=_source_history_seed(operational_case,actor=actor)
+    path=tmp_path/"fictional-source-history-seed.json";path.write_bytes(store.canonical(seed))
+    script='''
+import sys,json,socket
+from pathlib import Path
+from tools.private_draft_store_v2 import limits
+limits()
+sys.path.insert(0,str(Path.cwd()/'tests'))
+import test_audit_weekly_operations_restore_v1 as probe
+socket.socket.connect=lambda *_:(_ for _ in ()).throw(AssertionError('REAL_NETWORK_FORBIDDEN'))
+print(json.dumps(probe._native(json.loads(Path(sys.argv[1]).read_bytes())),sort_keys=True))
+'''
+    profile=json.loads((ROOT/"config/audit-weekly-numerical-runtime-v1.json").read_bytes())["environment"]
+    result=subprocess.run([sys.executable,"-B","-c",script,str(path)],cwd=ROOT,
+        env={"PYTHONDONTWRITEBYTECODE":"1",**profile},capture_output=True,text=True,timeout=185)
+    assert result.returncode==0,result.stderr
+    value=json.loads(result.stdout)
+    assert value["state"]=="PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY" and value["restored_original_bytes"]is True
+    assert value["original_runtime_id"]!=value["current_runtime_id"] and value["private_GETs"]>0
+    assert value["fits"]==value["model_decodes"]==value["outcome_decodes"]==value["remote_writes"]==0
+    assert value["genuine_Actions_evidence"]is value["public_release"]is False
+    assert value["pins"]==128 and value["root_bytes"]<=60<<10 and value["dispatch_input_bytes"]<=65535
+    expected=["BIND_SEALED_DISCOVERY_SOURCE","LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET"]
+    if actor=="bot":expected += ["BIND_SEALED_HISTORICAL_SOURCE","LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"]
+    assert value["grant_kinds"]==expected
 
 
 def test_restore_preparation_has_no_runtime_or_credential_dependency():

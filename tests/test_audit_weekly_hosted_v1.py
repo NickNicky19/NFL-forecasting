@@ -818,6 +818,32 @@ def test_operational_past_history_and_software_acceptance_have_distinct_purposes
         runtime.config_check(config,slate)
 
 
+def _process_is_alive(pid):
+    stat=Path(f'/proc/{pid}/stat')
+    try:
+        state=stat.read_text().rsplit(') ',1)[1].split()[0]
+    except FileNotFoundError:
+        # The kernel may reap the child between polls; a missing
+        # process is the expected result of parent interruption.
+        return False
+    return state not in {'Z','X'}
+
+
+@pytest.mark.parametrize('state,expected',[('S',True),('R',True),('Z',False),('X',False),(None,False)])
+def test_owned_worker_poll_handles_reaping_race(monkeypatch,state,expected):
+    # Force the old exists()/read_text() race while retaining the real
+    # parent/worker interruption test below. Other read failures must propagate.
+    monkeypatch.setattr(Path,'exists',lambda self:True)
+    def read_stat(self):
+        if state is None:raise FileNotFoundError(str(self))
+        return f'123 (owned child) {state} 1 2 3'
+    monkeypatch.setattr(Path,'read_text',read_stat)
+    assert _process_is_alive(123) is expected
+    def denied(self):raise PermissionError(str(self))
+    monkeypatch.setattr(Path,'read_text',denied)
+    with pytest.raises(PermissionError):_process_is_alive(123)
+
+
 def test_owned_worker_dies_when_its_parent_is_interrupted(tmp_path):
     import time
     child_code='from tools.audit_process_guard_v1 import arm_parent_death;from pathlib import Path;import os,sys,time;arm_parent_death();Path(sys.argv[1]).write_text(str(os.getpid()));time.sleep(20)'
@@ -832,8 +858,7 @@ def test_owned_worker_dies_when_its_parent_is_interrupted(tmp_path):
         child_pid=int(marker.read_text());assert child_pid!=parent.pid
         parent.kill();parent.wait(timeout=5)
         def alive():
-            stat=Path(f'/proc/{child_pid}/stat')
-            return stat.exists() and stat.read_text().rsplit(') ',1)[1].split()[0] not in {'Z','X'}
+            return _process_is_alive(child_pid)
         deadline=time.monotonic()+5
         while alive() and time.monotonic()<deadline:time.sleep(.02)
         assert not alive(),'owned child survived parent interruption'

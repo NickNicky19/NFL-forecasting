@@ -22,7 +22,7 @@ def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))
 
 @pytest.fixture(scope='module')
-def original_seed(tmp_path_factory):
+def original_seed(tmp_path_factory,*,workflow=None,policy_sha256=None):
     import test_audit_weekly_operations_grade_v1 as bridge
     from nfl_lab import audit_weekly_operations_grade_v1 as worker,audit_weekly_grade_v1 as grade
     from nfl_lab import audit_weekly_archive_v1 as archive,private_draft_store as store,state,gha_private_checkpoint as cp
@@ -48,10 +48,10 @@ def original_seed(tmp_path_factory):
         encoded=archive.read_owned(q['storage'],report['evidence_envelope'],history.LIMITS['envelope_bytes'],raw=True)
         descriptor=store.append(c,encoded,cp.payload(encoded),x.service.q)
         completion=x.service.now+timedelta(minutes=1)
-        workflow=('concurrency:\n  group: nfl-lab-single-writer\n  cancel-in-progress: false\n'
+        workflow=workflow or ('concurrency:\n  group: nfl-lab-single-writer\n  cancel-in-progress: false\n'
             'permissions:\n  contents: write\n  actions: read\njobs:\n'+''.join('  '+j+':\n    runs-on: ubuntu-latest\n' for j in JOBS.values())).encode()
         receipt=dict(schema_version='audit-weekly-delivery-v1-public-receipt',source_sha=bridge.SOURCE,run_id=bridge.RUN,
-            root_go_sha256=bridge.ROOT_SHA,policy_sha256='1'*64,policy_registered_at_utc=q['pop']['registered_at'],
+            root_go_sha256=bridge.ROOT_SHA,policy_sha256=policy_sha256 or '1'*64,policy_registered_at_utc=q['pop']['registered_at'],
             workflow_sha256=store.sha(workflow),recipe_registration_sha256='2'*64,rights_authority_sha256='3'*64,
             r0_identity_sha256='4'*64,origin_choice_sha256='5'*64,feed_sha256='6'*64,feed_bytes=100,rows=1,categories=['rec'],
             jobs={r:dict(job_id=n,api_job_id=777+i) for i,(r,n) in enumerate(JOBS.items())},
@@ -170,7 +170,7 @@ def case(tmp_path,original_seed,monkeypatch):
 
 
 @pytest.fixture
-def locator_seed(tmp_path,original_seed,monkeypatch):
+def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,historical_pending=False,root_static=None):
     """Real grade/CAS/append/read, fictional authority/API and no new labels.
 
     The prior fixture is an input to this codec test, not an old-source
@@ -224,13 +224,52 @@ def locator_seed(tmp_path,original_seed,monkeypatch):
         effective_epoch=dict(schema_version=history.CONTEXT_V4,controller_context=None,previous_capture=anchor,
             previous_checkpoint=dict(schema_version=history.LOCATOR_REF,path='20261028T080300.000000Z--40000000001--'+'a'*64+'.json.gz',sha256='b'*64),
             plan=dict(kind='GRADE_ONLY',season=2026,week=7,deadline_utc=None,calendar_sha256=state.digest(schedule),game_cutoffs={})))
+    if source_transition:
+        # A fictional V3 capture Root with two already-qualified namespaces.
+        # No allocation, training, original asset rewrite or real NFL input.
+        from nfl_lab import audit_weekly_hosted_v1 as hosted
+        from test_audit_weekly_controller_bootstrap_v1 import fictional_runtime_metadata
+        pins.update({p:store.sha((ROOT/p).read_bytes()) for p in hosted.PINS})
+        pins['.github/workflows/lab.yml']=original_seed['receipt']['workflow_sha256']
+        prior=fictional_runtime_metadata(original_seed['package'],original_seed['census'])
+        root.update(schema_version=template.ROOT_V3,prior_capture_qualified_runtime=dict(
+            schema_version=template.PRIOR_RUNTIME,purpose='PRIOR_CAPTURE_QUALIFIED_RUNTIME',
+            anchor=deepcopy(anchor),qualified_runtime=prior,pending_census=deepcopy(original_seed['census']),root_static_sha256='a'*64),
+            publication_registration=dict(policy_gzip_base64='FICTIONAL_OLD_POLICY',policy_sha256=original_seed['receipt']['policy_sha256'],
+                rights_authority={'original':'rights'},r0={'original':'R0'}))
+        for p in ('nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py'):
+            pins[p]=store.sha((ROOT/p).read_bytes()+b'\n# FICTIONAL original orchestration\n')
+        # A future-only fictional calendar is metadata, never reconstructed NFL
+        # availability. All retained negative grades/clocks remain untouched.
+        schedule=[dict(r,kickoff_utc=(began+timedelta(days=2,minutes=i)).isoformat()) for i,r in enumerate(schedule)]
+        cuts={r['game_id']:(state.utc(r['kickoff_utc'])-timedelta(minutes=15)).isoformat() for r in schedule}
+        seed['current'].update(schedule=schedule,game_cutoffs=cuts)
+        root['effective_epoch'].update(schema_version=history.CONTEXT_V5,
+            pending_post_recovery=dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[]),
+            plan=dict(kind='FUTURE_CAPABLE',season=2026,week=7,deadline_utc=min(cuts.values()),calendar_sha256=state.digest(schedule),game_cutoffs=cuts))
+        if historical_pending:
+            root['owner_authorization']='FICTIONAL_OWNER_caf\u00e9'
+            descriptor=deepcopy(original_seed['sidecar']['evidence_descriptor']);entry=descriptor['entry']
+            records=[]
+            for name,size,sha in ((entry['payload_name'],entry['payload']['bytes'],entry['payload']['sha256']),
+                    ('manifest-'+descriptor['manifest_sha256']+'.json',descriptor['manifest_bytes'],descriptor['manifest_sha256'])):
+                records.append(dict(schema_version='weekly-private-POST-reservation-v2',key='asset:'+name,name=name,bytes=size,sha256=sha))
+            pool=dict(schema_version=template.PENDING_RECOVERY,handoffs=[dict(schema_version='audit-weekly-hosted-v2-failure-handoff',
+                binding=deepcopy(original_seed['package']['binding']),descriptor=descriptor,root_go_sha256='7'*64)],
+                pending_reservations=sorted(records,key=lambda r:r['key']))
+            raw_pool=store.canonical(pool)
+            root['effective_epoch']['pending_post_recovery']=dict(schema_version=template.PENDING_RECOVERY_ENVELOPE,
+                body_sha256=store.sha(raw_pool),body_bytes=len(raw_pool),gzip_base64=base64.b64encode(gzip.compress(raw_pool,mtime=0)).decode())
+    if root_static is not None:
+        assert not set(root_static)&(template.DYNAMIC_FIELDS|{'schema_version','code_pins','source_sha','qualified_runtime','pending_census','prior_capture_qualified_runtime'})
+        root.update(deepcopy(root_static))
     def client(role,operation):
         journal=tmp_path/('journal-'+role+'-'+operation);x.storage.register_root(journal)
         c=archive.Client('ghs_FICTIONAL',NEW_RUN,journal=journal,source_sha=original_seed['source'],operation=operation,transport=api,readonly=operation=='restore',
             process=store.sha((role+operation).encode()),qualification=original_seed['package']['qualification'],job=dict(execution_lane='github_actions',workflow_ref=original_seed['sidecar']['workflow_ref'],
                 workflow_sha=original_seed['source'],job_id=JOBS[role],permission='write',event_name='workflow_dispatch',api_job_id=0,run_authenticated=False))
         c.bind(original_seed['package']['binding']);return c
-    root_sha=state.digest(root);writer=client('restore','append')
+    root_sha=store.sha(store.canonical(root));writer=client('restore','append')
     handoff=checkpoint.append(snapshot,writer,original_seed['package'],storage=x.storage,output=tmp_path/'writer/checkpoint-write',
         current_root_go_sha256=root_sha,authenticate=lambda _:True,pending_census=original_seed['census'],clock=lambda:actual[0])
     done[0]=(began+timedelta(seconds=50)).isoformat();actual[0]=began+timedelta(seconds=90)
@@ -244,13 +283,18 @@ def locator_seed(tmp_path,original_seed,monkeypatch):
     encoded=archive.read_owned(x.storage,ref,history.LIMITS['envelope_bytes'],raw=True)
     descriptor=store.append(appender,encoded,cp.payload(encoded),original_seed['package']['qualification'])
     completed=began+timedelta(seconds=120)
-    cohort=dict(schema_version=history.LOCATOR_VERSION+'-cohort',kind='GRADING_ONLY',repository=store.REPO,source_sha=original_seed['source'],run_id=NEW_RUN,
+    cohort=dict(schema_version=history.LOCATOR_VERSION+'-cohort',kind='CAPTURE_AND_GRADE' if source_transition else 'GRADING_ONLY',repository=store.REPO,source_sha=original_seed['source'],run_id=NEW_RUN,
         root_go_sha256=root_sha,workflow_sha256=pins['.github/workflows/lab.yml'],epoch_sha256=previous.registered.epoch.sha256,feed_sha256=anchor['feed_sha256'],
         jobs={r:dict(job_id=JOBS[r],api_job_id=888+i) for i,r in enumerate(JOBS)},root_issued_at_utc=began.isoformat(),verified_at=result.proof['known_by_at'],
         created_at=(began+timedelta(seconds=100)).isoformat(),fits=0,public_release=False,successful_forecast=False)
+    receipt=deepcopy(original_seed['receipt'])
+    if source_transition:
+        receipt.update(**{k:cohort[k] for k in ('source_sha','run_id','root_go_sha256','workflow_sha256','epoch_sha256','jobs','verified_at','created_at')})
+        receipt['policy_registered_at_utc']=began.isoformat()
+        anchor=dict(feed_sha256=receipt['feed_sha256'],receipt_sha256=store.sha(gzip.compress(store.canonical(receipt),mtime=0)))
     locator=history.locator_document(anchor,cohort,handoff,result.proof,descriptor,cp.client_identity(appender),envelope['planning'],code_pins=pins)
     modified=deepcopy(original_seed)
-    modified.update(sidecar=locator['sidecar'],locator=locator,original_root=root,old_run=NEW_RUN,old_complete=completed.isoformat(),writer_done=done[0],
+    modified.update(sidecar=locator['sidecar'],locator=locator,original_root=root,receipt=receipt,old_run=NEW_RUN,old_complete=completed.isoformat(),writer_done=done[0],
         current_at=(completed+timedelta(days=1)).isoformat(),durable_sha256=grade._digest(result.durable.document),
         assets=[dict(a,body=base64.b64encode(a['body']).decode()) for a in x.server.assets])
     modified['job_times']=[((began+timedelta(seconds=a)).isoformat(),(began+timedelta(seconds=b)).isoformat()) for a,b in ((1,5),(10,50),(70,120))]
@@ -260,6 +304,9 @@ def locator_seed(tmp_path,original_seed,monkeypatch):
         (state.utc(original['snapshot_completed_at'])-timedelta(minutes=2),state.utc(original_seed['writer_done'])),
         (state.utc(original_seed['writer_done'])+timedelta(seconds=50),state.utc(original_seed['old_complete'])))]
     modified['sources'].update({p:base64.b64encode((ROOT/p).read_bytes()).decode() for p in history.LOCATOR_HELPERS})
+    if source_transition:
+        for p in ('nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py'):
+            modified['sources'][p]=base64.b64encode((ROOT/p).read_bytes()+b'\n# FICTIONAL original orchestration\n').decode()
     assert result.durable.document['known_versions']==previous.durable.document['known_versions']
     assert result.durable.document['captures']==previous.durable.document['captures']
     return modified
@@ -373,18 +420,25 @@ def test_v3_prior_namespace_restores_every_multipart_row_without_relabeling(tmp_
 
 def test_v3_restored_history_is_really_appended_and_read_from_new_namespace(tmp_path,multipart_locator_seed,monkeypatch):
     """Two fictional releases; real append, multipart codec and fresh reader."""
+    seed=multipart_locator_seed;x=dual_locator_case(tmp_path/'transition',seed,monkeypatch)
+    previous=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert_rotated_append_read(tmp_path,seed,x,previous,monkeypatch)
+
+
+def assert_rotated_append_read(tmp_path,seed,x,previous,monkeypatch):
+    """Unchanged checkpoint API writes/reads only the new qualified namespace."""
     from nfl_lab import audit_weekly_grade_v1 as grade,audit_weekly_grade_checkpoint_v1 as checkpoint
     from nfl_lab import audit_weekly_archive_v1 as archive,private_draft_store as store,state
     from test_private_draft_store_v2 import Server,Response
-    seed=multipart_locator_seed;x=dual_locator_case(tmp_path/'transition',seed,monkeypatch)
-    previous=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
     package=x.context.go['qualified_runtime'];binding=package['binding'];q=package['qualification']
+    current_source=x.context.go['source_sha']
+    asset_offset=binding['canary_asset_id']-seed['package']['binding']['canary_asset_id']
     class NewServer(Server):
         def release(self):
             result=super().release();result.update(id=binding['release_id'],url=store.API+'/releases/'+str(binding['release_id']))
             return result
         def add(self,name,body=b'fictional',size=None):
-            a=super().add(name,body,size);a['id']+=20000
+            a=super().add(name,body,size);a['id']+=asset_offset
             a['url']=store.API+'/releases/assets/'+str(a['id'])
             a['browser_download_url']='https://github.com/'+store.REPO+'/releases/download/'+self.tag+'/'+name
             return a
@@ -417,13 +471,13 @@ def test_v3_restored_history_is_really_appended_and_read_from_new_namespace(tmp_
                     head_sha=p['source_sha'],status='completed',conclusion='success',started_at=p['started_at_utc'],completed_at=p['created_at_utc'])
                     for p in (q['before_proof'],q['read_proof'],q)]))
             assert rid==x.context.client.run_id
-            if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha=seed['source'],run_attempt=1,event='workflow_dispatch',
+            if '/jobs?' not in url:return Response(dict(id=int(rid),head_sha=current_source,run_attempt=1,event='workflow_dispatch',
                 path='.github/workflows/lab.yml',head_branch='fictional',status='in_progress',conclusion=None,
                 repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
-            jobs=[dict(id=901,name=JOBS['restore'],run_id=int(rid),head_sha=seed['source'],
+            jobs=[dict(id=901,name=JOBS['restore'],run_id=int(rid),head_sha=current_source,
                 started_at=(state.utc(seed['current_at'])+timedelta(minutes=1)).isoformat(),completed_at=finished[0],
                 status='completed' if finished[0] else 'in_progress',conclusion='success' if finished[0] else None)]
-            if finished[0]:jobs.append(dict(id=902,name=JOBS['consume'],run_id=int(rid),head_sha=seed['source'],
+            if finished[0]:jobs.append(dict(id=902,name=JOBS['consume'],run_id=int(rid),head_sha=current_source,
                 started_at=(state.utc(finished[0])+timedelta(seconds=1)).isoformat(),completed_at=None,status='in_progress',conclusion=None))
             return Response(dict(total_count=len(jobs),jobs=jobs))
         return server(request,timeout)
@@ -435,8 +489,8 @@ def test_v3_restored_history_is_really_appended_and_read_from_new_namespace(tmp_
         previous=previous.durable,clock=lambda:at[0])
     def client(role):
         journal=tmp_path/('new-'+role);x.storage.register_root(journal)
-        c=archive.Client('ghs_FICTIONAL',x.context.client.run_id,journal=journal,source_sha=seed['source'],transport=transport,
-            job=dict(execution_lane='github_actions',workflow_ref=seed['sidecar']['workflow_ref'],workflow_sha=seed['source'],
+        c=archive.Client('ghs_FICTIONAL',x.context.client.run_id,journal=journal,source_sha=current_source,transport=transport,
+            job=dict(execution_lane='github_actions',workflow_ref=seed['sidecar']['workflow_ref'],workflow_sha=current_source,
                 job_id=JOBS[role],permission='write',event_name='workflow_dispatch',api_job_id=0,run_authenticated=False),
             operation='append' if role=='restore' else 'restore',readonly=role=='consume',process=('3' if role=='restore' else '4')*64,
             qualification=q)
@@ -455,6 +509,8 @@ def test_v3_restored_history_is_really_appended_and_read_from_new_namespace(tmp_
     assert restored.durable.document['known_weeks']==previous.durable.document['known_weeks']
     assert handoff['runtime_binding_sha256']==store.sha(store.canonical(binding))
     assert handoff['runtime_binding_sha256']!=seed['sidecar']['checkpoint_handoff']['runtime_binding_sha256']
+    assert handoff['producer']['source_sha']==current_source
+    assert restored.proof['reader']['source_sha']==current_source
     assert {a['id'] for a in server.assets}.isdisjoint({a['id'] for a in x.server.assets})
     assert all(r.method=='GET' for r in x.calls)
     assert any(r.method=='POST' for r in server.calls)
@@ -847,3 +903,586 @@ print(json.dumps(dict(fictional=True,AS_bytes=resource.getrlimit(resource.RLIMIT
     print(result.stdout,end='')
     assert result.returncode==0,result.stderr
     assert json.loads(result.stdout)['AS_bytes']==512 << 20
+
+
+def source_transition_root(original, receipt, locator, *, runtime_transition='PRESERVE'):
+    """New synthetic metadata; original Root/runtime bytes remain untouched."""
+    from nfl_lab import private_draft_store as store,audit_weekly_template_v1 as template
+    target=deepcopy(original);target.update(schema_version=history.ROOT_V4,source_sha='9'*40)
+    target['publication_registration'].update(policy_sha256=store.sha(b'FICTIONAL_NEW_SOURCE_POLICY'),
+        policy_gzip_base64='FICTIONAL_NEW_POLICY')
+    overrides={}
+    for p in ('nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py'):
+        overrides[p]=target['code_pins'][p]
+        target['code_pins'][p]=store.sha(('FICTIONAL_CURRENT_SOURCE:'+p).encode())
+    packed=gzip.compress(store.canonical(locator),mtime=0)
+    predecessor={k:receipt[k] for k in ('source_sha','workflow_sha256','policy_sha256','recipe_registration_sha256',
+        'run_id','feed_sha256','root_go_sha256','epoch_sha256','choice_sha256')}
+    predecessor.update(receipt_sha256=locator['anchor']['receipt_sha256'],root_static_sha256=template.static_root_sha256(original),
+        code_pins_sha256=store.sha(store.canonical(original['code_pins'])),
+        locator=dict(path=history.locator_filename(locator),sha256=store.sha(packed)))
+    binding=dict(schema_version=history.SOURCE_HISTORY_BINDING,target_source_sha=target['source_sha'],
+        target_policy_sha256=target['publication_registration']['policy_sha256'],predecessor=predecessor,pin_overrides=overrides,
+        runtime_transition=runtime_transition)
+    target['source_history_binding']=history.source_history_envelope(binding)
+    target['effective_epoch'].update(previous_capture=deepcopy(locator['anchor']),
+        previous_checkpoint=dict(schema_version=history.LOCATOR_REF,**predecessor['locator']))
+    if runtime_transition=='DUAL_RUNTIME_ROTATE':
+        from test_audit_weekly_controller_bootstrap_v1 import dual_runtime_root,fictional_runtime_metadata
+        target=dual_runtime_root(target,original['qualified_runtime'],original['pending_census'],locator['anchor'],original_root=original)
+        target['schema_version']=history.ROOT_V4
+        target['qualified_runtime']=fictional_runtime_metadata(original['qualified_runtime'],original['pending_census'],number=5)
+    return target
+
+
+@pytest.fixture
+def source_metadata(parent_metadata):
+    """128 synthetic pins and closed metadata, no private body or authority."""
+    from nfl_lab import private_draft_store as store,audit_weekly_template_v1 as template,audit_weekly_hosted_v1 as hosted
+    data=deepcopy(parent_metadata);sidecar=json.loads(gzip.decompress(data['packed']))
+    pins={p:store.sha(('FICTIONAL_OLD_PIN:'+p).encode()) for p in hosted.PINS}
+    pins.update(data['code_pins'])
+    assert len(pins)==128
+    schedule=[dict(season=2026,week=8,game_type='REG',game_id='FICTIONAL_GAME',kickoff_utc='2026-10-30T00:00:00+00:00')]
+    cuts={'FICTIONAL_GAME':'2026-10-29T23:45:00+00:00'}
+    old={k:None for k in template.ROOT_V3_KEYS}
+    old.update(schema_version=template.ROOT_V3,source_sha=data['receipt']['source_sha'],approved=True,operation='RECURRING_CAPTURE',
+        repository=store.REPO,code_pins=pins,qualified_runtime=data['qualified_runtime'],pending_census={'original':'census4'},
+        prior_capture_qualified_runtime={'original':'COUNT7 runtime2'},
+        issued_at_utc='2026-10-28T06:00:00+00:00',expires_at_utc='2026-10-28T07:00:00+00:00',
+        publication_registration=dict(policy_sha256=data['receipt']['policy_sha256'],policy_gzip_base64='FICTIONAL_OLD_POLICY',
+            rights_authority={'original':'rights'},r0={'original':'R0'}),
+        effective_epoch=dict(schema_version=history.CONTEXT_V5,controller_context=None,previous_capture={'old':'COUNT7'},previous_checkpoint=None,
+            pending_post_recovery={'original':'pending'},plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,
+                deadline_utc=min(cuts.values()),calendar_sha256=store.sha(store.canonical(schedule)),game_cutoffs=cuts)))
+    receipt=data['receipt'];receipt['root_go_sha256']=store.sha(store.canonical(old))
+    sidecar['root_go_sha256']=receipt['root_go_sha256']
+    planning=dict(schema_version=history.LOCATOR_VERSION+'-planning',epoch_sha256=receipt['epoch_sha256'],
+        current=dict(season=2026,week=8,schedule=schedule,game_cutoffs=cuts,canonical_choice_sha256=receipt['choice_sha256']),
+        next=None,resolved_weeks=[],known_by_at=sidecar['grade_read_proof']['known_by_at'],
+        calendar=dict(url='https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv',sha256='a'*64,bytes=10,
+            retrieved_utc='2026-10-28T06:01:00+00:00'))
+    cohort=dict(schema_version=history.LOCATOR_VERSION+'-cohort',kind='CAPTURE_AND_GRADE',repository=store.REPO,
+        **{k:deepcopy(receipt[k]) for k in ('source_sha','run_id','root_go_sha256','workflow_sha256','epoch_sha256','feed_sha256','jobs','verified_at','created_at')},
+        root_issued_at_utc=old['issued_at_utc'],fits=0,public_release=False,successful_forecast=False)
+    locator=dict(schema_version=history.LOCATOR_VERSION,repository=store.REPO,cohort=cohort,sidecar=sidecar,planning=planning,
+        anchor=dict(feed_sha256=receipt['feed_sha256'],receipt_sha256=store.sha(gzip.compress(store.canonical(receipt),mtime=0))),
+        helper_sha256={p:pins[p] for p in history.LOCATOR_HELPERS})
+    root=source_transition_root(old,receipt,locator)
+    return SimpleNamespace(root=root,original=old,receipt=receipt,locator=locator,jobs=data['jobs'],at=data['at'])
+
+
+def replace_source_body(root, body):
+    """Encode deliberately invalid test metadata without the builder's guards."""
+    from nfl_lab import private_draft_store as store
+    raw=store.canonical(body)
+    root['source_history_binding']=dict(schema_version=history.SOURCE_HISTORY_TRANSPORT,body_sha256=store.sha(raw),
+        body_bytes=len(raw),gzip_base64=base64.b64encode(gzip.compress(raw,mtime=0)).decode())
+
+
+def test_source_scope_static_transport_and_current_source_continuation(source_metadata):
+    from nfl_lab import private_draft_store as store,audit_weekly_template_v1 as template
+    x=source_metadata;before=store.canonical(x.original)
+    binding=history.validate_source_history_binding(x.root)
+    assert x.root['source_history_binding']==history.source_history_envelope(binding)
+    assert gzip.decompress(base64.b64decode(x.root['source_history_binding']['gzip_base64']))==store.canonical(binding)
+    assert history.source_history_scope(x.root,x.receipt,locator=x.locator,
+        locator_sha256=binding['predecessor']['locator']['sha256'])==x.original['code_pins']
+    static=deepcopy(x.root);static['approved']=False
+    for k in template.DYNAMIC_FIELDS-{'approved'}:static[k]=None
+    assert history.validate_source_history_binding(static)==binding
+    assert history.source_history_scope(static,x.receipt,locator=x.locator,
+        locator_sha256=binding['predecessor']['locator']['sha256'])==x.original['code_pins']
+    assert template.static_root_sha256(static)==template.static_root_sha256(x.root)
+    later=deepcopy(x.receipt);later.update(source_sha=x.root['source_sha'],policy_sha256=binding['target_policy_sha256'])
+    assert history.source_history_scope(x.root,later)==x.root['code_pins']
+    x.root['effective_epoch']['previous_capture']['feed_sha256']='f'*64
+    with pytest.raises(history.HistoryError,match='REGISTERED_PREDECESSOR'):
+        history.source_history_scope(x.root,x.receipt)
+    assert store.canonical(x.original)==before
+    assert history._SOURCE_ROOT_V3_KEYS==template.ROOT_V3_KEYS
+
+
+@pytest.mark.parametrize('field',['source_sha','workflow_sha256','policy_sha256','recipe_registration_sha256',
+    'run_id','feed_sha256','root_go_sha256','epoch_sha256','choice_sha256'])
+def test_source_scope_rejects_any_changed_original_receipt(source_metadata,field):
+    x=source_metadata;x.receipt[field]='123' if field=='run_id' else '0'*(40 if field=='source_sha' else 64)
+    with pytest.raises(history.HistoryError):history.source_history_scope(x.root,x.receipt)
+
+
+@pytest.mark.parametrize('damage',['binding_extra','predecessor_extra','missing_binding','raw_body','old_root','target_source','target_policy',
+    'pin_digest','missing_pin','added_pin','unchanged_override','forbidden_grade','forbidden_checkpoint','forbidden_workflow','forbidden_feature',
+    'forbidden_R0','forbidden_config','forbidden_procedure','forbidden_numerical','locator_run','receipt_anchor','locator_hash','locator_path','cohort','jobs'])
+def test_source_binding_rejects_scope_or_pin_mutations(source_metadata,damage):
+    from nfl_lab import private_draft_store as store
+    x=source_metadata;body=history.validate_source_history_binding(x.root)
+    if damage=='binding_extra':body['waiver']=True
+    elif damage=='predecessor_extra':body['predecessor']['reset_claim']=True
+    elif damage=='missing_binding':del x.root['source_history_binding']
+    elif damage=='raw_body':x.root['source_history_binding']=body
+    elif damage=='old_root':x.root['schema_version']='audit-weekly-hosted-v3-root-GO'
+    elif damage=='target_source':x.root['source_sha']='0'*40
+    elif damage=='target_policy':x.root['publication_registration']['policy_sha256']='0'*64
+    elif damage=='pin_digest':body['predecessor']['code_pins_sha256']='0'*64
+    elif damage=='missing_pin':del x.root['code_pins'][history.FILES[1]]
+    elif damage=='added_pin':x.root['code_pins']['nfl_lab/not_original.py']='0'*64
+    elif damage=='unchanged_override':body['pin_overrides'][history.FILES[0]]=x.root['code_pins'][history.FILES[0]]
+    elif damage.startswith('forbidden_'):
+        p={'grade':'nfl_lab/audit_weekly_grade_v1.py','checkpoint':'nfl_lab/audit_weekly_grade_checkpoint_v1.py',
+            'workflow':'.github/workflows/lab.yml','feature':'nfl_lab/features.py','R0':'nfl_lab/audit_reference_capture_v1.py',
+            'config':'config/audit-weekly-numerical-runtime-v1.json','procedure':'nfl_lab/weekly_generic_producer.py',
+            'numerical':'nfl_lab/audit_numerical_runtime_v1.py'}[damage.split('_',1)[1]]
+        body['pin_overrides'][p]='0'*64
+    elif damage=='locator_run':body['predecessor']['locator']['path']=body['predecessor']['locator']['path'].replace('--45000000001--','--45000000099--')
+    elif damage=='receipt_anchor':x.locator['anchor']['receipt_sha256']='0'*64
+    elif damage=='locator_hash':body['predecessor']['locator']['sha256']='0'*64
+    elif damage=='locator_path':x.locator['sidecar']['checkpoint_handoff']['snapshot_sha256']='0'*64
+    elif damage=='cohort':x.locator['cohort']['source_sha']='0'*40
+    elif damage=='jobs':x.locator['cohort']['jobs']['restore']['api_job_id']+=100
+    if damage not in {'missing_binding','raw_body'}:replace_source_body(x.root,body)
+    locator_sha=store.sha(gzip.compress(store.canonical(x.locator),mtime=0))
+    with pytest.raises(history.HistoryError):
+        history.source_history_scope(x.root,x.receipt,locator=x.locator,locator_sha256=locator_sha)
+
+
+@pytest.mark.parametrize('damage',['extra','body_hash','body_bytes','boolean_bytes','base64','trailing','multiple','truncated','noncanonical','duplicate',
+    'nan','infinity','oversize_plain','oversize_encoded'])
+def test_source_transport_is_closed_single_canonical_bounded_gzip(source_metadata,damage):
+    from nfl_lab import private_draft_store as store
+    root=source_metadata.root;envelope=root['source_history_binding'];raw=gzip.decompress(base64.b64decode(envelope['gzip_base64']))
+    packed=None
+    if damage=='extra':envelope['body']=json.loads(raw)
+    elif damage=='body_hash':envelope['body_sha256']='0'*64
+    elif damage=='body_bytes':envelope['body_bytes']+=1
+    elif damage=='boolean_bytes':envelope['body_bytes']=True
+    elif damage=='base64':envelope['gzip_base64']='***'
+    elif damage=='trailing':packed=base64.b64decode(envelope['gzip_base64'])+b'junk'
+    elif damage=='multiple':packed=base64.b64decode(envelope['gzip_base64'])+gzip.compress(b'{}',mtime=0)
+    elif damage=='truncated':packed=base64.b64decode(envelope['gzip_base64'])[:-1]
+    elif damage=='noncanonical':raw=json.dumps(json.loads(raw),indent=2).encode()
+    elif damage=='duplicate':raw=b'{"schema_version":"duplicate",'+raw[1:]
+    elif damage=='nan':raw=raw.replace(b'"pin_overrides":{',b'"pin_overrides":{"invalid":NaN,')
+    elif damage=='infinity':raw=raw.replace(b'"pin_overrides":{',b'"pin_overrides":{"invalid":Infinity,')
+    elif damage=='oversize_plain':raw=b' '*(history.SOURCE_HISTORY_PLAIN_CAP+1)
+    elif damage=='oversize_encoded':envelope['gzip_base64']='A'*(history.SOURCE_HISTORY_ENCODED_CAP+1)
+    if damage in {'noncanonical','duplicate','nan','infinity','oversize_plain'}:
+        envelope.update(body_bytes=len(raw),body_sha256=store.sha(raw));packed=gzip.compress(raw,mtime=0)
+    if packed is not None:envelope['gzip_base64']=base64.b64encode(packed).decode()
+    with pytest.raises(history.HistoryError):history.validate_source_history_binding(root)
+
+
+@pytest.fixture
+def source_transition_seed(tmp_path,original_seed,monkeypatch,*,historical_pending=False):
+    from nfl_lab import audit_weekly_grade_v1 as grade
+    actual_grade=grade.grade;actual_parts=grade._write_snapshot_v2
+    def split(storage,output,document,*,part_bytes=None):
+        size=sum(len(c) for c in grade._canonical_chunks(document))
+        return actual_parts(storage,output,document,part_bytes=min(64<<20,(size+1)//2))
+    monkeypatch.setattr(grade,'_write_snapshot_v2',split)
+    monkeypatch.setattr(grade,'grade',lambda *a,**kw:actual_grade(*a,**kw,wire_version=2))
+    return locator_seed.__wrapped__(tmp_path,original_seed,monkeypatch,source_transition=True,historical_pending=historical_pending)
+
+
+def source_transition_case(root,seed,monkeypatch,*,runtime_transition='PRESERVE'):
+    from nfl_lab import private_draft_store as store,state
+    from test_private_draft_store_v2 import Response
+    x=locator_recovery_case(root,seed,monkeypatch)
+    x.context.go=source_transition_root(seed['original_root'],seed['receipt'],seed['locator'],runtime_transition=runtime_transition)
+    x.context.go['issued_at_utc']=seed['current_at']
+    x.context.go['expires_at_utc']=(state.utc(seed['current_at'])+timedelta(hours=1)).isoformat()
+    x.context.root_sha256=store.sha(store.canonical(x.context.go))
+    original_api=x.api;target=x.context.go['source_sha'];directory=[]
+    def transport(request,timeout):
+        if '/contents/'+history.LOCATOR_ROOT+'?' in request.full_url:
+            x.calls.append(request)
+            name=history.locator_filename(seed['locator'])
+            rows=[dict(type='file',name=name,path=history.LOCATOR_ROOT+'/'+name,size=x.sidecar['bytes'])]
+            if x.damage.get('newer_locator'):
+                name=name.replace('2026','2027',1);rows.append(dict(type='file',name=name,path=history.LOCATOR_ROOT+'/'+name,size=100))
+            directory.append(request);return Response(rows)
+        response=original_api(request,timeout)
+        if '/actions/runs/'+x.context.client.run_id in request.full_url:
+            doc=json.loads(response.body)
+            if 'jobs' in doc:
+                for job in doc['jobs']:job['head_sha']=target
+            else:doc['head_sha']='0'*40 if x.damage.get('current_source') else target
+            return Response(doc)
+        return response
+    x.api=transport;x.context.client.transport=transport
+    x.context.client.source_sha=target;x.context.client.job['workflow_sha']=target
+    x.directory=directory
+    return x
+
+
+def test_source_transition_restores_full_native_multipart_history_with_current_identity(tmp_path,source_transition_seed,monkeypatch):
+    from nfl_lab import audit_weekly_grade_v1 as grade,private_draft_store as store
+    seed=source_transition_seed;x=source_transition_case(tmp_path/'new-source',seed,monkeypatch)
+    root_before=store.canonical(x.context.go);old_before=store.canonical(seed['original_root'])
+    result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert grade._digest(result.durable.document)==seed['durable_sha256']
+    assert result.durable.document['known_versions']==seed['known_versions']
+    assert result.durable.document['known_weeks']==seed['known_weeks']
+    assert result.proof['original_grade_read_proof']==seed['sidecar']['grade_read_proof']
+    assert result.proof['current']['source_sha']==x.context.go['source_sha']!=seed['source']
+    assert len(result.proof['native_part_recovery']['parts'])==2
+    assert len(x.directory)==2 and all(r.method=='GET' for r in x.calls)
+    assert store.canonical(x.context.go)==root_before and store.canonical(seed['original_root'])==old_before
+    for k in ('qualified_runtime','pending_census','prior_capture_qualified_runtime'):
+        assert x.context.go[k]==seed['original_root'][k]
+    assert not any('/contents/' in r.full_url and '?ref='+x.context.go['source_sha'] in r.full_url for r in x.calls)
+
+
+@pytest.mark.parametrize('damage',['source','run','job','current_source','newer_locator'])
+def test_source_transition_authenticates_old_and_current_sources_before_private_GET(tmp_path,source_transition_seed,monkeypatch,damage):
+    from nfl_lab import private_draft_store as store
+    x=source_transition_case(tmp_path/'reject',source_transition_seed,monkeypatch);x.damage[damage]=True
+    with pytest.raises((history.HistoryError,store.StoreError)):
+        history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert not any('/releases/' in r.full_url for r in x.calls)
+
+
+@pytest.mark.parametrize('field',['retained_registration','original_selected_handoff','source_config','qualified_runtime','pending_census',
+    'prior_capture_qualified_runtime','cutoff_lead_seconds','jobs','limits','owner_authorization','publication','workflow_ref','single_writer_group'])
+def test_source_transition_rejects_changed_protected_static_root_fields(tmp_path,source_transition_seed,monkeypatch,field):
+    seed=source_transition_seed;x=source_transition_case(tmp_path/'static',seed,monkeypatch)
+    x.context.go[field]={'FORBIDDEN':'STATIC_CHANGE'}
+    envelope=next(history.metadata_document(base64.b64decode(a['body']),cap=history.LIMITS['envelope_bytes'])
+        for a in seed['assets'] if a['name']=='blob-'+seed['sidecar']['evidence_descriptor']['entry']['payload']['sha256']+'.bin')
+    pins=history._source_history_pins(x.context.go,history.validate_source_history_binding(x.context.go))
+    jobs={role:dict(id=seed['locator']['cohort']['jobs'][role]['api_job_id'],name=JOBS[role],head_sha=seed['source'],
+        run_id=int(seed['old_run']),status='completed',conclusion='success',started_at=a,completed_at=b)
+        for (role,(a,b)) in zip(JOBS,seed['job_times'])}
+    with pytest.raises(history.HistoryError,match='STATIC_FIELDS_AND_RUNTIMES_UNCHANGED'):
+        history._root_envelope(envelope,seed['locator'],jobs,code_pins=pins,static_root=x.context.go,at=seed['current_at'])
+
+
+@pytest.mark.parametrize('schema',['audit-weekly-hosted-v1-root-GO','audit-weekly-hosted-v2-root-GO','audit-weekly-hosted-v3-root-GO'])
+def test_legacy_roots_cannot_smuggle_source_binding(source_metadata,schema):
+    root=source_metadata.root;root['schema_version']=schema
+    with pytest.raises(history.HistoryError,match='REQUIRES_ROOT_V4'):history.validate_source_history_binding(root)
+    del root['source_history_binding']
+    assert history.validate_source_history_binding(root) is None
+    with pytest.raises(history.HistoryError,match='ADAPTER_REQUIRED'):history.source_history_scope(root,source_metadata.receipt)
+
+
+def test_source_transport_preserves_58210_byte_root_within_existing_dispatch_caps(source_metadata):
+    from nfl_lab import private_draft_store as store
+    x=source_metadata;old=deepcopy(x.original)
+    old['owner_authorization']='x'*(58210-len(store.canonical(old))+2)
+    assert len(store.canonical(old))==58210
+    receipt=deepcopy(x.receipt);receipt['root_go_sha256']=store.sha(store.canonical(old))
+    locator=deepcopy(x.locator);locator['cohort']['root_go_sha256']=receipt['root_go_sha256']
+    locator['sidecar']['root_go_sha256']=receipt['root_go_sha256']
+    locator['anchor']['receipt_sha256']=store.sha(gzip.compress(store.canonical(receipt),mtime=0))
+    target=source_transition_root(old,receipt,locator);raw=store.canonical(target)
+    dispatch=dict(ref='fictional',inputs=dict(mode='audit-weekly-producer-v1',inference_builder_go_json=raw.decode(),
+        inference_builder_go_sha256=store.sha(raw)))
+    assert len(raw)<=60<<10 and len(store.canonical(dispatch))<65535
+    binding=history.validate_source_history_binding(target)
+    assert binding['predecessor']['root_go_sha256']==store.sha(store.canonical(old))
+    assert int.from_bytes(base64.b64decode(target['source_history_binding']['gzip_base64'])[4:8],'little')==0
+
+
+def test_source_metadata_cold_process_never_imports_numerical_or_performs_io(source_metadata,tmp_path):
+    from nfl_lab import private_draft_store as store
+    x=source_metadata;path=tmp_path/'source-metadata.json'
+    path.write_bytes(store.canonical(dict(root=x.root,receipt=x.receipt,locator=x.locator)))
+    script='''import sys,json,socket
+from pathlib import Path
+from unittest.mock import patch
+from nfl_lab import audit_weekly_grade_history_v1 as h
+data=json.loads(Path(sys.argv[1]).read_bytes())
+def denied(*a,**k):raise AssertionError("SOURCE_METADATA_IO_OR_NUMERICAL_FORBIDDEN")
+with patch.object(h,"_modules",denied),patch.object(Path,"read_bytes",denied),patch.object(Path,"read_text",denied),patch("builtins.open",denied),patch.object(socket.socket,"connect",denied):
+ binding=h.validate_source_history_binding(data["root"])
+ pins=h.source_history_scope(data["root"],data["receipt"],locator=data["locator"],locator_sha256=binding["predecessor"]["locator"]["sha256"])
+ assert len(pins)==128
+ assert h.source_history_envelope(binding)==data["root"]["source_history_binding"]
+assert not any(n in sys.modules for n in ("nfl_lab.audit_weekly_grade_v1","nfl_lab.audit_weekly_grade_checkpoint_v1","numpy","scipy","pandas","sklearn"))
+print("PURE_SOURCE_HISTORY_METADATA_OK")
+'''
+    result=subprocess.run([sys.executable,'-B','-c',script,str(path)],cwd=ROOT,capture_output=True,text=True,timeout=15)
+    assert result.returncode==0,result.stderr
+    assert result.stdout.strip()=='PURE_SOURCE_HISTORY_METADATA_OK'
+
+
+@pytest.mark.parametrize('damage',['full_hash','static_hash','old_root_body','old_root_pins','old_schema','rights','r0','locator_hash'])
+def test_source_root_preimage_and_original_policy_commitments_are_independent(source_metadata,damage):
+    x=source_metadata;body=history.validate_source_history_binding(x.root)
+    old=deepcopy(x.original)
+    if damage=='full_hash':body['predecessor']['root_go_sha256']='f'*64
+    elif damage=='static_hash':body['predecessor']['root_static_sha256']='f'*64
+    elif damage=='old_root_body':old['owner_authorization']='FORBIDDEN_OLD_ROOT_REWRITE'
+    elif damage=='old_root_pins':old['code_pins'][history.FILES[0]]='f'*64
+    elif damage=='old_schema':old['schema_version']='audit-weekly-hosted-v2-root-GO'
+    elif damage in {'rights','r0'}:x.root['publication_registration']['rights_authority' if damage=='rights' else 'r0']={'forbidden':'new identity'}
+    replace_source_body(x.root,body)
+    envelope=dict(root_go=old,planning=deepcopy(x.locator['planning']))
+    kwargs=dict(code_pins=x.original['code_pins'],static_root=x.root,at=x.at)
+    if damage=='locator_hash':kwargs['locator_sha256']='f'*64
+    with pytest.raises(history.HistoryError):history._root_envelope(envelope,x.locator,x.jobs,**kwargs)
+
+
+@pytest.mark.parametrize('value',[None,'','ROTATE','PRESERVE_THEN_FALLBACK',True,[],{}])
+def test_source_runtime_transition_must_be_an_explicit_closed_enum(source_metadata,value):
+    root=source_metadata.root;body=history.validate_source_history_binding(root)
+    body['runtime_transition']=value;replace_source_body(root,body)
+    with pytest.raises(history.HistoryError,match='EXPLICIT_SOURCE_HISTORY_RUNTIME_TRANSITION'):
+        history.validate_source_history_binding(root)
+    del body['runtime_transition'];replace_source_body(root,body)
+    with pytest.raises(history.HistoryError,match='CLOSED_SOURCE_HISTORY_BINDING'):
+        history.validate_source_history_binding(root)
+
+
+def source_rotation_envelope(seed):
+    return next(history.metadata_document(base64.b64decode(a['body']),cap=history.LIMITS['envelope_bytes'])
+        for a in seed['assets'] if a['name']=='blob-'+seed['sidecar']['evidence_descriptor']['entry']['payload']['sha256']+'.bin')
+
+
+def source_rotation_jobs(seed):
+    return {role:dict(id=seed['locator']['cohort']['jobs'][role]['api_job_id'],name=JOBS[role],head_sha=seed['source'],
+        run_id=int(seed['old_run']),status='completed',conclusion='success',started_at=a,completed_at=b)
+        for role,(a,b) in zip(JOBS,seed['job_times'])}
+
+
+def test_cross_source_rotation_reads_original4_then_appends_and_reads_current5(tmp_path,source_transition_seed,monkeypatch):
+    from nfl_lab import private_draft_store as store,audit_weekly_grade_v1 as grade,audit_weekly_template_v1 as template
+    seed=source_transition_seed;old=store.canonical(seed['original_root'])
+    x=source_transition_case(tmp_path/'rotation',seed,monkeypatch,runtime_transition='DUAL_RUNTIME_ROTATE')
+    root_before=store.canonical(x.context.go)
+    # An already-consumed first-future claim remains in the original release;
+    # neither source transition nor rotation creates another bootstrap claim.
+    claim=store.canonical(dict(schema_version='audit-weekly-owner-first-future-primary-v1-claim',
+        epoch_sha256=seed['receipt']['epoch_sha256'],stream_id='weekly-corrected-primary-player-game-v1'))
+    x.server.add('blob-'+store.sha(claim)+'.bin',claim)
+    old_assets=deepcopy(x.server.assets)
+    current=x.context.go['qualified_runtime'];prior=x.context.go['prior_capture_qualified_runtime']
+    assert template.capture_runtime(x.context.go)==(seed['package'],seed['census'])
+    assert store.canonical(prior['qualified_runtime'])==store.canonical(seed['original_root']['qualified_runtime'])
+    assert store.canonical(prior['pending_census'])==store.canonical(seed['original_root']['pending_census'])
+    assert prior['anchor']==seed['locator']['anchor']
+    assert prior['root_static_sha256']==template.static_root_sha256(seed['original_root'])
+    previous=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    assert grade._digest(previous.durable.document)==seed['durable_sha256']
+    assert previous.proof['original_grade_read_proof']==seed['sidecar']['grade_read_proof']
+    assert previous.proof['native_snapshot_recovery']['binding_sha256']==store.sha(store.canonical(prior['qualified_runtime']['binding']))
+    assert previous.proof['current']['source_sha']==x.context.go['source_sha']
+    assert x.server.assets==old_assets and all(r.method=='GET' for r in x.calls)
+    assert not any('/releases/'+str(current['binding']['release_id']) in r.full_url for r in x.calls)
+    assert_rotated_append_read(tmp_path,seed,x,previous,monkeypatch)
+    assert store.canonical(seed['original_root'])==old and store.canonical(x.context.go)==root_before
+    assert x.server.assets==old_assets
+
+
+@pytest.mark.parametrize('damage',['preserve_enum','prior_package','prior_census','anchor','root_static','same_runtime','reuse_COUNT7',
+    'unqualified','new_census','quota_cap','deletion','source_config','retained_registration','rights','r0','limits','new_binding'])
+def test_source_rotation_rejects_unsealed_or_migrated_runtime_metadata(tmp_path,source_transition_seed,monkeypatch,damage):
+    from nfl_lab import private_draft_store as store,audit_private_rotation_v1 as rotation
+    seed=source_transition_seed;x=source_transition_case(tmp_path/'reject-rotation',seed,monkeypatch,runtime_transition='DUAL_RUNTIME_ROTATE')
+    root=x.context.go;prior=root['prior_capture_qualified_runtime'];current=root['qualified_runtime']
+    if damage=='preserve_enum':
+        body=history.validate_source_history_binding(root);body['runtime_transition']='PRESERVE';replace_source_body(root,body)
+    elif damage=='prior_package':prior['qualified_runtime']['root_go_sha256']='f'*64
+    elif damage=='prior_census':prior['pending_census']['owner_evidence_sha256']='f'*64
+    elif damage=='anchor':prior['anchor']['feed_sha256']='f'*64
+    elif damage=='root_static':prior['root_static_sha256']='f'*64
+    elif damage=='same_runtime':root['qualified_runtime']=deepcopy(prior['qualified_runtime'])
+    elif damage=='reuse_COUNT7':root['qualified_runtime']=deepcopy(seed['original_root']['prior_capture_qualified_runtime']['qualified_runtime'])
+    elif damage=='unqualified':current['qualification']['exact_readback']=False
+    elif damage=='new_census':root['pending_census']['owner_evidence_sha256']='f'*64
+    elif damage=='quota_cap':current['quota_reservation']['reserved_after_bytes']=513<<20
+    elif damage=='deletion':current['quota_reservation']['old_assets_deleted']=1
+    elif damage in {'source_config','retained_registration','limits'}:root[damage]={'forbidden':'migration'}
+    elif damage in {'rights','r0'}:root['publication_registration']['rights_authority' if damage=='rights' else 'r0']={'forbidden':'migration'}
+    elif damage=='new_binding':current['binding']['release_id']+=1
+    pins=history._source_history_pins(root,history.validate_source_history_binding(root))
+    with pytest.raises((history.HistoryError,ValueError,store.StoreError,rotation.RotationError)):
+        history._root_envelope(source_rotation_envelope(seed),seed['locator'],source_rotation_jobs(seed),code_pins=pins,
+            static_root=root,at=seed['current_at'])
+
+
+@pytest.fixture
+def rotation_quota_metadata(original_seed):
+    return dict(package=deepcopy(original_seed['package']),census=deepcopy(original_seed['census']),before=original_seed['current_at'])
+
+
+@pytest.mark.parametrize('existing,unknown',[(1,0),(6,0),(6,1),(15,0)])
+def test_main_quota_metadata_matches_rotation_and_never_performs_io(rotation_quota_metadata,monkeypatch,existing,unknown):
+    from nfl_lab import audit_private_rotation_v1 as rotation,private_draft_store as store
+    data=rotation_quota_metadata;q=data['package']['quota_reservation']
+    q.update(existing_draft_runtimes=existing,pending_unlocated_runtimes=unknown,
+        reserved_before_bytes=(existing+unknown)*(32<<20),reserved_after_bytes=(existing+unknown+1)*(32<<20),
+        charged_existing_bytes=0,charged_existing_assets=0)
+    original=store.canonical(data)
+    rotation.checked_quota(q,dict(runtime_id=data['package']['runtime_id'],pending_census=data['census']))
+    def denied(*a,**k):pytest.fail('QUOTA_METADATA_IO_OR_PRODUCER_CALL_FORBIDDEN')
+    monkeypatch.setattr(rotation,'checked_quota',denied);monkeypatch.setattr(history,'_modules',denied)
+    monkeypatch.setattr(store,'read_local',denied);monkeypatch.setattr(Path,'read_bytes',denied);monkeypatch.setattr(Path,'read_text',denied)
+    monkeypatch.setattr('builtins.open',denied)
+    assert history._source_history_rotation_quota(**data)==q
+    assert store.canonical(data)==original
+
+
+@pytest.mark.parametrize('damage',['extra','missing','schema','global_cap','runtime_cap','target','deleted','metadata','bool_count','negative',
+    'no_existing','global_overflow','reserved_before','reserved_after','charged_bytes','charged_assets','pending_count','census_hash','inventory_hash'])
+def test_main_quota_mutations_rejected_by_existing_rotation_and_metadata(rotation_quota_metadata,damage):
+    from nfl_lab import audit_private_rotation_v1 as rotation
+    data=rotation_quota_metadata;q=data['package']['quota_reservation']
+    if damage=='extra':q['waiver']=True
+    elif damage=='missing':del q['old_assets_deleted']
+    elif damage=='schema':q['schema_version']='not-qualified'
+    elif damage=='global_cap':q['global_cap_bytes']+=1
+    elif damage=='runtime_cap':q['new_runtime_reserved_bytes']+=1
+    elif damage=='target':q['new_runtime_id']='f'*32
+    elif damage=='deleted':q['old_assets_deleted']=1
+    elif damage=='metadata':q['metadata_only']=False
+    elif damage=='bool_count':q['pending_records']=False
+    elif damage=='negative':q['pending_unlocated_runtimes']=-1
+    elif damage=='no_existing':q['existing_draft_runtimes']=0
+    elif damage=='global_overflow':q.update(existing_draft_runtimes=15,pending_unlocated_runtimes=1,reserved_before_bytes=512<<20,reserved_after_bytes=544<<20)
+    elif damage=='reserved_before':q['reserved_before_bytes']+=1
+    elif damage=='reserved_after':q['reserved_after_bytes']+=1
+    elif damage=='charged_bytes':q['charged_existing_bytes']=q['existing_draft_runtimes']*(32<<20)+1
+    elif damage=='charged_assets':q['charged_existing_assets']=q['existing_draft_runtimes']*128+1
+    elif damage=='pending_count':q['pending_records']+=1
+    elif damage=='census_hash':q['pending_census_sha256']='f'*64
+    elif damage=='inventory_hash':q['inventory_sha256']='invalid'
+    with pytest.raises(rotation.RotationError):
+        rotation.checked_quota(q,dict(runtime_id=data['package']['runtime_id'],pending_census=data['census']))
+    with pytest.raises(history.HistoryError):history._source_history_rotation_quota(**data)
+
+
+@pytest.mark.parametrize('damage',['census_extra','incomplete','owner_hash','future_census','naive_clock','qualification_future','row_extra',
+    'row_duplicate','row_boolean','row_over_cap','row_current_runtime','row_release_boolean','row_runtime','bool_deleted','float_global_cap'])
+def test_main_rotation_census_keeps_existing_strict_types_and_clocks(rotation_quota_metadata,damage):
+    from nfl_lab import private_draft_store as store
+    data=rotation_quota_metadata;p=data['package'];c=data['census']
+    row=dict(reservation_sha256='e'*64,runtime_id=None,release_id=None,pending_bytes=1,pending_assets=1)
+    if damage=='census_extra':c['reset_claim']=True
+    elif damage=='incomplete':c['complete']=False
+    elif damage=='owner_hash':c['owner_evidence_sha256']='invalid'
+    elif damage=='future_census':c['as_of_utc']='2099-01-01T00:00:00+00:00'
+    elif damage=='naive_clock':c['as_of_utc']='2026-01-01T00:00:00'
+    elif damage=='qualification_future':p['qualification']['created_at_utc']='2099-01-01T00:00:00+00:00'
+    elif damage=='bool_deleted':p['quota_reservation']['old_assets_deleted']=False
+    elif damage=='float_global_cap':p['quota_reservation']['global_cap_bytes']=float(512<<20)
+    else:
+        c['reservations']=[row]
+        if damage=='row_extra':row['fallback']=True
+        elif damage=='row_duplicate':c['reservations'].append(deepcopy(row))
+        elif damage=='row_boolean':row['pending_assets']=True
+        elif damage=='row_over_cap':row['pending_bytes']=(32<<20)+1
+        elif damage=='row_current_runtime':row['runtime_id']=p['runtime_id']
+        elif damage=='row_release_boolean':row['release_id']=True
+        elif damage=='row_runtime':row['runtime_id']='invalid'
+    p['quota_reservation'].update(pending_records=len(c['reservations']),pending_census_sha256=store.sha(store.canonical(c)))
+    with pytest.raises(history.HistoryError):history._source_history_rotation_quota(**data)
+
+
+@pytest.fixture
+def source_pending_seed(tmp_path,original_seed,monkeypatch):
+    return source_transition_seed.__wrapped__(tmp_path,original_seed,monkeypatch,historical_pending=True)
+
+
+def test_continued_pending_pool_preserve_same_source_and_rotation_keep_original_evidence(tmp_path,source_pending_seed,monkeypatch):
+    from nfl_lab import private_draft_store as store,audit_weekly_template_v1 as template,state
+    seed=source_pending_seed;old=seed['original_root'];before=store.canonical(old);pool=template.pending_recovery(old)
+    assert store.sha(before)!=state.digest(old),'ROOT_WIRE_CANONICAL_ENCODING_MUST_BE_TESTED'
+    assert pool['handoffs'] and pool['pending_reservations']
+    assert history.continued_pending_recovery(old,old)==pool
+    preserve=source_transition_root(old,seed['receipt'],seed['locator'])
+    assert history.continued_pending_recovery(preserve,old)==pool
+    x=source_transition_case(tmp_path/'pending-rotation',seed,monkeypatch,runtime_transition='DUAL_RUNTIME_ROTATE')
+    new_pool=history.continued_pending_recovery(x.context.go,old)
+    assert new_pool==dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
+    # The inherited old pool may not be passed as new-namespace evidence.
+    with pytest.raises(template.TemplateError,match='PENDING_POST_NAMESPACE_MISMATCH'):template.pending_recovery(x.context.go)
+    x.context.go['effective_epoch']['pending_post_recovery']=new_pool
+    x.context.root_sha256=store.sha(store.canonical(x.context.go))
+    result=history.restore_previous(x.context,x.storage,x.sidecar,x.receipt,transport=x.api)
+    proof=result.proof['source_history_continuation']
+    assert proof['original_root_go_sha256']==store.sha(before)
+    assert proof['original_pending_recovery_sha256']==store.sha(store.canonical(pool))
+    assert proof['continued_pending_recovery_sha256']==store.sha(store.canonical(new_pool))
+    retained=history.metadata_document(Path(proof['original_native_evidence_envelope']['path']).read_bytes(),cap=history.LIMITS['envelope_bytes'])
+    assert store.canonical(retained['root_go'])==before
+    assert template.pending_recovery(retained['root_go'])==pool
+    assert store.canonical(old)==before and all(r.method=='GET' for r in x.calls)
+
+
+@pytest.mark.parametrize('damage',['old_root','prior_pool_namespace','prior_package','prior_census','anchor','quota','same_source_namespace'])
+def test_continued_pending_rejects_wrong_root_runtime_and_namespace(source_pending_seed,damage):
+    from nfl_lab import private_draft_store as store,audit_weekly_template_v1 as template
+    seed=source_pending_seed;old=deepcopy(seed['original_root'])
+    root=source_transition_root(old,seed['receipt'],seed['locator'],runtime_transition='DUAL_RUNTIME_ROTATE')
+    if damage=='old_root':old['owner_authorization']='changed'
+    elif damage=='prior_pool_namespace':
+        pool=template.pending_recovery(old);pool['handoffs'][0]['binding']=deepcopy(root['qualified_runtime']['binding'])
+        old['effective_epoch']['pending_post_recovery']=pool
+    elif damage=='prior_package':root['prior_capture_qualified_runtime']['qualified_runtime']['root_go_sha256']='f'*64
+    elif damage=='prior_census':root['prior_capture_qualified_runtime']['pending_census']['owner_evidence_sha256']='f'*64
+    elif damage=='anchor':root['prior_capture_qualified_runtime']['anchor']['feed_sha256']='f'*64
+    elif damage=='quota':root['qualified_runtime']['quota_reservation']['old_assets_deleted']=1
+    elif damage=='same_source_namespace':
+        root['source_sha']=old['source_sha'];del root['source_history_binding'];root['schema_version']='audit-weekly-hosted-v3-root-GO'
+    with pytest.raises((history.HistoryError,ValueError,store.StoreError)):history.continued_pending_recovery(root,old)
+
+
+def test_cold_main_rotation_and_pending_continuation_have_no_producer_dependency(source_pending_seed,tmp_path):
+    """Load only the literal Parent dependency inventory in a fresh process."""
+    from nfl_lab import private_draft_store as store
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    # A hosted checkout has no sibling audit worktree. Reproduce the declared
+    # Parent package boundary, with no implicit access to Producer modules.
+    main=tmp_path/'metadata-only'
+    for name in bootstrap.PARENT_EXECUTABLE_PINS|{'nfl_lab/__init__.py'}:
+        target=main/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes((ROOT/name).read_bytes())
+    assert not (main/'nfl_lab/audit_private_rotation_v1.py').exists()
+    assert not (main/'nfl_lab/audit_weekly_grade_v1.py').exists()
+    seed=source_pending_seed
+    root=source_transition_root(seed['original_root'],seed['receipt'],seed['locator'],runtime_transition='DUAL_RUNTIME_ROTATE')
+    root['approved']=False
+    for k in ('issued_at_utc','expires_at_utc','operation','effective_epoch'):root[k]=None
+    path=tmp_path/'main-rotation-metadata.json'
+    path.write_bytes(store.canonical(dict(root=root,receipt=seed['receipt'],locator=seed['locator'],
+        locator_sha256=store.sha(gzip.compress(store.canonical(seed['locator']),mtime=0)),
+        envelope=source_rotation_envelope(seed),jobs=source_rotation_jobs(seed),at=seed['current_at'])))
+    script='''import sys,json,importlib.util,importlib.abc,socket,resource,signal
+from pathlib import Path
+from unittest.mock import patch
+main=Path(sys.argv[1]);sys.path.insert(0,str(main))
+resource.setrlimit(resource.RLIMIT_CPU,(120,120));resource.setrlimit(resource.RLIMIT_AS,(512<<20,512<<20))
+signal.signal(signal.SIGALRM,signal.SIG_DFL);signal.alarm(180)
+class MetadataOnly(importlib.abc.MetaPathFinder):
+ def find_spec(self,fullname,path=None,target=None):
+  if fullname in {"nfl_lab.audit_private_rotation_v1","nfl_lab.audit_weekly_grade_v1","nfl_lab.audit_weekly_grade_checkpoint_v1"} or fullname.split(".")[0] in {"numpy","scipy","pandas","sklearn","catboost"}:
+   raise AssertionError("MAIN_ROTATION_PRODUCER_IMPORT_FORBIDDEN:"+fullname)
+sys.meta_path.insert(0,MetadataOnly())
+import nfl_lab
+spec=importlib.util.spec_from_file_location("nfl_lab.audit_weekly_grade_history_v1",sys.argv[2])
+h=importlib.util.module_from_spec(spec);sys.modules[spec.name]=h;setattr(nfl_lab,"audit_weekly_grade_history_v1",h);spec.loader.exec_module(h)
+from nfl_lab import audit_weekly_template_v1 as t,private_draft_store as store
+data=json.loads(Path(sys.argv[3]).read_bytes())
+def denied(*a,**k):raise AssertionError("MAIN_METADATA_BODY_OR_NETWORK_FORBIDDEN")
+read_local=store.read_local
+def config_only(path,cap):
+ assert Path(path)==store.CONFIG
+ return read_local(path,cap)
+with patch.object(h,"_modules",denied),patch.object(Path,"read_bytes",denied),patch.object(Path,"read_text",denied),patch("builtins.open",denied),patch.object(socket.socket,"connect",denied),patch.object(store,"read_local",config_only):
+ pins=h.source_history_scope(data["root"],data["receipt"],locator=data["locator"],locator_sha256=data["locator_sha256"])
+ assert h._root_envelope(data["envelope"],data["locator"],data["jobs"],code_pins=pins,static_root=data["root"],at=data["at"],locator_sha256=data["locator_sha256"])==data["envelope"]
+ old=data["envelope"]["root_go"];before=store.canonical(old)
+ old_pool=t.pending_recovery(old);new_pool=h.continued_pending_recovery(data["root"],old)
+ assert old_pool["handoffs"] and old_pool["pending_reservations"]
+ assert new_pool==dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
+ assert store.canonical(old)==before
+for name,module in tuple(sys.modules.items()):
+ if name.startswith("nfl_lab.") and name!="nfl_lab.audit_weekly_grade_history_v1" and getattr(module,"__file__",None):
+  assert Path(module.__file__).is_relative_to(main),(name,module.__file__)
+print("COLD_MAIN_ROTATION_AND_PENDING_METADATA_OK")
+'''
+    result=subprocess.run([sys.executable,'-I','-B','-c',script,str(main),str(ROOT/'nfl_lab/audit_weekly_grade_history_v1.py'),str(path)],
+        cwd=main,capture_output=True,text=True,timeout=185)
+    assert result.returncode==0,result.stderr
+    assert result.stdout.strip()=='COLD_MAIN_ROTATION_AND_PENDING_METADATA_OK'

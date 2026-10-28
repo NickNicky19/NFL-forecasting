@@ -188,20 +188,23 @@ def validate_root(go, *, now):
     require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}
         and (go["publication"] is False or go["operation"] in {"CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}),
         "EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
-    if go['schema_version'] == template.ROOT_V3:
+    if go['schema_version'] in {template.ROOT_V3,template.ROOT_V4}:
         require(go['operation'] in {'RECURRING_CAPTURE','CONTROLLER_REGISTRATION'}, 'EXPLICIT_DUAL_RUNTIME_OPERATION')
         template.prior_runtime(go, before=go['issued_at_utc'])
+        if go['schema_version']==template.ROOT_V4:
+            from .audit_weekly_grade_history_v1 import validate_source_history_binding
+            validate_source_history_binding(go)
     if go["operation"]=="RECURRING_CAPTURE":
         from . import audit_weekly_operations_v1 as operations
         operations.context(go["effective_epoch"])
-        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==operations.CONTEXT_V5,
+        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4} or go['effective_epoch']['schema_version']==operations.CONTEXT_V5,
             'EXPLICIT_DUAL_RUNTIME_HISTORY_PROTOCOL')
     elif go["operation"]=="CONTROLLER_REGISTRATION":
         from . import audit_weekly_controller_registration_v1 as registration
         try:registration.context(go["effective_epoch"])
         except registration.RegistrationError:
             raise store.StoreError("EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT") from None
-        require(go['schema_version'] != template.ROOT_V3 or go['effective_epoch']['schema_version']==registration.RECOVERY_CONTEXT_SCHEMA,
+        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4} or go['effective_epoch']['schema_version']==registration.RECOVERY_CONTEXT_SCHEMA,
             'EXPLICIT_DUAL_RUNTIME_PENDING_REGISTRATION')
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
     template.pending_recovery(go)
