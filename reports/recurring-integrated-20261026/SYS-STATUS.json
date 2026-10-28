@@ -426,7 +426,9 @@
     "evidence/enabled-parent-next-checkpoint-metadata-preflight.json",
     "evidence/website-final-after-enabled-parent.json",
     "evidence/website-current-lease-integration-scope-review.json",
-    "evidence/website-owner-enabled-parent-progress-readback.json"
+    "evidence/website-owner-enabled-parent-progress-readback.json",
+    "evidence/automatic-delivery-final-handoff-readback.json",
+    "evidence/automatic-delivery-coverage-count-check.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -1747,5 +1749,18 @@
     "actual_latest_history_locator_metadata": "PASS",
     "history_locator_path": "state/controller-v1/history-v2/20261028T171323.535719Z--40729906573--dc66e91fad1e68d1fbc384d70c91a6aa41255274337004358107b559a2108468.json.gz",
     "history_locator_sha256": "7b71c4b1837fba5e7a767a2038f62eec072420e0d0d3cc0cd93d1a9f886909f8"
+  },
+  "current_release_handoff": {
+    "schema_version": "automatic-delivery-release-handoff-readback-v1",
+    "observed_at_utc": "2026-10-28T17:35:59.246884+00:00",
+    "comment": 6476073933,
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6476073933",
+    "exact_body_readback": true,
+    "body_sha256": "0462dd9af5fb54cd2cd0e620b02c8665b21562e122d1945e6f9bfed246451fa3",
+    "report_commit": "e0e7f94f01894482360581ed0c172fa4ef0d57c8",
+    "Parent": 40729788942,
+    "BOT_child": 40729906573,
+    "website_production_owner_lease": 178,
+    "website_released": false
   }
 }

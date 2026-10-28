@@ -10,6 +10,8 @@ At17:27UTC, website Main remained e336, app409dcb48, boardb83a8a2e andzero selec
 
 No deployed selected installation, forecasting-accuracy gain or scientific qualification is claimed. Original failures, losing weeks, issued forecasts, registrations and old26's missing-evidence gap remain retained. Source-timing assumptions, unsupported exact research PPR, private accuracy reproduction, finite capacity, authenticated optional routes and separate Phase2 operating limitations remain explicit. [All SYS states](SYS-STATUS.json) · [Current findings](CURRENT-FINDINGS-20261028.md) · [Coverage](coverage-current-20261028.csv).
 
+The exact completed-release handoff was posted and read back at [comment6476073933](https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6476073933). The public aggregate partition also checks independently:1,951public +1,001outside-board reference +4ineligible reference =2,956private selected rows. This is count consistency, not a private accuracy reproduction.
+
 ---
 
 Update — 2026-10-28T16:56:16.263983+00:00 (PARTIAL; enabled Parent passed, BOT child running)
