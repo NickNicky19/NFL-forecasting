@@ -273,7 +273,7 @@ def test_failed_first_recovery_real_GET_client_keeps_original_wire_and_bounds(fa
     class Native(hosted.PendingMetadataClient):
         def inventory(self):return q.assets,sum(a['size'] for a in q.assets)
         def draft(self):return None
-    journal=tmp_path/'bounded-recovery';journal.mkdir()
+    journal=tmp_path/'bounded-recovery';journal.mkdir(mode=0o700)
     client=Native('ghs_FICTIONAL','300',source_sha=q.root['source_sha'],journal=journal,
         job=q.client.job,operation='metadata',root_go=q.root,transport=transport)
     client.bind(q.client.binding)
