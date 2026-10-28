@@ -22,7 +22,7 @@ def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket,'connect',lambda *_:pytest.fail('REAL_NETWORK_FORBIDDEN'))
 
 @pytest.fixture(scope='module')
-def original_seed(tmp_path_factory):
+def original_seed(tmp_path_factory,*,workflow=None,policy_sha256=None):
     import test_audit_weekly_operations_grade_v1 as bridge
     from nfl_lab import audit_weekly_operations_grade_v1 as worker,audit_weekly_grade_v1 as grade
     from nfl_lab import audit_weekly_archive_v1 as archive,private_draft_store as store,state,gha_private_checkpoint as cp
@@ -48,10 +48,10 @@ def original_seed(tmp_path_factory):
         encoded=archive.read_owned(q['storage'],report['evidence_envelope'],history.LIMITS['envelope_bytes'],raw=True)
         descriptor=store.append(c,encoded,cp.payload(encoded),x.service.q)
         completion=x.service.now+timedelta(minutes=1)
-        workflow=('concurrency:\n  group: nfl-lab-single-writer\n  cancel-in-progress: false\n'
+        workflow=workflow or ('concurrency:\n  group: nfl-lab-single-writer\n  cancel-in-progress: false\n'
             'permissions:\n  contents: write\n  actions: read\njobs:\n'+''.join('  '+j+':\n    runs-on: ubuntu-latest\n' for j in JOBS.values())).encode()
         receipt=dict(schema_version='audit-weekly-delivery-v1-public-receipt',source_sha=bridge.SOURCE,run_id=bridge.RUN,
-            root_go_sha256=bridge.ROOT_SHA,policy_sha256='1'*64,policy_registered_at_utc=q['pop']['registered_at'],
+            root_go_sha256=bridge.ROOT_SHA,policy_sha256=policy_sha256 or '1'*64,policy_registered_at_utc=q['pop']['registered_at'],
             workflow_sha256=store.sha(workflow),recipe_registration_sha256='2'*64,rights_authority_sha256='3'*64,
             r0_identity_sha256='4'*64,origin_choice_sha256='5'*64,feed_sha256='6'*64,feed_bytes=100,rows=1,categories=['rec'],
             jobs={r:dict(job_id=n,api_job_id=777+i) for i,(r,n) in enumerate(JOBS.items())},
@@ -170,7 +170,7 @@ def case(tmp_path,original_seed,monkeypatch):
 
 
 @pytest.fixture
-def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,historical_pending=False):
+def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,historical_pending=False,root_static=None):
     """Real grade/CAS/append/read, fictional authority/API and no new labels.
 
     The prior fixture is an input to this codec test, not an old-source
@@ -260,6 +260,9 @@ def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,hi
             raw_pool=store.canonical(pool)
             root['effective_epoch']['pending_post_recovery']=dict(schema_version=template.PENDING_RECOVERY_ENVELOPE,
                 body_sha256=store.sha(raw_pool),body_bytes=len(raw_pool),gzip_base64=base64.b64encode(gzip.compress(raw_pool,mtime=0)).decode())
+    if root_static is not None:
+        assert not set(root_static)&(template.DYNAMIC_FIELDS|{'schema_version','code_pins','source_sha','qualified_runtime','pending_census','prior_capture_qualified_runtime'})
+        root.update(deepcopy(root_static))
     def client(role,operation):
         journal=tmp_path/('journal-'+role+'-'+operation);x.storage.register_root(journal)
         c=archive.Client('ghs_FICTIONAL',NEW_RUN,journal=journal,source_sha=original_seed['source'],operation=operation,transport=api,readonly=operation=='restore',
@@ -1426,10 +1429,17 @@ def test_continued_pending_rejects_wrong_root_runtime_and_namespace(source_pendi
 
 
 def test_cold_main_rotation_and_pending_continuation_have_no_producer_dependency(source_pending_seed,tmp_path):
-    """Load this shared component against Main's real metadata-only modules."""
+    """Load only the literal Parent dependency inventory in a fresh process."""
     from nfl_lab import private_draft_store as store
-    main=ROOT.parent/'source-transition-main-20261028'
-    assert (main/'nfl_lab/audit_weekly_template_v1.py').is_file(),'MAIN_METADATA_CHECKOUT_REQUIRED'
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    # A hosted checkout has no sibling audit worktree. Reproduce the declared
+    # Parent package boundary, with no implicit access to Producer modules.
+    main=tmp_path/'metadata-only'
+    for name in bootstrap.PARENT_EXECUTABLE_PINS|{'nfl_lab/__init__.py'}:
+        target=main/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes((ROOT/name).read_bytes())
+    assert not (main/'nfl_lab/audit_private_rotation_v1.py').exists()
+    assert not (main/'nfl_lab/audit_weekly_grade_v1.py').exists()
     seed=source_pending_seed
     root=source_transition_root(seed['original_root'],seed['receipt'],seed['locator'],runtime_transition='DUAL_RUNTIME_ROTATE')
     root['approved']=False

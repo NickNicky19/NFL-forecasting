@@ -64,7 +64,17 @@ def restore(context,*,transport=None):
     require(value["feed_sha256"]==previous["feed_sha256"] and value["run_id"]!=context.client.run_id,
         "EXACT_ROOT_REGISTERED_DISTINCT_PRIOR_CAPTURE")
     output=archive.fresh(storage,output);journal=storage.register_root(output/"journal")
-    from . import audit_weekly_template_v1 as template
+    from . import audit_weekly_template_v1 as template,audit_weekly_grade_history_v1 as history
+    source_history=context.go.get("schema_version")==history.ROOT_V4 and value["source_sha"]!=context.client.source_sha
+    def source_scope():
+        context.verify()
+        require(store.canonical(value)==plain,"UNCHANGED_SOURCE_HISTORY_ORIGINAL_RECEIPT")
+        pins=history.source_history_scope(context.go,value)
+        require(historical=={name:pins[name] for name in retained.HISTORICAL_FILES},"EXACT_SOURCE_HISTORY_ARCHIVE_PINS")
+        require(context.go["source_sha"]==context.client.source_sha
+            and context.root_sha256==store.sha(store.canonical(context.go)),"CURRENT_SOURCE_HISTORY_ARCHIVE_AUTHORITY")
+        return pins
+    if source_history:source_scope()
     package,pending=template.capture_runtime(context.go)
     extra=discovery.routes(value,package)
     clients=[]
@@ -74,10 +84,18 @@ def restore(context,*,transport=None):
             "BOUNDED_GET_ONLY_RECURRING_RESTORE_CLIENTS")
         c=retained.ReadClient(context.env.get("GITHUB_TOKEN"),context.client.run_id,source_sha=context.client.source_sha,
             journal=journal,job=context.client.job,operation="restore",extra_routes=extra,transport=transport)
+        if source_history:
+            native_transport=c.transport
+            def checked_transport(request,timeout):
+                source_scope()
+                require(request.method=="GET" and request.data is None,"SOURCE_HISTORY_ARCHIVE_GET_ONLY")
+                return native_transport(request,timeout)
+            c.transport=checked_transport
         c.bind(package["binding"]);clients.append(c);return c
     root_bytes=store.canonical(context.go)
     def grant_auth(request):
         context.verify()
+        if source_history:source_scope()
         require(request.get("kind") in {"BIND_SEALED_DISCOVERY_SOURCE","LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET",
             "BIND_SEALED_HISTORICAL_SOURCE","LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"},"CLOSED_RESTORE_GRANT_PURPOSE")
         require(store.sha(store.canonical(request["inputs"]))==request["inputs_sha256"],"EXACT_LIVE_RESTORE_GRANT_INPUTS")
@@ -92,8 +110,10 @@ def restore(context,*,transport=None):
         authority.attach(client,context.proof,context.env,root_bytes)
         require(cp.client_identity(client)["api_job_id"]==context.client.job["api_job_id"],"SAME_CURRENT_DISCOVERY_API_JOB")
         return True
-    dgrant=discovery.bind_discovery_source(plain,plain_sha,package,bootstrap_proof=context.proof,
-        current_root_go_sha256=context.root_sha256,historical_source_sha256=historical,authenticate=grant_auth)
+    grant_arguments=dict(bootstrap_proof=context.proof,current_root_go_sha256=context.root_sha256,
+        historical_source_sha256=historical,authenticate=grant_auth)
+    dgrant=(discovery.bind_source_history(plain,plain_sha,package,current_root=context.go,**grant_arguments) if source_history else
+        discovery.bind_discovery_source(plain,plain_sha,package,**grant_arguments))
     discovered=discovery.discover(plain,plain_sha,package,factory,storage=storage,output=output/"discovery",
         historical_source_sha256=historical,pending_census=pending,
         current_root_go_sha256=context.root_sha256,authenticate=authenticate_client,discovery_grant=dgrant)
@@ -118,10 +138,19 @@ def restore(context,*,transport=None):
             verified_permissions=dict(contents="write",actions="read")) for role,j in doc["original_job_evidence"].items()}
         # discovery validated the exact original workflow's permissions;
         # retained.restore independently rechecks them before private GETs.
+        # This SHA describes CURRENT grant authority. The old receipt, index,
+        # historical jobs and original policy remain unchanged historical data.
+        policy_sha=(context.go["publication_registration"]["policy_sha256"] if source_history else value["policy_sha256"])
         grant=retained.bind_historical_source(request,native,bootstrap_proof=context.proof,
-            public_policy_sha256=value["policy_sha256"],historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
+            public_policy_sha256=policy_sha,historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
     result=retained.restore(request,factory,storage=storage,authority=native,root=worker.ROOT,
-        check_authority=context.verify,historical_grant=grant)
+        check_authority=source_scope if source_history else context.verify,historical_grant=grant)
+    if source_history:
+        source_scope()
+        policy=result["aliases"].get("context/public_policy.json")
+        require(type(policy) is dict and policy["sha256"]==value["policy_sha256"]
+            and result["original_archive"]["root_go_sha256"]==value["root_go_sha256"],
+            "SOURCE_HISTORY_RESTORED_ORIGINAL_POLICY_AND_ROOT")
     context.verify()
     require(sum(c.calls for c in clients)<=LIMITS["HTTP_calls"],"RECURRING_RESTORE_AGGREGATE_HTTP_CAP")
     binding=cp.binding(output/"restored"/"RETAINED_RESULT.json")

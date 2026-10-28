@@ -94,17 +94,20 @@ def _historical_contract(value,scope):
 
 class DiscoverySourceGrant:
     """In-process source/actor scope; never serialized execution authority."""
-    def __init__(self,document,value,proof,authenticate,key):
+    def __init__(self,document,value,proof,authenticate,key,*,source_history_root=None):
         require(key is _LIVE,"LIVE_DISCOVERY_SOURCE_GRANT_REQUIRED")
         self.document=deepcopy(document);self.sha256=store.sha(store.canonical(document))
         self._value,self._proof,self._authenticate=deepcopy(value),proof,authenticate
+        self._source_history_root=deepcopy(source_history_root)
     def verify(self,binding,current=None):
         require(self.sha256==store.sha(store.canonical(self.document)) and self.document["binding"]==binding
             and self.document["process_identity"]==store.process_identity()
             and self.document["binding"]["receipt_sha256"]==store.sha(store.canonical(self._value))
             and store.utc(self.document["created_at_utc"])<=now(),"DISCOVERY_SOURCE_GRANT_INTEGRITY_AND_SCOPE")
         scope=_sealed_source(self._proof,binding["current_root_go_sha256"],now())
-        require(scope==self.document["scope"] and _historical_contract(self._value,scope)==self.document["historical_contract"],
+        contract=(_historical_contract(self._value,scope) if self._source_history_root is None else
+            _source_history_contract(self._source_history_root,self._value,scope,binding,self._proof))
+        require(scope==self.document["scope"] and contract==self.document["historical_contract"],
             "DISCOVERY_SEALED_SOURCE_GRANT_CHANGED")
         if current is not None:
             require(all(current[k]==v for k,v in scope["current"].items())
@@ -133,6 +136,59 @@ def bind_discovery_source(receipt_body,receipt_sha256,qualified_runtime,*,bootst
         process_identity=store.process_identity(),created_at_utc=at.isoformat() if isinstance(at,datetime) else at)
     retained._grant_authenticate(authenticate,"BIND_SEALED_DISCOVERY_SOURCE",document,at)
     return DiscoverySourceGrant(document,value,bootstrap_proof,authenticate,_LIVE)
+
+
+def _source_history_contract(root,value,scope,binding,proof):
+    """Explicit V4 predecessor; the live current proof/seal stays unchanged."""
+    from . import audit_weekly_grade_history_v1 as history,audit_weekly_template_v1 as template
+    from . import audit_weekly_controller_v1 as controller
+    require(store.sha(store.canonical(root))==binding["current_root_go_sha256"],"EXACT_SOURCE_HISTORY_DISCOVERY_ROOT")
+    body=history.validate_source_history_binding(root)
+    require(body is not None and root["source_sha"]==scope["operational_source_sha"]
+        and root["publication_registration"]["policy_sha256"]==scope["operational_policy_sha256"]
+        and root["code_pins"].get(".github/workflows/lab.yml")==scope["operational_workflow_sha256"]
+        and root["jobs"]==scope["operational_jobs"],"SOURCE_HISTORY_DISCOVERY_CURRENT_SEALED_AUTHORITY")
+    # Bind the entire static Root (including its transport) to the actual
+    # native registration, not just a caller-supplied owner-Root hash.
+    registration=controller.decode(proof.bootstrap_seal.registration_bytes)
+    static=deepcopy(root);static["approved"]=False
+    for name in template.DYNAMIC_FIELDS-{"approved"}:static[name]=None
+    prepared=template.prepare(dict(schema_version=template.STATIC_V4,source_sha=root["source_sha"],
+        code_pins=deepcopy(root["code_pins"]),readiness=deepcopy(registration["readiness"]),root_template=static))
+    sealed=proof.bootstrap_seal.template_descriptor
+    require(store.sha(prepared.plain)==sealed["template_sha256"] and len(prepared.plain)==sealed["template_bytes"],
+        "SOURCE_HISTORY_DISCOVERY_STATIC_ROOT_MUST_MATCH_NATIVE_SEAL")
+    pins=history.source_history_scope(root,value)
+    require(value["source_sha"]!=root["source_sha"]
+        and binding["historical_source_sha256"]=={p:pins[p] for p in retained.HISTORICAL_FILES},
+        "SOURCE_HISTORY_DISCOVERY_EXACT_HISTORICAL_PINS")
+    package,_=template.capture_runtime(root)
+    require(store.sha(store.canonical(package))==binding["qualified_runtime_sha256"],"SOURCE_HISTORY_DISCOVERY_ORIGINAL_RUNTIME")
+    branch=root["workflow_ref"].split("@refs/heads/",1)[1]
+    require(value["workflow_sha256"]==scope["operational_workflow_sha256"]
+        and {role:j["job_id"] for role,j in value["jobs"].items()}==scope["operational_jobs"],
+        "SOURCE_HISTORY_DISCOVERY_UNCHANGED_WORKFLOW_AND_JOBS")
+    return dict(kind="EXPLICIT_V4_OWNER_SOURCE_HISTORY",branch=branch,
+        binding_sha256=store.sha(store.canonical(body)),receipt_sha256=store.sha(store.canonical(value)),
+        historical_code_pins_sha256=body["predecessor"]["code_pins_sha256"])
+
+
+def bind_source_history(receipt_body,receipt_sha256,qualified_runtime,*,bootstrap_proof,current_root_go_sha256,
+        historical_source_sha256,current_root,authenticate,clock=now):
+    """Bind ONLY the explicit owner-produced predecessor to current authority.
+
+    Legacy discovery contracts keep their source/policy equality checks. This
+    separate constructor authenticates the native V4 static commitment before
+    any prior-namespace GET. Old BOT sources are not admitted by this adapter.
+    """
+    value=receipt(receipt_body,receipt_sha256);at=clock()
+    scope=_sealed_source(bootstrap_proof,current_root_go_sha256,at)
+    binding=_discovery_binding(receipt_sha256,qualified_runtime,current_root_go_sha256,historical_source_sha256)
+    contract=_source_history_contract(current_root,value,scope,binding,bootstrap_proof)
+    document=dict(schema_version=VERSION+"-source-history-grant",binding=binding,scope=scope,historical_contract=contract,
+        process_identity=store.process_identity(),created_at_utc=at.isoformat() if isinstance(at,datetime) else at)
+    retained._grant_authenticate(authenticate,"BIND_SEALED_DISCOVERY_SOURCE",document,at)
+    return DiscoverySourceGrant(document,value,bootstrap_proof,authenticate,_LIVE,source_history_root=current_root)
 
 
 def receipt(body, expected_sha256):
@@ -290,7 +346,8 @@ def _origin(pool, value, historical, *, discovery_grant=None):
     if discovery_grant is not None:
         discovery_grant.verify(pool.scope,pool.current)
         expected=discovery_grant.document["scope"]["current_actor"]
-        permitted=[owner] if discovery_grant.document["historical_contract"]["kind"]=="OWNER_SEALED_NICK_READINESS" else [owner,bot]
+        permitted=[owner] if discovery_grant.document["historical_contract"]["kind"] in {
+            "OWNER_SEALED_NICK_READINESS","EXPLICIT_V4_OWNER_SOURCE_HISTORY"} else [owner,bot]
         actor_allowed=current_actor.get("login")==expected["login"] and type(current_actor.get("id")) is int and current_actor["id"]==expected["id"] \
             and type(old_actor.get("id")) is int and any(old_actor.get("login")==a["login"] and old_actor["id"]==a["id"] for a in permitted)
         require(current.get("id")==int(pool.current["run_id"]) and current.get("head_sha")==pool.current["source_sha"]
