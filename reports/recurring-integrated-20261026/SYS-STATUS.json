@@ -1,6 +1,6 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-28T17:30:25.521868+00:00",
+  "observed_at_utc": "2026-10-28T21:37:37.766932+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
   "status": "PARTIAL_REAL_PARENT_CAPTURE_RESTORE_GRADE_EXPORT_AND_CONSUMER_VERIFIED_WEBSITE_OWNER_RELEASE_PENDING",
   "findings": [
@@ -140,7 +140,7 @@
         "integrated": "Main59cd51ff28/Producer60 0409a253; native31 registration/readback; genuine current32 capture/reader/grading/export and anonymous consumer pass.",
         "released": "Current source and actual Parent40729788942-to-BOT40729906573 delivery verified. Website9/10 still not released.",
         "verified": "Actual enabled daily ParentSUCCESS; one create-only claim/one BOT dispatch,118/140HTTPcalls. BOT capture, independent restoration, grading and export allSUCCESS. Current anonymous consumer1951rows/11categories in3.353s; independent chosen-model identity and exact-source three-width browser checks pass.",
-        "remaining_boundary": "Existing website owner release/live-selected verification; actual future cron trigger and Oct29weekly decision unobserved; declared40/42 horizon gaps and other timing limits remain. No backfill, new scheduler or weakened guard."
+        "remaining_boundary": "Existing website owner release/live-selected verification. Later scheduled40745398328 arrived13:28Chicago, missed07:36\u201307:57window, issued no forecast and exited78 at retained handover guard. Successful in-window cron execution and Oct29weekly decision remain unverified; declared40/42 horizon gaps persist. No backfill, new scheduler or weakened guard."
       },
       "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
@@ -287,21 +287,21 @@
   ],
   "critical_coverage_not_passed_by_default": true,
   "current_live": {
-    "website": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "website": "dbf4a05de77e3abcd497125fa0cb0479ac4c327a",
     "application_source": "453e7e6e843b0cb1ae611b0925063e0f96c70196",
     "app_sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
-    "week_sha256": "b83a8a2e630cfbcca6c47e3851b438d657fbbd42366492754b3646bcad84896a",
-    "generated_at": "2026-10-27T18:39:19Z",
+    "week_sha256": "5997049de49551c2d0588336ea04cbf08ee89cae36f18bddfe50f60be7dc6faa",
+    "generated_at": "2026-10-28T18:46:38Z",
     "season": 2026,
     "week": 8,
     "COUNT7_installed": false,
     "PR9_installed": false,
     "loaded_ranking_snapshot": true,
     "selected_overlay_rows": 0,
-    "all23_top_picks": "CURRENT_BASELINE",
+    "all23_top_picks": "NOT_RETRACED_AFTER_DATA_ONLY_REFRESH",
     "caption": "Selected forecasts \u00b7 provisional",
     "caption_status": "CONFIRMED_MISLEADING;PR9corrected_not_live",
-    "last_TLS_observation_utc": "2026-10-28T07:31:33.267768+00:00"
+    "last_TLS_observation_utc": "2026-10-28T21:37:37.766932+00:00"
   },
   "source": {
     "research_main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
@@ -672,11 +672,13 @@
   },
   "website_owner_latest": {
     "head": "81c3fc2a612ced916f4c54814f978c509058bca5",
-    "observed_at_utc": "2026-10-28T17:27:46.875909+00:00",
+    "observed_at_utc": "2026-10-28T21:37:37.766932+00:00",
     "status": "LEASE178_ACTIVE;PR9_AND_PR10_UNMERGED;ACTUAL_LIVE_REFERENCE0SELECTED",
     "scope": "Existing owner retains production integration/deployment. Ready PR9/10 exact current binding independent of unrelated Phase2 work.",
     "result_comment": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6460288311",
-    "integration_scope_evidence": "evidence/website-current-lease-integration-scope-review.json"
+    "integration_scope_evidence": "evidence/website-current-lease-integration-scope-review.json",
+    "main": "dbf4a05de77e3abcd497125fa0cb0479ac4c327a",
+    "last_published_checkpoint": "PAUSED_RETAINING_LEASE178; actual session running status not inferred"
   },
   "software_recovery_validation_20261028": {
     "Main": {
@@ -1108,26 +1110,12 @@
     "website_selected_installation": false
   },
   "latest_actual_live": {
-    "observed_at_utc": "2026-10-28T17:27:46.875909+00:00",
-    "main": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "schema_version": "website-deploy-request-live-readback-v1",
+    "observed_at_utc": "2026-10-28T21:37:37.766932+00:00",
+    "main": "dbf4a05de77e3abcd497125fa0cb0479ac4c327a",
     "lease_revision": 178,
-    "lease_source": "81c3fc2a612ced916f4c54814f978c509058bca5",
-    "lease_run": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
-    "PRs": [
-      {
-        "number": 9,
-        "head": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
-        "merged": false,
-        "state": "open"
-      },
-      {
-        "number": 10,
-        "head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
-        "merged": false,
-        "state": "open"
-      }
-    ],
-    "actual_TLS_assets": [
+    "lease_owner_source": "81c3fc2a612ced916f4c54814f978c509058bca5",
+    "assets": [
       {
         "path": "app.js",
         "sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec",
@@ -1135,19 +1123,24 @@
       },
       {
         "path": "data/week.json",
-        "sha256": "b83a8a2e630cfbcca6c47e3851b438d657fbbd42366492754b3646bcad84896a",
-        "bytes": 1979180
+        "sha256": "5997049de49551c2d0588336ea04cbf08ee89cae36f18bddfe50f60be7dc6faa",
+        "bytes": 2000122
       },
       {
         "path": "data/weekly-adaptive-overlay.json",
-        "sha256": "41d75fce8153b133f600145a0e6307fea2f8690cf5ef3eada860cdbdf30e0af8",
+        "sha256": "2581eb86b4ab00cc5dfcfc8ab91bedf689225dd57191ee5ee12ae321f6c1fc23",
         "bytes": 333
       }
     ],
-    "board_generated_at": "2026-10-27T18:39:19Z",
-    "live_overlay_state": "DISABLED_USE_R0",
-    "live_selected_rows": 0,
-    "new_release_verified": false
+    "board_generated_at": "2026-10-28T18:46:38Z",
+    "overlay_sha256": "91d6471029ec76839650b24b9996a5ae9886d5c83bfe32dc6a1556effe7e6a1b",
+    "overlay_state": "DISABLED_USE_R0",
+    "selected_rows": 0,
+    "fallback_counts": {
+      "PPR_or_unsupported_R0": 449,
+      "publication_not_approved_R0": 2019
+    },
+    "new_selected_release_verified": false
   },
   "current_website_handoff": {
     "observed_at_utc": "2026-10-28T07:39:58.335928+00:00",
@@ -1762,5 +1755,69 @@
     "BOT_child": 40729906573,
     "website_production_owner_lease": 178,
     "website_released": false
+  },
+  "latest_scheduled_parent": {
+    "schema_version": "late-scheduled-parent-public-safe-v1",
+    "run": 40745398328,
+    "job": 123017710437,
+    "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "event": "schedule",
+    "conclusion": "failure",
+    "created_at_utc": "2026-10-28T18:28:09Z",
+    "observed_chicago": "2026-10-28T13:28:20.420341-05:00",
+    "due": false,
+    "mode": "grade",
+    "pregame_issuance_allowed": false,
+    "cadence_reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED",
+    "policy_version": "audit-weekly-parent-0736-v1",
+    "readiness_state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+    "readiness_reasons": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "exit_code": 78,
+    "acquisition_started": false,
+    "capture_started": false,
+    "new_fits_predictions": 0,
+    "state_publication_started": false,
+    "controller_parent_result_artifact_uploaded": false,
+    "raw_log_retained_privately": true,
+    "exact_decoded_log_sha256": "828b417815c488d3bb1efc8594c9830807af8bd13612f0e5126d098be037d51e",
+    "earlier_successful_manual_parent_preserved": 40729788942,
+    "next_configured_window_chicago": "2026-10-29 07:36 to07:57 America/Chicago, end exclusive",
+    "status": "LATE_CRON_OBSERVED_NO_QUALIFIED_SCHEDULED_CAPTURE_NO_BACKFILL",
+    "remaining": "A valid future scheduled execution and weekly decision remain unverified; preserve single scheduler and all guards."
+  },
+  "latest_candidate_composition": {
+    "schema_version": "current-main-selected-release-compatibility-v1",
+    "observed_at_utc": "2026-10-28T21:36:04.891040+00:00",
+    "status": "PASS_READ_ONLY_COMBINED_TREE_NOT_A_RELEASE",
+    "main": "dbf4a05de77e3abcd497125fa0cb0479ac4c327a",
+    "prior_main": "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+    "PR9_head": "f9f3056e23d1f62c1fc85828adc5a666cd52ea35",
+    "PR10_head": "e12de4763d048f6dec8e2d6cc0f89f43e18f2736",
+    "combined_tree": "ff523ad941e09c0d99a38aea8245db78333d7a5c",
+    "conflicts": 0,
+    "newer_generated_data_history_paths_preserved": 64,
+    "policy_bound_code_files_verified": 22,
+    "consumer_policy_sha256": "d20e113d313633d90379de7a2079515a5d4bbc34251d60f4bdcd94aa3cbb11d8",
+    "all_candidate_code_equals_existing_CI_tested_PR10": true,
+    "workflow_equals_existing_CI_tested_PR10": true,
+    "changes_since_original_PR10_are_only_preserved_Main_generated_data_history": true,
+    "committed_or_merged": false,
+    "deployed": false,
+    "production_writer_changed": false,
+    "new_fits": 0,
+    "limits": [
+      "This verifies actual Git tree composition; it does not replace final integrated-source CI or live release acceptance.",
+      "Existing writer retains lease178 and must perform authorized landing/deployment."
+    ]
+  },
+  "future_model_updates": {
+    "weekly_changes": "Registered dynamic metadata/catalog may describe newly selected versions under the same approved producer and procedure authority.",
+    "new_method_code": "New producer source, recipes or category/scoring contracts require identifiable prospective registration/binding and relevant checks.",
+    "history": "Existing issued forecasts and their original model/procedure/selection identities remain immutable.",
+    "website_fit_or_select": false
   }
 }

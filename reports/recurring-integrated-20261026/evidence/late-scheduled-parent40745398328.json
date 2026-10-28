@@ -1,0 +1,33 @@
+{
+  "schema_version": "late-scheduled-parent-public-safe-v1",
+  "run": 40745398328,
+  "job": 123017710437,
+  "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+  "event": "schedule",
+  "conclusion": "failure",
+  "created_at_utc": "2026-10-28T18:28:09Z",
+  "observed_chicago": "2026-10-28T13:28:20.420341-05:00",
+  "due": false,
+  "mode": "grade",
+  "pregame_issuance_allowed": false,
+  "cadence_reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED",
+  "policy_version": "audit-weekly-parent-0736-v1",
+  "readiness_state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+  "readiness_reasons": [
+    "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+    "PRIVATE_DURABILITY_NOT_VERIFIED",
+    "EXACT_PUBLICATION_REVIEW_ABSENT"
+  ],
+  "exit_code": 78,
+  "acquisition_started": false,
+  "capture_started": false,
+  "new_fits_predictions": 0,
+  "state_publication_started": false,
+  "controller_parent_result_artifact_uploaded": false,
+  "raw_log_retained_privately": true,
+  "exact_decoded_log_sha256": "828b417815c488d3bb1efc8594c9830807af8bd13612f0e5126d098be037d51e",
+  "earlier_successful_manual_parent_preserved": 40729788942,
+  "next_configured_window_chicago": "2026-10-29 07:36 to07:57 America/Chicago, end exclusive",
+  "status": "LATE_CRON_OBSERVED_NO_QUALIFIED_SCHEDULED_CAPTURE_NO_BACKFILL",
+  "remaining": "A valid future scheduled execution and weekly decision remain unverified; preserve single scheduler and all guards."
+}
