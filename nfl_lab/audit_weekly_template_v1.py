@@ -53,6 +53,7 @@ PENDING_RECOVERY_ENVELOPE = 'audit-weekly-pending-post-recovery-v1-transport'
 RECURRING_V5 = 'audit-weekly-recurring-v5-context'
 REGISTRATION_RECOVERY = 'audit-weekly-controller-registration-v1-context-v4'
 FIRST_PRIMARY = 'audit-weekly-owner-first-future-primary-v1'
+FAILED_FIRST_RECOVERY = 'audit-weekly-owner-failed-first-primary-recovery-v1'
 DYNAMIC_FIELDS = {'approved','issued_at_utc','expires_at_utc','operation','effective_epoch'}
 DOCUMENT_KEYS = {'schema_version','source_sha','code_pins','readiness','root_template'}
 HANDOFF_KEYS = {'schema_version','repository','binding','descriptor','template_sha256','template_bytes',
@@ -299,6 +300,46 @@ def first_primary_claim(root):
     value=first_primary_root(root)
     require(value is not None, 'EXPLICIT_OWNER_FIRST_PRIMARY_REQUIRED')
     return dict(schema_version=FIRST_PRIMARY+'-claim',epoch_sha256=value['retained_epoch_sha256'],
+        stream_id='weekly-corrected-primary-player-game-v1')
+
+
+def failed_first_recovery_context(context):
+    """Explicit manual NEW issuance; this never qualifies the failed capture."""
+    value=(context or {}).get('controller_context')
+    if type(value) is not dict or value.get('schema_version') != FAILED_FIRST_RECOVERY:
+        return None
+    hashes={'retained_epoch_sha256','retained_choice_sha256','retained_root_go_sha256',
+        'claim_binding_sha256','failed_root_go_sha256'}
+    require(context.get('schema_version')==RECURRING_V5
+        and set(value)==hashes|{'schema_version','old_week8_choice_body_missing','old_forecast_bodies_missing'}
+        and all(hashed(value[k]) for k in hashes)
+        and value['old_week8_choice_body_missing'] is value['old_forecast_bodies_missing'] is True
+        and context.get('previous_checkpoint') is None and type(context.get('plan')) is dict
+        and context['plan'].get('kind')=='FUTURE_CAPABLE'
+        and (context['plan'].get('season'),context['plan'].get('week'))==(2026,8)
+        and type(context['plan'].get('game_cutoffs')) is dict
+        and len(context['plan']['game_cutoffs'])==14,
+        'CLOSED_OWNER_FAILED_FIRST_RECOVERY_SCOPE')
+    return deepcopy(value)
+
+
+def failed_first_recovery_root(root):
+    value=failed_first_recovery_context(root.get('effective_epoch'))
+    if value is not None:
+        require(root.get('operation')=='RECURRING_CAPTURE'
+            and value['claim_binding_sha256']==digest(root['qualified_runtime']['binding']),
+            'OWNER_RECOVERY_EXACT_REGISTERED_NAMESPACE')
+        matches=[h for h in pending_recovery(root)['handoffs'] if h['root_go_sha256']==value['failed_root_go_sha256']]
+        require(len(matches)==1,'EXACT_PENDING_FAILED_PREDECESSOR_REQUIRED')
+    return value
+
+
+def failed_first_recovery_claim(root):
+    """One successor per failed Root/epoch/stream, independent of new clocks."""
+    value=failed_first_recovery_root(root)
+    require(value is not None,'EXPLICIT_OWNER_FAILED_FIRST_RECOVERY_REQUIRED')
+    return dict(schema_version=FAILED_FIRST_RECOVERY+'-claim',
+        failed_root_go_sha256=value['failed_root_go_sha256'],epoch_sha256=value['retained_epoch_sha256'],
         stream_id='weekly-corrected-primary-player-game-v1')
 
 
