@@ -1,8 +1,8 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-28T15:45:04.617379+00:00",
+  "observed_at_utc": "2026-10-28T16:56:16.263983+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
-  "status": "PARTIAL_CURRENT_PRODUCER_VERIFIED;PARENT_VARIABLE_CASE_CORRECTION_AND_WEBSITE_OWNER_RELEASE_PENDING",
+  "status": "PARTIAL_ENABLED_PARENT_SUCCESS_BOT_CHILD_RUNNING_WEBSITE_OWNER_RELEASE_PENDING",
   "findings": [
     {
       "id": "SYS-001",
@@ -139,8 +139,8 @@
         "repaired": "Runtime/source-history and authenticated pending-read corrections integrated through55\u201360; original limits and failures retained.",
         "integrated": "Main59cd51ff28/Producer60 0409a253; native31 registration/readback; genuine current32 capture/reader/grading/export and anonymous consumer pass.",
         "released": "Current-source software and public feed32 delivered. Website9/10ready, not released.",
-        "verified": "2503 nodes completed:2502PASS/one existing optional skip. Actual32 all3jobsSUCCESS;1960 chosen forecasts accepted in3.043s. Latest grading sidecar/history metadata preflight passes. Actual current-Main daily40650140425 exits78 before acquisition; Parent not selected.",
-        "remaining_boundary": "AUDIT_WEEKLY_PARENT_ENABLED not exactlytrue at runtime; Variables API403. Exact owner activation package prepared. Actual Parent/child recurring route, next weekly decision, website integration/live-selected verification and declared40/42 horizon gaps remain open."
+        "verified": "2503 nodes completed:2502PASS/one existing optional skip. Actual32 all3jobsSUCCESS;1960 chosen forecasts accepted in3.043s. Latest grading sidecar/history metadata preflight passes. Actual current-Main daily40650140425 exits78 before acquisition; Parent not selected. Owner corrected the value; genuine Parent40729788942 SUCCESS, exact one-create claim/readback and118/140requests. It enqueued one actual BOT child40729906573, now capturing. Enqueue is not full operations acceptance.",
+        "remaining_boundary": "Complete BOT child40729906573 capture/fresh-reader/grading/export and actual anonymous consumer; existing website owner integration/deployment/live verification; future scheduled trigger and weekly decision; declared40/42 horizon gaps and other timing limits. Activation-value blocker is resolved."
       },
       "original_checkpoint_repair_status": "declaredpending;single schedulerpreserved"
     },
@@ -408,7 +408,11 @@
     "evidence/parent-after-owner-enable-case-mismatch.json",
     "evidence/parent40718723483-original-readiness.json",
     "evidence/parent32-after-owner-enable-preflight.json",
-    "evidence/website-live-after-owner-variable-enable.json"
+    "evidence/website-live-after-owner-variable-enable.json",
+    "evidence/parent40729788942-original-result.json",
+    "evidence/parent40729788942-exact-claim.json",
+    "evidence/enabled-parent40729788942-enqueue-proof.json",
+    "evidence/enabled-parent-invariants.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -618,10 +622,10 @@
     }
   ],
   "operational_boundaries_20261027": {
-    "next_parent_window_utc": "2026-10-28T12:36:00Z inclusive to12:57:00Z exclusive",
+    "next_parent_window_utc": "2026-10-29T12:36:00Z inclusive to12:57:00Z exclusive; scheduled trigger not yet observed after enable",
     "next_parent_window_chicago": "2026-10-28 07:36 to07:57 America/Chicago",
     "entry": ".github/workflows/lab.yml job lab, existing scheduler",
-    "activation_variable": "Actual currentMain daily40650140425 exits78 before acquisition; Parent route not selected. Single-variable APIGET403. Owner action: set existing variable to literaltrue; do not bypass guard.",
+    "activation_variable": "Owner created/corrected variable to lowercase true. Actual Parent40729788942 accepted it and enqueued one BOT child; the connection Variables API permissions remain limited but no longer block invocation.",
     "automatic_execution_verified": false,
     "census": "Fresh00:12UTC bounded GET: namespace origin row10of20;10 additional matching dispatches fit, Native27+Root28 use2. Established owner requalification is required before origin leaves finite census; no automatic reanchor/rotation added.",
     "weekly_decision_deadline_utc": "2026-10-29T18:15:00Z",
@@ -1065,43 +1069,13 @@
     "accuracy_gain_claim": false
   },
   "current_parent_activation": {
-    "schema_version": "current-parent-activation-block-v1",
-    "observed_at_utc": "2026-10-28T07:28:41.447013+00:00",
-    "run": 40650140425,
-    "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
-    "status": "completed",
-    "conclusion": "failure",
-    "job": 122688061713,
-    "activation_variable": "AUDIT_WEEKLY_PARENT_ENABLED",
-    "variable_API_status": 403,
-    "variable_error": "Resource not accessible by integration",
-    "parent_selected": false,
-    "child_enqueued": false,
-    "acquisition_started": false,
-    "forecast_published": false,
-    "guard_preserved": true,
-    "private_log_sha256": "ddf5ca9de7e8ee37810a2a784ce33fe81a784aa3e7da8c8235f5c4c3ce5c4d6e",
-    "steps": [
-      {
-        "name": "Select explicit main parent route without granting readiness",
-        "conclusion": "success"
-      },
-      {
-        "name": "Enforce source and publication handover safety",
-        "conclusion": "failure"
-      },
-      {
-        "name": "Enqueue one qualified same-source Ops capture and return",
-        "conclusion": "skipped"
-      }
-    ],
-    "existing_owner_action": "Set existing Actions variable AUDIT_WEEKLY_PARENT_ENABLED to literal true; then run existing daily route once with current guards.",
-    "write_API_status": 403,
-    "write_API_error": "Resource not accessible by integration",
-    "existing_variable_write_attempted": true,
-    "variable_changed": false,
-    "original_readiness_artifact": 12799252699,
-    "original_readiness_artifact_sha256": "34dac92c9728d0ed16c1e1e54fb4c919a90d4679064c7375b776f359a7952e05"
+    "state": "ENABLED_ACTUAL_PARENT_SUCCESS",
+    "value_seen": "true",
+    "Parent": 40729788942,
+    "BOT_child": 40729906573,
+    "child_state": "RUNNING_NOT_YET_QUALIFIED",
+    "new_dispatches": 1,
+    "automatic_retry": false
   },
   "latest_actual_live": {
     "observed_at_utc": "2026-10-28T07:31:33.267768+00:00",
@@ -1215,5 +1189,94 @@
     "selected_rows": 0,
     "board_generated_at": "2026-10-27T18:39:19Z",
     "new_selected_release_verified": false
+  },
+  "enabled_Parent_real_execution": {
+    "schema_version": "enabled-parent-real-enqueue-v1",
+    "observed_at_utc": "2026-10-28T16:52:49.670871+00:00",
+    "parent_run": 40729788942,
+    "parent_head": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "parent_conclusion": "success",
+    "activation_value_seen": "true",
+    "result": {
+      "HTTP_by_lane": {
+        "authority": 72,
+        "private": 32,
+        "state": 14
+      },
+      "HTTP_calls": 118,
+      "activation_authorized": false,
+      "automatic_retry": false,
+      "child_completion_claimed": false,
+      "claim_commit_sha": "9a98d1d3868e1bb52e675b3bb508a126fd8b41c7",
+      "claim_id": "b106e3135305397a245238afd63402d019d758f6f0e1cdc7c0f29a4c51b9d660",
+      "claim_sha256": "f750119284a6a4174e1cf4ba82faaa4f90a0e0091d18484220b7701e0f4cd9d9",
+      "dispatch_http_status": 204,
+      "dispatches": 1,
+      "fits": 0,
+      "parent_return_rule": "ENQUEUE_ONCE_AND_EXIT_NO_CHILD_POLL",
+      "parent_run_id": "40729788942",
+      "previous_capture": {
+        "feed_sha256": "73edf46ba1081f5ae4e19f04e70f9839ab5816dd8cd3e65f80121a025667d9a8",
+        "receipt_sha256": "b511c17b78bcfe215188365131fc93c17f4cd8b4087a66e19758a4dfaae09b72"
+      },
+      "previous_checkpoint": {
+        "path": "20261028T065635.514937Z--40644670107--a0b573fe465d4dccccff3e4c639d022baedc396ff7064af54c08a6465a5c0202.json.gz",
+        "schema_version": "audit-weekly-grade-history-v2-locator-reference",
+        "sha256": "446c926d5a3ff760acdf64d0ac8a47bff290e9be17b2ef69c65caf382a6e01a3"
+      },
+      "public_root": false,
+      "registration_sha256": "52d150651e308fada3514ae530ae7ee98a32b9cb8d84f916f64d3cd198a76512",
+      "root_go_sha256": "34743ce66f1c23ac0f45c6a910af734c9084693a2f4b2e314636283e423b58bc",
+      "schema_version": "audit-weekly-parent-v1-result",
+      "state": "ENQUEUE_ONCE_AND_EXIT"
+    },
+    "claim_path": "state/controller-v1/claims/b106e3135305397a245238afd63402d019d758f6f0e1cdc7c0f29a4c51b9d660.json",
+    "exact_claim_readback": true,
+    "child_run": 40729906573,
+    "child_head": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+    "child_actor": "github-actions[bot]",
+    "child_created_at": "2026-10-28T16:50:26Z",
+    "child_status": "in_progress",
+    "child_verified_success": false,
+    "next_required": "Actual capture, separate reader, grading, export and current anonymous consumer"
+  },
+  "previous_activation_access_failure": {
+    "schema_version": "current-parent-activation-block-v1",
+    "observed_at_utc": "2026-10-28T07:28:41.447013+00:00",
+    "run": 40650140425,
+    "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "status": "completed",
+    "conclusion": "failure",
+    "job": 122688061713,
+    "activation_variable": "AUDIT_WEEKLY_PARENT_ENABLED",
+    "variable_API_status": 403,
+    "variable_error": "Resource not accessible by integration",
+    "parent_selected": false,
+    "child_enqueued": false,
+    "acquisition_started": false,
+    "forecast_published": false,
+    "guard_preserved": true,
+    "private_log_sha256": "ddf5ca9de7e8ee37810a2a784ce33fe81a784aa3e7da8c8235f5c4c3ce5c4d6e",
+    "steps": [
+      {
+        "name": "Select explicit main parent route without granting readiness",
+        "conclusion": "success"
+      },
+      {
+        "name": "Enforce source and publication handover safety",
+        "conclusion": "failure"
+      },
+      {
+        "name": "Enqueue one qualified same-source Ops capture and return",
+        "conclusion": "skipped"
+      }
+    ],
+    "existing_owner_action": "Set existing Actions variable AUDIT_WEEKLY_PARENT_ENABLED to literal true; then run existing daily route once with current guards.",
+    "write_API_status": 403,
+    "write_API_error": "Resource not accessible by integration",
+    "existing_variable_write_attempted": true,
+    "variable_changed": false,
+    "original_readiness_artifact": 12799252699,
+    "original_readiness_artifact_sha256": "34dac92c9728d0ed16c1e1e54fb4c919a90d4679064c7375b776f359a7952e05"
   }
 }

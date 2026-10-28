@@ -1,3 +1,11 @@
+Update — 2026-10-28T16:56:16.263983+00:00 (PARTIAL; enabled Parent passed, BOT child running)
+
+The owner corrected the repository variable to lowercase `true`. Actual existing daily Parent [40729788942](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40729788942) passed on current Main cd51ff28 and enqueued exactly one Actions-bot child [40729906573](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40729906573) on producer0409. Its immutable claim was read back with exactly one creation;118 requests fit the unchanged140-call limit, including72/80authority,32/40private and14/20state calls. The exact previous32 checkpoint and feed remain preserved. No automatic retry, old-Root reuse, new fit or scheduler change occurred. [Actual Parent result](evidence/parent40729788942-original-result.json) · [Dispatch proof](evidence/enabled-parent40729788942-enqueue-proof.json).
+
+The BOT child is performing capture; independent restoration, grading, export and actual current consumer acceptance are not yet claimed. A fresh isolated normal paired website build completed16:53:58UTC with2,364matched pregame rows and no production changes. Website PR9/10 remain ready and unmerged under existing lease178. The next configured Parent window is October29 at12:36UTC; future scheduled invocation and the weekly decision are still unverified. All previous audit limitations remain. The earlier capital-T failure below is retained and is not a successful run.
+
+---
+
 Update — 2026-10-28T15:45UTC (PARTIAL; activation value confirmed)
 
 The owner added the repository variable. Actual daily run [40718723483](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40718723483), current Main `cd51ff28…`, received `AUDIT_WEEKLY_PARENT_ENABLED=True` with a capital T. The existing exact activation check requires lowercase `true`, so Parent was not selected. The run safely exited78 before acquisition, child issuance or publication. Original readiness evidence and private log hashes are retained. The owner has been asked to correct the value; the guard is unchanged. This is a configuration mismatch, not a successful automation run. [Exact evidence](evidence/parent-after-owner-enable-case-mismatch.json).
