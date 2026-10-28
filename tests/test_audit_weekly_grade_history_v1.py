@@ -782,10 +782,24 @@ def test_parent_full_runtime_rejects_invalid_flags_even_with_matching_digest(par
     with pytest.raises(history.HistoryError):history.validate_parent_sidecar(**data)
 
 
-@pytest.mark.parametrize('omitted',['root_go_sha256','private_payload_bytes','private_durability_qualified','strict_v1_unchanged'])
+@pytest.mark.parametrize('omitted',[tuple(key for index,key in enumerate(
+    ('root_go_sha256','private_payload_bytes','private_durability_qualified','strict_v1_unchanged'))
+    if mask & (1<<index)) for mask in range(1,15)])
 def test_parent_full_runtime_rejects_partial_flag_sets(parent_metadata,omitted):
-    data=_full_parent_runtime(parent_metadata);del data['qualified_runtime'][omitted]
-    with pytest.raises(history.HistoryError):history.validate_parent_sidecar(**data)
+    data=_full_parent_runtime(parent_metadata)
+    for key in omitted:del data['qualified_runtime'][key]
+    value=json.loads(gzip.decompress(data['packed']))
+    value['checkpoint_handoff']['qualified_package_sha256']=hashlib.sha256(json.dumps(
+        data['qualified_runtime'],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+    data['packed']=gzip.compress(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode(),mtime=0)
+    with pytest.raises(history.HistoryError,match='^CLOSED_PARENT_HISTORY_RUNTIME_PACKAGE$'):
+        history.validate_parent_sidecar(**data)
+
+
+def test_parent_runtime_forms_match_original_bootstrap_inventories(parent_metadata):
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    assert set(parent_metadata['qualified_runtime'])==bootstrap.PACKAGE_KEYS
+    assert set(_full_parent_runtime(parent_metadata)['qualified_runtime'])==bootstrap.PACKAGE_FULL_KEYS
 
 
 @pytest.mark.parametrize('full',[False,True])
