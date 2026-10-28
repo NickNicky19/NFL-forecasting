@@ -38,6 +38,8 @@ def main():
     parser.add_argument('--producer-ci-run',type=int,required=True)
     parser.add_argument('--qualified-runtime',type=Path)
     parser.add_argument('--pending-census',type=Path)
+    parser.add_argument('--pending-recovery',type=Path,
+        help='Original authenticated failure handoffs for the current qualified namespace; never old-namespace reservations.')
     args=parser.parse_args()
     require(args.attempt>28,'NEW_REGISTRATION_ONLY_NOT_OLD_ISSUE_RETRY')
     require((args.qualified_runtime is None)==(args.pending_census is None),'EXACT_QUALIFIED_RUNTIME_AND_ORIGINAL_CENSUS_PAIR')
@@ -109,6 +111,11 @@ def main():
         template.prior_runtime(root,before=issued.isoformat())
     root['publication_registration'].update(policy_gzip_base64=base64.b64encode(gzip.compress(policy_raw,mtime=0)).decode(),policy_sha256=store.sha(policy_raw))
     pending_current=history.continued_pending_recovery(root,old)
+    if args.pending_recovery is not None:
+        require(not pending_current['handoffs'] and not pending_current['pending_reservations'],
+            'EXPLICIT_ROTATED_CURRENT_NAMESPACE_PENDING_POOL_ONLY')
+        pending_current=template.validate_pending_recovery(json.loads(args.pending_recovery.read_bytes()),
+            binding=root['qualified_runtime']['binding'])
     root['effective_epoch']=dict(schema_version=registration.RECOVERY_CONTEXT_SCHEMA,parent_source_sha=args.parent_source,parent_code_pins=parent_pins,
         previous_capture=dict(feed_sha256='214b3983f6fc6cbf2907afa1ef4ae0bd002179fdf99c78b9bc739b1f8431dd4c',receipt_sha256='ab065477019becb3546da50169341b4d884dd9d9976cb4ce3e32ed7bbb9abec0'),
         history_protocol=history.LOCATOR_VERSION,pending_post_recovery=template.pending_recovery_envelope(pending_current))

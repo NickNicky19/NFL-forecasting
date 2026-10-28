@@ -1,0 +1,36 @@
+{
+  "Owner_and_BOT_positive": true,
+  "adversarial_cases": [
+    "extra_reservation",
+    "unsealed",
+    "preserve",
+    "current_namespace",
+    "namespace_changed",
+    "pending_bytes_cap",
+    "duplicate_index_keys",
+    "missing_row",
+    "wrong_runtime",
+    "wrong_release",
+    "insufficient_bytes",
+    "insufficient_slots"
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 /workspace/nfl-system-audit/venv/bin/python -B -m pytest -xq -p no:cacheprovider tests/test_audit_weekly_operations_restore_v1.py::test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority tests/test_audit_weekly_discovery_v1.py::test_prior_pending_exception_cannot_widen_authority_journal_snapshot_or_quota",
+  "elapsed_seconds": 113.79,
+  "errors": 0,
+  "failed": 0,
+  "fictional_only": true,
+  "genuine_Actions_evidence": false,
+  "new_fits": 0,
+  "passed": 14,
+  "private_forecast_decodes": 0,
+  "private_model_decodes": 0,
+  "private_outcome_decodes": 0,
+  "remote_writes": 0,
+  "sha256": {
+    "nfl_lab/audit_weekly_discovery_v1.py": "a61648870cbffb39ce333e62067562bf2c87ff7d0694e96de07e7d762dd52d62",
+    "tests/test_audit_weekly_discovery_v1.py": "996cbf160dfff83b4c52fd800e0be40fd32aea04f4f83ebc0f164f84e7985535",
+    "tests/test_audit_weekly_operations_restore_v1.py": "4199070c9cce8bb2d634f4d9a7c6436c6450cdee5e7a2fbc5465804030fe8372"
+  },
+  "state": "PASS",
+  "tests": 14
+}

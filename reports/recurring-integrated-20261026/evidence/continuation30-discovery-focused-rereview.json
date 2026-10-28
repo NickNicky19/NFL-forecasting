@@ -1,0 +1,94 @@
+{
+  "schema_version": "prior-pending-focused-rereview-v1",
+  "state": "CONFIRMED_GAP_CLOSED_NO_NEW_BLOCKER_IN_REVIEWED_FILE",
+  "observed_at_utc": "2026-10-28T05:56:10.968366+00:00",
+  "reviewed_file": "/workspace/nfl-system-audit/prior-namespace-pending-producer-20261028/nfl_lab/audit_weekly_discovery_v1.py",
+  "reviewed_file_sha256": "a61648870cbffb39ce333e62067562bf2c87ff7d0694e96de07e7d762dd52d62",
+  "results": [
+    {
+      "case": "full_coverage",
+      "result": "PASS",
+      "charged_slots": 10,
+      "charged_bytes": 54435,
+      "unresolved_still_charged": true
+    },
+    {
+      "case": "missing_row",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "wrong_runtime",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "wrong_release",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "duplicate_coverage",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "short_bytes",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "short_slots",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "excess_bytes",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "excess_slots",
+      "result": "REJECTED",
+      "error": "EXACT_PRIOR_NAMESPACE_FULL_RESERVED_CENSUS_COVERAGE"
+    },
+    {
+      "case": "duplicate_index_keys",
+      "result": "REJECTED",
+      "error": "UNIQUE_ORIGINAL_INDEX_PENDING_KEYS"
+    },
+    {
+      "case": "foreign_journal",
+      "result": "REJECTED",
+      "error": "EXACT_ORIGINAL_INDEX_PENDING_JOURNAL_NO_ADDITIONS"
+    }
+  ],
+  "focused_cases_passed": 11,
+  "test_scope": "Focused helper checks using existing fictional seed. Only the unchanged live-grant verify call is stubbed; actual new helper, Root/prior/rotation validators, closed journal bytes and native ReadClient.inventory charging are exercised.",
+  "real_metadata_checks": {
+    "exact_prior_rows": 1,
+    "physical_assets": 85,
+    "reserved_headroom_slots": 43,
+    "total_slots": 128,
+    "physical_bytes": 11860195,
+    "reserved_headroom_bytes": 21694237,
+    "total_reserved_bytes": 33554432,
+    "index_pending_keys": 23,
+    "index_pending_keys_unique": true
+  },
+  "static_findings": [
+    "Initial legacy _inventory remains unchanged.",
+    "Exception remains behind the live SourceHistoryGrant and V4 DUAL_RUNTIME_ROTATE selected-prior binding.",
+    "Exact one matching current sealed census row is now required when unresolved records exist.",
+    "Physical plus sealed headroom must equal complete original caps; actual charged native inventory caps remain in force.",
+    "Duplicate original index pending keys are rejected before journal comparison or inventory admission.",
+    "Exact selected descriptor checks and final physical snapshot equality remain unchanged.",
+    "Protected retained.py remains unchanged and needs no repair."
+  ],
+  "source_edits": 0,
+  "remote_writes": 0,
+  "real_network_calls": 0,
+  "real_private_payload_downloads": 0,
+  "new_fits": 0,
+  "full_baseline_rerun": false
+}

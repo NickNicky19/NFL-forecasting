@@ -1,0 +1,25 @@
+{
+  "schema_version": "source60-stale-test-route-failure-v1",
+  "run": 40641436617,
+  "job": 122660255535,
+  "head": "0de304d6e865a0a3e92d04cc21d960c7a3c3c5e2",
+  "failure": "tests/test_audit_weekly_operations_authority_v1.py::test_current_bot_needs_actual_registered_metadata_before_client_scope",
+  "expected": "Actual new create-only registration lookup; no historical slot fallback",
+  "actual": "Fixture still expected bootstrap-v2-20261028-history-runtime.json",
+  "production_bytes_changed_by_followup": false,
+  "fix_head": "43a118e",
+  "after": "12authoritytestsPASS; oldslotnegativeassertadded",
+  "new_CI": 40642527286,
+  "full_new_CI_pass": false,
+  "original_failed_zip": {
+    "artifact": 12795918067,
+    "bytes": 178721,
+    "sha256": "4a2d317f4e754abcf5296ebfa34939a18c940161e6a6c7b20cb8065b14ee038c"
+  },
+  "original_node_inventory_sha256": "6d84d48dbbe338f9f5cf99f45139419d0376f2ae760334c639a5994ad87d9daf",
+  "shard_assigned": 625,
+  "shard_attempted": 625,
+  "shard_completed": 625,
+  "native31_or_capture32_dispatched": false,
+  "new_NFL_fits": 0
+}

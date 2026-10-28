@@ -38,7 +38,7 @@ def main():
         # Normal continuation has its original non-null history checkpoint;
         # it must never reuse either special first-primary recovery claim.
         context = root['effective_epoch']
-        assert args.attempt == 30
+        assert args.attempt >= 30
         assert root['schema_version'] == 'audit-weekly-hosted-v4-root-GO'
         assert context['schema_version'] == 'audit-weekly-recurring-v5-context'
         assert context['controller_context'] is None

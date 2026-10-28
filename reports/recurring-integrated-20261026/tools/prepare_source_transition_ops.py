@@ -92,6 +92,11 @@ def main():
     original=json.loads((PRIVATE/'weekly-go-28.json').read_bytes())
     require(store.sha(store.canonical(original))==old['root_go_sha256'],'ORIGINAL_PREDECESSOR_ROOT_UNCHANGED')
     pending=history.continued_pending_recovery(root,original)
+    registered_pending=template.pending_recovery(root)
+    if registered_pending['handoffs'] or registered_pending['pending_reservations']:
+        require(not pending['handoffs'] and not pending['pending_reservations'],
+            'SEPARATE_CURRENT_NAMESPACE_FAILURE_POOL_ONLY')
+        pending=template.validate_pending_recovery(registered_pending,binding=root['qualified_runtime']['binding'])
     root.update(operation='RECURRING_CAPTURE',issued_at_utc=issued.isoformat(),expires_at_utc=(issued+timedelta(hours=1)).isoformat(),
         effective_epoch=dict(schema_version=operations.CONTEXT_V5,controller_context=None,
             previous_capture={k:old[k] for k in ('feed_sha256','receipt_sha256')},

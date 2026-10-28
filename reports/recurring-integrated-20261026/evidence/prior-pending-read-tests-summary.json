@@ -1,0 +1,127 @@
+{
+  "after": {
+    "counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 59
+    },
+    "expected_pass": true
+  },
+  "baseline_commit": "feef6e433c26b682b6b62d301bbbbfdd40ae9998",
+  "before": {
+    "counts": {
+      "errors": 0,
+      "failures": 2,
+      "skipped": 0,
+      "tests": 2
+    },
+    "expected_original_defect": true
+  },
+  "changed_test_paths": [
+    "tests/test_audit_weekly_operations_restore_v1.py",
+    "tests/test_audit_weekly_discovery_v1.py"
+  ],
+  "evidence_files": [
+    "prior-pending-read-tests-before.log",
+    "prior-pending-read-tests-before.json",
+    "prior-pending-read-tests-after.log",
+    "prior-pending-read-tests-after.json"
+  ],
+  "legacy_unknown_pending_rejection_unchanged": true,
+  "native_fictional_results": {
+    "test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority[bot-source-history]": {
+      "HTTP_calls": 146,
+      "bootstrap_metadata_GETs": 30,
+      "calls": 116,
+      "charged_inventory": {
+        "charged_bytes": 712625,
+        "charged_slots": 10,
+        "physical_assets": 9,
+        "physical_bytes": 54958
+      },
+      "charged_inventory_checks": 15,
+      "clients": 7,
+      "current_runtime_id": "00000000000000000000000000000006",
+      "dispatch_input_bytes": 44517,
+      "files": 105,
+      "fits": 0,
+      "genuine_Actions_evidence": false,
+      "grant_kinds": [
+        "BIND_SEALED_DISCOVERY_SOURCE",
+        "LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET",
+        "BIND_SEALED_HISTORICAL_SOURCE",
+        "LIVE_HISTORICAL_METADATA_BEFORE_PRIVATE_GET"
+      ],
+      "max_RSS_KiB": 209892,
+      "model_decodes": 0,
+      "native_CPU_seconds": 120,
+      "native_address_space_bytes": 536870912,
+      "native_wall_seconds": 180,
+      "original_runtime_id": "cccccccccccccccccccccccccccccccc",
+      "outcome_decodes": 0,
+      "pending_journal_preserved": true,
+      "pending_reservations": 1,
+      "pins": 128,
+      "private_GETs": 71,
+      "public_release": false,
+      "remote_writes": 0,
+      "reserved_prior_namespace_bytes": 33499474,
+      "reserved_prior_namespace_slots": 119,
+      "restored_original_bytes": true,
+      "root_bytes": 41732,
+      "state": "PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY",
+      "unresolved_pending_bytes": 657667
+    },
+    "test_v4_actual_operations_retained_entry_keeps_old_receipt_and_current_authority[owner-source-history]": {
+      "HTTP_calls": 137,
+      "bootstrap_metadata_GETs": 21,
+      "calls": 116,
+      "charged_inventory": {
+        "charged_bytes": 712367,
+        "charged_slots": 10,
+        "physical_assets": 9,
+        "physical_bytes": 54700
+      },
+      "charged_inventory_checks": 15,
+      "clients": 7,
+      "current_runtime_id": "00000000000000000000000000000006",
+      "dispatch_input_bytes": 43404,
+      "files": 105,
+      "fits": 0,
+      "genuine_Actions_evidence": false,
+      "grant_kinds": [
+        "BIND_SEALED_DISCOVERY_SOURCE",
+        "LIVE_DISCOVERY_METADATA_BEFORE_PRIVATE_GET"
+      ],
+      "max_RSS_KiB": 209892,
+      "model_decodes": 0,
+      "native_CPU_seconds": 120,
+      "native_address_space_bytes": 536870912,
+      "native_wall_seconds": 180,
+      "original_runtime_id": "cccccccccccccccccccccccccccccccc",
+      "outcome_decodes": 0,
+      "pending_journal_preserved": true,
+      "pending_reservations": 1,
+      "pins": 128,
+      "private_GETs": 71,
+      "public_release": false,
+      "remote_writes": 0,
+      "reserved_prior_namespace_bytes": 33499732,
+      "reserved_prior_namespace_slots": 119,
+      "restored_original_bytes": true,
+      "root_bytes": 40703,
+      "state": "PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY",
+      "unresolved_pending_bytes": 657667
+    }
+  },
+  "notes": [
+    "Baseline was extracted to an isolated temporary directory; shared production modules were never overwritten.",
+    "Only the two authorized test files were edited by this task. Other shared-worktree production/bootstrap edits belong to the parent.",
+    "Only fictional fixture forecast bytes were restored/validated; no private forecast, outcome, or model bodies were read.",
+    "No commits, pushes, remote writes, native jobs, or new fits.",
+    "Initial candidate results are retained under *-initial-candidate.*; the initial full-file run overlapped parent production changes."
+  ],
+  "scope": "Fictional local native/API regression fixtures; no genuine release evidence",
+  "state": "PASS"
+}
