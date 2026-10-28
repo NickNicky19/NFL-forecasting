@@ -674,7 +674,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261028-history-runtime.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
