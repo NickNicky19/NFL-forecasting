@@ -1,0 +1,35 @@
+{
+  "schema_version": "research-release-native29-status-v1",
+  "observed_at_utc": "2026-10-28T05:20:37.076355+00:00",
+  "state": "WAITING_FULL_CURRENT_HEAD_CI",
+  "parent_source": "2816561829a426ff55013c5c41b2cffd45f7b893",
+  "producer_pr": 58,
+  "producer_base": "771fc762b73cd35d36b10b11e82268b41ee682b0",
+  "prior_head": "ec5abbdd8c86321ddda017b28fa23e3c90e045ca",
+  "current_head": "96fa196ccc22f10c89ded27e543d1d5fbb7fcf2c",
+  "current_tree": "d3ece8c9d661b9ec6ddafb48f182655cb4775959",
+  "tested_merge": "4671daaa30774ffd1ada92f14151a57e5a8b71a0",
+  "tested_merge_tree_matches_head": true,
+  "retained_failed_runs": [
+    40633791481,
+    40635827954
+  ],
+  "failure_test": "tests/test_audit_weekly_hosted_v1.py::test_owned_worker_dies_when_its_parent_is_interrupted",
+  "diagnostic": "FileNotFoundError: [Errno 2] No such file or directory: '/proc/2875/stat'",
+  "cause": "Kernel reaped child between stat.exists() and stat.read_text(); test-side polling race.",
+  "repro": "Forced stale exists=True and read_text FileNotFoundError: old polling raises; repaired polling returns False. Running and zombie states and PermissionError propagation checked.",
+  "repair": "Read proc stat once; only FileNotFoundError means exited. Original real parent/child interruption test retained. Five deterministic polling cases added.",
+  "changed_files": [
+    "tests/test_audit_weekly_hosted_v1.py"
+  ],
+  "production_workflow_retained_numerical_scoring_checkpoint_files_unchanged": true,
+  "focused_result": "6 passed, 83 deselected",
+  "full_hosted_result": "89 passed",
+  "current_ci": 40636982249,
+  "native29_prepared": false,
+  "native29_dispatched": false,
+  "registry_published": false,
+  "forecast30_prepared": false,
+  "forecast30_dispatched": false,
+  "new_NFL_fits": 0
+}

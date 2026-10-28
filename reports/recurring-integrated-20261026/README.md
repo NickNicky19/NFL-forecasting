@@ -1,3 +1,15 @@
+Update — 2026-10-28T05:21:19.161515+00:00 (PARTIAL; integration continues)
+
+Main PR57 is normally merged as `2816561829a426ff55013c5c41b2cffd45f7b893`. Final exact-source CI40635632808 passed779tests/one existing optional skip/33subtests. The explicit RootV4 history adapter keeps original capture28 source, jobs, full Root, pins, timestamps and frozen weekly choice distinct from current execution; original C7 model readiness remains independently verified. Operations Owner/BOT entry paths are included; protected retained grading code is unchanged. [Main source evidence](evidence/source57-ready.json).
+
+Producer PR58 candidate `96fa196ccc22f10c89ded27e543d1d5fbb7fcf2c` awaits full current-head CI40636982249. Original failures40633791481 and40635827954 are preserved. The first was an environment-dependent sibling checkout assumption; the second was a test-side process reaping race after the worker exited. The repair keeps the real parent-interruption test and propagates permission errors; all89hosted-runtime tests pass locally, and independent diff review found no blocker. No failing run is counted as a pass. [Failure and focused correction](evidence/source58-ci-reaping-repair.json).
+
+Genuine namespace6 qualification40630369170 passed all3native jobs using a117-byte canary, original full12field package and authenticated census. Every old namespace/reservation is retained; total reserved224MiB remains under512MiB. Canary qualification is not forecast-durability proof. New-source native29, normal non-null-checkpoint continuation30 and actual fresh-process grading/export are still pending. [Qualification receipt](evidence/rotation6-qualification.json).
+
+Website PR9/10 remain ready/unmerged under lease178. The user confirms resuming that existing owner; no new public result after03:58UTC was present at this refresh. The old5278-source public feed remains eligible for its exact declared contract, and the real anonymous consumer reaccepted1959rows/11categories in3.527seconds after the producer branch advanced. No new website release, selected installation, automatic Parent execution, NFL fit or accuracy gain is claimed. Parent activation requires the existing variable; this connection's Variables request returns403.
+
+---
+
 Update — 2026-10-28T03:32:44.260951+00:00 (PARTIAL; continuation active)
 
 The owner resumed the audit. Main PR56 is normally merged as`085adb68be936947303b1dde96ab0e1d8bf053c3` and Producer PR55 as`771fc762b73cd35d36b10b11e82268b41ee682b0`. The corrected metadata reader accepts exactly bootstrap's existing8-/12-field runtime inventories, validates all full-package flags, and preserves the complete original package/hash. Actual checkpoint28 and latest history-locator compatibility passed with unchanged hashes. Final MainCI40624508111 passed746tests/oneexistingoptional skip/33subtests. ProducerCI40625354690 completed2331collected/attempted nodes:2330pass and oneexistingoptional cache skip; all6jobs passed. Original failedCI40624137355 is retained; its one stale registration-path test was corrected with an additional old-slot negative assertion. [Exact integration](evidence/history55-56-integrated.json).
