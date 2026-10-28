@@ -26,6 +26,13 @@ three packets passed independent arithmetic and local fresh-process storage
 checks; off-host restoration is not established by those checks. No selected
 research-model deployment is claimed by this checkpoint.
 
+- [Four restored 2025 passing challengers, primary gains/losses and separate QB distribution diagnostics](https://github.com/NickNicky19/NFL-forecasting/blob/8bc08f10653cc474a914b5366a1a348ff03b3d18/reports/modern-ten-control-pipeline-v4-restore4-2025/PUBLIC_RESULTS_v3.md):
+  34,804 new forecasts from four retained models; zero refits; 664 supported QB
+  player-games per target across 272 games and 18 weeks. Interception and
+  completion mean MSE improve about 0.56%; passing TD and attempt MSE lose.
+  Exposed reconstruction, with adverse tails and missing coverage retained;
+  no new website issuance or prospective qualification.
+
 ## Latest actual work — October 26, 2026
 
 The [accuracy wave](accuracy-wave-20261026/README.md) supersedes earlier
