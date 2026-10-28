@@ -1,3 +1,19 @@
+Update — 2026-10-28T00:13:58.502139+00:00 (PARTIAL)
+
+Main recovery PR53 is normally merged as `f365a55189d0ca2e2ad3e52564d10478617cd0a3`. Actual hosted CI40606329853/job122546634130 passes all737 tests/33 subtests with one existing optional real-PPR-cache skip; the tested merge, reviewed head and integrated source share tree1f760803. Its metadata-only parent contract passes. [Exact integration](evidence/recovery-main53-merged.json).
+
+Producer PR54 `cc2a5e7d02e1160868e908d3ef73e5258bed252a` contains the explicit Owner-only recovery for one NEW future issue, while preserving Root26's failed status, consumed first claim and missing old forecast/Week8-choice bodies. All340 affected checks pass on actual combined source; independent bounded source review passes. Two separately qualified recovery GET scopes use30/28 calls at the128-slot/two-page/two-redirect limit, below the unchanged40 cap. The existing eight prior-failure exchanges and all clocks, quotas and strict resume guards remain unchanged. [Final source review](evidence/failed-first-recovery-independent-review-final.json).
+
+The first full CI40606518156 correctly rejected a new fictional test journal created with default permissions under GitHub umask022. The original failure remains recorded. The one-line fixture correction explicitly creates0700; independent reproduction fails before and all84 hosted-module cases pass afterward under022. Every reviewed production source byte is unchanged. Exact successor full CI40607009220 is queued behind the preserved original run; Producer54 is not merged or native-qualified yet. [Before/after correction](evidence/recovery54-fixture-correction.json).
+
+Fresh00:00:50UTC TLS bytes still match indexe1822882/app409dcb48/Week8 boardb83a8a2e, generated18:39:19UTC. Website PR9 remains unmerged, and no fresh selected-model installation is verified. The active writer's latest observed development source is81c3fc2; its separate valid work is preserved. MainPR9 release remains independently ready.
+
+Current namespace metadata plus original pending reservations charge58 slots/3,889,761bytes, leaving70 slots/29,664,671bytes. Actual full encoded-archive admission is still mandatory. The origin is row10of the existing20-run census, so Native27 andRoot28 fit that bound. Single-variable access remains403/UNKNOWN; both manualdaily and scheduled Parent routes require the existing enable flag. Next existing Parent window is October28 07:36–07:57America/Chicago (12:36–12:57UTC,end exclusive); the weekly decision deadline is October29 18:15UTC. No scheduler, ticker, freshness, cutoff or scientific registration was relaxed.
+
+Next required evidence is Producer54 integration, a new source-specific genuine registration27, new current-clock Root28 with the exact fourteen old future cutoffs/5400-second lead, full capture/fresh reader/grading/export/checkpoint, actual anonymous four-second consumer/all11category traces, and owned website deployment/live verification. Native25 is historical evidence for its exact earlier source pair. The result remainsPARTIAL; no newNFL fits or forecast-accuracy gains are claimed.
+
+---
+
 Update — 2026-10-27T23:53:50.067696+00:00 (PARTIAL)
 
 PackingPR52 is normally merged at e386efc1adaad73bd3efafc153c90667c44856c3. ActualCI40602136533 completed all2275collected/attempted nodes:2274passed/oneexistingoptional source-cache skip. Head dc6dffc, actualtested d05aa875 and merge sharetreeed9b756; reviewthreads/reviewswereempty. The expected-head normalGitHub merge used the existing linkedaccount, with no admin/protection bypass orforce. Existing compressed/inflated/file/group/quota/time guards and wire remain unchanged. This is source integration, not newforecast orwebsiteinstallation. [Exact integration receipt](evidence/archive52-merged.json).

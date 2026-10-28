@@ -1,0 +1,51 @@
+{
+  "schema_version": "failed-first-recovery-journal-fixture-delta-review-v1",
+  "state": "ACK_FIXTURE_ONLY_ONE_LINE_PRIVATE_JOURNAL_MODE_NO_PRODUCTION_CHANGE",
+  "observed_at_utc": "2026-10-28T00:10:09.687102+00:00",
+  "worktree": "/workspace/nfl-system-audit/owner-first-recovery-20261027",
+  "reviewed_base_commit": "b51906c941bc0f2e051e5dd2370c62475888e0af",
+  "observed_head": "cc2a5e7d02e1160868e908d3ef73e5258bed252a",
+  "prior_receipt": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-independent-committed-review.json",
+    "sha256": "974d783ab6d4af1db3bf29d8ccdd4ffb4022463acd0ba31658cb383963e6470e"
+  },
+  "delta": {
+    "path": "tests/test_audit_weekly_hosted_v1.py",
+    "line": 276,
+    "old": "journal=tmp_path/'bounded-recovery';journal.mkdir()",
+    "new": "journal=tmp_path/'bounded-recovery';journal.mkdir(mode=0o700)",
+    "old_sha256": "bb9b55047c8d18b8d5ac91a58a8d5f9afefdbb60e15a86649e59807da422e805",
+    "new_sha256": "3bb34bd3de31e569822877e705f29f891fd4a2b5d19e6fd02c27dbb8b2b83452",
+    "only_one_line_changed": true
+  },
+  "production_all7_unchanged": {
+    "nfl_lab/audit_weekly_archive_v1.py": "51653aff5fb8c64b15ccd3772194433e32a709304fe1635c8cbfa7d9da9377b2",
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "e56885e3b9782b5c38d1b2eb22d534f62cc7237af1043bf98c0b8658d889054f",
+    "nfl_lab/audit_weekly_hosted_v1.py": "647804a43ec6843ff47651d457bf6b8532e1355b1d780d87ea758a09743a387a",
+    "nfl_lab/audit_weekly_operations_v1.py": "0abb55c15cf161cb9652285b395b8a840568ebe95cd28b0254d7fe122374f72e",
+    "nfl_lab/audit_weekly_operations_worker_v1.py": "2ec3386cbe28a14574810a696e704f0e2be729ddd961f984096abd998833c6fa",
+    "nfl_lab/audit_weekly_template_v1.py": "a772a9bcbf11bfd194111e4b2a6cea9a1bef70a62dcf80fdffc3ce5523431184",
+    "nfl_lab/audit_weekly_operations_authority_v1.py": "b4641d8a75057346a5bd72a0ba69f62d33aee8e0402fbccdd3bdbbf3a0e15583"
+  },
+  "guard_implementations_and_caps_unchanged": true,
+  "why": "Explicit0700 creates the fictional private journal under GitHub umask022 while retaining the production PRIVATE_JOURNAL_REQUIRED guard.",
+  "compile": "PASS_WITHOUT_BYTECODE",
+  "diff_check": "PASS",
+  "tests_rerun_by_reviewer": 0,
+  "Parent_reported_failure": {
+    "log": "/workspace/nfl-system-audit/continuation/evidence/recovery54-umask022-before.log",
+    "sha256": "751503a073554b210b90032325f20016a47097c6622dfca1a0a9ffb6ada92361",
+    "status": "Parent-reported fixture reproduction; no tests rerun by reviewer"
+  },
+  "Parent_hosted_module_retest": "RUNNING_AS_REPORTED; not certified by this acknowledgement",
+  "actions": {
+    "source_edits": 0,
+    "tests": 0,
+    "native_jobs": 0,
+    "dispatches": 0,
+    "remote_mutations": 0,
+    "new_fits": 0,
+    "private_forecast_or_outcome_reads": 0
+  },
+  "scope": "Bounded acknowledgement of the exact fixture delta; prior production review remains applicable."
+}

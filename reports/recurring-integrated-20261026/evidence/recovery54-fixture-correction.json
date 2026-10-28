@@ -1,0 +1,16 @@
+{
+  "schema_version": "recovery-ci-fixture-permissions-correction-v1",
+  "observed_at_utc": "2026-10-28T00:10:13.980459+00:00",
+  "old_head": "b51906c941bc0f2e051e5dd2370c62475888e0af",
+  "new_head": "cc2a5e7d02e1160868e908d3ef73e5258bed252a",
+  "original_failed_native_run": 40606518156,
+  "original_failed_job": 122547258747,
+  "guard": "PRIVATE_JOURNAL_REQUIRED",
+  "independent_before": "1 failed in 0.47s under umask022",
+  "after": "84 passed in 3.23s under umask022",
+  "fix": "Only test journal mkdir(mode=0o700); default permission is environment-dependent",
+  "production_source_changed": false,
+  "guard_weakened": false,
+  "old_CI_failure_preserved": true,
+  "fresh_full_CI_required": true
+}

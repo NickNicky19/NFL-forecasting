@@ -1,0 +1,155 @@
+{
+  "schema_version": "failed-first-recovery-helper-review-v1",
+  "state": "STANDALONE_HELPER_PREPARED_LOCAL_FICTIONAL_CHECKS_ONLY",
+  "observed_at_utc": "2026-10-27T23:56:49.237168+00:00",
+  "helper": {
+    "path": "/workspace/nfl-system-audit/continuation/prepare_failed_first_recovery_ops.py",
+    "sha256": "bc8866aef1ca0b3a8e09a3f0f43609dc0b1a679c97b4d22019757e3944a4853d",
+    "bytes": 20748,
+    "mode": "0o600",
+    "adapted_from": "/workspace/nfl-system-audit/continuation/prepare_first_primary_ops.py",
+    "repository_source_edits": 0
+  },
+  "cli_inputs": [
+    "--registration-root",
+    "--record",
+    "--publication-receipt",
+    "--failed-root",
+    "--claim-evidence",
+    "--attempt"
+  ],
+  "attempt": 28,
+  "working_directory": "Eventual clean registered Combined Producer checkout; never treat the inspected dirty 679 worktree as qualified new source.",
+  "source_contract": {
+    "worktree": "/workspace/nfl-system-audit/failed-first-primary-recovery-20261027",
+    "inspected_source_modules": {
+      "nfl_lab/audit_weekly_template_v1.py": {
+        "bytes": 48524,
+        "sha256": "a772a9bcbf11bfd194111e4b2a6cea9a1bef70a62dcf80fdffc3ce5523431184"
+      },
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py": {
+        "bytes": 59050,
+        "sha256": "e56885e3b9782b5c38d1b2eb22d534f62cc7237af1043bf98c0b8658d889054f"
+      },
+      "nfl_lab/audit_weekly_operations_v1.py": {
+        "bytes": 42158,
+        "sha256": "0abb55c15cf161cb9652285b395b8a840568ebe95cd28b0254d7fe122374f72e"
+      },
+      "nfl_lab/audit_weekly_operations_worker_v1.py": {
+        "bytes": 36100,
+        "sha256": "2ec3386cbe28a14574810a696e704f0e2be729ddd961f984096abd998833c6fa"
+      },
+      "nfl_lab/audit_weekly_hosted_v1.py": {
+        "bytes": 128811,
+        "sha256": "ced9dc4ff96927c7606dfa39e000cf3a23363756d51377e4952fba9206807090"
+      }
+    },
+    "interim_evidence": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-implementation-interim.json",
+    "interim_sha256": "7c49ed3622e540dc87ac646082bb229a361a8ddbde799731fa9d9d48ab940361",
+    "interim_only": true,
+    "exact8_schema_matches_current_Turing_contract": true,
+    "final_source_or_native_registration_qualified": false,
+    "source_runtime_guards": [
+      "clean HEAD differs from forbidden 679 source",
+      "current source equals Root27 source and native SAFE_SEAL source",
+      "exact hosted.pins and registered producer CODEPINS",
+      "live GET-only producer and Main source-head checks",
+      "fixed current registry record exact local receipt/record readback",
+      "native registration/policy clocks strictly precede new issuance",
+      "static Root hash unchanged; only registered dynamic fields change",
+      "full current hosted/context/recovery/bootstrap metadata validation before private writes"
+    ]
+  },
+  "recovery_marker": {
+    "exact_fields": [
+      "claim_binding_sha256",
+      "failed_root_go_sha256",
+      "old_forecast_bodies_missing",
+      "old_week8_choice_body_missing",
+      "retained_choice_sha256",
+      "retained_epoch_sha256",
+      "retained_root_go_sha256",
+      "schema_version"
+    ],
+    "old_week8_choice_body_missing": true,
+    "old_forecast_bodies_missing": true,
+    "old_reader_or_core_receipt_fields_embedded_in_root": false
+  },
+  "historical_metadata_only": {
+    "root26_sha256": "222a4313bfd337a567500cc66bb823aa9c9736663e20f71e7e08a05de2fa1baa",
+    "owner_GET_root_hash_match": true,
+    "owner_GET_state": "EXACT_EXISTING_CLAIM_OWNER_GET_NOT_NEW_NATIVE_AUTHORITY",
+    "owner_GET_diagnostic_is_live_authority": false,
+    "historical_root_execution_validated": false,
+    "old_week8_choice_body_opened_or_reconstructed": false,
+    "original_claim_retained": true,
+    "COUNT7_scope": "Copy exact four hash fields from original Root26 first-primary context; preserve registered previous_capture, require no previous checkpoint and identical actual private binding.",
+    "observed_cutoff_lead_seconds": 5400,
+    "observed_literal_plan_deadline": "2026-10-29T22:45:00+00:00",
+    "observed_plan_sha256": "ea392d70ac4c687c54902c49a8085bf7dd60a0d574681db88ba72b6ff8143ee8",
+    "observed_games": 14,
+    "lead_note": "Root26 plain metadata and current hosted source require 5400 seconds. Preserve this authenticated value exactly; the earlier 900-second description is not used."
+  },
+  "new_issue_rules": {
+    "fresh_actual_clock": true,
+    "expiry_seconds": 3600,
+    "issuance_deadline_utc": "2026-10-29T18:15:00+00:00",
+    "literal_old_plan_copied": true,
+    "calendar_sha256_and_all14_cutoff_strings_unchanged": true,
+    "cutoffs_never_extended": true,
+    "all14_games_future": true,
+    "current_schedule_only_calendar_GET": true,
+    "old_forecast_or_choice_body_reconstruction": false,
+    "pending_handoffs_required": 4,
+    "registered_pending_wire_preserved_exactly": true,
+    "root_bytes_cap": 61440,
+    "dispatch_bytes_cap": 65535
+  },
+  "future_outputs": {
+    "directory": "/workspace/nfl-system-audit/continuation/private",
+    "names": [
+      "weekly-go-28.json",
+      "weekly-dispatch-28.json",
+      "ops28-failed-first-recovery-plan-receipt.json"
+    ],
+    "create_only": true,
+    "mode": "0600",
+    "no_existing_receipt_overwrite": true,
+    "no_raw_calendar_or_row_data_file_written": true
+  },
+  "verification": {
+    "compile": "PASSED_WITHOUT_BYTECODE_OUTPUT",
+    "help": "PASSED_NO_SOURCE_PRIVATE_CREDENTIAL_NETWORK_IO",
+    "fictional_metadata_checks": 15,
+    "clock_and_actual_schedule_metadata_checks": 6,
+    "fictional_wrong_attempt_CLI_rejection": 1,
+    "total_local_checks": 22,
+    "pytest_runs": 0,
+    "evidence": [
+      "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-helper-fictional-checks.json",
+      "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-helper-clock-checks.json"
+    ],
+    "actual_registered_Root27_inputs_executed": false,
+    "actual_current_source_activation_or_native_proof_tested": false
+  },
+  "actions": {
+    "actual_new_Root_issued": 0,
+    "actual_dispatches": 0,
+    "helper_GET_calls": 0,
+    "helper_POST_calls": 0,
+    "remote_mutations": 0,
+    "actual_private_output_writes": 0,
+    "new_forecasts": 0,
+    "forecast_or_outcome_row_decodes": 0,
+    "new_fits": 0,
+    "repository_source_edits": 0,
+    "ledger_writes": 0,
+    "old_receipt_overwrites": 0,
+    "subagents_started": 0
+  },
+  "limitations": [
+    "Turing evidence remains interim. If the final schema changes, reconcile helper before use; source validators reject incompatible markers before output.",
+    "Actual clean Combined source and Native27 registration are not executed or qualified by this local helper review.",
+    "Saved Owner GET evidence is diagnostic only; genuine native GHA must independently authenticate old Core, original Root/claim/native manifest/POST pair, and independent old reader."
+  ]
+}

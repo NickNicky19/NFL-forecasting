@@ -1,0 +1,229 @@
+{
+  "schema_version": "failed-first-recovery-independent-review-final-v1",
+  "state": "PASS_NO_REMAINING_FINDINGS_IN_BOUNDED_SOURCE_REVIEW",
+  "observed_at_utc": "2026-10-28T00:07:11.632385+00:00",
+  "target": {
+    "producer_worktree": "/workspace/nfl-system-audit/owner-first-recovery-20261027",
+    "producer_base": "e386efc1adaad73bd3efafc153c90667c44856c3",
+    "producer_observed_head": "b51906c941bc0f2e051e5dd2370c62475888e0af",
+    "Main_worktree": "/workspace/nfl-system-audit/archive-first-recovery-main-20261027",
+    "Main_base": "fec873a02de6c180be7b85e569002ae4185654ff",
+    "Main_observed_head": "835808d112e79ba7f1c79187f99c5304060de135",
+    "working_tree_snapshot": true
+  },
+  "frozen_final_manifest": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-implementation-final.json",
+    "sha256": "9e8d6c5604d60cd8ad8c9b304bcdbdbdf71383a843990b4f4fb3a8bc46591fed"
+  },
+  "applied_evidence": {
+    "path": "/workspace/nfl-system-audit/continuation/evidence/recovery-combined-applied.json",
+    "sha256": "3d54f18b12c3084426e8928117b310065f3d5fa7ca48fe3cbcaf8064f17a3c56"
+  },
+  "patches": [
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-implementation.patch",
+      "bytes": 92136,
+      "sha256": "4e6dae2063df7c6b5ba98487a301897204369cea947fac32452678247c0970e8"
+    },
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-archive-optional.patch",
+      "bytes": 3177,
+      "sha256": "8c49471ca6d766ff878ce562682aaa68a4104855b83a0fae8350bab767b7f08d"
+    },
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-registry-test-counterpart.patch",
+      "bytes": 942,
+      "sha256": "b3e119b6d3f9075931a6a1e98b5c12c782269f9b04e4d3f388472ad04c61ae8f"
+    }
+  ],
+  "all_three_frozen_hashes_match_actual_Parent_applied_receipt": true,
+  "all_three_reverse_apply_checks": true,
+  "all_Turing_owned_files_exact_in_Parent": true,
+  "producer_source_and_test_files": {
+    "nfl_lab/audit_weekly_archive_v1.py": {
+      "bytes": 55793,
+      "sha256": "51653aff5fb8c64b15ccd3772194433e32a709304fe1635c8cbfa7d9da9377b2"
+    },
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 59050,
+      "sha256": "e56885e3b9782b5c38d1b2eb22d534f62cc7237af1043bf98c0b8658d889054f"
+    },
+    "nfl_lab/audit_weekly_hosted_v1.py": {
+      "bytes": 128829,
+      "sha256": "647804a43ec6843ff47651d457bf6b8532e1355b1d780d87ea758a09743a387a"
+    },
+    "nfl_lab/audit_weekly_operations_v1.py": {
+      "bytes": 42158,
+      "sha256": "0abb55c15cf161cb9652285b395b8a840568ebe95cd28b0254d7fe122374f72e"
+    },
+    "nfl_lab/audit_weekly_operations_worker_v1.py": {
+      "bytes": 36100,
+      "sha256": "2ec3386cbe28a14574810a696e704f0e2be729ddd961f984096abd998833c6fa"
+    },
+    "nfl_lab/audit_weekly_template_v1.py": {
+      "bytes": 48524,
+      "sha256": "a772a9bcbf11bfd194111e4b2a6cea9a1bef70a62dcf80fdffc3ce5523431184"
+    },
+    "tests/test_audit_weekly_archive_v1.py": {
+      "bytes": 27930,
+      "sha256": "9293ca142b280e69324d03f8d1a9efe0660342562cc0acc487eb1153ac124d25"
+    },
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": {
+      "bytes": 56052,
+      "sha256": "6f5059e843bc387abc37fadfcb61397a2b25dd6ea9eacb168c6b3b93fa282938"
+    },
+    "tests/test_audit_weekly_hosted_v1.py": {
+      "bytes": 82412,
+      "sha256": "bb9b55047c8d18b8d5ac91a58a8d5f9afefdbb60e15a86649e59807da422e805"
+    },
+    "tests/test_audit_weekly_operations_authority_v1.py": {
+      "bytes": 4980,
+      "sha256": "f348c7e05a1eafbb7b764c1c6f7b892130d30bdb69c4c7feb74afd92c9399bd5"
+    },
+    "tests/test_audit_weekly_operations_v1.py": {
+      "bytes": 22262,
+      "sha256": "fa966134e8ef3dc4f38340637ecb8b54fbe026d72320fdb760e56ad9f2f93790"
+    },
+    "tests/test_audit_weekly_operations_worker_v1.py": {
+      "bytes": 49659,
+      "sha256": "fd2c159ed2e420e390188359ceb1411bde2abdeab03984c4cfd36856c476ec8d"
+    }
+  },
+  "Main_three_shared_files_exact": {
+    "nfl_lab/audit_weekly_template_v1.py": "a772a9bcbf11bfd194111e4b2a6cea9a1bef70a62dcf80fdffc3ce5523431184",
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": "e56885e3b9782b5c38d1b2eb22d534f62cc7237af1043bf98c0b8658d889054f",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": "6f5059e843bc387abc37fadfcb61397a2b25dd6ea9eacb168c6b3b93fa282938"
+  },
+  "findings": [],
+  "resolved_findings": [
+    {
+      "priority": "P1",
+      "title": "recurring_prepare restore-module alias overwritten by recovery marker",
+      "status": "FIXED_AND_REGRESSION_PASSED_ALL_THREE_MODES",
+      "fix": "recovery_scope preserves recovery.VERSION/PHASE/LIMITS",
+      "previous_evidence": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-independent-review-interim.json"
+    }
+  ],
+  "reviewed_guards": {
+    "chronology": [
+      "Old failed run and producer source/job/owner authenticated from native Core and complete actual jobs listing.",
+      "Independent successful old reader must follow failed producer completion and precede new Root issuance.",
+      "New recovery proof is bound to current process/source/binding/Root and expires under unchanged Root/plan deadline.",
+      "COUNT7 anchor verified; new choice freezes after actual absence GETs, before the real weekly deadline, with the exact old calendar hash and fourteen cutoff strings/lead."
+    ],
+    "authority_and_pending": [
+      "Exact closed eight-field manual OWNER marker; BOT scheduling rejected.",
+      "Exactly one selected pending failed Root in the same qualified private namespace.",
+      "Complete authenticated prior reservations checked before seeding; native old claim payload, original producer manifest and both POST records must match.",
+      "Saved Owner GET diagnostics and old failed choices/forecasts never supply live authority or history."
+    ],
+    "budgets": [
+      "Eight prior-failure clients unchanged; two distinct bounded recovery metadata clients, each still at MAX_CALLS=40.",
+      "Independent worst-case actual Client fixtures: Core=30 and claim=28, at 128 charged slots/two pages/two redirects; old client counters and timers unchanged.",
+      "Third recovery client and ninth prior client reject before HTTP; prior single-client path fails at unchanged call40.",
+      "Worker charges both recovery clients to original16MiB metadata envelope; native180s/120CPU/512MiB guards unchanged."
+    ],
+    "claim_uniqueness": [
+      "Stable successor payload uses schema/failed Root/epoch/stream independent of replacement source/clocks.",
+      "Fresh actual absence check precedes claim append; existing-name check and reuse_completed=False preserve atomic duplicate rejection.",
+      "Existing first claim retained; original failed capture stays FAILED with old bodies missing."
+    ],
+    "archive_gap": [
+      "Optional typed ops_failed_recovery only; mandatory old roles, bundle/index/receipt schemas and full byte census unchanged.",
+      "Gap links to newly frozen choice/capture and current Root/producer at readback; no old failed archive promotion."
+    ]
+  },
+  "caps_not_raised": true,
+  "unchanged_limit_or_Root_definitions": {
+    "nfl_lab/audit_weekly_hosted_v1.py": [
+      "LIMITS",
+      "ROOT_KEYS"
+    ],
+    "nfl_lab/audit_weekly_template_v1.py": [
+      "LIMITS",
+      "ROOT_KEYS",
+      "ROOT_V3_KEYS",
+      "PLAIN_CAP",
+      "PACKED_CAP"
+    ],
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py": [
+      "LIMITS",
+      "LOCATOR_CAP"
+    ],
+    "nfl_lab/audit_weekly_operations_worker_v1.py": [
+      "LIMITS"
+    ],
+    "nfl_lab/audit_weekly_archive_v1.py": [
+      "LIMITS"
+    ]
+  },
+  "unchanged_guard_file_sha256": {
+    "nfl_lab/private_draft_store.py": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+    "nfl_lab/owner_bootstrap_bundle.py": "31d7daaa72ad5d2924c4e73cae43d5622f3a6035e864a316548fb0fb92ec58b8",
+    "nfl_lab/operational_storage.py": "fdec24fc89391506f3d99d1fedd04042442ec56f5495ef10ff7be9479381b3d8",
+    "tools/private_draft_store_v2.py": "abb6330e881bdf872a3da89a135c76d3256952ee184f652b22d4b58457009487",
+    "nfl_lab/audit_weekly_operations_authority_v1.py": "b4641d8a75057346a5bd72a0ba69f62d33aee8e0402fbccdd3bdbbf3a0e15583",
+    ".github/workflows/lab.yml": "2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384",
+    "config/audit-weekly-numerical-runtime-v1.json": "1edc3d47e9c2adb45efab75ff0483d1624419e54721b96636dd23beadad07e5a"
+  },
+  "math6_sha256": {
+    "baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+    "cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "weekly_future_inference.py": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+  },
+  "original18_replay_profile_unchanged": true,
+  "Main_workflow_and_cadence_unchanged": true,
+  "Parent_enable_variable": {
+    "required": "AUDIT_WEEKLY_PARENT_ENABLED == true",
+    "guard_bypass": false,
+    "access_checked_by_this_review": false,
+    "status": "Parent reported single-variable GET403; access/enablement remains a separate prerequisite. No bypass proposed."
+  },
+  "validation": {
+    "independent_unique_cases_passed": 34,
+    "first_run": {
+      "passed": 32,
+      "setup_errors": 2,
+      "cause": "Isolated test environment missing pinned CatBoost1.2.10 distribution metadata",
+      "log": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-independent-focused-tests.log"
+    },
+    "resolved_retest": {
+      "passed": 2,
+      "seconds": 7.11,
+      "worktree": "/workspace/nfl-system-audit/owner-first-recovery-20261027",
+      "log": "/workspace/nfl-system-audit/continuation/evidence/failed-first-recovery-independent-worker-retest.log"
+    },
+    "notes": "The32 successful cases ran on Turing files proven byte-identical to final actual Parent; only the2 missing-dependency fixtures reran on actual Parent after local pinned dependency installation. Existing119+75 suites were not repeated.",
+    "numerical_profile_launcher": "/workspace/nfl-system-audit/continuation/run_numerical_profile.py",
+    "no_cache_or_bytecode_writes": true,
+    "git_diff_check": "PASS"
+  },
+  "helper": {
+    "path": "/workspace/nfl-system-audit/continuation/prepare_failed_first_recovery_ops.py",
+    "sha256": "bc8866aef1ca0b3a8e09a3f0f43609dc0b1a679c97b4d22019757e3944a4853d",
+    "final_exact8_schema_compatible": true,
+    "actual_Root26_lead_seconds": 5400,
+    "not_executed_on_real_Root27_or28": true
+  },
+  "native_recovery_qualified": false,
+  "review_limits": [
+    "Bounded engineering/source review only; Parent full CI/integration/native27 qualification and exact clean registered source remain separate prerequisites.",
+    "No actual missing private forecast/model/outcome body was read or recovered."
+  ],
+  "actions": {
+    "repository_source_edits": 0,
+    "ledger_writes": 0,
+    "real_private_input_reads": 0,
+    "real_forecast_or_outcome_decodes": 0,
+    "new_fits": 0,
+    "new_Roots_issued": 0,
+    "native_jobs": 0,
+    "dispatches": 0,
+    "remote_mutations": 0,
+    "messages_sent": 0,
+    "subagents_started": 0
+  }
+}

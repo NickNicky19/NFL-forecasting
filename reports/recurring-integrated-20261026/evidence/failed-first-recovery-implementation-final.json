@@ -1,0 +1,160 @@
+{
+  "schema_version": "failed-first-recovery-implementation-final-v1",
+  "frozen_at_utc": "2026-10-28T00:02:28.908928+00:00",
+  "status": "READY_FOR_PARENT_COMBINED_VALIDATION",
+  "patches_frozen": true,
+  "editing_stopped": true,
+  "worktree": "/workspace/nfl-system-audit/failed-first-primary-recovery-20261027",
+  "branch": "audit/failed-first-primary-recovery-20261027",
+  "base_commit": "679641686337bf48020826754bd6ea6b90f88fb8",
+  "integration_base": "e386efc1adaad73bd3efafc153c90667c44856c3",
+  "patches": [
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-implementation.patch",
+      "bytes": 92136,
+      "sha256": "4e6dae2063df7c6b5ba98487a301897204369cea947fac32452678247c0970e8"
+    },
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-archive-optional.patch",
+      "bytes": 3177,
+      "sha256": "8c49471ca6d766ff878ce562682aaa68a4104855b83a0fae8350bab767b7f08d"
+    },
+    {
+      "path": "/workspace/nfl-system-audit/continuation/evidence/failed-first-primary-recovery-registry-test-counterpart.patch",
+      "bytes": 942,
+      "sha256": "b3e119b6d3f9075931a6a1e98b5c12c782269f9b04e4d3f388472ad04c61ae8f"
+    }
+  ],
+  "owned_changed_files": [
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+    "nfl_lab/audit_weekly_hosted_v1.py",
+    "nfl_lab/audit_weekly_operations_v1.py",
+    "nfl_lab/audit_weekly_operations_worker_v1.py",
+    "nfl_lab/audit_weekly_template_v1.py",
+    "tests/test_audit_weekly_archive_v1.py",
+    "tests/test_audit_weekly_controller_bootstrap_v1.py",
+    "tests/test_audit_weekly_hosted_v1.py",
+    "tests/test_audit_weekly_operations_v1.py",
+    "tests/test_audit_weekly_operations_worker_v1.py"
+  ],
+  "apply_checks": {
+    "parent_tree": "/workspace/nfl-system-audit/owner-first-recovery-20261027",
+    "all_three_patches": "PASS"
+  },
+  "tests": {
+    "final_exact_source_targeted_run": {
+      "passed": 66,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 224,
+      "seconds": 24.51,
+      "verification_tree": "/tmp/failed-first-primary-recovery-verification-20261027",
+      "modules": [
+        "tests/test_audit_weekly_hosted_v1.py",
+        "tests/test_audit_weekly_operations_worker_v1.py",
+        "tests/test_audit_weekly_operations_v1.py",
+        "tests/test_audit_weekly_controller_bootstrap_v1.py"
+      ],
+      "selection": "recovery or failed_first or first_future or first_primary or pending_full_handoff or last_pending or recurring_prepare"
+    },
+    "earlier_combined_verification": "458 passed in eleven relevant modules. The added archive transport fixture was corrected and its focused archive run passed 20/20; this was before the final split-client/entrypoint fixes, which are covered by the final 66-case selection.",
+    "budget_regressions": {
+      "actual_Client_authentication_qualification_and_readback": true,
+      "pending_handoff_counts": [
+        4,
+        8
+      ],
+      "uploaded_assets": 111,
+      "unresolved_reservations": 17,
+      "charged_slots": 128,
+      "inventory_pages": 2,
+      "redirects_per_download": 2,
+      "Core_scope_HTTP_calls": 30,
+      "claim_scope_HTTP_calls": 28,
+      "HTTP_limit_unchanged": 40,
+      "old_single_scope_reproduction": "Core consumes 30, first claim read reaches 36, second claim read fails at unchanged 40 before theoretical 42.",
+      "prior_failure_client_cap": 8,
+      "separate_recovery_client_cap": 2,
+      "old_client_counters_and_timers_unchanged": true,
+      "third_recovery_client_rejected_before_HTTP": true,
+      "ninth_prior_failure_client_rejected_before_HTTP": true,
+      "requests_GET_only": true,
+      "POST_retries": 0
+    },
+    "entrypoint_regressions": [
+      "Actual recurring_prepare constructs the original restore request for ordinary recurring, first-primary and failed-first recovery; only the child boundary is substituted.",
+      "Restore module alias remains recovery; local scope is recovery_scope. Worker inspected: no restore-module alias shadowing."
+    ],
+    "guards": [
+      "FAILED_CAPTURE_CANNOT_RESUME preserved",
+      "no synthetic DurableHistory or discarded primary assignment",
+      "closed manual OWNER marker; BOT rejected",
+      "exact native Core/claim/manifest/POST pair and independent reader metadata",
+      "new current-clock COUNT7 startup method freeze and unchanged fourteen cutoffs",
+      "typed failed gap preserved through optional archive role and owned codec roundtrip",
+      "one stable successor claim; original first claim retained",
+      "both recovery transfers charged to original metadata byte envelope"
+    ],
+    "diff_check": "PASS",
+    "source_pin_count": 128
+  },
+  "Root_preparer": {
+    "operation": "RECURRING_CAPTURE",
+    "effective_epoch_schema": "audit-weekly-recurring-v5-context",
+    "controller_context": {
+      "schema_version": "audit-weekly-owner-failed-first-primary-recovery-v1",
+      "retained_epoch_sha256": "Original COUNT7",
+      "retained_choice_sha256": "Original COUNT7, never missing Week8",
+      "retained_root_go_sha256": "Original COUNT7",
+      "claim_binding_sha256": "Unchanged qualified namespace binding digest",
+      "failed_root_go_sha256": "Exact failed Root26 selected in pending handoffs",
+      "old_week8_choice_body_missing": true,
+      "old_forecast_bodies_missing": true
+    },
+    "previous_capture": "Qualified COUNT7",
+    "previous_checkpoint": null,
+    "pending_post_recovery": "All four native Core handoffs and complete reservations in existing compact envelope",
+    "plan": "Exact Root26 calendar hash, all fourteen cutoff strings and deadline; same cutoff lead",
+    "current_authority": "New current-clock Root and live GHA OWNER proof; local Owner GET diagnostics never grant authority",
+    "extra_old_reader_receipt_fields": "None; native verification resolves old Root jobs.restore from the selected handoff writer run.",
+    "registry_target": "state/controller-v1/bootstrap-v2-20261027-archive-recovery.json"
+  },
+  "archive_gap": {
+    "role": "ops_failed_recovery",
+    "separate_optional_patch_required": true,
+    "wire_schemas_changed": false,
+    "mandatory_old_roles_changed": false,
+    "receipt_link": "Existing archive_files_sha256 commits the typed gap control in the complete index.",
+    "private_history_link": "Existing private envelope retains the complete new Root marker and pending lineage; retained capture aliases preserve the gap control. Old missing forecasts are never observations or losses."
+  },
+  "Main_counterpart": {
+    "exact_shared_module_copies": [
+      "nfl_lab/audit_weekly_template_v1.py",
+      "nfl_lab/audit_weekly_controller_bootstrap_v1.py"
+    ],
+    "Producer_only_modules_absent_from_Main": [
+      "nfl_lab/audit_weekly_operations_v1.py",
+      "nfl_lab/audit_weekly_operations_worker_v1.py",
+      "nfl_lab/audit_weekly_hosted_v1.py"
+    ]
+  },
+  "remaining_parent_work": [
+    "Apply the frozen implementation plus optional archive-role delta and two-literal unpinned registry-test counterpart.",
+    "Review actual combined Producer/Main source, run requested CI/checks, then perform authorized native registration and new issuance."
+  ],
+  "restrictions_observed": {
+    "owned_archive_source_untouched": true,
+    "no_new_files_in_pinned_source_inventory": true,
+    "old_Root_or_job_reruns": 0,
+    "old_archive_promotions": 0,
+    "new_NFL_fits": 0,
+    "actual_forecast_outcome_or_model_weight_reads": 0,
+    "pushes": 0,
+    "merges": 0,
+    "dispatches": 0,
+    "ledger_writes": 0,
+    "website_writes": 0,
+    "new_credentials": 0
+  },
+  "native_recovery_qualified": false
+}
