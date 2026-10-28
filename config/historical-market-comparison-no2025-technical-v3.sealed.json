@@ -1,0 +1,1991 @@
+{
+  "2022_market_dependency": "No named-book paired prices in original2022: cannot fit independent market comparison there;2022 contributes only where genuinely available;2023 is effective current calibration source.",
+  "2026_base_fit_or_calibration_or_selection": 0,
+  "V1_V2_executed_code_preserved": [
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    },
+    {
+      "bytes": 13897,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/tools/historical_market_comparison_no2025_v1.py",
+      "sha256": "d880bbc61e1e5701e6ddf1cec551a9426223161361d6ed176f7d00eac86e3d46"
+    },
+    {
+      "bytes": 5170,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/historical_market_comparison_v2.py",
+      "sha256": "4b7ea02c2598291f43838b8457f37ecd6d4e7ffa21923676570d8f48ff0de153"
+    },
+    {
+      "bytes": 14177,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/tools/historical_market_comparison_no2025_technical_v2.py",
+      "sha256": "87d655d1e30bb834795dfbf89f3ba1191c4ce7afdc271f4a90b92f8d50532031"
+    }
+  ],
+  "V1_original_executed_code_preserved": [
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    },
+    {
+      "bytes": 13897,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/tools/historical_market_comparison_no2025_v1.py",
+      "sha256": "d880bbc61e1e5701e6ddf1cec551a9426223161361d6ed176f7d00eac86e3d46"
+    }
+  ],
+  "actual_backend": "UNATTESTED",
+  "all_forecast_freeze_before_evaluation_grading": true,
+  "arms": {
+    "F": "retained strong leaf-CDF; mean count/MSE, median yard/MAE, genuine ATD event p",
+    "FC": "Earlier-only fixed football-only meta-calibration. Point ridge uses Fpoint; decisive probability logistic uses logit(Fp).",
+    "FS": "Confidence shrink .5+q*(Fp-.5), q estimated only2022/23 by constrained ridge10 Brier slope in[0,1]; separate from calibration.",
+    "H": "Exactly same ridge/logistic learner and earlier common training pool as FC, with independent B-excluded market point/probability feature added. No rawfeature CDF refit.",
+    "M": "independent book fair decisive probability; independent book line point heuristic",
+    "OFFERED_LINE_HEURISTIC": "actual canonical offering-book threshold scored as point only; no mean/median/probability/EV interpretation"
+  },
+  "base_git_head": "65763fcd8c5d669d185e6564b17f9a5c562bcdbd",
+  "books": {
+    "exclude_offering_book_from_all_independent_features_and_calibration": true,
+    "excluded_individual_book_ids": [
+      15,
+      30
+    ],
+    "minimum_independent_books": 1,
+    "offering_book_ids": [
+      68,
+      69,
+      79
+    ],
+    "source_config_required": true,
+    "total_named_books_for_common_pool_minimum": 2
+  },
+  "cached_canonical_offers": {
+    "bytes": 1603258,
+    "container": {
+      "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622",
+      "bytes": 1769500,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v2/FAILED_PRESERVED.zip",
+      "sha256": "d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622"
+    },
+    "member": "ALL_CANONICAL_OFFERED_POOL.parquet",
+    "sha256": "6d6794dc7cc5ebaa5ea2a88e1418aafecf10693858e57f9731c2dc533082807d"
+  },
+  "cached_context_abstentions": {
+    "bytes": 161080,
+    "container": {
+      "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622",
+      "bytes": 1769500,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v2/FAILED_PRESERVED.zip",
+      "sha256": "d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622"
+    },
+    "member": "STRICT_CONTEXT_ABSTENTIONS.parquet",
+    "sha256": "86904fd6e34aa1fa4f8e495230881c6dc7faec91cce5d9719e39f3128c568b6c"
+  },
+  "cached_context_admission": {
+    "bytes": 4075,
+    "container": {
+      "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622",
+      "bytes": 1769500,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v2/FAILED_PRESERVED.zip",
+      "sha256": "d5b73668260f9b2b59e5b2bab295b65dff5175aa90129dfc22aff7a64ef7f622"
+    },
+    "member": "CONTEXT_ADMISSION.json",
+    "sha256": "f286fa9af7474fe10fff852477f595dfc1c2ace766f6b8c1fb6b45542eee9c64"
+  },
+  "calibration_training_seasons": [
+    2022,
+    2023
+  ],
+  "canonical_offer": {
+    "independent_market": "other named books only, same source snapshot; probability requires exactly matching target threshold; no interpolation; point uses closest-to-even line per independent book, median across books",
+    "line_choice": "at earliest exact collector snapshot prefer authentic two-sided pairs; closest no-vig p to0.5; then line/originalordinal. With no pair retain one-sided line for point/F-only lane, no fairM inferred.",
+    "pair": "same actual book, threshold, snapshot, period, unique resolved GSIS context; conflicting versions quarantined",
+    "point_aggregate": "fixed offeringbook priority68,69,79; exactly one player/game/category/horizon",
+    "price_pair_requirement": "ordinary point/F-at-line comparisons can use a one-sided authentic quote; M fair probability and common paper pool require actual same-book same-line exactsamecollectorclock O/U pairs.",
+    "time_choice": "lexicographically first exact source_collection_naive after source version quarantine",
+    "unit": "one player/game/category/offeringbook"
+  },
+  "category_contract": {
+    "bytes": 40385,
+    "path": "/workspace/nfl-market-comparison-no2025-v1/reports/all12-leaf-cdf-v1/method-config.json",
+    "sha256": "9154f113d75b8b6af3cbc21e0c407e7af4b79b29e53a288d487a2dc868473de4"
+  },
+  "category_dependencies": {
+    "anytime_td": {
+      "label_components": [
+        "rush_td",
+        "rec_td"
+      ],
+      "modeled_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "bernoulli"
+    },
+    "fantasy_ppr": {
+      "label_components": [
+        "fantasy_ppr"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "BLOCKED_EXACT_PPR_LABEL_AND_NO_SOURCE_MARKET",
+      "support": "fractional_ppr"
+    },
+    "pass_att": {
+      "label_components": [
+        "pass_att"
+      ],
+      "modeled_roles": [
+        "QB"
+      ],
+      "primary_roles": [
+        "QB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "pass_cmp": {
+      "label_components": [
+        "pass_cmp"
+      ],
+      "modeled_roles": [
+        "QB"
+      ],
+      "primary_roles": [
+        "QB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "pass_int": {
+      "label_components": [
+        "pass_int"
+      ],
+      "modeled_roles": [
+        "QB"
+      ],
+      "primary_roles": [
+        "QB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "pass_td": {
+      "label_components": [
+        "pass_td"
+      ],
+      "modeled_roles": [
+        "QB"
+      ],
+      "primary_roles": [
+        "QB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "pass_yd": {
+      "label_components": [
+        "pass_yd"
+      ],
+      "modeled_roles": [
+        "QB"
+      ],
+      "primary_roles": [
+        "QB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "signed_integer"
+    },
+    "rec": {
+      "label_components": [
+        "rec"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "rec_yd": {
+      "label_components": [
+        "rec_yd"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "signed_integer"
+    },
+    "rush_att": {
+      "label_components": [
+        "rush_att"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "count"
+    },
+    "rush_rec_yd": {
+      "label_components": [
+        "rush_yd",
+        "rec_yd"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "signed_integer"
+    },
+    "rush_yd": {
+      "label_components": [
+        "rush_yd"
+      ],
+      "modeled_roles": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "primary_roles": [
+        "RB"
+      ],
+      "prop_probability": "common market comparison requires offering actualbookB plus at least1 other independently paired namedbook at same threshold/snapshot; ATD must have genuine No side, absent here",
+      "state": "QUALIFY_MODEL_LABEL_AND_MARKET",
+      "support": "signed_integer"
+    }
+  },
+  "context_abstention_contract": {
+    "2026_metadata": "projectmetadataonlyfromsameacceptedprimitivecontainer year2026W1\u20135; no2025; no outcome/stat columns",
+    "core_gate": "unchangedV1forecast_football rechecksall survivingcontexts beforeinference; no bypass ormonkeypatch",
+    "fields": [
+      "team",
+      "opponent",
+      "position",
+      "kickoff_utc"
+    ],
+    "historical_metadata": "exactretainedquerymetadata keys/team/opponent/role/kickoff; no target outcome read",
+    "policy": "rejectrowonanyexactcontextmismatch ormissingquery; preserveall99388canonicaloffers plusfullabstainedrows withfieldreasons/source+originalroles; nevermodifyfrozenqueryfeatures",
+    "population": "originalprimaryandall-compatiblerolesecondary rules unchanged; abstentioncoverage source/originalprimaryrolecounts exposed"
+  },
+  "development_seasons": [
+    2022,
+    2023
+  ],
+  "evaluation_2026_weeks": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "evaluation_seasons": [
+    2024,
+    2026
+  ],
+  "excluded_seasons": [
+    2025
+  ],
+  "execution_authorized": true,
+  "fictional_verification": {
+    "actual": {
+      "CPU_seconds": 1.924042773,
+      "peak_RSS_bytes": 177860608,
+      "wall_seconds": 1.6914703689981252
+    },
+    "budget": {
+      "CPU_seconds": 20,
+      "HTTP": 0,
+      "NFL_reads": 0,
+      "RSS_bytes": 536870912,
+      "fits": 0,
+      "invocations": 1,
+      "model_loads": 0,
+      "wall_seconds": 30
+    },
+    "receipt": {
+      "bytes": 1452,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/FICTIONAL_CHECKS_V1.json",
+      "sha256": "0f155beba380a36f167ab2540606b0cc590dc2a896ec04f22f5be94ece25422c"
+    },
+    "state": "32_NEW_FICTIONAL_CHECKS_PASS"
+  },
+  "fictional_verification_history": [
+    {
+      "budget": {
+        "CPU_seconds": 20,
+        "RSS_bytes": 536870912,
+        "fits": 0,
+        "invocations": 1,
+        "wall_seconds": 30
+      },
+      "receipt": {
+        "bytes": 1452,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/FICTIONAL_CHECKS_V1.json",
+        "sha256": "0f155beba380a36f167ab2540606b0cc590dc2a896ec04f22f5be94ece25422c"
+      },
+      "state": "FICTIONAL_CHECKS_PASS",
+      "version": 1
+    },
+    {
+      "budget": {
+        "CPU_seconds": 20,
+        "RSS_bytes": 536870912,
+        "fictional_parameter_fits": 4,
+        "invocations": 1,
+        "wall_seconds": 30
+      },
+      "failure": "relative fictional capsule path correctly rejected by absolute-path guard after13new edgechecks; no guard weakened; not rerun",
+      "receipt": {
+        "bytes": 967,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/FICTIONAL_CHECKS_V2.json",
+        "sha256": "02cdc3b661b2c9a94100ae5f50e8971bdd214c19fe8a18906f2e915dfccc18e9"
+      },
+      "state": "FAILED_FOCUSED_FICTIONAL_CHECKS_NO_RETRY",
+      "version": 2
+    },
+    {
+      "budget": {
+        "CPU_seconds": 5,
+        "RSS_bytes": 268435456,
+        "fits": 0,
+        "invocations": 1,
+        "wall_seconds": 10
+      },
+      "receipt": {
+        "bytes": 515,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/FICTIONAL_CHECKS_V3.json",
+        "sha256": "38b7b1576dfd1051dbb2d9b472d414af2fcbbf5628c4e1f81acc5ae2e6594e23"
+      },
+      "scope": "absolute realcontainer pointer/hash/missingmember/noextraction only; V1/V2 not rerun",
+      "state": "CAPSULE_ONLY_CHECKS_PASS",
+      "version": 3
+    }
+  ],
+  "football_features": {
+    "2026_inference_contract": "Direct raw fitted2024 LeafCDFModel supports new featureframes via predict_batches; newversion research runtime with exact source/input/model bindings. No bypass/monkeypatch of frozen artifact replay guards; not original replay or live ready.",
+    "availability": "unchanged kickoff+7days reconstructed; strictly prior before targetcutoff",
+    "before_evaluation_grading": "Global forecast/parameter/paper capsule frozen and exactreadback before EVALUATION LOSS table loading, scoring or selection. Permitted lag source primitives contain2019..2024 and prior2026 outcomes: those are not unopened evaluation values. Strict cutoff prevents own/current/futuregame features; no2026 calibration.",
+    "builder": {
+      "bytes": 12983,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/features.py",
+      "sha256": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9"
+    },
+    "discard_existing_f_columns": true,
+    "law_code": {
+      "bytes": 27618,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    "regenerate_only_2026": true,
+    "source_filter_before_materialization": "season in 2019..2024 OR (season=2026 and week<=5); query source target fields projected only in chronological source-history lane; no2025 numeric row decode",
+    "timing_lane": "timing-unverified exploratory; current-vintage historical reconstruction"
+  },
+  "historical_label_inputs": {
+    "2022": {
+      "anytime_td": {
+        "bytes": 406485,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/anytime_td/leaf_cdf/rows.parquet",
+        "sha256": "f8768911e6f33ca4b29a66a68d4e576116f655983e23e754dcfeb738426fbd62"
+      },
+      "pass_att": {
+        "bytes": 122880,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/pass_att/leaf_cdf/rows.parquet",
+        "sha256": "6cb21dce7abc55d8a1a4babca1603fe50f09dc614dda40b57c8662d03d4c6e02"
+      },
+      "pass_cmp": {
+        "bytes": 122133,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/pass_cmp/leaf_cdf/rows.parquet",
+        "sha256": "f1f63fd6d1e5ef735e2b5031d9ec9627a92388520ca856c4ea2edd45a8d394e9"
+      },
+      "pass_int": {
+        "bytes": 104271,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/pass_int/leaf_cdf/rows.parquet",
+        "sha256": "35f64dfcee27c4a1d4cb44e8dad57e596da62ab158849dfc9487282d97d3de1d"
+      },
+      "pass_td": {
+        "bytes": 108105,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/pass_td/leaf_cdf/rows.parquet",
+        "sha256": "ea9468b215c4d59386917f25334ba804add14995e310be173108ec524b59ea12"
+      },
+      "pass_yd": {
+        "bytes": 122545,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/pass_yd/leaf_cdf/rows.parquet",
+        "sha256": "f7d11c096477f72e9987e99b2029d1e067e906c41971bd9a39d880e06a348a33"
+      },
+      "rec": {
+        "bytes": 345395,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/rec/leaf_cdf/rows.parquet",
+        "sha256": "59f45959b333286aa28ba8c504ac8c68ffb17968a41aeb19622f4b348f4d8cdb"
+      },
+      "rec_yd": {
+        "bytes": 373539,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "c70d21c14668671835a054cdc7bb3d8c7d968ff5a8fbe0a509844f5efca3bfbc"
+      },
+      "rush_att": {
+        "bytes": 263473,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/rush_att/leaf_cdf/rows.parquet",
+        "sha256": "2a057594ebb092326a12c653f5ef58debe74eb8575827b0625055ca15348168e"
+      },
+      "rush_rec_yd": {
+        "bytes": 413397,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/rush_rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "c2bf056bce4eb260e61e51b979c7db1719f5e68db7203cd07389837ca07e38a0"
+      },
+      "rush_yd": {
+        "bytes": 292085,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2022/rush_yd/leaf_cdf/rows.parquet",
+        "sha256": "ce0b29b76d572fc58cbd270ae90ce67a96d0820fea9dad25988bd6a118be088a"
+      }
+    },
+    "2023": {
+      "anytime_td": {
+        "bytes": 399242,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/anytime_td/leaf_cdf/rows.parquet",
+        "sha256": "91dd1c21dac03f040e716077173a3908e456b62a086a944430c1e524fda49b64"
+      },
+      "pass_att": {
+        "bytes": 123361,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_att/leaf_cdf/rows.parquet",
+        "sha256": "e4ed1a3a74fb4ee58cfa793827e2bb7b8cb122135095e5593e44eee875527f6b"
+      },
+      "pass_cmp": {
+        "bytes": 118753,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_cmp/leaf_cdf/rows.parquet",
+        "sha256": "4209e0c7a052fc781802c3aca3454927caf6ca0aa0c2365092be1f451b91f0cc"
+      },
+      "pass_int": {
+        "bytes": 104773,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_int/leaf_cdf/rows.parquet",
+        "sha256": "4ae96d0e73bb8cf4a0c6f829dab52eb6aa891eea19a36463c9b7b692cc582e8c"
+      },
+      "pass_td": {
+        "bytes": 108517,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_td/leaf_cdf/rows.parquet",
+        "sha256": "a7cd44a4dad251f46806619c64933997173f6dbf427cd300c8bce1393673fbd2"
+      },
+      "pass_yd": {
+        "bytes": 123878,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/pass_yd/leaf_cdf/rows.parquet",
+        "sha256": "6ec48a3693bbb637fb0b7e710720261a791275ea292f7e1a9102c4e051435f56"
+      },
+      "rec": {
+        "bytes": 346925,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rec/leaf_cdf/rows.parquet",
+        "sha256": "83ff1e8b8946680fa38244cf4cdc0fe9b6bc3730e159b6ca0fb8106bbac1996c"
+      },
+      "rec_yd": {
+        "bytes": 373289,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "c18d9cb21ce61236a09df2f0c24d41c3d21691f5d190c56b68fdd36545b4885c"
+      },
+      "rush_att": {
+        "bytes": 252444,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rush_att/leaf_cdf/rows.parquet",
+        "sha256": "2fb41459cf480925539411fe790d5b95de5f662b7c0ce3245ce341335179bde1"
+      },
+      "rush_rec_yd": {
+        "bytes": 411013,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rush_rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "09f91440c6cc5eb2c764fe80ca8a340ff1add31dabb6f13803bff3c40d0d5c41"
+      },
+      "rush_yd": {
+        "bytes": 282747,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2023/rush_yd/leaf_cdf/rows.parquet",
+        "sha256": "92c65af31e06d2a9013569a45c9203490f53761ba73daca94099f60035e7fa02"
+      }
+    },
+    "2024": {
+      "anytime_td": {
+        "bytes": 404297,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/anytime_td/leaf_cdf/rows.parquet",
+        "sha256": "dbf9356498ee710e2f32744e90ca7cc4caa1e51fa566b67f56ae2853d5c392ab"
+      },
+      "pass_att": {
+        "bytes": 124342,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/pass_att/leaf_cdf/rows.parquet",
+        "sha256": "28191f1cc433761af925e9dcb01c475e0d3b996c95c01a2e72c6a5571aeb29e2"
+      },
+      "pass_cmp": {
+        "bytes": 119114,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/pass_cmp/leaf_cdf/rows.parquet",
+        "sha256": "98c3959ea08a7c55928e48857732a17605dc18adda392f9229d3d9619810da3b"
+      },
+      "pass_int": {
+        "bytes": 104435,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/pass_int/leaf_cdf/rows.parquet",
+        "sha256": "f474358cf18ad9e594067fd5cfdb6ab0f5c0147fab2ef6b4266d51fa8bac81c7"
+      },
+      "pass_td": {
+        "bytes": 108677,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/pass_td/leaf_cdf/rows.parquet",
+        "sha256": "ac53240c08f8307115988b60ba6e6143be865e3b03b314019852ed161b168666"
+      },
+      "pass_yd": {
+        "bytes": 123347,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/pass_yd/leaf_cdf/rows.parquet",
+        "sha256": "33d3819f62886aeb9c906a02cbdf207798e6861e6ecc4b56b6132b883ca75360"
+      },
+      "rec": {
+        "bytes": 343805,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/rec/leaf_cdf/rows.parquet",
+        "sha256": "4b6aedadc657dd23bb04eed64ad5159538ff41993872082daef2824f849010f3"
+      },
+      "rec_yd": {
+        "bytes": 370791,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "f04392a34a131c9b771df6055b4a035804faaffeee997556a2991a0d068e800a"
+      },
+      "rush_att": {
+        "bytes": 251508,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/rush_att/leaf_cdf/rows.parquet",
+        "sha256": "5f5d6a6500280694fd0d3c7875b2e68263b3d2a39f820647dbdd38d7a3df5b4e"
+      },
+      "rush_rec_yd": {
+        "bytes": 411214,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/rush_rec_yd/leaf_cdf/rows.parquet",
+        "sha256": "6e1b7cd654596dd4fffd4496702fb221aa1c1e93d3c87273b8a139b2138c0801"
+      },
+      "rush_yd": {
+        "bytes": 289226,
+        "path": "/workspace/website-methods-research/resumed/source-matched-report-recovery-v1-20261023/private/scored/2024/rush_yd/leaf_cdf/rows.parquet",
+        "sha256": "9ebf5b1e0588fe692cc4960c420154e6ca70d88d475b763957225740d36de677"
+      }
+    }
+  },
+  "historical_queries": {
+    "2022": {
+      "bytes": 588053,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/queries/2022.parquet",
+      "sha256": "8639b1367a7be841da7e9363a88d10f748540de9df9f619213165724b8263ba6"
+    },
+    "2023": {
+      "bytes": 577849,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/queries/2023.parquet",
+      "sha256": "bc31f1553918fe2f707d1ff10281eb8907ce2bf70f827dd086c479c956afa2cd"
+    },
+    "2024": {
+      "bytes": 577808,
+      "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/queries/2024.parquet",
+      "sha256": "a0a5e05d00b653d8e93683a7078df6cd50b772855c061b14911fbea13bbee04f"
+    }
+  },
+  "implementation_bindings": [
+    {
+      "bytes": 51381,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/historical_market_comparison.py",
+      "sha256": "8d16ec8fb1ba9ec1684adb577194e1b968095026002d890b283cc76ab425923d"
+    },
+    {
+      "bytes": 11176,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/historical_market_queries_v3.py",
+      "sha256": "531ae07377f428a8fadd875967591131cf84659c8c778c4a3dc17564295c11fc"
+    },
+    {
+      "bytes": 15289,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/tools/historical_market_comparison_no2025_technical_v3.py",
+      "sha256": "949e2b1f169a95b43c7eaff16978792b1dae02b085ff3f66ea913c52cb1820f3"
+    },
+    {
+      "bytes": 12983,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/features.py",
+      "sha256": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9"
+    },
+    {
+      "bytes": 27618,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    {
+      "bytes": 32004,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/nfl_lab/operational_storage.py",
+      "sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad"
+    }
+  ],
+  "learners": {
+    "confidence_shrink": {
+      "additional_closed_form_parameter_estimates_cap": 33,
+      "fallback": "q=1;FS=F",
+      "formula": "q=max(0,min(1,sum((pF-.5)*(y-.5))/(sum((pF-.5)^2)+10)));pFS=.5+q*(pF-.5)",
+      "minimum_rows": 100,
+      "training": [
+        2022,
+        2023
+      ]
+    },
+    "fits_by_offering_book": true,
+    "no_retraining_or_selection_on_2024_or_2026": true,
+    "point": {
+      "FC_inputs": [
+        "F_point"
+      ],
+      "H_inputs": [
+        "F_point",
+        "independent_M_line"
+      ],
+      "alpha": 10.0,
+      "class": "same standardized nonnegative-slope ridge with unpenalized intercept; scipy.optimize.lsq_linear",
+      "fallback": "FC=F; H abstains when independent M absent or training insufficient",
+      "intercept_penalized": false,
+      "max_iter": 200,
+      "min_unique_rows": 100,
+      "slope_bounds": [
+        0,
+        "positive_infinity"
+      ],
+      "sourcepointreuse": "2022/23/24 exact original frozen fullCDF mean counts, median yards;2026 new stable mean from retained law or fullCDF median",
+      "tol": 1e-10,
+      "training": [
+        2022,
+        2023
+      ]
+    },
+    "probability": {
+      "C": 0.1,
+      "FC_inputs": [
+        "logit(F_decisive_p)"
+      ],
+      "H_inputs": [
+        "logit(F_decisive_p)",
+        "logit(independent_M_decisive_p)"
+      ],
+      "class": "same convex nonnegative-slope logistic; scipy.optimize.minimize L-BFGS-B",
+      "fallback": "FC=F; H abstains when independent M absent or training insufficient",
+      "fit_only_strict_interior_probabilities": true,
+      "ftol": 1e-12,
+      "gtol": 1e-08,
+      "intercept_bounds": "unbounded",
+      "max_iter": 200,
+      "min_unique_rows": 100,
+      "minimum_each_class": 10,
+      "objective": "sum(logaddexp(0,eta)-y*eta)+5*sum(slopes**2)",
+      "random_state": 1701,
+      "slope_bounds": [
+        0,
+        "positive_infinity"
+      ],
+      "solver": "L-BFGS-B",
+      "tol": 1e-08
+    }
+  },
+  "market_prices_and_paper_settlement_qualification": "Source timing unverified; exact book settlement unqualified; retrospective exploratory assumed refundpush/void only.",
+  "model_for_season": {
+    "2022": 2022,
+    "2023": 2023,
+    "2024": 2024,
+    "2026": 2024
+  },
+  "model_training_admission": "Both modeled and role/global prior training bindings must contain exactly2019..modelyear-1;2024 model exactly2019..2023; no2025. Authenticate originalmodel/audit/FROZEN hashes. Oldpoint2022/23/24 reused only after exactquerycontext/target/method verification; threshold products separately new.",
+  "models": {
+    "2022": {
+      "anytime_td": {
+        "FROZEN.json": {
+          "bytes": 442,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/anytime_td/leaf_cdf/FROZEN.json",
+          "sha256": "dbbae1fd69187ea654790333586bbf9eebe4ef413e4c438a96cf034d04f6ca11"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 238961,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/anytime_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "10f50609eca4252dd0d27df4fb2bc9e290230e05e12b33131242d60e789b6d7d"
+        },
+        "model.joblib": {
+          "bytes": 925940,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/anytime_td/leaf_cdf/model.joblib",
+          "sha256": "93ed81e0840505af8cec80553acd7e9151efde8bf94807ffc2f16d44553801d9"
+        },
+        "training-audit.json": {
+          "bytes": 2208,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/anytime_td/leaf_cdf/training-audit.json",
+          "sha256": "da4b76dcd091220e52b7e9d1b0724a1fb4680a32681f08a8e7fb5b3c261ba36b"
+        }
+      },
+      "pass_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_att/leaf_cdf/FROZEN.json",
+          "sha256": "4ab4902aa7574a5c3c4231492286bb4236f9808a9a321468e7c732aed3530f94"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 81362,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "d16086e5adfb10d7d89403908c73cf7a0e4b719782e6c3f9d145ea37bdfb9253"
+        },
+        "model.joblib": {
+          "bytes": 287293,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_att/leaf_cdf/model.joblib",
+          "sha256": "9b9f45696c107ff160a0094cefde04cc3299df642f656991d9024153c1af1c3a"
+        },
+        "training-audit.json": {
+          "bytes": 2358,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_att/leaf_cdf/training-audit.json",
+          "sha256": "416fba3fa43f9303a27964bbfb486f7ec8dce6abe0828838a98ff9d525944af9"
+        }
+      },
+      "pass_cmp": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_cmp/leaf_cdf/FROZEN.json",
+          "sha256": "76b23568a61c37a86935723804d82f7abc0d93b8a006428c345a8904f8b7179d"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 81194,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_cmp/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "c667aabc06ba20f4b11d4f6b07956f69eab552b416898d7657f96f52b4c18cc6"
+        },
+        "model.joblib": {
+          "bytes": 282171,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_cmp/leaf_cdf/model.joblib",
+          "sha256": "ef36c73f3e19b0888e403edb72a554bf814c8e17dcae77c06348c27cb965f9d7"
+        },
+        "training-audit.json": {
+          "bytes": 2359,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_cmp/leaf_cdf/training-audit.json",
+          "sha256": "b6e0e169490266ac4ea7094e09f14778844076df11d4a785c48e416828fa6afe"
+        }
+      },
+      "pass_int": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_int/leaf_cdf/FROZEN.json",
+          "sha256": "3ca05be2b118867b89e89ef74b19d6b5027f73b2639c05918f3b940bcb69c8eb"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 71937,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_int/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "d629d2f7ac63303ecb85e9627dfe50b5d3a3ae6901b0a6248bb4cc12617f61d9"
+        },
+        "model.joblib": {
+          "bytes": 229639,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_int/leaf_cdf/model.joblib",
+          "sha256": "6f80bd1eceaf81997690351a2af691b923895cbd76611806fe671fdafc94e607"
+        },
+        "training-audit.json": {
+          "bytes": 2358,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_int/leaf_cdf/training-audit.json",
+          "sha256": "0fc709744705ff7c121476c647902a95169997ce561325c86a9c1a3fa6d46ef4"
+        }
+      },
+      "pass_td": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_td/leaf_cdf/FROZEN.json",
+          "sha256": "3b0692fd5a1abf30ae19e25baf4ae61319ef38d95cda26e86211af697a8cd085"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 73715,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "0d1c362ae7c24c3ae88c50fc3caaeb019758dbbde2002a90702d0ddc2cd2d9e6"
+        },
+        "model.joblib": {
+          "bytes": 255508,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_td/leaf_cdf/model.joblib",
+          "sha256": "5f25e2b5986723b0b8cfe19d80e2f4ca355739db132c4e926670aa33342bc7b7"
+        },
+        "training-audit.json": {
+          "bytes": 2358,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_td/leaf_cdf/training-audit.json",
+          "sha256": "892fb936c357c210e46f8b67757e4384e9a8e8f704a38aa8d73a7d3ceb15a8e7"
+        }
+      },
+      "pass_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_yd/leaf_cdf/FROZEN.json",
+          "sha256": "0bda6a2b3598d386cdefb8f063d847a764ac85f80987a4892d31fc6a1b450aaf"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 82111,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "58217c8f5fd155a3f124f8d720667cfd93b761d70177a11b8716e54a40e89299"
+        },
+        "model.joblib": {
+          "bytes": 339715,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_yd/leaf_cdf/model.joblib",
+          "sha256": "f0b36ee1f4aef18a1fdf80473ac621e59ea5110bd47791e3c151395f0a5f28cf"
+        },
+        "training-audit.json": {
+          "bytes": 2348,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/pass_yd/leaf_cdf/training-audit.json",
+          "sha256": "7ff431c8212fbcfb4d8325ad432cb4646319428528750f891047a89c971cb0b2"
+        }
+      },
+      "rec": {
+        "FROZEN.json": {
+          "bytes": 414,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec/leaf_cdf/FROZEN.json",
+          "sha256": "18061472bd82454dc0fb1ad9426ca1322c3347c6873f8ce18ecd09a8bb52ee10"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 161775,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "63994e4cf9b0c15f94525e80bc22cc544f97ca653bdbeaa335917cc01c6dec35"
+        },
+        "model.joblib": {
+          "bytes": 1191635,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec/leaf_cdf/model.joblib",
+          "sha256": "aefab7d1146892d5ffb7c67023277ba4a67ab033a560988888d5957cd4871947"
+        },
+        "training-audit.json": {
+          "bytes": 1810,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec/leaf_cdf/training-audit.json",
+          "sha256": "c146b0f8a8540316339ab6a747d4f119d59ab5cade767210494fd44c7748c2d9"
+        }
+      },
+      "rec_yd": {
+        "FROZEN.json": {
+          "bytes": 426,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "4c19e726a71a47834e4cfe277387f8f620970e3ba4709e8f36de8189276c8b10"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 171758,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "70f896baf1a46d6b7808303e52449c626d107b7d39c306e9e7de7182c3644513"
+        },
+        "model.joblib": {
+          "bytes": 1490689,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec_yd/leaf_cdf/model.joblib",
+          "sha256": "0eb31bc4401f9561b4d9d3b40c960f42ad13b53a2bec0c2ac7622424ba94de9e"
+        },
+        "training-audit.json": {
+          "bytes": 1850,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "87a6fbb841cf915dc7f2f297304ea7ee2a4239d81fe286540c5d361bd849473a"
+        }
+      },
+      "rush_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_att/leaf_cdf/FROZEN.json",
+          "sha256": "c465db6ce8c1406535e3347b46e21bef4df8c0127c2ea4cca3c0f9313c0ebcbd"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 134111,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "9ae0eddbd25c14583eecc2c76ec547c35e60fb1ffb8b60ca04d31f7d9b0a734b"
+        },
+        "model.joblib": {
+          "bytes": 1040341,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_att/leaf_cdf/model.joblib",
+          "sha256": "ecdfb38bea16d38b049b9e8deb5fee88d3e876a5d723d59357c1b5720883e5c7"
+        },
+        "training-audit.json": {
+          "bytes": 2091,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_att/leaf_cdf/training-audit.json",
+          "sha256": "bb8cda2c5f70af6cbd0dd5240ae3206c3ea73284f3361022d92077ba08168c21"
+        }
+      },
+      "rush_rec_yd": {
+        "FROZEN.json": {
+          "bytes": 446,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "0df87991ab99e5694e40405b88459bf5430d0ab329a4790ddcede0d58cbbf1d9"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 181315,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "ffe373a419f12d01a5b7b2f0fdaff58af636d439d58f7a2868acec37d020da18"
+        },
+        "model.joblib": {
+          "bytes": 1495313,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_rec_yd/leaf_cdf/model.joblib",
+          "sha256": "83046eb4197a454e10a72d3b5179f804ea10bee7eb90bc8644c5d527445129ed"
+        },
+        "training-audit.json": {
+          "bytes": 2147,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "59acaf2d0046c448a421ce3289e1d5786bf28c812a544c28bee5b2b442d2ef58"
+        }
+      },
+      "rush_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_yd/leaf_cdf/FROZEN.json",
+          "sha256": "abe907086454f8d2841d354d0e7c1849dd249bf37b953be1ab8f04d6e3d57fa5"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 141956,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "39d5a442a63e00433e9f924015195cc14ac45d66f11023177e63f2ec280fbd3a"
+        },
+        "model.joblib": {
+          "bytes": 1191535,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_yd/leaf_cdf/model.joblib",
+          "sha256": "d9ace6ec8a388729253e8e7eec25fa6a54117a06d863e42b7b80f5a992fb1896"
+        },
+        "training-audit.json": {
+          "bytes": 2130,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2022/rush_yd/leaf_cdf/training-audit.json",
+          "sha256": "57214572c66ed6ee0eafc6bb9f023588aa245815a8ffe399a5db1bee1c2a2550"
+        }
+      }
+    },
+    "2023": {
+      "anytime_td": {
+        "FROZEN.json": {
+          "bytes": 442,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/anytime_td/leaf_cdf/FROZEN.json",
+          "sha256": "0bdef1eb75ac4852fc93ce877233cb40e46d4fcfc0118e0d8eee12ad37f2f133"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 233804,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/anytime_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "9ebf43536f6be155b65dd6960a65a8ae55af9badaa91106357195bc412cc37da"
+        },
+        "model.joblib": {
+          "bytes": 1193853,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/anytime_td/leaf_cdf/model.joblib",
+          "sha256": "a583da3662916536edb3105f34b97cc187e91fad6d45b35edc1a95d7476603e0"
+        },
+        "training-audit.json": {
+          "bytes": 2198,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/anytime_td/leaf_cdf/training-audit.json",
+          "sha256": "18c86d3f17c053d80836d69fe9d8a326c7cdd6e513aaa6cd095cbb198fd6068f"
+        }
+      },
+      "pass_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_att/leaf_cdf/FROZEN.json",
+          "sha256": "06caaea7dd832c6dbc5e582d41094a02c8baf3ff736f5792444a5ba21cbb534d"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 82072,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "7845d96190d1a512e4593da5e07010fd1d234b9cf8ad6060c2d4aa4dc16d126d"
+        },
+        "model.joblib": {
+          "bytes": 373877,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_att/leaf_cdf/model.joblib",
+          "sha256": "4d914f3de8e88ab4b37eda14f08f0cf7cb65e6cbdda201f983cac9026735e76b"
+        },
+        "training-audit.json": {
+          "bytes": 2347,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_att/leaf_cdf/training-audit.json",
+          "sha256": "18131dd837aa787bdea34fe48f6595bd0689aba536ef301c33773364f245e0e9"
+        }
+      },
+      "pass_cmp": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_cmp/leaf_cdf/FROZEN.json",
+          "sha256": "6f10bcf5a171737c7ca23965ad93031609b279be2005aa517eaa136182699316"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 79890,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_cmp/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "62433d3ae30ad33a3cbca6e9cbdf30986c06bcedd3ee36ffc556f3c9033a7875"
+        },
+        "model.joblib": {
+          "bytes": 372483,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_cmp/leaf_cdf/model.joblib",
+          "sha256": "3110eb4ec6338c16de8637276430ba272f85ecc379a6618b397678fe67a1a99f"
+        },
+        "training-audit.json": {
+          "bytes": 2349,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_cmp/leaf_cdf/training-audit.json",
+          "sha256": "c9bfd495f5d869aa2886f7a49b96b25ce86d72c726c2b4ca14ca552dd5935130"
+        }
+      },
+      "pass_int": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_int/leaf_cdf/FROZEN.json",
+          "sha256": "032f2051e3203b1996afed9ef4abc4fa52ee7761dea28f4428c4df6f9bc2f66a"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 72170,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_int/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "accf970d5496b248b560a5722242732f138b320508c42fa0448e9665ef6b51a5"
+        },
+        "model.joblib": {
+          "bytes": 288366,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_int/leaf_cdf/model.joblib",
+          "sha256": "9b59d6f34375a0040c5b267ebd1a2fb1f7dd15082820c0171f78e8228d582ae5"
+        },
+        "training-audit.json": {
+          "bytes": 2348,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_int/leaf_cdf/training-audit.json",
+          "sha256": "66a637f9eec93ee1dc1e26283c07c7929898ac98a5125e1f12444e67cfbfa327"
+        }
+      },
+      "pass_td": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_td/leaf_cdf/FROZEN.json",
+          "sha256": "f1ddb54299785a4ab3649455db63e0c0268647a400420a62b5916489573dc66b"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 74100,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "96bdd61f71cdab4d8ef36a251d1c620dbea6cda86d34601522d76b04f6e528d9"
+        },
+        "model.joblib": {
+          "bytes": 342307,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_td/leaf_cdf/model.joblib",
+          "sha256": "0baa362265b74c25e81ddc9d960771d5c8417016137921d25971d7471f1db0f6"
+        },
+        "training-audit.json": {
+          "bytes": 2346,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_td/leaf_cdf/training-audit.json",
+          "sha256": "c9c3e2ac59b5bf901b70737109c33983fcb6a70114c3850dd49464f85af9fc8c"
+        }
+      },
+      "pass_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_yd/leaf_cdf/FROZEN.json",
+          "sha256": "edfd4c126016d5b3979cec380ad7528f2e6eda05f5060e8320eefb1b7cc88679"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 83274,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "32ab1af050c9a035e4892b2e99407b6971cf056ed32ba4ed9a41caec06933d9b"
+        },
+        "model.joblib": {
+          "bytes": 444431,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_yd/leaf_cdf/model.joblib",
+          "sha256": "0e5a364d1282b38f9ffd7b615d5e9b04f1ec2c3e81b287abdffd604cf3e2ef05"
+        },
+        "training-audit.json": {
+          "bytes": 2337,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/pass_yd/leaf_cdf/training-audit.json",
+          "sha256": "06d00c61bc43b29692cdde7f05c443dfc3811f5f66fd3008a36b895ba376f302"
+        }
+      },
+      "rec": {
+        "FROZEN.json": {
+          "bytes": 414,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec/leaf_cdf/FROZEN.json",
+          "sha256": "b09b971ae9e06424f5689a0f7d09da24037cef6c5f852f0712c3867cbe21a5ce"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 161259,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "1fdbbcb20d4b75bf916f995806f5472b957e7bca528e1adf5697a3dce4b0eb6b"
+        },
+        "model.joblib": {
+          "bytes": 1528585,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec/leaf_cdf/model.joblib",
+          "sha256": "38e2e68438b0ce7af05638e59d0de73465eacb71ef37cee88759aa6f326af2ca"
+        },
+        "training-audit.json": {
+          "bytes": 1824,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec/leaf_cdf/training-audit.json",
+          "sha256": "1deb80179a747003e6e405c2d3a09c0f13377e390b1deff7cf3bc08a8fd892b4"
+        }
+      },
+      "rec_yd": {
+        "FROZEN.json": {
+          "bytes": 426,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "4a96b6fd81257f1848899be51193a8743079badad3c887b82f780e1864cd8d9b"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 171307,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "ace90bd570e4516e65062560151aafac7bf2f06287feb3d5c976b7ff0a1cb840"
+        },
+        "model.joblib": {
+          "bytes": 1893714,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec_yd/leaf_cdf/model.joblib",
+          "sha256": "44d9e1629d6c84a0e3b67102827a807775f3dd4f508059fe1725018118ba2ce2"
+        },
+        "training-audit.json": {
+          "bytes": 1866,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "90e0f49f8c5e2c124f54aa5b7826e6cb0df58731e1b32b06edf5d4bdcf00f08d"
+        }
+      },
+      "rush_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_att/leaf_cdf/FROZEN.json",
+          "sha256": "9d068be83fe542c615ac0c0cc6c3de5bf32ef01c052f588b844b857297d4dc0f"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 130120,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "267a4d7b7cc523c7e3ad13bb005d2b224aaec6f3aff243bced5377c01210cf52"
+        },
+        "model.joblib": {
+          "bytes": 1349186,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_att/leaf_cdf/model.joblib",
+          "sha256": "97a8651f6b69a6f726d1f1301d2fe14cf0da15b49c42adffd9098706016dac5c"
+        },
+        "training-audit.json": {
+          "bytes": 2091,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_att/leaf_cdf/training-audit.json",
+          "sha256": "83f6a6c2ca8890fbf6ea8145e001a2426d3c1cfface9ed763376397d6b635338"
+        }
+      },
+      "rush_rec_yd": {
+        "FROZEN.json": {
+          "bytes": 446,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "41350c822c55bbbbb412595b4635265604e5a11ba3c2afd3f3b76402ef5acc1f"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 180386,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "34f21608260bdefb6a484991e70dc951ce6123fee4947be4532a59d483325596"
+        },
+        "model.joblib": {
+          "bytes": 1876777,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_rec_yd/leaf_cdf/model.joblib",
+          "sha256": "73d80ed1f71c16007053fe7e3559689c3c485d3000737ffd076ce00ef79fe7e2"
+        },
+        "training-audit.json": {
+          "bytes": 2148,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "85c8fdf2de464f612b638c6be1979786843c83f738b581fe523fefb33fa2c977"
+        }
+      },
+      "rush_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_yd/leaf_cdf/FROZEN.json",
+          "sha256": "2d5f24831cf30c4f75f2f250246d8bc304f2fa4542b444951a960b9c686ad110"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 138785,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "b69159ee09b1961a08eab8be8ac0eea1d8c7496f120c1fb1c273c7511b21fc46"
+        },
+        "model.joblib": {
+          "bytes": 1508216,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_yd/leaf_cdf/model.joblib",
+          "sha256": "43d9ec1c15961142afc5c3fa883b3b3e35b989b0512f3df9f3c2890e2fa100e0"
+        },
+        "training-audit.json": {
+          "bytes": 2131,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2023/rush_yd/leaf_cdf/training-audit.json",
+          "sha256": "a777e2098710618e272b8f6fecb0a8d40ddb3c260da5f66431ccb82941652e6f"
+        }
+      }
+    },
+    "2024": {
+      "anytime_td": {
+        "FROZEN.json": {
+          "bytes": 442,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/anytime_td/leaf_cdf/FROZEN.json",
+          "sha256": "754761fdcd21add06020d44ca130ddf8fb9699a6edb688c40f3ec99eb9dcf65c"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 236410,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/anytime_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "2c6698c847012a39db34b7e9987832a1a3537daf8df21fe87046a6f49523c2c1"
+        },
+        "model.joblib": {
+          "bytes": 1458426,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/anytime_td/leaf_cdf/model.joblib",
+          "sha256": "5384ea8151ee50de61d64b017e6f1e529d2b5778cb6d90f98e0e176e27ba911e"
+        },
+        "training-audit.json": {
+          "bytes": 2198,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/anytime_td/leaf_cdf/training-audit.json",
+          "sha256": "0ac08d0518e44076e0bf7c89a49528e51829b6414be743a2f4e226f52d783465"
+        }
+      },
+      "pass_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_att/leaf_cdf/FROZEN.json",
+          "sha256": "f05ff46308464840ec3d6794fedac4e83b0a505b027fd515b0f4cc8c90c3a7e6"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 82494,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "8c11840ec6473982c061bf3d097543d125a691dd83a608c83d4796ebf3c0e254"
+        },
+        "model.joblib": {
+          "bytes": 465479,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_att/leaf_cdf/model.joblib",
+          "sha256": "bdd8727e92d753d40e87f60ae26eedfc4e9f33d1d137847b9a4681b18aa5ab05"
+        },
+        "training-audit.json": {
+          "bytes": 2416,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_att/leaf_cdf/training-audit.json",
+          "sha256": "6569f6554ba99d9bb079b4255ec4e1d6d7c32139b903c97b4c8974c55e55ce45"
+        }
+      },
+      "pass_cmp": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_cmp/leaf_cdf/FROZEN.json",
+          "sha256": "97828271d253529bc3764fb4b6f7f49199259ccc965d7f5fb4b2b819d024a215"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 80064,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_cmp/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "1c4a17eea8243a6244d27270315e1b333d488f8b3a7faf89a10fc034271aa7ce"
+        },
+        "model.joblib": {
+          "bytes": 451726,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_cmp/leaf_cdf/model.joblib",
+          "sha256": "a7a9ce796bee41328c27fe91fb16c18865b2633956f7abb0f72e7d645ef2058f"
+        },
+        "training-audit.json": {
+          "bytes": 2417,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_cmp/leaf_cdf/training-audit.json",
+          "sha256": "179ec53dc6feaf111cb5670a15efd74ea48668f64e4855c7e0b236e900f06ca4"
+        }
+      },
+      "pass_int": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_int/leaf_cdf/FROZEN.json",
+          "sha256": "0ec959cddf5348dfb286c558ffd57f3f9746682204227fa8d795c529e31350c2"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 72210,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_int/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "f09935b4820974016309d67f908255c87b8ac6c29409c3761f1d34ae1f4927e5"
+        },
+        "model.joblib": {
+          "bytes": 353966,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_int/leaf_cdf/model.joblib",
+          "sha256": "fc6da861a5cb9f5727193cba55611717c6b7eef6ff779102f976cf25a03464bd"
+        },
+        "training-audit.json": {
+          "bytes": 2417,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_int/leaf_cdf/training-audit.json",
+          "sha256": "f8a70525107dec7b887ab57e36665b9269bca8bbffeebe99d39315f4197fadfc"
+        }
+      },
+      "pass_td": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_td/leaf_cdf/FROZEN.json",
+          "sha256": "dc2388ab18dd5afb6230af2dc0bf5b1183edb3db717253f1e38f3b1e2c717b13"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 74032,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_td/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "dbac46ed0d5cc932d6f5c239e49b684bc347941ebd7d936ea46a126db84c7851"
+        },
+        "model.joblib": {
+          "bytes": 425609,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_td/leaf_cdf/model.joblib",
+          "sha256": "c3d38b921c83ef0cfd852f66261721500864afb24f8dc4173495b9276309c79c"
+        },
+        "training-audit.json": {
+          "bytes": 2416,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_td/leaf_cdf/training-audit.json",
+          "sha256": "d4b72f1300933fe7ee25f23ba5cac9446319d562e55782997f1e90a9bd6bee3e"
+        }
+      },
+      "pass_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_yd/leaf_cdf/FROZEN.json",
+          "sha256": "67eaa5e57b7a494e24eb2c7c62aedcf0df25f22687de8815cb0ee1fcc2b84e5c"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 82662,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "fdf22da921bc4a24bb90ddafc12726f67b95760ecfd3d0fdeb47f9884e8f90d5"
+        },
+        "model.joblib": {
+          "bytes": 547569,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_yd/leaf_cdf/model.joblib",
+          "sha256": "389b8726a84b837997c813880f4f3a2dfc9491fea1b8988ed3e5ac69ac3ffaae"
+        },
+        "training-audit.json": {
+          "bytes": 2407,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/pass_yd/leaf_cdf/training-audit.json",
+          "sha256": "b4832ee73b6b804d7e63a8990ee1ae7a0e4b2d5fcb54d30e3db889ef40a4bd74"
+        }
+      },
+      "rec": {
+        "FROZEN.json": {
+          "bytes": 414,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec/leaf_cdf/FROZEN.json",
+          "sha256": "a02ccd6676e7d202acf9a2e90b5315ada0a569ab9d369663dc96d11eedfbb7d9"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 160463,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "7cbdedbdce822785ef4d955031b0dc0ebd097b98dc4b09e43f3777fb97014137"
+        },
+        "model.joblib": {
+          "bytes": 1857625,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec/leaf_cdf/model.joblib",
+          "sha256": "5ffd1739a22770febc86db27666b9f6c80a67e6377d268baafc1aaaaa7986ec3"
+        },
+        "training-audit.json": {
+          "bytes": 1852,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec/leaf_cdf/training-audit.json",
+          "sha256": "12b044828e361a7c43c8620ef6836b629a531fed47a4dcaafabe8cf9f048de88"
+        }
+      },
+      "rec_yd": {
+        "FROZEN.json": {
+          "bytes": 426,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "ae79fe067a4b179366552512e624eb5efa38f6999ce823cb5d5c82d3b1000a99"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 170126,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "50947793dea7d9d5f34b886bc56a695b79758f1c15c3db40e3083debf5a29791"
+        },
+        "model.joblib": {
+          "bytes": 2281330,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec_yd/leaf_cdf/model.joblib",
+          "sha256": "bf109eab6c4661282f040d1ceaadea83415d61a32977ff72efd115e070577293"
+        },
+        "training-audit.json": {
+          "bytes": 1893,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "69b470da18ceb7746e3a30d3030080840040f285816a5d596f545de91220e269"
+        }
+      },
+      "rush_att": {
+        "FROZEN.json": {
+          "bytes": 434,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_att/leaf_cdf/FROZEN.json",
+          "sha256": "3d1f15ee7624337ee1ab7a74272d2ae4e39e3f95ebfdeaaad79d18bfd81ebaa5"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 129113,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_att/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "c4b6996fde49db33dea6d2a9d442d533b7dedf6d52c16e73dd8fd1cc4ae6eff3"
+        },
+        "model.joblib": {
+          "bytes": 1643093,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_att/leaf_cdf/model.joblib",
+          "sha256": "40d19c570a829c27f094d7a295b16566d3843a4e2289a5b1d24208dbe501f601"
+        },
+        "training-audit.json": {
+          "bytes": 2118,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_att/leaf_cdf/training-audit.json",
+          "sha256": "ceabe38a28d8d64964fdb3c622eb8dc9cb9ded277fe3c2f08723ed5a0c23b433"
+        }
+      },
+      "rush_rec_yd": {
+        "FROZEN.json": {
+          "bytes": 446,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_rec_yd/leaf_cdf/FROZEN.json",
+          "sha256": "0cec999fedd2ad084e704e9e6b74b3d511741e7183f89afcb335f508472f6ec9"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 180719,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_rec_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "a2643257aeaff3b962565ca8ab5b2fb259b8a3b3c65b9a217a515fc089a51c87"
+        },
+        "model.joblib": {
+          "bytes": 2279182,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_rec_yd/leaf_cdf/model.joblib",
+          "sha256": "f6c120fc4d32d8f464a2fc9af451dc083d7bf5a7663d7d7ed3a220babb29b338"
+        },
+        "training-audit.json": {
+          "bytes": 2177,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_rec_yd/leaf_cdf/training-audit.json",
+          "sha256": "6c36f4fe5eb06d48b516aa88df817c1b974c92f9360c3252ffba46ecf7148d09"
+        }
+      },
+      "rush_yd": {
+        "FROZEN.json": {
+          "bytes": 430,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_yd/leaf_cdf/FROZEN.json",
+          "sha256": "749b05761ff7e55d33dff68f8506451f666a4e0daee92c3f6b1ce84603534341"
+        },
+        "forecast-frozen.parquet": {
+          "bytes": 141526,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_yd/leaf_cdf/forecast-frozen.parquet",
+          "sha256": "2dc61049c30272b3387414c6a4b28c0785bf954a5e532bebb65d9748e708b418"
+        },
+        "model.joblib": {
+          "bytes": 1843995,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_yd/leaf_cdf/model.joblib",
+          "sha256": "b4727a58b0246460af2949e6567a00624a54a7a658c195071a0d3a5650a42999"
+        },
+        "training-audit.json": {
+          "bytes": 2157,
+          "path": "/workspace/website-methods-research/resumed/source-matched-base-v1-20261023/private/cells/2024/rush_yd/leaf_cdf/training-audit.json",
+          "sha256": "7d61d647e0e8289f29b215662900df535a3aa6472c50d707d863bfbade4a53f0"
+        }
+      }
+    }
+  },
+  "normalized_market_inputs": [
+    {
+      "bytes": 995313,
+      "container": {
+        "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/0521c422c36173d5190ca3fe0c296d4543673b7ca210c4daf5cd499292a6907a",
+        "bytes": 4867614,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/processed/operational-source-v3/historical-market-no2025-v1/source-normalization-v3.zip",
+        "sha256": "0521c422c36173d5190ca3fe0c296d4543673b7ca210c4daf5cd499292a6907a"
+      },
+      "member": "offers_2026.parquet",
+      "season": 2026,
+      "sha256": "d83dc0017085bd2752e6f922026914a2526645124441533498da087e5cf57928"
+    },
+    {
+      "bytes": 2354063,
+      "container": {
+        "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/0521c422c36173d5190ca3fe0c296d4543673b7ca210c4daf5cd499292a6907a",
+        "bytes": 4867614,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/processed/operational-source-v3/historical-market-no2025-v1/source-normalization-v3.zip",
+        "sha256": "0521c422c36173d5190ca3fe0c296d4543673b7ca210c4daf5cd499292a6907a"
+      },
+      "member": "offers_2024.parquet",
+      "season": 2024,
+      "sha256": "2d8a3ba8512d4a830ab2d00962955b9bab2cb4ebbd241cd4781556c3605cb30a"
+    },
+    {
+      "bytes": 2522409,
+      "container": {
+        "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/d03f24f1786ae0126650dec7e47992a81f297c849c191b8de33814108b7373b7",
+        "bytes": 3326307,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/processed/operational-source-v3/historical-market-no2025-v1/source-normalization-v4-2023.zip",
+        "sha256": "d03f24f1786ae0126650dec7e47992a81f297c849c191b8de33814108b7373b7"
+      },
+      "member": "offers_2023.parquet",
+      "season": 2023,
+      "sha256": "6b780cf2a4acf0c828f22af6be7dcf35a1b91ca80e74cb9509efb53860bd286a"
+    },
+    {
+      "bytes": 970464,
+      "container": {
+        "blob": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/operational-forward-storage-v3/blobs/sha256/ab4d267be2d4cd7da08961505b56a42c041709d4dbe495c09d7c60a89f4e4608",
+        "bytes": 1207867,
+        "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/processed/operational-source-v3/historical-market-no2025-v1/source-normalization-v4-2022.zip",
+        "sha256": "ab4d267be2d4cd7da08961505b56a42c041709d4dbe495c09d7c60a89f4e4608"
+      },
+      "member": "offers_2022.parquet",
+      "season": 2022,
+      "sha256": "24577065bf1d437495a1a67831bcd91dc0eca13bbea0975d42efd6d896c06953"
+    }
+  ],
+  "normalized_market_inputs_contract": {
+    "process": "one season at a time; filtered Arrow read into categorical Pandas; verify both outer/inner hashes; no extraction",
+    "schema_fields": 24,
+    "shape": {
+      "bytes": "exact uncompressed inner Parquet bytes",
+      "container": "actual CAS binding path/bytes/sha256",
+      "member": "offers_YEAR.parquet",
+      "sha256": "exact inner bytes SHA256"
+    },
+    "source_capture_complete_before_constructor": true
+  },
+  "outer_consumption_receipt": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v3/CONSUMED.json",
+  "outer_failure_receipt": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v3/NATIVE_FAILURE.json",
+  "outer_preflight_receipt": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v3/REAL_QUERY_PREFLIGHT.json",
+  "outer_terminal_receipt": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v3/COMPLETE_NATIVE.json",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/historical-market-comparison-no2025-technical-v3",
+  "paper": {
+    "common_pool": "all F/FC/FS/M/H decisive probabilities available; one canonical offer/playergame/category using stable bookpriority",
+    "contract": "EXPLORATORY_ASSUMED_CONTRACT_ONLY_ACTUAL_BOOK_SETTLEMENT_UNQUALIFIED",
+    "edge_definition": "conditional expected profit per unit stake >0.02",
+    "max_picks_per_week_category": 5,
+    "never_profitability_or_pregame_claim": true,
+    "outcome_blind": true,
+    "point_correction_contract": "FC/H are standardized nonnegative-slope L2 ridge empirical point corrections; no stored CDF mean/median identity or live eligibility. F retains actual law products; line heuristics remain heuristics.",
+    "policies": {
+      "footballEV": "rank genuine F conditionalEV>.02",
+      "hybridEV": "rank H conditionalEV>.02",
+      "independentmarketEV": "rank independent M conditionalEV>.02",
+      "probabilityfirst": "rank FC selected side probability after FC conditionalEV>.02",
+      "projectiongap": "rank abs(Fpoint-line), side from gap; screened using genuine F conditionalEV>.02; no gap probability inference"
+    },
+    "proxy_identity": "GAP_SCREENED is a laboratory F point-gap proxy screened using genuine Fp and actual recorded price. It is not recorded website TopOver/Under: compatible historical SITE/R0 absent.",
+    "push_void_refund": true,
+    "screen": "each ranked side requires conditional EV>0.02 using its declared probability; projectiongap uses football p only for screen, never converts gap into p",
+    "stake_units": 1,
+    "ties": "score descending then game_id/player_id/target/book_id/line/side stable ascending"
+  },
+  "paper_completion_supplement_predeclared": {
+    "assumed_ROI": [
+      "known netunits/knownsettled unitstakes",
+      "known netunits/decisive unitstakes; reportboth exactdenominators, NAwhen0"
+    ],
+    "budget": {
+      "CPU_seconds": 30,
+      "RSS_bytes": 268435456,
+      "fits": 0,
+      "invocations": 1,
+      "managed_writes": 1,
+      "model_loads": 0,
+      "new_forecasts_or_selection": 0,
+      "retained_bytes": 1048576,
+      "source_requests": 0,
+      "wall_seconds": 60
+    },
+    "coverage": [
+      "selected/commoneligibleuniqueplayergamecategoryopportunities beforepolicyEVscreen",
+      "knownsettled/selected; unknownretained",
+      "knownnet/commoneligibleopportunities explicitlypartialifanyunknown"
+    ],
+    "drawdown": "maximumdrop from priorpeak of chronological known-settled cumulativeunitnet orderedkickoffUTC thenstablegame/player/category/book/line/side; unknownomitted flaggedpartial, neverzero",
+    "hit_rate": "wins/(wins+losses); pushes/voids/unknownexcluded; reportallstates separately",
+    "odds": "arithmetic average decimal selectedodds, separatelyknownsettled andwinningodds; no inferredfair probability",
+    "qualification": "timing-unverified exploratory assumed-paper accounting only; no authenticatedprofitability/website/liveclaim",
+    "stake": "flat1 unit eachselectedoffer; no wagers; all hypothetical under unqualifiedactualbooksettlement",
+    "stake_denominators": [
+      "all_selected_unit_stakes",
+      "known_settled_stakes includingrefundpush/void",
+      "decisive_stakes wins+losses",
+      "unknown_ungraded_stakes"
+    ],
+    "state": "NEW_ZERO_FIT_POSTPROCESS_ONLY_AFTER_FROZEN_FORECAST_AND_GRADE_CAPSULES",
+    "uncertainty": "fixed500replicates seed1703 wholeweek ratio/sum bootstrap when>=8weeks;2026W1\u20135 NAbyexistingrule; whole-game secondary when>=8games; noIIDrows; losingweeksretained"
+  },
+  "pending_root_bindings": [],
+  "point_semantics": "F count product is actual authenticated retained-law mean; F yard product full-CDF lower median. FC/H are nonnegative-SLOPE empirical L2 point corrections; signed yards may be negative through unbounded intercept; countoutputs have declared nonnegativeclamp. M/actualofferedline are pointheuristics, not mean/median/distribution claims.",
+  "population_contract": {
+    "calibration_scope": "FC/FS/H fit/apply onlyprimaryroles; outsideprimary FC/FS columns remainF aliases, Hmissing, excludedfromcommonpaperpool; no inferredcalibrationbenefit",
+    "complete_offered_pool": "ALL_CANONICAL_OFFERED_POOL.parquet retains every canonicalsourceoffer includingroles lackingprimarymembership andmissingfootballquerycontexts",
+    "historical_query_eligibility": "Exact existingoriginalfootballquerykeyintersection; missing/postseasoncontexts recordedasexplicitabstentions withrolecounts, neverguessed orsilentlyerased; fullsourcepool persists",
+    "known_model_role_metadata": {
+      "anytime_td": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "pass_att": [
+        "QB"
+      ],
+      "pass_cmp": [
+        "QB"
+      ],
+      "pass_int": [
+        "QB"
+      ],
+      "pass_td": [
+        "QB"
+      ],
+      "pass_yd": [
+        "QB"
+      ],
+      "rec": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "rec_yd": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "rush_att": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "rush_rec_yd": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ],
+      "rush_yd": [
+        "QB",
+        "RB",
+        "FB",
+        "WR",
+        "TE"
+      ]
+    },
+    "primary": "original prespecifiedprimaryroles unchanged, primarycalibration/paper/tests separate",
+    "secondary": "newretainedlaw forecasts for ALLcompatibleofferedroles withinexisting200klawrow/6.4mrowtreecap; all-roleF/Mcoverage/point/Fprobabilitysummaries separate fromprimaryresults; trainedrole/globalpriors retainfallbackreason"
+  },
+  "preserved_source_failures": [
+    {
+      "bytes": 62631,
+      "path": "/workspace/nfl-market-archive-source-no2025-v1/reports/historical-market-no2025-v1/source-qualification.json",
+      "sha256": "187c149d8e52ca601ea0012bcfede78c451c7dd973380354b710e1342c74ba25"
+    }
+  ],
+  "prior_consumption": {
+    "V1": {
+      "V1_original_enforcement_ceilings": {
+        "CPU_hard": 301,
+        "CPU_soft": 300,
+        "RSS": 805306368,
+        "wall": 420
+      },
+      "V1_state": "FAILED_NO_RETRY",
+      "base_CDF_fits": 0,
+      "canonical_offer_rows": 99388,
+      "context_diagnosis": {
+        "bytes": 1534,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/CONTEXT_DIAGNOSIS_V1.json",
+        "sha256": "5b6e6c05ccf88e8b10c988ceaf96842bf6cc4919bed7b4b355690a3d350d497b"
+      },
+      "exact_final_V1_CPU_RSS": "UNRECORDED afterfailurepreservation; do notlabelcheckpointfullusage",
+      "failure_readback": {
+        "bytes": 2088,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/FAILED_PHASE_LOCAL_READBACK.json",
+        "sha256": "5210c42397021aef56ad629887e42c36e743a819cf5d917e9d18af12c3054b89"
+      },
+      "failure_receipt": {
+        "bytes": 777,
+        "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-v1/NATIVE_FAILURE.json",
+        "sha256": "fd70a59d5ade3dd18ce75c36bdad2d0e24eab636eb5daa2449c04e35e92f50b6"
+      },
+      "law_queries_and_tree_evaluations_spent": 0,
+      "managed_write_cap_original": 4,
+      "managed_writes_remaining": 2,
+      "managed_writes_spent": 2,
+      "meta_estimates_remaining": 159,
+      "meta_estimates_spent": 0,
+      "model_loads_remaining": 43,
+      "model_loads_spent": 1,
+      "normalized_source_rows_already_prepared": 470856,
+      "old_failed_versions_relabelled_or_budget_refunded": false,
+      "original_model_load_cap": 44,
+      "ownership_metadata_bytes": 113,
+      "pre_failure_checkpoint": {
+        "CPU_seconds": 30.972857839,
+        "peak_RSS_bytes": 420950016,
+        "wall_seconds": 30.27863288899971
+      },
+      "retained_named_bytes": 1604640,
+      "sealed_plan": {
+        "bytes": 88782,
+        "path": "/workspace/nfl-methods-integration/config/historical-market-comparison-no2025-v1.sealed.json",
+        "sha256": "23abb000162f7f479c485a3af5c5fae5fec41c19eab1c6429573aa8cdcdb2b4d"
+      }
+    },
+    "V2_failure_receipt": {
+      "bytes": 501,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v2/NATIVE_FAILURE.json",
+      "sha256": "6be59f20ddfb19e7fbfac79ef57e05f18aee2fec6edb84258296e096268f805a"
+    },
+    "V2_full_wrapper_observed": {
+      "CPU_seconds_rounded_sum": 26.74,
+      "peak_RSS_after_failure_preservation": "UNRECORDED; preerrorcheckpoint373469184 only",
+      "real_seconds": 26.4,
+      "sys_seconds": 3.71,
+      "user_seconds": 23.03
+    },
+    "V2_preerror_checkpoint": {
+      "CPU_seconds": 20.090381276000002,
+      "peak_RSS_bytes": 373469184,
+      "wall_seconds": 19.74615980199451
+    },
+    "V2_sealed_plan": {
+      "bytes": 93935,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-comparison-no2025-technical-v2.sealed.json",
+      "sha256": "de66d60334d88d9e376ac148a320c0114c1bd2f15660831f31060911ff2c9f3d"
+    },
+    "V2_state": "FAILED_NO_RETRY",
+    "V2_whole_wrapper_time": {
+      "bytes": 31,
+      "path": "/workspace/nfl-market-comparison-no2025-v1/reports/historical-market-comparison-no2025-technical-v2/WRAPPER_TIME.txt",
+      "sha256": "b92d056cdc9bac8762e0b45c432f5e2bb81d1c46325a1481c346ca857b377982"
+    },
+    "additional_authorized_V3_retention_write_slots": 1,
+    "base_CDF_fits": 0,
+    "cumulative_write_cap_V1_V2_V3": 5,
+    "law_queries_and_tree_evaluations_spent": 0,
+    "managed_write_cap_original_preserved": 4,
+    "managed_writes_spent_V1_V2": 3,
+    "meta_estimates_remaining": 159,
+    "meta_estimates_spent": 0,
+    "model_load_cap_original": 44,
+    "model_loads_remaining": 42,
+    "model_loads_spent": 2,
+    "new_V3_write_attempt_cap": 2,
+    "old_failed_versions_relabelled_or_budget_refunded": false,
+    "original_write_slots_remaining": 1,
+    "ownership_metadata_bytes": 226,
+    "retained_named_bytes": 3374140
+  },
+  "probability_contract": {
+    "EV": "pwin*(d-1)-ploss; conditionalonly p*d-1 clearly labelled",
+    "decisive": "pwin/(pwin+ploss), abstain if denominator0",
+    "market_margin": "qO=(1/dO)/((1/dO)+(1/dU))",
+    "monotonicity": "Outcome-blind full-group abstention for upward no-vig over-probability steps across actual same-player/game/category/book/snapshot thresholds; separately check offering-book-excluded aggregate with variable book composition. Canonical final panel has one threshold/group; FC/H nonnegative slopes andFSq[0,1], observed final crossing groups abstain. These are conditional line probabilities, not claimed full CDFs.",
+    "no_market_push_distribution_inference": true,
+    "over": "1-F(floor(L))",
+    "price_guard": "abs(American)>=10000 quarantines probability/calibration/EV/paper pending resolution; original odds preserved; separate line-as-point allowed; no replacement odds.",
+    "push": "pmf(L) if L integer else0",
+    "scores": "same-pool decisive Brier/logloss; 10 fixed calibration bins; F push Brier separate; supported played labels only; unknown/DNP not scored",
+    "under": "F(ceil(L)-1)"
+  },
+  "raw_primitive_container": {
+    "bytes": 5070165,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/processed/operational-source-v2/accepted-historical.parquet",
+    "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f"
+  },
+  "real_query_preflight": {
+    "budget": "uniquequeriesandtreeevalscountedonce; allofferedthresholdlawrowincidenceschargedoriginal200kcap; predictionsareactualNFLforecastproducts, notvalidationprobes",
+    "fanout": "one target/yearmodel_load; forestapplytoUNIQUEqueryframe; forbatchmapunchangedweights[offertoqueryrow],sameatoms/prior/b intooriginalMixtureBatch; callunchangedlaw_productsatEVERYactualbookline; Fpointreplicatedperplayergame",
+    "guards": [
+      "uniquecompleteKEYS",
+      "strictcutoff/kickoff/featureavailability",
+      "exactsource/originalcontext agreement onallsurvivingoffers",
+      "exactoriginalfrozenpointprocedure/context forhistoricalyears",
+      "alloffersmapexactlyonce tooneuniquequeryrow",
+      "recheckactualinputhashbeforemodelcall"
+    ],
+    "not_allowed": "no inference/labels forLOSSES; no fabricatedvalidationprediction; permittedlaghistorysourceoutcomesremainexplicit",
+    "timing": "forALLplannedyear/targetsets beforeanymodel_load_or_predict; requiredactualoriginalassert_clock_contract onUNIQUEfeatures; nativeboundedreceipt +privatefreezeaudit",
+    "unit": "EXACTONE originalfootballfeaturequery/player-game-target; BOOKNOTfootballobservationidentity"
+  },
+  "reporting": {
+    "all_failures_and_abstentions_retained": true,
+    "no_live_promotion": true,
+    "point_metrics": [
+      "MAE",
+      "MSE",
+      "RMSE",
+      "bias",
+      "strict_abs_error_lt10_yards",
+      "inclusive_abs_error_le10_yards",
+      "strict_abs_error_lt1_counts",
+      "inclusive_abs_error_le1_counts",
+      "side_correct_and_close"
+    ],
+    "push_probability_diagnostic": "F raw-law push probability Brier/logloss/calibration scored separately on supported ordinary O/U primaryoffers including pushes; ATD excluded; no M/FC/FS/H push law inferred",
+    "separate_seasons": true,
+    "uncertainty": {
+      "method": "paired whole-game bootstrap",
+      "minimum_clusters": 8,
+      "replicates": 500,
+      "seed": 1703,
+      "whole_week": "same only >=8 weeks;2026W1\u20135 N/A"
+    }
+  },
+  "requested_effort": "xhigh",
+  "requested_model": "gpt-6.1-sol",
+  "resources": {
+    "CPU_hard_limit_seconds": 241,
+    "CPU_seconds": 240,
+    "CPU_soft_limit_seconds": 240,
+    "HTTP_calls": 0,
+    "Odds_API_calls": 0,
+    "RSS_bytes": 805306368,
+    "automatic_retries": 0,
+    "base_CDF_fits": 0,
+    "charge_failed_write_bytes_before_writer": true,
+    "hard_CPU_last_second_scope": "failure metadata/termination only; no new NFL work after240soft;241hardneverdropped",
+    "invocations": 1,
+    "main_wall_soft_stop_seconds": 320,
+    "managed_write_representation": "original4slots3spent plus1explicitseparatelyversionednewretentionwrite -> cumulative5total; V3max2CASwrites freeze+grade, nativecontrols64KiB; original4notreset",
+    "maximum_canonical_offers": 100000,
+    "maximum_confidence_shrink_estimates": 33,
+    "maximum_context_metadata_rows": 35000,
+    "maximum_failure_managed_writes": 2,
+    "maximum_law_batches": 16000,
+    "maximum_law_query_rows": 200000,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "maximum_meta_fits": 159,
+    "maximum_meta_optimizer_or_ridge_fits": 126,
+    "maximum_model_loads": 42,
+    "maximum_normalized_market_rows": 1000000,
+    "maximum_row_tree_evaluations": 6400000,
+    "maximum_source_rows_materialized": 65000,
+    "maximum_successful_managed_writes": 2,
+    "maximum_unique_football_queries": 200000,
+    "native_control_reserve_bytes": 65536,
+    "outer_metadata_cap": 1048576,
+    "peak_new_private_bytes_cap": 50331648,
+    "recovery": "same remaining240CPU/330wall,byte/writeattempt caps; no replacementfifthwrite; metadatafallback inrootapprovedreserve",
+    "retained_and_peak_scope": "cumulativeV1/V2named3,374,140B+ownership226B+V3newowner113B+allV3attemptedwrites<=32MiBretained/48MiBpeak; no evidence moved/deleted; failedattempts chargedbeforewriter",
+    "retained_new_private_bytes_cap": 33554432,
+    "retained_new_private_bytes_estimate": 16777216,
+    "technical_CPU_wall_allocation_relation": "ADDITIONAL separatelyversioned240CPU/330wall; never remaining/refundedV1CPU becausefullV1wrapperusageunrecorded; V1preerrorcheckpoint+original301/420ceilingsretained",
+    "threads": 2,
+    "wall_hard_phase_deadline_seconds": 330,
+    "wall_seconds": 330
+  },
+  "root_registration": {
+    "actual_backend": "UNATTESTED",
+    "at": "2026-10-28T04:15:15.379592+00:00",
+    "base_CDF_fits": 0,
+    "cumulative_all_versions_write_attempts_max": 5,
+    "meta_estimate_budget_original159_spent": 0,
+    "model_load_budget_original44_spent": 2,
+    "new_explicit_additional_retention_write_slots": 1,
+    "old_retained_and_ownership_bytes": 3374366,
+    "only_change": "One unique original-guarded model query/player-game; fan out identical law to offered thresholds, preserve strict context abstentions/fullpool. No new formula or outcome-driven choice.",
+    "original_V1_V2_budgets_failures_retained": true,
+    "original_four_write_cap_spent": 3,
+    "original_remaining_write_slots": 1,
+    "preseal_sha256": "21f9f9488fbec33d9319df7a2e0f35fb49679620b2763bad6a6a772c160c205a",
+    "previous_managed_writer_closed": true,
+    "review": "FINAL_EXACT_STATIC_PASS",
+    "reviewer": "/root/completion_readonly_review_v3",
+    "root": "/root",
+    "separate_additional_technical_CPU_wall": [
+      240,
+      330
+    ],
+    "this_version_write_attempts_max": 2
+  },
+  "runtime": {
+    "backend_attestation": "UNATTESTED",
+    "env": {
+      "MKL_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/workspace/nfl-market-comparison-no2025-v1"
+    },
+    "outer_hard_wrapper": "Bash builtin time -p env declaredtwo-threadsettings /usr/bin/timeout --signal=KILL330s approvedvenvworker; capturewholewrapper real/user/sys separately; /usr/bin/time absent and MUSTNOT beinvoked; RSSfrommainBudgetfinalsnapshot",
+    "python": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "runner": "tools/historical_market_comparison_no2025_technical_v3.py --plan PLAN --sha256 SHA --go ROOT_GO"
+  },
+  "source_admission_interpretation": "Official root metadata/inputvalidation PASS admits existing retainedvectors; originalwholeV3sourceattempt remainsFAILED_RSS, no failedbudgetreset orfalsecompleteclaim.",
+  "source_capture_complete": {
+    "bytes": 6194,
+    "path": "/workspace/nfl-methods-integration/reports/historical-market-no2025-v1/RETAINED_ROW_ADMISSION_V2.json",
+    "sha256": "7572497d0722aa224cd10c710e52b503a7fe00c9d0ec287e365cca6d4cda5c9e"
+  },
+  "source_capture_complete_state": "RETAINED_EXPLORATORY_ROWS_ADMITTED_WITH_ORIGINAL_RESOURCE_FAILURES_PRESERVED",
+  "source_completion_reports": [
+    {
+      "binding": {
+        "bytes": 22419,
+        "path": "/workspace/nfl-market-archive-source-no2025-v1/reports/historical-market-no2025-v1/source-normalization-v3.json",
+        "sha256": "939ed0fe63c51494f0541c908001213f38c2a9a587e897ceb6552ac682e94d8d"
+      },
+      "state_preserved": "FAILED_RSS_CEILING_EXCEEDED"
+    },
+    {
+      "binding": {
+        "bytes": 11800,
+        "path": "/workspace/nfl-market-archive-source-no2025-v1/reports/historical-market-no2025-v1/source-normalization-v4-2023.json",
+        "sha256": "1278eb93cd530e2d1bbef39e8394af7673584d74aa8b44367244f7198432f491"
+      },
+      "state_preserved": "COMPLETED_ONE_SEASON_CANONICAL_EXPLORATORY_NORMALIZATION"
+    },
+    {
+      "binding": {
+        "bytes": 8852,
+        "path": "/workspace/nfl-market-archive-source-no2025-v1/reports/historical-market-no2025-v1/source-normalization-v4-2022.json",
+        "sha256": "616e5c840a3d1332381bed081bfd172ea71160057ba49228a26a8178b114b87c"
+      },
+      "state_preserved": "COMPLETED_ONE_SEASON_CANONICAL_EXPLORATORY_NORMALIZATION"
+    }
+  ],
+  "source_dependency_fallback": "If2022/2023 qualified named-market rows unavailable: zero unsupported calibrator fits; FC=F, FSq1 if too few earlier rows, H abstains; preserve observed Fvsline/FvsindependentM. No2024/2026 calibration substitution.",
+  "source_manifest": {
+    "bytes": 23272,
+    "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/source-manifest.json",
+    "sha256": "582f34f9c53c98c07a103ca3176f1d08333cb6351cd93cadcfbaf20a67e420d7"
+  },
+  "source_policy": {
+    "bytes": 13487,
+    "path": "/workspace/nfl-market-comparison-no2025-v1/config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+  },
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "storage": {
+    "capsules": "ZIP_STORED; all Parquet data zstd internally; exact container and inner member byte/hash bindings; no extraction or fake paths; readback exact",
+    "constructors": "ONLY new HistoricalMarketStorage wrapper; old stores readonly accounting peers; no legacy OperationalStorage constructor",
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    },
+    "successful_managed_writes": [
+      "FORECASTS_FROZEN.zip",
+      "SCORES_COMPLETE.zip"
+    ]
+  },
+  "technical_change": "ONLY unique original football queries/player-game-target followedbyunchangedlawweights/atoms/priorfanouttoALLofferedbookthresholds; cachedcanonical/contextabstentionsreuse; allV1CDF/calibration/scoring/selectionformulasunchanged; V1/V2remainFAILED.",
+  "version": "historical-market-comparison-no2025-technical-v3-20261028"
+}

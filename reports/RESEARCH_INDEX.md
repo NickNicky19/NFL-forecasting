@@ -1,5 +1,23 @@
 # Forecasting research: complete navigation index
 
+## Latest completed market-information wave — October 28, 2026
+
+[All twelve category decisions and paper results](historical-market-no2025-v1/README.md)
+use the supplied 2022/2023/2024/2026 packages, with **2025 excluded from all new
+model, history, label and calibration lineage**. The 2026 archive covers Weeks
+1–5 only. Hybrid point loss improves versus the football control in nine of ten
+numeric categories, but the current website is unavailable as a comparator;
+the 2026 control is an older frozen model. Independent market/line controls
+frequently beat the hybrid. Probability results are mixed, and all five paper
+policies lose known units in 2024. Quote timing and settlement are unqualified.
+
+The run produced 34,759 unique football queries and 92,445 offer forecasts,
+144 small earlier-only estimates and zero base CDF fits. The private readable
+scorecard covers 62,576 matched evaluation rows; full original opportunities,
+abstentions and failed attempts remain retained. [Complete numerical tables](historical-market-comparison-no2025-v3/PUBLIC_RESULTS.md)
+separate 2024 from 2026. No new website model, probability, ranking or scheduler
+was activated; the actual served overlay readback remained `DISABLED_USE_R0`.
+
 ## Recent-season category completion — October 27, 2026
 
 [Current-era category decisions](recent-season-category-decisions-20261027/README.md)
