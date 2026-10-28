@@ -1,4 +1,4 @@
-"""Same-code cross-run history recovery; public metadata is never a live grant.
+"""Strict cross-run history, with an explicit bounded RootV4 source adapter.
 
 The current guarded process authenticates the old completed delivery and source
 BEFORE any private GET. A private envelope preserves the original native read
@@ -72,6 +72,27 @@ _RECEIPT_KEYS = _RECEIPT_HASH_KEYS | {"schema_version", "source_sha", "run_id", 
     "categories", "jobs", "created_at", "verified_at", "fits", "raw_or_models_public"}
 _METADATA_POLICY_SHA = "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
 _METADATA_TARGETS = {"pass_yd","pass_td","pass_cmp","pass_att","pass_int","rush_yd","rush_att","rec","rec_yd","rush_rec_yd","anytime_td"}
+ROOT_V4 = "audit-weekly-hosted-v4-root-GO"
+SOURCE_HISTORY_BINDING = "audit-weekly-source-history-binding-v1"
+SOURCE_HISTORY_TRANSPORT = SOURCE_HISTORY_BINDING + "-transport"
+SOURCE_HISTORY_PLAIN_CAP = 16 << 10
+SOURCE_HISTORY_ENCODED_CAP = 12 << 10
+# Closed metadata ABI, deliberately independent of template/numerical imports.
+_SOURCE_ROOT_V3_KEYS = {"schema_version","approved","repository","mode","operation","source_sha","workflow_ref",
+    "owner_authorization","issued_at_utc","expires_at_utc","single_writer_group","code_pins","limits","jobs",
+    "failure_restorer","retained_registration","original_selected_handoff","qualified_runtime","pending_census",
+    "source_config","cutoff_lead_seconds","publication","publication_registration","effective_epoch",
+    "prior_capture_qualified_runtime"}
+SOURCE_HISTORY_PIN_OVERRIDES = frozenset({
+    "nfl_lab/audit_weekly_grade_history_v1.py", "tests/test_audit_weekly_grade_history_v1.py",
+    "nfl_lab/audit_weekly_template_v1.py", "tests/test_audit_weekly_template_v1.py",
+    "nfl_lab/audit_weekly_controller_bootstrap_v1.py", "tests/test_audit_weekly_controller_bootstrap_v1.py",
+    "tests/test_audit_weekly_operations_authority_v1.py",
+    "nfl_lab/audit_weekly_hosted_v1.py", "tools/audit_weekly_hosted_v1.py", "tests/test_audit_weekly_hosted_v1.py",
+    "nfl_lab/audit_weekly_controller_registration_v1.py", "tests/test_audit_weekly_controller_registration_v1.py",
+    "nfl_lab/audit_weekly_parent_v1.py", "tests/test_audit_weekly_parent_v1.py"})
+_SOURCE_PREDECESSOR_HASHES = {"workflow_sha256","policy_sha256","recipe_registration_sha256","feed_sha256",
+    "receipt_sha256","root_go_sha256","root_static_sha256","epoch_sha256","choice_sha256","code_pins_sha256"}
 
 
 class HistoryError(ValueError): pass
@@ -82,6 +103,290 @@ def require(ok, code):
 
 
 def now(): return datetime.now(timezone.utc)
+
+
+def _source_history_pins(root, binding):
+    from . import private_draft_store as store
+    pins = root.get("code_pins")
+    require(type(pins) is dict and 0 < len(pins) <= 128
+        and all(type(p) is str and 0 < len(p) <= 256 and type(h) is str and store.HASH.fullmatch(h)
+            for p,h in pins.items()), "CLOSED_SOURCE_HISTORY_PIN_INVENTORY")
+    original = dict(pins)
+    if binding is not None:
+        overrides = binding["pin_overrides"]
+        require(type(overrides) is dict and set(overrides) <= SOURCE_HISTORY_PIN_OVERRIDES & set(pins)
+            and all(type(h) is str and store.HASH.fullmatch(h) and pins[p] != h for p,h in overrides.items()),
+            "ONLY_CHANGED_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES")
+        original.update(overrides)
+        require(set(original) == set(pins) and store.sha(store.canonical(original)) == binding["predecessor"]["code_pins_sha256"],
+            "EXACT_ORIGINAL_SOURCE_HISTORY_PIN_INVENTORY")
+        require(original.get(".github/workflows/lab.yml") == binding["predecessor"]["workflow_sha256"],
+            "UNCHANGED_SOURCE_HISTORY_WORKFLOW")
+    return original
+
+
+def _source_history_body(value):
+    from . import private_draft_store as store
+    require(type(value) is dict and set(value) == {"schema_version","target_source_sha","target_policy_sha256",
+        "predecessor","pin_overrides","runtime_transition"} and value["schema_version"] == SOURCE_HISTORY_BINDING,
+        "CLOSED_SOURCE_HISTORY_BINDING")
+    require(type(value["runtime_transition"]) is str and value["runtime_transition"] in {"PRESERVE","DUAL_RUNTIME_ROTATE"},
+        "EXPLICIT_SOURCE_HISTORY_RUNTIME_TRANSITION")
+    require(type(value["target_source_sha"]) is str and re.fullmatch(r"[a-f0-9]{40}",value["target_source_sha"])
+        and type(value["target_policy_sha256"]) is str and store.HASH.fullmatch(value["target_policy_sha256"]),
+        "CLOSED_SOURCE_HISTORY_TARGET_SOURCE_AND_POLICY")
+    old = value["predecessor"]
+    require(type(old) is dict and set(old) == _SOURCE_PREDECESSOR_HASHES | {"source_sha","run_id","locator"}
+        and type(old["source_sha"]) is str and re.fullmatch(r"[a-f0-9]{40}",old["source_sha"])
+        and old["source_sha"] != value["target_source_sha"]
+        and type(old["run_id"]) is str and re.fullmatch(r"[1-9][0-9]{0,19}",old["run_id"])
+        and all(type(old[k]) is str and store.HASH.fullmatch(old[k]) for k in _SOURCE_PREDECESSOR_HASHES),
+        "CLOSED_SOURCE_HISTORY_PREDECESSOR")
+    ref = old["locator"]
+    require(type(ref) is dict and set(ref) == {"path","sha256"}, "CLOSED_SOURCE_HISTORY_LOCATOR")
+    locator_reference(dict(schema_version=LOCATOR_REF, **ref))
+    require(ref["path"].split("--")[1] == old["run_id"], "EXACT_SOURCE_HISTORY_LOCATOR_RUN")
+    overrides=value["pin_overrides"]
+    require(type(overrides) is dict and set(overrides)<=SOURCE_HISTORY_PIN_OVERRIDES
+        and all(type(h) is str and store.HASH.fullmatch(h) for h in overrides.values()),
+        "ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES")
+    return value
+
+
+def source_history_envelope(binding):
+    """Lossless NEW metadata transport; never rewrites any original Root."""
+    from . import private_draft_store as store
+    _source_history_body(binding)
+    raw=store.canonical(binding)
+    require(0<len(raw)<=SOURCE_HISTORY_PLAIN_CAP,"BOUNDED_SOURCE_HISTORY_BINDING_BODY")
+    encoded=base64.b64encode(gzip.compress(raw,mtime=0)).decode()
+    require(len(encoded)<=SOURCE_HISTORY_ENCODED_CAP,"BOUNDED_SOURCE_HISTORY_BINDING_TRANSPORT")
+    return dict(schema_version=SOURCE_HISTORY_TRANSPORT,body_sha256=store.sha(raw),body_bytes=len(raw),gzip_base64=encoded)
+
+
+def _source_history_unwrap(value):
+    from . import private_draft_store as store
+    require(type(value) is dict and set(value)=={"schema_version","body_sha256","body_bytes","gzip_base64"}
+        and value["schema_version"]==SOURCE_HISTORY_TRANSPORT
+        and type(value["body_sha256"]) is str and store.HASH.fullmatch(value["body_sha256"])
+        and type(value["body_bytes"]) is int and 0<value["body_bytes"]<=SOURCE_HISTORY_PLAIN_CAP
+        and type(value["gzip_base64"]) is str and 0<len(value["gzip_base64"])<=SOURCE_HISTORY_ENCODED_CAP,
+        "CLOSED_BOUNDED_SOURCE_HISTORY_TRANSPORT")
+    def pairs(items):
+        result={}
+        for k,v in items:
+            require(k not in result,"DUPLICATE_SOURCE_HISTORY_JSON_KEY")
+            result[k]=v
+        return result
+    def nonfinite(_): raise HistoryError("NONFINITE_SOURCE_HISTORY_JSON")
+    try:
+        packed=base64.b64decode(value["gzip_base64"],validate=True)
+        decoder=zlib.decompressobj(31)
+        raw=decoder.decompress(packed,value["body_bytes"]+1)
+        require(decoder.eof and not decoder.unused_data and not decoder.unconsumed_tail
+            and len(raw)==value["body_bytes"] and store.sha(raw)==value["body_sha256"],
+            "EXACT_SINGLE_SOURCE_HISTORY_GZIP_AND_HASH")
+        body=json.loads(raw,object_pairs_hook=pairs,parse_constant=nonfinite)
+        require(store.canonical(body)==raw,"CANONICAL_SOURCE_HISTORY_BINDING_BODY")
+        return _source_history_body(body)
+    except HistoryError: raise
+    except (ValueError, TypeError, zlib.error, RecursionError):
+        raise HistoryError("INVALID_SOURCE_HISTORY_TRANSPORT") from None
+
+
+def validate_source_history_binding(root):
+    """Decode sealed static metadata only, including unapproved placeholders.
+
+    Runtime preservation, or the exact original current package/census in the
+    rotated prior slot, is checked against the authenticated original Root
+    preimage by _root_envelope. Live qualification remains independently due.
+    """
+    require(type(root) is dict,"CLOSED_SOURCE_HISTORY_ROOT")
+    if root.get("schema_version")!=ROOT_V4:
+        require("source_history_binding" not in root,"SOURCE_HISTORY_BINDING_REQUIRES_ROOT_V4")
+        return None
+    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding"},"CLOSED_SOURCE_HISTORY_ROOT_V4")
+    value=_source_history_unwrap(root["source_history_binding"])
+    require(root.get("source_sha")==value["target_source_sha"]
+        and type(root.get("publication_registration")) is dict
+        and root["publication_registration"].get("policy_sha256")==value["target_policy_sha256"],
+        "EXACT_SOURCE_HISTORY_TARGET_SOURCE_AND_POLICY")
+    _source_history_pins(root, value)
+    return deepcopy(value)
+
+
+def _source_history_rotation_quota(package, census, *, before=None):
+    """Closed metadata ABI for Main; no rotation/Producer import, IO or grant.
+
+    prior_runtime already verifies both archived qualification packages using
+    bootstrap._qualified_locator_package. This reproduces checked_quota's
+    reservation/census ties and the existing strict census fields and clocks.
+    Live qualification, inventory, canary and pending authentication stay due.
+    """
+    from . import private_draft_store as store,state
+    require(type(package) is dict and type(package.get("qualification")) is dict
+        and type(package.get("runtime_id")) is str and re.fullmatch(r"[a-f0-9]{32}",package["runtime_id"]),
+        "CLOSED_SOURCE_HISTORY_ROTATION_PACKAGE")
+    value=package.get("quota_reservation")
+    fields={"schema_version","global_cap_bytes","reserved_before_bytes","new_runtime_reserved_bytes","reserved_after_bytes",
+        "existing_draft_runtimes","pending_unlocated_runtimes","pending_records","charged_existing_bytes","charged_existing_assets",
+        "inventory_sha256","pending_census_sha256","new_runtime_id","old_assets_deleted","metadata_only"}
+    counts={"reserved_before_bytes","reserved_after_bytes","existing_draft_runtimes","pending_unlocated_runtimes",
+        "pending_records","charged_existing_bytes","charged_existing_assets"}
+    require(type(value) is dict and set(value)==fields and value["schema_version"]=="audit-private-rotation-v1-quota-reservation"
+        and type(value["global_cap_bytes"]) is int and value["global_cap_bytes"]==512<<20
+        and type(value["new_runtime_reserved_bytes"]) is int and value["new_runtime_reserved_bytes"]==32<<20
+        and value["new_runtime_id"]==package["runtime_id"] and type(value["old_assets_deleted"]) is int
+        and value["old_assets_deleted"]==0 and value["metadata_only"] is True
+        and all(type(value[k]) is int and value[k]>=0 for k in counts)
+        and 1<=value["existing_draft_runtimes"]<=15
+        and value["reserved_before_bytes"]==(value["existing_draft_runtimes"]+value["pending_unlocated_runtimes"])*(32<<20)
+        and value["reserved_after_bytes"]==value["reserved_before_bytes"]+(32<<20)<=512<<20
+        and value["charged_existing_bytes"]<=value["existing_draft_runtimes"]*(32<<20)
+        and value["charged_existing_assets"]<=value["existing_draft_runtimes"]*128
+        and all(type(value[k]) is str and store.HASH.fullmatch(value[k]) for k in ("inventory_sha256","pending_census_sha256")),
+        "CLOSED_SOURCE_HISTORY_GLOBAL_RUNTIME_RESERVATION")
+    require(type(census) is dict and set(census)=={"schema_version","complete","as_of_utc","owner_evidence_sha256","reservations"}
+        and census["schema_version"]=="audit-private-rotation-v1-pending-census" and census["complete"] is True
+        and type(census["owner_evidence_sha256"]) is str and store.HASH.fullmatch(census["owner_evidence_sha256"])
+        and type(census["reservations"]) is list and len(census["reservations"])<=128,
+        "CLOSED_SOURCE_HISTORY_ROTATION_CENSUS")
+    seen=set()
+    for row in census["reservations"]:
+        require(type(row) is dict and set(row)=={"reservation_sha256","runtime_id","release_id","pending_bytes","pending_assets"}
+            and type(row["reservation_sha256"]) is str and store.HASH.fullmatch(row["reservation_sha256"])
+            and row["reservation_sha256"] not in seen
+            and (row["runtime_id"] is None or type(row["runtime_id"]) is str and re.fullmatch(r"[a-f0-9]{32}",row["runtime_id"]))
+            and row["runtime_id"]!=package["runtime_id"]
+            and (row["release_id"] is None or type(row["release_id"]) is int and row["release_id"]>0)
+            and type(row["pending_bytes"]) is int and 0<=row["pending_bytes"]<=32<<20
+            and type(row["pending_assets"]) is int and 0<=row["pending_assets"]<=128,
+            "CLOSED_SOURCE_HISTORY_ROTATION_PENDING_RECORD")
+        seen.add(row["reservation_sha256"])
+    require(value["pending_records"]==len(census["reservations"])
+        and value["pending_census_sha256"]==store.sha(store.canonical(census)),"EXACT_SOURCE_HISTORY_CURRENT_CENSUS_COMMITMENT")
+    clocks=(census["as_of_utc"],package["qualification"].get("created_at_utc"),
+        before if before is not None else package["qualification"].get("created_at_utc"))
+    require(all(type(t) is str and 0<len(t)<=40 for t in clocks),"SOURCE_HISTORY_ROTATION_CENSUS_CLOCKS")
+    try: times=tuple(map(state.utc,clocks))
+    except (ValueError,TypeError,OverflowError): raise HistoryError("SOURCE_HISTORY_ROTATION_CENSUS_CLOCKS") from None
+    require(times[0]<=times[1]<=times[2],"SOURCE_HISTORY_ROTATION_CENSUS_CLOCKS")
+    return value
+
+
+def _source_history_runtime_scope(current_root, original_root, binding):
+    """Metadata commitments only; callers authenticate the native preimage."""
+    from . import private_draft_store as store,audit_weekly_template_v1 as template
+    old=binding["predecessor"]
+    require(type(original_root) is dict and set(original_root)==_SOURCE_ROOT_V3_KEYS
+        and original_root["schema_version"]==template.ROOT_V3 and original_root["source_sha"]==old["source_sha"]
+        and original_root["code_pins"]==_source_history_pins(current_root,binding)
+        and store.sha(store.canonical(original_root))==old["root_go_sha256"]
+        and template.static_root_sha256(original_root)==old["root_static_sha256"],
+        "EXACT_SOURCE_HISTORY_ORIGINAL_ROOT_COMMITMENTS")
+    changed={"approved","issued_at_utc","expires_at_utc","operation","effective_epoch",
+        "schema_version","source_sha","code_pins","publication_registration","source_history_binding"}
+    if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
+        changed|={"qualified_runtime","pending_census","prior_capture_qualified_runtime"}
+    require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in set(original_root)-changed),
+        "SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED")
+    original_policy=original_root["publication_registration"];current_policy=current_root["publication_registration"]
+    policy_keys={"policy_gzip_base64","policy_sha256","rights_authority","r0"}
+    require(type(original_policy) is dict and set(original_policy)==set(current_policy)==policy_keys
+        and original_policy["policy_sha256"]==old["policy_sha256"]
+        and all(store.canonical(original_policy[k])==store.canonical(current_policy[k]) for k in ("rights_authority","r0")),
+        "SOURCE_HISTORY_ORIGINAL_POLICY_AND_UNCHANGED_RIGHTS_R0")
+    prior=template.prior_runtime(current_root,before=current_root.get("issued_at_utc"))
+    if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
+        require(prior is not None
+            and store.canonical(prior["qualified_runtime"])==store.canonical(original_root["qualified_runtime"])
+            and store.canonical(prior["pending_census"])==store.canonical(original_root["pending_census"])
+            and prior["anchor"]=={k:old[k] for k in ("feed_sha256","receipt_sha256")}
+            and prior["root_static_sha256"]==old["root_static_sha256"],
+            "EXACT_SOURCE_HISTORY_ROTATED_PRIOR_PACKAGE_CENSUS_AND_ROOT")
+        current=current_root["qualified_runtime"];original_prior=original_root["prior_capture_qualified_runtime"]["qualified_runtime"]
+        require(all(current["binding"][k]!=original_prior["binding"][k] for k in ("runtime_id","release_id")),
+            "SOURCE_HISTORY_ROTATION_CANNOT_REUSE_COUNT7_NAMESPACE")
+        _source_history_rotation_quota(current,current_root["pending_census"],before=current_root.get("issued_at_utc"))
+    return prior
+
+
+def continued_pending_recovery(current_root, original_root):
+    """Return a namespace-specific pool; never alter or resolve old evidence.
+
+    Cross-source rotation retains the old pool in the exact original Root and
+    authenticated native envelope. Its fully reserved old namespace is a read
+    input, not the new namespace's POST ledger. No grant/counter is recreated.
+    """
+    from . import audit_weekly_template_v1 as template
+    binding=validate_source_history_binding(current_root)
+    require(type(original_root) is dict,"CLOSED_SOURCE_HISTORY_ORIGINAL_PENDING_ROOT")
+    pool=template.pending_recovery(original_root)
+    cross_source=original_root.get("source_sha")!=current_root.get("source_sha")
+    if cross_source:
+        require(binding is not None,"SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
+        _source_history_runtime_scope(current_root,original_root,binding)
+        if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
+            return dict(schema_version=template.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
+    return template.validate_pending_recovery(pool,binding=current_root["qualified_runtime"]["binding"])
+
+
+def _source_history_locator(binding, locator, locator_sha256):
+    """This bounded adapter binds the original capture-and-grade cohort only."""
+    from . import private_draft_store as store
+    old = binding["predecessor"]
+    require(type(locator) is dict and set(locator) == LOCATOR_KEYS and locator["schema_version"] == LOCATOR_VERSION
+        and locator["repository"] == store.REPO and locator_sha256 == old["locator"]["sha256"],
+        "EXACT_SOURCE_HISTORY_LOCATOR_BYTES_AND_PATH")
+    cohort = validate_cohort(locator["cohort"])
+    try: filename = locator_filename(locator)
+    except (KeyError, TypeError, ValueError, OverflowError):
+        raise HistoryError("EXACT_SOURCE_HISTORY_LOCATOR_BYTES_AND_PATH") from None
+    require(filename == old["locator"]["path"], "EXACT_SOURCE_HISTORY_LOCATOR_BYTES_AND_PATH")
+    require(cohort["kind"] == "CAPTURE_AND_GRADE"
+        and all(cohort[k] == old[k] for k in ("source_sha","workflow_sha256","run_id","feed_sha256","root_go_sha256","epoch_sha256"))
+        and locator["anchor"] == {k:old[k] for k in ("feed_sha256","receipt_sha256")},
+        "EXACT_SOURCE_HISTORY_ORIGINAL_COHORT_AND_ANCHOR")
+    return locator
+
+
+def source_history_scope(root, receipt, *, locator=None, locator_sha256=None):
+    """Return literal historical pins, never live API/private-read authority.
+
+    Callers authenticate the actual compressed receipt/locator hashes and the
+    freshest directory independently. A live Root must name those exact inputs;
+    a static template has effective_epoch=None and uses the supplied locator.
+    """
+    from . import private_draft_store as store
+    binding = validate_source_history_binding(root)
+    pins = _source_history_pins(root, None)
+    require(type(receipt) is dict and set(receipt) == _RECEIPT_KEYS
+        and receipt["schema_version"] == "audit-weekly-delivery-v1-public-receipt"
+        and type(receipt["source_sha"]) is str and re.fullmatch(r"[a-f0-9]{40}",receipt["source_sha"])
+        and type(receipt["run_id"]) is str and re.fullmatch(r"[1-9][0-9]{0,19}",receipt["run_id"])
+        and all(type(receipt[k]) is str and store.HASH.fullmatch(receipt[k]) for k in _RECEIPT_HASH_KEYS)
+        and type(receipt["fits"]) is int and receipt["fits"] == 0 and receipt["raw_or_models_public"] is False,
+        "CLOSED_SOURCE_HISTORY_ORIGINAL_RECEIPT")
+    require((locator is None) == (locator_sha256 is None), "PAIRED_SOURCE_HISTORY_LOCATOR_INPUTS")
+    if receipt["source_sha"] == root.get("source_sha"):
+        require(receipt["workflow_sha256"] == pins.get(".github/workflows/lab.yml")
+            and receipt["policy_sha256"] == root.get("publication_registration",{}).get("policy_sha256"),
+            "SAME_SOURCE_HISTORY_POLICY_AND_WORKFLOW")
+        return pins
+    require(binding is not None, "SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
+    old = binding["predecessor"]
+    require(all(receipt[k] == old[k] for k in ("source_sha","workflow_sha256","policy_sha256","recipe_registration_sha256",
+        "run_id","feed_sha256","root_go_sha256","epoch_sha256","choice_sha256")), "EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT")
+    context = root.get("effective_epoch")
+    if context is not None:
+        require(type(context) is dict and context.get("schema_version") == CONTEXT_V5
+            and context.get("previous_capture") == {k:old[k] for k in ("feed_sha256","receipt_sha256")}
+            and context.get("previous_checkpoint") == dict(schema_version=LOCATOR_REF, **old["locator"]),
+            "EXACT_SOURCE_HISTORY_REGISTERED_PREDECESSOR_INPUTS")
+    if locator is not None:
+        _source_history_locator(binding, locator, locator_sha256)
+        require(locator["cohort"]["jobs"] == receipt["jobs"], "EXACT_SOURCE_HISTORY_ORIGINAL_RECEIPT_JOBS")
+    return _source_history_pins(root, binding)
 
 
 def checkpoint_version(handoff):
@@ -891,20 +1196,37 @@ def validate_native_envelope(envelope, sidecar, client, jobs, *, version2, priva
     else:require(private_root is None,"NO_MULTIPART_ROOT_ON_ORIGINAL_V1_EVIDENCE")
 
 
-def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
+def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at, locator_sha256=None):
     from . import private_draft_store as store,state,audit_weekly_template_v1 as template
     require(envelope["planning"]==locator["planning"],"PUBLIC_PLANNING_BOUND_TO_PRIVATE_READER_EVIDENCE")
     root=envelope["root_go"];cohort=locator["cohort"]
     dynamic={"approved","issued_at_utc","expires_at_utc","operation","effective_epoch"}
+    binding=validate_source_history_binding(static_root)
+    require(type(root) is dict,"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
+    cross_source=root.get("source_sha")!=static_root.get("source_sha")
     require(type(root) is dict and set(root)==template.root_keys(root) and root["approved"] is True
         and root["operation"]=="RECURRING_CAPTURE" and root["source_sha"]==cohort["source_sha"]
         and root["code_pins"]==code_pins
         and store.sha(store.canonical(root))==cohort["root_go_sha256"] and root["issued_at_utc"]==cohort["root_issued_at_utc"]
         and root["effective_epoch"]["schema_version"] in {CONTEXT_V4,CONTEXT_V5},"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
+    if cross_source:
+        require(binding is not None and root["schema_version"]==template.ROOT_V3
+            and set(root)==_SOURCE_ROOT_V3_KEYS and root["effective_epoch"]["schema_version"]==CONTEXT_V5,
+            "EXPLICIT_ORIGINAL_V3_SOURCE_HISTORY_ROOT")
+        old=binding["predecessor"]
+        # Callers authenticate the actual compressed bytes before this metadata
+        # check. Preserve their exact hash across gzip implementations; callers
+        # using the original signature use the canonical native encoding.
+        encoded_sha=locator_sha256 if locator_sha256 is not None else store.sha(gzip.compress(store.canonical(locator),mtime=0))
+        _source_history_locator(binding,locator,encoded_sha)
+        _source_history_runtime_scope(static_root,root,binding)
     package,_=template.checkpoint_runtime(static_root,locator['sidecar']['checkpoint_handoff'],
         anchor=locator['anchor'],checkpoint={'sha256':store.sha(store.canonical(locator))})
     prior=template.prior_runtime(static_root)
-    if prior is not None and package==prior['qualified_runtime']:
+    if cross_source:
+        require(store.canonical(package)==store.canonical(root["qualified_runtime"]),
+            "SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED")
+    elif prior is not None and package==prior['qualified_runtime']:
         require(template.static_root_sha256(root)==prior['root_static_sha256']
             and root['qualified_runtime']==package and root['pending_census']==prior['pending_census'],
             'EXACT_SEALED_ORIGINAL_RUNTIME_ROOT_PREIMAGE')
@@ -931,14 +1253,57 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at):
     return envelope
 
 
-def validate_parent_envelope(packed, locator, client, jobs, *, code_pins, static_root, at, private_root=None):
+def validate_parent_envelope(packed, locator, client, jobs, *, code_pins, static_root, at, private_root=None, locator_sha256=None):
     """Fresh private metadata read, never a decoded-history/future grant."""
     from . import audit_weekly_template_v1 as template
     require(type(client) is template.ParentGETClient,"LIVE_READ_ONLY_PARENT_EVIDENCE_CLIENT")
     client.guard()
     envelope=metadata_document(packed,cap=LIMITS["envelope_bytes"])
     validate_native_envelope(envelope,locator["sidecar"],client,jobs,version2=True,private_root=private_root)
-    return _root_envelope(envelope,locator,jobs,code_pins=code_pins,static_root=static_root,at=at)
+    return _root_envelope(envelope,locator,jobs,code_pins=code_pins,static_root=static_root,at=at,locator_sha256=locator_sha256)
+
+
+def _restore_source_parts(context, handoff, client, *, storage, root_binding, native_root_proof, authenticate):
+    """Explicit source adapter around the UNCHANGED checkpoint part-read kernel.
+
+    The public checkpoint.restore_parts stays same-source. Every other check
+    from that wrapper remains here; its source equality is replaced only by
+    the sealed V4 predecessor/current-source pair. The caller first validates
+    the original native envelope AND full Root preimage, before any part GET.
+    No historical client identity, handoff, package, counter or receipt changes.
+    """
+    from . import audit_weekly_operations_worker_v1 as shared,audit_weekly_archive_v1 as archive,audit_weekly_template_v1 as template
+    grade,checkpoint,store,cp,state=_modules()
+    require(type(context) is shared.Authenticated,"LIVE_SOURCE_HISTORY_PART_CONTEXT")
+    context.verify();binding=validate_source_history_binding(context.go)
+    require(binding is not None,"EXPLICIT_SOURCE_HISTORY_PART_BINDING")
+    old=binding["predecessor"];budget=checkpoint.Budget();checkpoint.safe_handoff(handoff)
+    package,_=template.checkpoint_runtime(context.go,handoff)
+    require(isinstance(client,archive.Client) and client.readonly is True and client.operation=="restore"
+        and client.source_sha==context.client.source_sha==binding["target_source_sha"]
+        and handoff["producer"]["source_sha"]==old["source_sha"]!=client.source_sha
+        and handoff["producer"]["run_id"]==old["run_id"] and handoff["current_root_go_sha256"]==old["root_go_sha256"]
+        and handoff["epoch_sha256"]==old["epoch_sha256"]
+        and state.digest(client.binding)==handoff["runtime_binding_sha256"]
+        and client.binding==package["binding"]
+        and state.digest(package)==handoff["qualified_package_sha256"]
+        and root_binding["sha256"]==handoff["body_sha256"] and root_binding["bytes"]==handoff["body_bytes"],
+        "EXACT_SOURCE_HISTORY_GET_ONLY_PRIVATE_PART_READER")
+    checkpoint._own_restore(client,native_root_proof,now())
+    require(native_root_proof["payload_sha256"]==handoff["body_sha256"]
+        and native_root_proof["bytes"]==handoff["body_bytes"]
+        and native_root_proof["exact_readback"] is native_root_proof["separate_process"] is native_root_proof["draft_before_after"] is True,
+        "EXACT_SOURCE_HISTORY_NATIVE_ROOT_RECEIPT")
+    reader=archive.checked(client,client.job["job_id"])
+    require(reader["process_identity"]==native_root_proof["process_identity"]
+        and reader["api_job_id"]==native_root_proof["job"]["api_job_id"],"SOURCE_HISTORY_CURRENT_ROOT_READER_UNCHANGED")
+    checkpoint._authenticate(authenticate,"CHECKPOINT_RESTORE_PRIVATE_PARTS",dict(handoff_sha256=state.digest(handoff),
+        restored_binding=root_binding,native_root_proof_sha256=state.digest(native_root_proof),reader=reader),now())
+    with grade._compact_scans(storage):
+        result=checkpoint._restore_parts(handoff,client,storage,Path(root_binding["path"]).parent,root_binding,
+            native_root_proof,budget,now)
+    context.verify()
+    return result
 
 
 def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *, transport=None):
@@ -980,11 +1345,21 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     require(all(value[k] == receipt[k] for k in ("feed_sha256", "source_sha", "run_id", "root_go_sha256", "workflow_sha256", "epoch_sha256"))
         and value["feed_sha256"] == previous["feed_sha256"] and value["run_id"] != context.client.run_id
         and value["root_go_sha256"] != context.root_sha256, "EXACT_DIFFERENT_ROOT_RUN_PUBLIC_HISTORY_DELIVERY")
-    require(value["source_sha"]==context.client.source_sha,"SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
+    source_binding=validate_source_history_binding(context.go)
+    cross_source=value["source_sha"]!=context.client.source_sha
+    require(not cross_source or source_binding is not None,"SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
+    historical_pins=context.go["code_pins"]
+    if cross_source or source_binding is not None:
+        require(context.go.get("source_sha")==context.client.source_sha,"CURRENT_SOURCE_HISTORY_ROOT_AND_CLIENT")
+        historical_pins=source_history_scope(context.go,original_receipt,locator=wrapper,
+            locator_sha256=store.sha(raw) if wrapper is not None else None)
+    if cross_source:
+        require(wrapper is not None,"EXPLICIT_SOURCE_HISTORY_LOCATOR_REQUIRED")
+        require(source_binding is not None,"SOURCE_VERSION_HISTORY_ADAPTER_REQUIRED")
     from . import audit_weekly_template_v1 as template
     h = value["checkpoint_handoff"]
     package,pending=template.checkpoint_runtime(context.go,h)
-    require(context.go.get('schema_version')!=template.ROOT_V3 or wrapper is not None,
+    require(context.go.get('schema_version') not in {template.ROOT_V3,ROOT_V4} or wrapper is not None,
         'ORIGINAL_V2_READER_ROOT_EVIDENCE_REQUIRED')
     require(h["runtime_binding_sha256"] == store.sha(store.canonical(package["binding"]))
         and h["qualified_package_sha256"] == state.digest(package)
@@ -999,10 +1374,11 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     authority.authorize_client_actor(metadata, run)
     require(run.get("status") == "in_progress" and run.get("conclusion") is None and run.get("head_sha") == metadata.source_sha,
         "CURRENT_HISTORY_RUN_API_REQUIRED")
-    extra={n:context.go["code_pins"][n] for n in LOCATOR_HELPERS} if wrapper is not None else None
+    if cross_source:require_latest(metadata,locator)
+    extra={n:historical_pins[n] for n in LOCATOR_HELPERS} if wrapper is not None else None
     jobs = _original(metadata, value, receipt, evidence,extra_pins=extra)
     if wrapper is not None:
-        locator_metadata(raw,receipt=original_receipt,qualified_runtime=package,code_pins=context.go["code_pins"],jobs=jobs,at=now())
+        locator_metadata(raw,receipt=original_receipt,qualified_runtime=package,code_pins=historical_pins,jobs=jobs,at=now())
     anchor_jobs=None
     if wrapper is not None and original_receipt["run_id"]!=value["run_id"]:
         anchor_jobs=_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
@@ -1037,6 +1413,8 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     if multipart:
         raw_root=_read(storage,snapshot_ref,LIMITS["snapshot_bytes"])
         validate_native_envelope(envelope,value,envelope_client,jobs,version2=wrapper is not None,private_root=raw_root)
+        if cross_source:
+            _root_envelope(envelope,wrapper,jobs,code_pins=historical_pins,static_root=context.go,at=now(),locator_sha256=store.sha(raw))
         expected_parts=dict(handoff_sha256=state.digest(h),restored_binding=snapshot_ref,
             native_root_proof_sha256=state.digest(recovery_snapshot),reader=cp.client_identity(snapshot_client))
         admitted=[False]
@@ -1048,13 +1426,17 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
                 and request["inputs_sha256"]==state.digest(expected_parts) and state.utc(request["at"])<=now() and not admitted[0]
             if ok:admitted[0]=True
             return ok
-        part_recovery=checkpoint.restore_parts(h,snapshot_client,storage=storage,root_binding=snapshot_ref,
-            native_root_proof=recovery_snapshot,authenticate=parts_auth,clock=now)
+        if cross_source:
+            part_recovery=_restore_source_parts(context,h,snapshot_client,storage=storage,root_binding=snapshot_ref,
+                native_root_proof=recovery_snapshot,authenticate=parts_auth)
+        else:
+            part_recovery=checkpoint.restore_parts(h,snapshot_client,storage=storage,root_binding=snapshot_ref,
+                native_root_proof=recovery_snapshot,authenticate=parts_auth,clock=now)
         require(admitted[0],"LIVE_CURRENT_ROOT_SOURCE_API_PART_AUTHENTICATION_REQUIRED")
         validate_multipart_readback(part_recovery,h,recovery_snapshot,cp.client_identity(snapshot_client),
             known_by_at=now(),wire=private_checkpoint_root(raw_root,h))
-    if wrapper is not None:
-        _root_envelope(envelope,wrapper,jobs,code_pins=context.go["code_pins"],static_root=context.go,at=now())
+    if wrapper is not None and not (cross_source and multipart):
+        _root_envelope(envelope,wrapper,jobs,code_pins=historical_pins,static_root=context.go,at=now(),locator_sha256=store.sha(raw))
     snapshot_client.authenticate_actions_job()
     current_run=_json(snapshot_client,store.API+"/actions/runs/"+snapshot_client.run_id,evidence)
     authority.authorize_client_actor(snapshot_client,current_run)
@@ -1065,6 +1447,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     if anchor_jobs is not None:
         require(_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
             before=wrapper["cohort"]["root_issued_at_utc"],prior=anchor_jobs)==anchor_jobs,"ORIGINAL_FORECAST_ANCHOR_CHANGED_DURING_RECOVERY")
+    if cross_source:require_latest(metadata,locator)
     context.verify(); original = value["grade_read_proof"]
     expected = {"QUALIFIED_PREVIOUS_GRADING_SNAPSHOT": state.digest(dict(binding=snapshot_ref, epoch_sha256=registered.epoch.sha256)),
         "FRESH_READER_GRADING_DURABILITY": state.digest(original)}
@@ -1094,6 +1477,18 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
             if w["season"]==planning["current"]["season"] and state.utc(w["grade_completed_at"])<state.utc(original["known_by_at"])}),
             "EXACT_RESOLVED_WEEK_METADATA_FROM_COMPLETE_DURABLE_HISTORY")
         proof["planning"]=planning
+    if cross_source:
+        original_root=envelope["root_go"]
+        old_pool=template.pending_recovery(original_root)
+        continued_pool=continued_pending_recovery(context.go,original_root)
+        proof["source_history_continuation"]=dict(schema_version=SOURCE_HISTORY_BINDING+"-continuation",
+            runtime_transition=source_binding["runtime_transition"],original_root_go_sha256=store.sha(store.canonical(original_root)),
+            original_pending_recovery_sha256=store.sha(store.canonical(old_pool)),
+            original_pending_recovery_transport_sha256=store.sha(store.canonical(original_root["effective_epoch"]["pending_post_recovery"])),
+            continued_pending_recovery_sha256=store.sha(store.canonical(continued_pool)),
+            original_runtime_binding_sha256=state.digest(original_root["qualified_runtime"]["binding"]),
+            current_runtime_binding_sha256=state.digest(context.go["qualified_runtime"]["binding"]),
+            original_native_evidence_envelope=deepcopy(envelope_ref))
     archive.write(storage, output / "RECOVERY.json", proof)
     require(time.monotonic()-began <= 180 and all(c.calls <= 40 for c in [metadata]+clients), "BOUNDED_NATIVE_HISTORY_RECOVERY")
     return VerifiedHistory(context, registered, durable, binding, proof, _KEY).verify()

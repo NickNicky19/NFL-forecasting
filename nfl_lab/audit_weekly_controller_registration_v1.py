@@ -169,8 +169,8 @@ def prepare_template(go, readiness):
     root["approved"] = False
     for key in ("issued_at_utc", "expires_at_utc", "operation", "effective_epoch"):
         root[key] = None
-    version = template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA} else "-static")
-    require(version != template.STATIC_V3 or ctx['schema_version'] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
+    version = template.STATIC_V4 if go['schema_version']==template.ROOT_V4 else template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA} else "-static")
+    require(version not in {template.STATIC_V3,template.STATIC_V4} or ctx['schema_version'] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
     return template.prepare(dict(schema_version=version, source_sha=go["source_sha"],
         code_pins=deepcopy(go["code_pins"]), readiness=deepcopy(readiness), root_template=root))
 
