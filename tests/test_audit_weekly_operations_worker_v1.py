@@ -275,7 +275,7 @@ def test_failed_first_recovery_claim_appends_once_retains_old_claim_and_rejects_
     from nfl_lab import audit_weekly_template_v1 as template,audit_weekly_controller_bootstrap_v1 as bootstrap
     x=failed_first_composed;q=x.q;w.prepare(x.context,clock=lambda:x.case.at)
     r=hosted.Runner.__new__(hosted.Runner);r.go=x.context.go;r.go_sha=x.context.root_sha256
-    r.root=Path(q.request['cache']).parent;r.storage=q.c.storage;r.journal=r.root/'claim-journal';r.journal.mkdir()
+    r.root=Path(q.request['cache']).parent;r.storage=q.c.storage;r.journal=r.root/'claim-journal';r.journal.mkdir(mode=0o700)
     r.identity=dict(run_id=x.context.client.run_id,source_sha=x.context.client.source_sha);r.job=x.context.job
     r.env=dict(GITHUB_ACTOR='NickNicky19',GITHUB_ACTOR_ID='208912933',GITHUB_TOKEN='ghs_FICTIONAL')
     owner=bootstrap.Owner.__new__(bootstrap.Owner);r.operations_proof=owner;r.fresh_operations_proof=lambda:owner
