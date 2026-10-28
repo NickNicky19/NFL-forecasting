@@ -705,9 +705,28 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
             and root.get("single_writer_group") == c.GROUP and root.get("code_pins") == spec["code_pins"]
             and root.get("jobs") == {k: spec["jobs"][k] for k in c.ROLES}
             and root.get("failure_restorer") == spec["jobs"]["evidence"], "UNCHANGED_OWNER_SMOKE_ROOT_SOURCE_AND_JOBS")
-    require(root["effective_epoch"]["previous_capture"] == dict(
-        feed_sha256=p["readiness"]["receipt_bindings"]["feed_sha256"], receipt_sha256=p["readiness"]["receipt_sha256"]),
-        "OWNER_SMOKE_REQUIRES_EXACT_SEALED_QUALIFIED_PRIOR_CAPTURE")
+    transition=None
+    from . import audit_weekly_template_v1 as template
+    if root.get('schema_version')==template.ROOT_V4:
+        from . import audit_weekly_grade_history_v1 as history
+        require(registry_version==2,'SOURCE_HISTORY_OWNER_REQUIRES_NATIVE_V2_SEAL')
+        transition=history.validate_source_history_binding(root)
+        previous=transition['predecessor']
+        require(root['effective_epoch']['previous_capture']=={k:previous[k] for k in ('feed_sha256','receipt_sha256')}
+            and root['effective_epoch']['previous_checkpoint']==dict(schema_version=history.LOCATOR_REF,**previous['locator']),
+            'SOURCE_HISTORY_OWNER_REQUIRES_EXACT_SEALED_PREDECESSOR')
+        static=deepcopy(root);static['approved']=False
+        for name in template.DYNAMIC_FIELDS-{'approved'}:static[name]=None
+        prepared=template.prepare(dict(schema_version=template.STATIC_V4,source_sha=root['source_sha'],
+            code_pins=deepcopy(root['code_pins']),readiness=deepcopy(p['readiness']),root_template=static))
+        require(c.sha(prepared.plain)==seal.template_descriptor['template_sha256']
+            and len(prepared.plain)==seal.template_descriptor['template_bytes']
+            and root['publication_registration']['policy_sha256']==seal.document['static_public_policy_sha256'],
+            'SOURCE_HISTORY_OWNER_STATIC_ROOT_MUST_MATCH_NATIVE_SEAL')
+    else:
+        require(root["effective_epoch"]["previous_capture"] == dict(
+            feed_sha256=p["readiness"]["receipt_bindings"]["feed_sha256"], receipt_sha256=p["readiness"]["receipt_sha256"]),
+            "OWNER_SMOKE_REQUIRES_EXACT_SEALED_QUALIFIED_PRIOR_CAPTURE")
     run = c.checked_run(api.get(c.run_url(identifier)), identifier, spec, c.OWNER, event="workflow_dispatch", status="in_progress")
     job = c.job(api.get(c.jobs_url(identifier)), identifier, spec, job_id, status="in_progress")
     require(c.utc(seal.document["owner_registration_completed_at"]) <= c.utc(job["started_at"])
@@ -722,10 +741,13 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
     c.job(api.get(c.jobs_url(identifier)), identifier, spec, job_id, status="in_progress", api_id=job["id"])
     c.local_source(spec, source_root, read_head)
     require(c.utc(clock()) < c.utc(root["expires_at_utc"]), "OWNER_SMOKE_EXPIRED_DURING_VERIFICATION")
-    return Owner(dict(schema_version=VERSION + "-manual-owner-proof", root_go_sha256=c.sha(root_bytes),
+    document=dict(schema_version=VERSION + "-manual-owner-proof", root_go_sha256=c.sha(root_bytes),
         registration_sha256=seal.registration_sha256, source_sha=spec["source_sha"], run_id=identifier,
         job_id=job_id, api_job_id=job["id"], actor=dict(c.OWNER), prior_capture=ready,
-        scheduled_parent=None, activation_authorized=False, fits=0), seal, _KEY)
+        scheduled_parent=None, activation_authorized=False, fits=0)
+    if transition is not None:
+        document['source_history_predecessor']=deepcopy(transition['predecessor'])
+    return Owner(document, seal, _KEY)
 
 
 def authorize_policy(proof, root_bytes, policy_bytes):

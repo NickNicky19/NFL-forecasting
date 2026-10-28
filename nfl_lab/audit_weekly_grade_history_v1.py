@@ -90,6 +90,8 @@ SOURCE_HISTORY_PIN_OVERRIDES = frozenset({
     "tests/test_audit_weekly_operations_authority_v1.py",
     "nfl_lab/audit_weekly_hosted_v1.py", "tools/audit_weekly_hosted_v1.py", "tests/test_audit_weekly_hosted_v1.py",
     "nfl_lab/audit_weekly_controller_registration_v1.py", "tests/test_audit_weekly_controller_registration_v1.py",
+    "nfl_lab/audit_weekly_discovery_v1.py", "nfl_lab/audit_weekly_operations_restore_v1.py",
+    "tests/test_audit_weekly_operations_restore_v1.py",
     "nfl_lab/audit_weekly_parent_v1.py", "tests/test_audit_weekly_parent_v1.py"})
 _SOURCE_PREDECESSOR_HASHES = {"workflow_sha256","policy_sha256","recipe_registration_sha256","feed_sha256",
     "receipt_sha256","root_go_sha256","root_static_sha256","epoch_sha256","choice_sha256","code_pins_sha256"}
