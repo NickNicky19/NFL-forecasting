@@ -22,8 +22,9 @@ remaining strong-control comparisons:
    new reconstruction, not reproduction of an unretained prediction vector.
 
 The fixed equal anytime-TD probability blend was also completed and retains its
-primary losses. The next new-fit packet has retained four models but has not yet
-produced an accuracy comparison; its exact status is recorded below.
+primary losses. Four newly fitted 2025 passing models have now been restored
+without refitting, their new forecasts frozen and their comparisons independently
+checked. Their small gains and losses are recorded below.
 
 A separate read-only reviewer checks the exact plans and completed comparisons.
 Only the integrator writes the canonical execution ledger. Requested settings
@@ -54,8 +55,11 @@ A later production-owner refresh reports successful native registration 23
 (run 40591071685), followed by first-primary capture 24 (run 40591715349)
 failing `OPERATION_LIMIT` during original-source metadata verification before
 any child request or current-game forecast. Its failure was restored and export
-was skipped. PR #10 remains draft; the existing owner is preparing the focused
-producer PR #51 repair. Registration success is not forecast issuance.
+was skipped. PR #10 remains draft; producer PR #51 is merged into its producer branch at
+`679641686337bf48020826754bd6ea6b90f88fb8`. Its six hosted CI jobs in run
+40594427543 now pass;
+the later source Main readback still returns `fec873a02de6c180be7b85e569002ae4185654ff`.
+Registration success and green source CI are not forecast issuance.
 
 The final operating receipt and category table will identify any later actual
 capture, release or website consumption. An open PR, source registration or
@@ -113,11 +117,12 @@ remains separate unfinished work, not completed by the older averaging pilot.
 
 ## Available recent-season reference table
 
-This table includes the newly completed seven missing CDF control cells. It
-does not claim a complete tournament among every proposed learner. In
-particular, modern annual Response-CDF and count CatBoost packages are absent
-from the retained catalog. A sole available CDF cell is a reference, rather than
-proof it defeated an unavailable challenger. Historical SITE/raw/R0 forecasts
+This table includes the seven restored CDF control cells and the new four-model
+2025 comparison. It does not claim a complete tournament among every proposed
+learner. The five 2026 Response-CDF/count-CatBoost comparisons are still
+pending, and the 2025 CatBoost carry fit failed. A sole available CDF cell
+is a reference, rather than proof it defeated an unavailable challenger.
+Historical SITE/raw/R0 forecasts
 are unavailable on this exact reconstruction panel.
 
 Counts below are supported primary-role player-games. The complete reports keep
@@ -129,9 +134,9 @@ Week 7 is a separate captured-versus-reconstructed evaluation below.
 |---|---|---|---:|---|
 | Passing yards, median | CatBoost MAE 69.531907 yards | CDF MAE 62.279621 yards | 664 / 211 | Current-reference fallback; no new activation |
 | Passing TDs, mean | CDF MSE 1.178470; MAE 0.884272 TD | CDF MSE 1.158267; MAE 0.878612 TD | 664 / 211 | Same |
-| Completions, mean | CDF MSE 55.481118; MAE 5.857571 completions | CDF MSE 44.178448; MAE 5.196570 completions | 664 / 211 | Same |
+| Completions, mean | CatBoost MSE 55.168167; MAE 5.807423 completions | CDF MSE 44.178448; MAE 5.196570 completions | 664 / 211 | Same |
 | Passing attempts, mean | CDF MSE 124.098901; MAE 8.663631 attempts | CDF MSE 104.078472; MAE 7.898497 attempts | 664 / 211 | Same |
-| Interceptions, mean | CDF MSE 0.602122; MAE 0.640959 INT | CDF MSE 0.526397; MAE 0.628663 INT | 664 / 211 | Same |
+| Interceptions, mean | Response-CDF MSE 0.598773; MAE 0.639614 INT | CDF MSE 0.526397; MAE 0.628663 INT | 664 / 211 | Same |
 | Rushing yards, median | CatBoost MAE 19.007497 yards | CDF MAE 18.425856 yards | 1,566 / 526 | Same |
 | Rushing attempts, mean | Count A mean MSE 22.247834; MAE 3.567657 carries | Count A mean MSE 24.216499; MAE 3.797210 carries | 1,566 / 526 | Same |
 | Receptions, mean | Count A mean MSE 2.847217; MAE 1.272452 catches | Count A mean MSE 3.331184; MAE 1.333367 catches | 5,295 / 1,849 | Same |
@@ -174,6 +179,80 @@ Reviewed public records, each verified by exact remote readback:
 
 - [Modern CDF controls and mean/median comparisons](https://github.com/NickNicky19/NFL-forecasting/blob/e3b86c86286512ebfd904f01ee0d809a1252d68a/reports/modern-cdf-control-completion-v1/PUBLIC_RESULTS.md).
 - [Fixed anytime-TD blend, including both primary losses](https://github.com/NickNicky19/NFL-forecasting/blob/e2cefe973d5f4dbf88eef38937f0413e799270f0/reports/modern-anytime-equal-blend-v1/PUBLIC_RESULTS.md).
+- [Four additional 2025 passing models, all gains and losses](https://github.com/NickNicky19/NFL-forecasting/blob/8bc08f10653cc474a914b5366a1a348ff03b3d18/reports/modern-ten-control-pipeline-v4-restore4-2025/PUBLIC_RESULTS_v3.md).
+
+## Four additional 2025 passing-model comparisons — completed
+
+The four retained parameter packages were restored without refitting. Their
+**34,804 new player-target forecasts** were durably frozen by target before
+grading; they do not reproduce the earlier unretained arrays. Each primary
+comparison has the same **664 supported QB player-games, 272 REG games and
+18 weeks**, from 1,359 planned QB player-game queries. The 695 unknown participation
+states stay unscored; each method has 28 offered fallbacks and seven scored
+fallbacks. The repeated four targets are not four independent samples.
+
+Positive improvement means lower MSE against the matched annual CDF mean.
+MAE and RMSE below use the category's count units.
+
+| Target / challenger | CDF MSE | Challenger MSE | MSE improvement | Challenger MAE / RMSE | Observed decision |
+|---|---:|---:|---:|---:|---|
+| Passing TDs / Response-CDF mean | 1.178470 | 1.179024 | −0.0470% | 0.883879 / 1.085829 | Retain CDF primary lead |
+| Passing attempts / Response-CDF mean | 124.098901 | 124.523151 | −0.3419% | 8.683362 / 11.158994 | Retain CDF primary lead |
+| Interceptions / Response-CDF mean | 0.602122 | 0.598773 | +0.5561% | 0.639614 / 0.773804 | Small 2025 laboratory lead |
+| Completions / CatBoost mean | 55.481118 | 55.168167 | +0.5641% | 5.807423 / 7.427528 | Small 2025 laboratory lead |
+
+The interception mean's signed bias improves from +0.053762 to +0.051959,
+but p95 absolute error worsens from 1.341966 to 1.346250. Its nominal whole-week
+95% interval for candidate-minus-control MSE is [−0.005080, −0.001428]. The
+completion mean's bias improves from +1.082728 to +0.905759 and p95 falls
+from 15.152322 to 15.116369, but its interval [−1.834154, +1.413116] crosses
+zero. TD and attempt intervals also cross zero. The TD challenger slightly
+improves secondary MAE while losing the declared MSE objective; it is not
+selected by changing objectives afterward.
+
+All eighteen weeks and both adverse results remain. These nominal intervals
+use 500 PCG64 whole-week/game paired draws and are descriptive on exposed data;
+they do not satisfy an original scientific registration or establish future
+superiority. Historical SITE/raw/R0 forecasts and selected-line prices are
+unavailable on this exact panel. No new weekly selection or live deployment
+follows from these percentages.
+
+The successful restoration used zero fits, new priors or preprocessing estimates,
+four model loads and four exact original fixture checks. Independent read-only
+QA verified all 34,804 forecast bits, contexts, fallbacks and source labels,
+80 candidate summary/weekly checks, four control products and eight paired
+intervals with exact numeric comparisons. It performed no model deserialization
+or new prediction. Its actual CPU/wall was 8.396/8.382 seconds. The main worker
+used 92.405/95.882 seconds with 367,296,512 bytes peak RSS; original failures
+and consumed prediction budgets remain separate.
+
+The saved distribution diagnostics originally cover 6,029 supported rows across
+all offered roles. A separately named secondary report now derives the already
+declared **664-QB** slice from retained proper-loss columns, with no model or
+probability recalculation:
+
+| Response-CDF target | QB CRPS | QB negative log mass | Denominator |
+|---|---:|---:|---:|
+| Passing TDs | 0.56933543 | 1.36958236 | 664 |
+| Passing attempts | 6.02307265 | 3.67082350 | 664 |
+| Interceptions | 0.36806151 | 0.99546466 | 664 |
+
+No infinite losses occurred here; the reporting rule preserves their denominator
+and positive-infinity status if present. The original all-role diagnostics and
+immutable grade remain unchanged. These standalone proper scores have no
+matched distribution-control score in this packet and establish no distribution
+or prop-probability win. CatBoost supplies a count mean here, without an
+authenticated predictive law.
+
+The four-model terminal capsule retains the code, authority history, failed
+attempts, independent QA source and receipts, and public projection versions.
+Its one managed write was 1,397,031 bytes, SHA-256
+`074312386c74f8bb74bfeb81df6b17b81986dbc6b7e99aed2ae6742c1a07081a`,
+with exact CAS readback. A separate fresh process then verified **32 CAS
+alias/blob pairs and 61 embedded metadata bodies**, with no model loads,
+NFL-row decoding, scoring, fits or network calls. It used 0.0127 CPU / 0.0126
+wall seconds. This establishes fresh local retention; off-host restoration is
+still unproven. No old failure, storage cap or consumed fit token was removed.
 
 ## Week 7: completed available nonpassing grading
 
@@ -298,11 +377,23 @@ wall seconds before failure; the full wrapper took 76.667 wall seconds.
 Although 34,804 point incidences had been calculated in memory, **no annual or
 global forecast freeze was written**. They are not recovered original forecasts
 and supply no accuracy scores. Four fitted parameter packages, their fixtures,
-all attempt records and every failure remain retained. The immediate continuation
-will restore those four packages **without refitting**, create newly identified
-forecasts, freeze each target immediately and score matching controls. The
-failed 2025 carry fit is not retried under its consumed token; only five
-unattempted 2026 fit tokens remain from the original ten-cell allowance.
+all attempt records and every failure remain retained. The subsequent restoration
+reported above restored those four packages **without refitting**, created newly
+identified forecasts, froze each target immediately and scored matching controls. The
+failed 2025 carry fit is not retried under its consumed token. At completion of
+the 2025 restoration, five unattempted 2026 tokens remained from the original
+ten-cell allowance. Their separately sealed cold-process continuation has now
+passed its software-only checks; it retains a maximum of five attempts and
+has no scored result in this interim report. No consumed attempt is retried.
+
+The first cold-process 2026 job subsequently stopped at the exact full-training-
+table hash gate, before any fit, prior, preprocessing, model load or prediction.
+Its marker, prefit authority and failure receipt remain retained; the other four
+jobs were held. Static comparison found that a newer trainer helper added two
+raw TD-component columns absent from the original producer selector. The expected
+original training digest is preserved. A separately versioned source-only parity
+check must pass before a corrected continuation can execute. This failure is not
+a new NFL accuracy result or permission to accept a different training table.
 
 These technical corrections preserve the same 512 MiB memory cap and 480 MiB
 watcher. Original declared allocations remain in their records. The separately
@@ -370,12 +461,12 @@ category until the existing producer/consumer release path succeeds.
 | Category | Completed relevant comparison retained | Next mechanism or information test | Concrete prerequisite / current status |
 |---|---|---|---|
 | Passing yards | Modern CDF/CatBoost; original H3 reconstruction and its worse bias; Week 7 workload diagnosis | Authentic baseline correction and shared volume/gain uncertainty | Same-cutoff archived baseline and qualified role facts; no invented historical provider forecasts |
-| Passing TDs | Restored modern CDF; Week 7 rare-count qualification | Fixed Response-CDF versus source-matched CDF, then scoring opportunities | 2025 parameters retained but unscored; 2026 fit unattempted; complete zeros and publication clocks remain distinct |
-| Completions | Restored modern CDF means and medians | Fixed CatBoost mean versus CDF; separately hold attempts fixed for catch conversion | 2025 parameters retained but unscored; 2026 fit unattempted; catch-quality joins still need qualification |
-| Passing attempts | Negative history averages; completed 2026 fixed-learner history/depth test | Fixed Response-CDF; 2025 common-learner history test; verified current-role group | 2025 Response parameters retained but unscored; the 2025 history comparison remains separate unfinished work |
-| Interceptions | Hierarchical and FTN-risk negative pilots; modern CDF; Week 7 zero-label repair | Fixed Response-CDF, then qualified risk/role changes | 2025 parameters retained but unscored; 2026 fit unattempted; the earlier FTN loss is not silently rerun |
+| Passing TDs | Restored modern CDF; Week 7 rare-count qualification; 2025 Response-CDF comparison | Scoring opportunities after the fixed learner control | Response loses 2025 primary MSE; 2026 comparison pending; complete zeros and publication clocks remain distinct |
+| Completions | Restored modern CDF means/medians; 2025 CatBoost mean comparison | Hold attempts fixed for catch conversion | CatBoost has a small 2025 point lead; 2026 comparison pending; catch-quality joins still need qualification |
+| Passing attempts | Negative history averages; 2026 fixed-learner history/depth test; 2025 Response-CDF loss | 2025 common-learner history test; verified current-role group | The distinct 2025 history comparison remains unfinished; 2026 Response comparison pending |
+| Interceptions | Hierarchical and FTN-risk losses; 2025 small Response-CDF lead; Week 7 zero-label repair | Qualified risk/role additions against the strongest matched learner | 2026 Response comparison pending; the earlier FTN loss is not silently rerun |
 | Rushing yards | Modern CDF/CatBoost; completed available Week 7 comparison | Current carry-role information with the learner fixed, then signed gain severity | Verified full/limited/replacement and teammate facts are not supplied by a depth rank alone |
-| Rushing attempts | Modern CDF/Count A means and medians; Week 7 grading; original RB protocol preserved | Fixed CatBoost mean, then finite dynamic backfield allocation | 2025 CatBoost resource failure retained; 2026 fit unattempted; complete participant/zero evidence remains limited |
+| Rushing attempts | Modern CDF/Count A means and medians; Week 7 grading; original RB protocol preserved | Fixed CatBoost mean, then finite dynamic backfield allocation | 2025 CatBoost resource failure retained; 2026 comparison pending; complete participant/zero evidence remains limited |
 | Receptions | Modern CDF/Count A; separate median products; Week 7 grading | Qualified teammate redistribution, then catch conversion | No verified injury-effect data yet; original rec-half registration and Weeks 7–14 are unchanged |
 | Receiving yards | Modern CDF/CatBoost; completed source/history adapter; Week 7 grading | Target-type/catch-quality information with the learner fixed | Qualify denominators, current role and source availability before a new bounded feature addition |
 | Combined yards | Modern direct CDF/CatBoost; Week 7 comparison; earlier copula loss retained | Fixed marginals with changed dependence, versus direct total | Shared role inputs and complete component support; another simulation is not additional NFL evidence |
