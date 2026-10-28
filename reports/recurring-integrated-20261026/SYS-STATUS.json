@@ -1,8 +1,8 @@
 {
   "schema_version": "nfl-full-system-current-sys-status-v1",
-  "observed_at_utc": "2026-10-28T07:42:11.052487+00:00",
+  "observed_at_utc": "2026-10-28T15:45:04.617379+00:00",
   "original_public_ledger_ref": "f1447ce5f954cfc8a6036e569d388ffbe215d19a",
-  "status": "PARTIAL_PRODUCER_CURRENT32_VERIFIED_WEBSITE_READY_NOT_DEPLOYED_PARENT_ACTIVATION_BLOCKED",
+  "status": "PARTIAL_CURRENT_PRODUCER_VERIFIED;PARENT_VARIABLE_CASE_CORRECTION_AND_WEBSITE_OWNER_RELEASE_PENDING",
   "findings": [
     {
       "id": "SYS-001",
@@ -404,7 +404,11 @@
     "evidence/website-live-assets-current32.json",
     "evidence/parent-variable-write-access-result.json",
     "evidence/current32-website-handoff-readback.json",
-    "evidence/parent-current32-original-readiness.json"
+    "evidence/parent-current32-original-readiness.json",
+    "evidence/parent-after-owner-enable-case-mismatch.json",
+    "evidence/parent40718723483-original-readiness.json",
+    "evidence/parent32-after-owner-enable-preflight.json",
+    "evidence/website-live-after-owner-variable-enable.json"
   ],
   "no_accuracy_gain_claim": true,
   "no_new_nfl_fits": true,
@@ -1166,5 +1170,50 @@
     "PR10_body_exact": true,
     "report_commit": "bd9c204b78e1060480e19d69a661d11cfb2445e9",
     "release_verified": false
+  },
+  "parent_activation_after_owner_enable": {
+    "schema_version": "owner-variable-enable-first-check-v1",
+    "observed_at_utc": "2026-10-28T15:45:04.617379+00:00",
+    "run": 40718723483,
+    "job": 122923450393,
+    "source": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "state": "VARIABLE_EXISTS_BUT_VALUE_CASE_MISMATCH",
+    "actual_variable_name": "AUDIT_WEEKLY_PARENT_ENABLED",
+    "actual_nonsecret_value": "True",
+    "required_value": "true",
+    "parent_selected": false,
+    "child_enqueued": false,
+    "acquisition_started": false,
+    "state_publication_started": false,
+    "exit_code": 78,
+    "original_log_sha256": "ea991b79f6cde0f23dc5cae799d1cf4eb850da94103c00fdf7e36a71a6a938f9",
+    "existing_guard_preserved": true,
+    "owner_correction_requested": "Change value to lowercase true, without quotes",
+    "forecast_or_source_changes": 0
+  },
+  "latest_actual_live_after_enable": {
+    "observed_at_utc": "2026-10-28T15:43:14.141266+00:00",
+    "actual_TLS": true,
+    "assets": [
+      {
+        "path": "app.js",
+        "bytes": 342038,
+        "sha256": "409dcb4830cf91b08c2202232e392cae3e0ef02c2f9e72c94e27af2ff0e594ec"
+      },
+      {
+        "path": "data/week.json",
+        "bytes": 1979180,
+        "sha256": "b83a8a2e630cfbcca6c47e3851b438d657fbbd42366492754b3646bcad84896a"
+      },
+      {
+        "path": "data/weekly-adaptive-overlay.json",
+        "bytes": 333,
+        "sha256": "41d75fce8153b133f600145a0e6307fea2f8690cf5ef3eada860cdbdf30e0af8"
+      }
+    ],
+    "overlay_state": "DISABLED_USE_R0",
+    "selected_rows": 0,
+    "board_generated_at": "2026-10-27T18:39:19Z",
+    "new_selected_release_verified": false
   }
 }

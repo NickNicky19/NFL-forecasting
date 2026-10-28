@@ -1,3 +1,11 @@
+Update — 2026-10-28T15:45UTC (PARTIAL; activation value confirmed)
+
+The owner added the repository variable. Actual daily run [40718723483](https://github.com/NickNicky19/NFL-forecasting/actions/runs/40718723483), current Main `cd51ff28…`, received `AUDIT_WEEKLY_PARENT_ENABLED=True` with a capital T. The existing exact activation check requires lowercase `true`, so Parent was not selected. The run safely exited78 before acquisition, child issuance or publication. Original readiness evidence and private log hashes are retained. The owner has been asked to correct the value; the guard is unchanged. This is a configuration mismatch, not a successful automation run. [Exact evidence](evidence/parent-after-owner-enable-case-mismatch.json).
+
+The actual latest32 grading checkpoint/history locator still passes current-source metadata preflight. Research and website heads, lease178 and ready PR9/10 are unchanged. Fresh15:43UTC HTTPS verification still serves app409dcb48, the October27 board and zero selected forecasts. The existing website owner retains integration/deployment. The next configured Parent window is October29 at12:36UTC; neither the missed October28 window nor future automatic capture is claimed as executed. All previously documented horizon, historical accuracy and source-timing limits remain.
+
+---
+
 Update — 2026-10-28T07:34:06.798250+00:00 (PARTIAL; current producer verified, website release pending)
 
 Main PR59 `cd51ff289ace3bf14cfb820c139fd823bc330d17` and Producer PR60 `0409a253d6a365c31a2d421941b8ee5f40d6fd02` are integrated. CI40640349535 passed 779 tests, with one optional skip and 33 subtests. CI40642527286 completed all 2,503 nodes: 2,502 passed and one existing optional test skipped. Native registration31, run40644020277, passed all three jobs; its create-only record was read back at4f2cafd9. [Integration](evidence/source60-integration-verified.json) · [Current release evidence](evidence/current32-release-readiness.json).
