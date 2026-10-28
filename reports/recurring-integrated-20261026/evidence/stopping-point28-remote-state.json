@@ -1,0 +1,180 @@
+{
+  "jobs": [
+    {
+      "id": 122564516455,
+      "name": "audit-private-rotation-write-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517113,
+      "name": "storage-probe-read",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517392,
+      "name": "audit-private-rotation-qualify-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517555,
+      "name": "private-draft-v2-qualify",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517565,
+      "name": "storage-probe-restore",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517584,
+      "name": "private-draft-v2-read",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517646,
+      "name": "storage-probe-write",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564517973,
+      "name": "genuine-hosted-selected-restore-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564518534,
+      "name": "audit-count-effective-restore-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564519017,
+      "name": "genuine-hosted-selected-export-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564519451,
+      "name": "audit-weekly-produce-v1",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122564524368,
+      "name": "lab",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564558298,
+      "name": "private-draft-v2-write",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564562841,
+      "name": "genuine-hosted-fixed-build-restore-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564571514,
+      "name": "owner-bootstrap-restore-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564572696,
+      "name": "genuine-hosted-fixed-build-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122564574949,
+      "name": "audit-private-rotation-read-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 122568968875,
+      "name": "audit-weekly-restore-v1",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122570087612,
+      "name": "audit-weekly-export-v1",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 122571835615,
+      "name": "audit-weekly-failure-restore-v1",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "owner": {
+    "comment_id": 6457898723,
+    "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6457898723",
+    "updated_at": "2026-10-28T01:06:58Z",
+    "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5",
+    "source_CI": {
+      "CI_not_updater_performance": true,
+      "PR_job": 122539524691,
+      "PR_run": 40604203548,
+      "actual_PR_checkout": "bd4edb5522ea00d38863718d06df988403e6ad1e",
+      "actual_PR_parents": [
+        "e336bf7a68c32267c3c3eec48892aeadcd03a90e",
+        "81c3fc2a612ced916f4c54814f978c509058bca5"
+      ],
+      "environment_sha256": "0fe22f5a0742d075409028479b720710420df09916205474ab9c6cbccde8670f",
+      "full_checks": "BOTH_PASS",
+      "push_job": 122539507256,
+      "push_run": 40604198363,
+      "seal_sha256": "44ed7561c68d0d0b8055ca00e8b2925378cc7c93b4e2cc80e7437d7d707c2baa",
+      "source_manifest_sha256": "b6f555d15d37bcb1ce4e7b878b5da6cb7e711bc0f07e819b9591fd4799fcfbb8",
+      "tests_each": 1390
+    },
+    "genuine": {
+      "after_completion_validation_interval_seconds": 26.321295,
+      "aggregate_successful_workload_memory": "UNKNOWN",
+      "application_seconds_including_failure_grace": 116.50110450399993,
+      "attempt": 1,
+      "cause": "Closing game-status snapshot expired during repeated complete verification; all14 games remained before kickoff.",
+      "closing_to_completion_seconds": 50.836996,
+      "closing_to_final_rejection_seconds": 77.158291,
+      "controller_seconds_before_retention": 151.11903122500001,
+      "dispatches": 1,
+      "failed_completion_and_quarantined_native": "INELIGIBLE_PRESERVED",
+      "failure_boundary": "record_bundle final _cutoff(clock()) after read_bundle returned",
+      "full_generation": false,
+      "individual_RSS_is_not_aggregate": true,
+      "job_id": 122563398465,
+      "kickoff_and_status_guards": "CORRECT_UNCHANGED",
+      "largest_individual_child_peak_rss_kib": 434756,
+      "new_qualified_native": 0,
+      "no_blind_rerun": true,
+      "original_records_preserved": 8,
+      "primary_exception": "IntegrityError",
+      "primary_message": "Corrected capture crossed kickoff or final status expiry",
+      "primary_step": "build-capture",
+      "run_id": 40611360570,
+      "status": "FAILED_OUTPUT_CLASSIFICATION",
+      "status_max_age_seconds": 60,
+      "whole_GHA_job_or_VM_memory": "NOT_MEASURED",
+      "whole_job_seconds": 190
+    },
+    "next": "Complete the smallest evidence-bound correction and actual old-helper compatibility, test it against a matched offline control and mutation/clock controls, record exact source/config digest bindings through existing controls, then fresh source/current-base CI before another genuine operation. The website Goal and same owned repair continue; no general deployment reapproval requested.",
+    "goal_complete": false,
+    "deployed": false,
+    "lease_released": false
+  }
+}

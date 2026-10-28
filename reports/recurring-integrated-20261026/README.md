@@ -1,3 +1,13 @@
+Update — 2026-10-28T01:57:46.341546+00:00 (PARTIAL; owner-requested stopping point)
+
+Current producer run40611698210 is complete: genuine capture, independent fresh-process restoration/grading and derived export all succeeded. The actual anonymous consumer accepted1959 forecasts across all11supported categories in3.069seconds on a fresh normal paired board; zero accepted rows use an R0-only wrapper. Exact-source desktop/mobile preview passed all3widths,12filters,10routes, refresh and empty state with no browser/network errors or overflow. This is not a deployed selected installation.
+
+Website PR9`f9f3056e23d1f62c1fc85828adc5a666cd52ea35` and stacked PR10`f90ded196e13170c6ccfd7b4d603226f2b3d789b` are READY, unmerged. The existing website owner still holds lease176. Its latest genuine update failed the unchanged60-second final-status freshness guard and is under focused repair; both source CI runs passed1390tests each. Website production remains unchanged. Existing Parent activation/actual recurring execution, live release checks, originalRoot26 missing bodies, declared horizon/source-timing limits, exactresearchPPR and private historical-accuracy limits remain explicit. NoNFLfits or accuracy gain is claimed.
+
+[Exact integration handoff and next actions](INTEGRATION-READY-20261028.md) · [actual-run/consumer/browser receipt](evidence/stopping-point28-release-readiness.json) · [current coverage](coverage-current-20261028.csv). Earlier time-stamped entries below are retained as history and are superseded by this current checkpoint.
+
+---
+
 Update — 2026-10-28T01:00:21.632369+00:00 (PARTIAL)
 
 The corrective source is integrated: Main53 `f365a55189d0ca2e2ad3e52564d10478617cd0a3`, Producer54 `5278c1a46987e1676a39c9aff500d820d417a733`. Final exact-source CI40608365832 completed all2304 collected/attempted nodes:2303pass and one existing optional real-cache skip. Downloaded635-byte coverage artifact12782332059 matches API SHA25616a5a33f…; reviewed4e1c255, actual checkout9d689b1 and merged5278c1a share tree9a8eacfb. Main CI40606329853 passes737tests/33subtests/oneoptional skip. [Final integration receipt](evidence/recovery54-merged.json).
