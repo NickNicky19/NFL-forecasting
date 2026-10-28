@@ -1,0 +1,66 @@
+{
+  "state": "PR58_NORMAL_EXPECTED_HEAD_MERGE_VERIFIED",
+  "pr": 58,
+  "approved_current_head": "96fa196ccc22f10c89ded27e543d1d5fbb7fcf2c",
+  "tested_checkout": "4671daaa30774ffd1ada92f14151a57e5a8b71a0",
+  "actual_merge": "feef6e433c26b682b6b62d301bbbbfdd40ae9998",
+  "identical_tested_head_and_merge_tree": "d3ece8c9d661b9ec6ddafb48f182655cb4775959",
+  "producer_ci_run": 40636982249,
+  "all_six_jobs_success": true,
+  "coverage": {
+    "attempted": 2491,
+    "collected": 2491,
+    "completed": 2491,
+    "explicit_skips": {
+      "tests/test_ppr_sources.py::test_real_cached_source_schema_and_unknown_zero_contract": "('/home/runner/work/NFL-forecasting/NFL-forecasting/tests/test_ppr_sources.py', 102, 'Skipped: optional real ignored source cache is not present')"
+    },
+    "identity": {
+      "GITHUB_REPOSITORY": "NickNicky19/NFL-forecasting",
+      "GITHUB_RUN_ATTEMPT": "1",
+      "GITHUB_RUN_ID": "40636982249",
+      "GITHUB_SHA": "4671daaa30774ffd1ada92f14151a57e5a8b71a0"
+    },
+    "nodes_sha256": "5bed14fa4c3ccec5308d93deddb6ebafa6c8bfcf6189fb10c4893c78abca26cb",
+    "outcome_counts": {
+      "passed": 2490,
+      "skipped": 1
+    },
+    "schema_version": "audit-source-ci-v1-coverage",
+    "state": "ALL_COLLECTED_TESTS_COVERED_AND_JOBS_SUCCESSFUL"
+  },
+  "parent_source": "2816561829a426ff55013c5c41b2cffd45f7b893",
+  "normal_merge_method": "merge",
+  "admin_or_force_used": false,
+  "authorization": "Explicit delegated release authorization; Parent independently reviewed test-only follow-up96fa196 with no blocker",
+  "source_job_checkout_logs": [
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-repair-collect.log",
+      "sha256": "ab28ccf6275ff604ef1171ba2b6230f7a7c66f7f3e704d2c3b64ef111aeb412b"
+    },
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-job-122646096670.log",
+      "sha256": "ee4d664f098e5a5b8f355450a36b6f74a3d27268b2aa9aff667aa3f378188d0e"
+    },
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-job-122646096967.log",
+      "sha256": "5cc9d202fee7d308fcc807ff9601de8aab5a3f086c717addb8b6b153512b7373"
+    },
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-job-122646096973.log",
+      "sha256": "fa8ca9f5290b10576d95f9cfe6d0956eef9f65d548bd36854c00ccd5dcbf946d"
+    },
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-job-122646097076.log",
+      "sha256": "6a7f3220be2c2212045179d635fced058f20d1f1f1d11e0ab2af52bfd68cc93c"
+    },
+    {
+      "file": "/workspace/nfl-system-audit/continuation/private/source58-job-122649703281.log",
+      "sha256": "84338f72bdf2df0e2fbfc56d1c0735f7d58b0ca4c7fdd429d9ea124980aea187"
+    }
+  ],
+  "retained_failed_runs": [
+    40633791481,
+    40635827954
+  ],
+  "new_NFL_fits": 0
+}
