@@ -1,0 +1,130 @@
+{
+  "at": "2026-10-28T21:51:36.344783+00:00",
+  "checker_sha256": "48dd35f5bd34d2b4117da6f81545b30206a9b4d20ecbf709f2450bfdd8f4dfdc",
+  "checks": 76020,
+  "fallback_points": 85,
+  "games": 93,
+  "interpretation": "OnefixedHGBMAEpoint vsconstantposition/global chart controls; noauthenticwebsitechartcomparison,distributionorprobabilityclaim. Source-label reconstruction remains exposed development.",
+  "known_numeric_outcomes": 1954,
+  "method_forecast_values": 8468,
+  "metrics": {
+    "GLOBAL_CHART_MEDIAN_2024": {
+      "MAE": 6.239232343909928,
+      "MSE": 72.39949048106449,
+      "RMSE": 8.508789013782424,
+      "bias": -2.344002047082906,
+      "error_inclusive_le1": 0.08290685772773797,
+      "error_inclusive_le5": 0.5209825997952917,
+      "error_strict_lt1": 0.0767656090071648,
+      "error_strict_lt5": 0.5179119754350051,
+      "max_absolute_error": 39.400000000000006,
+      "n": 1954,
+      "p90_absolute_error": 14.5,
+      "p95_absolute_error": 18.907
+    },
+    "HGB_CHART_MEDIAN_V1": {
+      "MAE": 4.702027304826734,
+      "MSE": 44.02088019095238,
+      "RMSE": 6.634823297643456,
+      "bias": -1.3463430640486382,
+      "error_inclusive_le1": 0.18577277379733878,
+      "error_inclusive_le5": 0.6555783009211873,
+      "error_strict_lt1": 0.18577277379733878,
+      "error_strict_lt5": 0.6555783009211873,
+      "max_absolute_error": 36.104412064745226,
+      "n": 1954,
+      "p90_absolute_error": 10.798238649439845,
+      "p95_absolute_error": 14.111964986570086
+    },
+    "POSITION_CHART_MEAN_2024": {
+      "MAE": 6.054111260451355,
+      "MSE": 60.07401469793576,
+      "RMSE": 7.750742848136285,
+      "bias": 0.12656700501044235,
+      "error_inclusive_le1": 0.0931422722620266,
+      "error_inclusive_le5": 0.4790174002047083,
+      "error_strict_lt1": 0.0931422722620266,
+      "error_strict_lt5": 0.4790174002047083,
+      "max_absolute_error": 37.39848394004283,
+      "n": 1954,
+      "p90_absolute_error": 11.800746989241764,
+      "p95_absolute_error": 15.247718284577424
+    },
+    "POSITION_CHART_MEDIAN_2024": {
+      "MAE": 5.739191402251792,
+      "MSE": 63.80764380757421,
+      "RMSE": 7.987968690948545,
+      "bias": -1.967973387922211,
+      "error_inclusive_le1": 0.10798362333674513,
+      "error_inclusive_le5": 0.5634595701125895,
+      "error_strict_lt1": 0.10030706243602866,
+      "error_strict_lt5": 0.5593654042988742,
+      "max_absolute_error": 39.800000000000004,
+      "n": 1954,
+      "p90_absolute_error": 13.370000000000005,
+      "p95_absolute_error": 17.234999999999992
+    }
+  },
+  "model_points": 2032,
+  "model_replay": false,
+  "new_fits_model_loads_inference_original_NFL_table_decodes_HTTP_CAS": 0,
+  "new_football_observations": 0,
+  "new_live_use": false,
+  "paired": [
+    {
+      "candidate": "HGB_CHART_MEDIAN_V1",
+      "control": "POSITION_CHART_MEDIAN_2024",
+      "game_id_interval": {
+        "clusters": 93,
+        "confidence": 0.95,
+        "lower": -1.238407118060945,
+        "replicates": 500,
+        "seed": 1703,
+        "state": "NOMINAL_EXPOSED_DEVELOPMENT_DIAGNOSTIC",
+        "upper": -0.8462191065935986
+      },
+      "mean_loss_difference": -1.0371640974250569,
+      "n": 1954,
+      "primary": "MAE",
+      "relative_improvement_percent": 18.071606690414992,
+      "week_interval": {
+        "clusters": 6,
+        "state": "UNAVAILABLE_FEWER_THAN8CLUSTERS"
+      }
+    },
+    {
+      "candidate": "HGB_CHART_MEDIAN_V1",
+      "control": "GLOBAL_CHART_MEDIAN_2024",
+      "game_id_interval": {
+        "clusters": 93,
+        "confidence": 0.95,
+        "lower": -1.7536427610414629,
+        "replicates": 500,
+        "seed": 1703,
+        "state": "NOMINAL_EXPOSED_DEVELOPMENT_DIAGNOSTIC",
+        "upper": -1.3183563626478125
+      },
+      "mean_loss_difference": -1.537205039083194,
+      "n": 1954,
+      "primary": "MAE",
+      "relative_improvement_percent": 24.637727116920868,
+      "week_interval": {
+        "clusters": 6,
+        "state": "UNAVAILABLE_FEWER_THAN8CLUSTERS"
+      }
+    }
+  ],
+  "plan_sha256": "2da06bcba9a22cfae3a87176922601ef88c169b2e7e70a4e0234b937260a450f",
+  "private_readable_scorecard_rows": 8468,
+  "resources": {
+    "CPU_seconds": 1.054612311,
+    "RSS_bytes": 203427840,
+    "wall_seconds": 0.59753985099087
+  },
+  "schema_version": "week8-chart-point-independent-numerical-acceptance-v1",
+  "scientific_qualification": false,
+  "state": "PASS_ORIGINAL_CACHED_FORECASTS_LABELS_AND_ERROR_ARITHMETIC",
+  "unique_planned_player_games": 2117,
+  "unknown_participation": 163,
+  "weeks": 6
+}

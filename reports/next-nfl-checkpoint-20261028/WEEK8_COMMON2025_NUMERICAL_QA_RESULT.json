@@ -1,0 +1,329 @@
+{
+  "actual_returned_fits_existing": 52,
+  "archive_members_verified": {
+    "forecasts": 167,
+    "scores": 3
+  },
+  "at": "2026-10-28T21:47:13.918710+00:00",
+  "candidate_procedures": 4,
+  "checker_sha256": "8e302032b0395cdd3d534de465e463ee9a27e4deaf35f36e926aef6d4877e297",
+  "checks": 925,
+  "control_procedures": 1,
+  "fit_opportunity_audits_checked": 55,
+  "forecasts_checked": 5436,
+  "new_fits_model_loads_inference_HTTP_CAS_original_NFL_table_decodes": 0,
+  "new_football_observations": 0,
+  "new_live_use": false,
+  "paired": [
+    {
+      "MSE_delta": 4.128018267075105,
+      "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "control": "FROZEN_CDF_MEAN",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -3.771311236866469,
+            11.485586092895941
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -2.156835362156096,
+            9.96253094876903
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": -3.793167987635104,
+      "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "control": "FROZEN_CDF_MEAN",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -8.881019702193846,
+            1.052324917985816
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -7.550500521255804,
+            -0.25431318657730895
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": -2.9265296997565464,
+      "candidate": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "control": "FROZEN_CDF_MEAN",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -6.130153199750124,
+            0.6571347654582916
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -5.668617097946365,
+            -0.21754368462459353
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": 0.0,
+      "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "control": "FROZEN_CDF_MEAN",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            0.0,
+            0.0
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            0.0,
+            0.0
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": 4.128018267075105,
+      "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "control": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -3.771311236866469,
+            11.485586092895941
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -2.156835362156096,
+            9.96253094876903
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": -3.793167987635104,
+      "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "control": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -8.881019702193846,
+            1.052324917985816
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -7.550500521255804,
+            -0.25431318657730895
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    },
+    {
+      "MSE_delta": -2.9265296997565464,
+      "candidate": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "control": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "intervals": {
+        "game": {
+          "clusters": 272,
+          "interval": [
+            -6.130153199750124,
+            0.6571347654582916
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        },
+        "week": {
+          "clusters": 18,
+          "interval": [
+            -5.668617097946365,
+            -0.21754368462459353
+          ],
+          "paired_rows": 664,
+          "state": "DESCRIPTIVE"
+        }
+      }
+    }
+  ],
+  "plan_sha256": "eff1a9747933c3380275a05a16202b8783e50e19f21c660f052f655cd9e77010",
+  "replayed_models": false,
+  "resources": {
+    "CPU_seconds": 0.9497585129999999,
+    "RSS_bytes": 130764800,
+    "wall_seconds": 0.5985562260029837
+  },
+  "schema_version": "week8-common2025-independent-numerical-acceptance-v1",
+  "scientific_qualification": false,
+  "scored_method_rows_checked": 6795,
+  "state": "PASS_CACHED_ROWS_AND_PAIRED_ARITHMETIC",
+  "summaries": {
+    "CDF_H1_CURRENT_SEASON_TRAINING": {
+      "MAE": 8.929704687948007,
+      "MSE": 128.22691894200017,
+      "RMSE": 11.323732553447215,
+      "bias": 0.8708967475284787,
+      "error_le1": 0.07680722891566265,
+      "error_lt1": 0.07680722891566265,
+      "fallback_offered": 243,
+      "fallback_scored": 117,
+      "games": 272,
+      "maximum_abs": 32.422367335720544,
+      "offered": 1359,
+      "p90_abs": 18.900488010690786,
+      "p95_abs": 23.130725019584045,
+      "participation": {
+        "played": 664,
+        "unknown": 695
+      },
+      "played_invalid": 0,
+      "played_missing": 0,
+      "played_zero": 36,
+      "scored": 664,
+      "weeks": 18
+    },
+    "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING": {
+      "MAE": 8.631115622398214,
+      "MSE": 120.30573268728998,
+      "RMSE": 10.968396997159156,
+      "bias": 0.6916199456937918,
+      "error_le1": 0.07379518072289157,
+      "error_lt1": 0.07379518072289157,
+      "fallback_offered": 28,
+      "fallback_scored": 7,
+      "games": 272,
+      "maximum_abs": 34.349136218829884,
+      "offered": 1359,
+      "p90_abs": 18.37484892483674,
+      "p95_abs": 22.531833941893463,
+      "participation": {
+        "played": 664,
+        "unknown": 695
+      },
+      "played_invalid": 0,
+      "played_missing": 0,
+      "played_zero": 36,
+      "scored": 664,
+      "weeks": 18
+    },
+    "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING": {
+      "MAE": 8.573751986391812,
+      "MSE": 121.17237097516852,
+      "RMSE": 11.007832255951602,
+      "bias": 0.9657465024570842,
+      "error_le1": 0.08433734939759036,
+      "error_lt1": 0.08433734939759036,
+      "fallback_offered": 28,
+      "fallback_scored": 7,
+      "games": 272,
+      "maximum_abs": 36.434810201107,
+      "offered": 1359,
+      "p90_abs": 17.986910640736035,
+      "p95_abs": 23.147813191569345,
+      "participation": {
+        "played": 664,
+        "unknown": 695
+      },
+      "played_invalid": 0,
+      "played_missing": 0,
+      "played_zero": 36,
+      "scored": 664,
+      "weeks": 18
+    },
+    "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE": {
+      "MAE": 8.66363112205827,
+      "MSE": 124.09890067492505,
+      "RMSE": 11.139968611936258,
+      "bias": 1.655709508997246,
+      "error_le1": 0.0677710843373494,
+      "error_lt1": 0.0677710843373494,
+      "fallback_offered": 28,
+      "fallback_scored": 7,
+      "games": 272,
+      "maximum_abs": 35.03856316685318,
+      "offered": 1359,
+      "p90_abs": 18.321053627611246,
+      "p95_abs": 23.797956858054725,
+      "participation": {
+        "played": 664,
+        "unknown": 695
+      },
+      "played_invalid": 0,
+      "played_missing": 0,
+      "played_zero": 36,
+      "scored": 664,
+      "weeks": 18
+    },
+    "FROZEN_CDF_MEAN": {
+      "MAE": 8.66363112205827,
+      "MSE": 124.09890067492505,
+      "RMSE": 11.139968611936258,
+      "bias": 1.655709508997246,
+      "error_le1": 0.0677710843373494,
+      "error_lt1": 0.0677710843373494,
+      "fallback_offered": 28,
+      "fallback_scored": 7,
+      "games": 272,
+      "maximum_abs": 35.03856316685318,
+      "offered": 1359,
+      "p90_abs": 18.321053627611246,
+      "p95_abs": 23.797956858054725,
+      "participation": {
+        "played": 664,
+        "unknown": 695
+      },
+      "played_invalid": 0,
+      "played_missing": 0,
+      "played_zero": 36,
+      "scored": 664,
+      "weeks": 18
+    }
+  },
+  "trees_existing": 1664,
+  "unique_player_games": 1359
+}

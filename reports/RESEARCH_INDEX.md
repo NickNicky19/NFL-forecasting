@@ -309,3 +309,8 @@ remains pending an efficiency prerequisite under its original finite budget.
 [All-twelve-category capture and release status](weekly-provisional-capture-v1/README.md) · [Machine-readable matrix](weekly-provisional-capture-v1/aggregate.json) · [Genuine hosted canary proof](private-draft-canary-v2/ACTUAL_HOSTED_RESULT.json).
 
 Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. Original scientific registrations remain unchanged.
+
+## October 28: Week 8 capture and completed continuations
+
+[New results and twelve-category decisions](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md): 52 CDF forests complete the 2025 history comparison; one first chart-PPR median fit is scored. Independent cached-row QA passed. The 3.06% attempt MSE reduction is versus historical CDF; the 18.07% chart-MAE reduction is versus a constant position control. Neither is a demonstrated win over today's website. Original failures and negative 2026 results remain. The existing Week 8 stream is preserved; per-method census/assignment and retained-owner live integration remain explicit dependencies.
+

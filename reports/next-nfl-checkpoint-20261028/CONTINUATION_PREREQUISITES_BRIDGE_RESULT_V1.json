@@ -1,0 +1,153 @@
+{
+  "not_claimed": [
+    "predictivefit",
+    "forecastaccuracygain",
+    "2025rareclassification",
+    "independentappearancecompletion",
+    "prospectivecapture",
+    "oldsitePPRqualification",
+    "websiteconsumerchange",
+    "offhostrestore"
+  ],
+  "observed_at_utc": "2026-10-28T21:28:27.818778+00:00",
+  "original_capsule_rehashed_unchanged": {
+    "bytes": 838547,
+    "sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82"
+  },
+  "private_capsule": {
+    "bytes": 839403,
+    "same_body_CAS_alias_readback": "PASS",
+    "sha256": "981865b8c8190837d351a106f1a7d0a27113a240de34f8e58e80785c2980b27b"
+  },
+  "safe_aggregate": {
+    "HTTP": 0,
+    "accuracy_comparisons": 0,
+    "classification_diagnostics": {},
+    "fits": 0,
+    "forecasts": 0,
+    "full_population_preserved": true,
+    "newly_qualified_or_state_changed_2026_rows": 1,
+    "original_capsule_unchanged": true,
+    "original_label_capsule_sha256": "5ef732638c2d468bfe2b2f212cb85b1a1e02fb45ed0f51b2d511c71308467c82",
+    "plan_sha256": "29f832dcf5e135f7bc6beffe5ae0a7ee951848be524e9a46cc49ef891848e035",
+    "predictive_population_admissible": false,
+    "private_capsule_bytes": 839403,
+    "private_capsule_sha256": "981865b8c8190837d351a106f1a7d0a27113a240de34f8e58e80785c2980b27b",
+    "rare_2026": {
+      "numeric_after": 1,
+      "numeric_before": 0,
+      "planned": 1
+    },
+    "remaining": "2025rare classes and unresolved participation still require evidence; no event-free-only predictive sample",
+    "resources": {
+      "CPU_seconds": 3.149477677,
+      "peak_RSS_bytes": 481144832,
+      "wall_seconds": 3.142303542001173
+    },
+    "seasons": {
+      "2024": {
+        "numeric_after": 5589,
+        "numeric_before": 5589,
+        "planned": 5935,
+        "states_after": {
+          "played_missing": 1,
+          "played_score": 4955,
+          "played_zero": 634,
+          "unknown_participation": 345
+        },
+        "states_before": {
+          "played_missing": 1,
+          "played_score": 4955,
+          "played_zero": 634,
+          "unknown_participation": 345
+        }
+      },
+      "2025": {
+        "numeric_after": 5693,
+        "numeric_before": 5693,
+        "planned": 6108,
+        "states_after": {
+          "played_missing": 21,
+          "played_score": 4977,
+          "played_zero": 716,
+          "unknown_participation": 394
+        },
+        "states_before": {
+          "played_missing": 21,
+          "played_score": 4977,
+          "played_zero": 716,
+          "unknown_participation": 394
+        }
+      },
+      "2026": {
+        "numeric_after": 1954,
+        "numeric_before": 1953,
+        "planned": 2117,
+        "states_after": {
+          "played_score": 1686,
+          "played_zero": 268,
+          "unknown_participation": 163
+        },
+        "states_before": {
+          "played_missing": 1,
+          "played_score": 1685,
+          "played_zero": 268,
+          "unknown_participation": 163
+        }
+      }
+    },
+    "source_game_coverage": {
+      "PBP_through_W6_games": 93,
+      "weekly2026_games": 93,
+      "weekly2026_games_missing_PBP": 0
+    },
+    "state": "SOURCE_LABEL_CONTINUATION_COMPLETE_NO_PREDICTIVE_COMPARISON",
+    "target": "nick-chart-ppr-v1",
+    "transitions": [
+      {
+        "after": "played_score",
+        "before": "played_missing",
+        "n": 1
+      },
+      {
+        "after": "played_score",
+        "before": "played_score",
+        "n": 1685
+      },
+      {
+        "after": "played_zero",
+        "before": "played_zero",
+        "n": 268
+      },
+      {
+        "after": "unknown_participation",
+        "before": "unknown_participation",
+        "n": 163
+      }
+    ],
+    "version": "next-checkpoint-chart-2026-retained-PBP-bridge-v1"
+  },
+  "total_invocation": {
+    "HTTP": 0,
+    "accuracy_comparisons": 0,
+    "forecast_inference": 0,
+    "managed_write_attempts": 1,
+    "new_live_use": false,
+    "offhost_restoration": "UNPROVEN",
+    "predictive_fits": 0,
+    "private_control_delta_bytes": 273,
+    "resources": {
+      "CPU_seconds": 35.775566958,
+      "peak_RSS_bytes": 481144832,
+      "wall_seconds": 35.747040340997046
+    },
+    "retained_charged_bytes": 839676
+  },
+  "updated_totals": {
+    "numeric_labels": 13236,
+    "planned": 14160,
+    "played_missing": 22,
+    "unknown_participation": 902
+  },
+  "version": "continuation-prerequisites-chart-bridge-result-v1"
+}

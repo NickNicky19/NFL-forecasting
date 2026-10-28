@@ -1,0 +1,76 @@
+{
+  "checks": {
+    "actor_absence_not_dnp": true,
+    "arrow_predicate_before_materialization": true,
+    "binding:nfl_lab/next_checkpoint_chart_ppr.py": true,
+    "binding:nfl_lab/ppr_outcomes.py": true,
+    "binding:nfl_lab/ppr_sources.py": true,
+    "binding:nfl_lab/scoring.py": true,
+    "binding:tools/next_checkpoint_chart_bridge_build.py": true,
+    "binding:tools/next_checkpoint_chart_bridge_run.py": true,
+    "binding:tools/next_checkpoint_chart_ppr_labels.py": true,
+    "eariler_seasons_unchanged": true,
+    "explicit_new_destination_and_caps": true,
+    "final90s_retention_deadline": true,
+    "fresh_output_only": true,
+    "full_14160_population_and_2117_2026_keys": true,
+    "metadata_descriptor_hash_and_bytes": true,
+    "no_decode_or_execution_authorization_in_preseal": true,
+    "no_predictive_population_claim": true,
+    "old_evidence_preserved": true,
+    "only_one_private_slot": true,
+    "original_CAS_lock_quota_inherited": true,
+    "original_consumed_failure_kept": true,
+    "original_target_retained": true,
+    "prior_numeric_never_degraded": true
+  },
+  "findings": [],
+  "limits": [
+    "Static acceptance does not establish correct event values, football source truth, execution, completed capsule, model accuracy, or offhost restoration.",
+    "Root must seal exact reviewed hashes and admitted descriptor before GO.",
+    "Classifier remains conservative; rare positive inventory mismatches remain missing, no absent-actor zeros.",
+    "Full planned source-listed population preserved, predictive population not yet admitted."
+  ],
+  "metadata_descriptor": {
+    "bytes": 7109,
+    "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v7.json",
+    "sha256": "e7a50890572bdcb43a2ceae9e7cb626b448113cd7fb922ed36077e1b30ad198e"
+  },
+  "observed_at_utc": "2026-10-28T21:26:33.216430+00:00",
+  "plan_sha256": "5021b19b15d6b096f5cc1dd4d6394001158855c8bd1785eb0b8ffc105b80759c",
+  "plan_state": "PROPOSED_PENDING_ROOT_AND_INDEPENDENT_GO",
+  "reviewed_code": {
+    "nfl_lab/next_checkpoint_chart_ppr.py": {
+      "bytes": 11779,
+      "sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e"
+    },
+    "nfl_lab/ppr_outcomes.py": {
+      "bytes": 7856,
+      "sha256": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0"
+    },
+    "nfl_lab/ppr_sources.py": {
+      "bytes": 10983,
+      "sha256": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899"
+    },
+    "nfl_lab/scoring.py": {
+      "bytes": 5384,
+      "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13"
+    },
+    "tools/next_checkpoint_chart_bridge_build.py": {
+      "bytes": 10233,
+      "sha256": "d30d7c8efb4a3923b0b7a970bd6d9049b0e807e248ec1968f8ed4d20e89502cc"
+    },
+    "tools/next_checkpoint_chart_bridge_run.py": {
+      "bytes": 19107,
+      "sha256": "fc138c6aa3217d1fbedf54ae7be26a82a7bf491734f5b9dca84265ed8f36044a"
+    },
+    "tools/next_checkpoint_chart_ppr_labels.py": {
+      "bytes": 16246,
+      "sha256": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    }
+  },
+  "reviewer": "/root/week8_capture_readiness",
+  "schema_version": "week8-chart-bridge-independent-static-review-v1",
+  "scope": "Read source and metadata descriptors only; no imported runner, source NFL row decode, fits, inference, forecast/score, CAS writes or HTTP in review.",
+  "state": "PASS_STATIC_PREEXECUTION_REVIEW"
+}

@@ -1,0 +1,68 @@
+{
+  "admission": "Bothmeancolumns null/nonfinite only; bothcountcolumns null/nonfinite or0 only. Anypositive/finite meansblocktheexistingfeaturecontrolcomparison, no silentmasking. Preservealloldstudies.",
+  "columns": [
+    "f_player_offense_snaps_mean3",
+    "f_player_offense_snaps_n3",
+    "f_player_offense_snaps_mean8",
+    "f_player_offense_snaps_n8"
+  ],
+  "hypothesis": "Confirm excluded-source snap channels unavailable in fixed existing inputs before anynewfit; no alternativechosen fromoutcomeperformance",
+  "inputs": {
+    "historical_2019_2024_features": {
+      "bytes": 3629507,
+      "path": "/workspace/website-methods-research/resumed/distribution-cdf-after-audit-v2-20261025/corrected-features.parquet",
+      "sha256": "f7325134d9e70ed241fc041f8a7bfa4842054b7d3156ae6040d58e44b8127d17"
+    },
+    "query_2025": {
+      "bytes": 585638,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2025.parquet",
+      "sha256": "9e5fc61573b4e54aa5d25a7f59b88d6a839800a5622aed12d2751802d86369c4"
+    }
+  },
+  "predicates": {
+    "historical_2019_2024_features": [
+      [
+        "season",
+        ">=",
+        2019
+      ],
+      [
+        "season",
+        "<=",
+        2024
+      ],
+      [
+        "position",
+        "==",
+        "QB"
+      ]
+    ],
+    "query_2025": [
+      [
+        "season",
+        "==",
+        2025
+      ],
+      [
+        "position",
+        "==",
+        "QB"
+      ]
+    ]
+  },
+  "registered_at": "2026-10-28T21:28:49.294992+00:00",
+  "registered_by": "/root",
+  "resources": {
+    "CPU_seconds": 10,
+    "HTTP": 0,
+    "RSS_bytes": 268435456,
+    "fits": 0,
+    "invocations": 1,
+    "managed_private_writes": 0,
+    "metadata_limit_bytes": 16384,
+    "outcome_column_decodes": 0,
+    "wall_seconds": 15
+  },
+  "state": "AUTHORIZED_SINGLE_SOURCE_PREPARATION_NOT_FIT",
+  "version": "common2025-excluded-snap-absence-admission-v1"
+}

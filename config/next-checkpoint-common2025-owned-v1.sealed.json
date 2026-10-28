@@ -1,0 +1,958 @@
+{
+  "actual_backend": "UNATTESTED",
+  "category": {
+    "modeled_roles": [
+      "QB"
+    ],
+    "panels": {
+      "base": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "context": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3",
+        "f_team_pass_yd_mean3",
+        "f_opp_pass_yd_allowed_mean3",
+        "f_team_rush_yd_mean3",
+        "f_opp_rush_yd_allowed_mean3",
+        "f_team_pass_att_mean3",
+        "f_opp_pass_att_allowed_mean3",
+        "f_team_rush_att_mean3",
+        "f_opp_rush_att_allowed_mean3",
+        "f_team_rec_yd_mean3",
+        "f_opp_rec_yd_allowed_mean3",
+        "f_team_offense_plays_mean3",
+        "f_opp_offense_plays_allowed_mean3",
+        "f_team_pass_rate3",
+        "f_team_games_prior",
+        "f_opp_games_prior",
+        "f_team_pass_yd_adjusted_mean8",
+        "f_opp_pass_yd_adjusted_allowed_mean8",
+        "f_team_rush_yd_adjusted_mean8",
+        "f_opp_rush_yd_adjusted_allowed_mean8",
+        "f_rest_days",
+        "f_is_home"
+      ]
+    },
+    "primary_roles": [
+      "QB"
+    ],
+    "state": "READY",
+    "support": "count",
+    "target": "pass_att"
+  },
+  "controls": [
+    "authentic frozen2025 LAB_CDF expectedmean",
+    "same-wrapper annualH4 trained2019-2024 with current full38 state"
+  ],
+  "environment_versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "execution_authorized": true,
+  "exposure": "2025 alreadyexposeddevelopment; chronologicalfitting doesnotcreateuntouchedconfirmation",
+  "features": [
+    "f_player_pass_att_mean3",
+    "f_player_pass_att_n3",
+    "f_player_pass_att_mean8",
+    "f_player_pass_att_n8",
+    "f_player_pass_cmp_mean3",
+    "f_player_pass_cmp_n3",
+    "f_player_pass_cmp_mean8",
+    "f_player_pass_cmp_n8",
+    "f_player_pass_yd_mean3",
+    "f_player_pass_yd_n3",
+    "f_player_pass_yd_mean8",
+    "f_player_pass_yd_n8",
+    "f_player_pass_td_mean3",
+    "f_player_pass_td_n3",
+    "f_player_pass_td_mean8",
+    "f_player_pass_td_n8",
+    "f_player_pass_int_mean3",
+    "f_player_pass_int_n3",
+    "f_player_pass_int_mean8",
+    "f_player_pass_int_n8",
+    "f_player_rush_att_mean3",
+    "f_player_rush_att_n3",
+    "f_player_rush_att_mean8",
+    "f_player_rush_att_n8",
+    "f_player_rush_yd_mean3",
+    "f_player_rush_yd_n3",
+    "f_player_rush_yd_mean8",
+    "f_player_rush_yd_n8",
+    "f_player_offense_snaps_mean3",
+    "f_player_offense_snaps_n3",
+    "f_player_offense_snaps_mean8",
+    "f_player_offense_snaps_n8",
+    "f_player_games_prior",
+    "f_player_play_rate8",
+    "f_player_known_participation_n8",
+    "f_player_pass_ypa3",
+    "f_player_comp_rate3",
+    "f_player_rush_ypa3"
+  ],
+  "fit_accounting": {
+    "durable_reservation": "all55 consumed in one managed capsule before anytraininglabeldecode, no retries or reusedslots",
+    "initial_current_only": "no forest withunder60; exactauthenticCDF fallback",
+    "maximum_forests": 55,
+    "maximum_opportunities": 55,
+    "maximum_trees": 1760,
+    "prior_formations_maximum": 55
+  },
+  "fit_wrapper": {
+    "bytes": 11213,
+    "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_common_learner_v1.py",
+    "sha256": "9159551f81172fb1c3e1cae791c4143c7c6bf36831eceb38a06881eab882b3f0"
+  },
+  "fold_opportunities": [
+    {
+      "annual": true,
+      "id": "2025-HISTORICAL_RELATION_CURRENT_STATE-ANNUAL",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "HISTORICAL_RELATION_CURRENT_STATE",
+      "week": 1,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W01",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 1,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W01",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 1,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W01",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 1,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W02",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 2,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W02",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 2,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W02",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 2,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W03",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 3,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W03",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 3,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W03",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 3,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W04",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 4,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W04",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 4,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W04",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 4,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W05",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 5,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W05",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 5,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W05",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 5,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W06",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 6,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W06",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 6,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W06",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 6,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W07",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 7,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W07",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 7,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W07",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 7,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W08",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 8,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W08",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 8,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W08",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 8,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W09",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 9,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W09",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 9,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W09",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 9,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W10",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 10,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W10",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 10,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W10",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 10,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W11",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 11,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W11",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 11,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W11",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 11,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W12",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 12,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W12",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 12,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W12",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 12,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W13",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 13,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W13",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 13,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W13",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 13,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W14",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 14,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W14",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 14,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W14",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 14,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W15",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 15,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W15",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 15,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W15",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 15,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W16",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 16,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W16",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 16,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W16",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 16,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W17",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 17,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W17",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 17,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W17",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 17,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-CURRENT_ONLY-W18",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "CURRENT_ONLY",
+      "week": 18,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-PRIOR_PLUS_CURRENT-W18",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "PRIOR_PLUS_CURRENT",
+      "week": 18,
+      "year": 2025
+    },
+    {
+      "annual": false,
+      "id": "2025-TIME_WEIGHTED-W18",
+      "maximum_forest_fits": 1,
+      "maximum_trees": 32,
+      "policy": "TIME_WEIGHTED",
+      "week": 18,
+      "year": 2025
+    }
+  ],
+  "freeze": "Persistmodelparams/trainingbindings/full5436candidateforecasts and readback BEFOREcompleteouterlabels; earlyeligiblelabels usedonlyforchronologicalfit",
+  "hypothesis": "Fixed full38 learner/representation: does training-window policy improve2025 pass-attempt expectedmean vs annualrelationship and authentic frozenCDF?",
+  "identity": "New2025 separately authorized continuation, not rerun/replacement of completed2026 wave",
+  "implementation_bindings": [
+    {
+      "bytes": 24633,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/next_checkpoint_common2025_run.py",
+      "sha256": "f5cd5898b3496c450750960d5255c5c25b7fd200c27184d9769799190c6beb75"
+    },
+    {
+      "bytes": 11213,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_common_learner_v1.py",
+      "sha256": "9159551f81172fb1c3e1cae791c4143c7c6bf36831eceb38a06881eab882b3f0"
+    },
+    {
+      "bytes": 6124,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_common_learner_loader_v1.py",
+      "sha256": "30c65af0a14b7cb2d6cd2cf9d520f3210b97d1b279e131f3fc5e3eab3fcb36a4"
+    },
+    {
+      "bytes": 27566,
+      "path": "/workspace/nfl-current-season-priority-20261027/tools/modern_report_recovery_v2.py",
+      "sha256": "b09a66534af1a3af7eaedea9fbca0f70f060bac1531a4ee867389856fa52a68b"
+    },
+    {
+      "bytes": 10004,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_four_families_v1.py",
+      "sha256": "121b8307c219f7fa37cd3d78cc8b95e9b6b3af0b2f68a0b3a6ab52cc5432ff79"
+    },
+    {
+      "bytes": 12069,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_four_families_loader_v1.py",
+      "sha256": "3f6272c2b8b5aaddf04fac60aa3b15b80f75b7194f8481bc0acd2564a02dc6eb"
+    },
+    {
+      "bytes": 27618,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    {
+      "bytes": 23159,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/nfl_lab/source_matched_reporting.py",
+      "sha256": "d338ddd8062bd29e8df4479b014720f93429e97d07b8f4b96d7e9ae157ee5b0e"
+    },
+    {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    }
+  ],
+  "inputs": {
+    "frozen_2025_LAB_CDF": {
+      "bytes": 88536,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2025/pass_att/LAB_CDF.parquet",
+      "sha256": "e3526e2aa398e4e0dac61070349df7450390a9ed21210a2dc1808c3a677fff4e"
+    },
+    "historical_2019_2024_features": {
+      "bytes": 3629507,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/common-learner-source-retention-v4-20261027/corrected-features.parquet",
+      "sha256": "f7325134d9e70ed241fc041f8a7bfa4842054b7d3156ae6040d58e44b8127d17"
+    },
+    "outcome_2025_pass_att": {
+      "bytes": 41712,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2025/pass_att.parquet",
+      "sha256": "0aa4ecdb9e360904f4618fe3b6688c51883ccc4b76b934493f60f352af7865b2"
+    },
+    "query_2025": {
+      "bytes": 585638,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2025.parquet",
+      "sha256": "9e5fc61573b4e54aa5d25a7f59b88d6a839800a5622aed12d2751802d86369c4"
+    },
+    "schedule_metadata": {
+      "bytes": 2186341,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/sources/schedules.csv",
+      "sha256": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7"
+    }
+  },
+  "loader": {
+    "bytes": 6124,
+    "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_common_learner_loader_v1.py",
+    "sha256": "30c65af0a14b7cb2d6cd2cf9d520f3210b97d1b279e131f3fc5e3eab3fcb36a4"
+  },
+  "native_control_root": "/workspace/nfl-common-learner-cdf-role-20261027/reports/next-nfl-common2025-20261028/native-v1",
+  "new_live_use": false,
+  "new_metadata_envelope_bytes": 524288,
+  "offhost_restore": "NOT_CLAIMED",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-common2025-v1",
+  "policies": {
+    "CURRENT_ONLY": {
+      "fit_clock": "minimum original offered cutoff in each evaluation week",
+      "training_seasons": "evaluation season only",
+      "under60_supported_QB_rows": "exact frozen season-specific olderCDF mean; whole all-row policy includes older-reference information",
+      "weights": "ones"
+    },
+    "HISTORICAL_RELATION_CURRENT_STATE": {
+      "fit_clock": "one annual fit at minimum original offered cutoff in evaluation season",
+      "query_features": "eligible current query full38 state; no refit during that season",
+      "training_seasons": "2019 through year immediately before evaluation season",
+      "weights": "ones"
+    },
+    "PRIOR_PLUS_CURRENT": {
+      "fit_clock": "minimum original offered cutoff in each evaluation week",
+      "insufficient_training": "native qualified prior/fallback from this policy history; do not impose CURRENT_ONLY cold mask",
+      "training_seasons": "prior and evaluation seasons",
+      "weights": "ones"
+    },
+    "TIME_WEIGHTED": {
+      "fit_clock": "minimum original offered cutoff in each evaluation week",
+      "insufficient_training": "native qualified prior/fallback from this policy history",
+      "training_seasons": "2019 through evaluation season",
+      "weights": "2**(-(fit_cutoff_utc-outcome_available_utc)/365days); same positive weights for splits, empirical leaf PMFs and count priors"
+    }
+  },
+  "primary_metric": "MSE",
+  "prior_loader": {
+    "bytes": 12069,
+    "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_four_families_loader_v1.py",
+    "sha256": "3f6272c2b8b5aaddf04fac60aa3b15b80f75b7194f8481bc0acd2564a02dc6eb"
+  },
+  "prior_recipe": {
+    "bytes": 10004,
+    "path": "/workspace/nfl-common-learner-cdf-role-20261027/tools/pass_att_four_families_v1.py",
+    "sha256": "121b8307c219f7fa37cd3d78cc8b95e9b6b3af0b2f68a0b3a6ab52cc5432ff79"
+  },
+  "python_binary": {
+    "bytes": 30894944,
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+  },
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "requested_effort": "xhigh",
+  "requested_model": "gpt-6.1-sol",
+  "resource_reason": "55forests of32trees (prior2026used17); joint48MiB model/forecast capsule avoidsperfitCASfullscan overhead; complete64MiB and96MiBstaging peak includeallreceipts/failures; oldallocations/capsfailuresunchanged",
+  "resources": {
+    "CPU_seconds": 600,
+    "HTTP_calls": 0,
+    "RSS_bytes": 805306368,
+    "automatic_retries": 0,
+    "bootstrap_replicates": 500,
+    "bootstrap_seed": 1703,
+    "forecast_model_capsule_bytes_cap": 50331648,
+    "forest_n_jobs": 1,
+    "invocations": 1,
+    "maximum_managed_write_attempts_including_failure": 3,
+    "model_loads": 0,
+    "native_control_bytes_cap": 524288,
+    "peak_private_bytes_cap": 100663296,
+    "retained_private_bytes_cap": 67108864,
+    "score_capsule_bytes_cap": 4194304,
+    "threads": 1,
+    "wall_seconds": 840
+  },
+  "role_information": "NO_NEWROLE_GROUP;2025 roleablationunsupported andnotclaimed",
+  "root_registration": {
+    "at": "2026-10-28T21:30:54.219072+00:00",
+    "registered_by": "/root",
+    "review_receipt_sha256": "f932920e66767943f15a2a77e41c90a38e74d36d5f427b7a8eebfbe52769023b",
+    "root_review": "Exactfixed38/kernel/earliercutoffs/full1359population/controlalignment/completefreezebeforelabels andfinitefailurepersistence reviewed; excluded-snap-absence sourcegatepassed; previouschartmanagedwriterfinished.",
+    "same_bytes_owned_source_binding": {
+      "at": "2026-10-28T21:31:52.719110+00:00",
+      "old_source": {
+        "bytes": 3629507,
+        "path": "/workspace/website-methods-research/resumed/distribution-cdf-after-audit-v2-20261025/corrected-features.parquet",
+        "sha256": "f7325134d9e70ed241fc041f8a7bfa4842054b7d3156ae6040d58e44b8127d17"
+      },
+      "previous_plan_unexecuted": true,
+      "previous_sealed_plan_sha256": "b9bc64e6660db3f884d85ed311fde2c0df88e3e0b555cddb95bb1de403a46569",
+      "reason": "Usealreadyretainedcanonicalmanagedsourcecopy; exactsamebytes/hash; nosourcevalue/formula/fitbudgetchange"
+    }
+  },
+  "runtime": {
+    "env": {
+      "ARROW_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONPATH": "/workspace/nfl-common-learner-cdf-role-20261027"
+    },
+    "outer": "timeout --signal=KILL 840s;RLIMITCPU600/601;softwall830s then absolute840s finalizer guard;RSS768MiB;offlinechildfree;PYTHONDONTWRITEBYTECODE=1",
+    "python": "/workspace/nfl-direct-boosters-venv/bin/python"
+  },
+  "scientific_registrations_and_old_consumed_budgets": "UNCHANGED",
+  "scope": {
+    "evaluation_season": 2025,
+    "game_type": "REG",
+    "population": "all1359 originalQB player-game opportunities includingunknown/sparse",
+    "protected2026W7plus": "CLOSED_NOT_READ",
+    "weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ]
+  },
+  "secondary": [
+    "MAE",
+    "RMSE",
+    "bias",
+    "p90/p95/maximumabsolute",
+    "error<1 and<=1",
+    "fullpopulation/fallbackcoverage",
+    "all18weeks"
+  ],
+  "shared_harness": {
+    "bytes": 27566,
+    "path": "/workspace/nfl-current-season-priority-20261027/tools/modern_report_recovery_v2.py",
+    "sha256": "b09a66534af1a3af7eaedea9fbca0f70f060bac1531a4ee867389856fa52a68b"
+  },
+  "snap_source_admission": {
+    "bytes": 1505,
+    "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/COMMON2025_SNAP_ADMISSION.json",
+    "sha256": "0fa30ae3c5482618b205d3c2697ac1b1bd8f45a8ebfeb8c08294a2ebd5ce9b62"
+  },
+  "source_assumptions": "Original kickoff+7day availability/current-vintage reconstruction unchanged; prior feature slots may contain earlierseason history evenCURRENT_ONLY; no verifiedinjury/currentrole modelclaim; separatelyadmitted4snapchannels allmeansmissing/allnzero in8039historicalQB+1359queryQB, noPFRsnapvalues",
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 7109,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v7.json",
+      "sha256": "e7a50890572bdcb43a2ceae9e7cb626b448113cd7fb922ed36077e1b30ad198e"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "training": "Minimum originalcutoff perweek; onlysupportedplayed integralnonnegative labels kickoff<outcomeavailable<fitcutoff; samecachedfeatures atownoriginalcutoff; fixed365day half-life vsavailability, no hyperparameterselection",
+  "uncertainty": "Seven fixedcontrasts;500wholegame/week PCG64 bootstrap seed1703,95%linear nominal exposedintervals; eightclusterminimum forinference only; allweeklylossesretained; no selectedwinnerqualification",
+  "version": "next-nfl-common2025-v1-20261028"
+}

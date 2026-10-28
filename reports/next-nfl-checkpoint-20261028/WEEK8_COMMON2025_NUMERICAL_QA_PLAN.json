@@ -1,0 +1,60 @@
+{
+  "actual_backend": "UNATTESTED",
+  "checker_sha256": "8e302032b0395cdd3d534de465e463ee9a27e4deaf35f36e926aef6d4877e297",
+  "failure_output": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_NUMERICAL_QA_FAILURE.json",
+  "inputs": {
+    "completion": {
+      "bytes": 1408,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/reports/next-nfl-common2025-20261028/native-technical-v2/COMPLETE.json",
+      "sha256": "c6c272a8c519b643a532680ee6fd973caa8c3c642229df640a067012b6e095fa"
+    },
+    "forecasts": {
+      "bytes": 13467890,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-common2025-technical-v2/FORECAST_MODELS_FROZEN.zip",
+      "sha256": "e1dee89fc6cd18feb96a0bc5d1f8d589a57133ca843f319c41c01d5ac23c12e2"
+    },
+    "freeze_readback": {
+      "bytes": 23005,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/reports/next-nfl-common2025-20261028/native-technical-v2/FORECAST_MODELS_FROZEN_READBACK.json",
+      "sha256": "65d5af471cbdea1af0b3791276f9cdf7164389c0b80adaa9d603326b6af63203"
+    },
+    "scientific_plan": {
+      "bytes": 32496,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-common2025-technical-v2.sealed.json",
+      "sha256": "7474037bb1504c3c86b4ab2fe41a0b715d25550aa315170a679847b011f6f5c2"
+    },
+    "score_readback": {
+      "bytes": 649,
+      "path": "/workspace/nfl-common-learner-cdf-role-20261027/reports/next-nfl-common2025-20261028/native-technical-v2/SCORES_COMPLETE_READBACK.json",
+      "sha256": "8999a1c8b511f9a11064db87674b01402cb78ecaf9e5b6d744ab362bd90c4269"
+    },
+    "scores": {
+      "bytes": 3175578,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-common2025-technical-v2/SCORES_COMPLETE.zip",
+      "sha256": "b8d32071e3078be425141d2879c38f4abd7608a79e9a3ae3a5bed833e0e2b870"
+    }
+  },
+  "output": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_NUMERICAL_QA_RESULT.json",
+  "registered_at": "2026-10-28T21:45:22.276264+00:00",
+  "resources": {
+    "CAS_writes": 0,
+    "CPU_seconds": 30,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "automatic_retries": 0,
+    "fits": 0,
+    "inference": 0,
+    "invocations": 1,
+    "maximum_forecast_capsule_bytes": 50331648,
+    "maximum_metadata_output_bytes": 65536,
+    "maximum_score_capsule_bytes": 4194304,
+    "model_loads": 0,
+    "original_NFL_table_decodes": 0,
+    "wall_seconds": 60
+  },
+  "reviewer": "/root/week8_capture_readiness",
+  "root_GO": null,
+  "schema_version": "week8-common2025-independent-numerical-acceptance-plan-v1",
+  "scope": "Authenticate all archive/member bytes without loading model pickle; check all55foldaudits/5436forecasts/6795gradedrows and1359canonicalkeys\u00d75arms; independently recompute all5metricrecords/all7paired500game/weekintervals andweeklydifferences, support/missingness/fallback. No refit, model replay, new observations or original NFLtabledecode.",
+  "state": "PROPOSED_REQUIRES_ROOT_GO_BEFORE_CACHED_SCORE_DECODE"
+}

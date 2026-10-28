@@ -1,0 +1,295 @@
+{
+  "actual_agent_model_effort": "UNATTESTED",
+  "chronology_admission": "All2024REG plannedlabels exactqualifiedcalendar game/team/opponent/week; sourcegameday/gametime America/New_York=>UTC, no inventedclock; kickoff+7day explicitlyASSUMEDavailability strictlybefore2026-09-01origin includingprior-only labels withoutfeatures. Usedfeaturetraining outcome_available mustbeknownawareprior;unknownfeaturemax=>prior-onlytraining+positionfallbackquery. Knownfuture/equalfeaturemax invalidatesinvocation.2026requiredquerycutoff/kickoffmustbeknownaware; unknownmaxneverfabricated.",
+  "code_bindings": {
+    "nfl_lab/next_checkpoint_chart_ppr.py": {
+      "bytes": 11779,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/next_checkpoint_chart_ppr.py",
+      "sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e"
+    },
+    "nfl_lab/ppr_outcomes.py": {
+      "bytes": 7856,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_outcomes.py",
+      "sha256": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0"
+    },
+    "nfl_lab/ppr_sources.py": {
+      "bytes": 10983,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_sources.py",
+      "sha256": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899"
+    },
+    "nfl_lab/scoring.py": {
+      "bytes": 5384,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/scoring.py",
+      "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13"
+    },
+    "tools/next_checkpoint_chart_point_build.py": {
+      "bytes": 21585,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_point_build.py",
+      "sha256": "7efd401fa5a430b3b39809d24b22a419a31812053adb3f9c1aa55788dcfbfc85"
+    },
+    "tools/next_checkpoint_chart_point_run.py": {
+      "bytes": 19267,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_point_run.py",
+      "sha256": "eef823952b14e43e41c1e149be98c88e0b7b5d08849fd70170e052853db20700"
+    },
+    "tools/next_checkpoint_chart_ppr_labels.py": {
+      "bytes": 16246,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_ppr_labels.py",
+      "sha256": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    }
+  },
+  "comparators": {
+    "GLOBAL_CHART_MEDIAN_2024": "Allqualified2024empiricalmedian. MAEprimary.",
+    "HGB_CHART_MEDIAN_V1": "One150iterationabsolute-errorHGB+position/globalmedianfallback. Numericpoint,notdistribution.",
+    "POSITION_CHART_MEAN_2024": "Training2024positionempiricalmean; globalmeanonlyunseenrole. MSEprimary,MAE/RMSEreadability.",
+    "POSITION_CHART_MEDIAN_2024": "Training2024positionempiricalmedian; globalmedianonlyunseenrole. MAEprimary.",
+    "unavailable": "NoexistingtrainedsamechartCDF/CountA/CatBoostmodel orauthenticoldwebsitechartoutput. Oldsitefpts isdifferentcontract andnotused."
+  },
+  "continuation_version": "next-checkpoint-chart-point-pilot-v1",
+  "evaluation_population": {
+    "REG_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "games": 93,
+    "known_played_complete_chart_labels": 1954,
+    "not_offered_board": "Source-listedpopulation; noqualifiedsamechartofferedline orcurrentwebsitechartforecasts. Do notclaimfullstatlessrosterorofferedboardcoverage.",
+    "planned": 2117,
+    "rare_positive_numeric": 1,
+    "rule": "Everyoriginalsource-listedplayergame attempted byallfourpointprocedures. Missingfeaturequery orcold/unknownhistory directmodeluses2024positionmedian, unknownroleusesglobalmedian; allfallbacksretainplannedrows. No2026numeric targetconversion untilforecasts andfittedmodeldurablyfrozen+readback. Unknown feature-maxclock forcespositionmedian fallback andnullclockretained.",
+    "unknown": 163,
+    "year": 2026
+  },
+  "execution_authorized": true,
+  "features": [
+    "f_player_pass_yd_mean3",
+    "f_player_pass_yd_mean8",
+    "f_player_pass_td_mean3",
+    "f_player_pass_td_mean8",
+    "f_player_pass_att_mean3",
+    "f_player_pass_att_mean8",
+    "f_player_pass_int_mean3",
+    "f_player_pass_int_mean8",
+    "f_player_rush_yd_mean3",
+    "f_player_rush_yd_mean8",
+    "f_player_rush_att_mean3",
+    "f_player_rush_att_mean8",
+    "f_player_rec_mean3",
+    "f_player_rec_mean8",
+    "f_player_rec_yd_mean3",
+    "f_player_rec_yd_mean8",
+    "f_player_rush_td_mean3",
+    "f_player_rush_td_mean8",
+    "f_player_rec_td_mean3",
+    "f_player_rec_td_mean8",
+    "f_player_rec_tgt_mean3",
+    "f_player_rec_tgt_mean8",
+    "f_player_games_prior",
+    "f_player_play_rate8",
+    "f_player_known_participation_n8",
+    "f_player_pass_ypa3",
+    "f_player_comp_rate3",
+    "f_player_rush_ypa3",
+    "f_player_rec_ypt3",
+    "f_player_rec_catch_rate3",
+    "f_rest_days",
+    "f_is_home"
+  ],
+  "freeze_contract": "TokenizewholeauthenticatedlabelJSONusingNumericToken string subclass forparse_int/parse_float. Convert2024trainingvaluesand2024/26identityseason/weekonly; no2026targetvalue numericconversion/accessbeforeCASforecastfreeze. Then scorefromoriginalunchangedtokens. Fullfittedmodelpickle+all2117forecastsretainedinprivatefreeze; gradecapsuleseparate.",
+  "hypothesis": "One fixed direct MAE-objective HGB chartpoint may improve on same-chart training-only position/global median controls on complete qualified2026source-listed population. Empiricalpositionmean is separateexpectedvalue control, notmedianwin target.",
+  "identity": "Canonicalgame/player/team key; declaredLA/STL->LAR,SD->LAC,OAK->LValiasnormalizationonly; exactseason/week/opponentbinding; duplicateorconflict abort, no favorable subset retry. Weeklypositionmetadata preserves source-listedrole, includingFB, evenmissingquery. Require len canonicalfeaturelookups equalsoriginalframes afteraliases; collisionaborts. Calendarjoinsall5935traininglabels.",
+  "independent_review": "PASS",
+  "inputs": {
+    "chart_labels": {
+      "bytes": 839403,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-chart-2026-bridge-v1/CHART_LABELS_2026_BRIDGE_COMPLETE.json.gz",
+      "sha256": "981865b8c8190837d351a106f1a7d0a27113a240de34f8e58e80785c2980b27b"
+    },
+    "historical_features": {
+      "bytes": 3629507,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/common-learner-source-retention-v4-20261027/corrected-features.parquet",
+      "sha256": "f7325134d9e70ed241fc041f8a7bfa4842054b7d3156ae6040d58e44b8127d17"
+    },
+    "query2026": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    },
+    "schedule_metadata": {
+      "bytes": 2186341,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/sources/schedules.csv",
+      "sha256": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7"
+    },
+    "weekly2024": {
+      "bytes": 849243,
+      "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2024.parquet",
+      "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+    },
+    "weekly2026": {
+      "bytes": 386908,
+      "kind": "weekly",
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261024T083337210719Z/01ec1f6f199cf3eb617697e0845c0899c159bca437a59dd623ffeddc06066339/sources/stats_player_week_2026.parquet",
+      "season": 2026,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd"
+    }
+  },
+  "native_control_root": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/POINT_PILOT_NATIVE_V1",
+  "objectives": {
+    "primary": "HGBmedianMAE versuspositionmedian andglobalmedian onexact1954supportedmatchedrows.",
+    "probability_side_EV": "Unavailablepointonly,nochartofferedlineandnofulldistribution.",
+    "secondary": [
+      "MSE/RMSE",
+      "signedbias",
+      "p90/p95/maxabsoluteerror",
+      "strict<1/inclusive<=1point",
+      "strict<5/inclusive<=5points",
+      "byweek",
+      "byposition",
+      "coverage/fallback",
+      "Prespecifiedmodel-onlyandfallback-onlycoverage/MAE/MSE/RMSE/bias/p90/p95/max andtolerances,withunknownoutcomesretainedindenominators."
+    ],
+    "uncertainty": "Nominalpairedgame/weekclusterbootstrap500repseed1703confidence95;min8clusters;6weekintervalunavailable,notreleasegate. Exposeddevelopment/noindependentconfirmation orselectedbestguarantee. Two predeclared primarymediancontrols; nosimultaneousqualificationclaim."
+  },
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-point-pilot-v1",
+  "parameters": {
+    "early_stopping": false,
+    "l2_regularization": 10.0,
+    "learning_rate": 0.05,
+    "loss": "absolute_error",
+    "max_depth": 3,
+    "max_iter": 150,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 30,
+    "random_state": 1702
+  },
+  "position_semantics": "Sourceweeklycurrent-vintageposition suppliesrole metadata; notarchivedasofnews,injury,limitationorstarterstatus. No claimverifiedinjuryawareness.",
+  "preparation_failures": [
+    {
+      "NFL_decoded": 0,
+      "error": "systemPython ModuleNotFoundError pyarrow beforefile/rowdecode",
+      "fixed": "UsedalreadyinstalledscientificPython forbyte/footeronlycheck; notnumericaltrialretry",
+      "stage": "PPRpilot sourcefooter inspection"
+    }
+  ],
+  "preprocessing": "32fixedexistingnon-snap/non-oldPPRfeatures; training-only featuremedians, all-training-missing numericfill0 with explicitmissingindicator; append5fixedpositiononehots. No fittedfeatureselection/scaling/tuning or targetgameoutcomeinputs. SignedPPRpredictionsunclipped.",
+  "prior_attempts_preserved": true,
+  "prior_results": "AllpreviousoriginalV1failure,technicalV2labels,2026bridge and scientificbudgetsunchanged. Thisisnew1fit,notrefundorextensionofoldmodelsearch.",
+  "resources": {
+    "CPU_seconds": 120,
+    "HTTP": 0,
+    "RSS_bytes": 805306368,
+    "accuracy_comparisons": 1,
+    "aggregate_metadata_bytes": 262144,
+    "fits": 1,
+    "forecast_inference": 1,
+    "invocations": 1,
+    "maximum_input_bytes": 8388608,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "maximum_model_iterations": 150,
+    "native_control_bytes_cap": 65536,
+    "peak_private_bytes_cap": 8388608,
+    "retained_private_bytes_cap": 4194304,
+    "retries": 0,
+    "single_gzip_cap_bytes": 1048576,
+    "threads": 1,
+    "wall_seconds": 180
+  },
+  "roles": [
+    "QB",
+    "RB",
+    "FB",
+    "WR",
+    "TE"
+  ],
+  "root_registration": {
+    "at": "2026-10-28T21:42:52.480997+00:00",
+    "execution_start_condition": "Explicitrootstartonlyaftercommon2025managedwriterclosed. Thissealdoesnotclaimitstopped.",
+    "independent_review_receipt_sha256": "fc1b797fad68a0b8d50c7f6d82beab7fd01b24710be6931ea8c227889defa616",
+    "registered_by": "/root",
+    "root_review": "FixedoneHGB/32features/train2024/numeric2026afterdurablefreeze/full2117queryfallbacks/identityandawareclockguards/explicit7dayassumption/source-listedcurrentvintageposition/unknown+rarecases/privateCSV/nooldPPRmigration reviewed.2callslotinclfailure.",
+    "technical_go_continuation_v2": {
+      "at": "2026-10-28T21:45:24.071403+00:00",
+      "combined_private_cap_unchanged_bytes": [
+        4194304,
+        8388608
+      ],
+      "new_explicit_execution_budget": {
+        "CPU_seconds": 120,
+        "RSS_bytes": 805306368,
+        "fits": 1,
+        "invocations": 1,
+        "maximum_managed_calls_including_failure": 2,
+        "wall_seconds": 180
+      },
+      "original_actual_fits_forecasts_data_CAS": 0,
+      "original_failed_launch_receipt": {
+        "bytes": 1435,
+        "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/POINT_PILOT_LAUNCH_FAILURE_V1.json",
+        "sha256": "6c8895fdccf79360898454451a3b2557ab8c4930d14314c880a41835bfc54049"
+      },
+      "original_launch_and_budget_not_erased_or_refunded": true,
+      "original_plan_sha256": "507cfa006555e85711b655cc6f8faf65c74ed1bbb3225a85a739036a3399259e",
+      "reason": "OriginalrootGOomittedrequired source_native_broad_zero_qualification field; failedbeforeimports/NFLdecodes/nativewriter/model/CAS. Existingqualifiedbroadzerocontract reviewed inoldlabelsource+independent14160labelarithmetic; fieldsetPASStruthfully. Noformula/input/code/metric/populationchange.",
+      "technical_continuation_records_additional_launch_not_automatic_retry": true
+    }
+  },
+  "safe_aggregate_path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/SAFE_AGGREGATE_POINT_PILOT_V1.json",
+  "scope": "Firstactualchartforecastaccuracycomparison; exposedcurrent-vintage7dayreconstruction,notprospective orcurrentwebsitewin.2024onlytrained; qualified2025football mayoccurin2026lagged non-PPR features butno2025chartlabels trained.",
+  "scorecard": "Full2117planned\u00d74methods privateCSV string insideexistinggradecapsule; prediction/actual/error/nulloutcomes/cutoff/role/fallback,8468data rows. NoadditionalCAScall orpublicrowupload.",
+  "state": "ROOT_AND_INDEPENDENT_SEALED",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 8051,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v8.json",
+      "sha256": "7fcf00309c439363f44aaf22ba9d35ebff92f1dea8603226db0154ab9f2b8770"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "target": "nick-chart-ppr-v1",
+  "training_population": {
+    "known_played_complete_chart_labels": 5589,
+    "missingness": "Reportknownmissing/unknown and unmatchedfeaturetraining counts, nevercallcompletepopulationall5935scored.",
+    "planned": 5935,
+    "played_missing": 1,
+    "rare_positive_numeric": 12,
+    "rule": "All5589qualifiedlabels used empiricalposition/global priors. Modelusesexactmatched2024feature rows; missingfeature rowscountedandkeptinpriors, no zero label fill. No event-free sample selection. Eachsourcefeaturemustpasstimestampchecks; alltraininglabelavailabletimes beforefixed2026-09-01origin. Knownnumericfeatureclockmissing leaves row inpriorsonly andreported; no timefabrication.",
+    "unknown": 345,
+    "year": 2024
+  },
+  "version": "next-checkpoint-chart-point-pilot-v1"
+}
