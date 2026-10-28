@@ -191,7 +191,7 @@ def ops_sidecar(receipt, package, pins, branch):
 
 
 @pytest.fixture
-def case(locator_system, tmp_path, monkeypatch):
+def case(locator_system, tmp_path, monkeypatch, request):
     x = locator_system
     x.p["cadence"] = deepcopy(c.PARENT_CADENCE)
     x.workflow = x.workflow.replace(c.CADENCE["cron"].encode(), c.PARENT_CADENCE["cron"].encode())
@@ -200,7 +200,9 @@ def case(locator_system, tmp_path, monkeypatch):
         x.p[role]["workflow_sha256"] = c.sha(x.workflow)
         x.api.data[c.contents_url(c.WORKFLOW,sha)] = old.content(c.WORKFLOW,x.workflow)
     x.native["workflow_sha256"] = c.sha(x.workflow)
-    x.package = {name:deepcopy(x.package[name]) for name in b.PACKAGE_KEYS}
+    runtime_keys = getattr(request, "param", b.PACKAGE_KEYS)
+    assert runtime_keys in (b.PACKAGE_KEYS, b.PACKAGE_FULL_KEYS)
+    x.package = {name:deepcopy(x.package[name]) for name in runtime_keys}
     x.locators["qualified_runtime_package"] = x.package
     for role, source in (("parent", x.parent_source), ("producer", x.child_source)):
         pins = x.p[role]["code_pins"]
@@ -995,12 +997,26 @@ def test_v3_parent_reads_old_checkpoint_using_separately_bound_GET_only_client(c
     record_property('v3_prior_history_private_GETs',result['HTTP_by_lane']['private'])
 
 
+@pytest.mark.parametrize("case", [b.PACKAGE_KEYS, b.PACKAGE_FULL_KEYS], indirect=True,
+    ids=["bootstrap-eight-fields", "bootstrap-full-package"])
 @pytest.mark.parametrize("resolved,expected,week",[(False,"GRADE_ONLY",8),(True,"FUTURE_CAPABLE",9)])
 def test_new_parent_discovers_grade_only_without_new_feed_and_routes_once(history_case,resolved,expected,week,record_property):
     h=history_case;case=h.case;original=bytes(case.ops_packed)
     if resolved:h.locator["planning"]["resolved_weeks"]=[8];h.publish()
+    original_package=deepcopy(case.x.package)
+    original_locator=s.canonical(h.locator)
+    handoff=h.locator["sidecar"]["checkpoint_handoff"]
+    package_sha256=c.digest(original_package)
+    assert handoff["qualified_package_sha256"]==package_sha256
+    if set(original_package)==b.PACKAGE_FULL_KEYS:
+        projected={name:original_package[name] for name in b.PACKAGE_KEYS}
+        assert package_sha256!=c.digest(projected)
     result=case.execute()
     root=c.decode(case.service.dispatch_body["inputs"]["inference_builder_go_json"])
+    # Both bootstrap inventories must survive the actual locator/Parent path.
+    assert root["qualified_runtime"]==original_package==case.x.package
+    assert c.digest(root["qualified_runtime"])==package_sha256
+    assert s.canonical(h.locator)==original_locator
     ctx=root["effective_epoch"]
     assert ctx["schema_version"]==history.CONTEXT_V5 and ctx["plan"]["kind"]==expected and ctx["plan"]["week"]==week
     assert ctx["pending_post_recovery"]==dict(schema_version=t.PENDING_RECOVERY,handoffs=[],pending_reservations=[])
@@ -1014,6 +1030,37 @@ def test_new_parent_discovers_grade_only_without_new_feed_and_routes_once(histor
     assert h.locator["cohort"]["run_id"]!=case.ops["run_id"]
     assert not any("/contents/"+w.PUBLIC_ROOT+"/2026-W" in r.full_url for r in case.service.calls)
     assert not any("/releases/assets/801" in r.full_url or "/releases/assets/802" in r.full_url for r in case.service.calls)
+
+
+@pytest.mark.parametrize("case", [b.PACKAGE_FULL_KEYS], indirect=True)
+@pytest.mark.parametrize("damage,error", [
+    ("projection", "EXACT_PARENT_HISTORY_NAMESPACE_AND_PINS"),
+    ("root_go_sha256", "EXACT_PARENT_HISTORY_NAMESPACE_AND_PINS"),
+    ("private_payload_bytes", "ORIGINAL_PARENT_HISTORY_QUALIFICATION_FLAGS_UNCHANGED"),
+    ("private_durability_qualified", "ORIGINAL_PARENT_HISTORY_QUALIFICATION_FLAGS_UNCHANGED"),
+    ("strict_v1_unchanged", "ORIGINAL_PARENT_HISTORY_QUALIFICATION_FLAGS_UNCHANGED"),
+    ("unknown_field", "CLOSED_PARENT_HISTORY_RUNTIME_PACKAGE"),
+])
+def test_parent_locator_keeps_original_full_runtime_commitment(history_case,damage,error):
+    h=history_case;case=h.case;original_package=deepcopy(case.x.package)
+    assert set(original_package)==b.PACKAGE_FULL_KEYS
+    raw=h.publish();original_locator=s.canonical(h.locator)
+    data=dict(packed=raw,receipt=case.ops,qualified_runtime=deepcopy(original_package),
+        code_pins=case.x.p["producer"]["code_pins"],
+        jobs=dict(zip(c.ROLES,case.x.api.data[c.jobs_url("700")]["jobs"])),at=case.clock())
+    assert history.locator_metadata(**data)==h.locator
+    if damage=="projection":
+        data["qualified_runtime"]={name:original_package[name] for name in b.PACKAGE_KEYS}
+    else:
+        data["qualified_runtime"][damage]={
+            "root_go_sha256":old.h("changed original rotation Root"), "private_payload_bytes":1,
+            "private_durability_qualified":True, "strict_v1_unchanged":"QUALIFIED", "unknown_field":False,
+        }[damage]
+    # The issued handoff remains bound to the original full package throughout.
+    with pytest.raises(history.HistoryError,match="^"+error+"$"):
+        history.locator_metadata(**data)
+    assert h.locator["sidecar"]["checkpoint_handoff"]["qualified_package_sha256"]==c.digest(original_package)
+    assert s.canonical(h.locator)==original_locator and case.x.package==original_package
 
 
 @pytest.mark.parametrize("damage",["private_planning","private_native","root_preimage","source_blob","helper_pin","incomplete_job","late_history","newest_failed","state_race"])
@@ -1047,6 +1094,8 @@ def test_old_parent_sidecar_reader_rejects_new_nonforecast_locator(history_case)
         **dict(data,receipt=h.locator["cohort"]))
 
 
+@pytest.mark.parametrize("case", [b.PACKAGE_KEYS, b.PACKAGE_FULL_KEYS], indirect=True,
+    ids=["bootstrap-eight-fields", "bootstrap-full-package"])
 def test_new_locator_metadata_cold_import_does_not_need_producer_numerical_code(history_case,tmp_path):
     h=history_case;case=h.case
     payload=dict(packed=base64.b64encode(h.publish()).decode(),receipt=case.ops,qualified_runtime=case.x.package,
