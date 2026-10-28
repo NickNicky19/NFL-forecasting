@@ -245,6 +245,8 @@ def prepare(context, *, clock=None, transport=None):
     validate_request(request, PHASE)
     operations.context(context.go["effective_epoch"])
     first=template.first_primary_root(context.go)
+    recovery=template.failed_first_recovery_root(context.go)
+    startup=first or recovery
     locator = history.previous_checkpoint(context.go)
     if context.go["effective_epoch"]["schema_version"] in {operations.CONTEXT_V4,operations.CONTEXT_V5} and locator is not None:
         require(locator.get("schema_version")==history.LOCATOR_REF,"EXPLICIT_V4_HISTORY_LOCATOR_REQUIRED")
@@ -316,16 +318,43 @@ def prepare(context, *, clock=None, transport=None):
     anchor = resume._restore_anchor(retained, inputs["retained_models"], schedule, storage=storage, output=output/"resume",
         original_weekly_choice_sha256=inputs["canonical_weekly_choice_sha256"], authenticate=auth,
         authenticate_calendar=calendar_auth, clock=clock)
-    if first is not None:
+    if startup is not None:
         require(previous is None and pair is None
             and not ({'context/'+role+'.json' for role in archive.OPERATIONS_CONTEXT}|prior_operations) & set(retained['aliases'])
-            and retained['original_archive']['root_go_sha256']==first['retained_root_go_sha256']
-            and anchor['registered'].epoch.sha256==first['retained_epoch_sha256']
-            and anchor['original'].sha256==first['retained_choice_sha256'],
+            and retained['original_archive']['root_go_sha256']==startup['retained_root_go_sha256']
+            and anchor['registered'].epoch.sha256==startup['retained_epoch_sha256']
+            and anchor['original'].sha256==startup['retained_choice_sha256'],
             'EXACT_LEGACY_COUNT7_WITHOUT_PRIMARY_ASSIGNMENT_REQUIRED')
-        context.client.bind(context.go['qualified_runtime']['binding'])
-        absence=operations.first_primary_absence(context.client,context.go,
-            authenticate=lambda:_first_primary_authority(context),clock=clock)
+        if recovery is not None:
+            from . import audit_weekly_hosted_v1 as hosted,audit_weekly_operations_authority_v1 as authority
+            _first_primary_authority(context)
+            package=context.go['qualified_runtime']
+            recovery_clients=[]
+            def recovery_reader():
+                require(len(recovery_clients)<2,'TWO_RECOVERY_METADATA_CLIENTS')
+                current=hosted.PendingMetadataClient(context.env.get('GITHUB_TOKEN'),context.client.run_id,
+                    source_sha=context.client.source_sha,journal=Path(request['cache']).parent/'journal',
+                    job=context.job,operation='metadata',qualification=package['qualification'],root_go=context.go,transport=transport)
+                recovery_clients.append(current)
+                current.authenticate_actions_job();current.bind(package['binding'])
+                authority.attach(current,context.proof,context.env,store.canonical(context.go))
+                archive.authenticate_qualification(current,package,context.go['pending_census'])
+                require(cp.client_identity(current)==cp.client_identity(context.client),'SAME_CURRENT_RECOVERY_WORKER_IDENTITY')
+                return current
+            current=recovery_reader()
+            recovery_proof=operations.authenticate_failed_first_recovery(current,context.go,
+                authenticate=lambda:_first_primary_authority(context),claim_reader=recovery_reader,clock=clock)
+            read_bytes[0]+=sum(c.transferred for c in recovery_clients)
+            require(read_bytes[0]<=LIMITS['metadata_bytes'],'OPERATIONS_TOTAL_METADATA_BYTE_CAP')
+            # Absence uses its own remaining bounded client; never reset the
+            # native Core/claim client's wall clock or request counters.
+            context.client.bind(package['binding'])
+            absence=operations.failed_first_absence(context.client,context.go,recovery_proof,
+                authenticate=lambda:_first_primary_authority(context),clock=clock)
+        else:
+            context.client.bind(context.go['qualified_runtime']['binding'])
+            absence=operations.first_primary_absence(context.client,context.go,
+                authenticate=lambda:_first_primary_authority(context),clock=clock)
         # The new weekly choice clock follows the actual absence GETs. The
         # historical restore clock must not become a backdated new decision.
         anchor=dict(anchor,at=state.utc(clock()))
@@ -350,7 +379,11 @@ def prepare(context, *, clock=None, transport=None):
         require(verified is not None and "planning" in verified.proof,"LIVE_PRIVATE_HISTORY_PLANNING_REQUIRED")
         expected=history.next_plan(verified.proof["planning"],at=state.utc(context.go["issued_at_utc"]))
         require(expected==declared,"EXACT_PARENT_ROUTING_FROM_FRESHEST_PRIVATE_CAUSAL_HISTORY")
-    if first is not None:
+    if recovery is not None:
+        target,execution=operations.failed_first_future_plan(anchor['registered'],anchor['original'],target_schedule,
+            context.go,absence,recovery_proof,authenticate=plan_auth,cutoff_lead_seconds=lead,
+            relocated_replays=(anchor['replay'],),clock=lambda:anchor['at'])
+    elif first is not None:
         target, execution = operations.first_future_plan(anchor['registered'],anchor['original'],target_schedule,
             context.go,absence,authenticate=plan_auth,cutoff_lead_seconds=lead,
             relocated_replays=(anchor['replay'],),clock=lambda:anchor['at'])
@@ -440,6 +473,14 @@ def prepare(context, *, clock=None, transport=None):
         canonical_weekly_choice=resumed.document["canonical_weekly_choice"],
         capture_scope=resumed.document["capture_scope_binding"],
         ops_previous_checkpoint=verified.binding if verified is not None else None)
+    if recovery is not None:
+        recovery_proof.verify(context.go)
+        gap=dict(recovery_proof.document,schema_version=template.FAILED_FIRST_RECOVERY+'-gap',new_choice_sha256=resumed.choice.sha256,
+            new_capture_id=inputs['capture_id'],new_choice_actual_frozen_at=target.document['choice']['actual_frozen_at'],
+            startup_COUNT7_choice_sha256=anchor['original'].sha256,scope=recovery,
+            old_forecast_bodies_recovered=False,new_issue_only=True)
+        operations.validate_failed_first_gap(gap,choice=target.document,epoch_sha256=resumed.registered.epoch.sha256)
+        refs['ops_failed_recovery']=runtime.write(storage,output/'FAILED_FIRST_RECOVERY.json',gap)
     if planning is not None:refs["ops_planning"]=runtime.write(storage,output/"HISTORY_PLANNING.json",planning)
     if verified is not None:
         refs.update(zip(HISTORY_ARCHIVE_ROLES, (pair["sidecar"], pair["public_receipt"])))
@@ -463,6 +504,11 @@ def prepare(context, *, clock=None, transport=None):
         absence.verify(context.go)
         manifest.update(state='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL',
             first_primary=dict(scope=first,absence=deepcopy(absence.document)))
+    if recovery is not None:
+        absence.verify(context.go);recovery_proof.verify(context.go)
+        manifest.update(state='FAILED_FIRST_RECOVERY_PREVALUE_METADATA_READY_LOCAL',
+            failed_first_recovery=dict(scope=recovery,absence=deepcopy(absence.document),
+                verified=deepcopy(recovery_proof.document)))
     require(len(store.canonical(manifest)) <= LIMITS["manifest_bytes"], "FINITE_COMPLETE_OPERATIONS_MANIFEST")
     ref = runtime.write(storage, output / "PREPARED.json", manifest)
     return dict(state=manifest["state"], manifest=ref, capture_id=inputs["capture_id"],

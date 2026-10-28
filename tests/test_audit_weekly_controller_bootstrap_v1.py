@@ -651,6 +651,32 @@ def test_versioned_first_future_marker_uses_actual_owner_bootstrap_without_paren
         b._recurring(x.raw,bot=True)
 
 
+def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_system):
+    from nfl_lab import audit_weekly_template_v1 as t
+    x=locator_system;x.go['qualified_runtime']=deepcopy(x.package)
+    binding=x.go['qualified_runtime']['binding']
+    payload=dict(schema_version='weekly-private-payload-v2',payload_kind='runtime_manifest',format='gzip',
+        bytes=3,sha256='8'*64,source_policy_sha256=t.POLICY_SHA)
+    entry=dict(schema_version='weekly-private-restore-manifest-v2',payload=payload,payload_asset_id=51,
+        payload_name='blob-'+'8'*64+'.bin',producer_process='9'*64,binding_sha256=t.digest(binding),writer_run_id='200')
+    handoff=dict(schema_version='audit-weekly-hosted-v2-failure-handoff',binding=binding,root_go_sha256='0'*64,
+        descriptor=dict(entry=entry,manifest_asset_id=52,manifest_sha256=t.digest(entry),manifest_bytes=len(c.canonical(entry))))
+    x.go['effective_epoch'].update(schema_version=t.RECURRING_V5,previous_checkpoint=None,
+        pending_post_recovery=dict(schema_version=t.PENDING_RECOVERY,handoffs=[handoff],pending_reservations=[]),
+        plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,deadline_utc='2026-10-29T18:15:00Z',calendar_sha256='a'*64,
+            game_cutoffs={f'fictional-{n}':'2026-10-29T18:15:00Z' for n in range(14)}),
+        controller_context=dict(schema_version=t.FAILED_FIRST_RECOVERY,retained_epoch_sha256='1'*64,
+            retained_choice_sha256='2'*64,retained_root_go_sha256='3'*64,claim_binding_sha256=t.digest(binding),
+            failed_root_go_sha256='0'*64,old_week8_choice_body_missing=True,old_forecast_bodies_missing=True))
+    x.bind_root();x.env.update(GITHUB_ACTOR=c.OWNER['login'],GITHUB_ACTOR_ID=str(c.OWNER['id']))
+    x.api.data[c.run_url('300')].update(actor=deepcopy(c.OWNER),triggering_actor=deepcopy(c.OWNER))
+    proof=b.authorize_owner(x.env,x.child_source,x.raw,metadata_get=x.get,event_bytes=x.event,
+        clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
+    assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
+    with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261027-archive-recovery.json'
+
+
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
     x=system;x.go['effective_epoch']['controller_context']={'schema_version':'UNREGISTERED_STARTUP'}
     x.bind_root()

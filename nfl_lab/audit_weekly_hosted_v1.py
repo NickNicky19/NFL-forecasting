@@ -206,6 +206,7 @@ def validate_root(go, *, now):
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
     template.pending_recovery(go)
     template.first_primary_root(go)
+    template.failed_first_recovery_root(go)
     retained.validate_registration(retained_registration(go))
     require(go["qualified_runtime"]["schema_version"]=="audit-private-rotation-v1-qualified-runtime"
         and go["qualified_runtime"]["runtime_reserved_bytes"]==32 << 20,
@@ -286,7 +287,7 @@ class PendingMetadataClient(archive.Client):
         return super().request(url,method=method,**kwargs)
 
 
-def authenticated_pending_records(client, handoff, assets, *, before):
+def authenticated_pending_records(client, handoff, assets, *, before, _evidence=None):
     """Authenticate old failure metadata without retrying its POST or job."""
     import base64
     from pathlib import PurePosixPath
@@ -370,7 +371,11 @@ def authenticated_pending_records(client, handoff, assets, *, before):
         require(record['key'] not in records or records[record['key']]==record,'CONFLICTING_ORIGINAL_PENDING_RECORDS')
         records[record['key']]=record
     client.draft()
-    return [records[k] for k in sorted(records)]
+    result=[records[k] for k in sorted(records)]
+    if _evidence is not None:
+        _evidence.update(root=old,request=request,controls=controls,run=run,jobs=listing['jobs'],
+            failed_job=job,records=result)
+    return result
 
 
 class Runner:
@@ -407,6 +412,7 @@ class Runner:
         if not existing:self.journal.mkdir(mode=0o700)
         self.pending_scope_authenticated=False
         self.pending_metadata_clients=[]
+        self.recovery_metadata_clients=[]
         self.job=actions_context(env,"write")
         if existing:
             self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
@@ -530,12 +536,20 @@ class Runner:
     def pending_metadata_client(self):
         """One GET-only, qualified exchange for each of at most eight failures."""
         require(len(self.pending_metadata_clients)<8,"EIGHT_PENDING_FAILURE_METADATA_CLIENTS")
+        return self._qualified_metadata_client(self.pending_metadata_clients)
+
+    def recovery_metadata_client(self):
+        """Two distinct GET-only scopes for this recovery phase, outside the 8 handoffs."""
+        require(len(self.recovery_metadata_clients)<2,'TWO_RECOVERY_METADATA_CLIENTS')
+        return self._qualified_metadata_client(self.recovery_metadata_clients)
+
+    def _qualified_metadata_client(self, clients):
         proof=self.fresh_operations_proof()
         package=self.go["qualified_runtime"]
         client=PendingMetadataClient(self.env.get("GITHUB_TOKEN"),self.identity["run_id"],
             source_sha=self.identity["source_sha"],journal=self.journal,job=self.job,
             operation="metadata",qualification=package["qualification"],root_go=self.go)
-        self.pending_metadata_clients.append(client)
+        clients.append(client)
         client.authenticate_actions_job();client.bind(package["binding"])
         operations_authority.attach(client,proof,self.env,store.canonical(self.go))
         require(cp.client_identity(client)["api_job_id"]==self.identity["api_job_id"],
@@ -598,19 +612,36 @@ class Runner:
         self.require_pending_scope()
         from . import audit_weekly_template_v1 as template, audit_weekly_operations_v1 as operations
         first=template.first_primary_root(self.go)
-        if first is not None:
+        recovery=template.failed_first_recovery_root(self.go)
+        if first is not None or recovery is not None:
             from . import audit_weekly_controller_bootstrap_v1 as bootstrap
             proof=self.fresh_operations_proof()
             require(operations_authority.owner(self.env) and type(proof) is bootstrap.Owner,
                 'LIVE_OWNER_FIRST_PRIMARY_PROOF_REQUIRED')
             prepared=read_owned(self.storage,cp.binding(self.root/'operations-prepared/PREPARED.json'))
+            marker='first_primary' if first is not None else 'failed_first_recovery'
+            scope=first or recovery
             require(prepared['current_root_go_sha256']==self.go_sha
-                and prepared.get('first_primary',{}).get('scope')==first
-                and prepared['epoch_sha256']==first['retained_epoch_sha256']
-                and prepared['state']=='FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL',
+                and prepared.get(marker,{}).get('scope')==scope
+                and prepared['epoch_sha256']==scope['retained_epoch_sha256']
+                and prepared['state']==('FIRST_FUTURE_PRIMARY_PREVALUE_METADATA_READY_LOCAL' if first is not None
+                    else 'FAILED_FIRST_RECOVERY_PREVALUE_METADATA_READY_LOCAL'),
                 'AUTHENTICATED_FIRST_PRIMARY_PREPARATION_BEFORE_CLAIM')
             def owner():
                 operations_authority._verify(proof,self.env,store.canonical(self.go))
+            if recovery is not None:
+                # Fresh proof/client after potentially lengthy restoration.
+                # No parent JSON or local Owner GET diagnostic is authority.
+                recovery_proof=operations.authenticate_failed_first_recovery(self.recovery_metadata_client(),self.go,
+                    authenticate=owner,claim_reader=self.recovery_metadata_client)
+                gap=read_owned(self.storage,prepared['archive_context']['ops_failed_recovery'])
+                require(gap['new_choice_sha256']==prepared['choice_sha256']
+                    and gap['new_capture_id']==prepared['capture_id'] and gap['scope']==recovery
+                    and gap['failed_root_go_sha256']==recovery_proof.document['failed_root_go_sha256']
+                    and all(gap[k]==recovery_proof.document[k] for k in (
+                        'original_claim_payload_sha256','original_claim_manifest_sha256','original_core_payload_sha256',
+                        'original_controls_sha256','original_week8_choice_commitment')),
+                    'EXACT_PREVALUE_RECOVERY_GAP_AND_LIVE_CLAIM')
         package=self.go["qualified_runtime"]
         class ClaimClient(archive.Client):
             def upload(self,name,body,*,reuse_completed=False):
@@ -627,8 +658,11 @@ class Runner:
             # scope. Use this already authenticated claim operation; never
             # reset a previous client's timer or request counters.
             operations.first_primary_absence(client,self.go,authenticate=owner).verify(self.go)
+        if recovery is not None:
+            operations.failed_first_absence(client,self.go,recovery_proof,authenticate=owner).verify(self.go)
         body=store.canonical(dict(schema_version=VERSION+"-root-consumption",root_go_sha256=self.go_sha,maximum_dispatches=1,fits=0))
         if first is not None:body=store.canonical(template.first_primary_claim(self.go))
+        if recovery is not None:body=store.canonical(template.failed_first_recovery_claim(self.go))
         assets,total=client.inventory()
         require(not any(a["name"]=="blob-"+store.sha(body)+".bin" for a in assets),"OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY")
         require(total+len(body)+(32 << 10)<store.TOTAL_CAP and client.inventory_slots+2<=store.MAX_ASSETS,"ROOT_CLAIM_CAPACITY")
@@ -664,7 +698,8 @@ class Runner:
             "LIVE_RECURRING_CAPTURE_ROOT_REQUIRED")
         from . import audit_weekly_template_v1 as template
         first=template.first_primary_root(self.go)
-        if first is None:self.claim()
+        recovery_scope=template.failed_first_recovery_root(self.go)
+        if first is None and recovery_scope is None:self.claim()
         prior_metadata=self.prior_public_metadata()
         request=dict(schema_version=recovery.VERSION+"-request",phase=recovery.PHASE,code_pins=pins(),
             limits=recovery.LIMITS,cache=str(self.storage.cache),state_root=str(self.root/"state"),
@@ -702,7 +737,7 @@ class Runner:
         require(manifest["current_root_go_sha256"]==self.go_sha and manifest["current_values_used"] is False
             and manifest["no_reselection"] is manifest["no_cutoff_extension"] is True,
             "ACTUAL_PREVALUE_RECURRING_METADATA_REQUIRED")
-        if first is not None:self.claim()
+        if first is not None or recovery_scope is not None:self.claim()
         return retained_result,manifest
 
     def prior_public_metadata(self):

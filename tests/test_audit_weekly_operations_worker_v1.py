@@ -184,6 +184,152 @@ def test_first_future_cannot_forget_even_an_archived_unqualified_primary(first_f
     assert x.m.calls==[]
 
 
+@pytest.fixture
+def failed_first_composed(first_future_composed,tmp_path,monkeypatch):
+    from nfl_lab import audit_weekly_operations_v1 as operations,audit_weekly_hosted_v1 as hosted
+    from test_audit_weekly_hosted_v1 import pending_failure,_failed_first_recovery_case
+    x=first_future_composed;q=x.q
+    raw=store.read_local(q.request['inputs']['calendar']['body']['path'],8<<20)
+    raw+=b''.join(f'2026,8,REG,fictional-week-8-{n:02},2026-10-29,16:00,{20001+n},ATL,NO\n'.encode() for n in range(1,14))
+    full=operations.calendar(raw,season=2026,week=8)
+    schedule=[{k:r[k] for k in ('season','week','game_type','game_id','kickoff_utc')} for r in full]
+    cuts={r['game_id']:(state.utc(r['kickoff_utc'])-timedelta(minutes=15)).isoformat() for r in full}
+    plan=dict(kind='FUTURE_CAPABLE',season=2026,week=8,calendar_sha256=state.digest(schedule),game_cutoffs=cuts,deadline_utc=min(cuts.values()))
+    base=tmp_path/'new-failure-fixture';base.mkdir()
+    case=_failed_first_recovery_case(pending_failure.__wrapped__(base),calendar_plan=plan,
+        original_scope=x.m.root['effective_epoch']['controller_context'])
+    case.root['qualified_runtime']['qualification']={'run_id':'100','engineering_boundary_v2':True};case.root['pending_census']={}
+    q.seed['go']=case.root;x.m.at=case.at
+    path=q.c.root/'worker-input/RECOVERY_CALENDAR.csv';q.c.storage.write_bytes(path,raw)
+    q.request['inputs']['calendar']=dict(body=cp.binding(path),receipt=q.c.put('worker-input/RECOVERY_RECEIPT.json',
+        dict(url=w.CALENDAR_URL,status='acquired',sha256=store.sha(raw),bytes=len(raw),retrieved_utc=case.root['issued_at_utc'])))
+    context=q.context();context.client=x.m.client
+    case.client.run_id=context.client.run_id;case.client.source_sha=context.client.source_sha
+    case.client.job=context.job;case.client.process=context.client.process
+    case.client.authenticate_actions_job=lambda:None
+    case.client.bind=lambda binding:None
+    constructed=[]
+    def metadata_client(*a,**kw):
+        current=case.client if not constructed else case.claim_reader()
+        constructed.append(current);return current
+    monkeypatch.setattr(hosted,'PendingMetadataClient',metadata_client)
+    monkeypatch.setattr(hosted.archive,'authenticate_qualification',lambda *a,**kw:None)
+    monkeypatch.setattr(authority,'attach',lambda *a,**kw:None)
+    return SimpleNamespace(context=context,q=q,m=x.m,case=case)
+
+
+def test_failed_first_recovery_real_worker_preserves_missing_gap_and_new_choice(failed_first_composed):
+    x=failed_first_composed;q=x.q
+    result=w.prepare(x.context,clock=lambda:x.case.at)
+    manifest=runtime.read_owned(q.c.storage,result['manifest'])
+    assert manifest['state']=='FAILED_FIRST_RECOVERY_PREVALUE_METADATA_READY_LOCAL'
+    refs=manifest['archive_context'];gap=runtime.read_owned(q.c.storage,refs['ops_failed_recovery'])
+    choice=runtime.read_owned(q.c.storage,refs['canonical_weekly_choice'])
+    assert gap['old_forecast_bodies_missing'] is gap['old_week8_choice_body_missing'] is True
+    assert gap['failed_capture_qualified'] is gap['old_forecast_bodies_recovered'] is False
+    assert gap['new_choice_sha256']==manifest['choice_sha256']==state.digest(choice)
+    assert choice['resolved_prior_keys']==[] and len(choice['slate']['game_cutoffs'])==14
+    assert state.utc(choice['choice']['actual_frozen_at'])==x.case.at
+    assert refs['ops_previous_checkpoint'] is None
+    assert len(x.m.calls)==6 and manifest['fits']==manifest['source_acquisitions']==manifest['label_acquisitions']==0
+    assert gap['original_week8_choice_commitment']['sha256']!=manifest['choice_sha256']
+    assert all(c in {'GET','draft'} for c in x.case.client.calls)
+
+
+def test_failed_first_recovery_never_falls_back_to_failed_capture_or_assignment(failed_first_composed):
+    x=failed_first_composed;q=x.q
+    old=deepcopy(q.c.restored);old['aliases']['context/ops_population.json']=q.c.put('worker-input/FAILED_ASSIGNMENT.json',{'failed':True})
+    x.context.request['inputs']['retained_result']=q.c.put('worker-input/NOT_LEGACY.json',old)
+    x.context._sha=w._digest(dict(request=x.context.request,authority=x.context.authority,job=x.context.job,go=x.context.go))
+    with pytest.raises(w.WorkerError,match='QUALIFIED_PREVIOUS_PRIMARY_ASSIGNMENT_REQUIRED'):
+        w.prepare(x.context,clock=lambda:x.case.at)
+    assert x.case.client.calls==[]
+
+
+def test_failed_first_recovery_typed_gap_rejects_promotion_or_choice_drift(failed_first_composed):
+    from nfl_lab import audit_weekly_operations_v1 as operations
+    x=failed_first_composed;q=x.q
+    result=w.prepare(x.context,clock=lambda:x.case.at);m=runtime.read_owned(q.c.storage,result['manifest'])
+    gap=runtime.read_owned(q.c.storage,m['archive_context']['ops_failed_recovery'])
+    choice=runtime.read_owned(q.c.storage,m['archive_context']['canonical_weekly_choice'])
+    def validate(v):return operations.validate_failed_first_gap(v,choice=choice,epoch_sha256=m['epoch_sha256'])
+    assert validate(gap)==gap
+    for key,value in [('old_capture_state','COMPLETE_CAPTURE'),('old_forecast_bodies_missing',False),
+            ('old_forecast_bodies_recovered',True),('failed_capture_qualified',True),('new_choice_sha256','f'*64),
+            ('new_choice_actual_frozen_at','2026-10-27T19:00:00Z'),('invented_old_choice',{})]:
+        bad=deepcopy(gap);bad[key]=value
+        with pytest.raises(operations.OperationsError):validate(bad)
+    with pytest.raises(operations.OperationsError):
+        operations.validate_failed_first_gap(gap,choice=choice,epoch_sha256=m['epoch_sha256'],root_go_sha256='0'*64)
+
+
+def test_failed_first_recovery_charges_native_metadata_within_original_byte_cap(failed_first_composed):
+    x=failed_first_composed;x.case.client.transferred=w.LIMITS['metadata_bytes']
+    with pytest.raises(w.WorkerError,match='OPERATIONS_TOTAL_METADATA_BYTE_CAP'):
+        w.prepare(x.context,clock=lambda:x.case.at)
+    assert not list(Path(x.q.request['output']).glob('FAILED_FIRST_RECOVERY.json'))
+
+
+def test_failed_first_recovery_claim_appends_once_retains_old_claim_and_rejects_duplicate(failed_first_composed,monkeypatch):
+    from nfl_lab import audit_weekly_hosted_v1 as hosted,audit_weekly_operations_v1 as operations
+    from nfl_lab import audit_weekly_template_v1 as template,audit_weekly_controller_bootstrap_v1 as bootstrap
+    x=failed_first_composed;q=x.q;w.prepare(x.context,clock=lambda:x.case.at)
+    r=hosted.Runner.__new__(hosted.Runner);r.go=x.context.go;r.go_sha=x.context.root_sha256
+    r.root=Path(q.request['cache']).parent;r.storage=q.c.storage;r.journal=r.root/'claim-journal';r.journal.mkdir()
+    r.identity=dict(run_id=x.context.client.run_id,source_sha=x.context.client.source_sha);r.job=x.context.job
+    r.env=dict(GITHUB_ACTOR='NickNicky19',GITHUB_ACTOR_ID='208912933',GITHUB_TOKEN='ghs_FICTIONAL')
+    owner=bootstrap.Owner.__new__(bootstrap.Owner);r.operations_proof=owner;r.fresh_operations_proof=lambda:owner
+    r.pending_scope_authenticated=True;r.recovery_metadata_client=x.case.claim_reader
+    assets=deepcopy(x.case.assets);bodies={};uploads=[];real_client=hosted.archive.Client
+    old_claim=next(a for a in assets if a['id']==17)
+    class FreshClient(real_client):
+        def __init__(self,*a,**kw):super().__init__(*a,**kw,transport=x.m.client.transport,clock=lambda:10)
+        def authenticate_actions_job(self):pass
+        def inventory(self):self.inventory_slots=len(assets);return assets,sum(a['size'] for a in assets)
+        def upload(self,name,body,*,reuse_completed=False):
+            assert reuse_completed is False and not any(a['name']==name for a in assets)
+            uploads.append(name);a=dict(id=100+len(uploads),name=name,size=len(body),state='uploaded',digest='sha256:'+store.sha(body))
+            assets.append(a);bodies[name]=body;return a
+    original_auth=operations.authenticate_failed_first_recovery;original_absence=operations.failed_first_absence
+    monkeypatch.setattr(operations,'authenticate_failed_first_recovery',lambda client,root,*,authenticate,claim_reader:
+        original_auth(client,root,authenticate=authenticate,claim_reader=claim_reader,clock=lambda:x.case.at))
+    monkeypatch.setattr(operations,'failed_first_absence',lambda client,root,proof,*,authenticate:
+        original_absence(client,root,proof,authenticate=authenticate,clock=lambda:x.case.at))
+    monkeypatch.setattr(hosted.archive,'Client',FreshClient)
+    monkeypatch.setattr(hosted.operations_authority,'_verify',lambda *a,**kw:None)
+    monkeypatch.setattr(store,'check_proof',lambda *a,**kw:None)  # fictional qualification only; append wire is real
+    r.claim()
+    expected=store.canonical(template.failed_first_recovery_claim(r.go))
+    assert bodies['blob-'+store.sha(expected)+'.bin']==expected and len(uploads)==2
+    assert next(a for a in assets if a['id']==17)==old_claim
+    with pytest.raises(store.StoreError,match='OWNER_ROOT_ALREADY_CONSUMED_NO_RETRY'):r.claim()
+    assert len(uploads)==2
+
+
+def test_failed_first_recovery_gap_survives_optional_owned_archive_transport(failed_first_composed,tmp_path_factory):
+    """Runs with the separately supplied archive delta; fictional metadata only."""
+    from nfl_lab import audit_weekly_archive_v1 as archive,audit_weekly_operations_v1 as operations
+    from test_audit_weekly_archive_v1 import capture_case
+    if 'ops_failed_recovery' not in getattr(archive,'OPERATIONS_RECOVERY_CONTEXT',set()):
+        pytest.skip('Apply the separate optional archive-role patch for this integration check')
+    x=failed_first_composed;q=x.q;result=w.prepare(x.context,clock=lambda:x.case.at)
+    m=runtime.read_owned(q.c.storage,result['manifest']);new_choice=runtime.read_owned(q.c.storage,m['archive_context']['canonical_weekly_choice'])
+    epoch_doc=runtime.read_owned(q.c.storage,m['inputs']['epoch'])
+    base=tmp_path_factory.mktemp('recovery-gap-archive');p=capture_case(base,epoch_document=epoch_doc,choice_document=new_choice)
+    context=dict(p.context)
+    for role,ref in m['archive_context'].items():
+        if ref is not None:context[role]=p.put('recovery/'+role+'.json',runtime.read_owned(q.c.storage,ref))
+    snapshot=archive.collect(p.root,context,storage=p.storage,output=p.base/'collected')
+    member=next(f for f in snapshot['files'] if f['logical_path']=='context/ops_failed_recovery.json')
+    encoded,inflated=archive.codec.encode([member]);record=dict(bytes=len(encoded),sha256=store.sha(encoded),inflated_bytes=inflated,files=[member])
+    destination=p.base/'fresh-owned-gap';archive._extract_owned_group(encoded,record,p.storage,destination)
+    restored=archive.read_owned(p.storage,cp.binding(destination/member['logical_path']))
+    assert restored==runtime.read_owned(q.c.storage,m['archive_context']['ops_failed_recovery'])
+    assert operations.validate_failed_first_gap(restored,choice=new_choice,epoch_sha256=m['epoch_sha256'])==restored
+    assert restored['old_capture_state']=='FAILED' and restored['old_forecast_bodies_missing'] is True
+    assert not any('LOST_WEEK8_CHOICE' in f['logical_path'] for f in snapshot['files'])
+
+
 def test_first_future_manual_authority_rejects_bot_or_serialized_owner_before_gets():
     context=SimpleNamespace(verify=lambda:None,env={'GITHUB_ACTOR':'github-actions[bot]','GITHUB_ACTOR_ID':'41898282'},proof={})
     with pytest.raises(w.WorkerError,match='LIVE_OWNER_FIRST_PRIMARY_PROOF_REQUIRED'):
