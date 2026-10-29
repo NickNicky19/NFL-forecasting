@@ -222,3 +222,8 @@ TabR, relevance weighting and quote trajectories are bounded additions, not
 measured gains. Preserve the existing live release and retained production
 writer/scheduler. Qualify new source/runtime/budgets before NFL execution; do not
 claim replay or metadata preparation is a new predictive fit.
+
+
+## Owner four-category scope, October29
+
+New predictive experiments only pass_att, rush_att, rec_tgt and rec. Follow reports/opportunity-four/SCOPE.md and canonical registries there. Record a protocol before prediction, durable start/finish/failure, public-safe scores and immutable GitHub readback. Keep restricted evidence private. Preserve other categories' code/results/registrations, grading and production; unstarted nonfocus predictive work is DEFERRED_BY_OWNER_SCOPE_CHANGE. Retained production owner and scheduler remain authoritative; no new writer, credentials, spending or wagers.

@@ -1,0 +1,283 @@
+{
+  "records": [
+    {
+      "algorithm": "32tree empirical leaf CDF",
+      "aliases": [],
+      "code": [
+        {
+          "reason": "Exact portable source, configuration and sealed binding must be published before predictive GO.",
+          "state": "SOURCE_PREPARATION_PENDING"
+        }
+      ],
+      "family": "32tree empirical leaf CDF",
+      "feature_policy": "Unchanged strong base learner; explicit provider-reported target labels and original cutoff-qualified base features",
+      "formula": "F=.95*empirical_leaf+.05*training_prior",
+      "method_id": "m:TGT_CDF_BASE",
+      "original_id": "TGT_CDF_BASE",
+      "outputs": [
+        {
+          "functional": "median",
+          "output_id": "median",
+          "primary_score": null
+        },
+        {
+          "functional": "mean",
+          "output_id": "mean",
+          "primary_score": null
+        },
+        {
+          "functional": "distribution",
+          "output_id": "distribution",
+          "primary_score": "CRPS"
+        }
+      ],
+      "procedure_version": "v1-registered-source-preparation",
+      "training_rule": "Frozen before2026 on2022\u20132025 for targets; older featurememory2019+ disclosed. History median continuation reuses original fitted training procedures."
+    },
+    {
+      "algorithm": "Training-only position/global count prior",
+      "aliases": [],
+      "code": [
+        {
+          "reason": "Exact portable source, configuration and sealed binding must be published before predictive GO.",
+          "state": "SOURCE_PREPARATION_PENDING"
+        }
+      ],
+      "family": "Training-only position/global count prior",
+      "feature_policy": "Position only; same earlier training label population",
+      "formula": "Training role/global empirical support with registered priorlaw",
+      "method_id": "m:TGT_ROLE_PRIOR",
+      "original_id": "TGT_ROLE_PRIOR",
+      "outputs": [
+        {
+          "functional": "median",
+          "output_id": "median",
+          "primary_score": null
+        },
+        {
+          "functional": "mean",
+          "output_id": "mean",
+          "primary_score": null
+        },
+        {
+          "functional": "distribution",
+          "output_id": "distribution",
+          "primary_score": "CRPS"
+        }
+      ],
+      "procedure_version": "v1-registered-source-preparation",
+      "training_rule": "Frozen before2026 on2022\u20132025 for targets; older featurememory2019+ disclosed. History median continuation reuses original fitted training procedures."
+    },
+    {
+      "algorithm": "Earlier-only recent target-count mean",
+      "aliases": [],
+      "code": [
+        {
+          "reason": "Exact portable source, configuration and sealed binding must be published before predictive GO.",
+          "state": "SOURCE_PREPARATION_PENDING"
+        }
+      ],
+      "family": "Earlier-only recent target-count mean",
+      "feature_policy": "Last3 eligible prior games; genuine played zeros retained, unknowns notzero",
+      "formula": "mean(last3 eligible target counts), trained rolemean fallback",
+      "method_id": "m:TGT_RECENT3_MEAN",
+      "original_id": "TGT_RECENT3_MEAN",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean",
+          "primary_score": null
+        }
+      ],
+      "procedure_version": "v1-registered-source-preparation",
+      "training_rule": "Frozen before2026 on2022\u20132025 for targets; older featurememory2019+ disclosed. History median continuation reuses original fitted training procedures."
+    },
+    {
+      "algorithm": "Earlier-only recent target-count mean",
+      "aliases": [],
+      "code": [
+        {
+          "reason": "Exact portable source, configuration and sealed binding must be published before predictive GO.",
+          "state": "SOURCE_PREPARATION_PENDING"
+        }
+      ],
+      "family": "Earlier-only recent target-count mean",
+      "feature_policy": "Last8 eligible prior games; same source/cutoff/fallback policy",
+      "formula": "mean(last8 eligible target counts), trained rolemean fallback",
+      "method_id": "m:TGT_RECENT8_MEAN",
+      "original_id": "TGT_RECENT8_MEAN",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean",
+          "primary_score": null
+        }
+      ],
+      "procedure_version": "v1-registered-source-preparation",
+      "training_rule": "Frozen before2026 on2022\u20132025 for targets; older featurememory2019+ disclosed. History median continuation reuses original fitted training procedures."
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+      "original_id": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "Only eligible earlier2026labels; explicitunder60 oldCDFfallback witholderfeatures/priors disclosed"
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "original_id": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "Eligible2025plus earlier2026labels; earlierfeaturememory retained"
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+      "original_id": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "Eligible2019+multiseason with frozen365day half-life and earlier2026labels; notunweightedH-MULTI"
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "original_id": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "Frozenpre2026 historicalrelationship+updatedoriginalqueryfeatures; notverifiedinjuryaware"
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "original_id": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "Samefixedhistoricalrelation plus recordeddepthrank/loadclock; notcurrentinjuryannouncements"
+    },
+    {
+      "algorithm": "32ExtraTrees depth8 minleaf30 seed1701, .95leaf+.05prior",
+      "aliases": [],
+      "code": [
+        {
+          "path": "tools/category_topfive_opportunity_history_median_v1.py",
+          "state": "Exactsourcepublicationrequired beforeinference"
+        }
+      ],
+      "family": "Empirical leaf CDF history policy",
+      "feature_policy": "Exactoriginal38features; earlier2019memory andstartupfallback documented; no newfeature/tuning",
+      "formula": "conditional law fromearlier fittedleaf labels; lowerCDFmedian; true lawmean separately",
+      "method_id": "m:LEAF_CDF",
+      "original_id": "LEAF_CDF",
+      "outputs": [
+        {
+          "functional": "mean",
+          "output_id": "mean"
+        },
+        {
+          "functional": "median",
+          "output_id": "median"
+        }
+      ],
+      "procedure_version": "originalpass-atthistory-v5 / newmedianoutput-v1",
+      "training_rule": "OriginalfrozenmultiseasonbaseCDF; exactcachemean/mediancontrol"
+    }
+  ],
+  "schema_version": "opportunity-four-registry-v1"
+}

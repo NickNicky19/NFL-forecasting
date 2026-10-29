@@ -450,3 +450,8 @@ One new32-tree carry CDF fit, 2,999 new historical forecasts and matched2026W1â€
 - [Results, current twelve-category state and exact owner request](category-topfive-continuation-20261029/README.md)
 - [Full scientific aggregate](category-topfive-continuation-20261029/RESULTS.json)
 - [Read-only V2 evidence handoff](category-topfive-continuation-20261029/V2_EVIDENCE_HANDOFF.json)
+
+
+## Four-category opportunity focus â€” owner October29
+
+New predictive work is limited to pass_att/rush_att/rec_tgt/rec; nonfocus pending work is deferred. [Permanent methods, all run states/results, generated leaderboards, source limits and protocols](opportunity-four/README.md). Existing all-category evidence and production remain preserved.

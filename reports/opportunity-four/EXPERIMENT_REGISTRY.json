@@ -1,0 +1,114 @@
+{
+  "records": [
+    {
+      "budget": {
+        "CPU_seconds": 300,
+        "RSS_bytes": 1073741824,
+        "fit_count": 1,
+        "private_peak_bytes": 33554432,
+        "private_retained_cap_bytes": 16777216,
+        "source_and_artifact_binding": "Exactsourcequalification/sealedGOrequired",
+        "trees": 32,
+        "wall_seconds": 420
+      },
+      "cutoff": "Original historical kickoffleftlimit, strictlyearlier source clocks; no authenticpregameclaim",
+      "experiment_id": "e:opportunity-four-targets-frozen-v1-20261029",
+      "history_policy": "FROZEN_PRESEASON_2022_2025_NOT_WEEKLY_H_MULTI",
+      "hypothesis": "Dedicated direct targetCDF and declared recent/prior baselines; targetcolumns/features do not themselves constitute a targetforecast study. MedianMAE primary vsregisteredrecent8unroundedmean; meanMSE andfull-law CRPS/logloss separate.",
+      "method_ids": [
+        "m:TGT_CDF_BASE",
+        "m:TGT_ROLE_PRIOR",
+        "m:TGT_RECENT3_MEAN",
+        "m:TGT_RECENT8_MEAN"
+      ],
+      "owner": "Original NFL-forecasting session",
+      "population": {
+        "intended": "2026REGWeeks1\u20137 relevant WR/RB/TE player-games",
+        "participation": "DNP/playedzero/playedmissing/unknown distinct; no zeroimputation",
+        "supported_panel": "Original2999all-roleW1\u20136 query; exactreceivingrole supported counts pendingqualification",
+        "week7": "NOT_AVAILABLE_PENDING_COMPATIBLE_SOURCE_QUERY"
+      },
+      "registration": {
+        "record": "reports/opportunity-four/EXPERIMENT_REGISTRY.json",
+        "state": "REGISTERED_NOT_RUN"
+      },
+      "request_id": "owner-opportunity-four-20261029",
+      "sources": [
+        {
+          "id": "nflverse-weekly-targets-provider-field-v1",
+          "timing": "Original7day reconstructedavailability preserved; exact newerpublication unknown; 2026W7 source/query compatibility unresolved"
+        }
+      ],
+      "status": "REGISTERED"
+    },
+    {
+      "budget": {
+        "CPU_seconds": 90,
+        "model_capsules_max": 19,
+        "new_fits": 0,
+        "new_median_rows": 2575,
+        "private_peak_bytes": 33554432,
+        "private_retained_bytes": 16777216,
+        "wall_seconds": 150
+      },
+      "cutoff": "Original exact historicalquery cutoffs; newoutputsarecurrentreconstructions notpregameoriginals",
+      "experiment_id": "e:opportunity-four-history-medians-v1-20261029",
+      "history_policy": {
+        "CDF_H1_CURRENT_SEASON_TRAINING": "Only eligible earlier2026labels; explicitunder60 oldCDFfallback witholderfeatures/priors disclosed",
+        "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING": "Eligible2025plus earlier2026labels; earlierfeaturememory retained",
+        "CDF_H3_TIME_WEIGHTED_TRAINING": "Eligible2019+multiseason with frozen365day half-life and earlier2026labels; notunweightedH-MULTI",
+        "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE": "Frozenpre2026 historicalrelationship+updatedoriginalqueryfeatures; notverifiedinjuryaware",
+        "CDF_H4_PLUS_TIMESTAMPED_DEPTH": "Samefixedhistoricalrelation plus recordeddepthrank/loadclock; notcurrentinjuryannouncements",
+        "LEAF_CDF": "OriginalfrozenmultiseasonbaseCDF; exactcachemean/mediancontrol"
+      },
+      "hypothesis": "Extract andfreeze NEWmedian outputs fromauthentic retainedhistorymodels; replayoriginalmeans exactlyfirst; do notrefit orclaimoldmediansretained. Compare sameeligible2026cases, meanandmediancontractsseparate.",
+      "method_ids": [
+        "m:CDF_H1_CURRENT_SEASON_TRAINING",
+        "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+        "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+        "m:LEAF_CDF"
+      ],
+      "owner": "OriginalNFL-forecastingsession, distinctfromV2empiricalidentityaudit",
+      "population": {
+        "games": 93,
+        "plannedQB": 515,
+        "supported": 211,
+        "unknown": 304,
+        "week7": "Missingcompatiblequery/source; notsilentlyconcatenated",
+        "weeks_intended": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "weeks_supported": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "registration": {
+        "record": "reports/opportunity-four/EXPERIMENT_REGISTRY.json",
+        "scientific_recipe": "protocols/HISTORY_MEDIANS_V1.json",
+        "state": "Exactcodeandreadbackrequired beforeGO"
+      },
+      "request_id": "owner-opportunity-four-20261029",
+      "sources": [
+        {
+          "id": "originalpass-atthistory2026v5",
+          "timing": "Original7day reconstruction anddepthvendorloadclocksunchanged"
+        }
+      ],
+      "status": "REGISTERED"
+    }
+  ],
+  "schema_version": "opportunity-four-registry-v1"
+}
