@@ -206,3 +206,19 @@ unlimited fit allocation. Reuse completed NGS, role/history, FTN, workload and
 market studies including losses. PFR-derived snaps remain excluded; incomplete
 primary-receiver route data are not all-player routes. Continue source-ready
 work and existing owner integration independently; no competing writer/schedule.
+
+## Latest owner MAE, top-player and new-method continuation (2026-10-28)
+
+The complete24,228-byte pasted handoff SHA2560bb5bdf5dcb386f628cd4a4f7e42b9aecbbf20c44d50e11cda4735c5a54755e9
+prioritizes MAE for displayed numeric statistics. Version product/policy changes;
+keep genuine means/MSE, distributions and probabilities separate. V1 strict2025,
+signed-bias and tail vetoes were implementation choices, not universal owner
+requirements; a median need not have zero mean signed error. Preserve v1/P2 and
+scientific registrations. Analyze saved forecasts on frozen common pregame-only
+top10/15/20 groups within position, retaining full populations/unknowns/fallbacks.
+Specialization is a separate later comparison, not an inference from changing
+the evaluated population. Ordered recent games, TabICLv2, chronological analogs/
+TabR, relevance weighting and quote trajectories are bounded additions, not
+measured gains. Preserve the existing live release and retained production
+writer/scheduler. Qualify new source/runtime/budgets before NFL execution; do not
+claim replay or metadata preparation is a new predictive fit.

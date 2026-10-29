@@ -1,0 +1,29 @@
+{
+  "at_utc": "2026-10-29T02:27:21.535434+00:00",
+  "input": {
+    "bytes": 274362,
+    "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+    "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+  },
+  "projection": [
+    "season",
+    "week",
+    "position",
+    "kickoff_utc",
+    "cutoff_utc",
+    "feature_max_source_available_utc"
+  ],
+  "reason": "Actualvolumeoriginalquerystrictbefore-kickoffguardfailedprelabel; preservefailedrun. Establish originalreconstructionclockstates beforeanynewadmission, neverfabricateissuanceorrelaxtheliveconsumer.",
+  "resources": {
+    "CAS_calls": 0,
+    "CPU_seconds": 12,
+    "RSS_bytes": 134217728,
+    "invocations": 1,
+    "model_loads": 0,
+    "output_bytes": 16384,
+    "statistic_or_outcome_decodes": 0,
+    "wall_seconds": 20
+  },
+  "state": "ROOT_REGISTERED_BEFORE_CLOCK_DECODE",
+  "version": "historical-query-clock-audit-v1"
+}

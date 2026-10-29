@@ -1,0 +1,38 @@
+{
+  "version": "next-runtime-scheduler-current-source-v2",
+  "state": "NO_CURRENT_CRON_WINDOW_MISMATCH",
+  "repository": "NickNicky19/NFL-forecasting",
+  "ref": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+  "path": ".github/workflows/lab.yml",
+  "git_blob_sha1": "c84c939f43e666624d5c23fbd042f41fd75b3c1d",
+  "source_characters": 10087,
+  "cron": "36 12,13,14 * * *",
+  "cron_timezone": "UTC",
+  "source_comment": "One scheduler: explicit Parent 07:36; legacy08:36. Each gates oneDSTslot.",
+  "october29_CDT_interpretation": [
+    "07:36",
+    "08:36",
+    "09:36"
+  ],
+  "registered_0736_Chicago_slot_is_present": true,
+  "previous_local_branch_schedule_is_stale": true,
+  "current_Main_has_explicit_12UTC_slot": true,
+  "next_existing_qualified_window": "2026-10-29 07:36-07:57America/Chicago endexclusive",
+  "actual_next_run_or_capture_verified": false,
+  "source_route": {
+    "requires": "AUDIT_WEEKLY_PARENT_ENABLED == true; refs/heads/main; schedule or dailyworkflow_dispatch",
+    "exact_command": "timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --execute > controller-parent-result.json",
+    "failure_guard": "Originalhosted_safety_guard retained ifparentrequested andweekly_parent outcome!=success"
+  },
+  "runtime_flag_value": "NOT_READ_THIS_SOURCE_CHECK; sourceconditionisnotproofcurrentvariable/next-readiness",
+  "registration": {
+    "new_GETs": 1,
+    "response_characters": 10087,
+    "max_response_bytes": 131072,
+    "original12attempts_refunded": false,
+    "new_schedulers_mutations_dispatches": 0
+  },
+  "raw_workflow_body_saved": false,
+  "claim_boundary": "CurrentimmutableMainworkflowcontainscorrectUTCslot; noduplicatepatchorschedulerrepairrequiredforhypothesizedlocalcronmismatch. ActualGitHubdispatchdelay/readiness/privatehistory remains futureobserved evidence."
+}
+

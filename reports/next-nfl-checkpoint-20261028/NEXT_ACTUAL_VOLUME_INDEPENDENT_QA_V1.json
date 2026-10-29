@@ -1,0 +1,39 @@
+{
+  "CPU_seconds": 0.502592062,
+  "RSS_bytes": 117358592,
+  "actual_backend": "UNATTESTED",
+  "checks": 850,
+  "freeze_sha256": "97d36573bc4871ce1d86dfedb58960bdc77895fe2c39bae55f05ede0827738d0",
+  "grade_sha256": "1a578d87a2c28753376faf6b7bd173b735ab6ef9a0902497ddc62e75468f58aa",
+  "interpretation": "Read-only validation of POSTGAME actual-volume diagnostics. These are not achievable pregame gains, forecast replacements or an error floor. V1 failure preserved.",
+  "new_fits_models_predictions_outcomes_CAS_network": 0,
+  "plan_sha256": "507aef424b0d922f3ccac1c58bd13fd2b2ba70dee267a715f2e0791e3e70ed43",
+  "public_sha256": "04138f5ff8f5c279f392ded18d9fa07690a73099f2b968cc59f0319a54245d84",
+  "reviewer": "/root/current_runtime_and_review",
+  "rows": 1183,
+  "state": "PASS",
+  "summary": [
+    {
+      "CDF_MAE": 62.279620853080566,
+      "genuine_new_forecasts": 0,
+      "lagged_volume_MAE": 72.97630331753554,
+      "planned": 515,
+      "postgame_actual_volume_MAE": 55.67202262429055,
+      "scored": 211,
+      "target": "pass_yd"
+    },
+    {
+      "CDF_MAE": 18.425855513307983,
+      "genuine_new_forecasts": 0,
+      "lagged_volume_MAE": 20.274397972116603,
+      "planned": 668,
+      "postgame_actual_volume_MAE": 12.112246738254049,
+      "scored": 526,
+      "target": "rush_yd"
+    }
+  ],
+  "supported_rows": 737,
+  "version": "actual-volume-independent-qa-v1",
+  "wall_seconds": 0.5028618450014619,
+  "worker_sha256": "59f084457d11c1176fe6b29d10b4dfbfeaac1d9e0dc6ff9c2de9b7690aa80e0b"
+}

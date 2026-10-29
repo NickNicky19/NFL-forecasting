@@ -1,0 +1,141 @@
+{
+  "actual_backend": "UNATTESTED",
+  "command": "timeout --signal=KILL 240s /workspace/nfl-direct-boosters-venv/bin/python -B tools/next_checkpoint_actual_volume_diagnostic_v2.py --plan <rootseal> --sha256 <hash> --go <rootGO>",
+  "execution_authorized": false,
+  "historical_clock_contract": {
+    "all_original_query_rows_equal_kickoff": 2999,
+    "clock_audit": "reports/next-nfl-checkpoint-20261028/NEXT_HISTORICAL_QUERY_CLOCK_AUDIT_V1.json",
+    "cutoff": "at_or_before_kickoff",
+    "feature_max": "strictly_before_cutoff",
+    "live_consumer_strict_before_kickoff": "UNCHANGED",
+    "original_issuance_claim": false,
+    "original_source": [
+      "nfl_lab/features.py:113",
+      "nfl_lab/cdf_engine.py:77"
+    ]
+  },
+  "hypothesis": "Postgame substitute actual attempts/carries in SAME fixed up-to3-slot efficiency recipe; compare with its lagged-volume version and withstrongCDFmedian separately. CDFcontrast changesrecipe andvolume, neither is achievablepregame or irreduciblefloor.",
+  "inputs": {
+    "forecast_pass_yd": {
+      "bytes": 42082,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_yd/LAB_CDF.parquet",
+      "sha256": "e1ba960b1c295b2a5f0fd67c6848357d94afc51948b52595c35a4b0b1792d7e1"
+    },
+    "forecast_rush_yd": {
+      "bytes": 62436,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/rush_yd/LAB_CDF.parquet",
+      "sha256": "1472dacb0f5a2f1cfc37e40c6379ddf9dffd20730fe62794710817a6399e58f2"
+    },
+    "outcome_rush_att": {
+      "bytes": 20583,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2026/rush_att.parquet",
+      "sha256": "c165117de163e9492de37dcacc1bd7816a30d81a1903b1973bd3f9fa24c6cc9a"
+    },
+    "outcome_rush_yd": {
+      "bytes": 21073,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2026/rush_yd.parquet",
+      "sha256": "8f2594e8804c743dc4f352d4bc0e23959b44a71fe501abffd6b15c8576b5af18"
+    },
+    "qualified_QB": {
+      "bytes": 55479,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/week7-espn-passing-zero-qualification-v1/retained-w1-6-source-qualification-v1/RETAINED_QB_SOURCE_QUALIFICATION.json.gz",
+      "sha256": "917906adaf55271651f2f4ac7d1ae62264571644f1175d7fdcb74aeeb2f14f61"
+    },
+    "query": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    }
+  },
+  "native": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/NEXT_ACTUAL_VOLUME_NATIVE_V2",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/actual-volume-diagnostic-v2",
+  "preexecution_revision": "V2technical historical-left-limit admission; V1 failure and source preserved",
+  "primary": "MAE",
+  "prior_allocations_and_scientific_rules": "UNCHANGED;new0fitdiagnosticallocation;previousfailedtrialsnotrefunded",
+  "prior_failed_execution": {
+    "CAS_attempts_including_failure": 1,
+    "CPU_seconds": 26.123349911,
+    "original_budget_refunded": false,
+    "retained_failure_bytes": 346,
+    "retained_failure_sha256": "83e588d10241cb53e55b199eb94884e92bdf2c2c242d04d7198f9efba12ce366",
+    "state": "FAILED_BEFORE_TARGET_LABEL_DECODE",
+    "version": "actual-volume-diagnostic-v1",
+    "wall_seconds": 26.129859713
+  },
+  "public_result": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/NEXT_ACTUAL_VOLUME_PUBLIC_V2.json",
+  "recipe_freeze": "AllCDFpoints plus prior-rate/priorvolume inputs and complete pregamerecipe freeze/readback beforelabels; actualtargetvolume diagnostic computed only afterward.",
+  "registered_at_utc": "2026-10-29T02:33:28.642040+00:00",
+  "resources": {
+    "CAS_attempts_including_failure": 2,
+    "CPU_seconds": 180,
+    "HTTP": 0,
+    "RSS_bytes": 805306368,
+    "bootstrap_replicates": 500,
+    "fits": 0,
+    "model_loads": 0,
+    "new_pregame_forecasts": 0,
+    "peak_bytes": 8388608,
+    "retained_bytes": 4194304,
+    "seed": 1703,
+    "wall_seconds": 240
+  },
+  "review": "PENDING",
+  "scope": "2026REGW1-6;pass_yd QB515query/211supported,rush_yd RB668query/526supported;93games6weeks. Allplannedrows retained. Unsupported prior inputs retain CDF; unavailable actual targetvolume retains same-rate lagged-volume point. No protectedfutureoutcomes.",
+  "secondaries": [
+    "MSE/RMSE",
+    "bias",
+    "p95",
+    "strict<10/inclusive<=10",
+    "weekly",
+    "model/oraclefallback",
+    "zero-exposure nonzero-creditedyards",
+    "nominal500paired game/weekbootstrap1703;weekCI N/Aunder8clusters"
+  ],
+  "state": "PRESEAL_AWAIT_REVIEW",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 16549,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v16.json",
+      "sha256": "c06be785fc3d87c6c7de6059e79b3186f284c2a6c85d4be180be815f05900503"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "technical_continuation": "Separate one-invocation 180CPU/240wall allocation, original caps unchanged: correct historical reconstruction admission from < to <= matching original features.py and cdf_engine.py; no scientific recipe, labels, metrics, search or live guard change.",
+  "version": "actual-volume-diagnostic-v2",
+  "worker": {
+    "bytes": 18679,
+    "path": "/workspace/nfl-methods-integration/tools/next_checkpoint_actual_volume_diagnostic_v2.py",
+    "sha256": "7306cc934a396cb85e09772aac2c90a60dffd851ba34851f02a05c2158307a83"
+  }
+}

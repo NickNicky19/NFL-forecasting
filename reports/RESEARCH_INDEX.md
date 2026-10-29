@@ -1,10 +1,15 @@
 # Forecasting research: complete navigation index
 
-## Latest verified category and live-release checkpoint — October 28, 2026
+## Latest: MAE display and top-player checkpoint (October 28, 2026)
 
-[Current twelve-category decisions](next-nfl-checkpoint-20261028/LOWEST_CURRENT_DECISION_V1.md) supersede dated pending statuses below. The retained owner has merged website PRs9/10/11; actual served consumption was verified for **1,948 provisional selected forecasts**. This is distinct from research selection or scientific qualification.
+[Current twelve-category MAE decisions](next-nfl-checkpoint-20261028/NEXT_CURRENT_MAE_DECISION_V2.md), [top-player comparison](top-player-cached-20261028/README.md), and [retained production-owner handoff](next-nfl-checkpoint-20261028/NEXT_OWNER_MAE_POINT_HANDOFF_V2.md). Zero new fits; cached 2026 Weeks1–6 comparisons and postgame volume diagnostic completed; new MAE policy not live. All old studies/failures and registrations remain.
 
-[Complete safe all-method ledger](next-nfl-checkpoint-20261028/LOWEST_ALL_METHOD_LEDGER_V1.json) contains **4,832 aggregate cells** with losses and separate point-MAE, valid means, laws and probabilities. A zero-fit five-cell count-median continuation and one stronger same-chart PPR CDF fit completed, with independent numerical checks and adverse results retained. [Implemented research-informed initialization](next-nfl-checkpoint-20261028/LOWEST_RESEARCH_INFORMED_SELECTION_V1.json) retains the current choices and awaits normal producer admission; original P2/history are unchanged. Chart PPR is not live. Private raw evidence remains private.
+Older checkpoint sections below preserve their dated statuses; the current decision record above supersedes them.
+
+## Current lowest-error and live-release checkpoint — October28
+
+[All twelve product decisions](next-nfl-checkpoint-20261028/LOWEST_CURRENT_DECISION_V1.md):4,832 safe aggregate cells, five completed count-median cells and one stronger chartCDF fit, independently checked. Existing owner release is live with1,948 selected rows. New research-informed initialization retains incumbents and awaits producer admission; originalP2/scientific gates unchanged.
+
 
 ## Reconciled category/market/chart checkpoint — October28
 
@@ -64,13 +69,10 @@ three packets passed independent arithmetic and local fresh-process storage
 checks; off-host restoration is not established by those checks. No selected
 research-model deployment is claimed by this checkpoint.
 
-- [Four restored 2025 passing challengers, primary gains/losses and separate QB distribution diagnostics](https://github.com/NickNicky19/NFL-forecasting/blob/8bc08f10653cc474a914b5366a1a348ff03b3d18/reports/modern-ten-control-pipeline-v4-restore4-2025/PUBLIC_RESULTS_v3.md):
-  34,804 new forecasts from four retained models; zero refits; 664 supported QB
-  player-games per target across 272 games and 18 weeks. Interception and
-  completion mean MSE improve about 0.56%; passing TD and attempt MSE lose.
-  Exposed reconstruction, with adverse tails and missing coverage retained;
-  no new website issuance or prospective qualification.
-
+- [Four restored 2025 passing challengers](https://github.com/NickNicky19/NFL-forecasting/blob/8bc08f10653cc474a914b5366a1a348ff03b3d18/reports/modern-ten-control-pipeline-v4-restore4-2025/PUBLIC_RESULTS_v3.md):
+  34,804 new reconstructed forecasts from four retained models, without refits.
+  Interception and completion mean MSE improve about 0.56% versus matched CDF;
+  passing TD and attempt MSE lose. Missing coverage and adverse tails remain.
 - [Five completed 2026 fixed challengers and composite verification](https://github.com/NickNicky19/NFL-forecasting/blob/2967cf24593b156b0dc1fd1ba37f82f23e3075d2/reports/modern-2026-cold-grade-v2/PUBLIC_RESULTS_v2.md):
   five fixed fits and 14,995 new reconstructed forecasts. Supported primary
   populations cover 93 games and six weeks: 211 QB rows per passing target and
@@ -86,6 +88,117 @@ records the completed comparisons, retained failures and owner-requested pause.
 The existing production producer, private restoration and derived export have
 succeeded, but website consumption of the selected research forecasts remains
 unverified. This checkpoint makes no new live-deployment claim.
+
+## Completed common-learner passing-attempt slice — 2026-10-27
+
+[Reviewed results](https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_RESULTS.md) · [Exact aggregate comparisons](https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json)
+
+Actual17forest fits/544trees,19packages,2575candidateforecasts;211supported QBplayer-games/93games/6weeks from515planned opportunities. Fixed38-featureCDF history-policy comparison and one5-feature depth-group ablation complete for2026W1–6. No candidate reduced primaryMSE versus strongCDF; roleMAE fell1.02% butMSE/bias/tails worsened. Original negative F1–F4 average/workload studies remain separate;2025same-learner study queued. Source reconstruction/publication-clock limits remain; no currentwebsite-relative gain, probability win or newdeployment. FrozenCDF fallback coverage0→30 corrected in a separate public receipt; forecasts/labels/losses and originalgrade unchanged. Private managed storage/readback and finalcensus passed; off-host restoration remains unverified.
+
+
+## Controlled continuation — restored 2026 passing-attempt control
+
+[Verified CDF comparison](pass-att-retained-cdf-control-v1/PUBLIC_RESULTS.md)
+and [aggregate metrics](pass-att-retained-cdf-control-v1/PUBLIC_METRICS.json)
+restore a strong matched 2026 Weeks 1–6 control from retained parameters, with
+no refit. On 211 supported QB outcomes in 93 games, MAE is 7.898497 attempts
+versus 8.424801 for pooled-eight; MSE is 104.078472 versus 125.491697. Bias
+worsens and Weeks 4 and 6 lose. There are 515 planned opportunities, 304
+unknown participation states and six supported zeros. The original blocked
+member remains blocked; this is a named reconstruction, not recovery of its
+unretained vector. No current-website gain, probability gain or deployment is
+claimed. The complete frozen rows and arithmetic passed independent review.
+
+The completed earlier F1–F3 recipes were player-history averages (F3 fixed a
+365-day half-life); F4 reused the workload relation. Their losses remain. The
+common-learner history-policy and added-role comparison is a separate ongoing
+experiment, not an already-completed injury-aware system. New timestamped
+2025/2026 depth-chart contexts are privately captured and qualified by vendor
+load clock; publication time and target-role join coverage remain distinct.
+
+## Completed finite-wave checkpoint — October 27, 2026
+
+[Complete actual-results checkpoint and twelve-category decisions](accuracy-wave-20261027/CHECKPOINT.md)
+records the modern-season recovery, Monday passing qualification, adverse
+stored-mean fallback comparison and completed four-history-family study.
+[New four-family football results](https://github.com/NickNicky19/NFL-forecasting/blob/15b54ce54a2c71349eb70aebcdc891e7c403d667/reports/pass-att-four-training-families-v1/PUBLIC_RESULTS.md)
+and [count-fallback losses](https://github.com/NickNicky19/NFL-forecasting/blob/ebcd0f0aaabac4868cf6088b1e572f0bdefd190a/reports/modern-count-A-mean-v3/PUBLIC_RESULTS.md)
+are published with exact readback; private operational and raw artifacts are not.
+All new families lose their strongest available matched controls. No new live
+selection, deployment, pregame issuance or market/+EV result is claimed. Final
+private-store readback passes; the season-long research goal remains open.
+
+## Latest actual work — October 27, 2026
+
+[2025 and completed 2026 historical results](modern-report-recovery-v2/PUBLIC_RESULTS.md)
+are now recovered from authenticated retained outputs, without refitting. They
+cover all 272 regular-season games/18 weeks of 2025 and the 93 supported games
+in 2026 Weeks 1–6. CatBoost's tiny 2025 yardage leads do not persist uniformly in
+2026; Leaf-CDF remains a required strong control. Missing count-CDF cells stay
+unavailable. These are exposed, current-vintage historical reconstructions,
+without contemporaneous SITE/raw/R0 forecasts, rather than prospective wins.
+
+[Week 7's updated passing comparison](accuracy-wave-20261027/PUBLIC_RESULTS.md)
+adds the actual Monday final source and ten supported QB labels, while keeping
+forecasts, ranking membership and out-of-scope rows unchanged. The genuine
+pregame common panel is ten QBs/five games/one week; it contains mixed point
+results and only four offered probability rows/two games. The current
+interception selection still leads its matched laboratory alternatives. Both
+the original export failure and successful cached-only continuation remain.
+
+These two aggregate football reports were published and read back at commit
+[`709d796`](https://github.com/NickNicky19/NFL-forecasting/commit/709d796551304a5b7d013425d08fca52e6e59021).
+A separately versioned 2025/2026 count-mean fallback correction has now completed
+four forecast vectors, independently verified scoring and durable closure:
+[all four primary MSEs worsen](modern-count-A-mean-v3/PUBLIC_RESULTS.md). It is not selected, deployed or evidence of a better mean prior.
+The [four history/training-family comparison is now complete](pass-att-four-training-families-v1/PUBLIC_RESULTS.md):
+2 annual prior/share estimates, zero optimizer fits, and 875 supported QB
+player-games over 365 games/24 season-weeks. All four lose to the strongest
+available matched control in each season. Time-weighting beats recent-three
+but loses to the authentic 2025 CDF and 2026 pooled-eight control. All forecasts,
+labels, fallbacks, weekly coverage and negative findings are independently
+verified and durably retained. This does not establish a website-relative win.
+No new live deployment is claimed by this checkpoint.
+
+## New forward-allocation checkpoint — October 26, 2026
+
+The [completed forward evidence wave](forward-evidence-wave-20261026/README.md)
+records actual sustainable private storage, full restored-model scoring and
+current-season passing-zero qualification. The old 512 MiB allocation is
+unchanged; new forward bytes and all retained old bytes are jointly capped at
+1 GiB. Actual initialization and independent fresh-process recovery passed.
+
+The [retained hierarchical interception model](forward-evidence-wave-20261026/HIERARCHICAL_RESULTS.md)
+is now scored without refitting: 6.413% worse MSE than matched NGBoost on 633
+2022 QB appearances. Its older unscored archive failures below remain historical
+evidence. The [new FTN risk-information pilot](ftn-source-risk-prior3-v1/RESULTS.md)
+also completed: one fixed new estimator, 663 supported 2023 QB appearances,
+0.492% worse MSE than its matched Count A baseline. Both negative trials remain.
+
+The [updated source capture](accuracy-wave-20261026/CURRENT_QB_PUBLISHER_REVISION.md)
+and [separate derived-count contract](accuracy-wave-20261026/QB_DERIVED_COUNT_CREDIT_CLOSURE.md)
+restore missing rare-count zeros without changing forecasts. Rare-count support
+is 28/88; unknown and pending participation remain separate. Current selection
+leads the captured lab procedures in the restored eight-QB genuine pregame
+interception comparison; unmatched-vintage saved controls remain separate. The earlier
+positive-only Count A gain reverses. Common 24-QB comparisons remain distinct
+from source-population coverage and historical development. No new deployment,
+probability-law qualification or fresh same-cutoff R0 capture is claimed.
+
+The [role/count source qualification](forward-evidence-wave-20261026/ROLE_SOURCE_QUALIFICATION.md)
+now supports a separate frozen label intake: 115 rushing-attempt and 859
+reception derived zeros across 859 distinct player-games. That intake passed
+independent durable readback; the separate [20-product cached comparison is now
+complete](pbp-2024-qualified-cached-grade-v1-20261027/PUBLIC_RESULTS.md).
+It covers 1,651 carry and 6,059 reception outcomes over 272 games/18 weeks of
+2024. CatBoost medium retains the lowest mean MSE for both; Response-CDF leads
+carry median MAE and Leaf-CDF leads reception median MAE. No alternative beats
+its prespecified strongest control. [Every product's original-unit MAE/RMSE,
+bias, tails and coverage](pbp-2024-qualified-cached-grade-v1-20261027/ALL_PRODUCT_ERRORS.md)
+is explicit. Evaluation labels expanded without retraining, changing forecasts
+or establishing a current website-relative gain. Independent row, interval and
+complete group-table verification passed. Original source failures, old masks,
+first failed intake seal and a failed verifier attempt remain retained.
 
 ## Latest actual work — October 26, 2026
 
@@ -316,6 +429,6 @@ remains pending an efficiency prerequisite under its original finite budget.
 
 Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 13 future games; the registered startup rule saved 2,832 selected rows. Outcomes are pending. The harmless hosted storage canary passed; no NFL data was uploaded. Website PR #3 is draft and undeployed; live R0-relative gains remain unknown. Original scientific registrations remain unchanged.
 
-## October 28: Week 8 capture and completed continuations
+## October28 continuation:2025 history and first chart-point comparison
 
-[New results and twelve-category decisions](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md): 52 CDF forests complete the 2025 history comparison; one first chart-PPR median fit is scored. Independent cached-row QA passed. The 3.06% attempt MSE reduction is versus historical CDF; the 18.07% chart-MAE reduction is versus a constant position control. Neither is a demonstrated win over today's website. Original failures and negative 2026 results remain. The existing Week 8 stream is preserved; per-method census/assignment and retained-owner live integration remain explicit dependencies.
+[Completed studies, all12decisions and Week8capture](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md):52forests+1chartfit, independent cached-row acceptance, all failures and oldlosses retained.3.06%2025attempt MSE gain vsCDF;18.07%chartMAE gain vsconstantposition control. Neither establishes today's website superiority. Week8originalcapture verifiedpartly; live0selected, retainedowner integration pending.

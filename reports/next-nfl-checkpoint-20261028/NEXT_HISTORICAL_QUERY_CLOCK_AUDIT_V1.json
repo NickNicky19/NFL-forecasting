@@ -1,0 +1,63 @@
+{
+  "CPU_seconds": 0.879772383,
+  "RSS_bytes": 110403584,
+  "interpretation": "Clockclassificationonly; equalitydoesnotmakeoriginalissuedforecastandisnotpermissiontorelaxstrictlivecutoff.",
+  "role_counts": {
+    "FB": {
+      "cutoff_equal": 26,
+      "feature_available_before_cutoff": 26,
+      "feature_clock_unknown": 0,
+      "rows": 26,
+      "unknown_cutoff": 0,
+      "unknown_kickoff": 0
+    },
+    "QB": {
+      "cutoff_equal": 515,
+      "feature_available_before_cutoff": 515,
+      "feature_clock_unknown": 0,
+      "rows": 515,
+      "unknown_cutoff": 0,
+      "unknown_kickoff": 0
+    },
+    "RB": {
+      "cutoff_equal": 668,
+      "feature_available_before_cutoff": 668,
+      "feature_clock_unknown": 0,
+      "rows": 668,
+      "unknown_cutoff": 0,
+      "unknown_kickoff": 0
+    },
+    "TE": {
+      "cutoff_equal": 708,
+      "feature_available_before_cutoff": 708,
+      "feature_clock_unknown": 0,
+      "rows": 708,
+      "unknown_cutoff": 0,
+      "unknown_kickoff": 0
+    },
+    "WR": {
+      "cutoff_equal": 1082,
+      "feature_available_before_cutoff": 1082,
+      "feature_clock_unknown": 0,
+      "rows": 1082,
+      "unknown_cutoff": 0,
+      "unknown_kickoff": 0
+    }
+  },
+  "schema": {
+    "cutoff_utc": "timestamp[ns, tz=UTC]",
+    "feature_max_source_available_utc": "timestamp[ns, tz=UTC]",
+    "kickoff_utc": "timestamp[ns, tz=UTC]",
+    "position": "string",
+    "season": "int32",
+    "week": "int32"
+  },
+  "source": {
+    "bytes": 274362,
+    "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+    "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+  },
+  "state": "CLOCK_ONLY_QUERY_AUDIT_COMPLETE",
+  "statistics_outcomes_model_decodes": 0,
+  "wall_seconds": 0.41381601500324905
+}

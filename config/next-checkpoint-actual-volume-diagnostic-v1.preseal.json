@@ -1,0 +1,116 @@
+{
+  "actual_backend": "UNATTESTED",
+  "command": "timeout --signal=KILL240s /workspace/nfl-direct-boosters-venv/bin/python -B tools/next_checkpoint_actual_volume_diagnostic_v1.py --plan <rootseal> --sha256 <hash> --go <rootGO>",
+  "execution_authorized": false,
+  "hypothesis": "How much does substituting actual target-game attempts/carries change error while retaining the fixed earlier qualified3-slot efficiency? Exposed postgame diagnostic, NOT pregame comparison or attainable/irreducible error bound.",
+  "inputs": {
+    "forecast_pass_yd": {
+      "bytes": 42082,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_yd/LAB_CDF.parquet",
+      "sha256": "e1ba960b1c295b2a5f0fd67c6848357d94afc51948b52595c35a4b0b1792d7e1"
+    },
+    "forecast_rush_yd": {
+      "bytes": 62436,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/rush_yd/LAB_CDF.parquet",
+      "sha256": "1472dacb0f5a2f1cfc37e40c6379ddf9dffd20730fe62794710817a6399e58f2"
+    },
+    "outcome_rush_att": {
+      "bytes": 20583,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2026/rush_att.parquet",
+      "sha256": "c165117de163e9492de37dcacc1bd7816a30d81a1903b1973bd3f9fa24c6cc9a"
+    },
+    "outcome_rush_yd": {
+      "bytes": 21073,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2026/rush_yd.parquet",
+      "sha256": "8f2594e8804c743dc4f352d4bc0e23959b44a71fe501abffd6b15c8576b5af18"
+    },
+    "qualified_QB": {
+      "bytes": 55479,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/week7-espn-passing-zero-qualification-v1/retained-w1-6-source-qualification-v1/RETAINED_QB_SOURCE_QUALIFICATION.json.gz",
+      "sha256": "917906adaf55271651f2f4ac7d1ae62264571644f1175d7fdcb74aeeb2f14f61"
+    },
+    "query": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    }
+  },
+  "native": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/NEXT_ACTUAL_VOLUME_NATIVE_V1",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/actual-volume-diagnostic-v1",
+  "primary": "MAE",
+  "prior_allocations_and_scientific_rules": "UNCHANGED;new0fitdiagnosticallocation;previousfailedtrialsnotrefunded",
+  "public_result": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/NEXT_ACTUAL_VOLUME_PUBLIC_V1.json",
+  "recipe_freeze": "Complete original median controls and prior input/clock contract CAS-frozen/readback before target labels/actual exposures decoded. Diagnostic requires outcomes bydesign and willneverbe calledissuedforecast.",
+  "registered_at_utc": "2026-10-29T02:13:28.943247+00:00",
+  "resources": {
+    "CAS_attempts_including_failure": 2,
+    "CPU_seconds": 180,
+    "HTTP": 0,
+    "RSS_bytes": 805306368,
+    "bootstrap_replicates": 500,
+    "fits": 0,
+    "model_loads": 0,
+    "new_pregame_forecasts": 0,
+    "peak_bytes": 8388608,
+    "retained_bytes": 4194304,
+    "seed": 1703,
+    "wall_seconds": 240
+  },
+  "scope": "2026REGW1-6;pass_yd QB515query/211supported,rush_yd RB668query/526supported;93games6weeks. Allplannedrowsretained andunsupportedvolume/rate uses unchangedCDFpoint. No protectedfutureoutcomes.",
+  "secondaries": [
+    "MSE/RMSE",
+    "bias",
+    "p95",
+    "strict<10/inclusive<=10",
+    "weekly",
+    "model/oraclefallback",
+    "zero-exposure nonzero-creditedyards",
+    "nominal500paired game/weekbootstrap1703;weekCI N/Aunder8clusters"
+  ],
+  "state": "PREPARED_NOT_AUTHORIZED",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 15608,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v14.json",
+      "sha256": "0887086dccba1ac7a03ff266d682b75f5b7f815e541ab98bfab0080e69615b92"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "version": "actual-volume-diagnostic-v1",
+  "worker": {
+    "bytes": 16868,
+    "path": "/workspace/nfl-methods-integration/tools/next_checkpoint_actual_volume_diagnostic_v1.py",
+    "sha256": "33f04b1763df11e0025487c28a7ffc3631b9094f75971e8827daffad14890650"
+  }
+}

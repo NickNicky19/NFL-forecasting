@@ -1,0 +1,197 @@
+{
+  "current_display_contracts": {
+    "nick-chart-ppr-v1": {
+      "functional": "old_website_scoring_reference",
+      "method_id": "UNCHANGED_OLD_WEBSITE_PPR_REFERENCE",
+      "product": "point_empirical",
+      "scoring_target": "old_website_PPR_reference",
+      "target": "old_website_PPR",
+      "version": "252a7aeff73acd6eb0f36dfc4f585a1af2b27a0a"
+    },
+    "pass_att": {
+      "functional": "expected_mean",
+      "method_id": "CDF_MEAN",
+      "product": "point_mean",
+      "scoring_target": "pass_att",
+      "target": "pass_att",
+      "version": "3b75a227cca1ed2d7c50d9d56b5510c1907d19aae98c412dc4d04b76859a982b"
+    },
+    "pass_cmp": {
+      "functional": "expected_mean",
+      "method_id": "CDF_MEAN",
+      "product": "point_mean",
+      "scoring_target": "pass_cmp",
+      "target": "pass_cmp",
+      "version": "e1f7ab72b1d199864f330b88375201a5f8f44a9371e4af9e8145d629503a81e3"
+    },
+    "pass_int": {
+      "functional": "expected_mean",
+      "method_id": "CDF_MEAN",
+      "product": "point_mean",
+      "scoring_target": "pass_int",
+      "target": "pass_int",
+      "version": "e9a6506f082eb8a979b086d4c14dcaf134a8979a1b32e471ed2ff28895378824"
+    },
+    "pass_td": {
+      "functional": "expected_mean",
+      "method_id": "CDF_MEAN",
+      "product": "point_mean",
+      "scoring_target": "pass_td",
+      "target": "pass_td",
+      "version": "98f3087768e1a23539388667d128ac759c55befd9f03b01b7654baafd263a228"
+    },
+    "pass_yd": {
+      "functional": "full_cdf_lower_median",
+      "method_id": "CDF_MEDIAN",
+      "product": "point_median",
+      "scoring_target": "pass_yd",
+      "target": "pass_yd",
+      "version": "3b3e1d63966c0581f1e0e33364daea77f22b801ba55bbc11170353d73736eb04"
+    },
+    "rec": {
+      "authentic_matched_historical_current_website_loss": null,
+      "current_original_procedure_sha256": "19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b",
+      "declared_live_contract_only": true,
+      "fallback_recipe_equivalence_to_lab_corrected_mean": "UNVERIFIED_NOT_INFERRED_FROM_ALIAS",
+      "functional": "expected_mean",
+      "laboratory_corrected_mean_comparator": "COUNT_A_MEAN",
+      "method_id": "LIVE_SELECTED_COUNT_A_DECLARED_MEAN",
+      "product": "point_mean",
+      "scoring_target": "rec",
+      "target": "rec",
+      "version": "0a9a11a81d0250c1ba04bbf8ddc7eb08646b76b73bb775863b146ae9c016f2f5"
+    },
+    "rec_yd": {
+      "functional": "median_objective_point",
+      "method_id": "CATBOOST_MEDIUM",
+      "product": "point_median",
+      "scoring_target": "rec_yd",
+      "target": "rec_yd",
+      "version": "1533819a3c922826f6eb631d32107c09bf1d8c7d7c005dd20fad30e0f0c4a661"
+    },
+    "rush_att": {
+      "authentic_matched_historical_current_website_loss": null,
+      "current_original_procedure_sha256": "19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b",
+      "declared_live_contract_only": true,
+      "fallback_recipe_equivalence_to_lab_corrected_mean": "UNVERIFIED_NOT_INFERRED_FROM_ALIAS",
+      "functional": "expected_mean",
+      "laboratory_corrected_mean_comparator": "COUNT_A_MEAN",
+      "method_id": "LIVE_SELECTED_COUNT_A_DECLARED_MEAN",
+      "product": "point_mean",
+      "scoring_target": "rush_att",
+      "target": "rush_att",
+      "version": "e1e017717fd44b0835d542fa7c96b8908f5e2fc281c0032c3e1186831dec00dc"
+    },
+    "rush_rec_yd": {
+      "functional": "median_objective_point",
+      "method_id": "CATBOOST_MEDIUM",
+      "product": "point_median",
+      "scoring_target": "rush_rec_yd",
+      "target": "rush_rec_yd",
+      "version": "c52af4f64b44247a4cb329f249a56e09c27a85fc4c78b18231f294c147555f25"
+    },
+    "rush_yd": {
+      "functional": "full_cdf_lower_median",
+      "method_id": "CDF_MEDIAN",
+      "product": "point_median",
+      "scoring_target": "rush_yd",
+      "target": "rush_yd",
+      "version": "1c0148f601f146a4307b4c562d151f33243afb44e9a068a28ca6a11bcd7e5e8a"
+    }
+  },
+  "execution_authorized": true,
+  "inputs": {
+    "cohort_complete": {
+      "bytes": 1387,
+      "path": "/workspace/nfl-top-player-cached-20261028/reports/top-player-cached-20261028/native-v1/COMPLETE.json",
+      "sha256": "fe66ba4a096311f45c0f8fe94a4e961114e2f34f1de3564159ad064e2f5ab4b1"
+    },
+    "cohort_consumed": {
+      "bytes": 549,
+      "path": "/workspace/nfl-top-player-cached-20261028/reports/top-player-cached-20261028/native-v1/CONSUMED.json",
+      "sha256": "2b8331d5c55d43f14216689d0bd36b18f751ab4582b1a9c734f533fc9b8e6400"
+    },
+    "cohort_independent_QA": {
+      "bytes": 2908,
+      "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/NEXT_TOP_PLAYER_INDEPENDENT_QA_V1.json",
+      "sha256": "74c9324f7891d95475777e5a49f88b91009a194a851beb5f7e6d6325c32e8a0e"
+    },
+    "cohort_safe_aggregate": {
+      "bytes": 567484,
+      "path": "/workspace/nfl-top-player-cached-20261028/reports/top-player-cached-20261028/PUBLIC_RESULTS.json.gz",
+      "sha256": "2e2b7f87f7b5470a1421d4e4778da05f3ddc40c453dd5cc2eb68cdb4f25e7f04"
+    },
+    "executed_cohort_plan": {
+      "bytes": 21664,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-top-player-v1.sealed.json",
+      "sha256": "20e144caf0d3610d9f42d5fa4c9dc228a9410bd7082d9abd425d4569276bbd84"
+    }
+  },
+  "operational_admission": {},
+  "output_root": "/workspace/nfl-lowest-median-policy-v2-20261028/reports/next-nfl-median-policy-v2-20261028/COHORT_DECISIONS_V1",
+  "prepared_at_utc": "2026-10-29T02:47:38.465458+00:00",
+  "resources": {
+    "CAS_writes": 0,
+    "CPU_seconds": 12,
+    "HTTP": 0,
+    "NFL_value_decodes": 0,
+    "RSS_bytes": 268435456,
+    "aggregate_records_max": 20000,
+    "compressed_input_bytes_max": 2097152,
+    "fits": 0,
+    "forecast_inference": 0,
+    "full_numeric_decisions_max": 11,
+    "invocations": 1,
+    "model_loads": 0,
+    "output_bytes_max": 65536,
+    "uncompressed_aggregate_bytes_max": 16777216,
+    "wall_seconds": 30
+  },
+  "review": "PASS",
+  "root_seal": {
+    "all_actual_inputs_independent_QA_bound": true,
+    "at_utc": "2026-10-29T02:50:15.244421+00:00",
+    "old_policy_and_live_unchanged": true,
+    "reviewer_source": "NEXT_RUNTIME_POINT_AGGREGATE_SOURCE_REVIEW_V1.json"
+  },
+  "source_bindings": [
+    {
+      "bytes": 10788,
+      "path": "/workspace/nfl-lowest-median-policy-v2-20261028/nfl_lab/next_checkpoint_median_policy_v2.py",
+      "sha256": "e6d8b4a53b5109bc66274c14857f91dbddf7d440e23500ee15f08a3235677164"
+    },
+    {
+      "bytes": 6096,
+      "path": "/workspace/nfl-lowest-median-policy-v2-20261028/nfl_lab/next_checkpoint_research_selection_v1.py",
+      "sha256": "59dc53c8fba22aeab6212c10f9a4e397c41bb908d17d918cdaf11c5a25394f3d"
+    },
+    {
+      "bytes": 11503,
+      "path": "/workspace/nfl-lowest-median-policy-v2-20261028/tools/next_checkpoint_median_policy_v2_aggregate.py",
+      "sha256": "b12c9ee3bf3e73534ad41a0b8093b72e612093408674d24e02074507dcc915f0"
+    },
+    {
+      "bytes": 24336,
+      "path": "/workspace/nfl-lowest-median-policy-v2-20261028/config/next-checkpoint-median-policy-v2.json",
+      "sha256": "d380575f8a8ea56f2f4974969e01b8d4ed628570eea143fb6eab3c2fe212f8ec"
+    },
+    {
+      "bytes": 10274,
+      "path": "/workspace/nfl-lowest-median-policy-v2-20261028/config/next-checkpoint-median-policy-v2-cohort-aggregate-v1.template.json",
+      "sha256": "8ee6ae007ce3efe6916f564b6388e9fca694d90448f6e4f55c5ab42baca5b9c2"
+    },
+    {
+      "bytes": 16549,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v16.json",
+      "sha256": "c06be785fc3d87c6c7de6059e79b3186f284c2a6c85d4be180be815f05900503"
+    }
+  ],
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "version": "stat-point-mae-v2-cohort-aggregate-decision-v1",
+  "worker": {
+    "bytes": 11503,
+    "path": "/workspace/nfl-lowest-median-policy-v2-20261028/tools/next_checkpoint_median_policy_v2_aggregate.py",
+    "sha256": "b12c9ee3bf3e73534ad41a0b8093b72e612093408674d24e02074507dcc915f0"
+  },
+  "worktree": "/workspace/nfl-lowest-median-policy-v2-20261028"
+}

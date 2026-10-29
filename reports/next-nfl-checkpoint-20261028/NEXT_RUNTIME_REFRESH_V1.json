@@ -1,0 +1,183 @@
+{
+  "schema_version": "next-runtime-readonly-refresh-v1",
+  "state": "CURRENT_HEADS_OWNER_AND_LIVE_POINTER_RECONCILED",
+  "observed_chicago": "2026-10-28T20:54:24-05:00",
+  "observed_utc": "2026-10-29T01:54:24Z",
+  "actual_model_effort": "UNATTESTED",
+  "heads": {
+    "research_branch": "9795d773ca626f9d1e5b3a3bca380a98907a716f",
+    "research_Main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "website_Main": "252a7aeff73acd6eb0f36dfc4f585a1af2b27a0a"
+  },
+  "original_PR9_PR10_PR11_merged_history": "REUSED_IMMUTABLE_COMPLETED_RECEIPTS;notrepairedorremerged",
+  "retained_writer": {
+    "revision": 178,
+    "updated_at": "2026-10-28T03:58:28.617439Z",
+    "active_run": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+    "active_kind": "manual_owner",
+    "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5",
+    "lease_expiry_or_takeover": false,
+    "source_scope_changed": false,
+    "no_new_lease_acquired": true,
+    "full_source_body_not_saved": true
+  },
+  "recent_comments": {
+    "website_PR1_updates": [
+      {
+        "id": 6484807118,
+        "author": "NickNicky19",
+        "actor_id": 208912933,
+        "created_at": "2026-10-29T00:53:18Z",
+        "updated_at": "2026-10-29T00:53:18Z",
+        "html_url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6484807118",
+        "is_preceding_root_handoff": true
+      }
+    ],
+    "research_PR1_updates": [
+      {
+        "id": 6484807983,
+        "author": "NickNicky19",
+        "actor_id": 208912933,
+        "created_at": "2026-10-29T00:53:21Z",
+        "updated_at": "2026-10-29T00:53:21Z",
+        "html_url": "https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6484807983",
+        "is_preceding_root_handoff": true
+      }
+    ]
+  },
+  "no_new_owner_response_since_preceding_root_handoff": true,
+  "current_runs": {
+    "latest_scheduled_parent_canonical": [
+      {
+        "id": 40745398328,
+        "name": "NFL research lab",
+        "event": "schedule",
+        "head_branch": "main",
+        "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-28T18:28:09Z",
+        "updated_at": "2026-10-28T18:28:24Z",
+        "path": ".github/workflows/lab.yml",
+        "run_attempt": 1,
+        "url": "https://github.com/NickNicky19/NFL-forecasting/actions/runs/40745398328"
+      }
+    ],
+    "latest_website_run_canonical": [
+      {
+        "id": 40783542962,
+        "name": "Hourly update",
+        "event": "push",
+        "head_branch": "main",
+        "head_sha": "a0b1668898a182fc5df9e67ed08c23c56fc03f0f",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-28T22:54:58Z",
+        "updated_at": "2026-10-28T22:56:06Z",
+        "path": ".github/workflows/hourly.yml",
+        "run_attempt": 1,
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/actions/runs/40783542962"
+      }
+    ]
+  },
+  "live": {
+    "meta_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+    "meta_bytes": 1215,
+    "meta_sha256": "4b56b7a202d5d96a0244b3e5b42d942ea7011e9847ac6b3e22cab273a8a766ab",
+    "meta_generated_at": "2026-10-28T22:55:41Z",
+    "season": 2026,
+    "week": 8,
+    "pointer_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+    "pointer_bytes": 337,
+    "pointer_sha256": "3662f7f4990f2596a93d638a91eb640f9bd7d9aadd9cdc6536a1b580eee04383",
+    "overlay_path": "data/weekly-adaptive/765b74e3bf8cb0f45a7e073cea489e47ef9b7b028c6428bd9578fff0454ea1ad.json",
+    "overlay_bytes": 1855246,
+    "overlay_sha256": "765b74e3bf8cb0f45a7e073cea489e47ef9b7b028c6428bd9578fff0454ea1ad",
+    "meta_and_pointer_exact_previous_hashes": true,
+    "conditional_large_overlay_GET_used": false,
+    "current_selected_count": 1948,
+    "selected_by_category": {
+      "pass_yd": 40,
+      "pass_td": 40,
+      "pass_cmp": 40,
+      "pass_att": 40,
+      "pass_int": 40,
+      "rush_yd": 112,
+      "rush_att": 112,
+      "rec": 402,
+      "rec_yd": 402,
+      "rush_rec_yd": 291,
+      "anytime_td": 429
+    },
+    "fallback_counts": {
+      "PPR_or_unsupported_R0": 448,
+      "missing_or_duplicate_candidate_R0": 68
+    },
+    "count_method_authority": "Priorcomplete765b74overlayandservedconsumerverification reused because currentlivepointerandMain/meta unchanged; no freshfullpayload/DOM/browser execution.",
+    "website_source": "a0b1668898a182fc5df9e67ed08c23c56fc03f0f",
+    "new_chart_PPR_or_count_medians_or_research_policy_activation": false
+  },
+  "next_configured_chicago": {
+    "capture_window_start": "2026-10-29T07:36:00-05:00",
+    "capture_window_end_exclusive": "2026-10-29T07:57:00-05:00",
+    "weekly_decision": "2026-10-29T13:15:00-05:00",
+    "first_input_cutoff": "2026-10-29T17:45:00-05:00",
+    "first_kickoff": "2026-10-29T19:15:00-05:00",
+    "next_actual_execution": "PENDING; no new scheduled Parent since existing40745398328"
+  },
+  "preserved_old_parent_failure": {
+    "run": 40745398328,
+    "known_reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED; handover exit78",
+    "reason_source": "Priorauthenticatedreadinessreceipt reused; no log refetch/newinference fromrunstatus"
+  },
+  "access_limitations": [
+    "Public metadata does not authenticate original private per-method capture census or pre-value game/capture assignment.",
+    "No new APIquota/Odds/private transport check, acquisition, numerical accuracy study or secret read.",
+    "No model/product/source or production writer change.",
+    "No independent real-browser layout/MyPicks/cache check."
+  ],
+  "resource_attempts": {
+    "registered_max": 12,
+    "total": 12,
+    "connector_validator_rejections": 2,
+    "successful_remote_metadata_reads": 10,
+    "pages_GETs": 2,
+    "large_overlay_GETs": 0,
+    "decoded_pretty_JSON_source_bytes": 222188,
+    "pages_exact_bytes": 1552,
+    "HTTP_wire_bytes_attested": false,
+    "transport_accounting_note": "Tool rawtransportwrapper/gzipbytes not attested; parser-visible normalized metadata plus exactPages bodies counted conservatively; no fullboard/overlay/app/download/privatebody retained.",
+    "new_fits_queries_grades_dispatches_merges_Odds_APIcalls_secret_reads": 0
+  },
+  "preserved_failed_requests": [
+    {
+      "label": "latest_scheduled_parent",
+      "state": "CONNECTOR_VALIDATOR_REJECTED_WORKFLOW_SPECIFIC_PATH",
+      "response": {
+        "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)",
+        "error_code": "INVALID_ARGUMENT"
+      },
+      "resource_attempt_consumed": true,
+      "not_a_workflow_failure": true,
+      "recovery": "Canonical allowed actions/runs collection used inside last2slots; original failedattempts retained."
+    },
+    {
+      "label": "latest_website_hourly",
+      "state": "CONNECTOR_VALIDATOR_REJECTED_WORKFLOW_SPECIFIC_PATH",
+      "response": {
+        "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)",
+        "error_code": "INVALID_ARGUMENT"
+      },
+      "resource_attempt_consumed": true,
+      "not_a_workflow_failure": true,
+      "recovery": "Canonical allowed actions/runs collection used inside last2slots; original failedattempts retained."
+    }
+  ],
+  "next_existing_owner_actions": [
+    "Observe actual existing Parent in qualified morningwindow; preserve missed-window/handover checks and one-issue claim.",
+    "Admit revisedmedianproduct/selectionv2 onlyafter versionedsource/product/private restore and consumer checks; preserve oldP2/epoch and currentmean/probability outputs.",
+    "Authenticate original privateWeek8assignment/candidate coverage; no latest/first fallback assignment.",
+    "Qualify approvedprivateOddsroute/quota before acquisition; no infersecretmissing fromthisruntime."
+  ]
+}
+
