@@ -1,3 +1,7 @@
+# October 29: current category shortlists, actual Week 8 capture and new 2025 comparison
+
+[Current twelve-category decision and capture/release status](category-topfive-20261029/README.md) · [Up-to-five research procedures and producer-family shortlists](category-topfive-20261029/RESEARCH_RANKINGS.md) · [Readable comparison JSON](category-topfive-20261029/PUBLIC_RESULTS.json) · [New 2025 ordered-history comparison](category-topfive-20261029/ORDERED_2025.md).
+
 # Forecasting research: complete navigation index
 
 ## New ordered-history and analog comparisons — October29

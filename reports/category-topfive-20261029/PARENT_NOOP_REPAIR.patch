@@ -1,0 +1,30 @@
+--- a/.github/workflows/lab.yml
++++ b/.github/workflows/lab.yml
+@@ -100,14 +100,16 @@
+         run: timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --execute > controller-parent-result.json
+       - name: Keep original handover block when parent qualification fails
+         id: parent_readiness_block
+-        if: always() && steps.parent_route.outputs.requested == 'true' && steps.weekly_parent.outcome != 'success'
++        if: always() && steps.parent_route.outputs.requested == 'true' && (steps.parent_cadence.outcome != 'success' || steps.parent_cadence.outputs.due != 'false') && steps.weekly_parent.outcome != 'success'
+         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+       - name: Upload public-safe parent enqueue status
+         if: always() && steps.parent_route.outputs.requested == 'true'
+         uses: actions/upload-artifact@v4
+         with:
+           name: lab-parent-${{ github.run_id }}-${{ github.run_attempt }}
+-          path: controller-parent-result.json
++          path: |
++            controller-parent-result.json
++            parent-cadence-result.json
+           retention-days: 14
+           if-no-files-found: ignore
+       - uses: actions/setup-python@v5
+@@ -204,7 +206,7 @@
+           retention-days: 14
+           if-no-files-found: ignore
+       - name: Upload exact public-safe readiness receipt
+-        if: always() && (steps.parent_route.outputs.requested != 'true' || steps.weekly_parent.outcome != 'success')
++        if: always() && (steps.parent_route.outputs.requested != 'true' || ((steps.parent_cadence.outcome != 'success' || steps.parent_cadence.outputs.due != 'false') && steps.weekly_parent.outcome != 'success'))
+         uses: actions/upload-artifact@v4
+         with:
+           name: lab-readiness-${{ github.run_id }}-${{ github.run_attempt }}
