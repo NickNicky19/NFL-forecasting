@@ -1,0 +1,340 @@
+{
+  "category": "rec_tgt",
+  "category_definition": {
+    "modeled_roles": [
+      "RB",
+      "FB",
+      "WR",
+      "TE"
+    ],
+    "panels": {
+      "base": [
+        "f_player_targets_mean3",
+        "f_player_targets_n3",
+        "f_player_targets_mean8",
+        "f_player_targets_n8",
+        "f_player_rec_mean3",
+        "f_player_rec_n3",
+        "f_player_rec_mean8",
+        "f_player_rec_n8",
+        "f_player_rec_yd_mean3",
+        "f_player_rec_yd_n3",
+        "f_player_rec_yd_mean8",
+        "f_player_rec_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_rec_catch_rate3",
+        "f_player_rec_ypt3",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8"
+      ],
+      "context": [
+        "f_player_targets_mean3",
+        "f_player_targets_n3",
+        "f_player_targets_mean8",
+        "f_player_targets_n8",
+        "f_player_rec_mean3",
+        "f_player_rec_n3",
+        "f_player_rec_mean8",
+        "f_player_rec_n8",
+        "f_player_rec_yd_mean3",
+        "f_player_rec_yd_n3",
+        "f_player_rec_yd_mean8",
+        "f_player_rec_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_rec_catch_rate3",
+        "f_player_rec_ypt3",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8"
+      ]
+    },
+    "primary_roles": [
+      "RB",
+      "WR",
+      "TE"
+    ],
+    "state": "READY",
+    "support": "count",
+    "target": "rec_tgt"
+  },
+  "code_pins": {
+    "cdf_engine": {
+      "bytes": 27618,
+      "repository_file": "nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    "future_API": {
+      "bytes": 44865,
+      "repository_file": "nfl_lab/weekly_future_inference.py",
+      "sha256": "0689fdc2e3d0154d7431f7fb834d0684dbddd8f952cd5710e010e7fdd678fad7"
+    },
+    "physical_action_fields": {
+      "bytes": 7965,
+      "repository_file": "nfl_lab/rb_readiness.py",
+      "sha256": "e36a9be08a38a2c66195a81bd8958fe1574c18f679318ba632e2570eac05ded3"
+    },
+    "physical_predicate": {
+      "bytes": 19311,
+      "repository_file": "nfl_lab/permitted_source_features.py",
+      "sha256": "e3a7a3aac3320f8f88a6bdd81d239e5c36c6e23c278b5a504f822bda109d0edb"
+    },
+    "product": {
+      "bytes": 10106,
+      "repository_file": "nfl_lab/category_topfive_targets_product_v1.py",
+      "sha256": "bf44f9a4223f98785155ddbbfa18ab307e4983427349e6dc99cc73c164b69109"
+    },
+    "target_label_module": {
+      "bytes": 8772,
+      "repository_file": "nfl_lab/category_topfive_target_labels_v2.py",
+      "sha256": "028252f00997dd813f849277d750cba367e41dea30f20e5a41a90b6d44ff0909"
+    },
+    "worker": {
+      "bytes": 25830,
+      "repository_file": "tools/category_topfive_targets_frozen_v1_run.py",
+      "sha256": "ac297f8af7903ffcb0a4d1f3eb9dd1c53af868e629f4637710d009ff763dcf28"
+    }
+  },
+  "evaluation": {
+    "all_role_played_zero": 591,
+    "all_role_qualified_labels": 2090,
+    "clock_contract": "Original seven-day historical availability assumption and frozen query cutoffs preserved; not authenticated historical publication timing or genuine pregame issuance",
+    "cohort": "Frozen query position retained even when raw source position differs; all original 2999 queries retained, nonprimary coverage reported separately",
+    "evidence": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+    "intended_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "primary_RB_WR_TE_planned": 2458,
+    "primary_played_zero": 369,
+    "primary_unknown": 603,
+    "qualified_primary_labels": 1855,
+    "query_games": 93,
+    "query_player_games": 2999,
+    "season": 2026,
+    "season_type": "REG",
+    "supported_query_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "week7": {
+      "query_games": 0,
+      "raw_target_source_games": 0,
+      "reason": "MISSING_COMPATIBLE_QUERY_AND_TARGET_LABEL_SOURCE",
+      "scheduled_games": 14
+    }
+  },
+  "execution": {
+    "environment": {
+      "joblib": "1.5.3",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "pyarrow": "23.0.1",
+      "scikit-learn": "1.8.0",
+      "scipy": "1.17.0",
+      "threadpoolctl": "3.6.0"
+    },
+    "expected_forecast_rows": 11996,
+    "expected_new_CDF_query_rows": 2999,
+    "ordering": [
+      "authenticate exact code/environment/source/qualification/publication proof",
+      "consume once-only fit allocation durably",
+      "fit unchanged 32-tree CDF",
+      "generate all four procedures on all 2999 queries",
+      "freeze model, training/query projections and all forecasts in managed private storage with exact readback",
+      "project and qualify actual target outcomes",
+      "score unchanged forecast values and freeze grades",
+      "retain success or complete failure receipt; no automatic retry"
+    ],
+    "portable_command": "python -B tools/category_topfive_targets_frozen_v1_run.py --plan <approved-private-sealed-plan.json> --sha256 <exact-sealed-plan-sha256> --go <root-go.json>",
+    "publication_gate": "Exact portable code, this science record and protocol published with immutable remote readback proof before root seals execution; exact source independent review also required",
+    "resources": {
+      "CPU_seconds": 180,
+      "HTTP": 0,
+      "RSS_bytes": 1073741824,
+      "automatic_retries": 0,
+      "bootstrap_replicates": 500,
+      "fits": 1,
+      "managed_write_attempts": 3,
+      "native_metadata_bytes": 65536,
+      "original_model_loads": 0,
+      "peak_private_bytes": 33554432,
+      "public_aggregate_bytes": 196608,
+      "retained_private_bytes": 16777216,
+      "seed": 1703,
+      "trees": 32,
+      "wall_seconds": 270
+    },
+    "seed_tree": 1701
+  },
+  "experiment_id": "e:opportunity-four-targets-frozen-v1-20261029",
+  "hypothesis": "A fixed strong reception-feature leaf-CDF fitted to qualified target outcomes may reduce target point-display MAE relative to an unchanged earlier-history recent-eight-target mean on identical frozen 2026 cases.",
+  "labels": {
+    "context_checks": [
+      "schedule REG game",
+      "season/week",
+      "team",
+      "opponent"
+    ],
+    "keys": [
+      "season",
+      "week",
+      "game_id",
+      "player_id"
+    ],
+    "known_limit": "Exact retained historical aggregation commit and nullified/two-point target-credit exceptions not fully verified. Current public code uses stat_id115; contextual source inspection does not authenticate retained builder lineage.",
+    "participation": "Positive finite official physical count or nonzero finite signed production. Explicit source targets=0 plus positive other physical event qualifies played-zero. Missing source and zero-only rows stay unknown; no DNP imputation.",
+    "raw_identity": "Six source rows missing canonical player identity quarantined using metadata before target/action projection, originals retained; never assigned fabricated players or used as zero labels.",
+    "source_field": "provider weekly targets mapped unchanged"
+  },
+  "method_counting": "Four recorded procedures, three families, one tree fit. Recent3/8 are two fixed settings in one recent-history family; one CDF mean and median are distinct outputs of one model.",
+  "new_mechanism": "First separately identified direct target CDF using the unchanged existing reception-CDF representation. No new role information or learner tuning. Prior auxiliary target-count work is retained separately, not represented as a reproduced complete benchmark.",
+  "prespecified_primary": {
+    "candidate": "TGT_CDF_BASE",
+    "comparison": "same player-game and frozen horizon; point-display comparison, not equal-functional or probability superiority",
+    "control": "TGT_RECENT8_MEAN",
+    "control_output": "unrounded_recent_mean_or_training_position_mean_fallback",
+    "output": "lower_count_median",
+    "population": "frozen query RB/WR/TE roles with qualified played target labels",
+    "score": "MAE",
+    "unit": "credited receiving targets per player-game"
+  },
+  "prior_work": "QL1 label-empty query finding, QL2 failed raw identity attempt, identity-only diagnostic, QL3 successful source qualification, fictional/source checks and source-GET failures remain separately recorded; zero previous target predictive fits are attributed to these preparation runs.",
+  "procedures": [
+    {
+      "fallback": "Existing cold/unsupported-role training position prior or global prior; abstain if no supported training outcomes",
+      "family": "empirical_leaf_CDF",
+      "formula": "F(y|x) = 0.95 * average_tree_empirical_leaf_CDF(y|x) + 0.05 * training_position_support_prior_CDF(y)",
+      "method": "TGT_CDF_BASE",
+      "outputs": [
+        "actual lower count median",
+        "actual law mean",
+        "count distribution"
+      ],
+      "tree_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_estimators": 32,
+        "n_jobs": 2,
+        "random_state": 1701
+      }
+    },
+    {
+      "family": "training_position_prior",
+      "fit_accounting": "Same CDF training priors; zero additional tree fits",
+      "formula": "Geometric count prior on nonnegative integers: p = 1/(1+max(training position mean,0.05)), P(Y=k)=p*(1-p)^k; unknown role uses training global prior",
+      "method": "TGT_ROLE_PRIOR",
+      "outputs": [
+        "actual lower count median",
+        "actual law mean",
+        "count distribution"
+      ]
+    },
+    {
+      "distribution": null,
+      "family": "recent_history_mean",
+      "formula": "f_player_targets_mean3 when finite nonnegative with finite n3>0, else the same training-position prior mean; unknown role global prior; abstain without prior",
+      "method": "TGT_RECENT3_MEAN",
+      "outputs": [
+        "unrounded point-only mean"
+      ]
+    },
+    {
+      "distribution": null,
+      "family": "recent_history_mean",
+      "formula": "f_player_targets_mean8 when finite nonnegative with finite n8>0, else the same training-position prior mean; unknown role global prior; abstain without prior",
+      "method": "TGT_RECENT8_MEAN",
+      "outputs": [
+        "unrounded point-only mean"
+      ]
+    }
+  ],
+  "product": "rec_tgt_nflverse_weekly_v1",
+  "readiness": {
+    "dependencies": [
+      "target-credit/source lineage qualification",
+      "current-source feature binding",
+      "new typed future-query wrapper",
+      "fresh-process restoration/replay",
+      "target consumer source/schema/labels/sort/fallback/rollback tests",
+      "retained production-owner admission/capture/publication and served-value readback"
+    ],
+    "deployment": false,
+    "genuine_pregame_capture": 0,
+    "operational": "NOT_ADMITTED",
+    "research": "PREPARED_NOT_EXECUTED",
+    "website": "NO_EXISTING_TARGET_PRODUCT"
+  },
+  "restoration": "Restricted source snapshots, row forecasts, fitted model, labels and private storage bindings remain in existing approved owner-controlled private restoration route, manifest keyed by this run. The public record contains no storage destination; hash or public report alone is not proof of off-host restoration.",
+  "run_id": "r:opportunity-four-targets-frozen-v1-20261029",
+  "schema_version": "public-research-science-v1",
+  "scoring": {
+    "calibration": "NOT_ESTABLISHED for target offered thresholds; no fabricated target lines",
+    "coverage": "Full planned/forecasted/scored/fallback/unknown counts; primary and all-role panels separate; preserve every unsupported row",
+    "distribution_primary": "CRPS for supported complete CDF/prior laws; secondary log loss retains positive infinity and exact denominator",
+    "exact_count": "Only registered integer lower count median; means not rounded",
+    "mean_primary": "MSE; RMSE also in targets",
+    "periods": "2026 each supported week and pooled W1-6; no new 2025 evaluation in this frozen pilot",
+    "point_outputs": [
+      "MAE",
+      "MSE",
+      "RMSE",
+      "signed bias",
+      "p90 absolute error",
+      "p95 absolute error",
+      "strict absolute error<1",
+      "inclusive absolute error<=1"
+    ],
+    "uncertainty": {
+      "bootstrap_replicates": 500,
+      "clusters": [
+        "game_id",
+        "week"
+      ],
+      "minimum_clusters": 8,
+      "note": "Six supported weeks cannot supply an admitted week bootstrap interval; report null with reason. Game interval is development diagnostic, not selection-adjusted universal guarantee.",
+      "paired_difference": "absolute-error candidate minus control",
+      "seed": 1703
+    }
+  },
+  "state": "PROTOCOL_PREPARED_NO_PREDICTIVE_EXECUTION",
+  "training": {
+    "admission": "schedule-authenticated regular-season rows; kickoff and recorded outcome availability strictly before cutoff; valid nonnegative integer target and qualified played state",
+    "cutoff_utc": "2026-09-01T00:00:00+00:00",
+    "feature_memory": "Existing features may include 2019-2021 warm history; not strict current-season information",
+    "history_comparison_status": "NOT weekly H-MULTI and NOT completion of H-CURRENT/H-RECENT/H-MULTI comparison",
+    "name": "REC_TGT_FROZEN_PRESEASON_2022_2025",
+    "preprocessing": "Fit missing-value medians, missing flags and position one-hot representation only on modeled training rows. No tuning/calibration/stacking.",
+    "refit_rule": "one fit before 2026; no within-2026 updates",
+    "season_type": "REG",
+    "seasons": [
+      2022,
+      2023,
+      2024,
+      2025
+    ]
+  },
+  "unsupported": {
+    "market_offer_probability_or_EV": "No authenticated target offers, prices, settlement or frozen selections",
+    "unrun_accuracy": null,
+    "website_relative_accuracy": "No actual website target incumbent"
+  }
+}
