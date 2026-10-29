@@ -441,3 +441,12 @@ Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 
 ## October28 continuation:2025 history and first chart-point comparison
 
 [Completed studies, all12decisions and Week8capture](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md):52forests+1chartfit, independent cached-row acceptance, all failures and oldlosses retained.3.06%2025attempt MSE gain vsCDF;18.07%chartMAE gain vsconstantposition control. Neither establishes today's website superiority. Week8originalcapture verifiedpartly; live0selected, retainedowner integration pending.
+
+
+## Original-session continuation — new backfield information, October29
+
+One new32-tree carry CDF fit, 2,999 new historical forecasts and matched2026W1–6 evaluation. MedianMAE3.534221 versus priorORDERED3.619772 and BASE3.661597; adverse bias/precision and chronology limitations retained. Independent saved-vector QA1,253checks/64metriccells; private fresh-process readback. New ordered future adapter and read-only V2 evidence package. No new pregame capture, admission or live deployment; retained-owner actions explicit.
+
+- [Results, current twelve-category state and exact owner request](category-topfive-continuation-20261029/README.md)
+- [Full scientific aggregate](category-topfive-continuation-20261029/RESULTS.json)
+- [Read-only V2 evidence handoff](category-topfive-continuation-20261029/V2_EVIDENCE_HANDOFF.json)

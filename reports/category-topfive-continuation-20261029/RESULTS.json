@@ -1,0 +1,1679 @@
+{
+  "actual_backend": "UNATTESTED",
+  "added_columns": {
+    "rush_att": [
+      "f_backfield_supported_RB_carries_mean3",
+      "f_backfield_other_RB_carries_mean3",
+      "f_backfield_positive_RB_carriers_mean3",
+      "f_backfield_supported_RB_HHI_mean3",
+      "f_backfield_player_supported_share_mean3",
+      "f_backfield_unknown_RB_rows_mean3",
+      "f_backfield_played_missing_RB_rows_mean3",
+      "f_backfield_games_n3",
+      "f_backfield_latest_game_age_days"
+    ]
+  },
+  "admitted_selected_deployed_live_verified": false,
+  "all_original_point_columns_bit_identical": true,
+  "all_role_operational_coverage": {
+    "rush_att": {
+      "BACKFIELD_CDF": {
+        "mean": {
+          "MAE": 1.2229296820256783,
+          "MSE": 6.444637034706108,
+          "RMSE": 2.5386289675149674,
+          "bias": 0.031659760752054594,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.7092130518234165,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 3.8647201589584825,
+          "p95_AE": 5.899769604750978,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.7092130518234165,
+          "weeks": 6
+        },
+        "median": {
+          "MAE": 1.1238003838771593,
+          "MSE": 6.493282149712092,
+          "RMSE": 2.5481919373767927,
+          "bias": -0.34069097888675626,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.7711132437619962,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 4.0,
+          "p95_AE": 6.0,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.6501919385796545,
+          "weeks": 6
+        }
+      },
+      "BASE_CDF_CACHED": {
+        "mean": {
+          "MAE": 1.2557106314571278,
+          "MSE": 6.714904223032425,
+          "RMSE": 2.591313223644032,
+          "bias": 0.056569169258129784,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.708253358925144,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 4.141449425088468,
+          "p95_AE": 6.281374421034739,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.708253358925144,
+          "weeks": 6
+        },
+        "median": {
+          "MAE": 1.1588291746641075,
+          "MSE": 6.778790786948177,
+          "RMSE": 2.603611105166856,
+          "bias": -0.30950095969289826,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.7653550863723608,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 4.0,
+          "p95_AE": 6.0,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.6497120921305183,
+          "weeks": 6
+        }
+      },
+      "COUNT_A_CORRECTED_MEAN": {
+        "mean": {
+          "MAE": 1.2489616041918825,
+          "MSE": 6.6859093677178265,
+          "RMSE": 2.585712545453927,
+          "bias": 0.058475727076435655,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.716890595009597,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 4.062803301375235,
+          "p95_AE": 6.315321017963408,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.716890595009597,
+          "weeks": 6
+        },
+        "median": {
+          "MAE": null,
+          "MSE": null,
+          "RMSE": null,
+          "bias": null,
+          "fallbacks": 171,
+          "games": 0,
+          "inclusive_error_le1": null,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": null,
+          "p95_AE": null,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 0,
+          "players": 0,
+          "scored": 0,
+          "strict_error_lt1": null,
+          "weeks": 0
+        }
+      },
+      "ORDERED_CDF_CACHED": {
+        "mean": {
+          "MAE": 1.2415242897358847,
+          "MSE": 6.614990212142669,
+          "RMSE": 2.571962327123527,
+          "bias": 0.019957549707518417,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.7116122840690979,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 3.9601130249610117,
+          "p95_AE": 6.053433637274495,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.7116122840690979,
+          "weeks": 6
+        },
+        "median": {
+          "MAE": 1.1482725527831095,
+          "MSE": 6.695297504798464,
+          "RMSE": 2.5875272954692603,
+          "bias": -0.3459692898272553,
+          "fallbacks": 171,
+          "games": 93,
+          "inclusive_error_le1": 0.7730326295585412,
+          "outcome_states": {
+            "played": 2090,
+            "unknown": 909
+          },
+          "p90_AE": 4.0,
+          "p95_AE": 6.0,
+          "planned": 2999,
+          "played_missing": 6,
+          "played_zero": 1354,
+          "players": 514,
+          "scored": 2084,
+          "strict_error_lt1": 0.6501919385796545,
+          "weeks": 6
+        }
+      }
+    }
+  },
+  "evaluation_season": 2026,
+  "games": 93,
+  "independent_QA": {
+    "actual": {
+      "CPU_seconds": 0.518632642,
+      "RSS_bytes": 137465856,
+      "wall_seconds": 0.5185057189992222
+    },
+    "checks": 1253,
+    "metric_cells": 64,
+    "original_source_not_independently_redecoded": true,
+    "proper_scores_saved_vectors_only": true,
+    "state": "PASS_INDEPENDENT_SAVED_VECTOR_QA"
+  },
+  "interpretation": "Added earlier-teamgame supported RB competition/concentration group only, unchanged strong learner and original base features. Group ablation, not isolated per-feature effects. Supported observed RB sums are not certified complete team opportunities. Exposed2026 current-vintage seven-day historical reconstruction, not current injury/availability, contemporaneous website or untouched confirmation. Unknowns neverzero. Full original primary population and fallbacks retained. No subgroup-trained model or autoactivation.",
+  "new_backfield_forecast_rows_all_roles": 2999,
+  "new_fits": 1,
+  "new_genuine_pregame_capture": 0,
+  "new_pregame_forecasts": 0,
+  "new_trees": 32,
+  "original_model_loads": 1,
+  "point_identity_explanation": "Forecast values are bit-identical before and after grading; predictions differ between methods.",
+  "primary_supported_target_outcomes": 526,
+  "primary_target_query_memberships": 668,
+  "private_evidence": {
+    "bytes": 5544062,
+    "capsules": 3,
+    "fresh_process_capsule_and_member_readback": "PASS",
+    "model_laws_independently_reconstructed": false,
+    "offhost_owner_restoration": "NOT_ATTESTED",
+    "original_private_source_independently_redecoded": false,
+    "route": "Retained owner approved private checkpoint restoration; no public raw rows or fitted weights",
+    "same_process_readback": "PASS"
+  },
+  "results": [
+    {
+      "candidate_minus_control_MAE": -0.12737642585551345,
+      "candidate_minus_ordered_MAE": -0.08555133079847899,
+      "game_interval": {
+        "candidate_minus_control_MAE": -0.12737642585551331,
+        "clusters": 93,
+        "minimum_clusters": 8,
+        "nominal95_interval": [
+          -0.2002003816793893,
+          -0.059961315280464215
+        ],
+        "paired_rows": 526,
+        "replicates": 500,
+        "secondary97_5_interval": [
+          -0.20848930654329342,
+          -0.0468911356541551
+        ],
+        "seed": 1703
+      },
+      "matched_strongest_ordered_control_MAE": 3.6197718631178706,
+      "ordered_game_interval": {
+        "candidate_minus_control_MAE": -0.08555133079847908,
+        "clusters": 93,
+        "minimum_clusters": 8,
+        "nominal95_interval": [
+          -0.15501962171899125,
+          -0.02685819773611604
+        ],
+        "paired_rows": 526,
+        "replicates": 500,
+        "secondary97_5_interval": [
+          -0.16204724061028708,
+          -0.017763297415290268
+        ],
+        "seed": 1703
+      },
+      "ordered_week_interval": {
+        "candidate_minus_control_MAE": -0.08555133079847908,
+        "clusters": 6,
+        "minimum_clusters": 8,
+        "nominal95_interval": null,
+        "paired_rows": 526,
+        "replicates": 500,
+        "secondary97_5_interval": null,
+        "seed": 1703
+      },
+      "primary": "median_MAE",
+      "products": {
+        "BACKFIELD_CDF": {
+          "mean": {
+            "MAE": 3.7008654523956674,
+            "MSE": 23.295657190680565,
+            "RMSE": 4.826557488591694,
+            "bias": 0.01836829586077487,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.1482889733840304,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 7.747688293860836,
+            "p95_AE": 9.59782080756133,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.1482889733840304,
+            "weeks": 6
+          },
+          "median": {
+            "MAE": 3.5342205323193916,
+            "MSE": 23.34790874524715,
+            "RMSE": 4.831967378330192,
+            "bias": -0.9714828897338403,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.31749049429657794,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 8.0,
+            "p95_AE": 10.0,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.13498098859315588,
+            "weeks": 6
+          }
+        },
+        "BASE_CDF_CACHED": {
+          "mean": {
+            "MAE": 3.8298563348529466,
+            "MSE": 24.347097863227134,
+            "RMSE": 4.934277846172339,
+            "bias": 0.12539978876454724,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.15019011406844107,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 7.91375502449586,
+            "p95_AE": 9.801457743102482,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.15019011406844107,
+            "weeks": 6
+          },
+          "median": {
+            "MAE": 3.661596958174905,
+            "MSE": 24.4638783269962,
+            "RMSE": 4.946097282403188,
+            "bias": -0.8669201520912547,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.2946768060836502,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 8.5,
+            "p95_AE": 10.75,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.1482889733840304,
+            "weeks": 6
+          }
+        },
+        "COUNT_A_CORRECTED_MEAN": {
+          "mean": {
+            "MAE": 3.7972103014698773,
+            "MSE": 24.216499471302253,
+            "RMSE": 4.921026262000869,
+            "bias": 0.11895124880045442,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.1844106463878327,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 7.713973591716537,
+            "p95_AE": 9.528581551145187,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.1844106463878327,
+            "weeks": 6
+          },
+          "median": {
+            "MAE": null,
+            "MSE": null,
+            "RMSE": null,
+            "bias": null,
+            "fallbacks": 32,
+            "games": 0,
+            "inclusive_error_le1": null,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": null,
+            "p95_AE": null,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 0,
+            "players": 0,
+            "scored": 0,
+            "strict_error_lt1": null,
+            "weeks": 0
+          }
+        },
+        "ORDERED_CDF_CACHED": {
+          "mean": {
+            "MAE": 3.7712919159728027,
+            "MSE": 23.909217079498855,
+            "RMSE": 4.889705213967285,
+            "bias": -0.02034746194292853,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.16539923954372623,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 7.832198068165672,
+            "p95_AE": 10.003251775153274,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.16539923954372623,
+            "weeks": 6
+          },
+          "median": {
+            "MAE": 3.6197718631178706,
+            "MSE": 24.064638783269963,
+            "RMSE": 4.905572217720372,
+            "bias": -0.9923954372623575,
+            "fallbacks": 32,
+            "games": 93,
+            "inclusive_error_le1": 0.3231939163498099,
+            "outcome_states": {
+              "played": 526,
+              "unknown": 142
+            },
+            "p90_AE": 9.0,
+            "p95_AE": 10.0,
+            "planned": 668,
+            "played_missing": 0,
+            "played_zero": 92,
+            "players": 129,
+            "scored": 526,
+            "strict_error_lt1": 0.13878326996197718,
+            "weeks": 6
+          }
+        }
+      },
+      "proper_distribution_secondary": {
+        "BACKFIELD_CDF": {
+          "CRPS": 2.503149900605991,
+          "calibration_claim": false,
+          "log_loss": {
+            "denominator": 526,
+            "impossible_events_retained": true,
+            "positive_infinite_rows": 0,
+            "state": "FINITE",
+            "value": 2.6782655423138664
+          }
+        },
+        "BASE_CDF_CACHED": "point control only; full cached proper-score reproduction not performed"
+      },
+      "signed_improvement_percent": 3.478712357217034,
+      "target": "rush_att",
+      "top_player_specialization": "not run; full unchanged primary population",
+      "week_interval": {
+        "candidate_minus_control_MAE": -0.12737642585551331,
+        "clusters": 6,
+        "minimum_clusters": 8,
+        "nominal95_interval": null,
+        "paired_rows": 526,
+        "replicates": 500,
+        "secondary97_5_interval": null,
+        "seed": 1703
+      },
+      "weekly": {
+        "1": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 4.25336441313595,
+              "MSE": 28.26483172420972,
+              "RMSE": 5.316467974530621,
+              "bias": 0.14516487170553907,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.10112359550561797,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 7.984243980076698,
+              "p95_AE": 9.417689068103144,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.10112359550561797,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 4.112359550561798,
+              "MSE": 27.910112359550563,
+              "RMSE": 5.2830022108220405,
+              "bias": -0.898876404494382,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.24719101123595505,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 8.200000000000003,
+              "p95_AE": 10.0,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.0898876404494382,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 4.382160179433991,
+              "MSE": 28.929049637956908,
+              "RMSE": 5.378573197229625,
+              "bias": 0.4471781562194484,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.10112359550561797,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 8.093639746878369,
+              "p95_AE": 9.2350700951258,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.10112359550561797,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 4.269662921348314,
+              "MSE": 28.876404494382022,
+              "RMSE": 5.373676999446657,
+              "bias": -0.5842696629213483,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.21348314606741572,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 9.0,
+              "p95_AE": 9.599999999999994,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.10112359550561797,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 4.352216366076559,
+              "MSE": 28.37847483669498,
+              "RMSE": 5.327145092513905,
+              "bias": 0.4747438269918521,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.14606741573033707,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 7.939874810166089,
+              "p95_AE": 8.707420765687546,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.14606741573033707,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 15,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 4.272039343524094,
+              "MSE": 28.51961252662268,
+              "RMSE": 5.340375691524209,
+              "bias": 0.09803659576775135,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.15730337078651685,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 8.585486380729407,
+              "p95_AE": 9.360763585438301,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.15730337078651685,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 4.202247191011236,
+              "MSE": 28.96629213483146,
+              "RMSE": 5.382034200451671,
+              "bias": -0.8764044943820225,
+              "fallbacks": 15,
+              "games": 16,
+              "inclusive_error_le1": 0.2696629213483146,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 28
+              },
+              "p90_AE": 9.0,
+              "p95_AE": 10.0,
+              "planned": 117,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.11235955056179775,
+              "weeks": 1
+            }
+          }
+        },
+        "2": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 3.61185310540179,
+              "MSE": 22.60557269854196,
+              "RMSE": 4.7545318064497115,
+              "bias": 0.6218306481033016,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.22105263157894736,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.713973591716537,
+              "p95_AE": 9.258265170895061,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.22105263157894736,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.3789473684210525,
+              "MSE": 21.231578947368423,
+              "RMSE": 4.607773751755659,
+              "bias": -0.3894736842105263,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.3263157894736842,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.0,
+              "p95_AE": 9.299999999999997,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.11578947368421053,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.8566713358749563,
+              "MSE": 24.053300776088015,
+              "RMSE": 4.904416456224737,
+              "bias": 0.921487891068908,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.2,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.622367873331447,
+              "p95_AE": 9.507520908692383,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.2,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.610526315789474,
+              "MSE": 22.13684210526316,
+              "RMSE": 4.704980563749776,
+              "bias": -0.1368421052631579,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.29473684210526313,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.0,
+              "p95_AE": 10.0,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.12631578947368421,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 3.7606186040605136,
+              "MSE": 23.07711261879112,
+              "RMSE": 4.803864342255214,
+              "bias": 0.9797104680603284,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.22105263157894736,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.713973591716537,
+              "p95_AE": 9.15974970331481,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.22105263157894736,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 11,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.809467168687172,
+              "MSE": 23.810494922037623,
+              "RMSE": 4.879599873149194,
+              "bias": 0.6386879230928044,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.23157894736842105,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.630871137582415,
+              "p95_AE": 10.512938883511001,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.23157894736842105,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.5789473684210527,
+              "MSE": 22.210526315789473,
+              "RMSE": 4.7128045064260276,
+              "bias": -0.37894736842105264,
+              "fallbacks": 11,
+              "games": 16,
+              "inclusive_error_le1": 0.3157894736842105,
+              "outcome_states": {
+                "played": 95,
+                "unknown": 16
+              },
+              "p90_AE": 7.0,
+              "p95_AE": 11.0,
+              "planned": 111,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 95,
+              "scored": 95,
+              "strict_error_lt1": 0.12631578947368421,
+              "weeks": 1
+            }
+          }
+        },
+        "3": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 4.0613069478475525,
+              "MSE": 26.374910589198596,
+              "RMSE": 5.135650941136731,
+              "bias": 0.10819308139883406,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.12359550561797752,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 8.570536979978744,
+              "p95_AE": 11.190070407115284,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.12359550561797752,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.898876404494382,
+              "MSE": 25.89887640449438,
+              "RMSE": 5.0890938687053495,
+              "bias": -0.7752808988764045,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.29213483146067415,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 8.200000000000003,
+              "p95_AE": 11.599999999999994,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.1348314606741573,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 4.094459955031097,
+              "MSE": 26.720347856165223,
+              "RMSE": 5.169172840616303,
+              "bias": 0.08560888244240818,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.0898876404494382,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 8.51624593700587,
+              "p95_AE": 11.077175077385585,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.0898876404494382,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.9775280898876404,
+              "MSE": 26.9438202247191,
+              "RMSE": 5.190743706321773,
+              "bias": -0.8539325842696629,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.24719101123595505,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 9.0,
+              "p95_AE": 11.0,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.1348314606741573,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 4.045414938608424,
+              "MSE": 26.311709194094444,
+              "RMSE": 5.129494048548496,
+              "bias": 0.11379545127572646,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.1348314606741573,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 8.700679739244542,
+              "p95_AE": 10.613936604758614,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.1348314606741573,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 2,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 4.110992731428452,
+              "MSE": 26.781130453313125,
+              "RMSE": 5.175048835838472,
+              "bias": -0.025107288670707027,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.10112359550561797,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 8.736720102403316,
+              "p95_AE": 10.53518764105699,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.10112359550561797,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.9213483146067416,
+              "MSE": 26.46067415730337,
+              "RMSE": 5.143993988847904,
+              "bias": -0.8876404494382022,
+              "fallbacks": 2,
+              "games": 16,
+              "inclusive_error_le1": 0.3146067415730337,
+              "outcome_states": {
+                "played": 89,
+                "unknown": 24
+              },
+              "p90_AE": 9.0,
+              "p95_AE": 10.599999999999994,
+              "planned": 113,
+              "played_missing": 0,
+              "played_zero": 17,
+              "players": 89,
+              "scored": 89,
+              "strict_error_lt1": 0.11235955056179775,
+              "weeks": 1
+            }
+          }
+        },
+        "4": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 3.3617089615220754,
+              "MSE": 19.998321124062844,
+              "RMSE": 4.471948247024203,
+              "bias": -0.12700940611514472,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.15555555555555556,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.46260413799688,
+              "p95_AE": 7.967028999381146,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.15555555555555556,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.2,
+              "MSE": 19.866666666666667,
+              "RMSE": 4.457203906785808,
+              "bias": -1.0888888888888888,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.3111111111111111,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.1000000000000085,
+              "p95_AE": 8.549999999999997,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.15555555555555556,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.4617555394874038,
+              "MSE": 21.01971170657019,
+              "RMSE": 4.584725914007313,
+              "bias": -0.14088868713514008,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.18888888888888888,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.55871360092898,
+              "p95_AE": 8.330377991271318,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.18888888888888888,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.3222222222222224,
+              "MSE": 21.166666666666668,
+              "RMSE": 4.600724580614087,
+              "bias": -1.0555555555555556,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.3111111111111111,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 7.0,
+              "p95_AE": 9.0,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.14444444444444443,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 3.466891447571789,
+              "MSE": 21.770973471001444,
+              "RMSE": 4.665937576843634,
+              "bias": -0.2188511541002084,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.2222222222222222,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.639215439210158,
+              "p95_AE": 8.450810346131272,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.2222222222222222,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 1,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.355143040398481,
+              "MSE": 20.093765901946522,
+              "RMSE": 4.482607042999255,
+              "bias": -0.1792170687694718,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.18888888888888888,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.4575791423519355,
+              "p95_AE": 8.10883574780621,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.18888888888888888,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.2666666666666666,
+              "MSE": 20.11111111111111,
+              "RMSE": 4.48454134902457,
+              "bias": -1.1555555555555554,
+              "fallbacks": 1,
+              "games": 16,
+              "inclusive_error_le1": 0.3111111111111111,
+              "outcome_states": {
+                "played": 90,
+                "unknown": 24
+              },
+              "p90_AE": 6.0,
+              "p95_AE": 9.0,
+              "planned": 114,
+              "played_missing": 0,
+              "played_zero": 16,
+              "players": 90,
+              "scored": 90,
+              "strict_error_lt1": 0.13333333333333333,
+              "weeks": 1
+            }
+          }
+        },
+        "5": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 3.399759712966998,
+              "MSE": 21.30906316300705,
+              "RMSE": 4.616174082831696,
+              "bias": -0.23991490463900195,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.12941176470588237,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 7.522645242257782,
+              "p95_AE": 9.889547503554821,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.12941176470588237,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.223529411764706,
+              "MSE": 22.541176470588237,
+              "RMSE": 4.7477548873744775,
+              "bias": -1.2470588235294118,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.35294117647058826,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 7.6000000000000085,
+              "p95_AE": 9.799999999999997,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.18823529411764706,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.4931664239163505,
+              "MSE": 21.891077081173844,
+              "RMSE": 4.6787901300628825,
+              "bias": -0.24106776105697428,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.15294117647058825,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 7.427706379676247,
+              "p95_AE": 10.214895412077711,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.15294117647058825,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.3176470588235296,
+              "MSE": 23.176470588235293,
+              "RMSE": 4.814194697790617,
+              "bias": -1.2705882352941176,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.35294117647058826,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 8.200000000000017,
+              "p95_AE": 10.799999999999997,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.18823529411764706,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 3.527906487503538,
+              "MSE": 22.634319184786527,
+              "RMSE": 4.757553907712085,
+              "bias": -0.2560687239538729,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.17647058823529413,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 7.99281381816395,
+              "p95_AE": 9.925582947440857,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.17647058823529413,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 2,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.4529840362917974,
+              "MSE": 21.521524841578145,
+              "RMSE": 4.639129750457315,
+              "bias": -0.2938804115166161,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.17647058823529413,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 7.377897251272968,
+              "p95_AE": 9.994673292463592,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.17647058823529413,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.2823529411764705,
+              "MSE": 22.55294117647059,
+              "RMSE": 4.748993701456192,
+              "bias": -1.2588235294117647,
+              "fallbacks": 2,
+              "games": 15,
+              "inclusive_error_le1": 0.36470588235294116,
+              "outcome_states": {
+                "played": 85,
+                "unknown": 25
+              },
+              "p90_AE": 8.200000000000017,
+              "p95_AE": 10.0,
+              "planned": 110,
+              "played_missing": 0,
+              "played_zero": 15,
+              "players": 85,
+              "scored": 85,
+              "strict_error_lt1": 0.17647058823529413,
+              "weeks": 1
+            }
+          }
+        },
+        "6": {
+          "BACKFIELD_CDF": {
+            "mean": {
+              "MAE": 3.4870519189774076,
+              "MSE": 20.92217871822945,
+              "RMSE": 4.574076815951985,
+              "bias": -0.5145824657520139,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.15384615384615385,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 6.744220130649699,
+              "p95_AE": 9.690956341076593,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.15384615384615385,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.371794871794872,
+              "MSE": 22.705128205128204,
+              "RMSE": 4.764989843129595,
+              "bias": -1.5512820512820513,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.38461538461538464,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 8.0,
+              "p95_AE": 11.149999999999991,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.1282051282051282,
+              "weeks": 1
+            }
+          },
+          "BASE_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.656722034235644,
+              "MSE": 23.284588716168567,
+              "RMSE": 4.825410730307687,
+              "bias": -0.45933802141402835,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.16666666666666666,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 7.632654053618671,
+              "p95_AE": 9.848312861441727,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.16666666666666666,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.4358974358974357,
+              "MSE": 24.641025641025642,
+              "RMSE": 4.963972767957701,
+              "bias": -1.435897435897436,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.358974358974359,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 8.299999999999997,
+              "p95_AE": 11.0,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.20512820512820512,
+              "weeks": 1
+            }
+          },
+          "COUNT_A_CORRECTED_MEAN": {
+            "mean": {
+              "MAE": 3.599902350656174,
+              "MSE": 23.0105371959306,
+              "RMSE": 4.7969299761337565,
+              "bias": -0.53104728150524,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.20512820512820512,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 7.323597363611928,
+              "p95_AE": 9.808249894526169,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.20512820512820512,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": null,
+              "MSE": null,
+              "RMSE": null,
+              "bias": null,
+              "fallbacks": 1,
+              "games": 0,
+              "inclusive_error_le1": null,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": null,
+              "p95_AE": null,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 0,
+              "players": 0,
+              "scored": 0,
+              "strict_error_lt1": null,
+              "weeks": 0
+            }
+          },
+          "ORDERED_CDF_CACHED": {
+            "mean": {
+              "MAE": 3.592869171602183,
+              "MSE": 22.496365362810355,
+              "RMSE": 4.743033350379307,
+              "bias": -0.4712750620419095,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.1282051282051282,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 7.871340807574347,
+              "p95_AE": 9.570090445243446,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.1282051282051282,
+              "weeks": 1
+            },
+            "median": {
+              "MAE": 3.4358974358974357,
+              "MSE": 24.205128205128204,
+              "RMSE": 4.919870750855982,
+              "bias": -1.5128205128205128,
+              "fallbacks": 1,
+              "games": 14,
+              "inclusive_error_le1": 0.3717948717948718,
+              "outcome_states": {
+                "played": 78,
+                "unknown": 25
+              },
+              "p90_AE": 9.0,
+              "p95_AE": 11.0,
+              "planned": 103,
+              "played_missing": 0,
+              "played_zero": 13,
+              "players": 78,
+              "scored": 78,
+              "strict_error_lt1": 0.1794871794871795,
+              "weeks": 1
+            }
+          }
+        }
+      }
+    }
+  ],
+  "reused_BASE_forecasts_all_roles": 2999,
+  "reused_CountA_points_all_roles": 2999,
+  "reused_ORDERED_forecasts_all_roles": 2999,
+  "software_check": {
+    "NFL_observations": 0,
+    "fictional_checks": 11
+  },
+  "state": "NEW_BACKFIELD_INFORMATION_COMPARISON_COMPLETE",
+  "total_method_rows_frozen": 11996,
+  "training_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "unique_all_role_player_games": 2999,
+  "usage": {
+    "CAS_attempts": 3,
+    "CPU_seconds": 65.388466671,
+    "HTTP": 0,
+    "RSS_bytes": 563924992,
+    "actual_forest_fit_entries": 1,
+    "blocked_calls": [],
+    "fit_attempts": 1,
+    "original_model_loads": 1,
+    "retained_law_query_rows": 2999,
+    "retained_law_scoring_passes": 1,
+    "returned_forest_fits": 1,
+    "trees_returned": 32,
+    "wall_seconds": 63.876896218000184
+  },
+  "usage_before_grade": {
+    "CAS_attempts": 2,
+    "CPU_seconds": 57.468141411,
+    "HTTP": 0,
+    "RSS_bytes": 563924992,
+    "actual_forest_fit_entries": 1,
+    "blocked_calls": [],
+    "fit_attempts": 1,
+    "original_model_loads": 1,
+    "retained_law_query_rows": 2999,
+    "retained_law_scoring_passes": 1,
+    "returned_forest_fits": 1,
+    "trees_returned": 32,
+    "wall_seconds": 55.953544356998464
+  },
+  "version": "category-topfive-backfield-v1-20261029",
+  "weeks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ]
+}

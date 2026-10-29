@@ -1,0 +1,103 @@
+{
+  "actual_backend": "UNATTESTED",
+  "actual_execution_state": "See RESULTS.json and EXECUTION_RECEIPT.json; draft state is not completion status",
+  "added_columns": {
+    "rush_att": [
+      "f_backfield_supported_RB_carries_mean3",
+      "f_backfield_other_RB_carries_mean3",
+      "f_backfield_positive_RB_carriers_mean3",
+      "f_backfield_supported_RB_HHI_mean3",
+      "f_backfield_player_supported_share_mean3",
+      "f_backfield_unknown_RB_rows_mean3",
+      "f_backfield_played_missing_RB_rows_mean3",
+      "f_backfield_games_n3",
+      "f_backfield_latest_game_age_days"
+    ]
+  },
+  "chronology": "Admit each source record by strict earlier qualified/reconstructed availability and earlier kickoff, then choose latest3teamgames by game chronology. Original kickoff+7day assumption preserved. Training2019-2025REG exact original source; earlierPOSTcan enter historical features under original permitted prior-history recipe. Query2026REGW1-6leftlimit originalcutoff; currenttarget values neverfeatures. Current role/injury/announcements NOT qualified by this study. Compiled old-group facts reused only from pretraining-cutoff projection; each query2026extra projected before its own cutoff. Backfield max source timestamp explicitly updates feature_max_source_available_utc, preserving all original base numeric features.",
+  "controls": {
+    "BASE_CDF_CACHED": "Authenticated original training frame/model/procedure audit and exact source/horizon/query equality; reused frozen mean/median points; zero base inference/refits",
+    "COUNT_A_CORRECTED_MEAN": "Correct storedmean secondaryMSE benchmark, not count distribution",
+    "ORDERED_CDF_CACHED": "Exact previously frozen original ordered2026mean/median, only source-compatible rush_att rows, no new model load/inference"
+  },
+  "environment": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "evaluation": {
+    "allrole_queries": 2999,
+    "games": 93,
+    "primary_RB_queries": 668,
+    "season": 2026,
+    "supported_primary_RB_outcomes": 526,
+    "weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "failure": "One invocation, no automaticretry. Preserve consumedattempt and partial models/vectors under originalCAS/locks; evidence-only failure-retention cannot resume science.",
+  "forecast_product": "Conditional-on-played full count law, lowerCDFmedian for primaryMAE, actualmean secondaryMSE; probabilities not yet compared at authentic offers",
+  "freeze": "Reserve1fit32trees before numeric decode. Reuse cached original/ordered/CountA points, fit1CDF and durable models/features/forecast freeze/readback before target label projection. No claim target outcomes are untouched: alreadyexposeddevelopment.",
+  "hypothesis": "Nine fixed earlier-teamgame supported RB backfield competition/concentration features add useful information to unchanged leaf-CDF learner and original base representation. Whole-group controlled addition. No tuning, new source, ordered-feature combination or structured-model change.",
+  "novelty": "Completed ordered model added only ownplayer lag slots; old dynamic workload used shrunk owncarry share times held teamvolume. This adds otherRB observed opportunity and backfield concentration to unchanged CDF, no independent availability or finite-allocation claim.",
+  "population": "Original all2999queries,668primaryRBplanned,526supported. No postoutcome filtering, unknown neverzero. Supported-RB-count sums are partial observed denominators, not complete team opportunity certification. Unknown/playedmissingRBrows explicit; missing ownshare notzero; leave queryplayer out of competitor sums.",
+  "primary": "Median MAE on original 668 planned primary-RB2026W1-6 queries,526 supported outcomes, all registered fallbacks retained; paired against BASECDF with strongest existing ORDEREDCDF also compared",
+  "private_reproduction": "Approved authenticated private store/producer restoration required; no restricted records or locations in this public-safe scientific configuration",
+  "registration_draft_state_preserved": "SOURCE_REVIEW_PENDING_NO_FITS",
+  "release": "Research-only new procedure until real futurequery/source/model/wrapper/private-restoration entry and retainedproductionowner admission. No new scientific wait.",
+  "resources": {
+    "CPU_seconds": 240,
+    "HTTP": 0,
+    "RSS_bytes": 1073741824,
+    "automatic_retries": 0,
+    "bootstrap_replicates": 500,
+    "fits": 1,
+    "managed_write_attempts": 3,
+    "native_metadata_bytes": 65536,
+    "original_model_loads": 1,
+    "peak_private_bytes": 33554432,
+    "public_aggregate_bytes": 131072,
+    "retained_private_bytes": 16777216,
+    "seed": 1703,
+    "trees": 32,
+    "wall_seconds": 360
+  },
+  "secondary": [
+    "validmeanMSE/RMSE/MAE",
+    "bias,p90,p95,strict<1,inclusive<=1",
+    "candidateCRPS/logloss positiveinfretained; no matchedBASElaw claim",
+    "weeklyscores andallrolecoverage",
+    "paired bootstrap500seed1703 game95CI;weekCIunavailable below8clusters",
+    "paired bootstrap against strongest cached ORDERED, same526supportedRB outcomes"
+  ],
+  "training_cutoff_utc": "2026-09-01T00:00:00+00:00",
+  "training_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "tree_parameters": {
+    "bootstrap": false,
+    "criterion": "squared_error",
+    "max_depth": 8,
+    "max_features": 1.0,
+    "min_samples_leaf": 30,
+    "n_estimators": 32,
+    "n_jobs": 2,
+    "random_state": 1701
+  },
+  "version": "category-topfive-backfield-v1-20261029"
+}
