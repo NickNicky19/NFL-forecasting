@@ -1,0 +1,77 @@
+{
+  "CAS_writes": 0,
+  "CPU_seconds": 1.306055757,
+  "RSS_bytes": 135892992,
+  "blocked_attempts": {
+    "children": 0,
+    "network": 0
+  },
+  "cells": [
+    {
+      "lowest_observed_MAE_method": "CDF_LOWER_MEDIAN",
+      "offered": 1359,
+      "season": 2025,
+      "supported": 664,
+      "target": "pass_att",
+      "unknown": 695
+    },
+    {
+      "lowest_observed_MAE_method": "CDF_LOWER_MEDIAN",
+      "offered": 1359,
+      "season": 2025,
+      "supported": 664,
+      "target": "pass_int",
+      "unknown": 695
+    },
+    {
+      "lowest_observed_MAE_method": "CDF_LOWER_MEDIAN",
+      "offered": 515,
+      "season": 2026,
+      "supported": 211,
+      "target": "pass_td",
+      "unknown": 304
+    },
+    {
+      "lowest_observed_MAE_method": "CDF_LOWER_MEDIAN",
+      "offered": 515,
+      "season": 2026,
+      "supported": 211,
+      "target": "pass_att",
+      "unknown": 304
+    },
+    {
+      "lowest_observed_MAE_method": "CDF_LOWER_MEDIAN",
+      "offered": 515,
+      "season": 2026,
+      "supported": 211,
+      "target": "pass_int",
+      "unknown": 304
+    }
+  ],
+  "fits": 0,
+  "forecast_rows": 18926,
+  "inputs": {
+    "freeze": {
+      "bytes": 114560,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-count-median-completion-v1/FORECASTS_FROZEN.zip",
+      "sha256": "a4a7b96be5a71d28e09c2c806634083e219f867759563c257541966edd785674"
+    },
+    "grade": {
+      "bytes": 275677,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-count-median-completion-v1/GRADE_COMPLETE.zip",
+      "sha256": "2c014fb7247fa8993cfd67b635a1b8863c2410376d158061cf7c87fe1e3154d3"
+    }
+  },
+  "limits": [
+    "Does not establish original runtime/model-vector reproduction or source completeness",
+    "Exposed historical reconstruction; no current-website or probability claim"
+  ],
+  "model_loads": 0,
+  "new_forecasts": 0,
+  "plan_sha256": "0ed311d727c0eed3dc38183f044460d50860cb3a791a91fd76bb23ea9ac2caa5",
+  "scalar_checks": 14336,
+  "scope": "independent arithmetic on frozen rows, not independent source-truth verification",
+  "scored_row_incidences": 8719,
+  "state": "PASS",
+  "wall_seconds": 1.3085263209941331
+}

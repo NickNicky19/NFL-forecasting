@@ -1,0 +1,117 @@
+{
+  "actual_model_effort": "UNATTESTED",
+  "checks": [
+    "2117exactidentity/cutoff/position/fallbackrows andall8frozenpointfloatbits versusgrade, original4HGB/controlpoints retained",
+    "1954actuals/163unknown,1686played_score268played_zero,93games6weeks; unchangedoriginalHGBactuals/states",
+    "One trustedfrozenmodelunpickle, verify32trees/retainedhistograms and frozen2117x32leafIDs; patchapply/predicttofail; nofeaturequeries",
+    "Reconstructeveryretainedlawfromhistograms/support/priorfields; independentlyevaluateexactmean/lower0.5quantile/p10/p90",
+    "IndependentfullsupportCRPSfromCDFsquaredsums onintegerZ plusanalyticalleft/rightgeometrictails, divide50; logmixturemass useslogaddexp; retaininfinity",
+    "All8pointmetricsets; MAE/MSE/RMSE/bias/p90/p95/max/strictinclusive1and5tolerances; byweek/role/fallbackslice",
+    "All2properlaws CRPS/logmass/intervalcoveragewidthscore versusnativegradeandsafeaggregate",
+    "Fivefixedpairedcontrasts and500wholegame/weekclusterbootstrap draws PCG64seed1703; weekintervalremainsN/A6clusters",
+    "All16936privateCSVrowsoriginalprediction/actual/error/clock/state/method checked privately; aggregatehashreadback"
+  ],
+  "claim_boundary": "Independent verification of retainedvectors/formulas/aggregatearithmetic; not independentNFLsourcetruth, newfootballobservations,prospectiveconfirmation orlive/deploymentqualification",
+  "completed_study_plan_sha256": "250f187df9ddea7fdb19173cf958f33f97c1cbd0ce0ae449e76853502c5aafd7",
+  "environment": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "execution_authorized": true,
+  "independent_CRPS": "Forintegeractualy, CRPS_Z=sum[k<y]F(k)^2+sum[k>=y](1-F(k))^2. L=min(empirical_support,c,y),H=max(...). InteriorL..H-1exact; lefttail=b^2*q^(2*(c-L+1))/((1+q)^2*(1-q^2));righttail=b^2*q^(2*(H-c+1))/((1+q)^2*(1-q^2)). CRPS_chart=CRPS_Z/50.",
+  "independent_prior_CDF": "ForintegerZ, center c,0<q<1:P(Z<=k)=q^(c-k)/(1+q)ifk<c;1-q^(k-c+1)/(1+q)otherwise. PMF=(1-q)/(1+q)*q^abs(k-c).",
+  "inputs": {
+    "forecast": {
+      "bytes": 698121,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-cdf-control-v1/FORECASTS_FROZEN.json.gz",
+      "sha256": "063ba204d555313c59c1aae18717fc6642791371da28e7455dc79234ac385925"
+    },
+    "grade": {
+      "bytes": 547045,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-cdf-control-v1/GRADE_COMPLETE.json.gz",
+      "sha256": "8920c866bd979a8fc26c19b2da371ae21378bd60c95e06cb3af1ece24a3b14fb"
+    },
+    "native_complete": {
+      "bytes": 1269,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/CDF_CONTROL_NATIVE_V1/COMPLETE.json",
+      "sha256": "ac97329988c3b4121b37c9f6c8b58ec60c09d52b9affc0a2813bae9cb66f25ce"
+    },
+    "original_HGB_forecast": {
+      "bytes": 107386,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-point-pilot-v1/FORECASTS_FROZEN.json.gz",
+      "sha256": "b13a87929a712cb4058bb48395fc3d1824ce487088da34aaa8639879fb4b9922"
+    },
+    "original_HGB_grade": {
+      "bytes": 274774,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-point-pilot-v1/GRADE_COMPLETE.json.gz",
+      "sha256": "fbe03a9d98469b1fbc9f2c0700fe22c0cf8ff9d17d6d7ec3aa4adb27bfb5ad83"
+    },
+    "safe_aggregate": {
+      "bytes": 51207,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/SAFE_AGGREGATE_CDF_CONTROL_V1.json",
+      "sha256": "c91cb496940918abb380ff749f6e8e2ea853ac24bd1613749dacb4d52d88831e"
+    }
+  },
+  "metadata_inspected_now": {
+    "NFL_row_decodes": 0,
+    "archive_type": "GZIP compressedJSON; noZIPmemberdirectory exists; schema declaredfrom completedwriter source, not rowdecode",
+    "forecast_gzip_ISIZE": 7618082,
+    "grade_gzip_ISIZE": 6552150,
+    "model_loads": 0,
+    "new_fits": 0
+  },
+  "model_class_sources": {
+    "cdf_engine": {
+      "bytes": 27618,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    "package_init": {
+      "bytes": 59,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/__init__.py",
+      "sha256": "b83391a537342a00ccaab7b5dd1954457377109737617e9d4c61adee5912b899"
+    }
+  },
+  "model_package_root": "/workspace/nfl-next-chart-ppr-20261028",
+  "numerical_tolerance": "Pointfreezegradebits exact; independentmean/log/metric atol1e-10+rtol1e-12; individualindependentCRPS atol2e-9 forCDFsumvsoriginalmomentformula; no rounding of source/outcomeeligibility.",
+  "outputs": [
+    "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/LOWEST_CHART_CDF_ACCEPTANCE_CONSUMED_V1.json",
+    "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/LOWEST_CHART_CDF_ACCEPTANCE_RESULT_V1.json",
+    "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/LOWEST_CHART_CDF_ACCEPTANCE_FAILED_V1.json"
+  ],
+  "preparation_failure": "One draftASTsyntaxfailurebeforeexecution/seal, fixed keywordspacing;0NFLdecode/fit.",
+  "resources": {
+    "CAS_writes": 0,
+    "CPU_seconds": 45,
+    "HTTP": 0,
+    "RSS_bytes": 805306368,
+    "bootstrap_replicates": 500,
+    "fits": 0,
+    "forest_apply_predict_calls": 0,
+    "invocations": 1,
+    "maximum_empirical_support": 5589,
+    "maximum_input_bytes": 4194304,
+    "maximum_lattice_grid_width": 65536,
+    "maximum_uncompressed_gzip_bytes_each": 16777216,
+    "model_loads": 1,
+    "output_metadata_bytes": 32768,
+    "seed": 1703,
+    "wall_seconds": 60
+  },
+  "review": "PREEXEC_PASS",
+  "root_registration": {
+    "previous_managed_writer_closed": true,
+    "registered_by": "/root"
+  },
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "trusted_fitted_model_sha256": "dee275647336f34b0a96fdfad0b7b349c8c1df9e83fd4ce8fa53608ff621e877",
+  "version": "lowest-chart-cdf-independent-acceptance-v1",
+  "worker": {
+    "bytes": 23792,
+    "path": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/LOWEST_CHART_CDF_ACCEPTANCE_CODE_V1.py",
+    "sha256": "ec922f455c8aadd29e0005b6156078cd494787e2de6eb723f75320fbeca04511"
+  },
+  "write_scope": "Atmost32KiBnon-sensitiveaggregatereceiptsinexistingaccountedLOWESTprefix; noCAS/private/production/canonicalledgerwrites"
+}

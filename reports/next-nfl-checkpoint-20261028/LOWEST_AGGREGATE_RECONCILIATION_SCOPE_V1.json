@@ -1,0 +1,21 @@
+{
+  "version": "lowest-all-method-aggregate-reconciliation-v1",
+  "owner": "/root/all_methods_objectives",
+  "authorization": "parent assigned aggregate/metadata-only reconciliation under existing shared16MiB metadata reserve; canonical ledger writer unchanged",
+  "read_scope": "published aggregate reports, text index, existing canonical ledger metadata, dated private EXECUTION_LEDGER metadata and only named events.jsonl/attempt-consumed.json files; artifact byte hash authentication only",
+  "prohibited": "No player-game values/forecast vector/model deserialization/new fit/new inference/outcome joins/secrets/network/production or scheduler writes",
+  "finite_limits": {
+    "source_documents": 256,
+    "source_decoded_bytes": 100663296,
+    "private_event_files": 512,
+    "private_event_bytes": 2097152,
+    "metadata_output_JSON_bytes": 1048576,
+    "metadata_output_MD_bytes": 131072,
+    "new_NFL_fits": 0,
+    "new_NFL_forecasts": 0,
+    "new_NFL_scoring_runs": 0
+  },
+  "output_scope": "reports/next-nfl-checkpoint-20261028/LOWEST_* only; no canonical ledger/index append",
+  "actual_model_effort": "UNATTESTED",
+  "completeness": "Every inspected aggregate cell retained; private census limited to explicit named metadata files, not proof every arbitrary private attempt/result is accounted."
+}

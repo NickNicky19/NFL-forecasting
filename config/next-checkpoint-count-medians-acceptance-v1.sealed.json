@@ -1,0 +1,56 @@
+{
+  "accounting_descriptor": {
+    "bytes": 13226,
+    "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v13.json",
+    "sha256": "adf3e8f790b2a78af740756644063524a7d991c9caa0a668b8ddb5d7a076dd52"
+  },
+  "execution_authorized": true,
+  "independent_review": "PASS",
+  "inputs": {
+    "freeze": {
+      "bytes": 114560,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-count-median-completion-v1/FORECASTS_FROZEN.zip",
+      "sha256": "a4a7b96be5a71d28e09c2c806634083e219f867759563c257541966edd785674"
+    },
+    "grade": {
+      "bytes": 275677,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-count-median-completion-v1/GRADE_COMPLETE.zip",
+      "sha256": "2c014fb7247fa8993cfd67b635a1b8863c2410376d158061cf7c87fe1e3154d3"
+    }
+  },
+  "output": "/workspace/nfl-methods-integration/reports/next-nfl-checkpoint-20261028/LOWEST_COUNT_MEDIAN_NUMERICAL_ACCEPTANCE_V1.json",
+  "previous_metadata_probe_failure": {
+    "NFL_decodes": 0,
+    "correct_environment": "/workspace/nfl-direct-boosters-venv/bin/python",
+    "state": "FAILED_PYARROW_IMPORT_IN_DEFAULT_PYTHON"
+  },
+  "resources": {
+    "CAS_writes": 0,
+    "CPU_seconds": 20,
+    "RSS_bytes": 536870912,
+    "children": 0,
+    "fits": 0,
+    "invocations": 1,
+    "model_loads": 0,
+    "network": 0,
+    "new_forecasts": 0,
+    "safe_output_bytes": 16384,
+    "wall_seconds": 30
+  },
+  "review_corrections": "exact cells/participation/Python/PyArrow pins added as requested; no NFL decoded by reviewers",
+  "runtime": {
+    "bytecode": false,
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "python": "3.12.14",
+    "threads": 1
+  },
+  "state": "ROOT_AND_REVIEWER_SEALED",
+  "version": "next-checkpoint-count-median-independent-acceptance-v1",
+  "worker": {
+    "bytes": 9259,
+    "path": "/workspace/nfl-methods-integration/tools/next_checkpoint_count_median_acceptance_v1.py",
+    "sha256": "f01bfc17345fd4ffeec819abf9c98c9f2132ef1dcd3d6486ea26abfbf642f62a"
+  }
+}

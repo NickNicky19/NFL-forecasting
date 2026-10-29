@@ -1,5 +1,11 @@
 # Forecasting research: complete navigation index
 
+## Latest verified category and live-release checkpoint — October 28, 2026
+
+[Current twelve-category decisions](next-nfl-checkpoint-20261028/LOWEST_CURRENT_DECISION_V1.md) supersede dated pending statuses below. The retained owner has merged website PRs9/10/11; actual served consumption was verified for **1,948 provisional selected forecasts**. This is distinct from research selection or scientific qualification.
+
+[Complete safe all-method ledger](next-nfl-checkpoint-20261028/LOWEST_ALL_METHOD_LEDGER_V1.json) contains **4,832 aggregate cells** with losses and separate point-MAE, valid means, laws and probabilities. A zero-fit five-cell count-median continuation and one stronger same-chart PPR CDF fit completed, with independent numerical checks and adverse results retained. [Implemented research-informed initialization](next-nfl-checkpoint-20261028/LOWEST_RESEARCH_INFORMED_SELECTION_V1.json) retains the current choices and awaits normal producer admission; original P2/history are unchanged. Chart PPR is not live. Private raw evidence remains private.
+
 ## Reconciled category/market/chart checkpoint — October28
 
 [Current twelve-category decisions, actual comparisons and served status](next-nfl-checkpoint-20261028/README.md)
@@ -313,4 +319,3 @@ Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 
 ## October 28: Week 8 capture and completed continuations
 
 [New results and twelve-category decisions](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md): 52 CDF forests complete the 2025 history comparison; one first chart-PPR median fit is scored. Independent cached-row QA passed. The 3.06% attempt MSE reduction is versus historical CDF; the 18.07% chart-MAE reduction is versus a constant position control. Neither is a demonstrated win over today's website. Original failures and negative 2026 results remain. The existing Week 8 stream is preserved; per-method census/assignment and retained-owner live integration remain explicit dependencies.
-

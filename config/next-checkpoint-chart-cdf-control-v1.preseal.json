@@ -1,0 +1,349 @@
+{
+  "GO_template": {
+    "code_sha256": {
+      "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+      "nfl_lab/next_checkpoint_chart_ppr.py": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e",
+      "nfl_lab/ppr_outcomes.py": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0",
+      "nfl_lab/ppr_sources.py": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899",
+      "nfl_lab/scoring.py": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13",
+      "tools/next_checkpoint_chart_cdf_build.py": "88e209b87e3fd339de6c7c384bf6130e86101a644bea57aefad23e45fe4f17d5",
+      "tools/next_checkpoint_chart_cdf_contract.py": "d453c7df57dcec4e4f7e643554e23be9bf2d988c04d59c3891eaff65e80984df",
+      "tools/next_checkpoint_chart_cdf_run.py": "1018a432891cf9abc7869f85f94a7828d891bb66efb4f36b9d7827864b29eb6c",
+      "tools/next_checkpoint_chart_point_build.py": "7efd401fa5a430b3b39809d24b22a419a31812053adb3f9c1aa55788dcfbfc85",
+      "tools/next_checkpoint_chart_ppr_labels.py": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    },
+    "independent_review": "PASS",
+    "plan_sha256": "ROOT_SEALED_PLAN_SHA256",
+    "predictive_fits": 1,
+    "registered_by": "/root",
+    "source_native_broad_zero_qualification": "PASS",
+    "state": "ROOT_AND_INDEPENDENT_GO"
+  },
+  "actual_agent_model_effort": "UNATTESTED",
+  "capsule_contents": "FullinferenceCDFmodelpickle,traininglabel/clockbindings,queryleafIDs+allpointandintervalvalues beforeactualscoring; scorecapsuleall2117actualstatesand8procedures,properlawlosses,readableCSV.",
+  "chronology_admission": "All2024REG plannedlabels exactqualifiedcalendar game/team/opponent/week; sourcegameday/gametime America/New_York=>UTC, no inventedclock; kickoff+7day explicitlyASSUMEDavailability strictlybefore2026-09-01origin includingprior-only labels withoutfeatures. Usedfeaturetraining outcome_available mustbeknownawareprior;unknownfeaturemax=>prior-onlytraining+positionfallbackquery. Knownfuture/equalfeaturemax invalidatesinvocation.2026requiredquerycutoff/kickoffmustbeknownaware; unknownmaxneverfabricated.",
+  "code_bindings": {
+    "nfl_lab/cdf_engine.py": {
+      "bytes": 27618,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    "nfl_lab/next_checkpoint_chart_ppr.py": {
+      "bytes": 11779,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/next_checkpoint_chart_ppr.py",
+      "sha256": "13c72bd00ef42acf14c3cd24f8c0f371eb53cd676278a599cf0a8021a3b0585e"
+    },
+    "nfl_lab/ppr_outcomes.py": {
+      "bytes": 7856,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_outcomes.py",
+      "sha256": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0"
+    },
+    "nfl_lab/ppr_sources.py": {
+      "bytes": 10983,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/ppr_sources.py",
+      "sha256": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899"
+    },
+    "nfl_lab/scoring.py": {
+      "bytes": 5384,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/nfl_lab/scoring.py",
+      "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13"
+    },
+    "tools/next_checkpoint_chart_cdf_build.py": {
+      "bytes": 26921,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_cdf_build.py",
+      "sha256": "88e209b87e3fd339de6c7c384bf6130e86101a644bea57aefad23e45fe4f17d5"
+    },
+    "tools/next_checkpoint_chart_cdf_contract.py": {
+      "bytes": 3460,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_cdf_contract.py",
+      "sha256": "d453c7df57dcec4e4f7e643554e23be9bf2d988c04d59c3891eaff65e80984df"
+    },
+    "tools/next_checkpoint_chart_cdf_run.py": {
+      "bytes": 21618,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_cdf_run.py",
+      "sha256": "1018a432891cf9abc7869f85f94a7828d891bb66efb4f36b9d7827864b29eb6c"
+    },
+    "tools/next_checkpoint_chart_point_build.py": {
+      "bytes": 21585,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_point_build.py",
+      "sha256": "7efd401fa5a430b3b39809d24b22a419a31812053adb3f9c1aa55788dcfbfc85"
+    },
+    "tools/next_checkpoint_chart_ppr_labels.py": {
+      "bytes": 16246,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/tools/next_checkpoint_chart_ppr_labels.py",
+      "sha256": "f031404e3eb7650a7e5e5875d92172ae63983ca5f0d5d6bc0e317d8be02ec7f4"
+    }
+  },
+  "comparators": {
+    "GLOBAL_CHART_MEDIAN_2024": "Allqualified2024empiricalmedian. MAEprimary.",
+    "HGB_CHART_MEDIAN_V1": "One150iterationabsolute-errorHGB+position/globalmedianfallback. Numericpoint,notdistribution.",
+    "LEAF_CDF_CHART_MEAN_V1": "Exactmeanofnewretainedlaw/50; MSEsecondary againstpositionmean. Notmedian fallback.",
+    "LEAF_CDF_CHART_MEDIAN_V1": "New32treeCDF lowerlawmedian/50; same32rawfeatures. PrimaryMAE vsretainedHGBnotrefit.",
+    "POSITION_CHART_MEAN_2024": "Training2024positionempiricalmean; globalmeanonlyunseenrole. MSEprimary,MAE/RMSEreadability.",
+    "POSITION_CHART_MEDIAN_2024": "Training2024positionempiricalmedian; globalmedianonlyunseenrole. MAEprimary.",
+    "ROLE_LAW_CHART_MEAN_V1": "Exactmeanofsamefullsupportprior, distinct fromempiricalpositionmean.",
+    "ROLE_LAW_CHART_MEDIAN_V1": "Proper signed0.02fullsupport prior fittedall5589qualified2024labels byposition/global; lowerlawmedian.",
+    "unavailable": "Noauthenticoldwebsitechartoutput orofferedchartprices; noCDFproper-scoreequivalentforoldHGBpoint. Oldsitefpts isdifferenttarget."
+  },
+  "continuation_version": "next-checkpoint-chart-cdf-control-v1",
+  "evaluation_population": {
+    "REG_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "games": 93,
+    "known_played_complete_chart_labels": 1954,
+    "not_offered_board": "Source-listedpopulation; noqualifiedsamechartofferedline orcurrentwebsitechartforecasts. Do notclaimfullstatlessrosterorofferedboardcoverage.",
+    "planned": 2117,
+    "rare_positive_numeric": 1,
+    "rule": "Every2117plannedplayergame gets8pointoutputs fromoneCDFfamily+properprior and4retainedHGB/simple outputs. Same85fallbackeligibility/horizon asoldHGBcheckedBEFOREfit. NewCDF100%role/globalprior fallback remainsvalidlaw, so itslowerCDFmedianmaydifferfromHGBempiricalmedian. Both unknownsourceclockNone/NaT remainunknown; no fabricatedtime. Actual2026 numericread onlyaftercompleteCASfreeze.",
+    "unknown": 163,
+    "year": 2026
+  },
+  "execution_authorized": false,
+  "fallback_contract": "Same85 cold/unknown history eligibility asHGBpilot;100%CDFrole/globalpriorlaw insteadofHGBempiricalmedian. ExactCDFmean+lowerCDFmedian remainhonest; reportwholepopulation andseparatefallback/modelonlymetricdifferences.",
+  "features": [
+    "f_player_pass_yd_mean3",
+    "f_player_pass_yd_mean8",
+    "f_player_pass_td_mean3",
+    "f_player_pass_td_mean8",
+    "f_player_pass_att_mean3",
+    "f_player_pass_att_mean8",
+    "f_player_pass_int_mean3",
+    "f_player_pass_int_mean8",
+    "f_player_rush_yd_mean3",
+    "f_player_rush_yd_mean8",
+    "f_player_rush_att_mean3",
+    "f_player_rush_att_mean8",
+    "f_player_rec_mean3",
+    "f_player_rec_mean8",
+    "f_player_rec_yd_mean3",
+    "f_player_rec_yd_mean8",
+    "f_player_rush_td_mean3",
+    "f_player_rush_td_mean8",
+    "f_player_rec_td_mean3",
+    "f_player_rec_td_mean8",
+    "f_player_rec_tgt_mean3",
+    "f_player_rec_tgt_mean8",
+    "f_player_games_prior",
+    "f_player_play_rate8",
+    "f_player_known_participation_n8",
+    "f_player_pass_ypa3",
+    "f_player_comp_rate3",
+    "f_player_rush_ypa3",
+    "f_player_rec_ypt3",
+    "f_player_rec_catch_rate3",
+    "f_rest_days",
+    "f_is_home"
+  ],
+  "freeze_contract": "TokenizewholeauthenticatedlabelJSONusingNumericToken string subclass forparse_int/parse_float. Convert2024trainingvaluesand2024/26identityseason/weekonly; no2026targetvalue numericconversion/accessbeforeCASforecastfreeze. Then scorefromoriginalunchangedtokens. Fullfittedmodelpickle+all2117forecastsretainedinprivatefreeze; gradecapsuleseparate.",
+  "hypothesis": "One fixed LeafCDF with same32rawinputs,2024training/2026queries may improve same-chart medianpoint vs retainedHGB; exactsigned0.02latticelaw can be scoredproperly vsitsrole-priorlaw; nohypersearch",
+  "identity": "Canonicalgame/player/team key; declaredLA/STL->LAR,SD->LAC,OAK->LValiasnormalizationonly; exactseason/week/opponentbinding; duplicateorconflict abort, no favorable subset retry. Weeklypositionmetadata preserves source-listedrole, includingFB, evenmissingquery. Require len canonicalfeaturelookups equalsoriginalframes afteraliases; collisionaborts. Calendarjoinsall5935traininglabels.",
+  "independent_review": null,
+  "inputs": {
+    "chart_labels": {
+      "bytes": 839403,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-checkpoint-chart-2026-bridge-v1/CHART_LABELS_2026_BRIDGE_COMPLETE.json.gz",
+      "sha256": "981865b8c8190837d351a106f1a7d0a27113a240de34f8e58e80785c2980b27b"
+    },
+    "historical_features": {
+      "bytes": 3629507,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/common-learner-source-retention-v4-20261027/corrected-features.parquet",
+      "sha256": "f7325134d9e70ed241fc041f8a7bfa4842054b7d3156ae6040d58e44b8127d17"
+    },
+    "original_HGB_forecasts": {
+      "bytes": 107386,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-point-pilot-v1/FORECASTS_FROZEN.json.gz",
+      "sha256": "b13a87929a712cb4058bb48395fc3d1824ce487088da34aaa8639879fb4b9922"
+    },
+    "original_HGB_grades": {
+      "bytes": 274774,
+      "path": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-point-pilot-v1/GRADE_COMPLETE.json.gz",
+      "sha256": "fbe03a9d98469b1fbc9f2c0700fe22c0cf8ff9d17d6d7ec3aa4adb27bfb5ad83"
+    },
+    "query2026": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    },
+    "schedule_metadata": {
+      "bytes": 2186341,
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261023T112749536081Z/06c3dad2b67e10f34d5a57eed7dea71a8ba7d22ba7c7af7279177252188b36af/sources/schedules.csv",
+      "sha256": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7"
+    },
+    "weekly2024": {
+      "bytes": 849243,
+      "path": "/workspace/NFL-forecasting/data/raw/stats_player_week_2024.parquet",
+      "sha256": "847569d194ca3d96b5efcf91e6eac5e18780fc47568a713fd545a82d29d155c1"
+    },
+    "weekly2026": {
+      "bytes": 386908,
+      "kind": "weekly",
+      "path": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache/operational-source-v2/e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441/20261024T083337210719Z/01ec1f6f199cf3eb617697e0845c0899c159bca437a59dd623ffeddc06066339/sources/stats_player_week_2026.parquet",
+      "season": 2026,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd"
+    }
+  },
+  "lattice_tolerance": 1e-08,
+  "native_control_root": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/CDF_CONTROL_NATIVE_V1",
+  "objectives": {
+    "primary": "NewCDFretainedlower-medianMAE versusretainedHGBmedianpoint andtraining-onlyposition/globalmedian controls; same1954supportedrows.",
+    "probability_side_EV": "Fullsigned0.02latticeCDFproperlosses versusrolepriorlaw; noofferedchartthreshold/price/EV andnoinventedHGBdistribution.",
+    "secondary": [
+      "MSE/RMSE",
+      "signedbias",
+      "p90/p95/maxabsoluteerror",
+      "strict<1/inclusive<=1point",
+      "strict<5/inclusive<=5points",
+      "byweek",
+      "byposition",
+      "coverage/fallback",
+      "Prespecifiedmodel-onlyandfallback-onlycoverage/MAE/MSE/RMSE/bias/p90/p95/max andtolerances,withunknownoutcomesretainedindenominators."
+    ],
+    "uncertainty": "Fivefixedcontrasts:3medianMAE,1meanMSE,1CDFCRPS;nominal500game/weekseed1703confidence95,min8clusters.6weekintervalN/A;exposeddevelopment,noqualificationclaim."
+  },
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-chart-cdf-control-v1",
+  "position_semantics": "Sourceweeklycurrent-vintageposition suppliesrole metadata; notarchivedasofnews,injury,limitationorstarterstatus. No claimverifiedinjuryawareness.",
+  "preparation_failures": [
+    {
+      "NFL_decoded": 0,
+      "error": "systemPython ModuleNotFoundError pyarrow beforefile/rowdecode",
+      "fixed": "UsedalreadyinstalledscientificPython forbyte/footeronlycheck; notnumericaltrialretry",
+      "stage": "PPRpilot sourcefooter inspection"
+    }
+  ],
+  "preprocessing": "OriginalCDFengineFixedDesign on same32rawinformationfields: training-only medians, missingindicators interleaved, float32 numericalmatrix and sortedtrainingpositiononehots. OriginalHGBpipeline uses equivalentinformation butdifferentinternalcolumnordering/floatprecision. No newfeatureselection/scaling/tuning; signed0.02labeltransformexactadmission, no clipping.",
+  "prior_attempts_preserved": true,
+  "prior_information_contract": "Afterunchangedforestfit on feature-admittedmodelrows, replaceCDFglobal/roleSupportPriors with fits onALL5589 completequalified2024labels. Fullpriortrainingbindings with declaredschedule+7dayavailabilityassumption retained. Thisis explicitnewprocedure, notexactreproductionofpriorrawCDFpipeline.",
+  "prior_results": "AllpreviousoriginalV1failure,technicalV2labels,2026bridge and scientificbudgetsunchanged. Thisisnew1fit,notrefundorextensionofoldmodelsearch.",
+  "proper_score_contract": {
+    "HGB": "pointonly; no fabricatedCDF orproperCDFscore",
+    "primary_distribution": "exactfulltailCRPSscaled/50 vsrole-priorlaw",
+    "primary_point": "MAEofstoredlawlower0.5quantile",
+    "secondary_distribution": "exactnatural-logprobabilitymasson0.02lattice; retainpositiveinfinity, no clipping",
+    "secondary_mean": "MSEofexactstoredlawmean",
+    "support": "S=Z/50;Zsignedinteger; coefficientgcd0.02; abs(50*S-rint(50*S))<=1e-8 elseabortnoeligibilityrounding",
+    "uncertainty": "fivefixedcontrasts,nominal500game/weekseed1703,8clusterminforinferenceonly; exposeddevelopmentnotqualification"
+  },
+  "resources": {
+    "CPU_seconds": 120,
+    "HTTP": 0,
+    "RSS_bytes": 805306368,
+    "accuracy_comparisons": 1,
+    "aggregate_metadata_bytes": 262144,
+    "fits": 1,
+    "forecast_inference": 1,
+    "invocations": 1,
+    "maximum_input_bytes": 12582912,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "maximum_trees": 32,
+    "native_control_bytes_cap": 65536,
+    "peak_private_bytes_cap": 8388608,
+    "retained_private_bytes_cap": 4194304,
+    "retries": 0,
+    "single_gzip_cap_bytes": 2097152,
+    "threads": 2,
+    "wall_seconds": 180
+  },
+  "roles": [
+    "QB",
+    "RB",
+    "FB",
+    "WR",
+    "TE"
+  ],
+  "root_registration": null,
+  "runtime_dependency_correction": {
+    "no_algorithm_or_sourcevalue_change": true,
+    "parity_receipt": {
+      "bytes": 4164,
+      "path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/CDF_PURE_CONTRACT_PARITY_V1.json",
+      "sha256": "bf5c9951979544e3625eeb7377a426c3399bc4be152489d5bd1f72dbf4139a2b"
+    },
+    "reason": "unchangedHTTP/socketdenyblocksoptionalurllib3IPv6probeonunusedoldPPRHTTPimport; copyexactpurecontracts ratherthanweakenguard",
+    "type": "preexecution_pure_helper_dependency_removal"
+  },
+  "safe_aggregate_path": "/workspace/nfl-next-chart-ppr-20261028/reports/next-nfl-checkpoint-chart-ppr-20261028/SAFE_AGGREGATE_CDF_CONTROL_V1.json",
+  "scope": "OneCDF/32trees only; no rerun HGB orold2025studies. Exposedcurrent-vintage7dayassumption pluscurrent-vintagepositions; qualified2025footballmayoccurlaggedfeatures. No futureWeek8issuance/consumer/readinessclaim.",
+  "score_lattice_scale": 50,
+  "scorecard": "Full2117planned\u00d78pointoutputs=16936privateCSVrows; allpredictions/actuals/errors/nullstates/cutoffs/fallbacks plus2properCDFper-rowCRPS/logmass fields inprivategrade. NoextraCAScall/publicrowupload.",
+  "source_controls": "PreserveoriginalHGBfreeze+gradeandexact2026chartlabels; all2117identities/fallbackeligibility/horizonsmustagree, unknown163 retained; same2024admittedtrainingdata/preprocessingtrainingonly. No freshWebsitecomparison.",
+  "state": "PROPOSED_PENDING_ROOT_AND_INDEPENDENT_GO",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 13040,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v12.json",
+      "sha256": "830fcc7a799f10cf88c6600e432f582b759d4d76ad148dd89bd4f36986946673"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "target": "nick-chart-ppr-v1",
+  "technical_bootstrap": {
+    "libc": {
+      "bytes": 1995216,
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+    },
+    "threadpoolctl": {
+      "bytes": 50722,
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/threadpoolctl.py",
+      "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+    }
+  },
+  "training_population": {
+    "known_played_complete_chart_labels": 5589,
+    "missingness": "Reportknownmissing/unknown and unmatchedfeaturetraining counts, nevercallcompletepopulationall5935scored.",
+    "planned": 5935,
+    "played_missing": 1,
+    "rare_positive_numeric": 12,
+    "rule": "All5589qualifiedlabels used empiricalposition/global priors. Modelusesexactmatched2024feature rows; missingfeature rowscountedandkeptinpriors, no zero label fill. No event-free sample selection. Eachsourcefeaturemustpasstimestampchecks; alltraininglabelavailabletimes beforefixed2026-09-01origin. Knownnumericfeatureclockmissing leaves row inpriorsonly andreported; no timefabrication.",
+    "unknown": 345,
+    "year": 2024
+  },
+  "tree_parameters": {
+    "bootstrap": false,
+    "criterion": "squared_error",
+    "max_depth": 8,
+    "max_features": 1.0,
+    "min_samples_leaf": 30,
+    "n_estimators": 32,
+    "n_jobs": 2,
+    "random_state": 1701
+  },
+  "version": "next-checkpoint-chart-cdf-control-v1"
+}

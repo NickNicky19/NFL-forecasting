@@ -1,0 +1,945 @@
+{
+  "actual_backend": "UNATTESTED",
+  "cached_forecasts": {
+    "2025/pass_att": {
+      "bytes": 88536,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2025/pass_att/LAB_CDF.parquet",
+      "sha256": "e3526e2aa398e4e0dac61070349df7450390a9ed21210a2dc1808c3a677fff4e"
+    },
+    "2025/pass_int": {
+      "bytes": 82145,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2025/pass_int/LAB_CDF.parquet",
+      "sha256": "c1ffb7a1cfd6fa6df6a92b86a6412b5533c587a5776aa8d33972fb3bc4fb883f"
+    },
+    "2026/pass_int": {
+      "bytes": 40722,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_int/LAB_CDF.parquet",
+      "sha256": "bd8d2d76f4d99d8156e94bd80bc8875ebcb9b4bb077b5ec56e512036bb02fe19"
+    },
+    "2026/pass_td": {
+      "bytes": 41214,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecasts/2026/pass_td/LAB_CDF.parquet",
+      "sha256": "71c105e4bf3844cf5397c3b0e619ed65573590ce628145e47f72181e9294d9d5"
+    }
+  },
+  "cells": [
+    {
+      "expected_label_population": {
+        "offered_rows": 1359,
+        "scorable_played_numeric": 664,
+        "unknown_rows": 695
+      },
+      "query_rows": 1359,
+      "target": "pass_att",
+      "year": 2025
+    },
+    {
+      "expected_label_population": {
+        "offered_rows": 1359,
+        "scorable_played_numeric": 664,
+        "unknown_rows": 695
+      },
+      "query_rows": 1359,
+      "target": "pass_int",
+      "year": 2025
+    },
+    {
+      "expected_label_population": {
+        "offered_rows": 515,
+        "scorable_played_numeric": 211,
+        "unknown_rows": 304
+      },
+      "query_rows": 515,
+      "target": "pass_td",
+      "year": 2026
+    },
+    {
+      "expected_label_population": {
+        "offered_rows": 515,
+        "scorable_played_numeric": 211,
+        "unknown_rows": 304
+      },
+      "query_rows": 515,
+      "target": "pass_att",
+      "year": 2026
+    },
+    {
+      "expected_label_population": {
+        "offered_rows": 515,
+        "scorable_played_numeric": 211,
+        "unknown_rows": 304
+      },
+      "query_rows": 515,
+      "target": "pass_int",
+      "year": 2026
+    }
+  ],
+  "command_template": "timeout --signal=KILL 180s /workspace/nfl-direct-boosters-venv/bin/python -B /workspace/nfl-modern-control-completion-20261027/tools/next_checkpoint_count_medians_v1.py --plan <root sealed plan> --sha256 <root seal hash> --go <root GO>",
+  "compatibility": "Original cached schemas/identity/cutoff/target/method retained. All five original QB query populations preserved. ATT new means/fallbacks must match existing retained means exactly before label decode.",
+  "environment_versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "execution_authorized": false,
+  "fictional_acceptance": {
+    "bytes": 656,
+    "path": "/workspace/nfl-modern-control-completion-20261027/reports/next-nfl-count-medians-20261028/FICTIONAL_STARTUP_V3.json",
+    "sha256": "a6a6a1755b746cb8b3f6d78b8590ea9379e4ca0045163bd7128f65671af7050a"
+  },
+  "history": "Original seven-day/current-vintage source assumptions retained unchanged. No latest role/news/timing repair claimed.",
+  "hypothesis": "The lower median and predeclared recent3/recent8 points can have lower MAE than distribution means on the same complete modern QB population; no new fitting or probability claim.",
+  "implementation_bindings": [
+    {
+      "bytes": 36436,
+      "path": "/workspace/nfl-modern-control-completion-20261027/tools/next_checkpoint_count_medians_v1.py",
+      "sha256": "693cdb4eab64824dfbdc0c6c102eba2e15fad46337e313d80c3bd0a31bbe7eab"
+    }
+  ],
+  "inputs": {
+    "artifact_2026_att": {
+      "bytes": 8666,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/future-inference.json",
+      "sha256": "e0f60b951026b96ba1ac64eef71c144bb98a8da4bc62a15ff5d677b9ae82f0c7"
+    },
+    "model_2026_att": {
+      "bytes": 223157,
+      "path": "/workspace/website-methods-research/resumed/weekly-future-training-v3-20261024/pass_att/leaf_cdf_base/trained.joblib",
+      "sha256": "2609f3c2461e155058655b82b63bc824d1955c7ce2268007189e0a7a48eab9c6"
+    },
+    "original_forecast_freeze": {
+      "bytes": 54562,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/forecast-freeze.json",
+      "sha256": "8f6bcc810f97cea3f1d133d83da3ec558e5908bf3d26a4dc72574b4052b41fee"
+    },
+    "original_scored_freeze": {
+      "bytes": 29728,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/scored-freeze.json",
+      "sha256": "c321c7090884c00d1c8728edd775f1764688c8063f5802022ac8b482f81c6222"
+    },
+    "outcome_2025_pass_att": {
+      "bytes": 41712,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2025/pass_att.parquet",
+      "sha256": "0aa4ecdb9e360904f4618fe3b6688c51883ccc4b76b934493f60f352af7865b2"
+    },
+    "outcome_2025_pass_int": {
+      "bytes": 40402,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/outcomes/2025/pass_int.parquet",
+      "sha256": "28c3adae70f3cc6132928004ed428ba5f6fb5398687807909b449474a3f1ba2a"
+    },
+    "qualified_2026_W1_6": {
+      "bytes": 55479,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/week7-espn-passing-zero-qualification-v1/retained-w1-6-source-qualification-v1/RETAINED_QB_SOURCE_QUALIFICATION.json.gz",
+      "sha256": "917906adaf55271651f2f4ac7d1ae62264571644f1175d7fdcb74aeeb2f14f61"
+    },
+    "query_2025": {
+      "bytes": 585638,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2025.parquet",
+      "sha256": "9e5fc61573b4e54aa5d25a7f59b88d6a839800a5622aed12d2751802d86369c4"
+    },
+    "query_2026": {
+      "bytes": 274362,
+      "path": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024/queries/2026.parquet",
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    },
+    "retained_2026_att_mean_freeze": {
+      "bytes": 29221,
+      "path": "/workspace/website-methods-research/resumed/operational-forward-storage-v3-20261026/cache/operational-live-v3/research/pass-att-retained-cdf-control-v1-20261027/FORECAST_FREEZE.zip",
+      "sha256": "2ea0d9bccbedc789caadc92a1e9c54ca553147c7cbc729e90221701f520af3bc"
+    }
+  },
+  "label_freeze_rule": "ALL_FIVE_COMPLETE_POINT_VECTORS_READ_BACK_BEFORE_LABEL_DECODE",
+  "label_quarantine": "Retain original2025 raw numerical counts in retained_source_actual; independently unplayed/unknown actual masked unavailable for scoring. Do not alter participation. Exact counts admitted before each cell scoring. Preserve2026 source-context quarantine and invalid-state/count failures.",
+  "law_helper": {
+    "bytes": 40550,
+    "path": "/workspace/nfl-modern-control-completion-20261027/tools/complete_modern_cdf_controls_v1.py",
+    "sha256": "65b492222ad95a6446915d48f188f0df40cc1c50c81234c6133cca9d010a7972"
+  },
+  "library_root": "/workspace/nfl-session-scorecard-20261025",
+  "library_source_bindings": [
+    {
+      "bytes": 59,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/__init__.py",
+      "sha256": "b83391a537342a00ccaab7b5dd1954457377109737617e9d4c61adee5912b899"
+    },
+    {
+      "bytes": 5561,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/archive_replay.py",
+      "sha256": "cd5ee336d2c157cabcd9223ea64f455e047d420fc8d0f5dbbc18d647e71c3a51"
+    },
+    {
+      "bytes": 15202,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/archive_source_coverage.py",
+      "sha256": "4531d577fd5be55c0c0a333fd74e6da94be556b78d0ed56c466c9d4e6915b41e"
+    },
+    {
+      "bytes": 19263,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/archive_study.py",
+      "sha256": "7a893c94987d21778fbb348a6ca0bd75c2e8a6ec82c5162c2082667140e55637"
+    },
+    {
+      "bytes": 11553,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/baseline_correction.py",
+      "sha256": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2"
+    },
+    {
+      "bytes": 10215,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/bernoulli_diagnostics_v2.py",
+      "sha256": "6c686436648ac5f342bbd8c664f1b16b36245164775a458d6e808b55e4becc2f"
+    },
+    {
+      "bytes": 928,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/cadence.py",
+      "sha256": "426a4c726b26475be1392e6f926284deb3fcc401f974b8b12ff4db1d74151b5f"
+    },
+    {
+      "bytes": 15977,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/canonical_feature_inputs.py",
+      "sha256": "ad3c94eeeef175cd678b74804332d328401a88341f2e39a3ef9cce2a099d1395"
+    },
+    {
+      "bytes": 7333,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/canonical_feature_inputs_v2.py",
+      "sha256": "f478d2b72b67a57a52d7bec67f21dabedc2cec45ec5ce4880290418a24bec77b"
+    },
+    {
+      "bytes": 21386,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/cdf_campaign.py",
+      "sha256": "f394b11005ed0a551c87a17d229c0bb9751d44acc8a41cb9bd7c036a4cef0a66"
+    },
+    {
+      "bytes": 27618,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/cdf_engine.py",
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    {
+      "bytes": 20909,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/cdf_evaluation.py",
+      "sha256": "11a8e708fcd16d465a7379c965a1f4d3aafd3c7d8bbb149bdb049bbed95bd7ad"
+    },
+    {
+      "bytes": 8004,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/cli.py",
+      "sha256": "b8ffa856ced92fc4d0cdefc78974ddff6ae923e09eafad6735237d204fbdff0c"
+    },
+    {
+      "bytes": 13104,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/coherence_audit.py",
+      "sha256": "b97b57cfa1a03a4ff51e8dac13e5e09a7afca50237176be6156cc2d7ac364db2"
+    },
+    {
+      "bytes": 19615,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/conformal_interval_campaign.py",
+      "sha256": "060f30269b9eda608c8bca33a8be94df8405109cb7ff1026b2efc7a1dca286ff"
+    },
+    {
+      "bytes": 12861,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/conformal_intervals.py",
+      "sha256": "ff8dc1a41accf5b7ea313e068c343137226b0df6cd08cf1769c0a5c49da64ab1"
+    },
+    {
+      "bytes": 1735,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/consumer.py",
+      "sha256": "b73bd6442f557766103591e2c8165b1f78146361b2e79c20280827032511c9b8"
+    },
+    {
+      "bytes": 21819,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/context.py",
+      "sha256": "4294af6a3503252d00d9a1f6cd490519c051ae50ae1cfd5cbb84237437c6d886"
+    },
+    {
+      "bytes": 5148,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/context_study.py",
+      "sha256": "e7164d9853e9f15061c56a5f38e520313ee82fbfb0de762e8869b29c1dc7a8a5"
+    },
+    {
+      "bytes": 23471,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/data.py",
+      "sha256": "38c6fdc45d0a9d86f2a11fc334f77099d918819672ac745563e7248093ba625f"
+    },
+    {
+      "bytes": 3975,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/direct_binary_canonical_v2.py",
+      "sha256": "0a3cb910fb12e7e2095132c4c28ead1ff1a6d0e3943696e78ffc8705fac233ce"
+    },
+    {
+      "bytes": 22991,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/direct_booster_screen.py",
+      "sha256": "a47a5a21910a132977bda33ad531ba4c82b24cc9120143d40e3b415f32b84016"
+    },
+    {
+      "bytes": 11460,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/direct_boosters.py",
+      "sha256": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f"
+    },
+    {
+      "bytes": 6999,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/distribution_split_cdf.py",
+      "sha256": "8b28fbd705164d92e2ecfd8ed79c9ead926fa8894ecf6604a6d9b67f7a22e2a0"
+    },
+    {
+      "bytes": 67489,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_backend.py",
+      "sha256": "d59da1320b88374c90acb9f864f0d97c2ef7fb080f5e5e068a25203677b37d14"
+    },
+    {
+      "bytes": 17738,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_core.py",
+      "sha256": "d9323e22cf3fdc4a0f3bbbc57c108f766811630060d3045ae54e89b80dc686a9"
+    },
+    {
+      "bytes": 20386,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_history.py",
+      "sha256": "afbaec9af4130005ecfb74e5ace4eba2db31a8f7193308dbc26348052dfcd027"
+    },
+    {
+      "bytes": 12946,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_history_replay_v2.py",
+      "sha256": "019d11ffc3875382c5b8dd1087b5c68070d7f850a88f498051d8c3c7e5cf458f"
+    },
+    {
+      "bytes": 43044,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_recovery.py",
+      "sha256": "620541da0f91a9cbc1fc01d9cb3b6d2dfaf6db86b636433e83e417d5628cde34"
+    },
+    {
+      "bytes": 27212,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_source.py",
+      "sha256": "b80280c2b74e8d9520b1dcfa6fedda5c6b91070e4687a5c1812bd18c06be8f02"
+    },
+    {
+      "bytes": 19756,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_source_helpers.py",
+      "sha256": "432d6fdc0739778dd920490b4ee1723bff24d498d1eed9e235e8b14662d81a64"
+    },
+    {
+      "bytes": 23047,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/dynamic_opportunity_study.py",
+      "sha256": "47cf033d937c78e3c5deb67b9016b0c99240bcbb89a0e452d6c766a58c1852cb"
+    },
+    {
+      "bytes": 12562,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/espn_boxscore_supplement.py",
+      "sha256": "7d52ca1c9142acaba25522f9f48d04c6870ad746e873f4653f1aec2f42d100dc"
+    },
+    {
+      "bytes": 15303,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/evaluation.py",
+      "sha256": "ebcfaf531d9ba0fb0b318814ee7bd223188cc4bd30738162d00f9f7da78aaaba"
+    },
+    {
+      "bytes": 16935,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/experiment.py",
+      "sha256": "8f12d3d41a790d63dd4983622b7070a79c0f642eaa6d95cba600e571d70d20e9"
+    },
+    {
+      "bytes": 14379,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/features.py",
+      "sha256": "e593d4330f83b69be5dc3a3e2e49d5b5f173a3f7f7a7d11e850f2a53e8a7ce40"
+    },
+    {
+      "bytes": 4344,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/forecast_json_projection.py",
+      "sha256": "0d29fd53fb80755248d22177a984df26111044fa1ab3a183f3e8d45c534d1f2d"
+    },
+    {
+      "bytes": 1834,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/frozen_source_policy.py",
+      "sha256": "ab8e0e163fe392d66ade04e38253db76bd7b11cc77608e23591f5d5aec41a644"
+    },
+    {
+      "bytes": 24062,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/frozen_subgroup_run.py",
+      "sha256": "0beee14279bf69b27fa654cc23b74ac0372ae4e938f4ac61963947cf8d6bf243"
+    },
+    {
+      "bytes": 11777,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/frozen_subgroups.py",
+      "sha256": "70429515f94095499a8a8a7a1668c979ce2bf958677e595e4dacf307ecc6e01f"
+    },
+    {
+      "bytes": 9212,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ftn_context_metadata_diagnosis.py",
+      "sha256": "4283149b79c9094aa6afa071adc09ce5dc9b811e050a009fbe38aa20d39a79c4"
+    },
+    {
+      "bytes": 7283,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ftn_context_metadata_diagnosis_v2.py",
+      "sha256": "41b577b2fa0e09efe300e093ebba7253b775cfd7a3579bc9ddc5be08b03a6f22"
+    },
+    {
+      "bytes": 26886,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ftn_zero_join.py",
+      "sha256": "56511f54aa6717f6d102e11c55b566568a773d9003b8a90779e313c98dfe77d4"
+    },
+    {
+      "bytes": 26945,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/gha_private_checkpoint.py",
+      "sha256": "0a860949760959f9057bc08ad2c6b824bdec02ab31aadc000db65421d1bdcf78"
+    },
+    {
+      "bytes": 13055,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/grading_sources.py",
+      "sha256": "aef15f71296fd50b50cd346ff0164c929670237bc22e825d444be174ccab95ff"
+    },
+    {
+      "bytes": 9102,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/hosted_fixed_build_v1.py",
+      "sha256": "0655963d20a825e22096c41ac655fd7c3e98727bafa9a3f49f062249e9fe80f6"
+    },
+    {
+      "bytes": 15169,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/hosted_initial_plan_builder_v1.py",
+      "sha256": "a339482a2d96d15d188e4dd3920929851faf5c4d9d4f3fa4248c5575714f4431"
+    },
+    {
+      "bytes": 7017,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/hosted_reference_adapter.py",
+      "sha256": "392f84fc77dd10268a36e07ab14236b481e21250cfeaba374ee9b996a5895c5f"
+    },
+    {
+      "bytes": 2754,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/initial_horizon.py",
+      "sha256": "6fe1b639e372f1dd99ae4dd31840f608c1b1b672e4d66e3e73ac19a027c262b8"
+    },
+    {
+      "bytes": 33584,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/live.py",
+      "sha256": "9f13bf76d6c83f4be246ac6e213d36a061073bc673d51b53093ba4edad4d74b0"
+    },
+    {
+      "bytes": 12790,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/median_boosting.py",
+      "sha256": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d"
+    },
+    {
+      "bytes": 36851,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/median_boosting_campaign.py",
+      "sha256": "a7aafaa3ee801106b5e2676fd9ef4c78d618183439d1a3b054141cdee4d1d60b"
+    },
+    {
+      "bytes": 9096,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/median_boosting_evaluation.py",
+      "sha256": "ecc6d873e8d475f702ea2d4d92a8c6c565d86107f1a88e37aeb92eb659d6e7bc"
+    },
+    {
+      "bytes": 21840,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/median_boosting_export.py",
+      "sha256": "1dc1327deccab121ca8a71dc2fa26e51d5f9ecf77109837d1697f3eb4c20ec2f"
+    },
+    {
+      "bytes": 26598,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/model_artifacts.py",
+      "sha256": "9e3a3266e227695f158a68a39260ba1ad51c66f24ccc4a1f83c390604aad54f8"
+    },
+    {
+      "bytes": 38198,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/models.py",
+      "sha256": "0672825fc5d08b882a31ec6906b0618b4766bbb7f38bd05baf791aab37ceccb1"
+    },
+    {
+      "bytes": 19580,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ngboost_laws.py",
+      "sha256": "d59f42074a36098c8adcaf5a02657dc8655a8b22a606a285b1d8442601057136"
+    },
+    {
+      "bytes": 13104,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ngboost_model.py",
+      "sha256": "7a8dd81471df256105f75c5bf40b960e98376b74f98f7fdcb96349fc4b77771e"
+    },
+    {
+      "bytes": 3547,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/operational_io.py",
+      "sha256": "75976833ebb55b0f734eb51bf8a34c1a321fc12e02a8a32765dda2454996132f"
+    },
+    {
+      "bytes": 7290,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/operational_models.py",
+      "sha256": "be5592454358bd8f0be2b25179c05e3be5c996e8279755335b015d5b2f69f810"
+    },
+    {
+      "bytes": 30317,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/operational_sources.py",
+      "sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c"
+    },
+    {
+      "bytes": 32004,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/operational_storage.py",
+      "sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad"
+    },
+    {
+      "bytes": 3912,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/owned_reference_batch.py",
+      "sha256": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb"
+    },
+    {
+      "bytes": 12495,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/owner_bootstrap_bundle.py",
+      "sha256": "31d7daaa72ad5d2924c4e73cae43d5622f3a6035e864a316548fb0fb92ec58b8"
+    },
+    {
+      "bytes": 20594,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/owner_private_bootstrap.py",
+      "sha256": "9d4022dabb6bbe0b03d5a730a5a44978dbfa78cbf9be98275faace65b99d49fe"
+    },
+    {
+      "bytes": 17456,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/participation_qualification_probe.py",
+      "sha256": "5921fa401d14cd1f3a8cd1ea2ae02fde12f8200a1fa75eb1ac2d5dd7612b5dbb"
+    },
+    {
+      "bytes": 19311,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/permitted_source_features.py",
+      "sha256": "e3a7a3aac3320f8f88a6bdd81d239e5c36c6e23c278b5a504f822bda109d0edb"
+    },
+    {
+      "bytes": 23322,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/player_context.py",
+      "sha256": "804f5a26f579049009acbdae20ff1cb077756cb17e389412ab51dd23eb5df507"
+    },
+    {
+      "bytes": 7856,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ppr_outcomes.py",
+      "sha256": "1b6be8baa4cf039ea1c6aca33857517b4127bbbde30e63cc19da844121f669f0"
+    },
+    {
+      "bytes": 10983,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/ppr_sources.py",
+      "sha256": "8df2ea443d6a28758ceced6aaef5edb528ff38e23ab899a735decaa4c5534899"
+    },
+    {
+      "bytes": 3467,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/private_draft_probe_helpers.py",
+      "sha256": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0"
+    },
+    {
+      "bytes": 37072,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/private_draft_store.py",
+      "sha256": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f"
+    },
+    {
+      "bytes": 2980,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/prospective.py",
+      "sha256": "2ddec379957df6ea1c9c08860d6ab3ecf6660056c1d800c293196f439db5389e"
+    },
+    {
+      "bytes": 17267,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/prospective_availability.py",
+      "sha256": "6de1c7b39e4064a4af5645f70fc4132dc97bf0bc4a04d8d30832d58fcff805a2"
+    },
+    {
+      "bytes": 14016,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/public_release_plan_v1.py",
+      "sha256": "bb1a918eabb481b3ffa9470e6196bcc33c3baa5688d2a44bdffe63145f7e73d7"
+    },
+    {
+      "bytes": 14691,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/publication_qualification.py",
+      "sha256": "0f99ea5bcc5fbec10f0cdcfff205601f55c358b7d7759a4a2a12c23f0add0b2d"
+    },
+    {
+      "bytes": 12882,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/publication_scope.py",
+      "sha256": "1f1f142b8f64fcada11ebc618dea5b5d949056ab1ff9b56131d8cc50fdb447d9"
+    },
+    {
+      "bytes": 9969,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/query_identity.py",
+      "sha256": "76fef5d2e0b1ddfe9023d2328cdd1b05f54931271432e6442e58c85c6826c942"
+    },
+    {
+      "bytes": 16194,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/raw_orphan_context.py",
+      "sha256": "0b80039325a4ad7a3fa5e14656e3c68d52b0f1bf9040bedf48521c5ade9a106c"
+    },
+    {
+      "bytes": 18740,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/raw_orphan_zero_audit.py",
+      "sha256": "52464fac42e301974952e2beb50f7fb13d74df9320e67673b1c4b39eeb9c4571"
+    },
+    {
+      "bytes": 7965,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/rb_readiness.py",
+      "sha256": "e36a9be08a38a2c66195a81bd8958fe1574c18f679318ba632e2570eac05ded3"
+    },
+    {
+      "bytes": 10077,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/receiving.py",
+      "sha256": "1f72b2568b71b791e971d739be8acdd19dd5ccc79697d6b45c6333b6fdcfc0bf"
+    },
+    {
+      "bytes": 8172,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/recorded_research.py",
+      "sha256": "68be617307904d606e226b24890bbe90c139d483f98ba95d17f42dd01548756f"
+    },
+    {
+      "bytes": 23553,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/recorded_thresholds.py",
+      "sha256": "1380bf617740317622a67f8fa51bf83566b58202f7fccdca40b9b75d0043eb97"
+    },
+    {
+      "bytes": 23493,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/recorded_thresholds_export.py",
+      "sha256": "6bb5f4b7f97ab7117de1df230ed0c37ac0f4e2b5a9a86513f831a8fb996bb4aa"
+    },
+    {
+      "bytes": 17657,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/reference_contract.py",
+      "sha256": "d6e17cc894ebbe3291bfa97215a2dde248bd7db1ef03399f04fc1d6398b4670b"
+    },
+    {
+      "bytes": 34615,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/reference_runtime.py",
+      "sha256": "dcb512196ff7fb7dee97f43f53867002bf01aebc5ad987677f40d07aa5edbc4a"
+    },
+    {
+      "bytes": 12623,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/reporting.py",
+      "sha256": "10c34e9fc091e5712ef9a11f0e060a1a6ab643cdd1a01f659b7b6058827fb10f"
+    },
+    {
+      "bytes": 14101,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/research_passing.py",
+      "sha256": "376b38ecac0507c89b2ee32eb80d77f56b1573fa81e481247398776f03301b2e"
+    },
+    {
+      "bytes": 10236,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/role_boosting.py",
+      "sha256": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93"
+    },
+    {
+      "bytes": 41090,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/role_boosting_campaign.py",
+      "sha256": "d4e31b8018b65e20856efc52fcaaa6735154fa04bf4563b73e79e3dabf4cd4de"
+    },
+    {
+      "bytes": 30313,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/role_boosting_export.py",
+      "sha256": "561dd50ae34643aa5fe9508851bdf8fdaba4c3dc0d724271b18cc107f0f8cfae"
+    },
+    {
+      "bytes": 24693,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/role_boosting_repair_export.py",
+      "sha256": "8aa0be494cbbf8823cbd69c2ba071862dbc66bd410ef951e32c39e85573dc8b4"
+    },
+    {
+      "bytes": 24330,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/role_boosting_reporting_repair.py",
+      "sha256": "ea746f78c1a1c0a6a94e96b49bacaad8c1b6df00aff75c8a93c72d1f5f736603"
+    },
+    {
+      "bytes": 19660,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/scheme_context.py",
+      "sha256": "07f85465b2870cbb4adb6b34dc7ee3455cf0c4bac8a7bab03a25684d38ef1b46"
+    },
+    {
+      "bytes": 11064,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/scheme_study.py",
+      "sha256": "d812ed7496c7c83cb2c32002bb7143875ec080bf51d7d77742b3191a7e58021e"
+    },
+    {
+      "bytes": 5384,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/scoring.py",
+      "sha256": "cd3d5c56fafd6f98a3d56d8e022bc776abc9c608e059f2b228f968a7a20c0f13"
+    },
+    {
+      "bytes": 18698,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/selected_private_snapshot.py",
+      "sha256": "6080ccd28f03a33298aeffb525cc7414f6a5482a542923542cb3e7105d346af4"
+    },
+    {
+      "bytes": 11619,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/session_scorecard.py",
+      "sha256": "620bc5a3461d8df11c70a60e91d2d5fff403ccfe51f9fb1e8ce3959bba59ee49"
+    },
+    {
+      "bytes": 10826,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/session_scorecard_collector.py",
+      "sha256": "46194037c4fb5f8148a6d8a42066dbaa218fd51a134498cf26953a85329b134f"
+    },
+    {
+      "bytes": 17360,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/skill.py",
+      "sha256": "b8db431aa9ab2b914331c87af063dadeaf34697216819ad5c983caf627653a97"
+    },
+    {
+      "bytes": 36883,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/source_matched_benchmark.py",
+      "sha256": "0add4a66e709068f1c049fbafe175eb81e5064369421a602e3dbfa1904c5fc11"
+    },
+    {
+      "bytes": 19898,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/source_matched_report_recovery.py",
+      "sha256": "1261d6dcd52acc0466ee59a8bf57d2b811a78dc154de539000a06df280011d52"
+    },
+    {
+      "bytes": 23159,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/source_matched_reporting.py",
+      "sha256": "d338ddd8062bd29e8df4479b014720f93429e97d07b8f4b96d7e9ae157ee5b0e"
+    },
+    {
+      "bytes": 9670,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/state.py",
+      "sha256": "db7093c5c80a7eb9ae3a4662d801dde1c8a86e6125a6a239cd3782f559b00cfd"
+    },
+    {
+      "bytes": 5993,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/termination_accounting.py",
+      "sha256": "3f18e42b297757bfa697fd60e11c2247691f130db30ebf3b3f361014cfd5fb81"
+    },
+    {
+      "bytes": 16207,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/threshold_cdf.py",
+      "sha256": "c734a7330737e8898449c8ef196a7fb43ae2c9f9fc8c0687c0a2d745c6ba8f63"
+    },
+    {
+      "bytes": 25450,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_baselines.py",
+      "sha256": "a96fb44c8714c1555d2706047f4af7e85f741984d72dcbcb63cfd5c637d505f0"
+    },
+    {
+      "bytes": 25770,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_cdf.py",
+      "sha256": "5ebbcd14fab801182846df9e7065f18540c1a36701602f3731c25c1d4217441a"
+    },
+    {
+      "bytes": 18707,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_cdf_evaluation.py",
+      "sha256": "df9b6055cc3aad29dd35d64692cb0a0af29329d9944a44a481d73d22b3ef9050"
+    },
+    {
+      "bytes": 21406,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_cdf_export.py",
+      "sha256": "b8d723abf28dfe3fb74c1e7a9fcba6e48bfb1ca96e5e74be3606bd9cd78c50f7"
+    },
+    {
+      "bytes": 31047,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_cdf_features.py",
+      "sha256": "3c75e69d01816995934c434807fd06be9f137d6124e65c9562654e2caafd0047"
+    },
+    {
+      "bytes": 18656,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/website_cdf_features_v2.py",
+      "sha256": "6b0b94b8c2ec8c31068e29433568d5682aca4b3f159f6aef085ff757bd31306d"
+    },
+    {
+      "bytes": 51055,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_adaptive.py",
+      "sha256": "9f88ca724f472a34ca010d3245ce42053d1550d1b55fabefd0eab2bff3bd5522"
+    },
+    {
+      "bytes": 29141,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_cached_policy_replay.py",
+      "sha256": "fa9fc9a1ec711da8a92106e55b10d442d4feb3b4959dccfac58c13d6c616eb4b"
+    },
+    {
+      "bytes": 18142,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_current_inference.py",
+      "sha256": "4cd423f2cafe2676c770dcad6ec485e469949e8ec96c9a1dca6e2f0441cc5b33"
+    },
+    {
+      "bytes": 8256,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_current_query.py",
+      "sha256": "9a41a6c1ce606b4b3c1c1114867fd2d961eef47ffc2e360a663017365e105dff"
+    },
+    {
+      "bytes": 16615,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_durable_acceptance.py",
+      "sha256": "83578b13e72ac7459de7a78bd9008cba875eb5e32f8c389df66d67b3cac23089"
+    },
+    {
+      "bytes": 46008,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_future_inference.py",
+      "sha256": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+    },
+    {
+      "bytes": 52541,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_generic_producer.py",
+      "sha256": "0ea49ed836d8f6210ece0feedd58641534a98983ede261430a98d19ef41f670b"
+    },
+    {
+      "bytes": 27660,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_grading.py",
+      "sha256": "8db2319330b6acaebbc1306df87ae9dbf5d75e93a0af2e04f7601195d72d0798"
+    },
+    {
+      "bytes": 13111,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_historical_expansion.py",
+      "sha256": "d96553c2f3afe18c487d2d5a64cbcf16b9ea2e6f0297f7058bc1ff28d5b408cc"
+    },
+    {
+      "bytes": 6064,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_inference_diagnostics_v1.py",
+      "sha256": "48661f1eaadf41fdc36590f02da57b030511b899391189269c3c1047a2a88769"
+    },
+    {
+      "bytes": 11499,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_initial_continuation_v3.py",
+      "sha256": "5256970c5f1ce91dbde7f331d7660d34a8f8b96e2daa2c1bf5a04dda7b96648f"
+    },
+    {
+      "bytes": 8915,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_initial_remaining_v1.py",
+      "sha256": "11afaaa687522a77b10602e100561bc7bb46c0fc7cc18b538ee43dbe5df0d3a7"
+    },
+    {
+      "bytes": 10523,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_initial_remaining_v2.py",
+      "sha256": "d0a050389dbe68bbdee209b7e0aa63f6f42801177c1a9a30374dedfee05a1693"
+    },
+    {
+      "bytes": 18488,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_private_selected.py",
+      "sha256": "db237cb845ac274507fbfcaf61984630aec5f9b92089d5920cc165c5b4bbf92d"
+    },
+    {
+      "bytes": 34777,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_public_feed.py",
+      "sha256": "14d6efe2d3ac5d8763cd289a8bff790eb1878536d77e84ec812162e66135a0e0"
+    },
+    {
+      "bytes": 9530,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_replay_compact.py",
+      "sha256": "91da41d81f48f456ed73c78c71882bd9571954b81d25a2a48e58c09039309922"
+    },
+    {
+      "bytes": 4431,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_source_read_batch.py",
+      "sha256": "29c68a2679183413a65dff2ee346934ec75aa633afb976374ba50c77637e7b97"
+    },
+    {
+      "bytes": 17701,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_website_overlay.py",
+      "sha256": "9fbd76a136a7539712097321556470ae5954f55d82c95b98d25485f1e2708290"
+    },
+    {
+      "bytes": 9919,
+      "path": "/workspace/nfl-session-scorecard-20261025/nfl_lab/weekly_week6_reconstruction.py",
+      "sha256": "3169b16cf828c4e2910e02c59d6ee76757824a888374a940e4733c2b64ba4524"
+    }
+  ],
+  "native_control_root": "/workspace/nfl-modern-control-completion-20261027/reports/next-nfl-count-medians-20261028/native-v1",
+  "new_live_use": false,
+  "old_budgets_and_negative_results": "UNCHANGED; 0 new fit opportunities; no refund or scientific gate change",
+  "original_API": {
+    "bytes": 44865,
+    "path": "/workspace/nfl-common-learner-cdf-role-20261027/nfl_lab/weekly_future_inference.py",
+    "sha256": "0689fdc2e3d0154d7431f7fb834d0684dbddd8f952cd5710e010e7fdd678fad7"
+  },
+  "original_expansion_root": "/workspace/website-methods-research/resumed/weekly-historical-expansion-v1-20261024",
+  "output": "/workspace/website-methods-research/resumed/historical-market-forward-v1-20261028/cache/operational-live-v3/research/next-nfl-count-median-completion-v1",
+  "products": {
+    "CDF_LAW_MEAN_POINT": "stored mean scored as point control; MSE secondary only, no conversion into median",
+    "CDF_LOWER_MEDIAN": "MAE median",
+    "RECENT3_POINT_CDF_MEAN_FALLBACK": "empirical point benchmark",
+    "RECENT8_POINT_CDF_MEAN_FALLBACK": "empirical point benchmark",
+    "ZERO_INTERCEPTION_POINT_NOT_PROBABILITY": "INT only, MAE control, NOT probability"
+  },
+  "python_binary": {
+    "bytes": 30894944,
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+  },
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "resources": {
+    "CPU_seconds": 120,
+    "HTTP_calls": 0,
+    "RSS_bytes": 805306368,
+    "automatic_retries": 0,
+    "bootstrap_replicates": 500,
+    "bootstrap_seed": 1703,
+    "cached_extractions": 4,
+    "fits": 0,
+    "fixture_replays": 1,
+    "law_query_rows": 515,
+    "maximum_managed_write_attempts_including_failure": 2,
+    "model_loads": 1,
+    "native_control_bytes_cap": 262144,
+    "native_numerical_threads": 2,
+    "new_priors": 0,
+    "peak_private_bytes_cap": 8388608,
+    "retained_private_bytes_cap": 4194304,
+    "startup_threads": 1,
+    "wall_seconds": 180
+  },
+  "review": "PENDING",
+  "root_registration": {
+    "previous_managed_writer_closed": false,
+    "registered_by": "PENDING"
+  },
+  "runtime_identity": "Separately versioned current-runtime retained-law reconstruction; exact original fixture bits required; strict original API unchanged; no original-runtime or missing-original-vector reproduction claim.",
+  "source_scope": "2025 REGW1-18;2026 REGW1-6 only; protected later outcomes CLOSED. Unknown participation not zero.",
+  "state": "PREPARED_NOT_AUTHORIZED",
+  "storage": {
+    "forward_implementation": {
+      "bytes": 15173,
+      "path": "/workspace/nfl-forward-storage-20261026/nfl_lab/operational_forward_storage.py",
+      "sha256": "647a3b0bf75e695fcf234f265832f9c034e96618272e1370ceb4b23718fe1499"
+    },
+    "helper": {
+      "bytes": 3232,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/next_checkpoint_storage.py",
+      "sha256": "0e56fce31ebc9357ab94d4a31925a29ab3df7bf05ed0d10e81e3879c7109f240"
+    },
+    "legacy_cache": "/workspace/website-methods-research/resumed/operational-storage-v2-20261023/cache",
+    "legacy_library_root": "/workspace/nfl-session-scorecard-20261025",
+    "legacy_policy": {
+      "bytes": 13487,
+      "path": "/workspace/nfl-methods-integration/config/operational-source-policy-v2.json",
+      "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
+    },
+    "market_policy": {
+      "bytes": 4638,
+      "path": "/workspace/nfl-methods-integration/config/historical-market-forward-v1.json",
+      "sha256": "00dee8b51d8a1defeb8730a6994a96a7d47c2eaa4f71fb6d9c951bd5a8541f1a"
+    },
+    "metadata_descriptor": {
+      "bytes": 13226,
+      "path": "/workspace/nfl-methods-integration/config/next-checkpoint-metadata-v13.json",
+      "sha256": "adf3e8f790b2a78af740756644063524a7d991c9caa0a668b8ddb5d7a076dd52"
+    },
+    "original_helper": {
+      "bytes": 12864,
+      "path": "/workspace/nfl-methods-integration/nfl_lab/historical_market_storage_v1.py",
+      "sha256": "5650f1934b7471c9f414b8bc77a8e096e700851558deebd8ef119a49f2575c09"
+    },
+    "prior_policy": {
+      "bytes": 1056,
+      "path": "/workspace/nfl-forward-storage-20261026/config/operational-forward-storage-v3.json",
+      "sha256": "8cbfa5093c8c2d0fca386964b27442f44d4529076bea90b431ee6cda4fbe4c44"
+    }
+  },
+  "technical_bootstrap": {
+    "libc": {
+      "bytes": 1995216,
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+    },
+    "threadpoolctl": {
+      "bytes": 50722,
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/threadpoolctl.py",
+      "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+    }
+  },
+  "uncertainty": {
+    "clusters": [
+      "game_id",
+      "week"
+    ],
+    "meaning": "nominal exposed-development descriptive; no multiplicity-adjusted scientific qualification",
+    "minimum_clusters": 8,
+    "paired": true,
+    "replicates": 500,
+    "seed": 1703
+  },
+  "version": "next-nfl-count-median-completion-v1",
+  "worker": {
+    "bytes": 36436,
+    "path": "/workspace/nfl-modern-control-completion-20261027/tools/next_checkpoint_count_medians_v1.py",
+    "sha256": "693cdb4eab64824dfbdc0c6c102eba2e15fad46337e313d80c3bd0a31bbe7eab"
+  }
+}

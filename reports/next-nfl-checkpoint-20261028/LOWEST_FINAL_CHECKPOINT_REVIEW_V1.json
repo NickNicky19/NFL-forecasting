@@ -1,0 +1,127 @@
+{
+  "actual_backend": "UNATTESTED",
+  "anchors": {
+    "ledger": {
+      "bytes": 1019853,
+      "sha256": "0fffe93818777fa818e473e62d3cd09993a7626a68ea552c1759efcb3dc007f3"
+    },
+    "original_P2_policy": {
+      "bytes": 10342,
+      "sha256": "0ee3eccf4f0e9ed85ee46c6ba4f6df404459fb4f3cabba469bf6dffd9ee2456c"
+    },
+    "selection": {
+      "bytes": 56895,
+      "sha256": "fa295e56387f058f2ef03ea1e88a9842f5c2d2677ba738f39ca6a3b5c3799f0d"
+    }
+  },
+  "checks": {
+    "all_decisions_RETAIN": true,
+    "ledger_expected_sha_match": true,
+    "live_activation": false,
+    "original_P2_policy_hash_matches_registered": true,
+    "selection_decision_count": 12,
+    "selection_expected_sha_match": true,
+    "selection_fits_forecasts_grades": 0
+  },
+  "compatible_2026_MAE_minima": {
+    "anytime_td": {
+      "MAE": 0.27571256183615894,
+      "method": "CATBOOST_MEDIUM",
+      "product": "event_probability",
+      "record": 3370
+    },
+    "pass_att": {
+      "MAE": 7.7725118483412325,
+      "method": "CDF_LOWER_MEDIAN",
+      "product": "law_median",
+      "record": 4823
+    },
+    "pass_cmp": {
+      "MAE": 5.118483412322274,
+      "method": "RETAINED_ANNUAL_CDF_LOWER_MEDIAN_V1",
+      "product": "law_median",
+      "record": 3313
+    },
+    "pass_int": {
+      "MAE": 0.6018957345971564,
+      "method": "CDF_LOWER_MEDIAN",
+      "product": "law_median",
+      "record": 4828
+    },
+    "pass_td": {
+      "MAE": 0.8246445497630331,
+      "method": "CDF_LOWER_MEDIAN",
+      "product": "law_median",
+      "record": 4819
+    },
+    "pass_yd": {
+      "MAE": 62.279621,
+      "method": "LAB_CDF",
+      "product": "law_median",
+      "record": 3391
+    },
+    "rec": {
+      "MAE": 1.2525689561925366,
+      "method": "RETAINED_ANNUAL_CDF_LOWER_MEDIAN_V1",
+      "product": "law_median",
+      "record": 3325
+    },
+    "rec_yd": {
+      "MAE": 16.054624,
+      "method": "LAB_CDF",
+      "product": "law_median",
+      "record": 3394
+    },
+    "rush_att": {
+      "MAE": 3.661596958174905,
+      "method": "RETAINED_ANNUAL_CDF_LOWER_MEDIAN_V1",
+      "product": "law_median",
+      "record": 3317
+    },
+    "rush_rec_yd": {
+      "MAE": 19.925906,
+      "method": "LAB_CDF",
+      "product": "law_median",
+      "record": 3397
+    },
+    "rush_yd": {
+      "MAE": 18.425856,
+      "method": "LAB_CDF",
+      "product": "law_median",
+      "record": 3399
+    }
+  },
+  "created_at_utc": "2026-10-28T23:56:58.583664+00:00",
+  "independent_acceptance": "Chart/count PASS receipts support arithmetic on retained evidence, with their original source/chronology limitations. Main report preserves tiny gains, adverse bias/tails, actual output contracts and no universal-best or website-accuracy-gain claim.",
+  "operations": {
+    "NFL_fits_inference_grades": 0,
+    "NFL_row_decodes": 0,
+    "network": 0,
+    "private_writes": 0,
+    "raw_NFL_or_model_loads": 0,
+    "safe_receipt_writes": 1,
+    "tests": 0
+  },
+  "production": "Safe reconciliation records PR9/10/11merged,1948actual selected rows,674means+845medians+429probabilities,all original selected forecast fields preserved. New chart/count comparisons did not activate on the website; no new live fetch by this review.",
+  "provenance": "V1 missing ATD game/week metadata failure retained. V2 metadata repair/computations/fictional checks completed before pretty-JSON64KiB refusal; failed receipt retained. V3 changes only compact lossless serialization;56895-byte safe selection result andPASS receipt retained. Original P2 hash matches. New layer not producer admitted or activated. These are existing receipts; selector/driver were not rerun by this review.",
+  "receipt_computation_resources": {
+    "CPU_seconds": 0.022461809000000003,
+    "peak_RSS_bytes": 19693568,
+    "wall_seconds": 0.02392008400056511
+  },
+  "report_note": {
+    "action": "Explicitly mention the already scored common-learner history/depth comparison beside the attempts row or nearby text. It does not change the lowest MAE or mean-MSE leader.",
+    "evidence": "record3404 depth CDF mean MAE7.818085945989444 vs frozen CDF mean7.89849686089153, but MSE105.2147964295957 vs104.07847224438218, absolute bias2.3030300184458365 vs1.4222163420585896 andp95 21.272580910553582 vs20.740355373633818. New CDF medianMAE7.7725118483412325 remains lower. All use211/515 QB opportunities,93games,6weeks.",
+    "line": 16,
+    "path": "LOWEST_CURRENT_DECISION_V1.md",
+    "severity": "low"
+  },
+  "resource_limits": {
+    "CPU_seconds": 15,
+    "address_space_bytes": 134217728,
+    "wall_seconds": 30
+  },
+  "schema_version": "lowest-final-checkpoint-readonly-review-v1",
+  "scope": "Static code/config/driver/receipt reading and safe aggregate arithmetic only. No raw NFL rows, fitted models, fit/inference/grade/test execution, network, credentials, canonical ledger, production or scheduler writes.",
+  "state": "NO_BLOCKING_FINDING_REPORT_COMPLETENESS_NOTE"
+}
