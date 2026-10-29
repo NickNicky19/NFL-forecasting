@@ -73,3 +73,7 @@ All unique evidence and original failures remain. Complete storage inventory adm
 ## Independent verification
 
 Current-category aggregation passed40,568independent checks across69typed point views and12categories. The new2025 forecasts passed10,449independent checks/240metric cells, including all52,206saved points, source/query chronology,18weeks,paired intervals and retained proper-score vectors. That QA loaded no models or reconstructed laws. The first QA interpreter failure and its separately registered exact-interpreter continuation remain recorded. These checks are implementation verification, not additional NFL observations. [Verification summary](VERIFICATION.json).
+
+### Readable data correction
+
+The first readable export compacted some substantive unknown-participation and tolerance fields. The complete original privacy-cleared scientific aggregate is now restored as plain JSON, including every retained typed view, extra family, coverage alias and diagnostic. Scores, ranks and NFL results did not change. The initial export and failed projection-check receipt remain preserved.
