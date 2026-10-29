@@ -1,0 +1,47 @@
+{
+  "actual_new_CDF_fits": 2,
+  "actual_new_analog_contexts": 2,
+  "all_original_scientific_registrations_and_budgets": "PRESERVED",
+  "analog_final_checks": 29462,
+  "failure_history": [
+    {
+      "outcome": "Twofitsandforecastfreezecomplete;gradingfailedmissingplaceholder",
+      "stage": "orderedV1"
+    },
+    {
+      "CPU_budget": 60,
+      "CPU_seconds": 63.267573793,
+      "outcome": "0models/lawsscored;CPUlimitfailurefromglobalprofileoverhead",
+      "stage": "scoringV2"
+    },
+    {
+      "CPU_seconds": 36.151449141,
+      "outcome": "Passedwithsamefrozenpoints;0refits,2retainedlawreplaypasses",
+      "stage": "scoringV3"
+    },
+    {
+      "CPU_seconds": 73.628052028,
+      "outcome": "Passedonce;allnegativeresultsretained",
+      "stage": "analogNFL"
+    },
+    {
+      "outcome": "Reviewerstringcomparisonbug;failurepreserved,noNFL/modelchanges",
+      "stage": "analogQAfirst"
+    },
+    {
+      "CPU_seconds": 4.44,
+      "outcome": "Passedunchangeddata/calculationswithstringequalityfix",
+      "stage": "analogQAtechnical"
+    }
+  ],
+  "genuine_new_pregame_captures": 0,
+  "new_default_readiness": "No new procedure operationally admitted or activated",
+  "new_historical_forecasts": 17994,
+  "new_independent_NFL_observations_from_reviews": 0,
+  "new_live_deployments": 0,
+  "ordered_final_checks": 3026,
+  "ordered_primary_point_checks": 47,
+  "source_model_and_operational_bindings": "Private;notexported",
+  "state": "FINAL_NUMERICAL_CHECKS_PASS",
+  "version": "public-verification-summary-v1"
+}

@@ -1,5 +1,10 @@
 # Forecasting research: complete navigation index
 
+## New ordered-history and analog comparisons — October29
+
+[New predictive results, methods and release status](ordered-analog-20261029/README.md): two new CDF fits and two analog contexts. Ordered carry/reception MAE reductions are 1.14%/0.39%; both uncertainty intervals include zero. Analog reception losses remain. No new live activation. Public algorithm/config/aggregate packet; full sealed execution records remain private.
+
+
 ## Latest: MAE display and top-player checkpoint (October 28, 2026)
 
 [Current twelve-category MAE decisions](next-nfl-checkpoint-20261028/NEXT_CURRENT_MAE_DECISION_V2.md), [top-player comparison](top-player-cached-20261028/README.md), and [retained production-owner handoff](next-nfl-checkpoint-20261028/NEXT_OWNER_MAE_POINT_HANDOFF_V2.md). Zero new fits; cached 2026 Weeks1–6 comparisons and postgame volume diagnostic completed; new MAE policy not live. All old studies/failures and registrations remain.
