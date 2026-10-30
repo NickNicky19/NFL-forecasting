@@ -1,0 +1,83 @@
+{
+  "record_id": "opportunity-four-history-vector-QA-v2",
+  "type": "SAVED_VECTOR_QA_NOT_PREDICTIVE_EXPERIMENT",
+  "state": "PASS_INDEPENDENT_SAVED_VECTOR_QA",
+  "evidence_label": "REPRODUCED_FROM_DATA",
+  "at_UTC": "2026-10-29T23:54:41.667451+00:00",
+  "worker_sha256": "ed452986618d729248e36148b803018649c7a148af39ebb671a778f98f69a3f3",
+  "result_sha256": "c74a411bc06fc97f6f833e7b22644b3b49624d39a316c5b92717fe30b2d4afc1",
+  "input_capsule_sha256": {
+    "freeze": "3e2ff047a188fcce4fd299978e2eb2353743ea603cefdf2b115265f1a5ba9d58",
+    "grade": "73454d767ce109df3c93eb15919af949250483e768126a3924a39da881c55f5f",
+    "original_freeze": "dd7f18e34363a15a9d985f0f36af129cf915d678e0dae9a5cfbe9a44036e2bf9"
+  },
+  "checks": [
+    "exact forecast-to-grade parity",
+    "identical method keys/context/labels",
+    "unrounded means and integer medians",
+    "no unknown zeros",
+    "overall and per-week metrics",
+    "all ten game/week-aware paired contrasts"
+  ],
+  "rows": {
+    "rows": 3090,
+    "unique_player_games": 515,
+    "supported": 211,
+    "unknown": 304,
+    "played_zero": 6,
+    "original_mean_and_fallback_parity_rows": 2575,
+    "aggregate_result_fields_compared": 1736
+  },
+  "clock_diagnostics": {
+    "cutoff_equal_kickoff_unique": 515,
+    "known_source_clocks": 515,
+    "rule": "Original kickoff-left-limit permits cutoff equality; known feature clocks strictly earlier. No numeric source features decoded.",
+    "unknown_source_clocks": 0
+  },
+  "H4_vs_BASE_bit_equality": {
+    "all_recorded_functionals_and_fallbacks": true,
+    "fallbacks": true,
+    "mean": true,
+    "median": true
+  },
+  "common_learned_output_overlap": {
+    "definition": "All six procedures have empty original fallback flags on the same player-game; no outcome-based filtering.",
+    "planned_unique": 249,
+    "scored_unique": 99
+  },
+  "usage": {
+    "CAS": 0,
+    "CPU_seconds": 0.615094704,
+    "HTTP": 0,
+    "RSS_bytes": 114245632,
+    "blocked_calls": [],
+    "fits": 0,
+    "model_deserializations": 0,
+    "wall_seconds": 0.616672768999706
+  },
+  "prior_QA_v1": {
+    "state": "FAILED_RETAINED",
+    "reason": "Reviewer introduced cutoff<kickoff check; original reconstruction permits cutoff==kickoff while feature availability remains strict. No forecast invalidation follows without an actual defect.",
+    "failure_sha256": "5b5598c9caea78ea12c7027790969c72ffab10366a6d0584e62f8ea9db916cf3",
+    "usage": {
+      "CAS": 0,
+      "CPU_seconds": 0.362529521,
+      "HTTP": 0,
+      "RSS_bytes": 110256128,
+      "blocked_calls": [],
+      "fits": 0,
+      "model_deserializations": 0,
+      "wall_seconds": 0.3680596920021344
+    },
+    "allocation_retained_spent": true
+  },
+  "limitations": [
+    "No model deserialization/refit or new forecasts.",
+    "Same-host saved-vector readback; not off-host private restoration.",
+    "Exposed W1-6 reconstructed labels/timing; no W7 or genuine pregame/site gain.",
+    "Nominal intervals; only six week clusters, so week uncertainty unavailable.",
+    "No probability, offered-line, market, EV, admission or deployment evidence."
+  ],
+  "publication_state": "RESULT_SAVED_PUBLICATION_PENDING",
+  "private_evidence_route": "Original approved retained private evidence restoration; no private paths or row-level records included."
+}

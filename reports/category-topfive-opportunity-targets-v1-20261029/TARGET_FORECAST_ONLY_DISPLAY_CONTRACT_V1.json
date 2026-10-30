@@ -1,0 +1,97 @@
+{
+  "admission_dependencies": [
+    "Exactprovidercreditexceptionsandhistoricalsource-lineagequalification",
+    "Current-sourcefeature/labelbinding",
+    "Namedfuture-querywrapperadmittingrec_tgtwithoutweakeningold12targetguards",
+    "Authenticatedmodelandprivatefresh-processrestoration/replay",
+    "Typedconsumerfield/label/sort/fallback/rollbacktests",
+    "Retainedproductionowneradmission, pre-cutoffcapture, actualpublicationandserved-valueverification"
+  ],
+  "canonical_target": "rec_tgt",
+  "display": {
+    "betting_line_or_price": "NOT_AVAILABLE unlessauthenticindependentlyqualifiedtargetoffer; neveruseareceptionline",
+    "estimated_status": "Provisional/research qualifiers under existingadmissionpolicy, notguaranteedaccuracy",
+    "forecast_label": "Receiving targets \u2014 forecast only",
+    "mean_label": "Expected targets",
+    "point_label": "Show selectedpointfunctional truthfully",
+    "sort": "Optional targetforecastsort only after validatedtypedconsumer; no biggestgap/overunder prop selection without actualtargetoffer",
+    "website_incumbent": "NOT_AVAILABLE"
+  },
+  "grading": {
+    "DNP": "actualnull, separateDNPstate; nogradedcountmiss",
+    "actual_type": "nonnegativeinteger ornull",
+    "corrections": "Appendnewoutcomeversion/gradeversion; preserveoriginalforecasts+earliergrades",
+    "known_played_zero": "actual0 only ifexplicitobservedtarget0+qualifiedphysicalplayingwitness",
+    "missing_label_source": "actualnull, separatelyreported",
+    "outcome": "Provider-reported targets under exactversionedlabeldefinition",
+    "played_missing": "actualnull, separatelyreported",
+    "primary": "MAEallcompatiblepoints, no rounding",
+    "secondary": "GenuinemeanMSE/RMSE, strict<1/inclusive<=1; exactcounts onlyregisteredintegeroutput; supportedfull-lawproper scoresseparate",
+    "unknown_participation": "actualnull, never0"
+  },
+  "identity": {
+    "immutable_forecast_key": [
+      "policy_version",
+      "horizon",
+      "model_version",
+      "game_id",
+      "player_id",
+      "target",
+      "issue_time"
+    ],
+    "required_context": [
+      "season",
+      "week",
+      "team",
+      "opponent",
+      "kickoff_utc",
+      "information_cutoff_utc",
+      "issued_at_utc",
+      "source_policy_version",
+      "source_version",
+      "model_version",
+      "procedure_version",
+      "label_definition_version"
+    ],
+    "shared_opportunity_key": [
+      "horizon",
+      "game_id",
+      "player_id",
+      "target"
+    ]
+  },
+  "intended_population": "Same frozen eligible receivingplayer-gamequery population; primaryRB/WR/TE, queryrole fixed before grading; missingDNP/unknown distinct",
+  "outputs": {
+    "distribution": {
+      "null_reason": "POINT_ONLY_OR_NOT_PRODUCED",
+      "probability_validation": "nonnegative normalized coherentPMF/CDF; mean/medianmustmatchstoredlaw",
+      "support": "nonnegativeinteger",
+      "type": "authenticatedcountlawreference ornull"
+    },
+    "expected_mean": {
+      "semantics": "actualexpectedvalueofstoredlaw ortruthfullynamedpoint-onlymean; nevermedianrelabeledmean",
+      "type": "nonnegative finite number or null"
+    },
+    "fallback": {
+      "allowed": "target-specifictrainingpositionprior, authenticatedtargetcontrol orabstention",
+      "forbidden": "Receptionforecast, receptionslineorunqualified0usedas targetfallback",
+      "type": "explicitreason_or_empty"
+    },
+    "lower_count_median": {
+      "semantics": "actual lower0.5quantileofvalidcountlaw; notroundedmean",
+      "type": "nonnegative integer or null"
+    },
+    "selected_point": {
+      "null_requires": "abstention_or_failure_reason",
+      "semantic_tag": "lower_count_median|expected_mean|named_empirical_point; mustmatchactualselectedfunctional",
+      "type": "nonnegative finite number or null"
+    }
+  },
+  "price_probability_EV_metrics": "UNSUPPORTEDwithoutauthenticmatchingtargetoffersandsettlementrules",
+  "product_id": "rec_tgt_nflverse_weekly_v1",
+  "production_writer_scheduler": "Existingretainedowneronly; thiscontractdoesnotissueforecastsorconfigurejobs",
+  "schema_version": "receiving-targets-forecast-only-v1",
+  "scoring_or_other_category_migration": false,
+  "state": "PREPARED_NOT_ADMITTED_NOT_DEPLOYED",
+  "timing": "Freezeactualissue/informationcutoffbeforeapplicablekickoff; preserveallregisteredrefreshes/assignments; sourcepublicationunknownneverinvented"
+}

@@ -1,0 +1,3586 @@
+{
+  "corrections": [
+    {
+      "id": "2025commonlearner-status-refresh",
+      "new": "52fit/1664tree2025study completedOct28; import separately",
+      "old": "Older2026report says2025QUEUED",
+      "public_record": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      }
+    },
+    {
+      "forecast_labels_losses_unchanged": true,
+      "id": "frozen-cdf-fallback-reporting-correction-v1",
+      "new": 30,
+      "old": 0,
+      "public_record": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      }
+    }
+  ],
+  "experiments": [
+    {
+      "actual_execution_owner": "originalNFLresearch",
+      "category": "pass_att",
+      "evaluation": {
+        "forecast_horizon": "original cachedquery cutoff; current-vintage seven-day historicalreconstruction",
+        "population": "all original offeredQB queryrows, conditionalonplayed losses",
+        "regular_season": true,
+        "season": 2026,
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "import_is_new_predictive_execution": false,
+      "limits": [
+        "Already exposed development evidence",
+        "Original private row vectors and parameters not decoded or reproduced by this import",
+        "No authenticated matching originalSITE/R0 on this panel",
+        "No new calibrated probability or betting result"
+      ],
+      "original_acceptance": {
+        "RSS_bytes": 209285120,
+        "actual_CPU_wall_including_preflight_debit": [
+          8.15283322,
+          8.15313473
+        ],
+        "additional_NFL_observations": 0,
+        "budget_CPU_wall": [
+          30,
+          60
+        ],
+        "checks": [
+          "all2575frozenpointbits",
+          "all4120gradecontexts_and_qualifiedlabels",
+          "all13paired_contrasts_weekly_bootstraps",
+          "20opportunities_19capsules_17forests_544trees",
+          "all515role_joins_cutoffs_provenance",
+          "source_bound_control_fallback_correction"
+        ],
+        "models_fits_predict_HTTP_writes": 0,
+        "state": "PASS_WITH_REPORTING_CORRECTION"
+      },
+      "original_activity": {
+        "HTTP": 0,
+        "new_fits": 17,
+        "new_forecast_rows": 2575,
+        "trees": 544
+      },
+      "original_run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "private_evidence_route": "Original approved private-store/producer restoration with exact originalsource/runtime/GO identities; raw rows/models not public",
+      "public_source": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "request": "Earlier owner same-learner training-history comparison, retained under latestfour-categoryinstruction",
+      "status": "IMPORTED_COMPLETED_COMPARISON"
+    },
+    {
+      "actual_execution_owner": "originalNFLresearch",
+      "category": "pass_att",
+      "evaluation": {
+        "forecast_horizon": "original cachedquery cutoff; current-vintage seven-day historicalreconstruction",
+        "population": "all original offeredQB queryrows, conditionalonplayed losses",
+        "regular_season": true,
+        "season": 2025,
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "import_is_new_predictive_execution": false,
+      "limits": [
+        "Already exposed development evidence",
+        "Original private row vectors and parameters not decoded or reproduced by this import",
+        "No authenticated matching originalSITE/R0 on this panel",
+        "No new calibrated probability or betting result"
+      ],
+      "original_acceptance": {
+        "archive_members": 170,
+        "candidate_forecasts": 5436,
+        "folds": 55,
+        "metric_procedures": 5,
+        "new_fits": 0,
+        "new_football_observations": 0,
+        "paired_contrasts": 7,
+        "receipt_bytes": 8710,
+        "receipt_sha256": "eaff77eee590b015840e75a07151be6f96d42477be0d9a4a6f67e561ba06ff2f",
+        "scientific_confirmation": false,
+        "scored_rows_and_CSV": 6795,
+        "state": "PASS_CACHED_ROWS_AND_PAIRED_ARITHMETIC"
+      },
+      "original_activity": {
+        "HTTP": 0,
+        "new_fits": 52,
+        "new_forecast_rows": 5436,
+        "trees": 1664
+      },
+      "original_run_id": "next-nfl-common2025-technical-v2-20261028",
+      "private_evidence_route": "Original approved private-store/producer restoration with exact originalsource/runtime/GO identities; raw rows/models not public",
+      "public_source": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "request": "Earlier owner same-learner training-history comparison, retained under latestfour-categoryinstruction",
+      "status": "IMPORTED_COMPLETED_COMPARISON"
+    }
+  ],
+  "import_activity": {
+    "metadata_only": true,
+    "new_predictive_fits_forecasts_NFL_row_decodes": 0
+  },
+  "inventory_limits": [
+    "Three commonlearnerfailures specifically recovered; other listedimport/runtime/retention failures still need individualoriginalreceipts",
+    "Not a complete inventory of inaccessible sessionhistory",
+    "2025and2026 sourcepopulations differ; neverpoolunrelatedMAEs",
+    "V2independentempiricalhistoryaudit not transferred tooriginal CDFprogramme"
+  ],
+  "metadata_resources": {
+    "CPU_seconds": 0.003608231,
+    "wall_seconds": 0.0036085209976590704
+  },
+  "methods": [
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "H-CURRENT",
+        "older_memory": "38 cached features and fallback use older seasons; not strict current-season information",
+        "training": "Earlier eligible target-season labels, weekly refit; below60 supported rows use older authenticatedCDF fallback"
+      },
+      "method_id": "PASS_ATT::CDF_H1_CURRENT_SEASON_TRAINING",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "H-RECENT",
+        "older_memory": "Cached features, startup priors and fallback may include older seasons",
+        "training": "Previous season plus earlier eligible target-season labels, weekly refit"
+      },
+      "method_id": "PASS_ATT::CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "ADDITIONAL_FIXED365_DECAY",
+        "older_memory": "Not the newly requested unweighted2022+ H-MULTI arm",
+        "training": "Eligible2019+ labels, weekly refit, fixed365day half-life by label availability; weights enter splits/leafmasses/priors"
+      },
+      "method_id": "PASS_ATT::CDF_H3_TIME_WEIGHTED_TRAINING",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "ADDITIONAL_FIXED_HISTORICAL_RELATION",
+        "older_memory": "Current state is lagged prior-only features, not a verified injury-aware role model",
+        "training": "Fit once before evaluated season on2019+ earlier seasons; current cutoff-qualified38features"
+      },
+      "method_id": "PASS_ATT::CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "ROLE_GROUP_ABLATION_NOT_HISTORY_ONLY",
+        "older_memory": "Vendor loaded clock, not original announcement; no verified injury/teammate absence claim",
+        "training": "H4 plus5 depth rank/starter/group size/loadage/missingness fields"
+      },
+      "method_id": "PASS_ATT::CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": null,
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": null,
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "FIXED_ARCHIVED_CONTROL",
+        "older_memory": "No new refit or inferred provider history arm",
+        "training": "Original retained through-prior-season CDF procedure; original numeric means reused"
+      },
+      "method_id": "PASS_ATT::FROZEN_CDF_MEAN",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "FROZEN_CDF_MEAN",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "FROZEN_CDF_MEAN",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": null,
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "recentplayerhistory",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": null,
+      "formula": "existing supported-player recent arithmetic mean plus originalfallback",
+      "history_policy": {
+        "canonical_history": "SIMPLE_CONTROL",
+        "older_memory": "Earlier seasons retained by original recipe",
+        "training": "Existing recent-eight supported player histories with registeredfallback"
+      },
+      "method_id": "PASS_ATT::POOLED8",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "POOLED8",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "POOLED8",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": null,
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "recentplayerhistory",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": null,
+      "formula": "existing supported-player recent arithmetic mean plus originalfallback",
+      "history_policy": {
+        "canonical_history": "SIMPLE_CONTROL",
+        "older_memory": "Earlier seasons retained by original recipe",
+        "training": "Existing recent-three supported player histories with registeredfallback"
+      },
+      "method_id": "PASS_ATT::RECENT3",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "RECENT3",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "RECENT3",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    },
+    {
+      "algorithm_parameters": {
+        "bootstrap": false,
+        "criterion": "squared_error",
+        "max_depth": 8,
+        "max_features": 1.0,
+        "min_samples_leaf": 30,
+        "n_jobs": 1,
+        "prior_weight": 0.05,
+        "random_state": 1701,
+        "trees": 32
+      },
+      "code_config_boundary": "Original exact pinnedrunner/config available through approvedprivate restoration; public scientificmethod/score record linked perexperiment",
+      "family": "empiricalleafCDF",
+      "feature_memory": "Original cached3/8appearance history andefficiency; prior years remaininfeatures",
+      "features": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "formula": "0.95 empiricalleaflaw +0.05 training-only supportprior; expectation=sum(k*p(k))",
+      "history_policy": {
+        "canonical_history": "ADDITIONAL_FIXED365_DECAY",
+        "older_memory": "Not the newly requested unweighted2022+ H-MULTI arm",
+        "training": "Eligible2019+ labels, weekly refit, fixed365day half-life by label availability; weights enter splits/leafmasses/priors"
+      },
+      "method_id": "PASS_ATT::CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "operational_state": "NOT_NEWLY_ADMITTED",
+      "original_method_id": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "output": "conditional-on-played expected count mean",
+      "point_rounding": "none",
+      "preprocessing": "Training-only FixedDesign medians/missing indicators; no tuning/calibration/stacking",
+      "procedure_version": "pass-att-common-learner-four-window-v1-20261027",
+      "reproduction_command": "python -B <restored-original-runner> --plan <authenticated-original-plan> --sha256 <original-plan-digest> --go <original-GO>",
+      "target": "pass_att",
+      "website_use_from_this_import": false
+    }
+  ],
+  "original_failed_attempts": [
+    {
+      "HTTP": 0,
+      "attempt_id": "pass-att-common-learner-v3-failed-ownership-receipt",
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "model_loads": 0,
+      "new_fits": 0,
+      "reason": {
+        "reason": "unregistered operational write destination",
+        "type": "StorageIntegrityError"
+      },
+      "resource_use": {
+        "CPU_wall": [
+          14.887734328,
+          14.907798946000185
+        ],
+        "RSS_bytes": 239525888,
+        "managed_writes": 0,
+        "outer_wall_user_sys": [
+          15.163,
+          12.457,
+          2.685
+        ]
+      },
+      "source": "Original reviewed2026report records failure and consumedbudget; exact private receipt retained",
+      "status": "FAILED_RETAINED"
+    },
+    {
+      "HTTP": 0,
+      "attempt_id": "pass-att-common-learner-v4-failed-bridge-receipt",
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "model_loads": 0,
+      "new_fits": 0,
+      "reason": {
+        "reason": "No match for FieldRef.Name(espn_id); trimmed raw/players.parquet only gsis_id/display_name/pfr_id",
+        "type": "ArrowInvalid"
+      },
+      "resource_use": {
+        "actual_CPU_wall": [
+          20.025152906,
+          19.967647129000397
+        ],
+        "managed_writes": 1,
+        "outer_wall_user_sys": [
+          20.221,
+          16.798,
+          3.481
+        ]
+      },
+      "source": "Original reviewed2026report records failure and consumedbudget; exact private receipt retained",
+      "status": "FAILED_RETAINED"
+    },
+    {
+      "attempt_id": "next-nfl-common2025-v1-20261028",
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "followup": "next-nfl-common2025-technical-v2-20261028 separate legitimate continuation",
+      "new_fits": 0,
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "reason": "Original callback charged1attempt/32trees but0actualforestfits; full original55slots/600CPU840wall remainconsumed",
+      "status": "FAILED_RETAINED"
+    }
+  ],
+  "paired_comparisons": {
+    "2025": [
+      {
+        "MSE_delta_candidate_minus_control": 4.128018267075104,
+        "adequately_trained_delta_MSE": 5.010976470453144,
+        "adequately_trained_n": 547,
+        "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -3.771311236866469,
+              11.485586092895941
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -2.156835362156096,
+              9.96253094876903
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": -3.3263939040752613,
+        "weekly": [
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": 12.594149948876622,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": -12.124984103605955,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -27.84912754118552,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": 9.891399992872143,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": 12.432823378811646,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -1.3048769575956203,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": 15.526462587653285,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 13.409943514738858,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 21.723831917894536,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": 20.533669241696014,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": 8.525398372170933,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": 13.272256880440482,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -18.160631095087695,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": -1.8391730182143502,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": 8.646371054980092,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": -3.793167987635103,
+        "adequately_trained_delta_MSE": -3.793167987635103,
+        "adequately_trained_n": 664,
+        "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -8.881019702193846,
+              1.052324917985816
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -7.5505005212558025,
+              -0.25431318657730906
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": 3.056568565076366,
+        "weekly": [
+          {
+            "MSE_delta": 0.5340463119974572,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": -1.8206993144840726,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": -17.216065994691743,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": -8.149233324745484,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": -19.4096706025818,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -5.406957724576902,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": -2.5007586539258266,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": -1.2727138936010416,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -5.531069793102805,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": -2.582038880266162,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 6.308584209633656,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 2.0669700102138506,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": 6.564137794940597,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": 1.7673977574455515,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": 4.499455357524282,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -13.883012143639261,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": 0.207055921529636,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": -8.618505779818873,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": -2.9265296997565464,
+        "adequately_trained_delta_MSE": -2.9265296997565464,
+        "adequately_trained_n": 664,
+        "candidate": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -6.130153199750124,
+              0.6571347654582916
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -5.668617097946364,
+              -0.21754368462459348
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": 2.358223710153987,
+        "weekly": [
+          {
+            "MSE_delta": 1.837419885927111,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": 2.381785147177782,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": -8.301319971817058,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": -8.47530560098216,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": 3.784904437973831,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -1.5770531977106652,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": -3.612614645830472,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": -1.4187493541580098,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -2.497122789402223,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": -10.204274460737349,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 7.466488093141843,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 0.9706579517809653,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": -3.0314156899281626,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": -6.437835994996998,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": -1.7060978840222092,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -14.854799274222543,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": 3.6181070197273693,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": -6.534552266102329,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": 0.0,
+        "adequately_trained_delta_MSE": 0.0,
+        "adequately_trained_n": 664,
+        "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              0.0,
+              0.0
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              0.0,
+              0.0
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": 0.0,
+        "weekly": [
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": 4.128018267075104,
+        "adequately_trained_delta_MSE": 5.010976470453144,
+        "adequately_trained_n": 547,
+        "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+        "comparator": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -3.771311236866469,
+              11.485586092895941
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -2.156835362156096,
+              9.96253094876903
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": -3.3263939040752613,
+        "weekly": [
+          {
+            "MSE_delta": 0.0,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": 0.0,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": 12.594149948876622,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": -12.124984103605955,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -27.84912754118552,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": 9.891399992872143,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": 12.432823378811646,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -1.3048769575956203,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": 15.526462587653285,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 13.409943514738858,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 21.723831917894536,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": 20.533669241696014,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": 8.525398372170933,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": 13.272256880440482,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -18.160631095087695,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": -1.8391730182143502,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": 8.646371054980092,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": -3.793167987635103,
+        "adequately_trained_delta_MSE": -3.793167987635103,
+        "adequately_trained_n": 664,
+        "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "comparator": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -8.881019702193846,
+              1.052324917985816
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -7.5505005212558025,
+              -0.25431318657730906
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": 3.056568565076366,
+        "weekly": [
+          {
+            "MSE_delta": 0.5340463119974572,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": -1.8206993144840726,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": -17.216065994691743,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": -8.149233324745484,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": -19.4096706025818,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -5.406957724576902,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": -2.5007586539258266,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": -1.2727138936010416,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -5.531069793102805,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": -2.582038880266162,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 6.308584209633656,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 2.0669700102138506,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": 6.564137794940597,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": 1.7673977574455515,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": 4.499455357524282,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -13.883012143639261,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": 0.207055921529636,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": -8.618505779818873,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      },
+      {
+        "MSE_delta_candidate_minus_control": -2.9265296997565464,
+        "adequately_trained_delta_MSE": -2.9265296997565464,
+        "adequately_trained_n": 664,
+        "candidate": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+        "comparator": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "intervals": [
+          {
+            "cluster": "game",
+            "clusters": 272,
+            "generator": "PCG64",
+            "interval": [
+              -6.130153199750124,
+              0.6571347654582916
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          },
+          {
+            "cluster": "week",
+            "clusters": 18,
+            "generator": "PCG64",
+            "interval": [
+              -5.668617097946364,
+              -0.21754368462459348
+            ],
+            "level": 0.95,
+            "paired_rows": 664,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 664,
+        "relative_improvement_percent": 2.358223710153987,
+        "weekly": [
+          {
+            "MSE_delta": 1.837419885927111,
+            "n": 34,
+            "week": 1
+          },
+          {
+            "MSE_delta": 2.381785147177782,
+            "n": 41,
+            "week": 2
+          },
+          {
+            "MSE_delta": -8.301319971817058,
+            "n": 42,
+            "week": 3
+          },
+          {
+            "MSE_delta": -8.47530560098216,
+            "n": 39,
+            "week": 4
+          },
+          {
+            "MSE_delta": 3.784904437973831,
+            "n": 34,
+            "week": 5
+          },
+          {
+            "MSE_delta": -1.5770531977106652,
+            "n": 33,
+            "week": 6
+          },
+          {
+            "MSE_delta": -3.612614645830472,
+            "n": 39,
+            "week": 7
+          },
+          {
+            "MSE_delta": -1.4187493541580098,
+            "n": 34,
+            "week": 8
+          },
+          {
+            "MSE_delta": -2.497122789402223,
+            "n": 31,
+            "week": 9
+          },
+          {
+            "MSE_delta": -10.204274460737349,
+            "n": 34,
+            "week": 10
+          },
+          {
+            "MSE_delta": 7.466488093141843,
+            "n": 37,
+            "week": 11
+          },
+          {
+            "MSE_delta": 0.9706579517809653,
+            "n": 32,
+            "week": 12
+          },
+          {
+            "MSE_delta": -3.0314156899281626,
+            "n": 37,
+            "week": 13
+          },
+          {
+            "MSE_delta": -6.437835994996998,
+            "n": 36,
+            "week": 14
+          },
+          {
+            "MSE_delta": -1.7060978840222092,
+            "n": 38,
+            "week": 15
+          },
+          {
+            "MSE_delta": -14.854799274222543,
+            "n": 43,
+            "week": 16
+          },
+          {
+            "MSE_delta": 3.6181070197273693,
+            "n": 37,
+            "week": 17
+          },
+          {
+            "MSE_delta": -6.534552266102329,
+            "n": 43,
+            "week": 18
+          }
+        ]
+      }
+    ],
+    "2026": [
+      {
+        "MSE_delta_candidate_minus_control": 12.09681272282835,
+        "adequately_trained_delta_MSE": 25.78209580319982,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              3.198002791465935,
+              21.561090272602105
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": 0.0,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 25.017190860300474,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": 35.64381484131533,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 14.436746930317735,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -17.706846391141763,
+        "adequately_trained_delta_MSE": 1.8077921710783775,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+        "comparator": "RECENT3",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -32.272311123534585,
+              -4.067708086488766
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -22.74897434583086,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -50.171404560127016,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -31.01997735630487,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": -3.0994127399495417,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -20.36491054063561,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 35.08580129510088,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -9.316412258008276,
+        "adequately_trained_delta_MSE": 9.138598298956845,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H1_CURRENT_SEASON_TRAINING",
+        "comparator": "POOLED8",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -21.62029060393917,
+              2.781556810207623
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -21.358242943185353,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -29.438946808295032,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -25.891952878197486,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 28.289634917881823,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -19.071528254733934,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 21.705126260660954,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": 15.745403202370746,
+        "adequately_trained_delta_MSE": 14.243036515869695,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              8.307370153480248,
+              24.019964365200376
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": 18.05856100129899,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": 16.604488749412884,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": 16.56882339872118,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 24.9254246334623,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": 2.8930062821808296,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 15.808550047409371,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -14.058255911599371,
+        "adequately_trained_delta_MSE": -9.73126711625175,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "comparator": "RECENT3",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -32.41303633063063,
+              5.168907464399591
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -4.6904133445318665,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -33.56691581071414,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -14.451153957583703,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": -3.1911789667877115,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -53.11571909977012,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 36.45760441219252,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -5.667821778465884,
+        "adequately_trained_delta_MSE": -2.400460988373285,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+        "comparator": "POOLED8",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -21.32540297120719,
+              11.442010907273312
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -3.299681941886367,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -12.834458058882142,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -9.323129479476314,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 28.19786869104364,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -51.82233681386845,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 23.07692937775259,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": 1.5838440419325996,
+        "adequately_trained_delta_MSE": 2.899223564586435,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -1.4336481001375714,
+              5.133216681539048
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -2.3086329944372737,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": 1.8380158271517149,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": 1.6917989858051004,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 10.105535900744215,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -2.099047834781954,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 0.655194286927728,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -28.219815072037512,
+        "adequately_trained_delta_MSE": -21.07508006753501,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+        "comparator": "RECENT3",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -43.57639732395306,
+              -11.493532528328624
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -25.05760734026814,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -48.33338873297529,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -29.328178370499774,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": -18.011067699505787,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -58.10777321673291,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 21.304248651710875,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -19.829380938904027,
+        "adequately_trained_delta_MSE": -13.74427393965654,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H3_TIME_WEIGHTED_TRAINING",
+        "comparator": "POOLED8",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -33.08507767078387,
+              -4.616217481522798
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -23.666875937622628,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -27.600930981143318,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -24.20015389239239,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 13.377979958325568,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -56.814390930831216,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 7.923573617270946,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": 0.0,
+        "adequately_trained_delta_MSE": 0.0,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "comparator": "FROZEN_CDF_MEAN",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              0.0,
+              0.0
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": 0.0,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 0.0,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -29.803659113970113,
+        "adequately_trained_delta_MSE": -23.97430363212145,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "comparator": "RECENT3",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -44.34031280122851,
+              -13.595450708130004
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -22.74897434583086,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -50.171404560127016,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -31.01997735630487,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": -28.116603600250006,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -56.00872538195095,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 20.64905436478314,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": -21.413224980836624,
+        "adequately_trained_delta_MSE": -16.643497504242976,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "comparator": "POOLED8",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -34.17105224501433,
+              -6.5166122493696506
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": -21.358242943185353,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": -29.438946808295032,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": -25.891952878197486,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 3.272444057581353,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -54.71534309604928,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 7.268379330343227,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      },
+      {
+        "MSE_delta_candidate_minus_control": 1.1363241852135126,
+        "adequately_trained_delta_MSE": 0.4551384719647106,
+        "adequately_trained_n": 99,
+        "candidate": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+        "comparator": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+        "intervals": [
+          {
+            "cluster": "week",
+            "clusters": 6,
+            "generator": "PCG64",
+            "interval": null,
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "reason": "fewer_than_8_clusters",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "N/A"
+          },
+          {
+            "cluster": "game",
+            "clusters": 93,
+            "generator": "PCG64",
+            "interval": [
+              -5.4270139396412365,
+              7.529080276991484
+            ],
+            "level": 0.95,
+            "paired_rows": 211,
+            "percentile_method": "linear",
+            "replicates": 500,
+            "seed": 1703,
+            "semantics": "whole-cluster paired sums/counts; nominal descriptive exposed-sample interval; no IID row resampling or qualification",
+            "state": "DESCRIPTIVE"
+          }
+        ],
+        "n": 211,
+        "weekly": [
+          {
+            "delta_MSE": 3.3159775058465772,
+            "n": 37,
+            "week": 1
+          },
+          {
+            "delta_MSE": 0.5736197773149205,
+            "n": 39,
+            "week": 2
+          },
+          {
+            "delta_MSE": 1.3789820923316523,
+            "n": 36,
+            "week": 3
+          },
+          {
+            "delta_MSE": 16.449071836476882,
+            "n": 34,
+            "week": 4
+          },
+          {
+            "delta_MSE": -18.093907583850687,
+            "n": 36,
+            "week": 5
+          },
+          {
+            "delta_MSE": 4.730032389755763,
+            "n": 29,
+            "week": 6
+          }
+        ],
+        "year": 2026
+      }
+    ]
+  },
+  "remaining_source_qualification": {
+    "V2": "Prepared identity-corrected14game label replay may supply qualified labels; doesnotauthenticate featurepolicy or assumedearlierpublication",
+    "W7query": "Retained610rows/13games has all neededf_ columns but different oldhistory/inputhorizon lane and missingThursday. Originalbuilder uses2019-2025plus2026W1-5 and f_player_play_rate8 forcedNaN. Rebuild/admit separate modernW7 source/control before primaryW1-7pool"
+  },
+  "requested_history_matrix": [
+    {
+      "2025_context": "IMPORTED52FITSTUDY_SEPARATE",
+      "H_CURRENT": "IMPORTED2026W1-6DONE;W7extensionpending",
+      "H_MULTI_2022PLUS_UNWEIGHTED": "GENUINELY_MISSING; explicitfiniteprotocolandqualifiedW7required",
+      "H_RECENT": "IMPORTED2026W1-6DONE;W7extensionpending",
+      "category": "pass_att"
+    },
+    {
+      "2025_context": "Existingannualcontrols/orderedresultsseparate;notfullhistorypolicyexperiment",
+      "H_CURRENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "H_MULTI_2022PLUS_UNWEIGHTED": "GENUINELY_MISSING; explicitfiniteprotocolandqualifiedW7required",
+      "H_RECENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "category": "rush_att"
+    },
+    {
+      "2025_context": "Existingannualcontrols/orderedresultsseparate;notfullhistorypolicyexperiment",
+      "H_CURRENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "H_MULTI_2022PLUS_UNWEIGHTED": "GENUINELY_MISSING; explicitfiniteprotocolandqualifiedW7required",
+      "H_RECENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "category": "rec_tgt"
+    },
+    {
+      "2025_context": "Existingannualcontrols/orderedresultsseparate;notfullhistorypolicyexperiment",
+      "H_CURRENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "H_MULTI_2022PLUS_UNWEIGHTED": "GENUINELY_MISSING; explicitfiniteprotocolandqualifiedW7required",
+      "H_RECENT": "NO_VERIFIED_COMPLETED_COMMON_LEARNER_ARM_LOCATED",
+      "category": "rec"
+    }
+  ],
+  "results": [
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::CDF_H1_CURRENT_SEASON_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::CDF_H1_CURRENT_SEASON_TRAINING::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 8.248873634036398,
+        "MSE": 116.17528496721053,
+        "RMSE": 10.778463942845034,
+        "bias": -1.7401032312742755,
+        "dnp": 0,
+        "fallback_offered": 266,
+        "fallback_played_losses": {
+          "MAE": 7.646126233748445,
+          "MSE": 101.66072344161901,
+          "RMSE": 10.08269425508971,
+          "bias": -0.03302237927941603,
+          "n": 112,
+          "p95_absolute_error": 21.28225834413245
+        },
+        "fallback_rows": 266,
+        "mae": 8.248873634036398,
+        "n": 211,
+        "p95_absolute_error": 21.93819875776397,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.778463942845034,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::CDF_H2_PRIOR_PLUS_CURRENT_TRAINING::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 8.381572950841708,
+        "MSE": 119.82387544675292,
+        "RMSE": 10.946409249007317,
+        "bias": -2.8399621522635297,
+        "dnp": 0,
+        "fallback_offered": 30,
+        "fallback_played_losses": {
+          "MAE": 11.190404797601186,
+          "MSE": 125.22515953417565,
+          "RMSE": 11.190404797601186,
+          "bias": 11.190404797601186,
+          "n": 1,
+          "p95_absolute_error": 11.190404797601186
+        },
+        "fallback_rows": 30,
+        "mae": 8.381572950841708,
+        "n": 211,
+        "p95_absolute_error": 22.898598804986936,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.946409249007317,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::CDF_H3_TIME_WEIGHTED_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H3_TIME_WEIGHTED_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::CDF_H3_TIME_WEIGHTED_TRAINING::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 7.9585839835430425,
+        "MSE": 105.66231628631478,
+        "RMSE": 10.279217688438882,
+        "bias": -2.0252982852005665,
+        "dnp": 0,
+        "fallback_offered": 30,
+        "fallback_played_losses": {
+          "MAE": 11.718866898276652,
+          "MSE": 137.33184137952423,
+          "RMSE": 11.718866898276652,
+          "bias": 11.718866898276652,
+          "n": 1,
+          "p95_absolute_error": 11.718866898276652
+        },
+        "fallback_rows": 30,
+        "mae": 7.9585839835430425,
+        "n": 211,
+        "p95_absolute_error": 21.077734208588712,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.279217688438882,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::CDF_H4_HISTORICAL_RELATION_CURRENT_STATE::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 7.898496860891531,
+        "MSE": 104.07847224438218,
+        "RMSE": 10.201885720021675,
+        "bias": -1.4222163420585896,
+        "dnp": 0,
+        "fallback_offered": 30,
+        "fallback_played_losses": {
+          "MAE": 12.991312096235198,
+          "MSE": 168.77418998178698,
+          "RMSE": 12.991312096235198,
+          "bias": 12.991312096235198,
+          "n": 1,
+          "p95_absolute_error": 12.991312096235198
+        },
+        "fallback_rows": 30,
+        "mae": 7.89849686089153,
+        "n": 211,
+        "p95_absolute_error": 20.740355373633818,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.201885720021675,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::CDF_H4_PLUS_TIMESTAMPED_DEPTH::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 7.818085945989444,
+        "MSE": 105.2147964295957,
+        "RMSE": 10.257426403810836,
+        "bias": -2.3030300184458365,
+        "dnp": 0,
+        "fallback_offered": 30,
+        "fallback_played_losses": {
+          "MAE": 12.991312096235198,
+          "MSE": 168.77418998178698,
+          "RMSE": 12.991312096235198,
+          "bias": 12.991312096235198,
+          "n": 1,
+          "p95_absolute_error": 12.991312096235198
+        },
+        "fallback_rows": 30,
+        "mae": 7.818085945989444,
+        "n": 211,
+        "p95_absolute_error": 21.272580910553582,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.257426403810836,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::FROZEN_CDF_MEAN",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "FROZEN_CDF_MEAN",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::FROZEN_CDF_MEAN::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 7.898496860891531,
+        "MSE": 104.07847224438218,
+        "RMSE": 10.201885720021675,
+        "bias": -1.4222163420585896,
+        "dnp": 0,
+        "fallback_offered": 30,
+        "fallback_played_losses": {
+          "MAE": 12.991312096235198,
+          "MSE": 168.77418998178698,
+          "RMSE": 12.991312096235198,
+          "bias": 12.991312096235198,
+          "n": 1,
+          "p95_absolute_error": 12.991312096235198
+        },
+        "fallback_rows": 30,
+        "mae": 7.89849686089153,
+        "n": 211,
+        "p95_absolute_error": 20.740355373633818,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 10.201885720021675,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::POOLED8",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "POOLED8",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::POOLED8::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 8.42480059395484,
+        "MSE": 125.4916972252188,
+        "RMSE": 11.202307674100851,
+        "bias": -0.8293214281075602,
+        "dnp": 0,
+        "fallback_offered": 148,
+        "fallback_played_losses": {
+          "MAE": 15.07754139749016,
+          "MSE": 304.5198460299057,
+          "RMSE": 17.450497013836188,
+          "bias": 13.24131209623524,
+          "n": 12,
+          "p95_absolute_error": 25.89131209623524
+        },
+        "fallback_rows": 148,
+        "mae": 8.42480059395484,
+        "n": 211,
+        "p95_absolute_error": 24.190875620258556,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 11.202307674100851,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2026_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2026,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027",
+      "method_id": "PASS_ATT::RECENT3",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "RECENT3",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "c99002d7400f21d21d733494839d1eb4d85278fb",
+        "path": "reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/c99002d7400f21d21d733494839d1eb4d85278fb/reports/pass-att-common-learner-2026-v5/PUBLIC_METRICS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::pass-att-common-learner-2026-four-window-v5-20261027::RECENT3::mean::2026",
+      "run_id": "pass-att-common-learner-2026-four-window-v5-20261027",
+      "scores": {
+        "MAE": 8.738523746127537,
+        "MSE": 133.8821313583523,
+        "RMSE": 11.570744632838126,
+        "bias": -0.9805262609636983,
+        "dnp": 0,
+        "fallback_offered": 218,
+        "fallback_played_losses": {
+          "MAE": 15.401937245777743,
+          "MSE": 326.8170189546683,
+          "RMSE": 18.07808117457902,
+          "bias": 12.657978762901907,
+          "n": 27,
+          "p95_absolute_error": 27.99131209623524
+        },
+        "fallback_rows": 218,
+        "mae": 8.738523746127536,
+        "n": 211,
+        "p95_absolute_error": 24.89304967698819,
+        "played_missing_statistic": 0,
+        "played_zero_rows": 6,
+        "population_rows": 515,
+        "rmse": 11.570744632838126,
+        "scored_rows": 211,
+        "selected_line_performance": "unavailable_no_recorded_offers",
+        "supported_played_outcomes": 211,
+        "unique_games": 93,
+        "unique_players": 56,
+        "unique_weeks": 6,
+        "unknown_participation": 304
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2025_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2025,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "method_id": "PASS_ATT::CDF_H1_CURRENT_SEASON_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H1_CURRENT_SEASON_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028::CDF_H1_CURRENT_SEASON_TRAINING::mean::2025",
+      "run_id": "next-nfl-common2025-technical-v2-20261028",
+      "scores": {
+        "MAE": 8.929704687948007,
+        "MSE": 128.22691894200017,
+        "RMSE": 11.323732553447215,
+        "bias": 0.8708967475284787,
+        "error_le1": 0.07680722891566265,
+        "error_lt1": 0.07680722891566265,
+        "fallback_offered": 243,
+        "fallback_scored": 117,
+        "games": 272,
+        "maximum_abs": 32.422367335720544,
+        "offered": 1359,
+        "p90_abs": 18.900488010690786,
+        "p95_abs": 23.130725019584045,
+        "participation": {
+          "played": 664,
+          "unknown": 695
+        },
+        "played_invalid": 0,
+        "played_missing": 0,
+        "played_zero": 36,
+        "scored": 664,
+        "weeks": 18
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2025_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2025,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "method_id": "PASS_ATT::CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028::CDF_H2_PRIOR_PLUS_CURRENT_TRAINING::mean::2025",
+      "run_id": "next-nfl-common2025-technical-v2-20261028",
+      "scores": {
+        "MAE": 8.631115622398214,
+        "MSE": 120.30573268728995,
+        "RMSE": 10.968396997159154,
+        "bias": 0.6916199456937919,
+        "error_le1": 0.07379518072289157,
+        "error_lt1": 0.07379518072289157,
+        "fallback_offered": 28,
+        "fallback_scored": 7,
+        "games": 272,
+        "maximum_abs": 34.349136218829884,
+        "offered": 1359,
+        "p90_abs": 18.37484892483674,
+        "p95_abs": 22.531833941893463,
+        "participation": {
+          "played": 664,
+          "unknown": 695
+        },
+        "played_invalid": 0,
+        "played_missing": 0,
+        "played_zero": 36,
+        "scored": 664,
+        "weeks": 18
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2025_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2025,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "method_id": "PASS_ATT::CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028::CDF_H3_TIME_WEIGHTED_FIXED365_TRAINING::mean::2025",
+      "run_id": "next-nfl-common2025-technical-v2-20261028",
+      "scores": {
+        "MAE": 8.57375198639181,
+        "MSE": 121.17237097516852,
+        "RMSE": 11.007832255951602,
+        "bias": 0.9657465024570842,
+        "error_le1": 0.08433734939759036,
+        "error_lt1": 0.08433734939759036,
+        "fallback_offered": 28,
+        "fallback_scored": 7,
+        "games": 272,
+        "maximum_abs": 36.434810201107,
+        "offered": 1359,
+        "p90_abs": 17.986910640736035,
+        "p95_abs": 23.147813191569345,
+        "participation": {
+          "played": 664,
+          "unknown": 695
+        },
+        "played_invalid": 0,
+        "played_missing": 0,
+        "played_zero": 36,
+        "scored": 664,
+        "weeks": 18
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2025_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2025,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "method_id": "PASS_ATT::CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028::CDF_H4_HISTORICAL_RELATION_CURRENT_STATE::mean::2025",
+      "run_id": "next-nfl-common2025-technical-v2-20261028",
+      "scores": {
+        "MAE": 8.66363112205827,
+        "MSE": 124.09890067492505,
+        "RMSE": 11.139968611936258,
+        "bias": 1.6557095089972462,
+        "error_le1": 0.0677710843373494,
+        "error_lt1": 0.0677710843373494,
+        "fallback_offered": 28,
+        "fallback_scored": 7,
+        "games": 272,
+        "maximum_abs": 35.03856316685318,
+        "offered": 1359,
+        "p90_abs": 18.321053627611246,
+        "p95_abs": 23.797956858054725,
+        "participation": {
+          "played": 664,
+          "unknown": 695
+        },
+        "played_invalid": 0,
+        "played_missing": 0,
+        "played_zero": 36,
+        "scored": 664,
+        "weeks": 18
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    },
+    {
+      "category": "pass_att",
+      "comparison_key": "original_commonlearnerQB_2025_fullquery_originalcutoff_old7day",
+      "evaluation_season": 2025,
+      "evaluation_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "evidence_label": "REPORTED_NOT_REPRODUCED",
+      "experiment_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028",
+      "method_id": "PASS_ATT::FROZEN_CDF_MEAN",
+      "new_fits_or_predictions_from_import": 0,
+      "original_output_id": "FROZEN_CDF_MEAN",
+      "output_type": "mean",
+      "primary_objective": "MSE",
+      "public_report": {
+        "commit": "dab293cb7577c66e33abd29b263ea05abf99a274",
+        "path": "reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "repository": "NickNicky19/NFL-forecasting",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/blob/dab293cb7577c66e33abd29b263ea05abf99a274/reports/next-nfl-checkpoint-20261028/WEEK8_COMMON2025_PUBLIC_RESULTS.json",
+        "verification": "REUSED_ORIGINAL_PUBLISHED_INDEX; no new remote read performed by this child"
+      },
+      "result_id": "IMPORTED::next-nfl-common2025-technical-v2-20261028::FROZEN_CDF_MEAN::mean::2025",
+      "run_id": "next-nfl-common2025-technical-v2-20261028",
+      "scores": {
+        "MAE": 8.66363112205827,
+        "MSE": 124.09890067492505,
+        "RMSE": 11.139968611936258,
+        "bias": 1.6557095089972462,
+        "error_le1": 0.0677710843373494,
+        "error_lt1": 0.0677710843373494,
+        "fallback_offered": 28,
+        "fallback_scored": 7,
+        "games": 272,
+        "maximum_abs": 35.03856316685318,
+        "offered": 1359,
+        "p90_abs": 18.321053627611246,
+        "p95_abs": 23.797956858054725,
+        "participation": {
+          "played": 664,
+          "unknown": 695
+        },
+        "played_invalid": 0,
+        "played_missing": 0,
+        "played_zero": 36,
+        "scored": 664,
+        "weeks": 18
+      },
+      "scores_not_reported": {
+        "CRPS": "not supported by published pointmetricrecord",
+        "OverUnder_EV_returns": "no recordedmatchingoffers/prices/selectionrule",
+        "median": "recorded outputsaremeans; not a medianforecast",
+        "threshold_probability": "no authentic offeredprobabilitypanel"
+      },
+      "valid_for_MAE_point_comparison": true
+    }
+  ],
+  "state": "RESULT_SAVED_PUBLICATION_PENDING",
+  "version": "opportunity-four-legacy-history-import-v1"
+}

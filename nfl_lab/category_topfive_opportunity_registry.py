@@ -80,6 +80,10 @@ def validate(registry):
     for method in methods.values():
         _required(method, ('original_id', 'family', 'procedure_version', 'algorithm', 'formula', 'outputs', 'code', 'feature_policy', 'training_rule', 'aliases'), 'method')
         _unique(method['outputs'], 'output_id')
+        if 'shortlist_group' in method and (not isinstance(method['shortlist_group'], str) or not method['shortlist_group'] or not method.get('shortlist_group_reason')):
+            raise ValueError('related-procedure shortlist group requires an explicit reason')
+        if 'shortlist_group_panels' in method and (not isinstance(method['shortlist_group_panels'], list) or not method['shortlist_group_panels'] or any(not isinstance(p, str) or not p for p in method['shortlist_group_panels'])):
+            raise ValueError('explicit nonempty comparable-panel whitelist required')
         for output in method['outputs']:
             functional = output.get('functional')
             if functional not in {'mean', 'median', 'empirical_point', 'distribution', 'probability'}:
@@ -236,8 +240,20 @@ def leaderboard(registry):
     panels = []
     for key, by_method in sorted(groups.items()):
         context = json.loads(key)
-        ranked = sorted(by_method.values(), key=_rank)
-        panels.append({**context, 'distinct_procedures': len(ranked), 'top_up_to5': [{**x, 'rank': i+1} for i, x in enumerate(ranked[:5])], 'shortfall_from5': max(0, 5-len(ranked))})
+        related = {}
+        for item in by_method.values():
+            method = methods[item['method_id']]
+            allowed_panels = method.get('shortlist_group_panels')
+            use_group = allowed_panels is None or context['comparison']['comparison_set_id'] in allowed_panels
+            related.setdefault(method.get('shortlist_group', method['method_id']) if use_group else method['method_id'], []).append(item)
+        ranked = []
+        for group_id, members in sorted(related.items()):
+            members = sorted(members, key=_rank)
+            representative = dict(members[0])
+            representative.update(shortlist_group=group_id, grouped_method_ids=[m['method_id'] for m in members], grouped_results=members)
+            ranked.append(representative)
+        ranked.sort(key=_rank)
+        panels.append({**context, 'distinct_procedures': len(by_method), 'shortlist_groups': len(ranked), 'top_up_to5': [{**x, 'rank': i+1} for i, x in enumerate(ranked[:5])], 'shortfall_from5': max(0, 5-len(ranked))})
     return {'schema_version': VERSION, 'generated_from': 'METHOD_REGISTRY, EXPERIMENT_REGISTRY, ALL_RESULTS, RUN_EVENTS and PUBLICATION_RECORDS', 'panels': panels, 'scope': list(TARGETS), 'note': 'No mixing of years/populations/horizons/products; mean and median are views of one procedure. No future-readiness inferred from historical rank.'}
 
 

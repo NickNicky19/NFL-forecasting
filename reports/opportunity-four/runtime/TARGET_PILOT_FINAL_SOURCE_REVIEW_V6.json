@@ -1,0 +1,55 @@
+{
+  "review_id": "target-pilot-final-source-review-v6",
+  "at_UTC": "2026-10-29T23:47:02.315087+00:00",
+  "state": "PASS_SOURCE_ONLY_PENDING_ROOT_PUBLICATION_AND_GO",
+  "reviewer": "/root/opportunity_runtime_review",
+  "scope": "Independent source inspection; zero NFL numeric projection, zero model deserialization or fits, zero HTTP/CAS/fixture execution",
+  "source_pins": {
+    "preseal_v6": {
+      "filename": "category-topfive-targets-frozen-v1.preseal-v6.json",
+      "bytes": 13773,
+      "sha256": "dc242228fd803a76fa89cf3f9f9e0290ed692f4cfda8170879991aa77337749d"
+    },
+    "worker": {
+      "filename": "category_topfive_targets_frozen_v1_run.py",
+      "bytes": 25830,
+      "sha256": "ac297f8af7903ffcb0a4d1f3eb9dd1c53af868e629f4637710d009ff763dcf28"
+    },
+    "product": {
+      "filename": "category_topfive_targets_product_v1.py",
+      "bytes": 10106,
+      "sha256": "bf44f9a4223f98785155ddbbfa18ab307e4983427349e6dc99cc73c164b69109"
+    },
+    "label_helper": {
+      "filename": "category_topfive_target_labels_v2.py",
+      "bytes": 8772,
+      "sha256": "028252f00997dd813f849277d750cba367e41dea30f20e5a41a90b6d44ff0909"
+    }
+  },
+  "checks": [
+    "Only active rec_tgt target plus fixed base features/context projected for new training; unused nonfocus target labels excluded. Fixed 2022-2025 preseason training; no claimed weekly H-MULTI or pure current-season history.",
+    "Exact source/inputs and actual positive-support qualification authenticated; root sealed plan and GO mandatory. Publication proof binds experiment/run, exact worker/product hashes and remote-readback protocol commit before fit.",
+    "Feature-only query has no actual rec_tgt; same 2999 keys, 93 games, W1-6 preserved. W7 unavailable is explicit, no manufactured zero labels.",
+    "Actual label qualification reports 1855 of 2458 primary RB/WR/TE observations, including 369 zeros, 603 unknown. These are preparation labels, not new forecasts or accuracy evidence.",
+    "All 11996 forecast records and model/prepared inputs durably frozen and read back before target/action numeric projection for grading. Point vectors checked bitwise unchanged after grading.",
+    "Identity-only admission first preserves six unresolved raw rows in original bytes/bucket; no target-value admission, query drops or invented identity. Strict same helper/source join, physical participation predicate and unknown handling retained.",
+    "One 32-tree fit only; no refit after freeze. Four procedures from three families. Means remain unrounded; exact-count metric only for integer lower medians. Recent3/8 mean baselines not authenticated distributions.",
+    "CDF versus recent8 primary paired MAE uses same observations; game/week bootstrap seed1703 with500 replicates, minimum8 clusters means week interval null for6weeks. Invalid/impossible proper losses retained as explicit nonfinite state.",
+    "Finite one-invocation resources/managed write/readback gates and failure retention preserved. Original blank-query finding, QL2 identity failure and prior code-only reviews remain traceable."
+  ],
+  "limitations": [
+    "Not operational target admission, genuine pregame evidence, deployment or a website-relative comparison. No authenticated target offers, prices, settlement or EV evidence.",
+    "Provider-reported target credit: original historical-builder, nullified/two-point exceptions remain unverified; contextual code inspection does not resolve them.",
+    "Original assumed-seven-day timing/current-vintage exposed reconstruction and older feature memory retained. Snap panel placeholders are not qualified exposure.",
+    "Publication proof and exact sealed successor plan must be supplied by root; this preseal intentionally cannot execute.",
+    "Existing target zero-support and strict-identity failure records remain original; source pass never retroactively qualifies them."
+  ],
+  "actual_execution_by_this_review": {
+    "predictive_fits": 0,
+    "model_loads": 0,
+    "NFL_rows_decoded": 0,
+    "software_test_runs": 0,
+    "HTTP": 0,
+    "CAS": 0
+  }
+}

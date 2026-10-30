@@ -1,0 +1,65 @@
+{
+  "at_UTC": "2026-10-29T23:04:54.370740+00:00",
+  "files": {
+    "build_playstats.R": {
+      "bytes": 3306,
+      "sha256": "a98674f5c54e29c3400812c8f97e1c760777d2312274ab0bae0bc7cd9cd6bf9d"
+    },
+    "calculate_stats.R": {
+      "bytes": 29754,
+      "sha256": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28"
+    },
+    "deprecated_aggregate_game_stats.R": {
+      "bytes": 605,
+      "sha256": "e0112af62bdf60407f625b4b26f714fae6809cafadeebabc6d1be7fa40575486"
+    }
+  },
+  "model_fits_forecasts_NFL_values": 0,
+  "not_established": [
+    "Exact aggregation commit that produced retained historical weekly source files",
+    "Whether every NFL115credit excludes all nullified and2pt attempts",
+    "Independent oldannualsource/PBP perplayer/game reconciliation",
+    "Target market or offered target betting contract"
+  ],
+  "original_allocation": {
+    "actual_GETs": 2,
+    "attempts": [
+      {
+        "request": "nflverse/nflfastR master:R/calculate_player_stats.R",
+        "state": "HTTP404_PRESERVED"
+      },
+      {
+        "request": "nflverse/nflfastR contents/R",
+        "state": "DIRECTORY_METADATA_RECEIVED"
+      }
+    ],
+    "max_GETs": 2
+  },
+  "secret_account_quote_access": 0,
+  "technical_continuation_v2": {
+    "actual_GETs": 1,
+    "blob": "7ae557c240534231f7561d820c9d972d0b3d45ac",
+    "local_schema_rejection_before_GET": 1,
+    "max_GETs": 1,
+    "state": "DEPRECATED_FUNCTION_STUB_RECEIVED"
+  },
+  "technical_continuation_v3": {
+    "actual_GETs": 2,
+    "blobs": [
+      "f367d0a4ba7d3a472351865467eba3a9c53a14f6",
+      "80e495d237da350a1672ea68d7a6d4a72bd8f0f2"
+    ],
+    "max_GETs": 4,
+    "max_bytes": 1048576,
+    "no_further_requests": true,
+    "response_body_chars": 33060
+  },
+  "verified_from_current_public_code": {
+    "game_scope": "All supplied PBP game/play IDs are semi-joined; default loads all available plays, no quarter/time filter; overtime not explicitly removed",
+    "original_stats_input": "Official raw gameDetail plays/playStats, stat_ids1:1000 retained; no filter imposing nullified or2pt target rules in inspected functions",
+    "receptions": "sum(stat_id %in%21:22), separate output",
+    "target": "targets = sum(stat_id == 115)",
+    "two_point_conversion": "receiving_2pt_conversions = sum(stat_id ==104), separate stat credit; absence of115on2pt not established"
+  },
+  "version": "receiving-target-definition-source-v1"
+}

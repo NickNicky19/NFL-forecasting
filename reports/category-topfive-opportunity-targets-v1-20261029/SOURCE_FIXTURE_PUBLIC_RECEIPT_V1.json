@@ -1,0 +1,41 @@
+{
+  "NFL_models_fits_forecasts_CAS_HTTP": 0,
+  "actual": {
+    "CPU_seconds": 0.354759155,
+    "RSS_bytes": 91992064,
+    "wall_seconds": 0.35719457199957105
+  },
+  "automatic_retry": false,
+  "exact_source_pins": {
+    "module": {
+      "bytes": 10106,
+      "repository_file": "nfl_lab/category_topfive_targets_product_v1.py",
+      "sha256": "bf44f9a4223f98785155ddbbfa18ab307e4983427349e6dc99cc73c164b69109"
+    },
+    "pilot_worker": {
+      "bytes": 22564,
+      "repository_file": "tools/category_topfive_targets_frozen_v1_sourcecheck_snapshot.py",
+      "sha256": "d00b14cd0407bfb25057c17c37a23d6a8e514469bb6053148eeb323a67459a35"
+    },
+    "qualification_worker": {
+      "bytes": 8532,
+      "repository_file": "tools/category_topfive_targets_qualification_v1.py",
+      "sha256": "88b7c789542357a8aa5ce7f9c207604c6a3035c7cdb959f00d25cf3f1e023adc"
+    },
+    "sourcecheck_worker": {
+      "bytes": 3150,
+      "repository_file": "tools/category_topfive_targets_sourcecheck_v1.py",
+      "sha256": "18454967ad1dd4924663f224ec191ffe19c6b9087c0053335c4734653b3c0e75"
+    }
+  },
+  "fictional": {
+    "NFL_rows": 0,
+    "fictional_checks": 8,
+    "state": "PASS"
+  },
+  "original_receipt_sha256": "d3ef113ca06790407cbd6cc6788b8bd4ed28f6654530667dbc7895416cb730f5",
+  "portable_source_AST_modules": 3,
+  "projection": "Public-safe relative source references; original private receipt kept unchanged. Snapshot hash matches original tested pilot worker; this fixture did not validate later pilot revisions.",
+  "state": "PASS_NEW_TARGET_PRODUCT_SOURCE_FIXTURE",
+  "version": "rec-tgt-source-fictional-v1"
+}

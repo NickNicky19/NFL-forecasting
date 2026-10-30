@@ -1,0 +1,62 @@
+{
+  "NFL_stat_values_models_fits_forecasts_HTTP_CAS": 0,
+  "actual": {
+    "CPU_seconds": 0.308533622,
+    "RSS_bytes": 111738880,
+    "wall_seconds": 0.30825504600215936
+  },
+  "prior_failed_qualification_preserved": true,
+  "projected_columns": {
+    "query": [
+      "season",
+      "week",
+      "game_id",
+      "player_id",
+      "team",
+      "opponent",
+      "position"
+    ],
+    "raw": [
+      "season",
+      "week",
+      "game_id",
+      "player_id",
+      "team",
+      "position",
+      "opponent_team",
+      "season_type"
+    ]
+  },
+  "query_context_missing_counts": {
+    "game_id": 0,
+    "opponent": 0,
+    "player_id": 0,
+    "position": 0,
+    "season": 0,
+    "team": 0,
+    "week": 0
+  },
+  "query_row_count": 2999,
+  "source_complete_identity_duplicate_rows": 0,
+  "source_identity_missing_counts": {
+    "game_id": 0,
+    "player_id": 6,
+    "season": 0,
+    "team": 0,
+    "week": 0
+  },
+  "source_row_count": 6488,
+  "source_unresolved_identity_by_week": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1
+  },
+  "source_unresolved_identity_rows": 6,
+  "source_weekly_target_or_action_stat_values_read": false,
+  "state": "COMPLETE_IDENTITY_ONLY_DIAGNOSTIC",
+  "terminal_at_UTC": "2026-10-29T23:28:50.978566+00:00",
+  "version": "rec-tgt-identity-only-diagnostic-v3-20261029"
+}

@@ -1,0 +1,70 @@
+{
+  "record_id": "opportunity-four-target-vector-QA-v1",
+  "type": "SAVED_VECTOR_QA_NOT_PREDICTIVE_EXPERIMENT",
+  "state": "PASS_INDEPENDENT_TARGET_SAVED_VECTOR_QA",
+  "evidence_label": "REPRODUCED_FROM_DATA",
+  "at_UTC": "2026-10-29T23:57:14.806415+00:00",
+  "worker_sha256": "558804ed2f9a4462eedd548b7f68414070776783d0f43dcd3fa603d402d46f67",
+  "result_sha256": "369b34901d8556a5ce47d41a74e9fbd8fc075a378a250ad469628816e1d54a79",
+  "input_capsule_sha256": {
+    "freeze": "cc6474aa5476b77b8c7e1ff918a509feb86289080b3084230ecd5cdef60223a7",
+    "grade": "9272e138b53f318a1908111f7c49497633a3ed0f7638521d8fbae20f482bafa0"
+  },
+  "checks": [
+    "exact forecast-to-grade parity",
+    "all methods have identical keys/context/labels",
+    "unknown never numeric zero",
+    "mean/median/point-only contracts",
+    "count CDF/log-mass consistency",
+    "all overall/weekly point and proper aggregate scores",
+    "game/week bootstrap seed1703/500 on same1855observations"
+  ],
+  "coverage": {
+    "method_rows": 11996,
+    "unique_query_player_games": 2999,
+    "primary_planned": 2458,
+    "primary_supported": 1855,
+    "primary_unknown": 603,
+    "primary_played_zero": 369,
+    "full_population_scored_law_rows_checked": 4180,
+    "aggregate_result_fields_compared": 1555
+  },
+  "primary_MAE": {
+    "TGT_CDF_BASE": {
+      "mean": 1.745459984640342,
+      "median": 1.692722371967655
+    },
+    "TGT_RECENT3_MEAN": {
+      "mean": 1.8561931739489306,
+      "median": null
+    },
+    "TGT_RECENT8_MEAN": {
+      "mean": 1.7612667604551633,
+      "median": null
+    },
+    "TGT_ROLE_PRIOR": {
+      "mean": 2.423123998458453,
+      "median": 2.302964959568733
+    }
+  },
+  "usage": {
+    "CAS": 0,
+    "CPU_seconds": 0.48967041499999997,
+    "HTTP": 0,
+    "RSS_bytes": 132276224,
+    "blocked_calls": [],
+    "fits": 0,
+    "model_deserializations": 0,
+    "wall_seconds": 0.4912481050014321
+  },
+  "limitations": [
+    "No new model deserialization/fit, source acquisition or forecast generation.",
+    "Saved law score aggregation and CDF/log-mass consistency only; CRPS not regenerated from models.",
+    "Same-host readback; not off-host restoration or official-credit historical-builder qualification.",
+    "Exposed W1-6 reconstruction with original seven-day assumption; W7 gap retained.",
+    "Six week clusters cannot support the declared minimum-eight-cluster week interval.",
+    "No target website/market, probability calibration, EV, pregame, admission or deployment comparison."
+  ],
+  "publication_state": "RESULT_SAVED_PUBLICATION_PENDING",
+  "private_evidence_route": "Original approved retained private evidence restoration; no private paths or row-level records included."
+}

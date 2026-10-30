@@ -163,6 +163,50 @@ class RegistryChecks(unittest.TestCase):
         r = fixture(); r['methods'][0]['outputs'][0].update(functional='probability', primary_score='MAE')
         with self.assertRaises(ValueError): validate(r)
 
+    def grouped_fixture(self):
+        r = fixture()
+        b = copy.deepcopy(r['methods'][0]); b.update(method_id='m:b', original_id='original-b')
+        for m in (r['methods'][0], b): m.update(shortlist_group='related-fixture', shortlist_group_reason='Same family parameter controls; no padding')
+        r['methods'].append(b); r['experiments'][0]['method_ids'].append('m:b')
+        y = copy.deepcopy(r['results'][0]); y.update(result_id='y:b', method_id='m:b'); y['scores']['MAE'] = score(3.)
+        r['results'].append(y)
+        return r
+
+    def test_group_requires_reason(self):
+        r = fixture(); r['methods'][0]['shortlist_group'] = 'related'
+        with self.assertRaises(ValueError): validate(r)
+
+    def test_group_preserves_losing_members(self):
+        r = self.grouped_fixture(); p = leaderboard(r)['panels'][0]
+        self.assertEqual(p['distinct_procedures'], 2); self.assertEqual(p['shortlist_groups'], 1)
+        self.assertEqual(p['top_up_to5'][0]['grouped_method_ids'], ['m:a', 'm:b'])
+        self.assertEqual(p['top_up_to5'][0]['grouped_results'][1]['loss'], 3.)
+
+    def test_group_does_not_mix_seasons(self):
+        r = self.grouped_fixture(); r['results'][1]['comparison']['season'] = 2025
+        self.assertEqual(len(leaderboard(r)['panels']), 2)
+
+    def test_group_does_not_mix_population(self):
+        r = self.grouped_fixture(); r['results'][1]['comparison']['population_id'] = 'other'
+        self.assertEqual(len(leaderboard(r)['panels']), 2)
+
+    def test_group_selects_lower_loss(self):
+        r = self.grouped_fixture(); r['results'][1]['scores']['MAE'] = score(1.)
+        self.assertEqual(leaderboard(r)['panels'][0]['top_up_to5'][0]['method_id'], 'm:b')
+
+    def test_group_tie_stable_id(self):
+        r = self.grouped_fixture(); r['results'][1]['scores']['MAE'] = score(2.)
+        r['results'].reverse(); self.assertEqual(leaderboard(r)['panels'][0]['top_up_to5'][0]['method_id'], 'm:a')
+
+    def test_group_respects_panel_admission(self):
+        r = self.grouped_fixture()
+        for m in r['methods']: m['shortlist_group_panels'] = ['other-panel']
+        self.assertEqual(leaderboard(r)['panels'][0]['shortlist_groups'], 2)
+
+    def test_group_panel_string_rejected(self):
+        r = self.grouped_fixture(); r['methods'][0]['shortlist_group_panels'] = 'fixture'
+        with self.assertRaises(ValueError): validate(r)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
