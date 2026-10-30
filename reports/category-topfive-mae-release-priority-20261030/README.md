@@ -78,3 +78,15 @@ This checkpoint is linked from the [canonical four-category index](../opportunit
 Public outputs contain code, safe manifests and aggregate/consumer verification. Restricted sources, fitted models and row-level research evidence remain on the approved private route. No secrets, paid services, Odds API credits, wagers, competing producer or scheduler were used.
 
 Publication, owner delivery, acknowledgement, execution and actual release remain distinct. A code package or passing suite is not deployment.
+
+## Publication and owner delivery
+
+The package is published at commit `341742de83975264a07d035d4b6289e57c2ec1e9`: **65 exact Git blob matches** and two exact immutable body readbacks. [Publication proof](PUBLICATION_READBACK_V1.json). Original receipts retain their pre-publication status; this append-only publication record completes that stage without changing their source bytes or operational status.
+
+The retained owner received the exact package through [research PR 1, comment 6533786373](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6533786373), created **October 30 at 4:25 p.m. CDT**. Its full body was read back exactly. **Acknowledgement and execution have not been observed.** [Delivery receipt](OWNER_DELIVERY_V1.json).
+
+If the original production session does not receive the GitHub notification, Nick can relay this one action:
+
+> Retained production owner, please execute the MAE release package at research commit 341742de83975264a07d035d4b6289e57c2ec1e9, OWNER_EXECUTION_V1.json. Restore the named approved private checkpoint and fresh source/query bindings, admit and capture each ready category independently under stat_point_mae_v2, update the typed consumer, and publish through your existing writer/scheduler. Keep mean/probability products and prior forecasts intact. Return actual run IDs, category counts and served-value verification; acknowledge comment 6533786373. Ordered/chart work must not hold up a ready core category.
+
+This is an execution request under the existing authorization and retained production lease, not a request for new general approval. The original research session remains production read-only.
