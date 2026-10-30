@@ -97,3 +97,9 @@ The retained website owner must execute the already delivered MAE package at `34
 This wave completed statistical regrading, one bounded descriptive capacity replay, engineering checks and managed evidence retention. It performed **zero new predictive fits, forecasts, pregame captures, API odds calls or deployments**. Four-category predictive research, earlier negative evidence, scientific registrations and original/V2 ownership remain intact.
 
 [Category-level actual live versions, issue clocks, zero new issuance counts and latest build/capture identities](CATEGORY_RELEASE_AND_ROLE_STATUS_V1.json) · [Exact reporting owner addendum](OWNER_REPORTING_ADDENDUM_V1.json).
+
+## Publication and owner delivery
+
+Published source/results: `da24f9a3e88bb8c8af85e591b5283cfead4cffdd`. All 61 Git blobs and the exact original-side aggregate body matched immutable remote readback. [Proof](PUBLICATION_READBACK_V1.json). The original pending publication record remains intact; the appended canonical proof completes publication.
+
+The results and exact additive integration package were delivered through [research PR 1, comment 6534651808](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6534651808), and its full body was read back. [Delivery receipt](OWNER_DELIVERY_V1.json). The original MAE owner request remains at comment 6533786373. Delivery does not establish retained-owner acknowledgement, capture, publication or live consumption.
