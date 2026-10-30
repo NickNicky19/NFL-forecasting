@@ -61,6 +61,50 @@
       "source_sha256": "ea16a8e4ecfa22f1b2c07bebef526c7ec1e4fcce3d5a1b6cc7d078ed6604cfce",
       "started_at_UTC": "2026-10-30T00:03:19.597276+00:00",
       "wall_seconds": 0.017953834001673386
+    },
+    {
+      "actual": {
+        "CPU_seconds": 0.018545814000000008,
+        "RSS_bytes": 15597568,
+        "wall_seconds": 0.0194798640004592
+      },
+      "cases": 47,
+      "checks_sha256": "ff33ce3bce9cdae68af4f165ac18a79748bc7ce0753bbfd966525722ba031407",
+      "command": "python -B tools/category_topfive_opportunity_registry_checks_v1.py",
+      "equivalent_runner": "Same47unittestcases via runpy under5CPU10wall",
+      "exit_code": 0,
+      "finished_at_UTC": "2026-10-30T02:24:41.585044+00:00",
+      "id": "registry-source-v6",
+      "log": "over-under/software/REGISTRY_VALIDATION_V6.log",
+      "reason": "3newunstartedcancellationfixtures; sourcebeforeandafterarchivedinimmutableGit, no newNFLmethods",
+      "source_sha256": "1d05bdb9517a936882fbaf77554f4574d839ce3c667644d267dd04b930a9f373",
+      "started_at_UTC": "2026-10-30T02:24:41.565560+00:00"
+    },
+    {
+      "NFL_rows_models_fits_forecasts_CAS_HTTP": 0,
+      "actual": {
+        "CPU_seconds": 0.010629903999999999,
+        "RSS_bytes": 13631488,
+        "wall_seconds": 0.01377910999872256
+      },
+      "cases": 32,
+      "checks_sha256": "54f462d86dc5eadc928253805b4d227669830a74f08f80e7b5cf25f2e6bd48d6",
+      "command": "python -B tools/category_topfive_opportunity_ou_checks_v1.py --scorer nfl_lab/category_topfive_opportunity_ou_v1.py --out <newfixture-receipt.json>",
+      "finished_at_UTC": "2026-10-30T01:57:55.151414+00:00",
+      "id": "OU_32CASE_FIXTURE_V1",
+      "log": "over-under/software/OU_FIXTURE_V1.log",
+      "receipt": "over-under/software/OU_FIXTURE_V1.json",
+      "reproduction": "DirectsameCLI executed inprocessrunpy under5CPU10wall128MiB",
+      "scorer_sha256": "2d46963a0bf004c52233d75c0c729f3bc3e1148c3108ed8c0c326ada1fe43489",
+      "started_at_UTC": "2026-10-30T01:57:55.137477+00:00",
+      "state": "PASS"
+    },
+    {
+      "actual": "Source helperint32/int64correction fixture; newsourcequalificationseparate.",
+      "cases": 10,
+      "id": "target-identity-fixture-v3",
+      "kind": "Onefictionalbundle,0NFLmodels/fits/forecasts",
+      "record": "over-under/TARGET_RECENT_IDENTITY_FIXTURE_V3.json"
     }
   ]
 }

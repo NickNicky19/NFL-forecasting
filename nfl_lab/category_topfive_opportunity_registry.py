@@ -103,8 +103,13 @@ def validate(registry):
         if run['experiment_id'] not in experiments or run['status'] not in STATES or run['origin'] not in {'IMPORTED', 'EXECUTED_HERE'}:
             raise ValueError('run linkage/origin/state invalid')
         if run['origin'] == 'EXECUTED_HERE' and run['status'] not in {'REGISTERED', 'BLOCKED', 'DEFERRED_BY_OWNER_SCOPE_CHANGE'}:
-            if not run['start'].get('record'):
+            unstarted_cancellation = run['status'] == 'CANCELED' and not run['start'].get('record')
+            if unstarted_cancellation and not (run['finish'].get('record') and run['finish'].get('reason')):
+                raise ValueError('unstarted cancellation needs a durable reason and terminal record')
+            if not run['start'].get('record') and not unstarted_cancellation:
                 raise ValueError('launched run requires durable start')
+            if unstarted_cancellation and any(r.get('run_id') == run['run_id'] and r.get('coverage', {}).get('scored', 0) > 0 for r in results.values()):
+                raise ValueError('unstarted cancellation cannot have scored forecasts')
             if run['status'] not in {'RUNNING', 'RESUMABLE'} and not run['finish'].get('record'):
                 raise ValueError('terminal run requires finish/failure/interruption record')
         if run['origin'] == 'IMPORTED' and not run['evidence'].get('original_record'):

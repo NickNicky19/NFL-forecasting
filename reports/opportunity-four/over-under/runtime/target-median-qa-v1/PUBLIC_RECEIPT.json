@@ -1,0 +1,58 @@
+{
+  "aggregate_fields_compared": 1476,
+  "at_UTC": "2026-10-30T02:11:10.799849+00:00",
+  "eligible_source_row_incidences": 151675,
+  "input_sha256": {
+    "freeze": "ba4bc542ba4fc2d7fc0b083c9a340edcffab8acfb88ad063f2302bd8d32011c8",
+    "grade": "5570b2705221c98ed4c9a3a314c8025ff8a5b5cf239e6ea0ec6604154a0142bd",
+    "history": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+    "original_freeze": "cc6474aa5476b77b8c7e1ff918a509feb86289080b3084230ecd5cdef60223a7",
+    "original_grade": "9272e138b53f318a1908111f7c49497633a3ed0f7638521d8fbae20f482bafa0"
+  },
+  "limitations": [
+    "Independent QA re-evaluation, zero new fits/models/issued forecasts.",
+    "Only authenticated earlier prior-history targets projected; no target-game workload feature.",
+    "Same-host readback, exposedW1-6 reconstruction/oldseven-day assumption; noW7/pregame/site/market/deployment claim."
+  ],
+  "new_medians_independently_recomputed": 5998,
+  "played_zero": 369,
+  "primary_MAE": {
+    "TGT_CDF_BASE": {
+      "mean": 1.745459984640342,
+      "median": 1.692722371967655
+    },
+    "TGT_RECENT3_LOWER_MEDIAN_CDF_FALLBACK": {
+      "mean": null,
+      "median": 1.8495956873315365
+    },
+    "TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK": {
+      "mean": null,
+      "median": 1.7444743935309972
+    },
+    "TGT_RECENT8_MEAN": {
+      "mean": 1.7612667604551633,
+      "median": null
+    }
+  },
+  "primary_supported": 1855,
+  "query_rows": 2999,
+  "rows": 11996,
+  "state": "PASS_INDEPENDENT_TARGET_MEDIAN_SOURCE_AND_SCORE_QA",
+  "unchanged_control_rows": 5998,
+  "unknown": 603,
+  "usage": {
+    "CAS": 0,
+    "CPU_seconds": 19.207188681,
+    "HTTP": 0,
+    "RSS_bytes": 158838784,
+    "blocked_calls": [],
+    "fits": 0,
+    "model_deserializations": 0,
+    "new_forecasts": 0,
+    "wall_seconds": 19.212985851001577
+  },
+  "type": "INDEPENDENT_SAVED_VECTOR_AND_PRIOR_WINDOW_QA_NOT_NEW_PREDICTIVE_RUN",
+  "worker_sha256": "924cc0e850b348cddc82b4a62cd286cc56c143727e9a05349e40923be264b1b3",
+  "result_sha256": "21c44d7f1b8637ef00e8c21df265c368c45d24d017001e90deace34c25ee6474",
+  "publication_state": "RESULT_SAVED_PUBLICATION_PENDING"
+}

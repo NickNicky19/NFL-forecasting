@@ -207,6 +207,21 @@ class RegistryChecks(unittest.TestCase):
         r = self.grouped_fixture(); r['methods'][0]['shortlist_group_panels'] = 'fixture'
         with self.assertRaises(ValueError): validate(r)
 
+    def test_unstarted_cancellation_keeps_missing_start(self):
+        r = fixture(); r['results'] = []; a = r['runs'][0]
+        a.update(origin='EXECUTED_HERE', status='CANCELED', start={'record': None, 'reason': 'Never launched'}, finish={'record': 'fixture/cancellation', 'reason': 'Registration alias corrected before execution'})
+        self.assertEqual(validate(r)['runs'], 1)
+
+    def test_unstarted_cancellation_needs_reason(self):
+        r = fixture(); r['results'] = []; a = r['runs'][0]
+        a.update(origin='EXECUTED_HERE', status='CANCELED', start={'record': None}, finish={'record': 'fixture/cancellation'})
+        with self.assertRaises(ValueError): validate(r)
+
+    def test_unstarted_cancellation_cannot_score(self):
+        r = fixture(); a = r['runs'][0]
+        a.update(origin='EXECUTED_HERE', status='CANCELED', start={'record': None}, finish={'record': 'fixture/cancellation', 'reason': 'Not launched'})
+        with self.assertRaises(ValueError): validate(r)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
