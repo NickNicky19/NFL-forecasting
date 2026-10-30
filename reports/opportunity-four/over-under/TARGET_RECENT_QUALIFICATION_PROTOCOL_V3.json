@@ -1,0 +1,62 @@
+{
+  "version": "target-recent-history-qualification-v3-20261030",
+  "experiment_id": "e:target-recent-history-qualification-v3-20261030",
+  "run_id": "r:target-recent-history-qualification-v3-20261030",
+  "change": "Exactorderedidentityvaluecomparison withinteger-width distinction removed; missing/reordered/mutatedIDs stillfail, noalign/reindex",
+  "source_window_rules": "Admit byknownavailability thenchronology, prior3/8rosterslots; unknownnotzero; old7day assumption; exactmeans/countparity<=1e-10",
+  "resources": {
+    "CAS": 0,
+    "CPU_seconds": 60,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "attempts": 1,
+    "fits": 0,
+    "forecasts": 0,
+    "metadata_bytes": 65536,
+    "model_loads": 0,
+    "wall_seconds": 90
+  },
+  "source_pins": {
+    "helper": {
+      "filename": "category_topfive_target_recent_controls_v3.py",
+      "bytes": 10157,
+      "sha256": "0c325b1f70e7bbc89ef122b880f5f6455f042d12739d5e315ae089968925fbd2"
+    },
+    "ordered_chronology_definition": {
+      "filename": "ordered_recent_v1.py",
+      "bytes": 6013,
+      "sha256": "d7266d47462865d832079bde1a5ff757e217c6c6297e76028398a97100ef3d0e"
+    },
+    "original_feature_definition": {
+      "filename": "features.py",
+      "bytes": 12983,
+      "sha256": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9"
+    },
+    "worker": {
+      "filename": "category_topfive_target_recent_qualification_v3.py",
+      "bytes": 8859,
+      "sha256": "fdcf6806650a65be1ace52ccddd9a1dfbdfe5064b61e6080a693eef70ae7c3a7"
+    },
+    "identity_fixture_receipt": {
+      "filename": "RESULT.json",
+      "bytes": 669,
+      "sha256": "3378f9396602d2354df9685801c5c35a3537b8f6b1f3fdc12a7852d2235982f5"
+    },
+    "independent_review": {
+      "filename": "TARGET_RECENT_IDENTITY_CORRECTION_SOURCE_REVIEW_V3.json",
+      "bytes": 2891,
+      "sha256": "88ff7adfac6294a6f53b021078b187e94105133c1b3bf0e9492660bee217cd9d"
+    }
+  },
+  "data_hashes": {
+    "history": {
+      "bytes": 1155175,
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55"
+    },
+    "query": {
+      "bytes": 274362,
+      "sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+    }
+  },
+  "prior_failure": "Originalv2FAILED34.79CPU preserved; noautomaticretry/no refund; newsourceversion+newallocation"
+}

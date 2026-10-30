@@ -1,0 +1,64 @@
+{
+  "actual": {
+    "CPU_seconds": 36.6023766,
+    "RSS_bytes": 173527040,
+    "wall_seconds": 36.60265893000178
+  },
+  "archived_forecast_rows_read": 0,
+  "audit_sha256": "dafe207f8c8ffd8ad1cf1c1398ed49b3e4f8831de04ba2d68768d41a18b40ba8",
+  "automatic_retry": false,
+  "chronology": "Availability admitted first; last3/8 roster-game slots by kickoff then game_id; qualified played finite integer values only inside slots",
+  "cutoff_batches": 39,
+  "fits_forecasts_models_HTTP_CAS": 0,
+  "historical_timing": "Original fixed seven-day reconstruction assumption preserved; not authentic historical publication or pregame forecast",
+  "identity_dtypes": {
+    "query": {
+      "game_id": "object",
+      "player_id": "object",
+      "season": "int32",
+      "week": "int32"
+    },
+    "rebuilt_audit": {
+      "game_id": "object",
+      "player_id": "object",
+      "season": "int64",
+      "week": "int64"
+    },
+    "strict_integer_and_string_ordered_values_match": true
+  },
+  "intended_scope": "2026REGW1-7, supported frozen W1-6; W7 compatible source/query missing",
+  "numeric_projection_predicate": "Each exact query cutoff separately: permitted source scope AND source kickoff<cutoff AND source outcome availability<cutoff",
+  "primary_planned": 2458,
+  "query_games": 93,
+  "query_rows": 2999,
+  "source_contract": "Prior qualified target history only; unknown/DNP slots consume positions; admit availability before kickoff chronology; no missing availability fill",
+  "source_identity_rows": 62388,
+  "source_mean_count_parity": {
+    "3": {
+      "DNP_slots": 0,
+      "count_mismatches": 0,
+      "maximum_finite_mean_difference": 0.0,
+      "mean_mismatches": 0,
+      "mean_tolerance": 1e-10,
+      "query_rows": 2999,
+      "unknown_slots": 2370,
+      "zero_valid_value_windows": 565
+    },
+    "8": {
+      "DNP_slots": 0,
+      "count_mismatches": 0,
+      "maximum_finite_mean_difference": 0.0,
+      "mean_mismatches": 0,
+      "mean_tolerance": 1e-10,
+      "query_rows": 2999,
+      "unknown_slots": 5492,
+      "zero_valid_value_windows": 399
+    }
+  },
+  "source_row_projection_incidences": 2377842,
+  "state": "PASS_TARGET_RECENT_HISTORY_SOURCE_AND_MEAN_PARITY",
+  "target_game_values_used": false,
+  "terminal_at_UTC": "2026-10-30T01:43:14.995112+00:00",
+  "unknown_availability_rows": 0,
+  "version": "target-recent-history-qualification-v3-20261030"
+}

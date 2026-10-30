@@ -1,0 +1,152 @@
+{
+  "evidence_type": "PREPARATION_AND_SOFTWARE_NOT_NEW_PREDICTIVE_ACCURACY_RESULT",
+  "experiment_id": "e:opportunity-four-target-recent-medians-v2-20261030",
+  "forecasts_or_model_fits": 0,
+  "independent_NFL_outcomes_from_preparation": 0,
+  "limits": "No originalfailedv2auditrowvectors were retained or claimed reproduced. Actualv3 query/audit keys match exactly; means/counts bothwindows match all2999originalquery aliases exactly. Existingseven-day reconstruction andW7gap remain.",
+  "lineage": "Originalv2 strict dtype-sensitive check failed. v3 allows only exactorderedinteger/keyvalues acrossinteger-widthdtypes; originalsource/procedurevalues/clocks unchanged. Fictionalmechanism andactualnewsourcequalification are separate receipts.",
+  "records": [
+    {
+      "CAS": 0,
+      "consumed": {
+        "at_UTC": "2026-10-30T01:30:50.029108+00:00",
+        "original_allocations_refunded": false,
+        "plan_sha256": "433ece38858e5fbe0f91463d81487e161218dd5329d55b9e25856c1146e1a43c",
+        "state": "ONE_SOURCE_QUALIFICATION_ATTEMPT_CONSUMED"
+      },
+      "fits": 0,
+      "forecast_rows": 0,
+      "lane": "QUALIFICATION_V2",
+      "model_loads": 0,
+      "original_budget_refunded": false,
+      "original_consumed_sha256": "a64c8187f15f3452e5c491f0ad237a7b36ed3ebeffcfdb9ebca308c850d4a0d7",
+      "original_result_sha256": "90b0e78c98b8d40e770a18aa74937d8b39494a775e3332bcb10d8f7498c97c9e",
+      "result": {
+        "actual": {
+          "CPU_seconds": 34.793357115999996,
+          "RSS_bytes": 175181824,
+          "wall_seconds": 34.80023369999981
+        },
+        "automatic_retry": false,
+        "error": "source parity query order changed",
+        "error_type": "ValueError",
+        "fits_forecasts_models_HTTP_CAS": 0,
+        "state": "FAILED_RETAINED",
+        "terminal_at_UTC": "2026-10-30T01:31:24.829293+00:00",
+        "version": "target-recent-history-qualification-v2-20261030"
+      }
+    },
+    {
+      "CAS": 0,
+      "consumed": {
+        "at_UTC": "2026-10-30T01:38:56.490621+00:00",
+        "plan_sha256": "3f620926dd9783389a47fb9a1f15502b91a51742abdcab8e65659aee89e36781",
+        "state": "ONE_FICTIONAL_FIXTURE_CONSUMED"
+      },
+      "fits": 0,
+      "forecast_rows": 0,
+      "lane": "IDENTITY_FIXTURE_V3",
+      "model_loads": 0,
+      "original_budget_refunded": false,
+      "original_consumed_sha256": "d9b206279f6663b80945bc0981862d2899e7373b1ba678ed1213854604ebdde8",
+      "original_result_sha256": "3378f9396602d2354df9685801c5c35a3537b8f6b1f3fdc12a7852d2235982f5",
+      "result": {
+        "NFL_rows_models_fits_forecasts_HTTP_CAS": 0,
+        "automatic_retry": false,
+        "checks": 10,
+        "limit": "Fictional code mechanism, not independent actualNFL row equality or completed numeric sourceparity",
+        "state": "PASS_FICTIONAL_IDENTITY_CORRECTION",
+        "terminal_at_UTC": "2026-10-30T01:38:56.766565+00:00",
+        "usage": {
+          "CPU_seconds": 0.276043457,
+          "RSS_bytes": 92692480,
+          "wall_seconds": 0.27599094299876015
+        },
+        "verified": "Old dtype-only check fails on fictionalint32/int64; new exactorderedcanonicalkeysemanticspass andmissing/reorder/mutation/case/padding/dup/float/nonfinite reject",
+        "version": "target-recent-identity-fixture-v3-20261030"
+      }
+    },
+    {
+      "CAS": 0,
+      "consumed": {
+        "at_UTC": "2026-10-30T01:42:38.392500+00:00",
+        "original_allocations_refunded": false,
+        "plan_sha256": "57f9932a5ae55b8262d4803f958bf086fd40b86d9007c90e57e2d5a92c2df510",
+        "state": "ONE_SOURCE_QUALIFICATION_ATTEMPT_CONSUMED"
+      },
+      "fits": 0,
+      "forecast_rows": 0,
+      "lane": "QUALIFICATION_V3",
+      "model_loads": 0,
+      "original_budget_refunded": false,
+      "original_consumed_sha256": "d582a78649356850d272d5601e0a7400d095cbcfc9dcb898fc285888b729a878",
+      "original_result_sha256": "8783d529d52c92a829bd1b5bef62841620be7fce3fbf0ea51ff9dc0cf2a61135",
+      "result": {
+        "actual": {
+          "CPU_seconds": 36.6023766,
+          "RSS_bytes": 173527040,
+          "wall_seconds": 36.60265893000178
+        },
+        "archived_forecast_rows_read": 0,
+        "audit_sha256": "dafe207f8c8ffd8ad1cf1c1398ed49b3e4f8831de04ba2d68768d41a18b40ba8",
+        "automatic_retry": false,
+        "chronology": "Availability admitted first; last3/8 roster-game slots by kickoff then game_id; qualified played finite integer values only inside slots",
+        "cutoff_batches": 39,
+        "fits_forecasts_models_HTTP_CAS": 0,
+        "historical_timing": "Original fixed seven-day reconstruction assumption preserved; not authentic historical publication or pregame forecast",
+        "identity_dtypes": {
+          "query": {
+            "game_id": "object",
+            "player_id": "object",
+            "season": "int32",
+            "week": "int32"
+          },
+          "rebuilt_audit": {
+            "game_id": "object",
+            "player_id": "object",
+            "season": "int64",
+            "week": "int64"
+          },
+          "strict_integer_and_string_ordered_values_match": true
+        },
+        "intended_scope": "2026REGW1-7, supported frozen W1-6; W7 compatible source/query missing",
+        "numeric_projection_predicate": "Each exact query cutoff separately: permitted source scope AND source kickoff<cutoff AND source outcome availability<cutoff",
+        "primary_planned": 2458,
+        "query_games": 93,
+        "query_rows": 2999,
+        "source_contract": "Prior qualified target history only; unknown/DNP slots consume positions; admit availability before kickoff chronology; no missing availability fill",
+        "source_identity_rows": 62388,
+        "source_mean_count_parity": {
+          "3": {
+            "DNP_slots": 0,
+            "count_mismatches": 0,
+            "maximum_finite_mean_difference": 0.0,
+            "mean_mismatches": 0,
+            "mean_tolerance": 1e-10,
+            "query_rows": 2999,
+            "unknown_slots": 2370,
+            "zero_valid_value_windows": 565
+          },
+          "8": {
+            "DNP_slots": 0,
+            "count_mismatches": 0,
+            "maximum_finite_mean_difference": 0.0,
+            "mean_mismatches": 0,
+            "mean_tolerance": 1e-10,
+            "query_rows": 2999,
+            "unknown_slots": 5492,
+            "zero_valid_value_windows": 399
+          }
+        },
+        "source_row_projection_incidences": 2377842,
+        "state": "PASS_TARGET_RECENT_HISTORY_SOURCE_AND_MEAN_PARITY",
+        "target_game_values_used": false,
+        "terminal_at_UTC": "2026-10-30T01:43:14.995112+00:00",
+        "unknown_availability_rows": 0,
+        "version": "target-recent-history-qualification-v3-20261030"
+      }
+    }
+  ],
+  "source_row_projection_incidences_not_independent_observations": true,
+  "state": "SOURCE_QUALIFICATION_COMPLETE_FORECAST_NOT_RUN"
+}

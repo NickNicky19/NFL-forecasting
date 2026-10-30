@@ -1,0 +1,84 @@
+{
+  "at_UTC": "2026-10-30T01:37:19.527328+00:00",
+  "completed_equivalent_records": [
+    {
+      "evidence_label": "REPRODUCED_FROM_DATA",
+      "ids": [
+        "TGT_CDF_BASE",
+        "TGT_ROLE_PRIOR",
+        "TGT_RECENT3_MEAN",
+        "TGT_RECENT8_MEAN"
+      ],
+      "run_id": "r:opportunity-four-targets-frozen-v1-20261029",
+      "scope": "Original one-fit targetCDF and fixed mean/prior baselines, independently saved-vector checked; no recent empirical targetmedian output located.",
+      "source": "reports/opportunity-four/runtime/target-vector-qa-v1/PUBLIC_RECEIPT.json"
+    }
+  ],
+  "earlier_related_not_equivalent": [
+    {
+      "difference": "Shrunk conditional count means, not empirical medians. Existing package/failure histories retained, no new numerical reproduction.",
+      "evidence_label": "VERIFIED_FROM_CODE",
+      "formula": "(sum(valid selected prior counts)+strength*role_mean)/(n_valid+strength); strength3 for window3,5 for window8",
+      "procedures": [
+        "aux_recent3",
+        "aux_pooled8"
+      ],
+      "source": "nfl_lab/dynamic_opportunity_study.py:auxiliary_simple"
+    },
+    {
+      "difference": "Historical partial team-recorded-credit share models and target-point propagation; not newly qualified complete teamtargetdenominator or full distribution. Accessible recoveryv2 terminalFAILED,0packages; later records not assumed complete.",
+      "evidence_label": "VERIFIED_FROM_CODE",
+      "procedures": [
+        "selected_dynamic",
+        "matched_static"
+      ],
+      "source": "nfl_lab/dynamic_opportunity_backend.py:forecast_package"
+    },
+    {
+      "difference": "Prior rec_tgt is an information group for reception forecasts; not a completed standalone ordered-target forecasting comparison.",
+      "evidence_label": "VERIFIED_FROM_CODE",
+      "source": "nfl_lab/ordered_recent_v1.py"
+    }
+  ],
+  "inventory_limits": "Accessible canonical registry contained four target methods/eight output records fromonefit. No equivalent recent empiricaltarget median found in examined code/registry. Inaccessible historical attempts remain unknown; no claim exhaustive recovery.",
+  "prohibitions": [
+    "No newPPR ornonfocus forecasting",
+    "No synthetic target bettingoffers",
+    "No model/forecast private row access during metadata preparation",
+    "No originalbudgetrefund orfailedattempt retry"
+  ],
+  "state": "METADATA_CODE_INSPECTION_COMPLETE_NUMERIC_SOURCE_PENDING",
+  "target_to_reception": {
+    "OOF": "If downstream features/calibration/weights are trained on predicted target quantities, generate earlier-only out-of-fold upstream targets. A target model fitted through2025 cannot supply training predictions for its own2025 outcome evaluation.",
+    "conditional_learning": "A conditional law may learn from observed earlier historical target exposure, provided future inference integrates uncertain forecast targets. That is separate from feeding target-game actual targets into forecasting.",
+    "dependencies": [
+      "R<=T/nonnegativeinteger same-sourcecredit qualification including zero/missingness",
+      "compatible recent-season reception labels/common population",
+      "target full-law restoration/mass/tail/conditioning checks without weakening oldmodelbindings",
+      "earlier-only target-OOF iflearned downstream predictedfeatures/calibrator/stack",
+      "separate finite scientificregistration/codepublication/GO before anyNFLfit orforecast"
+    ],
+    "evidence_label": "VERIFIED_FROM_CODE",
+    "feasible_next_hypothesis": "Hold admitted target CDF fixed, fit a simple strongly pooled conditional catch law on earlier compatible receptions/targets, then integrate over forecast target law. Compare against unchanged strong direct receptionCDF using identical qualified population/information.",
+    "mean_rule": "E[R|played]=sum_t P(T=t|played)*E[R|T=t,played]. A constant catchprobability permits p*E[T], which is an expected value, not generally the reception median.",
+    "median_rule": "Compute actual integrated reception CDF and its lower countmedian; do not multiply a targetmedian by catchrate and call it a median.",
+    "no_new_fit_or_predictions": true,
+    "old_related": "Old dynamic code propagates target point*fixedcatch_rate; preserve it as its own point heuristic, not median or integrated distribution.",
+    "status": "FEASIBILITY_ONLY_NOT_RUN"
+  },
+  "team_target_share": {
+    "current_public_definition": {
+      "player_target_share": "player targets / first(team_targets)",
+      "source_blob": "f367d0a4ba7d3a472351865467eba3a9c53a14f6",
+      "source_code_sha256": "0ccd41c78355ee89c08929c79e81dac75b4d3f7b22d691cddd4f7f875acfac28",
+      "targets": "Stat115 credits",
+      "team_targets": "sum(stat_id==115) grouped by season/week/team for weekly summary"
+    },
+    "evidence_label": "VERIFIED_FROM_CODE",
+    "next": "Locate permitted retained official teamtargetstats or qualify complete same-version stat115 ledger under a separate finite source plan; preserve unassigned buckets. No HTTP/numeric denominator acquisition in this prep.",
+    "retained_schema": "Normalizedhistory has no team_targets, team_stat_rec_tgt or target_share. Raw2026weekly has targets/target_share but no explicitteamtotal. No retained teamstats source located in inspected source namespace.",
+    "status": "BLOCKED_DENOMINATOR_COMPLETENESS_AND_HISTORICAL_BINDING",
+    "why_blocked": "Do not invert a player ratio or sum a subset and claim authenticated complete denominators. Need source-year builder/version, allplayer/fullteam credits including unassigned other bucket, complete schedule/team identity, eligible availability and forecasted\u2014not realized\u2014future team volume."
+  },
+  "version": "targets-control-equivalence-and-feasibility-v2-20261030"
+}

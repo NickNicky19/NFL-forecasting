@@ -1,0 +1,182 @@
+{
+  "controls": [
+    "TGT_CDF_BASE actual lower median, original one-fit forecast unchanged",
+    "TGT_RECENT8_MEAN original unrounded mean forecast unchanged"
+  ],
+  "execution_order": [
+    "exact source/rootindependent review and public code/science/protocol immutable readback",
+    "root sealedGO and previousmanagedwriterclosed",
+    "durablyconsumeonce-only0fitattempt",
+    "derive each true targetmedian from earlier qualified targetvalues",
+    "freeze everynew5998forecast+5998unchangedcontrolrows with exact issuing-processreadback",
+    "read retainedtargetgrade labels without changingforecasts",
+    "score samepopulation, preserveall losses/fallbacks/missingness",
+    "save terminalsuccess/failure andreadback; noautoretry"
+  ],
+  "experiment_id": "e:opportunity-four-target-recent-medians-v2-20261030",
+  "failure_retention_correction": {
+    "new": "Retain completed pointbatches/sourceaudits, activequery/source batch and partialgrade/result when present; exactsame original caps.",
+    "prior_worker_executed": false,
+    "prior_worker_sha256": "83a6f6460cacc23e73d8261295898d4c1a1774c4522e007b5676ad9622bdad69",
+    "reason": "Independent source review found generated pre-concat batchpoints could be omitted from failurecapsule."
+  },
+  "hypothesis": "Does a true recent-eight prior-target lower empirical median with frozen CDF median fallback reduce MAE compared with the strongest existing CDF median on the same current-season cases?",
+  "information_policy": "Retained2019-2025 plus2026W1-5source; project each cutoff with earlierkickoff and earlieravailability before numeric values, thenlast3/8slotsby kickoff/game; unknown/DNP consume slots, no targetstatzeroimputation or missingclockfabrication",
+  "known_limits": [
+    "Originalfixedseven-dayhistoricalavailability assumption unchanged",
+    "Exact historicalbuilder/nullified/two-pointtargetcredit exceptions unverified",
+    "W7query/labelgap",
+    "Same-hostissuingreadbackisnotoffhostrestore orindependentnumericalQA"
+  ],
+  "mean_parity_gate": "Exactoriginalquery mean/n aliases3/8 agree within1e-10/countsexact; sourceauditdigest mustmatch completedqualification before forecastfreeze",
+  "methods": {
+    "TGT_RECENT3_LOWER_MEDIAN_CDF_FALLBACK": {
+      "fallback": "originalfrozenCDFlowercountmedian ifno validqualifiedtargetcounts inside last3roster-gameslots, elseabstain",
+      "slots": 3,
+      "statistic": "true lower empirical median sortedvalidtargets[(n-1)//2]"
+    },
+    "TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK": {
+      "fallback": "originalfrozenCDFlowercountmedian ifno validqualifiedtargetcounts inside last8roster-gameslots, elseabstain",
+      "slots": 8,
+      "statistic": "true lower empirical median sortedvalidtargets[(n-1)//2]"
+    }
+  },
+  "next_unrun_controls": {
+    "shrunk_team_target_share": "BLOCKED_COMPLETE_TEAM_TARGET_DENOMINATOR_OTHER_BUCKET_AND_VERSION_BINDING; currentpublicaggregationdefines teamtargetsumstat115, but retainednormalizedhistory hasnoteamtargetfield and rawtarget_sharealone notfullvintage/completeness evidence",
+    "target_to_reception": "FEASIBILITY_ONLY; predicted-upstreamtrainingfeatures require chronologicalOOFtargetforecasts; observedconditionalcatchlaw may trainhistoricalobserved exposure but integrate futuretargetdistribution, notactualtarget-gamevolume"
+  },
+  "population": {
+    "all_queries_attempted": true,
+    "games": 93,
+    "intended_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "planned_all_role": 2999,
+    "planned_primary_RB_WR_TE": 2458,
+    "played_zero": 369,
+    "season": 2026,
+    "supported_primary": 1855,
+    "supported_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "unknown": 603,
+    "week7": "14scheduledgames, no compatible query/targetlabels; never fabricated",
+    "zero_definition": "Explicit source target0 plus existing positivephysicalplayingwitness; DNP/unknown/missing distinct"
+  },
+  "portable_command": "python -B tools/category_topfive_target_recent_medians_v2_run.py --plan <approved-private-sealed-plan.json> --sha256 <exact-plan-sha256> --go <root-go.json>",
+  "primary_score": "MAE, targets; recent8median vsunchangedCDFmedian",
+  "private_route": "Approved retained owner-controlled private restoration byrunID for snapshots/forecasts/grades/bindings. No destinations/rowvectors/models/secrets public.",
+  "product": "rec_tgt_nflverse_weekly_v1",
+  "qualification": {
+    "CPU_seconds": 60,
+    "RSS_bytes": 536870912,
+    "attempts": 1,
+    "fits_forecasts_models_HTTP_CAS": 0,
+    "rule": "Mean/count alias parity mustpass before same-information forecast; NaNonlymatchesNaN, infinities cannot countasmissing; require exactqualifiedsource identity/context/clocks.",
+    "separate_source_run": "target-recent-history-qualification-v3-20261030",
+    "wall_seconds": 90
+  },
+  "related_family": "Both windows and original recent means belong to recent-target-history controls; do not count mean/median variants as independent fitted methods or pad five slots.",
+  "request": "Owner four-category focus, true target baseline comparison",
+  "resources": {
+    "CPU_seconds": 120,
+    "HTTP": 0,
+    "RSS_bytes": 536870912,
+    "automatic_retries": 0,
+    "bootstrap_replicates": 500,
+    "fits": 0,
+    "managed_write_attempts": 3,
+    "model_loads": 0,
+    "native_metadata_bytes": 65536,
+    "peak_private_bytes": 33554432,
+    "public_aggregate_bytes": 131072,
+    "retained_private_bytes": 16777216,
+    "seed": 1703,
+    "wall_seconds": 180
+  },
+  "run_id": "r:opportunity-four-target-recent-medians-v2-20261030",
+  "runtime_resource_revision": {
+    "before_first_forecast_execution": true,
+    "new_budget": {
+      "CPU_seconds": 120,
+      "wall_seconds": 180
+    },
+    "old_worker_sha256": "94273d943b6177ea2f92062c7afb50d8ececbfacb46c86c0cc0c24a85d48539d",
+    "original_budget_refunded": false,
+    "original_unexecuted_budget": {
+      "CPU_seconds": 60,
+      "wall_seconds": 90
+    },
+    "reason": "Actual sourcequalification36.60CPU plus earlier observed initialCAS37.98CPU require headroom; no deliberate under-budget failed forecasting run.",
+    "runtime_projection": "Add exact currentbatchplayerID identitypredicate before numeric sourceprojection; helper usesonly thoseplayers. Everyquery/order andfullsourcequalificationauditdigest retained.",
+    "scientific_procedure_and_information_changed": false
+  },
+  "schema_version": "public-research-science-v1",
+  "secondary_scores": [
+    "RECENT3medianMAE andboth versusunchangedRECENT8mean",
+    "MSE/RMSE,bias,p90/p95absoluteerror",
+    "strict absoluteerror<1 andinclusive<=1",
+    "exactcount for unroundedinteger median output; no meansrounded",
+    "weekly andcumulative matched loss/coverage, fulloperationalfallbackpopulation"
+  ],
+  "source_code": {
+    "helper": {
+      "bytes": 10157,
+      "repository_file": "nfl_lab/category_topfive_target_recent_controls_v3.py",
+      "sha256": "0c325b1f70e7bbc89ef122b880f5f6455f042d12739d5e315ae089968925fbd2"
+    },
+    "product_metrics": {
+      "bytes": 10106,
+      "repository_file": "nfl_lab/category_topfive_targets_product_v1.py",
+      "sha256": "bf44f9a4223f98785155ddbbfa18ab307e4983427349e6dc99cc73c164b69109"
+    },
+    "qualification_worker": {
+      "bytes": 8859,
+      "repository_file": "tools/category_topfive_target_recent_qualification_v3.py",
+      "sha256": "fdcf6806650a65be1ace52ccddd9a1dfbdfe5064b61e6080a693eef70ae7c3a7"
+    },
+    "worker": {
+      "bytes": 20895,
+      "repository_file": "tools/category_topfive_target_recent_medians_v2_run.py",
+      "sha256": "cd18bf3726303e8b0938851a677cc67517e109daf71ad7372a26b5ef154a4f58"
+    }
+  },
+  "source_correction": {
+    "new": "Strict identical ordered integer and string values across integer-width dtypes; no coercion, key sorting/alignment/intersection; reject missing/duplicate/reordered/mutated keys.",
+    "original_budget_refunded": false,
+    "predictive_attempts_before_correction": 0,
+    "prior": "Sourcequalificationv2 failed before mean/countparity scoring at dtype-sensitive key equality. Its consumed34.793CPU attempt and exact code retained."
+  },
+  "state": "PREPARED_NOT_EXECUTED",
+  "target": "rec_tgt",
+  "training_memory": "No new fit; histories can use2019-2025andearlier2026; CDFfallback retains2022-2025fittedrelation witholderfeaturememory. Neither arm is purecurrentseason information. Earlierpostseason may enter priorhistory as originalrecipe; evaluated targetgamesREG only.",
+  "uncertainty": {
+    "bootstrap": 500,
+    "minimum_clusters": 8,
+    "multiple_search": "Finite2fixedwindows declared beforehand; exposedcurrentvintageperiod, no future superiority guarantee",
+    "paired_clusters": [
+      "game_id",
+      "week"
+    ],
+    "seed": 1703,
+    "week_interval": "6weeks=>nullwithreason"
+  },
+  "unsupported": [
+    "Fullpredictivedistribution orcalibratedprobabilities from newpointmedians",
+    "Target bettingprices/EV/paperreturns",
+    "Website-target relativegain, because no targetwebsiteincumbent",
+    "Genuinepregameissuance; these are exposedcurrentvintage reconstructions",
+    "Operationaladmission/deployment"
+  ]
+}
