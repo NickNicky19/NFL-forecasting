@@ -1,7 +1,3160 @@
 {
   "generated_from": "METHOD_REGISTRY, EXPERIMENT_REGISTRY, ALL_RESULTS, RUN_EVENTS and PUBLICATION_RECORDS",
   "note": "No mixing of years/populations/horizons/products; mean and median are views of one procedure. No future-readiness inferred from historical rank.",
-  "panels": [],
+  "panels": [
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::pass_att",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "pass_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 5,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 5,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 120.30573268728995,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:d4574431c7c4cfb5"
+            }
+          ],
+          "loss": 120.30573268728995,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:d4574431c7c4cfb5",
+          "shortlist_group": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 121.17237097516852,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:b76b0c2f9b0c2b87"
+            }
+          ],
+          "loss": 121.17237097516852,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:b76b0c2f9b0c2b87",
+          "shortlist_group": "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 124.09890067492505,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:5c2b45e7ae1b6562"
+            }
+          ],
+          "loss": 124.09890067492505,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:5c2b45e7ae1b6562",
+          "shortlist_group": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 124.09890067492505,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:699071e9d77f5e92"
+            }
+          ],
+          "loss": 124.09890067492505,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:699071e9d77f5e92",
+          "shortlist_group": "m:LEAF_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H1_CURRENT_SEASON_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 128.22691894200017,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:36ede53f9a7b23e7"
+            }
+          ],
+          "loss": 128.22691894200017,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+          "output_id": "mean",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:36ede53f9a7b23e7",
+          "shortlist_group": "m:CDF_H1_CURRENT_SEASON_TRAINING"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::pass_att",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "pass_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 5,
+      "objective": "point_MAE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 5,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 8.57375198639181,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:b76b0c2f9b0c2b87"
+            }
+          ],
+          "loss": 8.57375198639181,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:b76b0c2f9b0c2b87",
+          "shortlist_group": "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 8.631115622398214,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:d4574431c7c4cfb5"
+            }
+          ],
+          "loss": 8.631115622398214,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:d4574431c7c4cfb5",
+          "shortlist_group": "m:CDF_H2_PRIOR_PLUS_CURRENT_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 8.66363112205827,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:5c2b45e7ae1b6562"
+            }
+          ],
+          "loss": 8.66363112205827,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:5c2b45e7ae1b6562",
+          "shortlist_group": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 8.66363112205827,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:699071e9d77f5e92"
+            }
+          ],
+          "loss": 8.66363112205827,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:699071e9d77f5e92",
+          "shortlist_group": "m:LEAF_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 1359,
+            "scored": 664,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H1_CURRENT_SEASON_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 1359,
+                "scored": 664,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 8.929704687948007,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:36ede53f9a7b23e7"
+            }
+          ],
+          "loss": 8.929704687948007,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+          "output_id": "mean",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:36ede53f9a7b23e7",
+          "shortlist_group": "m:CDF_H1_CURRENT_SEASON_TRAINING"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rec",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "CRPS",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "distribution",
+              "loss": 0.8361451485951625,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:f392aff0da3237b7"
+            }
+          ],
+          "loss": 0.8361451485951625,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "distribution",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:f392aff0da3237b7",
+          "shortlist_group": "m:ORDERED_CDF"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rec",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 3,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 2.831685254504983,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:df847a9c20f2629f"
+            }
+          ],
+          "loss": 2.831685254504983,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:df847a9c20f2629f",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 2.847216975005889,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:62e51699dfaaa2ae"
+            }
+          ],
+          "loss": 2.847216975005889,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:62e51699dfaaa2ae",
+          "shortlist_group": "m:COUNT_A"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 2.8512662067144054,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:f4dbd18c91a2411e"
+            }
+          ],
+          "loss": 2.8512662067144054,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:f4dbd18c91a2411e",
+          "shortlist_group": "m:LEAF_CDF"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rec",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 3,
+      "objective": "point_MAE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "median",
+              "loss": 1.1731822474032105,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:af06dd8aa49751bb"
+            }
+          ],
+          "loss": 1.1731822474032105,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:af06dd8aa49751bb",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "median",
+              "loss": 1.1786591123701606,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:6a0e463267ef1b67"
+            }
+          ],
+          "loss": 1.1786591123701606,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "median",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:6a0e463267ef1b67",
+          "shortlist_group": "m:LEAF_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 7271,
+            "scored": 5295,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 7271,
+                "scored": 5295,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 1.2724519829867191,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:62e51699dfaaa2ae"
+            }
+          ],
+          "loss": 1.2724519829867191,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:62e51699dfaaa2ae",
+          "shortlist_group": "m:COUNT_A"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rush_att",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "CRPS",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "distribution",
+              "loss": 2.4059669518760023,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:d7be253349cd0ed0"
+            }
+          ],
+          "loss": 2.4059669518760023,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "distribution",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:d7be253349cd0ed0",
+          "shortlist_group": "m:ORDERED_CDF"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rush_att",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 3,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 21.972122981005633,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:e7a83aae9decfc48"
+            }
+          ],
+          "loss": 21.972122981005633,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:e7a83aae9decfc48",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 22.247834319999928,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:3da3c228addd4d0d"
+            }
+          ],
+          "loss": 22.247834319999928,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:3da3c228addd4d0d",
+          "shortlist_group": "m:COUNT_A"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 22.34080123587763,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:2781e0d8321b338c"
+            }
+          ],
+          "loss": 22.34080123587763,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:2781e0d8321b338c",
+          "shortlist_group": "m:LEAF_CDF"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2025-W1-18",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2025-W1-18::original-qualified-outcomes",
+        "population_id": "original-primary-role-2025-W1-18::rush_att",
+        "season": 2025,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "distinct_procedures": 3,
+      "objective": "point_MAE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "median",
+              "loss": 3.3403575989782888,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:89c9646ae4e18da7"
+            }
+          ],
+          "loss": 3.3403575989782888,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:89c9646ae4e18da7",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "median",
+              "loss": 3.4086845466155813,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:d0e02855332be87a"
+            }
+          ],
+          "loss": 3.4086845466155813,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "median",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:d0e02855332be87a",
+          "shortlist_group": "m:LEAF_CDF"
+        },
+        {
+          "coverage": {
+            "games": 272,
+            "planned": 2079,
+            "scored": 1566,
+            "weeks": 18
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 272,
+                "planned": 2079,
+                "scored": 1566,
+                "weeks": 18
+              },
+              "functional": "mean",
+              "loss": 3.5676566594395775,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:3da3c228addd4d0d"
+            }
+          ],
+          "loss": 3.5676566594395775,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:3da3c228addd4d0d",
+          "shortlist_group": "m:COUNT_A"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::pass_att",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "pass_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 9,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 8,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:RESPONSE_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 104.05561018307941,
+              "loss_state": "FINITE",
+              "method_id": "m:RESPONSE_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:7ad489352b3416f5"
+            }
+          ],
+          "loss": 104.05561018307941,
+          "loss_state": "FINITE",
+          "method_id": "m:RESPONSE_CDF",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:7ad489352b3416f5",
+          "shortlist_group": "m:RESPONSE_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF",
+            "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 104.07847224438217,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:6b8a243ae99f5443"
+            },
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 104.07847224438218,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:c8011c96c90eb846"
+            }
+          ],
+          "loss": 104.07847224438217,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:6b8a243ae99f5443",
+          "shortlist_group": "base-annual-cdf-reference"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 105.2147964295957,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:9044d703594cf630"
+            }
+          ],
+          "loss": 105.2147964295957,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:9044d703594cf630",
+          "shortlist_group": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 105.66231628631478,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:0dec5d252e4d7d62"
+            }
+          ],
+          "loss": 105.66231628631478,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:0dec5d252e4d7d62",
+          "shortlist_group": "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:CDF_H1_CURRENT_SEASON_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 116.17528496721053,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:893a5bcc674c0003"
+            }
+          ],
+          "loss": 116.17528496721053,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+          "output_id": "mean",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:893a5bcc674c0003",
+          "shortlist_group": "m:CDF_H1_CURRENT_SEASON_TRAINING"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::pass_att",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "pass_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 11,
+      "objective": "point_MAE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 10,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 7.767772511848341,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:median-bc1c66efbebb55ab"
+            }
+          ],
+          "loss": 7.767772511848341,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:median-bc1c66efbebb55ab",
+          "shortlist_group": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 7.7725118483412325,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:median-e88aa56ca0f16a21"
+            },
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 7.7725118483412325,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:7c6acc710fc7df22"
+            }
+          ],
+          "loss": 7.7725118483412325,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H4_HISTORICAL_RELATION_CURRENT_STATE",
+          "output_id": "median",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:median-e88aa56ca0f16a21",
+          "shortlist_group": "base-annual-cdf-reference"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 7.8530805687203795,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:median-16a4add860949a73"
+            }
+          ],
+          "loss": 7.8530805687203795,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H3_TIME_WEIGHTED_TRAINING",
+          "output_id": "median",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:median-16a4add860949a73",
+          "shortlist_group": "m:CDF_H3_TIME_WEIGHTED_TRAINING"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:RESPONSE_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 7.892962020919222,
+              "loss_state": "FINITE",
+              "method_id": "m:RESPONSE_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:7ad489352b3416f5"
+            }
+          ],
+          "loss": 7.892962020919222,
+          "loss_state": "FINITE",
+          "method_id": "m:RESPONSE_CDF",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:7ad489352b3416f5",
+          "shortlist_group": "m:RESPONSE_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 515,
+            "scored": 211,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:CDF_H1_CURRENT_SEASON_TRAINING"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 515,
+                "scored": 211,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 7.957345971563981,
+              "loss_state": "FINITE",
+              "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:median-db91ad1dcb4a96d5"
+            }
+          ],
+          "loss": 7.957345971563981,
+          "loss_state": "FINITE",
+          "method_id": "m:CDF_H1_CURRENT_SEASON_TRAINING",
+          "output_id": "median",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:median-db91ad1dcb4a96d5",
+          "shortlist_group": "m:CDF_H1_CURRENT_SEASON_TRAINING"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rec",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 2,
+      "objective": "CRPS",
+      "shortfall_from5": 3,
+      "shortlist_groups": 2,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 0.9175434360257526,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:3bf5d2d91e1711eb"
+            }
+          ],
+          "loss": 0.9175434360257526,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "distribution",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:3bf5d2d91e1711eb",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 0.9177945987283939,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:6454fdc5d0dd2d74"
+            }
+          ],
+          "loss": 0.9177945987283939,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "distribution",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:6454fdc5d0dd2d74",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rec",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 5,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 5,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 3.331184222048846,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:9ba847b5ee58c8f8"
+            }
+          ],
+          "loss": 3.331184222048846,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:9ba847b5ee58c8f8",
+          "shortlist_group": "m:COUNT_A"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 3.336766040845114,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:5f1d729e592daa9e"
+            }
+          ],
+          "loss": 3.336766040845114,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:5f1d729e592daa9e",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 3.3470617230757664,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:b4bf59723e5cc668"
+            }
+          ],
+          "loss": 3.3470617230757664,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:b4bf59723e5cc668",
+          "shortlist_group": "base-annual-cdf-reference"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 3.445383013179589,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:8f9c8ab67f8fe04e"
+            }
+          ],
+          "loss": 3.445383013179589,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:8f9c8ab67f8fe04e",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 3.447034654425311,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:6b0bea22cc91c1a1"
+            }
+          ],
+          "loss": 3.447034654425311,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "mean",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:6b0bea22cc91c1a1",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rec",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 5,
+      "objective": "point_MAE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 5,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.247701460248783,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:250c8c6a90734ccb"
+            }
+          ],
+          "loss": 1.247701460248783,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:250c8c6a90734ccb",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.2525689561925366,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:983c0ed55970ed0b"
+            }
+          ],
+          "loss": 1.2525689561925366,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "median",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:983c0ed55970ed0b",
+          "shortlist_group": "base-annual-cdf-reference"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.267712276906436,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:c6d5bf126633d9d8"
+            }
+          ],
+          "loss": 1.267712276906436,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "median",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:c6d5bf126633d9d8",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.2736614386154679,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:c0debc17f8e9d522"
+            }
+          ],
+          "loss": 1.2736614386154679,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "median",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:c0debc17f8e9d522",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1849,
+            "weeks": 6
+          },
+          "functional": "empirical_point",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1849,
+                "weeks": 6
+              },
+              "functional": "empirical_point",
+              "loss": 1.3153181552185156,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "empirical_point",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:1dd5f9375c1f57d2"
+            }
+          ],
+          "loss": 1.3153181552185156,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "empirical_point",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:1dd5f9375c1f57d2",
+          "shortlist_group": "m:COUNT_A"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rush_att",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 3,
+      "objective": "CRPS",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:BACKFIELD_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 2.503149900605991,
+              "loss_state": "FINITE",
+              "method_id": "m:BACKFIELD_CDF",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:f19b4ba40f817934"
+            }
+          ],
+          "loss": 2.503149900605991,
+          "loss_state": "FINITE",
+          "method_id": "m:BACKFIELD_CDF",
+          "output_id": "distribution",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:f19b4ba40f817934",
+          "shortlist_group": "m:BACKFIELD_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 2.5759610450747066,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:b7b2858e5b430442"
+            }
+          ],
+          "loss": 2.5759610450747066,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "distribution",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:b7b2858e5b430442",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 2.576864179532984,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "distribution",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:297b53437b6dfcb8"
+            }
+          ],
+          "loss": 2.576864179532984,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "distribution",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:297b53437b6dfcb8",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rush_att",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 7,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 7,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:BACKFIELD_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 23.295657190680565,
+              "loss_state": "FINITE",
+              "method_id": "m:BACKFIELD_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:23418b2bf779f5aa"
+            }
+          ],
+          "loss": 23.295657190680565,
+          "loss_state": "FINITE",
+          "method_id": "m:BACKFIELD_CDF",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:23418b2bf779f5aa",
+          "shortlist_group": "m:BACKFIELD_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 23.909217079498855,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:44412b40491eb499"
+            }
+          ],
+          "loss": 23.909217079498855,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:44412b40491eb499",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 24.195530088806887,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:be4adfb3eae7ae85"
+            }
+          ],
+          "loss": 24.195530088806887,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:be4adfb3eae7ae85",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 24.212309075291007,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:edfa416ca1b92eeb"
+            }
+          ],
+          "loss": 24.212309075291007,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "mean",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:edfa416ca1b92eeb",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:COUNT_A"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 24.216499471302253,
+              "loss_state": "FINITE",
+              "method_id": "m:COUNT_A",
+              "output_id": "mean",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:a9dba4e053b7a6e0"
+            }
+          ],
+          "loss": 24.216499471302253,
+          "loss_state": "FINITE",
+          "method_id": "m:COUNT_A",
+          "output_id": "mean",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:a9dba4e053b7a6e0",
+          "shortlist_group": "m:COUNT_A"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "original-primary-role-2026-W1-6",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+        "population_id": "original-primary-role-2026-W1-6::rush_att",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 7,
+      "objective": "point_MAE",
+      "shortfall_from5": 0,
+      "shortlist_groups": 7,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:BACKFIELD_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 3.5342205323193916,
+              "loss_state": "FINITE",
+              "method_id": "m:BACKFIELD_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:8ed45a970874df7e"
+            }
+          ],
+          "loss": 3.5342205323193916,
+          "loss_state": "FINITE",
+          "method_id": "m:BACKFIELD_CDF",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:8ed45a970874df7e",
+          "shortlist_group": "m:BACKFIELD_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ORDERED_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 3.6197718631178706,
+              "loss_state": "FINITE",
+              "method_id": "m:ORDERED_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:73a329cbcc310f2b"
+            }
+          ],
+          "loss": 3.6197718631178706,
+          "loss_state": "FINITE",
+          "method_id": "m:ORDERED_CDF",
+          "output_id": "median",
+          "rank": 2,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:73a329cbcc310f2b",
+          "shortlist_group": "m:ORDERED_CDF"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ANALOG_UNIFORM"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 3.659695817490494,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_UNIFORM",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:22efccb55758e424"
+            }
+          ],
+          "loss": 3.659695817490494,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_UNIFORM",
+          "output_id": "median",
+          "rank": 3,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:22efccb55758e424",
+          "shortlist_group": "m:ANALOG_UNIFORM"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:LEAF_CDF"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 3.661596958174905,
+              "loss_state": "FINITE",
+              "method_id": "m:LEAF_CDF",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:7022c6fd51a1eb16"
+            }
+          ],
+          "loss": 3.661596958174905,
+          "loss_state": "FINITE",
+          "method_id": "m:LEAF_CDF",
+          "output_id": "median",
+          "rank": 4,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:7022c6fd51a1eb16",
+          "shortlist_group": "base-annual-cdf-reference"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 668,
+            "scored": 526,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:ANALOG_RELEVANCE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 668,
+                "scored": 526,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 3.667300380228137,
+              "loss_state": "FINITE",
+              "method_id": "m:ANALOG_RELEVANCE",
+              "output_id": "median",
+              "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+              "result_id": "y:b8d1c427717c437c"
+            }
+          ],
+          "loss": 3.667300380228137,
+          "loss_state": "FINITE",
+          "method_id": "m:ANALOG_RELEVANCE",
+          "output_id": "median",
+          "rank": 5,
+          "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+          "result_id": "y:b8d1c427717c437c",
+          "shortlist_group": "m:ANALOG_RELEVANCE"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "target-frozen2022-2025-2026W1-6-v1",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "target-frozen-prior-registered-fullsystem-v1",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "raw-weekly-target-qualification-v3",
+        "population_id": "provider-target-v1-primary-RB-WR-TE-fixed2458",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec_tgt",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 2,
+      "objective": "CRPS",
+      "shortfall_from5": 3,
+      "shortlist_groups": 2,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:TGT_CDF_BASE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 1.183527631765924,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_CDF_BASE",
+              "output_id": "distribution",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_CDF_BASE:distribution"
+            }
+          ],
+          "loss": 1.183527631765924,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_CDF_BASE",
+          "output_id": "distribution",
+          "rank": 1,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_CDF_BASE:distribution",
+          "shortlist_group": "m:TGT_CDF_BASE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "distribution",
+          "grouped_method_ids": [
+            "m:TGT_ROLE_PRIOR"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "distribution",
+              "loss": 1.6263748588529314,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_ROLE_PRIOR",
+              "output_id": "distribution",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_ROLE_PRIOR:distribution"
+            }
+          ],
+          "loss": 1.6263748588529314,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_ROLE_PRIOR",
+          "output_id": "distribution",
+          "rank": 2,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_ROLE_PRIOR:distribution",
+          "shortlist_group": "m:TGT_ROLE_PRIOR"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "target-frozen2022-2025-2026W1-6-v1",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "target-frozen-prior-registered-fullsystem-v1",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "raw-weekly-target-qualification-v3",
+        "population_id": "provider-target-v1-primary-RB-WR-TE-fixed2458",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec_tgt",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 4,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:TGT_CDF_BASE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 5.631437834022659,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_CDF_BASE",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_CDF_BASE:mean"
+            }
+          ],
+          "loss": 5.631437834022659,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_CDF_BASE",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_CDF_BASE:mean",
+          "shortlist_group": "m:TGT_CDF_BASE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:TGT_RECENT8_MEAN",
+            "m:TGT_RECENT3_MEAN"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 5.899139350235109,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT8_MEAN",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_RECENT8_MEAN:mean"
+            },
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 6.522362345915272,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT3_MEAN",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_RECENT3_MEAN:mean"
+            }
+          ],
+          "loss": 5.899139350235109,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_RECENT8_MEAN",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_RECENT8_MEAN:mean",
+          "shortlist_group": "target-recent-history-controls"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:TGT_ROLE_PRIOR"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 9.705431836506385,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_ROLE_PRIOR",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_ROLE_PRIOR:mean"
+            }
+          ],
+          "loss": 9.705431836506385,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_ROLE_PRIOR",
+          "output_id": "mean",
+          "rank": 3,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_ROLE_PRIOR:mean",
+          "shortlist_group": "m:TGT_ROLE_PRIOR"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "target-frozen2022-2025-2026W1-6-v1",
+        "evidence_kind": "current_vintage_reconstruction_exposed_development",
+        "fallback_policy_id": "target-frozen-prior-registered-fullsystem-v1",
+        "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+        "outcome_version": "raw-weekly-target-qualification-v3",
+        "population_id": "provider-target-v1-primary-RB-WR-TE-fixed2458",
+        "season": 2026,
+        "source_policy_id": "original-permitted-seven-day-reconstruction",
+        "target": "rec_tgt",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "distinct_procedures": 4,
+      "objective": "point_MAE",
+      "shortfall_from5": 2,
+      "shortlist_groups": 3,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:TGT_CDF_BASE"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.692722371967655,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_CDF_BASE",
+              "output_id": "median",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_CDF_BASE:median"
+            }
+          ],
+          "loss": 1.692722371967655,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_CDF_BASE",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_CDF_BASE:median",
+          "shortlist_group": "m:TGT_CDF_BASE"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:TGT_RECENT8_MEAN",
+            "m:TGT_RECENT3_MEAN"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 1.7612667604551633,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT8_MEAN",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_RECENT8_MEAN:mean"
+            },
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "mean",
+              "loss": 1.8561931739489306,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT3_MEAN",
+              "output_id": "mean",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_RECENT3_MEAN:mean"
+            }
+          ],
+          "loss": 1.7612667604551633,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_RECENT8_MEAN",
+          "output_id": "mean",
+          "rank": 2,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_RECENT8_MEAN:mean",
+          "shortlist_group": "target-recent-history-controls"
+        },
+        {
+          "coverage": {
+            "games": 93,
+            "planned": 2458,
+            "scored": 1855,
+            "weeks": 6
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:TGT_ROLE_PRIOR"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 2.302964959568733,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_ROLE_PRIOR",
+              "output_id": "median",
+              "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+              "result_id": "y:targets-v1:TGT_ROLE_PRIOR:median"
+            }
+          ],
+          "loss": 2.302964959568733,
+          "loss_state": "FINITE",
+          "method_id": "m:TGT_ROLE_PRIOR",
+          "output_id": "median",
+          "rank": 3,
+          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+          "result_id": "y:targets-v1:TGT_ROLE_PRIOR:median",
+          "shortlist_group": "m:TGT_ROLE_PRIOR"
+        }
+      ]
+    }
+  ],
   "schema_version": "opportunity-four-registry-v1",
   "scope": [
     "pass_att",
