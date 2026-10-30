@@ -1,0 +1,17 @@
+{
+  "registration_id": "original-highlighted-pool-capacity-replay-v1-20261030",
+  "status_before_execution": "REGISTERED",
+  "hypothesis": "Describe whether ranking the retained original highlighted pool by its recorded standardized gap score changes selected outcomes at capacities 6, 10 and 20, with an abstaining control.",
+  "not_equivalent_to": "A full-board website strategy, probability ranking, EV selection, new original recommendations or prospective validation.",
+  "source": "Same authenticated 2026 Weeks 4-8 original archive picks, lines and frozen statistical grades used by ORIGINAL_LEANS_REPORT_V1.json.",
+  "eligibility": "Original highlighted membership, matching player/game, non-late original record, dk/sleeper real-line source. Pending and unresolved selections stay selected and visible.",
+  "dedup": "One record per season/week/player/game/category; conflicts fail. Original source pick pool may already reflect side quotas; disclose this restriction.",
+  "ranking": "Descending absolute ORIGINAL recorded score; never recompute score from newer forecasts. Ties use stable game/player/category/side/line string.",
+  "policies": ["TOP_6_ORIGINAL_SCORE", "TOP_10_ORIGINAL_SCORE", "TOP_20_ORIGINAL_SCORE", "TOP_20_ABSTAIN_ABS_SCORE_AT_LEAST_2"],
+  "matched_controls": ["ORIGINAL_RECORDED_SIDE", "ALWAYS_OVER_ON_IDENTICAL_SELECTED_OPPORTUNITIES", "ALWAYS_UNDER_ON_IDENTICAL_SELECTED_OPPORTUNITIES"],
+  "threshold_note": "The score-2 abstention rule is fixed here for an exposed descriptive check; it is not tuned, known optimal or a live release policy.",
+  "metrics": "Hits, misses, pushes, DNP, pending, unresolved, abstention/coverage; category/side/week breakdown; no probabilities or returns without supported original values.",
+  "budget": {"attempts": 1, "wall_seconds": 15, "CPU_seconds": 10, "retained_metadata_bytes": 24576, "new_fits_forecasts_HTTP_CAS": 0},
+  "evidence_tier": "EXPOSED_DESCRIPTIVE_REPLAY_OF_ORIGINAL_HIGHLIGHTED_POOL",
+  "production_activation": false
+}

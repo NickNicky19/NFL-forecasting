@@ -1,0 +1,11 @@
+{
+  "version":"original-upload-byte-restoration-v1-20261030",
+  "reason":"The complete managed accounting correctly refused a scorecard write because four original upload paths disappeared after environment resume.",
+  "source":"Authenticated byte-identical originals already retained in the approved managed CAS; all four full hashes and sizes verified read-only.",
+  "action":"Restore unique copies exclusively to the exact frozen-policy original paths. Keep every managed original and unchanged source/accounting policy.",
+  "original_external_bytes_already_reserved":17649073,
+  "serialized_additional_physical_peak_bytes":17649073,
+  "temporary_policy":"One exclusive temporary at a time; atomically link to absent final destination, unlink temporary, require final nlink=1. No overwrite, hardlink to source, evidence deletion or accounting exclusion.",
+  "runtime":{"attempts":1,"CPU_seconds":10,"wall_seconds":30,"new_fits_HTTP_outcome_decoding":0},
+  "followup":"One separately recorded retry of the unchanged private scorecard writer after exact restoration; the original failed attempt remains consumed. Then one independent local readback. Off-host restoration remains unproved."
+}

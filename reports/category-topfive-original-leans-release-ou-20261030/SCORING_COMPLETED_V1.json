@@ -1,0 +1,64 @@
+{
+  "started_at_UTC": "2026-10-30T21:50:34.338Z",
+  "completed_at_UTC": "2026-10-30T21:50:35.925Z",
+  "wall_ms": 592,
+  "CPU_seconds": null,
+  "CPU_reason": "Functions isolate does not expose per-run CPU accounting; measured wall time only.",
+  "records": 2286,
+  "public_json_chars": 310584,
+  "state": "COMPLETED_ORIGINAL_DECISION_STATISTICAL_REGRADING",
+  "scope": {
+    "new_fits": 0,
+    "new_forecast_packages": 0,
+    "new_pregame_captures": 0,
+    "new_deployments": 0,
+    "scored_original_decisions": 2286,
+    "matched_quoted_side_totals": true,
+    "source_files": 11,
+    "settlement": "STATISTICAL_ONLY_NOT_VENUE_VERIFIED"
+  },
+  "serializer": "tools/category_topfive_original_leans_public_v1.cjs; representation-only; no repeated scoring",
+  "population_metadata_correction": {
+    "reason": "W4-W6 transport initially included qualifying lean props only. Full source population counters were restored from identical authenticated original archives; no decision, outcome, score or ranking changed.",
+    "original_intermediate_counters": [
+      {
+        "week": 4,
+        "original_real_line_rows": 486,
+        "real_lines_without_lean": 0,
+        "excluded_nonbook_lean_rows": 0
+      },
+      {
+        "week": 5,
+        "original_real_line_rows": 452,
+        "real_lines_without_lean": 0,
+        "excluded_nonbook_lean_rows": 0
+      },
+      {
+        "week": 6,
+        "original_real_line_rows": 434,
+        "real_lines_without_lean": 0,
+        "excluded_nonbook_lean_rows": 0
+      }
+    ],
+    "corrected_full_source_counters": {
+      "4": {
+        "original_real_line_rows": 755,
+        "original_real_line_leans": 486,
+        "real_lines_without_lean": 269,
+        "excluded_nonbook_lean_rows": 16
+      },
+      "5": {
+        "original_real_line_rows": 682,
+        "original_real_line_leans": 452,
+        "real_lines_without_lean": 230,
+        "excluded_nonbook_lean_rows": 13
+      },
+      "6": {
+        "original_real_line_rows": 692,
+        "original_real_line_leans": 434,
+        "real_lines_without_lean": 258,
+        "excluded_nonbook_lean_rows": 14
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+"use strict";
+// Fictional software fixtures only: no original forecasts, outcomes or websites.
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const vm = require("node:vm");
+const path = require("node:path");
+const file = path.join(__dirname, "category_topfive_original_side_report_v1.js");
+const api = require(file);
+const side = (hit = 2, miss = 1) => ({ hit, miss, decided: hit + miss, hit_rate: hit + miss ? hit / (hit + miss) : null, push: 1, void: 0, dnp: 1, pending: 2, unresolved: 3 });
+const row = (extra = {}) => Object.assign({ category: "pass_att", cohort: "ALL_RECORDED_LEANS", season: 2099, week: null, model_version: null, selection_policy_version: null, provenance: "LEGACY_UNATTRIBUTED", evidence_tier: "FICTIONAL_SOFTWARE_ONLY", over: side(), under: side(1, 2), unique_games: 3, weeks: [7, 8], partial_weeks: [8] }, extra);
+const fixture = () => ({ schema_version: api.SCHEMA, source: { snapshot_commit: "FICTIONAL_COMMIT", grading_version: "FICTIONAL_GRADER" }, tables: { cumulative: [row(), row({ category: "rec", cohort: "ORIGINAL_TOP_PICKS", model_version: "fictional-model", selection_policy_version: "fictional-policy", provenance: "FICTIONAL_ONLY" })], weekly: [row({ week: 7, weeks: [7], partial_weeks: [] }), row({ week: 8, weeks: [8] })], by_version: [row(), row({ model_version: "fictional-model" })] }, reconciliation: {}, limitations: ["Fictional data: no live integration, capture or football accuracy claim."] });
+let checks = 0;
+function check(name, fn) { fn(); checks++; process.stdout.write("PASS " + name + "\n"); }
+check("defined decided denominator and percentage", () => assert.match(api.render(fixture()), /66\.7%/));
+check("zero-decided rate stays unavailable", () => { const f = fixture(); f.tables.cumulative[0].over = side(0, 0); assert.match(api.render(f), /<td>—<\/td>/); });
+check("wrong rate rejected", () => { const f = fixture(); f.tables.cumulative[0].over.hit_rate = 0.99; assert.throws(() => api.render(f), /hit rate/); });
+check("wrong decided denominator rejected", () => { const f = fixture(); f.tables.cumulative[0].over.decided = 9; assert.throws(() => api.validate(f), /decided denominator/); });
+check("pending and unresolved stay separate", () => assert.match(api.render(fixture()), /<th>Pending<\/th><th>Unresolved<\/th>/));
+check("uncovered partial week rejected", () => { const f = fixture(); f.tables.cumulative[0].partial_weeks = [9]; assert.throws(() => api.validate(f), /partial week/); });
+check("partial weeks and sample counts visible", () => { const s = api.render(fixture()); assert.match(s, /Partial: 8/); assert.match(s, /Decided sample/); assert.match(s, /<td>3<\/td>/); });
+check("category filter does not pool categories", () => { const r = api.filteredRows(fixture(), { category: "rec" }); assert.equal(r.length, 1); assert.equal(r[0].category, "rec"); });
+check("Top Picks population kept separate", () => { const r = api.filteredRows(fixture(), { cohort: "ORIGINAL_TOP_PICKS" }); assert.equal(r.length, 1); assert.equal(r[0].cohort, "ORIGINAL_TOP_PICKS"); });
+check("unknown model remains explicit and filterable", () => { const r = api.filteredRows(fixture(), { model: "__UNKNOWN_MODEL__" }); assert.equal(r.length, 1); assert.equal(r[0].model_version, null); assert.match(api.render(fixture()), /Unknown \/ not retained/); });
+check("known model filter preserves original identity", () => assert.equal(api.filteredRows(fixture(), { model: "fictional-model" })[0].model_version, "fictional-model"));
+check("side filter selects one side without equal quotas", () => { const s = api.render(fixture(), { side: "under" }); assert.match(s, /<td>Under<\/td>/); assert.doesNotMatch(s, /<td>Over<\/td>/); });
+check("weekly filter uses original week", () => { const r = api.filteredRows(fixture(), { view: "weekly", week: "7" }); assert.equal(r.length, 1); assert.equal(r[0].week, 7); });
+check("HTML values escaped", () => { const f = fixture(); f.tables.cumulative[0].model_version = '<img src=x onerror="evil()">'; f.limitations.push("<script>evil()</script>"); const s = api.render(f); assert.doesNotMatch(s, /<img|<script/); assert.match(s, /&lt;img/); });
+check("historical rate not a player probability", () => assert.match(api.render(fixture()), /not an individual player’s estimated win probability/));
+check("no price or probability fabricated", () => { const s = api.render(fixture()); assert.doesNotMatch(s, /\+EV|confidence:|estimated win probability:|American odds:/); });
+check("invalid version and negative counts rejected", () => { const f = fixture(); f.schema_version = "unsupported"; assert.throws(() => api.validate(f), /version/); const g = fixture(); g.tables.cumulative[0].over.hit = -1; assert.throws(() => api.validate(g), /count/); });
+check("report never mutated", () => { const f = fixture(), before = JSON.stringify(f); api.render(f); api.options(f); api.filteredRows(f, { side: "over" }); assert.equal(JSON.stringify(f), before); });
+check("empty filtered population not a zero result", () => assert.match(api.render(fixture(), { category: "not-present" }), /Missing records are not zero-error/));
+check("browser global module load", () => { const ctx = { globalThis: {} }; vm.runInNewContext(fs.readFileSync(file, "utf8"), ctx); assert.equal(ctx.globalThis.NflOriginalSideRecord.VERSION, api.VERSION); });
+check("mounted controls update and clean up", () => { let handler, removed = false; const element = { innerHTML: "", addEventListener(type, fn) { assert.equal(type, "change"); handler = fn; }, removeEventListener(type, fn) { removed = type === "change" && fn === handler; } }; const dispose = api.mount(element, fixture()); assert.match(element.innerHTML, /Original history filters/); handler({ target: { getAttribute() { return "category"; }, value: "rec" } }); assert.match(element.innerHTML, /<td class="l">rec<\/td>/); assert.doesNotMatch(element.innerHTML, /<td class="l">pass_att<\/td>/); dispose(); assert.equal(removed, true); });
+process.stdout.write(JSON.stringify({ state: "PASS_FICTIONAL_RENDERER_FIXTURES", checks, NFL_fits_forecasts_capture_deployments: 0 }) + "\n");

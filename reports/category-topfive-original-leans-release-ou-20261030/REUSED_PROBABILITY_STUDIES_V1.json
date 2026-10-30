@@ -1,0 +1,120 @@
+{
+  "version": "reused-probability-studies-original-leans-v1",
+  "new_probability_fits_or_scores": 0,
+  "source_reports": [
+    "reports/historical-market-comparison-no2025-v3/PUBLIC_RESULTS.md",
+    "reports/historical-market-comparison-no2025-v3/PUBLIC_METRICS.json",
+    "reports/historical-market-no2025-v1/PAPER_PUBLIC_RESULTS.json",
+    "reports/opportunity-four/over-under/OVER_UNDER_RESULTS.json"
+  ],
+  "completed_original_work": {
+    "small_earlier_only_estimates": 144,
+    "new_base_CDF_fits": 0,
+    "unique_forecast_queries": 34759,
+    "outer_scope": "2024 regular season and 2026 Weeks 1-5; available overlap differs by category.",
+    "football_control": "Older frozen 2024 CDF trained through 2023, NOT current website champion."
+  },
+  "arms": {
+    "F": "Football CDF",
+    "FC": "Earlier-trained correction/calibration",
+    "FS": "Earlier-trained confidence shrinkage",
+    "M": "Offering-book-excluded market reference",
+    "H": "Restrained football/market correction"
+  },
+  "Brier_2026": [
+    {
+      "category": "pass_att",
+      "rows": 46,
+      "games": 31,
+      "weeks": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "F": 0.243263,
+      "FC": 0.249475,
+      "FS": 0.25,
+      "M": 0.248612,
+      "H": 0.249421
+    },
+    {
+      "category": "rush_att",
+      "rows": 67,
+      "games": 36,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "F": 0.286105,
+      "FC": 0.253711,
+      "FS": 0.250966,
+      "M": 0.254675,
+      "H": 0.253808
+    },
+    {
+      "category": "rec",
+      "rows": 419,
+      "games": 48,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "F": 0.281989,
+      "FC": 0.253618,
+      "FS": 0.251094,
+      "M": 0.249694,
+      "H": 0.250651
+    },
+    {
+      "category": "rec_tgt",
+      "rows": 0,
+      "scores": null,
+      "reason": "NO_MATCHED_TARGET_MARKET"
+    }
+  ],
+  "selection_rules_completed": "At most five/week/category: lab projection-gap proxy, football EV, independent-market EV, hybrid EV, probability-first. NOT original website Top Picks or Top6/10/20 policies.",
+  "known_paper_units_2026": {
+    "pass_att": {
+      "gap": 4.329,
+      "football_EV": 0.841,
+      "market_EV": -2.0,
+      "hybrid_EV": 1.02,
+      "probability_first": 1.02
+    },
+    "rush_att": {
+      "gap": -1.026,
+      "football_EV": -2.903,
+      "market_EV": -3.076,
+      "hybrid_EV": -6.949,
+      "probability_first": -6.978
+    },
+    "rec": {
+      "gap": 2.892,
+      "football_EV": -3.85,
+      "market_EV": 8.429,
+      "hybrid_EV": -3.54,
+      "probability_first": 0.597
+    }
+  },
+  "unresolved_reception_stakes": {
+    "gap": 3,
+    "football_EV": 1,
+    "market_EV": 3,
+    "hybrid_EV": 2,
+    "probability_first": 3
+  },
+  "limitations": [
+    "Quote timing and actual venue settlement remain unqualified; paper units are assumed exploratory returns, not authenticated profit.",
+    "Selected populations differ; do not treat their hit rates as a paired policy comparison.",
+    "The 72,646 later P1/P2 reconstructed directions and 1,271 retained paper rows are separate from the original saved website history graded here.",
+    "No completed current-website-relative probability gain, live EV activation or universal side winner is established."
+  ],
+  "probability_conditioning": "Decisive binary-event Brier from the original study; preserve original push/void conditioning and frozen 50% control. Not authenticated venue settlement."
+}

@@ -1,0 +1,30 @@
+{
+  "version": "original-leans-private-accounting-runtime-v2",
+  "registered_at_UTC": "2026-10-30T22:03:14.721900+00:00",
+  "prior_attempts": [
+    {
+      "attempt": "v1",
+      "state": "FAILED_MISSING_EXTERNAL_ORIGINALS_BEFORE_STREAM",
+      "consumed": true
+    },
+    {
+      "attempt": "v1_after_exact_source_restore",
+      "state": "CPU_LIMIT_EXIT_152_EMPTY_UNREGISTERED_NAMESPACE_NO_CAS_BODY",
+      "consumed_CPU_limit_seconds": 20,
+      "consumed": true
+    }
+  ],
+  "reason": "The fully inherited quota/accounting scans exceeded the original 20-second CPU envelope before root registration; exact old guards remain unchanged. A practical separate accounting runtime is required.",
+  "new_attempts": 1,
+  "CPU_seconds": 120,
+  "wall_seconds": 180,
+  "RSS_bytes": 536870912,
+  "retained_private_bytes": 2097152,
+  "additional_private_peak_bytes": 4194304,
+  "fresh_process_readback_attempts": 1,
+  "fresh_process_CPU_seconds": 120,
+  "fresh_process_wall_seconds": 180,
+  "new_forecast_fits_HTTP": 0,
+  "source_policy_quota_checks_and_old_caps": "UNCHANGED",
+  "original_partial_namespace": "Retained empty, unregistered; no completed bytes to claim or rewrite."
+}

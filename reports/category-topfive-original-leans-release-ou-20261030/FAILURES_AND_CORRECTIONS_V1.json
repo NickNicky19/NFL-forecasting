@@ -1,0 +1,52 @@
+{
+  "version": "original-leans-failures-and-corrections-v1",
+  "records": [
+    {
+      "attempt": "current_public_week_body_read",
+      "state": "FAILED_EMPTY_CONTENT",
+      "source_git_blob": "2e51be85f9ef877018f8fc10dbb8aea6525e5148",
+      "declared_bytes": 2046208,
+      "returned_content_bytes": 0,
+      "effect": "No current-week body used. Final-game scope follows published completed-week flags and the single game with an original graded Top Pick in partial Week 8. No unsupported final status inferred."
+    },
+    {
+      "attempt": "original_lean_aggregation_v1",
+      "state": "SCORES_VALID_POPULATION_METADATA_CORRECTED",
+      "effect": "Qualifying-side totals reproduce exactly. W4-W6 input transport retained qualifying leans only; original complete offered counts were restored from the same authenticated source archives. No side, line, outcome or score changed."
+    },
+    {
+      "attempt": "top_capacity_replay_v1",
+      "state": "RESULT_SAVED_METADATA_ENVELOPE_EXCEEDED",
+      "original_metadata_limit_bytes": 24576,
+      "actual_result_bytes": 36373,
+      "effect": "Original result retained. A separately versioned forward allocation covers result, protocol, source and failure records; original consumed allocation is not refunded."
+    },
+    {
+      "attempt": "private_scorecard_freeze_v1",
+      "state": "FAILED_BEFORE_STREAM_OR_NEW_CAS_WRITE",
+      "error_type": "FileNotFoundError",
+      "error": "A frozen-policy original uploaded ZIP path is unavailable after environment resume; private path redacted.",
+      "effect": "Managed complete accounting refused to initialize. No quota/identity check weakened, no scorecard bytes accepted, no local or off-host restoration claimed."
+    },
+    {
+      "attempt": "private_scorecard_freeze_v1_after_original_restore",
+      "state": "CPU_LIMIT_EXIT_152",
+      "original_CPU_limit_seconds": 20,
+      "effect": "Empty unregistered namespace only; no scorecard alias, matching CAS body or incoming partial existed. Full accounting continued under separately recorded runtime-v2 without weakening checks."
+    },
+    {
+      "attempt": "private_scorecard_freeze_runtime_v2",
+      "state": "PASS_WITH_FRESH_PROCESS_READBACK",
+      "effect": "1869269 bytes and 2286 records durably retained under inherited managed writer; full hash matched in an independent local process. Off-host restoration remains pending."
+    },
+    {
+      "attempt": "complete_reporting_metadata_v1",
+      "state": "FULL_RETAINED_PACKET_EXCEEDS_ORIGINAL_ESTIMATE",
+      "original_wave_bytes": 393216,
+      "actual_report_code_configs_bytes": 405357,
+      "effect": "All original source fixtures, failed attempts, results and code retained. Separately recorded 98304-byte forward suballocation inside the unchanged 8MiB reserve covers complete remaining registry/publication work and peak metadata writes."
+    }
+  ],
+  "threshold_harness_failures": "Both source-fixture runtime failures remain in threshold/; neither is a confirmed website threshold defect.",
+  "originals_failures_and_budgets": "PRESERVED"
+}
