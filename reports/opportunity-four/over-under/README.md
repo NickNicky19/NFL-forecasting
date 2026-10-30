@@ -89,3 +89,13 @@ The next configured parent window is **Friday October 30, 7:36–7:57 a.m. CDT**
 V2 acknowledged the ownership split in comment `6513284161`: the original session retains targets and retained-CDF continuation; V2 owns its distinct source-availability ablation. Its separate reported captures are not original-producer capture. Production-owner acknowledgement and admission remain unobserved.
 
 The retained owner must restore the original census, admit eligible core `stat_point_mae_v2` outputs independently of new wrappers/targets, capture before the actual cutoffs, and return per-method counts, persistence and served-value proof. [Executable package and completion criteria](OWNER_ACTION_PACKAGE.json). There is no new general approval or eight-week prerequisite.
+
+## Post-interruption refresh — October 30, 11:33 a.m. CDT
+
+The workspace returned and all four target/OU freeze and grade capsules matched their original SHA-256 values (11,411,863 bytes total). This is same-workspace restoration evidence, not off-host restoration. No forecasting job was rerun.
+
+Friday’s 7:36–7:57 a.m. CDT parent window has elapsed. Fresh workflow metadata still shows run `40932594714` as the latest original workflow run; no Friday execution was observed. Record the parent window as **MISSED_NO_OBSERVED_EXECUTION**. Other/private capture remains **UNVERIFIED** until owner census restoration. The served pointer, website Main and lease 178 remain unchanged.
+
+The next daily parent slot is Saturday October 31, 7:36–7:57 a.m. CDT, pending execution. The next remaining registered game T−90 deadline is Sunday November 1, 10:30 a.m. CST. Preserve daylight-saving changes and original assignments.
+
+The exact owner package was delivered and remotely read back in [comment 6527892507](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6527892507). This is delivery, not acknowledgement or execution. No owner reply or new original-producer capture/release is observed. See [publication proof](PUBLICATION_READBACK_V3.json) and the post-interruption runtime receipt when published.

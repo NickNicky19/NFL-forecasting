@@ -1,0 +1,202 @@
+{
+  "version": "opportunity-four-runtime-postoutage-refresh-v4",
+  "state": "COMPLETE_READ_ONLY_POSTOUTAGE_CHECK",
+  "at_UTC": "2026-10-30T16:32:49.636831+00:00",
+  "at_Chicago": "2026-10-30T11:32:49.637247-05:00",
+  "allocation_record": "config/category-topfive-opportunity-runtime-postoutage-v4.json",
+  "window": {
+    "date_Chicago": "2026-10-30",
+    "expected_parent_start_Chicago": "2026-10-30T07:36:00-05:00",
+    "expected_parent_end_exclusive_Chicago": "2026-10-30T07:57:00-05:00",
+    "window_now": "ELAPSED",
+    "public_parent_status": "MISSED_NO_OBSERVED_EXECUTION",
+    "reason": "Fresh latest-five repository run listing contains only original lab workflow392888807 and noOctober30 run. Latest stillOctober29 failed40932594714. No successfulFriday parent or child capture receipt observed.",
+    "all_possible_private_or_other_capture_status": "UNVERIFIED_OWNER_RESTORATION_REQUIRED",
+    "no_backfill_or_relabel": true
+  },
+  "latest_observed_parent": {
+    "id": 40932594714,
+    "workflow_id": 392888807,
+    "name": "NFL research lab",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-29T18:37:43Z",
+    "updated_at": "2026-10-29T18:37:57Z",
+    "event": "schedule",
+    "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "path": ".github/workflows/lab.yml"
+  },
+  "refreshed_recent_runs": [
+    {
+      "id": 40932594714,
+      "workflow_id": 392888807,
+      "name": "NFL research lab",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-29T18:37:43Z",
+      "updated_at": "2026-10-29T18:37:57Z",
+      "event": "schedule",
+      "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+      "path": ".github/workflows/lab.yml"
+    },
+    {
+      "id": 40745398328,
+      "workflow_id": 392888807,
+      "name": "NFL research lab",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-28T18:28:09Z",
+      "updated_at": "2026-10-28T18:28:24Z",
+      "event": "schedule",
+      "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+      "path": ".github/workflows/lab.yml"
+    },
+    {
+      "id": 40729906573,
+      "workflow_id": 392888807,
+      "name": "NFL research lab",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-28T16:50:26Z",
+      "updated_at": "2026-10-28T17:15:21Z",
+      "event": "workflow_dispatch",
+      "head_sha": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+      "path": ".github/workflows/lab.yml"
+    },
+    {
+      "id": 40729788942,
+      "workflow_id": 392888807,
+      "name": "NFL research lab",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-28T16:49:44Z",
+      "updated_at": "2026-10-28T16:50:33Z",
+      "event": "workflow_dispatch",
+      "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+      "path": ".github/workflows/lab.yml"
+    },
+    {
+      "id": 40718723483,
+      "workflow_id": 392888807,
+      "name": "NFL research lab",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-28T15:42:47Z",
+      "updated_at": "2026-10-28T15:42:58Z",
+      "event": "workflow_dispatch",
+      "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+      "path": ".github/workflows/lab.yml"
+    }
+  ],
+  "production": {
+    "main": "911a81a31f822de58e0f9c04ded070f8c9752670",
+    "writer": {
+      "revision": 178,
+      "updated_at": "2026-10-28T03:58:28.617439Z",
+      "active": {
+        "kind": "manual_owner",
+        "run_id": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+        "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5"
+      }
+    },
+    "owner_acknowledgement": "NOT_OBSERVED",
+    "takeover": false
+  },
+  "served": {
+    "meta": {
+      "generated_at": "2026-10-29T18:55:33Z",
+      "season": 2026,
+      "week": 8,
+      "model": "sleeper-matchup-classic-fg-identity-v1"
+    },
+    "pointer": {
+      "bytes": 1852417,
+      "display_board_sha256": "12638b545ade73e91d2a6312731491e61c8225949546afb39eba71d5d908ae40",
+      "path": "data/weekly-adaptive/df44db8a71e3ef229ab397787462decee93505717aa591de413dac4a5c8cd0b1.json",
+      "schema_version": "weekly-adaptive-overlay-pointer-v1",
+      "sha256": "df44db8a71e3ef229ab397787462decee93505717aa591de413dac4a5c8cd0b1"
+    },
+    "unchanged_pointer": true,
+    "selected_rows_from_prior_authenticated_body_census": 1945,
+    "current_forecast_body_reopened": false,
+    "new_capture_inference_admission_deployment_proven": false
+  },
+  "coordination": {
+    "new_handoff_id": 6527892507,
+    "created_at_UTC": "2026-10-30T16:30:36Z",
+    "status": "DELIVERED_READ_BACK_NOT_ACKNOWLEDGED",
+    "comments_since_UTC": "2026-10-30T16:30:00Z",
+    "located": [
+      {
+        "id": 6527892507,
+        "created_at": "2026-10-30T16:30:36Z",
+        "updated_at": "2026-10-30T16:30:36Z",
+        "author": "NickNicky19",
+        "kind": "ORIGINAL_RESEARCH_HANDOFF_NOT_OWNER_ACK"
+      }
+    ],
+    "V2_ownership_ack_preserved": 6513284161,
+    "comment_posting_performed_here": false
+  },
+  "next_deadline": {
+    "inherited_T90_UTC": "2026-11-01T16:30:00+00:00",
+    "inherited_T90_Chicago": "2026-11-01T10:30:00-06:00",
+    "remaining_schedule_basis": "Previous authenticated November1/2 schedule read; no new schedule or outcome opened in this six-GET allocation.",
+    "DST_note": "FridayOctober30 isCDT; SundayNovember1 isCST. Do not retain Fridaymorning as an upcoming window.",
+    "next_configured_parent_after_elapsed_window_Chicago": "2026-10-31T07:36:00-05:00",
+    "configured_run_is_not_execution": true
+  },
+  "evidence_boundary": {
+    "original_11466_private_census_and_game_capture_assignments": "Not restored or authenticated by this metadata refresh.",
+    "same_workspace_capsule_restoration": "Root reports exact four target/OU capsulehash readback after outage; this is separately recorded and not off-host proof.",
+    "Website_method_claim": "Unchanged pointer inherits prior feed identity; no new numeric row or actual UI consumer check performed."
+  },
+  "resources": {
+    "new_GET_budget": 6,
+    "new_GET_attempts": 6,
+    "new_response_bytes": 310018,
+    "max_new_response_bytes": 1048576,
+    "new_metadata_cap": 12288,
+    "old_GET_consumption_preserved": "38/40 prior runtime allocation unchanged; no refunds or erased failures",
+    "new_NFL_rows_outcomes_models_fits_forecasts_HTTP_Odds_API_CAS_dispatch_writes": 0
+  },
+  "request_receipts": [
+    {
+      "label": "research_runs",
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/runs?per_page=5",
+      "returned_UTF8_bytes": 138415,
+      "isError": false
+    },
+    {
+      "label": "website_main",
+      "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/branches/main",
+      "returned_UTF8_bytes": 9446,
+      "isError": false
+    },
+    {
+      "label": "coordination_comments",
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/issues/1/comments?since=2026-10-30T16%3A30%3A00Z&per_page=10",
+      "returned_UTF8_bytes": 14014,
+      "isError": false
+    },
+    {
+      "label": "production_lease",
+      "url": "github-file:coordination/writer-state.json@coordination/phase2-writer",
+      "returned_UTF8_bytes": 146591,
+      "isError": false
+    }
+  ],
+  "direct_public_source_receipts": [
+    {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+      "bytes": 1215,
+      "sha256": "1c6da8355a5103f3134ffe85ef02e24fd32e030873dac869aaaad1c18faf9659"
+    },
+    {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+      "bytes": 337,
+      "sha256": "689e43e991b5b04ef5be7d001b423202cd7bbae624244d8362d0bdca522d1ca2"
+    }
+  ],
+  "precise_remaining_owner_action": "Retained production owner lease178 must acknowledge action IDs in6527892507, restore originalcensus/assignments throughapprovedroute and verify actual upcoming capture/admission/publication. Research session doesnotdispatch, seizelease, backdate or fabricate a successful Friday run."
+}
