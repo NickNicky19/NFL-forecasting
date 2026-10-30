@@ -1,0 +1,29 @@
+{
+  "actual_original_peak_bytes": 107520,
+  "at_UTC": "2026-10-30T21:18:10.662750+00:00",
+  "cause": "Pretty-printing plus repeated audit/evidence metadata exceeded the registered metadata bounds. Actual content is thirteen safe aggregate release rows; no raw source or player identity was written.",
+  "completion": "Finish public-safe allowlist and retain existing receipt; no automatic rerun.",
+  "executed_builder": {
+    "bytes": 13884,
+    "sha256": "cf7f470f1f3ba5f7fa16a4207669246451eab4135fcbd4e127cde035d9e87048"
+  },
+  "forward_authorization": {
+    "new_role_bytes": 147456,
+    "new_task_total_bytes": 98304,
+    "root_message": "Separately versioned forward48KiB metadata extension under existing8MiB reserve; old role96KiB/task48KiB and observed107520B failure preserved",
+    "status": "Root records canonical forward amendment; this file records actual local failure and completion."
+  },
+  "generated_receipt": {
+    "bytes": 74362,
+    "sha256": "e8f8fd9b10d0c3e484e798336af3a7d494ee3c0616f0258ba3a3fcf33694b3fa"
+  },
+  "new_NFL_fits_models_forecasts_scores_HTTP_CAS_or_production_writes": 0,
+  "original_limits": {
+    "new_task_bytes": 49152,
+    "role_bytes": 98304
+  },
+  "preservation": "Original receipt and exact executed builder retained unchanged. No data moved outside accounting; no numerical model/forecast/score rerun. Proposed lossless compact form was measured in memory only, never persisted.",
+  "scientific_run": false,
+  "state": "FAILED_BUDGET_BOUND_AFTER_METADATA_GENERATION",
+  "version": "mae-category-release-metadata-budget-failure-v1"
+}

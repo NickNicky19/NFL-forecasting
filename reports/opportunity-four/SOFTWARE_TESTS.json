@@ -154,6 +154,44 @@
       "protocol": "over-under/software/OU_REGISTRY_VALIDATION_PROTOCOL_V4.json",
       "source_sha256": "1a9dc8041a85621a44f7c53c904016642b0b0a471c51ebb63b844141cc125e1f",
       "state": "PASS"
+    },
+    {
+      "cases": 8,
+      "command": "python -B tools/category_topfive_mae_policy_v21_checks.py --root <reviewed-source-root> --protocol <registered-protocol> --sha256 <digest> --output <new-receipt-directory>",
+      "id": "MAE_FUNCTIONAL_TIE_V2_1",
+      "kind": "Newversionedpuremetadatafixtures,0NFLfits",
+      "record": "../category-topfive-mae-release-priority-20261030/core/FUNCTIONAL_TIE_V21_CHECKS/RESULT.json",
+      "scope": "OriginalV2/36casespreserved",
+      "state": "PASS"
+    },
+    {
+      "cases": 12,
+      "id": "CHART_TYPED_ADAPTER_V1",
+      "kind": "Newsoftwarefake-shell/realCDFmath;0NFLfits",
+      "record": "../category-topfive-mae-release-priority-20261030/ordered-chart/CHART_TYPED_ADAPTER_RESULT_V1.json",
+      "state": "PASS"
+    },
+    {
+      "cases": 4,
+      "id": "CHART_CAPTURE_V1_1",
+      "kind": "Separatelyversioned persistenceguards;0NFLfits",
+      "record": "../category-topfive-mae-release-priority-20261030/ordered-chart/CHART_CAPTURE_RESULT_V1_1.json",
+      "state": "PASS"
+    },
+    {
+      "cases": 6,
+      "command": "node tools/category_topfive_mae_browser_contract_v1.cjs",
+      "id": "CURRENT_BROWSER_POINT_SCHEMA",
+      "kind": "Currentservedcodefictionalcontracttest; notMAEreadinesspass",
+      "record": "../category-topfive-mae-release-priority-20261030/BROWSER_CONTRACT_DIAGNOSTIC_V1.json",
+      "state": "CURRENT_BROWSER_SCHEMA_BLOCKER_REPRODUCED"
+    },
+    {
+      "command": "python -B tools/category_topfive_mae_consumer_readback_v1.py",
+      "id": "ACTUAL_SERVED_VALUE_READBACK",
+      "kind": "Actualpublic1945forecastrows not newinference/outcomes orindependentgames; browserDOMnotobserved",
+      "record": "../category-topfive-mae-release-priority-20261030/SERVED_CONSUMER_READBACK_V1.json",
+      "state": "PASS_EXACT_SERVED_CONSUMER_FUNCTION_VALUES"
     }
   ]
 }

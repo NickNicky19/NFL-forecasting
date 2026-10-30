@@ -1,5 +1,11 @@
 # Four-category NFL opportunity forecasts
 
+## Immediate priority: MAE-selected release — October 30
+
+[Category release receipt, current served values and exact owner actions](../category-topfive-mae-release-priority-20261030/README.md).
+The live payload was read back: 1,945 original October 28 forecasts, zero new MAE-profile rows. New software adapters and correctness fixes are prepared; production admission, fresh capture and live release remain pending. The latest scheduled parent is now **41104520104**, failed October 30 with enqueue skipped; older snapshots below retain their original dates.
+
+
 Executed checkpoint: **October 29, 2026, America/Chicago**. New predictive work covers passing attempts, carries, receiving targets and receptions. Prior results, registrations and nonfocus website outputs remain intact.
 
 ## New Over/Under results

@@ -1,0 +1,158 @@
+{
+  "version": "mae-latest-parent-execution-readback-v1",
+  "run": {
+    "id": 41104520104,
+    "workflow_id": 392888807,
+    "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "event": "schedule",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-30T18:10:04Z",
+    "updated_at": "2026-10-30T18:13:04Z"
+  },
+  "jobs": [
+    {
+      "id": 124230368443,
+      "name": "lab",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-10-30T18:10:06Z",
+      "completed_at": "2026-10-30T18:11:41Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Select explicit main parent route without granting readiness",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Enforce source and publication handover safety",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Set up metadata-only parent Python",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install exact metadata-only parent dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Determine parent cadence without enabling legacy research",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Enqueue one qualified same-source Ops capture and return",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Keep original handover block when parent qualification fails",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "Upload public-safe parent enqueue status",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Install exact tested dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Acceptance tests",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Determine cadence",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Restore derived evidence state",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Capture and grade",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Grade recorded games without pregame issuance",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Bounded weekly experiments",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Replay immutable records",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Persist only lab-derived forecasts and corrections",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Upload derived health reports",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Upload exact public-safe readiness receipt",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up metadata-only parent Python",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "capture": "ENQUEUE_SKIPPED_NO_NEW_CAPTURE_VERIFIED",
+  "scheduler": "Fridaymorningwindowmissed; later13:10CDTrunfailed. No-opclassificationfix alone doesnotestablishactualcapture.",
+  "new_NFL_outcomes_models_fits_dispatch": 0
+}

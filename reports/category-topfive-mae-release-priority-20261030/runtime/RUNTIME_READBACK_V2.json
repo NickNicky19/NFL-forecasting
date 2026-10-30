@@ -1,0 +1,264 @@
+{
+  "version": "mae-release-priority-runtime-readback-v2",
+  "state": "COMPLETE_READ_ONLY_METADATA_REFRESH_NO_ACTIVATION_CLAIM",
+  "checked_at_UTC": "2026-10-30T20:54:18.832581+00:00",
+  "checked_at_Chicago": "2026-10-30T15:54:18.832790-05:00",
+  "registration": "config/category-topfive-mae-release-priority-v1.json",
+  "continuation": "CORRECTION_V2_PRESEAL.json",
+  "heads": {
+    "research_main": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "research_accuracy_branch": "ae16eccd8d11f035fc9b13d6b5b70181c90e4748",
+    "website_main_commit": "1ec93e068a91abd51c990937d1019e4a831694b4",
+    "website_commit_identity_proof": {
+      "endpoint": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/branches/main",
+      "name": "main",
+      "commit_sha": "1ec93e068a91abd51c990937d1019e4a831694b4",
+      "tree_sha": "54b090d614f71b64ae2b7e8485d064793e44707e",
+      "commit_url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/commits/1ec93e068a91abd51c990937d1019e4a831694b4",
+      "parents": [
+        "911a81a31f822de58e0f9c04ded070f8c9752670"
+      ]
+    },
+    "old_website_main": "911a81a31f822de58e0f9c04ded070f8c9752670",
+    "main_changed": true
+  },
+  "writer": {
+    "revision": 178,
+    "updated_at": "2026-10-28T03:58:28.617439Z",
+    "active": {
+      "kind": "manual_owner",
+      "run_id": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+      "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5"
+    },
+    "allowed_route": {
+      "original_research_handoff": "https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6527892507",
+      "retained_owner_authorization": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6397619947",
+      "production_coordination": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1"
+    },
+    "ownership_taken": false
+  },
+  "served": {
+    "meta": {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+      "bytes": 1215,
+      "sha256": "132c273c3ae252d02ca15dff696f4f7522310e0c64ddb002511bdd20a982c778",
+      "generated_at": "2026-10-30T18:32:55Z",
+      "season": 2026,
+      "week": 8,
+      "model_field": "Projected value is null; original top-level key presence was not retained. No forecast-model identity inferred."
+    },
+    "pointer": {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+      "receipt_sha256": "23d2875b93516bad86ad0e8f26990d0e6a6c460d12174fdfb10fec04c5151969",
+      "bytes": 1871124,
+      "display_board_sha256": "1787b57f7582a180827b78fc6549fff9bb65126bde23f721d751364cc94ff90f",
+      "path": "data/weekly-adaptive/369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4.json",
+      "schema_version": "weekly-adaptive-overlay-pointer-v1",
+      "sha256": "369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4"
+    },
+    "old_pointer_sha256": "df44db8a71e3ef229ab397787462decee93505717aa591de413dac4a5c8cd0b1",
+    "pointer_changed": true,
+    "selected_rows": null,
+    "selected_rows_reason": "New immutable payload is1,871,124B and not opened under metadata-only task; prior1,945 census belongs to old pointer and is not asserted for new body.",
+    "per_category_MAE_admission": "UNKNOWN_FROM_METADATA_ONLY_NEW_POINTER",
+    "actual_values_labels_sorts_fallbacks": "Not reread in this runtime task",
+    "fresh_inference_or_capture": "NOT_PROVEN_BY_POINTER_OR_BUILD"
+  },
+  "coordination": {
+    "original_PR1_comments_since_UTC": "2026-10-30T16:30:36Z",
+    "observed": [
+      {
+        "id": 6527892507,
+        "created_at": "2026-10-30T16:30:36Z",
+        "updated_at": "2026-10-30T16:30:36Z",
+        "author": "NickNicky19",
+        "url": "https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6527892507",
+        "meaning": "RESEARCH_HANDOFF_DELIVERY_NOT_PRODUCTION_ACK"
+      }
+    ],
+    "production_ack_in_original_PR1": "NOT_OBSERVED",
+    "website_latest_pulls": [
+      {
+        "number": 1,
+        "state": "open",
+        "title": "Phase 2: reproducible comparison, shadow forecasts and disabled audit handoff",
+        "updated_at": "2026-10-29T03:06:03Z",
+        "merged_at": null,
+        "head": "81c3fc2a612ced916f4c54814f978c509058bca5",
+        "ref": "upgrade/phase2-reproducible-comparison",
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1"
+      },
+      {
+        "number": 11,
+        "state": "closed",
+        "title": "Preserve selected forecasts through authenticated current-board drift",
+        "updated_at": "2026-10-28T22:54:55Z",
+        "merged_at": "2026-10-28T22:54:55Z",
+        "head": "f89b080bfd37d6d8cc6c69428b32d8b4986fcc49",
+        "ref": "release/selected-scope-recovery-20261028",
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/11"
+      },
+      {
+        "number": 10,
+        "state": "closed",
+        "title": "Bind the current website consumer to the prospective producer release",
+        "updated_at": "2026-10-28T22:36:54Z",
+        "merged_at": "2026-10-28T22:36:54Z",
+        "head": "8628c5e9c5b1b0d189475c3d5398fb2aab247427",
+        "ref": "audit/current-selected-consumer-20261027",
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/10"
+      },
+      {
+        "number": 9,
+        "state": "closed",
+        "title": "Restore frozen ranking refreshes and bind player prop grading to final events",
+        "updated_at": "2026-10-28T22:32:42Z",
+        "merged_at": "2026-10-28T22:32:42Z",
+        "head": "05531dda1a89caa54a557614a0e0be468e360718",
+        "ref": "audit/main-critical-release-20261027",
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/9"
+      },
+      {
+        "number": 8,
+        "state": "closed",
+        "title": "Keep live My Picks provisional and grade game results individually",
+        "updated_at": "2026-10-25T10:14:39Z",
+        "merged_at": "2026-10-25T10:14:38Z",
+        "head": "5e45584460a0f1eb61acf8d0cb50faea6e8a614b",
+        "ref": "upgrade/mypicks-game-finality-20261025",
+        "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/8"
+      }
+    ],
+    "new_website_PR": "NOT_OBSERVED_IN_FRESH_LATEST_FIVE_UPDATED_LIST",
+    "website_PR1_comment_replies": "Not individually reread in this allocation; do not treat absence on originalPR1 as proof no other-channel message exists.",
+    "reposts_performed": 0
+  },
+  "capture": {
+    "Friday_morning_window": "ELAPSED",
+    "preserved_earlier_check": "At16:32UTC latest-five publicparent listing had noOctober30run; prior miss remains recorded separately.",
+    "current_parent_child_execution": "NOT_REFRESHED_THIS_ALLOCATION; new18:32build must not be labeled capture without producer receipts.",
+    "original_11466_private_census_and_assignments": "APPROVED_RETAINED_OWNER_RESTORATION_REQUIRED_UNVERIFIED_HERE",
+    "next_configured_parent_Chicago": "2026-10-31T07:36:00-05:00",
+    "next_registered_T90_Chicago": "2026-11-01T10:30:00-06:00",
+    "next_registered_T90_UTC": "2026-11-01T16:30:00Z",
+    "DST": "Friday/SaturdayCDT; SundayNovember1CST.",
+    "schedule_basis": "Prior authenticatedNovember1/2schedule; no new schedule/outcomes opened."
+  },
+  "owner_action_matrix": [
+    {
+      "id": "ACK-RELEASE-ACTIONS",
+      "role": "Retainedproducer/websiteowner lease178",
+      "action": "Acknowledge exact MAE release action/package IDs through existing approved coordination route",
+      "delivery": "6527892507 delivered and read back; new priority package prepared by root",
+      "ack": "NOT_OBSERVED_ORIGINAL_PR1",
+      "execution": "NOT_OBSERVED",
+      "complete_when": "Owner acknowledgement names actionIDs, actual source/model/config/forecast product and assigned execution."
+    },
+    {
+      "id": "CORE-MAE-ADMISSION",
+      "role": "Retainedproducerowner; research prepares exact package",
+      "action": "Restore/bind selected stat_point_mae_v2 core point products against current source and current model/wrapper/catalog/epoch; preserve means/probabilities",
+      "delivery": "Existing named public package in6527892507; refreshed per-category package owned by root",
+      "ack": "NOT_OBSERVED",
+      "execution": "UNKNOWN_NEW_POINTER_NOT_DECODED",
+      "complete_when": "Actual futurequery inference, authenticated freshprocess restoration, captured typed points and fallback/rollback/consumer checks."
+    },
+    {
+      "id": "PUBLISH-VERIFY-MAE",
+      "role": "Retainedwebsiteproductionowner",
+      "action": "Publish admitted categorypoints through existing workflow and return exact payload/build and category selected/fallback counts",
+      "delivery": "Requested in6527892507; no new owner instruction needed",
+      "ack": "NOT_OBSERVED",
+      "execution": "Main/pointer changed, MAEproduct activation unverified",
+      "complete_when": "Exact displayed values/labels/sorts match selected frozen MAEpoint projections; means/probabilities remain separatelytyped."
+    },
+    {
+      "id": "RESTORE-CENSUS-CAPTURE",
+      "role": "Retainedproducer/schedulerowner",
+      "action": "Restore original11,466 challenger census and assignments; preserve prior issues; capture remaining ready candidates/R0/actualwebsite at original horizons",
+      "delivery": "6527892507",
+      "ack": "NOT_OBSERVED",
+      "execution": "UNVERIFIED",
+      "complete_when": "Actual parent/child IDs, predeadline issue/persist/readback clocks and per-method/category/game/population failures/fallbacks."
+    },
+    {
+      "id": "ORDERED-BACKFIELD-ADMISSION",
+      "role": "Researchadapter preparation; retainedowner admission",
+      "action": "Bind current2026 models/currenthistory and new wrappers separately from base guard; admit each ready item independently",
+      "delivery": "Existing ordered/backfield public source packages",
+      "ack": "NOT_OBSERVED",
+      "execution": "UNVERIFIED",
+      "complete_when": "Exact futurequery/restoration/sourcefreshness and consumer bindings; actual entrant capture time preserved."
+    },
+    {
+      "id": "TARGETS-CHART-SEPARATE",
+      "role": "Researchsource/contract preparation; retainedproducer/websiteowner",
+      "action": "Keep targets forecast-only admission and chartPPR migration separate from coreMAE release",
+      "delivery": "Existing contracts/results; readiness refreshed by siblingagents",
+      "ack": "NOT_OBSERVED",
+      "execution": "NOT_VERIFIED",
+      "complete_when": "Each exact target/scoring/source/model/currentwrapper/consumer/fallback qualification passes; unsupported product remains truthfully labeled."
+    }
+  ],
+  "resources": {
+    "old_GET_attempts_spent": 5,
+    "old_returned_bytes": null,
+    "old_returned_byte_state": "UNKNOWN_RESERVED_NOT_ZERO_NO_CAP_COMPLIANCE_CLAIM",
+    "old_failure": "METADATA_PROJECTION_FAILURE_V1.json",
+    "forward_GETs": 7,
+    "forward_response_bytes": 427862,
+    "forward_response_allowance": 1048576,
+    "total_GET_attempts": 12,
+    "metadata_cap": 98304,
+    "NFL_vector_model_outcome_decode_fits_forecasts_secrets_OddsAPI_dispatch_production_writes": 0
+  },
+  "request_receipts": [
+    {
+      "label": "research_branches",
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/branches?per_page=100",
+      "bytes": 35461,
+      "isError": false
+    },
+    {
+      "label": "website_main",
+      "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/branches/main",
+      "bytes": 9446,
+      "isError": false
+    },
+    {
+      "label": "original_comments",
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/issues/1/comments?since=2026-10-30T16%3A30%3A36Z&per_page=20",
+      "bytes": 14014,
+      "isError": false
+    },
+    {
+      "label": "website_recent_pulls",
+      "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/pulls?state=all&sort=updated&direction=desc&per_page=5",
+      "bytes": 220798,
+      "isError": false
+    },
+    {
+      "label": "production_lease",
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/blob/coordination/phase2-writer/coordination/writer-state.json",
+      "bytes": 146591,
+      "isError": false
+    },
+    {
+      "label": "served_meta",
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+      "bytes": 1215,
+      "status": 200
+    },
+    {
+      "label": "served_pointer",
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+      "bytes": 337,
+      "status": 200
+    }
+  ],
+  "limitations": [
+    "ActualnewMAEactivation requires selected-product/payload/consumer proof; changedMain/build/pointer alone is insufficient.",
+    "No new ownercommentposted; no dispatch, key access, lease takeover or publicrawfeed.",
+    "Earlierfailedmetadatarequests and all consumed budgets retained; routine repair does not reset them."
+  ]
+}

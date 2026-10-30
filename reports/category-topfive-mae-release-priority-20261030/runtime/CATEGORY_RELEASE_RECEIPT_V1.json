@@ -1,0 +1,1684 @@
+{
+  "actual_verification": {
+    "all_1945_typed_new_MAE_rows": 0,
+    "browser_DOM_observed": false,
+    "consumer_values_equal_saved": 1945,
+    "exact_served_consumer_functions_executed": true,
+    "new_fits_models_forecasts_capture_or_deployment_by_this_builder": 0,
+    "original_issues": "October28 retained, not October30 forecasts",
+    "saved_rows": 1945
+  },
+  "at_UTC": "2026-10-30T21:15:54.744814+00:00",
+  "core_public_source_pins": {
+    "config/next-checkpoint-median-policy-v2.json": {
+      "bytes": 24336,
+      "sha256": "d380575f8a8ea56f2f4974969e01b8d4ed628570eea143fb6eab3c2fe212f8ec"
+    },
+    "config/weekly-catalog-contract-v1.json": {
+      "bytes": 4099,
+      "sha256": "bd79997e725024ed6113438d33a4971861610d51a93b8d1a134a058ecd3c1d0f"
+    },
+    "docs/NEXT_CHECKPOINT_MEDIAN_POLICY_V2_CONSUMER.md": {
+      "bytes": 9409,
+      "sha256": "a8058c7efee6d52ebb67465c3bb0f3dd8dffcf62d96cf656072c41d6e80389b0"
+    },
+    "nfl_lab/next_checkpoint_median_policy_v2.py": {
+      "bytes": 10788,
+      "sha256": "e6d8b4a53b5109bc66274c14857f91dbddf7d440e23500ee15f08a3235677164"
+    },
+    "nfl_lab/next_checkpoint_median_policy_v2_view.py": {
+      "bytes": 7932,
+      "sha256": "48cc101e8a2b4288bebc74bc2015d6140f4181e83ebfe3bbd0a3e87603a12ed5"
+    },
+    "nfl_lab/weekly_future_inference.py": {
+      "bytes": 44865,
+      "sha256": "0689fdc2e3d0154d7431f7fb834d0684dbddd8f952cd5710e010e7fdd678fad7"
+    },
+    "nfl_lab/weekly_generic_producer.py": {
+      "bytes": 52541,
+      "sha256": "0ea49ed836d8f6210ece0feedd58641534a98983ede261430a98d19ef41f670b"
+    },
+    "nfl_lab/weekly_private_selected.py": {
+      "bytes": 18488,
+      "sha256": "db237cb845ac274507fbfcaf61984630aec5f9b92089d5920cc165c5b4bbf92d"
+    },
+    "nfl_lab/weekly_public_feed.py": {
+      "bytes": 34777,
+      "sha256": "14d6efe2d3ac5d8763cd289a8bff790eb1878536d77e84ec812162e66135a0e0"
+    },
+    "reports/category-topfive-20261029/public/POINT_POLICY_DECISIONS.json": {
+      "bytes": 5232,
+      "sha256": "44b6c2db48309f16a3c75ac159efe84ea821c5ea891c31bd22b9b0c068a4e16c"
+    },
+    "reports/category-topfive-20261029/runtime/RUNTIME_CATEGORY_CENSUS_TECHNICAL_V2_RESULT.json": {
+      "bytes": 9946,
+      "sha256": "60c99ba215aee3b04775a4c6f0921516ef588df7c876b098ad4ef21e7f3582e9"
+    },
+    "reports/category-topfive-continuation-20261029/public/OWNER_ACTIONS.json": {
+      "bytes": 4904,
+      "sha256": "9bbc68c737c309271c841825e4c501e5e8e0e38f187b40e296041f864a65a3a3"
+    },
+    "reports/next-nfl-checkpoint-20261028/LOWEST_PRODUCTION_OWNER_CATALOG_DRAFT_V1.json": {
+      "bytes": 26131,
+      "sha256": "057381abc7913b763aaf15fc718fe0bfca10068f2cf1a81eb40d210d0ef17fe3"
+    },
+    "reports/next-nfl-checkpoint-20261028/NEXT_CURRENT_MAE_DECISION_V2.json": {
+      "bytes": 26823,
+      "sha256": "af176471bb621c4b3e07f79a4b97dfef7e997e615b88fa1f9067df0bbfeadfc1"
+    },
+    "reports/next-nfl-median-policy-v2-20261028/SOFTWARE_V1/SOFTWARE_COMPLETE.json": {
+      "bytes": 1588,
+      "sha256": "2f0604971342997dcedf339c68390754a17645bfa8a11db7c5bb61d9afbd35e2"
+    },
+    "reports/opportunity-four/CURRENT_DECISIONS.json": {
+      "bytes": 43713,
+      "sha256": "7b508c8a73a5615b887ee220142e51445d09f297a74667d48c50a6252ab46e02"
+    },
+    "reports/opportunity-four/over-under/runtime/FINAL_RUNTIME_DELTA_V3.json": {
+      "bytes": 8470,
+      "sha256": "ebe9d70c7788d2729c7a06341b2fdef82752b17649182f05bea4f3db6b073aad"
+    }
+  },
+  "fallback_counts_as_original_combined_scopes": {
+    "PPR_or_unsupported_R0": 414,
+    "missing_or_duplicate_candidate_R0": 74,
+    "started_R0_frozen_no_new_selection": 38
+  },
+  "gate_interpretation": "All new-product operational gates unverified here; source/fictional software PASS does not set a gate true.",
+  "owner": {
+    "acknowledgement": "Not observed in latest originalPR1 refresh; delivery is not execution",
+    "existing_delivery": "https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6527892507",
+    "research_website_writes": false,
+    "retained_lease": 178
+  },
+  "packaged_at": "2026-10-30T18:33:02.364525+00:00",
+  "payload_bytes": 1871124,
+  "payload_sha256": "369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4",
+  "payload_website_source_sha": "911a81a31f822de58e0f9c04ded070f8c9752670",
+  "rows": [
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 40,
+        "consumer_labels": {
+          "median": 40
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "3b3e1d63966c0581f1e0e33364daea77f22b801ba55bbc11170353d73736eb04"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:27.983768+00:00",
+          "2026-10-28T17:01:28.264871+00:00"
+        ],
+        "procedure_versions": [
+          "2ced2a3d88822d200dec59bb6485356044b8733353c87c91f3fa6825f963ba12"
+        ],
+        "product_functionals": [
+          [
+            "point_median",
+            "intended_median"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "240.00",
+          "functional": "intended_median",
+          "label": "median",
+          "product": "point_median",
+          "row_sha256": "189fd18057faf5696b8c9be821087bd868b9627d6973822485daca565bf57281",
+          "value": 240
+        },
+        "selected_overlay_rows": 40,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 62.279620853080566,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 211,
+            "unknown": 304
+          },
+          "planned": 515,
+          "played_missing": 0,
+          "played_zero": 11,
+          "scored": 211,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 6299.559241706161,
+          "RMSE": 79.36976276710269,
+          "bias": -5.767772511848341,
+          "p90_AE": 141.0,
+          "p95_AE": 158.5
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 62.279620853080566,
+          "method": "CDF_MEDIAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "dffd0a2f82dd8f542177f666c0dc9f4a1c15942e885fd82eb25b6b1ee6b8a0b4",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "pass_yd"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 40,
+        "consumer_labels": {
+          "mean": 40
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "98f3087768e1a23539388667d128ac759c55befd9f03b01b7654baafd263a228"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:28.279859+00:00",
+          "2026-10-28T17:01:28.571531+00:00"
+        ],
+        "procedure_versions": [
+          "9098170124985c38e0c317b8bd1ef4a44b4aa3c2e6fbb9344d74e99ba757e29d"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "1.63",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "0b6d8f66e8110c9a04d92eb67d08d0f1f6c46f0b3be9317f3103a77f082de350",
+          "value": 1.626033417976
+        },
+        "selected_overlay_rows": 40,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 0.8246445497630331,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 211,
+            "unknown": 304
+          },
+          "planned": 515,
+          "played_missing": 0,
+          "played_zero": 57,
+          "scored": 211,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 1.3459715639810426,
+          "RMSE": 1.1601601458337736,
+          "bias": -0.36018957345971564,
+          "p90_AE": 2.0,
+          "p95_AE": 2.0
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 0.8786121012454494,
+          "method": "CDF_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "471dc5a0fcd04055d1a5b0600dbddbb2085e71f3b8608ac8a2164ff50886d5f1",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "pass_td"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 40,
+        "consumer_labels": {
+          "mean": 40
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "e1f7ab72b1d199864f330b88375201a5f8f44a9371e4af9e8145d629503a81e3"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:28.577456+00:00",
+          "2026-10-28T17:01:28.862984+00:00"
+        ],
+        "procedure_versions": [
+          "935a49265a81d44a21ebd6c79f67b22945a649c5176111fdc3ab59ff7490079e"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "21.73",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "447d7e77a83dbc438b403b797c4273cae18d28655e3cd977d3dcbc2065a8fec4",
+          "value": 21.73074343001904
+        },
+        "selected_overlay_rows": 40,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 5.118483412322274,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 211,
+            "unknown": 304
+          },
+          "planned": 515,
+          "played_missing": 0,
+          "played_zero": 10,
+          "scored": 211,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 44.170616113744074,
+          "RMSE": 6.646097811027466,
+          "bias": -0.8056872037914692,
+          "p90_AE": 11.0,
+          "p95_AE": 14.0
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 5.196569831053004,
+          "method": "CDF_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "0dc368d6f8890ed37049af28381b338af32734aa3a271d8ac657db2f0f351ce3",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "pass_cmp"
+    },
+    {
+      "core_equals_full_focus_research_leader": false,
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": {
+        "comparator_and_uncertainty": {
+          "comparator": {
+            "matched_contrasts": [
+              {
+                "candidate_minus_control_MAE": -0.004739336492890996,
+                "comparator": "BASE_CDF_CACHED",
+                "functional": "median",
+                "intervals": {
+                  "game_id": {
+                    "clusters": 93,
+                    "nominal95_interval": [
+                      -0.3933720930232558,
+                      0.39575696316262354
+                    ],
+                    "reason": null
+                  },
+                  "week": {
+                    "clusters": 6,
+                    "nominal95_interval": null,
+                    "reason": "fewer_than8clusters"
+                  }
+                },
+                "method": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+                "multiplicity": "nominal descriptive10productcontrasts; selectedminimum notscientificqualification",
+                "paired_rows": 211,
+                "relative_improvement_percent": 0.060975609756099614
+              }
+            ]
+          },
+          "uncertainty": {
+            "matched_contrasts": [
+              {
+                "candidate_minus_control_MAE": -0.004739336492890996,
+                "comparator": "BASE_CDF_CACHED",
+                "functional": "median",
+                "intervals": {
+                  "game_id": {
+                    "clusters": 93,
+                    "nominal95_interval": [
+                      -0.3933720930232558,
+                      0.39575696316262354
+                    ],
+                    "reason": null
+                  },
+                  "week": {
+                    "clusters": 6,
+                    "nominal95_interval": null,
+                    "reason": "fewer_than8clusters"
+                  }
+                },
+                "method": "CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+                "multiplicity": "nominal descriptive10productcontrasts; selectedminimum notscientificqualification",
+                "paired_rows": 211,
+                "relative_improvement_percent": 0.060975609756099614
+              }
+            ]
+          }
+        },
+        "coverage": {
+          "games": 93,
+          "planned": 515,
+          "scored": 211,
+          "weeks": 6
+        },
+        "functional": "median",
+        "loss": 7.767772511848341,
+        "loss_state": "FINITE",
+        "method_id": "m:CDF_H4_PLUS_TIMESTAMPED_DEPTH",
+        "output_id": "median",
+        "panel": {
+          "comparison_set_id": "original-primary-role-2026-W1-6",
+          "evidence_kind": "current_vintage_reconstruction_exposed_development",
+          "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+          "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+          "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+          "population_id": "original-primary-role-2026-W1-6::pass_att",
+          "season": 2026,
+          "source_policy_id": "original-permitted-seven-day-reconstruction",
+          "target": "pass_att",
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+        "result_id": "y:median-bc1c66efbebb55ab",
+        "training_history_note": "Use appended source-inspected correction; older prose in CURRENT_DECISIONS remains visible.",
+        "training_history_source": "reports/opportunity-four/over-under/TRAINING_HISTORY_CORRECTION_V1.json",
+        "website_relative_gain": "Not established by this reconstructed panel"
+      },
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 40,
+        "consumer_labels": {
+          "mean": 40
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "3b75a227cca1ed2d7c50d9d56b5510c1907d19aae98c412dc4d04b76859a982b"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:28.875295+00:00",
+          "2026-10-28T17:01:29.150922+00:00"
+        ],
+        "procedure_versions": [
+          "8036241e6dc11ee50f630dcd1858c7c15ef5faabc9a3aa29d328fcb6329a4e75"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "33.46",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "d480d360c2236990aa4bb01f28fb382adb37aeb2f6e639d07f0edc6cfe71468a",
+          "value": 33.46453804466135
+        },
+        "selected_overlay_rows": 40,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 7.7725118483412325,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 211,
+            "unknown": 304
+          },
+          "planned": 515,
+          "played_missing": 0,
+          "played_zero": 6,
+          "scored": 211,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 106.05687203791469,
+          "RMSE": 10.298391720939474,
+          "bias": -1.7535545023696681,
+          "p90_AE": 17.0,
+          "p95_AE": 21.5
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 7.89849686089153,
+          "method": "CDF_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "2609f3c2461e155058655b82b63bc824d1955c7ce2268007189e0a7a48eab9c6",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "pass_att"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 40,
+        "consumer_labels": {
+          "mean": 40
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "e9a6506f082eb8a979b086d4c14dcaf134a8979a1b32e471ed2ff28895378824"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:29.172368+00:00",
+          "2026-10-28T17:01:29.460576+00:00"
+        ],
+        "procedure_versions": [
+          "a19ca418522418dcd42765700f20cae7cc19063489a2517945ba693f7203b37e"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "0.70",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "508887d67dafaf586eba971344f983e01004902c2512909df81af8e4878e967c",
+          "value": 0.6974938022225464
+        },
+        "selected_overlay_rows": 40,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 0.6018957345971564,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 211,
+            "unknown": 304
+          },
+          "planned": 515,
+          "played_missing": 0,
+          "played_zero": 111,
+          "scored": 211,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 0.8672985781990521,
+          "RMSE": 0.9312886653444528,
+          "bias": -0.5734597156398105,
+          "p90_AE": 2.0,
+          "p95_AE": 2.0
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 0.6286628784830167,
+          "method": "CDF_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "3d8436e467c77531a7928eb788caba2231d82b518517453b53cc13e99f4bae47",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "pass_int"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 112,
+        "consumer_labels": {
+          "median": 112
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "1c0148f601f146a4307b4c562d151f33243afb44e9a068a28ca6a11bcd7e5e8a"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:29.478379+00:00",
+          "2026-10-28T17:01:29.976648+00:00"
+        ],
+        "procedure_versions": [
+          "30d664e1d0d015708bd52f59ed8d90a8cf1a4079884f7e4f3acc42e0f03a7aa5"
+        ],
+        "product_functionals": [
+          [
+            "point_median",
+            "intended_median"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "12.00",
+          "functional": "intended_median",
+          "label": "median",
+          "product": "point_median",
+          "row_sha256": "22570736509212c4d9bc1e217a339353030dd0187de4333cfe7e853f5543c08d",
+          "value": 12
+        },
+        "selected_overlay_rows": 112,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 18.425855513307983,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 526,
+            "unknown": 142
+          },
+          "planned": 668,
+          "played_missing": 0,
+          "played_zero": 99,
+          "scored": 526,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 723.5095057034221,
+          "RMSE": 26.898132011413395,
+          "bias": -4.832699619771863,
+          "p90_AE": 41.5,
+          "p95_AE": 55.75
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 18.425855513307983,
+          "method": "CDF_MEDIAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "3ccae17979c67319de20bc2ce31c69c54740564c2cf5b02a7f3d1fa4e553ff24",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rush_yd"
+    },
+    {
+      "core_equals_full_focus_research_leader": false,
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": {
+        "comparator_and_uncertainty": {
+          "comparator": {
+            "BASE_median_MAE_delta": -0.12737642585551345
+          },
+          "uncertainty": {
+            "game": {
+              "candidate_minus_control_MAE": -0.12737642585551331,
+              "clusters": 93,
+              "minimum_clusters": 8,
+              "nominal95_interval": [
+                -0.2002003816793893,
+                -0.059961315280464215
+              ],
+              "paired_rows": 526,
+              "replicates": 500,
+              "secondary97_5_interval": [
+                -0.20848930654329342,
+                -0.0468911356541551
+              ],
+              "seed": 1703
+            },
+            "versus_ordered": {
+              "candidate_minus_control_MAE": -0.08555133079847908,
+              "clusters": 93,
+              "minimum_clusters": 8,
+              "nominal95_interval": [
+                -0.15501962171899125,
+                -0.02685819773611604
+              ],
+              "paired_rows": 526,
+              "replicates": 500,
+              "secondary97_5_interval": [
+                -0.16204724061028708,
+                -0.017763297415290268
+              ],
+              "seed": 1703
+            },
+            "week": {
+              "candidate_minus_control_MAE": -0.12737642585551331,
+              "clusters": 6,
+              "minimum_clusters": 8,
+              "nominal95_interval": null,
+              "paired_rows": 526,
+              "replicates": 500,
+              "secondary97_5_interval": null,
+              "seed": 1703
+            }
+          }
+        },
+        "coverage": {
+          "games": 93,
+          "planned": 668,
+          "scored": 526,
+          "weeks": 6
+        },
+        "functional": "median",
+        "loss": 3.5342205323193916,
+        "loss_state": "FINITE",
+        "method_id": "m:BACKFIELD_CDF",
+        "output_id": "median",
+        "panel": {
+          "comparison_set_id": "original-primary-role-2026-W1-6",
+          "evidence_kind": "current_vintage_reconstruction_exposed_development",
+          "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+          "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+          "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+          "population_id": "original-primary-role-2026-W1-6::rush_att",
+          "season": 2026,
+          "source_policy_id": "original-permitted-seven-day-reconstruction",
+          "target": "rush_att",
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+        "result_id": "y:8ed45a970874df7e",
+        "training_history_note": "Use appended source-inspected correction; older prose in CURRENT_DECISIONS remains visible.",
+        "training_history_source": "reports/opportunity-four/over-under/TRAINING_HISTORY_CORRECTION_V1.json",
+        "website_relative_gain": "Not established by this reconstructed panel"
+      },
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 112,
+        "consumer_labels": {
+          "mean": 112
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "e1e017717fd44b0835d542fa7c96b8908f5e2fc281c0032c3e1186831dec00dc"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:29.987740+00:00",
+          "2026-10-28T17:01:30.480903+00:00"
+        ],
+        "procedure_versions": [
+          "178469d87333edd3c3a615bb925792338f789cb44c6c38b6d9b9466cdeeffd7b"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "4.48",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "9513e3f98e2350fb4e04e2fd6e19e8265308badc5b0edf634af06dbe8fff207a",
+          "value": 4.48131701302451
+        },
+        "selected_overlay_rows": 112,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_family_blocker": "Ordered/backfield needs separately admitted export/session/current source and artifact binding; original ordered fit-clock receipt unresolved. Historical score/source API alone is not admission.",
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 3.661596958174905,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 526,
+            "unknown": 142
+          },
+          "planned": 668,
+          "played_missing": 0,
+          "played_zero": 92,
+          "scored": 526,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 24.4638783269962,
+          "RMSE": 4.946097282403188,
+          "bias": -0.8669201520912547,
+          "p90_AE": 8.5,
+          "p95_AE": 10.75
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 3.7972103014698773,
+          "method": "COUNT_A_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "7ad62239d3918217d2910600156f3fd7e5b788e082621dabefdaeb705ad16ab0",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rush_att"
+    },
+    {
+      "core_equals_full_focus_research_leader": false,
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": {
+        "comparator_and_uncertainty": {
+          "comparator": {
+            "state": "See original same-panel controls; no invented website-relative gain."
+          },
+          "uncertainty": {
+            "state": "Not reported for this exact contrast; source may contain separate paired comparisons."
+          }
+        },
+        "coverage": {
+          "games": 93,
+          "planned": 2458,
+          "scored": 1849,
+          "weeks": 6
+        },
+        "functional": "median",
+        "loss": 1.247701460248783,
+        "loss_state": "FINITE",
+        "method_id": "m:ORDERED_CDF",
+        "output_id": "median",
+        "panel": {
+          "comparison_set_id": "original-primary-role-2026-W1-6",
+          "evidence_kind": "current_vintage_reconstruction_exposed_development",
+          "fallback_policy_id": "Original_registered_fallbacks_full_system_population",
+          "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+          "outcome_version": "original-primary-role-2026-W1-6::original-qualified-outcomes",
+          "population_id": "original-primary-role-2026-W1-6::rec",
+          "season": 2026,
+          "source_policy_id": "original-permitted-seven-day-reconstruction",
+          "target": "rec",
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "readiness": "NOT_NEWLY_OPERATIONALLY_ADMITTED",
+        "result_id": "y:250c8c6a90734ccb",
+        "training_history_note": "Use appended source-inspected correction; older prose in CURRENT_DECISIONS remains visible.",
+        "training_history_source": "reports/opportunity-four/over-under/TRAINING_HISTORY_CORRECTION_V1.json",
+        "website_relative_gain": "Not established by this reconstructed panel"
+      },
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 401,
+        "consumer_labels": {
+          "mean": 401
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "0a9a11a81d0250c1ba04bbf8ddc7eb08646b76b73bb775863b146ae9c016f2f5"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:30.499576+00:00",
+          "2026-10-28T17:01:32.195343+00:00"
+        ],
+        "procedure_versions": [
+          "49e96640fac97556fcafd63570f45e240f970faf17cf1aca4f3936bdd50e939f"
+        ],
+        "product_functionals": [
+          [
+            "point_mean",
+            "expected_mean"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "0.96",
+          "functional": "expected_mean",
+          "label": "mean",
+          "product": "point_mean",
+          "row_sha256": "b7b5d40d69c17638d8fb149eb42b8d250000fedcfd691cd0a88b306f27178a67",
+          "value": 0.957963543998789
+        },
+        "selected_overlay_rows": 401,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_family_blocker": "Ordered/backfield needs separately admitted export/session/current source and artifact binding; original ordered fit-clock receipt unresolved. Historical score/source API alone is not admission.",
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 1.2525689561925366,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 1855,
+            "unknown": 603
+          },
+          "planned": 2458,
+          "played_missing": 6,
+          "played_zero": 528,
+          "scored": 1849,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 3.552190373174689,
+          "RMSE": 1.884725543195796,
+          "bias": -0.40454299621416984,
+          "p90_AE": 3.0,
+          "p95_AE": 4.0
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 1.3333669131215085,
+          "method": "COUNT_A_MEAN"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "8465955423f642def6e6a691872250746eb01a31f31aee10893db87bdccb1a15",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rec"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 401,
+        "consumer_labels": {
+          "median": 401
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "1533819a3c922826f6eb631d32107c09bf1d8c7d7c005dd20fad30e0f0c4a661"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:32.215949+00:00",
+          "2026-10-28T17:01:33.989330+00:00"
+        ],
+        "procedure_versions": [
+          "cd08ff51b1ff61c39834a9aad9cda67c73743bc1e03a82abd78bff1cc44fc825"
+        ],
+        "product_functionals": [
+          [
+            "point_median",
+            "intended_median"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "4.82",
+          "functional": "intended_median",
+          "label": "median",
+          "product": "point_median",
+          "row_sha256": "d6709422e3aa590b4a3b490d6a481efe29dcf65333d7cdc79afcadd780b27c2c",
+          "value": 4.818404597085398
+        },
+        "selected_overlay_rows": 401,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 16.054624121146567,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 1855,
+            "unknown": 603
+          },
+          "planned": 2458,
+          "played_missing": 6,
+          "played_zero": 536,
+          "scored": 1849,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 638.9307733910222,
+          "RMSE": 25.277080001278275,
+          "bias": -6.384532179556517,
+          "p90_AE": 39.0,
+          "p95_AE": 55.0
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 16.105430499058414,
+          "method": "CATBOOST_MEDIUM"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "9afc353d862b2c961e804ea4171941423241c9170e624fce2d295f3bbf6ab9d6",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rec_yd"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "Retained producer must authenticate current wrapper map and fresh Week8 SOURCE/query/feature-completion receipts; bind selected typed point/catalog/epoch/export; capture/restore before deadline and integrate validated consumer/fallback/rollback.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 291,
+        "consumer_labels": {
+          "median": 291
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "c52af4f64b44247a4cb329f249a56e09c27a85fc4c78b18231f294c147555f25"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:34.013735+00:00",
+          "2026-10-28T17:01:35.758229+00:00"
+        ],
+        "procedure_versions": [
+          "80edf4fe057928f748c21ad652573cf2f78c29120d2e87e63f6d959d3c1fa877"
+        ],
+        "product_functionals": [
+          [
+            "point_median",
+            "intended_median"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "24.06",
+          "functional": "intended_median",
+          "label": "median",
+          "product": "point_median",
+          "row_sha256": "45564453a7972cab660fa620651e9f704fdf1ca0719af06c2ba01a0a6f4eab46",
+          "value": 24.0636561046527
+        },
+        "selected_overlay_rows": 291,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 19.925905895078422,
+        "coverage": {
+          "games": 93,
+          "outcome_states": {
+            "played": 1855,
+            "unknown": 603
+          },
+          "planned": 2458,
+          "played_missing": 6,
+          "played_zero": 393,
+          "scored": 1849,
+          "weeks": 6
+        },
+        "current_restored_wrapper_sha256": null,
+        "diagnostics": {
+          "MSE": 847.6511627906976,
+          "RMSE": 29.114449381547605,
+          "bias": -6.391022174148188,
+          "p90_AE": 47.0,
+          "p95_AE": 64.59999999999991
+        },
+        "evidence": "2026_REG_W1_6_current_vintage_reconstruction_exposed_development",
+        "family": "leaf_cdf_base",
+        "functional": "full_cdf_lower_median",
+        "lab_comparator": {
+          "MAE": 20.03210981638184,
+          "method": "CATBOOST_MEDIUM"
+        },
+        "matched_current_website_loss": null,
+        "matched_website_loss_reason": "Authentic matching historical current-site forecasts absent in this panel",
+        "method": "CDF_MEDIAN",
+        "metric": "MAE",
+        "model_hash_evidence": "Retained manifest claim; no new model-byte restore in this metadata job",
+        "model_member_sha256": "14d9781edf4d54b7bd668e75e0c790cae018b182b52f75e420128da88ac13459",
+        "new_procedure_sha256": null,
+        "not_installed_by_base_admission": "New ordered/backfield/depth variants need distinct bindings; no forced switch.",
+        "original_procedure_sha256": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "product": "point_median",
+        "selection_product": "stat_point_mae_v2",
+        "separate_expected_mean": "law.mean; unchanged mean contract",
+        "status": "PREPARED_NOT_OPERATIONALLY_ADMITTED_AS_STAT_POINT_MAE_V2",
+        "uncertainty": "Retain original linked study intervals; none newly calculated in this metadata audit"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "schema_blocker": "Existing V1 count schema rejects added median/expected_mean fields; do not weaken it. Register separately typed MAE catalog/export/consumer.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rush_rec_yd"
+    },
+    {
+      "decision": "KEEP_ACTUAL_INCUMBENT_PENDING_PRODUCT_SPECIFIC_ADMISSION",
+      "exact_remaining_action": "V1.1 engineering source ready; retained owner must admit current chart inputs/model/source wrapper, fresh-process restoration and genuine future capture, then exact chart consumer/scoring/fallback/rollback migration.",
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 0,
+        "fallback_count_reference": "Global PPR_or_unsupported_R0=414 is a combined fallback count, not a verified chart forecast count.",
+        "legacy_fallback": "Old-site PPR/R0 fallback remains under original identity; exact legacy scoring contract not authenticated here and must not be relabeled nick-chart-ppr-v1.",
+        "model_versions": [],
+        "procedure_versions": [],
+        "product_functionals": [],
+        "sample_public_value": null,
+        "sample_reason": "No such selected product in pinned overlay",
+        "selected_overlay_rows": 0,
+        "status": "NO_SELECTED_NICK_CHART_PPR_PRODUCT"
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": {
+        "MAE": 4.679406345957012,
+        "adapter": "nick-chart-ppr-mae-future-adapter-v1.1",
+        "coverage": {
+          "games": 93,
+          "planned": 2117,
+          "scored": 1954,
+          "weeks": 6
+        },
+        "evidence": "Existing same-chart 2026W1-6 reconstructed exposed development; no new predictive run",
+        "functional": "full_cdf_lower_median",
+        "method": "LEAF_CDF_CHART_MEDIAN_V1",
+        "model_hash_evidence": "Existing retained artifact identity; no current restore in this job",
+        "model_sha256": "dee275647336f34b0a96fdfad0b7b349c8c1df9e83fd4ce8fa53608ff621e877",
+        "product": "point_median",
+        "target": "nick-chart-ppr-v1"
+      },
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "nick-chart-ppr-v1"
+    },
+    {
+      "decision": "RETAIN_EXISTING_PROBABILITY_PRODUCT_NO_MAE_OR_EV_MIGRATION",
+      "exact_remaining_action": "Keep current admitted probability capture/grading; any probability replacement needs its separate product-specific policy and operational qualification.",
+      "existing_research_context": {
+        "evidence": "Dated existing 2026W1-6 development panel; not a new fit, current-site victory or release decision",
+        "loss": 0.1364719698071096,
+        "method": "CATBOOST_MEDIUM",
+        "primary": "Brier",
+        "record": "reports/next-nfl-checkpoint-20261028/NEXT_CURRENT_MAE_DECISION_V2.json"
+      },
+      "full_focus_research_leader": null,
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 428,
+        "consumer_labels": {
+          "TD probability": 428
+        },
+        "method_ids": [
+          "P2_SELECTED"
+        ],
+        "model_versions": [
+          "c7948634bfb2fb284b0e6895084373b526ae99b008ad2de9e28c4d80ef1f8301"
+        ],
+        "original_issue_UTC_range": [
+          "2026-10-28T17:01:35.831984+00:00",
+          "2026-10-28T17:01:37.561173+00:00"
+        ],
+        "procedure_versions": [
+          "e16886f8a95732f8433548da5fd776a4aa4fff06c971767593ac58d732edb664"
+        ],
+        "product_functionals": [
+          [
+            "binary_probability",
+            "event_probability"
+          ]
+        ],
+        "sample_public_value": {
+          "formatted_text": "8.7%",
+          "functional": "event_probability",
+          "label": "TD probability",
+          "product": "binary_probability",
+          "row_sha256": "51b0bf57a79559586df5104fa94aef364a0548cfaa88ac79b426c2f4754eecfe",
+          "value": 0.08679068215840227
+        },
+        "selected_overlay_rows": 428,
+        "separate_expected_mean_rows": 0,
+        "typed_MAE_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": null,
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "MAE display release does not select a new probability law; existing Brier stream stays separate.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "anytime_td"
+    },
+    {
+      "decision": "NOT_AVAILABLE_LIVE_KEEP_TARGETS_SEPARATE_FROM_RECEPTIONS",
+      "exact_remaining_action": "Admit provider-target source/true-zero definition, exact current model/future wrapper, restoration and separately typed forecast-only targets catalog/display/grading; no incumbent target forecast or qualified market assumed.",
+      "full_focus_research_leader": {
+        "comparator_and_uncertainty": {
+          "comparator": {
+            "game": {
+              "bootstrap_replicates": 500,
+              "candidate": "TGT_CDF_BASE",
+              "candidate_loss": 1.692722371967655,
+              "candidate_minus_control": -0.06854438848750814,
+              "candidate_output": "lower_count_median",
+              "cluster": "game_id",
+              "clusters": 93,
+              "control": "TGT_RECENT8_MEAN",
+              "control_loss": 1.7612667604551633,
+              "control_output": "unrounded_mean",
+              "interval95": [
+                -0.0980894188437533,
+                -0.041108718377385035
+              ],
+              "minimum_clusters": 8,
+              "relative_improvement_percent": 3.8917664278064517,
+              "rows": 1855,
+              "scope": "Point-display comparison; incompatible functionals remain honestly labeled, no probability claim",
+              "score": "MAE",
+              "seed": 1703
+            },
+            "week": {
+              "bootstrap_replicates": 500,
+              "candidate": "TGT_CDF_BASE",
+              "candidate_loss": 1.692722371967655,
+              "candidate_minus_control": -0.06854438848750814,
+              "candidate_output": "lower_count_median",
+              "cluster": "week",
+              "clusters": 6,
+              "control": "TGT_RECENT8_MEAN",
+              "control_loss": 1.7612667604551633,
+              "control_output": "unrounded_mean",
+              "interval95": null,
+              "minimum_clusters": 8,
+              "relative_improvement_percent": 3.8917664278064517,
+              "rows": 1855,
+              "scope": "Point-display comparison; incompatible functionals remain honestly labeled, no probability claim",
+              "score": "MAE",
+              "seed": 1703
+            }
+          },
+          "uncertainty": {
+            "game_week": {
+              "game": {
+                "bootstrap_replicates": 500,
+                "candidate": "TGT_CDF_BASE",
+                "candidate_loss": 1.692722371967655,
+                "candidate_minus_control": -0.06854438848750814,
+                "candidate_output": "lower_count_median",
+                "cluster": "game_id",
+                "clusters": 93,
+                "control": "TGT_RECENT8_MEAN",
+                "control_loss": 1.7612667604551633,
+                "control_output": "unrounded_mean",
+                "interval95": [
+                  -0.0980894188437533,
+                  -0.041108718377385035
+                ],
+                "minimum_clusters": 8,
+                "relative_improvement_percent": 3.8917664278064517,
+                "rows": 1855,
+                "scope": "Point-display comparison; incompatible functionals remain honestly labeled, no probability claim",
+                "score": "MAE",
+                "seed": 1703
+              },
+              "week": {
+                "bootstrap_replicates": 500,
+                "candidate": "TGT_CDF_BASE",
+                "candidate_loss": 1.692722371967655,
+                "candidate_minus_control": -0.06854438848750814,
+                "candidate_output": "lower_count_median",
+                "cluster": "week",
+                "clusters": 6,
+                "control": "TGT_RECENT8_MEAN",
+                "control_loss": 1.7612667604551633,
+                "control_output": "unrounded_mean",
+                "interval95": null,
+                "minimum_clusters": 8,
+                "relative_improvement_percent": 3.8917664278064517,
+                "rows": 1855,
+                "scope": "Point-display comparison; incompatible functionals remain honestly labeled, no probability claim",
+                "score": "MAE",
+                "seed": 1703
+              }
+            },
+            "multiplicity": "Exposed development, finite method selection, nominal intervals; no durable superiority claim.",
+            "record": "reports/category-topfive-opportunity-targets-v1-20261029/PUBLIC_RESULTS_V1.json"
+          }
+        },
+        "coverage": {
+          "games": 93,
+          "planned": 2458,
+          "scored": 1855,
+          "weeks": 6
+        },
+        "functional": "median",
+        "loss": 1.692722371967655,
+        "loss_state": "FINITE",
+        "method_id": "m:TGT_CDF_BASE",
+        "output_id": "median",
+        "panel": {
+          "comparison_set_id": "target-frozen2022-2025-2026W1-6-v1",
+          "evidence_kind": "current_vintage_reconstruction_exposed_development",
+          "fallback_policy_id": "target-frozen-prior-registered-fullsystem-v1",
+          "horizon_id": "original-kickoff-left-limit-not-issued-T90",
+          "outcome_version": "raw-weekly-target-qualification-v3",
+          "population_id": "provider-target-v1-primary-RB-WR-TE-fixed2458",
+          "season": 2026,
+          "source_policy_id": "original-permitted-seven-day-reconstruction",
+          "target": "rec_tgt",
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
+        "result_id": "y:targets-v1:TGT_CDF_BASE:median",
+        "training_history_note": "Use appended source-inspected correction; older prose in CURRENT_DECISIONS remains visible.",
+        "training_history_source": "reports/opportunity-four/over-under/TRAINING_HISTORY_CORRECTION_V1.json",
+        "website_relative_gain": "Not established by this reconstructed panel"
+      },
+      "live_incumbent": {
+        "browser_DOM_observed": false,
+        "consumer_function_equal_saved": 0,
+        "model_versions": [],
+        "procedure_versions": [],
+        "product_functionals": [],
+        "sample_public_value": null,
+        "sample_reason": "No such selected product in pinned overlay",
+        "selected_overlay_rows": 0
+      },
+      "new_MAE_values_published": 0,
+      "new_captures": 0,
+      "new_forecasts": 0,
+      "new_product_operational_gates": {
+        "consumer_fallback_rollback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "current_source_and_artifact_bindings": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "durable_capture_restore": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "future_inference": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "genuine_capture_and_served_value_readback": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "registered_product_catalog_epoch_export": "UNVERIFIED_FOR_NEW_PRODUCT",
+        "retained_owner_admission": "UNVERIFIED_FOR_NEW_PRODUCT"
+      },
+      "proposed_core_product": null,
+      "published_new_MAE_values": null,
+      "published_new_MAE_values_reason": "No genuine newly admitted MAE product capture/publication verified; October30 packaging retains October28 issues.",
+      "scientific_qualification": false,
+      "selected_replacement": null,
+      "target": "rec_tgt"
+    }
+  ],
+  "scientific_registrations": "Unchanged; no scientific qualification claimed",
+  "scope": "Existing release engineering only; new predictive research still four-category focus",
+  "source_bindings": {
+    "reports/category-topfive-mae-release-priority-20261030/CURRENT_SERVED_AUDIT_V3.json": {
+      "bytes": 31120,
+      "sha256": "b3ad2747728e64578502de4b7a0ad4858c51f0fb7c097bd9ea554769e12e96cd"
+    },
+    "reports/category-topfive-mae-release-priority-20261030/SERVED_CONSUMER_READBACK_V1.json": {
+      "bytes": 6297,
+      "sha256": "f907b7b5238501fed42e7f445122f01d6b335b1d9e8b1552d28e6502842653f1"
+    },
+    "reports/category-topfive-mae-release-priority-20261030/core/CORE_CATEGORY_MANIFEST_V1.json": {
+      "bytes": 90965,
+      "sha256": "a7a09ae2616ba2e4605da10058777cf8084b0897575cc71a01fee55a8de134e8"
+    },
+    "reports/category-topfive-mae-release-priority-20261030/ordered-chart/ORDERED_CHART_ADMISSION_MANIFEST_V1.json": {
+      "bytes": 7583,
+      "sha256": "51bd8f9f53065a6595a9d4a84bb63c89b2990d306cf116cb70f666feed822183"
+    },
+    "reports/next-nfl-checkpoint-20261028/NEXT_CURRENT_MAE_DECISION_V2.json": {
+      "bytes": 26823,
+      "sha256": "af176471bb621c4b3e07f79a4b97dfef7e997e615b88fa1f9067df0bbfeadfc1"
+    },
+    "reports/opportunity-four/CURRENT_DECISIONS.json": {
+      "bytes": 43713,
+      "sha256": "7b508c8a73a5615b887ee220142e51445d09f297a74667d48c50a6252ab46e02"
+    },
+    "reports/opportunity-four/over-under/TRAINING_HISTORY_CORRECTION_V1.json": {
+      "bytes": 841,
+      "sha256": "7a76502e2bb2dfb0c87d3def211145376d7c8ab4f8cde44add7107c367041b6f"
+    }
+  },
+  "source_review": "reports/category-topfive-mae-release-priority-20261030/runtime/INDEPENDENT_SOURCE_REVIEW_V1.json",
+  "state": "RESULT_SAVED_PUBLICATION_PENDING",
+  "version": "mae-category-release-receipt-v1",
+  "website_main_commit": "1ec93e068a91abd51c990937d1019e4a831694b4"
+}

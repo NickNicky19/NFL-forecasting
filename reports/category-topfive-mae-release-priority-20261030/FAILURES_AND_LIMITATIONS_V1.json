@@ -1,0 +1,48 @@
+{
+  "version": "mae-release-engineering-failures-v1",
+  "at_UTC": "2026-10-30T21:18:29.849894+00:00",
+  "failures": [
+    {
+      "record": "CURRENT_SERVED_AUDIT_FAILURE_V1.json",
+      "bytes": 330,
+      "sha256": "1483cd4775d3b7a26428a0194c693b4e5511da7b8ef53b10c9bb5d1b65e46676",
+      "state": "FAILED_ATTEMPT_RETAINED_NOT_REFUNDED",
+      "new_NFL_forecasts_or_fits": 0
+    },
+    {
+      "record": "CURRENT_SERVED_AUDIT_FAILURE_V2.json",
+      "bytes": 300,
+      "sha256": "70fbff2f8d1c6eacd47311a5d527c4c2216be4b046b6856bd9654a35774ef1a9",
+      "state": "FAILED_ATTEMPT_RETAINED_NOT_REFUNDED",
+      "new_NFL_forecasts_or_fits": 0
+    },
+    {
+      "record": "runtime/METADATA_PROJECTION_FAILURE_V1.json",
+      "bytes": 1349,
+      "sha256": "50ea02d563c45499e9ee6065d68f532b075b4d95740fe53e2914a38f65a6965c",
+      "state": "FAILED_ATTEMPT_RETAINED_NOT_REFUNDED",
+      "new_NFL_forecasts_or_fits": 0
+    },
+    {
+      "record": "runtime/CATEGORY_RELEASE_RECEIPT_V1.json",
+      "state": "PRETTY_FORMAT_METADATA_BOUND_EXCEEDED_RETAINED",
+      "bytes": 74362,
+      "actual_role_peak_bytes": 107520,
+      "old_role_limit_bytes": 98304,
+      "forward_completion_allocation": "config/category-topfive-mae-release-priority-metadata-forward-v2.json",
+      "reason": "Originalprettybytespreserved; no NFLresult or source removed."
+    },
+    {
+      "record": "core/PUBLICATION_ALLOWLIST_V1.json",
+      "state": "ALLOWLIST_SIZE_ASSERT_BEFORE_WRITE",
+      "new_NFL_fits_forecasts": 0
+    },
+    {
+      "state": "EXEC_SERVER_TRANSPORT_DISCONNECTED_ON_METADATA_READ",
+      "error": "Failed to create unified exec process: exec-server transport disconnected",
+      "later_probe": "pwd succeeded; no NFL taskrerun or evidence rewritten"
+    }
+  ],
+  "originals": "Oldscientificfailures/registrations unchanged; theseareengineering/network/metadataattempts, notNFLaccuracyexperiments",
+  "inline_V1_source": "Original publicreadV1 wasinline; exactprotocol/errorretained, standaloneV1sourcewasnotfrozen. Do notclaimexactstandalonereproduction."
+}
