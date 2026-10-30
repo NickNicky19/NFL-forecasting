@@ -1,0 +1,111 @@
+{
+  "no_complete_route_or_team_denominator_dependency": true,
+  "privacy": "No raw numericvalues, playerrows, private destinations or models areinthis record.",
+  "raw_weekly_count_fields": {
+    "receptions": "int32",
+    "targets": "int32"
+  },
+  "required_next_qualification": [
+    "Exactsamecanonical player/game/team/week/cutoff andsourceversion pairjoins",
+    "Nonnegativeinteger R,T, R<=T, explicitstatsobserved+physicalplayed; T=R=0 iszeroexposure, notmissing",
+    "Countrec/targetmissing andincompatiblecreditpairs beforefit; no clippingoroutcome-informedquerydropping",
+    "Preserve6existingrec-missing unlessseparatelegitlabelrepair qualifiesbothcandidate/control together",
+    "Per-cutoff earlier-only exposure; original7day assumption stillassumed; unknown availability neverfabricated",
+    "Replay retainedtargetmeans/medians exactly before obtainingfulltargetlaws; do notweakenfuturequerybinding",
+    "Matchstrongorderedreceptionpoint/distribution controls onidentical supportedlabels; fallback/allplannedcoverage explicit"
+  ],
+  "source_mapping": "data.STAT_MAP maps targets->rec_tgt, receptions->rec; same qualified provider fields, never infer zeros from rowabsence.",
+  "source_schema": {
+    "accepted_features": {
+      "binding": "APPROVED_PRIVATE_SOURCE_MANIFEST_ONLY",
+      "bytes": 5070165,
+      "fields": {
+        "game_id": "string",
+        "kickoff_utc": "timestamp[ns, tz=UTC]",
+        "official_physical_event": "bool",
+        "opponent": "string",
+        "outcome_available_utc": "timestamp[ns, tz=UTC]",
+        "participation_state": "string",
+        "player_id": "string",
+        "position": "string",
+        "rec": "double",
+        "rec_tgt": "double",
+        "season": "int32",
+        "stats_observed": "bool",
+        "team": "string",
+        "week": "int32"
+      },
+      "numeric_values_read_this_prep": false,
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+      "source_rows_metadata": 62388
+    },
+    "history": {
+      "binding": "APPROVED_PRIVATE_SOURCE_MANIFEST_ONLY",
+      "bytes": 1155175,
+      "fields": {
+        "game_id": "string",
+        "kickoff_utc": "timestamp[ns, tz=UTC]",
+        "official_physical_event": "bool",
+        "opponent": "string",
+        "outcome_available_utc": "timestamp[ns, tz=UTC]",
+        "participation_state": "string",
+        "player_id": "string",
+        "position": "string",
+        "rec": "double",
+        "rec_tgt": "double",
+        "season": "int32",
+        "stats_observed": "bool",
+        "team": "string",
+        "week": "int32"
+      },
+      "numeric_values_read_this_prep": false,
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+      "source_rows_metadata": 62388
+    },
+    "raw_weekly": {
+      "binding": "APPROVED_PRIVATE_SOURCE_MANIFEST_ONLY",
+      "bytes": 386908,
+      "fields": {
+        "game_id": "string",
+        "kickoff_utc": "ABSENT",
+        "official_physical_event": "ABSENT",
+        "opponent": "ABSENT",
+        "outcome_available_utc": "ABSENT",
+        "participation_state": "ABSENT",
+        "player_id": "string",
+        "position": "string",
+        "rec": "ABSENT",
+        "rec_tgt": "ABSENT",
+        "season": "int32",
+        "stats_observed": "ABSENT",
+        "team": "string",
+        "week": "int32"
+      },
+      "numeric_values_read_this_prep": false,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd",
+      "source_rows_metadata": 6488
+    }
+  },
+  "state": "SCHEMA_AND_ARTIFACT_LOCATORS_FOUND_VALUES_NOT_QUALIFIED",
+  "strong_ordered_reception_control": {
+    "existing_report_coverage": "2458primaryplanned,1855qualifiedplayed,6playedreceptionmissing,1849scored,603unknown; these areexistingaggregate reportmetadata notnew labelqualification",
+    "freeze_sha256": "8cbd202d3a4f45b782187996736155db38711b9d8e041223dadaeb2b50c921c2",
+    "grade_sha256": "777e5dec4a1c6d1029426731a2cc194c0427b153af927add2831e56e882addc2",
+    "graded_rows_sha256": "ac96002347a725e00f836dc7eb3be04415889ca2902d69a7ccef775b285459ff",
+    "model_bytes": 2525704,
+    "model_member": "MODELS/rec_ORDERED.joblib",
+    "model_sha256": "718a0cd0e4ae1e69f1b70c37c7814e9d1c7b3897c4d2bb31fad4a67aa83129aa",
+    "not_loaded_this_prep": true,
+    "original_query_source_sha256": "559beef36cf325a13c49eb67cd43f60dd90501e481cc4a5157fa190e45ed5fb1"
+  },
+  "upstream_target_source": {
+    "freeze_sha256": "cc6474aa5476b77b8c7e1ff918a509feb86289080b3084230ecd5cdef60223a7",
+    "model_bytes": 1540963,
+    "model_member": "MODELS/rec_tgt_CDF_BASE.joblib",
+    "model_sha256": "28bf057262eed9ff6c71dd5efc2b1c689804295e94e9a2e92f29f9476c948e23",
+    "not_loaded_this_prep": true,
+    "query_member_sha256": "b57e3e05c77fe4b24cac346683efa3fc71727225a2e6a2f56749ee34b8c8247b",
+    "run": "r:opportunity-four-targets-frozen-v1-20261029"
+  },
+  "version": "target-reception-paired-source-metadata-v1"
+}

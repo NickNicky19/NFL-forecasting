@@ -12,7 +12,7 @@ on:
         default: daily
   push:
     branches: [main]
-    paths: ['nfl_lab/**', 'tests/**', 'reports/opportunity-four/**', 'tools/category_topfive_opportunity_registry_checks_v1.py', 'config/**', 'schemas/**', 'pyproject.toml', '.github/workflows/lab.yml']
+    paths: ['nfl_lab/**', 'tests/**', 'reports/opportunity-four/**', 'tools/category_topfive_opportunity_registry_checks_v1.py', 'tools/category_topfive_opportunity_ou_registry_checks_v1.py', 'config/**', 'schemas/**', 'pyproject.toml', '.github/workflows/lab.yml']
 
 permissions:
   contents: write
@@ -39,6 +39,8 @@ jobs:
         run: python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four
       - name: Check opportunity registry failure cases
         run: python -B tools/category_topfive_opportunity_registry_checks_v1.py
+      - name: Check O/U policy links, denominators, nulls and unqualified settlement rejection
+        run: python -B tools/category_topfive_opportunity_ou_registry_checks_v1.py
   lab:
     runs-on: ubuntu-latest
     timeout-minutes: 40

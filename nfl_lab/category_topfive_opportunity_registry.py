@@ -283,6 +283,8 @@ def main():
     args = parser.parse_args()
     reg = load(args.root)
     report = validate(reg)
+    from nfl_lab.category_topfive_opportunity_ou_registry import validate_root
+    report['over_under_extension'] = validate_root(args.root, reg, write=args.write)
     generated = encoded(leaderboard(reg))
     target = Path(args.root)/'FOUR_CATEGORY_LEADERBOARD.json'
     if args.write:

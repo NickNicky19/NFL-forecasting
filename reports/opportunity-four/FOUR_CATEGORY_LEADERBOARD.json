@@ -3020,7 +3020,7 @@
           6
         ]
       },
-      "distinct_procedures": 4,
+      "distinct_procedures": 6,
       "objective": "point_MAE",
       "shortfall_from5": 2,
       "shortlist_groups": 3,
@@ -3069,12 +3069,29 @@
             "scored": 1855,
             "weeks": 6
           },
-          "functional": "mean",
+          "functional": "median",
           "grouped_method_ids": [
+            "m:TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK",
             "m:TGT_RECENT8_MEAN",
+            "m:TGT_RECENT3_LOWER_MEDIAN_CDF_FALLBACK",
             "m:TGT_RECENT3_MEAN"
           ],
           "grouped_results": [
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
+              "functional": "median",
+              "loss": 1.7444743935309972,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK",
+              "output_id": "median",
+              "readiness": "RESEARCH_RESULT_NOT_ADMITTED_OR_SELECTED",
+              "result_id": "y:target-recent-medians-v2:TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK"
+            },
             {
               "coverage": {
                 "games": 93,
@@ -3097,6 +3114,21 @@
                 "scored": 1855,
                 "weeks": 6
               },
+              "functional": "median",
+              "loss": 1.8495956873315365,
+              "loss_state": "FINITE",
+              "method_id": "m:TGT_RECENT3_LOWER_MEDIAN_CDF_FALLBACK",
+              "output_id": "median",
+              "readiness": "RESEARCH_RESULT_NOT_ADMITTED_OR_SELECTED",
+              "result_id": "y:target-recent-medians-v2:TGT_RECENT3_LOWER_MEDIAN_CDF_FALLBACK"
+            },
+            {
+              "coverage": {
+                "games": 93,
+                "planned": 2458,
+                "scored": 1855,
+                "weeks": 6
+              },
               "functional": "mean",
               "loss": 1.8561931739489306,
               "loss_state": "FINITE",
@@ -3106,13 +3138,13 @@
               "result_id": "y:targets-v1:TGT_RECENT3_MEAN:mean"
             }
           ],
-          "loss": 1.7612667604551633,
+          "loss": 1.7444743935309972,
           "loss_state": "FINITE",
-          "method_id": "m:TGT_RECENT8_MEAN",
-          "output_id": "mean",
+          "method_id": "m:TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK",
+          "output_id": "median",
           "rank": 2,
-          "readiness": "RESEARCH_RESULT_NOT_OPERATIONALLY_ADMITTED",
-          "result_id": "y:targets-v1:TGT_RECENT8_MEAN:mean",
+          "readiness": "RESEARCH_RESULT_NOT_ADMITTED_OR_SELECTED",
+          "result_id": "y:target-recent-medians-v2:TGT_RECENT8_LOWER_MEDIAN_CDF_FALLBACK",
           "shortlist_group": "target-recent-history-controls"
         },
         {

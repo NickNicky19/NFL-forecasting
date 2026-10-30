@@ -1,0 +1,94 @@
+{
+  "OOF": "Neededforlearneddownstreampredicted-targetfeatures/calibration/weights; notsimplyforfittingobservedhistoricalconditionalcatchlaw thatintegrates forecasttargetvolumeatinference",
+  "at_UTC": "2026-10-30T02:46:35.459005+00:00",
+  "candidate_arms": [
+    {
+      "id": "REC_FROM_FIXED_TGT_ROLE_BINOMIAL_V1",
+      "rate": "earlierpositionpooledp0, proposedpreseason2022-2025qualification",
+      "target_marginal": "Exactsame retainedTGT_CDF_BASE querylaw"
+    },
+    {
+      "id": "REC_FROM_FIXED_TGT_PLAYER_K20_BINOMIAL_V1",
+      "rate": "(C_i+20*p0)/(T_i+20), last8earlierroster-game slots; qualifiedpairedcounts only; K20fixednotoutcomechosen",
+      "target_marginal": "Exactsame retainedTGT_CDF_BASE querylaw"
+    }
+  ],
+  "controls": [
+    "Unchanged strongest orderedreceptionCDF on exactsupportedlabels; disclose2019-2025 vs target2022-2025training difference",
+    "ExistingbaseCDF/CountAwherecompatible, no newrefit merelytofillcatalogue",
+    "HoldTGT_CDFfixed between rolepooledandplayerK20 catch arms to isolateconversion"
+  ],
+  "fallback": "Sharedvalidtargetlaw+rolepooledp0 forplayerhistorymissing; full-lawfailures need authenticatedstrongcontrol law or explicitabstention, nevermeanpointlabeleddistribution",
+  "fit_accounting": {
+    "extra_ordered_control_model_restore": "Only if a full-lawfallback/replay requires it; separatelycount andqualify beforelaunch",
+    "model_deserializations_proposed": 1,
+    "new_conditional_forecast_rows_proposed": 5998,
+    "no_actual_counts_from_proposal": true,
+    "possible_shared_analytic_catch_rate_estimation": "One new statisticalrate-fit procedure, not falsely0fits because no trees; deterministicperqueryupdates perdeclaredrule",
+    "target_forest_fits": 0
+  },
+  "formula": {
+    "CRPS": "Finite empiricalpart plus exactanalytic geometric-tail remainder; see derivation",
+    "mean": "p*E[T]",
+    "median": "Lower0.5quantile of full integratedRlaw, not productofmedians",
+    "p0_endpoint": "delta0, explicitlogmassbranch",
+    "target_prior": "P(T=t|prior)=(1-q)q^t,t>=0",
+    "thinned_geometric_q": "q*p/(1-q+q*p)"
+  },
+  "mechanism": "Binomialthinning of fixed empirical-leaf+geometric targetCDF",
+  "modeling_assumptions": [
+    "Withinquery p isfixedconditionedonI; R|T isBinomial, nolearned target-quality/volume dependence beyondI.",
+    "Beta-shrunkpluginp isnotBetaBinomialnorposteriorp uncertainty.",
+    "Playergametargetmarginalconditionalonplayed; sourceparticipationdoesnotestimateDNP/void probability."
+  ],
+  "outputs_and_scores": {
+    "display_median": "MAE, bias,p90/p95, strict<1/inclusive<=1/exactcount underdeclaredrule",
+    "distribution": "CRPSprimary, loglosssecondary withpositiveinfinity retained",
+    "expected_mean": "MSE/RMSE plusMAE; correctlawmean",
+    "threshold_probability_and_EV": "Only genuine compatiblecaptured receptionoffers/prices/contracts; otherwise unsupportednull, no assumedtargetmarkets"
+  },
+  "prepared_NFL_numeric_projections_models_fits_forecasts_CAS_HTTP": 0,
+  "proposed_finite_future_budget_not_allocated": {
+    "authority": "Requiresnewexplicitregistration/capacity/sealedGO; existingprepallocationdoesnotfundNFLexecution",
+    "comparison": {
+      "CAS_max": 3,
+      "CPU_seconds": 120,
+      "HTTP": 0,
+      "RSS_bytes": 536870912,
+      "analytic_rate_procedures": 1,
+      "attempts": 1,
+      "fixed_arms": 2,
+      "new_forest_fits": 0,
+      "peak_private_bytes": 33554432,
+      "retained_private_bytes": 16777216,
+      "target_model_restores": 1,
+      "tuning_variants": 0,
+      "wall_seconds": 180
+    },
+    "qualification": {
+      "CPU_seconds": 60,
+      "RSS_bytes": 536870912,
+      "attempts": 1,
+      "fits": 0,
+      "forecasts": 0,
+      "models": 0,
+      "wall_seconds": 90
+    }
+  },
+  "readiness": "UNRUN_NOT_ADMITTED_NOT_DEPLOYED",
+  "source_qualification_before_rate_fit": {
+    "current_scope": "Intended2026W1-7, compatiblequery/labelsW1-6only;W7gap remains",
+    "need": [
+      "Canonicalsource/context joins andcutoffs",
+      "FiniteintegerpairedR,T with0<=R<=T",
+      "No omitted-stat zero imputation; preserve unknown/DNP/playedmissing",
+      "Explicit0/0 pairedexposure retainedwithzero denominator contribution",
+      "Preseasonp0 usesearlieronly sources; perqueryplayerupdates useearlieronly eligibledata",
+      "Preserve6existingmissingrec labels andcommon1849untilqualifiedrepair",
+      "Record prior/exposuremissingness/fallbacksandall2458plannedrows"
+    ],
+    "status": "NOT_RUN"
+  },
+  "state": "METADATA_PREPARATION_COMPLETE_NOT_EXECUTION_AUTHORIZATION",
+  "version": "target-to-reception-conditional-count-proposal-v1-20261030"
+}

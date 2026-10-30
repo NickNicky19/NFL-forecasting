@@ -1,0 +1,153 @@
+{
+  "version": "opportunity-four-runtime-final-delta-v3",
+  "state": "READ_ONLY_DELTA_COMPLETE_NO_ORIGINAL_CAPTURE_OR_DEPLOYMENT",
+  "at_UTC": "2026-10-30T02:52:14.593297+00:00",
+  "at_Chicago": "2026-10-29T21:52:14.593507-05:00",
+  "supersedes_status_fields_only": [
+    "CAPTURE_OWNER_STATE_V2.json coordination_acknowledgements.V2_scope_split_ack"
+  ],
+  "served": {
+    "meta": {
+      "generated_at": "2026-10-29T18:55:33Z",
+      "season": 2026,
+      "week": 8,
+      "model": "sleeper-matchup-classic-fg-identity-v1"
+    },
+    "pointer": {
+      "bytes": 1852417,
+      "display_board_sha256": "12638b545ade73e91d2a6312731491e61c8225949546afb39eba71d5d908ae40",
+      "path": "data/weekly-adaptive/df44db8a71e3ef229ab397787462decee93505717aa591de413dac4a5c8cd0b1.json",
+      "schema_version": "weekly-adaptive-overlay-pointer-v1",
+      "sha256": "df44db8a71e3ef229ab397787462decee93505717aa591de413dac4a5c8cd0b1"
+    },
+    "unchanged_from_prior_verified_pointer": true,
+    "prior_verified_selected_rows": 1945,
+    "forecast_body_decoded_this_delta": false,
+    "new_point_policy_ordered_backfield_targets_activation": "NOT_OBSERVED",
+    "genuine_new_original_capture": "NOT_VERIFIED_BY_METADATA"
+  },
+  "production": {
+    "main": "911a81a31f822de58e0f9c04ded070f8c9752670",
+    "writer": {
+      "revision": 178,
+      "updated_at": "2026-10-28T03:58:28.617439Z",
+      "active": {
+        "kind": "manual_owner",
+        "run_id": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z",
+        "source_head": "81c3fc2a612ced916f4c54814f978c509058bca5"
+      }
+    },
+    "owner_ack": "NOT_OBSERVED"
+  },
+  "parent_latest": {
+    "id": 40932594714,
+    "workflow_id": 392888807,
+    "status": "completed",
+    "conclusion": "failure",
+    "event": "schedule",
+    "head_sha": "cd51ff289ace3bf14cfb820c139fd823bc330d17",
+    "name": "NFL research lab",
+    "path": ".github/workflows/lab.yml",
+    "created_at": "2026-10-29T18:37:43Z",
+    "updated_at": "2026-10-29T18:37:57Z"
+  },
+  "coordination_comments": [
+    {
+      "id": 6513284161,
+      "author": "NickNicky19",
+      "created_at": "2026-10-30T02:14:27Z",
+      "body": "V2 scope and availability coordination, 2026-10-30 02:14 UTC. I read original-session acknowledgement 6511074225. V2 leaves your provider-reported receiving-target pilot and original retained-CDF output continuation with you; it is not duplicating those fits or taking production lease178. V2's directly received continuation asks for a separately registered availability ablation using its qualified retained source: A seven-day policy, B genuinely available fresher query features with the retained V2 model fixed, and C the same fresh features plus a separately defined current-cutoff refit. The retained source contains303 qualified Week7 rows;282 remain omitted by the newer lag policy. Earlier historical publication clocks remain unknown and will not be relabeled.\n\nPlease coordinate any official additional common-cutoff capture/admission through the existing producer and preserve every early Week8 packet. V2 is preparing distinct immutable research shadows for only the thirteen still-open games, with real inference/persistence clocks, frozen subgroup/grading rules and no outcome inspection; owner acknowledgement/admission and official capture will be recorded separately. No paid collection, scheduler/workflow dispatch, shared ledger change, website publication or production modification is requested or performed.\n\nV2's prior frozen checkpoint is84b5619bc24894ed64803378df2699063c301361, draft review package https://github.com/NickNicky19/NFL-forecasting-V2/pull/1 . Its ordered-feature ablation is a new reconstruction mechanism test on V2 inputs, not a claim to reproduce your original issuance. Please identify any overlapping active V2-input experiment before duplicate work. Public aggregates/hashes will follow; private rows remain in the approved companion. \n\nTimestamp clarification: the displayed header was corrected from a drafting typo; this is a coordination message, not a forecast issuance or persistence receipt."
+    }
+  ],
+  "V2_ownership_split": {
+    "state": "ACKNOWLEDGED_IN_PUBLIC_COMMENT",
+    "comment_id": 6513284161,
+    "created_at_UTC": "2026-10-30T02:14:27Z",
+    "original_owns": [
+      "provider-reported receiving-target pilot",
+      "original retained-CDF output continuation"
+    ],
+    "V2_owns": "Separately registered V2-source availability ablation: fixed seven-day vs qualified fresh features under retained model vs fresh features plus current-cutoff refit. Original fits not duplicated.",
+    "V2_future_shadows": "Reported preparation for13remaining games, real clocks; not original-producer capture or completed issuance asserted here.",
+    "V2_scope_note": "Acknowledges original scope/ownership by reference; no assumption its separately received continuation or active work was cancelled.",
+    "production_lease_takeover": false
+  },
+  "next_actual_capture_status": {
+    "parent_due_window_Chicago": "2026-10-30T07:36:00-05:00 through07:57exclusive",
+    "parent_execution": "PENDING_UNOBSERVED",
+    "next_inherited_T90_Chicago": "2026-11-01T10:30:00-06:00",
+    "next_inherited_T90_UTC": "2026-11-01T16:30:00+00:00",
+    "timezone_note": "FridayCDT; SundayCST after November1 DST transition.",
+    "next_receipt_location": "Existing NFL-forecasting Actions lab workflow: lab-parent-<actualrunid>-<attempt>/controller-parent-result.json, then approved child/private capture manifests. A green no-op is not a capture.",
+    "old_missed_Oct29_window": "PRESERVED",
+    "original11466census_and_assignments": "OWNER_RESTORE_REQUIRED"
+  },
+  "requests": [
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/workflows/lab.yml/runs?per_page=1",
+      "returned_UTF8_bytes": 343,
+      "isError": true
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/nicks-expert-nfl-picks/branches/main",
+      "returned_UTF8_bytes": 9446,
+      "isError": false
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/issues/1/comments?since=2026-10-30T01%3A00%3A00Z&per_page=10",
+      "returned_UTF8_bytes": 11916,
+      "isError": false
+    },
+    {
+      "url": "github-file:production-coordination-current",
+      "returned_UTF8_bytes": 146591,
+      "isError": false
+    },
+    {
+      "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/runs?per_page=1",
+      "returned_UTF8_bytes": 28013,
+      "isError": false
+    }
+  ],
+  "direct_public_GETs": [
+    {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+      "bytes": 1215,
+      "sha256": "1c6da8355a5103f3134ffe85ef02e24fd32e030873dac869aaaad1c18faf9659"
+    },
+    {
+      "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+      "bytes": 337,
+      "sha256": "689e43e991b5b04ef5be7d001b423202cd7bbae624244d8362d0bdca522d1ca2"
+    }
+  ],
+  "resource_accounting": {
+    "prior_GET_attempts": 31,
+    "new_GET_attempts_conservatively_counted": 7,
+    "cumulative_GET_attempts": 38,
+    "remaining_from40": 2,
+    "prior_response_bytes": 1187389,
+    "new_returned_bytes_and_public_bodies": 197861,
+    "cumulative_measured_response_bytes": 1385250,
+    "additional_wrapper_reserve_bytes": 4096,
+    "cumulative_conservative_accounted_response_bytes": 1389346,
+    "max_response_bytes": 4194304
+  },
+  "request_failure": {
+    "url": "https://api.github.com/repos/NickNicky19/NFL-forecasting/actions/workflows/lab.yml/runs?per_page=1",
+    "kind": "CONNECTOR_URL_REJECTED_BEFORE_REMOTE_REQUEST",
+    "error": "Exact workflow-filename route unsupported by connector allowlist. Separately consumed allowed repository run-list GET returned actual workflow_id392888807 and .github/workflows/lab.yml; no source guard bypass or automatic retry."
+  },
+  "activity": {
+    "NFL_vectors_outcomes_models_fits_new_forecasts": 0,
+    "HTTP_Odds_API": 0,
+    "credentials": 0,
+    "dispatches": 0,
+    "website_V2_or_lease_writes": 0
+  },
+  "limitations": [
+    "Metadata evidence only; immutable body census inherited from earlier authenticated readback, not redone.",
+    "Production acknowledgement/census restoration/admission/publication still require retained owner; V2 acknowledgement is separately identified.",
+    "No actual new scheduled capture, grading, selection or website forecast activation from this refresh."
+  ]
+}

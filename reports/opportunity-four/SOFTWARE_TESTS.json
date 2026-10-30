@@ -105,6 +105,55 @@
       "id": "target-identity-fixture-v3",
       "kind": "Onefictionalbundle,0NFLmodels/fits/forecasts",
       "record": "over-under/TARGET_RECENT_IDENTITY_FIXTURE_V3.json"
+    },
+    {
+      "cases": 15,
+      "command": "python -B tools/category_topfive_opportunity_ou_registry_checks_v1.py",
+      "current_acceptance": false,
+      "id": "OU_PUBLIC_REGISTRY_V1",
+      "kind": "Fictionalmutation/publicaggregatevalidation; notNFLfits/methods",
+      "log": "over-under/software/OU_REGISTRY_V1.log",
+      "prior_source_correction": "V1/V2 passpreserved; laterstaticreviewexpandedguards, noNFLscoreschanged.",
+      "protocol": "over-under/software/OU_REGISTRY_VALIDATION_PROTOCOL_V1.json",
+      "state": "PASS"
+    },
+    {
+      "cases": 26,
+      "command": "python -B tools/category_topfive_opportunity_ou_registry_checks_v1.py",
+      "current_acceptance": false,
+      "id": "OU_PUBLIC_REGISTRY_V2",
+      "kind": "Fictionalmutation/publicaggregatevalidation; notNFLfits/methods",
+      "log": "over-under/software/OU_REGISTRY_V2.log",
+      "prior_source_correction": "V1/V2 passpreserved; laterstaticreviewexpandedguards, noNFLscoreschanged.",
+      "protocol": "over-under/software/OU_REGISTRY_VALIDATION_PROTOCOL_V2.json",
+      "state": "PASS"
+    },
+    {
+      "cases": 27,
+      "checks_sha256": "68b7b5fcac6cccd7d78726b756534ca35d28da44f5ddbe6f92bf92dfc97af705",
+      "command": "python -B tools/category_topfive_opportunity_ou_registry_checks_v1.py",
+      "current_acceptance": false,
+      "id": "OU_PUBLIC_REGISTRY_V3",
+      "kind": "Fictionalmutation/publicaggregatevalidation; notNFLfits/methods",
+      "log": "over-under/software/OU_REGISTRY_V3.log",
+      "prior_source_correction": "V1/V2 passpreserved; laterstaticreviewexpandedguards, noNFLscoreschanged.",
+      "protocol": "over-under/software/OU_REGISTRY_VALIDATION_PROTOCOL_V3.json",
+      "source_sha256": "85ab9ba60b46a00c4f653fb5b17b131aac2f848ddf9ed1f619ceff97d0384241",
+      "state": "PASS"
+    },
+    {
+      "cases": 30,
+      "checks_sha256": "c8d726924dc54570583a968415149d910227be4f05e5dcd1e3f7ee3409f70272",
+      "command": "python -B tools/category_topfive_opportunity_ou_registry_checks_v1.py",
+      "current_acceptance": true,
+      "id": "OU_PUBLIC_REGISTRY_V4",
+      "internal_suite_wall_seconds": 0.641,
+      "kind": "Fictional/publicaggregatechecks,0NFLfits/forecasts",
+      "log": "over-under/software/OU_REGISTRY_V4.log",
+      "priorpasses": "15/26/27passretained; staticreviewaddedtypedcornerguards, noNFLscoreschanged",
+      "protocol": "over-under/software/OU_REGISTRY_VALIDATION_PROTOCOL_V4.json",
+      "source_sha256": "1a9dc8041a85621a44f7c53c904016642b0b0a471c51ebb63b844141cc125e1f",
+      "state": "PASS"
     }
   ]
 }

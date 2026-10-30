@@ -1,65 +1,67 @@
-# Four-category opportunity forecasting
+# Four-category NFL opportunity forecasts
 
-Checkpoint: **October29,2026, America/Chicago**. New predictive work covers passing attempts, carries, receiving targets and receptions. Unstarted nonfocus predictive work is **DEFERRED_BY_OWNER_SCOPE_CHANGE**; prior evidence, scientific registrations and production remain intact.
+Executed checkpoint: **October 29, 2026, America/Chicago**. New predictive work covers passing attempts, carries, receiving targets and receptions. Prior results, registrations and nonfocus website outputs remain intact.
 
-## Current decision
+## New Over/Under results
 
-Main comparable evidence: **2026 regular-season Weeks1–6,93games**. MAE is the average absolute miss, in the statistic's units. These exposed historical reconstructions retain the seven-day availability assumption. They are not a complete Weeks1–7 tournament or demonstrated wins against this week's website.
+[**Open the readable results**](over-under/README.md) · [Correct/incorrect counts for every method and side](over-under/CORRECT_INCORRECT_BY_SIDE.csv) · [Complete season and weekly results](over-under/OVER_UNDER_RESULTS.json) · [Data readiness](over-under/OVER_UNDER_DATA_READINESS.json)
 
-| Category | Lowest observed comparable point | Average miss (MAE) | Supported / planned | Website's last verified product |
+The new evaluator scored **72,646 decisions using saved predictions and original lines**, without refitting. It covers 2024 and 2026 Weeks 1–5 separately. Quote timing and actual bookmaker settlement remain unqualified. These are statistical direction results, not verified pregame bets or demonstrated wins against today's website.
+
+On the shared 2026 point panel, old football F → hybrid H correct-side counts were:
+
+| Category | F correct | H correct | Supported outcomes |
+|---|---:|---:|---:|
+| Passing attempts | 41 | 41 | 79 |
+| Carries | 58 | 58 | 101 |
+| Receptions | 230 | 236 | 461 |
+
+Another 35 reception outcomes remain unresolved. Lower numerical error did not reliably produce more correct directions. Probability results, abstention and the constant-50% control are reported separately. There is no universal winner.
+
+Independent fresh-process QA passed all 72,646 decisions, 1,271 original paper selections, 186,278 aggregate fields, 180 season summaries, 1,095 weekly summaries and 78 paired comparisons. Same-host readback does not prove off-host restoration or historical quote availability.
+
+Two new target controls also completed: **5,998 forecasts, zero fits**. Recent-eight median MAE 1.744474 and recent-three median 1.849596 both lost to target CDF 1.692722, in every evaluated week. Their adverse results remain recorded.
+
+## Current comparable point decisions
+
+These are exposed **2026 regular-season Weeks 1–6** reconstructions. They do not complete the requested Weeks 1–7 comparison. MAE is the average absolute miss in the named units.
+
+| Category | Lowest observed comparable point | MAE | Supported / planned | Last verified website product |
 |---|---|---:|---:|---|
-| Passing attempts | Historical-relation CDF + timestamped depth, median |**7.767773 attempts**|211 /515|CDF mean|
-| Carries, RB panel | Backfield-information CDF, median |**3.534221 carries**|526 /668|Count A declared mean|
-| Receiving targets | New target CDF, median |**1.692722 targets**|1855 /2458|**Not available**|
-| Receptions | Ordered-history CDF, median |**1.247701 receptions**|1849 /2458|Count A declared mean|
+| Passing attempts | Historical-relation CDF + timestamped depth, median | 7.767773 attempts | 211 / 515 | Leaf CDF mean |
+| Carries, RB panel | Backfield-information CDF median | 3.534221 carries | 526 / 668 | Count A declared mean |
+| Receiving targets | Target CDF median | 1.692722 targets | 1,855 / 2,458 | NOT_AVAILABLE |
+| Receptions | Ordered-history CDF median | 1.247701 receptions | 1,849 / 2,458 | Count A declared mean |
 
-Research-preferred products are **not newly admitted or deployed**. Existing live products remain until the retained owner completes source/model/wrapper, restoration, capture and consumer checks. No new eight-week prerequisite or post-result bias/significance veto is introduced.
+Research-preferred outputs are **not newly admitted or deployed**. [Research shortlists and separate upcoming catalogue](RESEARCH_SHORTLISTS.md) · [Policy and live gaps](CURRENT_DECISIONS.json) · [Generated comparable leaderboard](FOUR_CATEGORY_LEADERBOARD.json).
 
-The passing-depth lead is only0.004739 attempts (0.061%) versus base median, with an interval including no improvement and worse bias/tails. The prior backfield result improves3.48% versus base CDF and2.36% versus ordered CDF. Reception ordered median's lead is small. These are laboratory controls, not authentic matching live website comparisons.
+The training-history prose is corrected separately: the inspected 2026 base/ordered/backfield controls fit 2019–2025 regular-season data; the distinct target CDF fits 2022–2025. Scores and original artifacts are unchanged. [Proof and scope](over-under/TRAINING_HISTORY_CORRECTION_V1.json). The original seven-day availability reconstruction remains an assumption.
 
-## What actually ran
+## Permanent test records
 
-- **Targets: one new32-tree fit**,11,996 records from four procedures across2,999 queries. Primary1855 supported outcomes include369 played zeros;603 primary queries remain unknown. Median MAE1.692722 versus recent8 mean1.761267 is **3.89% lower**, a0.068544-target reduction. Nominal game interval for candidate minus control: **[−0.098089,−0.041109]**. CDF mean MSE5.631438 versus recent8 mean5.899139 is a separate mean-product result. Median MSE/bias, strict<1 precision and Week6 are adverse and preserved.
-- **Passing medians: zero refits**,17 retained-model restores,2,575 newly recorded procedure-median rows:2,309 law-functional evaluations plus266 authenticated fallback aliases;515 base rows reused. All2,575 original mean bits/fallbacks replay exactly. Current/recent/decay medians lose to base. H4 annual and BASE recorded outputs are identical on515 queries and share one shortlist slot on this panel only.
-- **Independent checks:**3,090 history rows/1,736 aggregate fields and11,996 target rows/1,555 aggregate fields pass saved-vector and arithmetic checks.4,180 supported law rows pass CDF/log-mass consistency. CRPS is not regenerated from models; same-host checks do not prove off-host restoration.
-- **Failures retained:** label-empty query finding, raw identity failure, source GET failures, original history failures and the first independent QA's incorrect stricter cutoff. Its new version honors original cutoff<=kickoff with strictly earlier known feature clocks. Forecasts remain unchanged.
-- **Software:**44 fictional registry checks pass; these are not44 methods or NFL outcomes. Imports and cached checks are not new fits.
+- [Methods](METHOD_REGISTRY.json), [experiments and protocols](EXPERIMENT_REGISTRY.json), [append-only run states](RUN_EVENTS.jsonl), [all point/product results and linked Over/Under extension](ALL_RESULTS.json).
+- [Side rules](over-under/OVER_UNDER_POLICY_REGISTRY.json), [run/result links](over-under/RESULT_INDEX.json), [older Week 6 reported directions](over-under/LEGACY_WEEK6_REPORTED_DIRECTIONS.json).
+- [Independent verification](VERIFICATION.json), [software commands and logs](SOFTWARE_TESTS.json), [publication/readback proofs](PUBLICATION_RECORDS.json).
+- [Fourteen audit answers](ANSWERS_01_TO_14.md), [remaining pathways](PATHWAY_QUEUE.json), [scope](SCOPE.md), [resumable journal](TASK_LEDGER.jsonl), [older all-category index](../RESEARCH_INDEX.md).
 
-The canonical snapshot contains **21 located procedure definitions,14 run identities and84 product-result records**. It is scoped recovery, not a lifetime-complete census. Controls, views, variants and repeated offers do not create independent football observations.
+The registry contains 29 located procedure definitions, 20 run identities and 86 point/product records, plus 180 linked Over/Under season summaries. Those are different objects, not independent football games or a lifetime-complete inventory. Failures, losses, missing originals and unavailable metrics remain visible. Missing scores are null with reasons.
 
-## Open the evidence
+## Capture and live release
 
-- [Research top-five lists and separate future catalogue](RESEARCH_SHORTLISTS.md)
-- [Four-category decisions and live gaps](CURRENT_DECISIONS.json); [generated comparable leaderboards](FOUR_CATEGORY_LEADERBOARD.json)
-- [Methods](METHOD_REGISTRY.json), [experiments](EXPERIMENT_REGISTRY.json), [append-only run states](RUN_EVENTS.jsonl), [all located scores and losses](ALL_RESULTS.json)
-- [Actual new targets study, protocol, code and weekly errors](../category-topfive-opportunity-targets-v1-20261029/README.md)
-- [New passing median outputs and weekly errors](../category-topfive-opportunity-four-history-20261029/MEDIAN_PUBLIC_RESULTS_V1.json); [original2025/2026 imports and failures](../category-topfive-opportunity-four-history-20261029/LEGACY_HISTORY_IMPORTS_V1.json)
-- [Independent verification](VERIFICATION.json), [software commands/logs](SOFTWARE_TESTS.json), [publication/readback](PUBLICATION_RECORDS.json)
-- [Separate older,2025 and genuine partial Week7 evidence; inventory gaps](LEGACY_CONTEXT_AND_GAPS.json)
-- [Fourteen audit answers](ANSWERS_01_TO_14.md), [twenty-pathway queue](PATHWAY_QUEUE.json), [scope](SCOPE.md), [resumable journal](TASK_LEDGER.jsonl), [all-category index](../RESEARCH_INDEX.md)
+**New original-producer pregame captures, admissions and deployments this wave: zero.** At **9:52 p.m. CDT October 29**, the served pointer still identified the earlier 1,945 selected rows issued October 28. Website Main `911a81a31f822de58e0f9c04ded070f8c9752670` and lease 178 are unchanged. [Latest runtime proof](over-under/runtime/FINAL_RUNTIME_DELTA_V3.json).
 
-Original result projections retain creation-time publication/QA-pending fields. Later immutable publication and independent acceptance records establish their current state without rewriting scores. Restricted rows, sources, fitted models and bindings stay private.
+The October 29 morning window remains missed. The next configured parent window is **Friday October 30, 7:36–7:57 a.m. CDT**, pending execution. The next remaining registered T−90 deadline is **Sunday November 1, 10:30 a.m. CST**. A successful no-op or page rebuild is not fresh inference.
 
-## Capture and release
+[The exact retained-owner package](over-under/OWNER_ACTION_PACKAGE.json) specifies restoration of the original census/assignments, independent admission of ready `stat_point_mae_v2` products, qualification of new wrappers, genuine capture and served-value verification. Production-owner acknowledgement and execution remain unobserved. No new general approval or eight-week prerequisite is requested.
 
-**New pregame captures, admissions and deployments this wave: zero.** Fresh metadata/pointer readback at **7:13p.m.CDT October29** is unchanged. Its previously verified body has1945 selected rows issued October28; the body was not downloaded again in this final check. A rebuild is not inference. See [served check](SERVED_REFRESH_V2.json) and [owner/capture state](CAPTURE_AND_OWNER_STATUS.json).
+V2 acknowledged the research split in [comment 6513284161](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6513284161): this session retains targets and retained-CDF continuation; V2 owns its distinct availability ablation. Private-artifact transfer is not inferred. Its separate reported captures do not restore the original producer's records.
 
-October29's morning window was missed; CAR–GB's5:45p.m.CDT deadline elapsed. Preserve earlier genuine forecasts and original assignments. Original parent40729788942/child40729906573 and reported11466 private challenger rows are distinct from the public feed; complete per-method/game census and original assignments require owner restoration.
+## Next executable research
 
-Next configured parent: **Friday October30,7:36–7:57a.m.CDT**, execution pending. Next remaining registered input deadline: **Sunday November1,10:30a.m.CST**; Chicago changes clocks that day. No-op classification and real capture are separate tasks.
+The [target-distribution → conditional-catch proposal](../category-topfive-target-reception-feasibility-v1-20261030/FINITE_COMPARISON_PROPOSAL_V1.json) is prepared. It needs paired-source qualification before catch-rate fitting and inference. Actual target-game targets are never a pregame input. Six missing reception labels remain unresolved.
 
-**Owner action to relay:** Resume retained producer/website owner under lease178. Restore original private Week8 census/assignments. Through the existing producer, capture ready four-category procedures plus fresh R0/site references before remaining deadlines. Admit ready core `stat_point_mae_v2` independently of new ordered/backfield/targets products, preserving means/probabilities. Return actual run IDs, restoration, per-method coverage and served-value proof. Prior delivery is recorded; production acknowledgement/execution is not observed.
+Compatible Week 7 coverage, clean H-CURRENT/H-RECENT/H-MULTI comparisons on identical games, and qualified role/teammate information remain unfinished. Missing routes or odds block their dependent experiments only. The completed studies are not rerun unchanged.
 
-Only one passing family and two carry/reception families are catalogued for the existing producer. No target method is operationally admitted. New MAE typing and new wrappers require admission; methods are not invented to fill five slots. Targets have no incumbent website field or authenticated offer in the located catalogue.
+Restricted player-level predictions and models remain in the approved private store. The completed Over/Under capsule contains a prediction/actual/line/direction CSV and interactive scorecard. Off-host restoration is not attested. Public records contain permitted aggregates and safe manifests.
 
-## Remaining limits and next work
-
-The requested clean H-CURRENT/H-RECENT/H-MULTI comparison on identical2026Weeks1–7 is incomplete. Fixed365-day decay and frozen historical relations are additional procedures, not the missing unweighted history arm. Preserve eligible2025 football and the no2025 market study separately. Qualified current-role facts, route denominators, historical target-credit exceptions, compatible Week7 sources and off-host restoration remain explicit gaps.
-
-**Did odds improve these new forecasts, probabilities or paper selections?** This wave has no new qualified odds comparison. Original matching offers/prices/settlement are unavailable here; over/under, close-and-correct, offered-line calibration and returns are unsupported. Point MAE is not probability accuracy or +EV.
-
-Original/V2 coordination was acknowledged in original PR1 comment6511074225. The proposed scope split has no received V2 acknowledgement; no transfer, cancellation or duplicate run is assumed. New public evidence is available read-only; private restoration was not transferred.
-
-Validation: `python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four`. Use `--write` only for derived leaders. It checks IDs, metadata, run/result linkage, null/nonfinite scores, comparable panels, corrections and prohibited public content. Declared panel/count checks do not replace private row-level compatibility evidence. Publication requires push and remote readback; a handoff is not deployment.
-
-The read-only registry CI job is present on the research branch, based on the current Main workflow and preserving its scheduler/producer/guards. It is not landed on Main and no successful Actions execution of that new job is claimed. The44 checks above actually ran locally. Future launchers must satisfy the publication gate; both new predictive workers enforce exact pre-inference protocol/source proof.
+Validate with `python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four`. The read-only CI extension is prepared on the research branch; it is not integrated into Main or a verified hosted execution. The latest 30-case Over/Under suite and prior 47-case canonical suite are software checks, not forecasting methods. Creation-time pending fields remain dated; later acceptance/publication records establish the current state.

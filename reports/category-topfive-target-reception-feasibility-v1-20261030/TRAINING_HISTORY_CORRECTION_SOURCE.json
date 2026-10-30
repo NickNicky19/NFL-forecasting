@@ -1,0 +1,123 @@
+{
+  "at_UTC": "2026-10-30T02:43:01.023331+00:00",
+  "code_config_proof_pins": [
+    {
+      "bytes": 12125,
+      "repository_file": "tools/weekly_future_train.py",
+      "sha256": "6ffe33b5e18e21940256450a07db9a1718c20e6b7a1316c3870eea998040f75a"
+    },
+    {
+      "bytes": 6409,
+      "repository_file": "tools/modern_2026_original_training_v2.py",
+      "sha256": "19b467e72ea29d39a336de3a2e207a750688d0fd75a214c29b768b00479c30b4"
+    },
+    {
+      "bytes": 27696,
+      "repository_file": "tools/ordered_recent_v1_run.py",
+      "sha256": "c78bc08e9603c21ea4fc6d986af7e6c0e6ff6f432fc7991ea272b35a0f27cca8"
+    },
+    {
+      "bytes": 24450,
+      "repository_file": "config/ordered-recent-v1.preseal.json",
+      "sha256": "1151bc9948cc358c3ceba71678c646aa3d94756f1c2a28f0dbde1f89118ef8f5"
+    },
+    {
+      "bytes": 5844,
+      "repository_file": "reports/ordered-recent-v1-20261029/native-v1/TRAINING_SOURCE_COMPATIBILITY.json",
+      "sha256": "fce18955d6d1403cbfb0da11c8b6e9a7ef7e2a24064de2a0f97762c192c5df61"
+    },
+    {
+      "bytes": 30925,
+      "repository_file": "tools/category_topfive_backfield_v1_run.py",
+      "sha256": "54eb41b7d829cf20ffa4cc4d5cbb4fc92b9f9e884237142dcff20d742e232037"
+    },
+    {
+      "bytes": 20606,
+      "repository_file": "config/category-topfive-backfield-v1.preseal-v2.json",
+      "sha256": "3115c4ff59943a4d5b808553806c21e1e463f541fce89d76344aa7de6ec125cf"
+    },
+    {
+      "bytes": 5844,
+      "repository_file": "reports/category-topfive-continuation-20261029/backfield-native-v1/TRAINING_SOURCE_COMPATIBILITY.json",
+      "sha256": "fce18955d6d1403cbfb0da11c8b6e9a7ef7e2a24064de2a0f97762c192c5df61"
+    },
+    {
+      "bytes": 6013,
+      "repository_file": "nfl_lab/ordered_recent_v1.py",
+      "sha256": "d7266d47462865d832079bde1a5ff757e217c6c6297e76028398a97100ef3d0e"
+    },
+    {
+      "bytes": 8017,
+      "repository_file": "nfl_lab/category_topfive_backfield_v1.py",
+      "sha256": "d1573acc289d0851b3b9bb55f568f373f328c497af35af910ac6e224003d3fd7"
+    },
+    {
+      "bytes": 25830,
+      "repository_file": "tools/category_topfive_targets_frozen_v1_run.py",
+      "sha256": "ac297f8af7903ffcb0a4d1f3eb9dd1c53af868e629f4637710d009ff763dcf28"
+    },
+    {
+      "bytes": 13773,
+      "repository_file": "config/category-topfive-targets-frozen-v1.preseal-v6.json",
+      "sha256": "dc242228fd803a76fa89cf3f9f9e0290ed692f4cfda8170879991aa77337749d"
+    }
+  ],
+  "config_content_boundary": "Config entries are exact private-binding metadata hashes; do not publish their actualcontents/paths. Root may link permittedscientific projections; hash references do notmean privateconfig ispublic.",
+  "correct_history": [
+    {
+      "actual_fit_clock_receipt_rec": {
+        "clock_basis": "ACTUAL_FIT_CALL",
+        "training_completed_at": "2026-10-24T07:39:23.012505+00:00",
+        "training_source_capture_completed_at": "2026-10-24T07:38:11.013650+00:00",
+        "training_started_at": "2026-10-24T07:39:20.740797+00:00"
+      },
+      "evidence": "Codepredicate+actualartifactmanifest traininghash andactualfitclock, not projectionrowcount inference.",
+      "exact_actual_fit_predicate": "weekly_future_train.py:regular_game_ids selects2019..2025REG;pd.read_parquet filters season>=2019,season<=2025,game_id inallowed;then good_clock.notna() &good_clock<cutoff before fit_future_model",
+      "manifest_source": {
+        "binding_path": "REDACTED_APPROVED_PRIVATE_ROUTE",
+        "bytes": 7090,
+        "sha256": "49085bae17ff5233027e4ed032385563b684c989a7993f1bcb7b73de0e473890"
+      },
+      "manifest_training_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+      "procedure": "2026BASE_CDF_CACHED(rec/rush_att annual source-matched controls)",
+      "training_target_rows": "Eligible2019-2025 scheduleREG identities with recorded outcome availability strictlybefore2026-09-01T00:00:00+00:00"
+    },
+    {
+      "actual_fit_flow": "ordered_recent_v1_run.py calls load_original_2026 -> prepared_train=ordered.augment(train,train_raw) -> LeafCDFModel.fit(prepared_train,...). Loader enforces2019..2025REG andavailability<cutoff; actualsource proof digest467e... matches manifest.",
+      "actual_source_proof_state": "ORIGINAL_PRODUCER_VIEW_OBSERVED",
+      "actual_source_selection": "season2019..2025 AND original schedule regular_game_ids; UTC/coerce outcome availability < original cutoff",
+      "not_inferred_from_row_count": true,
+      "procedure": "ORDERED_CDFrec/rush_att",
+      "projection_rows_metadata_only": 59842,
+      "sourceproof_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+      "training_target_rows": "Exactsameeligible2019-2025REG producer view; appendfour earlier-game ordered information slots, no target/outcome selection change"
+    },
+    {
+      "actual_fit_flow": "category_topfive_backfield_v1_run.py calls same load_original_2026, asserts train.season.between(2019,2025).all(), appendsbackfield features, then LeafCDFModel.fit(prepared_train,...); checksold/new priors andsupported training counts match.",
+      "actual_source_selection": "season2019..2025 AND original schedule regular_game_ids; UTC/coerce outcome availability < original cutoff",
+      "not_inferred_from_row_count": true,
+      "procedure": "BACKFIELD_CDFrush_att",
+      "sourceproof_frame_sha256": "467e9bf5475425de26aa48e4289c22116dba8585ee7ee236c499b57cd13c560e",
+      "training_target_rows": "Sameeligible2019-2025REG producer view; backfield groupadded before the one newfit"
+    },
+    {
+      "actual_fit_predicate": "category_topfive_targets_frozen_v1_run.py: ds.field(season)>=2022 AND<=2025 AND game_id REG AND outcome_available_utc<cutoff AND kickoff_utc<cutoff; assertset(train.season)=={2022,2023,2024,2025}; then LeafCDFModel.fit(train,rec_tgtcategory,base)",
+      "older_memory": "Existingfeatures can retain2019-2021history; not pure2022+information orcurrentseason only.",
+      "original_run": "r:opportunity-four-targets-frozen-v1-20261029",
+      "procedure": "TGT_CDF_BASE distincttargetpilot",
+      "training_target_rows": "Eligible2022-2025REG only before2026-09-01T00:00:00+00:00; not the2019basecontrol"
+    }
+  ],
+  "evidence_label": "VERIFIED_FROM_CODE",
+  "feature_and_evaluation_caveats": [
+    "2019-2025REG trainingtarget rows do not imply every historicalfeature excludesearlierPOST; originalpriorfeaturememory remains.",
+    "Evaluationsare2026W1-6reconstructions;2025 comparisons areseparatelyregistered, not inferred fromcurrentfits.",
+    "Older2022-2024 benchmark CDFs have annualcutoffs; do notgeneralize this2026training bound toallhistoricalexperiments.",
+    "No artifacts/models/forecasts/scores/scientificgates changed bythis metadata correction."
+  ],
+  "old_prose": "Currentdecision prose described these ordered/backfield/base currentcontrols as frozen2022-2025; preserve oldsnapshot, append correction rather than rewrite scores.",
+  "scope": "Inspected2026 source-matched BASE_CDF_CACHED, ORDERED_CDF(rec/rush_att), BACKFIELD_CDF(rush_att), and distinctTGT_CDF_BASE. Not universalallCDFhistory or an oldscientificregistration change.",
+  "state": "SOURCE_METADATA_CORRECTION_NOT_SCORE_OR_MODEL_CHANGE",
+  "verification_scope": "Read code/config/manifests and existingtrainingproof metadata only; no source numeric projection, fitted model deserialization or new numerical reproduction.",
+  "version": "training-history-prose-correction-source-v1-20261030"
+}

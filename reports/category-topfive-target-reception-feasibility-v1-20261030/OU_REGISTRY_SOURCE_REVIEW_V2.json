@@ -1,0 +1,67 @@
+{
+  "at_UTC": "2026-10-30T02:58:30.086445+00:00",
+  "evidence_label": "VERIFIED_FROM_CODE",
+  "fixed_and_verified_from_current_source": [
+    "Aggregate,policy,index pass canonical _safe recursiveprivacy/nonfinite guard before generation.",
+    "Per-side exactkeys/counts/bookstate totals validate; WIN/LOSS/PUSH/VOID forbidden inunqualifiedside settlement andtop totals linked.",
+    "Supported/statistical status population checked; nonnegativeinteger side counts andselected keys checked.",
+    "Empty metric panels produce emptyranks rather than fail common-denominator guard.",
+    "Period mustSEASON andpool registered; generation filtersSEASON.",
+    "Binary Brier bound1 andthree-state fullBrier bound2; null/finite/infinite log states retain denominator/impossibleevents; finite boollogscore rejected.",
+    "CorrespondingBrier/logscore denominators explicitly equal, includingpositiveinfinite losses.",
+    "Weekly column schema/identities/counts andpaireduniqueIDs/finite deltas checked.",
+    "Current website explicitly excluded fromthese historical comparisonpanels; timing-unverified evidence isnot upgraded tolivequalification."
+  ],
+  "no_edits_to_root_source": true,
+  "original_reviewed_module_sha256": "f07bcc0a370b2e3af2c99bfd1969b389c1b8a6ece0531bec4c643adf56598a7a",
+  "publication_state": "SOURCE_REVIEW_SAVED_PENDING_PARENT_PUBLICATION",
+  "remaining_findings": [
+    {
+      "actual_result_claim": "No actualaggregate error alleged.",
+      "condition": "Topstatistical ABSTAIN andUNRESOLVED do notfullylink selected-side states. A summarycanhave allselected rowsunresolved whiletop saysallABSTAIN/supported, despitevalid totals.",
+      "id": "OU_SIDE_STATUS_LINK",
+      "severity": "MEDIUM_VALIDATOR_CORNER_CASE",
+      "suggestion": "RequiretopABSTAIN<=selected_sides.abstain andsumside.unresolved<=topUNRESOLVED; deriveunselectedunknown fromremainingcounts."
+    },
+    {
+      "actual_result_claim": "No actualweekly score error alleged.",
+      "condition": "WeeklyBrier_rows isbounded byoffered only, not supported=offered-unresolved. A malformed all-unresolvedweek cancarryBrier scores. pointMAEmay benonnullwithnosupportedlabels; rowwidthnotexplicitlyequalcolumncount.",
+      "id": "OU_WEEKLY_SUPPORTED_SCORE_DENOMINATOR",
+      "severity": "MEDIUM_VALIDATOR_CORNER_CASE",
+      "suggestion": "Requirelen(row)==15; Brier_rows<=offered-unresolved (andrespectknownstatisticpush exclusionforconditionalBrier); pointMAEnullifnosupportedoutcomes."
+    },
+    {
+      "actual_result_claim": "No actualpaired result error alleged.",
+      "condition": "Pairedcountsareintegers,butclusters canexceedpaired_rows; zero pairedrows cancarrya numericdifference.",
+      "id": "OU_PAIRED_EMPTY_STATE",
+      "severity": "LOW_VALIDATOR_CORNER_CASE",
+      "suggestion": "clusters<=paired_rows; ifpaired_rows0 requireclusters0/deltaNone/intervalNonewithreason."
+    }
+  ],
+  "reviewed_module": {
+    "repository_file": "nfl_lab/category_topfive_opportunity_ou_registry.py",
+    "sha256": "85ab9ba60b46a00c4f653fb5b17b131aac2f848ddf9ed1f619ceff97d0384241"
+  },
+  "scope": "Static source inspection only; no private outcome/forecast/odds rows, no NFL numeric projection/model/fit/scoring/CAS/HTTP/testsuite execution. Root owns edits and exact softwaretests.",
+  "softwaretest_boundary": "Parentreports26fictionalchecksPASS; this reviewer neither ran nor independentlyreproduced that suite. No fictionalchecks counted asforecastmethods orNFL evidence.",
+  "state": "MAJOR_FIXES_VERIFIED_SOURCE_ONLY_REMAINING_DENOMINATOR_CORNER_CASES",
+  "version": "opportunity-ou-registry-source-review-v2-20261030",
+  "withdrawn_finding_and_correction": {
+    "actual_scored_worker": {
+      "repository_file": "tools/category_topfive_opportunity_ou_technical_v2.py",
+      "sha256": "71304c2c65c46115d59046cec5f06a4fcc04ffdd03a403eec45329795736cda8"
+    },
+    "correct_conclusion": "Current summaries use one representative/player-game/category perpool, not everyquote. Differentcommonpools canselectdifferentrepresentatives andoverlap; neverpool their rowsasindependentNFLoutcomes. Allquotes secondaryevaluation remainsseparate/deferred.",
+    "original_claim": "PointMAE appeared offer-row-weighted because helper.summarize loops suppliedrows.",
+    "original_wrong_message_preserved": true,
+    "status": "WITHDRAWN_AFTER_FULL_CALLER_SOURCE_INSPECTION",
+    "verified_rule": "representative(rows) sorts under frozenoffer rule thenresult.setdefault(UNIT,row) onceperplayer-game within eachpool before summarize.",
+    "verified_unit": [
+      "season",
+      "week",
+      "game_id",
+      "player_id",
+      "target"
+    ]
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "evidence": "TIMING_UNVERIFIED_HISTORICAL_RESEARCH_NOT_LIVE_QUALIFICATION",
+  "panels": [
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 6.281181619256017,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 1
+        },
+        {
+          "loss": 6.297592997811816,
+          "procedure": "P1_M",
+          "rank": 2
+        },
+        {
+          "loss": 6.301239268488698,
+          "procedure": "P1_H",
+          "rank": 3
+        },
+        {
+          "loss": 6.489657266017486,
+          "procedure": "P1_FC",
+          "rank": 4
+        },
+        {
+          "loss": 6.911236787787905,
+          "procedure": "P1_F",
+          "rank": 5
+        }
+      ],
+      "rows": 457,
+      "season": 2024,
+      "target": "pass_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.24954039219146346,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 1
+        },
+        {
+          "loss": 0.24954803358743896,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 2
+        },
+        {
+          "loss": 0.2495822950761193,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 3
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 4
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 5
+        },
+        {
+          "loss": 0.2597815554278342,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 6
+        },
+        {
+          "loss": 0.2597815554278342,
+          "procedure": "P2_F_FULL",
+          "rank": 7
+        }
+      ],
+      "rows": 424,
+      "season": 2024,
+      "target": "pass_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 4.004431314623338,
+          "procedure": "P1_M",
+          "rank": 1
+        },
+        {
+          "loss": 4.025849335302807,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 2
+        },
+        {
+          "loss": 4.036764738977224,
+          "procedure": "P1_H",
+          "rank": 3
+        },
+        {
+          "loss": 4.479795999107043,
+          "procedure": "P1_F",
+          "rank": 4
+        },
+        {
+          "loss": 4.557809481137718,
+          "procedure": "P1_FC",
+          "rank": 5
+        }
+      ],
+      "rows": 677,
+      "season": 2024,
+      "target": "rush_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.2496394812036605,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 1
+        },
+        {
+          "loss": 0.24969922322901464,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 2
+        },
+        {
+          "loss": 0.24994076096204995,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 3
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 4
+        },
+        {
+          "loss": 0.25000760502798,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 5
+        },
+        {
+          "loss": 0.2682844796084514,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 6
+        },
+        {
+          "loss": 0.2682844796084514,
+          "procedure": "P2_F_FULL",
+          "rank": 7
+        }
+      ],
+      "rows": 640,
+      "season": 2024,
+      "target": "rush_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 1.563791228706053,
+          "procedure": "P1_M",
+          "rank": 1
+        },
+        {
+          "loss": 1.565237346490136,
+          "procedure": "P1_H",
+          "rank": 2
+        },
+        {
+          "loss": 1.5782892352301559,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 3
+        },
+        {
+          "loss": 1.6259651712130707,
+          "procedure": "P1_F",
+          "rank": 4
+        },
+        {
+          "loss": 1.63534772281382,
+          "procedure": "P1_FC",
+          "rank": 5
+        }
+      ],
+      "rows": 2759,
+      "season": 2024,
+      "target": "rec"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.24424787647515653,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 1
+        },
+        {
+          "loss": 0.2450992578446915,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 2
+        },
+        {
+          "loss": 0.24819912368682698,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 3
+        },
+        {
+          "loss": 0.2483584211521602,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 4
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 5
+        },
+        {
+          "loss": 0.2602748533125818,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 6
+        },
+        {
+          "loss": 0.2602748533125818,
+          "procedure": "P2_F_FULL",
+          "rank": 7
+        }
+      ],
+      "rows": 2732,
+      "season": 2024,
+      "target": "rec"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 5.841772151898734,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 1
+        },
+        {
+          "loss": 5.884759557875342,
+          "procedure": "P1_H",
+          "rank": 2
+        },
+        {
+          "loss": 5.905063291139241,
+          "procedure": "P1_M",
+          "rank": 3
+        },
+        {
+          "loss": 6.037500576919026,
+          "procedure": "P1_FC",
+          "rank": 4
+        },
+        {
+          "loss": 6.238826426353602,
+          "procedure": "P1_F",
+          "rank": 5
+        }
+      ],
+      "rows": 79,
+      "season": 2026,
+      "target": "pass_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.24326277923865783,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 1
+        },
+        {
+          "loss": 0.24326277923865783,
+          "procedure": "P2_F_FULL",
+          "rank": 2
+        },
+        {
+          "loss": 0.24861211609110595,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 3
+        },
+        {
+          "loss": 0.24942063357188546,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 4
+        },
+        {
+          "loss": 0.2494749061960762,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 5
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 6
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 7
+        }
+      ],
+      "rows": 46,
+      "season": 2026,
+      "target": "pass_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 3.9306930693069306,
+          "procedure": "P1_M",
+          "rank": 1
+        },
+        {
+          "loss": 3.945439074273381,
+          "procedure": "P1_H",
+          "rank": 2
+        },
+        {
+          "loss": 3.9752475247524752,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 3
+        },
+        {
+          "loss": 4.224099025278407,
+          "procedure": "P1_FC",
+          "rank": 4
+        },
+        {
+          "loss": 4.542638742461568,
+          "procedure": "P1_F",
+          "rank": 5
+        }
+      ],
+      "rows": 101,
+      "season": 2026,
+      "target": "rush_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 1
+        },
+        {
+          "loss": 0.25096604423720514,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 2
+        },
+        {
+          "loss": 0.2537106498682152,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 3
+        },
+        {
+          "loss": 0.25380801617921844,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 4
+        },
+        {
+          "loss": 0.25467494397727436,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 5
+        },
+        {
+          "loss": 0.28610475623013604,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 6
+        },
+        {
+          "loss": 0.28610475623013604,
+          "procedure": "P2_F_FULL",
+          "rank": 7
+        }
+      ],
+      "rows": 67,
+      "season": 2026,
+      "target": "rush_att"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "point_MAE",
+      "pool": "P1_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 1.5911062906724511,
+          "procedure": "P1_M",
+          "rank": 1
+        },
+        {
+          "loss": 1.5954446854663775,
+          "procedure": "P1_OFFERED_LINE",
+          "rank": 2
+        },
+        {
+          "loss": 1.608741234193961,
+          "procedure": "P1_H",
+          "rank": 3
+        },
+        {
+          "loss": 1.788268829438767,
+          "procedure": "P1_F",
+          "rank": 4
+        },
+        {
+          "loss": 1.808322304692727,
+          "procedure": "P1_FC",
+          "rank": 5
+        }
+      ],
+      "rows": 461,
+      "season": 2026,
+      "target": "rec"
+    },
+    {
+      "limit": "Original matched offers; current website not in this panel. Hit-rate winner not inferred across differently selected rows.",
+      "metric": "Brier_decisive",
+      "pool": "P2_COMMON_ORIGINAL_OFFER_RULE",
+      "ranked": [
+        {
+          "loss": 0.24969359235925842,
+          "procedure": "P2_CONDITIONAL_M",
+          "rank": 1
+        },
+        {
+          "loss": 0.25,
+          "procedure": "P50_DECISIVE_CONTROL",
+          "rank": 2
+        },
+        {
+          "loss": 0.2506505970661784,
+          "procedure": "P2_CONDITIONAL_H",
+          "rank": 3
+        },
+        {
+          "loss": 0.2510939215703232,
+          "procedure": "P2_CONDITIONAL_FS",
+          "rank": 4
+        },
+        {
+          "loss": 0.2536177895164863,
+          "procedure": "P2_CONDITIONAL_FC",
+          "rank": 5
+        },
+        {
+          "loss": 0.2819889679736712,
+          "procedure": "P2_CONDITIONAL_F",
+          "rank": 6
+        },
+        {
+          "loss": 0.2819889679736712,
+          "procedure": "P2_F_FULL",
+          "rank": 7
+        }
+      ],
+      "rows": 419,
+      "season": 2026,
+      "target": "rec"
+    }
+  ]
+}
