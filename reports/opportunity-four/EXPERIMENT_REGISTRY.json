@@ -1141,6 +1141,76 @@
         }
       ],
       "status": "RUNNING"
+    },
+    {
+      "experiment_id": "e:session-A-vs-B-matched-v1-20261031",
+      "request_id": "OWNER_SESSION_A_VS_B_20261031",
+      "method_ids": [],
+      "hypothesis": "MatchAandBcompleteproceduresoncanonical2026W1-7casesandoriginalthresholds;separatepoint/mean/probability/selection. No aggregate-minimumcomparison.",
+      "history_policy": "Reuseexactretainedcandidate-specifichistory/memory/updateprocedures;no newfitsinfirstwave",
+      "sources": [
+        {
+          "record": "../session-a-b-matched-20261031/PUBLIC_SOURCE_CAPTURE_RECEIPT_V1_1.json",
+          "scope": "Bpublicreportedexternalnotprivatevectorreproduction"
+        },
+        {
+          "record": "../session-a-b-matched-20261031/ACTUAL_A_DIAGNOSTICS_V1_1.json",
+          "scope": "ActualnewcachedAdiagnostics;zeroBpairedrows"
+        }
+      ],
+      "population": {
+        "season": 2026,
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "A_roles": "QBpassing/RBrushing/RBWRTEreceiving/all5chart;RBQBbroadviewsseparate",
+        "B_roles": "Participant/stat-rowreconstruction,QRBrushing;canonicalexportrequired",
+        "actual_AB_matched_rows": null,
+        "missing_reason": "PrivateBfrozenrowexportnotaccessible"
+      },
+      "cutoff": "Historicalkickoffnumericalandknown-target-timeofferedreplaysstaydistinct;unknownsourcevintagesnotupgraded",
+      "budget": {
+        "record": "../session-a-b-matched-20261031/PROTOCOL_V1.json",
+        "new_fits": 0,
+        "cached_scoring_CPU_seconds": 1800
+      },
+      "status": "RUNNING",
+      "registration": {
+        "record": "../session-a-b-matched-20261031/PROTOCOL_V1.json",
+        "roster": "../session-a-b-matched-20261031/FINITE_CANDIDATE_ROSTER_V1.json",
+        "original_registrations_unchanged": true
+      },
+      "owner": "SessionAlead;SessionBread-onlysource;productionretainedowneronly",
+      "result_index": "../session-a-b-matched-20261031/README.md",
+      "record_type": "LINKED_ALL12_MATCHED_EXTENSION_NOT_NATIVE_FOUR_SCORE_ROWS",
+      "completed_stages": [
+        "PINNED_PUBLIC_A_B_CONTRACTS_AND_FINITE_ROSTER",
+        "A_CARRY_ROLE_AND_MEAN_MEDIAN_DIAGNOSTIC",
+        "A_SAME_LAW_MEDIAN_P2_4248_LINEAGE_QUALIFIED_NO_CONTRADICTIONS",
+        "INDEPENDENT_CACHED_AND_METADATA_QA",
+        "PRECISE_PRIVATE_B_EXPORT_REQUEST",
+        "FRESH_SERVED_CONSUMER_AND_CUTOFF_SEMANTICS_AUDIT"
+      ],
+      "remaining_stages": [
+        "B_PRIVATE_CACHED_EXPORT_ACK_AND_RESTORE",
+        "MATCHED_AB_COMMON_CORE_PAIRWISE_AND_FULLSYSTEM_SCORE",
+        "COMPARABLE_HISTORICAL_EXTENSIONS",
+        "OWNER_ONLY_ELIGIBLE_PRODUCT_ADMISSION_CAPTURE_PUBLICATION_LIVE_VERIFICATION"
+      ],
+      "B_owned_work_not_duplicated": [
+        "Earlieroffer/sourceexpansion",
+        "HGBl1passingyardselectionloss",
+        "D1completionselectionloss",
+        "Unavailableprobabilityversusabstention",
+        "RecoverygatedBoriginals"
+      ],
+      "production_status": "CURRENT_CHILD_CAPTURE_IN_PROGRESS_AS_OBSERVED;0NEW_MAE_VALUES_SERVED_AT_LAST_READ"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

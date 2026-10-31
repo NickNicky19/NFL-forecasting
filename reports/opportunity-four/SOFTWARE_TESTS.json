@@ -212,6 +212,30 @@
       "kind": "Actual public aggregates validate/render; no deployed browser DOM claim.",
       "record": "../category-topfive-original-leans-release-ou-20261030/REAL_AGGREGATE_CONSUMER_CHECK_V1.json",
       "state": "PASS"
+    },
+    {
+      "run_id": "software:sessionAB-threshold-fixtures-v1",
+      "command": "python -B tools/session_ab_cached_diagnostics_v1.py --fixtures",
+      "state": "PASS",
+      "checks": 22,
+      "source_snapshot_sha256": "6e00f4bb5ddf1475d8ed12fe48e9f8f74277bc0fbdf6ab0de8a5944359542d2a",
+      "log_reference": "reports/session-a-b-matched-20261031/THRESHOLD_FIXTURES_V1.json",
+      "predictive_fits_forecasts_independent_NFL_outcomes": 0
+    },
+    {
+      "run_id": "software:sessionAB-live-consumer-replay-v1",
+      "state": "FAILED_ENVIRONMENT",
+      "command": "Node128MiBheapunder512MiBAS",
+      "log_reference": "reports/session-a-b-matched-20261031/CONSUMER_REPLAY_FAILURE_V1.json",
+      "predictive_fits_forecasts_independent_NFL_outcomes": 0
+    },
+    {
+      "run_id": "software:sessionAB-live-consumer-replay-v2",
+      "state": "PASS",
+      "command": "SameNodeconsumer128MiBheap,new12GiBvirtualaddressbudget;noadditionalHTTP",
+      "log_reference": "reports/session-a-b-matched-20261031/LIVE_CONSUMER_READBACK_V2.json",
+      "consumer_rows": 1945,
+      "predictive_fits_forecasts_independent_NFL_outcomes": 0
     }
   ]
 }

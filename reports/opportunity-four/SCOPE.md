@@ -9,3 +9,7 @@ Every new run needs a unique protocol before prediction, a durable start and fin
 ## Bounded all-category comparison authorized October 30
 
 The latest owner request makes the matched twelve-category 2026 Weeks 1–7 finalist comparison the highest research priority, including necessary supported inference/scoring/missing fits. See [registration](../category-topfive-matched-all12-w1w7-20261030/EXECUTION_PROTOCOL_V1.json). This is a bounded exception to the earlier four-category standalone-research priority. Preserve its backlog, all completed work and V2 ownership; do not launch unrelated variants. Production remains retained-owner-only.
+
+## Session A/B matched continuation — October 31
+
+The latest owner directive assigns Session A the bounded all12 A-versus-B comparison. B and production stay read-only. Reuse completed forecasts, score canonical shared identities and preserve current-season/history/evidence tiers. Zero paired B rows are currently accessible; the exact cached export request is linked in the current index. A owns its carry/neutral/same-law diagnostics; B retains assigned source expansion, passing-yard/completion diagnoses and unavailable-versus-abstention work. This does not complete or cancel the original four-category information/history backlog or the ready owner release.

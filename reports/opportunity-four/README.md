@@ -1,3 +1,7 @@
+## Current priority: Session A versus B
+
+[Matched A/B checkpoint and exact private-export dependency](../session-a-b-matched-20261031/README.md). Actual A cached diagnostics are completed; no paired B row is yet accessible. Existing ready releases and running capture remain independent.
+
 # Four-category NFL opportunity forecasts
 
 Latest matched current-season comparison: [all twelve categories, each method’s numerical error and own Over/Under record](../category-topfive-matched-all12-w1w7-20261030/README.md). Includes probability/50–50 controls, complete-policy comparisons, coverage and exact live identities.

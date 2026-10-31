@@ -1,0 +1,63 @@
+{
+  "state": "OWNER_CHILD_FAILED_PARTIAL_ARCHIVE_READER_REQUIRED",
+  "recorded_UTC": "2026-10-31 19:33:37 UTC",
+  "repository": "NickNicky19/NFL-forecasting",
+  "parent_run": 41231345947,
+  "parent_enqueue": "SUCCESS",
+  "scheduled_predecessor": 41224045141,
+  "scheduled_predecessor_result": "FAILED_PARENT_QUALIFICATION_ENQUEUE_SKIPPED",
+  "child_run": 41231404531,
+  "child_source_sha": "0409a253d6a365c31a2d421941b8ee5f40d6fd02",
+  "child_job": 124626214411,
+  "child_job_started_at": "2026-10-31T18:51:15Z",
+  "child_job_completed_at": "2026-10-31T19:11:32Z",
+  "capture_step": "FAILURE",
+  "fresh_process_failure_preservation_step": "SUCCESS",
+  "safe_fixed_status_records": [
+    {
+      "diagnostic": {
+        "error_type": "StoreError",
+        "source_frames": [
+          {
+            "file": "tools/audit_weekly_hosted_v1.py",
+            "line": 46
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 1744
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 1247
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 880
+          },
+          {
+            "file": "nfl_lab/audit_weekly_hosted_v1.py",
+            "line": 536
+          }
+        ]
+      },
+      "fits": 0,
+      "public_release": false,
+      "reason": "FULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POST",
+      "state": "FAILED_RETAINED",
+      "successful_forecast": false
+    },
+    {
+      "fits": 0,
+      "partial_forecast_archive_state": "UNQUALIFIED_SEE_ORIGINAL_FILE_GRAPH_AND_SECONDARY_STATUS",
+      "public_release": false,
+      "state": "FAILED_ATTEMPT_APPENDED_READER_REQUIRED",
+      "successful_forecast": false
+    }
+  ],
+  "public_artifacts_available": 0,
+  "capture_counts": "UNQUALIFIED_UNKNOWN;notzeroinventedandnotcompletedcapture",
+  "prepared_package_owner_acknowledgement": "NOT_VERIFIED",
+  "producer_actions_observed": "Manualparentandchildexecution;notclaimofcompletedpreparedMAErelease",
+  "owner_next_action": "Useexistingfailure-handoff/readershiprouteonthisexactrun,retainpartialfilegraph,timestampsandspentbudgets;identifyandresolveFULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POSTunderoriginalaccount/storageauthoritybeforequalifiedreader/admission/publication. No blindreissue,backdating,guardbypassorsecondproducer.",
+  "production_writes_by_this_session": 0
+}
