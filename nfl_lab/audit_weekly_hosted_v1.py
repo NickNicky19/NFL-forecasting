@@ -1235,6 +1235,22 @@ class Runner:
             retained_ref=self.recover_models()
             inputs=self.metadata(origin_ref,retained_ref)
         policy_ref=self.register_publication(inputs)
+        # Qualified native GETs and the authenticated original POST census,
+        # before mutable inputs or inference. This is capacity evidence, not
+        # a promise about not-yet-generated compressed forecast bytes.
+        self.require_pending_scope();self.client.draft()
+        capacity=archive.capacity_snapshot(self.client)
+        capacity.update(schema_version=archive.VERSION+"-before-capture-v1",root_go_sha256=self.go_sha,
+            source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],
+            observed_at_utc=now_utc().isoformat(),payload_bytes=None,
+            payload_feasibility="UNKNOWN_UNTIL_ACTUAL_SERIALIZATION",
+            fits=0,public_release=False)
+        write(self.storage,self.root/"ARCHIVE_CAPACITY_BEFORE_CAPTURE.json",capacity)
+        # Do not spend acquisition/inference when even the mandatory smallest
+        # complete archive plus its failure reserve cannot fit.
+        minimum_overhead=archive.INDEX_CAP+3*archive.ENTRY_CAP+archive.WITNESS_CAP+archive.FAILURE_RESERVE
+        require(capacity["remaining_bytes"]>minimum_overhead and capacity["remaining_slots"]>=8,
+            "ARCHIVE_MINIMUM_METADATA_FAILURE_RESERVE_BEFORE_CAPTURE")
         request=self.capture(inputs,origin_ref)
         r0=self.reference(inputs,request,previous_state=prior["previous_state"] if recurring else None,
             previous_state_aliases=prior["previous_state_aliases"] if recurring else None)
@@ -1423,7 +1439,13 @@ class Runner:
         require(journal_ref["bytes"]<=failure.ATTACHMENT_CAP,"FULL_ORIGINAL_POST_JOURNAL_BOUND")
         attachments.append(dict(label="original-post-reservations",kind="post_reservation",reference=journal_ref))
         auxiliary=[];auxiliary_groups=[]
-        fixed=[self.root/name for name in ("BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json","BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json")]
+        fixed=[self.root/name for name in ("BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json","BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json",
+            "ARCHIVE_CAPACITY_BEFORE_CAPTURE.json")]
+        # These controls survive independently even if the secondary opaque
+        # archive itself cannot be admitted. No preencoded payload is exposed.
+        for folder in ("archive-produce","failure-archive-produce"):
+            fixed += [self.root/folder/"transport"/name for name in
+                ("ADMISSION.json","ADMISSION_DETAILS.json","SERIALIZED_ADMISSION_DETAILS.json")]
         fixed += sorted(delivery.glob("DELIVERY_*.json")) if delivery.is_dir() else []
         fixed += sorted((self.root/"phase-status").glob("*.stdout"))
         fixed += sorted((self.root/"phase-status").glob("*.stderr"))
@@ -1513,7 +1535,8 @@ class Runner:
         # below and are not retried or presented as successful output.
         normal=self.root/"archive-produce"
         if normal.exists():
-            for name in ("CONSUMED.json","ADMISSION.json","HANDOFF.json","APPEND_FAILED.json","APPENDED.json",
+            for name in ("CONSUMED.json","ADMISSION.json","ADMISSION_DETAILS.json","SERIALIZED_ADMISSION_DETAILS.json",
+                    "HANDOFF.json","APPEND_FAILED.json","APPENDED.json",
                     *(f"APPEND_INTENT_{n}.json" for n in range(9))):
                 path=normal/"transport"/name
                 if path.exists():add(path,"failed/original-archive/"+name)

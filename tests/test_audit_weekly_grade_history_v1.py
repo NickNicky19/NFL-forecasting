@@ -1486,3 +1486,22 @@ print("COLD_MAIN_ROTATION_AND_PENDING_METADATA_OK")
         cwd=main,capture_output=True,text=True,timeout=185)
     assert result.returncode==0,result.stderr
     assert result.stdout.strip()=='COLD_MAIN_ROTATION_AND_PENDING_METADATA_OK'
+
+
+@pytest.mark.parametrize('path', ['nfl_lab/audit_weekly_archive_v1.py','tests/test_audit_weekly_archive_v1.py'])
+def test_archive_admission_only_source_change_retains_exact_original_binding(source_metadata,path):
+    x=deepcopy(source_metadata)
+    body=history.validate_source_history_binding(x.root)
+    original=x.root['code_pins'][path]
+    x.root['code_pins'][path]='d'*64
+    body['pin_overrides'][path]=original
+    replace_source_body(x.root,body)
+    old=deepcopy(x.original)
+    locator_sha=body['predecessor']['locator']['sha256']
+    scope=history.source_history_scope(x.root,x.receipt,locator=x.locator,locator_sha256=locator_sha)
+    assert scope==old['code_pins']
+    assert x.original==old
+    assert x.root['code_pins'][path]!=scope[path]
+    assert '.github/workflows/lab.yml' not in history.SOURCE_HISTORY_PIN_OVERRIDES
+    assert 'nfl_lab/private_draft_store.py' not in history.SOURCE_HISTORY_PIN_OVERRIDES
+    assert 'nfl_lab/weekly_future_inference.py' not in history.SOURCE_HISTORY_PIN_OVERRIDES

@@ -553,6 +553,37 @@ def safe_handoff(value):
     return body
 
 
+def capacity_snapshot(client):
+    """Fresh native inventory plus every still-charged intent; no POST/refund."""
+    assets, charged = client.inventory()
+    actual = sum(a["size"] for a in assets)
+    reservations = []
+    for path in sorted(client.journal.glob("*.reservation.json")):
+        require(not path.is_symlink(), "ARCHIVE_ADMISSION_JOURNAL_SYMLINK")
+        raw = store.read_local(path, 16 << 10)
+        row = cp.strict_json(raw)
+        # Client.inventory has validated the full record. Bind this second
+        # read to its actual digest-named journal and preserve spent intents.
+        require(raw == store.canonical(row)
+            and path.name == store.sha(row["key"].encode()) + ".reservation.json",
+            "ARCHIVE_ADMISSION_EXACT_POST_RECORD")
+        matched = row["name"] is not None and any(a["name"] == row["name"]
+            and a["size"] == row["bytes"] and a.get("digest") == "sha256:" + row["sha256"] for a in assets)
+        reservations.append(dict(reservation_sha256=store.sha(raw), key_sha256=store.sha(row["key"].encode()),
+            purpose="asset" if row["key"].startswith("asset:") else "other_post",
+            bytes=row["bytes"], sha256=row["sha256"], name=row["name"],
+            charged_pending=row["name"] is not None and not matched))
+    pending_bytes = sum(r["bytes"] for r in reservations if r["charged_pending"])
+    pending_slots = sum(r["charged_pending"] for r in reservations)
+    require(charged == actual + pending_bytes and client.inventory_slots == len(assets) + pending_slots,
+        "ARCHIVE_ADMISSION_INVENTORY_CHANGED_NO_WRITE")
+    return dict(actual_stored_bytes=actual, actual_asset_slots=len(assets), pending_bytes=pending_bytes,
+        pending_asset_slots=pending_slots, charged_existing_bytes=charged,
+        charged_existing_slots=client.inventory_slots, runtime_cap_bytes=store.TOTAL_CAP,
+        runtime_asset_cap=store.MAX_ASSETS, remaining_bytes=store.TOTAL_CAP-charged,
+        remaining_slots=store.MAX_ASSETS-client.inventory_slots, reservations=reservations)
+
+
 def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pending_census,pending=()):
     output=fresh(storage,output);files,census=snapshot["files"],snapshot["census"]
     validate_files(files);validate_owned_references(storage,{f["path"]:f["sha256"] for f in files})
@@ -574,13 +605,33 @@ def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pendin
         path=output/"preencoded"/(str(n)+".gz");storage.write_bytes(path,body)
         prepared.append((record,cp.binding(path)))
     first.draft();assets,total=first.inventory()
+    capacity=capacity_snapshot(first)
+    require(capacity["charged_existing_bytes"]==total and capacity["actual_asset_slots"]==len(assets),
+        "ARCHIVE_ADMISSION_INVENTORY_CHANGED_NO_WRITE")
     require(not any("blob-"+r["sha256"]+".bin" in {a["name"] for a in assets} for r,_ in prepared),"ARCHIVE_PAYLOAD_ALREADY_PRESENT_NO_RETRY")
     needed=sum(r["bytes"] for r,_ in prepared)+INDEX_CAP+(len(prepared)+1)*ENTRY_CAP+WITNESS_CAP+ENTRY_CAP+FAILURE_RESERVE
     slots=2*(len(prepared)+1)+2+2
-    require(total+needed<=store.TOTAL_CAP and first.inventory_slots+slots<=store.MAX_ASSETS,"FULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POST")
     admission=dict(existing_bytes=total,reserved_upper_bytes=needed,admitted_bytes=total+needed,runtime_cap=store.TOTAL_CAP,
         existing_slots=first.inventory_slots,reserved_slots=slots,index_bytes=INDEX_CAP,witness_bytes=WITNESS_CAP,
         failure_bytes=FAILURE_RESERVE,failure_slots=2,model_weights_reuploaded=False)
+    # Keep the historical index admission ABI unchanged. The separate detail
+    # is owned failure evidence, persisted BEFORE either admission rejection.
+    write(storage,output/"ADMISSION.json",admission)
+    details=dict(schema_version=VERSION+"-admission-details-v1",source_sha=first.source_sha,
+        run_id=first.run_id,root_go_sha256=root_go_sha256,capacity=capacity,
+        encoded_groups=[{k:r[k] for k in ("index","bytes","sha256","inflated_bytes")} for r,_ in prepared],
+        encoded_group_bytes=sum(r["bytes"] for r,_ in prepared),
+        group_manifest_bytes=(len(prepared)+1)*ENTRY_CAP,index_bytes=INDEX_CAP,
+        witness_bytes=WITNESS_CAP,witness_manifest_bytes=ENTRY_CAP,
+        failure_package_bytes=failure.PACKAGE_CAP,failure_manifest_bytes=ENTRY_CAP,
+        required_bytes=needed,required_slots=slots,
+        byte_shortfall=max(0,total+needed-store.TOTAL_CAP),
+        slot_shortfall=max(0,first.inventory_slots+slots-store.MAX_ASSETS),
+        index_plain_bytes=None,index_encoded_bytes=None,
+        serialization_state="PAYLOADS_ENCODED_INDEX_NOT_YET_SERIALIZED",
+        remote_POST_attempted=False,original_evidence_deleted=False,limits_changed=False)
+    write(storage,output/"ADMISSION_DETAILS.json",details)
+    require(total+needed<=store.TOTAL_CAP and first.inventory_slots+slots<=store.MAX_ASSETS,"FULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POST")
     def index(records,created):
         return dict(schema_version=VERSION+"-index",repository=store.REPO,source_sha=first.source_sha,run_id=first.run_id,
             root_go_sha256=root_go_sha256,producer=producer,producer_proof=proof,created_at=created,
@@ -590,10 +641,15 @@ def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pendin
     preview=[]
     for record,ref in prepared:preview.append(dict(record,descriptor=fake_descriptor(cp.read_ref(ref),first)))
     plain=store.canonical(index(preview,"9999-12-31T23:59:59.999999+00:00"));encoded=gzip.compress(plain,mtime=0)
+    details.update(index_plain_bytes=len(plain),index_encoded_bytes=len(encoded),
+        serialization_state="PAYLOADS_AND_PREVIEW_INDEX_ENCODED")
+    # A separate versioned detail avoids rewriting the earlier immutable
+    # rejection diagnostic or any original capture/index bytes.
+    write(storage,output/"SERIALIZED_ADMISSION_DETAILS.json",details)
     require(len(plain)<=INDEX_PLAIN_CAP-4096 and len(encoded)<=INDEX_CAP,"COMPLETE_ENCODED_INDEX_PREFLIGHT")
     with storage.transaction():
         storage._require(INDEX_CAP+WITNESS_CAP+FAILURE_RESERVE+((len(prepared)+3)<<15))
-        write(storage,output/"ADMISSION.json",admission);storage.write_bytes(output/"INDEX_PREVIEW.gz",encoded)
+        storage.write_bytes(output/"INDEX_PREVIEW.gz",encoded)
     def put(client,body,number):
         require(checked(client,jobs["produce"])==producer and client.binding==first.binding and client.journal==first.journal,"ONE_AUTHENTIC_ARCHIVE_PRODUCER")
         write(storage,output/(f"APPEND_INTENT_{number}.json"),dict(schema_version=VERSION+"-native-append",producer=producer,

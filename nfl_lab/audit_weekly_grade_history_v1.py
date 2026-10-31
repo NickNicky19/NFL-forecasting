@@ -84,6 +84,11 @@ _SOURCE_ROOT_V3_KEYS = {"schema_version","approved","repository","mode","operati
     "source_config","cutoff_lead_seconds","publication","publication_registration","effective_epoch",
     "prior_capture_qualified_runtime"}
 SOURCE_HISTORY_PIN_OVERRIDES = frozenset({
+    # Admission diagnostics retain the exact archive/index/reader wire, caps,
+    # semantic validation and original native evidence; source changes still
+    # require the exact authenticated predecessor preimage and hash overrides.
+    "nfl_lab/audit_weekly_archive_v1.py", "tests/test_audit_weekly_archive_v1.py",
+    "tests/test_audit_weekly_grade_checkpoint_v1.py",
     "nfl_lab/audit_weekly_grade_history_v1.py", "tests/test_audit_weekly_grade_history_v1.py",
     "nfl_lab/audit_weekly_template_v1.py", "tests/test_audit_weekly_template_v1.py",
     "nfl_lab/audit_weekly_controller_bootstrap_v1.py", "tests/test_audit_weekly_controller_bootstrap_v1.py",

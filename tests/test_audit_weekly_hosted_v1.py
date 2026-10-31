@@ -866,8 +866,8 @@ def test_owned_worker_dies_when_its_parent_is_interrupted(tmp_path):
         if parent.poll() is None:parent.kill();parent.wait(timeout=5)
 
 
-@pytest.mark.parametrize('phase,has_delivery',[('produce',False),('consume',True)])
-def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(tmp_path,phase,has_delivery):
+@pytest.mark.parametrize('phase,has_delivery,has_admission',[('produce',False,False),('consume',True,False),('produce',False,True)])
+def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(tmp_path,phase,has_delivery,has_admission):
     # Real owned filesystem/CAS and original failure codec, injected append only.
     # A newly loaded JSON status cannot authorize a successful forecast.
     r=object.__new__(hosted.Runner);r.phase=phase;r.root=tmp_path/'attempt';r.root.mkdir()
@@ -888,6 +888,20 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
             path=r.root/'delivery'/name
             hosted.write(r.storage,path,dict(state='FICTIONAL_ORIGINAL_EXPORT_FAILURE',name=name))
             original_controls['delivery/'+name]=path.read_bytes()
+    if has_admission:
+        for name in ('ARCHIVE_CAPACITY_BEFORE_CAPTURE.json','archive-produce/transport/ADMISSION.json',
+                'archive-produce/transport/ADMISSION_DETAILS.json','archive-produce/transport/SERIALIZED_ADMISSION_DETAILS.json'):
+            path=r.root/name
+            hosted.write(r.storage,path,dict(state='FICTIONAL_REJECTED_CAPACITY',byte_shortfall=1,name=name))
+            original_controls[name]=path.read_bytes()
+        def rejected_secondary():
+            for name in ('ADMISSION.json','ADMISSION_DETAILS.json'):
+                relative='failure-archive-produce/transport/'+name
+                path=r.root/relative
+                hosted.write(r.storage,path,dict(state='FICTIONAL_SECONDARY_REJECTION',byte_shortfall=2))
+                original_controls[relative]=path.read_bytes()
+            raise store.StoreError('FULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POST')
+        r.preserve_opaque_outputs=rejected_secondary
     observed={}
     def append(client,storage,output,**kwargs):
         request,bodies=failure.unpack((output/'FAILURE.json.gz').read_bytes())
@@ -896,13 +910,14 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
         # This isolated core fixture intentionally has no qualified native
         # archive client. Its secondary failure must be retained too.
         expected={'file-graph','owner-root','original-post-reservations','phase-00','secondary-preservation-failure'}
-        if has_delivery:expected.add('complete-auxiliary-controls')
+        if has_delivery or has_admission:expected.add('complete-auxiliary-controls')
         assert set(attachments)==expected
         secondary=hosted.cp.strict_json(attachments['secondary-preservation-failure'])
         assert secondary['original_failure_replaced'] is secondary['partial_forecast_durability_established'] is False
         if has_delivery:
-            import base64
             assert request['operation']=='export' and request['failure']['kind']=='INTERRUPTION'
+        if has_delivery or has_admission:
+            import base64
             auxiliary=hosted.cp.strict_json(attachments['complete-auxiliary-controls'])
             assert {f['relative_path']:base64.b64decode(f['body_base64'],validate=True) for f in auxiliary['files']}==original_controls
         assert b'FICTIONAL_SOURCE_UNAVAILABLE' in attachments['phase-00']
@@ -915,7 +930,7 @@ def test_early_failed_attempt_is_recoverable_failure_evidence_in_fresh_process(t
     assert result['successful_forecast'] is result['public_release'] is False
     script='from pathlib import Path;from nfl_lab.operational_failure_v1 import unpack;import json,sys; r,a=unpack(Path(sys.argv[1]).read_bytes());print(json.dumps(dict(state=r["state"],files=len(a))))'
     out=subprocess.run([sys.executable,'-c',script,str(observed['package'])],cwd=hosted.ROOT,capture_output=True,text=True,check=True)
-    assert json.loads(out.stdout)==dict(state='FAILED',files=6 if has_delivery else 5)
+    assert json.loads(out.stdout)==dict(state='FAILED',files=6 if has_delivery or has_admission else 5)
     with pytest.raises(store.StoreError,match='FAILED_ATTEMPT_PRESERVATION_ALREADY_CONSUMED'):
         r.preserve_failure()
 
