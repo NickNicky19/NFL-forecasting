@@ -145,6 +145,47 @@ def public_pair(storage,state,exported,live,policy,root_sha,origin_sha,reader_wi
     return files,receipt
 
 
+def _prepare_display_pair(storage,state,output,live,client,consumed,display_profile,legacy_files,*,clock=now):
+    """Optional V5 sibling preparation from the actual native legacy acceptance."""
+    from . import weekly_mae_display_archive_v1 as display
+    require(type(live) is public.LiveAcceptance and live.inputs["storage"] is storage,"SAME_LIVE_POINT_PUBLICATION_STORAGE_REQUIRED")
+    live.verify()
+    files=legacy_files;feed_path,_=persist_state.public_export_names(files)
+    policy=live.inputs["policy"];root_go_sha256=display_profile.root_sha256
+    expected_source_sha=live.record["exporter"]["source_sha"];identity=live.record["exporter"]
+    point_export=None;point_files={};point_unavailable_ref=None
+    try:
+        point_export=display.native_export(live,client,consumed,display_profile,
+            legacy_feed_sha256=files[feed_path],created_at=clock().isoformat())
+        if point_export["document"] is None:
+            point_unavailable_ref=archive.write(storage,output/"MAE_UNAVAILABLE.json",point_export["receipt"])
+        else:
+            readback_body=display.wire.canonical(point_export["private_readback"])
+            require(len(readback_body)<=4 << 20,"BOUNDED_POINT_NATIVE_READBACK_EVIDENCE_REQUIRED")
+            point_body=display.wire.canonical(point_export["document"])
+            point_receipt_body=gzip.compress(display.wire.canonical(point_export["receipt"]),mtime=0)
+            # Optional display preparation preserves the existing failure
+            # reserve under the same global owner before any added write.
+            with storage.transaction():storage._require(len(readback_body)+len(point_body)+len(point_receipt_body)+archive.FAILURE_RESERVE+(128 << 10))
+            storage.write_bytes(output/"POINT_CAPTURE_READBACK.json",readback_body)
+            readback_ref=cp.binding(output/"POINT_CAPTURE_READBACK.json")
+            require(readback_ref["sha256"]==point_export["receipt"]["readback_sha256"]
+                and archive.read_owned(storage,readback_ref,4 << 20,raw=True)==readback_body,"EXACT_NATIVE_POINT_READBACK_EVIDENCE_RETAINED")
+            point_files=display.write_pair(storage,state,point_export)
+            persist_state.validate_v5_public_export(state,dict(files,**point_files),policy["source_policy_sha256"])
+    except Exception as error:
+        point_files={}
+        point_export=dict(document=None,receipt=dict(schema_version="weekly-mae-display-archive-v1-unavailable",
+            state="MAE_UNAVAILABLE",reason=display.safe_reason(error,"POINT_PREPARATION_FAILED_RETAINED"),
+            root_go_sha256=root_go_sha256,source_sha=expected_source_sha,run_id=identity["run_id"],
+            partial_local_bytes="RETAINED_NOT_IN_PUBLICATION_MAP",fits=0,model_adoption=False,
+            probability_policy_change=False,ranking_policy_change=False))
+        # A prior unavailability receipt, if any, is immutable. This new
+        # failure receipt records only the optional preparation failure.
+        point_unavailable_ref=archive.write(storage,output/"MAE_PREPARATION_UNAVAILABLE.json",point_export["receipt"])
+    return point_export,point_files,point_unavailable_ref
+
+
 def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending_census,configuration,root_repository,*,
         expected_source_sha,expected_original_choice_sha256,source_policy_path=None,root_go=None,at=None,
         source_check=None,publisher=None,before_publication=None,clock=now):
@@ -157,6 +198,7 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
     never a frozen clock for later live verification or publication.
     """
     try:
+        display_profile=None
         if at is not None:require(public.feed.utc(at if type(at) is str else at.isoformat())<=clock(),"ACTUAL_DELIVERY_START_CLOCK")
         if root_go is not None:
             require(type(root_go) is dict and root_go.get("publication") is True and root_go.get("approved") is True
@@ -164,6 +206,9 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
                 and store.sha(store.canonical(root_go))==root_go_sha256,"EXPLICIT_ROOT_AUTHORIZED_PUBLIC_DELIVERY")
             recurring=root_go.get("operation")=="RECURRING_CAPTURE"
             require(recurring==callable(before_publication),"RECURRING_PUBLICATION_REQUIRES_NATIVE_GRADING_DELIVERY")
+            if root_go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
+                from . import weekly_mae_display_archive_v1 as display
+                display_profile=display.checked_profile(root_go,root_go_sha256,Path(public.__file__).resolve().parents[1])
         elif before_publication is not None:
             require(callable(before_publication) and source_check is not None and publisher is not None,
                 "PRODUCTION_GRADING_CALLBACK_REQUIRES_CURRENT_ROOT")
@@ -172,7 +217,7 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
             expected_original_choice_sha256=expected_original_choice_sha256,repository_root=root_repository,output=output,
             source_policy_path=Path(root_repository)/"config/operational-source-policy-v2.json" if source_policy_path is None else source_policy_path,
             pending_census=pending_census,source_check=source_check,publisher=publisher,
-            before_publication=before_publication,clock=clock)
+            before_publication=before_publication,clock=clock,display_profile=display_profile)
     except (store.StoreError,public.PublicError,epoch.EpochError) as error:
         reason=str(error)
         raise store.StoreError(reason if re.fullmatch(r"[A-Z][A-Z0-9_]{0,95}",reason) else "PUBLIC_DELIVERY_UPSTREAM_GUARD") from None
@@ -182,7 +227,7 @@ def deliver(reader_handoff,package,factory,storage,output,root_go_sha256,pending
 
 def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,publication,
         expected_source_sha,expected_original_choice_sha256,repository_root,output,source_policy_path,pending_census,
-        source_check,publisher,before_publication,clock):
+        source_check,publisher,before_publication,clock,display_profile=None):
     require(isinstance(storage,OperationalStorage) and storage.limit_bytes==512 << 20,"EXISTING_SHARED_DELIVERY_STORAGE_OWNER_REQUIRED")
     require(type(publication) is dict and set(publication)==CONFIG_KEYS and re.fullmatch(r"[a-f0-9]{40}",str(expected_source_sha))
         and re.fullmatch(r"[a-f0-9]{64}",str(expected_original_choice_sha256))
@@ -223,7 +268,8 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         return native(operation)
     # Direct call: no JSON receipt or subprocess can recreate LiveAcceptance.
     consumed=archive.consume(reader_handoff,reuse,qualified_runtime,storage=storage,output=output/"consumed",
-        root_go_sha256=root_go_sha256,pending_census=pending_census)
+        root_go_sha256=root_go_sha256,pending_census=pending_census,
+        **({} if display_profile is None else {"display_profile":display_profile}))
     client=clients[-1];aliases=consumed["aliases"]
     require(cp.client_identity(client)==consumed["current"]==identity,"CONSUMED_PROOFS_MUST_MATCH_CURRENT_EXPORTER")
     require(archive.read_owned(storage,aliases["context/public_policy.json"],128 << 10)==policy,"EXACT_ARCHIVED_BEFORE_VALUES_PUBLIC_POLICY")
@@ -241,6 +287,14 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         consumed["witness_descriptor"]["entry"]["payload"]["sha256"])
     feed_path,receipt_path=persist_state.public_export_names(files)
     require(len(files)==2 and files[feed_path]==exported["sha256"],"EXACT_TWO_DERIVED_PUBLIC_DELIVERY_FILES")
+    point_export=None;point_files={};point_unavailable_ref=None
+    if display_profile is not None:
+        from . import weekly_mae_display_archive_v1 as display
+        point_export,point_files,point_unavailable_ref=_prepare_display_pair(storage,state,output,live,client,consumed,
+            display_profile,files,clock=clock)
+    publication_files=dict(files,**point_files)
+    if point_files:
+        require(persist_state.v5_public_export_names(publication_files)[0]==(feed_path,receipt_path),"EXACT_ATOMIC_V5_LEGACY_AND_POINT_PUBLIC_PAIRS")
     safe=dict(schema_version=VERSION+"-receipt",state="PUBLIC_FILES_PREPARED",source_sha=expected_source_sha,run_id=identity["run_id"],
         root_go_sha256=root_go_sha256,feed_path=feed_path,feed_sha256=files[feed_path],export_receipt_path=receipt_path,export_receipt_sha256=files[receipt_path],
         policy_sha256=public.feed.digest(policy),policy_registered_at_utc=public_receipt["policy_registered_at_utc"],
@@ -251,6 +305,12 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         fits=0,raw_or_models_public=False)
     safe.update({key:public_receipt[key] for key in DISCOVERY_HASH_KEYS})
     archive.write(storage,output/"DELIVERY_PUBLISH_INTENT.json",safe)
+    if display_profile is not None:
+        archive.write(storage,output/"POINT_DELIVERY_PUBLISH_INTENT.json",dict(schema_version="audit-weekly-delivery-v2-display-intent",
+            root_go_sha256=root_go_sha256,legacy_feed_sha256=files[feed_path],files=publication_files,
+            point_state="POINT_SUBSET_PREPARED" if point_files else "MAE_UNAVAILABLE",
+            point_receipt_sha256=point_files[display.public_names(point_files)[1]] if point_files else point_unavailable_ref["sha256"],
+            probability_policy_change=False,ranking_policy_change=False,model_adoption=False))
     require(check(client,policy["source_branch"])==expected_source_sha,"PRODUCER_SOURCE_CHANGED_BEFORE_PUBLICATION")
     grading=None
     if before_publication is not None:
@@ -270,19 +330,28 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         # completion is not permission to publish from a source that advanced.
         require(check(client,policy["source_branch"])==expected_source_sha,
             "PRODUCER_SOURCE_CHANGED_AFTER_GRADING_BEFORE_FEED")
+    def point_failure(state,remote_publication,**extra):
+        if display_profile is not None:
+            archive.write(storage,output/"POINT_DELIVERY_FAILED.json",dict(schema_version="audit-weekly-delivery-v2-display-failure",
+                state=state,files=publication_files,root_go_sha256=root_go_sha256,remote_publication=remote_publication,
+                retries=0,rollback=False,failed_at=clock().isoformat(),**extra))
     publish=persist_state.persist if publisher is None else publisher
     try:
         with quiet_publisher(repository_root),operational_io(storage,run_root=Path(repository_root)/"runs"):
-            publish(Path(repository_root),Path(state),storage=storage,policy_path=policy_path,files=files,metadata_policy=True)
+            publish(Path(repository_root),Path(state),storage=storage,policy_path=policy_path,files=publication_files,
+                **({"v5_metadata_policy":True} if point_files else {"metadata_policy":True}))
     except Exception:
         archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,state="PUBLICATION_FAILED_BYTES_RETAINED",failed_at=clock().isoformat()))
+        point_failure("COHERENT_PUBLICATION_UNRESOLVED_BYTES_RETAINED","UNKNOWN_COMMIT_OR_READBACK_FAILURE")
         raise store.StoreError("PUBLIC_DELIVERY_PUBLICATION_FAILED_BYTES_RETAINED") from None
     try:observed=check(client,policy["source_branch"])
     except Exception:
         archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,state="SOURCE_RECHECK_UNRESOLVED_AFTER_PUBLICATION_BYTES_RETAINED",failed_at=clock().isoformat()))
+        point_failure("SOURCE_RECHECK_UNRESOLVED_AFTER_PUBLICATION_BYTES_RETAINED","PERSIST_CALL_COMPLETED_SOURCE_RECHECK_UNRESOLVED")
         raise store.StoreError("PRODUCER_SOURCE_RECHECK_UNRESOLVED_AFTER_PUBLICATION") from None
     if observed!=expected_source_sha:
         archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,state="SOURCE_RACE_AFTER_PUBLICATION_BYTES_RETAINED",observed_source_sha=observed,failed_at=clock().isoformat()))
+        point_failure("SOURCE_RACE_AFTER_PUBLICATION_BYTES_RETAINED","PERSIST_CALL_COMPLETED_SOURCE_CHANGED",observed_source_sha=observed)
         raise store.StoreError("PRODUCER_SOURCE_CHANGED_AFTER_PUBLICATION")
     receipt=dict(safe,state="PUBLIC_DERIVED_DELIVERY_COMPLETE",published_at=clock().isoformat(),source_head_verified_before_after=True)
     if grading is not None:receipt["grading_checkpoint"]=grading
@@ -293,4 +362,18 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         policy_registered_at_utc=receipt["policy_registered_at_utc"],workflow_sha256=receipt["workflow_sha256"],
         **{key:public_receipt[key] for key in DISCOVERY_HASH_KEYS})
     if grading is not None:result["grading_checkpoint"]=grading
+    if display_profile is not None:
+        point_result=dict(schema_version="audit-weekly-delivery-v2-display-receipt",state="POINT_SUBSET_PUBLISHED" if point_files else "MAE_UNAVAILABLE",
+            root_go_sha256=root_go_sha256,legacy_delivery_receipt_sha256=ref["sha256"],legacy_feed_sha256=files[feed_path],
+            atomic_four_file_publication=bool(point_files),published_at=receipt["published_at"],model_adoption=False,
+            ranking_policy_change=False,probability_policy_change=False)
+        if point_files:
+            point_feed,point_receipt=display.public_names(point_files)
+            point_result.update(feed_path=point_feed,feed_sha256=point_files[point_feed],export_receipt_path=point_receipt,
+                export_receipt_sha256=point_files[point_receipt],categories=point_export["receipt"]["categories"])
+        else:point_result["unavailable_receipt_sha256"]=point_unavailable_ref["sha256"]
+        point_ref=archive.write(storage,output/"POINT_DELIVERY_RECEIPT.json",point_result)
+        result.update(schema_version="audit-weekly-delivery-v2-display-result",
+            state="PUBLIC_DERIVED_AND_POINT_DELIVERY_COMPLETE" if point_files else "PUBLIC_DERIVED_DELIVERY_COMPLETE_MAE_UNAVAILABLE",mae_display=point_result,
+            mae_delivery_receipt_sha256=point_ref["sha256"],model_adoption=False)
     return result

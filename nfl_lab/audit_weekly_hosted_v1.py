@@ -188,25 +188,28 @@ def validate_root(go, *, now):
     require(go["operation"] in {"ORIGIN_METADATA_ONLY","CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}
         and (go["publication"] is False or go["operation"] in {"CURRENT_CORRECTION_CAPTURE","RECURRING_CAPTURE","CONTROLLER_REGISTRATION"}),
         "EXPLICIT_WEEKLY_PUBLICATION_SCOPE")
-    if go['schema_version'] in {template.ROOT_V3,template.ROOT_V4}:
+    if go['schema_version'] in {template.ROOT_V3,template.ROOT_V4,template.ROOT_V5}:
         require(go['operation'] in {'RECURRING_CAPTURE','CONTROLLER_REGISTRATION'}, 'EXPLICIT_DUAL_RUNTIME_OPERATION')
         template.prior_runtime(go, before=go['issued_at_utc'])
-        if go['schema_version']==template.ROOT_V4:
+        if go['schema_version'] in {template.ROOT_V4,template.ROOT_V5}:
             from .audit_weekly_grade_history_v1 import validate_source_history_binding
             validate_source_history_binding(go)
     if go["operation"]=="RECURRING_CAPTURE":
         from . import audit_weekly_operations_v1 as operations
         operations.context(go["effective_epoch"])
-        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4} or go['effective_epoch']['schema_version']==operations.CONTEXT_V5,
+        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4,template.ROOT_V5} or go['effective_epoch']['schema_version']==operations.CONTEXT_V5,
             'EXPLICIT_DUAL_RUNTIME_HISTORY_PROTOCOL')
     elif go["operation"]=="CONTROLLER_REGISTRATION":
         from . import audit_weekly_controller_registration_v1 as registration
         try:registration.context(go["effective_epoch"])
         except registration.RegistrationError:
             raise store.StoreError("EXACT_OWNER_CONTROLLER_REGISTRATION_CONTEXT") from None
-        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4} or go['effective_epoch']['schema_version']==registration.RECOVERY_CONTEXT_SCHEMA,
+        require(go['schema_version'] not in {template.ROOT_V3,template.ROOT_V4,template.ROOT_V5} or go['effective_epoch']['schema_version']==registration.RECOVERY_CONTEXT_SCHEMA,
             'EXPLICIT_DUAL_RUNTIME_PENDING_REGISTRATION')
     else:require(go["effective_epoch"] is None,"NO_IMPLICIT_RECURRING_CONTEXT")
+    if go['schema_version']==template.ROOT_V5:
+        from .weekly_mae_display_profile_v1 import validate_root_extension
+        validate_root_extension(go,ROOT)
     template.pending_recovery(go)
     template.first_primary_root(go)
     template.failed_first_recovery_root(go)
@@ -841,6 +844,8 @@ class Runner:
         old=read_owned(self.storage,origin_ref)
         request=template();request.update(approved=True,cache=str(self.storage.cache),state_root=str(self.root/"state"),inputs=inputs,
             history_binding=old["history_binding"],config=self.go["source_config"],historical_sources=old["historical_sources"])
+        if self.go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
+            request.update(schema_version="audit-weekly-runtime-v2-display-request",mae_registration=self.go["mae_registration"])
         outputs={"prepare":self.root/"prepared","acquire":self.root/"source","infer":self.root/"runtime"}
         for phase in ("prepare","acquire","infer"):
             request["output"]=str(outputs[phase])
@@ -874,6 +879,8 @@ class Runner:
             pending_census=self.go["pending_census"],pending_reservations=pending_recovery(self.go)['pending_reservations'],
             runtime_root=str(self.root/"runtime"),context=context,r0=r0,
             handoff=handoff,reader_handoff=reader_handoff)
+        if self.go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
+            request.update(schema_version="audit-weekly-archive-v2-display-request",mae_registration=self.go["mae_registration"])
         return request
 
     def archive_call(self, phase, request):
@@ -1235,9 +1242,7 @@ class Runner:
             retained_ref=self.recover_models()
             inputs=self.metadata(origin_ref,retained_ref)
         policy_ref=self.register_publication(inputs)
-        # Qualified native GETs and the authenticated original POST census,
-        # before mutable inputs or inference. This is capacity evidence, not
-        # a promise about not-yet-generated compressed forecast bytes.
+        # Capacity first.
         self.require_pending_scope();self.client.draft()
         capacity=archive.capacity_snapshot(self.client)
         capacity.update(schema_version=archive.VERSION+"-before-capture-v1",root_go_sha256=self.go_sha,
@@ -1246,8 +1251,6 @@ class Runner:
             payload_feasibility="UNKNOWN_UNTIL_ACTUAL_SERIALIZATION",
             fits=0,public_release=False)
         write(self.storage,self.root/"ARCHIVE_CAPACITY_BEFORE_CAPTURE.json",capacity)
-        # Do not spend acquisition/inference when even the mandatory smallest
-        # complete archive plus its failure reserve cannot fit.
         minimum_overhead=archive.INDEX_CAP+3*archive.ENTRY_CAP+archive.WITNESS_CAP+archive.FAILURE_RESERVE
         require(capacity["remaining_bytes"]>minimum_overhead and capacity["remaining_slots"]>=8,
             "ARCHIVE_MINIMUM_METADATA_FAILURE_RESERVE_BEFORE_CAPTURE")
@@ -1441,8 +1444,7 @@ class Runner:
         auxiliary=[];auxiliary_groups=[]
         fixed=[self.root/name for name in ("BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json","BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json",
             "ARCHIVE_CAPACITY_BEFORE_CAPTURE.json")]
-        # These controls survive independently even if the secondary opaque
-        # archive itself cannot be admitted. No preencoded payload is exposed.
+        # Retain controls.
         for folder in ("archive-produce","failure-archive-produce"):
             fixed += [self.root/folder/"transport"/name for name in
                 ("ADMISSION.json","ADMISSION_DETAILS.json","SERIALIZED_ADMISSION_DETAILS.json")]

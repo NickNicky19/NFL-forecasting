@@ -69,20 +69,35 @@ def context(args,env):
         and private.HASH.fullmatch(str(authority["owner_root_go_sha256"]))
         and private.sha(root) == authority["owner_root_go_sha256"] == event["inputs"].get("inference_builder_go_sha256"), "ACTUAL_SEALED_OWNER_ROOT_INPUT_REQUIRED")
     from nfl_lab import audit_weekly_operations_authority_v1 as operations_authority
-    operations_authority.child(env,root,ROOT)
+    operations_proof=operations_authority.child(env,root,ROOT)
     dirty=subprocess.check_output(["git","status","--porcelain","--untracked-files=all","--",
         ".github","nfl_lab","tools","config","schemas","requirements.lock","requirements-hosted-fixed-build-v1.lock"],cwd=ROOT,text=True)
     runtime.require(dirty == "", "CLEAN_COMMITTED_RUNTIME_SOURCE_REQUIRED")
+    root_document=cp.strict_json(root)
+    if root_document.get("schema_version") == "audit-weekly-hosted-v5-root-GO":
+        from nfl_lab.weekly_mae_display_runtime_v1 import checked_context
+        return checked_context(authority,root,operations_proof,env,ROOT)
     return authority
 
 
 def execute(args,env):
-    authority=context(args,env)  # Before model/private input reads.
+    checked=context(args,env)  # Existing native/API/Root checks precede private reads.
+    mae_owner=None
+    if type(checked) is dict:
+        authority=checked
+    else:
+        from nfl_lab.weekly_mae_display_runtime_v1 import NativeContext
+        runtime.require(type(checked) is NativeContext,"ACTUAL_NATIVE_MAE_CONTEXT_REQUIRED")
+        mae_owner=checked;mae_owner.verify();authority=mae_owner.authority
     body=private.read_local(args.request,512 << 10)
     runtime.require(private.sha(body) == args.request_sha256,"EXACT_RUNTIME_REQUEST_HASH")
     p=cp.strict_json(body)
-    runtime.require(body == private.canonical(p) and set(p) == REQUEST_KEYS and p["approved"] is True
-        and p["schema_version"] == runtime.VERSION+"-request" and p["repository"] == private.REPO
+    expected_keys=REQUEST_KEYS if mae_owner is None else REQUEST_KEYS|{"mae_registration"}
+    expected_schema=runtime.VERSION+"-request" if mae_owner is None else "audit-weekly-runtime-v2-display-request"
+    runtime.require(mae_owner is None or p.get("mae_registration")==mae_owner.registration_ref,
+        "SAME_NATIVE_ROOT_MAE_REGISTRATION_REQUIRED")
+    runtime.require(body == private.canonical(p) and set(p) == expected_keys and p["approved"] is True
+        and p["schema_version"] == expected_schema and p["repository"] == private.REPO
         and p["code_pins"] == runtime.pins() and p["limits"] == runtime.LIMITS
         and p["acquisition_limits"] == runtime.ACQUISITION_LIMITS and set(p["inputs"]) == INPUT_KEYS, "SEALED_EXACT_RUNTIME_REQUEST_REQUIRED")
     numerical=cp.strict_json(private.read_local(ROOT/"config/weekly-owner-private-bootstrap-v1.json",1 << 20))["numerical_environment"]
@@ -99,7 +114,8 @@ def execute(args,env):
     registered=epoch.bind_registration(corrected,read("epoch_registration"),now=now)
     choice_doc=read("choice");choice=epoch.EpochChoice(choice_doc,runtime.digest(choice_doc))
     def progress():runtime.require(runtime.now_utc() < private.utc(authority["expires_at_utc"]),"PARENT_NATIVE_AUTHORITY_EXPIRED")
-    backend=runtime.Runtime(storage,registered,choice,p["inputs"]["retained_restore"],p["config"],progress=progress)
+    options={} if mae_owner is None else {"mae_owner":mae_owner}
+    backend=runtime.Runtime(storage,registered,choice,p["inputs"]["retained_restore"],p["config"],progress=progress,**options)
     actual=backend.restored["current"]
     runtime.require(all(actual[key] == authority[key] for key in ("source_sha","run_id","job_id","workflow_ref","api_job_id")), "SAME_ACTUAL_RETAINED_RUNTIME_JOB_REQUIRED")
     if args.phase == "infer":
