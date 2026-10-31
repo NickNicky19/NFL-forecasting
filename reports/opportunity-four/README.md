@@ -90,3 +90,7 @@ Friday’s 7:36–7:57 a.m. CDT parent window has elapsed. Fresh workflow metada
 The next daily parent slot is Saturday October 31, 7:36–7:57 a.m. CDT, pending execution. The next remaining registered game T−90 deadline is Sunday November 1, 10:30 a.m. CST. Preserve daylight-saving changes and original assignments.
 
 The exact owner package was delivered and remotely read back in [comment 6527892507](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6527892507). This is delivery, not acknowledgement or execution. No owner reply or new original-producer capture/release is observed. See [publication proof](over-under/PUBLICATION_READBACK_V3.json) and the post-interruption runtime receipt when published.
+
+## Current all-category matched checkpoint — October 30 late evening CDT
+
+[Executed Weeks 1–7 category comparison](../category-topfive-matched-all12-w1w7-20261030/README.md) contains matched numerical leaders, each method’s own recorded-line Over/Under results, mean products, probability-law replay, coverage and exact live identities. This bounded all-category comparison preserves the optional four-category queue. Results are reconstructed development evidence. Owner-only restoration, fresh capture and release remain separate.

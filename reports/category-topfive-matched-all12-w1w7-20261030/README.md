@@ -1,38 +1,151 @@
 # Matched twelve-category comparison — 2026 Weeks 1–7
 
-Status: **running; first executed comparison available below; publication pending**. This is the current highest research priority. The four-category optional research queue and every earlier result remain preserved.
+**Current-season point/P1 comparison and 24-law replay completed; historical same-finalist extensions and owner release remain unfinished.** This is exposed historical development, with current-vintage inputs and the preserved seven-day availability assumption. These are not forecasts originally issued before these games.
 
-## Actual execution so far
+## Current-season category decisions
 
-- New roster and feature preparation: **4,985 valid player-game queries across all 107 scheduled games**, including all 14 Week 7 games; 502 source identity rows remain quarantined. This is source preparation, not an accuracy gain.
-- First inference wave: **18 retained artifacts restored, 64,128 procedure/query forecasts saved and independently read back**, zero new fits. Second wave: **11 artifacts restored**, including ordered/backfield, response-CDF, count CatBoost and chart procedures; all completed without failure. These are historical reconstructions, not new pregame captures.
-- Necessary accepted-REG fixed HGB continuation: **nine new fits and 23,530 forecasts**, all saved; scoring pending. The old HGB study used a different admitted training population, so these are separately identified fits, not claimed reproductions. No new hyperparameter search.
-- Real line-panel preparation: **3,998 primary lines** (2,705 annual archive, 676 Week 6 DK-tagged website records, 617 Week 7 records). Quote timing is unverified; annual identities use the disclosed source-week/roster/schedule binding. This is not authenticated historical betting execution.
-- Corrected auxiliary comparison: **58,833 saved output rows scored**, 15,860 unique player/game/target opportunities over 93 games and six weeks. **9,626 model-output/line matches**, not independent bets. Fresh-process independent grading checked all 41 point/event outputs and 31 numeric full-board tables. The first two failed attempts and the codec/resource failure remain preserved.
-- Updated public NFLverse files were captured privately and read back, with no statistical outcomes decoded during acquisition. Their label/participation and exact-chart qualification is separate work; a source download is not an accuracy comparison.
+MAE means the average absolute miss, in yards, counts or chart points. The Over/Under columns below belong to the listed **point leader**, using its unrounded point against the original recorded line. They are statistical direction counts on the supported offered subset, not venue-settled returns. The numerical-MAE population is broader.
 
-## Actual method-specific Over/Under results (auxiliary Weeks 1–6)
+| Category | Lowest observed point procedure | MAE / probability loss | Scored player-games | Lower MAE versus base CDF | Its Over correct/decided | Its Under correct/decided | Current served family/product |
+|---|---|---:|---:|---:|---:|---:|---|
+| Passing yards | LEAF_CDF / median | 62.9544 | 241 | 0.000% | 39/67 (58.2%) | 38/76 (50.0%) | LAB_CDF intended_median |
+| Passing TDs | HGB_MAE_DIRECT / mae_objective_point | 0.7864 | 241 | 1.286% | 24/40 (60.0%) | 59/102 (57.8%) | LAB_CDF expected_mean |
+| Completions | RESPONSE_CDF / median | 5.1743 | 241 | 0.558% | 37/61 (60.7%) | 38/83 (45.8%) | LAB_CDF expected_mean |
+| Passing attempts | RESPONSE_CDF / median | 7.7759 | 241 | 0.689% | 20/40 (50.0%) | 47/103 (45.6%) | LAB_CDF expected_mean |
+| Interceptions | LEAF_CDF / median | 0.5892 | 241 | 0.000% | 4/5 (80.0%) | 65/138 (47.1%) | LAB_CDF expected_mean |
+| Rushing yards (RB) | RESPONSE_CDF / median | 19.4608 | 586 | 0.061% | 57/114 (50.0%) | 197/329 (59.9%) | LAB_CDF intended_median |
+| Carries (RB) | BACKFIELD_CDF / median | 3.6280 | 586 | 3.451% | 44/88 (50.0%) | 120/239 (50.2%) | COUNT_A expected_mean |
+| Receptions | ORDERED_CDF / median | 1.2800 | 2000 | 0.117% | 154/255 (60.4%) | 366/662 (55.3%) | COUNT_A expected_mean |
+| Receiving yards | RESPONSE_CDF / median | 16.7850 | 2000 | 0.098% | 166/308 (53.9%) | 327/621 (52.7%) | CATBOOST_MEDIUM intended_median |
+| Rushing + receiving yards | LEAF_CDF / median | 20.8600 | 2000 | 0.000% | 73/148 (49.3%) | 168/320 (52.5%) | CATBOOST_MEDIUM intended_median |
+| Anytime rushing/receiving TD | EQUAL_CDF_CAT_PROBABILITY / probability | Brier 0.145766 | 2000 | Separate probability objective | Unavailable | Unavailable | LAB_CDF/CATBOOST_MEDIUM event_probability |
+| Chart PPR | RESPONSE_CDF / median | 4.6404 | 2241 | 0.464% | Unavailable | Unavailable | Legacy fallback; chart not active |
 
-[Every numeric output and its own selected-side counts](auxiliary/METHOD_OWN_OVER_UNDER_W1_6.csv) · [Execution receipt](auxiliary/ACTUAL_REPLAY_V1_2.json) · [Independent check](auxiliary/INDEPENDENT_FRESH_QA_V1_2.json).
+The clearest numeric difference is carries: 3.628 versus 3.758, a 0.1297-carry decrease. Its paired game-cluster interval is approximately −0.1993 to −0.0652 carries; week-cluster interval −0.1741 to −0.0898. Most other leads are tiny and their paired intervals cross zero. Chart response-CDF improves by 0.0216 points on this panel. All periods have been inspected; the shortlist and output choice introduce selection uncertainty. These are comparisons with the named laboratory CDF, **not proven percentage gains over the actual live website**.
 
-This uses the full recoverable recorded board intersected with the old cached query population, **not the website's original selected leans**. The new all-roster Weeks 1–7 comparison is still being scored. Lines have unresolved quote timing and venue settlement; the counts describe statistical direction, not authenticated pregame bookmaker wins or profitability. MAE here is on the offered matched subset and must not be compared with another population's MAE.
+## Five procedures per category and every output
 
-For example, on 115 matching passing-attempt lines, the CDF mean selected Over on 28 (14 correct) and Under on 87 (37 correct): 51/115 complete decisions correct. Response-CDF mean had slightly lower offered-pool MAE (6.945 versus 6.992 attempts), but 50/115 correct decisions. Different own-side subsets and small samples prevent calling one conditional side percentage a durable advantage.
+[Ranked numeric procedure shortlist](RESEARCH_POINT_PROCEDURE_RANKING_W1_7.csv) · [All point products, errors, bias, tails, coverage and paired uncertainty](POINT_PRODUCTS_W1_7.csv) · [Every method/output’s own Over/Under record](EACH_POINT_PRODUCTS_OWN_OVER_UNDER_W1_7.csv) · [Weekly own-side records](EACH_POINT_PRODUCTS_OWN_OVER_UNDER_BY_WEEK.csv.gz) · [Complete immutable main aggregates](ALL_FINALISTS_AGGREGATES_V1.json.gz).
 
-Full-board, Top 6/10/20, always-side controls, disagreement comparisons, weekly coverage and uncertainty are retained in the safe aggregate. No probabilities were inferred from point errors; probability-law replay is separately pending. Prices and settlement contracts do not yet support returns.
+| Category | Five meaningful procedure groups (point-MAE order; output variants share one group) |
+|---|---|
+| Passing yards | LEAF_CDF, RESPONSE_CDF, EQUAL_CDF_CAT_HGB_POINT, HGB_MAE_DIRECT, CATBOOST_MEDIUM |
+| Passing TDs | HGB_MAE_DIRECT, LEAF_CDF, RESPONSE_CDF, COUNT_A_LEGACY_POINT, CATBOOST_MEDIUM |
+| Completions | RESPONSE_CDF, LEAF_CDF, CATBOOST_MEDIUM, COUNT_A_LEGACY_POINT, HGB_MAE_DIRECT |
+| Passing attempts | RESPONSE_CDF, LEAF_CDF, HGB_MAE_DIRECT, COUNT_A_LEGACY_POINT, CATBOOST_MEDIUM |
+| Interceptions | LEAF_CDF, RESPONSE_CDF, HGB_MAE_DIRECT, COUNT_A_LEGACY_POINT, CATBOOST_MEDIUM |
+| Rushing yards (RB) | RESPONSE_CDF, LEAF_CDF, EQUAL_CDF_CAT_HGB_POINT, CATBOOST_MEDIUM, HGB_MAE_DIRECT |
+| Carries (RB) | BACKFIELD_CDF, ORDERED_CDF, LEAF_CDF, COUNT_A_LEGACY_POINT, CATBOOST_MEDIUM |
+| Receptions | ORDERED_CDF, LEAF_CDF, HGB_MAE_DIRECT, COUNT_A_LEGACY_POINT, CATBOOST_MEDIUM |
+| Receiving yards | RESPONSE_CDF, LEAF_CDF, EQUAL_CDF_CAT_HGB_POINT, CATBOOST_MEDIUM, HGB_MAE_DIRECT |
+| Rushing + receiving yards | LEAF_CDF, RESPONSE_CDF, EQUAL_CDF_CAT_HGB_POINT, CATBOOST_MEDIUM, HGB_MAE_DIRECT |
+| Anytime rushing/receiving TD | Normalized leaf CDF, CatBoost binary, Equal CDF/CatBoost probability blend, Role logistic, Retained Platt curve — late entrant, separate appendix |
+| Chart PPR | RESPONSE_CDF, CATBOOST_MEDIUM, CHART_LEAF_CDF, CHART_HGB, CHART_ROLE_LAW |
 
-## Execution records
+Legacy Count A empirical points and corrected stored means remain separate outputs of the same family. The yardage three-way point blend is the declared equal CDF/CatBoost/HGB recipe, not an old P4 recipe or the median of a mixture distribution. Response-CDF, ordered CDF and backfield CDF have distinct procedure/source bindings. The depth passing-attempt comparator has only Weeks 1–6 and remains a secondary partial record; it does not shrink the full Weeks 1–7 headline core.
 
-[Protocol](EXECUTION_PROTOCOL_V1.json) · [Finalists](FINALIST_CATALOG_V1.json) · [Effective existing recipes](FINALIST_AMENDMENTS_V1_1.json) · [Population and output contracts](POPULATION_AND_PRODUCT_AMENDMENTS_V1.json).
+## Mean, law, probability and selection products
 
-The legacy Weeks 1–6 cached population is an auxiliary comparison. It does not substitute for the new all-roster Weeks 1–7 panel. Original website recommendations, reconstructed model decisions, proper probability scores and price-aware returns remain separate.
+Mean MSE/RMSE leaders are retained separately in the release manifest; they are not automatically the means of the displayed model. Valid saved laws provide CRPS, threshold probabilities, pushes and direct log-tail loss. Count A/CatBoost point objectives do not create an assumed PMF. Numeric threshold Brier uses one-half of the sum over Under/Push/Over outcomes; conditional market comparisons use a separate binary score. Anytime TD retains Brier as primary.
 
-## Production and capture
+Full board, Top 6/10/20, confidence-abstaining, always-side, disagreement and paired game/week-aware comparisons are retained. Own Over rates compare different selected subsets; a 4/5 result is not stronger evidence than a much larger sample. The highest retrospective Over and Under performers are never spliced into a historical strategy. Original website recommendations remain in [their separate immutable report](../category-topfive-original-leans-release-ou-20261030/README.md).
 
-This session remains **production read-only**. The retained website owner holds lease 178. The ready MAE release package at research commit `341742de83975264a07d035d4b6289e57c2ec1e9` remains delivered; acknowledgement, execution and new live consumption have not been observed. No handoff is labeled deployment.
+## Scope, labels and coverage
 
-The next configured original-producer parent window is **October 31, 7:36–7:57 a.m. CDT**; the remaining Sunday T−90 deadline is **November 1, 10:30 a.m. CST**. Configured times are not executed capture receipts. The last served-data verification found the 1,945 October 28 forecasts, zero new MAE-profile rows; this paragraph is a dated readback, not a claim of a fresh check.
+All 107 scheduled games are represented (16/16/16/16/15/14/14); 4,985 qualified roster queries were attempted and 502 source identity rows quarantined. Full finalist grading materialized 283,673 product rows, with 188 missing depth outputs; these are repeated procedure/product incidences. There were 124,110 supported scored incidences in the primary-role population, not that many independent football games.
 
-## Next actions
+The exact outcome version contains 43,470 target-label opportunities including forecast-only targets. Passing labels support 241 played QB cases of 718 queried; RB rushing supports 586 of 1,244; receiving/ATD supports 2,000 of 4,267; chart supports 2,241 of 4,985. Unknown participation stays unknown, never zero or DNP. The source-qualified chart uses signed official yards and all sixteen specified primitives. Week 8 outcomes were not admitted. Full system missingness and fallback counts appear alongside the common supported core.
 
-Finish immutable finalist forecasts, qualify outcomes without fabricating zero labels, execute numerical and each-method Over/Under comparisons, publish safe results with exact code/artifact bindings, and deliver eligible product decisions to the retained owner. Exact chart-PPR and receiving-target offers remain unsupported; numerical forecasting continues independently.
+The recorded board has 3,998 unique primary lines: 2,705 in Weeks 1–5, 676 in Week 6 and 617 in Week 7. Quote clocks and venue participation/settlement rules remain unqualified. Statistical direction can be scored; authenticated historical execution cannot be claimed. Targets and chart have no qualified actual offers. Anytime TD is a separate event target.
+
+## Market evidence and limits
+
+The archive contains 2,642 valid same-book/same-line two-sided price pairs, only in Weeks 1–5. An independent-book, same-naive-collection-clock reference supports 1,068 opportunities before outcome qualification. Offering-book exclusion is preserved. No historical quote clock, original cutoff or settlement contract is established. Week 6–7 lines have no prices; ATD Yes prices do not identify fair No probabilities. No −110 defaults, manufactured offers, EV/ROI or profitability claims are used. The fixed-half hybrid and line-as-point heuristic are exploratory and reported separately.
+
+## What actually ran and was checked
+
+Twenty-five successful new fitted models were saved: nine HGB, thirteen missing fixed Count A/CatBoost/response cells and three chart/event models. Two chart/event resource failures remain visible; the failed response and logistic cells were retried in isolated fresh processes without rerunning the successful CatBoost. Retained-model restorations, 283,485 frozen output rows, later materialized missing rows, scoring runs and NFL outcomes are distinct counts.
+
+Independent grading checked the main point/side arithmetic and all 24 cached law packages. Law QA covered 77,594 distribution rows, 16,892 line-probability records and 308 policy records; only sixteen outcome-blind query slots were independently re-inferred, with nine supported CRPS outcomes. This is not complete independent re-inference of every vector. [Main QA](primary-scoring/INDEPENDENT_FRESH_QA_ALL_FINALISTS_V1.json) · [Law QA](law-qa/ACTUAL_INDEPENDENT_QA_V1.json).
+
+[Readable private scorecard receipt](READABLE_PRIVATE_SCORECARD_V1.json): 204,431 prediction/actual CSV rows and 258,748 line/direction CSV rows, exact ZIP readback. These remain restricted private evidence; approved owner restoration is required. No player-level raw data are placed in this public repository.
+
+## Historical seasons and training histories
+
+Current models generally use earlier multiseason training through 2025; chart models use admitted 2024 chart labels. Best on 2026 does not mean trained only on 2026. The old 2025 ordered-history and 2022–2024 benchmarks remain intact, including negative findings. Their populations, source timing and feature treatment can differ from this repaired panel. They are not silently copied into a matched same-finalist tournament. Missing same-contract historical cells and clean H-CURRENT/H-RECENT/H-MULTI cells remain unfinished; no through-2025 model is applied to its own 2025 outcomes as out-of-sample evidence.
+
+## Production, capture and exact remaining owner action
+
+**This session is research-only.** Website Main remains `1ec93e068a91abd51c990937d1019e4a831694b4`; no later owner acknowledgement was returned by the October 31, 10:00 a.m. CDT read. The served payload SHA is `369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4`: 1,945 forecasts issued October 28, zero new MAE-profile rows. A fresh 10:00 a.m. CDT check also executed the exact served JavaScript consumer and matched all 1,945 saved values and labels; browser DOM was not visually observed. [Fresh consumer readback](LIVE_CONSUMER_READBACK_V2.json) · [Category release manifest](CATEGORY_RELEASE_MANIFEST_V2.json.gz). The exact live family/procedure/model bindings are recorded; chart PPR is not active.
+
+The retained owner holds lease 178. The ready release package at commit `341742de83975264a07d035d4b6289e57c2ec1e9` was delivered, not acknowledged or executed. It must restore parent `40729788942` / child `40729906573`, authenticate SOURCE/query-completion/feature-capture receipts and actual model/wrapper/slot bindings, admit separately typed selected_projection while preserving independent means/probabilities, perform current-query inference, immutable persistence, fallback/rollback and publish/read back the actual consumer. Newly tested response, ordered/backfield, target and chart adapters retain their own guards. Ready older core products do not wait for this new research package.
+
+The **October 31, 7:36–7:57 a.m. CDT** parent window has elapsed. A 10:00 a.m. CDT read found no newer public parent execution; latest remains failed `41104520104`. Classify this public window MISSED_NO_OBSERVED_PUBLIC_EXECUTION, while private per-method capture remains unverified until owner census restoration. Next remaining Sunday T−90: **November 1, 10:30 a.m. CST**. This future configured deadline is not completed capture. The last inspected parent `41104520104` failed with capture enqueue skipped. Original assignments and the per-method Week 8 census still require approved owner-controlled restoration. No capture was backdated and no older issue time was replaced.
+
+## Reproducible records and next executable work
+
+[Registration](EXECUTION_PROTOCOL_V1.json) · [Finalist/source amendments](FINALIST_AMENDMENTS_V1_1.json) · [Population/contracts](POPULATION_AND_PRODUCT_AMENDMENTS_V1.json) · [Canonical project index](../opportunity-four/README.md). Source configurations, models, source snapshots and full row vectors stay in the approved managed store; public code, aggregate scores and safe hashes provide the evidence index. Local-only artifacts remain PUBLICATION_PENDING until exact remote readback. Original caps, exhausted allocations, failures, losing weeks and scientific registrations are preserved. Lossless metadata compression stayed within the same accounting; no unique source/model/vector was discarded.
+
+The late ATD supplement and exploratory M/H independent check are complete. Publish every result with remote readback; complete compatible historical cells under finite registrations; continue the four-category information backlog independently of owner-only release. No probability or EV ranking is activated solely from lower point MAE.
+
+## Highest observed point-direction side rates — separate selected subsets
+
+These are descriptive maximums among the full-seven-week eligible outputs. Each method’s complete decision rule and all contrary rows remain in the full table. Tiny interception samples are visibly weak evidence; these maxima are not a stitched selection strategy.
+
+| Category | Highest observed Over point rule | Correct / decided | Highest observed Under point rule | Correct / decided |
+|---|---|---:|---|---:|
+| pass_att | COUNT_A_LEGACY_POINT / legacy_empirical_point | 19/35 (54.3%) | COUNT_A_LEGACY_POINT / legacy_empirical_point | 51/108 (47.2%) |
+| pass_cmp | CATBOOST_MEDIUM / mean_objective_point | 35/53 (66.0%) | CATBOOST_MEDIUM / mean_objective_point | 44/91 (48.4%) |
+| pass_int | LEAF_CDF / median | 4/5 (80.0%) | LEAF_CDF / mean | 8/10 (80.0%) |
+| pass_td | LEAF_CDF / median | 27/44 (61.4%) | COUNT_A_LEGACY_POINT / legacy_empirical_point | 44/68 (64.7%) |
+| pass_yd | LEAF_CDF / mean | 36/61 (59.0%) | HGB_MAE_DIRECT / mae_objective_point | 37/73 (50.7%) |
+| rec | ORDERED_CDF / median | 154/255 (60.4%) | ORDERED_CDF / mean | 271/481 (56.3%) |
+| rec_yd | CATBOOST_MEDIUM / median_objective_point | 171/317 (53.9%) | RESPONSE_CDF / mean | 201/363 (55.4%) |
+| rush_att | BACKFIELD_CDF / mean | 70/130 (53.8%) | BACKFIELD_CDF / mean | 104/197 (52.8%) |
+| rush_rec_yd | RESPONSE_CDF / mean | 117/230 (50.9%) | RESPONSE_CDF / mean | 130/238 (54.6%) |
+| rush_yd | LEAF_CDF / median | 58/110 (52.7%) | EQUAL_CDF_CAT_HGB_POINT / empirical_point_blend | 199/327 (60.9%) |
+
+## Probability and complete-rule results
+
+[Every full law](probability-projection/DISTRIBUTION_PRODUCTS_W1_7.csv.gz) · [Every supported threshold/ATD probability product](probability-projection/PROBABILITY_PRODUCTS_W1_7.csv.gz) · [Full-board, Top6/10/20 and abstaining football selection rules](probability-projection/FOOTBALL_PROBABILITY_SELECTIONS_W1_7.csv.gz) · [Matched market/hybrid policies](probability-projection/EXPLORATORY_MARKET_SELECTIONS_W1_7.csv.gz) · [Paired market Brier differences](probability-projection/EXPLORATORY_MARKET_PAIRED_BRIER_W1_7.csv.gz) · [Line-as-point heuristic](probability-projection/LINE_AS_POINT_HEURISTIC_W1_7.csv.gz). TopN is prespecified per category/week, not an asserted reproduction of the website’s overall multi-category Top Picks.
+
+| Category | Full-law CRPS leader | Raw football threshold Brier leader | Best fixed-shrink threshold Brier | Highest full-board football decision result |
+|---|---|---|---|---|
+| chart_ppr | RESPONSE_CDF: 3.281089 | Unavailable | Unavailable | No numeric offers |
+| pass_att | RESPONSE_CDF: 5.555103 | LEAF_CDF: 0.263985 | LEAF_CDF: 0.254173 | LEAF_CDF: 68/143 (47.6%) |
+| pass_cmp | RESPONSE_CDF: 3.688927 | LEAF_CDF: 0.256732 | LEAF_CDF: 0.250857 | RESPONSE_CDF: 75/144 (52.1%) |
+| pass_int | LEAF_CDF: 0.360168 | LEAF_CDF: 0.247501 | LEAF_CDF: 0.247725 | LEAF_CDF: 69/143 (48.3%) |
+| pass_td | LEAF_CDF: 0.571764 | LEAF_CDF: 0.240694 | LEAF_CDF: 0.240309 | LEAF_CDF: 85/142 (59.9%) |
+| pass_yd | LEAF_CDF: 44.860151 | LEAF_CDF: 0.257921 | LEAF_CDF: 0.250778 | LEAF_CDF: 77/143 (53.8%) |
+| rec | ORDERED_CDF: 0.917611 | ORDERED_CDF: 0.258155 | ORDERED_CDF: 0.246598 | LEAF_CDF: 521/917 (56.8%) |
+| rec_yd | LEAF_CDF: 12.005365 | LEAF_CDF: 0.263184 | LEAF_CDF: 0.250944 | RESPONSE_CDF: 493/929 (53.1%) |
+| rush_att | BACKFIELD_CDF: 2.560732 | BACKFIELD_CDF: 0.264806 | BACKFIELD_CDF: 0.248118 | ORDERED_CDF: 169/327 (51.7%) |
+| rush_rec_yd | LEAF_CDF: 14.788712 | LEAF_CDF: 0.269162 | LEAF_CDF: 0.252539 | RESPONSE_CDF: 243/468 (51.9%) |
+| rush_yd | LEAF_CDF: 13.707890 | LEAF_CDF: 0.255676 | LEAF_CDF: 0.245241 | LEAF_CDF: 260/443 (58.7%) |
+| anytime_td | Unavailable | Unavailable | Unavailable | No numeric offers |
+
+The independent market QA checked 33,418 probability rows, 233,926 selection flags and 12,320 cumulative/weekly policy records without rerunning fitting, inference or bootstrap intervals. On matched available price rows, reception football Brier 0.262294 became 0.249144 under the fixed-half hybrid, while simple shrinkage was lower at 0.248383. For passing attempts, football 0.242228 was lower than hybrid 0.242392 and market 0.246809. For carries, hybrid 0.244868 narrowly beat shrinkage 0.245065 on only 94 scored offers. These are timing-unverified conditional probability comparisons, not authentic execution, ROI or a universal market advantage.
+
+## Recovered historical context, not newly executed fits
+
+The completed 2025 ordered comparison remains reusable: carry MAE 3.408685 base versus 3.340358 ordered on 1,566 outcomes; receptions 1.178659 versus 1.173182 on 5,295. The separately completed 2025 passing-attempt common-learner history study used 52 prior fits, 664 supported QB cases and all 18 weeks. Prior-plus-current had lowest MSE 120.305733; fixed-365-day decay had lowest MAE 8.573752 among its history arms. These were already completed results, not new fits in this checkpoint or matched repaired-2026 gains. The exact compatibility/gap audit is retained in the execution evidence archive. Full same-finalist older-season coverage and the fixed-current-2026 three-history tournament remain incomplete.
+
+## Completed fifth anytime-TD contender — late appendix
+
+The earlier accepted Platt curve was restored without refitting and applied as a separately named late contender. Its original 2022–2023 training acceptance was authenticated, not independently reproduced. The first cached grading run hit its 120-CPU-second cap after saving the complete scores; that failure remains. A separate 80.44-CPU-second post-retention admission authenticated the saved artifacts and independently checked all scores, weekly counts and unchanged original controls without rerunning scoring, inference or bootstrap. [Admission receipt](fitting/ACTUAL_ATD_POSTRETENTION_ADMISSION_V1.json) · [Complete late appendix](ATD_LATE_AGGREGATES_V1.json.gz).
+
+| Meaningful procedure | Brier (2,000 identical supported cases) | Log loss |
+|---|---:|---:|
+| EQUAL_CDF_CAT_PROBABILITY | 0.145765931 | 0.456502080 |
+| CATBOOST_MEDIUM | 0.145838864 | 0.456937852 |
+| LEAF_CDF | 0.145998085 | 0.457045103 |
+| ATD_CDF_RETAINED_PLATT_NLL_IDENTITY01 | 0.146490971 | 0.458665019 |
+| ROLE_LOGISTIC | 0.146818014 | 0.460794879 |
+
+The equal CDF/CatBoost blend remained lowest. Both role logistic and the late retained Platt curve lost. Five meaningful procedures now have current-panel probability scores, but the fifth was not part of the original global freeze and has no retroactive pregame history. No probability release or website change followed from this appendix.
+
+## Permanent run/result index
+
+[Safe execution evidence archive](EXECUTION_EVIDENCE_V2.zip) preserves each public-safe receipt, failure, configuration contract, correction and historical compatibility audit under its original relative path, including `ALL12_RUN_RESULTS_INDEX_V2.json.gz`. Large immutable point/law/market/ATD aggregates are separate files; private rows and model artifacts remain private. Index publication is complete only after the exact commit/tree/body remote readback receipt.
+
+[Weekly point/mean/event errors and full operational coverage for every output](WEEKLY_POINT_PRODUCTS_W1_7.csv) directly projects already-completed per-week aggregates. It retains partial depth eligibility, unknowns, fallbacks, zeros and product labels. Weighted weekly MAEs reproduce the cumulative figures. No model was refitted or rescored. Missing metrics remain empty with reasons.

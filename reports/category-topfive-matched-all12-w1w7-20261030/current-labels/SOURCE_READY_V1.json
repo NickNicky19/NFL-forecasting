@@ -1,0 +1,46 @@
+{
+  "version": "matched12-current-nflverse-W1-W7-labels-v1",
+  "state": "READY_FOR_INDEPENDENT_REVIEW_NOT_NFL_MATERIALIZED",
+  "worker_sha256": "81080392d40c7c4f773dddb382c612a6945943b8b69002df15eaabda2c4721a5",
+  "worker_bytes": 14054,
+  "fictional_checks": 20,
+  "NFL_statistical_rows_decoded": 0,
+  "sources": {
+    "weekly": {
+      "bytes": 424204,
+      "sha256": "e3f8da96837537190867e4f5e19b63320360ecc58819d115120e0ddb74c43e66"
+    },
+    "pbp": {
+      "bytes": 8068642,
+      "sha256": "6a6097066474da7ca867d954d6b04b84905c5e242d13917391237b8334f362fe"
+    }
+  },
+  "API": "materialize(config,go) ->labelsDataFrame,safeaudit,privatechartproofs; rootownsCAS/sourceownership/persistence",
+  "required_config": [
+    "source_pins exactcode",
+    "generator_source0ccd\u2026",
+    "forecast_freezes list reference+required_state; actualchartmanifestchart_target_contract=nick-chart-ppr-v1 ifrequested",
+    "queries original4985/107 source; at leastone actualfreeze source_queries_sha256 matches",
+    "weekly+pbp exactrefs",
+    "roles_by_target fixedbeforelabels",
+    "qualified_final_game_ids fromapprovedcompletedgameevidence"
+  ],
+  "code_dependencies": [
+    "tools/next_checkpoint_chart_ppr_labels.py",
+    "nfl_lab/next_checkpoint_chart_ppr.py",
+    "nfl_lab/ppr_outcomes.py",
+    "nfl_lab/ppr_sources.py",
+    "nfl_lab/scoring.py",
+    "tools/category_topfive_matched12_offer_driver_v1.py/read_exact"
+  ],
+  "scope": "Arrow2026REGweek1-7 predicate beforePython/pandas; weeklyqueryGSIS andPBPquerygamefilters; sourcepositiondisagreements retaineddiagnostic; noW8semanticoutcomes",
+  "old_labels": "Allstrictandolderqualifiedversionsunchanged; current-sourcecorrectionappliestoallcandidate/controlarms",
+  "resources_proposal": {
+    "CPU_seconds": 180,
+    "wall_seconds": 300,
+    "RSS_bytes": 2147483648,
+    "fits_forecasts_HTTP": 0
+  },
+  "publication": "Onlysafeaggregates/code/sourcehashespublic; playerlabels/components/PBPsourceproofs private",
+  "metadata_preparation_cap_bytes": 32768
+}
