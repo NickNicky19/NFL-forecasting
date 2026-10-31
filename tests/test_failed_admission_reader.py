@@ -214,6 +214,31 @@ class ReaderTests(unittest.TestCase):
         self.assertEqual(set(value["original_census"]["reservations"][0]),
             {"reservation_sha256","runtime_id","release_id","pending_bytes","pending_assets"})
 
+    def test_current_unknown_pending_still_charges_its_bytes_and_slot(self):
+        value=self.f.read();pending=value["pending"]
+        self.assertEqual(pending["current_unmatched_records"],1)
+        self.assertEqual(pending["current_unmatched_slots"],1)
+        self.assertEqual(pending["current_unmatched_bytes"],len(b"missing"))
+        self.assertEqual(value["HTTP_calls"],22)  # Existing read path, no new HTTP.
+
+    def test_after_cutoff_upload_is_historically_pending_but_currently_matched(self):
+        late=self.f.asset(82,self.f.pending["name"],b"missing",self.f.cut+timedelta(seconds=8))
+        self.f.assets.append(late)
+        value=self.f.read();pending=value["pending"]
+        self.assertEqual(pending["unmatched_at_admission_records"],1)
+        self.assertEqual(pending["unmatched_at_admission_bytes"],len(b"missing"))
+        self.assertEqual(pending["current_unmatched_records"],0)
+        self.assertEqual(pending["current_unmatched_slots"],0)
+        self.assertEqual(pending["current_unmatched_bytes"],0)
+        rows=[]
+        for record in sorted(self.f.original_records,key=lambda r:r["key"]):
+            match=next(a for a in self.f.assets if a["name"]==record["name"] and a["size"]==record["bytes"]
+                and a.get("digest")=="sha256:"+record["sha256"])
+            rows.append(dict(record_sha256=s.sha(s.canonical(record)),matched_asset_id=match["id"]))
+        expected=s.sha(s.canonical(dict(schema_version=d.VERSION+"-authenticated-current-reservation-matches",records=rows)))
+        self.assertEqual(pending["current_record_matches_sha256"],expected)
+        self.assertEqual(value["HTTP_calls"],22)
+
     def test_qualification_runs_only_after_authenticated_original_root_and_records(self):
         events=[]; auth=hosted.authenticated_pending_records; verify=d.verify_qualification
         def records(*args,**kwargs):

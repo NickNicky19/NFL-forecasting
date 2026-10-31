@@ -358,6 +358,18 @@ def aggregate(evidence, records, assets, package, target, denied_routes, m):
     # issued record existed before that guard. Fail closed rather than charge
     # a preservation POST as original pending, or silently omit an old intent.
     require(not nonseeded_unmatched,"UNMATCHED_NONSEEDED_PRE_ADMISSION_ELIGIBILITY_REQUIRED")
+    # Classify the same authenticated records against the current live
+    # inventory independently of their historical admission classification.
+    current_unmatched = []; current_matches = []
+    for record in sorted(records,key=lambda r:r["key"]):
+        matching = [a for a in assets if a["name"] == record["name"] and a["size"] == record["bytes"]
+            and a.get("digest") == "sha256:"+record["sha256"]]
+        require(len(matching) <= 1,"ONE_CURRENT_ASSET_PER_AUTHENTICATED_RESERVATION")
+        if not matching:current_unmatched.append(record)
+        current_matches.append(dict(record_sha256=s.sha(s.canonical(record)),
+            matched_asset_id=matching[0]["id"] if matching else None))
+    current_match_sha = s.sha(s.canonical(dict(schema_version=VERSION+"-authenticated-current-reservation-matches",
+        records=current_matches)))
     aux = auxiliary_controls(controls,m)
     graph = m.cp.strict_json(controls["file-graph"][1])
     require(type(graph) is dict and graph.get("schema_version") == m.hosted.VERSION+"-failed-file-graph"
@@ -395,6 +407,8 @@ def aggregate(evidence, records, assets, package, target, denied_routes, m):
                 for r in census["reservations"]]),
         pending=dict(authenticated_original_journal_records=len(records),archive_seeded_records=len(original_pending),
             unmatched_at_admission_records=len(unmatched),unmatched_at_admission_bytes=sum(r["bytes"] for r in unmatched),
+            current_unmatched_records=len(current_unmatched),current_unmatched_slots=len(current_unmatched),
+            current_unmatched_bytes=sum(r["bytes"] for r in current_unmatched),current_record_matches_sha256=current_match_sha,
             existing_admission_bytes=sum(a["size"] for a in historical)+sum(r["bytes"] for r in unmatched),
             existing_admission_slots=len(historical)+len(unmatched),
             owner_purpose=[dict(origin=o,purpose=p,records=n,
