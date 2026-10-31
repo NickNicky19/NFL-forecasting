@@ -1,0 +1,24 @@
+{
+  "version": "matched12-managed-replay-v1.1",
+  "registered_UTC": "2026-10-31T00:27:05.942901+00:00",
+  "parent_run_id": "r:matched12-legacy-common-board-v1-20261031",
+  "parent_state": "FAILED_BEFORE_ACCURACY_SCORING",
+  "actual_failure": "ImportError: storage bootstrap loaded old library package; historical_market_comparison module unavailable there.",
+  "parent_worker_sha256": "9fc9d6e97c0f5b0e8a2cb76b43d63f2390354cb2f4100414ae30e6d9d3687de7",
+  "worker_sha256": "1a040b658cd1ea970f3a772dd708aeb676e576f2077117af6110bc428c1ec650",
+  "change": "Pin root NFL package before readonly storage bootstrap; numerical algorithms/configuration unchanged; new output namespace andGO.",
+  "old_attempt_preserved": true,
+  "old_resource_charge": {
+    "actual_CPU_seconds": null,
+    "reason": "Original failure receipt omitted runtime counters; no zero or inventedactual; wholeoriginalfiniteallocation charged conservatively.",
+    "conservative_CPU_seconds": 900,
+    "conservative_wall_seconds": 1200
+  },
+  "new_additional_finite_allocation": {
+    "CPU_seconds": 900,
+    "wall_seconds": 1200,
+    "new_fits": 0,
+    "private_peak_bytes": 25165824,
+    "metadata_parent_cap_unchanged": 524288
+  }
+}

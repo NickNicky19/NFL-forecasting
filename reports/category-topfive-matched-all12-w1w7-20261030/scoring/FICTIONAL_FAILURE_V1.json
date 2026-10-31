@@ -1,0 +1,13 @@
+{
+  "version": "matched12-fictional-failure-v1",
+  "state": "FAILED",
+  "worker_sha256": "51723f89a23967eab96a5ad9acd3468e8ccb2b2184c6e7649e6a18fe9cf154a1",
+  "error_type": "TypeError",
+  "error": "Direct metrics fixture supplied all-NaT timezone-naive cutoff series alongside timezone-aware kickoff. Clock comparison refused before final receipt.",
+  "correction": "Normalize clock columns to aware UTC inside metrics; preserve NaT unchanged. No source timestamp is fabricated.",
+  "NFL_decode_fits_forecasts_network_CAS": 0,
+  "attempt_consumed": true,
+  "terminal_tool_wall_seconds": 0.420957815,
+  "CPU_seconds": null,
+  "CPU_reason": "Failure occurred before final resource receipt."
+}

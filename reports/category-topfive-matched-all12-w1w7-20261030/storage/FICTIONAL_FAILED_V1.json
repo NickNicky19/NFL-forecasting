@@ -1,0 +1,12 @@
+{
+  "state": "FAILED_FICTIONAL_PRIVATE_REQUIRE_WITHOUT_TRANSACTION",
+  "fixture_sha256": "eaf61ea3c105a00f6f6c8bf08a62c9c7068081c9acef0f6ea126eac02b13b456",
+  "fixture_path": "reports/category-topfive-matched-all12-w1w7-20261030/storage/FICTIONAL_CHECKS_V1.py",
+  "failure": "StorageIntegrityError: storage registry/ownership is corrupt; direct private _require called outside inherited permanent flock transaction. Earlier fictional initialization and readonly restore assertions reached; no real managed store opened.",
+  "correction": "Separate V1.1 fixture wraps incoming-peak rejection in store.transaction().",
+  "CPU_limit_seconds": 20,
+  "wall_limit_seconds": 30,
+  "actual_CPU_seconds": null,
+  "actual_CPU_reason": "Failure stopped before success receipt; command wall<1s, exact process CPU not captured.",
+  "new_NFL_operations": 0
+}

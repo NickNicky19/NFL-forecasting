@@ -1,0 +1,22 @@
+--- tools/category_topfive_matched12_labels_v1.py
++++ first-fictional-source.py
+@@ -44,9 +44,6 @@
+    v,reason=value(stats,key)
+    if v is None:return 'unknown','INVALID_PARTICIPATION_'+key
+    if v>0:witnesses.append(key)
+- for key in ['pass_att','pass_cmp','pass_td','pass_int','rush_att','rec_tgt','rec','rush_td','rec_td','pass_yd','rush_yd','rec_yd']:
+-  v,_=value(stats,key)
+-  if v is not None and v!=0:witnesses.append('physical_'+key)
+  dnp=entry.get('participation_status')=='dnp' and isinstance(entry.get('participation_source'),str) and bool(entry['participation_source'])
+  if witnesses and dnp:return 'unknown','CONTRADICTORY_PLAYED_DNP_EVIDENCE'
+  if witnesses:return 'played','EXPLICIT_POSITIVE_'+','.join(witnesses)
+@@ -269,9 +266,6 @@
+  check(participation({'participation_status':'dnp','participation_source':'fixture'})[0]=='dnp')
+  check(participation({'stats':{'gp':1},'participation_status':'dnp','participation_source':'fixture'})[0]=='unknown')
+  check(participation({'stats':{'gp':'1'}})[0]=='unknown')
+- check(participation({'stats':{'rec':1}})[0]=='played')
+- check(participation({'stats':{'rush_yd':-2}})[0]=='played')
+- check(participation({'stats':{'rec':1},'participation_status':'dnp','participation_source':'fixture'})[0]=='unknown')
+  q=dict(season=2026,week=7,game_id='2026_07_ARI_ATL',player_id='00-1234567',team='ARI',opponent='ATL',position='WR',sleeper_id='1234',kickoff_utc='2026-10-25T17:00:00Z')
+  archive=dict(season=2026,week=7,games=[dict(id='401000001',home='ATL',away='ARI',kickoff=q['kickoff_utc'])])
+  events=archive_event_lookup(archive);ref={'sha256':'a'*64,'version':'FICTIONAL_ONLY'};finals={q['game_id']}

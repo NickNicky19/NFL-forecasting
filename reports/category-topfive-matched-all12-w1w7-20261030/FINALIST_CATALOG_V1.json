@@ -1,0 +1,237 @@
+{
+  "version": "matched-all12-finalists-v1-20261030",
+  "registered_at_UTC": "2026-10-30T23:50:37.919340+00:00",
+  "development_selected": true,
+  "scope": "Fixed2026REGW1-7 primary;2025 and2022-24 separately; original and prospective evidence separate.",
+  "finalists": {
+    "pass_yd": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT",
+      "RESPONSE_CDF",
+      "EQUAL_CDF_CAT_HGB_POINT"
+    ],
+    "pass_td": [
+      "LEAF_CDF",
+      "RESPONSE_CDF",
+      "COUNT_A_MEAN",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT"
+    ],
+    "pass_cmp": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "COUNT_A_MEAN",
+      "HGB_MAE_DIRECT",
+      "RESPONSE_CDF"
+    ],
+    "pass_att": [
+      "LEAF_CDF",
+      "DEPTH_CDF",
+      "RESPONSE_CDF",
+      "COUNT_A_MEAN",
+      "HGB_MAE_DIRECT"
+    ],
+    "pass_int": [
+      "LEAF_CDF",
+      "RESPONSE_CDF",
+      "COUNT_A_MEAN",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT"
+    ],
+    "rush_yd": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT",
+      "RESPONSE_CDF",
+      "EQUAL_CDF_CAT_HGB_POINT"
+    ],
+    "rush_att": [
+      "LEAF_CDF",
+      "BACKFIELD_CDF",
+      "ORDERED_CDF",
+      "COUNT_A_MEAN",
+      "CATBOOST_MEDIUM"
+    ],
+    "rec": [
+      "LEAF_CDF",
+      "ORDERED_CDF",
+      "COUNT_A_MEAN",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT"
+    ],
+    "rec_yd": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT",
+      "RESPONSE_CDF",
+      "EQUAL_CDF_CAT_HGB_POINT"
+    ],
+    "rush_rec_yd": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "HGB_MAE_DIRECT",
+      "RESPONSE_CDF",
+      "EQUAL_CDF_CAT_HGB_POINT"
+    ],
+    "anytime_td": [
+      "LEAF_CDF",
+      "CATBOOST_MEDIUM",
+      "EQUAL_CDF_CAT_PROBABILITY",
+      "EARLIER_CDF_LOGISTIC_CALIBRATION",
+      "ROLE_LOGISTIC"
+    ],
+    "chart_ppr": [
+      "CHART_LEAF_CDF",
+      "CHART_HGB",
+      "CHART_ROLE_LAW",
+      "CATBOOST_MEDIUM",
+      "RESPONSE_CDF"
+    ]
+  },
+  "families": {
+    "LEAF_CDF": {
+      "algorithm": "Existing 32-tree empirical leaf distribution plus trained role/global prior, unchanged full-law mean/median/CDF; source- and artifact-specific exact configuration must bind each execution.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution",
+        "threshold_probability"
+      ],
+      "status": "EXISTING_ANNUAL_ARTIFACTS_AND_SAVED_POINTS; new roster/source queries require exact parity or new inference."
+    },
+    "RESPONSE_CDF": {
+      "algorithm": "Existing fixed response-indicator split forest procedure with same information representation; no new tuning.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution",
+        "threshold_probability"
+      ],
+      "status": "EXISTING_COUNT_ARTIFACTS; missing yard/chart/count cells require fixed-procedure fits if labels/source support."
+    },
+    "CATBOOST_MEDIUM": {
+      "algorithm": "Frozen medium recipe:128 iterations,depth5,learning_rate0.05; existing exact regularization/seed/source config retained. Yard/chart points Quantile0.5; counts Poisson-objective intended mean; ATD binary probability. No predictive count PMF implied.",
+      "outputs": [
+        "objective-specific point",
+        "ATD probability only"
+      ],
+      "status": "REUSE_QUALIFIED_ARTIFACTS; missing exact target/season cells need separately logged fits."
+    },
+    "COUNT_A_MEAN": {
+      "algorithm": "Existing corrected stored-mean fallback Count A regularized Poisson-objective HGB; original exact params, training preprocessing and warm/fallback rule retained.",
+      "outputs": [
+        "intended_expected_mean_point"
+      ],
+      "status": "EXISTING_REC_CARRY_ARTIFACTS; missing passing cells need exact frozen-procedure fits. Legacy mixed fallback remains separate empirical benchmark."
+    },
+    "HGB_MAE_DIRECT": {
+      "algorithm": "One fixed same-information direct absolute-error HGB;max_iter128,max_leaf_nodes31,max_depth5,learning_rate0.05,l2_regularization1,min_samples_leaf20,random_state1703. One declared configuration; no search.",
+      "outputs": [
+        "median_objective_point"
+      ],
+      "status": "MISSING_CURRENT_MATCHED_CELLS; reuse exact equivalent completed configuration if authenticated, else fit necessary cells."
+    },
+    "DEPTH_CDF": {
+      "algorithm": "Existing common-learner added depth-rank information group procedure; not an injury/availability mixture. Frozen trained forest and exact feature rule.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution",
+        "threshold_probability"
+      ],
+      "status": "EXISTING_PASS_ATT_RESEARCH; new source bridge and actual future admission separate."
+    },
+    "ORDERED_CDF": {
+      "algorithm": "Existing frozen ordered-recent-game CDF recipe; game chronology after allowed availability filter. No repeat unchanged old study.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution",
+        "threshold_probability"
+      ],
+      "status": "EXISTING_CARRY_RECEPTION_RESEARCH; new exact-source adapter needed; old base-only future guard unchanged."
+    },
+    "BACKFIELD_CDF": {
+      "algorithm": "Existing lagged backfield/teammate competition feature group in CDF; not verified current injury/limited-role data.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution",
+        "threshold_probability"
+      ],
+      "status": "EXISTING_CARRY_RESEARCH; restore exact artifact/feature bindings."
+    },
+    "EQUAL_CDF_CAT_HGB_POINT": {
+      "algorithm": "Fixed arithmetic average of leaf-CDF lower median, CatBoost yard median-objective point and HGB MAE point; weight1/3 each, frozen before this panel.",
+      "outputs": [
+        "empirical_point_only"
+      ],
+      "status": "NEW_BOUNDED_DECLARED_BLEND; not the older P4 identity, not a mixture median or independent supporting evidence."
+    },
+    "EQUAL_CDF_CAT_PROBABILITY": {
+      "algorithm": "Existing registered equal event-probability blend,0.5CDF+0.5CatBoost. Preserve its prior losses.",
+      "outputs": [
+        "event_probability"
+      ],
+      "status": "COMPLETED_EXISTING; reapply to new matched queries only."
+    },
+    "EARLIER_CDF_LOGISTIC_CALIBRATION": {
+      "algorithm": "Monotone logistic transform of CDF event probabilities, one L2C1 fixed recipe fitted only to earlier out-of-time annual CDF forecasts/outcomes. No current seven-week fitting or threshold search.",
+      "outputs": [
+        "event_probability"
+      ],
+      "status": "ADMIT_ONLY_WITH_EARLIER_OOF_SUPPORT; otherwise unavailable, no invented calibration."
+    },
+    "ROLE_LOGISTIC": {
+      "algorithm": "One direct L2C1 logistic probability learner on the same qualified feature schema, earlier-only imputer/scaler,random_state1703,max_iter300.",
+      "outputs": [
+        "event_probability"
+      ],
+      "status": "NEW_BOUNDED_STRONG_SIMPLE_PROBABILITY_CONTROL; no search."
+    },
+    "CHART_LEAF_CDF": {
+      "algorithm": "Existing exact nick-chart-ppr-v1 distribution on signed Z=50*S,32same features; reuse2024-trained parameters and role/global priors.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution"
+      ],
+      "status": "EXISTING_W1_6; missing W7 exact primitives block only unsupported label rows."
+    },
+    "CHART_HGB": {
+      "algorithm": "Existing exact-chart direct HGB median pilot, original fixed recipe and failed/adverse findings intact.",
+      "outputs": [
+        "median_objective_point"
+      ],
+      "status": "EXISTING; no unchanged refit."
+    },
+    "CHART_ROLE_LAW": {
+      "algorithm": "Existing earlier-trained role-conditioned chart prior law, not a new fitted-feature model.",
+      "outputs": [
+        "mean",
+        "lower_median",
+        "full_distribution"
+      ],
+      "status": "EXISTING_SIMPLE_CONTROL_INCLUDED_FOR_DISTINCT_INFORMATION; position/global controls additionally reported, not pad fitted-method counts."
+    }
+  },
+  "candidate_counting": "One procedure entry per family/target; supported mean/median outputs from one law are not additional methods. Actual exact procedure/artifact/configuration versions bind per-cell execution before inference.",
+  "shortfall": "A declared finalist is not a completed tested or operationally ready method. If unsupported, keep its reason and execute feasible preparation without padding aliases.",
+  "additional_controls": [
+    "Actual original website and R0 only on authentic matching captures/contracts",
+    "Legacy CountA empirical mixed points, truthfully typed",
+    "Position/global/recent/prior simple controls where supported",
+    "Market line-as-point heuristic, qualified market probabilities and restrained hybrid separately on matched offers"
+  ],
+  "extra_forecast_only_target": {
+    "target": "rec_tgt",
+    "procedures": [
+      "TARGET_CDF",
+      "RECENT3_EMPIRICAL_HISTORY",
+      "RECENT8_EMPIRICAL_HISTORY",
+      "TARGET_ROLE_PRIOR"
+    ],
+    "actual_offer_status": "TARGET_OFFER_UNAVAILABLE"
+  }
+}

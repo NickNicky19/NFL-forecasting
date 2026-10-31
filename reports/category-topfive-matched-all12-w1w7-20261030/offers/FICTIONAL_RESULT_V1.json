@@ -1,0 +1,29 @@
+{
+  "state": "PASS_FICTIONAL_SOURCE_POLICY_CHECKS_ONLY",
+  "fixture_only": true,
+  "checks": [
+    "named_book_priority_before_alternate_book_clock",
+    "same_book_same_clock_pair_retained",
+    "invalid_price_only_finite_line_retained",
+    "invalid_price_not_replaced_or_market_qualified",
+    "nonprice_conflict_stays_rejected",
+    "nullable_eligibility_rejected",
+    "ATD_is_event_not_numeric_line",
+    "consensus_stays_excluded",
+    "earliest_collector_selected_without_opening_claim",
+    "unchosen_prop_and_late_flag_do_not_remove_descriptive_line",
+    "contest_separate_from_DK_primary",
+    "site_generated_line_excluded",
+    "site_prices_times_stay_unavailable",
+    "model_independent_primary_unique",
+    "context_mismatch_excludes_without_reclassification",
+    "binding_hash_enforced"
+  ],
+  "new_NFL_decode_fits_inference_scores_HTTP_CAS": 0,
+  "source_sha256": "06e16f5a266b67eb49766b1a8951a408f49638009274df76b978863fbe03d895",
+  "actual": {
+    "CPU_seconds": 0.632015438,
+    "wall_seconds": 0.2650247439996747,
+    "RSS_bytes": 62046208
+  }
+}

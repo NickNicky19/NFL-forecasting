@@ -1,0 +1,19 @@
+--- category_topfive_matched12_score_v1_2.py
++++ category_topfive_matched12_score_v1_1.py
+@@ -10,7 +10,7 @@
+ from decimal import Decimal
+ from pathlib import Path
+ 
+-VERSION='matched12-cached-score-v1.2'
++VERSION='matched12-cached-score-v1.1'
+ KEY=['target','season','week','game_id','player_id','team','opponent','cutoff_utc','kickoff_utc']
+ ID=['target','season','week','game_id','player_id','team','opponent']
+ COUNT={'pass_td','pass_cmp','pass_att','pass_int','rush_att','rec','rec_tgt'}
+@@ -317,7 +317,6 @@
+ 
+ def score_panel(frame,scope,catalog,uncertainty,*,expected_roster,outcomes):
+     """Explicit full-system + predeclared common core + pairwise, by season/week."""
+-    import numpy as np
+     f=materialize_expected(frame,expected_roster,outcomes,scope,catalog);records=[];pairs=[];dedup=[]
+     for (target,season),group in f.groupby(['target','season'],sort=True):
+         views={name:g for name,g in group.groupby(['method','product'],sort=True)}

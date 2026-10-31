@@ -1,0 +1,67 @@
+{
+  "version": "matched12-label-source-plan-v1",
+  "state": "SOURCE_ONLY_READY_FOR_REVIEW_NOT_NFL_EXECUTED",
+  "worker_sha256": "a0dfa1358069b64f6b3c70cfa852075be4f4ea29c1024d9951a2a98313209f32",
+  "worker_bytes": 17489,
+  "actual_NFL_source_rows_decoded": 0,
+  "fits": 0,
+  "source_versions": {
+    "history": {
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+      "version": "operational-source-policy-v2/qualified-history/10fe618c;CURRENT_VINTAGE;original7dayassumption"
+    },
+    "history_week6": {
+      "sha256": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061",
+      "version": "weekly-week6-reconstruction-v1;qualifiedofficialphysicalevents;CURRENT_VINTAGE"
+    },
+    "chart": {
+      "sha256": "981865b8c8190837d351a106f1a7d0a27113a240de34f8e58e80785c2980b27b",
+      "version": "nick-chart-ppr-v1/CHART_LABELS_2026_BRIDGE_COMPLETE;preserveoriginalqualification"
+    },
+    "site": {
+      "sha256": "46ff7b8986f02b29142ff0576adcbded936b05a30782a0338c7c10ba48f2649a",
+      "version": "website1ec93e068a91abd51c990937d1019e4a831694b4/data/cache/stat-keys-fgm-v1/stats_2026_07.json;CURRENT_VINTAGE"
+    }
+  },
+  "site_archive": {
+    "bytes": 355241,
+    "sha256": "a4c409ebaeca593ad2d63093129109fded281a3c9323358f0e9c87f328be8a2f",
+    "purpose": "ExactW7sourceeventteams/kickoff;notoriginalforecastorquoteclocks"
+  },
+  "requirements_before_materialize": [
+    "Rootreviewedconfigurationwithfrozenroles_by_target",
+    "AuthenticatedprimaryEXPECTED_QUERIESsource",
+    "Immutableforecastmanifestwrittenandfreshreadback;exactSHA;stateROOTchosenandforecast_readback_verified=true",
+    "Rootqualified_final_game_ids+exactsourcefinalityidentity;datealoneinsufficient",
+    "Exactworker/configGOafterfreeze;managedprivatepersistenceofcompletequalifiedlabelsandfailures"
+  ],
+  "source_policies": [
+    "Missingstatfieldsnotzero;explicitfinitevaluesonly",
+    "PositiveGP/offensesnapsorvalidatedphysicalfootballactionestablishplayed;explicitDNPconflictsstayunknown",
+    "KnownDNPactualnull;playedmissingactualnull;unknownactualnull",
+    "Countactualnonnegativeintegers;signedyardsretained",
+    "ATDpositiveexplicitrushorrecTDcredit;negativebothcomponentsreportedzero;noabsenceorpassingTDshortcut",
+    "ChartW1-6existingqualifiedsamechartlabels;W7preciselyblockedbyPBPrareeventclassification",
+    "Rawproviderstatsandfullsourcecapsulesstayprivate"
+  ],
+  "readiness_dependencies": [
+    "NoactualW7statfieldcoverageclaimbeforedecode",
+    "NoqualifiedW7finalitysourceyetboundinthisworker",
+    "ChartW7labelsnotavailablefromoldW1-6PBP"
+  ],
+  "role_populations": "Rootmustbindexactlythesamepredeclaredroles_by_targetusedbyforecastinference;notselectedafterlabels",
+  "proposed_resources": {
+    "CPU_seconds": 120,
+    "wall_seconds": 240,
+    "RSS_bytes": 1073741824,
+    "attempts": 1,
+    "fits": 0,
+    "inference": 0,
+    "newHTTP": 0
+  },
+  "metadata_cap_bytes": 24576,
+  "read_only_source_dependencies": [
+    "tools/category_topfive_matched12_offer_driver_v1.py/read_exact",
+    "nfl_lab/data.py/_team"
+  ]
+}

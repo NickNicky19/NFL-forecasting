@@ -1,0 +1,210 @@
+{
+  "version": "matched12-input-readiness-matrix-v1",
+  "preparation_only": true,
+  "new_fits_forecasts_scores": 0,
+  "source_code": {
+    "path": "tools/category_topfive_matched12_prepare_v1.py",
+    "bytes": 13388,
+    "sha256": "c199bf566405f0fdb19b2b84c65f31bac931d3df2af8c5e6fad252b4bd3d40ef"
+  },
+  "query_population": "All roster-defined offensive skill positions, all statuses under the existing exact GSIS/Sleeper/team/game identity quarantine; no positive-statistical-event additions. Primary all7 panel distinct from old2999 benchmark.",
+  "coverage_metadata": {
+    "roster_rows": 17602,
+    "available_roster_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "W7_old_population": {
+      "roster_skill_rows": 708,
+      "quarantine": 54,
+      "old13_game_offers": 610,
+      "old_elapsed_game_rows": 44,
+      "new14_game_rows_expected_not_executed": 654
+    }
+  },
+  "safe_source_bindings": {
+    "roster": {
+      "reference": "config/weekly-current-query-v2.json#roster",
+      "bytes": 823402,
+      "sha256": "951448fb9e22f11585f37593ce1e0bbcf2b0c01b13390559d2c9d773bb786c99",
+      "metadata_week_range": [
+        1,
+        7
+      ]
+    },
+    "schedule": {
+      "reference": "config/weekly-current-query-v2.json#schedule",
+      "bytes": 2186341,
+      "sha256": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7"
+    },
+    "prior_history": {
+      "reference": "config/weekly-current-feature-v4.json#history",
+      "bytes": 1155175,
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+      "scope": "Raw2019-2025 and2026W1-5, original7day assumption"
+    },
+    "W6_normalized_history": {
+      "reference": "weekly-historical-expansion-v1/W6-reconstruction/qualified-labels.parquet",
+      "bytes": 44461,
+      "sha256": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061",
+      "scope": "RawqualifiedW6history, not queryfeatures"
+    },
+    "weekly2026": {
+      "reference": "config/weekly-historical-expansion-v1.json#W6_sources.statistics",
+      "bytes": 386908,
+      "sha256": "17c5e71586394a7786bba7f29e7606da83223f6defa2b76d7514895a36558cdd",
+      "footer_weeks": [
+        1,
+        6
+      ],
+      "W7_labels": false
+    },
+    "PBP2026": {
+      "reference": "config/next-checkpoint-chart-bridge-v1.sealed.json#inputs.PBP2026",
+      "bytes": 6998248,
+      "sha256": "947b1cfa02fbcfb554609ec3517bc4f186b2cf6a6fa0e53aa2fb9ec94214d0da",
+      "footer_weeks": [
+        1,
+        6
+      ],
+      "W7_labels": false
+    },
+    "W7_nonpassing_qualified": {
+      "reference": "config/week7-nonpassing-terminal-retention-v1.sealed.json#inputs",
+      "bytes": 80907,
+      "sha256": "d723ea2a8a68e26d295392933433cbf28147ec1077ed14085c57ced22f9f6b88",
+      "scope": "13queriedgames; cannot implyThursday/full14coverage"
+    },
+    "W7_candidate_site_actuals": {
+      "repository": "NickNicky19/nicks-expert-nfl-picks",
+      "commit": "1ec93e068a91abd51c990937d1019e4a831694b4",
+      "path": "data/cache/stat-keys-fgm-v1/stats_2026_07.json",
+      "git_blob": "ca299a9b470fe3a28441b03dd00ab9e16fbdde12",
+      "bytes": 63956,
+      "sha256": null,
+      "sha256_reason": "Exactbodyadmission/rootqualificationpending; declaredpublicGitblobknown.",
+      "readiness": "CANDIDATE_NUMERIC/ATD_SOURCE; full14 identity/participation/zero qualification required; chart primitive completeness not implied"
+    }
+  },
+  "category_input_matrix": [
+    {
+      "target": "pass_yd",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "pass_td",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "pass_cmp",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "pass_att",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "pass_int",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rush_yd",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rush_att",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rec",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rec_yd",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rush_rec_yd",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "anytime_td",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "ROOT_COMMON_OFFER_PANEL_REQUIRED",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "chart_ppr",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "RARE_CHART_PRIMITIVES_UNAVAILABLE_OLD_PBP_MAXW6",
+      "actual_offer": "UNAVAILABLE_EXACT_CHART_CONTRACT",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    },
+    {
+      "target": "rec_tgt",
+      "queries": "SOURCE_ONLY_ALL7_ADAPTER_READY_FOR_ROOT_REVIEW",
+      "W1_6_cached": "REUSE_AFTER_EXACT_OVERLAP",
+      "W7_labels": "FULL14_SITE_ACTUAL_CROSSWALK_QUALIFICATION_REQUIRED",
+      "actual_offer": "TARGET_OFFER_UNAVAILABLE",
+      "model_runtime": "Rootfinalist-specificmanifest/feature/libraryadmission; no models loaded here."
+    }
+  ],
+  "root_execution_requirements": [
+    "NewsealedGO and finite runtime/storage allocation before calls; source-only guard is not standalone authority.",
+    "Authenticate exact source/helper hashes, managed reference ownership and source receipts before numeric reads.",
+    "Build all7 roster packets and shared base features; keep original query participation unknown; count quarantines and missing sources.",
+    "Use earlier-week raw history only; explicitunknownavailability excluded, never filled; require knownclock values follow declared7day assumption.",
+    "Pin optional ordered/backfield augmenter separately and freeze exact candidate feature lists.",
+    "Reuse cached points only after exact key/context/cutoff/model-feature overlap; all mismatches retain primary coverage and require inference.",
+    "Freeze complete per-method forecasts before target-label loading; never weaken genuine operational source or base-only exporter guards.",
+    "Qualify fullW7numeric/ATDlabels and rare chart primitives separately; missing chart labels must not block other11."
+  ]
+}

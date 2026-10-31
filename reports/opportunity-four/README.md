@@ -1,5 +1,9 @@
 # Four-category NFL opportunity forecasts
 
+## Highest priority: matched all-category Weeks 1–7 comparison
+
+[Current execution and resumable comparison record](../category-topfive-matched-all12-w1w7-20261030/README.md). The latest owner request authorizes this bounded twelve-category inference/scoring/missing-fit comparison; it does not reopen an unlimited method search. New source preparation covers all 107 games. Accuracy comparisons are running; no new deployment is claimed. The next configured parent window is October 31, 7:36–7:57 a.m. CDT. Older dated checkpoints below remain historical.
+
 ## Original saved Over/Under history — October 30
 
 [Computed category-by-side tables, original Top Picks, weekly/model views, exact snapshot reconciliation and threshold verification](../category-topfive-original-leans-release-ou-20261030/README.md). Over 394/791 = 49.8%; Under 349/585 = 59.7%. These are original saved-side statistical grades with explicit timing/attribution limits, separate from reconstructed P1/P2 results. [Canonical result index](ORIGINAL_DECISION_RESULTS_INDEX.json). New fits, forecasts and deployments: zero.

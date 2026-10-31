@@ -1,0 +1,60 @@
+{
+  "version": "matched12-score-preparation-source-v1",
+  "state": "SOURCE_FICTIONAL_PASS_PENDING_NEW_NUMERIC_GO",
+  "worker": "tools/category_topfive_matched12_score_v1.py",
+  "worker_bytes": 21813,
+  "worker_sha256": "a203631d6c2412f3aa4722ca61d95c354fd4161523ad7548f43bb7587c3ac93e",
+  "schema_metadata": {
+    "saved_rows": 58833,
+    "row_groups": 1,
+    "member_bytes": 1103008,
+    "capsule_bytes": 1608828,
+    "capsule_sha256": "b58155f0868d45c1359a7bb9bdc2dd9aafcb7bafbda2cbe6d06ae6c2131fb481",
+    "numeric_array_decode": false,
+    "columns": [
+      "season",
+      "week",
+      "game_id",
+      "player_id",
+      "team",
+      "opponent",
+      "position",
+      "kickoff_utc",
+      "cutoff_utc",
+      "prediction",
+      "fallback",
+      "method",
+      "product",
+      "target",
+      "source_forecast_input",
+      "actual",
+      "participation_state",
+      "source_outcome_state",
+      "outcome_state",
+      "source_label_input",
+      "evidence_lane"
+    ]
+  },
+  "preflight": "AST parse only; no software suite, NFL scoring, model inference or fits",
+  "required_GO": [
+    "exact new worker SHA256",
+    "input capsule hash",
+    "frozen candidate/config catalog",
+    "explicit primary common-core outputs and reference by target",
+    "source identity namespace and any offer crosswalk receipt",
+    "source/outcome/evidence-tier and horizon policies",
+    "finite runtime/private-output envelope",
+    "root runner inherited managed storage binding"
+  ],
+  "known_current_limit": "Cached member covers 2026W1-6; must not label it completeW1-7. Offer/probability/W7 extensions require compatible separately frozen inputs.",
+  "fictional_check_source_sha256": "51ba2549086656a11eafc29ca5e52d4fc37237af80707bcbd1805a03c1761ca5",
+  "fictional_result": "FICTIONAL_RESULT_V1_1.json",
+  "original_failure": "FICTIONAL_FAILURE_V1.json",
+  "source_corrections": [
+    "BinaryATD point-error leadership suppressed; MSE explicitly aliasesBrier.",
+    "AwareUTC/nullclock normalization; known naive clocks rejected.",
+    "Unroundedintegerexact-count rule; no fractionalmean rounding.",
+    "Numeric three-outcome Brier/logloss retains infinite losses and push mass."
+  ],
+  "effective_role_bytes": 36864
+}

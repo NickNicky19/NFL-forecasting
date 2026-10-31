@@ -1,0 +1,85 @@
+{
+  "state": "PREPARED_FICTIONAL_CHECKS_PASSED_AWAITING_ROOT_INDEPENDENT_GO",
+  "worker": "tools/category_topfive_matched12_aux_runner_v1.py",
+  "worker_version": "matched12-auxiliary-runner-v1",
+  "worker_bytes": 25515,
+  "worker_sha256": "9e3e060e098acdcac67607a0a0bc0b23c4fa84ecd8716169eca3cff5c2fee8e9",
+  "effective_configuration_canonical_sha256": "77cf5fa48a2d5665c9dacb93f30ccc6ad93085ba1d0cc4b3e813a3d71fff8067",
+  "command": "/workspace/nfl-direct-boosters-venv/bin/python -B tools/category_topfive_matched12_aux_runner_v1.py --fictional-check",
+  "attempts": [
+    {
+      "attempt": "FICTIONAL_INITIAL",
+      "state": "FAILED",
+      "error": "IndexError: single positional indexer is out-of-bounds",
+      "cause": "All-abstaining fractional point produces an empty Top-N list; summary attempted to infer target from the first selected row.",
+      "correction": "Target is now passed explicitly and every original week has an explicit empty selection summary.",
+      "intermediate_worker_sha256": null,
+      "missing_hash_reason": "Unsealed intermediate code was corrected before separate exact-byte freeze; no actual NFL predictions or source rows were decoded."
+    },
+    {
+      "attempt": "FICTIONAL_FIXED",
+      "state": "PASS",
+      "cases": 13
+    },
+    {
+      "attempt": "FICTIONAL_BOUND_ENTRY_AND_BOOTSTRAP",
+      "state": "PASS",
+      "cases": 14
+    },
+    {
+      "attempt": "FICTIONAL_FINAL_SOURCE_STRATA",
+      "state": "PASS",
+      "cases": 14,
+      "CPU_seconds": 1.252956955,
+      "wall_seconds": 0.901426911001181
+    },
+    {
+      "attempt": "FICTIONAL_FINITE_OFFER_READ_GUARD",
+      "state": "PASS",
+      "cases": 14,
+      "CPU_seconds": 1.203563299,
+      "wall_seconds": 0.811007353997411
+    },
+    {
+      "attempt": "FICTIONAL_INTERSECTION_COVERAGE_FIRST_INVOCATION",
+      "state": "OUTPUT_NOT_RETAINED_IN_TOOL_RETURN",
+      "reason": "Command completed without captured tool output; not counted as a pass. No NFL sources opened."
+    },
+    {
+      "attempt": "FICTIONAL_INTERSECTION_COVERAGE_VERIFIED_RETURN",
+      "state": "PASS",
+      "cases": 15,
+      "CPU_seconds": 1.707599619,
+      "wall_seconds": 1.4029930389988294
+    }
+  ],
+  "actual_NFL_decodes": 0,
+  "actual_scoring_runs": 0,
+  "fits": 0,
+  "inference": 0,
+  "managed_store_writes": 0,
+  "network_requests": 0,
+  "declared_output_limit_private_bytes": 8388608,
+  "declared_output_limit_compressed_aggregate_bytes": 65536,
+  "limitations": [
+    "This is outer-runner software preparation, not a completed forecasting or Over/Under comparison.",
+    "Legacy W1-6 capture remains an auxiliary population, never the new all-roster W1-7 primary.",
+    "Actual primary offer panel source binding and independent root GO are required before execution.",
+    "Point-only replay does not fabricate exact-line probability laws, EV or venue settlements."
+  ],
+  "entry": "execute_bound(ref,cfg,go,read_go,offer_ref=None)",
+  "GO_fields": [
+    "state=ROOT_AND_INDEPENDENT_GO",
+    "registered_by=/root",
+    "worker_version=matched12-auxiliary-runner-v1",
+    "worker_sha256",
+    "configuration_sha256=canonical JSON digest",
+    "input_sha256",
+    "offer_input_sha256=null or exact input capsule digest"
+  ],
+  "reviewer_requested_changes": [
+    "Explicitly label old query population intersected with recorded line board, not the full recoverable board.",
+    "Report original offers outside old expected query population by target/season/week.",
+    "Name unique player-game-target opportunities separately from independent game/week clusters."
+  ]
+}

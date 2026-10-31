@@ -1,0 +1,26 @@
+{
+  "version": "matched12-offer-driver-independent-aux-review-v1",
+  "reviewer": "/root/all12_aux_runner_prepare",
+  "state": "PASS_FOR_BOUNDED_TIMING_UNVERIFIED_LINE_ONLY_PREPARATION",
+  "driver": "tools/category_topfive_matched12_offer_driver_v1.py",
+  "driver_sha256": "381396e53859fab8238a87fb8f516b1676889407be258585d1d251c92dc968b0",
+  "policy": "tools/category_topfive_matched12_offers_v1.py",
+  "policy_sha256": "06e16f5a266b67eb49766b1a8951a408f49638009274df76b978863fbe03d895",
+  "scope": "Read-only source review; no NFL source decode, fitting, inference or numerical accuracy scoring by this reviewer.",
+  "verified": [
+    "Exact normalized field allowlist excludes outcome/result data.",
+    "Authenticated source hashes, schedule/game/team/opponent/kickoff context and source-week consistency are required.",
+    "Sleeper/GSIS resolution uses exact registry; no name guessing and no unknown-as-zero conversion.",
+    "Full recorded site props retain no-lean and late-flagged records; no TopPick selection filter.",
+    "Annual named books then recorded DK source fallback yields one outcome-blind model-independent primary opportunity.",
+    "Naive collection clocks and archive saves do not become quote timestamps or authenticated pregame evidence.",
+    "Anytime event offers remain separate and ordinary chart/targets markets are not fabricated.",
+    "Narrow scoring projection is compatible with auxiliary scorer after inclusion of opportunity_key."
+  ],
+  "limitations": [
+    "Source normalized GSIS/game bindings are consistency-checked, not independently reproduced upstream event mappings.",
+    "No bookmaker settlement or executable historical price qualification is asserted.",
+    "Root must authenticate/freeze actual output before scoring."
+  ],
+  "optional_hardening": "read_exact could reject an unexpected file size before reading, although bounded pinned hashes are already checked after read."
+}

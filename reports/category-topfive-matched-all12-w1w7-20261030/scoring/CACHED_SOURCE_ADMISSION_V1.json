@@ -1,0 +1,315 @@
+{
+  "version": "matched12-cached-source-admission-v1",
+  "state": "PASS_AUTHENTICATED_EXISTING_CACHED_INPUT",
+  "rows": 58833,
+  "columns": [
+    "season",
+    "week",
+    "game_id",
+    "player_id",
+    "team",
+    "opponent",
+    "position",
+    "kickoff_utc",
+    "cutoff_utc",
+    "prediction",
+    "fallback",
+    "method",
+    "product",
+    "target",
+    "source_forecast_input",
+    "rank_family",
+    "rank_deadline",
+    "rank",
+    "rank_band",
+    "forecast_clock_state",
+    "calendar_kickoff",
+    "rank_score",
+    "rank_history_slots",
+    "rank_known_slots",
+    "rank_unknown_slots",
+    "rank_last_game",
+    "rank_max_available",
+    "rank_state",
+    "actual",
+    "participation_state",
+    "source_outcome_state",
+    "outcome_state",
+    "signed_error",
+    "absolute_error",
+    "source_label_input",
+    "evidence_lane"
+  ],
+  "method_products": [
+    {
+      "target": "anytime_td",
+      "method": "CATBOOST_MEDIUM",
+      "product": "probability",
+      "rows": 2458
+    },
+    {
+      "target": "anytime_td",
+      "method": "LAB_CDF",
+      "product": "probability",
+      "rows": 2458
+    },
+    {
+      "target": "anytime_td",
+      "method": "TD_EQUAL_CDF_CAT",
+      "product": "probability",
+      "rows": 2458
+    },
+    {
+      "target": "chart_ppr",
+      "method": "GLOBAL_CHART_MEDIAN_2024",
+      "product": "median",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "HGB_CHART_MEDIAN_V1",
+      "product": "median_objective_point",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "LEAF_CDF_CHART_MEAN_V1",
+      "product": "mean",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "LEAF_CDF_CHART_MEDIAN_V1",
+      "product": "median",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "POSITION_CHART_MEAN_2024",
+      "product": "mean",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "POSITION_CHART_MEDIAN_2024",
+      "product": "median",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "ROLE_LAW_CHART_MEAN_V1",
+      "product": "mean",
+      "rows": 2117
+    },
+    {
+      "target": "chart_ppr",
+      "method": "ROLE_LAW_CHART_MEDIAN_V1",
+      "product": "median",
+      "rows": 2117
+    },
+    {
+      "target": "pass_att",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_att",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 515
+    },
+    {
+      "target": "pass_att",
+      "method": "RESPONSE_CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_cmp",
+      "method": "CATBOOST_COUNT_MEAN",
+      "product": "mean_objective_point",
+      "rows": 515
+    },
+    {
+      "target": "pass_cmp",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_cmp",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 515
+    },
+    {
+      "target": "pass_int",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_int",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 515
+    },
+    {
+      "target": "pass_int",
+      "method": "RESPONSE_CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_td",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_td",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 515
+    },
+    {
+      "target": "pass_td",
+      "method": "RESPONSE_CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_yd",
+      "method": "CATBOOST_MEDIUM",
+      "product": "median_objective_point",
+      "rows": 515
+    },
+    {
+      "target": "pass_yd",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 515
+    },
+    {
+      "target": "pass_yd",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 515
+    },
+    {
+      "target": "rec",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 2458
+    },
+    {
+      "target": "rec",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 2458
+    },
+    {
+      "target": "rec",
+      "method": "COUNT_A_MEAN",
+      "product": "mean_objective_point",
+      "rows": 2458
+    },
+    {
+      "target": "rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "product": "median_objective_point",
+      "rows": 2458
+    },
+    {
+      "target": "rec_yd",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 2458
+    },
+    {
+      "target": "rec_yd",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 2458
+    },
+    {
+      "target": "rush_att",
+      "method": "CATBOOST_COUNT_MEAN",
+      "product": "mean_objective_point",
+      "rows": 668
+    },
+    {
+      "target": "rush_att",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 668
+    },
+    {
+      "target": "rush_att",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 668
+    },
+    {
+      "target": "rush_att",
+      "method": "COUNT_A_MEAN",
+      "product": "mean_objective_point",
+      "rows": 668
+    },
+    {
+      "target": "rush_rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "product": "median_objective_point",
+      "rows": 2458
+    },
+    {
+      "target": "rush_rec_yd",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 2458
+    },
+    {
+      "target": "rush_rec_yd",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 2458
+    },
+    {
+      "target": "rush_yd",
+      "method": "CATBOOST_MEDIUM",
+      "product": "median_objective_point",
+      "rows": 668
+    },
+    {
+      "target": "rush_yd",
+      "method": "CDF_MEAN",
+      "product": "mean",
+      "rows": 668
+    },
+    {
+      "target": "rush_yd",
+      "method": "CDF_MEDIAN",
+      "product": "median",
+      "rows": 668
+    }
+  ],
+  "participation_states": {
+    "played": 44739,
+    "unknown": 14094
+  },
+  "weeks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "new_fits_forecasts_scores": 0,
+  "actual": {
+    "CPU_seconds": 0.8062842760000001,
+    "wall_seconds": 0.3918001479978557,
+    "RSS_bytes": 184848384
+  }
+}

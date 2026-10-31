@@ -1,0 +1,55 @@
+{
+  "version": "matched12-managed-replay-preparation-v1",
+  "state": "PREPARED_AWAITING_EXACT_ROOT_INDEPENDENT_GO",
+  "worker": "tools/category_topfive_matched12_replay_v1.py",
+  "worker_sha256": "9fc9d6e97c0f5b0e8a2cb76b43d63f2390354cb2f4100414ae30e6d9d3687de7",
+  "worker_bytes": 12008,
+  "checks": {
+    "AST": "PASS",
+    "fictional_absent_GO_rejected_before_store_open": "PASS",
+    "public_reference_redaction": "PASS",
+    "AST_after_review": "PASS",
+    "fictional_absent_GO_and_redaction_after_review": "PASS"
+  },
+  "actual_NFL_decodes": 0,
+  "actual_managed_store_opens": 0,
+  "actual_scoring_runs": 0,
+  "fits": 0,
+  "inference": 0,
+  "network": 0,
+  "prospective_resource_allocation": {
+    "CPU_seconds": 900,
+    "wall_seconds": 1200,
+    "RSS_bytes": 2147483648,
+    "threads": 2,
+    "complete_private_peak_bytes": 25165824,
+    "safe_aggregate_compressed_bytes": 196608
+  },
+  "prior_caps_preserved": "Root plan must record separately versioned unexecuted64KiB aggregate-limit amendment; original spent budgets and failed attempts unchanged.",
+  "actual_execution_entry": "CLI with exact privateplan file SHA, exact rootGO file SHA, and canonical plan digest. No real execution during preparation.",
+  "prepared_behavior": [
+    "Authenticate exact worker/config/source before source decode.",
+    "Use actual namespace owner for original inputs; never misattribute old bytes to new private peer.",
+    "Durably journal consumed attempt before football source materialization.",
+    "Retain complete prepared frames, exclusions, event-offer tables, site bindings and exact private source configs.",
+    "Freeze/readback primary offered scoring panel, derive exact inner bindings under reviewed root delegation, then execute bound auxiliary replay.",
+    "Retain private point and side scorecards, public-safe gzip aggregates, failure states and checkpoint receipt."
+  ],
+  "boundaries": [
+    "No production writes/capture/scheduler changes.",
+    "No model fitting, restoration, inference or sourceHTTP.",
+    "No pregame, probability-law or venue-settlement claims from this point-only reconstruction.",
+    "Local sameprocess validation is not fresh-process restore or offhost durability."
+  ],
+  "superseded_unexecuted_workers": [
+    {
+      "sha256": "3dfbb634c2ff3f93b03b1fad1deca7c2717a77bdf8155fc403cdbad946834cd4",
+      "reason": "Root review caught W7 recorded offers incompatible with auxiliaryW1-6 scoring scope; no actual execution occurred."
+    }
+  ],
+  "review_corrections": [
+    "Preserve full W1-7 prepared sources and PRIMARY_FULL. Separately freeze PRIMARY_SCORING_LEGACY_W1_6 filtered by preregistered auxiliary season/week/target scope.",
+    "Count omitted offers by target/season/week without consulting outcomes.",
+    "Measure CPU/wall from outer execute entry, including managed constructor and source checks."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "version": "matched12-finalist-runtime-amendments-v1-1",
+  "registered_at_UTC": "2026-10-30T23:56:44.278926+00:00",
+  "original_catalog": "FINALIST_CATALOG_V1.json",
+  "original_execution_protocol": "EXECUTION_PROTOCOL_V1.json",
+  "changes_before_any_NFL_numerical_execution": [
+    {
+      "family": "HGB_MAE_DIRECT",
+      "original_unexecuted_variant": "128iterations/31leaves/depth5/l2=1/seed1703",
+      "state": "DEFERRED_UNEXECUTED_UNNEEDED_VARIANT",
+      "effective_procedure": "Existing all12-median-boosting-v1-20261023 fixed150iterations,15leaves,depth3,minleaf30,l2=10,lr0.05,noearlystop,seed1702; no new hyperparameter variation."
+    },
+    {
+      "runtime": "native numerical threads",
+      "original_registered_default": 1,
+      "effective_existing_method_threads": 2,
+      "reason": "Reuse unchanged frozen source parameters/threadpool contracts; safe bounded existing free runtime, no estimator/feature/objective changes."
+    }
+  ],
+  "source_pins": {
+    "nfl_lab/median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "nfl_lab/direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "nfl_lab/role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+  },
+  "exact_existing_parameters": {
+    "HGB": {
+      "max_iter": 150,
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 15,
+      "max_depth": 3,
+      "min_samples_leaf": 30,
+      "l2_regularization": 10,
+      "early_stopping": false,
+      "random_state": 1702
+    },
+    "CatBoost_medium": {
+      "iterations": 128,
+      "depth": 5,
+      "learning_rate": 0.05,
+      "l2_leaf_reg": 10,
+      "random_seed": 1753,
+      "thread_count": 2,
+      "bootstrap_type": "No",
+      "random_strength": 0,
+      "rsm": 1,
+      "allow_writing_files": false,
+      "use_best_model": false
+    }
+  },
+  "before_execution": "All per-worker sealed plans must apply this explicit amendment. Original source/catalog and zero spent fits remain retained."
+}

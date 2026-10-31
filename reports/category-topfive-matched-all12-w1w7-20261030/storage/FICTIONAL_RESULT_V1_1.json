@@ -1,0 +1,43 @@
+{
+  "NFL_decode_fits_forecasts_scoring_HTTP": 0,
+  "actual": {
+    "CPU_seconds": 0.7599241099999999,
+    "RSS_bytes": 57552896,
+    "wall_seconds": 0.41944028200305183
+  },
+  "check_count": 24,
+  "checks": [
+    "oldlimit drift before old attachment",
+    "rejected allocation did not attach peer",
+    "immutable writer inherited",
+    "stream capture inherited",
+    "restore validator inherited",
+    "same permanent flock",
+    "same thread lock context",
+    "new root disjoint",
+    "complete usage nonduplicated",
+    "limits unchanged",
+    "reservation checked",
+    "cas readback",
+    "old controls immutable",
+    "readonly reference restored",
+    "readonly identical accounting",
+    "mutable descriptor before old peer",
+    "bad descriptor did not attach peer",
+    "new128MiB incoming peak rejected",
+    "upcoming old reservation protected",
+    "blocked destination absent",
+    "retained96MiB checkpoint enforced",
+    "old outer descriptor checked before attachment",
+    "evidence preserved after failures",
+    "retained checkpoint still valid"
+  ],
+  "fixture_sha256": "4c6dac95b97eae7f2c5eccae88b2b901625e705d3abd8ccceab7a82a35173031",
+  "limitations": [
+    "Old complete aggregate simulated; real peer initialization/inventory still requires independent root review and explicit GO.",
+    "No off-host restoration tested."
+  ],
+  "real_managed_store_opened": false,
+  "source_sha256": "cd5b25fecbfc0ddb38c9ac21a2e52369706d9b1694bffb2f4f8cdcc4af3dfdcf",
+  "state": "PASS_FICTIONAL_ACTUAL_INHERITED_CAS_WITH_SIMULATED_OLD_COMPLETE_PEER"
+}
