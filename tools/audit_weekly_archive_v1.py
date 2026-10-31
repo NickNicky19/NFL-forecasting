@@ -87,9 +87,15 @@ def run(args,env,*,transport=None):
     authority,job,operations_proof,root_bytes=guard(args,env)
     raw=store.read_local(args.request,512 << 10)
     archive.require(store.sha(raw)==args.request_sha256,"EXACT_ARCHIVE_REQUEST_HASH")
-    p=cp.strict_json(raw)
-    archive.require(raw==store.canonical(p) and set(p)==REQUEST_KEYS and p["approved"] is True
-        and p["schema_version"]==archive.VERSION+"-request" and p["repository"]==store.REPO and p["phase"]==args.phase
+    p=cp.strict_json(raw);root_go=cp.strict_json(root_bytes);display_profile=None
+    if root_go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
+        from nfl_lab import weekly_mae_display_archive_v1 as display
+        display_profile=display.checked_profile(root_go,authority["owner_root_go_sha256"],ROOT)
+    expected_keys=REQUEST_KEYS if display_profile is None else REQUEST_KEYS|{"mae_registration"}
+    expected_schema=archive.VERSION+"-request" if display_profile is None else display.REQUEST_V2
+    archive.require(display_profile is None or p.get("mae_registration")==root_go["mae_registration"],"SAME_ROOT_ARCHIVE_DISPLAY_REGISTRATION")
+    archive.require(raw==store.canonical(p) and set(p)==expected_keys and p["approved"] is True
+        and p["schema_version"]==expected_schema and p["repository"]==store.REPO and p["phase"]==args.phase
         and p["helper_sha256"]==archive.pins() and p["limits"]==archive.LIMITS
         and set(p["jobs"])=={"produce","restore","consume"} and p["jobs"][args.phase]==job["job_id"],"SEALED_CLOSED_ARCHIVE_REQUEST")
     from nfl_lab.audit_weekly_template_v1 import pending_recovery
@@ -130,14 +136,14 @@ def run(args,env,*,transport=None):
             # Genuine current identity and rotated qualification precede any
             # forecast/feature body read. Reuse this client for the first POST.
             first=factory("append");archive.authenticate_qualification(first,package,p["pending_census"]);archive.jobs_for(first)
-            snapshot=archive.collect(p["runtime_root"],p["context"],storage=storage,output=Path(p["local_root"])/"collection",r0=p["r0"])
+            snapshot=archive.collect(p["runtime_root"],p["context"],storage=storage,output=Path(p["local_root"])/"collection",r0=p["r0"],display_profile=display_profile)
             used=False
             def reuse(operation):
                 nonlocal used
                 if not used:used=True;return first
                 return factory(operation)
             handoff=archive.produce(snapshot,reuse,package,storage=storage,output=p["output"],root_go_sha256=authority["owner_root_go_sha256"],
-                jobs=p["jobs"],pending_census=p["pending_census"],pending=p["pending_reservations"])
+                jobs=p["jobs"],pending_census=p["pending_census"],pending=p["pending_reservations"],display_profile=display_profile)
             body=archive.safe_handoff(handoff)
             summary=dict(state="PRIVATE_CAPTURE_APPENDED_RESTORE_REQUIRED",archive_state=handoff["archive_state"],handoff_sha256=store.sha(body))
             key="archive_handoff"
@@ -145,7 +151,7 @@ def run(args,env,*,transport=None):
             handoff=p["handoff"] if args.phase=="restore" else p["reader_handoff"]["archive"]
             archive.require(handoff["jobs"]==p["jobs"],"EXACT_CURRENT_ARCHIVE_WORKFLOW_ROLES")
             result=archive.restore(handoff,factory,package,storage=storage,output=p["output"],root_go_sha256=authority["owner_root_go_sha256"],
-                pending_census=p["pending_census"],reader_handoff=p["reader_handoff"] if args.phase=="consume" else None)
+                pending_census=p["pending_census"],reader_handoff=p["reader_handoff"] if args.phase=="consume" else None,display_profile=display_profile)
             summary=dict(state=result["state"],result_sha256=store.sha(store.canonical(result)),replay_ready=result["replay_ready"],model_replay_performed=False)
             if args.phase=="restore":
                 body=store.read_local(Path(p["output"])/"READER_HANDOFF.json",16384);key="archive_reader_handoff"

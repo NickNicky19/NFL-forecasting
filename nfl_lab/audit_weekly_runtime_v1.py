@@ -130,7 +130,7 @@ def relocated_catalog(restored, aliases):
 
 class Runtime:
     """One typed epoch/choice. External proof authentication belongs to parent."""
-    def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None):
+    def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None, mae_owner=None):
         from . import operational_sources as sources
         numerical.loaded(Path(__file__).resolve().parents[1],os.environ)
         require(isinstance(storage, OperationalStorage) and type(registered) is epoch.RegisteredEpoch
@@ -184,6 +184,10 @@ class Runtime:
             product_kind=choice.document["mode"], export_boundary=HANDOFF,
             numerical_runtime=dict(configuration_id="effective18-haswell-numpy-generic-v1",
                 configuration_file_sha256=private.sha(private.read_local(Path(__file__).resolve().parents[1]/"config/audit-weekly-numerical-runtime-v1.json",32 << 10))))
+        self._mae = None
+        if mae_owner is not None:
+            from .weekly_mae_display_runtime_v1 import BoundDisplay
+            self._mae = BoundDisplay(self, mae_owner)
 
     def check(self):
         self.progress()
@@ -209,10 +213,13 @@ class Runtime:
                 replay_catalog_sha256=digest(self.replay),model_pairs=18),
             metadata_remote_durability_qualified=False,current_values_used=False)
         completion_ref = write(self.storage, output/"CHOICE_COMPLETION.json",completion)
-        return write(self.storage, output/"PREPARED.json", dict(schema_version=VERSION+"-prepared", refs=refs,
+        prepared_ref = write(self.storage, output/"PREPARED.json", dict(schema_version=VERSION+"-prepared", refs=refs,
             epoch_sha256=self.registered.epoch.sha256, choice_sha256=self.choice.sha256,
             actual_completed_at=self.clock().isoformat(), current_values_used=False, fits=0,
             choice_completion=completion_ref,metadata_remote_durability_qualified=False,public_export_authorized=False))
+        if self._mae is not None:
+            self._mae.prepare(output, prepared_ref)
+        return prepared_ref
 
     def prepared(self, ref):
         value = read_owned(self.storage, ref)
@@ -410,6 +417,11 @@ class Runtime:
                 choice=future.binding(output/"WEEKLY_CHOICE.json"), artifact_catalog=future.binding(output/"ARTIFACT_CATALOG.json"),
                 selected_version_catalog=future.binding(output/"SELECTED_VERSION_CATALOG.json"),
                 requires_new_epoch_checkpoint_export_consumer=True, rights=None, durability=None, public_export_authorized=False))
+        # The original session, FINISHED and successful handoff are complete
+        # before optional point work can register refs or consume more budget.
+        if self._mae is not None and fatal is None:
+            self._mae.capture(features, capture, cref, source, source_ref, prepared_ref,
+                bridge, bref, sink, output, receipt, statuses)
         return ref
 
     def _candidates(self, session, features, capture, capture_ref, bridge, sink, output):

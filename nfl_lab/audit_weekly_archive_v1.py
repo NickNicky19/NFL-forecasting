@@ -212,7 +212,7 @@ def allowed_runtime_name(name):
     return name in CONTROL_FILES|CANDIDATE_NAMES|STATUS_NAMES or re.fullmatch(r"views/[0-9]{1,2}/projections/[a-f0-9]{64}\.json",name) is not None
 
 
-def collect(runtime_root, context, *, storage, output, r0=None):
+def collect(runtime_root, context, *, storage, output, r0=None, display_profile=None):
     """All available bytes, with a closed missing census for partial failures.
 
 context roles are exact owned metadata bindings, including the parent's honest
@@ -225,6 +225,10 @@ No old completion is invented. Missing files force a failure archive.
     require(not history or history == OPERATIONS_HISTORY_CONTEXT,"PAIRED_OPERATIONAL_HISTORY_REFERENCES_REQUIRED")
     operations=set(context) & (OPERATIONS_CONTEXT | OPERATIONS_PLANNING_CONTEXT | OPERATIONS_RECOVERY_CONTEXT | OPERATIONS_HISTORY_CONTEXT | {"ops_previous_checkpoint"})
     require(not operations or OPERATIONS_CONTEXT <= set(context), "COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED")
+    if display_profile is not None:
+        from . import weekly_mae_display_archive_v1 as display
+        require(type(display_profile) is display.DisplayProfile,"TYPED_ROOT_V5_ARCHIVE_PROFILE_REQUIRED")
+        display_profile.verify()
     root=store.parents_safe(runtime_root);output=fresh(storage,output)
     entries={};physical_origins={}
     def add(ref,name,kind="control"):
@@ -241,7 +245,8 @@ No old completion is invented. Missing files force a failure archive.
         for basename in names:
             if basename==_OWNER: continue
             path=Path(directory)/basename;name=path.relative_to(root).as_posix()
-            require(allowed_runtime_name(name) and not path.is_symlink(),"UNDECLARED_RUNTIME_FILE_NO_SILENT_OMISSION")
+            require((allowed_runtime_name(name) or (display_profile is not None and display.allowed_runtime_name(name)))
+                and not path.is_symlink(),"UNDECLARED_RUNTIME_FILE_NO_SILENT_OMISSION")
             kind="forecast" if name.endswith(".jsonl.gz") else "feature" if name=="features.parquet" else "query" if name.endswith(".parquet") else "control"
             add(cp.binding(path),"runtime/"+name,kind);observed.add(name)
     for role,ref in context.items():add(ref,"context/"+role+".json")
@@ -250,6 +255,10 @@ No old completion is invented. Missing files force a failure archive.
         and source["prepared"]==context["prepared"],"EXACT_RUNTIME_SOURCE_AND_METADATA_CONTEXT")
     for role,ref in prepared["refs"].items():add(ref,"prepared/"+codec.logical(role)+".json")
     add(prepared["choice_completion"],"prepared/choice_completion.json")
+    if display_profile is not None:
+        for name in display.PREPARED:
+            path=Path(context["prepared"]["path"]).parent/"mae-display"/name
+            if path.exists(): add(cp.binding(path),"prepared/mae-display/"+name)
     namespace=store.parents_safe(source["namespace"])
     for name in ("source-manifest.json","subset-manifest.json"):
         path=namespace/name
@@ -311,14 +320,33 @@ No old completion is invented. Missing files force a failure archive.
     if "FINISHED.json" in observed:
         terminal=cp.strict_json(cp.read_ref(physical_origins["runtime/FINISHED.json"]))
         if terminal.get("state")!="PRIVATE_CURRENT_EPOCH_CAPTURE_COMPLETE":census["archive_state"]="FAILURE_EVIDENCE"
+    if display_profile is not None:
+        census["mae_display_profile"]=dict(root_go_sha256=display_profile.root_sha256,
+            registration_sha256=display_profile.root["mae_registration"]["sha256"])
     result=dict(files=files,census=census)
-    validate_capture(result,lambda name:Path(entries[name]["path"]),complete=census["archive_state"]=="COMPLETE_CAPTURE")
+    validate_capture(result,lambda name:Path(entries[name]["path"]),complete=census["archive_state"]=="COMPLETE_CAPTURE",display_profile=display_profile)
     _owned_files(storage,files)
     write(storage,output/"COLLECTED.json",result)
     return result
 
 
-def validate_capture(snapshot,path,*,complete):
+def validate_capture(snapshot,path,*,complete,display_profile=None):
+    names={f["logical_path"] for f in snapshot["files"]}
+    extra=any(n.startswith(("runtime/mae-display/","prepared/mae-display/")) for n in names)
+    if display_profile is None:
+        require(not extra and "mae_display_profile" not in snapshot["census"],"V1_ARCHIVE_HAS_NO_DISPLAY_PROFILE_OR_ALIASES")
+        return _validate_legacy_capture(snapshot,path,complete=complete)
+    from . import weekly_mae_display_archive_v1 as display
+    require(type(display_profile) is display.DisplayProfile,"TYPED_ROOT_V5_ARCHIVE_PROFILE_REQUIRED")
+    display_profile.verify()
+    require(snapshot["census"].get("mae_display_profile")==dict(root_go_sha256=display_profile.root_sha256,
+        registration_sha256=display_profile.root["mae_registration"]["sha256"]),"EXACT_ROOT_V5_CAPTURE_PROFILE_BINDING")
+    result=_validate_legacy_capture(snapshot,path,complete=complete)
+    result["mae_display"]=display.validate_capture(snapshot,path,display_profile)
+    return result
+
+
+def _validate_legacy_capture(snapshot,path,*,complete):
     """Semantic readback of forecast/control bytes only; no model/outcome API."""
     files=snapshot["files"];validate_files(files)
     names={f["logical_path"] for f in files};census=snapshot["census"]
@@ -584,11 +612,13 @@ def capacity_snapshot(client):
         remaining_slots=store.MAX_ASSETS-client.inventory_slots, reservations=reservations)
 
 
-def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pending_census,pending=()):
+def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pending_census,pending=(),display_profile=None):
     output=fresh(storage,output);files,census=snapshot["files"],snapshot["census"]
     validate_files(files);validate_owned_references(storage,{f["path"]:f["sha256"] for f in files})
     require(set(jobs)=={"produce","restore","consume"} and len(set(jobs.values()))==3 and store.HASH.fullmatch(root_go_sha256),"CLOSED_PARENT_ARCHIVE_ROLES_AND_ROOT_GO")
     first=factory("append");producer=checked(first,jobs["produce"])
+    require(display_profile is None or (display_profile.root["source_sha"]==producer["source_sha"]
+        and display_profile.root["jobs"]==jobs),"SAME_NATIVE_PRODUCER_AND_DISPLAY_ROOT_SOURCE_ROLES")
     cp.seed_pending(first.journal,list(pending));authenticate_qualification(first,package,pending_census);jobs_for(first)
     proof=dict(schema_version=VERSION+"-producer",identity=producer,root_go_sha256=root_go_sha256,
         files_sha256=store.sha(store.canonical(files)),census_sha256=store.sha(store.canonical(census)),actual_started_at=first.started_at,
@@ -596,7 +626,9 @@ def produce(snapshot,factory,package,*,storage,output,root_go_sha256,jobs,pendin
         fits=0,successful_forecast=False,public_release=False)
     write(storage,output/"CONSUMED.json",proof)
     complete=census["archive_state"]=="COMPLETE_CAPTURE"
-    validate_capture(snapshot,lambda n:Path(next(f["path"] for f in files if f["logical_path"]==n)),complete=complete)
+    require(display_profile is None or display_profile.root_sha256==root_go_sha256,"SAME_DISPLAY_PROFILE_AND_ARCHIVE_ROOT")
+    validation_snapshot=snapshot if display_profile is None else dict(snapshot,producer_proof=proof)
+    validate_capture(validation_snapshot,lambda n:Path(next(f["path"] for f in files if f["logical_path"]==n)),complete=complete,display_profile=display_profile)
     prepared=[]
     for n,members in enumerate(capture_groups(files)):
         require(n<MAX_GROUPS,"EIGHT_ARCHIVE_GROUPS_NO_OMISSIONS")
@@ -707,11 +739,13 @@ def check_index(index,handoff):
     return index
 
 
-def restore(handoff,factory,package,*,storage,output,root_go_sha256,pending_census,reader_handoff=None):
+def restore(handoff,factory,package,*,storage,output,root_go_sha256,pending_census,reader_handoff=None,display_profile=None):
     """Fresh reader writes one reserved witness; exporter variant is GET only."""
     safe_handoff(handoff);require(root_go_sha256==handoff["root_go_sha256"],"EXACT_CAPTURE_ROOT_GO")
     output=fresh(storage,output);exporter=reader_handoff is not None;role="consume" if exporter else "restore"
     first=factory("restore");current=checked(first,handoff["jobs"][role])
+    require(display_profile is None or (display_profile.root["source_sha"]==current["source_sha"]
+        and display_profile.root["jobs"]==handoff["jobs"]),"SAME_NATIVE_READER_AND_DISPLAY_ROOT_SOURCE_ROLES")
     authenticate_qualification(first,package,pending_census);jobs=jobs_for(first)
     writer=predecessor(first,handoff["producer"],jobs,failure_archive=handoff["archive_state"]=="FAILURE_EVIDENCE")
     prior_witness=None
@@ -757,7 +791,8 @@ def restore(handoff,factory,package,*,storage,output,root_go_sha256,pending_cens
     if empty:_publish_owned_files(storage,empty,output/"files")
     aliases={f["logical_path"]:dict(path=str(output/"files"/f["logical_path"]),bytes=f["bytes"],sha256=f["sha256"]) for f in index["files"]}
     _owned_files(storage,list(aliases.values()))
-    validation=validate_capture(index,lambda n:Path(aliases[n]["path"]),complete=index["archive_state"]=="COMPLETE_CAPTURE")
+    require(display_profile is None or display_profile.root_sha256==root_go_sha256,"SAME_DISPLAY_PROFILE_AND_ARCHIVE_ROOT")
+    validation=validate_capture(index,lambda n:Path(aliases[n]["path"]),complete=index["archive_state"]=="COMPLETE_CAPTURE",display_profile=display_profile)
     _owned_files(storage,list(aliases.values()))
     witness=dict(schema_version=VERSION+"-witness",restorer=current,index_sha256=store.sha(encoded),files_sha256=index["files_sha256"],
         producer_proof_sha256=store.sha(store.canonical(index["producer_proof"])),proofs=proofs,validation=validation,actual_completed_at=now(),

@@ -114,6 +114,11 @@ def _source_specs(go):
     producer = dict(source_sha=go["source_sha"], branch=BRANCH, code_pins=producer_pins,
         workflow_sha256=producer_pins[c.WORKFLOW])
     bootstrap.source_inventories(parent, producer, registry_version=2)
+    if go.get("schema_version")==template.ROOT_V5:
+        require(bootstrap.PARENT_MAE_METADATA_PINS<=set(parent_pins)
+            and type(go.get("mae_helper_pins")) is dict
+            and all(parent_pins[name]==go["mae_helper_pins"].get(name) for name in bootstrap.PARENT_MAE_METADATA_PINS),
+            "EXACT_V5_PARENT_METADATA_PINS_BEFORE_PRIVATE_CREATE")
     return parent, producer
 
 
@@ -169,8 +174,8 @@ def prepare_template(go, readiness):
     root["approved"] = False
     for key in ("issued_at_utc", "expires_at_utc", "operation", "effective_epoch"):
         root[key] = None
-    version = template.STATIC_V4 if go['schema_version']==template.ROOT_V4 else template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA} else "-static")
-    require(version not in {template.STATIC_V3,template.STATIC_V4} or ctx['schema_version'] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
+    version = template.STATIC_V5 if go['schema_version']==template.ROOT_V5 else template.STATIC_V4 if go['schema_version']==template.ROOT_V4 else template.STATIC_V3 if go['schema_version'] == template.ROOT_V3 else template.VERSION + ("-static-v2" if ctx["schema_version"] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA} else "-static")
+    require(version not in {template.STATIC_V3,template.STATIC_V4,template.STATIC_V5} or ctx['schema_version'] in {HISTORY_CONTEXT_SCHEMA,RECOVERY_CONTEXT_SCHEMA}, 'EXPLICIT_DUAL_RUNTIME_HISTORY_REGISTRATION')
     return template.prepare(dict(schema_version=version, source_sha=go["source_sha"],
         code_pins=deepcopy(go["code_pins"]), readiness=deepcopy(readiness), root_template=root))
 

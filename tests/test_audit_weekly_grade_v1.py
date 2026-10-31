@@ -65,6 +65,8 @@ def packet(tmp_path):
     # Exercise the actual serializer, not an expected-shape fixture. The
     # inference backend is deliberately not constructed: no model is loaded.
     serializer=object.__new__(runtime.Runtime)
+    # This deliberate no-inference serializer fixture is the original lane.
+    serializer._mae=None
     serializer.storage=storage;serializer.registered=r;serializer.choice=c
     serializer.clock=lambda:CONTINUED+timedelta(minutes=2);serializer.progress=lambda:None
     serializer.recipe=dict(schema_version=runtime.VERSION+'-recipe',fictional_metadata_only=True)

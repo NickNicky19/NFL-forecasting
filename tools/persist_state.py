@@ -8,6 +8,7 @@ from contextlib import nullcontext
 from datetime import datetime, timezone
 import re
 import uuid
+import zlib
 from pathlib import Path, PurePosixPath
 import shutil
 import subprocess
@@ -34,6 +35,53 @@ def public_export_names(files):
     if len(feeds)!=1 or len(receipts)!=1:
         raise ValueError("only the closed derived public feed and receipt paths may publish")
     return feeds[0],receipts[0]
+
+
+def v5_public_export_names(files):
+    """Exactly the unchanged legacy pair plus one separate point-display pair."""
+    from nfl_lab.weekly_mae_display_archive_v1 import public_names
+    if type(files) is not dict or len(files)!=4:
+        raise ValueError("V5 atomic publication requires exactly four public files")
+    legacy={n:h for n,h in files.items() if n.startswith("public/weekly-adaptive-v1/")}
+    point={n:h for n,h in files.items() if n.startswith("public/stat-point-mae-v1/")}
+    if set(legacy)|set(point)!=set(files):
+        raise ValueError("closed V5 public inventory required")
+    return public_export_names(legacy),public_names(point)
+
+
+def validate_v5_public_export(state,files,source_policy_sha256):
+    from nfl_lab.weekly_mae_display_archive_v1 import validate_public_pair,read_bounded
+    legacy,point=v5_public_export_names(files)
+    for name,expected in files.items():
+        body=read_bounded(Path(state)/name,4 << 20 if name.endswith(".json") else 64 << 10)
+        if hashlib.sha256(body).hexdigest()!=expected:
+            raise ValueError("V5 publication differs from exact owned file inventory")
+    document,receipt=validate_public_pair(read_bounded(Path(state)/point[0],4 << 20),read_bounded(Path(state)/point[1],64 << 10))
+    from nfl_lab import audit_weekly_delivery_v1 as legacy_delivery
+    from nfl_lab.gha_private_checkpoint import strict_json
+    old_body=read_bounded(Path(state)/legacy[0],4 << 20);old_feed=strict_json(old_body)
+    decoder=zlib.decompressobj(16+zlib.MAX_WBITS)
+    old_raw=decoder.decompress(read_bounded(Path(state)/legacy[1],64 << 10),(64 << 10)+1)
+    if not decoder.eof or decoder.unused_data or decoder.unconsumed_tail or len(old_raw)>64 << 10:
+        raise ValueError("V5 requires exact bounded genuine legacy receipt")
+    old_receipt=strict_json(old_raw)
+    common=("source_sha","run_id","root_go_sha256","workflow_sha256","jobs","archive_index_sha256","archive_files_sha256","reader_witness_sha256")
+    if (type(old_receipt) is not dict or set(old_receipt)!=legacy_delivery.RECEIPT_KEYS
+            or old_receipt["schema_version"]!=legacy_delivery.VERSION+"-public-receipt"
+            or any(old_receipt[k]!=receipt[k] for k in common)
+            or old_receipt["feed_sha256"]!=files[legacy[0]] or old_receipt["feed_bytes"]!=len(old_body)
+            or old_receipt["rows"]!=len(old_feed["rows"]) or old_receipt["created_at"]!=old_feed["created_at"]
+            or (old_feed["season"],old_feed["week"])!=(document["season"],document["week"])
+            or Path(legacy[1]).name!=files[legacy[0]]+".json.gz"):
+        raise ValueError("V5 legacy and point pair must share actual source/run/jobs/Root/archive and period")
+    stamp=datetime.fromisoformat(document["created_at"].replace("Z","+00:00")).astimezone(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+    if (Path(point[0]).name.split("--")[0]!=stamp
+            or Path(point[0]).parent.name!=f"{document['season']}-W{document['week']:02d}"
+            or Path(point[0]).stem.split("--")[1]!=files[point[0]]
+            or receipt["legacy_feed_sha256"]!=files[legacy[0]]
+            or receipt["source_policy_sha256"]!=source_policy_sha256):
+        raise ValueError("V5 point receipt must bind coherent legacy feed and frozen policy")
+    return files
 
 
 def publication_files(state):
@@ -230,7 +278,12 @@ def main(argv=None):
         return persist(root,state,storage=storage,policy_path=policy_path,files=files)
 
 
-def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_policy=False):
+def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_policy=False,v5_metadata_policy=False):
+    if v5_metadata_policy:
+        if metadata_policy or storage is None or policy_path is None:
+            raise ValueError("explicit V5 metadata mode requires one quota owner and frozen source policy")
+        from nfl_lab.frozen_source_policy import load_frozen_source_policy
+        validate_v5_public_export(state,files,load_frozen_source_policy(policy_path)["_policy_sha256"])
     if metadata_policy:
         if storage is None or policy_path is None:raise ValueError("frozen public metadata publication requires its quota owner and policy")
         public_export_names(files)
@@ -274,7 +327,7 @@ def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_polic
             observed=git("ls-remote","origin",f"refs/heads/{branch}",capture=True).split()[0]
             if observed!=commit:raise RuntimeError("remote state readback mismatch")
             from nfl_lab.publication_scope import scope_document
-            if metadata_policy:
+            if metadata_policy or v5_metadata_policy:
                 from nfl_lab.frozen_source_policy import load_frozen_source_policy as load_source_policy
             else:
                 from nfl_lab.operational_sources import load_source_policy
@@ -283,7 +336,7 @@ def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_polic
             publication=[sys.executable,"-m","nfl_lab.cli","publication","--root",str(root),"--state",str(state),"--publication-commit",commit,"--publication-scope-stdin"]
             if storage is not None:
                 publication += ["--cache",str(storage.cache),"--source-policy",str(policy_path),"--output","runs/operational-v2/publication-result.json"]
-                if metadata_policy:publication += ["--frozen-public-policy"]
+                if metadata_policy or v5_metadata_policy:publication += ["--frozen-public-policy"]
             subprocess.run(publication,check=True,input=json.dumps(scope),text=True)
             if storage is not None:
                 print("Reviewed state published; new local publication-timing receipts await the next exact content review")
