@@ -105,7 +105,7 @@ def capture_case(tmp_path, *, epoch_document=None, choice_document=None):
 
 
 class Service:
-    def __init__(self,path):
+    def __init__(self,path, *, qualification_at=None):
         self.server=Server();self.calls=[];self.active='produce';self.bad_writer=False;self.bad_qualifier=False
         self.started=datetime.now(timezone.utc)-timedelta(minutes=10)
         self.writer_completed=None;self.reader_completed=None
@@ -113,7 +113,18 @@ class Service:
         self.qrun='40000000001'
         initial=s.Client('ghs_FICTIONAL',self.qrun,journal=journal,source_sha=SOURCE,transport=self.server,process='e'*64)
         self.binding=s.initialize(initial,'c'*32)
-        self.q=qualification(self.binding)
+        if qualification_at is None:
+            self.q=qualification(self.binding)
+        else:
+            # A frozen grading service must create its NEW fictional canary
+            # proofs at that same synthetic clock, not the host wall clock.
+            class QualificationClock(datetime):
+                @classmethod
+                def now(cls,tz=None):
+                    return qualification_at if tz else qualification_at.replace(tzinfo=None)
+            from unittest.mock import patch as qualification_patch
+            with qualification_patch('test_owner_private_bootstrap.datetime',QualificationClock):
+                self.q=qualification(self.binding)
         before,read,q=self.q['before_proof'],self.q['read_proof'],self.q
         for p,k in zip((before,read,q),('write','read','qualify')):p['job']['job_id']=rotation.JOBS[k]
         read['before_sha256']=s.sha(s.canonical(before));q['before_sha256']=read['before_sha256'];q['read_sha256']=s.sha(s.canonical(read))
@@ -393,3 +404,89 @@ def test_literal_original_five_operational_roles_pass_context_admission(tmp_path
     del context['ops_schedule']
     with pytest.raises(s.StoreError,match='COMPLETE_OPERATIONAL_PREVALUE_CONTEXT_REQUIRED'):
         a.collect(tmp_path,context,storage=object(),output=tmp_path/'still-not-created')
+
+
+@pytest.mark.parametrize('byte_delta,slot_delta', [(0,0),(1,0),(0,1)])
+def test_rejected_or_exact_admission_keeps_full_reservation_breakdown(capture, byte_delta, slot_delta):
+    """Real codec/inventory/journals; fictional server capacity, no HTTP."""
+    p=capture;service=Service(p.base)
+    snapshot=a.collect(p.root,p.context,storage=p.storage,output=p.base/'capacity-collection')
+    groups=a.capture_groups(snapshot['files'])
+    encoded=sum(len(a.codec.encode(g)[0]) for g in groups)
+    needed=encoded+a.INDEX_CAP+(len(groups)+2)*a.ENTRY_CAP+a.WITNESS_CAP+a.FAILURE_RESERVE
+    slots=2*(len(groups)+1)+4
+    target_bytes=s.TOTAL_CAP-needed+byte_delta
+    # Metadata-only capacity controls. They are never used as fixture reports,
+    # downloadable original evidence, model bytes or a hosted qualification.
+    remaining=target_bytes-sum(x['size'] for x in service.server.assets)
+    while remaining:
+        n=min(remaining,s.ASSET_CAP)
+        service.server.add('fictional-capacity-'+str(len(service.server.assets)),b'',size=n)
+        remaining-=n
+    target_slots=s.MAX_ASSETS-slots+slot_delta
+    while len(service.server.assets)<target_slots:
+        service.server.add('fictional-slot-'+str(len(service.server.assets)),b'')
+    factory=service.factory(p.base/'quota-journal','produce')
+    before_posts=len(service.posts())
+    args=dict(storage=p.storage,output=p.base/'quota-archive',root_go_sha256='d'*64,
+        jobs=ROLES,pending_census=service.census)
+    if byte_delta or slot_delta:
+        with pytest.raises(s.StoreError,match='FULL_ARCHIVE_INDEX_WITNESS_FAILURE_QUOTA_BEFORE_POST'):
+            a.produce(snapshot,factory,service.package,**args)
+        assert len(service.posts())==before_posts
+    else:
+        result=a.produce(snapshot,factory,service.package,**args)
+        assert result['archive_state']=='COMPLETE_CAPTURE'
+    admission=cp.strict_json((p.base/'quota-archive/ADMISSION.json').read_bytes())
+    details=cp.strict_json((p.base/'quota-archive/ADMISSION_DETAILS.json').read_bytes())
+    assert admission['admitted_bytes']==s.TOTAL_CAP+byte_delta
+    assert admission['existing_slots']+admission['reserved_slots']==s.MAX_ASSETS+slot_delta
+    assert details['capacity']['actual_stored_bytes']==target_bytes
+    assert details['capacity']['pending_bytes']==details['capacity']['pending_asset_slots']==0
+    assert details['encoded_group_bytes']==encoded
+    assert len(details['encoded_groups'])==len(groups)
+    assert details['required_bytes']==needed and details['required_slots']==slots
+    assert details['byte_shortfall']==byte_delta and details['slot_shortfall']==slot_delta
+    assert details['failure_package_bytes']+details['failure_manifest_bytes']==a.FAILURE_RESERVE
+    assert details['group_manifest_bytes']==(len(groups)+1)*a.ENTRY_CAP
+    assert details['remote_POST_attempted'] is details['limits_changed'] is details['original_evidence_deleted'] is False
+    if not byte_delta and not slot_delta:
+        actual=cp.strict_json((p.base/'quota-archive/SERIALIZED_ADMISSION_DETAILS.json').read_bytes())
+        assert 0<actual['index_encoded_bytes']<=a.INDEX_CAP
+        assert 0<actual['index_plain_bytes']<=a.INDEX_PLAIN_CAP-4096
+        # This correction adds local evidence; it does not change index keys.
+        index_asset=next(x for x in service.server.assets if x['id']==result['index_descriptor']['entry']['payload_asset_id'])
+        index=a.unpack(index_asset['body'],a.INDEX_PLAIN_CAP)
+        assert set(index)==a.INDEX_KEYS
+        assert index['admission']==admission
+
+
+def test_capacity_freshly_counts_pending_and_matched_intents_without_refund(capture):
+    p=capture;service=Service(p.base)
+    factory=service.factory(p.base/'capacity-journal','produce')
+    client=factory('append')
+    actual=service.server.assets[0]
+    client.reserve('asset:'+actual['name'],actual['body'],name=actual['name'])
+    body=b'FICTIONAL_UNRESOLVED_POST'
+    client.reserve('asset:blob-'+s.sha(body)+'.bin',body,name='blob-'+s.sha(body)+'.bin')
+    before={x.name:x.read_bytes() for x in client.journal.glob('*.reservation.json')}
+    details=a.capacity_snapshot(client)
+    assert details['actual_stored_bytes']==117
+    assert details['pending_bytes']==len(body) and details['pending_asset_slots']==1
+    assert details['charged_existing_bytes']==117+len(body) and details['charged_existing_slots']==2
+    assert len(details['reservations'])==2
+    assert sum(x['charged_pending'] for x in details['reservations'])==1
+    assert {x.name:x.read_bytes() for x in client.journal.glob('*.reservation.json')}==before
+    # Same pathname and size with a different digest must remain charged.
+    service.server.assets.append(dict(id=999,name='blob-'+s.sha(body)+'.bin',size=len(body),state='uploaded',
+        digest='sha256:'+'0'*64,url=s.API+'/releases/assets/999',body=b'X'*len(body)))
+    again=a.capacity_snapshot(client)
+    assert again['pending_bytes']==len(body) and again['pending_asset_slots']==1
+
+
+def test_frozen_grading_service_qualification_uses_its_own_test_clock(tmp_path):
+    at=datetime(2026,10,28,8,1,tzinfo=timezone.utc)
+    service=Service(tmp_path,qualification_at=at)
+    for proof in (service.q['before_proof'],service.q['read_proof'],service.q):
+        assert s.utc(proof['started_at_utc'])<=s.utc(proof['created_at_utc'])<at
+    assert s.utc(service.q['created_at_utc'])==at-timedelta(minutes=25,seconds=30)

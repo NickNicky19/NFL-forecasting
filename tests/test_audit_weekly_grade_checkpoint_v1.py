@@ -32,7 +32,7 @@ def packet(tmp_path_factory):
 
 class Service(ArchiveService):
     def __init__(self, path):
-        super().__init__(path)
+        super().__init__(path,qualification_at=GRADE+timedelta(minutes=1))
         self.now = GRADE + timedelta(minutes=1)
         self.writer_done = None
         self.bad_writer = False

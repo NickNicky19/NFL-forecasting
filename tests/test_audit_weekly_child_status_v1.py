@@ -190,16 +190,17 @@ def test_actual_child_preserves_exit_raw_stdio_and_core_codec(runner,tmp_path,mo
 
 def test_normal_archive_failure_gets_distinct_failure_only_append_and_batched_raw_controls(runner,monkeypatch):
     r=runner;normal=r.storage.register_root(r.root/'archive-produce')
-    old={}
-    for name in ('CONSUMED.json','ADMISSION.json','HANDOFF.json'):
+    old={};expected={}
+    for name in ('CONSUMED.json','ADMISSION.json','ADMISSION_DETAILS.json','SERIALIZED_ADMISSION_DETAILS.json','HANDOFF.json'):
         path=normal/'transport'/name
         r.storage.write_bytes(path,store.canonical(dict(fictional_failed_normal_archive=name)))
         old[path.relative_to(normal).as_posix()]=path.read_bytes()
+        if name in {'ADMISSION.json','ADMISSION_DETAILS.json','SERIALIZED_ADMISSION_DETAILS.json'}:
+            expected[path.relative_to(r.root).as_posix()]=path.read_bytes()
     raw=b'FICTIONAL unresolved original archive POST'
     pending=cp.reservation_metadata('asset:blob-'+store.sha(raw)+'.bin',raw,'blob-'+store.sha(raw)+'.bin')
     path=normal/'journal'/'original.reservation.json';r.storage.write_bytes(path,store.canonical(pending))
     old[path.relative_to(normal).as_posix()]=path.read_bytes()
-    expected={}
     for n in range(8):
         for stream in ('stdout','stderr'):
             name=f'phase-status/{20+n:02}-fictional.{stream}'
