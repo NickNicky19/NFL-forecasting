@@ -58,7 +58,7 @@ REGISTRY_PATH = "state/controller-v1/bootstrap-v1.json"
 # The first V2 wire registration remains immutable at bootstrap-v2.json.
 # All issued registration records remain immutable. Restoring the registered
 # feature builder requires its own native registration on the corrected source.
-LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json"
+LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261031-mae-display-read.json"
 LOCATOR_CAP = 64 << 10
 TEMPLATE_MODULE = "nfl_lab/audit_weekly_template_v1.py"
 # Shared executable bytes are checked in BOTH literal source inventories.
@@ -78,6 +78,9 @@ PARENT_EXECUTABLE_PINS = SHARED_EXECUTABLE_PINS | {
     "tests/test_audit_weekly_parent_v1.py", "tests/test_audit_weekly_parent_workflow_v1.py",
     "tests/test_cadence.py",
     "nfl_lab/state.py", c.WORKFLOW}
+# Keep the original Parent/V4 package intact; V5 adds metadata-only files.
+PARENT_MAE_METADATA_PINS=frozenset({"nfl_lab/weekly_mae_display_profile_v1.py","config/weekly-mae-display-core3-v1.json"})
+PARENT_EXECUTABLE_MAE_PINS=PARENT_EXECUTABLE_PINS|PARENT_MAE_METADATA_PINS
 STATE_REF = "lab-state"
 JOBS = dict(write="audit-weekly-produce-v1", read="audit-weekly-restore-v1", seal="audit-weekly-export-v1")
 LIMITS = dict(HTTP_calls=32, wall_seconds=180, CPU_seconds=120, RSS_bytes=512 << 20,
@@ -240,6 +243,7 @@ def fixed_route(url):
         r"contents/state/controller-v1/bootstrap-v2-20261027-archive-recovery\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261028-history-runtime\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261028-prior-pending-read\.json\?ref=[a-f0-9]{40}",
+        r"contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read\.json\?ref=[a-f0-9]{40}",
         r"actions/artifacts/[1-9][0-9]{0,19}"))
 
 
@@ -614,6 +618,7 @@ def verify_private_template(seal, body, private_descriptor_bytes, storage_bindin
     else:
         canonical_body = c.canonical(value)
     require(type(value) is dict and body == canonical_body, "CANONICAL_PRIVATE_ROOT_TEMPLATE")
+    _v5_parent_metadata_binding(seal,value)
     return value
 
 
@@ -708,7 +713,7 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
             and root.get("failure_restorer") == spec["jobs"]["evidence"], "UNCHANGED_OWNER_SMOKE_ROOT_SOURCE_AND_JOBS")
     transition=None
     from . import audit_weekly_template_v1 as template
-    if root.get('schema_version')==template.ROOT_V4:
+    if root.get('schema_version') in {template.ROOT_V4,template.ROOT_V5}:
         from . import audit_weekly_grade_history_v1 as history
         require(registry_version==2,'SOURCE_HISTORY_OWNER_REQUIRES_NATIVE_V2_SEAL')
         transition=history.validate_source_history_binding(root)
@@ -718,7 +723,7 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
             'SOURCE_HISTORY_OWNER_REQUIRES_EXACT_SEALED_PREDECESSOR')
         static=deepcopy(root);static['approved']=False
         for name in template.DYNAMIC_FIELDS-{'approved'}:static[name]=None
-        prepared=template.prepare(dict(schema_version=template.STATIC_V4,source_sha=root['source_sha'],
+        prepared=template.prepare(dict(schema_version=template.STATIC_V5 if root['schema_version']==template.ROOT_V5 else template.STATIC_V4,source_sha=root['source_sha'],
             code_pins=deepcopy(root['code_pins']),readiness=deepcopy(p['readiness']),root_template=static))
         require(c.sha(prepared.plain)==seal.template_descriptor['template_sha256']
             and len(prepared.plain)==seal.template_descriptor['template_bytes']
@@ -925,7 +930,22 @@ def verify_template_payload(seal, body):
     p = c.decode(seal.registration_bytes)
     require(prepared.document["source_sha"] == p["producer"]["source_sha"]
             and prepared.document["code_pins"] == p["producer"]["code_pins"], "EXACT_PRIVATE_TEMPLATE_REGISTERED_SOURCE_INVENTORY")
+    _v5_parent_metadata_binding(seal,prepared.document)
     return prepared
+
+
+def _v5_parent_metadata_binding(seal,document):
+    """Native seal binding; metadata source and producer remain separate roots."""
+    from . import audit_weekly_template_v1 as template
+    root=document.get("root_template") if type(document) is dict else None
+    if type(root) is not dict or root.get("schema_version")!=template.ROOT_V5:return
+    require(type(seal) is Seal,"LIVE_V5_BOOTSTRAP_SEAL_REQUIRED");seal.verify()
+    p=c.decode(seal.registration_bytes)
+    # Main's actual local inventory is freshly checked by load_seal. A Root
+    # may not borrow producer numerical trust for an unchecked Parent source.
+    for name in PARENT_MAE_METADATA_PINS:
+        require(name in p["parent"]["code_pins"] and p["parent"]["code_pins"][name]==root["mae_helper_pins"][name],
+            "EXACT_V5_PARENT_METADATA_SOURCE_COMMITMENTS")
 
 
 def locator_contract():
