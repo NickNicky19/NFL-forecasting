@@ -330,19 +330,42 @@ def aggregate(evidence, records, assets, package, target, denied_routes, m):
     # child() writes {exit_code,status:{reason,...},actual_completed_at};
     # execute() separately writes PARENT_FAILED with top-level reason/time.
     # Authenticate both forms when present; neither shape is an authority flag.
-    reason_matches = []
+    reason_matches = []; successful_phase_clocks = []
     for label,(_,raw) in controls.items():
         if not re.fullmatch(r"phase-[0-9]{2}",label):continue
         document = m.cp.strict_json(raw)
         require(type(document) is dict,"BOUNDED_ORIGINAL_PHASE_STATUS")
+        if type(document.get("exit_code")) is int and document["exit_code"] == 0:
+            stamp = document.get("actual_completed_at")
+            require(stamp is not None and s.utc(request["clocks"]["started_at_utc"]) <= s.utc(stamp)
+                <= s.utc(request["clocks"]["observed_at_utc"]),"ORIGINAL_SUCCESSFUL_PHASE_CLOCK")
+            successful_phase_clocks.append(s.utc(stamp))
         if document.get("reason") == QUOTA_REASON:
             reason_matches.append(("PARENT_REASON",document.get("actual_observed_at")))
         if type(document.get("status")) is dict and document["status"].get("reason") == QUOTA_REASON:
             reason_matches.append(("CHILD_STATUS_REASON",document.get("actual_completed_at")))
     for _,stamp in reason_matches:
-        require(stamp is not None and cut <= s.utc(stamp) < cut+timedelta(seconds=1)
-            and s.utc(request["clocks"]["started_at_utc"]) <= s.utc(stamp)
+        require(stamp is not None and s.utc(request["clocks"]["started_at_utc"]) <= s.utc(stamp)
             <= s.utc(request["clocks"]["observed_at_utc"]),"ORIGINAL_PHASE_REASON_CLOCK")
+    children = [s.utc(stamp) for shape,stamp in reason_matches if shape == "CHILD_STATUS_REASON"]
+    parents = [s.utc(stamp) for shape,stamp in reason_matches if shape == "PARENT_REASON"]
+    require(all(cut <= stamp < cut+timedelta(seconds=1) for stamp in parents)
+        and all(stamp < cut+timedelta(seconds=1) for stamp in children)
+        and (not parents or not children or max(children) <= min(parents)),
+        "CAUSAL_CHILD_REJECTION_AND_PINNED_PARENT_DISCLOSURE_CLOCKS")
+    admission_window = None
+    if reason_matches:
+        require(successful_phase_clocks and max(successful_phase_clocks) < min(s.utc(stamp) for _,stamp in reason_matches),
+            "SERIAL_PRIOR_PHASE_BEFORE_ARCHIVE_REJECTION")
+        lower = max(successful_phase_clocks).replace(microsecond=0)
+        upper = cut+timedelta(seconds=1)  # Metadata creation clocks have second precision.
+        require(all(not lower <= s.utc(asset["created_at"]) < upper for asset in assets),
+            "ADMISSION_INVENTORY_CHANGED_DURING_AUTHENTICATED_WINDOW")
+        admission_window = dict(previous_phase_completed_at=max(successful_phase_clocks).isoformat(),
+            child_rejection_completed_at=[stamp.isoformat() for stamp in children],
+            parent_failure_observed_at=[stamp.isoformat() for stamp in parents],
+            pinned_parent_log_second=target["admission_second"],inventory_unchanged_from_utc=lower.isoformat(),
+            inventory_unchanged_until_utc=upper.isoformat(),exact_guard_time_available=False)
     require(all(s.utc(a["created_at"]) != cut for a in assets),"HISTORICAL_INVENTORY_SECOND_AMBIGUITY")
     historical = [a for a in assets if s.utc(a["created_at"]) < cut]
     require(len(historical) == target["historical_assets"] and sum(a["size"] for a in historical) == target["historical_bytes"]
@@ -418,7 +441,8 @@ def aggregate(evidence, records, assets, package, target, denied_routes, m):
         archive=dict(original_reason=QUOTA_REASON if reason_matches else None,
             original_reason_state="AUTHENTICATED_CORE_STATUS" if reason_matches else "CORE_REASON_UNKNOWN",
             status_reason_match_count=len(reason_matches),status_reason_shapes=sorted({shape for shape,_ in reason_matches}),
-            retained_log_sha256=target["retained_log_sha256"],admission_clock_source="PINNED_RETAINED_LOG_WITHIN_AUTHENTICATED_REQUEST_WINDOW",
+            retained_log_sha256=target["retained_log_sha256"],admission_clock_source="AUTHENTICATED_SERIAL_PHASE_WINDOW_AND_PINNED_PARENT_LOG; EXACT_GUARD_TIME_UNAVAILABLE",
+            admission_window=admission_window,
             encoded_group_count=None,encoded_group_bytes=None,
             exact_requested_bytes=None,exact_rejected_deficit_bytes=None,state="UNKNOWN_PREENCODED_AND_ADMISSION_NOT_RETAINED",
             admission_artifacts=0,preencoded_group_references=0,index_reserve_bytes=512 << 10,

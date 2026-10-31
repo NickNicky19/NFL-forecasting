@@ -88,7 +88,7 @@ class SyntheticFailure:
             workflow_ref=d.ORIGINAL_WORKFLOW,issued_at_utc=(self.cut-timedelta(minutes=3)).isoformat(),qualified_runtime=self.package,
             pending_census=census,effective_epoch=dict(schema_version=template.RECURRING_V5,
                 pending_post_recovery=dict(schema_version=template.PENDING_RECOVERY,handoffs=[old_handoff],pending_reservations=[self.pending])))
-        self.original_records=[self.pending,self.claim_record];self.phase_shape="actual_both"
+        self.original_records=[self.pending,self.claim_record];self.phase_shape="actual_both";self.child_offset=.4;self.parent_offset=.5
         self.graph=dict(schema_version=hosted.VERSION+"-failed-file-graph",files=[dict(relative_path="runtime/FINISHED.json",
             reference=dict(path="/synthetic/PRIVATE_ROOT/runtime/FINISHED.json",bytes=999,sha256="9"*64))],
             raw_HTTP_corpus_archived=False,successful_forecast=False,public_release=False)
@@ -107,12 +107,14 @@ class SyntheticFailure:
             wrappers.append(dict(relative_path=name,bytes=len(raw),sha256=s.sha(raw),body_base64=base64.b64encode(raw).decode()))
         docs={"owner-root":self.old,"original-post-reservations":dict(schema_version=hosted.VERSION+"-original-post-journals",records=wrappers),
             "file-graph":self.graph,"complete-auxiliary-controls":dict(schema_version=hosted.VERSION+"-complete-auxiliary-controls",files=[])}
+        docs["phase-99"]=dict(exit_code=0,status=dict(state="FICTIONAL_PRIOR_PHASE_COMPLETE"),
+            actual_completed_at=(self.cut-timedelta(seconds=2)).isoformat())
         if self.phase_shape in {"actual_both","nested_only"}:
             docs["phase-00"]=dict(exit_code=1,status=dict(state="FAILED_RETAINED",reason=d.QUOTA_REASON,fits=0,public_release=False),
-                actual_completed_at=(self.cut+timedelta(microseconds=400000)).isoformat())
+                actual_completed_at=(self.cut+timedelta(seconds=self.child_offset)).isoformat())
         if self.phase_shape in {"actual_both","parent_only"}:
             docs["phase-01"]=dict(reason=d.QUOTA_REASON,state="FAILED_RETAINED",phase="produce",
-                actual_observed_at=(self.cut+timedelta(microseconds=500000)).isoformat(),public_release=False,successful_forecast=False)
+                actual_observed_at=(self.cut+timedelta(seconds=self.parent_offset)).isoformat(),public_release=False,successful_forecast=False)
         root_sha=s.sha(s.canonical(self.old)); attachments=[]; values=[]
         for label,value in docs.items():
             raw=s.canonical(value)
@@ -358,6 +360,26 @@ class ReaderTests(unittest.TestCase):
         value=self.f.read()
         self.assertEqual(value["archive"]["status_reason_match_count"],2)
         self.assertEqual(value["archive"]["status_reason_shapes"],["CHILD_STATUS_REASON","PARENT_REASON"])
+
+    def test_child_rejection_can_precede_the_next_second_parent_disclosure(self):
+        self.f.child_offset=-.466863;self.f.parent_offset=.011367;self.f.rebuild()
+        value=self.f.read();window=value["archive"]["admission_window"]
+        self.assertEqual(window["child_rejection_completed_at"],[(self.f.cut+timedelta(seconds=self.f.child_offset)).isoformat()])
+        self.assertFalse(window["exact_guard_time_available"])
+        self.assertEqual(value["pending"]["existing_admission_bytes"],sum(a["size"] for a in self.f.historical)+len(b"missing"))
+
+    def test_reversed_parent_or_prior_success_clocks_fail(self):
+        for child,parent in [(.6,.5),(-3,.5)]:
+            with self.subTest(child=child,parent=parent), tempfile.TemporaryDirectory(dir=self.f.root) as temporary:
+                case=SyntheticFailure(Path(temporary))
+                case.child_offset=child;case.parent_offset=parent;case.rebuild()
+                with self.assertRaises(d.DiagnosticError):case.read()
+
+    def test_asset_in_uncertain_admission_window_is_not_silently_assigned(self):
+        item=self.f.asset(83,"fictional-racing-asset",b"x",self.f.cut-timedelta(seconds=1))
+        self.f.assets.append(item)
+        with self.assertRaisesRegex(d.DiagnosticError,"ADMISSION_INVENTORY_CHANGED"):
+            self.f.read()
 
     def test_nested_only_status_has_no_assumed_parent_shape(self):
         self.f.phase_shape="nested_only";self.f.rebuild()
