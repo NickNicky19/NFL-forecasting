@@ -73,8 +73,15 @@ _RECEIPT_KEYS = _RECEIPT_HASH_KEYS | {"schema_version", "source_sha", "run_id", 
 _METADATA_POLICY_SHA = "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441"
 _METADATA_TARGETS = {"pass_yd","pass_td","pass_cmp","pass_att","pass_int","rush_yd","rush_att","rec","rec_yd","rush_rec_yd","anytime_td"}
 ROOT_V4 = "audit-weekly-hosted-v4-root-GO"
+ROOT_V5 = "audit-weekly-hosted-v5-root-GO"
+# V5-only candidates. The original128 intersection is mandatory; persist_state
+# is separately helper-pinned and cannot be invented as an old legacy pin.
+_MAE_RUNTIME_OVERRIDE_PATHS = frozenset({"nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
+    "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py"})
 SOURCE_HISTORY_BINDING = "audit-weekly-source-history-binding-v1"
 SOURCE_HISTORY_TRANSPORT = SOURCE_HISTORY_BINDING + "-transport"
+SOURCE_HISTORY_BINDING_V2 = "audit-weekly-source-history-binding-v2"
+SOURCE_HISTORY_TRANSPORT_V2 = SOURCE_HISTORY_BINDING_V2 + "-transport"
 SOURCE_HISTORY_PLAIN_CAP = 16 << 10
 SOURCE_HISTORY_ENCODED_CAP = 12 << 10
 # Closed metadata ABI, deliberately independent of template/numerical imports.
@@ -84,6 +91,11 @@ _SOURCE_ROOT_V3_KEYS = {"schema_version","approved","repository","mode","operati
     "source_config","cutoff_lead_seconds","publication","publication_registration","effective_epoch",
     "prior_capture_qualified_runtime"}
 SOURCE_HISTORY_PIN_OVERRIDES = frozenset({
+    # Admission diagnostics retain the exact archive/index/reader wire, caps,
+    # semantic validation and original native evidence; source changes still
+    # require the exact authenticated predecessor preimage and hash overrides.
+    "nfl_lab/audit_weekly_archive_v1.py", "tests/test_audit_weekly_archive_v1.py",
+    "tests/test_audit_weekly_grade_checkpoint_v1.py",
     "nfl_lab/audit_weekly_grade_history_v1.py", "tests/test_audit_weekly_grade_history_v1.py",
     "nfl_lab/audit_weekly_template_v1.py", "tests/test_audit_weekly_template_v1.py",
     "nfl_lab/audit_weekly_controller_bootstrap_v1.py", "tests/test_audit_weekly_controller_bootstrap_v1.py",
@@ -116,7 +128,16 @@ def _source_history_pins(root, binding):
     original = dict(pins)
     if binding is not None:
         overrides = binding["pin_overrides"]
-        require(type(overrides) is dict and set(overrides) <= SOURCE_HISTORY_PIN_OVERRIDES & set(pins)
+        allowed=SOURCE_HISTORY_PIN_OVERRIDES
+        if root.get("schema_version")==ROOT_V5:
+            from . import weekly_mae_display_profile_v1 as profile
+            cfg=profile.validate_metadata(root,Path(__file__).resolve().parents[1])
+            declared=cfg["mae_runtime_pin_profile"]["changed_paths"]
+            for name in set(overrides)&_MAE_RUNTIME_OVERRIDE_PATHS:
+                require(name in declared and overrides[name]==declared[name]["before_sha256"]
+                    and pins[name]==declared[name]["after_sha256"],"EXACT_MAE_ONLY_PREDECESSOR_RUNTIME_PIN_OVERRIDE")
+            allowed=allowed|_MAE_RUNTIME_OVERRIDE_PATHS
+        require(type(overrides) is dict and set(overrides) <= allowed & set(pins)
             and all(type(h) is str and store.HASH.fullmatch(h) and pins[p] != h for p,h in overrides.items()),
             "ONLY_CHANGED_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES")
         original.update(overrides)
@@ -129,9 +150,19 @@ def _source_history_pins(root, binding):
 
 def _source_history_body(value):
     from . import private_draft_store as store
-    require(type(value) is dict and set(value) == {"schema_version","target_source_sha","target_policy_sha256",
-        "predecessor","pin_overrides","runtime_transition"} and value["schema_version"] == SOURCE_HISTORY_BINDING,
+    require(type(value) is dict,"CLOSED_SOURCE_HISTORY_BINDING")
+    second=value.get("schema_version")==SOURCE_HISTORY_BINDING_V2
+    extra={"predecessor_root_schema","predecessor_source_history_sha256"} if second else set()
+    require(set(value) == {"schema_version","target_source_sha","target_policy_sha256",
+        "predecessor","pin_overrides","runtime_transition"}|extra
+        and value["schema_version"] in {SOURCE_HISTORY_BINDING,SOURCE_HISTORY_BINDING_V2},
         "CLOSED_SOURCE_HISTORY_BINDING")
+    if second:
+        require(value["predecessor_root_schema"] in {ROOT_V4,ROOT_V5}
+            and type(value["predecessor_source_history_sha256"]) is str
+            and store.HASH.fullmatch(value["predecessor_source_history_sha256"])
+            and value["runtime_transition"]=="DUAL_RUNTIME_ROTATE",
+            "EXPLICIT_IMMEDIATE_V4_SOURCE_HISTORY_ROTATION")
     require(type(value["runtime_transition"]) is str and value["runtime_transition"] in {"PRESERVE","DUAL_RUNTIME_ROTATE"},
         "EXPLICIT_SOURCE_HISTORY_RUNTIME_TRANSITION")
     require(type(value["target_source_sha"]) is str and re.fullmatch(r"[a-f0-9]{40}",value["target_source_sha"])
@@ -149,7 +180,7 @@ def _source_history_body(value):
     locator_reference(dict(schema_version=LOCATOR_REF, **ref))
     require(ref["path"].split("--")[1] == old["run_id"], "EXACT_SOURCE_HISTORY_LOCATOR_RUN")
     overrides=value["pin_overrides"]
-    require(type(overrides) is dict and set(overrides)<=SOURCE_HISTORY_PIN_OVERRIDES
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
         and all(type(h) is str and store.HASH.fullmatch(h) for h in overrides.values()),
         "ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES")
     return value
@@ -163,13 +194,14 @@ def source_history_envelope(binding):
     require(0<len(raw)<=SOURCE_HISTORY_PLAIN_CAP,"BOUNDED_SOURCE_HISTORY_BINDING_BODY")
     encoded=base64.b64encode(gzip.compress(raw,mtime=0)).decode()
     require(len(encoded)<=SOURCE_HISTORY_ENCODED_CAP,"BOUNDED_SOURCE_HISTORY_BINDING_TRANSPORT")
-    return dict(schema_version=SOURCE_HISTORY_TRANSPORT,body_sha256=store.sha(raw),body_bytes=len(raw),gzip_base64=encoded)
+    version=SOURCE_HISTORY_TRANSPORT_V2 if binding["schema_version"]==SOURCE_HISTORY_BINDING_V2 else SOURCE_HISTORY_TRANSPORT
+    return dict(schema_version=version,body_sha256=store.sha(raw),body_bytes=len(raw),gzip_base64=encoded)
 
 
 def _source_history_unwrap(value):
     from . import private_draft_store as store
     require(type(value) is dict and set(value)=={"schema_version","body_sha256","body_bytes","gzip_base64"}
-        and value["schema_version"]==SOURCE_HISTORY_TRANSPORT
+        and value["schema_version"] in {SOURCE_HISTORY_TRANSPORT,SOURCE_HISTORY_TRANSPORT_V2}
         and type(value["body_sha256"]) is str and store.HASH.fullmatch(value["body_sha256"])
         and type(value["body_bytes"]) is int and 0<value["body_bytes"]<=SOURCE_HISTORY_PLAIN_CAP
         and type(value["gzip_base64"]) is str and 0<len(value["gzip_base64"])<=SOURCE_HISTORY_ENCODED_CAP,
@@ -190,7 +222,10 @@ def _source_history_unwrap(value):
             "EXACT_SINGLE_SOURCE_HISTORY_GZIP_AND_HASH")
         body=json.loads(raw,object_pairs_hook=pairs,parse_constant=nonfinite)
         require(store.canonical(body)==raw,"CANONICAL_SOURCE_HISTORY_BINDING_BODY")
-        return _source_history_body(body)
+        body=_source_history_body(body)
+        expected=SOURCE_HISTORY_TRANSPORT_V2 if body["schema_version"]==SOURCE_HISTORY_BINDING_V2 else SOURCE_HISTORY_TRANSPORT
+        require(value["schema_version"]==expected,"PAIRED_SOURCE_HISTORY_BODY_AND_TRANSPORT_VERSION")
+        return body
     except HistoryError: raise
     except (ValueError, TypeError, zlib.error, RecursionError):
         raise HistoryError("INVALID_SOURCE_HISTORY_TRANSPORT") from None
@@ -204,17 +239,44 @@ def validate_source_history_binding(root):
     preimage by _root_envelope. Live qualification remains independently due.
     """
     require(type(root) is dict,"CLOSED_SOURCE_HISTORY_ROOT")
-    if root.get("schema_version")!=ROOT_V4:
+    if root.get("schema_version") not in {ROOT_V4,ROOT_V5}:
         require("source_history_binding" not in root,"SOURCE_HISTORY_BINDING_REQUIRES_ROOT_V4")
         return None
-    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding"},"CLOSED_SOURCE_HISTORY_ROOT_V4")
+    extra={"mae_registration","mae_helper_pins"} if root["schema_version"]==ROOT_V5 else set()
+    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding"}|extra,"CLOSED_SOURCE_HISTORY_ROOT_V4")
     value=_source_history_unwrap(root["source_history_binding"])
     require(root.get("source_sha")==value["target_source_sha"]
         and type(root.get("publication_registration")) is dict
         and root["publication_registration"].get("policy_sha256")==value["target_policy_sha256"],
         "EXACT_SOURCE_HISTORY_TARGET_SOURCE_AND_POLICY")
+    if root["schema_version"]==ROOT_V5:
+        require(value["schema_version"]==SOURCE_HISTORY_BINDING_V2,"MAE_ROOT_REQUIRES_EXPLICIT_V2_SOURCE_HISTORY")
+        from . import weekly_mae_display_profile_v1 as profile
+        profile.validate_metadata(root,Path(__file__).resolve().parents[1])
+    elif value["schema_version"]==SOURCE_HISTORY_BINDING_V2:
+        require(value["predecessor_root_schema"]==ROOT_V4,"NO_IMPLICIT_V5_TO_V4_SOURCE_HISTORY_DOWNGRADE")
     _source_history_pins(root, value)
     return deepcopy(value)
+
+
+def _prior_source_history_metadata(root):
+    """No current-source validation or grant; exact native preimage checked first."""
+    from . import private_draft_store as store
+    if root.get("schema_version")!=ROOT_V5:return validate_source_history_binding(root)
+    from . import weekly_mae_display_profile_v1 as profile
+    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding","mae_registration","mae_helper_pins"},
+        "CLOSED_ORIGINAL_ROOT_V5_METADATA")
+    profile.prior_extension_metadata(root)
+    value=_source_history_unwrap(root["source_history_binding"])
+    require(value["schema_version"]==SOURCE_HISTORY_BINDING_V2 and value["target_source_sha"]==root["source_sha"]
+        and value["target_policy_sha256"]==root["publication_registration"]["policy_sha256"],"ORIGINAL_MAE_SOURCE_HISTORY_TARGET")
+    pins=root["code_pins"];overrides=value["pin_overrides"]
+    require(type(pins) is dict and len(pins)==128 and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|_MAE_RUNTIME_OVERRIDE_PATHS)&set(pins)
+        and all(type(h) is str and store.HASH.fullmatch(h) for h in pins.values()),"CLOSED_ORIGINAL_MAE_SOURCE_HISTORY_PINS")
+    old=dict(pins);old.update(overrides)
+    require(store.sha(store.canonical(old))==value["predecessor"]["code_pins_sha256"]
+        and old[".github/workflows/lab.yml"]==value["predecessor"]["workflow_sha256"],"ORIGINAL_MAE_PREDECESSOR_PIN_COMMITMENT")
+    return value
 
 
 def _source_history_rotation_quota(package, census, *, before=None):
@@ -280,14 +342,30 @@ def _source_history_runtime_scope(current_root, original_root, binding):
     """Metadata commitments only; callers authenticate the native preimage."""
     from . import private_draft_store as store,audit_weekly_template_v1 as template
     old=binding["predecessor"]
-    require(type(original_root) is dict and set(original_root)==_SOURCE_ROOT_V3_KEYS
-        and original_root["schema_version"]==template.ROOT_V3 and original_root["source_sha"]==old["source_sha"]
+    second=binding["schema_version"]==SOURCE_HISTORY_BINDING_V2
+    expected_schema=binding["predecessor_root_schema"] if second else template.ROOT_V3
+    expected_keys=_SOURCE_ROOT_V3_KEYS|({"source_history_binding"} if second else set())|({"mae_registration","mae_helper_pins"} if expected_schema==ROOT_V5 else set())
+    require(type(original_root) is dict and set(original_root)==expected_keys
+        and original_root["schema_version"]==expected_schema and original_root["source_sha"]==old["source_sha"]
         and original_root["code_pins"]==_source_history_pins(current_root,binding)
         and store.sha(store.canonical(original_root))==old["root_go_sha256"]
         and template.static_root_sha256(original_root)==old["root_static_sha256"],
         "EXACT_SOURCE_HISTORY_ORIGINAL_ROOT_COMMITMENTS")
+    if second:
+        # The immediate completed native Root is the preimage. Its prior
+        # binding remains a bounded canonical commitment, never a new
+        # grant or a recursively resolved grandparent history route.
+        require(store.sha(store.canonical(original_root["source_history_binding"]))
+            ==binding["predecessor_source_history_sha256"],
+            "EXACT_IMMEDIATE_V4_SOURCE_HISTORY_COMMITMENT")
+        inner=_prior_source_history_metadata(original_root)
+        require(inner is not None and inner["schema_version"] in {SOURCE_HISTORY_BINDING,SOURCE_HISTORY_BINDING_V2}
+            and current_root["source_sha"] not in {original_root["source_sha"],inner["predecessor"]["source_sha"]}
+            and old["root_go_sha256"]!=inner["predecessor"]["root_go_sha256"]
+            and old["run_id"]!=inner["predecessor"]["run_id"],
+            "DISTINCT_FORWARD_IMMEDIATE_SOURCE_HISTORY_HOP")
     changed={"approved","issued_at_utc","expires_at_utc","operation","effective_epoch",
-        "schema_version","source_sha","code_pins","publication_registration","source_history_binding"}
+        "schema_version","source_sha","code_pins","publication_registration","source_history_binding","mae_registration","mae_helper_pins"}
     if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
         changed|={"qualified_runtime","pending_census","prior_capture_qualified_runtime"}
     require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in set(original_root)-changed),
@@ -1212,9 +1290,12 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at, locat
         and store.sha(store.canonical(root))==cohort["root_go_sha256"] and root["issued_at_utc"]==cohort["root_issued_at_utc"]
         and root["effective_epoch"]["schema_version"] in {CONTEXT_V4,CONTEXT_V5},"ORIGINAL_REGISTERED_LITERAL_ROOT_PREIMAGE")
     if cross_source:
-        require(binding is not None and root["schema_version"]==template.ROOT_V3
-            and set(root)==_SOURCE_ROOT_V3_KEYS and root["effective_epoch"]["schema_version"]==CONTEXT_V5,
-            "EXPLICIT_ORIGINAL_V3_SOURCE_HISTORY_ROOT")
+        second=binding is not None and binding["schema_version"]==SOURCE_HISTORY_BINDING_V2
+        expected_schema=binding["predecessor_root_schema"] if second else template.ROOT_V3
+        expected_keys=_SOURCE_ROOT_V3_KEYS|({"source_history_binding"} if second else set())|({"mae_registration","mae_helper_pins"} if expected_schema==ROOT_V5 else set())
+        require(binding is not None and root["schema_version"]==expected_schema
+            and set(root)==expected_keys and root["effective_epoch"]["schema_version"]==CONTEXT_V5,
+            "EXPLICIT_ORIGINAL_V4_SOURCE_HISTORY_ROOT" if second else "EXPLICIT_ORIGINAL_V3_SOURCE_HISTORY_ROOT")
         old=binding["predecessor"]
         # Callers authenticate the actual compressed bytes before this metadata
         # check. Preserve their exact hash across gzip implementations; callers
@@ -1222,6 +1303,14 @@ def _root_envelope(envelope, locator, jobs, *, code_pins, static_root, at, locat
         encoded_sha=locator_sha256 if locator_sha256 is not None else store.sha(gzip.compress(store.canonical(locator),mtime=0))
         _source_history_locator(binding,locator,encoded_sha)
         _source_history_runtime_scope(static_root,root,binding)
+        if second:
+            # A fresh native rotation cannot recycle an earlier qualified
+            # namespace. Actual job/source proofs are authenticated by the
+            # caller; no serialized flag can satisfy these clocks.
+            q=static_root["qualified_runtime"]["qualification"]
+            require(state.utc(jobs["consume"]["completed_at"])<state.utc(q["before_proof"]["started_at_utc"])
+                <=state.utc(q["created_at_utc"])<=state.utc(static_root.get("issued_at_utc") or at),
+                "FRESH_NATIVE_ROTATION_AFTER_IMMEDIATE_DELIVERY")
     package,_=template.checkpoint_runtime(static_root,locator['sidecar']['checkpoint_handoff'],
         anchor=locator['anchor'],checkpoint={'sha256':store.sha(store.canonical(locator))})
     prior=template.prior_runtime(static_root)
@@ -1483,7 +1572,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         original_root=envelope["root_go"]
         old_pool=template.pending_recovery(original_root)
         continued_pool=continued_pending_recovery(context.go,original_root)
-        proof["source_history_continuation"]=dict(schema_version=SOURCE_HISTORY_BINDING+"-continuation",
+        proof["source_history_continuation"]=dict(schema_version=source_binding["schema_version"]+"-continuation",
             runtime_transition=source_binding["runtime_transition"],original_root_go_sha256=store.sha(store.canonical(original_root)),
             original_pending_recovery_sha256=store.sha(store.canonical(old_pool)),
             original_pending_recovery_transport_sha256=store.sha(store.canonical(original_root["effective_epoch"]["pending_post_recovery"])),

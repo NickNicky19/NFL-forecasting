@@ -703,7 +703,7 @@ def _build_root(parent, document, capture, at, *, plan=None):
             previous_checkpoint=deepcopy(capture.checkpoint)))
     if type(capture) is _HistoryCapture:
         from . import audit_weekly_grade_history_v1 as history
-        require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
+        require(document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4,template.STATIC_V5} and plan is None,"EXPLICIT_NEW_TEMPLATE_AND_PRIVATE_HISTORY_ROUTING")
         root["effective_epoch"].update(schema_version=history.CONTEXT_V5,
             plan=history.next_plan(capture.locator["planning"],at=at),
             pending_post_recovery=template.pending_recovery_envelope(template.validate_pending_recovery(capture.pending_recovery,
@@ -826,7 +826,7 @@ def run(env, *, source_root=ROOT, work_root=None, transport=None, clock=c.now, r
     document,private_client,storage = _recover(parent, env, source_root, read_head, clock, ledger, workspace, journal)
     api = _API(ledger)
     capture = (_discover_history(parent,document,api,clock,private_client,storage,workspace)
-        if document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4} else _discover(parent, document, api, clock))
+        if document["schema_version"] in {template.VERSION+"-static-v2",template.STATIC_V3,template.STATIC_V4,template.STATIC_V5} else _discover(parent, document, api, clock))
     # Refresh through the unchanged actual verifier, using a separately counted
     # GET lane. The original bootstrap's 32-call cap is not enlarged or reset.
     parent.proof = c.verify_parent(parent.registration_bytes, sealed_sha256=parent.seal.registration_sha256,

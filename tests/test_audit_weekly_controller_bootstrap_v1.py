@@ -496,6 +496,10 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261027-first-primary.json",
     "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
     "state/controller-v1/bootstrap-v2-20261027-metadata-phases.json",
+    "state/controller-v1/bootstrap-v2-20261027-archive-recovery.json",
+    "state/controller-v1/bootstrap-v2-20261028-history-runtime.json",
+    "state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json",
+    "state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -506,7 +510,7 @@ def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     assert api.get(c.contents_url(literal, old.A), 17) == []
     assert len(calls) == 1
     for path, ref in ((literal, "lab-state"),
-            (literal.replace("20261026", "20261025").replace("20261027", "20261025"), old.A),
+            (literal.replace("20261026", "20261025").replace("20261027", "20261025").replace("20261028", "20261025").replace("20261031", "20261025"), old.A),
             (literal.replace(".json", "-extra.json"), old.A),
             (literal.replace("bootstrap-v2", "../bootstrap-v2"), old.A)):
         with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):
@@ -674,7 +678,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
@@ -986,3 +990,27 @@ def test_locator_contract_is_explicit_metadata_only():
     assert value["registry_path"] != b.REGISTRY_PATH and value["registry_version"] == 2
     assert value["private_reads"] == value["POSTs"] == value["fits"] == 0
     assert value["activation_authorized"] is value["public_root"] is False
+
+
+@pytest.mark.parametrize('tail',[
+    'contents/state/controller-v1/bootstrap-v2-20261030-mae-display-read.json?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-MAE-display-read.json?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.JSON?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read-extra.json?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref=main',
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref=lab-state',
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'A'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'a'*39,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'a'*41,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?Ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'a'*40+'&page=1',
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'a'*40+'&ref='+'b'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?ref='+'a'*40+'#fragment',
+    'contents/state/controller-v1/bootstrap-v2-20261031-mae-display-read.json?extra=x&ref='+'a'*40,
+])
+def test_mae_registry_route_rejects_similar_case_ref_and_query_before_io(tail):
+    api=b.Metadata({},lambda *_:pytest.fail('UNDECLARED_MAE_REGISTRY_ROUTE_REACHED_IO'))
+    assert not b.fixed_route(c.API+'/'+tail)
+    with pytest.raises(b.BootstrapError,match='BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'):
+        api(c.API+'/'+tail,64)
+    assert api.calls==[]

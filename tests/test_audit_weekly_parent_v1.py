@@ -1647,3 +1647,28 @@ print('COLD_SOURCE_HISTORY_SCOPE_OK')
     result=subprocess.run([sys.executable,'-B','-c',script,str(path)],cwd=ROOT,capture_output=True,text=True,timeout=30)
     assert result.returncode==0,result.stderr
     assert result.stdout.strip()=='COLD_SOURCE_HISTORY_SCOPE_OK'
+
+
+def test_static_v5_selects_history_reader_before_claim_or_dispatch(case,monkeypatch):
+    """Isolated routing boundary only; no V5 Root admission/hosted claim.
+
+    The existing fixture runs its real fictional native template read. Its
+    trusted template boundary then supplies the V5 routing tag, and the reader
+    sentinel stops execution before any Root construction/claim/dispatch.
+    """
+    recover=w._recover;seen=[]
+    class ReachedV5History(Exception):pass
+    def validated_template_routing_boundary(*args,**kwargs):
+        document,client,storage=recover(*args,**kwargs)
+        document=deepcopy(document);document['schema_version']=t.STATIC_V5
+        return document,client,storage
+    def history_reader(parent,document,*args):
+        assert type(parent) is b.Parent and document['schema_version']==t.STATIC_V5
+        seen.append(document['schema_version']);raise ReachedV5History
+    monkeypatch.setattr(w,'_recover',validated_template_routing_boundary)
+    monkeypatch.setattr(w,'_discover_history',history_reader)
+    monkeypatch.setattr(w,'_discover',lambda *_:pytest.fail('V5_REACHED_LEGACY_FEED_DISCOVERY'))
+    with pytest.raises(ReachedV5History):case.execute()
+    assert seen==[t.STATIC_V5]
+    assert not any(r.get_method() in {'POST','PATCH'} for r in case.service.calls)
+    assert case.service.dispatch_body is None
