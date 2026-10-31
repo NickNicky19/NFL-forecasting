@@ -1,0 +1,93 @@
+{
+  "state": "CHANGED_SERVED_BYTES_CAPTURED_CONSUMER_EXECUTION_PENDING",
+  "at_UTC": "2026-10-31T19:52:52.370390+00:00",
+  "payload_sha256": "e0197bc7b109b13bd8afe3e5f675f8a1ffa9637d053ac2697e47ad5eecb97973",
+  "payload_bytes": 1867308,
+  "rows": 1941,
+  "row_keys": [
+    "category",
+    "first_prepared_at",
+    "forecast_value",
+    "game_id",
+    "horizon",
+    "issued_at",
+    "kickoff_utc",
+    "method_id",
+    "model_version",
+    "persistence_completed_at",
+    "player_id",
+    "prediction_functional",
+    "procedure_version",
+    "product",
+    "query_source_sha256",
+    "selection_sha256",
+    "source_cutoff_utc",
+    "source_policy_sha256",
+    "valid_until_utc"
+  ],
+  "payload_metadata_keys": [
+    "board_contract_sha256",
+    "canonical_board_sha256",
+    "display_board_sha256",
+    "fallback_counts",
+    "frozen_rows",
+    "packaged_at",
+    "prepared_at",
+    "publication_review_sha256",
+    "registration_id",
+    "schema_version",
+    "season",
+    "state",
+    "website_source_sha",
+    "week"
+  ],
+  "products": {
+    "binary_probability": 427,
+    "point_mean": 672,
+    "point_median": 842
+  },
+  "category_counts": {
+    "anytime_td": 427,
+    "rec": 400,
+    "rec_yd": 400,
+    "rush_rec_yd": 290,
+    "rush_att": 112,
+    "rush_yd": 112,
+    "pass_att": 40,
+    "pass_cmp": 40,
+    "pass_int": 40,
+    "pass_td": 40,
+    "pass_yd": 40
+  },
+  "issue_range": [
+    "2026-10-28T17:01:27.983768+00:00",
+    "2026-10-28T17:01:37.561173+00:00"
+  ],
+  "persistence_range": [
+    "2026-10-28T17:14:28.568750+00:00",
+    "2026-10-28T17:14:28.568750+00:00"
+  ],
+  "requests": [
+    {
+      "path": "data/weekly-adaptive/e0197bc7b109b13bd8afe3e5f675f8a1ffa9637d053ac2697e47ad5eecb97973.json",
+      "bytes": 1867308,
+      "sha256": "e0197bc7b109b13bd8afe3e5f675f8a1ffa9637d053ac2697e47ad5eecb97973"
+    },
+    {
+      "path": "app.js",
+      "bytes": 355942,
+      "sha256": "b50cd2d12e96a707d39eb34dea54b8724dba8b9ab02974ce416bd5aca7d84fe0"
+    },
+    {
+      "path": "weekly-adaptive-overlay.js",
+      "bytes": 12486,
+      "sha256": "e8df2cf8772088a56462d8833af39eda189d0215969dc40029ef1dda4bbd5478"
+    }
+  ],
+  "new_Session_A_fits_inference_capture": 0,
+  "private_input": {
+    "bytes": 87171,
+    "sha256": "10f9c6618450630c642fa777469f035dcff9b80c183318a030fa52dece24392c"
+  },
+  "CPU_seconds_source_readback": 38.103071703000005
+}
