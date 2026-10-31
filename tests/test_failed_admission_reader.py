@@ -345,7 +345,7 @@ class ReaderTests(unittest.TestCase):
         self.assertEqual(value["archive"]["original_reason_state"],"CORE_REASON_UNKNOWN")
 
     def test_pin_inventory_is_complete_hosted_closure_plus_reader_and_installed_test(self):
-        self.assertEqual(set(d.dependency_paths()),set(hosted.PINS)|{d.TOOL,"tests/test_failed_admission_reader.py"})
+        self.assertEqual(set(d.dependency_paths()),set(hosted.PINS)|{d.TOOL,"tests/test_failed_admission_reader.py","nfl_lab/__init__.py"})
 
     def test_metadata_imports_do_not_load_numerical_models(self):
         # Other repository tests may already have imported numerical libraries.
@@ -408,6 +408,9 @@ class PreflightTests(unittest.TestCase):
             d.verify_workflow(self.workflow.replace(b"contents: write",b"contents: read"))
     def test_source_pin_edit_rejected(self):
         (self.root/d.TOOL).write_bytes(b"changed\n")
+        with self.assertRaisesRegex(d.DiagnosticError,"EXACT_DIAGNOSTIC_SOURCE_PINS"):self.run_preflight()
+    def test_package_initializer_pin_edit_rejected(self):
+        (self.root/"nfl_lab/__init__.py").write_bytes(b"changed initializer\n")
         with self.assertRaisesRegex(d.DiagnosticError,"EXACT_DIAGNOSTIC_SOURCE_PINS"):self.run_preflight()
     def test_generic_lab_must_exclude_this_diagnostic(self):
         raw=self.workflow.replace(("inputs.mode != '"+d.VERSION+"'").encode(),b"true")

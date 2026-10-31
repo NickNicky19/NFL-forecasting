@@ -83,7 +83,7 @@ def dependency_paths(m=None):
     forecast Root's 128-pin ABI or its source-history adapter permissions.
     """
     m = m or modules()
-    return tuple(sorted(set(m.hosted.PINS) | {TOOL,TEST}))
+    return tuple(sorted(set(m.hosted.PINS) | {TOOL,TEST,"nfl_lab/__init__.py"}))
 
 
 def template():
