@@ -1,5 +1,8 @@
 # Four-category NFL opportunity forecasts
 
+Latest matched current-season comparison: [all twelve categories, each method’s numerical error and own Over/Under record](../category-topfive-matched-all12-w1w7-20261030/README.md). Includes probability/50–50 controls, complete-policy comparisons, coverage and exact live identities.
+
+
 ## Highest priority: matched all-category Weeks 1–7 comparison
 
 [Current execution and resumable comparison record](../category-topfive-matched-all12-w1w7-20261030/README.md). The latest owner request authorizes this bounded twelve-category inference/scoring/missing-fit comparison; it does not reopen an unlimited method search. New source preparation covers all 107 games. Accuracy comparisons are running; no new deployment is claimed. The next configured parent window is October 31, 7:36–7:57 a.m. CDT. Older dated checkpoints below remain historical.

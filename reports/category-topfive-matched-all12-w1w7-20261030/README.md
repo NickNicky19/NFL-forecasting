@@ -4,7 +4,7 @@
 
 ## Current-season category decisions
 
-MAE means the average absolute miss, in yards, counts or chart points. The Over/Under columns below belong to the listed **point leader**, using its unrounded point against the original recorded line. They are statistical direction counts on the supported offered subset, not venue-settled returns. The numerical-MAE population is broader.
+MAE means the average absolute miss, in yards, counts or chart points. The Over/Under columns below belong to the listed **point leader**, using its unrounded point against the original recorded line. Rushing MAE is on the prespecified RB population; the offering-board side counts include supported QB rushing and registered fallbacks as well, so they are a different population. They are statistical direction counts on the supported offered subset, not venue-settled returns. The numerical-MAE population is broader.
 
 | Category | Lowest observed point procedure | MAE / probability loss | Scored player-games | Lower MAE versus base CDF | Its Over correct/decided | Its Under correct/decided | Current served family/product |
 |---|---|---:|---:|---:|---:|---:|---|
@@ -12,7 +12,7 @@ MAE means the average absolute miss, in yards, counts or chart points. The Over/
 | Passing TDs | HGB_MAE_DIRECT / mae_objective_point | 0.7864 | 241 | 1.286% | 24/40 (60.0%) | 59/102 (57.8%) | LAB_CDF expected_mean |
 | Completions | RESPONSE_CDF / median | 5.1743 | 241 | 0.558% | 37/61 (60.7%) | 38/83 (45.8%) | LAB_CDF expected_mean |
 | Passing attempts | RESPONSE_CDF / median | 7.7759 | 241 | 0.689% | 20/40 (50.0%) | 47/103 (45.6%) | LAB_CDF expected_mean |
-| Interceptions | LEAF_CDF / median | 0.5892 | 241 | 0.000% | 4/5 (80.0%) | 65/138 (47.1%) | LAB_CDF expected_mean |
+| Interceptions | LEAF_CDF / RESPONSE_CDF median tie; side counts shown for LEAF_CDF | 0.5892 | 241 | 0.000% | 4/5 (80.0%) | 65/138 (47.1%) | LAB_CDF expected_mean |
 | Rushing yards (RB) | RESPONSE_CDF / median | 19.4608 | 586 | 0.061% | 57/114 (50.0%) | 197/329 (59.9%) | LAB_CDF intended_median |
 | Carries (RB) | BACKFIELD_CDF / median | 3.6280 | 586 | 3.451% | 44/88 (50.0%) | 120/239 (50.2%) | COUNT_A expected_mean |
 | Receptions | ORDERED_CDF / median | 1.2800 | 2000 | 0.117% | 154/255 (60.4%) | 366/662 (55.3%) | COUNT_A expected_mean |
@@ -76,9 +76,9 @@ Current models generally use earlier multiseason training through 2025; chart mo
 
 ## Production, capture and exact remaining owner action
 
-**This session is research-only.** Website Main remains `1ec93e068a91abd51c990937d1019e4a831694b4`; no later owner acknowledgement was returned by the October 31, 10:00 a.m. CDT read. The served payload SHA is `369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4`: 1,945 forecasts issued October 28, zero new MAE-profile rows. A fresh 10:00 a.m. CDT check also executed the exact served JavaScript consumer and matched all 1,945 saved values and labels; browser DOM was not visually observed. [Fresh consumer readback](LIVE_CONSUMER_READBACK_V2.json) · [Category release manifest](CATEGORY_RELEASE_MANIFEST_V2.json.gz). The exact live family/procedure/model bindings are recorded; chart PPR is not active.
+**This session is research-only.** Website Main remains `1ec93e068a91abd51c990937d1019e4a831694b4`; no later owner acknowledgement was returned by the October 31, 10:00 a.m. CDT read. The served payload SHA is `369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4`: 1,945 forecasts issued October 28, zero new MAE-profile rows. A fresh 10:00 a.m. CDT check also executed the exact served JavaScript consumer and matched all 1,945 saved values and labels; browser DOM was not visually observed. [Fresh consumer readback](LIVE_CONSUMER_READBACK_V2.json) · [Category release manifest](CATEGORY_RELEASE_MANIFEST_V2.json.gz). The exact live family/procedure/model bindings are recorded; chart PPR is not active. Live COUNT_A entries identify the served family and mean-labeled product; the serving wrapper has not been asserted identical to the laboratory corrected-mean recipe.
 
-The retained owner holds lease 178. The ready release package at commit `341742de83975264a07d035d4b6289e57c2ec1e9` was delivered, not acknowledged or executed. It must restore parent `40729788942` / child `40729906573`, authenticate SOURCE/query-completion/feature-capture receipts and actual model/wrapper/slot bindings, admit separately typed selected_projection while preserving independent means/probabilities, perform current-query inference, immutable persistence, fallback/rollback and publish/read back the actual consumer. Newly tested response, ordered/backfield, target and chart adapters retain their own guards. Ready older core products do not wait for this new research package.
+The retained owner holds lease 178. The ready release package at commit `341742de83975264a07d035d4b6289e57c2ec1e9` has verified delivery; owner acknowledgement and execution remain unverified. It must restore parent `40729788942` / child `40729906573`, authenticate SOURCE/query-completion/feature-capture receipts and actual model/wrapper/slot bindings, admit separately typed selected_projection while preserving independent means/probabilities, perform current-query inference, immutable persistence, fallback/rollback and publish/read back the actual consumer. Newly tested response, ordered/backfield, target and chart adapters retain their own guards. Ready older core products do not wait for this new research package.
 
 The **October 31, 7:36–7:57 a.m. CDT** parent window has elapsed. A 10:00 a.m. CDT read found no newer public parent execution; latest remains failed `41104520104`. Classify this public window MISSED_NO_OBSERVED_PUBLIC_EXECUTION, while private per-method capture remains unverified until owner census restoration. Next remaining Sunday T−90: **November 1, 10:30 a.m. CST**. This future configured deadline is not completed capture. The last inspected parent `41104520104` failed with capture enqueue skipped. Original assignments and the per-method Week 8 census still require approved owner-controlled restoration. No capture was backdated and no older issue time was replaced.
 
@@ -149,3 +149,71 @@ The equal CDF/CatBoost blend remained lowest. Both role logistic and the late re
 [Safe execution evidence archive](EXECUTION_EVIDENCE_V2.zip) preserves each public-safe receipt, failure, configuration contract, correction and historical compatibility audit under its original relative path, including `ALL12_RUN_RESULTS_INDEX_V2.json.gz`. Large immutable point/law/market/ATD aggregates are separate files; private rows and model artifacts remain private. Index publication is complete only after the exact commit/tree/body remote readback receipt.
 
 [Weekly point/mean/event errors and full operational coverage for every output](WEEKLY_POINT_PRODUCTS_W1_7.csv) directly projects already-completed per-week aggregates. It retains partial depth eligibility, unknowns, fallbacks, zeros and product labels. Weighted weekly MAEs reproduce the cumulative figures. No model was refitted or rescored. Missing metrics remain empty with reasons.
+
+## Constant 50/50 probability control — actual matched completion
+
+[Control comparison](probability-projection/FLAT50_COMPARISON_V1.json) · [Complete control aggregates](FLAT50_AGGREGATES_V1.json.gz). The same recorded board contains 3,998 within-query offers; 3,738 belong to the numeric primary roles. Prop-board results use all actual offered roles, including supported QB rushing. The control’s Brier was exactly 0.25 on supported rows; no observed pushes occurred. Integer-push handling was still preserved and checked. The probability-only control always abstains from selecting a side.
+
+| Category | Supported offered cases | Best tested football/shrink Brier | 50/50 Brier | Lower observed loss |
+|---|---:|---:|---:|---|
+| pass_att | 143 | 0.254173 (LEAF_CDF/SHRINK_0_5) | 0.25 | FLAT_50_CONTROL_ABSTAIN |
+| pass_cmp | 144 | 0.250857 (LEAF_CDF/SHRINK_0_5) | 0.25 | FLAT_50_CONTROL_ABSTAIN |
+| pass_int | 143 | 0.247501 (LEAF_CDF/FOOTBALL) | 0.25 | LEAF_CDF/FOOTBALL |
+| pass_td | 142 | 0.240309 (LEAF_CDF/SHRINK_0_5) | 0.25 | LEAF_CDF/SHRINK_0_5 |
+| pass_yd | 143 | 0.250778 (LEAF_CDF/SHRINK_0_5) | 0.25 | FLAT_50_CONTROL_ABSTAIN |
+| rec | 917 | 0.246598 (ORDERED_CDF/SHRINK_0_5) | 0.25 | ORDERED_CDF/SHRINK_0_5 |
+| rec_yd | 929 | 0.250944 (LEAF_CDF/SHRINK_0_5) | 0.25 | FLAT_50_CONTROL_ABSTAIN |
+| rush_att | 327 | 0.248118 (BACKFIELD_CDF/SHRINK_0_5) | 0.25 | BACKFIELD_CDF/SHRINK_0_5 |
+| rush_rec_yd | 468 | 0.252539 (LEAF_CDF/SHRINK_0_5) | 0.25 | FLAT_50_CONTROL_ABSTAIN |
+| rush_yd | 443 | 0.245241 (LEAF_CDF/SHRINK_0_5) | 0.25 | LEAF_CDF/SHRINK_0_5 |
+
+Thus model/shrink probabilities did not beat a 50/50 control for passing yards, completions, passing attempts, receiving yards or combined yards on this full offered panel. This prevents describing their relative model lead as demonstrated probability skill. Do not activate confident probability/EV rankings from those point-MAE results. Other categories’ modest observed probability gains remain exposed development evidence, with uncertainty and timing limits.
+
+## Descriptive weekly leaders
+
+[Week-by-week lowest observed errors](WEEKLY_OBSERVED_LEADERS_V1.csv) lists all twelve categories over Weeks 1–7, using the same frozen role populations and supported output definitions. It includes sample sizes and exact products. These are hindsight weekly winners, not forecasts of which method would win, not the policy’s actual advance choices and not a deployable weekly switching backtest. Tied minima remain tied numerically; the CSV uses a deterministic method-name tie display.
+
+## Complete selection rules at comparable coverage
+
+[Full policy comparison](probability-projection/COMPLETE_POLICY_COMPARISON_V1.md) compares 556 already-scored point/probability/control policy products and preserves 121 equal-capacity groups. On this full offered board, Always-Over beat the fitted selectors for passing attempts and completions. Count A mean had 87/142 correct passing-TD decisions; backfield CDF mean 174/327 carries; leaf-CDF median 521/917 receptions. These are descriptive exposed-data maxima, including ties, unresolved rows and registered fallbacks—not an earlier-trained switching rule. Top 6/10/20, abstention and each method’s own sides remain separate; equal capacity is not identical selected players.
+
+The first 2025 proper-score extension stopped before labels because a restored BASE mean did not match the saved point bit-for-bit. Its 78.75-CPU-second failure, 2,079 produced-but-unretained new replay rows and original intact artifacts are recorded. Source inspection found a changed inference batch shape and an incorrect check against old unavailable optional-product placeholders. The separately versioned continuation below restored the exact original batching and saved every replay before checking. No old study was erased or declared invalid from the first failure, and no target outcomes were used to choose a numerical tolerance. The successful continuation is a new traceable result, not a relabeling of that failure.
+
+## Completed 2025 BASE/ORDERED distribution comparison
+
+The corrected continuation completed with strict original mean/median/fallback replay parity, two retained BASE restorations and no refitting. It reused original ORDERED proper-score vectors. Across 272 games and all eighteen 2025 regular-season weeks:
+
+| Category | Supported primary cases | BASE CRPS | ORDERED CRPS | Relative lower CRPS | Game-cluster paired difference interval |
+|---|---:|---:|---:|---:|---|
+| rush_att | 1566 | 2.426268791 | 2.405966952 | 0.837% | [-0.033983, -0.005052] |
+| rec | 5295 | 0.838962759 | 0.836145149 | 0.336% | [-0.004682, -0.000955] |
+
+NLL reductions were smaller, with paired intervals crossing zero. Week-cluster and two-target adjustment diagnostics are retained in the full aggregate. This is exposed, current-vintage historical development under the original seven-day and participation limitations, not a new label repair or proof against website forecasts. The 9,350 primary query memberships include 6,861 supported outcomes; 34,804 actual full-context query passes were necessary to reproduce the original batching. Previously unavailable optional products were not relabeled as originals. [Actual execution](historical-2025-proper-gap/ACTUAL_EXECUTION_V2.json). The first failed attempt remains unchanged.
+
+[Full new 2025 proper-score results and every weekly gain/loss](HISTORICAL_2025_BASE_ORDERED_PROPER_AGGREGATES_V2.json.gz) preserve the exact original BASE bit-parity diagnostics, source/model identities, both target uncertainty intervals and unknown/fallback coverage. These remain separate from the 2026 label-repaired panel.
+
+## Paired uncertainty against the strongest alternative
+
+[All 23 strongest-control comparisons](STRONGEST_CONTROL_PAIRS_AGGREGATES_V1.json.gz) reuse frozen original vectors: eleven point-MAE pairs, eleven compatible mean-MSE pairs and the ATD blend against CatBoost. No model or prediction was regenerated. These controls are the strongest alternative procedure groups on the declared core, with nominal game/week-aware intervals and development-selection limits.
+
+| Category | Point leader | Next-best procedure | Lower average absolute miss | Game-cluster interval for leader minus control |
+|---|---|---|---:|---|
+| chart_ppr | RESPONSE_CDF/median | CATBOOST_MEDIUM/median_objective_point | 0.018439 | [-0.053260, 0.016141] |
+| pass_att | RESPONSE_CDF/median | LEAF_CDF/median | 0.053942 | [-0.139835, 0.033065] |
+| pass_cmp | RESPONSE_CDF/median | LEAF_CDF/median | 0.029046 | [-0.104173, 0.042923] |
+| pass_int | LEAF_CDF/median | RESPONSE_CDF/median | -0.000000 | [-0.032660, 0.032524] |
+| pass_td | HGB_MAE_DIRECT/mae_objective_point | LEAF_CDF/median | 0.010243 | [-0.047180, 0.024335] |
+| pass_yd | LEAF_CDF/median | RESPONSE_CDF/median | 0.302905 | [-1.050624, 0.370941] |
+| rec | ORDERED_CDF/median | LEAF_CDF/median | 0.001500 | [-0.013180, 0.009695] |
+| rec_yd | RESPONSE_CDF/median | LEAF_CDF/median | 0.016500 | [-0.063600, 0.029182] |
+| rush_att | BACKFIELD_CDF/median | ORDERED_CDF/median | 0.087031 | [-0.148411, -0.022647] |
+| rush_rec_yd | LEAF_CDF/median | RESPONSE_CDF/median | 0.003000 | [-0.075480, 0.066538] |
+| rush_yd | RESPONSE_CDF/median | LEAF_CDF/median | 0.011945 | [-0.128673, 0.109643] |
+
+Carries improve 2.343% versus the stronger ordered-history control (3.628 versus 3.715), compared with 3.451% versus base CDF. The paired game interval against ordered is −0.1484 to −0.0226 carries. Most other differences remain small and uncertain. The chart leader’s game interval crosses zero against CatBoost, despite a lead against base CDF. Interception medians tie in aggregate, with different individual errors. ATD blend’s 0.050% Brier advantage over CatBoost has intervals crossing zero. No new significance veto or automatic promotion was added.
+
+## Exact retained-owner release action
+
+[One self-contained owner action request](OWNER_ACTION_REQUEST_V3.md) names the delivered package, checkpoint, guards, remaining game deadline and required live receipt. No new website writer or scheduler was created. The original ready core release remains independent of new research and probability work.
+
+[Latest completed control/history execution index](ALL12_RUN_RESULTS_SUPPLEMENT_V3.json) supplements the immutable earlier run index. The separately saved failures, actual successful continuations and independent checks are individually linked.
