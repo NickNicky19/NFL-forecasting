@@ -45,6 +45,10 @@ CONFIG_KEYS = {"schema_version", "scope", "selection_product", "selection_metric
     "source_evidence", "categories", "new_fits", "probability_policy_change", "ranking_policy_change", "public_export_authorized",
     "mae_runtime_pin_profile"}
 CHANGED_LEGACY_PATHS = frozenset({
+    'nfl_lab/audit_weekly_operations_restore_v1.py',
+    'nfl_lab/audit_weekly_discovery_v1.py',
+    'nfl_lab/audit_weekly_retained_v1.py',
+    'tests/test_audit_weekly_operations_restore_v1.py',
     'nfl_lab/audit_weekly_controller_v1.py',
     'nfl_lab/audit_weekly_archive_v1.py',
     'nfl_lab/audit_weekly_controller_bootstrap_v1.py',
