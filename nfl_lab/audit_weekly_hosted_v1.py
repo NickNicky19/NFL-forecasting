@@ -419,6 +419,7 @@ class Runner:
         self.pending_scope_authenticated=False
         self.pending_metadata_clients=[]
         self.recovery_metadata_clients=[]
+        self.capacity_metadata_clients=[]
         self.job=actions_context(env,"write")
         if existing:
             self.root_ref=cp.binding(self.root/"OWNER_ROOT.json");self.package_ref=cp.binding(self.root/"QUALIFIED_RUNTIME.json")
@@ -548,6 +549,10 @@ class Runner:
         """Two distinct GET-only scopes for this recovery phase, outside the 8 handoffs."""
         require(len(self.recovery_metadata_clients)<2,'TWO_RECOVERY_METADATA_CLIENTS')
         return self._qualified_metadata_client(self.recovery_metadata_clients)
+
+    def capacity_metadata_client(self):
+        require(not self.capacity_metadata_clients,'ONE_PRE_CAPTURE_CAPACITY_CLIENT')
+        return self._qualified_metadata_client(self.capacity_metadata_clients)
 
     def _qualified_metadata_client(self, clients):
         proof=self.fresh_operations_proof()
@@ -1246,8 +1251,8 @@ class Runner:
             inputs=self.metadata(origin_ref,retained_ref)
         policy_ref=self.register_publication(inputs)
         # Capacity first.
-        self.require_pending_scope();self.client.draft()
-        capacity=archive.capacity_snapshot(self.client)
+        self.require_pending_scope();capacity_client=self.capacity_metadata_client();capacity_client.draft()
+        capacity=archive.capacity_snapshot(capacity_client)
         capacity.update(schema_version=archive.VERSION+"-before-capture-v1",root_go_sha256=self.go_sha,
             source_sha=self.identity["source_sha"],run_id=self.identity["run_id"],
             observed_at_utc=now_utc().isoformat(),payload_bytes=None,
@@ -1524,7 +1529,6 @@ class Runner:
             alias=collection/logical
             self.storage.import_file(path,alias,expected_sha256=ref["sha256"])
             files.append(cp.file_item(cp.binding(alias),logical,"forecast" if path.suffix==".gz" else "control"))
-        # Keep fixed controls; exclude raw source caches and weights.
         for name in ("OWNER_ROOT.json","QUALIFIED_RUNTIME.json","BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json",
                 "BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json"):
             path=self.root/name
@@ -1534,7 +1538,6 @@ class Runner:
             for name in names:
                 path=self.root/folder/name
                 if path.exists():add(path,"failed/"+folder+"-metadata/"+name)
-        # Keep original intents/descriptors/journals; never retry preencoded bodies.
         normal=self.root/"archive-produce"
         if normal.exists():
             for name in ("CONSUMED.json","ADMISSION.json","ADMISSION_DETAILS.json","SERIALIZED_ADMISSION_DETAILS.json",
@@ -1551,7 +1554,7 @@ class Runner:
                     add(path,"failed/original-archive/journal/"+path.relative_to(journal).as_posix())
                     if path.name.endswith(".reservation.json"):
                         original_pending.append(cp.strict_json(store.read_local(path,32 << 10)))
-            # Charge unresolved POSTs without retrying them.
+            # Charge unresolved POSTs.
             if original_pending:cp.seed_pending(self.journal,original_pending)
         for folder in ("runtime","reference","metadata","phase-status","requests","journal",
                 "operations-grade-write","operations-grade-read","operations-prepared","grading-delivery",
@@ -1563,7 +1566,7 @@ class Runner:
                 if not path.is_file() or path.name==_OWNER:continue
                 logical="failed/"+path.relative_to(self.root).as_posix()
                 if folder=="reference" and path.parent==base/"source-observations" and re.fullmatch(r"[0-9]{4}-(?:BEGIN|END)\.json",path.name):
-                    # Bundle original receipts within unchanged byte/file caps.
+                    # Bundle original receipts.
                     ref=cp.binding(path)
                     require(len(observations)<1024 and ref["bytes"]<=64 << 10,"FINITE_FULL_ORIGINAL_OBSERVATION_CONTROLS")
                     raw=archive.read_owned(self.storage,ref,64 << 10,raw=True)
@@ -1571,7 +1574,7 @@ class Runner:
                     require(observation_bytes<=1 << 20,"COMPLETE_ORIGINAL_OBSERVATION_BYTES_CAP")
                     observations.append(dict(logical_path=logical,reference=ref,body_base64=base64.b64encode(raw).decode()))
                     continue
-                # Import interrupted writes unchanged into owned CAS.
+                # Import original writes.
                 add(path,logical)
         bundled={}
         if observations:
@@ -1607,7 +1610,6 @@ class Runner:
             c.authenticate_actions_job();c.bind(package["binding"])
             operations_authority.attach(c,proof,self.env,store.canonical(self.go))
             clients.append(c);return c
-        # Separate failure-only intent; the original archive stays immutable.
         handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"failure-archive-produce",
             root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"],
             pending=pending_recovery(self.go)['pending_reservations'],display_profile=display_profile)
