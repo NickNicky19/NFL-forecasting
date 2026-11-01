@@ -138,8 +138,38 @@ def bind_discovery_source(receipt_body,receipt_sha256,qualified_runtime,*,bootst
     return DiscoverySourceGrant(document,value,bootstrap_proof,authenticate,_LIVE)
 
 
+V5_OWNER_HISTORY = "EXACT_ROOT_V5_OWNER_34743_SOURCE_HISTORY"
+
+
+def _v5_owner_history(root,value,proof):
+    """Closed first Owner bridge; never a Parent migration or actor union."""
+    from . import audit_weekly_controller_v1 as controller,audit_weekly_controller_bootstrap_v1 as bootstrap
+    from . import audit_weekly_grade_history_v1 as history,audit_weekly_template_v1 as template
+    require(type(proof) is bootstrap.Owner and proof.document.get("actor")==controller.OWNER,
+        "V5_HISTORY_REQUIRES_CURRENT_LIVE_OWNER")
+    require(root.get("schema_version")==template.ROOT_V5 and root.get("operation")=="RECURRING_CAPTURE"
+        and root["effective_epoch"].get("schema_version")==history.CONTEXT_V5
+        and root["effective_epoch"].get("controller_context") is None,
+        "EXPLICIT_V5_OWNER_OPS_TRANSITION_REQUIRED")
+    controller._historical_v5_root(root)
+    seal=proof.bootstrap_seal;seal.verify()
+    registered=controller.registration(seal.registration_bytes,sealed_sha256=seal.registration_sha256,at=now())
+    a=controller._historical_v5(registered)
+    require(store.sha(store.canonical(value))==a["receipt_body_sha256"]
+        and all(value[k]==a[k] for k in ("source_sha","run_id","root_go_sha256","workflow_sha256","jobs")),
+        "EXACT_V5_NATIVE_34743_PUBLIC_RECEIPT_REQUIRED")
+    transition=history.validate_source_history_binding(root);old=transition["predecessor"]
+    reference=dict(schema_version=history.LOCATOR_REF,**old["locator"])
+    require(root["effective_epoch"]["previous_capture"]==dict(feed_sha256=value["feed_sha256"],receipt_sha256=a["receipt_sha256"])
+        and root["effective_epoch"]["previous_checkpoint"]==reference,
+        "V5_OLD_OPS_HISTORY_LOCATOR_REQUIRED_NO_NULL_CHECKPOINT")
+    history.locator_reference(reference)
+    return dict(kind=V5_OWNER_HISTORY,historical_actor=dict(controller.BOT),
+        historical_authority_sha256=controller.digest(a),historical_receipt_sha256=store.sha(store.canonical(value)))
+
+
 def _source_history_contract(root,value,scope,binding,proof):
-    """Explicit V4 predecessor; the live current proof/seal stays unchanged."""
+    """Explicit V4 Owner or closed V5 old-BOT predecessor under a live Seal."""
     from . import audit_weekly_grade_history_v1 as history,audit_weekly_template_v1 as template
     from . import audit_weekly_controller_v1 as controller
     require(store.sha(store.canonical(root))==binding["current_root_go_sha256"],"EXACT_SOURCE_HISTORY_DISCOVERY_ROOT")
@@ -153,7 +183,9 @@ def _source_history_contract(root,value,scope,binding,proof):
     registration=controller.decode(proof.bootstrap_seal.registration_bytes)
     static=deepcopy(root);static["approved"]=False
     for name in template.DYNAMIC_FIELDS-{"approved"}:static[name]=None
-    prepared=template.prepare(dict(schema_version=template.STATIC_V4,source_sha=root["source_sha"],
+    v5=root["schema_version"]==template.ROOT_V5
+    exact=_v5_owner_history(root,value,proof) if v5 else None
+    prepared=template.prepare(dict(schema_version=template.STATIC_V5 if v5 else template.STATIC_V4,source_sha=root["source_sha"],
         code_pins=deepcopy(root["code_pins"]),readiness=deepcopy(registration["readiness"]),root_template=static))
     sealed=proof.bootstrap_seal.template_descriptor
     require(store.sha(prepared.plain)==sealed["template_sha256"] and len(prepared.plain)==sealed["template_bytes"],
@@ -168,7 +200,7 @@ def _source_history_contract(root,value,scope,binding,proof):
     require(value["workflow_sha256"]==scope["operational_workflow_sha256"]
         and {role:j["job_id"] for role,j in value["jobs"].items()}==scope["operational_jobs"],
         "SOURCE_HISTORY_DISCOVERY_UNCHANGED_WORKFLOW_AND_JOBS")
-    return dict(kind="EXPLICIT_V4_OWNER_SOURCE_HISTORY",branch=branch,
+    return dict(exact or dict(kind="EXPLICIT_V4_OWNER_SOURCE_HISTORY"),branch=branch,
         binding_sha256=store.sha(store.canonical(body)),receipt_sha256=store.sha(store.canonical(value)),
         historical_code_pins_sha256=body["predecessor"]["code_pins_sha256"])
 
@@ -178,8 +210,8 @@ def bind_source_history(receipt_body,receipt_sha256,qualified_runtime,*,bootstra
     """Bind ONLY the explicit owner-produced predecessor to current authority.
 
     Legacy discovery contracts keep their source/policy equality checks. This
-    separate constructor authenticates the native V4 static commitment before
-    any prior-namespace GET. Old BOT sources are not admitted by this adapter.
+    separate constructor authenticates the full native static commitment before
+    prior-namespace GETs. Only V5 admits its exact historical BOT preimage.
     """
     value=receipt(receipt_body,receipt_sha256);at=clock()
     scope=_sealed_source(bootstrap_proof,current_root_go_sha256,at)
@@ -399,6 +431,12 @@ def _origin(pool, value, historical, *, discovery_grant=None):
             "OWNER_SEALED_NICK_READINESS","EXPLICIT_V4_OWNER_SOURCE_HISTORY"} else [owner,bot]
         actor_allowed=current_actor.get("login")==expected["login"] and type(current_actor.get("id")) is int and current_actor["id"]==expected["id"] \
             and type(old_actor.get("id")) is int and any(old_actor.get("login")==a["login"] and old_actor["id"]==a["id"] for a in permitted)
+        if discovery_grant.document["historical_contract"]["kind"]==V5_OWNER_HISTORY:
+            require(expected==owner,"V5_HISTORY_CURRENT_ACTOR_MUST_REMAIN_OWNER")
+            actor_allowed=current_actor.get("login")==owner["login"] and type(current_actor.get("id")) is int and current_actor["id"]==owner["id"] \
+                and old_actor.get("login")==bot["login"] and type(old_actor.get("id")) is int and old_actor["id"]==bot["id"] \
+                and type(run.get("triggering_actor")) is dict and run["triggering_actor"].get("login")==bot["login"] \
+                and type(run["triggering_actor"].get("id")) is int and run["triggering_actor"]["id"]==bot["id"]
         require(current.get("id")==int(pool.current["run_id"]) and current.get("head_sha")==pool.current["source_sha"]
             and current.get("status")=="in_progress" and current.get("event")=="workflow_dispatch" and current.get("run_attempt")==1
             and current.get("path")==".github/workflows/lab.yml"

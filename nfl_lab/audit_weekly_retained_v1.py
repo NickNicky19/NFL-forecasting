@@ -119,10 +119,11 @@ def _bootstrap_scope(proof,authority,at):
 
 class HistoricalSourceGrant:
     """Live, process-bound extension; JSON and historical proof flags cannot mint it."""
-    def __init__(self,document,proof,authenticate,key):
+    def __init__(self,document,proof,authenticate,key,*,v5_discovery=None):
         require(key is _GRANT_KEY,"LIVE_HISTORICAL_SOURCE_GRANT_REQUIRED")
         self.document=deepcopy(document);self.sha256=store.sha(store.canonical(document))
         self._proof,self._authenticate,self._process=proof,authenticate,store.process_identity()
+        self._v5_discovery=v5_discovery
     def verify(self,p,authority,at):
         require(self.sha256==store.sha(store.canonical(self.document)) and self._process==store.process_identity(),
             "HISTORICAL_SOURCE_GRANT_CHANGED_OR_DIFFERENT_PROCESS")
@@ -130,6 +131,9 @@ class HistoricalSourceGrant:
         require(self.document["scope"]==scope and self.document["request_sha256"]==store.sha(store.canonical(p))
             and self.document["authority_sha256"]==store.sha(store.canonical(authority))
             and store.utc(self.document["created_at_utc"])<=_grant_utc(at),"EXACT_HISTORICAL_SOURCE_GRANT_BINDING")
+        if self._v5_discovery is not None:
+            require(self.document["v5_historical_scope"]==_v5_historical_scope(p,authority,self._proof,self._v5_discovery,at),
+                "V5_HISTORICAL_SCOPE_CHANGED_OR_UNBOUND")
         return self
     def __reduce__(self):raise store.StoreError("HISTORICAL_SOURCE_GRANT_CANNOT_BE_SERIALIZED")
 
@@ -160,6 +164,51 @@ def bind_historical_source(p,authority,*,bootstrap_proof,public_policy_sha256,hi
         historical_jobs=deepcopy(_historical_jobs(p,historical_jobs)),created_at_utc=at.isoformat())
     _grant_authenticate(authenticate,"BIND_SEALED_HISTORICAL_SOURCE",document,at)
     return HistoricalSourceGrant(document,bootstrap_proof,authenticate,_GRANT_KEY)
+
+
+def _v5_historical_scope(p,authority,proof,grant,at):
+    from . import audit_weekly_discovery_v1 as discovery,audit_weekly_controller_bootstrap_v1 as bootstrap
+    require(type(proof) is bootstrap.Owner and type(grant) is discovery.DiscoverySourceGrant
+        and grant._proof is proof,"V5_SAME_CURRENT_OWNER_AND_DISCOVERY_GRANT_REQUIRED")
+    grant.verify(grant.document["binding"])
+    current=_bootstrap_scope(proof,authority,at);d=grant.document;v=grant._value
+    require(d["historical_contract"]["kind"]==discovery.V5_OWNER_HISTORY
+        and d["scope"]["operational_source_sha"]==current["approved_source_sha"]
+        and d["scope"]["operational_policy_sha256"]==current["public_policy_sha256"]
+        and d["scope"]["current_actor"]==current["current_actor"]
+        and d["binding"]["current_root_go_sha256"]==authority["owner_root_go_sha256"],
+        "V5_RETAINED_CURRENT_SEAL_SOURCE_POLICY_SCOPE")
+    h=p["reader_handoff"]["archive"]
+    require(all(h[k]==v[k] for k in ("source_sha","run_id","root_go_sha256"))
+        and h["jobs"]=={role:j["job_id"] for role,j in v["jobs"].items()}
+        and h["producer"]["api_job_id"]==v["jobs"]["produce"]["api_job_id"]
+        and p["reader_handoff"]["restorer"]["api_job_id"]==v["jobs"]["restore"]["api_job_id"]
+        and p["exporter_api_job_id"]==v["jobs"]["consume"]["api_job_id"]
+        and h["index_descriptor"]["entry"]["payload"]["sha256"]==v["archive_index_sha256"]
+        and h["files_sha256"]==v["archive_files_sha256"]
+        and p["reader_handoff"]["witness_descriptor"]["entry"]["payload"]["sha256"]==v["reader_witness_sha256"]
+        and h["producer"]["workflow_ref"]==store.REPO+"/.github/workflows/lab.yml@refs/heads/"+d["historical_contract"]["branch"]
+        and p["historical_source_sha256"]==d["binding"]["historical_source_sha256"]
+        and store.sha(store.canonical(p["qualified_runtime"]))==d["binding"]["qualified_runtime_sha256"],
+        "V5_RETAINED_EXACT_ORIGINAL_ARCHIVE_SOURCE_PACKAGE")
+    return dict(approved_source_sha=v["source_sha"],run_id=v["run_id"],root_go_sha256=v["root_go_sha256"],
+        public_policy_sha256=v["policy_sha256"],operational_jobs={role:j["job_id"] for role,j in v["jobs"].items()},
+        operational_workflow_sha256=v["workflow_sha256"],operational_workflow_ref=h["producer"]["workflow_ref"],
+        authority_sha256=d["historical_contract"]["historical_authority_sha256"])
+
+
+def bind_v5_source_history(p,authority,*,bootstrap_proof,discovery_grant,historical_jobs,authenticate,root,clock=now):
+    """Current Owner/source/policy stay separate from exact old BOT/policy."""
+    validate_request(p,root);at=_grant_utc(clock());scope=_bootstrap_scope(bootstrap_proof,authority,at)
+    historical=_v5_historical_scope(p,authority,bootstrap_proof,discovery_grant,at)
+    require(authority["request_sha256"]==store.sha(store.canonical(p))
+        and store.utc(p["registered_at_utc"])<=store.utc(authority["issued_at_utc"]),
+        "EXACT_V5_REGISTERED_RETAINED_REQUEST")
+    document=dict(schema_version=VERSION+"-historical-source-grant-v5",scope=scope,v5_historical_scope=historical,
+        request_sha256=authority["request_sha256"],authority_sha256=store.sha(store.canonical(authority)),
+        historical_jobs=deepcopy(_historical_jobs(p,historical_jobs)),created_at_utc=at.isoformat())
+    _grant_authenticate(authenticate,"BIND_SEALED_HISTORICAL_SOURCE",document,at)
+    return HistoricalSourceGrant(document,bootstrap_proof,authenticate,_GRANT_KEY,v5_discovery=discovery_grant)
 
 
 def prepare_request(root,reader_handoff,qualified_runtime,*,exporter_api_job_id,historical_source_sha256,
@@ -293,16 +342,21 @@ def authenticate_origin(client,p,authority,*,historical_grant=None):
         and type(current.get("actor",{}).get("id")) is int and current["actor"]["id"]==current_actor["id"],"ACTUAL_NEW_RETAINED_BRANCH_OWNER")
     url=store.API+"/actions/runs/"+h["run_id"];run=client.json(client.allow(url));listing=client.json(client.allow(url+"/jobs?per_page=100&page=1"))
     actor=run.get("actor",{});original_owner=actor.get("login")=="NickNicky19" and type(actor.get("id")) is int and actor["id"]==208912933
-    granted_bot=historical_grant is not None and h["source_sha"]==historical_grant.document["scope"]["approved_source_sha"] \
-        and h["jobs"]==historical_grant.document["scope"]["operational_jobs"] \
-        and h["producer"]["workflow_ref"]==historical_grant.document["scope"]["operational_workflow_ref"] \
-        and p["historical_source_sha256"][".github/workflows/lab.yml"]==historical_grant.document["scope"]["operational_workflow_sha256"] \
+    v5=historical_grant is not None and historical_grant._v5_discovery is not None
+    historical_scope=(historical_grant.document["v5_historical_scope"] if v5 else historical_grant.document["scope"]) if historical_grant is not None else None
+    granted_bot=historical_grant is not None and h["source_sha"]==historical_scope["approved_source_sha"] \
+        and h["jobs"]==historical_scope["operational_jobs"] \
+        and h["producer"]["workflow_ref"]==historical_scope["operational_workflow_ref"] \
+        and p["historical_source_sha256"][".github/workflows/lab.yml"]==historical_scope["operational_workflow_sha256"] \
         and actor.get("login")=="github-actions[bot]" and type(actor.get("id")) is int and actor["id"]==41898282
     require(run.get("id")==int(h["run_id"]) and run.get("head_sha")==h["source_sha"] and run.get("status")=="completed"
         and run.get("conclusion")=="success" and run.get("event")=="workflow_dispatch" and run.get("run_attempt")==1
         and run.get("path")==".github/workflows/lab.yml" and run.get("head_branch")==h["producer"]["workflow_ref"].split("@refs/heads/",1)[1]
         and run.get("repository",{}).get("full_name")==run.get("head_repository",{}).get("full_name")==store.REPO
-        and (original_owner or granted_bot),
+        and ((granted_bot and type(run.get("triggering_actor")) is dict
+            and run["triggering_actor"].get("login")=="github-actions[bot]"
+            and type(run["triggering_actor"].get("id")) is int and run["triggering_actor"]["id"]==41898282) if v5
+            else (original_owner or granted_bot)),
         "ACTUAL_REGISTERED_COMPLETED_SUCCESSFUL_PRIOR_RUN")
     require(type(listing.get("jobs")) is list and listing.get("total_count")==len(listing["jobs"])<=100,"COMPLETE_PRIOR_WEEKLY_JOB_LIST")
     ids=dict(produce=h["producer"]["api_job_id"],restore=p["reader_handoff"]["restorer"]["api_job_id"],consume=p["exporter_api_job_id"])
@@ -422,10 +476,11 @@ def restore(p,factory,*,storage,authority,root,check_authority=None,historical_g
             <=store.utc(proof["created_at_utc"])<=now(),"GENUINE_CURRENT_PAYLOAD_PROOF_AND_NEW_CLOCK")
         proofs.append(proof);downloads[name]=cp.binding(owned);return cp.read_ref(downloads[name],cap)
     raw=get(h["index_descriptor"],"index.gz",archive.INDEX_CAP);index=archive.check_index(archive.unpack(raw,archive.INDEX_PLAIN_CAP),h)
-    if historical_grant is not None and h["source_sha"]==historical_grant.document["scope"]["approved_source_sha"]:
+    historical_scope=(historical_grant.document["v5_historical_scope"] if historical_grant._v5_discovery is not None else historical_grant.document["scope"]) if historical_grant is not None else None
+    if historical_scope is not None and h["source_sha"]==historical_scope["approved_source_sha"]:
         policy=[f for f in index["files"] if f["logical_path"]=="context/public_policy.json"]
         require(len(policy)==1 and 0<policy[0]["bytes"]<=128 << 10
-            and policy[0]["sha256"]==historical_grant.document["scope"]["public_policy_sha256"],
+            and policy[0]["sha256"]==historical_scope["public_policy_sha256"],
             "EXACT_GRANTED_OPERATIONAL_ARCHIVE_PUBLIC_POLICY")
     writer=evidence["produce"];producer=index["producer_proof"]
     require(index["qualification_sha256"]==store.sha(store.canonical(p["qualified_runtime"]["qualification"]))

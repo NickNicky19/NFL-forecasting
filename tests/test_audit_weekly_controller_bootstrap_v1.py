@@ -500,6 +500,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261028-history-runtime.json",
     "state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json",
     "state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
+    "state/controller-v1/bootstrap-v2-20261101-mae-history-read.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -510,7 +511,7 @@ def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     assert api.get(c.contents_url(literal, old.A), 17) == []
     assert len(calls) == 1
     for path, ref in ((literal, "lab-state"),
-            (literal.replace("20261026", "20261025").replace("20261027", "20261025").replace("20261028", "20261025").replace("20261031", "20261025"), old.A),
+            (literal.replace("20261026", "20261025").replace("20261027", "20261025").replace("20261028", "20261025").replace("20261031", "20261025").replace("20261101", "20261025"), old.A),
             (literal.replace(".json", "-extra.json"), old.A),
             (literal.replace("bootstrap-v2", "../bootstrap-v2"), old.A)):
         with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):
@@ -678,7 +679,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261101-mae-history-read.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
@@ -1014,3 +1015,32 @@ def test_mae_registry_route_rejects_similar_case_ref_and_query_before_io(tail):
     with pytest.raises(b.BootstrapError,match='BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'):
         api(c.API+'/'+tail,64)
     assert api.calls==[]
+
+
+@pytest.mark.parametrize('tail',[
+    'contents/state/controller-v1/bootstrap-v2-20261101-MAE-history-read.json?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.JSON?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read-extra.json?ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref=main',
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref=lab-state',
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'A'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'a'*39,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'a'*41,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?Ref='+'a'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'a'*40+'&page=1',
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'a'*40+'&ref='+'b'*40,
+    'contents/state/controller-v1/bootstrap-v2-20261101-mae-history-read.json?ref='+'a'*40+'#fragment',
+])
+def test_history_mae_registry_new_literal_remains_fixed_before_io(tail):
+    api=b.Metadata({},lambda *_:pytest.fail('UNDECLARED_HISTORY_MAE_REGISTRY_ROUTE_REACHED_IO'))
+    assert not b.fixed_route(c.API+'/'+tail)
+    with pytest.raises(b.BootstrapError,match='BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP'):
+        api(c.API+'/'+tail,64)
+    assert api.calls==[]
+
+
+def test_new_default_registry_does_not_reclassify_the_previous_native_seal():
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261101-mae-history-read.json'
+    assert b.LOCATOR_REGISTRY_PATH!='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
+    assert b.fixed_route(c.contents_url('state/controller-v1/bootstrap-v2-20261031-mae-display-read.json','a'*40))
+    assert b.REGISTRY_PATH=='state/controller-v1/bootstrap-v1.json'

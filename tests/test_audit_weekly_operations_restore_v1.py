@@ -322,7 +322,7 @@ def _dual_runtime_seed(case,damage=None,*,root_override=None):
         key="feed_sha256" if damage=="feed-anchor" else "receipt_sha256"
         root["prior_capture_qualified_runtime"]["anchor"][key]="0"*64
     document=deepcopy(x.prepared.document)
-    document["schema_version"]=template.STATIC_V4 if root["schema_version"]==template.ROOT_V4 else template.STATIC_V3
+    document["schema_version"]=template.STATIC_V5 if root["schema_version"]==template.ROOT_V5 else template.STATIC_V4 if root["schema_version"]==template.ROOT_V4 else template.STATIC_V3
     document.update(source_sha=root["source_sha"],code_pins=deepcopy(root["code_pins"]),readiness=deepcopy(x.p["readiness"]))
     document["root_template"]=deepcopy(root);document["root_template"]["approved"]=False
     for key in template.DYNAMIC_FIELDS-{"approved"}:document["root_template"][key]=None
@@ -524,7 +524,7 @@ def _native(seed,failure=None,*,discovery_fault=None):
         if hasattr(module,"datetime"):clock_scope.enter_context(patch.object(module,"datetime",ScenarioClock))
     if dual:
         real_select=template.capture_runtime;real_qualification=archive.authenticate_qualification
-        real_prepare=retained.prepare_request;real_bind=retained.bind_historical_source
+        real_prepare=retained.prepare_request;real_bind=retained.bind_historical_source;real_v5_bind=retained.bind_v5_source_history
         def select(root,**kwargs):
             package,pending=real_select(root,**kwargs);selected.append(deepcopy(package))
             if seed["damage"] is None:assert pending==seed["old"]["census"]
@@ -537,6 +537,10 @@ def _native(seed,failure=None,*,discovery_fault=None):
         def bind(request,native,**kwargs):
             grant=real_bind(request,native,**kwargs)
             historical_grants.append((grant,deepcopy(request),deepcopy(native)));return grant
+        def bind_v5(request,native,**kwargs):
+            grant=real_v5_bind(request,native,**kwargs)
+            historical_grants.append((grant,deepcopy(request),deepcopy(native)));return grant
+        clock_scope.enter_context(patch.object(retained,"bind_v5_source_history",bind_v5))
         clock_scope.enter_context(patch.object(template,"capture_runtime",select))
         clock_scope.enter_context(patch.object(archive,"authenticate_qualification",qualify))
         clock_scope.enter_context(patch.object(retained,"prepare_request",prepare))
@@ -560,7 +564,7 @@ def _native(seed,failure=None,*,discovery_fault=None):
             assert context.proof.document["actor"]==(controller.OWNER if expected_proof is bootstrap.Owner else controller.BOT)
             assert context.proof.document["root_go_sha256"]==store.sha(store.canonical(go))
             prepared=bootstrap.verify_template_payload(context.proof.bootstrap_seal,base64.b64decode(seed["static_template_base64"]))
-            assert prepared.document["schema_version"]==(template.STATIC_V4 if source_history else template.STATIC_V3)
+            assert prepared.document["schema_version"]==(template.STATIC_V5 if go["schema_version"]==template.ROOT_V5 else template.STATIC_V4 if source_history else template.STATIC_V3)
             sealed=prepared.document["root_template"]["prior_capture_qualified_runtime"]
             assert sealed["qualified_runtime"]==seed["old"]["package"] and sealed["pending_census"]==seed["old"]["census"]
             if seed["damage"] not in {"census","package"}:
@@ -643,7 +647,7 @@ def _native(seed,failure=None,*,discovery_fault=None):
         bindings=[c._audit_operations_current for c in clients if hasattr(c,"_audit_operations_current")]
         assert bindings and all(type(binding)is authority.CurrentClient and binding.proof is context.proof for binding in bindings)
         assert all(cp.client_identity(c)==cp.client_identity(context.client) for c in clients)
-        if not (source_history and seed["actor"]=="owner"):
+        if go["schema_version"]==template.ROOT_V5 or not (source_history and seed["actor"]=="owner"):
             assert len(historical_grants)==1
             grant,approved,native=historical_grants[0]
             assert type(grant)is retained.HistoricalSourceGrant and grant._proof is context.proof
@@ -652,11 +656,25 @@ def _native(seed,failure=None,*,discovery_fault=None):
             if source_history:
                 assert grant.document["scope"]["public_policy_sha256"]==go["publication_registration"]["policy_sha256"]
                 assert grant.document["scope"]["public_policy_sha256"]!=seed["old"]["receipt"]["policy_sha256"]
+            if go["schema_version"]==template.ROOT_V5:
+                assert grant.document["v5_historical_scope"]["public_policy_sha256"]==seed["old"]["receipt"]["policy_sha256"]
+                assert grant.document["v5_historical_scope"]["approved_source_sha"]==seed["old"]["receipt"]["source_sha"]
+                assert grant.document["scope"]["current_actor"]==controller.OWNER
+                assert grant.document["v5_historical_scope"]["root_go_sha256"]==seed["old"]["receipt"]["root_go_sha256"]
         else:assert not historical_grants
         assert all(c.extra_routes==frozenset(discovery.routes(seed["old"]["receipt"],seed["old"]["package"])) for c in clients)
         assert all(req.method=="GET" and req.data is None for req in server.calls)
         assert server.assets==[dict({k:v for k,v in a.items()if k!="body_base64"},body=base64.b64decode(a["body_base64"]))for a in seed["old"]["assets"]]
         assert manifest["current_root_go_sha256"]==context.root_sha256
+        if go["schema_version"]==template.ROOT_V5:
+            assert manifest["current_restore_proofs"]
+            for proof in manifest["current_restore_proofs"]:
+                assert acceptance.restored_identity(proof)==manifest["current"]
+                assert proof["source_sha"]==go["source_sha"]!=seed["old"]["receipt"]["source_sha"]
+                assert proof["run_id"]==context.client.run_id!=seed["old"]["receipt"]["run_id"]
+                assert store.utc(proof["started_at_utc"])<=store.utc(proof["created_at_utc"])<=ScenarioClock.now(timezone.utc)
+            assert manifest["original_archive"]["source_sha"]==seed["old"]["receipt"]["source_sha"]
+            assert manifest["original_reader_handoff"]==seed["old"]["reader"]
         assert len(calls)+len(metadata_calls)<=recovery.LIMITS["HTTP_calls"]==640
     worker.native_envelope()
     return dict(state="PASS_FICTIONAL_NATIVE_DISCOVERY_AND_FULL_RECOVERY",calls=len(calls),clients=len(clients),files=result["files"],
