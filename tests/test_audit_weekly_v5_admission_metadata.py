@@ -280,18 +280,18 @@ print('COLD_MAIN_METADATA_OK')
     assert result.stdout.strip()=='COLD_MAIN_METADATA_OK'
 
 
-SIX_V5_CANDIDATES=frozenset({"nfl_lab/audit_weekly_controller_v1.py",
+SEVEN_V5_CANDIDATES=frozenset({"nfl_lab/audit_weekly_retained_v1.py","nfl_lab/audit_weekly_controller_v1.py",
     "nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
     "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py"})
 
 
 def test_v5_candidate_set_is_exact_and_v1_v4_whitelist_does_not_grow():
-    assert history._MAE_RUNTIME_OVERRIDE_PATHS==SIX_V5_CANDIDATES
-    assert not (SIX_V5_CANDIDATES & history.SOURCE_HISTORY_PIN_OVERRIDES)
+    assert history._MAE_RUNTIME_OVERRIDE_PATHS==SEVEN_V5_CANDIDATES
+    assert not (SEVEN_V5_CANDIDATES & history.SOURCE_HISTORY_PIN_OVERRIDES)
     assert 'nfl_lab/weekly_future_inference.py' not in history.SOURCE_HISTORY_PIN_OVERRIDES
 
 
-@pytest.mark.parametrize('path',sorted(SIX_V5_CANDIDATES-{'tools/persist_state.py'}))
+@pytest.mark.parametrize('path',sorted(SEVEN_V5_CANDIDATES-{'tools/persist_state.py'}))
 def test_each_present_v5_override_requires_exact_registered_before_hash(v5_case,path):
     x=v5_case;body=history._source_history_unwrap(x.current['source_history_binding'])
     body['pin_overrides'][path]='0'*64

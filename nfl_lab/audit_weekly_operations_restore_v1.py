@@ -65,7 +65,7 @@ def restore(context,*,transport=None):
         "EXACT_ROOT_REGISTERED_DISTINCT_PRIOR_CAPTURE")
     output=archive.fresh(storage,output);journal=storage.register_root(output/"journal")
     from . import audit_weekly_template_v1 as template,audit_weekly_grade_history_v1 as history
-    source_history=context.go.get("schema_version")==history.ROOT_V4 and value["source_sha"]!=context.client.source_sha
+    source_history=context.go.get("schema_version") in {history.ROOT_V4,history.ROOT_V5} and value["source_sha"]!=context.client.source_sha
     def source_scope():
         context.verify()
         require(store.canonical(value)==plain,"UNCHANGED_SOURCE_HISTORY_ORIGINAL_RECEIPT")
@@ -131,7 +131,8 @@ def restore(context,*,transport=None):
         protected_outcome_reads=0,public_release=False)
     require(set(native)==retained.AUTHORITY_KEYS,"CLOSED_DERIVED_RESTORE_AUTHORITY")
     grant=None
-    if context.proof.document["actor"]==controller.BOT:
+    v5_bridge=source_history and context.go["schema_version"]==history.ROOT_V5
+    if context.proof.document["actor"]==controller.BOT or v5_bridge:
         jobs={role:dict(repository=store.REPO,run_id=value["run_id"],source_sha=value["source_sha"],
             workflow_ref=doc["reader_handoff"]["archive"]["producer"]["workflow_ref"],api_job_id=j["id"],job_id=j["name"],
             status=j["status"],conclusion=j["conclusion"],started_at=j["started_at"],completed_at=j["completed_at"],
@@ -141,8 +142,12 @@ def restore(context,*,transport=None):
         # This SHA describes CURRENT grant authority. The old receipt, index,
         # historical jobs and original policy remain unchanged historical data.
         policy_sha=(context.go["publication_registration"]["policy_sha256"] if source_history else value["policy_sha256"])
-        grant=retained.bind_historical_source(request,native,bootstrap_proof=context.proof,
-            public_policy_sha256=policy_sha,historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
+        if v5_bridge:
+            grant=retained.bind_v5_source_history(request,native,bootstrap_proof=context.proof,
+                discovery_grant=dgrant,historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
+        else:
+            grant=retained.bind_historical_source(request,native,bootstrap_proof=context.proof,
+                public_policy_sha256=policy_sha,historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
     result=retained.restore(request,factory,storage=storage,authority=native,root=worker.ROOT,
         check_authority=source_scope if source_history else context.verify,historical_grant=grant)
     if source_history:
