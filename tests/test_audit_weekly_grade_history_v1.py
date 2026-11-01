@@ -114,7 +114,8 @@ def recovery_case(root,seed,patch,*,native=False,role='produce',current_run=NEW_
                     run_attempt=2 if anchor and damage.get('anchor_attempt') else 1,event='workflow_dispatch',
                     path='.github/workflows/lab.yml',head_branch='fictional',status='completed' if old else 'in_progress',
                     conclusion=('failure' if damage.get('run') or anchor and damage.get('anchor_failed') else 'success') if old else None,repository=dict(full_name=store.REPO),
-                    head_repository=dict(full_name=store.REPO),actor=dict(login='OTHER' if anchor and damage.get('anchor_actor') else 'NickNicky19',id=208912933)))
+                    head_repository=dict(full_name=store.REPO),actor=dict(login='OTHER' if anchor and damage.get('anchor_actor') else 'github-actions[bot]' if old and seed.get('historical_bot') else 'NickNicky19',id=41898282 if old and seed.get('historical_bot') else 208912933),
+                    **({'triggering_actor':dict(login='github-actions[bot]',id=41898282)} if old and seed.get('historical_bot') else {})))
                 if old:
                     h=seed['sidecar']['checkpoint_handoff']
                     times=[(state.utc(h['snapshot_completed_at'])-timedelta(hours=2),state.utc(h['snapshot_completed_at'])-timedelta(hours=1)),
@@ -170,7 +171,7 @@ def case(tmp_path,original_seed,monkeypatch):
 
 
 @pytest.fixture
-def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,historical_pending=False,root_static=None):
+def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,historical_pending=False,root_static=None,closed_v4=False,closed_v5=False,historical_bot=False):
     """Real grade/CAS/append/read, fictional authority/API and no new labels.
 
     The prior fixture is an input to this codec test, not an old-source
@@ -194,7 +195,8 @@ def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,hi
             if '/jobs?' not in request.full_url:
                 return Response(dict(id=int(NEW_RUN),head_sha=original_seed['source'],run_attempt=1,event='workflow_dispatch',
                     path='.github/workflows/lab.yml',head_branch='fictional',status='in_progress',conclusion=None,
-                    repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),actor=dict(login='NickNicky19',id=208912933)))
+                    repository=dict(full_name=store.REPO),head_repository=dict(full_name=store.REPO),actor=dict(login='github-actions[bot]' if historical_bot else 'NickNicky19',id=41898282 if historical_bot else 208912933),
+                    triggering_actor=dict(login='github-actions[bot]' if historical_bot else 'NickNicky19',id=41898282 if historical_bot else 208912933)))
             jobs=[dict(id=888,name=JOBS['produce'],run_id=int(NEW_RUN),head_sha=original_seed['source'],status='completed',conclusion='success',
                 started_at=(began+timedelta(seconds=1)).isoformat(),completed_at=(began+timedelta(seconds=5)).isoformat()),
                 dict(id=889,name=JOBS['restore'],run_id=int(NEW_RUN),head_sha=original_seed['source'],status='completed' if done[0] else 'in_progress',
@@ -260,6 +262,22 @@ def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,hi
             raw_pool=store.canonical(pool)
             root['effective_epoch']['pending_post_recovery']=dict(schema_version=template.PENDING_RECOVERY_ENVELOPE,
                 body_sha256=store.sha(raw_pool),body_bytes=len(raw_pool),gzip_base64=base64.b64encode(gzip.compress(raw_pool,mtime=0)).decode())
+    if closed_v4 or closed_v5:
+        # Explicit synthetic immediate V4 predecessor for the V5 reader test.
+        # The default fixtures and every existing same-source case are intact.
+        assert source_transition
+        pins.update(grade.pins());pins.update(checkpoint.pins())
+        root['schema_version']=history.ROOT_V5 if closed_v5 else history.ROOT_V4
+        predecessor={k:'a'*64 for k in history._SOURCE_PREDECESSOR_HASHES}
+        predecessor.update(source_sha='7'*40,run_id='70000000001',workflow_sha256=pins['.github/workflows/lab.yml'],
+            code_pins_sha256=store.sha(store.canonical(pins)),locator=dict(
+                path='20261025T101100.000000Z--70000000001--'+'a'*64+'.json.gz',sha256='b'*64))
+        inner=dict(schema_version=history.SOURCE_HISTORY_BINDING,
+            target_source_sha=root['source_sha'],target_policy_sha256=root['publication_registration']['policy_sha256'],
+            predecessor=predecessor,pin_overrides={},runtime_transition='PRESERVE')
+        if closed_v5:inner.update(schema_version=history.SOURCE_HISTORY_BINDING_V2,predecessor_root_schema=history.ROOT_V4,
+            predecessor_source_history_sha256='c'*64,runtime_transition='DUAL_RUNTIME_ROTATE')
+        root['source_history_binding']=history.source_history_envelope(inner)
     if root_static is not None:
         assert not set(root_static)&(template.DYNAMIC_FIELDS|{'schema_version','code_pins','source_sha','qualified_runtime','pending_census','prior_capture_qualified_runtime'})
         root.update(deepcopy(root_static))
@@ -297,6 +315,7 @@ def locator_seed(tmp_path,original_seed,monkeypatch,*,source_transition=False,hi
     modified.update(sidecar=locator['sidecar'],locator=locator,original_root=root,receipt=receipt,old_run=NEW_RUN,old_complete=completed.isoformat(),writer_done=done[0],
         current_at=(completed+timedelta(days=1)).isoformat(),durable_sha256=grade._digest(result.durable.document),
         assets=[dict(a,body=base64.b64encode(a['body']).decode()) for a in x.server.assets])
+    if historical_bot:modified['historical_bot']=True
     modified['job_times']=[((began+timedelta(seconds=a)).isoformat(),(began+timedelta(seconds=b)).isoformat()) for a,b in ((1,5),(10,50),(70,120))]
     original=original_seed['sidecar']['checkpoint_handoff']
     modified['anchor_job_times']=[(a.isoformat(),b.isoformat()) for a,b in (
