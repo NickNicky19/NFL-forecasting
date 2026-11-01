@@ -1119,7 +1119,7 @@ def _json(client, url, evidence):
     evidence[url] = store.sha(raw); return cp.strict_json(raw)
 
 
-def _original(client, value, receipt, evidence, *, check_sources=True, extra_pins=None):
+def _original(client, value, receipt, evidence, *, check_sources=True, extra_pins=None, pinned=None):
     grade, checkpoint, store, _, state = _modules()
     from . import audit_weekly_retained_v1 as retained, audit_weekly_controller_v1 as controller
     base = store.API + "/actions/runs/" + value["run_id"]
@@ -1133,6 +1133,8 @@ def _original(client, value, receipt, evidence, *, check_sources=True, extra_pin
         and actor_id in {(a["login"], a["id"]) for a in (controller.OWNER, controller.BOT)}
         and ("triggering_actor" not in run or (run["triggering_actor"].get("login"), run["triggering_actor"].get("id")) == actor_id),
         "ORIGINAL_COMPLETED_HISTORY_DELIVERY_RUN_REQUIRED")
+    if pinned is not None:
+        require(type(pinned) is _PinnedV5History,"LIVE_V5_PINNED_HISTORY_SCOPE_REQUIRED");pinned.original_run(run)
     require(type(listing.get("jobs")) is list and type(listing.get("total_count")) is int
         and listing["total_count"] == len(listing["jobs"]) <= 100, "COMPLETE_ORIGINAL_HISTORY_JOB_CENSUS")
     jobs = {}
@@ -1355,7 +1357,131 @@ def validate_parent_envelope(packed, locator, client, jobs, *, code_pins, static
     return _root_envelope(envelope,locator,jobs,code_pins=code_pins,static_root=static_root,at=at,locator_sha256=locator_sha256)
 
 
-def _restore_source_parts(context, handoff, client, *, storage, root_binding, native_root_proof, authenticate):
+_PINNED_V5_KEY = object()
+
+
+class _PinnedV5History:
+    """One live exact-old-source reader; never a caller pin dictionary."""
+    def __init__(self,context,packed,receipt_body,wrapper,receipt,package,pins,key):
+        from . import audit_weekly_operations_worker_v1 as shared,audit_weekly_discovery_v1 as discovery
+        from . import audit_weekly_retained_v1 as retained,audit_weekly_controller_bootstrap_v1 as bootstrap
+        from . import audit_weekly_controller_v1 as controller,private_draft_store as store,gha_private_checkpoint as cp
+        require(key is _PINNED_V5_KEY and type(context) is shared.Authenticated
+            and type(context.proof) is bootstrap.Owner,"LIVE_EXACT_V5_PINNED_HISTORY_CONTEXT_REQUIRED")
+        context.verify();root=context.go;proof=context.proof
+        require(root.get("schema_version")==ROOT_V5 and root.get("source_sha")==context.client.source_sha
+            and proof.document.get("actor")==controller.OWNER and root["effective_epoch"].get("controller_context") is None
+            and store.sha(store.canonical(root))==context.root_sha256,"EXACT_V5_OWNER_HISTORY_ROOT_REQUIRED")
+        controller._historical_v5_root(root)
+        require(wrapper["sidecar"]["source_sha"]!=context.client.source_sha
+            and store.sha(packed)==previous_checkpoint(root)["sha256"]
+            and store.sha(receipt_body)==root["effective_epoch"]["previous_capture"]["receipt_sha256"]
+            and wrapper==metadata_document(packed) and receipt==metadata_document(receipt_body),
+            "EXACT_V5_HISTORY_ORIGINAL_PUBLIC_BYTES")
+        expected=source_history_scope(root,receipt,locator=wrapper,locator_sha256=store.sha(packed))
+        require(pins==expected and len(expected)==128,"EXACT_V5_HISTORY_ORIGINAL_FULL_PIN_INVENTORY")
+        historical={n:expected[n] for n in retained.HISTORICAL_FILES}
+        binding=discovery._discovery_binding(store.sha(store.canonical(receipt)),package,context.root_sha256,historical)
+        scope=discovery._sealed_source(proof,context.root_sha256,now())
+        discovery._source_history_contract(root,receipt,scope,binding,proof)
+        value=wrapper["sidecar"];grade,checkpoint,_,_,_=_modules()
+        gp={n:expected[n] for n in _GRADE_PIN_PATHS};hp={n:expected[n] for n in _CHECKPOINT_PIN_PATHS}
+        require(type(value) is dict and set(value)==SIDECAR_KEYS and value["schema_version"]==VERSION+"-sidecar"
+            and value["repository"]==store.REPO and value["grade_code_pins"]==gp and value["checkpoint_helper_sha256"]==hp,
+            "EXACT_V5_HISTORY_ORIGINAL_SIDECAR_PINS")
+        # The numerical grader and checkpoint kernels stay unchanged. Only the
+        # reviewed retained orchestration and checkpoint test identities differ.
+        require(set(gp)==set(grade.pins()) and set(hp)==set(checkpoint.pins())
+            and {n for n,h in gp.items() if h!=grade.pins()[n]}<={"nfl_lab/audit_weekly_retained_v1.py"}
+            and {n for n,h in hp.items() if h!=checkpoint.pins()[n]}<={"tests/test_audit_weekly_grade_checkpoint_v1.py"},
+            "UNCHANGED_ORIGINAL_V5_GRADING_AND_CHECKPOINT_KERNELS")
+        self.context,self.process=context,store.process_identity()
+        self.current=cp.client_identity(context.client)
+        self.packed,self.receipt_body=packed,receipt_body
+        self.wrapper,self.receipt,self.package,self.pins=map(deepcopy,(wrapper,receipt,package,expected))
+        self.root_sha256=context.root_sha256;self._metadata=None;self._native=None
+        self._state_sha256=store.sha(store.canonical([self._metadata,self._native]))
+        self.sha256=store.sha(store.canonical(dict(root=self.root_sha256,current=self.current,locator=store.sha(packed),
+            receipt=store.sha(receipt_body),wrapper=wrapper,original_receipt=receipt,package=package,pins=expected)))
+        self.verify()
+    def verify(self):
+        from . import private_draft_store as store,audit_weekly_controller_v1 as controller,audit_weekly_discovery_v1 as discovery,gha_private_checkpoint as cp
+        self.context.verify()
+        require(self.process==store.process_identity() and self.context.root_sha256==self.root_sha256
+            and cp.client_identity(self.context.client)==self.current
+            and self._state_sha256==store.sha(store.canonical([self._metadata,self._native]))
+            and store.sha(store.canonical(self.context.go))==self.root_sha256
+            and store.utc(self.context.go["issued_at_utc"])<=now()<store.utc(self.context.go["expires_at_utc"])
+            and self.sha256==store.sha(store.canonical(dict(root=self.root_sha256,current=self.current,locator=store.sha(self.packed),
+                receipt=store.sha(self.receipt_body),wrapper=self.wrapper,original_receipt=self.receipt,
+                package=self.package,pins=self.pins)))
+            and source_history_scope(self.context.go,self.receipt,locator=self.wrapper,
+                locator_sha256=store.sha(self.packed))==self.pins,"V5_PINNED_HISTORY_SCOPE_CHANGED_OR_FOREIGN_PROCESS")
+        grade,checkpoint,_,_,_=_modules()
+        require(grade.pins()=={n:self.context.go["code_pins"][n] for n in _GRADE_PIN_PATHS}
+            and checkpoint.pins()=={n:self.context.go["code_pins"][n] for n in _CHECKPOINT_PIN_PATHS},
+            "CURRENT_V5_GRADING_KERNEL_SOURCE_CHANGED")
+        controller._historical_v5_root(self.context.go)
+        discovery._v5_owner_history(self.context.go,self.receipt,self.context.proof)
+        current=discovery._sealed_source(self.context.proof,self.root_sha256,now())
+        require(all(current["current"][n]==self.current[n] for n in ("source_sha","run_id","job_id","api_job_id")),
+            "CURRENT_V5_HISTORY_PROOF_IDENTITY_CHANGED")
+        return self
+    def metadata(self,jobs):
+        from . import private_draft_store as store
+        self.verify()
+        checked=locator_metadata(self.packed,receipt=self.receipt,qualified_runtime=self.package,
+            code_pins=self.pins,jobs=jobs,at=now())
+        require(checked==self.wrapper,"UNCHANGED_V5_ORIGINAL_HISTORY_METADATA")
+        self._metadata=deepcopy(jobs);self._state_sha256=store.sha(store.canonical([self._metadata,self._native]));return checked
+    def original_run(self,run):
+        from . import audit_weekly_controller_v1 as controller
+        self.verify();a=controller.V5_HISTORICAL_AUTHORITY
+        require(run.get("id")==int(a["run_id"]) and run.get("head_sha")==a["source_sha"]
+            and controller.actor(run.get("actor"),controller.BOT)
+            and controller.actor(run.get("triggering_actor"),controller.BOT),"EXACT_V5_ORIGINAL_BOT_HISTORY_RUN_REQUIRED")
+    def handoff(self,handoff):
+        self.verify()
+        require(self._metadata is not None and handoff==self.wrapper["sidecar"]["checkpoint_handoff"],
+            "LIVE_V5_ORIGINAL_METADATA_BEFORE_HANDOFF_USE")
+        return handoff
+    def native(self,ref,proof,client):
+        grade,checkpoint,store,cp,state=_modules();self.handoff(self.wrapper["sidecar"]["checkpoint_handoff"])
+        checkpoint._own_restore(client,proof,now());h=self.wrapper["sidecar"]["checkpoint_handoff"]
+        require(ref["sha256"]==proof["payload_sha256"]==h["body_sha256"]
+            and ref["bytes"]==proof["bytes"]==h["body_bytes"]
+            and cp.client_identity(client)["source_sha"]==self.context.client.source_sha,
+            "EXACT_V5_CURRENT_NATIVE_HISTORY_ROOT_READ")
+        self._native=state.digest(ref)
+        self._state_sha256=store.sha(store.canonical([self._metadata,self._native]))
+    def __reduce__(self):raise HistoryError("V5_PINNED_HISTORY_CANNOT_BE_SERIALIZED")
+
+
+def _restore_pinned_v5_snapshot(scope,storage,ref,registered,*,authenticate,at):
+    """Same restore_snapshot semantics; historical pins come only from live V5."""
+    grade,_,_,_,state=_modules()
+    require(type(scope) is _PinnedV5History,"LIVE_V5_PINNED_HISTORY_SCOPE_REQUIRED");scope.verify()
+    require(scope._native==state.digest(ref),"ACTUAL_V5_NATIVE_ROOT_BEFORE_SNAPSHOT_DECODE")
+    with grade._compact_scans(storage):
+        grade.require(type(registered) is grade.epoch.RegisteredEpoch,"TYPED_REGISTERED_EPOCH_REQUIRED")
+        registered.verify(state.utc(at))
+        grade._authenticate(authenticate,"QUALIFIED_PREVIOUS_GRADING_SNAPSHOT",dict(binding=ref,epoch_sha256=registered.epoch.sha256),at)
+        doc=grade._load_snapshot(storage,ref)
+        grade.require(set(doc)==grade.SNAPSHOT_KEYS and doc["schema_version"]==grade.VERSION+"-snapshot"
+            and doc["epoch_sha256"]==registered.epoch.sha256
+            and doc["legacy_history_binding"]==registered.epoch.origin["history_binding"]
+            and doc["code_pins"]=={n:scope.pins[n] for n in _GRADE_PIN_PATHS},
+            "EXACT_PARENT_RESTORED_CURRENT_EPOCH_GRADING_STATE")
+        grade.require(0<len(doc["captures"])<=grade.LIMITS["captures"] and len(doc["collector_records"])<=grade.LIMITS["revisions"]
+            and len(doc["versions"])<=grade.LIMITS["revisions"] and doc["fits"]==doc["searches"]==0
+            and doc["metadata_remote_durability_qualified"] is False
+            and doc["public_release"] is doc["scientific_qualification"] is doc["successful_forecast"] is False,
+            "FINITE_CLOSED_RESTORED_GRADING_STATE")
+        result=grade.Snapshot(doc,grade._KEY);result.binding=deepcopy(ref);result._binding_sha256=state.digest(ref)
+        return result
+
+
+def _restore_source_parts(context, handoff, client, *, storage, root_binding, native_root_proof, authenticate, pinned=None):
     """Explicit source adapter around the UNCHANGED checkpoint part-read kernel.
 
     The public checkpoint.restore_parts stays same-source. Every other check
@@ -1369,7 +1495,11 @@ def _restore_source_parts(context, handoff, client, *, storage, root_binding, na
     require(type(context) is shared.Authenticated,"LIVE_SOURCE_HISTORY_PART_CONTEXT")
     context.verify();binding=validate_source_history_binding(context.go)
     require(binding is not None,"EXPLICIT_SOURCE_HISTORY_PART_BINDING")
-    old=binding["predecessor"];budget=checkpoint.Budget();checkpoint.safe_handoff(handoff)
+    old=binding["predecessor"];budget=checkpoint.Budget()
+    if pinned is None:checkpoint.safe_handoff(handoff)
+    else:
+        require(type(pinned) is _PinnedV5History and pinned.context is context,"SAME_LIVE_V5_PART_READER_SCOPE")
+        pinned.handoff(handoff)
     package,_=template.checkpoint_runtime(context.go,handoff)
     require(isinstance(client,archive.Client) and client.readonly is True and client.operation=="restore"
         and client.source_sha==context.client.source_sha==binding["target_source_sha"]
@@ -1417,7 +1547,9 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         wrapper=metadata_document(raw)
         require(type(wrapper) is dict and set(wrapper)==LOCATOR_KEYS and wrapper["schema_version"]==LOCATOR_VERSION
             and locator_filename(wrapper)==locator["path"],"EXACT_IMMUTABLE_HISTORY_LOCATOR_FILENAME")
-        value=_sidecar(wrapper["sidecar"])
+        core=wrapper["sidecar"]
+        value=(core if context.go.get("schema_version")==ROOT_V5 and type(core) is dict
+            and core.get("source_sha")!=context.client.source_sha else _sidecar(core))
     else:value = _sidecar(_unpack(raw, LIMITS["metadata_plain_bytes"]))
     receipt_body = _read(storage, prior_public_receipt_ref, LIMITS["sidecar_bytes"])
     previous = context.go["effective_epoch"]["previous_capture"]
@@ -1456,6 +1588,8 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     require(h["runtime_binding_sha256"] == store.sha(store.canonical(package["binding"]))
         and h["qualified_package_sha256"] == state.digest(package)
         and h["append_proof"]["qualification_sha256"] == state.digest(package["qualification"]), "SAME_QUALIFIED_HISTORY_NAMESPACE_REQUIRED")
+    pinned=(_PinnedV5History(context,raw,receipt_body,wrapper,original_receipt,package,historical_pins,_PINNED_V5_KEY)
+        if context.go.get("schema_version")==ROOT_V5 and cross_source else None)
     pins = set(value["grade_code_pins"]) | set(value["checkpoint_helper_sha256"]) | {".github/workflows/lab.yml"}
     if wrapper is not None:pins |= LOCATOR_HELPERS
     routes = {retained.source_url(value["source_sha"], name) for name in pins}
@@ -1468,9 +1602,10 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
         "CURRENT_HISTORY_RUN_API_REQUIRED")
     if cross_source:require_latest(metadata,locator)
     extra={n:historical_pins[n] for n in LOCATOR_HELPERS} if wrapper is not None else None
-    jobs = _original(metadata, value, receipt, evidence,extra_pins=extra)
+    jobs = _original(metadata, value, receipt, evidence,extra_pins=extra,pinned=pinned)
     if wrapper is not None:
-        locator_metadata(raw,receipt=original_receipt,qualified_runtime=package,code_pins=historical_pins,jobs=jobs,at=now())
+        if pinned is None:locator_metadata(raw,receipt=original_receipt,qualified_runtime=package,code_pins=historical_pins,jobs=jobs,at=now())
+        else:pinned.metadata(jobs)
     anchor_jobs=None
     if wrapper is not None and original_receipt["run_id"]!=value["run_id"]:
         anchor_jobs=_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
@@ -1501,6 +1636,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     multipart=checkpoint_version(h)==CHECKPOINT_V2
     if not multipart:validate_native_envelope(envelope,value,envelope_client,jobs,version2=wrapper is not None)
     snapshot_ref, recovery_snapshot, snapshot_client = get(h["descriptor"], "SNAPSHOT.json.gz")
+    if pinned is not None:pinned.native(snapshot_ref,recovery_snapshot,snapshot_client)
     part_recovery=None
     if multipart:
         raw_root=_read(storage,snapshot_ref,LIMITS["snapshot_bytes"])
@@ -1520,7 +1656,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
             return ok
         if cross_source:
             part_recovery=_restore_source_parts(context,h,snapshot_client,storage=storage,root_binding=snapshot_ref,
-                native_root_proof=recovery_snapshot,authenticate=parts_auth)
+                native_root_proof=recovery_snapshot,authenticate=parts_auth,pinned=pinned)
         else:
             part_recovery=checkpoint.restore_parts(h,snapshot_client,storage=storage,root_binding=snapshot_ref,
                 native_root_proof=recovery_snapshot,authenticate=parts_auth,clock=now)
@@ -1535,7 +1671,7 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
     require(current_run.get("status")=="in_progress" and current_run.get("conclusion") is None
         and current_run.get("head_sha")==snapshot_client.source_sha,"CURRENT_HISTORY_JOB_CHANGED_DURING_RECOVERY")
     # Recheck the completed old cohort and same source after transfers.
-    require(_original(metadata, value, receipt, evidence, check_sources=False) == jobs, "ORIGINAL_HISTORY_API_CHANGED_DURING_RECOVERY")
+    require(_original(metadata, value, receipt, evidence, check_sources=False,pinned=pinned) == jobs, "ORIGINAL_HISTORY_API_CHANGED_DURING_RECOVERY")
     if anchor_jobs is not None:
         require(_anchor(metadata,original_receipt,evidence,workflow_ref=value["workflow_ref"],expected_jobs=context.go["jobs"],
             before=wrapper["cohort"]["root_issued_at_utc"],prior=anchor_jobs)==anchor_jobs,"ORIGINAL_FORECAST_ANCHOR_CHANGED_DURING_RECOVERY")
@@ -1549,7 +1685,9 @@ def restore_previous(context, storage, sidecar_ref, prior_public_receipt_ref, *,
             and request["schema_version"] == grade.VERSION + "-authentication-request" \
             and request.get("kind") in expected and request["inputs_sha256"] == expected[request["kind"]] \
             and state.utc(request["at"]) <= now()
-    snapshot = grade.restore_snapshot(storage, snapshot_ref, registered, authenticate=authenticate, at=now())
+    if pinned is None:snapshot=grade.restore_snapshot(storage,snapshot_ref,registered,authenticate=authenticate,at=now())
+    else:
+        snapshot=_restore_pinned_v5_snapshot(pinned,storage,snapshot_ref,registered,authenticate=authenticate,at=now())
     require(snapshot.sha256 == h["snapshot_sha256"] and snapshot.document["actual_completed_at"] == h["snapshot_completed_at"], "EXACT_ORIGINAL_HISTORY_SNAPSHOT")
     durable = grade.confirm_durable(snapshot, original, registered=registered, authenticate=authenticate, at=now())
     if wrapper is not None:
