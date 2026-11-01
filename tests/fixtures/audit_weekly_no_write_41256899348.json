@@ -1,0 +1,385 @@
+{
+  "diagnostic": {
+    "diagnostic": {
+      "error_type": "StoreError",
+      "source_frames": [
+        {
+          "file": "tools/audit_weekly_hosted_v1.py",
+          "line": 46
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 1764
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 455
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 606
+        },
+        {
+          "file": "nfl_lab/audit_weekly_hosted_v1.py",
+          "line": 114
+        }
+      ]
+    },
+    "fits": 0,
+    "public_release": false,
+    "reason": "UNRECOVERED_PRIOR_FAILED_DISPATCH_NO_WRITE",
+    "state": "FAILED_RETAINED",
+    "successful_forecast": false
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "completed_at": "2026-11-01T00:29:15Z",
+        "conclusion": "failure",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701874519,
+        "name": "audit-weekly-produce-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:31Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completed_at": "2026-11-01T00:28:32Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-11-01T00:28:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:28:34Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "started_at": "2026-11-01T00:28:32Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:28:34Z",
+            "conclusion": "success",
+            "name": "Mask private dispatch metadata before environment logging",
+            "number": 3,
+            "started_at": "2026-11-01T00:28:34Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:28:36Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 4,
+            "started_at": "2026-11-01T00:28:34Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:28:36Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 5,
+            "started_at": "2026-11-01T00:28:36Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:06Z",
+            "conclusion": "success",
+            "name": "Install exact existing numerical dependencies",
+            "number": 6,
+            "started_at": "2026-11-01T00:28:36Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:09Z",
+            "conclusion": "failure",
+            "name": "Capture all effective candidates, selected rows and original R0",
+            "number": 7,
+            "started_at": "2026-11-01T00:29:06Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:13Z",
+            "conclusion": "failure",
+            "name": "Preserve a failed or partial attempt in a fresh process",
+            "number": 8,
+            "started_at": "2026-11-01T00:29:09Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:13Z",
+            "conclusion": "skipped",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 14,
+            "started_at": "2026-11-01T00:29:13Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:13Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 15,
+            "started_at": "2026-11-01T00:29:13Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:14Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 16,
+            "started_at": "2026-11-01T00:29:13Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-11-01T00:29:14Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "started_at": "2026-11-01T00:29:14Z",
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875245,
+        "name": "audit-private-rotation-write-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875261,
+        "name": "genuine-hosted-fixed-build-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875367,
+        "name": "private-draft-v2-write",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875382,
+        "name": "genuine-hosted-fixed-build-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875387,
+        "name": "private-draft-v2-read",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875424,
+        "name": "storage-probe-read",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875525,
+        "name": "audit-private-rotation-read-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875581,
+        "name": "storage-probe-write",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875728,
+        "name": "audit-count-effective-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875750,
+        "name": "private-draft-v2-qualify",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875810,
+        "name": "storage-probe-restore",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875831,
+        "name": "genuine-hosted-selected-export-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875840,
+        "name": "audit-private-rotation-qualify-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701875871,
+        "name": "genuine-hosted-selected-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:30Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701893684,
+        "name": "owner-bootstrap-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:35Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:28:29Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124701897077,
+        "name": "lab",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:28:36Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:29:15Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124702039203,
+        "name": "audit-weekly-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:29:16Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:29:15Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124702039707,
+        "name": "audit-weekly-export-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:29:16Z",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "completed_at": "2026-11-01T00:29:15Z",
+        "conclusion": "skipped",
+        "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+        "id": 124702040170,
+        "name": "audit-weekly-failure-restore-v1",
+        "run_id": 41256899348,
+        "started_at": "2026-11-01T00:29:16Z",
+        "status": "completed",
+        "steps": []
+      }
+    ],
+    "total_count": 20
+  },
+  "run": {
+    "actor": {
+      "id": 208912933,
+      "login": "NickNicky19"
+    },
+    "conclusion": "failure",
+    "created_at": "2026-11-01T00:28:28Z",
+    "event": "workflow_dispatch",
+    "head_branch": "research/weekly-storage-probe-v1",
+    "head_repository": {
+      "full_name": "NickNicky19/NFL-forecasting"
+    },
+    "head_sha": "b4ef09b5f4e09d5c861d55507952579379c87f9a",
+    "id": 41256899348,
+    "path": ".github/workflows/lab.yml",
+    "repository": {
+      "full_name": "NickNicky19/NFL-forecasting"
+    },
+    "run_attempt": 1,
+    "run_started_at": "2026-11-01T00:28:28Z",
+    "status": "completed",
+    "triggering_actor": {
+      "id": 208912933,
+      "login": "NickNicky19"
+    },
+    "updated_at": "2026-11-01T00:29:16Z"
+  },
+  "schema_version": "projected-actual-public-gha-no-write-metadata",
+  "scope": "PUBLIC_API_FIELDS_ONLY_NO_JOB_LOG_PRIVATE_ROOT_OR_PROVIDER_PAYLOAD"
+}
