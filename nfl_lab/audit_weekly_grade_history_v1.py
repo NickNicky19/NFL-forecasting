@@ -76,7 +76,8 @@ ROOT_V4 = "audit-weekly-hosted-v4-root-GO"
 ROOT_V5 = "audit-weekly-hosted-v5-root-GO"
 # V5-only candidates. The original128 intersection is mandatory; persist_state
 # is separately helper-pinned and cannot be invented as an old legacy pin.
-_MAE_RUNTIME_OVERRIDE_PATHS = frozenset({"nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
+_MAE_RUNTIME_OVERRIDE_PATHS = frozenset({"nfl_lab/audit_weekly_controller_v1.py",
+    "nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
     "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py"})
 SOURCE_HISTORY_BINDING = "audit-weekly-source-history-binding-v1"
 SOURCE_HISTORY_TRANSPORT = SOURCE_HISTORY_BINDING + "-transport"
