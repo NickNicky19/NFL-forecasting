@@ -1521,8 +1521,7 @@ class Runner:
             alias=collection/logical
             self.storage.import_file(path,alias,expected_sha256=ref["sha256"])
             files.append(cp.file_item(cp.binding(alias),logical,"forecast" if path.suffix==".gz" else "control"))
-        # Full fixed controls survive even if the separate core-failure
-        # envelope cannot finish. Raw source caches and weights stay excluded.
+        # Keep fixed controls; exclude raw source caches and weights.
         for name in ("OWNER_ROOT.json","QUALIFIED_RUNTIME.json","BOOTSTRAP_STARTED.json","BOOTSTRAP_FAILED.json",
                 "BOOTSTRAP_REAUTHENTICATED.json","PARENT_STARTED.json"):
             path=self.root/name
@@ -1532,9 +1531,7 @@ class Runner:
             for name in names:
                 path=self.root/folder/name
                 if path.exists():add(path,"failed/"+folder+"-metadata/"+name)
-        # Keep the failed normal archive's own intent, descriptors and POST
-        # journals. Its preencoded bodies duplicate the original runtime scope
-        # below and are not retried or presented as successful output.
+        # Keep original intents/descriptors/journals; never retry preencoded bodies.
         normal=self.root/"archive-produce"
         if normal.exists():
             for name in ("CONSUMED.json","ADMISSION.json","ADMISSION_DETAILS.json","SERIALIZED_ADMISSION_DETAILS.json",
@@ -1551,8 +1548,7 @@ class Runner:
                     add(path,"failed/original-archive/journal/"+path.relative_to(journal).as_posix())
                     if path.name.endswith(".reservation.json"):
                         original_pending.append(cp.strict_json(store.read_local(path,32 << 10)))
-            # Native admission must still charge every unresolved earlier POST.
-            # This copies original reservation metadata, never retries a POST.
+            # Charge unresolved POSTs without retrying them.
             if original_pending:cp.seed_pending(self.journal,original_pending)
         for folder in ("runtime","reference","metadata","phase-status","requests","journal",
                 "operations-grade-write","operations-grade-read","operations-prepared","grading-delivery",
@@ -1564,9 +1560,7 @@ class Runner:
                 if not path.is_file() or path.name==_OWNER:continue
                 logical="failed/"+path.relative_to(self.root).as_posix()
                 if folder=="reference" and path.parent==base/"source-observations" and re.fullmatch(r"[0-9]{4}-(?:BEGIN|END)\.json",path.name):
-                    # Preserve all original small receipts in one bounded
-                    # container. Do not spend one of 512 transport-file slots
-                    # per receipt, raise the cap, or discard hard rows.
+                    # Bundle original receipts within unchanged byte/file caps.
                     ref=cp.binding(path)
                     require(len(observations)<1024 and ref["bytes"]<=64 << 10,"FINITE_FULL_ORIGINAL_OBSERVATION_CONTROLS")
                     raw=archive.read_owned(self.storage,ref,64 << 10,raw=True)
@@ -1574,8 +1568,7 @@ class Runner:
                     require(observation_bytes<=1 << 20,"COMPLETE_ORIGINAL_OBSERVATION_BYTES_CAP")
                     observations.append(dict(logical_path=logical,reference=ref,body_base64=base64.b64encode(raw).decode()))
                     continue
-                # Files left by an interrupted atomic write may not yet be CAS
-                # aliases. Import exact original bytes; never rewrite them.
+                # Import interrupted writes unchanged into owned CAS.
                 add(path,logical)
         bundled={}
         if observations:
@@ -1595,6 +1588,12 @@ class Runner:
             logical_files=len(files),logical_bytes=sum(f["bytes"] for f in files),physical_origins=physical_origins,
             fits=0,successful_forecast=False,public_release=False)
         if bundled:census["bundled_control_sources"]=bundled
+        display_profile=None
+        if self.go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
+            from . import weekly_mae_display_archive_v1 as display
+            display_profile=display.checked_profile(self.go,self.go_sha,ROOT)
+            census["mae_display_profile"]=dict(root_go_sha256=display_profile.root_sha256,
+                registration_sha256=display_profile.root["mae_registration"]["sha256"])
         snapshot=dict(files=sorted(files,key=lambda f:f["logical_path"]),census=census)
         package=self.go["qualified_runtime"];clients=[]
         proof=self.fresh_operations_proof()
@@ -1605,11 +1604,10 @@ class Runner:
             c.authenticate_actions_job();c.bind(package["binding"])
             operations_authority.attach(c,proof,self.env,store.canonical(self.go))
             clients.append(c);return c
-        # A failed normal archive is immutable. This is a separate failure-only
-        # append with its own intent, never a retry of that normal archive.
+        # Separate failure-only intent; the original archive stays immutable.
         handoff=archive.produce(snapshot,factory,package,storage=self.storage,output=self.root/"failure-archive-produce",
             root_go_sha256=self.go_sha,jobs=JOBS,pending_census=self.go["pending_census"],
-            pending=pending_recovery(self.go)['pending_reservations'])
+            pending=pending_recovery(self.go)['pending_reservations'],display_profile=display_profile)
         body=archive.safe_handoff(handoff)
         with open(self.env["GITHUB_OUTPUT"],"a") as stream:
             stream.write("archive_handoff_json="+body.decode()+"\narchive_handoff_sha256="+store.sha(body)+"\n");stream.flush();os.fsync(stream.fileno())

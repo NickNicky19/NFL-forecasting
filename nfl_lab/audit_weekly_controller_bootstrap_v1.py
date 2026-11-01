@@ -694,6 +694,7 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
     root = _recurring(root_bytes, bot=False)
     seal = load_seal(env, source_root, metadata_get=metadata_get, clock=clock, read_head=read_head, registry_version=registry_version).verify()
     p = c.registration(seal.registration_bytes, sealed_sha256=seal.registration_sha256, at=clock())
+    if p["schema_version"]==c.REGISTRATION_V5:c._historical_v5_root(root)
     spec, api, identifier = p["producer"], seal.metadata, env.get("GITHUB_RUN_ID")
     job_id = env.get("GITHUB_JOB")
     require(job_id in spec["jobs"].values() and identifier not in {p["readiness"]["run_id"], seal.document["owner_registration_run_id"]},

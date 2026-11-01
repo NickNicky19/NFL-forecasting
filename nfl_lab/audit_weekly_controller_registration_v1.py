@@ -382,8 +382,10 @@ def _readiness(live):
     template._readiness(readiness)
     # Root's original authorization precedes every registration stage/current
     # value. The final registration clock is assigned separately by the sealer.
-    prior, _ = c.readiness(live.api, dict(readiness=readiness, registered_at_utc=live.go["issued_at_utc"]),
-        before=live.go["issued_at_utc"])
+    context=dict(readiness=readiness,registered_at_utc=live.go["issued_at_utc"])
+    if live.go.get("schema_version")==template.ROOT_V5:
+        context=c.historical_v5_registration(live.go,context)
+    prior, _ = c.readiness(live.api,context,before=live.go["issued_at_utc"])
     c.stable(run, prior)
     return readiness
 
@@ -632,6 +634,8 @@ def _seal(live, readiness, prepared, storage):
     registration["parent"].update(deepcopy(parent_spec))
     registration["producer"].update(source_sha=live.go["source_sha"], branch=BRANCH, code_pins=pins,
         workflow_sha256=pins[c.WORKFLOW], jobs=dict(live.go["jobs"], evidence=live.go["failure_restorer"]))
+    if live.go.get("schema_version")==template.ROOT_V5:
+        registration=c.historical_v5_registration(live.go,registration)
     reg_raw = c.canonical(registration)
     c.registration(reg_raw, sealed_sha256=c.sha(reg_raw), at=c.now())
     locators = dict(schema_version=bootstrap.LOCATOR_VERSION + "-locator-registration", repository=c.REPO,
