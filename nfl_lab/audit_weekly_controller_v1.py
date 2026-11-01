@@ -155,6 +155,81 @@ def cadence_policy(value):
     return value
 
 
+
+# Only this already completed BOT capture is covered. Its canonical private
+# The original private Root was independently authenticated by the owner.
+# These are public identities/digests of its genuine Parent and claim context;
+# no private Root, model, source data or saved PASS flag is embedded here.
+REGISTRATION_V5 = VERSION + "-registration-v5-historical-bot"
+SCOPE_V5 = "ROOT_V5_EXACT_AUTHENTICATED_HISTORICAL_BOT_READINESS"
+V5_HISTORICAL_AUTHORITY = {'branch': 'research/weekly-storage-probe-v1',
+ 'claim_id': 'b106e3135305397a245238afd63402d019d758f6f0e1cdc7c0f29a4c51b9d660',
+ 'claim_locator_sha256': 'c88e5eae76d3c9a487df940329c66dd3dfb7bc3c0bfe260fefda710894b302ee',
+ 'code_pins_sha256': '315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212',
+ 'controller_context_sha256': '18f118d336bdbc67a501f8fc10c9079a088e67f7eafcebccc5d8cebfdffaac17',
+ 'jobs': {'consume': {'api_job_id': 122974673980, 'job_id': 'audit-weekly-export-v1'},
+          'produce': {'api_job_id': 122963146111, 'job_id': 'audit-weekly-produce-v1'},
+          'restore': {'api_job_id': 122973253202, 'job_id': 'audit-weekly-restore-v1'}},
+ 'old_registration_sha256': '52d150651e308fada3514ae530ae7ee98a32b9cb8d84f916f64d3cd198a76512',
+ 'parent_actor': {'id': 208912933, 'login': 'NickNicky19'},
+ 'parent_api_job_id': 122962686106,
+ 'parent_context_sha256': '756b17c7c793a149453bf2426df6d645333395175b9b64618169ee9a2796cc43',
+ 'parent_run_id': '40729788942',
+ 'parent_source_sha': 'cd51ff289ace3bf14cfb820c139fd823bc330d17',
+ 'receipt_body_sha256': '1e6ae99b049322b74d098afa2cbf3ff94e9c2e4cd22e0e63dc624dd1f1f60551',
+ 'receipt_sha256': 'b8ac97b3dde799e6050e5359327b3b979a53d0b462a43a16571673d10d2ed790',
+ 'root_go_sha256': '34743ce66f1c23ac0f45c6a910af734c9084693a2f4b2e314636283e423b58bc',
+ 'root_static_sha256': '3490322fbd2b559320f2e635e16ba8a4820d4eab471a13e55df0011a2d44977f',
+ 'run_id': '40729906573',
+ 'schema_version': 'audit-weekly-controller-v5-historical-bot-authority-v1',
+ 'source_history_binding_sha256': '7e830f039264526b031243ff2aaa1b1674b4868081a2f14958a41a4707800dd7',
+ 'source_sha': '0409a253d6a365c31a2d421941b8ee5f40d6fd02',
+ 'workflow_sha256': '2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384'}
+
+
+def _historical_v5(p):
+    require(type(p) is dict and p.get("schema_version") == REGISTRATION_V5
+        and p.get("scope") == SCOPE_V5 and p.get("historical_readiness") == V5_HISTORICAL_AUTHORITY,
+        "CLOSED_V5_NATIVE_HISTORICAL_READINESS_AUTHORITY")
+    a=V5_HISTORICAL_AUTHORITY;r=p["readiness"]
+    require(all(r[k] == a[k] for k in ("source_sha","run_id","branch","workflow_sha256",
+        "receipt_sha256","receipt_body_sha256","jobs"))
+        and r["receipt_bindings"]["root_go_sha256"] == a["root_go_sha256"],
+        "EXACT_V5_AUTHENTICATED_HISTORICAL_ROOT_RECEIPT_SOURCE")
+    return a
+
+
+def _historical_v5_root(root):
+    # Metadata only. The existing native owner/Seal authenticates current Root;
+    # this check binds the explicit V5 variant to its source-history preimage.
+    from .audit_weekly_grade_history_v1 import _source_history_unwrap,SOURCE_HISTORY_BINDING_V2
+    require(type(root) is dict and root.get("schema_version") == "audit-weekly-hosted-v5-root-GO",
+        "HISTORICAL_BOT_READINESS_REQUIRES_ROOT_V5")
+    binding=_source_history_unwrap(root["source_history_binding"])
+    a=V5_HISTORICAL_AUTHORITY;old=binding["predecessor"]
+    require(binding["schema_version"] == SOURCE_HISTORY_BINDING_V2
+        and binding["target_source_sha"] == root["source_sha"]
+        and all(old[k] == a[k] for k in ("source_sha","run_id","root_go_sha256","receipt_sha256","workflow_sha256",
+            "root_static_sha256","code_pins_sha256"))
+        and binding["predecessor_source_history_sha256"] == a["source_history_binding_sha256"],
+        "EXACT_V5_SOURCE_HISTORY_HISTORICAL_BOT_PREIMAGE")
+    return a
+
+
+def historical_v5_registration(root, registration):
+    """Native registrar derivative; a caller actor/approval flag is never input.
+
+    Only an actual RootV5 source-history transition to the reviewed exact native
+    Root can select this registration variant. The existing external native Seal,
+    source checks, current Owner/Parent/child and once-claim checks stay due.
+    """
+    _historical_v5_root(root)
+    p=deepcopy(registration)
+    p.update(schema_version=REGISTRATION_V5,scope=SCOPE_V5,historical_readiness=deepcopy(V5_HISTORICAL_AUTHORITY))
+    _historical_v5(p)
+    return p
+
+
 def registration_template(*,cadence_policy_version=PARENT_POLICY):
     """Public-safe, deliberately unusable until independently owner-sealed."""
     require(cadence_policy_version in {LEGACY_POLICY,PARENT_POLICY},"EXPLICIT_CONTROLLER_CADENCE_VERSION")
@@ -175,11 +250,13 @@ def registration(body,*,sealed_sha256,at):
     require(type(body) is bytes and 0<len(body)<=128 << 10 and hashed(sealed_sha256)
         and sha(body)==sealed_sha256,"EXTERNAL_OWNER_SEAL_REQUIRED")
     p=decode(body)
-    require(type(p) is dict and set(p)==REG_KEYS,"CLOSED_SEALED_CONTROLLER_REGISTRATION")
+    v5=type(p) is dict and p.get("schema_version")==REGISTRATION_V5
+    keys=REG_KEYS|{"historical_readiness"} if v5 else REG_KEYS
+    require(type(p) is dict and set(p)==keys,"CLOSED_SEALED_CONTROLLER_REGISTRATION")
     cadence_policy(p["cadence"])
-    require(type(p) is dict and set(p)==REG_KEYS and body==canonical(p)
-        and p["schema_version"]==VERSION+"-registration" and p["state"]=="OWNER_SEALED_METADATA_BINDING"
-        and p["scope"]=="GHA_METADATA_AND_ONCE_CLAIM_BINDING_ONLY" and p["repository"]==REPO
+    require(type(p) is dict and set(p)==keys and body==canonical(p)
+        and p["schema_version"]==(REGISTRATION_V5 if v5 else VERSION+"-registration") and p["state"]=="OWNER_SEALED_METADATA_BINDING"
+        and p["scope"]==(SCOPE_V5 if v5 else "GHA_METADATA_AND_ONCE_CLAIM_BINDING_ONLY") and p["repository"]==REPO
         and canonical(p["concurrency"])==canonical(CONCURRENCY)
         and canonical(p["limits"])==canonical(LIMITS)
         and p["parent_return_rule"]==RETURN_RULE and utc(p["registered_at_utc"])<=utc(at),"CLOSED_SEALED_CONTROLLER_REGISTRATION")
@@ -210,6 +287,7 @@ def registration(body,*,sealed_sha256,at):
             and type(j["job_id"]) is str and re.fullmatch("[A-Za-z0-9_-]{1,100}",j["job_id"]) for j in r["jobs"].values())
         and len({j["api_job_id"] for j in r["jobs"].values()})==3 and len({j["job_id"] for j in r["jobs"].values()})==3,
         "EXACT_OLD_THREE_JOB_IDENTITIES")
+    if v5:_historical_v5(p)
     return p
 
 
@@ -401,7 +479,12 @@ def due(event,stamp,*,cadence=None):
 
 def readiness(api,p,*,before):
     r=p["readiness"];identifier=r["run_id"]
-    current=checked_run(api.get(run_url(identifier)),identifier,r,OWNER,event="workflow_dispatch",status="completed",strict_trigger=False)
+    # Old registrations keep the exact Owner rule. No actor auto-detection,
+    # catch/fallback, caller bool or generic expected-actor input is accepted.
+    v5=p.get("schema_version")==REGISTRATION_V5
+    if v5:_historical_v5(p)
+    current=checked_run(api.get(run_url(identifier)),identifier,r,BOT if v5 else OWNER,
+        event="workflow_dispatch",status="completed",strict_trigger=v5)
     listing=api.get(jobs_url(identifier))
     chain=[job(listing,identifier,r,r["jobs"][role]["job_id"],status="completed",api_id=r["jobs"][role]["api_job_id"]) for role in ROLES]
     require(utc(chain[0]["completed_at"])<=utc(chain[1]["started_at"])
@@ -505,6 +588,7 @@ def verify_child(registration_bytes,*,sealed_sha256,root_bytes,event_bytes,env,s
     at=utc(clock());p=registration(registration_bytes,sealed_sha256=sealed_sha256,at=at);spec=p["producer"]
     require(type(root_bytes) is bytes and 0<len(root_bytes)<=LIMITS["root_bytes"],"BOUNDED_ACTUAL_CHILD_ROOT")
     root=decode(root_bytes);root_sha=sha(root_bytes)
+    if p["schema_version"]==REGISTRATION_V5:_historical_v5_root(root)
     require(root_bytes==canonical(root) and root.get("source_sha")==spec["source_sha"] and root.get("mode")==MODE
         and root.get("workflow_ref")==REPO+"/"+WORKFLOW+"@refs/heads/"+spec["branch"]
         and root.get("single_writer_group")==GROUP and root.get("code_pins")==spec["code_pins"]
