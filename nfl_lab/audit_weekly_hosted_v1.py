@@ -603,6 +603,9 @@ class Runner:
             require(origin in identities and known<=set(identities),'PENDING_CENSUS_OMITS_NAMESPACE_OR_KNOWN_FAILURE')
             unknown=[r for r in runs if r['id']>origin and r.get('status')=='completed'
                 and r.get('conclusion') in {'failure','cancelled','timed_out'} and r['id'] not in known]
+            if unknown and self.go.get('schema_version')==template.ROOT_V5:
+                from . import weekly_mae_display_profile_v1 as m
+                unknown=m.no_write_failures(self,unknown)
             require(not unknown,'UNRECOVERED_PRIOR_FAILED_DISPATCH_NO_WRITE')
         cp.seed_pending(self.journal,spec['pending_reservations'])
         self.pending_scope_authenticated=True
