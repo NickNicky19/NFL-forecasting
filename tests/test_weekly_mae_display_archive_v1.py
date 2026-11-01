@@ -580,7 +580,28 @@ def test_coherent_four_file_publisher_stages_and_pushes_once_without_reference_w
     assert staged and all(m==files for m in staged) and len(publication)==1 and publication[0]["files"]==files
 
 
-def test_actual_collector_producer_reader_consumer_preserve_optional_failed_bytes(point_packet,tmp_path_factory):
+@pytest.fixture
+def declared_archive_service_clock(monkeypatch):
+    """NEW fictional chronology; no host-clock or availability assertion."""
+    from datetime import datetime
+    import test_audit_weekly_archive_v1 as capture_fixture
+    import test_owner_private_bootstrap as qualification_fixture
+    from nfl_lab import owner_private_bootstrap as owner,weekly_durable_acceptance as acceptance
+    clock=SimpleNamespace(value=public.feed.utc("2099-10-31T00:20:00Z"))
+    class DeclaredDatetime(datetime):
+        @classmethod
+        def now(cls,tz=None):
+            return clock.value if tz is not None else clock.value.replace(tzinfo=None)
+    def advance():
+        clock.value+=timedelta(seconds=1)
+        return clock.value
+    clock.advance=advance
+    for module in (capture_fixture,qualification_fixture,store,archive,owner,acceptance):
+        monkeypatch.setattr(module,"datetime",DeclaredDatetime)
+    return clock
+
+
+def test_actual_collector_producer_reader_consumer_preserve_optional_failed_bytes(point_packet,tmp_path_factory,declared_archive_service_clock):
     from test_audit_weekly_archive_v1 import capture_case,Service
     q=point_packet;p=capture_case(tmp_path_factory.mktemp("v5-actual-archive"))
     partial=p.root/"mae-display/candidates/pass_int.jsonl.gz"
@@ -596,13 +617,16 @@ def test_actual_collector_producer_reader_consumer_preserve_optional_failed_byte
     names={f["logical_path"] for f in snapshot["files"]}
     assert {"prepared/mae-display/PROFILE_CATALOG.json","prepared/mae-display/CATALOG_COMPLETION.json",
         "runtime/mae-display/candidates/pass_int.jsonl.gz","runtime/mae-display/status/pass_int.json"}<=names
-    service=Service(p.base)
+    clock=declared_archive_service_clock
+    service=Service(p.base,qualification_at=clock.value)
     handoff=archive.produce(snapshot,service.factory(p.base/"writer-journal","produce"),service.package,storage=p.storage,
         output=p.base/"writer",root_go_sha256=q.root_sha,jobs=ROLES,pending_census=service.census,display_profile=q.profile)
-    service.writer_completed=public.feed.utc(archive.now());service.active="restore"
+    service.writer_completed=clock.advance();service.active="restore"
+    clock.advance()  # The NEW reader starts strictly after producer completion.
     reader=archive.restore(handoff,service.factory(p.base/"reader-journal","restore"),service.package,storage=p.storage,
         output=p.base/"reader",root_go_sha256=q.root_sha,pending_census=service.census,display_profile=q.profile)
-    service.reader_completed=public.feed.utc(archive.now());service.active="consume"
+    service.reader_completed=clock.advance();service.active="consume"
+    clock.advance()  # The NEW consumer starts strictly after reader completion.
     reader_handoff=cp.strict_json((p.base/"reader/READER_HANDOFF.json").read_bytes())
     consumer=service.factory(p.base/"consumer-journal","consume")
     before_posts=len(service.posts())
@@ -615,6 +639,30 @@ def test_actual_collector_producer_reader_consumer_preserve_optional_failed_byte
     assert consumed["aliases"]["prepared/mae-display/PROFILE_CATALOG.json"]["sha256"]==catalog["sha256"]
     assert consumed["aliases"]["prepared/mae-display/CATALOG_COMPLETION.json"]["sha256"]==completion["sha256"]
     assert len(service.posts())==before_posts and all(c.readonly and c.calls<=40 for c in consumer.clients)
+
+
+@pytest.mark.parametrize("previous_role,next_role",[("produce","restore"),("restore","consume")])
+def test_declared_archive_predecessor_completion_after_next_client_start_rejects(tmp_path,declared_archive_service_clock,previous_role,next_role):
+    from test_audit_weekly_archive_v1 import Service
+    clock=declared_archive_service_clock;service=Service(tmp_path,qualification_at=clock.value)
+    service.active=previous_role
+    previous=service.factory(tmp_path/"previous",previous_role)("append")
+    previous.authenticate_actions_job();identity=cp.client_identity(previous)
+    clock.advance();service.active=next_role
+    completed=clock.value+timedelta(seconds=1)
+    if previous_role=="produce":service.writer_completed=completed
+    else:service.reader_completed=completed
+    reader=service.factory(tmp_path/"next",next_role)("restore")
+    reader.authenticate_actions_job();jobs=archive.jobs_for(reader)
+    matched=[j for j in jobs if j["id"]==identity["api_job_id"]]
+    assert len(matched)==1;job=matched[0]
+    assert job["name"]==identity["job_id"] and job["status"]=="completed" and job["conclusion"]=="success"
+    assert job["head_sha"]==reader.source_sha and job["run_id"]==int(reader.run_id)
+    assert public.feed.utc(job["completed_at"])>public.feed.utc(reader.started_at)
+    before_posts=len(service.posts())
+    with pytest.raises(store.StoreError,match="COMPLETED_SUCCESSFUL_ARCHIVE_PREDECESSOR"):
+        archive.predecessor(reader,identity,jobs)
+    assert len(service.posts())==before_posts and all(c.get_method()=="GET" and c.data is None for c in service.calls)
 
 
 def test_actual_hosted_archive_request_only_root_v5_opts_into_new_closed_wire(point_packet,tmp_path,monkeypatch):
