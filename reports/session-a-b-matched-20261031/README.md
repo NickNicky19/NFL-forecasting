@@ -1,5 +1,9 @@
 # Session A versus B — fixed 2026 Weeks 1–7 comparison
 
+## Existing-access check after the comparison checkpoint
+
+[Executed read-only route investigation](READ_ONLY_ACCESS_CHECK_V2.md): inspected B’s newer research commit and private-artifact references, supported client tools, A’s exact receiver and four bounded Drive metadata searches without contacting B. No private B rows became accessible. The next requirement is a usable existing private reference/member mapping, rather than assuming that a newly packaged export or full old-archive recovery is necessary. The A/B comparison and production releases retain their independent states.
+
 **Paired A/B results: not yet executable. Zero B private forecast rows were accessible or joined.** Public reports have been pinned and inspected, but they cannot supply player-game pairing. No A/B winner or cross-session percentage gain is claimed. The requested cached export is the precise remaining dependency; existing ready production releases continue independently.
 
 ## Executed results in this checkpoint

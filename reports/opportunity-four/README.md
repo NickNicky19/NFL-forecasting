@@ -2,6 +2,8 @@
 
 [Matched A/B checkpoint and exact private-export dependency](../session-a-b-matched-20261031/README.md). Actual A cached diagnostics are completed; no paired B row is yet accessible. Existing ready releases and running capture remain independent.
 
+[Existing read-only access check](../session-a-b-matched-20261031/READ_ONLY_ACCESS_CHECK_V2.md): B’s newer recovery manifests were inspected without contacting B; an existing private reference/member route remains unbound. No new fit or paired result.
+
 # Four-category NFL opportunity forecasts
 
 Latest matched current-season comparison: [all twelve categories, each method’s numerical error and own Over/Under record](../category-topfive-matched-all12-w1w7-20261030/README.md). Includes probability/50–50 controls, complete-policy comparisons, coverage and exact live identities.

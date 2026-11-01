@@ -1,0 +1,15 @@
+{
+  "version": "A-readonly-retention-v2-failure",
+  "state": "FAILED_BEFORE_NEW_PRIVATE_STORE_WRITE",
+  "failure": "KeyError for existing frozen protocol SHA; old immutable ZIP stores public bodies inside B_PUBLIC_CAPTURE.json, not direct individual ZIP members",
+  "source_sha256": "8328efa30335c78ebdeb27d79f7b0f4e5689d21ccacd707a7622b9697e0bb7c0",
+  "source_snapshot": "../../tools/session_ab_readonly_reference_retention_v2.py",
+  "private_data_written": 0,
+  "B_rows_read": 0,
+  "fits_or_model_inference": 0,
+  "CPU_seconds": null,
+  "CPU_missing_reason": "Worker had no terminal resource receipt before exception; do not invent observed CPU",
+  "conservative_CPU_charge_seconds": 90,
+  "orchestration_preparation_failure": "btoa unavailable before worker start; preserved in continuation payload; zero private writes",
+  "correction": "Version2.1decode original validated JSON wrapper then reuse exact source-body SHA/Git blob; no source rerequest or B access"
+}
