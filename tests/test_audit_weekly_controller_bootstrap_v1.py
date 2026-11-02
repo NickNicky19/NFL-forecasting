@@ -504,6 +504,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261101-mae-pinned-history.json",
     "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json",
     "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json",
+    "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -514,7 +515,7 @@ def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     assert api.get(c.contents_url(literal, old.A), 17) == []
     assert len(calls) == 1
     for path, ref in ((literal, "lab-state"),
-            (literal.replace("20261026", "20261025").replace("20261027", "20261025").replace("20261028", "20261025").replace("20261031", "20261025").replace("20261101", "20261025"), old.A),
+            (literal.replace("20261026", "20261025").replace("20261027", "20261025").replace("20261028", "20261025").replace("20261031", "20261025").replace("20261101", "20261025").replace("20261102", "20261025"), old.A),
             (literal.replace(".json", "-extra.json"), old.A),
             (literal.replace("bootstrap-v2", "../bootstrap-v2"), old.A)):
         with pytest.raises(b.BootstrapError, match="BOOTSTRAP_FIXED_GET_ROUTE_OR_SHARED_CAP"):
@@ -682,7 +683,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
@@ -1043,23 +1044,24 @@ def test_history_mae_registry_new_literal_remains_fixed_before_io(tail):
 
 
 def test_new_default_registry_does_not_reclassify_the_previous_native_seal():
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json'
     assert b.LOCATOR_REGISTRY_PATH!='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
     assert b.fixed_route(c.contents_url('state/controller-v1/bootstrap-v2-20261031-mae-display-read.json','a'*40))
     assert b.REGISTRY_PATH=='state/controller-v1/bootstrap-v1.json'
 
 
 def test_pinned_history_registry_preserves_all_prior_literal_seals():
-    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json"
+    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json"
     for previous in ("state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-history-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-pinned-history.json",
-                     "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json"):
+                     "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json",
+                     "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json"):
         assert previous != b.LOCATOR_REGISTRY_PATH
         assert b.fixed_route(c.contents_url(previous, "a" * 40))
     url = c.contents_url(b.LOCATOR_REGISTRY_PATH, "a" * 40)
     assert b.fixed_route(url)
-    for bad in (url.replace("20261101", "20261102"),
+    for bad in (url.replace("20261102", "20261103"),
                 url.replace(".json?", ".JSON?"), url.replace(".json?", "-extra.json?"),
                 url.replace("?ref=", "?Ref="), url + "&page=1", url + "#fragment",
                 url.rsplit("?ref=", 1)[0] + "?ref=main",
