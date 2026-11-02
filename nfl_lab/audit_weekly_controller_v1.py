@@ -216,6 +216,80 @@ def _historical_v5_root(root):
     return a
 
 
+# Additive exact successor. Original347/BOT registrations retain their contract.
+REGISTRATION_V5_OWNER = VERSION + "-registration-v5-current-owner"
+SCOPE_V5_OWNER = "ROOT_V5_EXACT_AUTHENTICATED_DAD58_OWNER_READINESS"
+V5_CURRENT_OWNER_AUTHORITY = {'branch': 'research/weekly-storage-probe-v1',
+ 'code_pins_sha256': 'a358c9ff659c902655d15f92aafe0486cbac986dd286c802acd09526b4b01cf1',
+ 'jobs': {'consume': {'api_job_id': 125588652331, 'job_id': 'audit-weekly-export-v1'},
+          'produce': {'api_job_id': 125580407240, 'job_id': 'audit-weekly-produce-v1'},
+          'restore': {'api_job_id': 125587398403, 'job_id': 'audit-weekly-restore-v1'}},
+ 'receipt_bindings': {'archive_files_sha256': 'df9f3dbeb695120d58fb92bfc1898fae2e8d630b16df471945d3804c5adc5bb7',
+                      'archive_index_sha256': 'bb6a9585dc0d62c0b3704062f20e0c84d2b0ccd07d33b9d8fffa754861cde103',
+                      'choice_sha256': '4fb40b38a66cd118078ecfc3598b28c9e952c87267b2b687cde276211763348a',
+                      'epoch_sha256': 'e756c03f1ed1d8e6d5d095d8429f8b499780853c50baf5c2c6228fcc94f465ee',
+                      'feed_sha256': 'cc9fa4b5364384845d3423ed0896323c54256f6c2b27404d8f8c6f3804444eb7',
+                      'origin_choice_sha256': 'a6ebda8372e0d2527a6c857863ae93d98051e63082e34214a31f93b2df174061',
+                      'policy_sha256': '34f76676acb2590a388446b9498896c12900255c1be3451687ab34bb1810651b',
+                      'r0_identity_sha256': 'a21ccd21ad395da3487c5e084ab2865c54a357a191419cc4da9ce31c19f83660',
+                      'reader_witness_sha256': '3b15c8ad29106c9d8bf36972aa038e9f1cb0130e277a3b3336d4146289d96ef4',
+                      'recipe_registration_sha256': 'f5b74b181934e26cb33a717897fdbfe10ddef5212f0dde80d0dac30759f06592',
+                      'rights_authority_sha256': 'e88955f3bfb4496180851c803a17bd8b5a25f39df3bdcbf34458659bdcc49069',
+                      'root_go_sha256': 'ebba074c9d377aef0fff549ead043eb174c6b51bba89d8d122c53e903a1c7c82'},
+ 'receipt_body_sha256': 'a9132b2d7c088b7459a959ffd6cec70b8ba400e6da7a47adeafa1bc9d152414b',
+ 'receipt_sha256': '7179b3f517455c41e94847032107f52e34f381424028d137862d54de55d0fc0e',
+ 'root_go_sha256': 'ebba074c9d377aef0fff549ead043eb174c6b51bba89d8d122c53e903a1c7c82',
+ 'root_static_sha256': '215c700cd3149ca0bed43e72646ab50621fb053f88610cfee0b2c3c23735d46d',
+ 'run_id': '41533789085',
+ 'schema_version': 'audit-weekly-controller-v5-current-owner-authority-v1',
+ 'source_history_binding_sha256': 'cccb86dc5f97cf608efe93ee81ee9a6076925acff463db48bbb59f796f23950a',
+ 'source_sha': 'dad58d459951bdb77ef852b8ca88860ffb0bce60',
+ 'workflow_sha256': '2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384'}
+V5_CURRENT_OWNER_RUNTIME_PINS = {
+    "nfl_lab/audit_weekly_controller_v1.py": "4799c5923134594aaf2ebc8e8a560fdf014aaa8607119e747a6fb8a0da8dde80",
+    "nfl_lab/audit_weekly_retained_v1.py": "719e80ed5e52eba9b7e23f1e55c22d819c9119a69174d537483bcf0334aa9f0e",
+}
+
+
+def _current_owner_v5(p):
+    a = V5_CURRENT_OWNER_AUTHORITY
+    require(type(p) is dict and p.get("schema_version") == REGISTRATION_V5_OWNER
+        and p.get("scope") == SCOPE_V5_OWNER and p.get("current_owner_readiness") == a,
+        "CLOSED_V5_CURRENT_OWNER_READINESS_AUTHORITY")
+    r = p["readiness"]
+    require(all(r[k] == a[k] for k in ("source_sha", "run_id", "branch", "workflow_sha256",
+        "receipt_sha256", "receipt_body_sha256", "jobs", "receipt_bindings")),
+        "EXACT_V5_CURRENT_OWNER_SOURCE_RECEIPT_AND_JOBS")
+    return a
+
+
+def _current_owner_v5_root(root):
+    from .audit_weekly_grade_history_v1 import _source_history_unwrap, SOURCE_HISTORY_BINDING_V2
+    require(type(root) is dict and root.get("schema_version") == "audit-weekly-hosted-v5-root-GO",
+        "CURRENT_OWNER_READINESS_REQUIRES_ROOT_V5")
+    binding = _source_history_unwrap(root["source_history_binding"])
+    a = V5_CURRENT_OWNER_AUTHORITY; old = binding["predecessor"]
+    require(binding["schema_version"] == SOURCE_HISTORY_BINDING_V2
+        and binding["predecessor_root_schema"] == "audit-weekly-hosted-v5-root-GO"
+        and binding["target_source_sha"] == root["source_sha"]
+        and all(old[k] == a[k] for k in ("source_sha", "run_id", "root_go_sha256", "receipt_sha256",
+            "workflow_sha256", "root_static_sha256", "code_pins_sha256"))
+        and all(old[k] == a["receipt_bindings"][k] for k in ("feed_sha256", "policy_sha256",
+            "recipe_registration_sha256", "epoch_sha256", "choice_sha256"))
+        and binding["predecessor_source_history_sha256"] == a["source_history_binding_sha256"],
+        "EXACT_V5_CURRENT_OWNER_SOURCE_HISTORY_PREIMAGE")
+    return a
+
+
+def v5_history_authority(root):
+    """Closed source-bound dispatch, never an actor/name fallback."""
+    from .audit_weekly_grade_history_v1 import _source_history_unwrap
+    binding = _source_history_unwrap(root["source_history_binding"])
+    if binding["predecessor"]["source_sha"] == V5_CURRENT_OWNER_AUTHORITY["source_sha"]:
+        return _current_owner_v5_root(root)
+    return _historical_v5_root(root)
+
+
 def historical_v5_registration(root, registration):
     """Native registrar derivative; a caller actor/approval flag is never input.
 
@@ -223,6 +297,13 @@ def historical_v5_registration(root, registration):
     Root can select this registration variant. The existing external native Seal,
     source checks, current Owner/Parent/child and once-claim checks stay due.
     """
+    a = v5_history_authority(root)
+    if a == V5_CURRENT_OWNER_AUTHORITY:
+        p = deepcopy(registration)
+        p.update(schema_version=REGISTRATION_V5_OWNER, scope=SCOPE_V5_OWNER,
+            current_owner_readiness=deepcopy(a))
+        _current_owner_v5(p)
+        return p
     _historical_v5_root(root)
     p=deepcopy(registration)
     p.update(schema_version=REGISTRATION_V5,scope=SCOPE_V5,historical_readiness=deepcopy(V5_HISTORICAL_AUTHORITY))
@@ -251,12 +332,13 @@ def registration(body,*,sealed_sha256,at):
         and sha(body)==sealed_sha256,"EXTERNAL_OWNER_SEAL_REQUIRED")
     p=decode(body)
     v5=type(p) is dict and p.get("schema_version")==REGISTRATION_V5
-    keys=REG_KEYS|{"historical_readiness"} if v5 else REG_KEYS
+    owner_v5=type(p) is dict and p.get("schema_version")==REGISTRATION_V5_OWNER
+    keys=REG_KEYS|({"current_owner_readiness"} if owner_v5 else {"historical_readiness"} if v5 else set())
     require(type(p) is dict and set(p)==keys,"CLOSED_SEALED_CONTROLLER_REGISTRATION")
     cadence_policy(p["cadence"])
     require(type(p) is dict and set(p)==keys and body==canonical(p)
-        and p["schema_version"]==(REGISTRATION_V5 if v5 else VERSION+"-registration") and p["state"]=="OWNER_SEALED_METADATA_BINDING"
-        and p["scope"]==(SCOPE_V5 if v5 else "GHA_METADATA_AND_ONCE_CLAIM_BINDING_ONLY") and p["repository"]==REPO
+        and p["schema_version"]==(REGISTRATION_V5_OWNER if owner_v5 else REGISTRATION_V5 if v5 else VERSION+"-registration") and p["state"]=="OWNER_SEALED_METADATA_BINDING"
+        and p["scope"]==(SCOPE_V5_OWNER if owner_v5 else SCOPE_V5 if v5 else "GHA_METADATA_AND_ONCE_CLAIM_BINDING_ONLY") and p["repository"]==REPO
         and canonical(p["concurrency"])==canonical(CONCURRENCY)
         and canonical(p["limits"])==canonical(LIMITS)
         and p["parent_return_rule"]==RETURN_RULE and utc(p["registered_at_utc"])<=utc(at),"CLOSED_SEALED_CONTROLLER_REGISTRATION")
@@ -288,6 +370,7 @@ def registration(body,*,sealed_sha256,at):
         and len({j["api_job_id"] for j in r["jobs"].values()})==3 and len({j["job_id"] for j in r["jobs"].values()})==3,
         "EXACT_OLD_THREE_JOB_IDENTITIES")
     if v5:_historical_v5(p)
+    if owner_v5:_current_owner_v5(p)
     return p
 
 
@@ -482,9 +565,11 @@ def readiness(api,p,*,before):
     # Old registrations keep the exact Owner rule. No actor auto-detection,
     # catch/fallback, caller bool or generic expected-actor input is accepted.
     v5=p.get("schema_version")==REGISTRATION_V5
+    owner_v5=p.get("schema_version")==REGISTRATION_V5_OWNER
     if v5:_historical_v5(p)
+    if owner_v5:_current_owner_v5(p)
     current=checked_run(api.get(run_url(identifier)),identifier,r,BOT if v5 else OWNER,
-        event="workflow_dispatch",status="completed",strict_trigger=v5)
+        event="workflow_dispatch",status="completed",strict_trigger=v5 or owner_v5)
     listing=api.get(jobs_url(identifier))
     chain=[job(listing,identifier,r,r["jobs"][role]["job_id"],status="completed",api_id=r["jobs"][role]["api_job_id"]) for role in ROLES]
     require(utc(chain[0]["completed_at"])<=utc(chain[1]["started_at"])
@@ -589,6 +674,7 @@ def verify_child(registration_bytes,*,sealed_sha256,root_bytes,event_bytes,env,s
     require(type(root_bytes) is bytes and 0<len(root_bytes)<=LIMITS["root_bytes"],"BOUNDED_ACTUAL_CHILD_ROOT")
     root=decode(root_bytes);root_sha=sha(root_bytes)
     if p["schema_version"]==REGISTRATION_V5:_historical_v5_root(root)
+    if p["schema_version"]==REGISTRATION_V5_OWNER:_current_owner_v5_root(root)
     require(root_bytes==canonical(root) and root.get("source_sha")==spec["source_sha"] and root.get("mode")==MODE
         and root.get("workflow_ref")==REPO+"/"+WORKFLOW+"@refs/heads/"+spec["branch"]
         and root.get("single_writer_group")==GROUP and root.get("code_pins")==spec["code_pins"]
