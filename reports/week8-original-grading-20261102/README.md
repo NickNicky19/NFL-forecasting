@@ -186,3 +186,9 @@ Numeric offered-line probabilities are unsupported by these point wires; no dist
 Private row-level JSON and readable CSV retain original players, values, actuals, errors, sides, lines, clocks, source/model/policy identity, failures and participation reasons. Their safe manifests are in the result/retention receipts. No restricted rows or private locators are published. Local readback is distinct from off-host restoration.
 
 Session A made no production write, dispatch, lease change or new forecast. The retained owner must publish any site/UI update, preserve historical snapshots, label partial Week8 and verify actual served consumption. Delivery, acknowledgement and execution remain separate. Existing capture/grading/correction scheduling stays with that owner; no unobserved future run is promised.
+
+## Publication and owner delivery receipt
+
+The data/code publication was independently read back at commit `5b9c1c5f864c13726f5614f5cadc804afcabf5a4`: 59 exact Git blob matches and exact immutable report/aggregate bodies. The initial two-CSV newline serialization mismatch is preserved and repaired without changing any grade. [Readback](PUBLICATION_READBACK_V1.json).
+
+[Owner update delivered](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6586792117) at November 2, 19:44:50 UTC / 1:44:50 p.m. CST. Receipt acknowledgement, owner execution and served UI verification are **not observed**. Delivery does not complete deployment. [Delivery record](OWNER_DELIVERY_V1.json).
