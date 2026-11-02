@@ -58,7 +58,7 @@ REGISTRY_PATH = "state/controller-v1/bootstrap-v1.json"
 # The first V2 wire registration remains immutable at bootstrap-v2.json.
 # All issued registration records remain immutable. Restoring the registered
 # feature builder requires its own native registration on the corrected source.
-LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json"
+LOCATOR_REGISTRY_PATH = "state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json"
 LOCATOR_CAP = 64 << 10
 TEMPLATE_MODULE = "nfl_lab/audit_weekly_template_v1.py"
 # Shared executable bytes are checked in BOTH literal source inventories.
@@ -250,6 +250,7 @@ def fixed_route(url):
         r"contents/state/controller-v1/bootstrap-v2-20261101-mae-retained-binding\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture\.json\?ref=[a-f0-9]{40}",
         r"contents/state/controller-v1/bootstrap-v2-20261102-mae-canonical-period\.json\?ref=[a-f0-9]{40}",
+        r"contents/state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope\.json\?ref=[a-f0-9]{40}",
         r"actions/artifacts/[1-9][0-9]{0,19}"))
 
 
@@ -373,9 +374,18 @@ class Seal:
     def locators(self):
         return verify_locator_registration(self, self.locator_registration_bytes)
 
-    def verify(self):
+    def verify_integrity_only(self):
+        """Immutable input integrity only; never current metadata authority."""
         require(self.registration_sha256 == c.sha(self.registration_bytes)
                 and self._integrity == c.digest(self._state()), "BOOTSTRAP_LIVE_SEAL_INTEGRITY")
+        return self
+
+    def integrity_commitment(self):
+        self.verify_integrity_only()
+        return self._integrity
+
+    def verify(self):
+        self.verify_integrity_only()
         self.metadata.budget()
         return self
 
@@ -680,9 +690,15 @@ class Owner:
         self.document, self.bootstrap_seal = deepcopy(document), seal
         self.sha256 = c.digest(self.document)
 
-    def verify(self, *, root_sha256):
+    def verify_scope_integrity(self, *, root_sha256):
+        """Integrity predicate, not permission for an API/client operation."""
         require(c.digest(self.document) == self.sha256 and self.document["root_go_sha256"] == root_sha256,
                 "OWNER_BOOTSTRAP_SCOPE_OR_INTEGRITY")
+        self.bootstrap_seal.verify_integrity_only()
+        return self
+
+    def verify(self, *, root_sha256):
+        self.verify_scope_integrity(root_sha256=root_sha256)
         self.bootstrap_seal.verify()
         return self
 
@@ -701,6 +717,7 @@ def authorize_owner(env, source_root, root_bytes, *, metadata_get=None, event_by
     seal = load_seal(env, source_root, metadata_get=metadata_get, clock=clock, read_head=read_head, registry_version=registry_version).verify()
     p = c.registration(seal.registration_bytes, sealed_sha256=seal.registration_sha256, at=clock())
     if p["schema_version"]==c.REGISTRATION_V5:c._historical_v5_root(root)
+    if p["schema_version"]==c.REGISTRATION_V5_OWNER:c._current_owner_v5_root(root)
     spec, api, identifier = p["producer"], seal.metadata, env.get("GITHUB_RUN_ID")
     job_id = env.get("GITHUB_JOB")
     require(job_id in spec["jobs"].values() and identifier not in {p["readiness"]["run_id"], seal.document["owner_registration_run_id"]},

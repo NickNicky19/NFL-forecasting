@@ -135,8 +135,13 @@ def _source_history_pins(root, binding):
             from . import weekly_mae_display_profile_v1 as profile
             cfg=profile.validate_metadata(root,Path(__file__).resolve().parents[1])
             declared=cfg["mae_runtime_pin_profile"]["changed_paths"]
+            successor_pins={}
+            from . import audit_weekly_controller_v1 as controller
+            if binding["predecessor"]["source_sha"]==controller.V5_CURRENT_OWNER_AUTHORITY["source_sha"]:
+                controller._current_owner_v5_root(root)
+                successor_pins=controller.V5_CURRENT_OWNER_RUNTIME_PINS
             for name in set(overrides)&_MAE_RUNTIME_OVERRIDE_PATHS:
-                require(name in declared and overrides[name]==declared[name]["before_sha256"]
+                require(name in declared and overrides[name]==successor_pins.get(name,declared[name]["before_sha256"])
                     and pins[name]==declared[name]["after_sha256"],"EXACT_MAE_ONLY_PREDECESSOR_RUNTIME_PIN_OVERRIDE")
             allowed=allowed|_MAE_RUNTIME_OVERRIDE_PATHS
         require(type(overrides) is dict and set(overrides) <= allowed & set(pins)
@@ -1373,7 +1378,7 @@ class _PinnedV5History:
         require(root.get("schema_version")==ROOT_V5 and root.get("source_sha")==context.client.source_sha
             and proof.document.get("actor")==controller.OWNER and root["effective_epoch"].get("controller_context") is None
             and store.sha(store.canonical(root))==context.root_sha256,"EXACT_V5_OWNER_HISTORY_ROOT_REQUIRED")
-        controller._historical_v5_root(root)
+        controller.v5_history_authority(root)
         require(wrapper["sidecar"]["source_sha"]!=context.client.source_sha
             and store.sha(packed)==previous_checkpoint(root)["sha256"]
             and store.sha(receipt_body)==root["effective_epoch"]["previous_capture"]["receipt_sha256"]
@@ -1422,7 +1427,7 @@ class _PinnedV5History:
         require(grade.pins()=={n:self.context.go["code_pins"][n] for n in _GRADE_PIN_PATHS}
             and checkpoint.pins()=={n:self.context.go["code_pins"][n] for n in _CHECKPOINT_PIN_PATHS},
             "CURRENT_V5_GRADING_KERNEL_SOURCE_CHANGED")
-        controller._historical_v5_root(self.context.go)
+        controller.v5_history_authority(self.context.go)
         discovery._v5_owner_history(self.context.go,self.receipt,self.context.proof)
         current=discovery._sealed_source(self.context.proof,self.root_sha256,now())
         require(all(current["current"][n]==self.current[n] for n in ("source_sha","run_id","job_id","api_job_id")),
@@ -1437,10 +1442,13 @@ class _PinnedV5History:
         self._metadata=deepcopy(jobs);self._state_sha256=store.sha(store.canonical([self._metadata,self._native]));return checked
     def original_run(self,run):
         from . import audit_weekly_controller_v1 as controller
-        self.verify();a=controller.V5_HISTORICAL_AUTHORITY
+        self.verify();a=controller.v5_history_authority(self.context.go)
+        current_owner=a==controller.V5_CURRENT_OWNER_AUTHORITY
+        expected=controller.OWNER if current_owner else controller.BOT
         require(run.get("id")==int(a["run_id"]) and run.get("head_sha")==a["source_sha"]
-            and controller.actor(run.get("actor"),controller.BOT)
-            and controller.actor(run.get("triggering_actor"),controller.BOT),"EXACT_V5_ORIGINAL_BOT_HISTORY_RUN_REQUIRED")
+            and controller.actor(run.get("actor"),expected)
+            and controller.actor(run.get("triggering_actor"),expected),
+            "EXACT_V5_CURRENT_OWNER_HISTORY_RUN_REQUIRED" if current_owner else "EXACT_V5_ORIGINAL_BOT_HISTORY_RUN_REQUIRED")
     def handoff(self,handoff):
         self.verify()
         require(self._metadata is not None and handoff==self.wrapper["sidecar"]["checkpoint_handoff"],

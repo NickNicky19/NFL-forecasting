@@ -505,7 +505,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json",
     "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json",
     "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json",
-    "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json",
+    "state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -684,7 +684,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
@@ -1045,14 +1045,14 @@ def test_history_mae_registry_new_literal_remains_fixed_before_io(tail):
 
 
 def test_new_default_registry_does_not_reclassify_the_previous_native_seal():
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json'
     assert b.LOCATOR_REGISTRY_PATH!='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
     assert b.fixed_route(c.contents_url('state/controller-v1/bootstrap-v2-20261031-mae-display-read.json','a'*40))
     assert b.REGISTRY_PATH=='state/controller-v1/bootstrap-v1.json'
 
 
 def test_pinned_history_registry_preserves_all_prior_literal_seals():
-    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json"
+    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json"
     for previous in ("state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-history-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-pinned-history.json",
@@ -1069,3 +1069,36 @@ def test_pinned_history_registry_preserves_all_prior_literal_seals():
                 url.rsplit("?ref=", 1)[0] + "?ref=lab-state"):
         assert bad != url
         assert not b.fixed_route(bad)
+
+
+@pytest.mark.parametrize('counter',['cpu','rss','wall'])
+def test_integrity_predicates_never_extend_metadata_authority(monkeypatch,counter):
+    from types import SimpleNamespace
+    state=dict(cpu=0.,wall=0.,rss=128 << 20)
+    monkeypatch.setattr(b.time,'monotonic',lambda:state['wall'])
+    monkeypatch.setattr(b.time,'process_time',lambda:state['cpu'])
+    monkeypatch.setattr(b.resource,'getrusage',lambda *_:SimpleNamespace(ru_maxrss=state['rss']//1024))
+    metadata=b.Metadata({},lambda *_:pytest.fail('NO_METADATA_REQUEST_IN_INTEGRITY_CONTROL'))
+    seal=b.Seal(b'{"fictional":true}',{},dict(fictional=True),metadata,b._KEY)
+    proof=b.Owner(dict(root_go_sha256='a'*64),seal,b._KEY)
+    proof.verify(root_sha256='a'*64)
+    original=seal.integrity_commitment()
+    state[counter]={'cpu':130.,'rss':600 << 20,'wall':181.}[counter]
+    assert proof.verify_scope_integrity(root_sha256='a'*64) is proof
+    assert seal.integrity_commitment()==original
+    with pytest.raises(b.BootstrapError,match='BOOTSTRAP_SHARED_NATIVE_BUDGET'):
+        proof.verify(root_sha256='a'*64)
+    with pytest.raises(b.BootstrapError,match='BOOTSTRAP_SHARED_NATIVE_BUDGET'):
+        seal.verify()
+    seal.document['changed']=True
+    with pytest.raises(b.BootstrapError,match='BOOTSTRAP_LIVE_SEAL_INTEGRITY'):
+        proof.verify_scope_integrity(root_sha256='a'*64)
+    assert metadata.calls==[]
+
+
+def test_new_infer_registry_is_exact_and_previous_registry_routes_remain_readable():
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json'
+    for path in ('bootstrap-v2-20261102-mae-infer-local-scope.json','bootstrap-v2-20261102-mae-canonical-period.json',
+                 'bootstrap-v2-20261102-mae-fresh-capture.json','bootstrap-v2-20261101-mae-retained-binding.json'):
+        assert b.fixed_route('https://api.github.com/repos/NickNicky19/NFL-forecasting/contents/state/controller-v1/'+path+'?ref='+'a'*40)
+    assert not b.fixed_route('https://api.github.com/repos/NickNicky19/NFL-forecasting/contents/state/controller-v1/bootstrap-v2-arbitrary.json?ref='+'a'*40)
