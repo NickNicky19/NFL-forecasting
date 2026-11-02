@@ -1,0 +1,14 @@
+{
+  "state": "CONFIRMED_PUBLICATION_SERIALIZATION_DIFFERENCE",
+  "at_UTC": "2026-11-02T19:44:04.688976+00:00",
+  "parent_commit": "2e751294f1fb286559c07fa3bfd16254d875c279",
+  "cause": "Text-mode read normalized CRLF CSV endings into LF for Git tree payload; CSV data and all grades identical. Two exact byte hashes correctly rejected; original expected source hashes unchanged.",
+  "affected_files": [
+    "ALL_NAMED_SNAPSHOTS_CATEGORY_SIDES_V1.csv",
+    "ALL_NUMERIC_METRICS_V1.csv"
+  ],
+  "repair": "Use read_bytes().decode(utf-8) to preserve exact CRLF and publish a forward correction. No score recomputation or forecast changes.",
+  "preserve_original_commit_and_failure": true,
+  "additional_completion_API_calls_max": 12,
+  "resource_authority": "Existing owner-authorized permitted evidence publication; preserve consumed calls, extend reporting-only finite allocation. No data/fit/CPU budget reset, unchanged complete metadata2MiB and private caps."
+}
