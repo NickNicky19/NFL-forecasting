@@ -505,6 +505,7 @@ def test_no_private_provider_POST_arbitrary_or_traversal_route(url):
     "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json",
     "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json",
     "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json",
+    "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json",
 ])
 def test_issued_registration_routes_are_literal_and_commit_bound(literal):
     calls = []
@@ -683,7 +684,7 @@ def test_failed_first_recovery_uses_genuine_manual_owner_bootstrap_only(locator_
         clock=lambda:old.AT,read_head=x.read_head,registry_version=2)
     assert type(proof) is b.Owner and proof.document['scheduled_parent'] is None
     with pytest.raises(b.BootstrapError,match='CANNOT_BE_SCHEDULED'):b._recurring(x.raw,bot=True)
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json'
 
 
 def test_first_future_marker_does_not_make_an_unversioned_manual_context_valid(system):
@@ -1044,14 +1045,14 @@ def test_history_mae_registry_new_literal_remains_fixed_before_io(tail):
 
 
 def test_new_default_registry_does_not_reclassify_the_previous_native_seal():
-    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json'
+    assert b.LOCATOR_REGISTRY_PATH=='state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json'
     assert b.LOCATOR_REGISTRY_PATH!='state/controller-v1/bootstrap-v2-20261031-mae-display-read.json'
     assert b.fixed_route(c.contents_url('state/controller-v1/bootstrap-v2-20261031-mae-display-read.json','a'*40))
     assert b.REGISTRY_PATH=='state/controller-v1/bootstrap-v1.json'
 
 
 def test_pinned_history_registry_preserves_all_prior_literal_seals():
-    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json"
+    assert b.LOCATOR_REGISTRY_PATH == "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json"
     for previous in ("state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-history-read.json",
                      "state/controller-v1/bootstrap-v2-20261101-mae-pinned-history.json",
