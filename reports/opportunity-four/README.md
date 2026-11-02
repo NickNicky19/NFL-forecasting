@@ -1,3 +1,7 @@
+## Immediate reporting priority: actual Week 8 grades — November 2
+
+[Original website leans, original Top Picks, genuine R0, captured forecast replays, coverage and corrections](../week8-original-grading-20261102/README.md). As of 1:07 p.m. CST: 13/14 games final; CHI–SEA pending. Fixed original leans 152/302; first selected Top Picks 12/23. No new model fit, forecast or deployment. Older dated operational statuses below remain historical; the A/B task and ready releases continue independently.
+
 ## Current priority: Session A versus B
 
 [Matched A/B checkpoint and exact private-export dependency](../session-a-b-matched-20261031/README.md). Actual A cached diagnostics are completed; no paired B row is yet accessible. Existing ready releases and running capture remain independent.

@@ -1,13 +1,12 @@
-# October 29: current category shortlists, actual Week 8 capture and new 2025 comparison
-
-[Current twelve-category decision and capture/release status](category-topfive-20261029/README.md) · [Up-to-five research procedures and producer-family shortlists](category-topfive-20261029/RESEARCH_RANKINGS.md) · [Readable comparison JSON](category-topfive-20261029/PUBLIC_RESULTS.json) · [New 2025 ordered-history comparison](category-topfive-20261029/ORDERED_2025.md).
-
 # Forecasting research: complete navigation index
 
-## New ordered-history and analog comparisons — October29
+## Actual Week 8 grading — November 2, partial week
 
-[New predictive results, methods and release status](ordered-analog-20261029/README.md): two new CDF fits and two analog contexts. Ordered carry/reception MAE reductions are 1.14%/0.39%; both uncertainty intervals include zero. Analog reception losses remain. No new live activation. Public algorithm/config/aggregate packet; full sealed execution records remain private.
+[Original per-category Over/Under results, original Top Picks, R0, genuine captured point comparisons and all pending/unknown outcomes](week8-original-grading-20261102/README.md). Thirteen of fourteen final games; unchanged original selections and issue horizons. No new fit, inference or deployment. [Permanent experiment index](opportunity-four/EXPERIMENT_REGISTRY.json).
 
+## New ordered/analog forecasting wave — October29
+
+[Actual new comparisons, twelve-category status and release dependencies](next-nfl-checkpoint-20261029/README.md):2newCDFfits and2analogcontexts; carries/receptions show small ordered-feature leads, allprimaryintervals crosszero. Analoglosses andtechnicalfailures retained. No newliveactivation.
 
 ## Latest: MAE display and top-player checkpoint (October 28, 2026)
 
@@ -443,15 +442,6 @@ Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 
 [Completed studies, all12decisions and Week8capture](next-nfl-checkpoint-20261028/WEEK8_AND_STUDIES_CONTINUATION.md):52forests+1chartfit, independent cached-row acceptance, all failures and oldlosses retained.3.06%2025attempt MSE gain vsCDF;18.07%chartMAE gain vsconstantposition control. Neither establishes today's website superiority. Week8originalcapture verifiedpartly; live0selected, retainedowner integration pending.
 
 
-## Original-session continuation — new backfield information, October29
+## Opportunity forecasts
 
-One new32-tree carry CDF fit, 2,999 new historical forecasts and matched2026W1–6 evaluation. MedianMAE3.534221 versus priorORDERED3.619772 and BASE3.661597; adverse bias/precision and chronology limitations retained. Independent saved-vector QA1,253checks/64metriccells; private fresh-process readback. New ordered future adapter and read-only V2 evidence package. No new pregame capture, admission or live deployment; retained-owner actions explicit.
-
-- [Results, current twelve-category state and exact owner request](category-topfive-continuation-20261029/README.md)
-- [Full scientific aggregate](category-topfive-continuation-20261029/RESULTS.json)
-- [Read-only V2 evidence handoff](category-topfive-continuation-20261029/V2_EVIDENCE_HANDOFF.json)
-
-
-## Four-category opportunity focus — owner October29
-
-New predictive work is limited to pass_att/rush_att/rec_tgt/rec; nonfocus pending work is deferred. [Permanent methods, all run states/results, generated leaderboards, source limits and protocols](opportunity-four/README.md). Existing all-category evidence and production remain preserved.
+[Four-category methods, all attempts, results and generated leaders](opportunity-four/README.md).

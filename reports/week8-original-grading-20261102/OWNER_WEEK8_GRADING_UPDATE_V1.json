@@ -1,0 +1,35 @@
+{
+  "version": "week8-original-grading-owner-update-v1",
+  "state": "PREPARED_NOT_OWNER_ACKNOWLEDGED_OR_DEPLOYED",
+  "season": 2026,
+  "week": 8,
+  "partial_week": true,
+  "completed_games": 13,
+  "expected_games": 14,
+  "asof_UTC": "2026-11-02T19:07:42.367987+00:00",
+  "asof_America_Chicago": "2026-11-02T13:07:42.367987-06:00",
+  "research_only": true,
+  "sources": [
+    "HEADLINE_TABLES_V1.json",
+    "ALL_NAMED_SNAPSHOTS_CATEGORY_SIDES_V1.csv",
+    "RESULTS_V1.json.gz",
+    "REPORT_COMPLETION_V1.json"
+  ],
+  "required_consumer_labels": [
+    "Originalsavedlegacyallleans,firstselectedresearchTop,legacyTop,R0andreplayedpointdirectionsareseparate",
+    "Keepnamedhorizonsandmodel/policyidentity;no poolingrefreshes",
+    "Statisticalwins/lossesnotvenuesettlementorindividualpickprobability",
+    "CHI-SEAandunknownparticipationpending/unresolved;N/Aemptydenominators"
+  ],
+  "integration_actions": [
+    "Appendnewversionandsourceas-of;preserveolderpartialWeek8andW1-7history",
+    "Do notreplaceoriginalpicks/linesorblendthes325and394differentpopulations",
+    "Usehits/(hits+misses);retainpush/void/DNP/pending/unresolved",
+    "Keepnumericpoint/expectedmean/probability/EVproductsunchanged",
+    "Runexistingconsumerchecksoftheversionednewdataadapter;rollbacktooldreportwithoutrewritingpicks",
+    "Publishonlypermittedaggregatesandverifyservedpayloadidentityandactualcategorycounters"
+  ],
+  "does_not_authorize": "Newmodelrelease,probability/EVrankingchange,scheduler,wager,productiontakeover",
+  "ready_MAE_release": "IndependentofthisgradingandBexport",
+  "handoff_status": "DELIVERY_PENDING_EXISTING_A_PR1_CHANNEL"
+}

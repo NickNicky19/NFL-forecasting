@@ -236,6 +236,13 @@
       "log_reference": "reports/session-a-b-matched-20261031/LIVE_CONSUMER_READBACK_V2.json",
       "consumer_rows": 1945,
       "predictive_fits_forecasts_independent_NFL_outcomes": 0
+    },
+    {
+      "id": "WEEK8_PARTIAL_GRADE_CANONICAL_REGISTRY_V1",
+      "command": "python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four",
+      "state": "PASS",
+      "kind": "Actual local public metadata validation; not forecasting methods or hosted CI",
+      "record": "../week8-original-grading-20261102/CANONICAL_REGISTRY_VALIDATION_V1.json"
     }
   ]
 }
