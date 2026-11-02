@@ -172,7 +172,10 @@ def _v5_historical_scope(p,authority,proof,grant,at):
         and grant._proof is proof,"V5_SAME_CURRENT_OWNER_AND_DISCOVERY_GRANT_REQUIRED")
     grant.verify(grant.document["binding"])
     current=_bootstrap_scope(proof,authority,at);d=grant.document;v=grant._value
-    require(d["historical_contract"]["kind"]==discovery.V5_OWNER_HISTORY
+    kind=d["historical_contract"]["kind"]
+    from . import audit_weekly_controller_v1 as controller
+    require(kind in {discovery.V5_OWNER_HISTORY,discovery.V5_CURRENT_OWNER_HISTORY}
+        and d["historical_contract"]["historical_actor"]==(controller.OWNER if kind==discovery.V5_CURRENT_OWNER_HISTORY else controller.BOT)
         and d["scope"]["operational_source_sha"]==current["approved_source_sha"]
         and d["scope"]["operational_policy_sha256"]==current["public_policy_sha256"]
         and d["scope"]["current_actor"]==current["current_actor"]
@@ -349,14 +352,20 @@ def authenticate_origin(client,p,authority,*,historical_grant=None):
         and h["producer"]["workflow_ref"]==historical_scope["operational_workflow_ref"] \
         and p["historical_source_sha256"][".github/workflows/lab.yml"]==historical_scope["operational_workflow_sha256"] \
         and actor.get("login")=="github-actions[bot]" and type(actor.get("id")) is int and actor["id"]==41898282
+    granted_v5=False
+    if v5:
+        from . import audit_weekly_discovery_v1 as discovery,audit_weekly_controller_v1 as controller
+        contract=historical_grant._v5_discovery.document["historical_contract"]
+        kind=contract["kind"]
+        require(kind in {discovery.V5_OWNER_HISTORY,discovery.V5_CURRENT_OWNER_HISTORY},
+            "CLOSED_RETAINED_V5_HISTORICAL_CONTRACT")
+        expected=controller.OWNER if kind==discovery.V5_CURRENT_OWNER_HISTORY else controller.BOT
+        granted_v5=contract["historical_actor"]==expected             and controller.actor(actor,expected) and controller.actor(run.get("triggering_actor"),expected)             and h["source_sha"]==historical_scope["approved_source_sha"]             and h["jobs"]==historical_scope["operational_jobs"]             and h["producer"]["workflow_ref"]==historical_scope["operational_workflow_ref"]             and p["historical_source_sha256"][".github/workflows/lab.yml"]==historical_scope["operational_workflow_sha256"]
     require(run.get("id")==int(h["run_id"]) and run.get("head_sha")==h["source_sha"] and run.get("status")=="completed"
         and run.get("conclusion")=="success" and run.get("event")=="workflow_dispatch" and run.get("run_attempt")==1
         and run.get("path")==".github/workflows/lab.yml" and run.get("head_branch")==h["producer"]["workflow_ref"].split("@refs/heads/",1)[1]
         and run.get("repository",{}).get("full_name")==run.get("head_repository",{}).get("full_name")==store.REPO
-        and ((granted_bot and type(run.get("triggering_actor")) is dict
-            and run["triggering_actor"].get("login")=="github-actions[bot]"
-            and type(run["triggering_actor"].get("id")) is int and run["triggering_actor"]["id"]==41898282) if v5
-            else (original_owner or granted_bot)),
+        and (granted_v5 if v5 else (original_owner or granted_bot)),
         "ACTUAL_REGISTERED_COMPLETED_SUCCESSFUL_PRIOR_RUN")
     require(type(listing.get("jobs")) is list and listing.get("total_count")==len(listing["jobs"])<=100,"COMPLETE_PRIOR_WEEKLY_JOB_LIST")
     ids=dict(produce=h["producer"]["api_job_id"],restore=p["reader_handoff"]["restorer"]["api_job_id"],consume=p["exporter_api_job_id"])

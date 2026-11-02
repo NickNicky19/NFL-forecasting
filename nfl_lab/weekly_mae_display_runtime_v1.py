@@ -8,6 +8,9 @@ from copy import deepcopy
 from pathlib import Path
 import json
 import re
+import resource
+import signal
+import time
 
 from nfl_lab import audit_weekly_runtime_v1 as runtime
 from nfl_lab import weekly_future_inference as future, weekly_current_inference as current
@@ -23,6 +26,98 @@ from nfl_lab.weekly_mae_display_profile_v1 import (
     pins, validate_root_extension,
 )
 _NATIVE = object()
+_INFER_LOCAL = object()
+_INFER_ENV = ("GITHUB_REPOSITORY", "GITHUB_RUN_ID", "GITHUB_SHA", "GITHUB_JOB",
+    "GITHUB_WORKFLOW_REF", "GITHUB_ACTOR", "GITHUB_ACTOR_ID", "GITHUB_EVENT_NAME", "GITHUB_RUN_ATTEMPT")
+
+
+class _InferLocalAuthority:
+    """One authenticated, offline numerical invocation; no remote authority.
+
+    The metadata exchange finishes before model work. Its strict limits still
+    apply to every metadata/client operation; they are not numerical limits.
+    This private capability cannot be supplied by request JSON or serialized.
+    """
+    def __init__(self, context, key):
+        require(key is _INFER_LOCAL, "PRIVATE_INFER_LOCAL_AUTHORITY_REQUIRED")
+        operations._verify(context.proof, context.env, context.root_bytes)
+        a, env = context.authority, context.env
+        require(a.get("phase") == "infer" and a.get("schema_version") == runtime.VERSION+"-native-authority"
+            and private.HASH.fullmatch(str(a.get("request_sha256")))
+            and a.get("actual_actions_api_authenticated") is a.get("owner_root_checked") is True
+            and a.get("repository") == env.get("GITHUB_REPOSITORY") == private.REPO
+            and a.get("source_sha") == env.get("GITHUB_SHA") == context.root["source_sha"]
+            and a.get("run_id") == env.get("GITHUB_RUN_ID")
+            and a.get("job_id") == env.get("GITHUB_JOB")
+            and type(a.get("api_job_id")) is int and a["api_job_id"] > 0
+            and a["api_job_id"] == context.proof.document.get("api_job_id")
+            and a.get("workflow_ref") == env.get("GITHUB_WORKFLOW_REF") == context.root["workflow_ref"]
+            and type(a.get("run_attempt")) is int and a["run_attempt"] == 1
+            and env.get("GITHUB_RUN_ATTEMPT") == "1" and env.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+            and type(a.get("fits")) is int and a["fits"] == 0 and a.get("public_release") is False,
+            "EXACT_AUTHENTICATED_OFFLINE_INFER_SCOPE_REQUIRED")
+        from . import audit_weekly_hosted_v1 as hosted, audit_count_requalify_v1 as envelope
+        require(set(context.root["code_pins"]) == set(hosted.PINS)
+            and set(context.root["mae_helper_pins"]) == set(HELPERS), "COMPLETE_INFER_SOURCE_CLOSURE_REQUIRED")
+        self.context, self.proof = context, context.proof
+        self.seal = getattr(context.proof, "bootstrap_seal", None)
+        require(type(self.seal) is operations.bootstrap.Seal, "AUTHENTICATED_INFER_SEAL_REQUIRED")
+        self.process = private.process_identity()
+        self.caps = deepcopy(envelope.shared_envelopes()["requalify"])
+        remaining, interval = signal.getitimer(signal.ITIMER_REAL)
+        require(0 < remaining <= self.caps["wall_seconds"] and interval == 0
+            and signal.getsignal(signal.SIGALRM) == signal.SIG_DFL, "EXISTING_INFER_WALL_GUARD_REQUIRED")
+        self.deadline = time.monotonic() + remaining
+        self.frozen = private.canonical(self._state())
+        self.verify(context)
+
+    def _state(self):
+        x = self.context
+        return dict(authority=x.authority, root_sha256=private.sha(x.root_bytes), root=x.root,
+            registration=x.registration_ref, source_root=str(x.source_root.resolve()),
+            environment={k:x.env.get(k) for k in _INFER_ENV}, proof=x.proof.document,
+            seal_commitment=self.seal.integrity_commitment(), numerical_caps=self.caps,
+            numerical_deadline=self.deadline)
+
+    def verify(self, context):
+        require(context is self.context and context.proof is self.proof
+            and getattr(context.proof, "bootstrap_seal", None) is self.seal
+            and self.process == private.process_identity()
+            and private.canonical(self._state()) == self.frozen, "INFER_LOCAL_SCOPE_OR_PROCESS_CHANGED")
+        if type(self.proof) is operations.bootstrap.Owner:
+            self.proof.verify_scope_integrity(root_sha256=context.root_sha256)
+        else:
+            require(type(self.proof) is operations.controller.Proof, "EXACT_INFER_PROOF_TYPE_REQUIRED")
+            d = self.proof.document
+            self.proof.verify(registration_sha256=d["registration_sha256"], run_id=d["run_id"],
+                job_id=d["job_id"], root_sha256=context.root_sha256)
+            self.seal.verify_integrity_only()
+        from . import audit_count_requalify_v1 as envelope
+        remaining, interval = signal.getitimer(signal.ITIMER_REAL)
+        require(self.caps == envelope.shared_envelopes()["requalify"]
+            and time.monotonic() < self.deadline
+            and 0 < remaining <= self.caps["wall_seconds"] and interval == 0
+            and signal.getsignal(signal.SIGALRM) == signal.SIG_DFL
+            and runtime.utc(context.authority["issued_at_utc"]) <= runtime.now_utc()
+                < runtime.utc(context.authority["expires_at_utc"])
+            and time.process_time() < self.caps["CPU_seconds"]
+            and resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
+                < self.caps["RSS_bytes"]-self.caps["RSS_stop_margin_bytes"]
+            and resource.getrlimit(resource.RLIMIT_CPU) == (self.caps["CPU_seconds"],)*2
+            and resource.getrlimit(resource.RLIMIT_AS) == (self.caps["address_space_bytes"],)*2,
+            "EXISTING_INFER_NUMERICAL_ENVELOPE_REQUIRED")
+        # Fresh bounded actual bytes, including every original source/helper.
+        # No pathname, mtime, old digest flag or caller hash grants reuse.
+        for inventory in (context.root["code_pins"], context.root["mae_helper_pins"]):
+            for name, expected in inventory.items():
+                path = context.source_root/name
+                require(not path.is_symlink() and path.resolve().is_relative_to(context.source_root.resolve())
+                    and private.sha(private.read_local(path, 2 << 20)) == expected,
+                    "INFER_ACTUAL_SOURCE_CLOSURE_CHANGED")
+        return self
+
+    def __reduce__(self):
+        raise runtime.RuntimeErrorCode("INFER_LOCAL_AUTHORITY_NOT_SERIALIZABLE")
 
 
 def require(ok, code):
@@ -33,24 +128,41 @@ class NativeContext:
     def __init__(self, authority, root_bytes, proof, env, source_root, key):
         require(key is _NATIVE, "CHECKED_NATIVE_ROOT_CONTEXT_REQUIRED")
         self.authority, self.root_bytes = deepcopy(authority), root_bytes
+        self._authority_bytes = private.canonical(self.authority)
+        self._infer_phase = self.authority.get("phase") == "infer"
         self.root, self.proof, self.env = public.strict_json(root_bytes), proof, dict(env)
         self.source_root, self.process = Path(source_root), private.process_identity()
         self.root_sha256 = private.sha(root_bytes)
         self.config = validate_root_extension(self.root, self.source_root)
         self.registration_ref = deepcopy(self.root["mae_registration"])
-        self.verify()
+        self._infer_local = None
+        self._verify_identity()
+        operations._verify(self.proof, self.env, self.root_bytes)
+        require(validate_root_extension(self.root, self.source_root) == self.config, "REGISTERED_MAE_SOURCE_CHANGED")
+        if self._infer_phase:
+            self._infer_local = _InferLocalAuthority(self, _INFER_LOCAL)
 
     def __reduce__(self):
         raise runtime.RuntimeErrorCode("NATIVE_MAE_CONTEXT_NOT_SERIALIZABLE")
 
-    def verify(self):
+    def _verify_identity(self):
         require(self.process == private.process_identity() and private.sha(self.root_bytes) == self.root_sha256
             and self.authority["owner_root_go_sha256"] == self.root_sha256
             and self.authority["source_sha"] == self.root["source_sha"]
             and runtime.utc(self.root["issued_at_utc"]) <= runtime.now_utc() < runtime.utc(self.root["expires_at_utc"]),
             "CURRENT_NATIVE_MAE_ROOT_OR_CLOCK_CHANGED")
+        require(private.canonical(self.authority) == self._authority_bytes
+            and self._infer_phase == (self.authority.get("phase") == "infer"), "NATIVE_MAE_AUTHORITY_CHANGED")
         require(self.proof is not None, "LIVE_ROOT_V5_OPERATIONS_PROOF_REQUIRED")
-        operations._verify(self.proof, self.env, self.root_bytes)
+
+    def verify(self):
+        self._verify_identity()
+        if self._infer_phase:
+            require(type(self._infer_local) is _InferLocalAuthority, "ACTUAL_PRIVATE_INFER_LOCAL_AUTHORITY_REQUIRED")
+            self._infer_local.verify(self)
+        else:
+            require(self._infer_local is None, "NO_NUMERICAL_AUTHORITY_IN_METADATA_PHASE")
+            operations._verify(self.proof, self.env, self.root_bytes)
         require(validate_root_extension(self.root, self.source_root) == self.config, "REGISTERED_MAE_SOURCE_CHANGED")
 
 

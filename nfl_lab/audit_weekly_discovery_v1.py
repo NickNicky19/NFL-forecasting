@@ -139,6 +139,7 @@ def bind_discovery_source(receipt_body,receipt_sha256,qualified_runtime,*,bootst
 
 
 V5_OWNER_HISTORY = "EXACT_ROOT_V5_OWNER_34743_SOURCE_HISTORY"
+V5_CURRENT_OWNER_HISTORY = "EXACT_ROOT_V5_OWNER_DAD58_SOURCE_HISTORY"
 
 
 def _v5_owner_history(root,value,proof):
@@ -151,20 +152,23 @@ def _v5_owner_history(root,value,proof):
         and root["effective_epoch"].get("schema_version")==history.CONTEXT_V5
         and root["effective_epoch"].get("controller_context") is None,
         "EXPLICIT_V5_OWNER_OPS_TRANSITION_REQUIRED")
-    controller._historical_v5_root(root)
+    root_authority=controller.v5_history_authority(root)
     seal=proof.bootstrap_seal;seal.verify()
     registered=controller.registration(seal.registration_bytes,sealed_sha256=seal.registration_sha256,at=now())
-    a=controller._historical_v5(registered)
+    current_owner=registered["schema_version"]==controller.REGISTRATION_V5_OWNER
+    a=controller._current_owner_v5(registered) if current_owner else controller._historical_v5(registered)
+    require(a==root_authority,"EXACT_V5_SEALED_HISTORY_AUTHORITY_AND_ROOT")
     require(store.sha(store.canonical(value))==a["receipt_body_sha256"]
         and all(value[k]==a[k] for k in ("source_sha","run_id","root_go_sha256","workflow_sha256","jobs")),
-        "EXACT_V5_NATIVE_34743_PUBLIC_RECEIPT_REQUIRED")
+        "EXACT_V5_NATIVE_CURRENT_OWNER_PUBLIC_RECEIPT_REQUIRED" if current_owner else "EXACT_V5_NATIVE_34743_PUBLIC_RECEIPT_REQUIRED")
     transition=history.validate_source_history_binding(root);old=transition["predecessor"]
     reference=dict(schema_version=history.LOCATOR_REF,**old["locator"])
     require(root["effective_epoch"]["previous_capture"]==dict(feed_sha256=value["feed_sha256"],receipt_sha256=a["receipt_sha256"])
         and root["effective_epoch"]["previous_checkpoint"]==reference,
         "V5_OLD_OPS_HISTORY_LOCATOR_REQUIRED_NO_NULL_CHECKPOINT")
     history.locator_reference(reference)
-    return dict(kind=V5_OWNER_HISTORY,historical_actor=dict(controller.BOT),
+    return dict(kind=V5_CURRENT_OWNER_HISTORY if current_owner else V5_OWNER_HISTORY,
+        historical_actor=dict(controller.OWNER if current_owner else controller.BOT),
         historical_authority_sha256=controller.digest(a),historical_receipt_sha256=store.sha(store.canonical(value)))
 
 
@@ -427,8 +431,12 @@ def _origin(pool, value, historical, *, discovery_grant=None):
     if discovery_grant is not None:
         discovery_grant.verify(pool.scope,pool.current)
         expected=discovery_grant.document["scope"]["current_actor"]
-        permitted=[owner] if discovery_grant.document["historical_contract"]["kind"] in {
-            "OWNER_SEALED_NICK_READINESS","EXPLICIT_V4_OWNER_SOURCE_HISTORY"} else [owner,bot]
+        kind=discovery_grant.document["historical_contract"]["kind"]
+        require(kind in {"OWNER_SEALED_NICK_READINESS", "EXPLICIT_V4_OWNER_SOURCE_HISTORY",
+            "CURRENT_SEALED_OPERATIONAL_SOURCE", V5_OWNER_HISTORY, V5_CURRENT_OWNER_HISTORY},
+            "CLOSED_DISCOVERY_HISTORICAL_CONTRACT")
+        permitted=[owner] if kind in {
+            "OWNER_SEALED_NICK_READINESS","EXPLICIT_V4_OWNER_SOURCE_HISTORY",V5_CURRENT_OWNER_HISTORY} else [owner,bot]
         actor_allowed=current_actor.get("login")==expected["login"] and type(current_actor.get("id")) is int and current_actor["id"]==expected["id"] \
             and type(old_actor.get("id")) is int and any(old_actor.get("login")==a["login"] and old_actor["id"]==a["id"] for a in permitted)
         if discovery_grant.document["historical_contract"]["kind"]==V5_OWNER_HISTORY:
@@ -437,6 +445,12 @@ def _origin(pool, value, historical, *, discovery_grant=None):
                 and old_actor.get("login")==bot["login"] and type(old_actor.get("id")) is int and old_actor["id"]==bot["id"] \
                 and type(run.get("triggering_actor")) is dict and run["triggering_actor"].get("login")==bot["login"] \
                 and type(run["triggering_actor"].get("id")) is int and run["triggering_actor"]["id"]==bot["id"]
+        if kind==V5_CURRENT_OWNER_HISTORY:
+            from . import audit_weekly_controller_v1 as controller
+            a=controller.V5_CURRENT_OWNER_AUTHORITY
+            require(expected==owner and discovery_grant.document["historical_contract"]["historical_actor"]==owner,
+                "V5_SUCCESSOR_HISTORY_CURRENT_AND_PRIOR_ACTORS_MUST_BE_OWNER")
+            actor_allowed=controller.actor(current_actor,owner) and controller.actor(old_actor,owner)                 and controller.actor(run.get("triggering_actor"),owner)                 and run.get("id")==int(a["run_id"]) and run.get("head_sha")==a["source_sha"]
         require(current.get("id")==int(pool.current["run_id"]) and current.get("head_sha")==pool.current["source_sha"]
             and current.get("status")=="in_progress" and current.get("event")=="workflow_dispatch" and current.get("run_attempt")==1
             and current.get("path")==".github/workflows/lab.yml"

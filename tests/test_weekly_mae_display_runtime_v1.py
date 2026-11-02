@@ -374,3 +374,147 @@ def test_provider_period_source_change_is_exact_v5_only():
     wrong=deepcopy(root);wrong["code_pins"][name]="0"*64
     with pytest.raises(ValueError,match="CLOSED_MAE_ONLY_RUNTIME_PIN_PROFILE"):
         display_profile.validate_root_extension(wrong,SOURCE)
+
+
+def local_infer_context(packet, monkeypatch, *, before_mint=None, actor='owner'):
+    """Real Owner/Seal/Metadata predicates; synthetic native inputs/counters.
+
+    The retained runtime fixture still mocks numerical objects and remote API
+    authentication. This fixture does NOT replace operations._verify: it tests
+    the actual resource/integrity boundary that those old mocks could not see.
+    """
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    real_verify = display.operations._verify
+    old, _ = install_display(packet, monkeypatch)
+    monkeypatch.setattr(display.operations, '_verify', real_verify)
+    state = dict(wall=0., cpu=0., rss=128 << 20, timer=420.,
+        cpu_limit=(300,300), as_limit=(4 << 30,4 << 30), handler=display.signal.SIG_DFL)
+    monkeypatch.setattr(bootstrap.time, 'monotonic', lambda: state['wall'])
+    monkeypatch.setattr(bootstrap.time, 'process_time', lambda: state['cpu'])
+    monkeypatch.setattr(bootstrap.resource, 'getrusage', lambda *_: SimpleNamespace(ru_maxrss=state['rss']//1024))
+    monkeypatch.setattr(display.resource, 'getrlimit', lambda which: state['cpu_limit'] if which==display.resource.RLIMIT_CPU else state['as_limit'])
+    monkeypatch.setattr(display.signal, 'getitimer', lambda *_: (state['timer'],0.))
+    monkeypatch.setattr(display.signal, 'getsignal', lambda *_: state['handler'])
+    root=deepcopy(old.root)
+    workflow='NickNicky19/NFL-forecasting/.github/workflows/lab.yml@refs/heads/research/weekly-storage-probe-v1'
+    root['workflow_ref']=workflow;raw=display.private.canonical(root);root_hash=display.private.sha(raw)
+    env=dict(GITHUB_REPOSITORY=display.private.REPO,GITHUB_RUN_ID='123456',GITHUB_SHA=root['source_sha'],
+        GITHUB_JOB='audit-weekly-produce-v1',GITHUB_WORKFLOW_REF=workflow,GITHUB_ACTOR='NickNicky19',
+        GITHUB_ACTOR_ID='208912933',GITHUB_EVENT_NAME='workflow_dispatch',GITHUB_RUN_ATTEMPT='1')
+    api=bootstrap.Metadata(env,lambda *_:pytest.fail('OFFLINE_SCOPE_MUST_NOT_REQUEST_HTTP'))
+    seal=bootstrap.Seal(b'{"fictional_registration":true}',{},dict(fictional_native_inputs=True),api,
+        bootstrap._KEY,registry_version=2,locator_bytes=b'{"fictional_locator":true}')
+    document=dict(source_sha=root['source_sha'],run_id=env['GITHUB_RUN_ID'],job_id=env['GITHUB_JOB'],
+        api_job_id=101,actor=deepcopy(display.operations.controller.OWNER),root_go_sha256=root_hash,
+        registration_sha256=seal.registration_sha256)
+    proof=bootstrap.Owner(document,seal,bootstrap._KEY)
+    if actor=='bot':
+        env.update(GITHUB_ACTOR='github-actions[bot]',GITHUB_ACTOR_ID='41898282')
+        document.update(actor=deepcopy(display.operations.controller.BOT),
+            schema_version=display.operations.controller.VERSION+'-current-child-proof')
+        proof=display.operations.controller.Proof(document,display.operations.controller._KEY)
+        proof.bootstrap_seal=seal
+    authority=dict(schema_version=original.VERSION+'-native-authority',phase='infer',request_sha256='e'*64,
+        owner_root_go_sha256=root_hash,repository=display.private.REPO,source_sha=root['source_sha'],
+        run_id=env['GITHUB_RUN_ID'],run_attempt=1,job_id=env['GITHUB_JOB'],workflow_ref=workflow,api_job_id=101,
+        issued_at_utc=root['issued_at_utc'],expires_at_utc=root['expires_at_utc'],
+        actual_actions_api_authenticated=True,owner_root_checked=True,fits=0,public_release=False)
+    if before_mint is not None:before_mint(state)
+    context=display.checked_context(authority,raw,proof,env,old.source_root)
+    return context,state,proof,api
+
+
+@pytest.mark.parametrize('actor',['owner','bot'])
+@pytest.mark.parametrize('counter',['cpu','rss'])
+def test_local_infer_survives_numerical_work_without_extending_metadata_authority(packet,monkeypatch,counter,actor):
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    context,state,proof,api=local_infer_context(packet,monkeypatch,actor=actor)
+    state.update(wall=100.,timer=320.)
+    state[counter]=130. if counter=='cpu' else 600 << 20
+    with pytest.raises(bootstrap.BootstrapError,match='BOOTSTRAP_SHARED_NATIVE_BUDGET'):
+        display.operations._verify(proof,context.env,context.root_bytes)
+    assert context.verify() is None
+    assert api.calls==[]
+    # A local numerical capability never becomes a private/API client proof.
+    with pytest.raises(display.private.StoreError,match='LIVE_OPERATIONS_BOOTSTRAP_REQUIRED'):
+        display.operations._verify(context._infer_local,context.env,context.root_bytes)
+    import pickle
+    with pytest.raises(ValueError,match='INFER_LOCAL_AUTHORITY_NOT_SERIALIZABLE'):
+        pickle.dumps(context._infer_local)
+
+
+@pytest.mark.parametrize('change',[
+    dict(cpu=301.),dict(rss=(1 << 30)-(32 << 20)),dict(wall=421.),dict(timer=0.),
+    dict(timer=421.),dict(cpu_limit=(400,400)),dict(as_limit=(8 << 30,8 << 30)),dict(handler=lambda *_:None)])
+def test_local_infer_retains_every_existing_numerical_envelope(packet,monkeypatch,change):
+    context,state,_,_=local_infer_context(packet,monkeypatch);state.update(change)
+    with pytest.raises(ValueError,match='EXISTING_INFER_NUMERICAL_ENVELOPE_REQUIRED'):
+        context.verify()
+
+
+@pytest.mark.parametrize('counter',['cpu','rss','wall'])
+def test_expired_metadata_cannot_mint_a_local_capability(packet,monkeypatch,counter):
+    from nfl_lab import audit_weekly_controller_bootstrap_v1 as bootstrap
+    def before(state):state[counter]={'cpu':130.,'rss':600 << 20,'wall':181.}[counter]
+    with pytest.raises(bootstrap.BootstrapError,match='BOOTSTRAP_SHARED_NATIVE_BUDGET'):
+        local_infer_context(packet,monkeypatch,before_mint=before)
+
+
+@pytest.mark.parametrize('field',['phase','request_sha256','source_sha','api_job_id'])
+def test_local_infer_rejects_changed_authority(packet,monkeypatch,field):
+    context,_,_,_=local_infer_context(packet,monkeypatch)
+    context.authority[field]='different'
+    expected='CURRENT_NATIVE_MAE_ROOT_OR_CLOCK_CHANGED' if field=='source_sha' else 'NATIVE_MAE_AUTHORITY_CHANGED'
+    with pytest.raises(ValueError,match=expected):
+        context.verify()
+
+
+@pytest.mark.parametrize('kind',['root','proof','seal','env','source_root','caps','root_bytes'])
+def test_local_infer_rejects_mutable_aliases_and_scope_substitution(packet,monkeypatch,kind):
+    context,_,proof,_=local_infer_context(packet,monkeypatch)
+    if kind=='root':context.root['source_config']['fictional_change']=True
+    elif kind=='proof':proof.document['api_job_id']=202
+    elif kind=='seal':proof.bootstrap_seal.document['changed']=True
+    elif kind=='env':context.env['GITHUB_RUN_ID']='123457'
+    elif kind=='source_root':context.source_root=context.source_root.parent
+    elif kind=='caps':context._infer_local.caps['CPU_seconds']=400
+    else:context.root_bytes+=b' '
+    with pytest.raises(ValueError):context.verify()
+
+
+def test_local_infer_cannot_borrow_another_process_or_expired_root(packet,monkeypatch):
+    context,_,_,_=local_infer_context(packet,monkeypatch)
+    with monkeypatch.context() as m:
+        m.setattr(display.private,'process_identity',lambda:'another-process')
+        with pytest.raises(ValueError,match='CURRENT_NATIVE_MAE_ROOT_OR_CLOCK_CHANGED'):
+            context.verify()
+    monkeypatch.setattr(display.runtime,'now_utc',lambda:display.runtime.utc(context.root['expires_at_utc']))
+    with pytest.raises(ValueError,match='CURRENT_NATIVE_MAE_ROOT_OR_CLOCK_CHANGED'):
+        context.verify()
+
+
+@pytest.mark.parametrize('name',['nfl_lab/weekly_source_read_batch.py','nfl_lab/weekly_mae_display_runtime_v1.py'])
+def test_local_infer_rehashes_actual_same_size_restored_mtime_source_and_helpers(packet,monkeypatch,name):
+    import os
+    context,_,_,_=local_infer_context(packet,monkeypatch);path=context.source_root/name
+    before=path.read_bytes();stamp=path.stat();after=(b'!' if before[:1]!=b'!' else b'#')+before[1:]
+    path.write_bytes(after);os.utime(path,ns=(stamp.st_atime_ns,stamp.st_mtime_ns))
+    assert path.stat().st_size==len(before) and path.stat().st_mtime_ns==stamp.st_mtime_ns
+    with pytest.raises(ValueError,match='INFER_ACTUAL_SOURCE_CLOSURE_CHANGED'):
+        context.verify()
+
+
+@pytest.mark.parametrize('replacement',[None,SimpleNamespace(verify=lambda *_:None)])
+def test_initialized_infer_requires_its_actual_private_capability(packet,monkeypatch,replacement):
+    context,_,_,_=local_infer_context(packet,monkeypatch)
+    context._infer_local=replacement
+    with pytest.raises(ValueError,match='ACTUAL_PRIVATE_INFER_LOCAL_AUTHORITY_REQUIRED'):
+        context.verify()
+
+
+def test_valid_capability_cannot_be_borrowed_from_another_context(packet,monkeypatch):
+    first,_,_,_=local_infer_context(packet,monkeypatch)
+    second,_,_,_=local_infer_context(packet,monkeypatch)
+    first._infer_local=second._infer_local
+    with pytest.raises(ValueError,match='INFER_LOCAL_SCOPE_OR_PROCESS_CHANGED'):
+        first.verify()
