@@ -230,3 +230,109 @@ def test_v5_live_original_bot_jobs_and_current_owner_remain_strict(bridge_seed,t
     assert result["rejected"] in {"StoreError","BootstrapError","ControllerError"}
     assert result["reason"] not in {"DAMAGED_BRIDGE_ACCEPTED","REAL_NETWORK_FORBIDDEN"}
 
+
+
+# Exact current-Owner dispatch controls. Seal/Owner are explicit synthetic native
+# boundaries; the current Root128/profile/predecessor checks themselves are real.
+def test_current_owner_discovery_contract_is_distinct_and_binds_exact_receipt(tmp_path):
+    from test_audit_weekly_v5_historical_readiness import current_owner_protocol
+    root,p,value,api=current_owner_protocol()
+    from test_audit_weekly_controller_v1 import system
+    fixture_root=tmp_path/'current-discovery-system';fixture_root.mkdir()
+    base=deepcopy(system.__wrapped__(fixture_root).p);base.update(p);p=base
+    p['registered_at_utc']='2026-11-02T23:00:00Z'
+    seal=object.__new__(bootstrap.Seal);seal.registration_bytes=store.canonical(p)
+    seal.registration_sha256=store.sha(seal.registration_bytes);seal.verify=lambda:seal
+    proof=object.__new__(bootstrap.Owner);proof.document={'actor':deepcopy(c.OWNER)};proof.bootstrap_seal=seal
+    result=discovery._v5_owner_history(root,value,proof)
+    assert result['kind']==discovery.V5_CURRENT_OWNER_HISTORY and result['historical_actor']==c.OWNER
+    assert result['historical_authority_sha256']==c.digest(c.V5_CURRENT_OWNER_AUTHORITY)
+    assert result['kind']!=discovery.V5_OWNER_HISTORY
+    for key in ('source_sha','run_id','root_go_sha256','workflow_sha256'):
+        bad=deepcopy(value);bad[key]='999999' if key=='run_id' else '0'*(40 if key=='source_sha' else 64)
+        with pytest.raises(store.StoreError,match='EXACT_V5_NATIVE_CURRENT_OWNER_PUBLIC_RECEIPT_REQUIRED'):
+            discovery._v5_owner_history(root,bad,proof)
+    for key in ('previous_checkpoint','previous_capture'):
+        bad=deepcopy(root);bad['effective_epoch'][key]=None
+        with pytest.raises(store.StoreError,match='V5_OLD_OPS_HISTORY_LOCATOR_REQUIRED_NO_NULL_CHECKPOINT'):
+            discovery._v5_owner_history(bad,value,proof)
+    wrong=deepcopy(p);wrong['schema_version']=c.REGISTRATION_V5;wrong.pop('current_owner_readiness')
+    wrong.update(scope=c.SCOPE_V5,historical_readiness=deepcopy(c.V5_HISTORICAL_AUTHORITY))
+    seal.registration_bytes=store.canonical(wrong);seal.registration_sha256=store.sha(seal.registration_bytes)
+    with pytest.raises(c.ControllerError):discovery._v5_owner_history(root,value,proof)
+
+
+def _current_origin_boundary_case():
+    """Actual origin consumers; explicit synthetic native grant/API boundary.
+
+    No authority can be minted by this fixture: it invokes internal consumers
+    with typed test doubles. Public source bodies/receipt hashes are exact.
+    """
+    from test_audit_weekly_v5_historical_readiness import current_owner_protocol,DATA,content,B
+    root,p,value,api=current_owner_protocol();a=c.V5_CURRENT_OWNER_AUTHORITY
+    current=dict(run_id='99990000001',source_sha=B,api_job_id=99990000002,
+        job_id='audit-weekly-restore-v1',workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/'+a['branch'])
+    run=deepcopy(DATA['run']);run.update(id=int(current['run_id']),head_sha=B,head_branch=a['branch'],
+        status='in_progress',conclusion=None,actor=deepcopy(c.OWNER),triggering_actor=deepcopy(c.OWNER))
+    api.data[c.run_url(current['run_id'])]=run
+    sources={}
+    for name in retained.HISTORICAL_FILES:
+        raw=subprocess.check_output(['git','--no-lazy-fetch','show',a['source_sha']+':'+name],cwd=ROOT)
+        sources[name]=store.sha(raw);api.data[retained.source_url(a['source_sha'],name)]=content(name,raw)
+    contract=dict(kind=discovery.V5_CURRENT_OWNER_HISTORY,branch=a['branch'],historical_actor=deepcopy(c.OWNER),
+        historical_authority_sha256=c.digest(a))
+    grant=object.__new__(discovery.DiscoverySourceGrant)
+    grant.document=dict(scope=dict(current_actor=deepcopy(c.OWNER)),historical_contract=contract)
+    grant.sha256='f'*64;grant.verify=lambda *_:grant;grant._authenticate=lambda *_:True
+    pool=SimpleNamespace(current=current,scope='SYNTHETIC_NATIVE_BOUNDARY',
+        clients=[SimpleNamespace(started_at='2026-11-02T23:01:01Z')],json=lambda url:api.data[url])
+    evidence,workflow_ref=discovery._origin(pool,value,sources,discovery_grant=grant)
+    archive=dict(source_sha=a['source_sha'],run_id=a['run_id'],root_go_sha256=a['root_go_sha256'],
+        jobs={role:j['job_id'] for role,j in a['jobs'].items()},producer=dict(
+            api_job_id=a['jobs']['produce']['api_job_id'],workflow_ref=workflow_ref))
+    request=dict(reader_handoff=dict(archive=archive,restorer=dict(api_job_id=a['jobs']['restore']['api_job_id'])),
+        exporter_api_job_id=a['jobs']['consume']['api_job_id'],historical_source_sha256=sources,
+        registered_at_utc='2026-11-02T23:00:00Z',qualified_runtime=dict(qualification=dict(run_id='99990000003')),pending_census={})
+    permissions=retained.workflow_permissions(base64.b64decode(api.data[retained.source_url(a['source_sha'],'.github/workflows/lab.yml')]['content']),archive)
+    expected={role:dict(repository=store.REPO,run_id=a['run_id'],source_sha=a['source_sha'],workflow_ref=workflow_ref,
+        api_job_id=row['id'],job_id=row['name'],status=row['status'],conclusion=row['conclusion'],
+        started_at=row['started_at'],completed_at=row['completed_at'],verified_permissions=permissions[role]) for role,row in evidence.items()}
+    scope=dict(approved_source_sha=a['source_sha'],operational_jobs=archive['jobs'],
+        operational_workflow_ref=workflow_ref,operational_workflow_sha256=a['workflow_sha256'])
+    historical=object.__new__(retained.HistoricalSourceGrant);historical._v5_discovery=grant
+    historical.document=dict(scope=dict(current_actor=deepcopy(c.OWNER)),v5_historical_scope=scope,historical_jobs=expected)
+    historical.sha256='e'*64;historical.verify=lambda *_:historical;historical._authenticate=lambda *_:True
+    authority=dict(current,issued_at_utc='2026-11-02T23:01:00Z')
+    api.data[c.run_url('99990000003')]=dict(status='completed',conclusion='success')
+    client=SimpleNamespace(run_id=current['run_id'],source_sha=B,inventory=lambda:None,draft=lambda:None,
+        job={k:current[k] for k in ('job_id','api_job_id','workflow_ref')},started_at='2026-11-02T23:01:01Z',
+        allow=lambda url:url,json=lambda url:api.data[url])
+    return SimpleNamespace(value=value,sources=sources,grant=grant,pool=pool,api=api,request=request,
+        authority=authority,client=client,historical=historical)
+
+
+@pytest.mark.parametrize('boundary',['discovery','retained'])
+@pytest.mark.parametrize('damage',[None,'actor_bot','trigger_bot','trigger_missing','boolean_actor_id','unknown_kind'])
+def test_current_owner_both_origin_consumers_reject_bot_trigger_and_unknown_contract(boundary,damage,monkeypatch):
+    x=_current_origin_boundary_case();run=x.api.data[c.run_url(x.value['run_id'])]
+    # Namespace qualification/native grant are explicitly outside this unit;
+    # original complete restoration tests above retain their real validators.
+    calls=[]
+    def namespace_boundary(client,package,census):
+        assert client is x.client and package is x.request['qualified_runtime'] and census is x.request['pending_census']
+        calls.append('SYNTHETIC_NATIVE_NAMESPACE_BOUNDARY')
+    monkeypatch.setattr(retained.archive,'authenticate_qualification',namespace_boundary)
+    if damage=='actor_bot':run['actor']=deepcopy(c.BOT)
+    elif damage=='trigger_bot':run['triggering_actor']=deepcopy(c.BOT)
+    elif damage=='trigger_missing':del run['triggering_actor']
+    elif damage=='boolean_actor_id':run['actor']['id']=True
+    elif damage=='unknown_kind':x.grant.document['historical_contract']['kind']='UNRECOGNIZED_HISTORY'
+    def consume():
+        if boundary=='discovery':return discovery._origin(x.pool,x.value,x.sources,discovery_grant=x.grant)
+        return retained.authenticate_origin(x.client,x.request,x.authority,historical_grant=x.historical)
+    if damage is None:
+        consume()
+        assert calls==(['SYNTHETIC_NATIVE_NAMESPACE_BOUNDARY'] if boundary=='retained' else [])
+    else:
+        with pytest.raises(store.StoreError):consume()
+        assert not calls

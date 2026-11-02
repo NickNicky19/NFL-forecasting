@@ -304,3 +304,20 @@ def test_later_same_source_v5_history_keeps_original_default_reader(tmp_path_fac
     assert result.durable.document['code_pins']==grade.pins()
     assert result.proof['original_grade_read_proof']==minted['sidecar']['grade_read_proof']
     assert all(q.method=='GET' for q in x.calls)
+
+
+@pytest.mark.parametrize('damage',[None,'actor','trigger','run','source'])
+def test_current_owner_pinned_history_original_run_uses_distinct_exact_actor_contract(damage):
+    from test_audit_weekly_v5_historical_readiness import current_owner_root
+    root=current_owner_root();a=c.V5_CURRENT_OWNER_AUTHORITY
+    # Isolate original_run dispatch. Full old-source snapshot/capability controls
+    # above remain active; native current-source snapshot admission is separate.
+    scope=object.__new__(history._PinnedV5History);scope.context=SimpleNamespace(go=root);scope.verify=lambda:scope
+    run=dict(id=int(a['run_id']),head_sha=a['source_sha'],actor=deepcopy(c.OWNER),triggering_actor=deepcopy(c.OWNER))
+    if damage=='actor':run['actor']=deepcopy(c.BOT)
+    elif damage=='trigger':run['triggering_actor']=deepcopy(c.BOT)
+    elif damage=='run':run['id']+=1
+    elif damage=='source':run['head_sha']='0'*40
+    if damage is None:scope.original_run(run)
+    else:
+        with pytest.raises(history.HistoryError,match='EXACT_V5_CURRENT_OWNER_HISTORY_RUN_REQUIRED'):scope.original_run(run)

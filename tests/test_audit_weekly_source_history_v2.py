@@ -211,3 +211,41 @@ def test_original128_pinned_source_files_fit_unchanged_history_source_cap():
     invalid = {name: (source_root/name).stat().st_size for name in hosted.PINS
         if not 0 < (source_root/name).stat().st_size <= history.LIMITS["source_bytes"]}
     assert not invalid, invalid
+
+
+@pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+    from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+    from test_audit_weekly_v5_historical_readiness import current_owner_root
+    root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+    from nfl_lab import weekly_mae_display_profile_v1 as profile
+    cfg=profile.validate_metadata(root,Path(__file__).resolve().parents[1])
+    assert cfg['mae_runtime_pin_profile']['reviewed_before_inventory_sha256']=='315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212'
+    if damage is None:
+        pins=history._source_history_pins(root,body)
+        assert store.sha(store.canonical(pins))==c.V5_CURRENT_OWNER_AUTHORITY['code_pins_sha256']
+        for n,h in c.V5_CURRENT_OWNER_RUNTIME_PINS.items():assert pins[n]==h
+        return
+    if damage.startswith('original315e-'):
+        n='nfl_lab/audit_weekly_'+('controller' if damage.endswith('controller') else 'retained')+'_v1.py'
+        body['pin_overrides'][n]=cfg['mae_runtime_pin_profile']['changed_paths'][n]['before_sha256']
+    elif damage=='wrong-DAD-inventory':body['predecessor']['code_pins_sha256']='0'*64
+    elif damage=='wrong-DAD-root':body['predecessor']['root_go_sha256']='0'*64
+    else:body['predecessor_source_history_sha256']='0'*64
+    root['source_history_binding']=history.source_history_envelope(body)
+    with pytest.raises((history.HistoryError,c.ControllerError)):history.validate_source_history_binding(root)
+
+
+def test_current_owner_successor_does_not_hide_a_later_locator_or_substitute_old347():
+    from test_audit_weekly_v5_historical_readiness import current_owner_root
+    from nfl_lab import private_draft_store as store
+    root=current_owner_root();ref=root['effective_epoch']['previous_checkpoint']
+    later='20261103T000001.000000Z--99990000001--'+'a'*64+'.json.gz'
+    entries=[dict(type='file',name=n,path=history.LOCATOR_ROOT+'/'+n,size=1) for n in (ref['path'],later)]
+    client=SimpleNamespace(allowed=set(),json=lambda _:entries)
+    with pytest.raises(history.HistoryError,match='NEWER_KNOWN_HISTORY_REQUIRES_A_FRESH_ROOT'):
+        history.require_latest(client,ref)
+    old='20261029T000001.000000Z--40729906573--'+'b'*64+'.json.gz'
+    earlier=dict(schema_version=history.LOCATOR_REF,path=old,sha256='c'*64)
+    with pytest.raises(history.HistoryError,match='NEWER_KNOWN_HISTORY_REQUIRES_A_FRESH_ROOT'):
+        history.require_latest(client,earlier)
