@@ -398,7 +398,14 @@ def project_statistics(stats, offers, *, source_receipt, status_receipt):
             require(type(player) is dict, "MALFORMED_SOURCE_PLAYER_IDENTITY")
             for key in ("season","week"):
                 if key in entry:
-                    require(type(entry[key]) is int and entry[key] == row[key], "SOURCE_STATISTICS_PERIOD_MISMATCH")
+                    value = entry[key]
+                    # Period IDs may be JSON integers or their exact canonical
+                    # decimal strings. Compare without coercing/mutating the
+                    # authenticated source graph; false/wrong periods still fail.
+                    require(type(row[key]) is int and (
+                        type(value) is int and value == row[key]
+                        or type(value) is str and value == str(row[key])),
+                        "SOURCE_STATISTICS_PERIOD_MISMATCH")
             team = entry.get("team") or player.get("team")
             gsis = entry.get("gsis_id") or player.get("gsis_id")
             game = entry.get("game_id")
