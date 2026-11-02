@@ -559,3 +559,51 @@ def test_CLI_contract_cannot_execute_JSON_or_touch_provider(monkeypatch,tmp_path
     doc=json.loads(out.read_bytes())
     assert doc["state"]=="PREPARED_UNREGISTERED" and len(doc["targets"])==11 and doc["source_timestamp"] is None
     assert cli.main(["execute"])==2
+
+
+@pytest.mark.parametrize("season,week", [(2026,7),("2026",7),(2026,"7"),("2026","7")])
+def test_exact_canonical_source_periods_preserve_original_native_bytes(setup,season,week):
+    _,make=setup
+    source=[dict(player_id="123",season=season,week=week,team="AAA",stats=dict(gp=1,rec=0))]
+    original=deepcopy(source)
+    transport=Transport(stats=source)
+    c,_,_,req=make(transport=transport,label="canonical-period")
+    result=c(req)
+    assert result["observations"][0]["actual"] == 0
+    assert result["observations"][0]["participation_state"] == "played"
+    assert source == original and transport.stats == original
+    raw=(c.output/"sources"/"statistics-2026-7.json").read_bytes()
+    metadata=json.loads((c.output/"sources"/"statistics-2026-7.json.receipt.json").read_bytes())
+    assert json.loads(raw) == original
+    assert type(json.loads(raw)[0]["season"]) is type(season)
+    assert type(json.loads(raw)[0]["week"]) is type(week)
+    assert metadata["sha256"] == hashlib.sha256(raw).hexdigest()
+    assert metadata["bytes"] == len(raw)
+    assert result["observations"][0]["source_sha256"] == metadata["sha256"]
+    assert c.capture.verify() is c.capture
+
+
+@pytest.mark.parametrize("field,bad", [
+    ("season",2025),("season","2025"),("season",True),("season",2026.0),
+    ("season",None),("season","02026"),("season"," 2026"),("season","+2026"),
+    ("season","2026.0"),("season","2.026e3"),("season","２０２６"),
+    ("week",8),("week","8"),("week",True),("week",7.0),("week",None),
+    ("week","07"),("week"," 7"),("week","+7"),("week","7.0"),("week","７"),
+])
+def test_source_period_noncanonical_false_or_wrong_values_still_fail(setup,field,bad):
+    _,make=setup
+    entry=dict(player_id="123",season="2026",week="7",stats=dict(gp=1,rec=0))
+    entry[field]=bad
+    c,_,_,req=make(transport=Transport(stats=[entry]),label="invalid-period")
+    with pytest.raises(p.ProviderError,match="SOURCE_STATISTICS_PERIOD_MISMATCH"):
+        c(req)
+    assert c.capture is None and not (c.output/"COMPLETION.json").exists()
+
+
+def test_period_expected_boolean_cannot_authorize_matching_text():
+    offers=request()["opportunities"]
+    offers[0]["season"]=True
+    source=[dict(player_id="123",season="True",week="7",stats=dict(gp=1,rec=0))]
+    with pytest.raises(p.ProviderError,match="SOURCE_STATISTICS_PERIOD_MISMATCH"):
+        p.project_statistics(source,offers,source_receipt=dict(sha256="a"*64,retrieved_utc=AT.isoformat()),
+            status_receipt=dict(sha256="b"*64))

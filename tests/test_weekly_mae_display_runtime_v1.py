@@ -351,3 +351,26 @@ print('stdlib-only exact source/profile closure')
     with pytest.raises(ValueError,match='EXACT_ORIGINAL_SIX_MODEL_CODE_ROOT_PINS'):
         display_profile.validate_root_extension(wrong,owner.source_root)
     assert p.loads==[] and p.feature_calls==[] and p.requests==[]
+
+
+def test_provider_period_source_change_is_exact_v5_only():
+    from hashlib import sha256
+    from nfl_lab import audit_weekly_grade_history_v1 as history
+    name="nfl_lab/audit_weekly_provider_v1.py"
+    cfg=json.loads((SOURCE/display_profile.REGISTRATION_PATH).read_bytes())
+    root=dict(schema_version=display_profile.ROOT_V5,code_pins=hosted.pins(),
+        mae_helper_pins=display_profile.pins(SOURCE),mae_registration=dict(
+            path=display_profile.REGISTRATION_PATH,bytes=(SOURCE/display_profile.REGISTRATION_PATH).stat().st_size,
+            sha256=sha256((SOURCE/display_profile.REGISTRATION_PATH).read_bytes()).hexdigest()))
+    display_profile.validate_root_extension(root,SOURCE)
+    delta=cfg["mae_runtime_pin_profile"]["changed_paths"][name]
+    assert delta["before_sha256"] == "ffbe666b1838998282286ad68640255962f2c047c800b64f9f476a161a3b900b"
+    assert delta["after_sha256"] == sha256((SOURCE/name).read_bytes()).hexdigest()
+    assert name in history._MAE_RUNTIME_OVERRIDE_PATHS
+    assert name not in history.SOURCE_HISTORY_PIN_OVERRIDES
+    legacy=dict(schema_version=history.ROOT_V4,code_pins={name:delta["after_sha256"]})
+    with pytest.raises(history.HistoryError,match="ONLY_CHANGED_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES"):
+        history._source_history_pins(legacy,dict(pin_overrides={name:delta["before_sha256"]}))
+    wrong=deepcopy(root);wrong["code_pins"][name]="0"*64
+    with pytest.raises(ValueError,match="CLOSED_MAE_ONLY_RUNTIME_PIN_PROFILE"):
+        display_profile.validate_root_extension(wrong,SOURCE)
