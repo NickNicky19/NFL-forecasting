@@ -80,3 +80,7 @@ Owner-local scripts use the exact downloaded C source path/dependencies recorded
 At23:49UTC November3 (5:49p.m.CST), the live Week9 selected overlay returned `DISABLED_USE_R0`, with0selectedrows. Its metadata lists2,197publication-not-approved R0fallbacks and489unsupported/PPR R0fallbacks. This is a verified public payload read, not a browser-consumption or individual-board-value verification. It supersedes older1,945selected-row snapshots only for this observed time. No original-site write was made. [Live payload receipt](LIVE_PUBLIC_PAYLOAD_READBACK_V1.json).
 
 [Prepared final-week grading/UI owner package](OWNER_WEEK8_FINAL_GRADE_UPDATE_V2.json) is discoverable but delivery/acknowledgement/execution are not claimed. Ready point releases remain separate from this selection-first comparison and require the retained owner’s existing policy/operational checks.
+
+## Publication receipt
+
+Data/code checkpoint `88dac5da1b261ae6f521d3f23c83b2f95fc364bd` was pushed and remotely read back:52exactGitblobs and exact readable checkpoint body. [Receipt](PERIOD_PUBLICATION_READBACK_V1.json). Canonical C admission is still not observed. Aggregate publication is not private restoration, new forecasts, model improvement, live release or completed championship.
