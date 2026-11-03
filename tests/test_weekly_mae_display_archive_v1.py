@@ -31,6 +31,7 @@ from nfl_lab.cdf_engine import LeafCDFModel, SupportPrior
 from tools import persist_state
 from test_private_draft_store_v2 import SOURCE
 from test_audit_weekly_archive_v1 import ROLES
+from test_audit_weekly_grade_history_v1 import original_seed as archived_grade_seed
 
 BASE = Path(archive.__file__).resolve().parents[1]
 
@@ -727,3 +728,237 @@ def test_repaired_terminal_requires_real_legacy_collection_and_native_boundaries
     assert result["summary"]["state"]=="MAE_UNAVAILABLE" and not result["captures"]
     assert result["summary"]["reason"] in {"POINT_TERMINAL_MUST_FOLLOW_LEGACY_AND_PRECEDE_ARCHIVE",
         "POINT_TERMINAL_REQUIRES_ACTUAL_COLLECTION_CLOCK","POINT_TERMINAL_REQUIRES_NATIVE_PRODUCER_CLOCK"}
+
+# Native byte/proof, original-source and capture-origin integration. The current
+# Root/bootstrap context and in-memory Git/Actions service are fictional seams;
+# store.restore, both proof verifiers, history metadata and DisplayProfile use
+# their actual code. No fitted model, provider or protected outcome is loaded.
+@pytest.fixture
+def archived_profile_case(tmp_path,monkeypatch,archived_grade_seed,request):
+    import test_audit_weekly_grade_history_v1 as old
+    from nfl_lab import audit_weekly_grade_history_v1 as history,audit_weekly_grade_v1 as grade
+    from nfl_lab import audit_weekly_grade_checkpoint_v1 as checkpoint,audit_weekly_hosted_v1 as hosted
+    from nfl_lab import audit_weekly_retained_v1 as retained,audit_weekly_template_v1 as template
+    from nfl_lab import weekly_mae_display_profile_v1 as metadata
+    original_seed=deepcopy(archived_grade_seed)
+    pins={p:store.sha((BASE/p).read_bytes()) for p in set(history.FILES)|history._GRADE_PIN_PATHS|history._CHECKPOINT_PIN_PATHS|history.LOCATOR_HELPERS|set(hosted.PINS)}
+    pins['.github/workflows/lab.yml']=original_seed['receipt']['workflow_sha256']
+    for p in ('nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py'):
+        pins[p]=store.sha((BASE/p).read_bytes()+b'\n# FICTIONAL original orchestration\n')
+    pins.update(grade.pins());pins.update(checkpoint.pins())
+    kit=tmp_path/'original-source';kit.mkdir()
+    for name in set(metadata.HELPERS)|set(metadata.CHANGED_LEGACY_PATHS):
+        p=kit/name;p.parent.mkdir(parents=True,exist_ok=True)
+        if name!=metadata.REGISTRATION_PATH:
+            body=(BASE/name).read_bytes()
+            if name in ('nfl_lab/audit_weekly_grade_history_v1.py','nfl_lab/audit_weekly_template_v1.py') and pins[name]!=store.sha(body):
+                body+=b'\n# FICTIONAL original orchestration\n'
+            p.write_bytes(body)
+    cfg=metadata.strict_json((BASE/metadata.REGISTRATION_PATH).read_bytes())
+    changed=cfg['mae_runtime_pin_profile']['changed_paths'];before=dict(pins)
+    for n,d in changed.items():d['after_sha256']=pins[n];before[n]=d['before_sha256']
+    cfg['mae_runtime_pin_profile'].update(reviewed_before_inventory_sha256=store.sha(store.canonical(before)),reviewed_after_inventory_sha256=store.sha(store.canonical(pins)))
+    raw=store.canonical(cfg);(kit/metadata.REGISTRATION_PATH).write_bytes(raw)
+    root_static=dict(mae_helper_pins=metadata.pins(kit),mae_registration=dict(path=metadata.REGISTRATION_PATH,bytes=len(raw),sha256=store.sha(raw)),
+        workflow_ref=original_seed['sidecar']['workflow_ref'])
+    multipart=getattr(request,'param',False)
+    if multipart:
+        actual_grade=grade.grade;actual_parts=grade._write_snapshot_v2
+        def split(storage,output,document,*,part_bytes=None):
+            size=sum(len(c) for c in grade._canonical_chunks(document))
+            return actual_parts(storage,output,document,part_bytes=(size+1)//2)
+        monkeypatch.setattr(grade,'_write_snapshot_v2',split)
+        monkeypatch.setattr(grade,'grade',lambda *a,**kw:actual_grade(*a,**kw,wire_version=2))
+    seed=old.locator_seed.__wrapped__(tmp_path/'capture',original_seed,monkeypatch,
+        source_transition=True,closed_v5=True,root_static=root_static)
+    original=seed['original_root'];assert original['code_pins']==pins
+    assert metadata.validate_root_extension(original,kit)==cfg
+    x=old.recovery_case(tmp_path/'current',seed,monkeypatch,current_run='46000000003')
+    x.context.go=deepcopy(original);x.context.root_sha256=display.digest(x.context.go)
+    # The explicit fixture bootstrap already accepts this same-source context;
+    # its current operation retains the original capture as previous_capture.
+    monkeypatch.setattr(history,'__file__',str(kit/'nfl_lab/audit_weekly_grade_history_v1.py'))
+    client=retained.ReadClient('ghs_FICTIONAL','46000000003',source_sha=seed['source'],journal=x.context.client.journal,
+        job=deepcopy(x.context.client.job),transport=x.api,operation='restore')
+    client.bind(seed['package']['binding']);client.authenticate_actions_job()
+    x.context.client=client
+    jobs={r:dict(repository=store.REPO,run_id=seed['old_run'],source_sha=seed['source'],workflow_ref=seed['sidecar']['workflow_ref'],
+        api_job_id=seed['receipt']['jobs'][r]['api_job_id'],job_id=old.JOBS[r],status='completed',conclusion='success',started_at=a,completed_at=b,
+        verified_permissions=dict(contents='write',actions='read'))for r,(a,b)in zip(old.JOBS,seed['job_times'])}
+    index=dict(source_sha=seed['source'],root_go_sha256=seed['receipt']['root_go_sha256'],producer=dict(workflow_ref=original['workflow_ref']),
+        census=dict(mae_display_profile=dict(root_go_sha256=seed['receipt']['root_go_sha256'],registration_sha256=original['mae_registration']['sha256'])))
+    reads=[];sources=[]
+    def native(descriptor,label,cap):
+        dest=x.storage.cache.parent/label
+        proof=store.restore(client,descriptor,dest);body=dest.read_bytes();reads.append((label,deepcopy(proof)))
+        return body,proof
+    def source(root):sources.append(deepcopy(root));return kit
+    def run(*,read_native=native,read_source=source,sidecar=None):
+        packed=gzip.compress(store.canonical(seed['sidecar'] if sidecar is None else sidecar),mtime=0)
+        return display.checked_archived_profile(x.context,seed['receipt'],index,packed,client,jobs,read_native,read_source)
+    return SimpleNamespace(x=x,seed=seed,original=original,index=index,kit=kit,native=native,source=source,run=run,reads=reads,sources=sources,jobs=jobs)
+
+
+@pytest.mark.parametrize('archived_profile_case',[False,True],indirect=True)
+def test_archived_profile_uses_fresh_own_receipts_and_exact_original_source(archived_profile_case):
+    q=archived_profile_case;before=store.canonical(q.seed);result=q.run()
+    assert type(result) is display.DisplayProfile and result.root==q.original
+    result.verify();assert store.canonical(q.seed)==before
+    from nfl_lab import audit_weekly_grade_history_v1 as history
+    multipart=history.checkpoint_version(q.seed['sidecar']['checkpoint_handoff'])==history.CHECKPOINT_V2
+    assert [x[0]for x in q.reads]==(['EVIDENCE.json.gz','SNAPSHOT_ROOT.json.gz']if multipart else ['EVIDENCE.json.gz'])
+    assert len(q.sources)==1 and q.x.context.client.calls<=40
+    with pytest.raises(store.StoreError,match='PROOF_BINDING_OR_PROVENANCE'):
+        store.check_proof(q.x.context.client,q.reads[-1][1],'restore')
+
+
+@pytest.mark.parametrize('damage',['body','bytes','hash','descriptor','process','source','run','job','calls','extra-HTTP','failed-readback'])
+def test_archived_profile_rejects_changed_actual_read_before_source_access(archived_profile_case,damage):
+    q=archived_profile_case
+    def corrupted(d,n,cap):
+        d=deepcopy(d)
+        if damage=='descriptor':d['entry']['payload']['sha256']='0'*64
+        body,proof=q.native(d,n,cap)
+        if damage=='body':body=body[:-1]+bytes([body[-1]^1])
+        if damage=='bytes':proof['bytes']+=1
+        if damage=='hash':proof['payload_sha256']='0'*64
+        if damage=='process':proof['process_identity']='0'*64
+        if damage=='source':proof['source_sha']='0'*40
+        if damage=='run':proof['run_id']='999999'
+        if damage=='job':proof['job']['api_job_id']+=1
+        if damage=='calls':proof['HTTP_calls']+=1
+        if damage=='extra-HTTP':q.x.context.client.draft()
+        if damage=='failed-readback':proof['exact_readback']=False
+        return body,proof
+    with pytest.raises((store.StoreError,ValueError)):
+        q.run(read_native=corrupted)
+    assert not q.sources
+
+
+@pytest.mark.parametrize('damage',['root','source','feed','run','workflow','epoch'])
+def test_archived_profile_rejects_substituted_origin_before_private_read(archived_profile_case,damage):
+    q=archived_profile_case;side=deepcopy(q.seed['sidecar']);field={'root':'root_go_sha256','source':'source_sha','feed':'feed_sha256','run':'run_id','workflow':'workflow_sha256','epoch':'epoch_sha256'}[damage]
+    side[field]='0'*len(side[field]);before=len(q.x.calls)
+    with pytest.raises(ValueError,match='EXACT_CAPTURE_ORIGIN_SIDECAR_NOT_LATEST_GRADING_ROOT'):q.run(sidecar=side)
+    assert not q.reads and not q.sources and len(q.x.calls)==before
+
+
+@pytest.mark.parametrize('name',[display.metadata.REGISTRATION_PATH,'nfl_lab/weekly_mae_display_runtime_v1.py','nfl_lab/audit_weekly_operations_restore_v1.py'])
+def test_archived_profile_rehashes_original_helpers_and_profile_after_return(archived_profile_case,name):
+    q=archived_profile_case;result=q.run();path=q.kit/name;body=path.read_bytes()
+    info=path.stat();path.write_bytes(body[:-1]+bytes([body[-1]^1]));__import__('os').utime(path,ns=(info.st_atime_ns,info.st_mtime_ns))
+    with pytest.raises(ValueError):result.verify()
+
+@pytest.mark.parametrize('damage',[None,'source-body','source-blob','source-size','source-path','wrong-origin','wrong-envelope','old-job-failed'])
+def test_original_profile_loader_reads_exact_git_and_private_bodies(archived_profile_case,damage):
+    import base64
+    from nfl_lab import audit_weekly_operations_restore_v1 as recovery,audit_weekly_retained_v1 as retained
+    from nfl_lab import audit_weekly_grade_history_v1 as history,audit_weekly_controller_v1 as controller
+    from test_private_draft_store_v2 import Response
+    q=archived_profile_case;clients=[];routes=set();seen=[]
+    sidepath='state/controller-v1/grade-checkpoints/'+q.seed['receipt']['feed_sha256']+'.json.gz'
+    sideurl=store.API+'/contents/'+sidepath+'?ref=lab-state'
+    side=deepcopy(q.seed['sidecar']);jobs=deepcopy(q.jobs)
+    if damage=='wrong-origin':side['root_go_sha256']='0'*64
+    if damage=='wrong-envelope':side['evidence_descriptor']['manifest_sha256']='0'*64
+    if damage=='old-job-failed':jobs['consume']['conclusion']='failure'
+    sidebody=gzip.compress(store.canonical(side),mtime=0)
+    def transport(req,timeout):
+        seen.append(req.full_url);assert req.method=='GET' and req.data is None
+        if '/contents/' in req.full_url:
+            name=req.full_url.split('/contents/',1)[1].split('?ref=',1)[0]
+            if req.full_url==sideurl:body=sidebody
+            else:
+                assert req.full_url==retained.source_url(q.seed['source'],name)
+                body=(q.kit/name).read_bytes()
+            result=dict(type='file',path=name,encoding='base64',size=len(body),content=base64.b64encode(body).decode(),sha=controller.blob_sha(body))
+            if name!=sidepath:
+                if damage=='source-body':result['content']=base64.b64encode(body[:-1]+bytes([body[-1]^1])).decode()
+                if damage=='source-blob':result['sha']='0'*40
+                if damage=='source-size':result['size']+=1
+                if damage=='source-path':result['path']='nfl_lab/not-the-requested-file.py'
+            return Response(result)
+        return q.x.api(req,timeout)
+    def factory():
+        client=retained.ReadClient('ghs_FICTIONAL','46000000003',source_sha=q.seed['source'],journal=q.x.context.client.journal,
+            job=deepcopy(q.x.context.client.job),operation='restore',transport=transport,extra_routes=routes)
+        client.bind(q.seed['package']['binding']);client.authenticate_actions_job();clients.append(client);return client
+    output=q.x.storage.cache.parent/'profile-loader'
+    def run():return recovery._archived_display_profile(q.x.context,q.x.storage,output,q.index,q.seed['receipt'],jobs,factory,routes)
+    if damage is not None:
+        with pytest.raises((ValueError,store.StoreError)):run()
+        return
+    result=run();result.verify();assert result.root==q.original
+    assert len(clients)==2 and all(c.calls<=40 and c.transferred<=store.TRANSFER_CAP for c in clients)
+    assert (output/'CAPTURE_ORIGIN_SIDECAR.json.gz').read_bytes()==sidebody
+    readback=json.loads((output/'SOURCE_READBACK.json').read_bytes())
+    assert {r['path']for r in readback['source_files']}==set(display.metadata.HELPERS)|set(display.metadata.CHANGED_LEGACY_PATHS)
+    assert readback['source_bytes']==sum(r['bytes']for r in readback['source_files'])<=4<<20
+    proof=json.loads((output/'EVIDENCE.json.gz.restore-proof.json').read_bytes())
+    assert proof['run_id']=='46000000003' and proof['source_sha']==q.seed['source']
+    assert not any('/models' in u or '/outcomes' in u for u in seen)
+
+
+def test_later_grade_root_does_not_replace_original_capture_profile(archived_profile_case):
+    q=archived_profile_case;original=store.canonical(q.original)
+    q.x.context.go['effective_epoch']['plan']=dict(kind='GRADE_ONLY',season=2026,week=8,deadline_utc=None,calendar_sha256='e'*64,game_cutoffs={})
+    q.x.context.root_sha256=display.digest(q.x.context.go)
+    assert q.x.context.root_sha256!=q.seed['receipt']['root_go_sha256']
+    result=q.run();assert store.canonical(result.root)==original
+    assert result.root_sha256==q.seed['receipt']['root_go_sha256']
+
+@pytest.mark.parametrize('groups',[6,7,8])
+def test_supported_modern_groups_keep_full_native_reads_inside_original_client_caps(archived_profile_case,tmp_path,monkeypatch,groups):
+    import base64
+    from datetime import timedelta
+    from nfl_lab import audit_weekly_retained_v1 as retained,audit_weekly_grade_history_v1 as history
+    from test_audit_weekly_operations_restore_v1 import _fictional_archive
+    from test_private_draft_store_v2 import Server,Response
+    q=archived_profile_case;profile=q.run()
+    # Profile authority is the explicit fixture seam in this pool/accounting
+    # test. Its actual native-source reconstruction is tested above. No new
+    # feed is claimed to have been authenticated by an unrelated sidecar.
+    old=_fictional_archive(tmp_path/'archive',base64.b64decode(q.seed['sources']['.github/workflows/lab.yml']),
+        store.canonical(dict(fictional_original_policy=True)),q.seed['source'],q.original['jobs'],q.original['workflow_ref'],
+        history_seed=q.seed,display_profile=profile,group_count=groups)
+    monkeypatch.setattr(retained,'now',history.now)
+    root=q.x.storage.cache.parent;output=root/'pool-retained'
+    request=retained.prepare_request(BASE,old['reader'],old['package'],exporter_api_job_id=old['receipt']['jobs']['consume']['api_job_id'],
+        historical_source_sha256={p:old['historical'][p]for p in retained.HISTORICAL_FILES},
+        cache=str(q.x.storage.cache),state_root=str(q.x.storage.state_root),output=str(output),pending_census=old['census'])
+    request['approved']=True;issued=history.now();current_run='46000000003';job=q.x.context.client.job
+    authority=dict(schema_version=retained.VERSION+'-native-authority',phase=retained.PHASE,request_sha256=store.sha(store.canonical(request)),repository=store.REPO,
+        owner_root_go_sha256=q.x.context.root_sha256,owner_root_checked=True,actual_actions_api_authenticated=True,api_job_id=job['api_job_id'],source_sha=q.seed['source'],
+        run_id=current_run,run_attempt=1,job_id=job['job_id'],workflow_ref=job['workflow_ref'],issued_at_utc=issued.isoformat(),
+        expires_at_utc=(issued+timedelta(minutes=15)).isoformat(),fits=0,remote_writes=0,protected_outcome_reads=0,public_release=False)
+    server=Server();server.tag=old['tag']
+    server.assets=[dict(a,body=base64.b64decode(a['body_base64']))for a in old['assets']]
+    for a in server.assets:a.pop('body_base64')
+    calls=[];clients=[];extra=set(retained.routes(request))
+    def transport(req,timeout):
+        assert req.method=='GET' and req.data is None;calls.append(req.full_url)
+        if req.full_url in old['api']:return Response(old['api'][req.full_url])
+        if '/actions/runs/'+current_run in req.full_url:return q.x.api(req,timeout)
+        return server(req,timeout)
+    def factory(operation):
+        assert operation=='restore'
+        c=retained.ReadClient('ghs_FICTIONAL',current_run,source_sha=q.seed['source'],journal=q.x.context.client.journal,
+            job=deepcopy(job),operation='restore',transport=transport,extra_routes=extra)
+        c.bind(old['package']['binding']);clients.append(c);return c
+    profiles=[]
+    def checked_profile(index,new_client):
+        # Exercise both additional independently authenticated clients, the
+        # same budget needed by the actual origin and immutable-source reads.
+        profiles.append(index)
+        for _ in range(2):new_client()
+        profile.verify();return profile
+    result=retained.restore(request,factory,storage=q.x.storage,authority=authority,root=BASE,display_profile_factory=checked_profile)
+    assert len(profiles)==1 and len(profiles[0]['groups'])==groups
+    assert len(clients)==5+(groups+1)//2<=retained.MAX_CLIENTS==11
+    assert result['validation']==result['historical_reader_witness']['validation']
+    assert result['validation']['mae_display']['state']=='MAE_UNAVAILABLE'
+    assert result['HTTP_calls']==sum(c.calls for c in clients)<=retained.LIMITS['HTTP_calls']==440
+    assert all(c.calls<=40 and c.transferred<=store.TRANSFER_CAP for c in clients)
+    assert result['model_decodes']==result['protected_outcome_reads']==result['remote_writes']==0
+    for name,ref in result['aliases'].items():
+        assert ref['sha256']==old['original_files'][name]['sha256']

@@ -29,13 +29,14 @@ def no_actual_network(monkeypatch):
 
 
 def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,closed_census=False,history_seed=None,
-        unresolved_pending=False):
+        unresolved_pending=False,display_profile=None,group_count=None):
     """Generate original native bytes under a fictional earlier acquisition clock."""
     from contextlib import ExitStack
     import test_audit_weekly_archive_v1 as old
     import test_audit_weekly_retained_v1 as historical
     import test_owner_private_bootstrap as qualifier
     from nfl_lab import audit_weekly_archive_v1 as archive,gha_private_checkpoint as cp
+    from nfl_lab import audit_weekly_retained_v1 as retained,weekly_mae_display_profile_v1 as display_metadata
     from nfl_lab import owner_private_bootstrap as owner
     start=datetime.now(timezone.utc);phase_start=[start];phase_seconds=[2]
     root_sha="d"*64 if history_seed is None else store.sha(store.canonical(history_seed["original_root"]))
@@ -84,6 +85,14 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         replace_json("EXPORT_INPUTS.json",export)
         public_body=store.canonical(dict(schema_version="FICTIONAL_DERIVED_CATEGORY_ROWS",rows=rows))
         history=historical.History(p)
+        if display_profile is not None:
+            display_profile.verify()
+            assert root_sha==display_profile.root_sha256
+            names=(set(display_profile.root['code_pins'])&set(retained.HISTORICAL_FILES)
+                |set(display_profile.root['mae_helper_pins'])|set(display_metadata.CHANGED_LEGACY_PATHS))
+            for name in names:
+                path=display_profile.source_root/name
+                if path.exists():history.codes[name]=path.read_bytes()
         if history_seed is not None:
             history.old.package=deepcopy(history_seed["package"]);history.old.q=history.old.package["qualification"]
             history.old.binding=history.old.package["binding"];history.old.qrun=history.old.q["run_id"]
@@ -130,7 +139,7 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
             return Factory()
         history.old.factory=factory
         r0,completion=historical.full_r0(p)
-        snapshot=archive.collect(p.root,p.context,storage=p.storage,output=base/"collection",r0=r0)
+        snapshot=archive.collect(p.root,p.context,storage=p.storage,output=base/"collection",r0=r0,display_profile=display_profile)
         assert "r0/control_completion.json" in {f["logical_path"]for f in snapshot["files"]}
         policy_ref=p.body("context/public-policy.json",policy)
         item=cp.file_item(policy_ref,"context/public_policy.json","control")
@@ -152,8 +161,19 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
             assert len(failed_posts)==len(pending)==1 and pending[0]["bytes"]==657667
             assert pending[0]["sha256"]==store.sha(failed_posts[0].data)
             assert not any(a["name"]==failed_name for a in history.old.server.assets)
+        if group_count is not None:
+            # Partition the actual small fixture census once, without padding,
+            # duplicate members or changed reader/cap rules. Real codecs,
+            # descriptors, byte accounting and native proofs remain active.
+            assert type(group_count)is int and 1<=group_count<=8
+            def declared_groups(files):
+                members=[f for f in files if f['bytes']]
+                assert len(members)>=group_count
+                return [members[n::group_count]for n in range(group_count)]
+            scope.enter_context(patch.object(archive,'capture_groups',declared_groups))
         handoff=archive.produce(snapshot,factory(base/"producer-journal","produce"),history.old.package,
-            storage=p.storage,output=base/"producer",root_go_sha256=root_sha,jobs=roles,pending_census=history.old.census,pending=pending)
+            storage=p.storage,output=base/"producer",root_go_sha256=root_sha,jobs=roles,pending_census=history.old.census,pending=pending,
+            display_profile=display_profile)
         index_asset=next(a for a in history.old.server.assets
             if a["id"]==handoff["index_descriptor"]["entry"]["payload_asset_id"])
         index=archive.unpack(index_asset["body"],archive.INDEX_PLAIN_CAP)
@@ -162,12 +182,12 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
         if history_seed is not None:phase_seconds[0]=12;phase_start[0]=datetime.now(timezone.utc)
         history.begin("restore")
         archive.restore(handoff,factory(base/"old-reader-journal","restore"),history.old.package,
-            storage=p.storage,output=base/"old-reader",root_go_sha256=root_sha,pending_census=history.old.census)
+            storage=p.storage,output=base/"old-reader",root_go_sha256=root_sha,pending_census=history.old.census,display_profile=display_profile)
         history.end();reader=cp.strict_json((base/"old-reader/READER_HANDOFF.json").read_bytes())
         if history_seed is not None:phase_seconds[0]=72;phase_start[0]=datetime.now(timezone.utc)
         history.begin("consume");verified=HistoricalClock.now(timezone.utc)
         archive.consume(reader,factory(base/"old-export-journal","consume"),history.old.package,
-            storage=p.storage,output=base/"old-export",root_go_sha256=root_sha,pending_census=history.old.census)
+            storage=p.storage,output=base/"old-export",root_go_sha256=root_sha,pending_census=history.old.census,display_profile=display_profile)
         created=HistoricalClock.now(timezone.utc);history.end();history.finished=True
         api={}
         for run_id in (old.RUN,history.old.qrun):
@@ -824,3 +844,29 @@ def test_restore_preparation_has_no_runtime_or_credential_dependency():
 def test_saved_documents_never_authorize_private_recovery(saved):
     with pytest.raises(store.StoreError,match="LIVE_RECURRING_RESTORE_CONTEXT_REQUIRED"):
         recovery.restore(saved)
+
+@pytest.mark.parametrize('damage',[None,'source','run','id','boolean-id','failed','clock','missing-role'])
+def test_raw_discovery_jobs_project_to_both_existing_consumers_without_relabelling(damage):
+    from nfl_lab import audit_weekly_retained_v1 as retained
+    value=dict(source_sha='a'*40,run_id='123',jobs={r:dict(job_id='fictional_'+r,api_job_id=777+i)for i,r in enumerate(('produce','restore','consume'))})
+    raw={r:dict(id=ref['api_job_id'],name=ref['job_id'],run_id=123,head_sha=value['source_sha'],status='completed',conclusion='success',
+        started_at='2026-10-25T10:00:00Z',completed_at='2026-10-25T10:01:00Z',runner_name='fictional-runner',labels=['ubuntu-latest'],steps=[])
+        for r,ref in value['jobs'].items()}
+    if damage=='source':raw['restore']['head_sha']='b'*40
+    if damage=='run':raw['restore']['run_id']=124
+    if damage=='id':raw['restore']['id']+=1
+    if damage=='boolean-id':raw['restore']['id']=True
+    if damage=='failed':raw['restore']['conclusion']='failure'
+    if damage=='clock':raw['restore']['completed_at']='2026-10-25T09:00:00Z'
+    if damage=='missing-role':del raw['restore']
+    doc=dict(original_job_evidence=raw,reader_handoff=dict(archive=dict(producer=dict(workflow_ref=store.REPO+'/.github/workflows/lab.yml@refs/heads/fictional'))))
+    before=store.canonical(doc)
+    if damage is not None:
+        with pytest.raises(store.StoreError):recovery._original_job_records(value,doc)
+        return
+    result=recovery._original_job_records(value,doc)
+    assert store.canonical(doc)==before
+    assert all(set(j)==retained._JOB_EVIDENCE_KEYS for j in result.values())
+    for role,j in result.items():
+        assert j['source_sha']==raw[role]['head_sha'] and j['api_job_id']==raw[role]['id'] and j['run_id']==str(raw[role]['run_id'])
+        assert j['started_at']==raw[role]['started_at'] and j['completed_at']==raw[role]['completed_at']

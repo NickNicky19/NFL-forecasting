@@ -34,6 +34,111 @@ def run(args,env,*,transport=None):
     return restore(context,transport=transport)
 
 
+def _original_job_records(receipt,document):
+    """Project discovery's actual API jobs; this does not grant authority.
+
+    The caller has verified discovery, including original workflow permissions.
+    Both consumers independently recheck the projected source/identity/clocks.
+    Extra GitHub API fields are irrelevant, rather than an alternate schema.
+    """
+    from . import private_draft_store as store
+    raw=document["original_job_evidence"]
+    require(type(raw) is dict and set(raw)==set(receipt["jobs"])=={"produce","restore","consume"},
+        "EXACT_DISCOVERED_ORIGINAL_JOB_POPULATION")
+    result={}
+    for role,j in raw.items():
+        ref=receipt["jobs"][role]
+        require(type(j) is dict and type(j.get("id")) is int and j["id"]==ref["api_job_id"]
+            and j.get("name")==ref["job_id"] and type(j.get("run_id")) is int
+            and j["run_id"]==int(receipt["run_id"]) and j.get("head_sha")==receipt["source_sha"]
+            and j.get("status")=="completed" and j.get("conclusion")=="success"
+            and store.utc(j["started_at"])<=store.utc(j["completed_at"]),
+            "EXACT_DISCOVERED_ORIGINAL_JOB_IDENTITY_AND_RESULT")
+        result[role]=dict(repository=store.REPO,run_id=receipt["run_id"],source_sha=receipt["source_sha"],
+            workflow_ref=document["reader_handoff"]["archive"]["producer"]["workflow_ref"],api_job_id=j["id"],job_id=j["name"],
+            status=j["status"],conclusion=j["conclusion"],started_at=j["started_at"],completed_at=j["completed_at"],
+            verified_permissions=dict(contents="write",actions="read"))
+    return result
+
+
+def _archived_display_profile(context, storage, output, index, receipt, jobs, new_client, extra_routes):
+    """Fresh original native metadata and bounded immutable source reads.
+
+    Source GETs use only originalreceipt.source_sha and the authenticated Root's
+    fixed helper/profile paths. These are not execution/import requests.
+    """
+    import base64,hashlib
+    from . import audit_weekly_grade_history_v1 as history,audit_weekly_archive_v1 as archive
+    from . import audit_weekly_retained_v1 as retained,audit_weekly_controller_v1 as controller
+    from . import weekly_mae_display_archive_v1 as display,weekly_mae_display_profile_v1 as profile
+    from . import private_draft_store as store,gha_private_checkpoint as cp
+    context.verify()
+    require(context.go.get("schema_version")==history.ROOT_V5,"EXPLICIT_ORIGINAL_V5_PROFILE_RESTORE_REQUIRED")
+    require(index["source_sha"]==receipt["source_sha"] and index["root_go_sha256"]==receipt["root_go_sha256"]
+        and index["census"].get("mae_display_profile",{}).get("root_go_sha256")==receipt["root_go_sha256"],
+        "CAPTURE_ORIGIN_PROFILE_NOT_LATEST_GRADING_COHORT")
+    output=archive.fresh(storage,output)
+    sidepath="state/controller-v1/grade-checkpoints/"+receipt["feed_sha256"]+".json.gz"
+    sideurl=store.API+"/contents/"+sidepath+"?ref=lab-state"
+    extra_routes.add(sideurl);native=new_client()
+    def public_file(client,url,path,cap,expected=None):
+        context.verify();doc=client.json(client.allow(url))
+        require(type(doc) is dict and doc.get("type")=="file" and doc.get("path")==path
+            and doc.get("encoding")=="base64" and type(doc.get("content")) is str,
+            "EXACT_ORIGINAL_SOURCE_GIT_FILE_REQUIRED")
+        try:body=base64.b64decode(doc["content"].replace("\n",""),validate=True)
+        except (ValueError,TypeError):raise store.StoreError("ORIGINAL_SOURCE_BASE64_INVALID") from None
+        require(type(doc.get("size")) is int and doc["size"]==len(body) and 0<len(body)<=cap
+            and doc.get("sha")==controller.blob_sha(body) and (expected is None or sha256(body)==expected),
+            "EXACT_ORIGINAL_SOURCE_GIT_BLOB_HASH_SIZE_REQUIRED")
+        return body
+    def sha256(b):return hashlib.sha256(b).hexdigest()
+    sidepacked=public_file(native,sideurl,sidepath,history.LIMITS["sidecar_bytes"])
+    storage.write_bytes(output/"CAPTURE_ORIGIN_SIDECAR.json.gz",sidepacked)
+    sidecar=history.metadata_document(sidepacked)
+    require(all(sidecar.get(k)==receipt[k] for k in ("source_sha","run_id","root_go_sha256","feed_sha256","workflow_sha256","epoch_sha256")),
+        "CAPTURE_ORIGIN_SIDECAR_NOT_LATEST_GRADING_ROOT")
+    def private(descriptor,label,cap):
+        context.verify();entry=cp.descriptor_meta(descriptor,cap)
+        path=output/label
+        with storage.transaction():
+            storage._require(2*entry["payload"]["bytes"]+archive.ENTRY_CAP)
+            proof=store.restore(native,descriptor,path)
+            owned=output/("owned-"+label);storage.import_file(path,owned,expected_sha256=entry["payload"]["sha256"])
+        body=archive.read_owned(storage,cp.binding(owned),cap,raw=True)
+        require(proof["payload_sha256"]==sha256(body),"ORIGINAL_PROFILE_NATIVE_PAYLOAD_READBACK")
+        archive.write(storage,output/(label+".restore-proof.json"),proof)
+        return body,proof
+    readback=[];total=0;original_profile=None
+    def read_source(original):
+        nonlocal total,original_profile
+        require(store.sha(store.canonical(original))==receipt["root_go_sha256"]
+            and original.get("schema_version")==history.ROOT_V5
+            and original.get("source_sha")==receipt["source_sha"],
+            "EXACT_ARCHIVED_ORIGINAL_ROOT_BEFORE_SOURCE_GETS")
+        expected={n:original["code_pins"][n] for n in profile.CHANGED_LEGACY_PATHS}
+        for n,h in original["mae_helper_pins"].items():
+            require(n not in expected or expected[n]==h,"ORIGINAL_HELPER_PIN_NAMESPACES_MUST_AGREE")
+            expected[n]=h
+        require(set(original["mae_helper_pins"])==set(profile.HELPERS)
+            and len(expected)<=32,"CLOSED_ORIGINAL_MAE_SOURCE_CLOSURE")
+        urls={n:retained.source_url(receipt["source_sha"],n) for n in expected};extra_routes.update(urls.values())
+        source_client=new_client();source=storage.register_root(output/"original-source")
+        for n in sorted(expected):
+            body=public_file(source_client,urls[n],n,2<<20,expected[n]);total+=len(body)
+            require(total<=4<<20,"BOUNDED_ORIGINAL_DISPLAY_SOURCE_CLOSURE")
+            storage.write_bytes(source/n,body);readback.append(dict(path=n,bytes=len(body),sha256=sha256(body)))
+        original_profile=original["mae_registration"]["sha256"]
+        return source
+    result=display.checked_archived_profile(context,receipt,index,sidepacked,native,jobs,private,read_source)
+    archive.write(storage,output/"SOURCE_READBACK.json",dict(schema_version="original-v5-display-profile-readback-v1",
+        current_root_go_sha256=context.root_sha256,original_root_go_sha256=receipt["root_go_sha256"],
+        original_source_sha=receipt["source_sha"],source_files=readback,source_bytes=total,
+        source_profile_sha256=original_profile,
+        semantic_or_model_execution_authority=False,model_decodes=0,outcome_decodes=0))
+    context.verify();return result
+
+
 def restore(context,*,transport=None):
     from . import audit_weekly_operations_worker_v1 as worker
     from . import audit_weekly_operations_authority_v1 as authority
@@ -132,11 +237,8 @@ def restore(context,*,transport=None):
     require(set(native)==retained.AUTHORITY_KEYS,"CLOSED_DERIVED_RESTORE_AUTHORITY")
     grant=None
     v5_bridge=source_history and context.go["schema_version"]==history.ROOT_V5
+    jobs=_original_job_records(value,doc)
     if context.proof.document["actor"]==controller.BOT or v5_bridge:
-        jobs={role:dict(repository=store.REPO,run_id=value["run_id"],source_sha=value["source_sha"],
-            workflow_ref=doc["reader_handoff"]["archive"]["producer"]["workflow_ref"],api_job_id=j["id"],job_id=j["name"],
-            status=j["status"],conclusion=j["conclusion"],started_at=j["started_at"],completed_at=j["completed_at"],
-            verified_permissions=dict(contents="write",actions="read")) for role,j in doc["original_job_evidence"].items()}
         # discovery validated the exact original workflow's permissions;
         # retained.restore independently rechecks them before private GETs.
         # This SHA describes CURRENT grant authority. The old receipt, index,
@@ -148,8 +250,12 @@ def restore(context,*,transport=None):
         else:
             grant=retained.bind_historical_source(request,native,bootstrap_proof=context.proof,
                 public_policy_sha256=policy_sha,historical_jobs=jobs,authenticate=grant_auth,root=worker.ROOT)
+    def display_profile_factory(index,new_client):
+        return _archived_display_profile(context,storage,output/"archived-display-profile",index,value,
+            jobs,new_client,extra)
     result=retained.restore(request,factory,storage=storage,authority=native,root=worker.ROOT,
-        check_authority=source_scope if source_history else context.verify,historical_grant=grant)
+        check_authority=source_scope if source_history else context.verify,historical_grant=grant,
+        display_profile_factory=display_profile_factory if context.go.get("schema_version")==history.ROOT_V5 else None)
     if source_history:
         source_scope()
         policy=result["aliases"].get("context/public_policy.json")
