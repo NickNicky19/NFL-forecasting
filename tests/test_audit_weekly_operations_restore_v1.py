@@ -38,14 +38,20 @@ def _fictional_archive(base,workflow,policy,source,roles,workflow_ref,*,hour=13,
     from nfl_lab import audit_weekly_archive_v1 as archive,gha_private_checkpoint as cp
     from nfl_lab import audit_weekly_retained_v1 as retained,weekly_mae_display_profile_v1 as display_metadata
     from nfl_lab import owner_private_bootstrap as owner
-    start=datetime.now(timezone.utc);phase_start=[start];phase_seconds=[2]
+    start=datetime.now(timezone.utc);phase_start=[start];phase_seconds=[2];protocol_ticks=[0]
     root_sha="d"*64 if history_seed is None else store.sha(store.canonical(history_seed["original_root"]))
     began=None if history_seed is None else store.utc(history_seed["original_root"]["issued_at_utc"])
     class HistoricalClock(datetime):
         @classmethod
         def now(cls,tz=None):
+            protocol_ticks[0]+=1
             value=(datetime(2026,10,25,hour,10,tzinfo=timezone.utc)+(datetime.now(timezone.utc)-start) if began is None else
-                began+timedelta(seconds=phase_seconds[0])+(datetime.now(timezone.utc)-phase_start[0]))
+                began+timedelta(seconds=phase_seconds[0])+(timedelta(microseconds=protocol_ticks[0]) if display_profile is not None
+                    else datetime.now(timezone.utc)-phase_start[0]))
+            # Modern fixture jobs are predeclared at 1--5/10--50/70--120s.
+            # Keep their fictional protocol clock deterministic under a slower
+            # runner. Real monotonic/CPU/RSS/HTTP limits remain unchanged; this
+            # is never an alteration of production clocks or saved evidence.
             return value if tz is not None else value.replace(tzinfo=None)
     with ExitStack() as scope:
         for module in (old,historical,qualifier,store,archive,owner):
