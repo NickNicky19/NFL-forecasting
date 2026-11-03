@@ -452,7 +452,7 @@ def r0_closure(index,aliases,storage):
         control_completion=aliases["r0/control_completion.json"],capture=aliases["r0/CAPTURE_COMPLETE.json"],original_native=aliases["r0/original-native.json.gz"])
 
 
-def restore(p,factory,*,storage,authority,root,check_authority=None,historical_grant=None):
+def restore(p,factory,*,storage,authority,root,check_authority=None,historical_grant=None,display_profile_factory=None):
     h=validate_request(p,root);r=p["reader_handoff"]
     require(authority["request_sha256"]==store.sha(store.canonical(p)) and store.utc(p["registered_at_utc"])<=store.utc(authority["issued_at_utc"]),
         "FRESH_PARENT_AUTHORITY_BINDS_APPROVED_PRIOR_REGISTRATION")
@@ -474,8 +474,9 @@ def restore(p,factory,*,storage,authority,root,check_authority=None,historical_g
         current=ident;clients.append(c);return c
     first=client();evidence=authenticate_origin(first,p,authority,historical_grant=historical_grant)
     proofs=[];downloads={}
-    def get(descriptor,name,cap):
-        c=client();entry=cp.descriptor_meta(descriptor,cap);destination=output/"downloads"/name;destination.parent.mkdir(parents=True,exist_ok=True)
+    def get(descriptor,name,cap,*,reader=None):
+        c=client() if reader is None else reader
+        guard();entry=cp.descriptor_meta(descriptor,cap);destination=output/"downloads"/name;destination.parent.mkdir(parents=True,exist_ok=True)
         with storage.transaction():
             storage._require(2*entry["payload"]["bytes"]+archive.ENTRY_CAP)
             proof=store.restore(c,descriptor,destination);owned=output/"owned-downloads"/name
@@ -515,13 +516,36 @@ def restore(p,factory,*,storage,authority,root,check_authority=None,historical_g
             <=store.utc(proof["created_at_utc"])<=store.utc(past["actual_completed_at"])<=store.utc(reader["completed_at"]),
             "UNMODIFIED_HISTORICAL_READER_PROOFS_INSIDE_ACTUAL_JOB")
     with storage.transaction():storage._require(sum(f["bytes"] for f in index["files"])+sum(g["bytes"]*2 for g in index["groups"])+(4 << 20))
-    for group in index["groups"]:
-        guard();archive._extract_owned_group(get(group["descriptor"],str(group["index"])+".gz",store.ASSET_CAP),group,storage,output/"files")
+    group_reader=None
+    for number,group in enumerate(index["groups"]):
+        guard()
+        if "mae_display_profile" in index["census"]:
+            # Two complete reads per client leave room for original V5 profile
+            # metadata/source reads, even with all eight supported groups.
+            # Re-authenticate before the second read; store.restore still does
+            # every fresh draft/manifest/hash/body/size check for EACH group.
+            if number%2==0:group_reader=client()
+            else:group_reader.authenticate_actions_job()
+        archive._extract_owned_group(get(group["descriptor"],str(group["index"])+".gz",store.ASSET_CAP,
+            reader=group_reader),group,storage,output/"files")
     empty=[(f["logical_path"],b"") for f in index["files"] if f["bytes"]==0]
     if empty:archive._publish_owned_files(storage,empty,output/"files")
     aliases={f["logical_path"]:dict(path=str(output/"files"/f["logical_path"]),bytes=f["bytes"],sha256=f["sha256"]) for f in index["files"]}
     validate_owned_references(storage,{ref["path"]:ref["sha256"] for ref in aliases.values()})
-    guard();validation=archive.validate_capture(index,lambda name:Path(aliases[name]["path"]),complete=True)
+    guard()
+    display_profile=None
+    if "mae_display_profile" in index["census"]:
+        require(callable(display_profile_factory),"AUTHENTICATED_ORIGINAL_V5_DISPLAY_PROFILE_REQUIRED")
+        # All additional profile reads use this same finite native client pool.
+        # The factory cannot authorize another namespace, a model or a write.
+        display_profile=display_profile_factory(index,client)
+        from . import weekly_mae_display_archive_v1 as display
+        require(type(display_profile) is display.DisplayProfile
+            and display_profile.root_sha256==h["root_go_sha256"],
+            "EXACT_CAPTURE_ORIGIN_DISPLAY_PROFILE_REQUIRED")
+        display_profile.verify()
+    validation=archive.validate_capture(index,lambda name:Path(aliases[name]["path"]),complete=True,
+        display_profile=display_profile)
     require(validation==past["validation"] and validation["replay_ready"] is True,"UNCHANGED_COMPLETE_CAPTURE_READBACK_VALIDATION")
     validate_owned_references(storage,{ref["path"]:ref["sha256"] for ref in aliases.values()})
     r0=r0_closure(index,aliases,storage);guard()

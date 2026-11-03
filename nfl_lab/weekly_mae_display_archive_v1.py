@@ -74,6 +74,97 @@ def checked_profile(root, root_sha256, source_root):
     return DisplayProfile(root, root_sha256, source_root, _PROFILE)
 
 
+def checked_archived_profile(context, receipt, index, packed_sidecar, envelope_client,
+        jobs, read_native, read_source):
+    """Authenticate an original capture, never the latest grading substitute.
+
+    Actual current native clients restore the old envelope/root; actual immutable
+    old-source bytes supply the existing DisplayProfile. No old receipt, Root,
+    source name, unavailable state or validation algorithm is rewritten.
+    """
+    from . import audit_weekly_operations_worker_v1 as worker
+    from . import audit_weekly_grade_history_v1 as history,audit_weekly_template_v1 as template
+    from . import audit_weekly_retained_v1 as retained,private_draft_store as store
+    from . import audit_weekly_grade_checkpoint_v1 as checkpoint,gha_private_checkpoint as cp
+    from .weekly_durable_acceptance import restored_identity
+    require(type(context) is worker.Authenticated,"LIVE_ARCHIVED_PROFILE_CONTEXT_REQUIRED")
+    context.verify()
+    require(context.go.get("schema_version")==ROOT_V5,"ARCHIVED_PROFILE_REQUIRES_EXPLICIT_CURRENT_ROOT_V5")
+    require(type(envelope_client) is retained.ReadClient
+        and envelope_client.source_sha==context.client.source_sha and envelope_client.run_id==context.client.run_id
+        and envelope_client.job["api_job_id"]==context.client.job["api_job_id"],
+        "ACTUAL_CURRENT_ARCHIVED_PROFILE_CLIENT_REQUIRED")
+    sidecar=history.metadata_document(packed_sidecar)
+    require(type(sidecar) is dict and all(sidecar.get(k)==receipt[k] for k in
+        ("source_sha","run_id","root_go_sha256","feed_sha256","workflow_sha256","epoch_sha256")),
+        "EXACT_CAPTURE_ORIGIN_SIDECAR_NOT_LATEST_GRADING_ROOT")
+    require(callable(read_native) and callable(read_source),"BOUNDED_ARCHIVED_BYTE_READERS_REQUIRED")
+    def fresh_read(descriptor,label,cap):
+        context.verify();entry=cp.descriptor_meta(descriptor,cap)
+        body,proof=read_native(descriptor,label,cap)
+        # Check the issuer's receipt NOW, before another HTTP read changes its
+        # counters. store.check_proof deliberately accepts other processes only.
+        checkpoint._own_restore(envelope_client,proof,history.now().isoformat())
+        require(type(body) is bytes and proof["exact_readback"] is True
+            and proof["separate_process"] is True and proof["draft_before_after"] is True
+            and proof["payload_sha256"]==entry["payload"]["sha256"]==sha(body)
+            and proof["bytes"]==entry["payload"]["bytes"]==len(body),
+            "FRESH_NATIVE_ORIGINAL_PROFILE_BYTE_READBACK_REQUIRED")
+        context.verify();return body,proof
+    descriptor=sidecar["evidence_descriptor"]
+    encoded_envelope,envelope_proof=fresh_read(descriptor,"EVIDENCE.json.gz",history.LIMITS["envelope_bytes"])
+    require(envelope_proof["payload_sha256"]==descriptor["entry"]["payload"]["sha256"]==sha(encoded_envelope)
+        and envelope_proof["bytes"]==len(encoded_envelope)==descriptor["entry"]["payload"]["bytes"]
+        and restored_identity(envelope_proof)["api_job_id"]==context.client.job["api_job_id"],
+        "FRESH_NATIVE_ORIGINAL_ENVELOPE_BYTES_REQUIRED")
+    envelope=history.metadata_document(encoded_envelope,cap=history.LIMITS["envelope_bytes"])
+    require(envelope.get("schema_version")==history.LOCATOR_VERSION+"-evidence-envelope",
+        "ORIGINAL_V5_NATIVE_ROOT_ENVELOPE_REQUIRED")
+    private_root=None
+    if history.checkpoint_version(sidecar["checkpoint_handoff"])==history.CHECKPOINT_V2:
+        handoff=sidecar["checkpoint_handoff"]
+        private_root,private_root_proof=fresh_read(handoff["descriptor"],"SNAPSHOT_ROOT.json.gz",8<<20)
+        require(private_root_proof["payload_sha256"]==handoff["body_sha256"]==sha(private_root)
+            and private_root_proof["bytes"]==handoff["body_bytes"]==len(private_root),
+            "EXACT_NATIVE_ORIGINAL_MULTIPART_ROOT_BYTES")
+    history.validate_native_envelope(envelope,sidecar,envelope_client,jobs,version2=True,private_root=private_root)
+    original=envelope["root_go"];root_sha=digest(original)
+    require(type(original) is dict and set(original)==template.root_keys(original)
+        and original.get("schema_version")==ROOT_V5 and original.get("approved") is True
+        and original.get("operation")=="RECURRING_CAPTURE"
+        and root_sha==receipt["root_go_sha256"]==index["root_go_sha256"]
+        and original["source_sha"]==receipt["source_sha"]==index["source_sha"]
+        and original["jobs"]=={r:j["job_id"] for r,j in receipt["jobs"].items()}
+        and original["workflow_ref"]==index["producer"]["workflow_ref"]
+        and original["code_pins"]==history.source_history_scope(context.go,receipt)
+        and original["publication_registration"]["policy_sha256"]==receipt["policy_sha256"],
+        "EXACT_AUTHENTICATED_CAPTURE_ROOT_V5_PREIMAGE_REQUIRED")
+    require(index["census"]["mae_display_profile"]==dict(root_go_sha256=root_sha,
+            registration_sha256=original["mae_registration"]["sha256"])
+        and envelope_client.binding==original["qualified_runtime"]["binding"],
+        "EXACT_ARCHIVED_DISPLAY_PROFILE_AND_ORIGINAL_NAMESPACE")
+    # Discovery retains a closed projection of the actual API jobs. The parent
+    # sidecar validator consumes their API field names; preserve every source,
+    # identity, result and clock while projecting that already checked record.
+    require(type(jobs) is dict and set(jobs)=={"produce","restore","consume"}
+        and all(type(j) is dict and set(j)==retained._JOB_EVIDENCE_KEYS for j in jobs.values()),
+        "CLOSED_FRESH_ARCHIVED_ORIGINAL_JOB_EVIDENCE")
+    api_jobs={role:dict(id=j["api_job_id"],name=j["job_id"],run_id=int(j["run_id"]),head_sha=j["source_sha"],
+        status=j["status"],conclusion=j["conclusion"],started_at=j["started_at"],completed_at=j["completed_at"])
+        for role,j in jobs.items()}
+    history.validate_parent_sidecar(packed_sidecar,receipt=receipt,qualified_runtime=original["qualified_runtime"],
+        code_pins=original["code_pins"],jobs=api_jobs,at=history.now())
+    require(store.utc(original["issued_at_utc"])<=store.utc(jobs["produce"]["started_at"])
+        and 0<(store.utc(original["expires_at_utc"])-store.utc(original["issued_at_utc"])).total_seconds()<=3600
+        and store.utc(sidecar["grade_read_proof"]["known_by_at"])<store.utc(original["expires_at_utc"]),
+        "ORIGINAL_ARCHIVED_ROOT_CLOCKS_UNCHANGED")
+    # read_source supplies a directory, never an acceptance result. The
+    # existing profile validator checks every actual original-source byte.
+    source_root=read_source(original)
+    result=checked_profile(original,root_sha,source_root)
+    context.verify();return result
+
+
 def allowed_runtime_name(name):
     return name.startswith("mae-display/") and (name[12:] in RUNTIME
         or re.fullmatch(r"views/[0-9]{1,2}/projections/[a-f0-9]{64}\.json", name[12:]) is not None)
