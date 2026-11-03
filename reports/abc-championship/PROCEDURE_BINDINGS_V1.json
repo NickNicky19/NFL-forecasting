@@ -1,0 +1,169 @@
+{
+  "version": "A-C-local-alias-bindings-v1",
+  "point_rule": "Unrounded retained forecast > original line Over; < Under; equal abstain",
+  "A_R0_POINT": {
+    "procedure_id": "original_sleeper_matchup_baseline",
+    "code_commit": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+    "issue_UTC": "2026-10-28T18:46:25Z",
+    "product": "original_adjusted_empirical_point",
+    "history": "Fixed non-retrainable original provider reference; do not invent history arms"
+  },
+  "A_CAPTURED_SELECTED_POINT": {
+    "category_bindings": [
+      {
+        "category": "rec",
+        "method": "P2_SELECTED:0a9a11a81d0250c1ba04bbf8ddc7eb08646b76b73bb775863b146ae9c016f2f5",
+        "product": "expected_mean"
+      },
+      {
+        "category": "rec_yd",
+        "method": "P2_SELECTED:1533819a3c922826f6eb631d32107c09bf1d8c7d7c005dd20fad30e0f0c4a661",
+        "product": "intended_median"
+      },
+      {
+        "category": "rush_yd",
+        "method": "P2_SELECTED:1c0148f601f146a4307b4c562d151f33243afb44e9a068a28ca6a11bcd7e5e8a",
+        "product": "intended_median"
+      },
+      {
+        "category": "pass_yd",
+        "method": "P2_SELECTED:3b3e1d63966c0581f1e0e33364daea77f22b801ba55bbc11170353d73736eb04",
+        "product": "intended_median"
+      },
+      {
+        "category": "pass_att",
+        "method": "P2_SELECTED:3b75a227cca1ed2d7c50d9d56b5510c1907d19aae98c412dc4d04b76859a982b",
+        "product": "expected_mean"
+      },
+      {
+        "category": "pass_td",
+        "method": "P2_SELECTED:98f3087768e1a23539388667d128ac759c55befd9f03b01b7654baafd263a228",
+        "product": "expected_mean"
+      },
+      {
+        "category": "rush_rec_yd",
+        "method": "P2_SELECTED:c52af4f64b44247a4cb329f249a56e09c27a85fc4c78b18231f294c147555f25",
+        "product": "intended_median"
+      },
+      {
+        "category": "rush_att",
+        "method": "P2_SELECTED:e1e017717fd44b0835d542fa7c96b8908f5e2fc281c0032c3e1186831dec00dc",
+        "product": "expected_mean"
+      },
+      {
+        "category": "pass_cmp",
+        "method": "P2_SELECTED:e1f7ab72b1d199864f330b88375201a5f8f44a9371e4af9e8145d629503a81e3",
+        "product": "expected_mean"
+      },
+      {
+        "category": "pass_int",
+        "method": "P2_SELECTED:e9a6506f082eb8a979b086d4c14dcaf134a8979a1b32e471ed2ff28895378824",
+        "product": "expected_mean"
+      }
+    ],
+    "payload_sha256": "369fec9caec012cb292284006a60bb25727d6d9d853f00560dbffe57f1ea1fa4",
+    "history": "Exact retained source-selected procedures; no refit. Full fitted lineage held in original candidate catalogs, not inferred from alias."
+  },
+  "C_CAPTURED_MEAN_AND_MEDIAN": {
+    "one_procedure_two_outputs": true,
+    "history": "C-FORWARD-P2-v4/P2_LEAF/H-MULTI, per-category frozen arms as published by C",
+    "category_bindings": [
+      {
+        "category": "anytime_td",
+        "model_id": "C-FORWARD-P2-v4/anytime_td/7012f8650245a66da70db9decda9a5af9af4f5509cd7c5f4475c82f3f3640bac",
+        "model_SHA256": "bafd9f04dd3e46b887ed5162f03a9c759cefd00f8226fa6a474a704c10baaba6",
+        "scoring_contract_id": "rush-or-rec-at-least-one-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:48.265236+00:00"
+      },
+      {
+        "category": "fpts",
+        "model_id": "C-FORWARD-P2-v4/fpts/8c6f2d20119beaac23b3becb1587672ca9353f82d43e02c3decf4110dbe00eb3",
+        "model_SHA256": "3885555ae27f5cc5601b22bb1ab0bb908d14b14e865ab36a4e75ef313406a816",
+        "scoring_contract_id": "nick-chart-ppr-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:58.421347+00:00"
+      },
+      {
+        "category": "pass_att",
+        "model_id": "C-FORWARD-P2-v4/pass_att/64bcb3a5e468aa7a73afecbb8f2d0afb1b81e1b63110e00f2077075f56a81b35",
+        "model_SHA256": "5b05a7db0c06f46f221f6df510174f6416181c89b9110c5355835c545cf68d31",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:08.706959+00:00"
+      },
+      {
+        "category": "pass_cmp",
+        "model_id": "C-FORWARD-P2-v4/pass_cmp/a777243eba9c8e4b267a501d0c60ef44e1bab0c6c89fadc090c86bb89ef91602",
+        "model_SHA256": "017ba3f58bbffbfca9d0797467a87854f8fd2aec8a3888c026aa5c6adcbc1317",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:07.790952+00:00"
+      },
+      {
+        "category": "pass_int",
+        "model_id": "C-FORWARD-P2-v4/pass_int/3b7a391974f52f446d418d11a263d40bee4b6e30b01d3eeed14600a285c55127",
+        "model_SHA256": "5b4b74b918bd328a763647d5c10415b74dc4fd959b45ed2789109a3ffef7eae3",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:09.573027+00:00"
+      },
+      {
+        "category": "pass_td",
+        "model_id": "C-FORWARD-P2-v4/pass_td/36070975f18b1f7da3836aced50d4a230cc1cb3d0186211570b0022b6af0d8b7",
+        "model_SHA256": "3b24276f3b909680047e2c35e11fdf41982beea8be619b6062c90c019711e564",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:06.866188+00:00"
+      },
+      {
+        "category": "pass_yd",
+        "model_id": "C-FORWARD-P2-v4/pass_yd/71787f7bf2c18f40cc43ab141ee32f4a12ca295450dcdf98f0b938c2d01affa5",
+        "model_SHA256": "faccd9acd1ca480cf74b816773957cfd1f39d4cfad157e08c3c93dece2752c64",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:26.536092043+00:00",
+        "generated_UTC": "2026-11-01T00:06:35.060113+00:00"
+      },
+      {
+        "category": "rec",
+        "model_id": "C-FORWARD-P2-v4/rec/9055c51e04c77b0b4dc3d70456468707c96eb915e74cfe65177bc5720454f7f3",
+        "model_SHA256": "363583cbfdc31fb91a4452b44cd02a19c90bded912110d7c5d95ade97718507c",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:27.606231+00:00"
+      },
+      {
+        "category": "rec_yd",
+        "model_id": "C-FORWARD-P2-v4/rec_yd/9fb8f57fd255af970fd56d2f44690a24c0a4b24f293f8ab8b30e91611c222788",
+        "model_SHA256": "982bdaeaf354cb545a9cfc07ac182fbc12bf87fda89a5b5d7ffcefa895352ba7",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:33.777591+00:00"
+      },
+      {
+        "category": "rush_att",
+        "model_id": "C-FORWARD-P2-v4/rush_att/63831bf7e3ab36042d714c0d330def7b9a02592b5f6f154eade874680c810285",
+        "model_SHA256": "3c20f7fa8e71e544bdc1427f3c4804d14c1eca407bb6a8b9f7fd012f0459c615",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:22.338241+00:00"
+      },
+      {
+        "category": "rush_rec_yd",
+        "model_id": "C-FORWARD-P2-v4/rush_rec_yd/6ba955fc0168f35c2bb3a5f53f38eddab187342d6ece14d9d300968a46f5328f",
+        "model_SHA256": "103addad0fa19ece2871ea240fe0476e809bc24c40109b6e9d3b2620ada2157e",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:40.548589+00:00"
+      },
+      {
+        "category": "rush_yd",
+        "model_id": "C-FORWARD-P2-v4/rush_yd/3f98010a2369e0d5a8a7a3d1248416276f676edd43c97bfc89086f6fbb017c57",
+        "model_SHA256": "41cfb75dab2bfba2ff1d3e24c8f6b3dde12dd3eb5be86fab5c419783b459493a",
+        "scoring_contract_id": "official-player-fullgame-OT-v1",
+        "information_cutoff_UTC": "2026-11-01T00:06:57.531492949+00:00",
+        "generated_UTC": "2026-11-01T00:07:15.429236+00:00"
+      }
+    ]
+  }
+}
