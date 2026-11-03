@@ -1,3 +1,7 @@
+## Selection-first A/B/C v2 — Session A
+
+[Executed local A/C zero-refit pilot and exact gaps](../abc-championship/README.md) · [A export index](../abc-championship/EXPORT_INDEX.json). C owns the consolidated benchmark. Prior A/B and scientific records remain unchanged.
+
 ## Immediate reporting priority: actual Week 8 grades — November 2
 
 [Original website leans, original Top Picks, genuine R0, captured forecast replays, coverage and corrections](../week8-original-grading-20261102/README.md). As of 1:07 p.m. CST: 13/14 games final; CHI–SEA pending. Fixed original leans 152/302; first selected Top Picks 12/23. No new model fit, forecast or deployment. Older dated operational statuses below remain historical; the A/B task and ready releases continue independently.
