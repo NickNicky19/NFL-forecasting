@@ -1,3 +1,7 @@
+## Period continuation under C canonical v2-C-1
+
+[**Executed source-matched A/C offers, historical periods, final Week8 and6,400week-gap states**](../abc-championship/PERIOD_COMPARISON_CHECKPOINT_V1.md). Exact C protocol pinned; no new canonical A/B admission or production release is inferred. Older checkpoint statuses remain dated.
+
 ## Selection-first A/B/C v2 — Session A
 
 [Executed local A/C zero-refit pilot and exact gaps](../abc-championship/README.md) · [A export index](../abc-championship/EXPORT_INDEX.json). C owns the consolidated benchmark. Prior A/B and scientific records remain unchanged.

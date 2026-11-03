@@ -1,0 +1,95 @@
+{
+  "protocol_id": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+  "protocol": {
+    "path": "reports/abc-championship/PROTOCOL-v2-C-1.json",
+    "SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1"
+  },
+  "scorer": {
+    "path": "src/abc_championship_v2.py",
+    "SHA256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+  },
+  "dependencies": [
+    {
+      "path": "src/actual_accuracy_v6.py",
+      "SHA256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+    },
+    {
+      "path": "src/selection.py",
+      "SHA256": "dc5c87ea7b8933947f57244ca90a6fa3fb8a374909c04993fa3b0bb831d6a13f"
+    },
+    {
+      "path": "src/contracts_v2.py",
+      "SHA256": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a"
+    },
+    {
+      "path": "src/actual_offers_v4.py",
+      "SHA256": "39b187dbdf750b5cdd7b26197bc2c56240ce5aab2bef67392fc77c1a8938e186"
+    },
+    {
+      "path": "src/offer_validator_v2.py",
+      "SHA256": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51"
+    }
+  ],
+  "schema": {
+    "path": "reports/abc-championship/EXPORT_SCHEMA-v2.json",
+    "SHA256": "0ba0755f94889a33fb7c02efbf4cc9e414b9a733fc3bc7f1357faba1c294f2f4"
+  },
+  "roster": {
+    "path": "reports/abc-championship/METHOD_ROSTER-v2-C-1.json",
+    "SHA256": "6a39f54967335dcce50235565b8be1736b47e18d2fe6f4847980fe10f7a4d1ef"
+  },
+  "population_offers_outcomes": {
+    "path": "reports/abc-championship/C_INPUT_BINDINGS.json",
+    "SHA256": "91cf77353b70d49d33e5ca80421a69c702dc6d8fbab07043e58b0676580359e8"
+  },
+  "masks": {
+    "path": "reports/abc-championship/COMMON_CORE-v2-C-1.json",
+    "SHA256": "15c5c843e7e3075723247584699e0f721c960664b762dd7c736b45667447969a"
+  },
+  "scores": {
+    "path": "reports/abc-championship/SCORES-v2-C-1.json",
+    "SHA256": "aee4ca8ed9b1c84992e887171813aa2d2b0e5a724c77ae65765e5e5116670fc0"
+  },
+  "corrections": "Originalv7.1gradechains validated; no newoutcomes changed",
+  "contributions": [
+    "C"
+  ],
+  "A_B_independent_acknowledgement": "NOT_RECEIVED",
+  "stage": "EXECUTED_LOCAL_MATCHED_C_ONLY_PARTIAL_E1;NOT_COMPLETED_CHAMPIONSHIP",
+  "admission": {
+    "path": "reports/abc-championship/ADMISSION_LEDGER.json",
+    "SHA256": "a9dbb95e4736a0c534e76f903cff564060a540cbd4bc19277cd740eca85cba23"
+  },
+  "tasks": {
+    "path": "reports/abc-championship/TASK_LEDGER.json",
+    "SHA256": "5c06249704dcb274dbd7e65c6e8a3c23a93fe0784a4a527d2b01fee2e001ec99"
+  },
+  "roster_coverage": {
+    "path": "reports/abc-championship/METHOD_COVERAGE.json",
+    "SHA256": "6af8da0d043d53c69710834363fe52984420cf4d017f7916b9e8aa55c903004c"
+  },
+  "failed_attempts": {
+    "path": "reports/abc-championship/FAILED_ATTEMPTS.json",
+    "SHA256": "486ecf9d012aa2ce3db34e650b414349e99bbdc4c4d410ebc022fc50a1417c69"
+  },
+  "source_coverage": {
+    "path": "reports/abc-championship/SOURCE_COVERAGE.csv",
+    "SHA256": "e25e8d0e89aeb1bf85a51dfdb01f6b8fbd5c7a0815c9d7475aeca461b05ccd90"
+  },
+  "strong_control_pairs": {
+    "path": "reports/abc-championship/STRONG_CONTROL_PAIRS.json",
+    "SHA256": "652416f0d01c9a0504901d00144445096364aa5fb96d4a526db5a42cc35010bc"
+  },
+  "strong_control_code": {
+    "path": "src/abc_strong_controls_v2.py",
+    "SHA256": "cbcfba49dcafcfe3c737dc4ddca7fdd76caa5380bc6e501e9ffd1e1e338add42"
+  },
+  "suite_summaries": {
+    "path": "reports/abc-championship/SUITE_SUMMARIES.json",
+    "SHA256": "b0076ed3200fdb1c8429c2ddd523ea04e993847b1b7fbbe1ad23d09ff20cefd7"
+  },
+  "suite_code": {
+    "path": "src/abc_suite_summaries_v2.py",
+    "SHA256": "7e5017d49b1547fc660617a741d60d0d85f49762609ae49596595f3cdbf0d8aa"
+  }
+}

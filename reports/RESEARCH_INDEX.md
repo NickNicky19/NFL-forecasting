@@ -1,8 +1,6 @@
-# Forecasting research: complete navigation index
+# Research index
 
-## Actual Week 8 grading — November 2, partial week
-
-[Original per-category Over/Under results, original Top Picks, R0, genuine captured point comparisons and all pending/unknown outcomes](week8-original-grading-20261102/README.md). Thirteen of fourteen final games; unchanged original selections and issue horizons. No new fit, inference or deployment. [Permanent experiment index](opportunity-four/EXPERIMENT_REGISTRY.json).
+[Week8](week8-original-grading-20261102/README.md)
 
 ## New ordered/analog forecasting wave — October29
 

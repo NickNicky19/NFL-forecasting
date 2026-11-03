@@ -1,0 +1,534 @@
+[
+  {
+    "category": "pass_yd",
+    "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      2,
+      3
+    ],
+    "OVER": {
+      "selected": 35,
+      "wins": 23,
+      "losses": 12,
+      "decided": 35,
+      "rate": 0.6571428571428571
+    },
+    "UNDER": {
+      "selected": 29,
+      "wins": 13,
+      "losses": 15,
+      "decided": 28,
+      "rate": 0.4642857142857143
+    },
+    "COMBINED": {
+      "selected": 64,
+      "wins": 36,
+      "losses": 27,
+      "decided": 63,
+      "rate": 0.5714285714285714
+    },
+    "eligible": 64,
+    "selected": 64,
+    "unavailable": 0,
+    "games": 32,
+    "matched_control": "C::ALWAYS_OVER:A36 vs control38/63;delta-2",
+    "uncertainty": {
+      "interval95": [
+        -0.1746031746031746,
+        0.09523809523809523
+      ],
+      "scope": "Nominal game-bootstrap1000 seed20261103; two exposedweeks, not independent confirmation"
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "pass_td",
+    "procedure_id": "A::CAPTURED_SELECTED_369fec9caec0",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 16,
+      "wins": 9,
+      "losses": 7,
+      "decided": 16,
+      "rate": 0.5625
+    },
+    "UNDER": {
+      "selected": 12,
+      "wins": 7,
+      "losses": 5,
+      "decided": 12,
+      "rate": 0.5833333333333334
+    },
+    "COMBINED": {
+      "selected": 28,
+      "wins": 16,
+      "losses": 12,
+      "decided": 28,
+      "rate": 0.5714285714285714
+    },
+    "eligible": 28,
+    "selected": 28,
+    "unavailable": 0,
+    "games": 14,
+    "matched_control": "A::CONTROL_ALWAYS_OVER:14/28",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.3907078562746876,
+      "high": 0.734914528758763,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "pass_cmp",
+    "procedure_id": "A::FIXED_R0_CAPTURE_20261028T184637Z",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 10,
+      "wins": 4,
+      "losses": 6,
+      "decided": 10,
+      "rate": 0.4
+    },
+    "UNDER": {
+      "selected": 18,
+      "wins": 9,
+      "losses": 9,
+      "decided": 18,
+      "rate": 0.5
+    },
+    "COMBINED": {
+      "selected": 28,
+      "wins": 13,
+      "losses": 15,
+      "decided": 28,
+      "rate": 0.4642857142857143
+    },
+    "eligible": 28,
+    "selected": 28,
+    "unavailable": 0,
+    "games": 14,
+    "matched_control": "A::CONTROL_ALWAYS_UNDER:15/28",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.2953156998279538,
+      "high": 0.6418731076553209,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "pass_att",
+    "procedure_id": "A::FIXED_R0_CAPTURE_20261028T184637Z",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 11,
+      "wins": 4,
+      "losses": 7,
+      "decided": 11,
+      "rate": 0.36363636363636365
+    },
+    "UNDER": {
+      "selected": 17,
+      "wins": 9,
+      "losses": 8,
+      "decided": 17,
+      "rate": 0.5294117647058824
+    },
+    "COMBINED": {
+      "selected": 28,
+      "wins": 13,
+      "losses": 15,
+      "decided": 28,
+      "rate": 0.4642857142857143
+    },
+    "eligible": 28,
+    "selected": 28,
+    "unavailable": 0,
+    "games": 14,
+    "matched_control": "A::CONTROL_ALWAYS_UNDER:16/28",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.2953156998279538,
+      "high": 0.6418731076553209,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "pass_int",
+    "procedure_id": "A::CAPTURED_SELECTED_369fec9caec0",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 22,
+      "wins": 13,
+      "losses": 9,
+      "decided": 22,
+      "rate": 0.5909090909090909
+    },
+    "UNDER": {
+      "selected": 2,
+      "wins": 1,
+      "losses": 1,
+      "decided": 2,
+      "rate": 0.5
+    },
+    "COMBINED": {
+      "selected": 24,
+      "wins": 14,
+      "losses": 10,
+      "decided": 24,
+      "rate": 0.5833333333333334
+    },
+    "eligible": 24,
+    "selected": 24,
+    "unavailable": 0,
+    "games": 12,
+    "matched_control": "A::CONTROL_ALWAYS_OVER:14/24",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.3883466586522876,
+      "high": 0.7553239739018824,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "rush_yd",
+    "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      2,
+      3
+    ],
+    "OVER": {
+      "selected": 64,
+      "wins": 27,
+      "losses": 35,
+      "decided": 62,
+      "rate": 0.43548387096774194
+    },
+    "UNDER": {
+      "selected": 50,
+      "wins": 28,
+      "losses": 21,
+      "decided": 49,
+      "rate": 0.5714285714285714
+    },
+    "COMBINED": {
+      "selected": 114,
+      "wins": 55,
+      "losses": 56,
+      "decided": 111,
+      "rate": 0.4954954954954955
+    },
+    "eligible": 181,
+    "selected": 114,
+    "unavailable": 67,
+    "games": 32,
+    "matched_control": "C::ALWAYS_UNDER:A55 vs control63/111;delta-8",
+    "uncertainty": {
+      "interval95": [
+        -0.1810344827586207,
+        0.043478260869565216
+      ],
+      "scope": "Nominal game-bootstrap1000 seed20261103; two exposedweeks, not independent confirmation"
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "rush_att",
+    "procedure_id": "A::FIXED_R0_CAPTURE_20261028T184637Z",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 15,
+      "wins": 6,
+      "losses": 8,
+      "decided": 14,
+      "rate": 0.42857142857142855
+    },
+    "UNDER": {
+      "selected": 14,
+      "wins": 3,
+      "losses": 11,
+      "decided": 14,
+      "rate": 0.21428571428571427
+    },
+    "COMBINED": {
+      "selected": 29,
+      "wins": 9,
+      "losses": 19,
+      "decided": 28,
+      "rate": 0.32142857142857145
+    },
+    "eligible": 29,
+    "selected": 29,
+    "unavailable": 0,
+    "games": 13,
+    "matched_control": "A::CONTROL_ALWAYS_OVER:17/28",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.1793324692249496,
+      "high": 0.5066115681914238,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "rec",
+    "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      2,
+      3
+    ],
+    "OVER": {
+      "selected": 107,
+      "wins": 53,
+      "losses": 43,
+      "decided": 96,
+      "rate": 0.5520833333333334
+    },
+    "UNDER": {
+      "selected": 255,
+      "wins": 139,
+      "losses": 103,
+      "decided": 242,
+      "rate": 0.5743801652892562
+    },
+    "COMBINED": {
+      "selected": 362,
+      "wins": 192,
+      "losses": 146,
+      "decided": 338,
+      "rate": 0.5680473372781065
+    },
+    "eligible": 362,
+    "selected": 362,
+    "unavailable": 0,
+    "games": 32,
+    "matched_control": "C::P3_DIRECT:A191 vs control194/337;delta-3",
+    "uncertainty": {
+      "interval95": [
+        -0.05325443786982249,
+        0.03115264797507788
+      ],
+      "scope": "Nominal game-bootstrap1000 seed20261103; two exposedweeks, not independent confirmation"
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "rec_yd",
+    "procedure_id": "A::9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      2,
+      3
+    ],
+    "OVER": {
+      "selected": 122,
+      "wins": 57,
+      "losses": 50,
+      "decided": 107,
+      "rate": 0.5327102803738317
+    },
+    "UNDER": {
+      "selected": 239,
+      "wins": 122,
+      "losses": 109,
+      "decided": 231,
+      "rate": 0.5281385281385281
+    },
+    "COMBINED": {
+      "selected": 361,
+      "wins": 179,
+      "losses": 159,
+      "decided": 338,
+      "rate": 0.5295857988165681
+    },
+    "eligible": 361,
+    "selected": 361,
+    "unavailable": 0,
+    "games": 32,
+    "matched_control": "C::P3_DIRECT:A178 vs control176/337;delta+2",
+    "uncertainty": {
+      "interval95": [
+        -0.04746835443037975,
+        0.05757575757575758
+      ],
+      "scope": "Nominal game-bootstrap1000 seed20261103; two exposedweeks, not independent confirmation"
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "rush_rec_yd",
+    "procedure_id": "A::CAPTURED_SELECTED_369fec9caec0",
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actual_weeks": [
+      8
+    ],
+    "OVER": {
+      "selected": 4,
+      "wins": 0,
+      "losses": 3,
+      "decided": 3,
+      "rate": 0.0
+    },
+    "UNDER": {
+      "selected": 24,
+      "wins": 13,
+      "losses": 11,
+      "decided": 24,
+      "rate": 0.5416666666666666
+    },
+    "COMBINED": {
+      "selected": 28,
+      "wins": 13,
+      "losses": 14,
+      "decided": 27,
+      "rate": 0.48148148148148145
+    },
+    "eligible": 28,
+    "selected": 28,
+    "unavailable": 0,
+    "games": 13,
+    "matched_control": "A::CONTROL_ALWAYS_UNDER:16/27",
+    "uncertainty": {
+      "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+      "low": 0.3074322697621846,
+      "high": 0.6601438424504771,
+      "dependence_aware": false,
+      "week_clusters": 1
+    },
+    "evidence_tier": "TIMING_UNVERIFIED_ACTUAL_LINE_DIAGNOSTIC",
+    "release": "NO_AUTOMATIC_CHANGE;retainedowneronly"
+  },
+  {
+    "category": "anytime_td",
+    "status": "NO_COMPATIBLE_OFFER_CONTRACT_IN_CURRENT_A_PANEL"
+  },
+  {
+    "category": "chart_ppr",
+    "status": "NO_COMPATIBLE_OFFER_CONTRACT_IN_CURRENT_A_PANEL"
+  }
+]

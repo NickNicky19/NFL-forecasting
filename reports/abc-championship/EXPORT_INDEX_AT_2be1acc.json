@@ -1,0 +1,87 @@
+{
+  "version": "A-ABC-EXPORT-INDEX-v2",
+  "session": "A",
+  "adopted_protocol": "ADOPTED_PROTOCOL_V2.json",
+  "adopted_sha256": "826c74b685e6d93086c9170e8feb1390ec809cf60f26a0861e7492fc7dfd63e8",
+  "canonical_C_protocol": {
+    "state": "MISSING_AT_CHECK",
+    "main_commit": "2d684f22830b817669ecf89f46eb6fdcace8335b",
+    "other_relevant_ref": "e38302299134a7fd9fb7272dd9aeba220958c047",
+    "CURRENT_PROTOCOL_response": "404 on default; both complete trees lack abc-championship path; older C-ACTUAL-ACCURACY-v6 is local W1-7 policy, not presumed common v2",
+    "required_action": "C publishes exact canonical pointer/scorer/schema/offer and outcome manifests, then reads this A index. No external message sent; no acknowledgement assumed."
+  },
+  "producer_commit": "5e6464ba0f2da95647ba302e78f6f08cf05c3e68",
+  "roster_references": [
+    {
+      "repository": "NickNicky19/NFL-forecasting",
+      "commit": "5e6464ba0f2da95647ba302e78f6f08cf05c3e68",
+      "path": "reports/opportunity-four/METHOD_REGISTRY.json",
+      "scope": "29 located procedure definitions, not exhaustive lifetime history"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting",
+      "commit": "5e6464ba0f2da95647ba302e78f6f08cf05c3e68",
+      "path": "reports/category-topfive-matched-all12-w1w7-20261030/FINALIST_CATALOG_V1.json",
+      "scope": "Fixed all12 roster; local policies/output identities preserved"
+    }
+  ],
+  "exports": [
+    {
+      "id": "A-LOCAL-W8-REGRADING-V1_1",
+      "period": "2026_W8_partial_asof_20261102",
+      "artifact_sha256": "22099b3ebb6d6337100a5e38dbb5df5d34266ccda62a1f195af674f015157876",
+      "bytes": 598996,
+      "permission": "Restricted A rows; existing owner-approved restoration only; C receiver not bound",
+      "state": "RETAINED_READBACK_VERIFIED_EXISTING_A_SCOPE",
+      "members": [
+        "SCORECARD.json.gz",
+        "AGGREGATES.json",
+        "MEMBER_MANIFEST.json"
+      ]
+    },
+    {
+      "id": "A-R0-EVALUATOR-COMPLETION-V1",
+      "period": "2026_W8",
+      "artifact_sha256": "bac6a5f39739517502ffe5ced5a33587a3f3bd5a84307ca18cfef08aa4c55493",
+      "bytes": 73114,
+      "members": [
+        "R0_SCORECARD.json.gz",
+        "native.json.gz",
+        "PAIR.json",
+        "ORIGINAL_SOURCE.json"
+      ],
+      "permission": "Restricted A vectors; existing restoration; no new public migration",
+      "state": "RETAINED_READBACK_VERIFIED"
+    },
+    {
+      "id": "A-C-LOCAL-ZERO-REFIT-v1",
+      "period": "2026_W8_C_CAPTURE_OVERLAP_ONLY",
+      "path": "LOCAL_A_C_RESULTS_V1.json",
+      "sha256": "168b6dc8145bb93ef16ca3cbdaee9f2c280ac23cc2e13ea3aa1e8e5618bd1a83",
+      "state": "LOCAL_EXECUTED_NOT_COMMON_ADMITTED",
+      "route": "Public aggregate/code in A; owner-local deterministic scoring from bound private A and public C inputs; no private rows transferred",
+      "inputs": [
+        {
+          "origin": "C",
+          "commit": "2d684f22830b817669ecf89f46eb6fdcace8335b",
+          "path": "reports/week8-v9/GRADED_FORECAST_ROWS.csv.gz",
+          "sha256": "c1a027df3e6a1252f0844379fbdad046be0243087f7598d3adeb7727395847da",
+          "bytes": 202739,
+          "permission": "Existing public C published artifact; exact Git blob and whole SHA verified"
+        }
+      ]
+    }
+  ],
+  "period_status": {
+    "E1": "PARTIAL: fixed A W1-7 local reconstruction plus separate W8 capture replay; not concatenated original advance history",
+    "E2_E3_E4": "Existing local 2022-2025 recipes/coverage retained; same-roster actual-line parity not established",
+    "E5_E6_E7": "NOT_EXECUTED; no incompatible pooling",
+    "E8": "Existing genuine captures preserved; no new inference/capture this wave"
+  },
+  "B": "No private B rows accessed, no B run duplicated or message sent",
+  "C_access": "Existing public2513-row artifact read, not an A-produced model or shared admission",
+  "raw_restricted_publication": false,
+  "production": "READ_ONLY; selection-first findings no automatic model/EV release",
+  "next_owner_local_action": "C supplies canonical opportunity manifest; A executes parity scoring where legal, independently verifies totals; only retained original-site owner can admit/publish a product",
+  "procedure_alias_binding": "PROCEDURE_BINDINGS_V1.json"
+}
