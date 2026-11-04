@@ -1517,14 +1517,23 @@
         "new_pregame_issuances": 0,
         "existing_cached_control_rows": 1244
       },
-      "status": "REGISTERED",
+      "status": "RESUMABLE",
       "registration": {
         "record": "../abc-championship/predictive-improvement-01/PROTOCOL_V1.json",
         "registered_UTC": "2026-11-04T20:07:05.756349+00:00",
         "state": "No predictive fit before preregistration/public readback/review",
         "protocol_sha256": "8a75ac5638894d323aface7b2b972f8044ba033a196f66313cb3a90eafdc4e2c"
       },
-      "owner": "SessionAintegrator; Ctargetshare and Bselectiveprobability mechanisms remain separatelyowned"
+      "owner": "SessionAintegrator; Ctargetshare and Bselectiveprobability mechanisms remain separatelyowned",
+      "continuations": [
+        {
+          "record": "../abc-championship/predictive-improvement-01/runtime-v2/PROTOCOL_V1.json",
+          "protocol_sha256": "9d6cc6a4509803b95ac6e7731694e89e26192c46c7816fabc4278ef0efada065",
+          "new_fit_budget": 2,
+          "original_fit_attempts_spent": 2,
+          "original_successful_A0_refit": false
+        }
+      ]
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

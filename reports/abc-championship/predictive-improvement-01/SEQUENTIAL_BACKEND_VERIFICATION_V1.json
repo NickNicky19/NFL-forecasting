@@ -1,0 +1,28 @@
+{
+  "state": "PASS_ACTUAL_CDF_PATH_WITH_RETAINED_INITIAL_ASSERTION_FAILURE",
+  "reviewer": "independentread-onlyreviewer",
+  "synthetic_forests_fitted": 4,
+  "NFL_fits_rows": 0,
+  "initial_generic_forest_predict_check": {
+    "state": "FAILED_BITWISE_EQUALITY",
+    "max_absolute_difference": 4.44e-16,
+    "reason": "Parallel reduction order. Not the CDFpredictionpath; no NFLdata."
+  },
+  "actual_CDF_path": {
+    "state": "PASS_BITWISE",
+    "training_rows": 512,
+    "query_rows": 73,
+    "identical": [
+      "tree thresholds",
+      "leaves",
+      "histograms",
+      "priors",
+      "weights",
+      "means",
+      "medians",
+      "exact-lineCDFs"
+    ],
+    "CPU_wall_scope": "Two bounded synthetic checks0.092s+0.131s; peakRSS~165MB"
+  },
+  "scientific_hyperparameters_changed": false
+}
