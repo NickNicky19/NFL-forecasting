@@ -1,0 +1,26 @@
+{
+  "version": "A-REGISTRY-LOSSLESS-STORAGE-v1",
+  "registered_UTC": "2026-11-04T21:50:13.290927+00:00",
+  "scope": "Storage representation only; no new fit/inference/scoring or policy change",
+  "reason": "Exact eight-MiB metadata reserve exceeded by 1527632 bytes before optional CSV export; compact JSON alone insufficient.",
+  "budget": {
+    "new_CPU_seconds": 60,
+    "new_private_bytes": 0,
+    "same_directory_public_gzip_bytes_max": 100000,
+    "old_metadata_cap_bytes": 8388608,
+    "guard_change": false
+  },
+  "files": [
+    "reports/opportunity-four/ALL_RESULTS.json",
+    "reports/opportunity-four/ABC_DYNAMIC_CARRY_SELECTION_RESULTS_V1.json"
+  ],
+  "preservation": "Retain every original uncompressed byte in content-addressed gzip in the same accounted directory; bind compressed and expanded hashes and record counts; old committed versions unchanged.",
+  "verification": [
+    "exact expanded byte/hash equality",
+    "parsed document equality",
+    "canonical validator and leaderboard replay",
+    "corrupt hash and path traversal rejected",
+    "final measured scope below unchanged cap including projected published leaderboard"
+  ],
+  "responsible_owner": "Session A root integrator"
+}

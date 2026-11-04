@@ -1,0 +1,9 @@
+{
+  "state": "FAILED_READONLY_INVENTORY_MEMORYERROR",
+  "asof_UTC": "2026-11-04T21:53:53.143451+00:00",
+  "command": "python -B tools/category_topfive_matched12_storage_v1.py --mode inventory [same bound allocation and GO]",
+  "reason": "Existing inventory CLI sets RLIMIT_AS=512MiB; MemoryError during inherited full blob hash scan. No changed guard or quota, no private writes, no new fit/inference/scoring.",
+  "CPU_seconds": null,
+  "CPU_bound_seconds": 120,
+  "accounting": "Failed attempt remains consumed/unknown; not refunded."
+}

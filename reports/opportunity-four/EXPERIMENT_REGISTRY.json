@@ -1397,10 +1397,12 @@
       "experiment_id": "e:ABC-PREDICTIVE-IMPROVEMENT-01-A-v1",
       "request_id": "ABC-PREDICTIVE-IMPROVEMENT-01",
       "method_ids": [
-        "m:BACKFIELD_CDF",
-        "m:A_DYNAMIC_ROLE_CDF_V1",
+        "m:ABC_ALWAYS_OVER",
+        "m:ABC_ALWAYS_UNDER",
         "m:A_DYNAMIC_ALLOCATION_V1",
+        "m:A_DYNAMIC_ROLE_CDF_V1",
         "m:A_RECENCY_ALLOCATION_V1",
+        "m:BACKFIELD_CDF",
         "m:COUNT_A"
       ],
       "hypothesis": "Forward-only partiallypooled share/role state and uncertain team opportunities improve actual-line decisions; unchanged direct plus group isolates information; structured model plus recency allocation isolates state/architecture.",
@@ -1517,7 +1519,7 @@
         "new_pregame_issuances": 0,
         "existing_cached_control_rows": 1244
       },
-      "status": "RESUMABLE",
+      "status": "COMPLETED",
       "registration": {
         "record": "../abc-championship/predictive-improvement-01/PROTOCOL_V1.json",
         "registered_UTC": "2026-11-04T20:07:05.756349+00:00",
@@ -1533,6 +1535,13 @@
           "original_fit_attempts_spent": 2,
           "original_successful_A0_refit": false
         }
+      ],
+      "completion_scope": "Named bounded wave only:2026W1-7 and2025W1-8numerical; actual-line2026W1-7full335direct/RB239structured. W8, olderoriginfits, authenticcapture/production remainopen.",
+      "artifacts": [
+        "../abc-championship/predictive-improvement-01/README.md",
+        "ABC_DYNAMIC_CARRY_SELECTION_RESULTS_V1.json",
+        "../abc-championship/predictive-improvement-01/completion-v3/NUMERICAL_RESULTS_V1.json",
+        "../abc-championship/predictive-improvement-01/FULL_BOARD_DIRECT_RESULTS_V1.json"
       ]
     }
   ],

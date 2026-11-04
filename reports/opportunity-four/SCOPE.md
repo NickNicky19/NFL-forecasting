@@ -13,3 +13,10 @@ The latest owner request makes the matched twelve-category 2026 Weeks 1–7 fina
 ## Session A/B matched continuation — October 31
 
 The latest owner directive assigns Session A the bounded all12 A-versus-B comparison. B and production stay read-only. Reuse completed forecasts, score canonical shared identities and preserve current-season/history/evidence tiers. Zero paired B rows are currently accessible; the exact cached export request is linked in the current index. A owns its carry/neutral/same-law diagnostics; B retains assigned source expansion, passing-yard/completion diagnoses and unavailable-versus-abstention work. This does not complete or cancel the original four-category information/history backlog or the ready owner release.
+
+
+## ABC-PREDICTIVE-IMPROVEMENT-01 — Session A
+
+C remains the canonical championship coordinator. A owns the dynamic opportunity/role mechanism, first on carries. B owns probability/selective reliability; C owns target-share inputs and its information studies. This wave executes A0/A1/A2 and ordinary recency controls. It does not reopen an unlimited all-category algorithm search. All twelve championship categories, historical coverage closure, grading and independently eligible owner releases remain active. Other unstarted predictive mechanisms retain their existing scope states and histories.
+
+The first carry wave is complete for named2026W1-7 and2025W1-8panels. W8/history/reception extension, genuine subsequent capture and operational admission are not completed by that result. See [executed report](../abc-championship/predictive-improvement-01/README.md).

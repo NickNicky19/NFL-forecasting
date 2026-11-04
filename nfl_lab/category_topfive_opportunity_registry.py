@@ -11,6 +11,7 @@ import json
 import math
 from pathlib import Path
 import re
+from nfl_lab.opportunity_registry_storage_v1 import read_document
 
 VERSION = 'opportunity-four-registry-v1'
 TARGETS = ('pass_att', 'rush_att', 'rec_tgt', 'rec')
@@ -19,7 +20,7 @@ STATES = {'REGISTERED', 'BLOCKED', 'RUNNING', 'RESUMABLE', 'COMPLETED', 'FAILED'
 COMPARABILITY = ('target', 'season', 'weeks', 'population_id', 'outcome_version', 'horizon_id', 'source_policy_id', 'fallback_policy_id', 'evidence_kind', 'comparison_set_id')
 SCORE_NAMES = ('MAE', 'MSE', 'RMSE', 'bias', 'p90_AE', 'p95_AE', 'exact_count_rate', 'strict_error_lt1', 'inclusive_error_le1', 'CRPS', 'log_loss', 'Brier')
 REDACTED_ROUTE = 'Retained owner approved authenticated private restoration; restricted fields are not public.'
-FORBIDDEN = re.compile(r'/workspace/|/tmp/|sediment://|s3://|gh[pousr]_[A-Za-z0-9]{20,}|sk-proj-[A-Za-z0-9_-]{16,}|ODDS_API_KEY\s*[:=]\s*[A-Za-z0-9]{8,}')
+FORBIDDEN = re.compile(r'[/]workspace/|[/]tmp/|sediment[:]//|s3[:]//|gh[pousr]_[A-Za-z0-9]{20,}|sk-proj-[A-Za-z0-9_-]{16,}|ODDS_API_KEY\s*[:=]\s*[A-Za-z0-9]{8,}')
 
 
 def encoded(value):
@@ -271,7 +272,7 @@ def load(root):
     names = {'methods': 'METHOD_REGISTRY.json', 'experiments': 'EXPERIMENT_REGISTRY.json', 'results': 'ALL_RESULTS.json', 'publications': 'PUBLICATION_RECORDS.json'}
     registry = {'schema_version': VERSION}
     for key, name in names.items():
-        registry[key] = json.loads((root/name).read_text())['records']
+        registry[key] = read_document(root/name)['records']
     registry['runs'] = [json.loads(x) for x in (root/'RUN_EVENTS.jsonl').read_text().splitlines() if x.strip()]
     return registry
 

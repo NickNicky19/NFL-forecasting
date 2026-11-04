@@ -1,0 +1,78 @@
+{
+  "state": "PASS_INDEPENDENT_FULL_BOARD_EXTENSION",
+  "source_program": "../../../tools/abc_a_independent_full_board_verification_v1.py",
+  "execution_time_source_sha256": "9a5f1c6df673673e811f0d3cb2322cf0acfa7961a6a5da9c3179a01c1f67e845",
+  "source_readback_sha256": "9a5f1c6df673673e811f0d3cb2322cf0acfa7961a6a5da9c3179a01c1f67e845",
+  "verified_grade_rows": 5695,
+  "unique_offers": 335,
+  "positions": {
+    "RB": 239,
+    "QB": 80,
+    "WR": 16
+  },
+  "score_cells": 136,
+  "cumulative_views": 17,
+  "A0_extra_contexts_replayed_exact": 96,
+  "A0_point_values_bitwise_equal": 192,
+  "new_clock_inequalities_checked": 192,
+  "unchanged_RB_grade_rows": 4063,
+  "full_board_probability_ALL": [
+    {
+      "arm": "A0_BACKFIELD_CDF",
+      "scored": 327,
+      "eligible": 335,
+      "Brier": 0.2648059000496253,
+      "logloss": 0.730458713129811,
+      "neutral_Brier": 0.25
+    },
+    {
+      "arm": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "scored": 327,
+      "eligible": 335,
+      "Brier": 0.2662425603297119,
+      "logloss": 0.7364924360719501,
+      "neutral_Brier": 0.25
+    },
+    {
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "scored": 231,
+      "eligible": 335,
+      "Brier": 0.411792437097388,
+      "logloss": 1.399855609237555,
+      "neutral_Brier": 0.25,
+      "unavailable_outside_RB_scope": 96
+    },
+    {
+      "arm": "S0_RECENCY_ALLOCATION",
+      "scored": 231,
+      "eligible": 335,
+      "Brier": 0.45057866397447455,
+      "logloss": 1.9938140022844362,
+      "neutral_Brier": 0.25,
+      "unavailable_outside_RB_scope": 96
+    },
+    {
+      "arm": "STORED_COUNT_A_MEAN_CONTROL",
+      "scored": 0,
+      "eligible": 335,
+      "Brier": null,
+      "logloss": null,
+      "reason": "POINT_ONLY_NO_LAW"
+    }
+  ],
+  "resources": {
+    "CPU_seconds": 32.128,
+    "wall_seconds": 32.195,
+    "RSS_bytes": null,
+    "RSS_reported": "approximately291MB; exactbytevalue notreturned inreviewmessage",
+    "new_fits": 0,
+    "new_inference": 0,
+    "private_writes": 0
+  },
+  "source_compatibility": "All4current sourceconfig hashes/bytes +3predictivemodule hashes match executedV2protocol9d6cc6a4;96A0contexts/pointsbitwisereplay. Not newA1re-inference.",
+  "limitations": [
+    "No authenticationofhistoricalsource/quote publication clocks.",
+    "FullboardA1BrierworsensA0 despiteRB-onlytinygain; allsupportedmasks lose0.25neutral.",
+    "No privateoffhostrestore, Cnewadmission or productionpromotion inferred."
+  ]
+}

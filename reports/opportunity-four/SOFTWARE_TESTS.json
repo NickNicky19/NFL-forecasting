@@ -243,6 +243,13 @@
       "state": "PASS",
       "kind": "Actual local public metadata validation; not forecasting methods or hosted CI",
       "record": "../week8-original-grading-20261102/CANONICAL_REGISTRY_VALIDATION_V1.json"
+    },
+    {
+      "id": "ABC_A_DYNAMIC_CARRY_STORAGE_AND_REGISTRY_V1",
+      "command": "python -B tools/verify_opportunity_registry_storage_v1.py; python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four --write",
+      "state": "PASS",
+      "kind": "Local software/aggregate verification; no new predictive observations or hosted CI claim",
+      "record": "../abc-championship/predictive-improvement-01/SOFTWARE_VERIFICATION_V1.json"
     }
   ]
 }

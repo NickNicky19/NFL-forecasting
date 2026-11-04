@@ -3,13 +3,48 @@
   "parent": "A-DYNAMIC-CARRY-CONTROLLED-v1",
   "state": "REGISTERED_BEFORE_NEW_SCORE_INSPECTION",
   "scope": "Paired scoring of frozen A0/A1/A2/S0 and retained CountA; no model fits or calibrator/gate search.",
-  "primary_pairs": ["A1_BACKFIELD_CDF_ROLE_INPUTS minus A0_BACKFIELD_CDF", "A2_DYNAMIC_ALLOCATION minus A0_BACKFIELD_CDF", "A2_DYNAMIC_ALLOCATION minus S0_RECENCY_ALLOCATION"],
-  "secondary_controls": ["ALWAYS_OVER", "ALWAYS_UNDER", "STORED_COUNT_A_MEAN_CONTROL"],
+  "primary_pairs": [
+    "A1_BACKFIELD_CDF_ROLE_INPUTS minus A0_BACKFIELD_CDF",
+    "A2_DYNAMIC_ALLOCATION minus A0_BACKFIELD_CDF",
+    "A2_DYNAMIC_ALLOCATION minus S0_RECENCY_ALLOCATION"
+  ],
+  "secondary_controls": [
+    "ALWAYS_OVER",
+    "ALWAYS_UNDER",
+    "STORED_COUNT_A_MEAN_CONTROL"
+  ],
   "masks": "Identical player/game/RB category/original primary line/horizon/outcome. Full intended coverage plus paired gradable overlap; failures, ties, unknowns and fallback retained separately.",
-  "uncertainty": {"replicates":1000,"seed":1703,"clusters":["game","season_week"],"scope":"Descriptive paired bootstrap on exposed development data; limited week clusters, multiple comparisons, not guarantee."},
+  "uncertainty": {
+    "replicates": 1000,
+    "seed": 1703,
+    "clusters": [
+      "game",
+      "season_week"
+    ],
+    "scope": "Descriptive paired bootstrap on exposed development data; limited week clusters, multiple comparisons, not guarantee."
+  },
   "team_volume": "One unique forecast per team/game; same shared volume law is not two independent forecasters. Grade against qualified all-position provider team total, never sum supported RBs.2026W7 team total unavailable in this source; retain missing.2025W1-8 available.",
   "TopK": "Reuse category/week Top6/10/20 mean-gap/median-gap/exact-law confidence rankings; ties stable opportunity key. All new memberships are retrospective rule replays. Historical left-limit forecasts and unqualified quotes were not simultaneously available before week's first game; label timing-unverified selection diagnostics, not original executable lists or90% validation.",
   "sources": "Prepared primary full board; separately report ANNUAL_NAMED_NJ and recorded-site source strata. No source tier upgrading or invented odds/lines.",
   "limits": "This new scoring cannot be a new independent forecasting fit.2025 actual-prop unavailable; numerical tests and volume errors separate.90% TARGET_NOT_ESTABLISHED; no new learned gate here.",
-  "budget": {"invocations":1,"CPU_seconds":240,"wall_seconds":360,"RSS_bytes":1073741824,"new_fits":0,"new_source_HTTP":0,"retained_private_bytes":1048576}
+  "budget": {
+    "invocations": 1,
+    "CPU_seconds": 240,
+    "wall_seconds": 360,
+    "RSS_bytes": 1073741824,
+    "new_fits": 0,
+    "new_source_HTTP": 0,
+    "retained_private_bytes": 1048576
+  },
+  "registered_UTC": "2026-11-04T20:39:58.889298+00:00",
+  "code_binding": {
+    "path": "tools/abc_a_dynamic_carry_analysis_v1.py",
+    "sha256": "5a8cc0f8a886cff85319087daf633896421e987786793844c39427e58fb4aacc"
+  },
+  "additional_pairs": "A1/A2 versus retained Count A mean; preserve right_policy labels when comparing probability direction with point control.",
+  "locator_amendment": {
+    "previous_sha256": "7bc1e732289682c5c5259c3ab96a56a8f600698347af95aaf19c9ad02a35e76c",
+    "reason": "Read completedscore receipt fromcompletion-v3, unchangedpredictions/policies/metrics; earlieranalysis plan retained.",
+    "new_score_values_inspected_before_amendment": false
+  }
 }

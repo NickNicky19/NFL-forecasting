@@ -1,0 +1,24 @@
+{
+  "state": "PASS_EXPLICIT_PUBLIC_ALLOWLIST",
+  "private_planning_files_not_published": [
+    {
+      "local_internal_filename": "PROTOCOL_PREREVIEW_DRAFT.json",
+      "bytes": 8726,
+      "sha256": "b869d404dd8e9395dd7c111994c9cbbd9587bb4686b9d7eb8cf530167d022056",
+      "public_state": "EXCLUDED_PRIVATE_LOCATORS; public PROTOCOL_V1.json preserves permitted scientific registration."
+    },
+    {
+      "local_internal_filename": "PREFLIGHT_EXECUTION_PROTOCOL.json",
+      "bytes": 9141,
+      "sha256": "7baacd37472bb66c496c00b569e794016ee4629b5b44785916327fe3b0e23e1b",
+      "public_state": "EXCLUDED_PRIVATE_LOCATORS; public PROTOCOL_V1.json preserves permitted scientific registration."
+    }
+  ],
+  "source_code_exception": "Four explicitly named executed Python sources contain only the public C-scorer code-cache default. These are not private NFL/evidence locations; exact executed source bytes are preserved. All other locator/row/secret patterns remain rejected.",
+  "failed_preflight_checks": [
+    "Guard-regex source literal initially matched its own pattern; equivalent character-class spelling retains validation behavior.",
+    "Two internal planning files correctly rejected and excluded.",
+    "Public C-scorer cache literal correctly classified as code-only; scoped exception not a private-store exemption."
+  ],
+  "new_fits_inference_scoring": 0
+}

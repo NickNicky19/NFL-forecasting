@@ -628,6 +628,13 @@
           "output_id": "median",
           "reason": "Requested output absent; no median/PMF inferred from a point objective.",
           "state": "UNSUPPORTED_NO_PROCEDURE"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier",
+          "state": "UNSUPPORTED_NO_PROCEDURE",
+          "reason": "No distribution is invented from CountAmean."
         }
       ],
       "procedure_version": "Original frozen procedure; exact per-result source/version retained",
@@ -685,6 +692,12 @@
           "functional": "distribution",
           "output_id": "distribution",
           "primary_score": "CRPS"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier",
+          "state": "RETAINED_LAW_NEW_EXACT_LINE_SCORE_VIEW"
         }
       ],
       "procedure_version": "Original frozen procedure; exact per-result source/version retained",
@@ -1000,6 +1013,56 @@
       "aliases": [],
       "shortlist_group": "A-dynamic-carry-information-and-allocation-v1",
       "shortlist_group_reason": "A1newinformationprocedure in existingCDFfamily; A2/S0sameallocationfamily structured/control. Mean andmedian are not independent methods."
+    },
+    {
+      "method_id": "m:ABC_ALWAYS_OVER",
+      "original_id": "ALWAYS_OVER",
+      "family": "Deterministic selection control; not learned model",
+      "procedure_version": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+      "algorithm": "Select constant supported side",
+      "formula": "Always select OVER at same original line; unknown outcomes remainunknown.",
+      "outputs": [],
+      "selection_outputs": [
+        {
+          "type": "DIRECTION_SELECTION",
+          "side": "OVER"
+        }
+      ],
+      "code": [
+        {
+          "record": "../abc-championship/predictive-improvement-01/PROTOCOL_V1.json",
+          "scope": "Predeclared common controls; zero footballfits"
+        }
+      ],
+      "feature_policy": "Same eligible offers/outcomes; no playercontext, probability or numeric point invented.",
+      "training_rule": "NOT_APPLICABLE",
+      "aliases": [],
+      "procedure_kind": "CONTROL_NOT_FORECAST_LEARNER"
+    },
+    {
+      "method_id": "m:ABC_ALWAYS_UNDER",
+      "original_id": "ALWAYS_UNDER",
+      "family": "Deterministic selection control; not learned model",
+      "procedure_version": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+      "algorithm": "Select constant supported side",
+      "formula": "Always select UNDER at same original line; unknown outcomes remainunknown.",
+      "outputs": [],
+      "selection_outputs": [
+        {
+          "type": "DIRECTION_SELECTION",
+          "side": "UNDER"
+        }
+      ],
+      "code": [
+        {
+          "record": "../abc-championship/predictive-improvement-01/PROTOCOL_V1.json",
+          "scope": "Predeclared common controls; zero footballfits"
+        }
+      ],
+      "feature_policy": "Same eligible offers/outcomes; no playercontext, probability or numeric point invented.",
+      "training_rule": "NOT_APPLICABLE",
+      "aliases": [],
+      "procedure_kind": "CONTROL_NOT_FORECAST_LEARNER"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

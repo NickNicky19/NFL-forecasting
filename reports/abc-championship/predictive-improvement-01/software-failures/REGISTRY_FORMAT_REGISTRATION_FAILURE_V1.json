@@ -1,0 +1,39 @@
+{
+  "state": "FAILED_LOCAL_VALIDATION_BEFORE_PUBLICATION",
+  "error": "terminal record correction requires a recorded reason",
+  "invalid_registration": {
+    "run_record_id": "r:ABC-A-full-board-CSV-format@2",
+    "run_id": "r:ABC-A-full-board-CSV-format",
+    "run_version": 2,
+    "supersedes_run_record_id": "r:ABC-A-full-board-CSV-format@1",
+    "experiment_id": "e:ABC-PREDICTIVE-IMPROVEMENT-01-A-v1",
+    "original_id": "A-FULL-BOARD-CSV-FORMAT",
+    "status": "REGISTERED",
+    "origin": "REGISTERED_CONTINUATION",
+    "start": {
+      "record": "../abc-championship/predictive-improvement-01/FULL_BOARD_CSV_FORMAT_CONTINUATION_V2.json"
+    },
+    "finish": {
+      "record": "../abc-championship/predictive-improvement-01/FULL_BOARD_CSV_FORMAT_CONTINUATION_V2.json",
+      "state": "REGISTERED"
+    },
+    "resources": {
+      "new_fits": 0,
+      "new_inference": 0,
+      "new_scoring": 0,
+      "CPU_seconds": null,
+      "reason": "Format-only; no new football results."
+    },
+    "software_checks": [
+      "../abc-championship/predictive-improvement-01/REGISTRY_STORAGE_RECEIPT_V1.json"
+    ],
+    "evidence": {
+      "label": "VERIFIED_FROM_CODE",
+      "original_record": "../abc-championship/predictive-improvement-01/FULL_BOARD_CSV_FORMAT_CONTINUATION_V2.json"
+    },
+    "publication_subject": "p:ABC-A-dynamic-carry-v1"
+  },
+  "invalid_line_sha256": "1fe65ac685e2dc275dddbed4cd5436a4e0f1bed13762114d90c9f1cd4377aac0",
+  "correction": "A retry is a separate run with an explicit parent-failed-attempt reference; failed original run remains terminal FAILED.",
+  "new_fits_inference_scoring": 0
+}

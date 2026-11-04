@@ -1,0 +1,43 @@
+{
+  "state": "PASS",
+  "executed_UTC": "2026-11-04T21:40:38.765680+00:00",
+  "commands": [
+    {
+      "command": "python -B -m nfl_lab.category_topfive_opportunity_registry --root reports/opportunity-four --write",
+      "result": "PASS",
+      "experiments": 30,
+      "methods": 34,
+      "native_results": 280,
+      "source": "nfl_lab/category_topfive_opportunity_registry.py"
+    },
+    {
+      "command": "Pinned C exactthreshold fixtures + exactallocation checks",
+      "result": "PASS_24_SYNTHETIC_BOUNDARIES",
+      "record": "SOFTWARE_FIXTURES_V1.json"
+    },
+    {
+      "command": "Independent CDFsequentialbackend differential checks",
+      "result": "PASS_ACTUAL_CDF_PATH; genericforest.predict assertionfailure retained",
+      "record": "SEQUENTIAL_BACKEND_VERIFICATION_V1.json"
+    }
+  ],
+  "NFL_observations_created_by_software_tests": 0,
+  "hosted_CI": "NOT_VERIFIED_THIS_WAVE",
+  "source_limits": [
+    "Initial inline verification andfixture execution-time script hashes were not separately recorded; reported recipes/invocations andcapturedresults retained. Full-board independent source isexact with execution-timeSHA."
+  ],
+  "failed_software_record": "software-failures/REPORT_GENERATOR_FAILURE_V1.json",
+  "registry_storage_extension": {
+    "state": "PASS",
+    "executed_UTC": "2026-11-04T21:53:16.880881+00:00",
+    "command": "python -B tools/verify_opportunity_registry_storage_v1.py",
+    "checks": 6,
+    "scope": "Lossless public aggregate storage, corrupt checksums/counts/path rejection. No NFL observations.",
+    "code_sha256": "651435c82a0526e2287f9d304e87523685242e49f86f1ee6fb8092aefd5a5908",
+    "original_8MiB_guard": "UNCHANGED",
+    "earlier_local_registration_failures_retained": [
+      "software-failures/REGISTRY_FORMAT_REGISTRATION_FAILURE_V1.json",
+      "software-failures/REGISTRY_FORMAT_ORIGIN_FAILURE_V1.json"
+    ]
+  }
+}
