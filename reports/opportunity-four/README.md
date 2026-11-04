@@ -119,3 +119,7 @@ The exact owner package was delivered and remotely read back in [comment 6527892
 ## Current all-category matched checkpoint — October 30 late evening CDT
 
 [Executed Weeks 1–7 category comparison](../category-topfive-matched-all12-w1w7-20261030/README.md) contains matched numerical leaders, each method’s own recorded-line Over/Under results, mean products, probability-law replay, coverage and exact live identities. This bounded all-category comparison preserves the optional four-category queue. Results are reconstructed development evidence. Owner-only restoration, fresh capture and release remain separate.
+
+## Targeted predictive improvement
+
+[Session A controlled carry wave](../abc-championship/predictive-improvement-01/README.md)

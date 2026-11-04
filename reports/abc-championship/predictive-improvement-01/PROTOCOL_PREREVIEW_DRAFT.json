@@ -1,0 +1,158 @@
+{
+  "assignment_id": "ABC-PREDICTIVE-IMPROVEMENT-01",
+  "protocol_id": "A-DYNAMIC-CARRY-CONTROLLED-v1",
+  "registered_UTC": "2026-11-04T20:07:05.756349+00:00",
+  "origin_session": "A",
+  "status": "REGISTERED_BEFORE_FITS",
+  "producer_source_commit": "BOUND_BY_PREEXEC_READBACK_RECEIPT",
+  "parent_completed_checkpoint": "5bb80746a5313c86ddb4920390bd04b300362024",
+  "C_protocol": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+  "C_protocol_sha256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
+  "C_scorer_sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+  "C_local_code_directory": "/tmp/abc-improvement-01/C/src",
+  "category": "rush_att",
+  "primary_objective": "Exact-line direction accuracy; probability quality and numerical error remain separate.",
+  "arms": {
+    "A0_BACKFIELD_CDF": "Unchanged Backfield CDF/context learner; retained2026model and exact point replay.2025 uses a legitimate earlier-origin fit.",
+    "A1_BACKFIELD_CDF_ROLE_INPUTS": "Identical training rows, priors, forest parameters and old-feature imputation; add12forward role/opportunity features.",
+    "A2_DYNAMIC_ALLOCATION": "Forward logit-share filter, positive moment projection to a joint Dirichlet over eligibleRBs+other, uncertain Gamma-Poisson team carries; exact NB x beta-binomial marginal.",
+    "S0_RECENCY_ALLOCATION": "Same team-volume law, inputs, roster, prior, other bucket and Dirichlet projection; ordinary exposure weighting with3teamgame half-life replaces the dynamic filter."
+  },
+  "prior_work": {
+    "Backfield_CDF": "Nine lag3backfield features, not forward state/finite uncertain allocation. Reuse actual source/train/model and point outputs.",
+    "dynamic_opportunity_v1_through_v6": "Fixed team volume, point-only smooth/changepoint share.24development packages retained; V6 failed source-phase at816.980723campaignCPU. Not an unchanged retry or completed forward study.",
+    "Count_A_and_role_B": "Existing controls/losses remain visible; no probability invented from their point.",
+    "C_receiving_target_share": "C-owned. No duplicate; reception extension requires a qualified C export."
+  },
+  "evaluation": {
+    "2026": {
+      "requested_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "executable_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "population": "All1244original matched12rosterRBqueries. No outcome/TopPick filter. Same existing primary full-board RBthresholds, QBscope separate.",
+      "history": "CDF fits2019-2025fixed before2026; original and dynamic features update earlier-only under strict7day availability assumption. Not strict-current-only.",
+      "week8_dependency": "Complete compatible query/feature/team-total source qualification; no backfilled pregame claim."
+    },
+    "2025": {
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "population": "Historical weekly ACT/INA rosterRBs; unknowns/zeros retained. Stat-only additions excluded from evaluation. Original training population unchanged.",
+      "history": "Only2019-2024labels before2025-09-01; earlier-only original features and annual filter parameters. Through2025model not reused.",
+      "actual_lines": "NO_QUALIFIED_2025_PANEL_THIS_WAVE; numerical tests proceed."
+    },
+    "evidence_tier": "EXPOSED_CURRENT_VINTAGE_CHRONOLOGICAL_RECONSTRUCTION; quote timing and venue semantics unverified."
+  },
+  "source_contract": {
+    "team_total": "Provider weekly credited carries summed over ALL stat positions before skill-position filtering; supported sum checked; nonRB/unlisted/unresolved explicit other. Not independent official team-box certification or designed runs.",
+    "observations": "Only supported played integer counts update. DNP/unknown/playedmissing never zero. Each source strictly before query. Historical weekly roster, not today's roster for oldgames.",
+    "conditional": "Laws conditional on appearance. No qualified full/limited/replacement injury probabilities; no invented penalties.",
+    "separation": "Designed runs/scrambles/kneels unavailable; no snap/route substitution.",
+    "roster_timing": "Weekly historical roster source retained; original publication clocks unverified. Training competition features exclude stat-only additions."
+  },
+  "estimation": {
+    "prior": "Annual earlier-season role center and betweenplayer variance; first2019explicit fixed startup.",
+    "process": "q=clip(mean(adjacent logit-change squared minus measurementvariances),.01,1.5); mean reversionrho=.95; no tuning/search or future smoothing.",
+    "volume": "Gamma shape=2*earlierleague_mean+weightedlast8teamcounts; rate=2+sumweights; half-life8teamgames.",
+    "allocation": "Filtered positive shares + earlier estimated other normalize to1. Common Dirichlet concentration is median moment estimate clipped[2,200]. Approximate moment projection, not exact Bayesian posterior.",
+    "control": "Recency share uses prior strength20exposures and last8supported observations decayed by3teamgame half-life; unknown slots do not update.",
+    "downstream": "No learned correction fitted to in-sample upstream forecasts. No target-game opportunity exposure at inference."
+  },
+  "precision": {
+    "quadrature_nodes": 41,
+    "check_nodes": 81,
+    "max_share_mean_error": 1e-06,
+    "tail_mass_bound": 1.01e-12,
+    "mass_tolerance": 1e-10,
+    "Monte_Carlo_draws": 0,
+    "seed": 1703,
+    "bootstrap_replicates": 1000,
+    "clusters": [
+      "game",
+      "week"
+    ]
+  },
+  "policies": {
+    "point": "Unrounded declaredmean/lowerCDFmedian >line Over,<line Under,equality abstain. Separate typed products.",
+    "probability": "Compare exactlinepOver/pUnder; within1e-12tie abstains; integer pushes retained.",
+    "abstention": "Existingconf55threshold as secondary. No gate searched toward90%.",
+    "TopK": "ExistingTop6/10/20 retained in championship queue; replay lists with unresolved simultaneity cannot be called original executable lists.",
+    "90_target": "TARGET_NOT_ESTABLISHED. B owns learned selective-reliability work. A supplies laws without tiny-subset/zero-pick success claims."
+  },
+  "practical_change": "2percentagepoint pairedfullboard gain is a predeclared descriptive useful-change reference, not a new admission veto. Report uncertainty/losses and keep existing provisional/scientific policies separate.",
+  "resources": {
+    "main_fit_invocations": 1,
+    "forest_fits": 3,
+    "trees_total": 96,
+    "annual_parameter_sets": 8,
+    "variants_per_mechanism": 1,
+    "CPU_seconds": 1800,
+    "wall_seconds": 2400,
+    "RSS_bytes": 1610612736,
+    "threads": 2,
+    "private_retained_bytes": 14680064,
+    "private_peak_bytes": 16777216,
+    "public_metadata_bytes": 1048576,
+    "HTTP": 0,
+    "automatic_retries": 0,
+    "new_pregame_issuances": 0
+  },
+  "storage": {
+    "allocation_sha256": "f123cd5ffd6f4a204a76c68bf63817cce63cecd7021543a23503d0233cc3eb26",
+    "headroom_at_registration_bytes": 19103803,
+    "caps_failures_and_reservations": "UNCHANGED;14MiBretained+2MiBworking within19.1MB existing headroom; refused writes stay refused."
+  },
+  "code_bindings": [
+    {
+      "path": "nfl_lab/abc_dynamic_carry_v1.py",
+      "bytes": 13316,
+      "sha256": "0edd0667162a29e3edac947cc988802b16986717fe19e65542f87c0799887b58"
+    },
+    {
+      "path": "tools/abc_a_dynamic_carry_wave_v1.py",
+      "bytes": 23198,
+      "sha256": "62dad62c602b4f86d95bfaa5130c37b0b1237628e18aae57927e3393669c2d68"
+    },
+    {
+      "path": "nfl_lab/cdf_engine.py",
+      "bytes": 27618,
+      "sha256": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214"
+    },
+    {
+      "path": "nfl_lab/category_topfive_backfield_v1.py",
+      "bytes": 8017,
+      "sha256": "d1573acc289d0851b3b9bb55f568f373f328c497af35af910ac6e224003d3fd7"
+    }
+  ],
+  "commands": [
+    "/workspace/nfl-venv/bin/python -B tools/abc_a_dynamic_carry_wave_v1.py --protocol-sha256 HASH --mode preflight",
+    "/workspace/nfl-venv/bin/python -B tools/abc_a_dynamic_carry_wave_v1.py --protocol-sha256 HASH --mode run",
+    "/workspace/nfl-venv/bin/python -B tools/abc_a_dynamic_carry_wave_v1.py --protocol-sha256 HASH --mode score"
+  ],
+  "publication": "Register before fits, publish/readback permitted code/config/aggregates; restricted source rows and artifacts stay in existing private CAS.",
+  "production": "READ_ONLY; no release/capture/scientific qualification claim. Owner-only current-query/restoration/admission required independently.",
+  "corrections": "Append versions; preserve failures/models/forecasts/losses. Never silently refund or rerun."
+}

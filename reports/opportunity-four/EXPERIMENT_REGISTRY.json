@@ -1392,6 +1392,139 @@
       "record_type": "CORRECTION_OUTCOME_APPEND_SOURCE_SPECIFIC_REPLAY_NOT_NEW_CHAMPIONSHIP",
       "publication_status": "PUBLICATION_COMPLETE",
       "publication_commit": "107f390903b91f59e4589cb9b84fd3a651deea33"
+    },
+    {
+      "experiment_id": "e:ABC-PREDICTIVE-IMPROVEMENT-01-A-v1",
+      "request_id": "ABC-PREDICTIVE-IMPROVEMENT-01",
+      "method_ids": [
+        "m:BACKFIELD_CDF",
+        "m:A_DYNAMIC_ROLE_CDF_V1",
+        "m:A_DYNAMIC_ALLOCATION_V1",
+        "m:A_RECENCY_ALLOCATION_V1",
+        "m:COUNT_A"
+      ],
+      "hypothesis": "Forward-only partiallypooled share/role state and uncertain team opportunities improve actual-line decisions; unchanged direct plus group isolates information; structured model plus recency allocation isolates state/architecture.",
+      "history_policy": {
+        "2026": {
+          "requested_weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "executable_weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "population": "All1244original matched12rosterRBqueries. No outcome/TopPick filter. Same existing primary full-board RBthresholds, QBscope separate.",
+          "history": "CDF fits2019-2025fixed before2026; original and dynamic features update earlier-only under strict7day availability assumption. Not strict-current-only.",
+          "week8_dependency": "Complete compatible query/feature/team-total source qualification; no backfilled pregame claim."
+        },
+        "2025": {
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "population": "Historical weekly ACT/INA rosterRBs; unknowns/zeros retained. Stat-only additions excluded from evaluation. Original training population unchanged.",
+          "history": "Only2019-2024labels before2025-09-01; earlier-only original features and annual filter parameters. Through2025model not reused.",
+          "actual_lines": "NO_QUALIFIED_2025_PANEL_THIS_WAVE; numerical tests proceed."
+        },
+        "evidence_tier": "EXPOSED_CURRENT_VINTAGE_CHRONOLOGICAL_RECONSTRUCTION; quote timing and venue semantics unverified."
+      },
+      "sources": [
+        {
+          "id": "retainedBackfieldtraining_and_model",
+          "timing": "Original7dayearlieronly; currentvintage historical reconstruction, not original issuances."
+        },
+        {
+          "id": "matched12-historical-features-and-qualified-labels",
+          "timing": "Exact retainedsource pins; query outcome fields stripped; labels projected afterforecast persistence."
+        }
+      ],
+      "population": {
+        "2026": {
+          "requested_weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "executable_weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "population": "All1244original matched12rosterRBqueries. No outcome/TopPick filter. Same existing primary full-board RBthresholds, QBscope separate.",
+          "history": "CDF fits2019-2025fixed before2026; original and dynamic features update earlier-only under strict7day availability assumption. Not strict-current-only.",
+          "week8_dependency": "Complete compatible query/feature/team-total source qualification; no backfilled pregame claim."
+        },
+        "2025": {
+          "weeks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "population": "Historical weekly ACT/INA rosterRBs; unknowns/zeros retained. Stat-only additions excluded from evaluation. Original training population unchanged.",
+          "history": "Only2019-2024labels before2025-09-01; earlier-only original features and annual filter parameters. Through2025model not reused.",
+          "actual_lines": "NO_QUALIFIED_2025_PANEL_THIS_WAVE; numerical tests proceed."
+        },
+        "evidence_tier": "EXPOSED_CURRENT_VINTAGE_CHRONOLOGICAL_RECONSTRUCTION; quote timing and venue semantics unverified."
+      },
+      "cutoff": "Each historicalleft-limitkickoff; sourceavailable strictlybefore; annualmodel cutoffSep1; clocks not authenticated historical vintages.",
+      "budget": {
+        "main_fit_invocations": 1,
+        "forest_fits": 3,
+        "trees_total": 96,
+        "annual_parameter_sets": 8,
+        "variants_per_mechanism": 1,
+        "CPU_seconds": 1800,
+        "wall_seconds": 2400,
+        "RSS_bytes": 1610612736,
+        "threads": 2,
+        "private_retained_bytes": 14680064,
+        "private_peak_bytes": 16777216,
+        "public_metadata_bytes": 1048576,
+        "HTTP": 0,
+        "automatic_retries": 0,
+        "new_pregame_issuances": 0,
+        "existing_cached_control_rows": 1244
+      },
+      "status": "REGISTERED",
+      "registration": {
+        "record": "../abc-championship/predictive-improvement-01/PROTOCOL_V1.json",
+        "registered_UTC": "2026-11-04T20:07:05.756349+00:00",
+        "state": "No predictive fit before preregistration/public readback/review",
+        "protocol_sha256": "8a75ac5638894d323aface7b2b972f8044ba033a196f66313cb3a90eafdc4e2c"
+      },
+      "owner": "SessionAintegrator; Ctargetshare and Bselectiveprobability mechanisms remain separatelyowned"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

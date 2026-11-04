@@ -1,0 +1,28 @@
+{
+  "assignment_id": "ABC-PREDICTIVE-IMPROVEMENT-01",
+  "preparation_id": "A-dynamic-carry-preparation-20261104-v1",
+  "owner": "Session A integrator",
+  "scope": "Inventory existing authorized storage, authenticate retained Backfield inputs, and qualify total credited carries. No predictive fit, new source collection, or production write.",
+  "closest_studies": [
+    "category-topfive-backfield-v1-20261029",
+    "dynamic-opportunity-study-v1-20261023 and failed computational continuations through v6"
+  ],
+  "resources": {
+    "inventory_attempts": 1,
+    "CPU_seconds": 180,
+    "wall_seconds": 240,
+    "RSS_bytes": 1073741824,
+    "metadata_bytes": 32768,
+    "HTTP": 0,
+    "predictive_fits": 0
+  },
+  "prior_attempt": {
+    "command": "tools/category_topfive_matched12_storage_v1.py --mode inventory with existing allocation and GO",
+    "status": "FAILED_MEMORYERROR_UNDER_TOOL_512MIB_ADDRESS_SPACE_LIMIT",
+    "new_fits_forecasts_private_writes": 0,
+    "reason_for_new_preparation": "Use separately recorded finite 1 GiB preparation resource envelope. Underlying store quotas and integrity checks are unchanged.",
+    "refund": false
+  },
+  "production": "READ_ONLY_RETAINED_OWNER",
+  "unverified": "Remaining capacity and restoration must pass before a predictive invocation. This preparation is not an accuracy comparison."
+}

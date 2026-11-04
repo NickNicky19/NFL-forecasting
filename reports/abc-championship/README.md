@@ -9,3 +9,7 @@
 C remains canonical coordinator. This is not a completed eight-week championship or deployment.
 
 [Preserved preceding local A/C pilot](README_AT_2be1acc.md).
+
+## Targeted predictive improvement
+
+[Session A controlled carry wave](predictive-improvement-01/README.md)
