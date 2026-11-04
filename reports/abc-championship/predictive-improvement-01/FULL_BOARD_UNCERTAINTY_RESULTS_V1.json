@@ -1,0 +1,335 @@
+{
+  "state": "PASS_PAIRED_SAVED_GRADE_DIAGNOSTIC",
+  "protocol": "FULL_BOARD_UNCERTAINTY_PROTOCOL_V1.json",
+  "asof_UTC": "2026-11-04T22:00:30.888634+00:00",
+  "selection_pairs": [
+    {
+      "left": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "left_policy": "P1_MEAN",
+      "right": "A0_BACKFIELD_CDF",
+      "right_policy": "P1_MEAN",
+      "n": 327,
+      "games": 81,
+      "left_wins": 173,
+      "right_wins": 174,
+      "rate_change": -0.0030581039755351682,
+      "disagreements": 29,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.033899612889725886,
+        "high": 0.02976190476190476
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.03514408196884984,
+        "high": 0.03384905660377358
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": -3
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": 4
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": -2
+        }
+      }
+    },
+    {
+      "left": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "left_policy": "P2_EXACT_LAW",
+      "right": "A0_BACKFIELD_CDF",
+      "right_policy": "P2_EXACT_LAW",
+      "n": 327,
+      "games": 81,
+      "left_wins": 174,
+      "right_wins": 164,
+      "rate_change": 0.03058103975535168,
+      "disagreements": 36,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.0055771037118611125,
+        "high": 0.06858907056798622
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": 0.002372262773722631,
+        "high": 0.05883442265795206
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 0
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": 10
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 0
+        }
+      }
+    },
+    {
+      "left": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "left_policy": "P2_EXACT_LAW",
+      "right": "A0_BACKFIELD_CDF",
+      "right_policy": "P1_MEAN",
+      "n": 327,
+      "games": 81,
+      "left_wins": 174,
+      "right_wins": 174,
+      "rate_change": 0.0,
+      "disagreements": 58,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.03870212994836489,
+        "high": 0.04286263736263736
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.03419003115264798,
+        "high": 0.04054743519029233
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 1
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": -1
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 0
+        }
+      }
+    },
+    {
+      "left": "A0_BACKFIELD_CDF",
+      "left_policy": "P1_MEAN",
+      "right": "ALWAYS_UNDER",
+      "right_policy": "CONSTANT",
+      "n": 327,
+      "games": 81,
+      "left_wins": 174,
+      "right_wins": 164,
+      "rate_change": 0.03058103975535168,
+      "disagreements": 130,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.02969162916129265,
+        "high": 0.08435356155500186
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.02857142857142857,
+        "high": 0.07207259585166562
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 5
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": 5
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 0
+        }
+      }
+    },
+    {
+      "left": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "left_policy": "P2_EXACT_LAW",
+      "right": "ALWAYS_UNDER",
+      "right_policy": "CONSTANT",
+      "n": 327,
+      "games": 81,
+      "left_wins": 174,
+      "right_wins": 164,
+      "rate_change": 0.03058103975535168,
+      "disagreements": 88,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.022039821906718972,
+        "high": 0.07932487806568425
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.04,
+        "high": 0.07671759747102212
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 6
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": 4
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 0
+        }
+      }
+    },
+    {
+      "left": "A0_BACKFIELD_CDF",
+      "left_policy": "P1_MEAN",
+      "right": "ALWAYS_OVER",
+      "right_policy": "CONSTANT",
+      "n": 327,
+      "games": 81,
+      "left_wins": 174,
+      "right_wins": 163,
+      "rate_change": 0.03363914373088685,
+      "disagreements": 197,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.03396122685185185,
+        "high": 0.09913302577524516
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.053573139025725226,
+        "high": 0.08783997823022925
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 7
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": -8
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 12
+        }
+      }
+    },
+    {
+      "left": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "left_policy": "P1_MEAN",
+      "right": "ALWAYS_OVER",
+      "right_policy": "CONSTANT",
+      "n": 327,
+      "games": 81,
+      "left_wins": 173,
+      "right_wins": 163,
+      "rate_change": 0.03058103975535168,
+      "disagreements": 196,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.03274053837953092,
+        "high": 0.09971281269773369
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.06899297166703272,
+        "high": 0.11419753086419752
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": 4
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": -4
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 10
+        }
+      }
+    },
+    {
+      "left": "STORED_COUNT_A_MEAN_CONTROL",
+      "left_policy": "P1_MEAN",
+      "right": "A0_BACKFIELD_CDF",
+      "right_policy": "P1_MEAN",
+      "n": 327,
+      "games": 81,
+      "left_wins": 172,
+      "right_wins": 174,
+      "rate_change": -0.0061162079510703364,
+      "disagreements": 28,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.037807468694096596,
+        "high": 0.027779927760577913
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.037940379403794036,
+        "high": 0.04232526881720429
+      },
+      "position_deltas": {
+        "QB": {
+          "n": 80,
+          "additional_wins": -3
+        },
+        "RB": {
+          "n": 231,
+          "additional_wins": 1
+        },
+        "WR": {
+          "n": 16,
+          "additional_wins": 0
+        }
+      }
+    }
+  ],
+  "probability_pairs": [
+    {
+      "left": "A1",
+      "right": "A0",
+      "metric": "Brier",
+      "n": 327,
+      "delta_left_minus_right": 0.0014366602800865906,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.0036197220258207103,
+        "high": 0.00660174615550792
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.002935585262453166,
+        "high": 0.005542579841434776
+      }
+    },
+    {
+      "left": "A1",
+      "right": "A0",
+      "metric": "log_loss",
+      "n": 327,
+      "delta_left_minus_right": 0.006033722942139127,
+      "game_CI": {
+        "clusters": 81,
+        "low": -0.007664501828666339,
+        "high": 0.021252880565729413
+      },
+      "week_CI": {
+        "clusters": 7,
+        "low": -0.006331036966939151,
+        "high": 0.019751556441081442
+      }
+    }
+  ],
+  "limitations": "Exposed development; seven weeks, candidate multiplicity; descriptive intervals, no fresh holdout or profitability claim.",
+  "CPU_seconds": 22.867165897,
+  "wall_seconds": 22.955934145000356,
+  "new_fits_inference_private_bytes": 0
+}

@@ -1,0 +1,68 @@
+{
+  "state": "REGISTERED_BEFORE_INTERVAL_COMPUTATION",
+  "registered_UTC": "2026-11-04T22:00:07.389592+00:00",
+  "scope": "Additional full335-board paired uncertainty using already published totals and immutable grades; no model or policy change. Point totals already exposed.",
+  "pairs": [
+    [
+      "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "P1_MEAN",
+      "A0_BACKFIELD_CDF",
+      "P1_MEAN"
+    ],
+    [
+      "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "P2_EXACT_LAW",
+      "A0_BACKFIELD_CDF",
+      "P2_EXACT_LAW"
+    ],
+    [
+      "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "P2_EXACT_LAW",
+      "A0_BACKFIELD_CDF",
+      "P1_MEAN"
+    ],
+    [
+      "A0_BACKFIELD_CDF",
+      "P1_MEAN",
+      "ALWAYS_UNDER",
+      "CONSTANT"
+    ],
+    [
+      "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "P2_EXACT_LAW",
+      "ALWAYS_UNDER",
+      "CONSTANT"
+    ],
+    [
+      "A0_BACKFIELD_CDF",
+      "P1_MEAN",
+      "ALWAYS_OVER",
+      "CONSTANT"
+    ],
+    [
+      "A1_BACKFIELD_CDF_ROLE_INPUTS",
+      "P1_MEAN",
+      "ALWAYS_OVER",
+      "CONSTANT"
+    ],
+    [
+      "STORED_COUNT_A_MEAN_CONTROL",
+      "P1_MEAN",
+      "A0_BACKFIELD_CDF",
+      "P1_MEAN"
+    ]
+  ],
+  "replicates": 1000,
+  "seed": 1703,
+  "cluster_key_order": "sorted string game/week",
+  "prior_design": "Same replica count/seed as ANALYSIS_PROTOCOL_V1; expand population, do not choose best seed.",
+  "budget": {
+    "CPU_seconds": 120,
+    "wall_seconds": 150,
+    "AS_bytes": 1610612736,
+    "new_private_bytes": 0,
+    "new_fits": 0,
+    "new_inference": 0
+  },
+  "code_sha256": "99cf741be7d12b5631f8474995dc4a0b8ffe60edd0f628d8a46eb8aeb416887b"
+}

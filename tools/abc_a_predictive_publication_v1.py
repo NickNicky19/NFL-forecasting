@@ -28,6 +28,7 @@ SOURCES = [
     'tools/abc_a_carry_population_reconciliation_v1.py',
     'tools/abc_a_carry_full_board_v1.py',
     'tools/abc_a_carry_full_scorecard_export_v1.py',
+    'tools/abc_a_carry_full_board_uncertainty_v1.py',
     'tools/abc_a_independent_full_board_verification_v1.py',
     'tools/abc_a_readable_wave_checkpoint_v1.py',
     'tools/verify_opportunity_registry_storage_v1.py',
