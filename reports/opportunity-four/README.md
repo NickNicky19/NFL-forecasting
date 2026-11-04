@@ -1,3 +1,7 @@
+## Latest: A correction and outcome expansion
+
+[80-view classification repair, 364-case W8 overlap and recorded-threshold source reconciliation](../abc-championship/reconciliation-v1/README.md). Wins/losses unchanged by the correction. C has limited admission of older aggregates; no new model release.
+
 ## Period continuation under C canonical v2-C-1
 
 [**Executed source-matched A/C offers, historical periods, final Week8 and6,400week-gap states**](../abc-championship/PERIOD_COMPARISON_CHECKPOINT_V1.md). Exact C protocol pinned; no new canonical A/B admission or production release is inferred. Older checkpoint statuses remain dated.

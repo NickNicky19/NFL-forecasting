@@ -1,0 +1,51 @@
+{
+  "version": "A-reconciliation-discovery-v1",
+  "C_canonical_owner": true,
+  "new_artifacts": [
+    {
+      "path": "reports/abc-championship/reconciliation-v1/A_ON_C_BOUND_OFFERS_STATE_CORRECTED_V2.json",
+      "SHA256": "1de6694e66ccf8ae1442a1087775df1f9e18a565a3d93b19aa30fcc2af803abc",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    },
+    {
+      "path": "reports/abc-championship/reconciliation-v1/AVAILABILITY_CORRECTION_TRACE_V1.json",
+      "SHA256": "18f5e41142b955b79c81236630ad5368c7bc039957faf5ac57e404414f947e0f",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    },
+    {
+      "path": "reports/abc-championship/reconciliation-v1/A_C_WEEK8_EXPANDED_V2.json",
+      "SHA256": "6dabd192bb9f63d97537f10250e663ac66ca343748272e7c138a534d46190563",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    },
+    {
+      "path": "reports/abc-championship/reconciliation-v1/C_WEEK8_EXPANSION_VERIFICATION_V1.json",
+      "SHA256": "eec8b8d919235e36a627f0e263c9bbfd87752d1d76a326767f1e6b3d5510a5c0",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    },
+    {
+      "path": "reports/abc-championship/reconciliation-v1/W6_W7_RECORDED_THRESHOLD_RESULTS_V1.json",
+      "SHA256": "f7f719bc1ef7a672855d02d3427865795f7ff1bd4e631225adceae7df0bf424c",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    },
+    {
+      "path": "reports/abc-championship/reconciliation-v1/W6_W7_OUTER_COVERAGE_AND_SOURCE_RECONCILIATION_V1.json",
+      "SHA256": "7bc9794c31160aaa656913f7a1bffb88b287457774eae8c603a7f29ca4de1896",
+      "state": "OWNER_LOCAL_COMPLETED_NOT_YET_C_ADMITTED"
+    }
+  ],
+  "private_artifacts": [
+    {
+      "artifact_id": "A-RECONCILIATION-20261104-V1",
+      "SHA256": "ac69e7d27ab3a496344b36b9609adb24f7f4cd17606704738d53ca405eabf5a6",
+      "bytes": 179273
+    },
+    {
+      "artifact_id": "A-W6-W7-RECORDED-THRESHOLD-REPLAY-V1",
+      "SHA256": "8364ab92a17750ee7a9740e8a23b1be7eaac0320d274f8f9de2a9bd5d7c40241",
+      "bytes": 419289
+    }
+  ],
+  "permissions": "Aggregates/code only public; private rows remain A approved route; C receiver/row parity not inferred",
+  "private_offhost_restore": "NOT_VERIFIED",
+  "next": "C reads new manifests and applies own admission; qualified historical rawoffer inference/fits separate."
+}

@@ -1,0 +1,1524 @@
+{
+  "state": "CONFIRMED_AND_CORRECTED_SELECTED_OUTCOME_STATE_INHERITANCE",
+  "original_source_commit": "88dac5da1b261ae6f521d3f23c83b2f95fc364bd",
+  "original_file": "A_ON_C_BOUND_OFFERS_UNCERTAINTY_APPEND_V1.json",
+  "new_file": "reconciliation-v1/A_ON_C_BOUND_OFFERS_STATE_CORRECTED_V2.json",
+  "affected_aggregate_views": 80,
+  "source_unique_model_offer_state_changes": {
+    "UNKNOWN_PARTICIPATION": 336
+  },
+  "decided_WL_side_counts_changed": 0,
+  "paired_count_or_mask_changes": 0,
+  "original_C_and_A_forecasts_changed": 0,
+  "original_scoring_file_preserved": true,
+  "cause": "A point exists and selects side, but copied C baseline status was UNAVAILABLE_FORECAST when labels unresolved. C status correctly preserved that input state. A adapter now sets forecast availability from A and missing-outcome state from participation before invoking unchanged C scorer.",
+  "changes": [
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 32,
+        "WIN": 31,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 32,
+        "WIN": 31,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::e218abfd52d8b5d860cd5bbae2c7145bea1670775c0b6fcc5f7b9bbcbd418c05::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 31,
+        "WIN": 32,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 31,
+        "WIN": 32,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 27,
+        "WIN": 36,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 27,
+        "WIN": 36,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::418ccf0e50bac7fbb2df02705f62f428ce00bf9d8f443e31d90e698ca60e21c9::RESPONSE_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 28,
+        "WIN": 35,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::418ccf0e50bac7fbb2df02705f62f428ce00bf9d8f443e31d90e698ca60e21c9::RESPONSE_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "LOSS": 29,
+        "WIN": 34,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 29,
+        "WIN": 34,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 64,
+      "decided": 63
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 61,
+        "WIN": 50
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 61,
+        "WIN": 50,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 26,
+        "WIN": 26
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 26,
+        "WIN": 26,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 60,
+        "WIN": 51
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 60,
+        "WIN": 51,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 26,
+        "WIN": 26
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 26,
+        "WIN": 26,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::78e0a3e29e50d210d93a63a276a3e9c23b278f9d21cab99e804b2b9d43506ef3::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 61,
+        "WIN": 50
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 61,
+        "WIN": 50,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::78e0a3e29e50d210d93a63a276a3e9c23b278f9d21cab99e804b2b9d43506ef3::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 26,
+        "WIN": 26
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 26,
+        "WIN": 26,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 56,
+        "WIN": 55
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 56,
+        "WIN": 55,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 25,
+        "WIN": 27
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 25,
+        "WIN": 27,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 58,
+        "WIN": 53
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 58,
+        "WIN": 53,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 25,
+        "WIN": 27
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 25,
+        "WIN": 27,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 57,
+        "WIN": 54
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 57,
+        "WIN": 54,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 25,
+        "WIN": 27
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 25,
+        "WIN": 27,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 70,
+        "LOSS": 59,
+        "WIN": 52
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 67,
+        "LOSS": 59,
+        "WIN": 52,
+        "UNKNOWN_PARTICIPATION": 3
+      },
+      "unavailable_forecasts": 67,
+      "selected": 114,
+      "decided": 111
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "LOSS": 26,
+        "WIN": 26
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 33,
+        "LOSS": 26,
+        "WIN": 26,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 33,
+      "selected": 53,
+      "decided": 52
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 178,
+        "LOSS": 160,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 178,
+        "LOSS": 160,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 179,
+        "LOSS": 159,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 179,
+        "LOSS": 159,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::6c6bf4be00366240df7de12ea47febd88fb82dfe27e6e184a5aeb636d008fff5::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 177,
+        "LOSS": 161,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 177,
+        "LOSS": 161,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::6c6bf4be00366240df7de12ea47febd88fb82dfe27e6e184a5aeb636d008fff5::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 79,
+        "LOSS": 81,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 176,
+        "LOSS": 162,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 176,
+        "LOSS": 162,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 82,
+        "LOSS": 78,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 82,
+        "LOSS": 78,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 175,
+        "LOSS": 163,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 175,
+        "LOSS": 163,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 75,
+        "LOSS": 85,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 75,
+        "LOSS": 85,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 172,
+        "LOSS": 166,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 172,
+        "LOSS": 166,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 84,
+        "LOSS": 76,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 84,
+        "LOSS": 76,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 177,
+        "LOSS": 161,
+        "UNKNOWN_PARTICIPATION": 3,
+        "UNAVAILABLE_FORECAST": 20
+      },
+      "after_states": {
+        "WIN": 177,
+        "LOSS": 161,
+        "UNKNOWN_PARTICIPATION": 23
+      },
+      "unavailable_forecasts": 0,
+      "selected": 361,
+      "decided": 338
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 77,
+        "LOSS": 83,
+        "UNKNOWN_PARTICIPATION": 2,
+        "UNAVAILABLE_FORECAST": 11
+      },
+      "after_states": {
+        "WIN": 77,
+        "LOSS": 83,
+        "UNKNOWN_PARTICIPATION": 13
+      },
+      "unavailable_forecasts": 0,
+      "selected": 173,
+      "decided": 160
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::08d8393d8d4e9f3989351546804d875fd3ff900854d6551ddd4e691a47c85cea::CATBOOST_MEDIUM::mean_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 183,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 155,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 183,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 155
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::08d8393d8d4e9f3989351546804d875fd3ff900854d6551ddd4e691a47c85cea::CATBOOST_MEDIUM::mean_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 78,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 83,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 78,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 83
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 181,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 157,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 181,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 157
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 85,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 85
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad::COUNT_A_MEAN::mean_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 181,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 157,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 181,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 157
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad::COUNT_A_MEAN::mean_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 85,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 85
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::22858dcf4777d138c08015823d963161dbcc7e9503d1136b1d073c584e90fb63::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 187,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 151,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 187,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 151
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::22858dcf4777d138c08015823d963161dbcc7e9503d1136b1d073c584e90fb63::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 79,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 82,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 79,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 82
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 183,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 155,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 183,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 155
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 85,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 76,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 85
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 192,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 146,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 192,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 146
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 84,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 77,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 84,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 77
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::mean",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 187,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 151,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 187,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 151
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::mean",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 78,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 83,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 78,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 83
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::median",
+      "week_view": "ALL",
+      "before_states": {
+        "WIN": 191,
+        "UNKNOWN_PARTICIPATION": 3,
+        "LOSS": 147,
+        "UNAVAILABLE_FORECAST": 21
+      },
+      "after_states": {
+        "WIN": 191,
+        "UNKNOWN_PARTICIPATION": 24,
+        "LOSS": 147
+      },
+      "unavailable_forecasts": 0,
+      "selected": 362,
+      "decided": 338
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::median",
+      "week_view": "2",
+      "before_states": {
+        "WIN": 81,
+        "UNKNOWN_PARTICIPATION": 2,
+        "LOSS": 80,
+        "UNAVAILABLE_FORECAST": 13
+      },
+      "after_states": {
+        "WIN": 81,
+        "UNKNOWN_PARTICIPATION": 15,
+        "LOSS": 80
+      },
+      "unavailable_forecasts": 0,
+      "selected": 176,
+      "decided": 161
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 99,
+        "LOSS": 79,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 99,
+        "LOSS": 79,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::6c6bf4be00366240df7de12ea47febd88fb82dfe27e6e184a5aeb636d008fff5::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 98,
+        "LOSS": 80,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 98,
+        "LOSS": 80,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 94,
+        "LOSS": 84,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 94,
+        "LOSS": 84,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 88,
+        "LOSS": 90,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 88,
+        "LOSS": 90,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec_yd",
+      "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNAVAILABLE_FORECAST": 9,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 100,
+        "LOSS": 78,
+        "UNKNOWN_PARTICIPATION": 10
+      },
+      "unavailable_forecasts": 0,
+      "selected": 188,
+      "decided": 178
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::08d8393d8d4e9f3989351546804d875fd3ff900854d6551ddd4e691a47c85cea::CATBOOST_MEDIUM::mean_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad::COUNT_A_MEAN::mean_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 105,
+        "LOSS": 72,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::22858dcf4777d138c08015823d963161dbcc7e9503d1136b1d073c584e90fb63::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 108,
+        "LOSS": 69,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 108,
+        "LOSS": 69,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 70,
+        "WIN": 107,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "LOSS": 70,
+        "WIN": 107,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 108,
+        "LOSS": 69,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 108,
+        "LOSS": 69,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 68,
+        "WIN": 109,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "LOSS": 68,
+        "WIN": 109,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "rec",
+      "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "WIN": 110,
+        "LOSS": 67,
+        "UNAVAILABLE_FORECAST": 8,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "after_states": {
+        "WIN": 110,
+        "LOSS": 67,
+        "UNKNOWN_PARTICIPATION": 9
+      },
+      "unavailable_forecasts": 0,
+      "selected": 186,
+      "decided": 177
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 17,
+        "WIN": 15,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 17,
+        "WIN": 15,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::e218abfd52d8b5d860cd5bbae2c7145bea1670775c0b6fcc5f7b9bbcbd418c05::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 18,
+        "WIN": 14,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 18,
+        "WIN": 14,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::418ccf0e50bac7fbb2df02705f62f428ce00bf9d8f443e31d90e698ca60e21c9::RESPONSE_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 14,
+        "WIN": 18,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "pass_yd",
+      "procedure_id": "A::418ccf0e50bac7fbb2df02705f62f428ce00bf9d8f443e31d90e698ca60e21c9::RESPONSE_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "LOSS": 15,
+        "WIN": 17,
+        "UNAVAILABLE_FORECAST": 1
+      },
+      "after_states": {
+        "LOSS": 15,
+        "WIN": 17,
+        "UNKNOWN_PARTICIPATION": 1
+      },
+      "unavailable_forecasts": 0,
+      "selected": 33,
+      "decided": 32
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 24,
+        "LOSS": 35
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 24,
+        "LOSS": 35,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 25,
+        "LOSS": 34
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 25,
+        "LOSS": 34,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::78e0a3e29e50d210d93a63a276a3e9c23b278f9d21cab99e804b2b9d43506ef3::HGB_MAE_DIRECT::mae_objective_point",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 24,
+        "LOSS": 35
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 24,
+        "LOSS": 35,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 28,
+        "LOSS": 31
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 28,
+        "LOSS": 31,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 26,
+        "LOSS": 33
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 26,
+        "LOSS": 33,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::mean",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 27,
+        "LOSS": 32
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 27,
+        "LOSS": 32,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    },
+    {
+      "category": "rush_yd",
+      "procedure_id": "A::67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313::RESPONSE_CDF::median",
+      "week_view": "3",
+      "before_states": {
+        "UNAVAILABLE_FORECAST": 36,
+        "WIN": 26,
+        "LOSS": 33
+      },
+      "after_states": {
+        "UNAVAILABLE_FORECAST": 34,
+        "WIN": 26,
+        "LOSS": 33,
+        "UNKNOWN_PARTICIPATION": 2
+      },
+      "unavailable_forecasts": 34,
+      "selected": 61,
+      "decided": 59
+    }
+  ],
+  "limits": "Aggregate-view counts include ALL and weekly views, not80independentNFLoutcomes."
+}

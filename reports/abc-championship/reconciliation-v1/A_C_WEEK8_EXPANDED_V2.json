@@ -1,0 +1,2856 @@
+{
+  "version": "A-C-W8-OUTCOME-EXPANSION-v2",
+  "shared_championship": false,
+  "period_id": "2026_W8_C_CAPTURE_OVERLAP_ONLY",
+  "canonical_parity": "C_V2_CORE_PINNED_OWNER_LOCAL_SCOPE_NO_NEW_CANONICAL_ADMISSION",
+  "A_commit": "5e6464ba0f2da95647ba302e78f6f08cf05c3e68",
+  "C_commit": "39b98567cc11835363e91c6a2b504bf9cae1f17a",
+  "C_artifact_sha256": "92c0882f45bfa7c4d8ab2f97ab830d830fcf36b344ec93636b23f989ebe6fa2d",
+  "asof_UTC": "2026-11-04T01:38:27.418542+00:00",
+  "asof_America_Chicago": "2026-11-03T19:38:27.418542-06:00",
+  "schedule_games": 14,
+  "schedule_final_games": 14,
+  "source_scope": "C immutable graded outcomes, not refreshed full-week A outcomes",
+  "rows": [
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "LOSS": 14,
+          "WIN": 10
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "LOSS": 14,
+          "WIN": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "combined": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 1,
+        "losses": 5,
+        "decided": 6,
+        "rate": 0.16666666666666666,
+        "states": {
+          "LOSS": 5,
+          "WIN": 1
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 9,
+        "decided": 18,
+        "rate": 0.5,
+        "states": {
+          "WIN": 9,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "WIN": 10,
+          "LOSS": 14
+        }
+      },
+      "MAE": 8.28542764765328,
+      "RMSE": 10.225401165393611
+    },
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 4,
+        "losses": 7,
+        "decided": 11,
+        "rate": 0.36363636363636365,
+        "states": {
+          "LOSS": 7,
+          "WIN": 4
+        }
+      },
+      "under": {
+        "wins": 7,
+        "losses": 6,
+        "decided": 13,
+        "rate": 0.5384615384615384,
+        "states": {
+          "LOSS": 6,
+          "WIN": 7
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 13,
+        "decided": 24,
+        "rate": 0.4583333333333333,
+        "states": {
+          "LOSS": 13,
+          "WIN": 11
+        }
+      },
+      "MAE": 8.1825,
+      "RMSE": 11.450814017643753
+    },
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 2,
+        "losses": 3,
+        "decided": 5,
+        "rate": 0.4,
+        "states": {
+          "LOSS": 3,
+          "WIN": 2
+        }
+      },
+      "under": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 13,
+        "losses": 11,
+        "decided": 24,
+        "rate": 0.5416666666666666,
+        "states": {
+          "WIN": 13,
+          "LOSS": 11
+        }
+      },
+      "MAE": 8.124778539849144,
+      "RMSE": 10.423249168209752
+    },
+    {
+      "category": "pass_att",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 2,
+        "losses": 3,
+        "decided": 5,
+        "rate": 0.4,
+        "states": {
+          "LOSS": 3,
+          "WIN": 2
+        }
+      },
+      "under": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 13,
+        "losses": 11,
+        "decided": 24,
+        "rate": 0.5416666666666666,
+        "states": {
+          "WIN": 13,
+          "LOSS": 11
+        }
+      },
+      "MAE": 8.041666666666666,
+      "RMSE": 10.651682183267267
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "LOSS": 14,
+          "WIN": 10
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "LOSS": 14,
+          "WIN": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "combined": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 3,
+        "losses": 7,
+        "decided": 10,
+        "rate": 0.3,
+        "states": {
+          "LOSS": 7,
+          "WIN": 3
+        }
+      },
+      "under": {
+        "wins": 7,
+        "losses": 7,
+        "decided": 14,
+        "rate": 0.5,
+        "states": {
+          "WIN": 7,
+          "LOSS": 7
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "WIN": 10,
+          "LOSS": 14
+        }
+      },
+      "MAE": 6.594181065459677,
+      "RMSE": 8.171091278687188
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 4,
+        "losses": 6,
+        "decided": 10,
+        "rate": 0.4,
+        "states": {
+          "LOSS": 6,
+          "WIN": 4
+        }
+      },
+      "under": {
+        "wins": 8,
+        "losses": 6,
+        "decided": 14,
+        "rate": 0.5714285714285714,
+        "states": {
+          "LOSS": 6,
+          "WIN": 8
+        }
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 12,
+          "WIN": 12
+        }
+      },
+      "MAE": 6.6225,
+      "RMSE": 8.759670846175291
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 2,
+        "losses": 6,
+        "decided": 8,
+        "rate": 0.25,
+        "states": {
+          "LOSS": 6,
+          "WIN": 2
+        }
+      },
+      "under": {
+        "wins": 8,
+        "losses": 8,
+        "decided": 16,
+        "rate": 0.5,
+        "states": {
+          "WIN": 8,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "WIN": 10,
+          "LOSS": 14
+        }
+      },
+      "MAE": 6.5360625096994935,
+      "RMSE": 8.180778089598727
+    },
+    {
+      "category": "pass_cmp",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 4,
+        "losses": 8,
+        "decided": 12,
+        "rate": 0.3333333333333333,
+        "states": {
+          "LOSS": 8,
+          "WIN": 4
+        }
+      },
+      "under": {
+        "wins": 6,
+        "losses": 6,
+        "decided": 12,
+        "rate": 0.5,
+        "states": {
+          "WIN": 6,
+          "LOSS": 6
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 14,
+        "decided": 24,
+        "rate": 0.4166666666666667,
+        "states": {
+          "WIN": 10,
+          "LOSS": 14
+        }
+      },
+      "MAE": 6.625,
+      "RMSE": 8.314144574157945
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 10,
+        "losses": 10,
+        "decided": 20,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 10,
+          "WIN": 10
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 10,
+        "decided": 20,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 10,
+          "WIN": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 10,
+        "losses": 10,
+        "decided": 20,
+        "rate": 0.5,
+        "states": {
+          "WIN": 10,
+          "LOSS": 10
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 10,
+        "decided": 20,
+        "rate": 0.5,
+        "states": {
+          "WIN": 10,
+          "LOSS": 10
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 9,
+        "losses": 9,
+        "decided": 18,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 9,
+          "WIN": 9
+        }
+      },
+      "under": {
+        "wins": 1,
+        "losses": 1,
+        "decided": 2,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 1,
+          "WIN": 1
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 10,
+        "decided": 20,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 10,
+          "WIN": 10
+        }
+      },
+      "MAE": 0.7924562170613999,
+      "RMSE": 1.0823187189395689
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 5,
+        "losses": 6,
+        "decided": 11,
+        "rate": 0.45454545454545453,
+        "states": {
+          "WIN": 5,
+          "LOSS": 6
+        }
+      },
+      "under": {
+        "wins": 4,
+        "losses": 5,
+        "decided": 9,
+        "rate": 0.4444444444444444,
+        "states": {
+          "WIN": 4,
+          "LOSS": 5
+        }
+      },
+      "combined": {
+        "wins": 9,
+        "losses": 11,
+        "decided": 20,
+        "rate": 0.45,
+        "states": {
+          "WIN": 9,
+          "LOSS": 11
+        }
+      },
+      "MAE": 0.8620000000000001,
+      "RMSE": 1.1282685850452454
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 10,
+        "losses": 9,
+        "decided": 19,
+        "rate": 0.5263157894736842,
+        "states": {
+          "LOSS": 9,
+          "WIN": 10
+        }
+      },
+      "under": {
+        "wins": 1,
+        "losses": 0,
+        "decided": 1,
+        "rate": 1.0,
+        "states": {
+          "WIN": 1
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 9,
+        "decided": 20,
+        "rate": 0.55,
+        "states": {
+          "LOSS": 9,
+          "WIN": 11
+        }
+      },
+      "MAE": 0.7999462340623904,
+      "RMSE": 1.0846957899009755
+    },
+    {
+      "category": "pass_int",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 20,
+      "selected": 20,
+      "games": 10,
+      "player_games": 20,
+      "over": {
+        "wins": 1,
+        "losses": 0,
+        "decided": 1,
+        "rate": 1.0,
+        "states": {
+          "WIN": 1
+        }
+      },
+      "under": {
+        "wins": 10,
+        "losses": 9,
+        "decided": 19,
+        "rate": 0.5263157894736842,
+        "states": {
+          "WIN": 10,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 9,
+        "decided": 20,
+        "rate": 0.55,
+        "states": {
+          "WIN": 11,
+          "LOSS": 9
+        }
+      },
+      "MAE": 0.75,
+      "RMSE": 1.3228756555322954
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 13,
+        "losses": 11,
+        "decided": 24,
+        "rate": 0.5416666666666666,
+        "states": {
+          "LOSS": 11,
+          "WIN": 13
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 13,
+        "losses": 11,
+        "decided": 24,
+        "rate": 0.5416666666666666,
+        "states": {
+          "LOSS": 11,
+          "WIN": 13
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 11,
+        "losses": 13,
+        "decided": 24,
+        "rate": 0.4583333333333333,
+        "states": {
+          "WIN": 11,
+          "LOSS": 13
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 13,
+        "decided": 24,
+        "rate": 0.4583333333333333,
+        "states": {
+          "WIN": 11,
+          "LOSS": 13
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 8,
+        "losses": 5,
+        "decided": 13,
+        "rate": 0.6153846153846154,
+        "states": {
+          "WIN": 8,
+          "LOSS": 5
+        }
+      },
+      "under": {
+        "wins": 6,
+        "losses": 5,
+        "decided": 11,
+        "rate": 0.5454545454545454,
+        "states": {
+          "WIN": 6,
+          "LOSS": 5
+        }
+      },
+      "combined": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "MAE": 0.9397301717696632,
+      "RMSE": 1.1238004283410035
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 24,
+      "selected": 23,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 7,
+        "losses": 6,
+        "decided": 13,
+        "rate": 0.5384615384615384,
+        "states": {
+          "LOSS": 6,
+          "WIN": 7
+        }
+      },
+      "under": {
+        "wins": 5,
+        "losses": 5,
+        "decided": 10,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 5,
+          "WIN": 5
+        }
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 11,
+        "decided": 23,
+        "rate": 0.5217391304347826,
+        "states": {
+          "LOSS": 11,
+          "WIN": 12,
+          "ABSTAIN": 1
+        }
+      },
+      "MAE": 1.1270833333333334,
+      "RMSE": 1.374977272539441
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 5,
+        "losses": 5,
+        "decided": 10,
+        "rate": 0.5,
+        "states": {
+          "WIN": 5,
+          "LOSS": 5
+        }
+      },
+      "under": {
+        "wins": 6,
+        "losses": 8,
+        "decided": 14,
+        "rate": 0.42857142857142855,
+        "states": {
+          "WIN": 6,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 13,
+        "decided": 24,
+        "rate": 0.4583333333333333,
+        "states": {
+          "WIN": 11,
+          "LOSS": 13
+        }
+      },
+      "MAE": 1.0131179558119536,
+      "RMSE": 1.1739450936947706
+    },
+    {
+      "category": "pass_td",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 5,
+        "losses": 4,
+        "decided": 9,
+        "rate": 0.5555555555555556,
+        "states": {
+          "WIN": 5,
+          "LOSS": 4
+        }
+      },
+      "under": {
+        "wins": 7,
+        "losses": 8,
+        "decided": 15,
+        "rate": 0.4666666666666667,
+        "states": {
+          "WIN": 7,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "WIN": 12,
+          "LOSS": 12
+        }
+      },
+      "MAE": 1.0,
+      "RMSE": 1.1902380714238083
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 12,
+          "WIN": 12
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 12,
+          "WIN": 12
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "WIN": 12,
+          "LOSS": 12
+        }
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "WIN": 12,
+          "LOSS": 12
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 7,
+        "losses": 4,
+        "decided": 11,
+        "rate": 0.6363636363636364,
+        "states": {
+          "WIN": 7,
+          "LOSS": 4
+        }
+      },
+      "under": {
+        "wins": 8,
+        "losses": 5,
+        "decided": 13,
+        "rate": 0.6153846153846154,
+        "states": {
+          "WIN": 8,
+          "LOSS": 5
+        }
+      },
+      "combined": {
+        "wins": 15,
+        "losses": 9,
+        "decided": 24,
+        "rate": 0.625,
+        "states": {
+          "WIN": 15,
+          "LOSS": 9
+        }
+      },
+      "MAE": 71.20833333333333,
+      "RMSE": 91.41959126285057
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 8,
+        "losses": 8,
+        "decided": 16,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 8,
+          "WIN": 8
+        }
+      },
+      "under": {
+        "wins": 4,
+        "losses": 4,
+        "decided": 8,
+        "rate": 0.5,
+        "states": {
+          "WIN": 4,
+          "LOSS": 4
+        }
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 12,
+        "decided": 24,
+        "rate": 0.5,
+        "states": {
+          "LOSS": 12,
+          "WIN": 12
+        }
+      },
+      "MAE": 80.18041666666666,
+      "RMSE": 101.45322672295839
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 5,
+        "losses": 3,
+        "decided": 8,
+        "rate": 0.625,
+        "states": {
+          "LOSS": 3,
+          "WIN": 5
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 7,
+        "decided": 16,
+        "rate": 0.5625,
+        "states": {
+          "WIN": 9,
+          "LOSS": 7
+        }
+      },
+      "combined": {
+        "wins": 14,
+        "losses": 10,
+        "decided": 24,
+        "rate": 0.5833333333333334,
+        "states": {
+          "WIN": 14,
+          "LOSS": 10
+        }
+      },
+      "MAE": 69.11264581399747,
+      "RMSE": 90.43979097616005
+    },
+    {
+      "category": "pass_yd",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 24,
+      "selected": 24,
+      "games": 12,
+      "player_games": 24,
+      "over": {
+        "wins": 8,
+        "losses": 3,
+        "decided": 11,
+        "rate": 0.7272727272727273,
+        "states": {
+          "LOSS": 3,
+          "WIN": 8
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 4,
+        "decided": 13,
+        "rate": 0.6923076923076923,
+        "states": {
+          "WIN": 9,
+          "LOSS": 4
+        }
+      },
+      "combined": {
+        "wins": 17,
+        "losses": 7,
+        "decided": 24,
+        "rate": 0.7083333333333334,
+        "states": {
+          "WIN": 17,
+          "LOSS": 7
+        }
+      },
+      "MAE": 68.54166666666667,
+      "RMSE": 91.38585776803761
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 44,
+        "losses": 45,
+        "decided": 89,
+        "rate": 0.4943820224719101,
+        "states": {
+          "WIN": 44,
+          "LOSS": 45
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 44,
+        "losses": 45,
+        "decided": 89,
+        "rate": 0.4943820224719101,
+        "states": {
+          "WIN": 44,
+          "LOSS": 45
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 45,
+        "losses": 44,
+        "decided": 89,
+        "rate": 0.5056179775280899,
+        "states": {
+          "LOSS": 44,
+          "WIN": 45
+        }
+      },
+      "combined": {
+        "wins": 45,
+        "losses": 44,
+        "decided": 89,
+        "rate": 0.5056179775280899,
+        "states": {
+          "LOSS": 44,
+          "WIN": 45
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 23,
+        "losses": 25,
+        "decided": 48,
+        "rate": 0.4791666666666667,
+        "states": {
+          "WIN": 23,
+          "LOSS": 25
+        }
+      },
+      "under": {
+        "wins": 20,
+        "losses": 21,
+        "decided": 41,
+        "rate": 0.4878048780487805,
+        "states": {
+          "LOSS": 21,
+          "WIN": 20
+        }
+      },
+      "combined": {
+        "wins": 43,
+        "losses": 46,
+        "decided": 89,
+        "rate": 0.48314606741573035,
+        "states": {
+          "LOSS": 46,
+          "WIN": 43
+        }
+      },
+      "MAE": 1.7270424562765843,
+      "RMSE": 2.2138230593683184
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 18,
+        "losses": 23,
+        "decided": 41,
+        "rate": 0.43902439024390244,
+        "states": {
+          "LOSS": 23,
+          "WIN": 18
+        }
+      },
+      "under": {
+        "wins": 22,
+        "losses": 26,
+        "decided": 48,
+        "rate": 0.4583333333333333,
+        "states": {
+          "LOSS": 26,
+          "WIN": 22
+        }
+      },
+      "combined": {
+        "wins": 40,
+        "losses": 49,
+        "decided": 89,
+        "rate": 0.449438202247191,
+        "states": {
+          "LOSS": 49,
+          "WIN": 40
+        }
+      },
+      "MAE": 1.818202247191011,
+      "RMSE": 2.269757201290259
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 23,
+        "losses": 23,
+        "decided": 46,
+        "rate": 0.5,
+        "states": {
+          "WIN": 23,
+          "LOSS": 23
+        }
+      },
+      "under": {
+        "wins": 22,
+        "losses": 21,
+        "decided": 43,
+        "rate": 0.5116279069767442,
+        "states": {
+          "WIN": 22,
+          "LOSS": 21
+        }
+      },
+      "combined": {
+        "wins": 45,
+        "losses": 44,
+        "decided": 89,
+        "rate": 0.5056179775280899,
+        "states": {
+          "WIN": 45,
+          "LOSS": 44
+        }
+      },
+      "MAE": 1.7243376064419635,
+      "RMSE": 2.208519564596657
+    },
+    {
+      "category": "rec",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 89,
+      "selected": 89,
+      "games": 12,
+      "player_games": 89,
+      "over": {
+        "wins": 15,
+        "losses": 14,
+        "decided": 29,
+        "rate": 0.5172413793103449,
+        "states": {
+          "WIN": 15,
+          "LOSS": 14
+        }
+      },
+      "under": {
+        "wins": 31,
+        "losses": 29,
+        "decided": 60,
+        "rate": 0.5166666666666667,
+        "states": {
+          "LOSS": 29,
+          "WIN": 31
+        }
+      },
+      "combined": {
+        "wins": 46,
+        "losses": 43,
+        "decided": 89,
+        "rate": 0.5168539325842697,
+        "states": {
+          "LOSS": 43,
+          "WIN": 46
+        }
+      },
+      "MAE": 1.752808988764045,
+      "RMSE": 2.2585667126533187
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 51,
+        "losses": 40,
+        "decided": 91,
+        "rate": 0.5604395604395604,
+        "states": {
+          "LOSS": 40,
+          "WIN": 51
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 51,
+        "losses": 40,
+        "decided": 91,
+        "rate": 0.5604395604395604,
+        "states": {
+          "LOSS": 40,
+          "WIN": 51
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 40,
+        "losses": 51,
+        "decided": 91,
+        "rate": 0.43956043956043955,
+        "states": {
+          "WIN": 40,
+          "LOSS": 51
+        }
+      },
+      "combined": {
+        "wins": 40,
+        "losses": 51,
+        "decided": 91,
+        "rate": 0.43956043956043955,
+        "states": {
+          "WIN": 40,
+          "LOSS": 51
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 20,
+        "losses": 11,
+        "decided": 31,
+        "rate": 0.6451612903225806,
+        "states": {
+          "WIN": 20,
+          "LOSS": 11
+        }
+      },
+      "under": {
+        "wins": 29,
+        "losses": 31,
+        "decided": 60,
+        "rate": 0.48333333333333334,
+        "states": {
+          "WIN": 29,
+          "LOSS": 31
+        }
+      },
+      "combined": {
+        "wins": 49,
+        "losses": 42,
+        "decided": 91,
+        "rate": 0.5384615384615384,
+        "states": {
+          "WIN": 49,
+          "LOSS": 42
+        }
+      },
+      "MAE": 26.25545897014562,
+      "RMSE": 36.840886076896005
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 38,
+        "losses": 24,
+        "decided": 62,
+        "rate": 0.6129032258064516,
+        "states": {
+          "LOSS": 24,
+          "WIN": 38
+        }
+      },
+      "under": {
+        "wins": 16,
+        "losses": 13,
+        "decided": 29,
+        "rate": 0.5517241379310345,
+        "states": {
+          "LOSS": 13,
+          "WIN": 16
+        }
+      },
+      "combined": {
+        "wins": 54,
+        "losses": 37,
+        "decided": 91,
+        "rate": 0.5934065934065934,
+        "states": {
+          "LOSS": 37,
+          "WIN": 54
+        }
+      },
+      "MAE": 25.453406593406594,
+      "RMSE": 34.852387781412254
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 36,
+        "losses": 22,
+        "decided": 58,
+        "rate": 0.6206896551724138,
+        "states": {
+          "LOSS": 22,
+          "WIN": 36
+        }
+      },
+      "under": {
+        "wins": 18,
+        "losses": 15,
+        "decided": 33,
+        "rate": 0.5454545454545454,
+        "states": {
+          "WIN": 18,
+          "LOSS": 15
+        }
+      },
+      "combined": {
+        "wins": 54,
+        "losses": 37,
+        "decided": 91,
+        "rate": 0.5934065934065934,
+        "states": {
+          "LOSS": 37,
+          "WIN": 54
+        }
+      },
+      "MAE": 25.999895213205,
+      "RMSE": 34.98427863786219
+    },
+    {
+      "category": "rec_yd",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 91,
+      "selected": 91,
+      "games": 12,
+      "player_games": 91,
+      "over": {
+        "wins": 16,
+        "losses": 11,
+        "decided": 27,
+        "rate": 0.5925925925925926,
+        "states": {
+          "LOSS": 11,
+          "WIN": 16
+        }
+      },
+      "under": {
+        "wins": 29,
+        "losses": 35,
+        "decided": 64,
+        "rate": 0.453125,
+        "states": {
+          "WIN": 29,
+          "LOSS": 35
+        }
+      },
+      "combined": {
+        "wins": 45,
+        "losses": 46,
+        "decided": 91,
+        "rate": 0.4945054945054945,
+        "states": {
+          "LOSS": 46,
+          "WIN": 45
+        }
+      },
+      "MAE": 26.615384615384617,
+      "RMSE": 36.514034634298156
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 12,
+        "losses": 9,
+        "decided": 21,
+        "rate": 0.5714285714285714,
+        "states": {
+          "LOSS": 9,
+          "WIN": 12
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 12,
+        "losses": 9,
+        "decided": 21,
+        "rate": 0.5714285714285714,
+        "states": {
+          "LOSS": 9,
+          "WIN": 12
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 9,
+        "losses": 12,
+        "decided": 21,
+        "rate": 0.42857142857142855,
+        "states": {
+          "WIN": 9,
+          "LOSS": 12
+        }
+      },
+      "combined": {
+        "wins": 9,
+        "losses": 12,
+        "decided": 21,
+        "rate": 0.42857142857142855,
+        "states": {
+          "WIN": 9,
+          "LOSS": 12
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 2,
+        "losses": 5,
+        "decided": 7,
+        "rate": 0.2857142857142857,
+        "states": {
+          "LOSS": 5,
+          "WIN": 2
+        }
+      },
+      "under": {
+        "wins": 4,
+        "losses": 10,
+        "decided": 14,
+        "rate": 0.2857142857142857,
+        "states": {
+          "WIN": 4,
+          "LOSS": 10
+        }
+      },
+      "combined": {
+        "wins": 6,
+        "losses": 15,
+        "decided": 21,
+        "rate": 0.2857142857142857,
+        "states": {
+          "WIN": 6,
+          "LOSS": 15
+        }
+      },
+      "MAE": 5.589483086506871,
+      "RMSE": 6.460089355582774
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 3,
+        "losses": 6,
+        "decided": 9,
+        "rate": 0.3333333333333333,
+        "states": {
+          "LOSS": 6,
+          "WIN": 3
+        }
+      },
+      "under": {
+        "wins": 3,
+        "losses": 9,
+        "decided": 12,
+        "rate": 0.25,
+        "states": {
+          "WIN": 3,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 6,
+        "losses": 15,
+        "decided": 21,
+        "rate": 0.2857142857142857,
+        "states": {
+          "WIN": 6,
+          "LOSS": 15
+        }
+      },
+      "MAE": 5.057619047619047,
+      "RMSE": 6.317793089664264
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 3,
+        "losses": 4,
+        "decided": 7,
+        "rate": 0.42857142857142855,
+        "states": {
+          "WIN": 3,
+          "LOSS": 4
+        }
+      },
+      "under": {
+        "wins": 5,
+        "losses": 9,
+        "decided": 14,
+        "rate": 0.35714285714285715,
+        "states": {
+          "WIN": 5,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 8,
+        "losses": 13,
+        "decided": 21,
+        "rate": 0.38095238095238093,
+        "states": {
+          "WIN": 8,
+          "LOSS": 13
+        }
+      },
+      "MAE": 4.988525433629769,
+      "RMSE": 5.695391091846233
+    },
+    {
+      "category": "rush_att",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 21,
+      "selected": 21,
+      "games": 11,
+      "player_games": 21,
+      "over": {
+        "wins": 3,
+        "losses": 3,
+        "decided": 6,
+        "rate": 0.5,
+        "states": {
+          "WIN": 3,
+          "LOSS": 3
+        }
+      },
+      "under": {
+        "wins": 6,
+        "losses": 9,
+        "decided": 15,
+        "rate": 0.4,
+        "states": {
+          "WIN": 6,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 9,
+        "losses": 12,
+        "decided": 21,
+        "rate": 0.42857142857142855,
+        "states": {
+          "WIN": 9,
+          "LOSS": 12
+        }
+      },
+      "MAE": 5.095238095238095,
+      "RMSE": 5.785861256216785
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 8,
+        "losses": 11,
+        "decided": 19,
+        "rate": 0.42105263157894735,
+        "states": {
+          "LOSS": 11,
+          "WIN": 8
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 8,
+        "losses": 11,
+        "decided": 19,
+        "rate": 0.42105263157894735,
+        "states": {
+          "LOSS": 11,
+          "WIN": 8
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 0,
+        "losses": 1,
+        "decided": 1,
+        "rate": 0.0,
+        "states": {
+          "LOSS": 1
+        }
+      },
+      "under": {
+        "wins": 10,
+        "losses": 8,
+        "decided": 18,
+        "rate": 0.5555555555555556,
+        "states": {
+          "WIN": 10,
+          "LOSS": 8
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 9,
+        "decided": 19,
+        "rate": 0.5263157894736842,
+        "states": {
+          "WIN": 10,
+          "LOSS": 9
+        }
+      },
+      "MAE": 31.526400451896496,
+      "RMSE": 43.286106472234714
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 4,
+        "losses": 4,
+        "decided": 8,
+        "rate": 0.5,
+        "states": {
+          "WIN": 4,
+          "LOSS": 4
+        }
+      },
+      "under": {
+        "wins": 7,
+        "losses": 4,
+        "decided": 11,
+        "rate": 0.6363636363636364,
+        "states": {
+          "WIN": 7,
+          "LOSS": 4
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "MAE": 29.303684210526313,
+      "RMSE": 38.27151331707367
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 2,
+        "losses": 2,
+        "decided": 4,
+        "rate": 0.5,
+        "states": {
+          "WIN": 2,
+          "LOSS": 2
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 6,
+        "decided": 15,
+        "rate": 0.6,
+        "states": {
+          "WIN": 9,
+          "LOSS": 6
+        }
+      },
+      "combined": {
+        "wins": 11,
+        "losses": 8,
+        "decided": 19,
+        "rate": 0.5789473684210527,
+        "states": {
+          "WIN": 11,
+          "LOSS": 8
+        }
+      },
+      "MAE": 28.45447067601595,
+      "RMSE": 38.12043959750468
+    },
+    {
+      "category": "rush_rec_yd",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 19,
+      "selected": 19,
+      "games": 11,
+      "player_games": 19,
+      "over": {
+        "wins": 1,
+        "losses": 2,
+        "decided": 3,
+        "rate": 0.3333333333333333,
+        "states": {
+          "LOSS": 2,
+          "WIN": 1
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 7,
+        "decided": 16,
+        "rate": 0.5625,
+        "states": {
+          "WIN": 9,
+          "LOSS": 7
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 9,
+        "decided": 19,
+        "rate": 0.5263157894736842,
+        "states": {
+          "WIN": 10,
+          "LOSS": 9
+        }
+      },
+      "MAE": 28.36842105263158,
+      "RMSE": 39.73133457824468
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "ALWAYS_OVER",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 15,
+        "losses": 13,
+        "decided": 28,
+        "rate": 0.5357142857142857,
+        "states": {
+          "LOSS": 13,
+          "WIN": 15
+        }
+      },
+      "under": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "combined": {
+        "wins": 15,
+        "losses": 13,
+        "decided": 28,
+        "rate": 0.5357142857142857,
+        "states": {
+          "LOSS": 13,
+          "WIN": 15
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "ALWAYS_UNDER",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 0,
+        "losses": 0,
+        "decided": 0,
+        "rate": null,
+        "states": {}
+      },
+      "under": {
+        "wins": 13,
+        "losses": 15,
+        "decided": 28,
+        "rate": 0.4642857142857143,
+        "states": {
+          "WIN": 13,
+          "LOSS": 15
+        }
+      },
+      "combined": {
+        "wins": 13,
+        "losses": 15,
+        "decided": 28,
+        "rate": 0.4642857142857143,
+        "states": {
+          "WIN": 13,
+          "LOSS": 15
+        }
+      },
+      "MAE": null,
+      "RMSE": null
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "A_CAPTURED_SELECTED_POINT",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 1,
+        "losses": 4,
+        "decided": 5,
+        "rate": 0.2,
+        "states": {
+          "WIN": 1,
+          "LOSS": 4
+        }
+      },
+      "under": {
+        "wins": 9,
+        "losses": 14,
+        "decided": 23,
+        "rate": 0.391304347826087,
+        "states": {
+          "WIN": 9,
+          "LOSS": 14
+        }
+      },
+      "combined": {
+        "wins": 10,
+        "losses": 18,
+        "decided": 28,
+        "rate": 0.35714285714285715,
+        "states": {
+          "WIN": 10,
+          "LOSS": 18
+        }
+      },
+      "MAE": 32.714285714285715,
+      "RMSE": 42.71165782647302
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "A_R0_POINT",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 9,
+        "losses": 8,
+        "decided": 17,
+        "rate": 0.5294117647058824,
+        "states": {
+          "WIN": 9,
+          "LOSS": 8
+        }
+      },
+      "under": {
+        "wins": 5,
+        "losses": 6,
+        "decided": 11,
+        "rate": 0.45454545454545453,
+        "states": {
+          "WIN": 5,
+          "LOSS": 6
+        }
+      },
+      "combined": {
+        "wins": 14,
+        "losses": 14,
+        "decided": 28,
+        "rate": 0.5,
+        "states": {
+          "WIN": 14,
+          "LOSS": 14
+        }
+      },
+      "MAE": 27.32,
+      "RMSE": 36.12169866279428
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "C_CAPTURED_MEAN",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 9,
+        "losses": 7,
+        "decided": 16,
+        "rate": 0.5625,
+        "states": {
+          "WIN": 9,
+          "LOSS": 7
+        }
+      },
+      "under": {
+        "wins": 6,
+        "losses": 6,
+        "decided": 12,
+        "rate": 0.5,
+        "states": {
+          "WIN": 6,
+          "LOSS": 6
+        }
+      },
+      "combined": {
+        "wins": 15,
+        "losses": 13,
+        "decided": 28,
+        "rate": 0.5357142857142857,
+        "states": {
+          "WIN": 15,
+          "LOSS": 13
+        }
+      },
+      "MAE": 26.60925901457663,
+      "RMSE": 36.12921883013948
+    },
+    {
+      "category": "rush_yd",
+      "procedure_output_rule": "C_CAPTURED_MEDIAN",
+      "eligible_common": 28,
+      "selected": 28,
+      "games": 11,
+      "player_games": 28,
+      "over": {
+        "wins": 6,
+        "losses": 3,
+        "decided": 9,
+        "rate": 0.6666666666666666,
+        "states": {
+          "WIN": 6,
+          "LOSS": 3
+        }
+      },
+      "under": {
+        "wins": 10,
+        "losses": 9,
+        "decided": 19,
+        "rate": 0.5263157894736842,
+        "states": {
+          "WIN": 10,
+          "LOSS": 9
+        }
+      },
+      "combined": {
+        "wins": 16,
+        "losses": 12,
+        "decided": 28,
+        "rate": 0.5714285714285714,
+        "states": {
+          "WIN": 16,
+          "LOSS": 12
+        }
+      },
+      "MAE": 28.107142857142858,
+      "RMSE": 38.375494412822505
+    }
+  ],
+  "paired_changes": [
+    {
+      "category": "pass_att",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.125,
+      "game_bootstrap95": [
+        -0.3333333333333333,
+        0.08333333333333333
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_att",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.16666666666666666,
+      "game_bootstrap95": [
+        -0.3333333333333333,
+        0.041666666666666664
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_att",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.041666666666666664,
+      "game_bootstrap95": [
+        -0.20833333333333334,
+        0.125
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_att",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.041666666666666664,
+      "game_bootstrap95": [
+        -0.20833333333333334,
+        0.125
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_cmp",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.08333333333333333,
+      "game_bootstrap95": [
+        -0.3333333333333333,
+        0.125
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_cmp",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.16666666666666666,
+      "game_bootstrap95": [
+        -0.3333333333333333,
+        0.0
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_cmp",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.16666666666666666,
+      "game_bootstrap95": [
+        -0.375,
+        0.041666666666666664
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_cmp",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": -0.16666666666666666,
+      "game_bootstrap95": [
+        -0.2916666666666667,
+        -0.041666666666666664
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_int",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 20,
+      "accuracy_change": -0.05,
+      "game_bootstrap95": [
+        -0.25,
+        0.15
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_int",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 20,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.35,
+        0.3
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_int",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 20,
+      "accuracy_change": 0.05,
+      "game_bootstrap95": [
+        0.0,
+        0.15
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_int",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 20,
+      "accuracy_change": 0.05,
+      "game_bootstrap95": [
+        -0.25,
+        0.35
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_td",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 23,
+      "accuracy_change": 0.043478260869565216,
+      "game_bootstrap95": [
+        -0.375,
+        0.43478260869565216
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_td",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.125,
+      "game_bootstrap95": [
+        -0.20833333333333334,
+        0.4583333333333333
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_td",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.041666666666666664,
+      "game_bootstrap95": [
+        -0.25,
+        0.2916666666666667
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_td",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.2916666666666667,
+        0.2916666666666667
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_yd",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.375,
+        0.375
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_yd",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.125,
+      "game_bootstrap95": [
+        -0.16666666666666666,
+        0.375
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_yd",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.20833333333333334,
+      "game_bootstrap95": [
+        -0.08333333333333333,
+        0.5
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "pass_yd",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 24,
+      "accuracy_change": 0.08333333333333333,
+      "game_bootstrap95": [
+        -0.20833333333333334,
+        0.3333333333333333
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 89,
+      "accuracy_change": -0.056179775280898875,
+      "game_bootstrap95": [
+        -0.2087912087912088,
+        0.09090909090909091
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 89,
+      "accuracy_change": -0.02247191011235955,
+      "game_bootstrap95": [
+        -0.18421052631578946,
+        0.14084507042253522
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 89,
+      "accuracy_change": 0.011235955056179775,
+      "game_bootstrap95": [
+        -0.13513513513513514,
+        0.16853932584269662
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 89,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.1794871794871795,
+        0.16666666666666666
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec_yd",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 91,
+      "accuracy_change": 0.15384615384615385,
+      "game_bootstrap95": [
+        -0.050505050505050504,
+        0.37
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec_yd",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 91,
+      "accuracy_change": 0.0989010989010989,
+      "game_bootstrap95": [
+        -0.011904761904761904,
+        0.2073170731707317
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec_yd",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 91,
+      "accuracy_change": 0.054945054945054944,
+      "game_bootstrap95": [
+        -0.02608695652173913,
+        0.13861386138613863
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rec_yd",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 91,
+      "accuracy_change": 0.15384615384615385,
+      "game_bootstrap95": [
+        0.009523809523809525,
+        0.3146067415730337
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_att",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 21,
+      "accuracy_change": -0.14285714285714285,
+      "game_bootstrap95": [
+        -0.375,
+        0.09523809523809523
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_att",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 21,
+      "accuracy_change": -0.14285714285714285,
+      "game_bootstrap95": [
+        -0.38095238095238093,
+        0.18181818181818182
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_att",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 21,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.21052631578947367,
+        0.3
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_att",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 21,
+      "accuracy_change": -0.047619047619047616,
+      "game_bootstrap95": [
+        -0.3,
+        0.29411764705882354
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 19,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.2857142857142857,
+        0.23809523809523808
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 19,
+      "accuracy_change": -0.05263157894736842,
+      "game_bootstrap95": [
+        -0.17647058823529413,
+        0.0
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 19,
+      "accuracy_change": -0.05263157894736842,
+      "game_bootstrap95": [
+        -0.15789473684210525,
+        0.0
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 19,
+      "accuracy_change": 0.0,
+      "game_bootstrap95": [
+        -0.14285714285714285,
+        0.15
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_yd",
+      "method": "A_R0_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 28,
+      "accuracy_change": 0.03571428571428571,
+      "game_bootstrap95": [
+        -0.2692307692307692,
+        0.34375
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_yd",
+      "method": "A_CAPTURED_SELECTED_POINT",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 28,
+      "accuracy_change": -0.10714285714285714,
+      "game_bootstrap95": [
+        -0.24,
+        0.038461538461538464
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_yd",
+      "method": "C_CAPTURED_MEDIAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 28,
+      "accuracy_change": 0.10714285714285714,
+      "game_bootstrap95": [
+        -0.07692307692307693,
+        0.2962962962962963
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    },
+    {
+      "category": "rush_yd",
+      "method": "C_CAPTURED_MEAN",
+      "control": "ALWAYS_UNDER",
+      "paired_decided": 28,
+      "accuracy_change": 0.07142857142857142,
+      "game_bootstrap95": [
+        -0.15384615384615385,
+        0.3
+      ],
+      "scope": "Nominal one-week exposed sensitivity; selection maxima unadjusted"
+    }
+  ],
+  "identity_exclusions": {
+    "NO_EXACT_NAME_EVENT_TEAM_JOIN": 400,
+    "NO_COMPATIBLE_ORIGINAL_LINE": 844,
+    "POSITION_OR_OPPONENT_MISMATCH": 51,
+    "A_FORECAST_UNAVAILABLE": 18,
+    "C_UNKNOWN_OR_PENDING_ACTUAL": 22
+  },
+  "outcome_conflicts_excluded": 0,
+  "identity_rule": "Exact unique full name + ESPN event + historical team; same position and reciprocal opponent; one-to-one GSIS-to-Sleeper mapping; no fuzzy joins",
+  "identity_crosswalk_players": 320,
+  "private_pair_rows_published": 0,
+  "new_fits_inference": 0,
+  "reproduction": "Existing private A capsules and public C final CSV; new minimal join/grade rows returned for managed private retention; old344-case pilot remains unchanged",
+  "limits": [
+    "LOCAL timing-unverified original-line replay; no shared parity or venue/ROI claim",
+    "C mean/median outputs one procedure, not two independent learners",
+    "C subset based on positively evidenced participation; unresolved issued rows remain excluded and counted",
+    "Different issue clocks/information tiers; complete-system descriptive comparison",
+    "Week8 only; no eight-week/historical/TopK or adaptive selector completion"
+  ]
+}

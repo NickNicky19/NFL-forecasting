@@ -1353,6 +1353,44 @@
       ],
       "publication_status": "PUBLICATION_COMPLETE",
       "publication_commit": "88dac5da1b261ae6f521d3f23c83b2f95fc364bd"
+    },
+    {
+      "experiment_id": "e:ABC-A-reconcile-state-and-outcome-v1-20261104",
+      "request_id": "OWNER_SHARED_ABC_REPORT_RECONCILIATION_20261104",
+      "method_ids": [],
+      "hypothesis": "Correct adapter availability/outcome separation and expand frozen W8 overlap only with new supported outcomes; qualify recovered W6-W7 source board without relabeling old weeks or authenticbook evidence.",
+      "history_policy": "Exact retained A/C predictions and earlier-only reconstruction source policies; no new model inference or fits",
+      "sources": [
+        {
+          "record": "../abc-championship/RECONCILIATION_PROTOCOL_V1.json"
+        },
+        {
+          "record": "../abc-championship/reconciliation-v1/CANONICAL_CONTINUATION_ACK_V1.json"
+        }
+      ],
+      "population": {
+        "corrected_aggregate_views": 80,
+        "unchanged_score_views": 87,
+        "unchanged_paired_views": 203,
+        "expanded_W8_unique_thresholds": 364,
+        "new_W6_W7_recorded_thresholds_source_panel": 1285
+      },
+      "cutoff": "Original forecast issue clocks unchanged; quote/source timing unverified; source-specific diagnostics not shared temporal parity",
+      "budget": {
+        "record": "../abc-championship/RECONCILIATION_PROTOCOL_V1.json",
+        "continuation": "../abc-championship/reconciliation-v1/CONTINUATION_V1_1.json",
+        "source_replay": "../abc-championship/reconciliation-v1/W6_W7_RECORDED_THRESHOLD_REPLAY_PROTOCOL_V1.json",
+        "fits": 0,
+        "inference": 0
+      },
+      "status": "COMPLETED",
+      "registration": {
+        "record": "../abc-championship/RECONCILIATION_PROTOCOL_V1.json"
+      },
+      "owner": "Session A; C canonical intake, B source/recovery and retained production owner unchanged",
+      "result_index": "../abc-championship/reconciliation-v1/README.md",
+      "record_type": "CORRECTION_OUTCOME_APPEND_SOURCE_SPECIFIC_REPLAY_NOT_NEW_CHAMPIONSHIP",
+      "publication_status": "RESULT_SAVED_PUBLICATION_PENDING"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"
