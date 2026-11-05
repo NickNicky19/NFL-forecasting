@@ -4,6 +4,375 @@
   "panels": [
     {
       "comparison": {
+        "comparison_set_id": "A3_MATCHED_SAME_RB_ROSTER_2025_5,6,7,8",
+        "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+        "fallback_policy_id": "UNCHANGED_REGISTERED_EXPOSURE_STATE_FALLBACKS",
+        "horizon_id": "HISTORICAL_LEFT_LIMIT_KICKOFF_RECONSTRUCTION",
+        "outcome_version": "Original bound carry scorecard current-vintage labels",
+        "population_id": "A_POSTWAVE_RB_428",
+        "season": 2025,
+        "source_policy_id": "CURRENT_VINTAGE_SEVEN_DAY_HISTORY_RECONSTRUCTION",
+        "target": "rush_att",
+        "weeks": [
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 57,
+            "planned": 428,
+            "scored": 333,
+            "weeks": 4
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 57,
+                "planned": 428,
+                "scored": 333,
+                "weeks": 4
+              },
+              "functional": "mean",
+              "loss": 20.18531568158814,
+              "loss_state": "FINITE",
+              "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+              "output_id": "mean",
+              "readiness": {
+                "future": "NOT_ADMITTED",
+                "live": "NO_NEW_A_RELEASE",
+                "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+                "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+              },
+              "result_id": "v:A-POST-WAVE-A3:2025:mean:ALL"
+            }
+          ],
+          "loss": 20.18531568158814,
+          "loss_state": "FINITE",
+          "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": {
+            "future": "NOT_ADMITTED",
+            "live": "NO_NEW_A_RELEASE",
+            "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+            "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+          },
+          "result_id": "v:A-POST-WAVE-A3:2025:mean:ALL",
+          "shortlist_group": "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "A3_MATCHED_SAME_RB_ROSTER_2025_5,6,7,8",
+        "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+        "fallback_policy_id": "UNCHANGED_REGISTERED_EXPOSURE_STATE_FALLBACKS",
+        "horizon_id": "HISTORICAL_LEFT_LIMIT_KICKOFF_RECONSTRUCTION",
+        "outcome_version": "Original bound carry scorecard current-vintage labels",
+        "population_id": "A_POSTWAVE_RB_428",
+        "season": 2025,
+        "source_policy_id": "CURRENT_VINTAGE_SEVEN_DAY_HISTORY_RECONSTRUCTION",
+        "target": "rush_att",
+        "weeks": [
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "point_MAE",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 57,
+            "planned": 428,
+            "scored": 333,
+            "weeks": 4
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 57,
+                "planned": 428,
+                "scored": 333,
+                "weeks": 4
+              },
+              "functional": "median",
+              "loss": 3.2882882882882885,
+              "loss_state": "FINITE",
+              "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+              "output_id": "median",
+              "readiness": {
+                "future": "NOT_ADMITTED",
+                "live": "NO_NEW_A_RELEASE",
+                "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+                "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+              },
+              "result_id": "v:A-POST-WAVE-A3:2025:median:ALL"
+            }
+          ],
+          "loss": 3.2882882882882885,
+          "loss_state": "FINITE",
+          "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": {
+            "future": "NOT_ADMITTED",
+            "live": "NO_NEW_A_RELEASE",
+            "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+            "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+          },
+          "result_id": "v:A-POST-WAVE-A3:2025:median:ALL",
+          "shortlist_group": "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "A3_MATCHED_SAME_RB_ROSTER_2026_1,2,3,4,5,6,7",
+        "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+        "fallback_policy_id": "UNCHANGED_REGISTERED_EXPOSURE_STATE_FALLBACKS",
+        "horizon_id": "HISTORICAL_LEFT_LIMIT_KICKOFF_RECONSTRUCTION",
+        "outcome_version": "Original bound carry scorecard current-vintage labels",
+        "population_id": "A_POSTWAVE_RB_1244",
+        "season": 2026,
+        "source_policy_id": "CURRENT_VINTAGE_SEVEN_DAY_HISTORY_RECONSTRUCTION",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "expected_mean_MSE",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 107,
+            "planned": 1244,
+            "scored": 586,
+            "weeks": 7
+          },
+          "functional": "mean",
+          "grouped_method_ids": [
+            "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 107,
+                "planned": 1244,
+                "scored": 586,
+                "weeks": 7
+              },
+              "functional": "mean",
+              "loss": 24.83631523782195,
+              "loss_state": "FINITE",
+              "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+              "output_id": "mean",
+              "readiness": {
+                "future": "NOT_ADMITTED",
+                "live": "NO_NEW_A_RELEASE",
+                "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+                "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+              },
+              "result_id": "v:A-POST-WAVE-A3:2026:mean:ALL"
+            }
+          ],
+          "loss": 24.83631523782195,
+          "loss_state": "FINITE",
+          "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+          "output_id": "mean",
+          "rank": 1,
+          "readiness": {
+            "future": "NOT_ADMITTED",
+            "live": "NO_NEW_A_RELEASE",
+            "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+            "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+          },
+          "result_id": "v:A-POST-WAVE-A3:2026:mean:ALL",
+          "shortlist_group": "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "A3_MATCHED_SAME_RB_ROSTER_2026_1,2,3,4,5,6,7",
+        "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+        "fallback_policy_id": "UNCHANGED_REGISTERED_EXPOSURE_STATE_FALLBACKS",
+        "horizon_id": "HISTORICAL_LEFT_LIMIT_KICKOFF_RECONSTRUCTION",
+        "outcome_version": "Original bound carry scorecard current-vintage labels",
+        "population_id": "A_POSTWAVE_RB_1244",
+        "season": 2026,
+        "source_policy_id": "CURRENT_VINTAGE_SEVEN_DAY_HISTORY_RECONSTRUCTION",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "point_MAE",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 107,
+            "planned": 1244,
+            "scored": 586,
+            "weeks": 7
+          },
+          "functional": "median",
+          "grouped_method_ids": [
+            "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 107,
+                "planned": 1244,
+                "scored": 586,
+                "weeks": 7
+              },
+              "functional": "median",
+              "loss": 3.742320819112628,
+              "loss_state": "FINITE",
+              "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+              "output_id": "median",
+              "readiness": {
+                "future": "NOT_ADMITTED",
+                "live": "NO_NEW_A_RELEASE",
+                "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+                "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+              },
+              "result_id": "v:A-POST-WAVE-A3:2026:median:ALL"
+            }
+          ],
+          "loss": 3.742320819112628,
+          "loss_state": "FINITE",
+          "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+          "output_id": "median",
+          "rank": 1,
+          "readiness": {
+            "future": "NOT_ADMITTED",
+            "live": "NO_NEW_A_RELEASE",
+            "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+            "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+          },
+          "result_id": "v:A-POST-WAVE-A3:2026:median:ALL",
+          "shortlist_group": "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+        }
+      ]
+    },
+    {
+      "comparison": {
+        "comparison_set_id": "A3_RB239_ACTUAL_LINE_FULL_LAW",
+        "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
+        "fallback_policy_id": "UNCHANGED_REGISTERED_EXPOSURE_STATE_FALLBACKS",
+        "horizon_id": "HISTORICAL_LEFT_LIMIT_KICKOFF_RECONSTRUCTION",
+        "outcome_version": "Original bound carry scorecard current-vintage labels",
+        "population_id": "RB239_ORIGINAL_HALF_INTEGER_OFFERS",
+        "season": 2026,
+        "source_policy_id": "CURRENT_VINTAGE_SEVEN_DAY_HISTORY_RECONSTRUCTION",
+        "target": "rush_att",
+        "weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "distinct_procedures": 1,
+      "objective": "Brier",
+      "shortfall_from5": 4,
+      "shortlist_groups": 1,
+      "top_up_to5": [
+        {
+          "coverage": {
+            "games": 81,
+            "planned": 239,
+            "scored": 231,
+            "weeks": 7
+          },
+          "functional": "probability",
+          "grouped_method_ids": [
+            "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+          ],
+          "grouped_results": [
+            {
+              "coverage": {
+                "games": 81,
+                "planned": 239,
+                "scored": 231,
+                "weeks": 7
+              },
+              "functional": "probability",
+              "loss": 0.2989635251542991,
+              "loss_state": "FINITE",
+              "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+              "output_id": "exact_line_probability",
+              "readiness": {
+                "future": "NOT_ADMITTED",
+                "live": "NO_NEW_A_RELEASE",
+                "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+                "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+              },
+              "result_id": "v:A-POST-WAVE-A3:2026:exact_line_probability:ALL"
+            }
+          ],
+          "loss": 0.2989635251542991,
+          "loss_state": "FINITE",
+          "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+          "output_id": "exact_line_probability",
+          "rank": 1,
+          "readiness": {
+            "future": "NOT_ADMITTED",
+            "live": "NO_NEW_A_RELEASE",
+            "primary_eligibility": "Five-week floor alone does not show superiority or operational readiness.",
+            "research": "SCORED_HISTORICAL_RECONSTRUCTION"
+          },
+          "result_id": "v:A-POST-WAVE-A3:2026:exact_line_probability:ALL",
+          "shortlist_group": "m:A_CONDITIONAL_PLAYED_CARRY_V1"
+        }
+      ]
+    },
+    {
+      "comparison": {
         "comparison_set_id": "A_DYNAMIC_CARRY_FULL335_OFFERS-2026-1,2,3,4,5,6,7",
         "evidence_kind": "EXPOSED_CURRENT_VINTAGE_RECONSTRUCTION",
         "fallback_policy_id": "REGISTERED_COMPLETE_SYSTEM_PER_METHOD_FALLBACKS",
