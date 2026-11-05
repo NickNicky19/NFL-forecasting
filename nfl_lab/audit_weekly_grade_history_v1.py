@@ -375,7 +375,21 @@ def _source_history_runtime_scope(current_root, original_root, binding):
         "schema_version","source_sha","code_pins","publication_registration","source_history_binding","mae_registration","mae_helper_pins"}
     if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
         changed|={"qualified_runtime","pending_census","prior_capture_qualified_runtime"}
-    require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in set(original_root)-changed),
+    frozen=set(original_root)-changed
+    if store.canonical(original_root["retained_registration"])!=store.canonical(current_root["retained_registration"]):
+        # Authenticate the old Root above; only a lossless transport may differ.
+        from . import audit_count_retained_v1 as retained
+        try:
+            original_registration=template.retained_registration(original_root)
+            current_registration=template.retained_registration(current_root)
+            retained.validate_registration(original_registration)
+            retained.validate_registration(current_registration)
+        except (template.TemplateError,store.StoreError):
+            raise HistoryError("SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED") from None
+        require(store.canonical(original_registration)==store.canonical(current_registration),
+            "SOURCE_HISTORY_RETAINED_REGISTRATION_BODY_UNCHANGED")
+        frozen-={"retained_registration"}
+    require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in frozen),
         "SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED")
     original_policy=original_root["publication_registration"];current_policy=current_root["publication_registration"]
     policy_keys={"policy_gzip_base64","policy_sha256","rights_authority","r0"}
