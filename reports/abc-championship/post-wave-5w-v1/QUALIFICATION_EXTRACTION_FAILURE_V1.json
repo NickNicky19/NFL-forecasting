@@ -1,0 +1,19 @@
+{
+  "state": "FAILED_AGGREGATE_EXTRACTION_NO_NEW_SCORES",
+  "failure": "KeyError decided in retained law weekly metrics",
+  "cause": "Old probability-policy aggregate stores decided counts under each side; combined must sum Over/Under decided, matching its original normalizer.",
+  "source_sha256": "b3dc3760577ba8c8e010e771383249c0643be4adaaf73edf9db94871ecc09efa",
+  "actual_runtime": {
+    "state": "FAILED",
+    "asof_UTC": "2026-11-05T00:28:55.912472+00:00",
+    "CPU_seconds": 28.827034452,
+    "wall_seconds": 29.105840223997802,
+    "error": {
+      "type": "KeyError",
+      "message_sha256": "0f4b9284c2fcf66f7b657ad9e087c2bf9e453d8205e900bfa11fca0e89f9f6e5"
+    },
+    "new_fits": 0
+  },
+  "new_fits_model_loads_inference": 0,
+  "repair": "Read existing side counts rather than invent a missing combined field. Original aggregates remain untouched."
+}

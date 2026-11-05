@@ -1,0 +1,206 @@
+{
+  "state": "PASS_EXACT_RETAINED_MODEL_AND_TYPED_CORE_PARITY",
+  "asof_UTC": "2026-11-05T00:15:44.514232+00:00",
+  "product": "pass_td__COUNT_A_MEAN",
+  "procedure_version": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+  "parent_procedure_version": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+  "capsule": {
+    "bytes": 399037,
+    "sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36"
+  },
+  "model_member": {
+    "bytes": 298952,
+    "sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d"
+  },
+  "members": {
+    "CELL_COMPLETE.json": {
+      "bytes": 859,
+      "sha256": "8612a6157d4de635677301fe7128a6314471efa33956976fefd5baf6311407ee"
+    },
+    "FIXTURE_EXPECTED.parquet": {
+      "bytes": 15916,
+      "sha256": "f9d83fdbb9d8b8d16ef89a9c537ad3fa97c14320573dc6a2782637d07d025c9e"
+    },
+    "FIXTURE_FEATURES.parquet": {
+      "bytes": 46058,
+      "sha256": "cac7a18d0a679441d10418381b67290438957ef721425e5f4a318abdda0e0216"
+    },
+    "FORECASTS.parquet": {
+      "bytes": 26771,
+      "sha256": "8d801a6b276a8ba800311a72abba6e13e1f051db9d3959bab596495913fe7a39"
+    },
+    "MODEL.joblib": {
+      "bytes": 298952,
+      "sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d"
+    },
+    "MODEL_AUDIT.json": {
+      "bytes": 8898,
+      "sha256": "a7679510ccae33d4f915f6bd70988090d279818bbf2934dc6f25654248cd0dc1"
+    }
+  },
+  "mean_corrector": {
+    "recipe": "count-a-prior-mean-fallback-v2-20261025",
+    "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6",
+    "source": "tools/modern_count_a_mean_v3.py"
+  },
+  "environment": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "sklearn": "1.8.0",
+    "scipy": "1.17.0",
+    "joblib": "1.5.3"
+  },
+  "category": {
+    "modeled_roles": [
+      "QB"
+    ],
+    "panels": {
+      "base": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "context": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3",
+        "f_team_pass_yd_mean3",
+        "f_opp_pass_yd_allowed_mean3",
+        "f_team_rush_yd_mean3",
+        "f_opp_rush_yd_allowed_mean3",
+        "f_team_pass_att_mean3",
+        "f_opp_pass_att_allowed_mean3",
+        "f_team_rush_att_mean3",
+        "f_opp_rush_att_allowed_mean3",
+        "f_team_rec_yd_mean3",
+        "f_opp_rec_yd_allowed_mean3",
+        "f_team_offense_plays_mean3",
+        "f_opp_offense_plays_allowed_mean3",
+        "f_team_pass_rate3",
+        "f_team_games_prior",
+        "f_opp_games_prior",
+        "f_team_pass_yd_adjusted_mean8",
+        "f_opp_pass_yd_adjusted_allowed_mean8",
+        "f_team_rush_yd_adjusted_mean8",
+        "f_opp_rush_yd_adjusted_allowed_mean8",
+        "f_rest_days",
+        "f_is_home"
+      ]
+    },
+    "primary_roles": [
+      "QB"
+    ],
+    "state": "READY",
+    "support": "count",
+    "target": "pass_td"
+  },
+  "feature_policy": "MATCHED12_ACCEPTED_2019_2025_REG_AND_QUALIFIED_RECENT_HISTORY_C_STREAM_V1",
+  "training_cutoff_utc": "2026-09-01T00:00:00Z",
+  "training_max_available_utc": "2026-01-12 01:20:00+00:00",
+  "training_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "original_fit_reservation_UTC": "2026-10-31T01:58:07.862367+00:00",
+  "original_fit_completion_UTC": "2026-10-31T01:58:21.656955+00:00",
+  "native_fixture_rows": 4,
+  "typed_core_retained_rows": 64,
+  "full_feature_hash_matches": true,
+  "typed_core_fallback_rows": 16,
+  "native_mean_column_all_NaN": true,
+  "native_corrected_point_supported": 718,
+  "warm_and_prior_branch_bitwise_parity": "PASS_ON_SUPPORTED_RETAINED_ROWS; see actual fallback-row count, no inference about untested branches",
+  "model_loads": 1,
+  "predict_calls": 2,
+  "new_fits": 0,
+  "new_current_query_or_pregame_issuance": 0,
+  "current_source_adapter_state": "Arithmetic core verified on retained cases; fresh current SOURCE/feature receipt and owning-producer future query remain NOT_VERIFIED.",
+  "public_feed_delivery": "NOT_EXECUTED; no original-site write, scheduler, source-guard or allowlist change.",
+  "private_evidence": {
+    "logical_id": "A-COUNT-A-CORE-PARITY-V3",
+    "bytes": 16432,
+    "sha256": "d9e974497dadf62782811c2643984ad85821e7c5154a4e490b7d57df42648bf1",
+    "readback": "PASS_OWNER_LOCAL",
+    "offhost": "NOT_VERIFIED"
+  },
+  "CPU_seconds": 78.206191899,
+  "wall_seconds": 78.00641985899892,
+  "RSS_bytes": 260493312,
+  "retained_headroom_bytes": 6021464
+}

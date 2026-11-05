@@ -1,0 +1,96 @@
+"""Authenticate the requested retained Count A capsule; never deserialize models."""
+from pathlib import Path
+import datetime
+import gzip
+import hashlib
+import io
+import json
+import resource
+import signal
+import sys
+import time
+import zipfile
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+OUT = ROOT/'reports/abc-championship/post-wave-5w-v1'
+
+
+def sha(b):
+    return hashlib.sha256(b).hexdigest()
+
+
+def main():
+    resource.setrlimit(resource.RLIMIT_AS, (2147483648,)*2)
+    resource.setrlimit(resource.RLIMIT_CPU, (60,61))
+    signal.alarm(90)
+    start = time.process_time()
+    from tools.category_topfive_matched12_storage_v1 import open_store, GO
+    store, _ = open_store(ROOT, allocation_sha256='f123cd5ffd6f4a204a76c68bf63817cce63cecd7021543a23503d0233cc3eb26', root_go=GO, readonly=True)
+    plan = json.loads(gzip.decompress((ROOT/'config/category-topfive-matched12-all-finalists-freeze-v1_2.json.gz').read_bytes()))
+    entry = next(e for e in plan['extra_entries'] if e.get('target')=='pass_td' and e.get('method')=='COUNT_A_MEAN')
+    def owned(ref):
+        p = Path(ref['path'])
+        owners = [s for s in (store,store.complete_peer,store.complete_peer.prior_forward,store.complete_peer.legacy)
+                  if any(p.is_relative_to(r) for r in s._roots)]
+        if len(owners)!=1:
+            raise ValueError('exact source owner required')
+        actual = owners[0].validate_reference(p, ref['sha256'])
+        if actual['bytes']!=ref['bytes']:
+            raise ValueError('owned source byte count mismatch')
+        return p.read_bytes()
+    proof = json.loads(owned(entry['producer_proof']))
+    cell = proof
+    for key in entry['producer_selector']:
+        cell = cell[key]
+    ref = entry['forecast']['container']
+    if ref['sha256']!='5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36':
+        raise ValueError('wrong owner-requested Count A capsule')
+    body = owned(ref)
+    with zipfile.ZipFile(io.BytesIO(body)) as z:
+        members = {name:z.read(name) for name in z.namelist()}
+    manifest = json.loads(members['MEMBER_MANIFEST.json'])['members']
+    for name, member_ref in manifest.items():
+        if len(members[name])!=member_ref['bytes'] or sha(members[name])!=member_ref['sha256']:
+            raise ValueError('Count A member mismatch')
+    if sha(members['MODEL.joblib'])!='4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d':
+        raise ValueError('wrong requested Count A model bytes')
+    audit = json.loads(members['MODEL_AUDIT.json'])
+    fit = proof['artifacts']['pass_td__COUNT_A_MEAN/FIT_START.json']
+    # Public completion stores exact owned references, not an unbound new path.
+    reservation = json.loads(owned(fit))
+    recipe = reservation['recipe']
+    parent = sha((json.dumps(recipe,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode())
+    if parent!=audit['recipe_sha256']:
+        raise ValueError('recipe and fitted audit disagree')
+    corrected = sha((json.dumps({'recipe':'count-a-prior-mean-fallback-v2-20261025',
+        'parent_procedure_version':parent,'parent_model_sha256':sha(members['MODEL.joblib'])},sort_keys=True,separators=(',',':'))+'\n').encode())
+    if corrected!='f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83':
+        raise ValueError('complete mean procedure identity differs')
+    source_pins = recipe['source_pins']
+    corrector = ROOT/'tools/modern_count_a_mean_v3.py'
+    corrector_match = sha(corrector.read_bytes())==source_pins['mean_corrector']['sha256']
+    from tools import abc_a_dynamic_carry_wave_v1 as original
+    _, feature_plan, _, _ = original.sources()
+    result = {'state':'PASS_AUTHENTICATED_RETAINED_CAPSULE_NO_MODEL_LOAD',
+        'asof_UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'product':'pass_td__COUNT_A_MEAN','complete_procedure_version':corrected,
+        'parent_procedure_version':parent,'capsule':{k:ref[k] for k in ['bytes','sha256']},
+        'model_member':manifest['MODEL.joblib'],'members':manifest,'category':audit['category'],
+        'parameters':audit['parameters'],'environment':audit['environment'],
+        'training_features':audit['training_features'],'query_features':audit['query_features'],
+        'training_cutoff_utc':recipe['training_cutoff_utc'],'source_policy_id':recipe['feature_policy'],
+        'source_code_pins':source_pins,'current_corrector_source_hash_matches':corrector_match,
+        'current_corrector_source_sha256':sha(corrector.read_bytes()),
+        'prepared_feature_reference_matches':feature_plan['features']['sha256']==audit['query_features']['sha256'],
+        'current_features_available':'NOT_ESTABLISHED; matching a retained historical feature file is not a current-source receipt.',
+        'lookup_history':['Original initial18 catalog contains Count A for rush_att/rec, not pass_td; metadata lookup StopIteration did not load a model or establish its absence.',
+                          'Resolved through original all-finalists extra_entries and original fixed13 producer proof; no refit.'],
+        'model_loads_fits_inference':0,'CPU_seconds':time.process_time()-start,
+        'private_bytes_written':0,'offhost_restoration':'NOT_VERIFIED'}
+    (OUT/'COUNT_A_RETAINED_METADATA_V1.json').write_text(json.dumps(result,indent=2)+'\n')
+    print(json.dumps({k:result[k] for k in ['state','complete_procedure_version','current_corrector_source_hash_matches','prepared_feature_reference_matches','CPU_seconds']}))
+
+
+if __name__=='__main__':
+    main()

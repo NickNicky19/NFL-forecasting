@@ -1063,6 +1063,41 @@
       "training_rule": "NOT_APPLICABLE",
       "aliases": [],
       "procedure_kind": "CONTROL_NOT_FORECAST_LEARNER"
+    },
+    {
+      "method_id": "m:A_CONDITIONAL_PLAYED_CARRY_V1",
+      "original_id": "A3_CONDITIONAL_PLAYED_EXPOSURE",
+      "family": "Conditional exposure marginal; Beta share and uncertain team carries",
+      "procedure_version": "aa97f5e5e8e3c491336eab61f2d7e67c7bd7af3c804b346d5201fd4a25bb4cc8",
+      "algorithm": "Exact negative-binomial team exposure mixed with Beta-binomial individual share; no joint allocation claim.",
+      "formula": "P(Y=y)=sum_n P(N=n)*BetaBinomial(y;n,alpha,beta); E[Y]=E[N]*raw_forward_filtered_share. No cross-roster normalization conditional on appearance.",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_conditional_carry_v1.py",
+          "sha256": "88e7520a763aae427757d4b027d4843176ccf7b190107f39b9cb78571120e59e"
+        }
+      ],
+      "feature_policy": "Same earlier-only raw forward-state share/variance and predicted team exposure as A2; no new injury/snaps/routes feature. C target-share remains C-owned.",
+      "training_rule": "Frozen analytic policy after 2025W1-4 component diagnosis; annual earlier-only state updates. 2025W5-8 and 2026W1-7 already exposed development reconstructions.",
+      "aliases": [],
+      "readiness": "Historical inference scored; not production admitted; no new genuine pregame packet."
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

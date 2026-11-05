@@ -1,0 +1,18 @@
+{
+  "state": "FAILED_LOSSLESS_SINGLE_MEMBER_SIZE_GUARD",
+  "reason": "Combined all-category qualification JSON exceeds existing four-MiB expanded-member bound. Guard correctly rejected before packing; original source scores unchanged.",
+  "source_sha256": "f215d2e9f38bc444a2ba728c40ccf8c8b050cfc66605d833ed87bb395ef706bb",
+  "actual_runtime": {
+    "state": "FAILED",
+    "asof_UTC": "2026-11-05T00:31:25.697619+00:00",
+    "CPU_seconds": 25.606687575000002,
+    "wall_seconds": 25.636098423001386,
+    "error": {
+      "type": "ValueError",
+      "message_sha256": "630bb89d8092e73ac5ff22c275517697f7bbc48ce65033ca8d540d15bd63e2dc"
+    },
+    "new_fits": 0
+  },
+  "remedy": "Preserve same records in immutable category partitions below existing member limits, with one discoverable manifest and full readback. Do not increase or bypass the guard.",
+  "new_fits_forecasts_scoring_NFL_weeks": 0
+}

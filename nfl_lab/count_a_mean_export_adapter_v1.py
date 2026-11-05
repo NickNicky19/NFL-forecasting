@@ -1,0 +1,64 @@
+"""Typed arithmetic core for the exact retained Count A mean procedure.
+
+The owning producer authenticates model/source bytes and handles issuance,
+persistence, publication, selection and the incumbent fallback. This core never
+claims those stages, creates probabilities, fits, or publishes anything.
+"""
+from __future__ import annotations
+import datetime
+import hashlib
+import json
+import numpy as np
+import pandas as pd
+from . import weekly_future_inference as future
+
+VERSION = 'A::count-a-trained-prior-mean-export-core-v1.2'
+RECIPE = 'count-a-prior-mean-fallback-v2-20261025'
+PROCEDURE = 'f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83'
+MODEL = '4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d'
+
+
+def procedure_version(parent, model_sha256):
+    raw = (json.dumps({'recipe': RECIPE, 'parent_procedure_version': parent,
+                       'parent_model_sha256': model_sha256}, sort_keys=True,
+                      separators=(',', ':'))).encode()
+    return hashlib.sha256(raw).hexdigest()
+
+
+def predict_verified_mean(model, frame, *, mean_corrector, binding):
+    if (binding['model_sha256'] != MODEL or
+            procedure_version(binding['parent_procedure_version'], MODEL) != PROCEDURE):
+        raise ValueError('exact original corrected-mean procedure required')
+    if model.category['target'] != 'pass_td' or model.category['support'] != 'count' or model.variant != 'A':
+        raise ValueError('wrong Count A target/support/variant')
+    if not frame.position.eq('QB').all():
+        raise ValueError('registered passing-QB role population required')
+    clean = future.query_projection(frame, list(model.category['panels']['base']))
+    cutoff = pd.to_datetime(clean.cutoff_utc, utc=True, errors='raise')
+    kickoff = pd.to_datetime(clean.kickoff_utc, utc=True, errors='raise')
+    training = pd.Timestamp(binding['training_cutoff_utc'])
+    maximum = pd.to_datetime(clean.feature_max_source_available_utc, utc=True, errors='coerce')
+    if training.tzinfo is None or cutoff.isna().any() or kickoff.isna().any() or (cutoff > kickoff).any() or (cutoff <= training).any():
+        raise ValueError('invalid query/training horizon')
+    if (maximum.notna() & (maximum >= cutoff)).any():
+        raise ValueError('future feature source')
+    if (maximum.isna() & (pd.to_numeric(clean.f_player_games_prior, errors='coerce') > 0)).any():
+        raise ValueError('unknown warm feature clock')
+    legacy, reasons = model.predict(clean)
+    point = mean_corrector(np, legacy, reasons, clean.position.to_numpy(), model.priors, model.global_prior)
+    out = clean[['season','week','game_id','player_id','team','opponent','position','kickoff_utc','cutoff_utc']].copy()
+    out['expected_mean'] = point
+    out['selection_point'] = point
+    out['legacy_point_for_audit_only'] = legacy
+    out['fallback_reason'] = reasons
+    out['value_origin'] = np.where(np.isfinite(point), np.where(np.asarray(reasons, str)=='',
+        'LEARNED_POISSON_OBJECTIVE_MEAN','EXISTING_TRAINED_PRIOR_MEAN'), 'INCUMBENT_FALLBACK_REQUIRED')
+    out['prediction_functional'] = 'MEAN_OBJECTIVE_POINT'
+    out['procedure_version'] = PROCEDURE
+    out['model_sha256'] = MODEL
+    out['probability'] = None
+    out['EV'] = None
+    out['issued_at_UTC'] = None
+    out['computed_at_UTC'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    out['operational_state'] = 'ARITHMETIC_CORE_ONLY_NOT_ISSUED_OR_ADMITTED'
+    return out

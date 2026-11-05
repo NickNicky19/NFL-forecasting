@@ -1,0 +1,17 @@
+{
+  "state": "FAILED_THEN_ACCOUNTING_REPAIRED_WITHOUT_GUARD_CHANGE",
+  "observed_UTC": "2026-11-04T23:52:35.782725+00:00",
+  "failed_operation": "Bound registered private-store readonly schema inspection; no model or private NFL records decoded",
+  "failure": "StorageQuotaError: actual working metadata exceeds reserved peak",
+  "cause": "New instruction appendix added to AGENTS, which belongs to the nearly exhausted old market metadata allocation.",
+  "old_metadata_reserve_bytes": 4194304,
+  "before_bytes": 4195943,
+  "excess_bytes": 1639,
+  "after_bytes": 4194295,
+  "headroom_bytes": 9,
+  "remedy": "Restore only this new unpublished AGENTS appendix to its prior bytes. Preserve identical full new instructions in canonical SCOPE.md, already linked from AGENTS, under the existing separately counted eight-MiB metadata allocation. No unique evidence removed or unaccounted; caps and guards unchanged.",
+  "instruction_appendix_sha256": "9c21fb74be5de565943281eeb105d3b3ec0e52df063f2f71327e652915bd7f12",
+  "failed_attempt_CPU_seconds": null,
+  "reason": "Failure output did not retain counters; original120CPU/150wall bound is not refunded.",
+  "new_fits_inference_private_NFL_rows": 0
+}

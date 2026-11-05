@@ -1,0 +1,48 @@
+{
+  "state": "PASS_INDEPENDENT_READ_ONLY_RETRY",
+  "asof_UTC": "2026-11-05T00:47:23.386736+00:00",
+  "reviewer": "/root/postwave_readonly_verifier",
+  "A3": {
+    "forecast_source_clock_invariance_checks": 1672,
+    "numerical_summaries_checked": 146,
+    "grade_rows_checked": 956,
+    "side_summaries_checked": 32,
+    "probability_Brier": 0.2989635251542991,
+    "log_loss": 0.8540179073847493,
+    "maximum_mass_error": 4.44e-16,
+    "maximum_mean_error": 3.21236e-11,
+    "independent_quadrature_event_differences": [
+      5.88e-13,
+      2.82e-13
+    ],
+    "representative_events": "one winner, one loser; Beta-integrated negative-binomial thinning,128/256nodes; not another invocation of the saved summation",
+    "four_policy_views": {
+      "wins": 440,
+      "losses": 460,
+      "abstentions": 24,
+      "unknown": 32,
+      "unknown_note": "The same eight unknown cases repeated across four policies, not 32 independent outcomes."
+    }
+  },
+  "Count_A": {
+    "retained_typed_mean_bitwise_matches": 64,
+    "fallback_matches": 16,
+    "native_mean_column": "all NaN; corrected native point retained",
+    "complete_procedure_model_corrector_bindings": "PASS",
+    "representative_core_NaT_kickoff_guard": "PASS after scoped v1.2 correction; no NFL re-inference",
+    "new_model_loads_fits_issued_forecasts": 0
+  },
+  "five_week_helper": {
+    "pure_software_fixtures": 7,
+    "state": "PASS",
+    "new_NFL_observations": 0
+  },
+  "retry_cost": {
+    "CPU_seconds": 45.222425359,
+    "wall_seconds": 50.444320356,
+    "RSS_bytes": 305065984
+  },
+  "separate_source_hash_checks_CPU_seconds": 0.000151896,
+  "separate_kickoff_guard_fixture_CPU_seconds": 0.00535793,
+  "limits": "Representative independent cached-row/probability verification, not complete historical re-inference, authenticated source vintages, offhost restoration, producer execution, consumer receipt or deployment. Inline execution-code hash was not retained and is not invented. Earlier failed import attempt remains separately charged and visible."
+}

@@ -1,0 +1,29 @@
+{
+  "state": "REGISTERED_BEFORE_SINGLE_TRUSTED_RESTORE",
+  "registered_UTC": "2026-11-05T00:10:37.721775+00:00",
+  "parent": "A-COUNT-A-MEAN-RESTORE-v1",
+  "source_bindings": [
+    {
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "sha256": "0872caa43cfabe5efbcb30be842c8893162d98f9a29acf9d171012f868769032"
+    },
+    {
+      "path": "tools/abc_a_count_a_restore_and_parity_v2.py",
+      "sha256": "4af081aa430a5dcf751ecd360d4b2ff0dc0184d51094327eb122426656cfa298"
+    }
+  ],
+  "original_failed_metadata_CPU_charged_upper_bound": 60,
+  "budget": {
+    "CPU_seconds": 120,
+    "wall_seconds": 150,
+    "AS_bytes": 2147483648,
+    "model_loads": 1,
+    "prediction_calls": 2,
+    "total_retained_fixture_rows_max": 128,
+    "new_private_bytes": 1048576,
+    "new_fits": 0
+  },
+  "overall_CPU_limit": 180,
+  "semantics": "Existing corrected mean procedure unchanged; new typed orchestration core verified on retained cases. Never claim actual current-source inference or publication from fixture parity.",
+  "source_locator_amendment": "FIT_START relative member exactly bound by original producer proof hash and registered owning store, not an unverified arbitrary path."
+}

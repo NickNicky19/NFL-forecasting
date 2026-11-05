@@ -1,0 +1,2385 @@
+{
+  "id": "A-ALLOC-COMMON-CASE-DIAG-v2-REPORTING",
+  "state": "COMPLETED_ZERO_FIT_POSTGAME_DIAGNOSIS",
+  "asof_UTC": "2026-11-04T23:56:32.299837+00:00",
+  "original_predictions_changed": false,
+  "source_numeric_archive_sha256": "061d03039d5c629ba4277e3b4db8761b26607cf628960a52a31a931d032e984e",
+  "team_label_source_hashes": [
+    {
+      "bytes": 1155175,
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55"
+    },
+    {
+      "bytes": 44461,
+      "sha256": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061"
+    }
+  ],
+  "retained_rows": 2572,
+  "joint_roster_groups": 912,
+  "coherence": {
+    "groups": 912,
+    "max_share_error": 2.220446049250313e-16,
+    "max_mean_conservation_error": 1.0658141036401503e-14,
+    "max_saved_mean_error": 0.0,
+    "source_label_conflicts": 0
+  },
+  "summaries": [
+    {
+      "season": 2025,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 700,
+        "MAE": 3.686121898738871,
+        "RMSE": 4.986536009914106,
+        "bias": -1.347083835188425
+      },
+      "common_player_metrics": {
+        "n": 700,
+        "MAE": 3.686121898738871,
+        "RMSE": 4.986536009914106,
+        "bias": -1.347083835188425
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 242,
+        "MAE": 5.615677191321021,
+        "RMSE": 7.0067399539976325,
+        "bias": 0.518929613316684
+      },
+      "common_team_games": 242,
+      "games": 121,
+      "volume_contribution_bias": 0.10610385450011484,
+      "allocation_contribution_bias": -1.4531876896885398,
+      "predicted_share_mean": 0.22051006361906142,
+      "actual_share_mean": 0.27744539173488053,
+      "raw_share_mean": 0.28628712651141835,
+      "normalization_denominator_mean": 1.3143087941741007,
+      "other_probability_mean": 0.24579638198531475,
+      "forecast_mass_to_unknown_RB_mean": 0.11636459101740015,
+      "fallback_common_player_metrics": {
+        "n": 75,
+        "MAE": 4.020496404520261,
+        "RMSE": 5.295676663525877,
+        "bias": -1.0149463054159988
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 625,
+        "MAE": 3.645996958045104,
+        "RMSE": 4.948141407093879,
+        "bias": -1.386940338761116
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 700,
+        "MAE": 3.4326517544932864,
+        "RMSE": 4.596330176907962,
+        "bias": -1.4531876896885398
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 700,
+        "MAE": 1.5662679884137158,
+        "RMSE": 2.6266755653979317,
+        "bias": 0.14218771238498062
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "common_actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        1
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 95,
+        "MAE": 3.942940314542893,
+        "RMSE": 5.248551467406824,
+        "bias": -1.1036507745515995
+      },
+      "common_player_metrics": {
+        "n": 95,
+        "MAE": 3.942940314542893,
+        "RMSE": 5.248551467406824,
+        "bias": -1.1036507745515995
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.487629828676461,
+        "RMSE": 5.997680678611351,
+        "bias": 0.5498981152656816
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.07849595640886106,
+      "allocation_contribution_bias": -1.1821467309604605,
+      "predicted_share_mean": 0.21064167508252118,
+      "actual_share_mean": 0.26019429777520875,
+      "raw_share_mean": 0.28433312265432076,
+      "normalization_denominator_mean": 1.35914305271754,
+      "other_probability_mean": 0.2633905607521001,
+      "forecast_mass_to_unknown_RB_mean": 0.11126696634666533,
+      "fallback_common_player_metrics": {
+        "n": 31,
+        "MAE": 4.66992644416594,
+        "RMSE": 6.285186473599897,
+        "bias": -2.291104832067735
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 64,
+        "MAE": 3.59080640800673,
+        "RMSE": 4.664329649093019,
+        "bias": -0.5284777154422211
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 95,
+        "MAE": 3.899768253902428,
+        "RMSE": 5.131978623761164,
+        "bias": -1.1821467309604605
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 95,
+        "MAE": 1.1706862866319523,
+        "RMSE": 2.050378689515754,
+        "bias": 0.17949743343089755
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1
+      ],
+      "common_actual_weeks": [
+        1
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        2
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 92,
+        "MAE": 3.9352797558820782,
+        "RMSE": 5.094783702715411,
+        "bias": -1.3249237844289399
+      },
+      "common_player_metrics": {
+        "n": 92,
+        "MAE": 3.9352797558820782,
+        "RMSE": 5.094783702715411,
+        "bias": -1.3249237844289399
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 3.968247349921551,
+        "RMSE": 5.250773858682081,
+        "bias": 1.225842517952647
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.1717688467049487,
+      "allocation_contribution_bias": -1.4966926311338886,
+      "predicted_share_mean": 0.21292050079175498,
+      "actual_share_mean": 0.27391444216909766,
+      "raw_share_mean": 0.28744145026008655,
+      "normalization_denominator_mean": 1.3709050732030008,
+      "other_probability_mean": 0.2578805998039482,
+      "forecast_mass_to_unknown_RB_mean": 0.12997296041975626,
+      "fallback_common_player_metrics": {
+        "n": 21,
+        "MAE": 3.4180917706642155,
+        "RMSE": 4.1908136279846175,
+        "bias": -0.7592312118902019
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 71,
+        "MAE": 4.088250850101446,
+        "RMSE": 5.332872061029955,
+        "bias": -1.4922413058840596
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 92,
+        "MAE": 3.951282124301978,
+        "RMSE": 4.982586756759636,
+        "bias": -1.4966926311338882
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 92,
+        "MAE": 1.091124466786175,
+        "RMSE": 1.9205286257720022,
+        "bias": 0.3021291860638814
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        2
+      ],
+      "common_actual_weeks": [
+        2
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        3
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 92,
+        "MAE": 3.781682198774425,
+        "RMSE": 4.886462011895196,
+        "bias": -1.7755857575937208
+      },
+      "common_player_metrics": {
+        "n": 92,
+        "MAE": 3.781682198774425,
+        "RMSE": 4.886462011895196,
+        "bias": -1.7755857575937208
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.707359120150079,
+        "RMSE": 5.373019788464081,
+        "bias": 0.16419685004422568
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.008309449626646566,
+      "allocation_contribution_bias": -1.7838952072203673,
+      "predicted_share_mean": 0.21754449398598813,
+      "actual_share_mean": 0.28601980596699045,
+      "raw_share_mean": 0.28193974785803794,
+      "normalization_denominator_mean": 1.3276920033663284,
+      "other_probability_mean": 0.2606908501960009,
+      "forecast_mass_to_unknown_RB_mean": 0.11386872959428314,
+      "fallback_common_player_metrics": {
+        "n": 6,
+        "MAE": 5.160174078933355,
+        "RMSE": 6.9031458597027635,
+        "bias": -2.6735352761129643
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 86,
+        "MAE": 3.685508346670313,
+        "RMSE": 4.71367441088547,
+        "bias": -1.7129381167667976
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 92,
+        "MAE": 3.5440476320129886,
+        "RMSE": 4.6256681275678275,
+        "bias": -1.7838952072203673
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 92,
+        "MAE": 1.347026532985964,
+        "RMSE": 2.050153234337356,
+        "bias": 0.005016831606603489
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        3
+      ],
+      "common_actual_weeks": [
+        3
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        4
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 88,
+        "MAE": 4.060710826553184,
+        "RMSE": 5.535942118727511,
+        "bias": -2.100278710944696
+      },
+      "common_player_metrics": {
+        "n": 88,
+        "MAE": 4.060710826553184,
+        "RMSE": 5.535942118727511,
+        "bias": -2.100278710944696
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 6.45136332881982,
+        "RMSE": 7.820288340348173,
+        "bias": -1.1405324131686365
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": -0.24483482049820432,
+      "allocation_contribution_bias": -1.8554438904464923,
+      "predicted_share_mean": 0.22517859333154833,
+      "actual_share_mean": 0.2928993845619452,
+      "raw_share_mean": 0.28917598258455113,
+      "normalization_denominator_mean": 1.3039238491838852,
+      "other_probability_mean": 0.2511395879297956,
+      "forecast_mass_to_unknown_RB_mean": 0.1296192804084466,
+      "fallback_common_player_metrics": {
+        "n": 4,
+        "MAE": 2.44820218522791,
+        "RMSE": 2.89587884866515,
+        "bias": 2.013598318157624
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 84,
+        "MAE": 4.13749695233058,
+        "RMSE": 5.630868573851179,
+        "bias": -2.2961776170924253
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 88,
+        "MAE": 3.5787253205806775,
+        "RMSE": 4.857673762903496,
+        "bias": -1.8554438904464918
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 88,
+        "MAE": 1.8683827000798416,
+        "RMSE": 3.072026376791621,
+        "bias": -0.3656274638020985
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        4
+      ],
+      "common_actual_weeks": [
+        4
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        5
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 86,
+        "MAE": 3.159151993979849,
+        "RMSE": 4.557279897469589,
+        "bias": -0.9685249084568717
+      },
+      "common_player_metrics": {
+        "n": 86,
+        "MAE": 3.159151993979849,
+        "RMSE": 4.557279897469589,
+        "bias": -0.9685249084568717
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 28,
+        "MAE": 5.5676783622864745,
+        "RMSE": 7.075970391667271,
+        "bias": 1.4270184997167357
+      },
+      "common_team_games": 28,
+      "games": 14,
+      "volume_contribution_bias": 0.37206400097205755,
+      "allocation_contribution_bias": -1.3405889094289294,
+      "predicted_share_mean": 0.20775897696210913,
+      "actual_share_mean": 0.26111230246786016,
+      "raw_share_mean": 0.27303631480816787,
+      "normalization_denominator_mean": 1.31696364446871,
+      "other_probability_mean": 0.24763303141857443,
+      "forecast_mass_to_unknown_RB_mean": 0.1142501107692332,
+      "fallback_common_player_metrics": {
+        "n": 7,
+        "MAE": 3.324988604355997,
+        "RMSE": 3.507910145914688,
+        "bias": 1.9946512236791958
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 79,
+        "MAE": 3.144457610781963,
+        "RMSE": 4.638827288446775,
+        "bias": -1.231084818899308
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 86,
+        "MAE": 2.9769813779162457,
+        "RMSE": 4.225615641988337,
+        "bias": -1.3405889094289294
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 86,
+        "MAE": 1.5157949558196542,
+        "RMSE": 2.6638461821802566,
+        "bias": 0.4300914894724091
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        5
+      ],
+      "common_actual_weeks": [
+        5
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        6
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 83,
+        "MAE": 3.6207059955103453,
+        "RMSE": 5.33819714399607,
+        "bias": -1.3096471613187926
+      },
+      "common_player_metrics": {
+        "n": 83,
+        "MAE": 3.6207059955103453,
+        "RMSE": 5.33819714399607,
+        "bias": -1.3096471613187926
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 5.253694250231197,
+        "RMSE": 6.401775427672262,
+        "bias": 0.7814644184949564
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": 0.23028048653597713,
+      "allocation_contribution_bias": -1.5399276478547694,
+      "predicted_share_mean": 0.23014041952147382,
+      "actual_share_mean": 0.29170366618522275,
+      "raw_share_mean": 0.2916794161945905,
+      "normalization_denominator_mean": 1.2749220308912512,
+      "other_probability_mean": 0.24008141830079513,
+      "forecast_mass_to_unknown_RB_mean": 0.12319675435646057,
+      "fallback_common_player_metrics": {
+        "n": 4,
+        "MAE": 2.663897872829903,
+        "RMSE": 2.934797284034523,
+        "bias": 2.663897872829903
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 79,
+        "MAE": 3.669151976405557,
+        "RMSE": 5.431675506359439,
+        "bias": -1.5108393149465746
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 83,
+        "MAE": 3.608102125426185,
+        "RMSE": 5.068127525372091,
+        "bias": -1.5399276478547694
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 83,
+        "MAE": 1.53315361238651,
+        "RMSE": 2.5942939708320174,
+        "bias": 0.2952518508229503
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        6
+      ],
+      "common_actual_weeks": [
+        6
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        7
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 86,
+        "MAE": 3.4222243435195883,
+        "RMSE": 4.5625003152204915,
+        "bias": -1.131688528659539
+      },
+      "common_player_metrics": {
+        "n": 86,
+        "MAE": 3.4222243435195883,
+        "RMSE": 4.5625003152204915,
+        "bias": -1.131688528659539
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 7.463996692574761,
+        "RMSE": 8.740838410525704,
+        "bias": 1.0169413597615387
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": 0.14306722166098207,
+      "allocation_contribution_bias": -1.2747557503205214,
+      "predicted_share_mean": 0.22983429135628902,
+      "actual_share_mean": 0.2824862326797166,
+      "raw_share_mean": 0.29365962918375915,
+      "normalization_denominator_mean": 1.2927344184613745,
+      "other_probability_mean": 0.22158607369780153,
+      "forecast_mass_to_unknown_RB_mean": 0.11955562441416982,
+      "fallback_common_player_metrics": {
+        "n": 1,
+        "MAE": 2.2605095570855522,
+        "RMSE": 2.2605095570855522,
+        "bias": 2.2605095570855522
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 85,
+        "MAE": 3.435891576301165,
+        "RMSE": 4.582705701440906,
+        "bias": -1.1715967414330106
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 86,
+        "MAE": 3.067051465617319,
+        "RMSE": 3.939173999005658,
+        "bias": -1.2747557503205214
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 86,
+        "MAE": 2.1165500784031526,
+        "RMSE": 3.3047762602410953,
+        "bias": 0.2679714220128712
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        7
+      ],
+      "common_actual_weeks": [
+        7
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        8
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 78,
+        "MAE": 3.4857177438236624,
+        "RMSE": 4.480294527797481,
+        "bias": -1.0092485466513632
+      },
+      "common_player_metrics": {
+        "n": 78,
+        "MAE": 3.4857177438236624,
+        "RMSE": 4.480294527797481,
+        "bias": -1.0092485466513632
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 26,
+        "MAE": 7.457729607281313,
+        "RMSE": 8.864676633473547,
+        "bias": 0.23428126307187305
+      },
+      "common_team_games": 26,
+      "games": 13,
+      "volume_contribution_bias": 0.10742663722623462,
+      "allocation_contribution_bias": -1.1166751838775975,
+      "predicted_share_mean": 0.2332424842578242,
+      "actual_share_mean": 0.2723505248683996,
+      "raw_share_mean": 0.2899172113342014,
+      "normalization_denominator_mean": 1.2532617443602143,
+      "other_probability_mean": 0.21691244780573676,
+      "forecast_mass_to_unknown_RB_mean": 0.08336009942079049,
+      "fallback_common_player_metrics": {
+        "n": 1,
+        "MAE": 8.044708892518113,
+        "RMSE": 8.044708892518113,
+        "bias": -8.044708892518113
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 77,
+        "MAE": 3.4265100665678907,
+        "RMSE": 4.415115278734999,
+        "bias": -0.9178789317699769
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 78,
+        "MAE": 2.6746253497209405,
+        "RMSE": 3.499615090595131,
+        "bias": -1.116675183877598
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 78,
+        "MAE": 2.0104025936187284,
+        "RMSE": 3.1328834838287936,
+        "bias": 0.0238155343129774
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        8
+      ],
+      "common_actual_weeks": [
+        8
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 700,
+        "MAE": 3.7661531565008364,
+        "RMSE": 5.079531531390937,
+        "bias": -1.4263310100031215
+      },
+      "common_player_metrics": {
+        "n": 700,
+        "MAE": 3.7661531565008364,
+        "RMSE": 5.079531531390937,
+        "bias": -1.4263310100031215
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 242,
+        "MAE": 5.615677191321021,
+        "RMSE": 7.0067399539976325,
+        "bias": 0.518929613316684
+      },
+      "common_team_games": 242,
+      "games": 121,
+      "volume_contribution_bias": 0.11003638205155637,
+      "allocation_contribution_bias": -1.5363673920546779,
+      "predicted_share_mean": 0.21758354881076358,
+      "actual_share_mean": 0.27744539173488053,
+      "raw_share_mean": 0.2984867270363525,
+      "normalization_denominator_mean": 1.3933493574444002,
+      "other_probability_mean": 0.2317639175871976,
+      "forecast_mass_to_unknown_RB_mean": 0.13886218089406477,
+      "fallback_common_player_metrics": {
+        "n": 75,
+        "MAE": 4.302816236060713,
+        "RMSE": 5.298307130493264,
+        "bias": 0.16687436060114172
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 625,
+        "MAE": 3.7017535869536515,
+        "RMSE": 5.052641926152875,
+        "bias": -1.617515654475633
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 700,
+        "MAE": 3.5274444787535115,
+        "RMSE": 4.714685854583616,
+        "bias": -1.5363673920546774
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 700,
+        "MAE": 1.5662679884137158,
+        "RMSE": 2.6266755653979317,
+        "bias": 0.14218771238498062
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "common_actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        1
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 95,
+        "MAE": 3.8280804220136733,
+        "RMSE": 5.049972508314261,
+        "bias": -1.0652766916107053
+      },
+      "common_player_metrics": {
+        "n": 95,
+        "MAE": 3.8280804220136733,
+        "RMSE": 5.049972508314261,
+        "bias": -1.0652766916107053
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.487629828676461,
+        "RMSE": 5.997680678611351,
+        "bias": 0.5498981152656816
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.08410172979804867,
+      "allocation_contribution_bias": -1.1493784214087537,
+      "predicted_share_mean": 0.21247345021485284,
+      "actual_share_mean": 0.26019429777520875,
+      "raw_share_mean": 0.3180020275813419,
+      "normalization_denominator_mean": 1.5152028485726476,
+      "other_probability_mean": 0.23451291674706276,
+      "forecast_mass_to_unknown_RB_mean": 0.13470652792759313,
+      "fallback_common_player_metrics": {
+        "n": 31,
+        "MAE": 4.867694603631734,
+        "RMSE": 6.060001447928084,
+        "bias": -1.1626642352962506
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 64,
+        "MAE": 3.3245173027924246,
+        "RMSE": 4.479604784785236,
+        "bias": -1.0181046001380187
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 95,
+        "MAE": 3.813663705204945,
+        "RMSE": 4.93569563654208,
+        "bias": -1.1493784214087537
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 95,
+        "MAE": 1.1706862866319523,
+        "RMSE": 2.050378689515754,
+        "bias": 0.17949743343089755
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1
+      ],
+      "common_actual_weeks": [
+        1
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        2
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 92,
+        "MAE": 3.932976414434603,
+        "RMSE": 4.941120959079429,
+        "bias": -1.3116289292453194
+      },
+      "common_player_metrics": {
+        "n": 92,
+        "MAE": 3.932976414434603,
+        "RMSE": 4.941120959079429,
+        "bias": -1.3116289292453194
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 3.968247349921551,
+        "RMSE": 5.250773858682081,
+        "bias": 1.225842517952647
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.19115365588954236,
+      "allocation_contribution_bias": -1.5027825851348617,
+      "predicted_share_mean": 0.213462934397268,
+      "actual_share_mean": 0.27391444216909766,
+      "raw_share_mean": 0.31795296458882805,
+      "normalization_denominator_mean": 1.5220843332544494,
+      "other_probability_mean": 0.23172093821266349,
+      "forecast_mass_to_unknown_RB_mean": 0.1545731253951911,
+      "fallback_common_player_metrics": {
+        "n": 21,
+        "MAE": 3.565252964109309,
+        "RMSE": 4.221530178421232,
+        "bias": 0.3129099084185871
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 71,
+        "MAE": 4.041739688474481,
+        "RMSE": 5.134668913683689,
+        "bias": -1.7921263319346439
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 92,
+        "MAE": 3.8343565669579505,
+        "RMSE": 4.801665202259345,
+        "bias": -1.5027825851348617
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 92,
+        "MAE": 1.091124466786175,
+        "RMSE": 1.9205286257720022,
+        "bias": 0.3021291860638814
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        2
+      ],
+      "common_actual_weeks": [
+        2
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        3
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 92,
+        "MAE": 3.8602701048100125,
+        "RMSE": 5.055556441448333,
+        "bias": -1.8585842983067038
+      },
+      "common_player_metrics": {
+        "n": 92,
+        "MAE": 3.8602701048100125,
+        "RMSE": 5.055556441448333,
+        "bias": -1.8585842983067038
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.707359120150079,
+        "RMSE": 5.373019788464081,
+        "bias": 0.16419685004422568
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.004142694732493351,
+      "allocation_contribution_bias": -1.8627269930391968,
+      "predicted_share_mean": 0.21426618605982437,
+      "actual_share_mean": 0.28601980596699045,
+      "raw_share_mean": 0.29519940950383355,
+      "normalization_denominator_mean": 1.4136543778400192,
+      "other_probability_mean": 0.24638390738589824,
+      "forecast_mass_to_unknown_RB_mean": 0.13760080769210664,
+      "fallback_common_player_metrics": {
+        "n": 6,
+        "MAE": 4.670540303372288,
+        "RMSE": 6.558029193849083,
+        "bias": -1.383687190007171
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 86,
+        "MAE": 3.8037396258405525,
+        "RMSE": 4.93368747933396,
+        "bias": -1.8917166546996946
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 92,
+        "MAE": 3.6928902225052616,
+        "RMSE": 4.820301047387623,
+        "bias": -1.8627269930391968
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 92,
+        "MAE": 1.347026532985964,
+        "RMSE": 2.050153234337356,
+        "bias": 0.005016831606603489
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        3
+      ],
+      "common_actual_weeks": [
+        3
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        4
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 88,
+        "MAE": 4.206951934270326,
+        "RMSE": 5.775516699757115,
+        "bias": -2.243329401277876
+      },
+      "common_player_metrics": {
+        "n": 88,
+        "MAE": 4.206951934270326,
+        "RMSE": 5.775516699757115,
+        "bias": -2.243329401277876
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 6.45136332881982,
+        "RMSE": 7.820288340348173,
+        "bias": -1.1405324131686365
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": -0.22277306656529924,
+      "allocation_contribution_bias": -2.0205563347125772,
+      "predicted_share_mean": 0.21993274429934992,
+      "actual_share_mean": 0.2928993845619452,
+      "raw_share_mean": 0.29519366496611515,
+      "normalization_denominator_mean": 1.3617634431776344,
+      "other_probability_mean": 0.24153602937325364,
+      "forecast_mass_to_unknown_RB_mean": 0.153648923803534,
+      "fallback_common_player_metrics": {
+        "n": 4,
+        "MAE": 3.492991375782826,
+        "RMSE": 4.1608202980606634,
+        "bias": 3.492991375782826
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 84,
+        "MAE": 4.240950056103064,
+        "RMSE": 5.841284202121585,
+        "bias": -2.516487533518862
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 88,
+        "MAE": 3.7011580798147943,
+        "RMSE": 5.11768042305443,
+        "bias": -2.0205563347125772
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 88,
+        "MAE": 1.8683827000798416,
+        "RMSE": 3.072026376791621,
+        "bias": -0.3656274638020985
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        4
+      ],
+      "common_actual_weeks": [
+        4
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        5
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 86,
+        "MAE": 3.2807977849529593,
+        "RMSE": 4.756027835910212,
+        "bias": -1.0051771784148487
+      },
+      "common_player_metrics": {
+        "n": 86,
+        "MAE": 3.2807977849529593,
+        "RMSE": 4.756027835910212,
+        "bias": -1.0051771784148487
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 28,
+        "MAE": 5.5676783622864745,
+        "RMSE": 7.075970391667271,
+        "bias": 1.4270184997167357
+      },
+      "common_team_games": 28,
+      "games": 14,
+      "volume_contribution_bias": 0.37190181792550037,
+      "allocation_contribution_bias": -1.3770789963403487,
+      "predicted_share_mean": 0.20626728369977718,
+      "actual_share_mean": 0.26111230246786016,
+      "raw_share_mean": 0.28199673265237046,
+      "normalization_denominator_mean": 1.37206464079071,
+      "other_probability_mean": 0.23840210841748047,
+      "forecast_mass_to_unknown_RB_mean": 0.1280626630760611,
+      "fallback_common_player_metrics": {
+        "n": 7,
+        "MAE": 4.00235405383799,
+        "RMSE": 4.356389539280805,
+        "bias": 3.2650251025974746
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 79,
+        "MAE": 3.216862419355552,
+        "RMSE": 4.7898309449386405,
+        "bias": -1.3835495324285985
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 86,
+        "MAE": 3.153896936840044,
+        "RMSE": 4.45212225631506,
+        "bias": -1.3770789963403487
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 86,
+        "MAE": 1.5157949558196542,
+        "RMSE": 2.6638461821802566,
+        "bias": 0.4300914894724091
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        5
+      ],
+      "common_actual_weeks": [
+        5
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        6
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 83,
+        "MAE": 3.8465661794115213,
+        "RMSE": 5.5273940349309925,
+        "bias": -1.4329425751009246
+      },
+      "common_player_metrics": {
+        "n": 83,
+        "MAE": 3.8465661794115213,
+        "RMSE": 5.5273940349309925,
+        "bias": -1.4329425751009246
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 5.253694250231197,
+        "RMSE": 6.401775427672262,
+        "bias": 0.7814644184949564
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": 0.23250885174107852,
+      "allocation_contribution_bias": -1.665451426842003,
+      "predicted_share_mean": 0.2255282567128899,
+      "actual_share_mean": 0.29170366618522275,
+      "raw_share_mean": 0.29266082580049846,
+      "normalization_denominator_mean": 1.316510923953395,
+      "other_probability_mean": 0.23073173971566402,
+      "forecast_mass_to_unknown_RB_mean": 0.14530675004534052,
+      "fallback_common_player_metrics": {
+        "n": 4,
+        "MAE": 4.089790671607092,
+        "RMSE": 4.257530740930237,
+        "bias": 4.089790671607092
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 79,
+        "MAE": 3.834251015249721,
+        "RMSE": 5.584015124344299,
+        "bias": -1.712574638225381
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 83,
+        "MAE": 3.804350784826132,
+        "RMSE": 5.325686159277922,
+        "bias": -1.665451426842003
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 83,
+        "MAE": 1.53315361238651,
+        "RMSE": 2.5942939708320174,
+        "bias": 0.2952518508229503
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        6
+      ],
+      "common_actual_weeks": [
+        6
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        7
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 86,
+        "MAE": 3.578418163416608,
+        "RMSE": 4.795918829720771,
+        "bias": -1.3146693413480728
+      },
+      "common_player_metrics": {
+        "n": 86,
+        "MAE": 3.578418163416608,
+        "RMSE": 4.795918829720771,
+        "bias": -1.3146693413480728
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 7.463996692574761,
+        "RMSE": 8.740838410525704,
+        "bias": 1.0169413597615387
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": 0.11921711498901863,
+      "allocation_contribution_bias": -1.4338864563370914,
+      "predicted_share_mean": 0.2230125124164221,
+      "actual_share_mean": 0.2824862326797166,
+      "raw_share_mean": 0.29251538927465415,
+      "normalization_denominator_mean": 1.3284660357822342,
+      "other_probability_mean": 0.21556348795178912,
+      "forecast_mass_to_unknown_RB_mean": 0.14513397645446757,
+      "fallback_common_player_metrics": {
+        "n": 1,
+        "MAE": 3.8372019268975306,
+        "RMSE": 3.8372019268975306,
+        "bias": 3.8372019268975306
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 85,
+        "MAE": 3.5753736485521266,
+        "RMSE": 4.806059777358843,
+        "bias": -1.375279591562727
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 86,
+        "MAE": 3.3036383396677995,
+        "RMSE": 4.26009331101276,
+        "bias": -1.4338864563370914
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 86,
+        "MAE": 2.1165500784031526,
+        "RMSE": 3.3047762602410953,
+        "bias": 0.2679714220128712
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        7
+      ],
+      "common_actual_weeks": [
+        7
+      ]
+    },
+    {
+      "season": 2025,
+      "weeks": [
+        8
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 78,
+        "MAE": 3.542199423359665,
+        "RMSE": 4.594189547639816,
+        "bias": -1.1502151617812921
+      },
+      "common_player_metrics": {
+        "n": 78,
+        "MAE": 3.542199423359665,
+        "RMSE": 4.594189547639816,
+        "bias": -1.1502151617812921
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 26,
+        "MAE": 7.457729607281313,
+        "RMSE": 8.864676633473547,
+        "bias": 0.23428126307187305
+      },
+      "common_team_games": 26,
+      "games": 13,
+      "volume_contribution_bias": 0.11715520231584269,
+      "allocation_contribution_bias": -1.2673703640971345,
+      "predicted_share_mean": 0.2279671544046822,
+      "actual_share_mean": 0.2723505248683996,
+      "raw_share_mean": 0.2903149274937283,
+      "normalization_denominator_mean": 1.2852640644732354,
+      "other_probability_mean": 0.21114734059171816,
+      "forecast_mass_to_unknown_RB_mean": 0.10495119619423542,
+      "fallback_common_player_metrics": {
+        "n": 1,
+        "MAE": 6.734322432117422,
+        "RMSE": 6.734322432117422,
+        "bias": -6.734322432117422
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 77,
+        "MAE": 3.500743280388786,
+        "RMSE": 4.5597931631041435,
+        "bias": -1.0776942881405633
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 78,
+        "MAE": 2.7896835712618953,
+        "RMSE": 3.690561094220305,
+        "bias": -1.267370364097135
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 78,
+        "MAE": 2.0104025936187284,
+        "RMSE": 3.1328834838287936,
+        "bias": 0.0238155343129774
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        8
+      ],
+      "common_actual_weeks": [
+        8
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 586,
+        "MAE": 4.548631069812039,
+        "RMSE": 6.261530345319125,
+        "bias": -3.139933474361764
+      },
+      "common_player_metrics": {
+        "n": 513,
+        "MAE": 4.517259328110622,
+        "RMSE": 6.215895075759934,
+        "bias": -3.048702175346108
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 186,
+        "MAE": 5.4610551782803425,
+        "RMSE": 6.911022205172678,
+        "bias": 0.7245493180901563
+      },
+      "common_team_games": 186,
+      "games": 93,
+      "volume_contribution_bias": 0.13611130241375563,
+      "allocation_contribution_bias": -3.1848134777598633,
+      "predicted_share_mean": 0.17995254289105078,
+      "actual_share_mean": 0.302012818234536,
+      "raw_share_mean": 0.29060226700090885,
+      "normalization_denominator_mean": 1.6630592585149129,
+      "other_probability_mean": 0.17139210684617448,
+      "forecast_mass_to_unknown_RB_mean": 0.3322871700188307,
+      "fallback_common_player_metrics": {
+        "n": 73,
+        "MAE": 3.9474353972617324,
+        "RMSE": 5.8255125411139135,
+        "bias": -2.148717926503761
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 440,
+        "MAE": 4.611798298456007,
+        "RMSE": 6.27831582663842,
+        "bias": -3.1980177439040434
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 513,
+        "MAE": 4.418660385171105,
+        "RMSE": 5.9661349952911475,
+        "bias": -3.1848134777598633
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 513,
+        "MAE": 1.6609449791908641,
+        "RMSE": 2.7965616672212277,
+        "bias": 0.23930247685776812
+      },
+      "excluded_component_rows": {
+        "TEAM_TOTAL_UNAVAILABLE": 73
+      },
+      "requested_or_original_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "common_actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        1
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 87,
+        "MAE": 5.296508027053144,
+        "RMSE": 7.002012298556351,
+        "bias": -3.4499708537935354
+      },
+      "common_player_metrics": {
+        "n": 87,
+        "MAE": 5.296508027053144,
+        "RMSE": 7.002012298556351,
+        "bias": -3.4499708537935354
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 6.947080642431769,
+        "RMSE": 8.214835595252039,
+        "bias": -0.08384402172727756
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.05036194451608324,
+      "allocation_contribution_bias": -3.50033279830962,
+      "predicted_share_mean": 0.171170872392696,
+      "actual_share_mean": 0.295714115453689,
+      "raw_share_mean": 0.28767800427581114,
+      "normalization_denominator_mean": 1.7465814875016177,
+      "other_probability_mean": 0.18392293876031768,
+      "forecast_mass_to_unknown_RB_mean": 0.3507062519220401,
+      "fallback_common_player_metrics": {
+        "n": 31,
+        "MAE": 4.850481814359727,
+        "RMSE": 6.928273568011882,
+        "bias": -3.1031125648371822
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 56,
+        "MAE": 5.543415394794143,
+        "RMSE": 7.042499959816822,
+        "bias": -3.6419816923229456
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 87,
+        "MAE": 4.899141372275206,
+        "RMSE": 6.51032407902024,
+        "bias": -3.50033279830962
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 87,
+        "MAE": 2.0317347166316932,
+        "RMSE": 3.116448567320878,
+        "bias": -0.08295042360456936
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1
+      ],
+      "common_actual_weeks": [
+        1
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        2
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 94,
+        "MAE": 4.220498214846211,
+        "RMSE": 5.97416573483007,
+        "bias": -2.731704424253397
+      },
+      "common_player_metrics": {
+        "n": 94,
+        "MAE": 4.220498214846211,
+        "RMSE": 5.97416573483007,
+        "bias": -2.731704424253397
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.406195385434035,
+        "RMSE": 5.56903048326625,
+        "bias": 0.6204495678184146
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.09281310993694676,
+      "allocation_contribution_bias": -2.8245175341903437,
+      "predicted_share_mean": 0.1741513573876478,
+      "actual_share_mean": 0.28280040307813525,
+      "raw_share_mean": 0.2840218043214995,
+      "normalization_denominator_mean": 1.657251836995226,
+      "other_probability_mean": 0.19125090683818116,
+      "forecast_mass_to_unknown_RB_mean": 0.2971794808356035,
+      "fallback_common_player_metrics": {
+        "n": 29,
+        "MAE": 3.26541347292871,
+        "RMSE": 5.222327036395905,
+        "bias": -1.8310233358374495
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 65,
+        "MAE": 4.646612945855559,
+        "RMSE": 6.280633719594993,
+        "bias": -3.1335467560082044
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 94,
+        "MAE": 4.279948803862396,
+        "RMSE": 5.891962547102537,
+        "bias": -2.8245175341903437
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 94,
+        "MAE": 1.2741079388980805,
+        "RMSE": 2.09881517962997,
+        "bias": 0.18931083631043938
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        2
+      ],
+      "common_actual_weeks": [
+        2
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        3
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 88,
+        "MAE": 4.888215511266602,
+        "RMSE": 6.519840826439778,
+        "bias": -3.0192651233198613
+      },
+      "common_player_metrics": {
+        "n": 88,
+        "MAE": 4.888215511266602,
+        "RMSE": 6.519840826439778,
+        "bias": -3.0192651233198613
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 5.107933238652613,
+        "RMSE": 6.436340048813079,
+        "bias": 1.101880483557283
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.23331327387663076,
+      "allocation_contribution_bias": -3.2525783971964914,
+      "predicted_share_mean": 0.18669487451451133,
+      "actual_share_mean": 0.31143611728451487,
+      "raw_share_mean": 0.305384055597625,
+      "normalization_denominator_mean": 1.6716005901130906,
+      "other_probability_mean": 0.17653503818749783,
+      "forecast_mass_to_unknown_RB_mean": 0.310054056897596,
+      "fallback_common_player_metrics": {
+        "n": 7,
+        "MAE": 3.2754671272646356,
+        "RMSE": 3.451004247942068,
+        "bias": 0.9060162023791316
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 81,
+        "MAE": 5.027588828402575,
+        "RMSE": 6.719573890765972,
+        "bias": -3.358486966281503
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 88,
+        "MAE": 4.760313083551118,
+        "RMSE": 6.271580376534832,
+        "bias": -3.2525783971964914
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 88,
+        "MAE": 1.597336951946226,
+        "RMSE": 2.6402061321051167,
+        "bias": 0.36930012956513475
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        3
+      ],
+      "common_actual_weeks": [
+        3
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        4
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 87,
+        "MAE": 4.329271474279449,
+        "RMSE": 5.942524266800919,
+        "bias": -3.012905001340354
+      },
+      "common_player_metrics": {
+        "n": 87,
+        "MAE": 4.329271474279449,
+        "RMSE": 5.942524266800919,
+        "bias": -3.012905001340354
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 5.458715695087071,
+        "RMSE": 7.407507962907453,
+        "bias": 0.7583993133141701
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.12693126142963376,
+      "allocation_contribution_bias": -3.1398362627699887,
+      "predicted_share_mean": 0.1867238799468007,
+      "actual_share_mean": 0.30928716231840564,
+      "raw_share_mean": 0.29601987907988875,
+      "normalization_denominator_mean": 1.6253891840136783,
+      "other_probability_mean": 0.16548388974793515,
+      "forecast_mass_to_unknown_RB_mean": 0.3268605616467004,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 0.550899039986189,
+        "RMSE": 0.7017657516982428,
+        "bias": 0.43472453116760623
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 85,
+        "MAE": 4.418174355086349,
+        "RMSE": 6.011066055213145,
+        "bias": -3.0940256962228947
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 87,
+        "MAE": 4.197079388238607,
+        "RMSE": 5.651731996563574,
+        "bias": -3.1398362627699887
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 87,
+        "MAE": 1.699187497970908,
+        "RMSE": 3.0907193375634243,
+        "bias": 0.2728508880367175
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        4
+      ],
+      "common_actual_weeks": [
+        4
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        5
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 82,
+        "MAE": 3.88330447139454,
+        "RMSE": 5.672867195187522,
+        "bias": -2.8468218302356676
+      },
+      "common_player_metrics": {
+        "n": 82,
+        "MAE": 3.88330447139454,
+        "RMSE": 5.672867195187522,
+        "bias": -2.8468218302356676
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 5.1357319483385275,
+        "RMSE": 6.1233852197952725,
+        "bias": 0.3991237454078005
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": -0.04511058060541848,
+      "allocation_contribution_bias": -2.8017112496302494,
+      "predicted_share_mean": 0.18546989400867864,
+      "actual_share_mean": 0.2989172658360116,
+      "raw_share_mean": 0.29090795591139884,
+      "normalization_denominator_mean": 1.621594020014131,
+      "other_probability_mean": 0.1551172674042647,
+      "forecast_mass_to_unknown_RB_mean": 0.33793168897201364,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 5.354346683746815,
+        "RMSE": 5.952533418808467,
+        "bias": -5.354346683746815
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 80,
+        "MAE": 3.8465284160857323,
+        "RMSE": 5.665698669805854,
+        "bias": -2.7841337088978886
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 82,
+        "MAE": 3.88519413487833,
+        "RMSE": 5.478477484791401,
+        "bias": -2.801711249630249
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 82,
+        "MAE": 1.5802558946617935,
+        "RMSE": 2.610729371901859,
+        "bias": 0.21198815368825086
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        5
+      ],
+      "common_actual_weeks": [
+        5
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        6
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 75,
+        "MAE": 4.46120606484609,
+        "RMSE": 6.053865371630721,
+        "bias": -3.2773210632615104
+      },
+      "common_player_metrics": {
+        "n": 75,
+        "MAE": 4.46120606484609,
+        "RMSE": 6.053865371630721,
+        "bias": -3.2773210632615104
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 28,
+        "MAE": 5.723096640664728,
+        "RMSE": 7.381081749722284,
+        "bias": 1.6461474938475777
+      },
+      "common_team_games": 28,
+      "games": 14,
+      "volume_contribution_bias": 0.38458208527209425,
+      "allocation_contribution_bias": -3.6619031485336047,
+      "predicted_share_mean": 0.1756120425219372,
+      "actual_share_mean": 0.317288434389464,
+      "raw_share_mean": 0.2782793098129822,
+      "normalization_denominator_mean": 1.651959368835509,
+      "other_probability_mean": 0.1526873249348104,
+      "forecast_mass_to_unknown_RB_mean": 0.3769232754528577,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 4.181047850851963,
+        "RMSE": 4.648481460696697,
+        "bias": -2.0315557485156757
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 73,
+        "MAE": 4.468881632352779,
+        "RMSE": 6.0878046581313905,
+        "bias": -3.311451619829889
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 75,
+        "MAE": 4.474572179366517,
+        "RMSE": 5.896986873709274,
+        "bias": -3.6619031485336047
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 75,
+        "MAE": 1.8341568035271003,
+        "RMSE": 3.161463021994667,
+        "bias": 0.5141889547345126
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        6
+      ],
+      "common_actual_weeks": [
+        6
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        7
+      ],
+      "arm": "A2_DYNAMIC_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 73,
+        "MAE": 4.769092761494599,
+        "RMSE": 6.573297290189977,
+        "bias": -3.7810520551156226
+      },
+      "common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "common_team_games": 0,
+      "games": 0,
+      "volume_contribution_bias": null,
+      "allocation_contribution_bias": null,
+      "predicted_share_mean": null,
+      "actual_share_mean": null,
+      "raw_share_mean": null,
+      "normalization_denominator_mean": null,
+      "other_probability_mean": null,
+      "forecast_mass_to_unknown_RB_mean": null,
+      "fallback_common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "excluded_component_rows": {
+        "TEAM_TOTAL_UNAVAILABLE": 73
+      },
+      "requested_or_original_scored_weeks": [
+        7
+      ],
+      "common_actual_weeks": []
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 586,
+        "MAE": 4.817309362077858,
+        "RMSE": 6.656783172183675,
+        "bias": -3.4792014430118208
+      },
+      "common_player_metrics": {
+        "n": 513,
+        "MAE": 4.789558190017209,
+        "RMSE": 6.594905507454435,
+        "bias": -3.372972200879064
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 186,
+        "MAE": 5.4610551782803425,
+        "RMSE": 6.911022205172678,
+        "bias": 0.7245493180901563
+      },
+      "common_team_games": 186,
+      "games": 93,
+      "volume_contribution_bias": 0.13421830806474175,
+      "allocation_contribution_bias": -3.507190508943806,
+      "predicted_share_mean": 0.16821790829289335,
+      "actual_share_mean": 0.302012818234536,
+      "raw_share_mean": 0.3080799398439929,
+      "normalization_denominator_mean": 1.8945199545634566,
+      "other_probability_mean": 0.151577449438844,
+      "forecast_mass_to_unknown_RB_mean": 0.3844667067210793,
+      "fallback_common_player_metrics": {
+        "n": 73,
+        "MAE": 3.974507762577393,
+        "RMSE": 5.674744302968865,
+        "bias": -1.3773683217727133
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 440,
+        "MAE": 4.924782465478814,
+        "RMSE": 6.73542140758435,
+        "bias": -3.7040610262762543
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 513,
+        "MAE": 4.718208282999885,
+        "RMSE": 6.381104821057806,
+        "bias": -3.507190508943806
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 513,
+        "MAE": 1.6609449791908641,
+        "RMSE": 2.7965616672212277,
+        "bias": 0.23930247685776812
+      },
+      "excluded_component_rows": {
+        "TEAM_TOTAL_UNAVAILABLE": 73
+      },
+      "requested_or_original_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "common_actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        1
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 87,
+        "MAE": 5.366885779160654,
+        "RMSE": 7.175084359088295,
+        "bias": -3.6537739321491203
+      },
+      "common_player_metrics": {
+        "n": 87,
+        "MAE": 5.366885779160654,
+        "RMSE": 7.175084359088295,
+        "bias": -3.6537739321491203
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 6.947080642431769,
+        "RMSE": 8.214835595252039,
+        "bias": -0.08384402172727756
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.044841675187634135,
+      "allocation_contribution_bias": -3.698615607336753,
+      "predicted_share_mean": 0.1638143160457,
+      "actual_share_mean": 0.295714115453689,
+      "raw_share_mean": 0.32721264950296663,
+      "normalization_denominator_mean": 2.082129868398654,
+      "other_probability_mean": 0.15390993722036939,
+      "forecast_mass_to_unknown_RB_mean": 0.40071989103038375,
+      "fallback_common_player_metrics": {
+        "n": 31,
+        "MAE": 4.795567228637492,
+        "RMSE": 6.733263067895466,
+        "bias": -2.4170670005471875
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 56,
+        "MAE": 5.683151405343119,
+        "RMSE": 7.408342204107373,
+        "bias": -4.338379555000189
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 87,
+        "MAE": 5.055894224114843,
+        "RMSE": 6.722086156179845,
+        "bias": -3.698615607336753
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 87,
+        "MAE": 2.0317347166316932,
+        "RMSE": 3.116448567320878,
+        "bias": -0.08295042360456936
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        1
+      ],
+      "common_actual_weeks": [
+        1
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        2
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 94,
+        "MAE": 4.4191798346450915,
+        "RMSE": 6.201994729243257,
+        "bias": -2.885706128238675
+      },
+      "common_player_metrics": {
+        "n": 94,
+        "MAE": 4.4191798346450915,
+        "RMSE": 6.201994729243257,
+        "bias": -2.885706128238675
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 4.406195385434035,
+        "RMSE": 5.56903048326625,
+        "bias": 0.6204495678184146
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.11636050910139914,
+      "allocation_contribution_bias": -3.002066637340074,
+      "predicted_share_mean": 0.16876749707084968,
+      "actual_share_mean": 0.28280040307813525,
+      "raw_share_mean": 0.31859776083850744,
+      "normalization_denominator_mean": 1.920928122030259,
+      "other_probability_mean": 0.16522784015887854,
+      "forecast_mass_to_unknown_RB_mean": 0.3390176371955005,
+      "fallback_common_player_metrics": {
+        "n": 29,
+        "MAE": 3.29614621666704,
+        "RMSE": 5.07151541169826,
+        "bias": -1.0580171048456628
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 65,
+        "MAE": 4.9202256026660685,
+        "RMSE": 6.644601790308433,
+        "bias": -3.7011366155986343
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 94,
+        "MAE": 4.438607670217944,
+        "RMSE": 6.108060728534056,
+        "bias": -3.002066637340074
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 94,
+        "MAE": 1.2741079388980805,
+        "RMSE": 2.09881517962997,
+        "bias": 0.18931083631043938
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        2
+      ],
+      "common_actual_weeks": [
+        2
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        3
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 88,
+        "MAE": 5.147565079168124,
+        "RMSE": 6.976086384446524,
+        "bias": -3.3948599976332745
+      },
+      "common_player_metrics": {
+        "n": 88,
+        "MAE": 5.147565079168124,
+        "RMSE": 6.976086384446524,
+        "bias": -3.3948599976332745
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 5.107933238652613,
+        "RMSE": 6.436340048813079,
+        "bias": 1.101880483557283
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.21892506777337825,
+      "allocation_contribution_bias": -3.613785065406653,
+      "predicted_share_mean": 0.17318773556396985,
+      "actual_share_mean": 0.31143611728451487,
+      "raw_share_mean": 0.31553034295995935,
+      "normalization_denominator_mean": 1.86748573748529,
+      "other_probability_mean": 0.15964265058010266,
+      "forecast_mass_to_unknown_RB_mean": 0.3640910766189803,
+      "fallback_common_player_metrics": {
+        "n": 7,
+        "MAE": 3.6796151538946,
+        "RMSE": 3.8819231093776128,
+        "bias": 1.9017344434178756
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 81,
+        "MAE": 5.27442494925349,
+        "RMSE": 7.181168325641603,
+        "bias": -3.852590381427819
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 88,
+        "MAE": 5.0893891817585635,
+        "RMSE": 6.792481317725917,
+        "bias": -3.613785065406653
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 88,
+        "MAE": 1.597336951946226,
+        "RMSE": 2.6402061321051167,
+        "bias": 0.36930012956513475
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        3
+      ],
+      "common_actual_weeks": [
+        3
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        4
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 87,
+        "MAE": 4.745531612178316,
+        "RMSE": 6.505990914792062,
+        "bias": -3.4641300782614883
+      },
+      "common_player_metrics": {
+        "n": 87,
+        "MAE": 4.745531612178316,
+        "RMSE": 6.505990914792062,
+        "bias": -3.4641300782614883
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 32,
+        "MAE": 5.458715695087071,
+        "RMSE": 7.407507962907453,
+        "bias": 0.7583993133141701
+      },
+      "common_team_games": 32,
+      "games": 16,
+      "volume_contribution_bias": 0.12747475880834613,
+      "allocation_contribution_bias": -3.5916048370698337,
+      "predicted_share_mean": 0.17023579650989096,
+      "actual_share_mean": 0.30928716231840564,
+      "raw_share_mean": 0.3005804291922134,
+      "normalization_denominator_mean": 1.8201792878113894,
+      "other_probability_mean": 0.149667224118985,
+      "forecast_mass_to_unknown_RB_mean": 0.387504204119749,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 1.45584935323406,
+        "RMSE": 1.5178324449265481,
+        "bias": 1.45584935323406
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 85,
+        "MAE": 4.822935900624063,
+        "RMSE": 6.5779678754516695,
+        "bias": -3.579894300179031
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 87,
+        "MAE": 4.612731061670487,
+        "RMSE": 6.265584412330863,
+        "bias": -3.5916048370698337
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 87,
+        "MAE": 1.699187497970908,
+        "RMSE": 3.0907193375634243,
+        "bias": 0.2728508880367175
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        4
+      ],
+      "common_actual_weeks": [
+        4
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        5
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 82,
+        "MAE": 4.373441937263447,
+        "RMSE": 6.2370777896098,
+        "bias": -3.282939195636262
+      },
+      "common_player_metrics": {
+        "n": 82,
+        "MAE": 4.373441937263447,
+        "RMSE": 6.2370777896098,
+        "bias": -3.282939195636262
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 30,
+        "MAE": 5.1357319483385275,
+        "RMSE": 6.1233852197952725,
+        "bias": 0.3991237454078005
+      },
+      "common_team_games": 30,
+      "games": 15,
+      "volume_contribution_bias": -0.035468330567570525,
+      "allocation_contribution_bias": -3.247470865068691,
+      "predicted_share_mean": 0.16957650604971447,
+      "actual_share_mean": 0.2989172658360116,
+      "raw_share_mean": 0.2953549762822768,
+      "normalization_denominator_mean": 1.8156672556750455,
+      "other_probability_mean": 0.1406570815973418,
+      "forecast_mass_to_unknown_RB_mean": 0.39583380186677186,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 4.3936771977296,
+        "RMSE": 5.050389578297728,
+        "bias": -4.3936771977296
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 80,
+        "MAE": 4.3729360557517944,
+        "RMSE": 6.263865177761293,
+        "bias": -3.2551707455839285
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 82,
+        "MAE": 4.368056195145018,
+        "RMSE": 6.0551910457980584,
+        "bias": -3.247470865068691
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 82,
+        "MAE": 1.5802558946617935,
+        "RMSE": 2.610729371901859,
+        "bias": 0.21198815368825086
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        5
+      ],
+      "common_actual_weeks": [
+        5
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        6
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 75,
+        "MAE": 4.670028908710688,
+        "RMSE": 6.389761916167984,
+        "bias": -3.624960270091995
+      },
+      "common_player_metrics": {
+        "n": 75,
+        "MAE": 4.670028908710688,
+        "RMSE": 6.389761916167984,
+        "bias": -3.624960270091995
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 28,
+        "MAE": 5.723096640664728,
+        "RMSE": 7.381081749722284,
+        "bias": 1.6461474938475777
+      },
+      "common_team_games": 28,
+      "games": 14,
+      "volume_contribution_bias": 0.35423428755352293,
+      "allocation_contribution_bias": -3.9791945576455183,
+      "predicted_share_mean": 0.16297984282069405,
+      "actual_share_mean": 0.317288434389464,
+      "raw_share_mean": 0.28657391385393166,
+      "normalization_denominator_mean": 1.850269906261879,
+      "other_probability_mean": 0.13797743861421377,
+      "forecast_mass_to_unknown_RB_mean": 0.42546941097321284,
+      "fallback_common_player_metrics": {
+        "n": 2,
+        "MAE": 4.21594155892686,
+        "RMSE": 4.379692684035667,
+        "bias": -1.1863999234275504
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 73,
+        "MAE": 4.682469658019833,
+        "RMSE": 6.43600306163578,
+        "bias": -3.6917701426033496
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 75,
+        "MAE": 4.746592964246474,
+        "RMSE": 6.291039301822607,
+        "bias": -3.979194557645519
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 75,
+        "MAE": 1.8341568035271003,
+        "RMSE": 3.161463021994667,
+        "bias": 0.5141889547345126
+      },
+      "excluded_component_rows": {},
+      "requested_or_original_scored_weeks": [
+        6
+      ],
+      "common_actual_weeks": [
+        6
+      ]
+    },
+    {
+      "season": 2026,
+      "weeks": [
+        7
+      ],
+      "arm": "S0_RECENCY_ALLOCATION",
+      "original_scored_player_metrics": {
+        "n": 73,
+        "MAE": 5.012327872586251,
+        "RMSE": 7.076377063772845,
+        "bias": -4.225716528136534
+      },
+      "common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "common_team_metrics_unique_team_games": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "common_team_games": 0,
+      "games": 0,
+      "volume_contribution_bias": null,
+      "allocation_contribution_bias": null,
+      "predicted_share_mean": null,
+      "actual_share_mean": null,
+      "raw_share_mean": null,
+      "normalization_denominator_mean": null,
+      "other_probability_mean": null,
+      "forecast_mass_to_unknown_RB_mean": null,
+      "fallback_common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "nonfallback_common_player_metrics": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "POSTGAME_DIAGNOSTIC_actual_volume": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "POSTGAME_DIAGNOSTIC_actual_share": {
+        "n": 0,
+        "MAE": null,
+        "RMSE": null,
+        "bias": null,
+        "reason": "No qualified matching rows"
+      },
+      "excluded_component_rows": {
+        "TEAM_TOTAL_UNAVAILABLE": 73
+      },
+      "requested_or_original_scored_weeks": [
+        7
+      ],
+      "common_actual_weeks": []
+    }
+  ],
+  "private_evidence": {
+    "logical_id": "A-POST-WAVE-COMPONENT-DIAG-V1",
+    "bytes": 384844,
+    "sha256": "3662d62f0139a0618893cda767ec4947ebef90532312a8860fee9ed0319818ef",
+    "readback": "PASS_OWNER_LOCAL",
+    "offhost": "NOT_VERIFIED"
+  },
+  "causal_limits": [
+    "Accounting decomposition and postgame substitutions identify error components, not a causal mechanism or achievable future accuracy.",
+    "Other/unresolved and unscored roster mass are not verified DNP or zero production.",
+    "Seven-day football availability is the original reconstruction assumption; quote timing and provider historical vintages remain unverified.",
+    "No architecture, injury penalty, correction offset, selection rule or forecast has been changed."
+  ],
+  "CPU_seconds": 54.718458369000004,
+  "wall_seconds": 54.751336405000984,
+  "RSS_bytes": 235094016,
+  "new_fits_inference": 0,
+  "retained_headroom_bytes": 6037896,
+  "supersedes_report": "ALLOCATION_COMPONENT_RESULTS_V1.json",
+  "superseded_sha256": "9ea9e6e98b23f629e600e97eea002f7b9e2b7fa27c12e5e2a5f851198a65275e",
+  "correction": "Explicit actual common-case weeks; original predictions, numerical values, private rows and earlier report retained. Common2026 component decomposition isW1-6, notW1-7."
+}

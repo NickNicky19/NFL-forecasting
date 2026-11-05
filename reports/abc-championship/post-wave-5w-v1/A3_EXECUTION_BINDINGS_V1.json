@@ -1,0 +1,39 @@
+{
+  "state": "SOURCE_BOUND_BEFORE_A3_INFERENCE",
+  "bound_UTC": "2026-11-05T00:18:04.502758+00:00",
+  "source_bindings": [
+    {
+      "path": "nfl_lab/abc_conditional_carry_v1.py",
+      "sha256": "88e7520a763aae427757d4b027d4843176ccf7b190107f39b9cb78571120e59e"
+    },
+    {
+      "path": "tools/abc_a_postwave_conditional_carry_v1.py",
+      "sha256": "b3f8df4bd27755c36648faae0158754ea7622f012be2ec75f2a2c9c8213b28d8"
+    }
+  ],
+  "C_scorer_code_cache": "Environment ABC_C_CODE_CACHE selects already verified public C scorer bytes; not NFL/private evidence storage.",
+  "C_bound_code": [
+    {
+      "path": "src/abc_championship_v2.py",
+      "sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+    },
+    {
+      "path": "src/actual_accuracy_v6.py",
+      "sha256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+    },
+    {
+      "path": "src/selection.py",
+      "sha256": "dc5c87ea7b8933947f57244ca90a6fa3fb8a374909c04993fa3b0bb831d6a13f"
+    },
+    {
+      "path": "src/contracts_v2.py",
+      "sha256": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a"
+    },
+    {
+      "path": "src/offer_validator_v2.py",
+      "sha256": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51"
+    }
+  ],
+  "budget": "A3_CONDITIONAL_EXPOSURE_PROTOCOL_V1.json",
+  "numerical_probability_rules": "Exact halfinteger/integer events; old1e-12 decisive-probability tie rule; no probability clipping/log-loss floor; Beta moment projection clipping is separately declared modeled approximation."
+}

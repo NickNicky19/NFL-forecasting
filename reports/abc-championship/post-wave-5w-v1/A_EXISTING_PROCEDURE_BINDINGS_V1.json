@@ -1,0 +1,958 @@
+{
+  "state": "AUTHENTICATED_EXISTING_METADATA_NOT_NEW_SCORES",
+  "source_archive_sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+  "catalog_scope_member_sha256": "e1f59a5c090f516b89afb195135741d4a566d04e41bf89928326f97674a2405d",
+  "bindings": [
+    {
+      "source_key": [
+        "catalog",
+        "anytime_td",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400",
+      "products": [
+        "probability"
+      ],
+      "model_sha256": "b5ff6a18b49fd3baf72a08e198a05ae0b682d09834418f05b2b3669177eb4000",
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "anytime_td",
+        "EQUAL_CDF_CAT_PROBABILITY"
+      ],
+      "procedure_id": "EQUAL_CDF_CAT_PROBABILITY",
+      "procedure_version": "5fd96c91561c262a582293e2ab164849a2dc4ab688c645241318c1b483b04043",
+      "products": [
+        "probability"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "EQUAL_CDF_CAT_PROBABILITY"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "anytime_td",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "probability_raw",
+        "probability_normalized"
+      ],
+      "model_sha256": "59ff99d89549a9d53e1b70b2fdebefa2562f8e9e31c6a2b67290995c6ad0e173",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "anytime_td",
+        "ROLE_LOGISTIC"
+      ],
+      "procedure_id": "ROLE_LOGISTIC",
+      "procedure_version": "a21ec6719e8e541ceef9bc7831c7f488f69d5117531991d906a340606f471508",
+      "products": [
+        "probability"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "ROLE_LOGISTIC"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "chart_ppr",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "0da8722880300f3fd9c4bb693e468428ff36b31f90e91f5e286c22ba6976f8d3",
+      "products": [
+        "median_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "chart_ppr",
+        "CHART_HGB"
+      ],
+      "procedure_id": "CHART_HGB",
+      "procedure_version": "a71bc0a1f194e1c3e1205dfce996db201aedf548ed312a062a59e75e8b9a3541",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CHART_HGB"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "chart_ppr",
+        "CHART_LEAF_CDF"
+      ],
+      "procedure_id": "CHART_LEAF_CDF",
+      "procedure_version": "ed2904659a9ed6329e43591e30a1abfd64c9f9cee5febdbdc00a4596907be604",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CHART_LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "chart_ppr",
+        "CHART_ROLE_LAW"
+      ],
+      "procedure_id": "CHART_ROLE_LAW",
+      "procedure_version": "447d381ce4438c1a22745e663f602817997a946cf047556ec44c8323f40905ca",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CHART_ROLE_LAW"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "chart_ppr",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "92d60092754dc6b1b9cbe804c20e8079b3454aa322dc3fe69435003cae8370c4",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "bc872dcebfe822d49ae435d048aa89b959b30cf570f404af119960f3701bd8ba",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "6aa8cf5de83b8ecae994e9e24412a5eeef688d1b50ea7f3880aa4f369c2aad23",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "e76d6588e12771f9c221bdbc030d25be52dab22e644c549fa0366d2832b6b2cd",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "DEPTH_CDF"
+      ],
+      "procedure_id": "DEPTH_CDF",
+      "procedure_version": "9b187e17fcaf1146d4465a18b1a7a996af42826b077cbdfa208ae4cde3583326",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "DEPTH_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "a49c455ae797e612d9532472a729f60a55f7bf55d0122a67332b2fb70d6ccb6d",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "2609f3c2461e155058655b82b63bc824d1955c7ce2268007189e0a7a48eab9c6",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_att",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "87b0494f617a671dc597bb963cdd5d97e60659b966e8f1b700f1b3c5ffa1983f",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "6dc1b2eef1164b94e77829994aa8fad2eb412f035cd9c4100fd271336e77e517",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "74e42511fb39acc351143ace63978024283ba4794eace416f5c891d1ccf1d394",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "80a9371936a049dfe5b75e458bb55c3f2ff11daf2f0c9e0e6726de0b8cbd6310",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "0dc368d6f8890ed37049af28381b338af32734aa3a271d8ac657db2f0f351ce3",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_cmp",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "c633c6909be533920b12e4fdc2aca7572093703b24fe2fefb6a4ca9ac90c6784",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "6705e4dba2244eb9057a9a0e84e1f5b88ad13073013c07bb20b3ad1938c21b35",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "f260c59798990e024714f8cb009949ce36aa06f272225463c3732cf230b9a1d2",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "3e1a430fb8dcfe86d77f04a00156044a60e3852989716b790c4dd5ddf73cfdaf",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "3d8436e467c77531a7928eb788caba2231d82b518517453b53cc13e99f4bae47",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_int",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "7ca7c686711185de4014ebd9aba3bed80ce62f41f63cd351cf4434e658be7cec",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "5b0be2edbbf34431088bb9165e89ac7188dd3d6a4c7be0b29030f5541ecdb3f2",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "bdcffa9803bcf96b39da157a16588b88d65b2ced2dc9c55d168a4f19c8e6102a",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "471dc5a0fcd04055d1a5b0600dbddbb2085e71f3b8608ac8a2164ff50886d5f1",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_td",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "646bf90f55f075a35a57d6fa957e27904266ccd6789a8f0d855a273158ea3c46",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_yd",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400",
+      "products": [
+        "median_objective_point"
+      ],
+      "model_sha256": "0203c637c17d1231871403306c0df48960571bdb7ae855bd6e95637bbe72f6e9",
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_yd",
+        "EQUAL_CDF_CAT_HGB_POINT"
+      ],
+      "procedure_id": "EQUAL_CDF_CAT_HGB_POINT",
+      "procedure_version": "e218abfd52d8b5d860cd5bbae2c7145bea1670775c0b6fcc5f7b9bbcbd418c05",
+      "products": [
+        "empirical_point_blend"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "EQUAL_CDF_CAT_HGB_POINT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_yd",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_yd",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "dffd0a2f82dd8f542177f666c0dc9f4a1c15942e885fd82eb25b6b1ee6b8a0b4",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "pass_yd",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "418ccf0e50bac7fbb2df02705f62f428ce00bf9d8f443e31d90e698ca60e21c9",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "08d8393d8d4e9f3989351546804d875fd3ff900854d6551ddd4e691a47c85cea",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": "8ed78a4e696b4d11be99b4f455a42f7bbb13f0e1208ec6165b9464b65ad348df",
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "22858dcf4777d138c08015823d963161dbcc7e9503d1136b1d073c584e90fb63",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "8465955423f642def6e6a691872250746eb01a31f31aee10893db87bdccb1a15",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec",
+        "ORDERED_CDF"
+      ],
+      "procedure_id": "ORDERED_CDF",
+      "procedure_version": "677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "ORDERED_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec_yd",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400",
+      "products": [
+        "median_objective_point"
+      ],
+      "model_sha256": "70d98cf501762c6f97e8d610e98d7d321613f10515aeb2c0d458713f4231c35a",
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec_yd",
+        "EQUAL_CDF_CAT_HGB_POINT"
+      ],
+      "procedure_id": "EQUAL_CDF_CAT_HGB_POINT",
+      "procedure_version": "9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69",
+      "products": [
+        "empirical_point_blend"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "EQUAL_CDF_CAT_HGB_POINT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec_yd",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "6c6bf4be00366240df7de12ea47febd88fb82dfe27e6e184a5aeb636d008fff5",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec_yd",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "9afc353d862b2c961e804ea4171941423241c9170e624fce2d295f3bbf6ab9d6",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rec_yd",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "BACKFIELD_CDF"
+      ],
+      "procedure_id": "BACKFIELD_CDF",
+      "procedure_version": "607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "BACKFIELD_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "e625ea46f0d19e59b6fb827cb2c4b54872fb728c58e1841101de54325669d109",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "COUNT_A_LEGACY_POINT"
+      ],
+      "procedure_id": "COUNT_A_LEGACY_POINT",
+      "procedure_version": "19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b",
+      "products": [
+        "legacy_empirical_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "COUNT_A_MEAN"
+      ],
+      "procedure_id": "COUNT_A_MEAN",
+      "procedure_version": "d097389f5f625d92e6061bd068deab153bb4ba3b02783feedc3a889796b647c8",
+      "products": [
+        "mean_objective_point"
+      ],
+      "model_sha256": "7c4f532660b86a77e2fc579f53565a0c06beffe9242dbe411f4787560d0d0a31",
+      "shortlist_group": "COUNT_A"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "7ad62239d3918217d2910600156f3fd7e5b788e082621dabefdaeb705ad16ab0",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_att",
+        "ORDERED_CDF"
+      ],
+      "procedure_id": "ORDERED_CDF",
+      "procedure_version": "677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "ORDERED_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_rec_yd",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400",
+      "products": [
+        "median_objective_point"
+      ],
+      "model_sha256": "85eae1163061b6f4812ad49650da8cd51cfd1d76e46d5acd1afe2ed019bd9193",
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_rec_yd",
+        "EQUAL_CDF_CAT_HGB_POINT"
+      ],
+      "procedure_id": "EQUAL_CDF_CAT_HGB_POINT",
+      "procedure_version": "2aabd412f6d95865c20da688c24eddab88736741eb61f8fb3891b5390352315e",
+      "products": [
+        "empirical_point_blend"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "EQUAL_CDF_CAT_HGB_POINT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_rec_yd",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "a5d8b74346b1405b83103820eaba11db4ad58fd88606d507860acb5c88f605bf",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_rec_yd",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "14d9781edf4d54b7bd668e75e0c790cae018b182b52f75e420128da88ac13459",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_rec_yd",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_yd",
+        "CATBOOST_MEDIUM"
+      ],
+      "procedure_id": "CATBOOST_MEDIUM",
+      "procedure_version": "9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400",
+      "products": [
+        "median_objective_point"
+      ],
+      "model_sha256": "b671108f9be16cde5a39efec11cc21016b90556dd1c42a9814d7ce3297c78558",
+      "shortlist_group": "CATBOOST_MEDIUM"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_yd",
+        "EQUAL_CDF_CAT_HGB_POINT"
+      ],
+      "procedure_id": "EQUAL_CDF_CAT_HGB_POINT",
+      "procedure_version": "d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681",
+      "products": [
+        "empirical_point_blend"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "EQUAL_CDF_CAT_HGB_POINT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_yd",
+        "HGB_MAE_DIRECT"
+      ],
+      "procedure_id": "HGB_MAE_DIRECT",
+      "procedure_version": "78e0a3e29e50d210d93a63a276a3e9c23b278f9d21cab99e804b2b9d43506ef3",
+      "products": [
+        "mae_objective_point"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "HGB_MAE_DIRECT"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_yd",
+        "LEAF_CDF"
+      ],
+      "procedure_id": "LEAF_CDF",
+      "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": "3ccae17979c67319de20bc2ce31c69c54740564c2cf5b02a7f3d1fa4e553ff24",
+      "shortlist_group": "LEAF_CDF"
+    },
+    {
+      "source_key": [
+        "catalog",
+        "rush_yd",
+        "RESPONSE_CDF"
+      ],
+      "procedure_id": "RESPONSE_CDF",
+      "procedure_version": "67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313",
+      "products": [
+        "mean",
+        "median"
+      ],
+      "model_sha256": null,
+      "shortlist_group": "RESPONSE_CDF"
+    }
+  ],
+  "limits": "Source key paths identify category/method hierarchy; private locators and all row forecasts excluded."
+}

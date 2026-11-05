@@ -250,6 +250,14 @@
       "state": "PASS",
       "kind": "Local software/aggregate verification; no new predictive observations or hosted CI claim",
       "record": "../abc-championship/predictive-improvement-01/SOFTWARE_VERIFICATION_V1.json"
+    },
+    {
+      "id": "A_POSTWAVE_TYPED_MEAN_AND_FIVE_WEEK_V1",
+      "command": "ABC_C_CODE_CACHE=<verified-public-C-scorer-cache> python -B tools/abc_a_postwave_software_checks_v1.py",
+      "state": "PASS",
+      "record": "../abc-championship/post-wave-5w-v1/SOFTWARE_CHECKS_V1.json",
+      "kind": "Local synthetic software checks, zero new NFL evidence or hosted CI claim.",
+      "failed_recheck_preserved": "../abc-championship/post-wave-5w-v1/SOFTWARE_RECHECK_ENV_FAILURE_V1.json"
     }
   ]
 }

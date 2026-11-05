@@ -1,0 +1,26 @@
+{
+  "state": "FAILED_BEFORE_MODEL_LOAD",
+  "observed_UTC": "2026-11-05T00:13:27.833844+00:00",
+  "error": "ValueError: full mean recipe differs",
+  "cause": "Local wrapper recomputed the original fixed13 recipe with an added newline; the frozen producer canonical encoder has no newline. Original reservation/model audit hashes agree under the correct original encoder. No old model/scientific procedure changed.",
+  "expected_original_parent_hash": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+  "incorrect_local_newline_hash": "35b97d56ff4ddfd3460cd6c2d2223499f7390bab885c265550bc13d646a2810a",
+  "expected_corrected_procedure": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+  "failed_attempt_CPU_seconds": null,
+  "charged_CPU_upper_bound": 120,
+  "model_loads_new_fits_predictions": 0,
+  "source_witnesses": [
+    {
+      "original_source": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "witness": "count_a_mean_export_adapter_v1.py.failed-v2.txt",
+      "bytes": 3439,
+      "sha256": "0872caa43cfabe5efbcb30be842c8893162d98f9a29acf9d171012f868769032"
+    },
+    {
+      "original_source": "tools/abc_a_count_a_restore_and_parity_v2.py",
+      "witness": "abc_a_count_a_restore_and_parity_v2.py.failed-v2.txt",
+      "bytes": 12081,
+      "sha256": "4af081aa430a5dcf751ecd360d4b2ff0dc0184d51094327eb122426656cfa298"
+    }
+  ]
+}

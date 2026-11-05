@@ -1,0 +1,20 @@
+{
+  "state": "FAILED_FINAL_PYTHON_OBJECT_EQUALITY_CHECK",
+  "failure": "qualification partition readback mismatch",
+  "cause": "Week helper emitted integer dictionary keys for per-season summaries; JSON roundtrip correctly converts object keys to strings. Hash-validated compressed bytes were intact; comparing against the pre-JSON Python object caused a false mismatch.",
+  "actual_runtime": {
+    "state": "FAILED",
+    "asof_UTC": "2026-11-05T00:38:40.009654+00:00",
+    "CPU_seconds": 25.648202045,
+    "wall_seconds": 42.22496673899877,
+    "error": {
+      "type": "ValueError",
+      "message_sha256": "e486cb07568d0b1667a0aa291c0c7d5b71a0fbcff63e2a564c5d90dbba733a6c"
+    },
+    "new_fits": 0
+  },
+  "helper_before_sha256": "cf6a5d77f01e9d73ef6c8696301958ad1904c055535d5e8f85f83fe412516914",
+  "preservation": "First immutable category payload/entry already written remain preserved; no scientific values changed.",
+  "remedy": "Emit explicit string season keys before serialization. Fill remaining partitions under a new bounded metadata attempt, retaining earlier failed receipts.",
+  "new_fits_inference_scores": 0
+}

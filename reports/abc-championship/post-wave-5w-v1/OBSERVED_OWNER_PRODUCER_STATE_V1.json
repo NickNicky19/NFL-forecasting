@@ -1,0 +1,86 @@
+{
+  "schema": "A-POSTWAVE-OBSERVED-OWNER-PRODUCER-STATE-v1",
+  "recorded_at_UTC": "2026-11-05 00:51:17 UTC",
+  "source_owner_comment": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6642441018",
+  "source_comment_created_updated_UTC": "2026-11-04T21:22:14Z",
+  "source_policy_ref": "af8bc14abe4a4148a3f84e6c131775923b5300f4",
+  "actual_heads": {
+    "A": "a36a545dd9962e0a154bdece65f7b2818185f32c",
+    "lab_state": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "production": "af8bc14abe4a4148a3f84e6c131775923b5300f4",
+    "C": "d66f3b20493a8ddf72842e9895d0c2c916583520"
+  },
+  "existing_owner_status": "Baseline retained; selected overlay DISABLED_USE_R0; zero selected or MAE rows. No new A product live.",
+  "Count_A_owner_report": [
+    {
+      "category": "pass_td",
+      "candidate": {
+        "history": "Exact producer-bound history not expanded by public selection CSV. General A report: most current fits through2025; chart through2024. Do not infer H-CURRENT/H-MULTI from alias.",
+        "method": "COUNT_A_MEAN",
+        "procedure_version": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+        "product": "mean_objective_point",
+        "ranking": "P1 absolute unrounded point gap per category/week; FULL/Top6/10/20. Does not reproduce current site scaled multi-category Top Picks.",
+        "role_and_history": "QB passing; RB numerical rushing; RB/WR/TE receiving; recorded offered pool includes declared role exceptions/fallbacks. Chart exact own qualified panel.",
+        "side_rule": "P1 unrounded point>line OVER;point<line UNDER;equality ABSTAIN. ATD has separate binary probability product; chart has no offered contract."
+      },
+      "decision": "BLOCKED",
+      "coverage": {
+        "baseline_input_source_counts": {
+          "average": 18,
+          "model": 30
+        },
+        "known_adjusted": 48,
+        "known_projection": 30,
+        "lines": {
+          "dk": 24,
+          "ours": 20,
+          "sleeper": 4
+        },
+        "mae": 0,
+        "missing_td_probability_shown_zero": 0,
+        "rows": 48,
+        "selected": 0
+      },
+      "reason": "Count A mean selection export needs exact existing fit/mean-corrector/features, fresh-process current-query inference, versioned side/ranking/role/fallback adapter and admissible public feed. No refit or general deployment approval is needed."
+    }
+  ],
+  "producer_route": {
+    "repository": "NickNicky19/NFL-forecasting",
+    "branch": "lab-state",
+    "commit": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "scoped_directory": "state/public/weekly-adaptive-v1",
+    "existing_members": [
+      "2026-W07",
+      "2026-W08",
+      "receipts"
+    ],
+    "Week9_state": "ABSENT_FROM_SCOPED_TREE; model exists in separate authenticated approved archive, not proven missing by a route404"
+  },
+  "latest_observed_parent": {
+    "run_id": 41902139908,
+    "job_id": 126827092873,
+    "source_sha": "53b05f41533489ddf2d8f6b99bdc70582ae0c085",
+    "observed_Chicago": "2026-11-04T13:58:57-06:00",
+    "due": false,
+    "pregame_issuance_allowed": false,
+    "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED",
+    "capture_enqueue": "SKIPPED",
+    "capture_started": false,
+    "new_fits_predictions": 0,
+    "hosted_guard_exit": 78,
+    "unaccepted": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "classification": "OFF_WINDOW_PARENT_FAILURE_NOT_ELIGIBLE_CAPTURE_SUCCESS; no-op classification correction is separate from fresh capture"
+  },
+  "next_configured_original_site_run": {
+    "local": "2026-11-05T08:06:00-06:00",
+    "UTC": "2026-11-05T14:06:00Z",
+    "state": "CONFIGURED_NOT_OBSERVED_EXECUTED",
+    "rules": "Actual game deadlines and source cutoffs must be refreshed by retained producer; nominal schedule is no capture."
+  },
+  "authority": "Research A remains production read-only; existing production lease178, producer, scheduler and secrets unchanged.",
+  "verification_limit": "Owner reported browser consumer verification is not a fresh A browser replay. No new owner acknowledgement or executed CountA delivery inferred."
+}

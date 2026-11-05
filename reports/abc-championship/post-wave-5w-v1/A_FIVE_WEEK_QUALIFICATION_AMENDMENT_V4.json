@@ -1,0 +1,316 @@
+{
+  "id": "A-FIVE-WEEK-QUALIFICATION-AMENDMENT-v4",
+  "asof_UTC": "2026-11-05T01:00:51.834133+00:00",
+  "base_index": {
+    "path": "A_FIVE_WEEK_QUALIFICATION_V3.json",
+    "sha256": "4c59c533efff7d45123b279c6204e8d72ff705f790daf5cf947ad38870134db0"
+  },
+  "corrections": [
+    {
+      "key_sha256": "24078335eaa6dbc2da5acaf18fe57f5bd29107377d314bcb65670ed6be146691",
+      "key": {
+        "procedure_version": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::STORED_COUNT_A_MEAN_CONTROL",
+        "target": "rush_att",
+        "output": "median",
+        "role_scope": [
+          "RB"
+        ],
+        "selection_policy": "NUMERIC_MAE",
+        "history_rule": "Original bound annual/earlier-only procedure; exact per-method code/history retained in original catalog/source manifests."
+      },
+      "source_alias": "STORED_COUNT_A_MEAN_CONTROL",
+      "effective_output_support": "UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE",
+      "effective_five_week_floor": "NOT_APPLICABLE",
+      "reason": "Retained CountA control is mean-only; no median or probability law is invented from it. Zero-output views remain auditable, not tested candidates."
+    },
+    {
+      "key_sha256": "24078335eaa6dbc2da5acaf18fe57f5bd29107377d314bcb65670ed6be146691",
+      "key": {
+        "procedure_version": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::STORED_COUNT_A_MEAN_CONTROL",
+        "target": "rush_att",
+        "output": "median",
+        "role_scope": [
+          "RB"
+        ],
+        "selection_policy": "NUMERIC_MAE",
+        "history_rule": "Original bound annual/earlier-only procedure; exact per-method code/history retained in original catalog/source manifests."
+      },
+      "source_alias": "STORED_COUNT_A_MEAN_CONTROL",
+      "effective_output_support": "UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE",
+      "effective_five_week_floor": "NOT_APPLICABLE",
+      "reason": "Retained CountA control is mean-only; no median or probability law is invented from it. Zero-output views remain auditable, not tested candidates."
+    },
+    {
+      "key_sha256": "a40e9095ac95e8b30049e83633271bd580604ab11cb56aefb77b97ce7011ad43",
+      "key": {
+        "procedure_version": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::STORED_COUNT_A_MEAN_CONTROL",
+        "target": "rush_att",
+        "output": "median",
+        "role_scope": [
+          "RB"
+        ],
+        "selection_policy": "P1_MEDIAN",
+        "history_rule": "Original bound annual/earlier-only procedure; exact per-method code/history retained in original catalog/source manifests."
+      },
+      "source_alias": "STORED_COUNT_A_MEAN_CONTROL",
+      "effective_output_support": "UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE",
+      "effective_five_week_floor": "NOT_APPLICABLE",
+      "reason": "Retained CountA control is mean-only; no median or probability law is invented from it. Zero-output views remain auditable, not tested candidates."
+    },
+    {
+      "key_sha256": "82af6a0fed1d01d646fa855f06dc0084f8fceb6605b5cac6fe68f24c40920a2f",
+      "key": {
+        "procedure_version": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::STORED_COUNT_A_MEAN_CONTROL",
+        "target": "rush_att",
+        "output": "exact_line_probability",
+        "role_scope": [
+          "RB"
+        ],
+        "selection_policy": "P2_EXACT_LAW",
+        "history_rule": "Original bound annual/earlier-only procedure; exact per-method code/history retained in original catalog/source manifests."
+      },
+      "source_alias": "STORED_COUNT_A_MEAN_CONTROL",
+      "effective_output_support": "UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE",
+      "effective_five_week_floor": "NOT_APPLICABLE",
+      "reason": "Retained CountA control is mean-only; no median or probability law is invented from it. Zero-output views remain auditable, not tested candidates."
+    },
+    {
+      "key_sha256": "cea8bfb1d90e82cadde360939237d73febc7b26cd72a5be848bc94dcf3791576",
+      "key": {
+        "procedure_version": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::STORED_COUNT_A_MEAN_CONTROL",
+        "target": "rush_att",
+        "output": "exact_line_probability",
+        "role_scope": [
+          "RB"
+        ],
+        "selection_policy": "P2_EXACT_LAW_CONF55",
+        "history_rule": "Original bound annual/earlier-only procedure; exact per-method code/history retained in original catalog/source manifests."
+      },
+      "source_alias": "STORED_COUNT_A_MEAN_CONTROL",
+      "effective_output_support": "UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE",
+      "effective_five_week_floor": "NOT_APPLICABLE",
+      "reason": "Retained CountA control is mean-only; no median or probability law is invented from it. Zero-output views remain auditable, not tested candidates."
+    }
+  ],
+  "four_week_historical_views": [
+    {
+      "key_sha256": "3ca5c6711994708825924c071c4c513ad7599dd178037710f6abc19cb358e5d9",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "ee485cc05d204526122854395e33523f155e5c3f43e3678649652df1a411527f",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "0b8fa9044b8f25e70407585d346c06d0e391a1f713ec4abf9fdc4504e7b2e6e4",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "eb3d7ec2b6bd8703633ff93689dcab507960906cd9a11b5e45f4086f853cdced",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "295c6e78350c46b08f91014982140f427c06cae67e945ea63df17b7cf055a1a9",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "f24dd91fff2d76bc07aaedf6dd83b12e321c58fc2862e47df08c1f32b1eb3c50",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "040001e463c6ebcfdf1147ebd6db355954d8a6dadfc95a7247c6506573171ae0",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "9ffb2b798b1771d71e02d542854b3437c49a0c89664d29cf59557ef45ea3c045",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "7fe547f4a617946cf5cb9e166eafb6e3404ac7c880701ebd558d4c923e6306e0",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    },
+    {
+      "key_sha256": "504d7c56837dbbf569ae1f16b8c6dcd573037d41949278b36e78b1ebf0f62e89",
+      "scored_weeks": [
+        {
+          "season": 2025,
+          "week": 5
+        },
+        {
+          "season": 2025,
+          "week": 6
+        },
+        {
+          "season": 2025,
+          "week": 7
+        },
+        {
+          "season": 2025,
+          "week": 8
+        }
+      ]
+    }
+  ],
+  "combined_main_and_proper_views": {
+    "examined": 800,
+    "floor_pass": 785,
+    "below_floor_four_weeks": 10,
+    "unsupported_output_not_applicable": 5
+  },
+  "proper_score_current": "A_PROPER_SCORE_FIVE_WEEK_SUPPLEMENT_V2.json",
+  "evidence_change": "Metadata classification/contract labels only; zero fits, inference, grading changes or new NFL outcomes. Original V1/V3 bytes remain.",
+  "coordinator": "C owns shared qualification/admission. Apply this amendment with the exact base, not as a separate championship."
+}

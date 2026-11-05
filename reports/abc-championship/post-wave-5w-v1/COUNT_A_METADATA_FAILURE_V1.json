@@ -1,0 +1,11 @@
+{
+  "state": "FAILED_BEFORE_MODEL_LOAD",
+  "observed_UTC": "2026-11-05T00:08:18.185481+00:00",
+  "error": "KeyError: path while reading source FIT_START reference",
+  "reason": "Producer proof stores a hash/size-only relative artifact; no absolute path is present. Model/capsule hashes were authenticated before this failure.",
+  "source_sha256": "4aea273fb41daf3baa151142f92627f377706ea248575a751ceeb7375ab79125",
+  "CPU_seconds": null,
+  "charged_CPU_upper_bound": 60,
+  "model_loads_fits_predictions": 0,
+  "next": "Resolve exact documented producer-relative member against producer proof parent and registered owning store; retain hashes and guards, then run one separately registered restore/parity continuation."
+}

@@ -1,0 +1,23 @@
+{
+  "state": "REGISTERED_BEFORE_AGGREGATE_QUALIFICATION_EXTRACTION",
+  "asof_UTC": "2026-11-05T00:28:26.384397+00:00",
+  "sources": [
+    {
+      "path": "nfl_lab/product_test_week_floor_v1.py",
+      "sha256": "cf6a5d77f01e9d73ef6c8696301958ad1904c055535d5e8f85f83fe412516914"
+    },
+    {
+      "path": "tools/abc_a_five_week_qualification_v1.py",
+      "sha256": "b3dc3760577ba8c8e010e771383249c0643be4adaaf73edf9db94871ecc09efa"
+    }
+  ],
+  "budget": {
+    "CPU_seconds": 60,
+    "wall_seconds": 90,
+    "AS_bytes": 1610612736,
+    "model_loads_fits_inference_scoring": 0,
+    "public_metadata_bytes_max": 1048576
+  },
+  "purpose": "Project own original actual scored weeks by exactproduct/policy and role, including fullboard/TopK/probability policies; C remains shared coordinator. No probabilities from point-only outputs, no new NFL observations.",
+  "source_classifier_limits": "Original law classification corrections/holds remain in originalCintake andAreconciliation reports; week-count metadata alone does not clear them."
+}

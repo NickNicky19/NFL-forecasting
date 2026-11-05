@@ -129,3 +129,7 @@ The exact owner package was delivered and remotely read back in [comment 6527892
 ### Lossless aggregate payloads
 
 `ALL_RESULTS.json` and `ABC_DYNAMIC_CARRY_SELECTION_RESULTS_V1.json` are canonical indexes for checksum-bound gzip JSON in this same accounted directory. Use `nfl_lab.opportunity_registry_storage_v1.read_document` to retrieve the unchanged records, or decompress the referenced member and verify both hashes. This storage-only version preserves every original JSON byte; no scores, IDs or failures were removed. [Accounting and readback](../abc-championship/predictive-improvement-01/REGISTRY_STORAGE_RECEIPT_V1.json).
+
+## Post-wave diagnosis and product-specific five-week evidence
+
+[Executed Session A checkpoint and owner package](../abc-championship/post-wave-5w-v1/README.md). Earlier elapsed capture windows above are retained historical reports; use this checkpoint for current state.

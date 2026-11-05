@@ -13,3 +13,7 @@ C remains canonical coordinator. This is not a completed eight-week championship
 ## Targeted predictive improvement
 
 [Session A controlled carry wave](predictive-improvement-01/README.md)
+
+## Post-wave diagnosis, five-week floor and Count A delivery
+
+[Executed Session A checkpoint and owner package](post-wave-5w-v1/README.md). Earlier elapsed capture windows above are retained historical reports; use this checkpoint for current state.

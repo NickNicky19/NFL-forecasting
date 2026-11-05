@@ -1,0 +1,294 @@
+{
+  "id": "A-COUNT-A-CORRECTED-MEAN-OWNER-PACKAGE-v1",
+  "prepared_UTC": "2026-11-05T00:53:27.726511+00:00",
+  "parent_assignment": "POST-WAVE-5W-v1",
+  "owner_receipt_reconciled": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6642441018",
+  "research_owner": "Session A",
+  "execution_owner": "Existing registered NFL-forecasting producer plus original-site retained owner/lease178",
+  "product": "pass_td__COUNT_A_MEAN",
+  "procedure_version": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+  "parent_procedure_version": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+  "model": {
+    "bytes": 298952,
+    "sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d"
+  },
+  "capsule": {
+    "bytes": 399037,
+    "sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36"
+  },
+  "mean_corrector": {
+    "recipe": "count-a-prior-mean-fallback-v2-20261025",
+    "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6",
+    "source": "tools/modern_count_a_mean_v3.py"
+  },
+  "original_model_members": {
+    "CELL_COMPLETE.json": {
+      "bytes": 859,
+      "sha256": "8612a6157d4de635677301fe7128a6314471efa33956976fefd5baf6311407ee"
+    },
+    "FIXTURE_EXPECTED.parquet": {
+      "bytes": 15916,
+      "sha256": "f9d83fdbb9d8b8d16ef89a9c537ad3fa97c14320573dc6a2782637d07d025c9e"
+    },
+    "FIXTURE_FEATURES.parquet": {
+      "bytes": 46058,
+      "sha256": "cac7a18d0a679441d10418381b67290438957ef721425e5f4a318abdda0e0216"
+    },
+    "FORECASTS.parquet": {
+      "bytes": 26771,
+      "sha256": "8d801a6b276a8ba800311a72abba6e13e1f051db9d3959bab596495913fe7a39"
+    },
+    "MODEL.joblib": {
+      "bytes": 298952,
+      "sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d"
+    },
+    "MODEL_AUDIT.json": {
+      "bytes": 8898,
+      "sha256": "a7679510ccae33d4f915f6bd70988090d279818bbf2934dc6f25654248cd0dc1"
+    }
+  },
+  "environment": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "sklearn": "1.8.0",
+    "scipy": "1.17.0",
+    "joblib": "1.5.3"
+  },
+  "original_feature_policy": "MATCHED12_ACCEPTED_2019_2025_REG_AND_QUALIFIED_RECENT_HISTORY_C_STREAM_V1",
+  "feature_schema": {
+    "modeled_roles": [
+      "QB"
+    ],
+    "panels": {
+      "base": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3"
+      ],
+      "context": [
+        "f_player_pass_att_mean3",
+        "f_player_pass_att_n3",
+        "f_player_pass_att_mean8",
+        "f_player_pass_att_n8",
+        "f_player_pass_cmp_mean3",
+        "f_player_pass_cmp_n3",
+        "f_player_pass_cmp_mean8",
+        "f_player_pass_cmp_n8",
+        "f_player_pass_yd_mean3",
+        "f_player_pass_yd_n3",
+        "f_player_pass_yd_mean8",
+        "f_player_pass_yd_n8",
+        "f_player_pass_td_mean3",
+        "f_player_pass_td_n3",
+        "f_player_pass_td_mean8",
+        "f_player_pass_td_n8",
+        "f_player_pass_int_mean3",
+        "f_player_pass_int_n3",
+        "f_player_pass_int_mean8",
+        "f_player_pass_int_n8",
+        "f_player_rush_att_mean3",
+        "f_player_rush_att_n3",
+        "f_player_rush_att_mean8",
+        "f_player_rush_att_n8",
+        "f_player_rush_yd_mean3",
+        "f_player_rush_yd_n3",
+        "f_player_rush_yd_mean8",
+        "f_player_rush_yd_n8",
+        "f_player_offense_snaps_mean3",
+        "f_player_offense_snaps_n3",
+        "f_player_offense_snaps_mean8",
+        "f_player_offense_snaps_n8",
+        "f_player_games_prior",
+        "f_player_play_rate8",
+        "f_player_known_participation_n8",
+        "f_player_pass_ypa3",
+        "f_player_comp_rate3",
+        "f_player_rush_ypa3",
+        "f_team_pass_yd_mean3",
+        "f_opp_pass_yd_allowed_mean3",
+        "f_team_rush_yd_mean3",
+        "f_opp_rush_yd_allowed_mean3",
+        "f_team_pass_att_mean3",
+        "f_opp_pass_att_allowed_mean3",
+        "f_team_rush_att_mean3",
+        "f_opp_rush_att_allowed_mean3",
+        "f_team_rec_yd_mean3",
+        "f_opp_rec_yd_allowed_mean3",
+        "f_team_offense_plays_mean3",
+        "f_opp_offense_plays_allowed_mean3",
+        "f_team_pass_rate3",
+        "f_team_games_prior",
+        "f_opp_games_prior",
+        "f_team_pass_yd_adjusted_mean8",
+        "f_opp_pass_yd_adjusted_allowed_mean8",
+        "f_team_rush_yd_adjusted_mean8",
+        "f_opp_rush_yd_adjusted_allowed_mean8",
+        "f_rest_days",
+        "f_is_home"
+      ]
+    },
+    "primary_roles": [
+      "QB"
+    ],
+    "state": "READY",
+    "support": "count",
+    "target": "pass_td"
+  },
+  "training_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "training_cutoff_UTC": "2026-09-01T00:00:00Z",
+  "training_max_available_UTC": "2026-01-12 01:20:00+00:00",
+  "immutable_original_fit_clocks": {
+    "reserved": "2026-10-31T01:58:07.862367+00:00",
+    "completed": "2026-10-31T01:58:21.656955+00:00"
+  },
+  "restoration": {
+    "state": "VERIFIED_A_OWNER_LOCAL_ONLY",
+    "binding_receipt": "COUNT_A_RESTORE_AND_PARITY_V3.json",
+    "native_fixture_rows": 4,
+    "typed_retained_rows": 64,
+    "fallback_rows": 16,
+    "finite_float_bits_and_fallbacks": "PASS",
+    "producer_offhost_restore": "NOT_VERIFIED",
+    "approved_resolution": "Use the retained all-finalists-freeze-v1.2 extra entry target=pass_td/method=COUNT_A_MEAN, producer_selector=cells[0], complete capsule hash above. Authenticate via the existing approved private recovery/store owner. Not in the initial 18-model checkpoint catalog. No new credential or public weights route."
+  },
+  "core": {
+    "source": "nfl_lab/count_a_mean_export_adapter_v1.py",
+    "software_version": "A::count-a-trained-prior-mean-export-core-v1.2",
+    "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527",
+    "call": "predict_verified_mean(authenticated_model, qualified_QB_feature_frame, mean_corrector=original_correct_fallbacks, binding={model_sha256,parent_procedure_version,training_cutoff_utc})",
+    "reference_restore_command": "python -B tools/abc_a_count_a_restore_and_parity_v3.py",
+    "reference_command_caveat": "This is the bounded retained-case owner-local verification command, already completed. Do not rerun for fresh issuance or claim that it authenticates current SOURCE. Integrate the callable into the existing registered producer after source/restoration handover.",
+    "no_trailing_newline_hash_encoding": "Sorted compact UTF8 JSON for original parent/procedure digest; do not add a newline."
+  },
+  "typed_outputs": {
+    "expected_mean": "Exact corrected native FORECASTS.parquet.point; never native mean (all NaN) or legacy_point (mixed).",
+    "selection_point": "Same unrounded corrected mean, explicitly mean_objective_point; may support only its independently admitted side rule.",
+    "median": null,
+    "probability": null,
+    "EV": null,
+    "origins": [
+      "LEARNED_POISSON_OBJECTIVE_MEAN",
+      "EXISTING_TRAINED_PRIOR_MEAN",
+      "INCUMBENT_FALLBACK_REQUIRED"
+    ],
+    "mean_product_selection": "This candidate does not automatically replace an independently MSE-selected mean or MAE-selected median. Apply the latest category/product decision separately."
+  },
+  "five_week_check": {
+    "record": "A_FIVE_WEEK_QUALIFICATION_V3__pass_td.json",
+    "season": 2026,
+    "weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "numerical_projection": "PASS_FLOOR:241 supported/718 planned; MAE0.8484231619618409; RMSE1.0493045708754531; 477unknown, not zero.",
+    "actual_line_P1": "PASS_FLOOR:142 decided, Over43-31/74, Under44-24/68, combined87-55/142;78games; source/quote timing unverified.",
+    "per_category_top6_10_20": "Separate seven-week policies, retained scores26/41,40/64,73/114; not site cross-category lists.",
+    "website_cross_category_Top12": "NOT_MET:0 scored test weeks for complete substituted site policy. Do not borrow per-category or numerical weeks.",
+    "probability_and_EV": "UNSUPPORTED; point objective alone supplies neither.",
+    "scope": "Exposed historical chronological reconstructions, not authenticated advance selections. Week floor does not establish superiority, source readiness or deployment."
+  },
+  "source_and_clock_requirements": [
+    "Authenticate current SOURCE.json, source-population/query-completion and feature_capture_receipt using the existing owner route and exact source/feature policy.",
+    "Resolve actual current NFL week/games/cutoffs at execution; confirm every eligible QB query, including replacements and explicit unknown/abstention/fallback.",
+    "Feature maximum source availability must be earlier than cutoff; cutoff must be timezone-aware and no later than kickoff, with model/prior training earlier. The arithmetic core is not an independent freshness attestation.",
+    "Bind actual information cutoff separately from issue deadline. computed_at is not issued_at. Stamp true inference/issuance/persistence and expiry in the owning producer after real execution.",
+    "Use a versioned permitted derived public wire and exact catalog/model/corrector/source hashes under existing publication review; no protected weights/raw feeds/private locators.",
+    "Save original reference/challengers and freeze decisions/offer identity before applicable deadlines; never overwrite or backdate. Forecast-only capture remains useful if real offers fail qualification."
+  ],
+  "side_role_ranking": {
+    "role": [
+      "QB"
+    ],
+    "historical_P1": "unrounded point>original line OVER; <line UNDER; ==line ABSTAIN; statistical threshold separate from venue settlement",
+    "classic_margin": 0.15,
+    "classic_rank_min_line": 0.5,
+    "classic_gap_scale": 0.6,
+    "warning": "These classic constants do not reproduce the complete incumbent eligibility/best-per-player/cross-category Top12 rule. Keep the incumbent selection policy until its exact replacement has independent five-week and admission evidence. Do not present a mean as a probability."
+  },
+  "fallback_and_rollback": [
+    "Retain trained-prior mean as separately typed fallback with original reason; do not call it learned output.",
+    "Unsupported/nonfinite/source-stale/expired/unadmitted rows require correctly identified incumbent fallback or unavailable status, never zero.",
+    "Preserve former payload/pointer, model/source identities and issuance; verify rollback restores them without replacing earlier captures.",
+    "Original-site owner verifies actual values, labels, sorts and consumer fields; probability/EV ranking remains separately admitted."
+  ],
+  "current_route_diagnosis": {
+    "record": "OBSERVED_OWNER_PRODUCER_STATE_V1.json",
+    "lab_state_sha": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "week9_public_feed": "Absent in scoped public weekly directory, which containsW07,W08,receipts. This is not a missing-model conclusion.",
+    "parent_run": 41902139908,
+    "job": 126827092873,
+    "capture_enqueue": "SKIPPED; observed off-window, no capture started",
+    "unaccepted_guards": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "required_owner_action": "Complete the existing producer handover/durable restoration/publication review with this exact procedure; qualify fresh current sources, run eligible future query and immutable capture, then expose the permitted derived feed. Do not weaken guards or create another pipeline."
+  },
+  "completion_evidence_required": [
+    "Producer receipt names exact procedure/model/corrector/source/feature/slot/catalog hashes and actual run IDs.",
+    "Expected/attempted/learned/prior-fallback/incumbent/unavailable query counts; true issue and persistence timestamps, checksum and independent readback.",
+    "Versioned published payload and owner consumer acknowledgement, category values/labels/sorts, fallback/expiry/rollback evidence.",
+    "Explicit product-specific five-week admission; do not claim new selector or probability qualification."
+  ],
+  "states": {
+    "prepared": true,
+    "A_restored_parity": true,
+    "public_package_delivered": "PENDING_PUBLICATION_READBACK",
+    "producer_receipt_acknowledged": false,
+    "fresh_current_query": false,
+    "new_forecast_captured": false,
+    "payload_published": false,
+    "website_consumed": false
+  },
+  "next_action": "Registered producer receives immutable package and returns a fresh current-source/capture receipt or the exact unmet handover member. Original-site owner separately admits/consumes eligible typed product. No new general permission requested."
+}

@@ -1,0 +1,8 @@
+{
+  "state": "INDEPENDENT_CONFIRMED_SOFTWARE_READINESS_FINDING",
+  "asof_UTC": "2026-11-05T00:36:21.848570+00:00",
+  "before_sha256": "869c37c1a8298a70db02dfbe36cca40484ef396c37a79e5698e126c502f9f8b3",
+  "finding": "Core rejected missing cutoff but did not explicitly reject missing kickoff; pandas comparison against NaT could pass.",
+  "scope": "Invalid/missing scheduling input rejection only. Valid retained fixtures already have supported kickoff, so no statistical outputs, procedure identity or qualifying weeks change.",
+  "action": "Add explicit kickoff.isna() rejection and synthetic guard fixtures; no refit/repeated NFL inference."
+}
