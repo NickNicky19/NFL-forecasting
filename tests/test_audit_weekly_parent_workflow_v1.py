@@ -24,10 +24,11 @@ def steps():
     return {s.get("id", s.get("name", s.get("uses"))):s for s in workflow()["jobs"]["lab"]["steps"]}
 
 
-def condition(expression, requested, outcome, *, due="true", mode="daily"):
+def condition(expression, requested, outcome, *, due="true", mode="daily", parent_cadence_outcome="success"):
     values = {"steps.parent_route.outputs.requested":requested, "steps.weekly_parent.outcome":outcome,
         "steps.parent_cadence.outputs.due":due, "steps.cadence.outputs.due":due,
-        "steps.cadence.outputs.mode":mode, "steps.cadence.outcome":"success", "steps.readiness.outcome":"success"}
+        "steps.cadence.outputs.mode":mode, "steps.cadence.outcome":"success", "steps.readiness.outcome":"success",
+        "steps.parent_cadence.outcome":parent_cadence_outcome}
     source = expression.replace("always()", "True").replace("&&", " and ").replace("||", " or ")
     source = re.sub(r"steps\.[A-Za-z_][A-Za-z0-9_]*(?:\.outputs\.[A-Za-z_][A-Za-z0-9_]*|\.outcome)",
         lambda m:repr(values[m[0]]), source)
@@ -180,3 +181,26 @@ def test_actual_same_source_ops_and_sidecar_success_returns_without_legacy_or_mi
     upload = steps()["Upload public-safe parent enqueue status"]
     assert upload["with"]["path"] == "controller-parent-result.json"
     assert upload["with"]["if-no-files-found"] == "ignore"
+
+
+def test_known_off_window_no_op_does_not_invoke_static_readiness_failure(tmp_path):
+    entries = steps()
+    assert condition(entries['parent_noop']['if'], 'true', 'skipped', due='false')
+    assert not condition(entries['parent_readiness_block']['if'], 'true', 'skipped', due='false')
+    assert not condition(entries['Upload exact public-safe readiness receipt']['if'], 'true', 'skipped', due='false')
+    (tmp_path/'parent-cadence-result.json').write_text(json.dumps({'due':False,
+        'pregame_issuance_allowed':False,'reason':'MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED'}))
+    result = subprocess.run([sys.executable, '-c', entries['parent_noop']['run'].split("python - <<'PY'\n",1)[1].rsplit('\nPY',1)[0]],
+        cwd=tmp_path, capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    receipt = json.loads((tmp_path/'controller-parent-result.json').read_bytes())
+    assert receipt['new_forecasts'] == 0 and receipt['capture_started'] is False
+    assert receipt['grading_started'] is False and receipt['missed_primary_capture'] == 'NOT_RECOVERED'
+    assert receipt['readiness'] == 'NOT_REASSESSED_BY_NO_OP'
+
+
+@pytest.mark.parametrize('cadence_state', ['failure', 'cancelled', 'skipped'])
+def test_failed_cadence_cannot_masquerade_as_successful_off_window(cadence_state):
+    entries = steps()
+    assert not condition(entries['parent_noop']['if'], 'true', 'skipped', due='false', parent_cadence_outcome=cadence_state)
+    assert condition(entries['parent_readiness_block']['if'], 'true', 'skipped', due='false', parent_cadence_outcome=cadence_state)
