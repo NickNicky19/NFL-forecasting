@@ -283,7 +283,8 @@ print('COLD_MAIN_METADATA_OK')
 V5_ONLY_CANDIDATES=frozenset({"nfl_lab/audit_weekly_retained_v1.py","nfl_lab/audit_weekly_controller_v1.py",
     "nfl_lab/audit_weekly_provider_v1.py",
     "nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
-    "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py"})
+    "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py",
+    "nfl_lab/features.py"})
 
 
 def test_v5_candidate_set_is_exact_and_v1_v4_whitelist_does_not_grow():
