@@ -30,7 +30,8 @@ REGISTERED_SOURCE_CONTRACT = dict(
     availability_rule="FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION", feature_builder_sha256=REGISTERED_BUILDER_SHA)
 
 
-def test_registered_original_builder_new_monday_query_features_and_owned_capture(tmp_path,monkeypatch):
+@pytest.mark.parametrize('unknown_history_clock', [False, True])
+def test_registered_original_builder_new_monday_query_features_and_owned_capture(tmp_path,monkeypatch,unknown_history_clock):
     """Fictional new queries, actual builder and literal retained contract.
 
     No frozen feature replay, model, provider or real outcome is used. This
@@ -53,6 +54,7 @@ def test_registered_original_builder_new_monday_query_features_and_owned_capture
         {'fictional-monday':'2026-10-26T19:00:00Z'}).map(utc)
     history=pd.DataFrame([dict(player_id=player,game_id='fictional-old',team=team,opponent=opponent,
         position=position,season=2020,week=1,kickoff_utc=pd.Timestamp('2020-09-10T20:00:00Z'),
+        outcome_available_utc=pd.NaT if unknown_history_clock else pd.Timestamp('2020-09-17T20:00:00Z'),
         participation_state='played',**{name:amount for name in features.PLAYER_STATS})
         for player,team,opponent,position,amount in [
             ('00-0000001','A','B','QB',2.0),('00-0000002','B','A','RB',0.0)]])
@@ -68,8 +70,14 @@ def test_registered_original_builder_new_monday_query_features_and_owned_capture
     assert contract==REGISTERED_SOURCE_CONTRACT
     assert frame.game_id.tolist()==['fictional-monday']*2
     assert frame.player_id.tolist()==['00-0000001','00-0000002']
-    assert frame.f_player_rec_mean3.tolist()==[2.0,0.0]
-    assert frame.f_player_games_prior.tolist()==[1.0,1.0]
+    # The qualified data adapter supplies declared prior clocks. Explicitly
+    # unknown clocks stay unavailable through the actual future-query wrapper.
+    if unknown_history_clock:
+        assert frame.f_player_rec_mean3.isna().all()
+        assert frame.f_player_games_prior.tolist()==[0.0,0.0]
+    else:
+        assert frame.f_player_rec_mean3.tolist()==[2.0,0.0]
+        assert frame.f_player_games_prior.tolist()==[1.0,1.0]
     assert frame.participation_state.eq('unknown').all() and frame.f_player_play_rate8.isna().all()
     owner=OperationalStorage(tmp_path/'cache',policy,state=tmp_path/'state');owner.register_root(tmp_path/'capture')
     source=tmp_path/'capture/fictional-source-metadata';owner.write_bytes(source,b'FICTIONAL_SOURCE_NOT_NFL_ROWS')
