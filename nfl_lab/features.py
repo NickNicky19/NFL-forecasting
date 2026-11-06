@@ -147,7 +147,12 @@ def build_features(history: pd.DataFrame) -> pd.DataFrame:
             out[col] = np.nan
     # An absent availability column declares the historical reconstruction
     # assumption above. An explicitly unknown clock cannot establish availability.
-    source = out.loc[out.outcome_available_utc.notna()].copy()
+    # Source windows use only these fields; carrying every retained provider
+    # column through the admission copy needlessly multiplies memory usage.
+    source_columns = list(dict.fromkeys(["game_id", "player_id", "team", "opponent",
+        "kickoff_utc", "outcome_available_utc", "participation_state"] + PLAYER_STATS +
+        ["team_stat_" + name for name in TEAM_STATS if "team_stat_" + name in out]))
+    source = out.loc[out.outcome_available_utc.notna(), source_columns].copy()
     source["known_play"] = np.where(source.participation_state.eq("played"), 1.0,
                                    np.where(source.participation_state.eq("DNP"), 0.0, np.nan))
     player = _lookup_windows(source, out, "player_id", PLAYER_STATS + ["known_play"])
