@@ -1,6 +1,6 @@
 # A audit remediation — executed checkpoint
 
-As of November 05, 2026 07:18 PM CST (2026-11-06T01:18:51.373421+00:00).
+As of November 05, 2026 08:24 PM CST (2026-11-06T02:24:03.896531+00:00).
 
 ## Executed findings and repairs
 
@@ -75,3 +75,9 @@ The original-site owner alone executes the changed cross-category Top Picks repl
 - [Closure02 work and retained failures](../execution-closure-02/README.md).
 
 C’s protocol/scorer remain pinned to `ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1` / `fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1`; its latest inspected pointer is at `0fd349324d7021022d8b374c20deb634583fe717`. New A contribution is not assumed received/admitted. B/C own their scoped repairs and independent verification. Astra package/owner remains a separate unavailable dependency. No new fit, paid acquisition, peer dispatch, production write or wager was performed by A.
+
+## Publication and owner delivery
+
+All156 files in checkpoint `81286e52c597f6e878e387a8c273faea67a947d2` were downloaded from GitHub and checked against their complete hashes: [publication readback](PUBLICATION_READBACK_V1.json). [Owner action request](OWNER_ACTION_REQUEST_V2.md) was delivered and its exact remote comment body read back at [A PR1 comment6675135183](https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6675135183). Receipt/producer execution is not acknowledged.
+
+A final read at Nov5,8:21p.m.CST pins production `bd285e0d5507c1354f506829624cd80021983f79`; classic presence-v2 remains identified, and the exact linked [overlay snapshot](CURRENT_OVERLAY_POINTER_V2.json) is `DISABLED_USE_R0`,0selected rows, with1,998incumbent-reference fallbacks plus140started-game frozen references. No MAE display file was found in that current output/data tree. The earlier strict-presence capture and published engine are real owner progress; this is not a new Count A/core3 release or actual changed Top Picks validation.
