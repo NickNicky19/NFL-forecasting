@@ -1,0 +1,1537 @@
+{
+  "id": "A-CLOSURE02-EXISTING-FULL-BOARD-ROLE-CENSUS-v2",
+  "UTC": "2026-11-05T23:56:30.915590+00:00",
+  "archive": {
+    "bytes": 11137356,
+    "sha256": "80ba907a24b4f9cc10b66f48e4408736ae9bc6d182a4be8bdf49fd9bf4113036"
+  },
+  "state": "EXACT_RETAINED_SCOPE_COUNT_NO_GRADING_OR_SELECTION",
+  "unique_valid_line_book_horizon_opportunities": 3998,
+  "unique_target_player_games_without_line": 29502,
+  "role_scope": [
+    {
+      "category": "pass_att",
+      "position": "QB",
+      "unique_offers": 143
+    },
+    {
+      "category": "pass_cmp",
+      "position": "QB",
+      "unique_offers": 144
+    },
+    {
+      "category": "pass_int",
+      "position": "QB",
+      "unique_offers": 143
+    },
+    {
+      "category": "pass_td",
+      "position": "QB",
+      "unique_offers": 142
+    },
+    {
+      "category": "pass_yd",
+      "position": "QB",
+      "unique_offers": 143
+    },
+    {
+      "category": "rec",
+      "position": "RB",
+      "unique_offers": 259
+    },
+    {
+      "category": "rec",
+      "position": "TE",
+      "unique_offers": 259
+    },
+    {
+      "category": "rec",
+      "position": "WR",
+      "unique_offers": 474
+    },
+    {
+      "category": "rec_yd",
+      "position": "RB",
+      "unique_offers": 264
+    },
+    {
+      "category": "rec_yd",
+      "position": "TE",
+      "unique_offers": 262
+    },
+    {
+      "category": "rec_yd",
+      "position": "WR",
+      "unique_offers": 482
+    },
+    {
+      "category": "rush_att",
+      "position": "QB",
+      "unique_offers": 80
+    },
+    {
+      "category": "rush_att",
+      "position": "RB",
+      "unique_offers": 239
+    },
+    {
+      "category": "rush_att",
+      "position": "WR",
+      "unique_offers": 16
+    },
+    {
+      "category": "rush_rec_yd",
+      "position": "RB",
+      "unique_offers": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "position": "WR",
+      "unique_offers": 234
+    },
+    {
+      "category": "rush_yd",
+      "position": "QB",
+      "unique_offers": 141
+    },
+    {
+      "category": "rush_yd",
+      "position": "RB",
+      "unique_offers": 291
+    },
+    {
+      "category": "rush_yd",
+      "position": "TE",
+      "unique_offers": 2
+    },
+    {
+      "category": "rush_yd",
+      "position": "WR",
+      "unique_offers": 21
+    }
+  ],
+  "candidate_output_census": [
+    {
+      "category": "pass_att",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "DEPTH_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 115
+    },
+    {
+      "category": "pass_att",
+      "method": "DEPTH_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "UNAVAILABLE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 28
+    },
+    {
+      "category": "pass_att",
+      "method": "DEPTH_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 115
+    },
+    {
+      "category": "pass_att",
+      "method": "DEPTH_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "UNAVAILABLE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 28
+    },
+    {
+      "category": "pass_att",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_att",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_cmp",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_cmp",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 144
+    },
+    {
+      "category": "pass_int",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_int",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_td",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_td",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 142
+    },
+    {
+      "category": "pass_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "pass_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 143
+    },
+    {
+      "category": "rec",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rec",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 474
+    },
+    {
+      "category": "rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 264
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 262
+    },
+    {
+      "category": "rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 482
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "BACKFIELD_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "CATBOOST_MEDIUM",
+      "output": "mean_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_LEGACY_POINT",
+      "output": "legacy_empirical_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "COUNT_A_MEAN",
+      "output": "mean_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 80
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 239
+    },
+    {
+      "category": "rush_att",
+      "method": "ORDERED_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 16
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 259
+    },
+    {
+      "category": "rush_rec_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 234
+    },
+    {
+      "category": "rush_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "CATBOOST_MEDIUM",
+      "output": "median_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "EQUAL_CDF_CAT_HGB_POINT",
+      "output": "empirical_point_blend",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "HGB_MAE_DIRECT",
+      "output": "mae_objective_point",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "LEAF_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "mean",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "QB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 141
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "RB",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 291
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "TE",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 2
+    },
+    {
+      "category": "rush_yd",
+      "method": "RESPONSE_CDF",
+      "output": "median",
+      "position": "WR",
+      "state": "FINITE_OUTPUT",
+      "fallback_flag": false,
+      "rows": 21
+    }
+  ],
+  "new_fits_inference_scores_selection_replays": 0,
+  "limits": [
+    "Counts existing finite original lines; no outcome accessed for a decision or grade.",
+    "All-role offer population, role-restricted model population and supported-output coverage remain separate.",
+    "This verifies existing inputs for the sole website-owner replay; not its execution or qualification."
+  ],
+  "CPU_seconds": 27.655303172,
+  "wall_seconds": 27.663348227000824,
+  "RSS_bytes": 148746240
+}

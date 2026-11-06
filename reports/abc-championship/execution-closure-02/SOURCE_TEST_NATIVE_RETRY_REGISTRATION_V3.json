@@ -1,0 +1,17 @@
+{
+  "id": "A-CLOSURE02-NATIVE-BOUNDARY-RECHECK-v3",
+  "registered_UTC": "2026-11-05T23:21:21.824907+00:00",
+  "prior_attempt": "SOURCE_TEST_RECEIPT_V2.json:299passed,2environmentfailures",
+  "cause": "Parent retry hardCPU97 prevented two unchanged cold subprocess fixtures from installing their explicitly tested native120-second limit; no source guard failed in those cases.",
+  "work": "Rerun only these two tests with compatible native hard120 and an external30-second process-group wall bound; preserve all original source/registration guards and prior failures.",
+  "budget": {
+    "per_process_native_hard_CPU": 120,
+    "process_group_wall_seconds": 30,
+    "aggregate_CPU_seconds_max": 60,
+    "AS_bytes": 1610612736,
+    "workers": 1,
+    "real_NFL_fits_models_forecasts": 0
+  },
+  "first_two_attempts_CPU": 163.095588506,
+  "no_budget_refund": true
+}

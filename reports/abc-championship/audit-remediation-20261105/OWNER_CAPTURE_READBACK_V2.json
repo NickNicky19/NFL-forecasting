@@ -1,0 +1,125 @@
+{
+  "commit": "a478db86e2702d9fa632a23bfaf9c575a67ea902",
+  "path": "data/current-classic/2026/w09/1dafcf9e9ee4acb130bc617be234f76d8ba5ffcf33002c1b200bc6e59a0a1a78.json.gz",
+  "bytes": 40820,
+  "sha256": "c710d0ef3fae5b37dc652afd82503cec379e20d12b36408cf2a2c6754998d7eb",
+  "decoded_bytes": 826702,
+  "decoded_sha256": "15a388cf0514574f2bf1c3a97b57496905e6e46f4556bbd9e59c4ae3c2f83e50",
+  "keys": [
+    "payload",
+    "payload_sha256"
+  ],
+  "safe_metadata": {
+    "payload_sha256": "c9aa28c3d41241b1864c96259dbacf87e7b53601e448860aa3c7a46cb2a95143"
+  },
+  "list_counts": {},
+  "payload_keys": [
+    "captured_at",
+    "code_commit",
+    "engine_files",
+    "engine_sha256",
+    "evidence_label",
+    "excluded_started_or_late_games",
+    "execution_contract",
+    "execution_contract_sha256",
+    "forecast_generated_at",
+    "input_sha256",
+    "mode",
+    "model",
+    "rows",
+    "schema_version"
+  ],
+  "payload_summary": {
+    "captured_at": "2026-11-06T00:38:09Z",
+    "code_commit": "93a6dae95f4a40455c39245e09046340e4c43c30",
+    "engine_files": {
+      "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+      "pull/build.py": "b83126080149f2f0705682d1c0be0a8ee87610ebb0a88cd57b94b8a82b63ad73",
+      "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+      "pull/grade.py": "afd1310d708def4f400e6bf84e981e2edc7635dc946a63571022203c1d3ae735",
+      "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+      "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+      "pull/scoring.py": "90a9d201581b20c4e757912ce7dbf4941a6a90784d721c80367341511c652a2d",
+      "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+    },
+    "engine_sha256": "7e8b25016ab7b1c51b3aac9d2ddfa6d7b56c5538ff4afe238e3f46d16a763746",
+    "evidence_label": "LOCAL_PRE_GAME_CAPTURE_PUBLICATION_NOT_VERIFIED",
+    "excluded_started_or_late_games": [],
+    "execution_contract": {
+      "capture_schema": "baseline-capture-classic-presence-v2",
+      "engine_sha256": {
+        "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+        "pull/build.py": "b83126080149f2f0705682d1c0be0a8ee87610ebb0a88cd57b94b8a82b63ad73",
+        "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+        "pull/grade.py": "afd1310d708def4f400e6bf84e981e2edc7635dc946a63571022203c1d3ae735",
+        "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+        "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+        "pull/scoring.py": "90a9d201581b20c4e757912ce7dbf4941a6a90784d721c80367341511c652a2d",
+        "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+      },
+      "grading_version": "statistical-presence-strict-v5-20261106",
+      "model": "sleeper-matchup-classic-presence-strict-v2",
+      "normalized_stats_cache": "stat-keys-presence-strict-v3",
+      "original_shadow_model": "original_sleeper_matchup_baseline",
+      "original_shadow_procedure": "original-builder-default-refresh-v1",
+      "original_shadow_source": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+      "schema_version": "weekly-classic-presence-execution-v2"
+    },
+    "execution_contract_sha256": "334d6fb9cba87f0bad24c8f222ec5010eb84397f9976668296a29e78a32398f1",
+    "forecast_generated_at": "2026-11-06T00:38:07Z",
+    "input_sha256": "6f24faded73f29e72a98f8eb13c419f7b79d76be2420cf075c14e0ba5ac1b5a5",
+    "mode": "live",
+    "model": "sleeper-matchup-classic-presence-strict-v2",
+    "schema_version": "baseline-capture-classic-presence-v2",
+    "row_count": 1681,
+    "row_fields": [
+      "adjusted_projection",
+      "category",
+      "expected_value",
+      "game_id",
+      "injury_at_capture",
+      "kickoff",
+      "lean",
+      "line",
+      "line_from",
+      "matchup_factor",
+      "name",
+      "player_id",
+      "position",
+      "price",
+      "probability",
+      "raw_projection",
+      "season",
+      "settlement_status",
+      "source_timestamps_verified",
+      "team",
+      "top_over",
+      "top_under",
+      "week"
+    ],
+    "category_counts": {
+      "anytime_td": 208,
+      "rec": 392,
+      "rec_yd": 392,
+      "rush_att": 110,
+      "rush_rec_yd": 212,
+      "rush_yd": 154,
+      "pass_att": 45,
+      "pass_cmp": 44,
+      "pass_int": 39,
+      "pass_td": 41,
+      "pass_yd": 44
+    },
+    "row_clock_fields": [
+      {
+        "kickoff": "2026-11-06T01:15Z",
+        "source_timestamps_verified": false
+      }
+    ],
+    "payload_sha256_recorded": "c9aa28c3d41241b1864c96259dbacf87e7b53601e448860aa3c7a46cb2a95143",
+    "payload_sha256_recomputed": "c9aa28c3d41241b1864c96259dbacf87e7b53601e448860aa3c7a46cb2a95143"
+  },
+  "payload_HASH_parity": true,
+  "row_game_count": 15,
+  "interpretation": "Existing owner-created immutable packet, not new A inference; capture-created=false in later verification cannot be counted as another capture."
+}

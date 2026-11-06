@@ -1,0 +1,222 @@
+........................................................................ [ 22%]
+........................................................................ [ 44%]
+........................................................................ [ 66%]
+.............................................................FFFFFFF.... [ 88%]
+......................................                                   [100%]
+=================================== FAILURES ===================================
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[None] _
+
+damage = None
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[original315e-controller] _
+
+damage = 'original315e-controller'
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[original315e-retained] _
+
+damage = 'original315e-retained'
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-DAD-inventory] _
+
+damage = 'wrong-DAD-inventory'
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-DAD-root] _
+
+damage = 'wrong-DAD-root'
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-preimage] _
+
+damage = 'wrong-preimage'
+
+    @pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+    def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
+        from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+>       root=current_owner_root();body=history._source_history_unwrap(root['source_history_binding'])
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+_ test_current_owner_successor_does_not_hide_a_later_locator_or_substitute_old347 _
+
+    def test_current_owner_successor_does_not_hide_a_later_locator_or_substitute_old347():
+        from test_audit_weekly_v5_historical_readiness import current_owner_root
+        from nfl_lab import private_draft_store as store
+>       root=current_owner_root();ref=root['effective_epoch']['previous_checkpoint']
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_audit_weekly_source_history_v2.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_audit_weekly_v5_historical_readiness.py:302: in current_owner_root
+    publication_registration=dict(policy_sha256='0'*64),source_history_binding=history.source_history_envelope(body),
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nfl_lab/audit_weekly_grade_history_v1.py:199: in source_history_envelope
+    _source_history_body(binding)
+nfl_lab/audit_weekly_grade_history_v1.py:190: in _source_history_body
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, code = 'ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES'
+
+    def require(ok, code):
+>       if not ok: raise HistoryError(code)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       nfl_lab.audit_weekly_grade_history_v1.HistoryError: ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES
+
+nfl_lab/audit_weekly_grade_history_v1.py:118: HistoryError
+=========================== short test summary info ============================
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[None]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[original315e-controller]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[original315e-retained]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-DAD-inventory]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-DAD-root]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile[wrong-preimage]
+FAILED tests/test_audit_weekly_source_history_v2.py::test_current_owner_successor_does_not_hide_a_later_locator_or_substitute_old347
+7 failed, 319 passed in 90.65s (0:01:30)

@@ -1,0 +1,66 @@
+{
+  "id": "A-AUDIT-TIMESTAMP-UNIT-COUNTEREXAMPLE-v2",
+  "UTC": "2026-11-06T00:11:01.057911+00:00",
+  "supersedes": "CLOCK_UNIT_REPRODUCTION_V1.json",
+  "correction_reason": "First standalone witness initialized cutoff differently and returned1; its CONFIRMED label was overbroad for that witness. Preserve it; exact failing-test construction and explicit storage-unit cases below provide actual reproduction.",
+  "exact_fixture": {
+    "available_dtype": "datetime64[ns, UTC]",
+    "cutoff_dtype": "datetime64[s, UTC]",
+    "old_prior_games": 0.0,
+    "fixed_prior_games": 1.0
+  },
+  "mixed_units": [
+    {
+      "source_unit": "ns",
+      "target_unit": "us",
+      "before": {
+        "games": 0,
+        "mean3": null
+      },
+      "after": {
+        "games": 4,
+        "mean3": 20.0
+      }
+    },
+    {
+      "source_unit": "us",
+      "target_unit": "ns",
+      "before": {
+        "games": 4,
+        "mean3": 20.0
+      },
+      "after": {
+        "games": 4,
+        "mean3": 20.0
+      }
+    },
+    {
+      "source_unit": "s",
+      "target_unit": "ns",
+      "before": {
+        "games": 4,
+        "mean3": 20.0
+      },
+      "after": {
+        "games": 4,
+        "mean3": 20.0
+      }
+    },
+    {
+      "source_unit": "ms",
+      "target_unit": "us",
+      "before": {
+        "games": 4,
+        "mean3": 20.0
+      },
+      "after": {
+        "games": 4,
+        "mean3": 20.0
+      }
+    }
+  ],
+  "old_sha256": "e593d4330f83b69be5dc3a3e2e49d5b5f173a3f7f7a7d11e850f2a53e8a7ce40",
+  "after_sha256": "c6f6c973f59877583d370bc00432a79510004c26506aa2d3919beaeea30b85e9",
+  "NFL_score_impact": "NOT_MEASURED;actualretaineddtypestilltobechecked",
+  "new_fits_NFL_rows": 0
+}

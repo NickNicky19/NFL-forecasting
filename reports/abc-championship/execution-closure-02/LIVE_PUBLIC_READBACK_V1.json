@@ -1,0 +1,236 @@
+{
+  "state": "READ_ONLY_SERVED_PAYLOAD_OBSERVATION",
+  "records": [
+    {
+      "public_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+      "status": "READ",
+      "bytes": 1215,
+      "sha256": "56f4086b9a556f096c2eb61be82a921434f1cd88b3eb5e8c68efa79d6491194a",
+      "git_blob_sha1": "707b381da9e22b6a60d0b959acaa66801bbb7c86",
+      "at_UTC": "2026-11-05T23:49:07.549648+00:00",
+      "at_America_Chicago": "2026-11-05T17:49:07.549648-06:00",
+      "keys": [
+        "execution_model",
+        "generated_at",
+        "season",
+        "week"
+      ],
+      "metadata": {
+        "execution_model": {
+          "capture_schema": "baseline-capture-classic-v1",
+          "engine_sha256": {
+            "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+            "pull/build.py": "1d1646ef67469c3ec45227b9fcb053c4e229362a07bca092a5602a1a1442c1e1",
+            "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+            "pull/grade.py": "739df92bf9a04ef5f9974e4213bb7fda98b29be84c30654c2095003fbb974354",
+            "pull/matchup.py": "15b1739b203e1757b0ebaefa3a6994034d56bb4a92a9e07572527ef1a90e914c",
+            "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+            "pull/scoring.py": "58c1f57fb0404f8bb6d1568d51791c97cdf0bb941c57117b703c6a24534980db",
+            "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+          },
+          "grading_version": "statistical-v3-identity-20261025",
+          "model": "sleeper-matchup-classic-fg-identity-v1",
+          "normalized_stats_cache": "stat-keys-fgm-v1",
+          "original_shadow_model": "original_sleeper_matchup_baseline",
+          "original_shadow_procedure": "original-builder-default-refresh-v1",
+          "original_shadow_source": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+          "schema_version": "weekly-classic-current-execution-v1"
+        },
+        "generated_at": "2026-11-05T23:32:08Z",
+        "season": 2026,
+        "week": 9
+      }
+    },
+    {
+      "public_url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/week.json",
+      "status": "READ",
+      "bytes": 2361659,
+      "sha256": "e25d4a8c5dc0d23adc8d2801f370150121acfbf04178926e229c637236fa64fb",
+      "git_blob_sha1": "dfc2d2e369a668d09360ca75b8f9c3731b4f7da0",
+      "at_UTC": "2026-11-05T23:49:07.992796+00:00",
+      "at_America_Chicago": "2026-11-05T17:49:07.992796-06:00",
+      "keys": [
+        "categories",
+        "def_tiers",
+        "defense",
+        "execution_model",
+        "games",
+        "generated_at",
+        "log_stats",
+        "picks",
+        "players",
+        "scoring",
+        "scoring_def",
+        "scoring_k",
+        "season",
+        "week"
+      ],
+      "list_census": {
+        "games": 15,
+        "players": 584
+      },
+      "scalar_metadata": {
+        "generated_at": "2026-11-05T23:32:08Z",
+        "season": 2026,
+        "week": 9
+      },
+      "container_fields": {
+        "categories": [
+          "anytime_td",
+          "fpts",
+          "pass_att",
+          "pass_cmp",
+          "pass_int",
+          "pass_td",
+          "pass_yd",
+          "rec",
+          "rec_yd",
+          "rush_att",
+          "rush_rec_yd",
+          "rush_yd"
+        ],
+        "def_tiers": [
+          "pts",
+          "yds"
+        ],
+        "defense": [
+          "ARI",
+          "ATL",
+          "BAL",
+          "BUF",
+          "CAR",
+          "CHI",
+          "CIN",
+          "CLE",
+          "DAL",
+          "DEN",
+          "DET",
+          "GB",
+          "HOU",
+          "IND",
+          "JAX",
+          "KC",
+          "LAC",
+          "LAR",
+          "LV",
+          "MIA",
+          "MIN",
+          "NE",
+          "NO",
+          "NYG",
+          "NYJ"
+        ],
+        "execution_model": [
+          "capture_schema",
+          "engine_sha256",
+          "grading_version",
+          "model",
+          "normalized_stats_cache",
+          "original_shadow_model",
+          "original_shadow_procedure",
+          "original_shadow_source",
+          "schema_version"
+        ],
+        "log_stats": [
+          "QB",
+          "RB",
+          "TE",
+          "WR"
+        ],
+        "picks": [
+          "over",
+          "under"
+        ],
+        "scoring": [
+          "fum_lost",
+          "fum_rec_td",
+          "idp_blk_kick",
+          "pass_2pt",
+          "pass_int",
+          "pass_td",
+          "pass_yd",
+          "rec",
+          "rec_2pt",
+          "rec_td",
+          "rec_yd",
+          "rush_2pt",
+          "rush_td",
+          "rush_yd",
+          "st_ff",
+          "st_fum_rec",
+          "st_td"
+        ],
+        "scoring_def": [
+          "blk_kick",
+          "def_st_fum_rec",
+          "def_st_td",
+          "def_td",
+          "fum_rec",
+          "int",
+          "sack",
+          "safe"
+        ],
+        "scoring_k": [
+          "fgm_0_19",
+          "fgm_20_29",
+          "fgm_30_39",
+          "fgm_40_49",
+          "fgm_50_59",
+          "fgm_60p",
+          "fgmiss",
+          "xpm"
+        ]
+      },
+      "games_row_keys": [
+        "away",
+        "away_score",
+        "completed",
+        "detail",
+        "home",
+        "home_score",
+        "id",
+        "kickoff",
+        "odds",
+        "ours",
+        "ours_late",
+        "reference_model",
+        "state",
+        "tv",
+        "venue"
+      ],
+      "players_row_keys": [
+        "actual",
+        "avg_half",
+        "avg_ppr",
+        "depth",
+        "espn_id",
+        "game_id",
+        "games_this_season",
+        "home",
+        "id",
+        "inj_report",
+        "inj_timeline",
+        "injury",
+        "injury_part",
+        "log",
+        "matchup",
+        "name",
+        "number",
+        "opp",
+        "pos",
+        "proj",
+        "proj_half",
+        "proj_ppr",
+        "props",
+        "reference_model",
+        "snap_share",
+        "team"
+      ]
+    }
+  ],
+  "CPU_seconds": 0.116908667,
+  "wall_seconds": 0.7991372999995292,
+  "new_model_inference_capture_publication": 0,
+  "browser_consumption": "NOT_VERIFIED; installed Playwright has no installed Chromium binary; no browser installed or production change.",
+  "limits": "HTTP payload readback is not rendered values, sorting, source-label or Top Picks consumer verification."
+}

@@ -133,3 +133,7 @@ The exact owner package was delivered and remotely read back in [comment 6527892
 ## Post-wave diagnosis and product-specific five-week evidence
 
 [Executed Session A checkpoint and owner package](../abc-championship/post-wave-5w-v1/README.md). Earlier elapsed capture windows above are retained historical reports; use this checkpoint for current state.
+
+### Finding-specific audit closure
+
+[Executed A repairs, corrected Week8measurement and delivery dependencies](../abc-championship/audit-remediation-20261105/README.md). The all-category outputs are indexed in the existing [A export index](../abc-championship/EXPORT_INDEX.json); original predictions and results remain retained.

@@ -1,0 +1,19 @@
+{
+  "id": "A-AUDIT-MATRIX-COLUMNWISE-RETRY-v6",
+  "UTC": "2026-11-06T00:48:20.644114+00:00",
+  "worker_sha256": "b0fb42ccc03768aa3838387933b952be3cd0fb92b772a832c8cbd4e29440d110",
+  "V5_CPU_seconds": 71.050470942,
+  "remaining_full_wrapper_CPU_authority": 168.949529058,
+  "retry_CPU_hard_limit": 166,
+  "retry_wall_seconds": 280,
+  "AS_bytes_unchanged": 2147483648,
+  "runtime_change": "Compare fitted-row subset column by column instead of constructing/deep-copying whole118column dataframes. Memoryerror shape59842rows points to widefit-scope copy; add precise failurephase/stack metadata toverify. All sourcewrapper semantics,complete-column/clock guards retained.",
+  "completed_V5_oldwrapper_proof": {
+    "columns": 97,
+    "changed_rows": 0,
+    "changed_columns": [],
+    "exact_finite_and_missing_equivalence": true
+  },
+  "model_loads_fits_predictcalls_grades": 0,
+  "no_prior_failures_or_spending_reset": true
+}

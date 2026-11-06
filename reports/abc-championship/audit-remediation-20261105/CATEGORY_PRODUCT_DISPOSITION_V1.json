@@ -1,0 +1,1463 @@
+{
+  "id": "A-AUDIT-CATEGORY-PRODUCT-DISPOSITION-v1",
+  "coordinator": "C",
+  "records": [
+    {
+      "category": "pass_yd",
+      "A_native_point": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "median",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 62.954356846473026,
+          "MSE": 6460.721991701244,
+          "RMSE": 80.37861650775811,
+          "bias": -5.609958506224066,
+          "p95_AE": 163.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "mean",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 64.51655022728048,
+          "MSE": 6464.329506819003,
+          "RMSE": 80.40105413997382,
+          "bias": -4.127581100196462,
+          "p95_AE": 154.83069469032728
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "pass_td",
+      "A_native_point": {
+        "origin": "A",
+        "method": "HGB_MAE_DIRECT",
+        "procedure_id": "bdcffa9803bcf96b39da157a16588b88d65b2ced2dc9c55d168a4f19c8e6102a",
+        "output": "mae_objective_point",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 0.7864372982338677,
+          "MSE": 1.2345241961631803,
+          "RMSE": 1.1110914436549226,
+          "bias": -0.34934177039387315,
+          "p95_AE": 2.000455554974484
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "COUNT_A_MEAN",
+        "procedure_id": "f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+        "output": "mean_objective_point",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 0.8484231619618409,
+          "MSE": 1.101040082460119,
+          "RMSE": 1.0493045708754531,
+          "bias": -0.0428687977306325,
+          "p95_AE": 2.077309097273409
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "pass_cmp",
+      "A_native_point": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8",
+        "output": "median",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 5.174273858921162,
+          "MSE": 45.25726141078838,
+          "RMSE": 6.727351738298539,
+          "bias": -0.6597510373443983,
+          "p95_AE": 15.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "mean",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 5.236808541979113,
+          "MSE": 44.7846807621578,
+          "RMSE": 6.692135739968056,
+          "bias": -0.5363678251774477,
+          "p95_AE": 13.056098733264845
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "pass_att",
+      "A_native_point": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "87b0494f617a671dc597bb963cdd5d97e60659b966e8f1b700f1b3c5ffa1983f",
+        "output": "median",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 7.775933609958506,
+          "MSE": 107.16182572614107,
+          "RMSE": 10.351899619207147,
+          "bias": -1.3692946058091287,
+          "p95_AE": 22.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "87b0494f617a671dc597bb963cdd5d97e60659b966e8f1b700f1b3c5ffa1983f",
+        "output": "mean",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 7.888354782666129,
+          "MSE": 104.87513623219078,
+          "RMSE": 10.24085622554046,
+          "bias": -1.0812821879105876,
+          "p95_AE": 20.71445866162547
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "pass_int",
+      "A_native_point": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "median",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 0.5892116182572614,
+          "MSE": 0.8381742738589212,
+          "RMSE": 0.9155185819298924,
+          "bias": -0.5560165975103735,
+          "p95_AE": 2.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "7ca7c686711185de4014ebd9aba3bed80ce62f41f63cd351cf4434e658be7cec",
+        "output": "mean",
+        "role_scope": [
+          "QB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 718,
+          "scored": 241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 0.6209128804126847,
+          "MSE": 0.5084566939776468,
+          "RMSE": 0.7130614938261964,
+          "bias": 0.03258757278938011,
+          "p95_AE": 1.3425519492659161
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "rush_yd",
+      "A_native_point": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "67ed09d586c4a4472e51c7c298bd8389b8329f319339d293e01934c39d7a4313",
+        "output": "median",
+        "role_scope": [
+          "RB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 1244,
+          "scored": 586,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 19.46075085324232,
+          "MSE": 792.5870307167236,
+          "RMSE": 28.152922241158617,
+          "bias": -6.361774744027303,
+          "p95_AE": 58.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "mean",
+        "role_scope": [
+          "RB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 1244,
+          "scored": 586,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 20.34278607330461,
+          "MSE": 745.7470943723937,
+          "RMSE": 27.308370408583404,
+          "bias": 0.0006808382030379654,
+          "p95_AE": 56.43330580437531
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "rush_att",
+      "A_native_point": {
+        "origin": "A",
+        "method": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+        "procedure_id": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::A1_BACKFIELD_CDF_ROLE_INPUTS",
+        "output": "median",
+        "role_scope": [
+          "RB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "scored": 586,
+          "games": 107,
+          "MAE": 3.580204778156997,
+          "MSE": 24.16382252559727,
+          "RMSE": 4.9156711165005,
+          "bias": -1.030716723549488,
+          "p95_absolute_error": 10.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "A1_BACKFIELD_CDF_ROLE_INPUTS",
+        "procedure_id": "ABC-PREDICTIVE-IMPROVEMENT-01-A-v1::A1_BACKFIELD_CDF_ROLE_INPUTS",
+        "output": "mean",
+        "role_scope": [
+          "RB"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "scored": 586,
+          "games": 107,
+          "MAE": 3.686916246007589,
+          "MSE": 23.57659066197655,
+          "RMSE": 4.855573154837289,
+          "bias": -0.1820462296326142,
+          "p95_absolute_error": 9.885863222819287
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "rec",
+      "A_native_point": {
+        "origin": "A",
+        "method": "ORDERED_CDF",
+        "procedure_id": "677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316",
+        "output": "median",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 1.28,
+          "MSE": 3.593,
+          "RMSE": 1.895521036549054,
+          "bias": -0.469,
+          "p95_AE": 4.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "COUNT_A_MEAN",
+        "procedure_id": "7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad",
+        "output": "mean_objective_point",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 1.3448594783045824,
+          "MSE": 3.354147573246445,
+          "RMSE": 1.8314332019613615,
+          "bias": -0.05894532186030719,
+          "p95_AE": 3.5688592459076105
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "rec_yd",
+      "A_native_point": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a",
+        "output": "median",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 16.785,
+          "MSE": 672.956,
+          "RMSE": 25.94139549060536,
+          "bias": -7.054,
+          "p95_AE": 56.049999999999955
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a",
+        "output": "mean",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 17.431138157935536,
+          "MSE": 618.8576028389107,
+          "RMSE": 24.87684873208242,
+          "bias": -1.268407803950476,
+          "p95_AE": 52.43935019513981
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "rush_rec_yd",
+      "A_native_point": {
+        "origin": "A",
+        "method": "LEAF_CDF",
+        "procedure_id": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+        "output": "median",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 20.86,
+          "MSE": 897.901,
+          "RMSE": 29.964996245619655,
+          "bias": -7.483,
+          "p95_AE": 66.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35",
+        "output": "mean",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 21.52781581549047,
+          "MSE": 840.5912524036179,
+          "RMSE": 28.992951771139445,
+          "bias": -1.0893348458302732,
+          "p95_AE": 60.975205848888194
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "anytime_td",
+      "A_native_point": null,
+      "A_native_expected_mean": null,
+      "A_native_event": {
+        "origin": "A",
+        "method": "EQUAL_CDF_CAT_PROBABILITY",
+        "procedure_id": "5fd96c91561c262a582293e2ab164849a2dc4ab688c645241318c1b483b04043",
+        "output": "probability",
+        "role_scope": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4267,
+          "scored": 2000,
+          "games": 107,
+          "weeks": 7,
+          "MAE": null,
+          "MSE": 0.1457659306012678,
+          "RMSE": null,
+          "bias": null,
+          "p95_AE": null
+        },
+        "selection_objective": "event_Brier"
+      },
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "sleeper-matchup-classic-presence-strict-v2/reference_point",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    },
+    {
+      "category": "chart_ppr",
+      "A_native_point": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "92d60092754dc6b1b9cbe804c20e8079b3454aa322dc3fe69435003cae8370c4",
+        "output": "median",
+        "role_scope": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4985,
+          "scored": 2241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 4.640392681838464,
+          "MSE": 43.29902686300758,
+          "RMSE": 6.580199606623464,
+          "bias": -1.5286568496207051,
+          "p95_AE": 14.0
+        },
+        "selection_objective": "MAE"
+      },
+      "A_native_expected_mean": {
+        "origin": "A",
+        "method": "RESPONSE_CDF",
+        "procedure_id": "92d60092754dc6b1b9cbe804c20e8079b3454aa322dc3fe69435003cae8370c4",
+        "output": "mean",
+        "role_scope": [
+          "QB",
+          "RB",
+          "FB",
+          "WR",
+          "TE"
+        ],
+        "five_week_floor": "PASS",
+        "tested_weeks": [
+          {
+            "season": 2026,
+            "week": 1
+          },
+          {
+            "season": 2026,
+            "week": 2
+          },
+          {
+            "season": 2026,
+            "week": 3
+          },
+          {
+            "season": 2026,
+            "week": 4
+          },
+          {
+            "season": 2026,
+            "week": 5
+          },
+          {
+            "season": 2026,
+            "week": 6
+          },
+          {
+            "season": 2026,
+            "week": 7
+          }
+        ],
+        "metrics": {
+          "planned": 4985,
+          "scored": 2241,
+          "games": 107,
+          "weeks": 7,
+          "MAE": 4.787291009685226,
+          "MSE": 40.76693828182127,
+          "RMSE": 6.384899238188592,
+          "bias": -0.21307853180553196,
+          "p95_AE": 13.283096434695848
+        },
+        "selection_objective": "MSE"
+      },
+      "A_native_event": null,
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "cross_session_choice": "NOT_ESTABLISHED_ON_COMPATIBLE_FIVE_WEEK_MASK; referCexactqualificationtable",
+      "native_input_disposition": "Exactboundbasequery97fields unchanged; CountA-boundtrainingproof established. Unseen origin/model/augmentedinputs are not automatically certified.",
+      "measurement_disposition": "W1-7currentNFLverse labelcode preserves explicitmissing/zeros andcomposites; W8separateSleeperabsencequalification appended, notpooled.",
+      "live_product": "Exactnick-chart-ppr-v1 notverifiedactive; legacyfantasy remainsseparate",
+      "release": "NotadmittedbyA; retainedownerrequiredcurrentSOURCE+issuedRoot/modelcatalog+immutableinference+typedconsumer/fallback/rollback",
+      "probability_or_EV_promotion": "NONE; numericselectiondoesnotqualifyprobabilities/EV",
+      "TopPicks": "Changedexactcompletepolicy0verifiedtestweeks; preserveincumbentinputpath pendingowner-ledreplay"
+    }
+  ],
+  "not_a_new_cross_session_championship": true,
+  "limits": "Ownpanelobservednativechoices retained, notglobalwinners; auditinputproof scoped; no blanketresetofunaffectedfiveweeks."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "A-AUDIT-COMPLETE-WRAPPER-IMPACT-v5",
+  "UTC": "2026-11-06T00:42:12.076305+00:00",
+  "worker_sha256": "2d6ecdec643f6712ad4c96c8f95f25bf1306fb7dd609691f7bad4cd4a0926025",
+  "new_question": "Reproduce the COMPLETE registered operational source wrapper, not its inner feature helper alone.",
+  "old_inner_builder_findings": "V4 completed old inner rebuild:96/97columns identical; play_rate differs on54951rows. Existing operational_sources.py intentionally overwrites that field withNaN; exact wrapperSHA matches original source contract. That is not a demonstrated forecasting defect.",
+  "wrapper_sha256": "0c79adea3eb0feb9c5f634f48e546578ed3632e4d20dfdd05dc323c523dafc3c",
+  "memory_change": "Project raw test input to every consumed helper field includingis_home andteam totals, then preserve exact source wrapperplay-rate mask; no input used by the model builder removed. Originalextraoutputmetadata are outside matrix parity claim.",
+  "previous_attempts": [
+    {
+      "version": 1,
+      "CPU_seconds": 83.705679276,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    },
+    {
+      "version": 2,
+      "CPU_seconds": 75.029478556,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    },
+    {
+      "version": 3,
+      "CPU_seconds": 74.63832145,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    },
+    {
+      "version": 4,
+      "CPU_seconds": 78.088618767,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    }
+  ],
+  "previous_CPU_spent": 311.462098049,
+  "new_distinct_CPU_seconds_max": 240,
+  "new_wall_seconds_max": 360,
+  "AS_bytes_unchanged": 2147483648,
+  "private_bytes_max_unchanged": 1048576,
+  "maximum_model_loads_fits_predictcalls_newgrades": 0,
+  "budget_statement": "Finding-specific bounded full-wrapper continuation, not reset of4failed attempts or a new predictive fit. All previousconsumedbudgets/receipts/caps preserved."
+}

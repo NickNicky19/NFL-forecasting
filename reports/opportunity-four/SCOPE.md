@@ -44,3 +44,7 @@ Prioritize the existing exact pass_td__COUNT_A_MEAN producer handoff independent
 of allocation research. Its corrected point column, mean corrector, prior-mean
 fallback and original procedure/model identities must be restored and verified.
 Do not substitute bare predict, a median, legacy_point or the NaN mean column.
+
+## Audit remediation amendment, November5,2026
+
+AUDIT-REMEDIATION-20261105-v1 prioritizes finding-specific correctness and affected-evidence revalidation. Preserve all12 championship targets, product-specificfiveweekfloor, C coordination, A/B ownership and retainedproductionowner. Closed diagnoses are reused; no newbroadsearch. [Executed A findings, all losses and exact owner actions](../abc-championship/audit-remediation-20261105/README.md).

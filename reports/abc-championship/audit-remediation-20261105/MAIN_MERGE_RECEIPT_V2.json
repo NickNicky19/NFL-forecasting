@@ -1,0 +1,28 @@
+{
+  "state": "MERGED_SOURCE_ONLY_NOT_PRODUCER_OR_WEBSITE_ADMISSION",
+  "pr": 86,
+  "url": "https://github.com/NickNicky19/NFL-forecasting/pull/86",
+  "head": "da590fba5b40e79654859c3619840a2bce399259",
+  "merge": "f37279a093fcdddece1e369d42ce54349cb1913c",
+  "base_before": "53b05f41533489ddf2d8f6b99bdc70582ae0c085",
+  "feature_sha256": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+  "files": {
+    ".github/workflows/lab.yml": "5ae30ecac01011545ddb1c3d1d55c62f227644d6d5ad1b97d8bdf8a2a2cf1f67",
+    "nfl_lab/features.py": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+    "tests/test_audit_weekly_parent_workflow_v1.py": "44e651c16e2219ee0e5e9f8c5827f504c7aa6c1af23dbb6bbf75afb00220a3e9",
+    "tests/test_audit_history_semantics_v1.py": "280914e69f20dfd34f30c5f73d1fcae1baf68fa172aa8f2ef8a449dafba1489b"
+  },
+  "ci": [
+    {
+      "id": 42138063534,
+      "name": "Audit source checks",
+      "status": "completed",
+      "conclusion": "success",
+      "head": "da590fba5b40e79654859c3619840a2bce399259"
+    }
+  ],
+  "scope": "History admission/game recency/UTC unit correction plus truthful off-window zero-capture receipt. Cron/mutex/cutoffs/safety/readiness checks preserved. Existing execution owner must bind current source/parent/feature contracts before capture.",
+  "new_NFL_fits_forecasts_captures_deployments": 0,
+  "supersedes": "MAIN_MERGE_RECEIPT_V1.json",
+  "correction": "First receipt retained a per-file list from earlier1e803head; actualhead/merge/feature_sha were correct. Per-file list corrected to final da590/c3dcc content; original receipt preserved."
+}

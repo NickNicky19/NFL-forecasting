@@ -1,0 +1,33 @@
+{
+  "id": "A-AUDIT-APPENDIX-B-COUNTEREXAMPLES-v1",
+  "UTC": "2026-11-06T00:08:24.114560+00:00",
+  "state": "REPRODUCED_ACTIVE_BOUND_SOURCE_AND_VERIFIED_EXISTING_REPAIR",
+  "audit_sha256": "720b464f8077d3a483a4a73245690071866b7757fb6d20763c2ea8d931061795",
+  "fixture_code_sha256": "f9a1cb54cf3edc818df14c663f24340b3fd65ea4f7d6aa73ebee5647631806ba",
+  "records": [
+    {
+      "build": "registered_producer_before_13dfa",
+      "feature_sha256": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9",
+      "unknown_clock": {
+        "player_games_prior": 1,
+        "player_mean3": 999.0,
+        "team_mean3": 999.0
+      },
+      "late_publication_last3": 50.0
+    },
+    {
+      "build": "exact_existing_research_repair",
+      "feature_sha256": "e593d4330f83b69be5dc3a3e2e49d5b5f173a3f7f7a7d11e850f2a53e8a7ce40",
+      "unknown_clock": {
+        "player_games_prior": 0,
+        "player_mean3": null,
+        "team_mean3": null
+      },
+      "late_publication_last3": 20.0
+    }
+  ],
+  "NFL_rows_models_fits_grades_or_inference": 0,
+  "historical_contamination": "NOT_MEASURED_BY_FICTIONAL_COUNTEREXAMPLES",
+  "CPU_seconds": 0.8217555769999999,
+  "wall_seconds": 0.8626685780000116
+}

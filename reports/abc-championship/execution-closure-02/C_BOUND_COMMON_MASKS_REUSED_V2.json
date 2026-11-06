@@ -1,0 +1,793 @@
+{
+  "id": "A-CLOSURE02-COMMON-MASK-DECISION-CONTRIBUTION-v2",
+  "source_repository": "NickNicky19/NFL-forecasting-NGS-C",
+  "source_commit": "df02c7656dd616224057176d057e2494d51c5b32",
+  "source_path": "reports/abc-championship/shared-intake-v3/SAME_OFFER_COMPARISONS.json.gz",
+  "source_sha256": "c7923d190a65194305e4920a91972ea9e45f2e49aef8e25b2c42b20997ea0566",
+  "actual_weeks": [
+    2,
+    3
+  ],
+  "five_week_floor": "NOT_MET_FOR_EXACT_ACTUAL_LINE_POLICIES",
+  "panels": [
+    {
+      "category": "pass_yd",
+      "mask_id": "bc1ff922d2bd426007a5f35ea9c22f2ebd3bbbf3aa40de97334128b8d1eb60f1",
+      "decided": 63,
+      "sessions": [
+        "A",
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::ALWAYS_OVER",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 63,
+            "wins": 38,
+            "losses": 25,
+            "decided": 63,
+            "rate": 0.6031746031746031
+          },
+          "UNDER": {
+            "selected": 0,
+            "wins": null,
+            "losses": null,
+            "decided": 0,
+            "rate": null
+          },
+          "COMBINED": {
+            "selected": 63,
+            "wins": 38,
+            "losses": 25,
+            "decided": 63,
+            "rate": 0.6031746031746031
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.47980918511657444,
+            "high": 0.7146808848095354,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rec",
+      "mask_id": "4f0fb7b7383857a540a025940364c22c94b65395cd866b67f19fa293e27a07ef",
+      "decided": 337,
+      "sessions": [
+        "A",
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [
+        {
+          "session": "A",
+          "procedure_id": "A::08d8393d8d4e9f3989351546804d875fd3ff900854d6551ddd4e691a47c85cea::CATBOOST_MEDIUM::mean_objective_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::19366fa2b42beb6e756a47c5567b5dabf948475adab024e81af4c2476137e13b::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::7c361c0821df616a356289b2dee9a5f3b82470ba992596b18154f692f87446ad::COUNT_A_MEAN::mean_objective_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::22858dcf4777d138c08015823d963161dbcc7e9503d1136b1d073c584e90fb63::HGB_MAE_DIRECT::mae_objective_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::mean",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::677d1ba543eeeb5b13c33e9539fb1cea58c760003e1b2e5cc3e49e884ccb3316::ORDERED_CDF::median",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        }
+      ],
+      "raw_same_mask_leaders": [
+        {
+          "session": "B",
+          "procedure_id": "B::v2-qualified-position-defense-information-wave-v1:D2:common-feature-memory::H-CURRENT-COMMON::lower_median",
+          "product": "lower_median",
+          "history": "H-CURRENT",
+          "OVER": {
+            "selected": 54,
+            "wins": 33,
+            "losses": 20,
+            "decided": 53,
+            "rate": 0.6226415094339622,
+            "states": {
+              "WIN": 33,
+              "LOSS": 20,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 1,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "UNDER": {
+            "selected": 286,
+            "wins": 161,
+            "losses": 123,
+            "decided": 284,
+            "rate": 0.5669014084507042,
+            "states": {
+              "WIN": 161,
+              "LOSS": 123,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 2,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "COMBINED": {
+            "selected": 340,
+            "wins": 194,
+            "losses": 143,
+            "decided": 337,
+            "rate": 0.5756676557863502,
+            "states": {
+              "WIN": 194,
+              "LOSS": 143,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 3,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "eligible": 362,
+          "unavailable": 22,
+          "fallback_issued": 163,
+          "uncertainty": {
+            "paired_n": null,
+            "game_clusters": 32,
+            "replicates": 500,
+            "seed": 1703,
+            "week_interval": null,
+            "week_interval_status": "INSUFFICIENT_WEEK_CLUSTERS",
+            "game_interval": [
+              0.504424778761062,
+              0.6397790697674419
+            ],
+            "game_interval_status": "GAME_CLUSTER_SENSITIVITY_BOOTSTRAP",
+            "selection_limit": "exposeddescriptive;notselection/multiplicityadjusted",
+            "estimate": 0.5756676557863502
+          }
+        },
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 65,
+            "wins": 39,
+            "losses": 26,
+            "decided": 65,
+            "rate": 0.6
+          },
+          "UNDER": {
+            "selected": 272,
+            "wins": 155,
+            "losses": 117,
+            "decided": 272,
+            "rate": 0.5698529411764706
+          },
+          "COMBINED": {
+            "selected": 337,
+            "wins": 194,
+            "losses": 143,
+            "decided": 337,
+            "rate": 0.5756676557863502
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5223379361722128,
+            "high": 0.6272917484807611,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rec_yd",
+      "mask_id": "2a2e3a97c1a04ea07027333f33dbca3a3eb262651bad153249eb558db40cea32",
+      "decided": 337,
+      "sessions": [
+        "A",
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [
+        {
+          "session": "A",
+          "procedure_id": "A::9fa09ae8fdc21d286c9f427811262da52243839e489ba003a0078f54fb743400::CATBOOST_MEDIUM::median_objective_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::9a96afcd9f1af01167323fbbe10b459cfc253b1da75e92087c4c085eef85de69::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::6c6bf4be00366240df7de12ea47febd88fb82dfe27e6e184a5aeb636d008fff5::HGB_MAE_DIRECT::mae_objective_point",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::median",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::mean",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        },
+        {
+          "session": "A",
+          "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::RESPONSE_CDF::median",
+          "product": "Source-bound P1 point",
+          "state": "SOURCE_NULL_OUTPUT_OR_SIDE_PARTITION;NOT_ASSUMED_INTENTIONAL_ABSTENTION"
+        }
+      ],
+      "raw_same_mask_leaders": [
+        {
+          "session": "B",
+          "procedure_id": "B::v2-c02-explicit-lag-block-removal-leaf-cdf-v1:common-feature-memory::H-CURRENT-COMMON::mean",
+          "product": "mean",
+          "history": "H-CURRENT",
+          "OVER": {
+            "selected": 99,
+            "wins": 57,
+            "losses": 40,
+            "decided": 97,
+            "rate": 0.5876288659793815,
+            "states": {
+              "WIN": 57,
+              "LOSS": 40,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 2,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "UNDER": {
+            "selected": 241,
+            "wins": 131,
+            "losses": 109,
+            "decided": 240,
+            "rate": 0.5458333333333333,
+            "states": {
+              "WIN": 131,
+              "LOSS": 109,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 1,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "COMBINED": {
+            "selected": 340,
+            "wins": 188,
+            "losses": 149,
+            "decided": 337,
+            "rate": 0.5578635014836796,
+            "states": {
+              "WIN": 188,
+              "LOSS": 149,
+              "PUSH": 0,
+              "UNKNOWN_PARTICIPATION": 3,
+              "MISSING_ACTUAL": 0,
+              "PENDING": 0,
+              "VOID": 0,
+              "UNRESOLVED_CONTRACT": 0
+            }
+          },
+          "eligible": 361,
+          "unavailable": 21,
+          "fallback_issued": 162,
+          "uncertainty": {
+            "paired_n": null,
+            "game_clusters": 32,
+            "replicates": 500,
+            "seed": 1703,
+            "week_interval": null,
+            "week_interval_status": "INSUFFICIENT_WEEK_CLUSTERS",
+            "game_interval": [
+              0.5132334622271819,
+              0.5994476744186046
+            ],
+            "game_interval_status": "GAME_CLUSTER_SENSITIVITY_BOOTSTRAP",
+            "selection_limit": "exposeddescriptive;notselection/multiplicityadjusted",
+            "estimate": 0.5578635014836796
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rush_yd",
+      "mask_id": "c4fd1fb5f9b53252659bba801521dc423c5dcf75ed15b67fe64ca3767a4ae6cf",
+      "decided": 174,
+      "sessions": [
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 15,
+            "wins": 10,
+            "losses": 5,
+            "decided": 15,
+            "rate": 0.6666666666666666
+          },
+          "UNDER": {
+            "selected": 159,
+            "wins": 91,
+            "losses": 68,
+            "decided": 159,
+            "rate": 0.5723270440251572
+          },
+          "COMBINED": {
+            "selected": 174,
+            "wins": 101,
+            "losses": 73,
+            "decided": 174,
+            "rate": 0.5804597701149425
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5061731895200408,
+            "high": 0.6512704132578164,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        },
+        {
+          "session": "C",
+          "procedure_id": "C::EARLIER_PREVALENCE_V8",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 49,
+            "wins": 27,
+            "losses": 22,
+            "decided": 49,
+            "rate": 0.5510204081632653
+          },
+          "UNDER": {
+            "selected": 125,
+            "wins": 74,
+            "losses": 51,
+            "decided": 125,
+            "rate": 0.592
+          },
+          "COMBINED": {
+            "selected": 174,
+            "wins": 101,
+            "losses": 73,
+            "decided": 174,
+            "rate": 0.5804597701149425
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5061731895200408,
+            "high": 0.6512704132578164,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rec",
+      "mask_id": "aa005bccaae41fd818c49c2272be9dcb2a38133cd9600f7a12cb1ddb9503a73b",
+      "decided": 324,
+      "sessions": [
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 63,
+            "wins": 38,
+            "losses": 25,
+            "decided": 63,
+            "rate": 0.6031746031746031
+          },
+          "UNDER": {
+            "selected": 261,
+            "wins": 146,
+            "losses": 115,
+            "decided": 261,
+            "rate": 0.5593869731800766
+          },
+          "COMBINED": {
+            "selected": 324,
+            "wins": 184,
+            "losses": 140,
+            "decided": 324,
+            "rate": 0.5679012345679012
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.513477572902573,
+            "high": 0.6207336405244172,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rec",
+      "mask_id": "b4bab3029aa9969f5be54ea2d3ced73d8f81251b6533a488eba4a6b1be59d1d2",
+      "decided": 333,
+      "sessions": [
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 64,
+            "wins": 39,
+            "losses": 25,
+            "decided": 64,
+            "rate": 0.609375
+          },
+          "UNDER": {
+            "selected": 269,
+            "wins": 153,
+            "losses": 116,
+            "decided": 269,
+            "rate": 0.5687732342007435
+          },
+          "COMBINED": {
+            "selected": 333,
+            "wins": 192,
+            "losses": 141,
+            "decided": 333,
+            "rate": 0.5765765765765766
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5229303980126305,
+            "high": 0.6284761425556078,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rec",
+      "mask_id": "b3956fa1fec0f6c7bf149ba257259d4e8aa6c9619309fe2da454ff341b9cd3b4",
+      "decided": 328,
+      "sessions": [
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 64,
+            "wins": 39,
+            "losses": 25,
+            "decided": 64,
+            "rate": 0.609375
+          },
+          "UNDER": {
+            "selected": 264,
+            "wins": 150,
+            "losses": 114,
+            "decided": 264,
+            "rate": 0.5681818181818182
+          },
+          "COMBINED": {
+            "selected": 328,
+            "wins": 189,
+            "losses": 139,
+            "decided": 328,
+            "rate": 0.5762195121951219
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5221622391671704,
+            "high": 0.6285121225527036,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rush_yd",
+      "mask_id": "8e987b7faeaa3e3a2105944e3653c2fd2e39e99dd10914ecc25fe76e614bff1b",
+      "decided": 173,
+      "sessions": [
+        "B",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::P3_DIRECT",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 15,
+            "wins": 10,
+            "losses": 5,
+            "decided": 15,
+            "rate": 0.6666666666666666
+          },
+          "UNDER": {
+            "selected": 158,
+            "wins": 90,
+            "losses": 68,
+            "decided": 158,
+            "rate": 0.569620253164557
+          },
+          "COMBINED": {
+            "selected": 173,
+            "wins": 100,
+            "losses": 73,
+            "decided": 173,
+            "rate": 0.5780346820809249
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5035298876436451,
+            "high": 0.6491492419001588,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        },
+        {
+          "session": "C",
+          "procedure_id": "C::EARLIER_PREVALENCE_V8",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 49,
+            "wins": 27,
+            "losses": 22,
+            "decided": 49,
+            "rate": 0.5510204081632653
+          },
+          "UNDER": {
+            "selected": 124,
+            "wins": 73,
+            "losses": 51,
+            "decided": 124,
+            "rate": 0.5887096774193549
+          },
+          "COMBINED": {
+            "selected": 173,
+            "wins": 100,
+            "losses": 73,
+            "decided": 173,
+            "rate": 0.5780346820809249
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.5035298876436451,
+            "high": 0.6491492419001588,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    },
+    {
+      "category": "rush_yd",
+      "mask_id": "cd315248b591579c11060d611ef4006a29e2848a811a30f526e3d9727f990d85",
+      "decided": 111,
+      "sessions": [
+        "A",
+        "C"
+      ],
+      "reported_temporal_parity": "NOT_ESTABLISHED_ACROSS_A_B_C",
+      "unavailable_or_unpartitioned_output_views": [],
+      "raw_same_mask_leaders": [
+        {
+          "session": "C",
+          "procedure_id": "C::ALWAYS_UNDER",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 0,
+            "wins": null,
+            "losses": null,
+            "decided": 0,
+            "rate": null
+          },
+          "UNDER": {
+            "selected": 111,
+            "wins": 63,
+            "losses": 48,
+            "decided": 111,
+            "rate": 0.5675675675675675
+          },
+          "COMBINED": {
+            "selected": 111,
+            "wins": 63,
+            "losses": 48,
+            "decided": 111,
+            "rate": 0.5675675675675675
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.47467121788751543,
+            "high": 0.6559436328295938,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        },
+        {
+          "session": "C",
+          "procedure_id": "C::EARLIER_PREVALENCE_V8",
+          "product": "Retained exact source product",
+          "history": null,
+          "OVER": {
+            "selected": 30,
+            "wins": 15,
+            "losses": 15,
+            "decided": 30,
+            "rate": 0.5
+          },
+          "UNDER": {
+            "selected": 81,
+            "wins": 48,
+            "losses": 33,
+            "decided": 81,
+            "rate": 0.5925925925925926
+          },
+          "COMBINED": {
+            "selected": 111,
+            "wins": 63,
+            "losses": 48,
+            "decided": 111,
+            "rate": 0.5675675675675675
+          },
+          "eligible": null,
+          "unavailable": null,
+          "fallback_issued": null,
+          "uncertainty": {
+            "kind": "WILSON_INDEPENDENT_BERNOULLI_DIAGNOSTIC_ONLY",
+            "low": 0.47467121788751543,
+            "high": 0.6559436328295938,
+            "dependence_aware": false,
+            "week_clusters": 2
+          }
+        }
+      ],
+      "status": "REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER"
+    }
+  ],
+  "no_new_private_rows_or_scores": true
+}

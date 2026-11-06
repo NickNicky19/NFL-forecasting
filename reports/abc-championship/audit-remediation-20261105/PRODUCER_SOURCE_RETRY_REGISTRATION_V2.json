@@ -1,0 +1,18 @@
+{
+  "id": "A-AUDIT-PRODUCER-OVERRIDE-RETRY-v2",
+  "UTC": "2026-11-06T00:42:58.715772+00:00",
+  "prior_CPU": 91.89899199999999,
+  "retry_CPU_hard_limit": 26,
+  "wall_seconds": 50,
+  "previous7failures": "Missingexplicitfeaturepath in second closedoverride list; now addedexactpath, nootherguardremoved.",
+  "source_hashes": {
+    "nfl_lab/audit_weekly_grade_history_v1.py": "80f913723658a28130dc61d03f77689171df1fa5357bda4ad482c3eecabf1c7b",
+    "nfl_lab/weekly_mae_display_profile_v1.py": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5",
+    "config/weekly-mae-display-core3-v1.json": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483"
+  },
+  "tests": [
+    "tests/test_audit_weekly_source_history_v2.py::test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile",
+    "tests/test_audit_weekly_source_history_v2.py::test_current_owner_successor_does_not_hide_a_later_locator_or_substitute_old347"
+  ],
+  "new_NFLfits_forecasts": 0
+}

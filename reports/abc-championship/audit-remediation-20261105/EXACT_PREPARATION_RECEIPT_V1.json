@@ -1,0 +1,128 @@
+{
+  "id": "A-AUDIT-EXACT-HISTORICAL-PREPARATION-v1",
+  "UTC": "2026-11-06T01:12:19.872224+00:00",
+  "state": "EXACT_RETAINED_TRAINING_QUERY_AND_GUARD_EQUIVALENCE",
+  "source_helper_sha256": "c199bf566405f0fdb19b2b84c65f31bac931d3df2af8c5e6fad252b4bd3d40ef",
+  "repaired_feature_sha256": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+  "retained_query_sha256": "5450041c91f3c5dce3a4078c81b861f388e4682dd5cc57d3f1e6b250338f5b0e",
+  "training_proof_sha256": "8dfc96149eac5900b3e7cdfb3df30b857483c293a2c6f7c48468cadf0612b0ed",
+  "query_rows": 4985,
+  "model_feature_columns": 97,
+  "changed_rows": 0,
+  "changed_columns": [],
+  "guard_changed_rows": {
+    "feature_max_source_available_utc": 0,
+    "feature_max_assumed_history_available_utc": 0
+  },
+  "actual_weeks": [
+    {
+      "week": 1,
+      "query_rows": 791,
+      "history_rows_before_week": 59842,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 2,
+      "query_rows": 722,
+      "history_rows_before_week": 60362,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 3,
+      "query_rows": 728,
+      "history_rows_before_week": 60875,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 4,
+      "query_rows": 736,
+      "history_rows_before_week": 61393,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 5,
+      "query_rows": 694,
+      "history_rows_before_week": 61907,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 6,
+      "query_rows": 660,
+      "history_rows_before_week": 62388,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    },
+    {
+      "week": 7,
+      "query_rows": 654,
+      "history_rows_before_week": 62841,
+      "feature_columns": 97,
+      "history_availability_unknown_rows_omitted_across_panel": 0,
+      "availability_rule": "FROZEN_KICKOFF_PLUS_7DAY_RECONSTRUCTION",
+      "operational_manifest_or_genuine_pregame_receipt_created": false
+    }
+  ],
+  "by_week": [
+    {
+      "week": 1,
+      "query_rows": 791,
+      "changed_rows": 0
+    },
+    {
+      "week": 2,
+      "query_rows": 722,
+      "changed_rows": 0
+    },
+    {
+      "week": 3,
+      "query_rows": 728,
+      "changed_rows": 0
+    },
+    {
+      "week": 4,
+      "query_rows": 736,
+      "changed_rows": 0
+    },
+    {
+      "week": 5,
+      "query_rows": 694,
+      "changed_rows": 0
+    },
+    {
+      "week": 6,
+      "query_rows": 660,
+      "changed_rows": 0
+    },
+    {
+      "week": 7,
+      "query_rows": 654,
+      "changed_rows": 0
+    }
+  ],
+  "source_context_correction": "Use registered full prior raw roster states and per-week target placeholders; previous ACT/INA and all-week query contexts were harness differences, not established saved-forecast contamination.",
+  "limits": [
+    "Input equivalence only for these exact retained sources, recipe,97fields and guards.",
+    "Declared seven-day reconstruction preserved; no authenticated observation vintage or freshness gain claimed.",
+    "Not native Root admission, current-query capture, new football scores or original-site consumer verification."
+  ],
+  "model_loads_fits_predict_calls_new_grades": 0,
+  "CPU_seconds": 196.197525588,
+  "wall_seconds": 196.36218685699896
+}

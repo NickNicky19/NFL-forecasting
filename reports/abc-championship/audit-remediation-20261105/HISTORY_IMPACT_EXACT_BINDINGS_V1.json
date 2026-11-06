@@ -1,0 +1,34 @@
+{
+  "id": "A-AUDIT-HISTORY-IMPACT-EXACT-BINDINGS-v1",
+  "UTC": "2026-11-06T00:17:22.109783+00:00",
+  "worker_sha256": "c2f622c15c23c39de73b25474e586606766b57cdaa8ea446405c18ca02a1d3db",
+  "worker": "tools/abc_audit_history_impact_v1.py",
+  "sources": [
+    {
+      "logical_id": "training_features",
+      "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+      "bytes": 5070165
+    },
+    {
+      "logical_id": "query_features",
+      "sha256": "5450041c91f3c5dce3a4078c81b861f388e4682dd5cc57d3f1e6b250338f5b0e",
+      "bytes": 380692
+    },
+    {
+      "logical_id": "history0",
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+      "bytes": 1155175
+    },
+    {
+      "logical_id": "history1",
+      "sha256": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061",
+      "bytes": 44461
+    }
+  ],
+  "CPU_seconds": 240,
+  "wall_seconds": 360,
+  "AS_bytes": 2147483648,
+  "new_models_fits_forecasts_grades": 0,
+  "private_peak_bytes_max": 1048576,
+  "checks": "Prove original-rebuild parity, actual source-clock/unit/identity/order scope, then repair effect; no blanket model certification from absent raw context."
+}

@@ -1,0 +1,123 @@
+{
+  "id": "A-AUDIT-HISTORY-IMPACT-v1",
+  "started_UTC": "2026-11-06T00:45:29.800213+00:00",
+  "state": "FAILED_RETAINED_IMPACT_AUDIT",
+  "old_feature_sha256": "2a6acd56fea5f9805f0db8fa0684eaa0c57b3c3a89bf77fdc60e948883a2fec9",
+  "new_feature_sha256": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+  "model_loads_fits_prediction_calls_new_grades": 0,
+  "panels": [],
+  "arrow_memory_pool": "system",
+  "phase": "TRAINING_FIXED_REBUILD",
+  "CountA_original_model_binding": {
+    "capsule_sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36",
+    "model_member_sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d",
+    "training_feature_sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+    "query_feature_sha256": "5450041c91f3c5dce3a4078c81b861f388e4682dd5cc57d3f1e6b250338f5b0e",
+    "scope": "Exact CountA and this retained source only; no inference that unseen native Root model inputs are identical."
+  },
+  "training_input": {
+    "sha256": "375dc79b4427db68504553736006af799ef98de880bd69ccb6f95285780a605f",
+    "bytes": 5070165,
+    "rows": 62388,
+    "seasons": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "duplicate_player_games": 0,
+    "noncanonical_GSIS_rows": 0,
+    "whitespace_player_rows": 0,
+    "availability_column_present": true,
+    "explicit_unknown_clock_rows": 0,
+    "clock_dtypes": {
+      "kickoff_utc": "datetime64[ns, UTC]",
+      "cutoff_utc": "datetime64[ns, UTC]",
+      "outcome_available_utc": "datetime64[ns, UTC]"
+    },
+    "known_groups_with_game_time_reversal_under_publication_order": {
+      "player_id": 0,
+      "team": 0
+    },
+    "source_availability": "Retained declared seven-day reconstruction; not authenticated observation vintage."
+  },
+  "query_input": {
+    "sha256": "5450041c91f3c5dce3a4078c81b861f388e4682dd5cc57d3f1e6b250338f5b0e",
+    "bytes": 380692,
+    "rows": 4985,
+    "seasons": [
+      2026
+    ],
+    "duplicate_player_games": 0,
+    "noncanonical_GSIS_rows": 0,
+    "whitespace_player_rows": 0,
+    "availability_column_present": false,
+    "explicit_unknown_clock_rows": null,
+    "clock_dtypes": {
+      "kickoff_utc": "datetime64[ns, UTC]",
+      "cutoff_utc": "datetime64[ns, UTC]"
+    },
+    "known_groups_with_game_time_reversal_under_publication_order": {
+      "player_id": 0,
+      "team": 0
+    },
+    "source_availability": "Retained declared seven-day reconstruction; not authenticated observation vintage."
+  },
+  "history_sources": [
+    {
+      "sha256": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+      "bytes": 1155175
+    },
+    {
+      "sha256": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061",
+      "bytes": 44461
+    }
+  ],
+  "raw_history": {
+    "rows": 62779,
+    "seasons": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "duplicate_player_games": 0,
+    "noncanonical_GSIS_rows": 0,
+    "whitespace_player_rows": 0,
+    "availability_column_present": true,
+    "explicit_unknown_clock_rows": 0,
+    "clock_dtypes": {
+      "kickoff_utc": "datetime64[ns, UTC]",
+      "cutoff_utc": "datetime64[ns, UTC]",
+      "outcome_available_utc": "datetime64[ns, UTC]"
+    },
+    "known_groups_with_game_time_reversal_under_publication_order": {
+      "player_id": 0,
+      "team": 0
+    },
+    "source_availability": "Retained declared seven-day reconstruction; not authenticated observation vintage."
+  },
+  "prior_census_reused": "Exact original verified source hashes; failed matrix rebuild is not a completed parity check.",
+  "completed_training_original_rebuild": {
+    "columns": 97,
+    "changed_rows": 0,
+    "changed_columns": [],
+    "exact_finite_and_missing_equivalence": true
+  },
+  "error_type": "MemoryError",
+  "error_sha256": "51032a0c834e9e371134009c63b76d3ac5040ed5f07d5f8c7261ac605e5a63dd",
+  "historical_qualification": "Unresolved; no inferred zero effect or automatic reuse.",
+  "allocation_error_detail": "Unable to allocate 53.9 MiB for an array with shape (118, 59842) and data type float64",
+  "completed_UTC": "2026-11-06T00:46:40.979420+00:00",
+  "CPU_seconds": 71.050470942,
+  "wall_seconds": 71.79955508199964,
+  "RSS_bytes": 675635200
+}

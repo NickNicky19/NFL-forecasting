@@ -1,0 +1,28 @@
+{
+  "id": "A-AUDIT-HISTORY-IMPACT-ALLOCATOR-CONTINUATION-v3",
+  "UTC": "2026-11-06T00:30:32.183581+00:00",
+  "previous_attempts": [
+    {
+      "receipt": "HISTORY_IMPACT_RECEIPT_V1.json",
+      "CPU_seconds": 83.705679276,
+      "wall_seconds": 85.23588815700168,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    },
+    {
+      "receipt": "HISTORY_IMPACT_RECEIPT_V2.json",
+      "CPU_seconds": 75.029478556,
+      "wall_seconds": 75.09799362000012,
+      "state": "FAILED_RETAINED_IMPACT_AUDIT"
+    }
+  ],
+  "previous_CPU_spent_seconds": 158.735157832,
+  "new_CPU_hard_limit_seconds": 240,
+  "new_wall_limit_seconds": 360,
+  "cumulative_CPU_upper_bound_seconds": 398.735157832,
+  "AS_bytes_unchanged": 2147483648,
+  "private_peak_bytes_unchanged": 1048576,
+  "changed_runtime": "Use PyArrow standard system memory pool, avoiding default virtual-arena reservation; retain sequential builds. Same features/sources/corrector/score hypotheses. This does not raise AS or disable guards.",
+  "new_fits_models_forecasts_grades": 0,
+  "worker_sha256": "143527d95db5670de5c698ee1631b636c5193f136614346479492303477a008f",
+  "prior_root_cause_limit": "Earlier MemoryError occurred before first matrix panel completion; exact failing allocation/constructor was not logged. Large-arena pressure is a hypothesis tested by this distinct runtime change, not a verified causal NFL finding."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "A-AUDIT-PRODUCER-SOURCE-VALIDATION-v1",
+  "UTC": "2026-11-06T00:35:43.823433+00:00",
+  "code_bindings": {
+    "nfl_lab/features.py": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+    "nfl_lab/weekly_mae_display_profile_v1.py": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5",
+    "config/weekly-mae-display-core3-v1.json": "29fa48d7535fbe8fb988cc8cb91e616b6fc43327a51f0d195696cef8a3457b4e",
+    "tests/test_audit_history_semantics_v1.py": "280914e69f20dfd34f30c5f73d1fcae1baf68fa172aa8f2ef8a449dafba1489b"
+  },
+  "CPU_hard_limit_seconds": 120,
+  "wall_seconds": 180,
+  "AS_bytes": 2147483648,
+  "native_threads": 1,
+  "tests": [
+    "tests/test_audit_weekly_grade_history_v1.py",
+    "tests/test_audit_weekly_source_history_v2.py",
+    "tests/test_audit_weekly_retained_transport_v1.py",
+    "tests/test_audit_history_semantics_v1.py",
+    "tests/test_data_features.py"
+  ],
+  "scope": "Fictional source/Root/clock/refusal/restoration/feature fixtures only. No realNFL model,sourceor prediction decode; no network/production/issuance.",
+  "authority": "Existing source/cadence maintenance120CPU allocation; preservealloldruns andnativecoldhard120limit."
+}

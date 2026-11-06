@@ -1,0 +1,27 @@
+{
+  "id": "A-AUDIT-MAIN-SOFTWARE-V1",
+  "UTC": "2026-11-06T00:35:45.962186+00:00",
+  "attempts": [
+    {
+      "code_version": "Existingresearchrepair_e593",
+      "command": "python -B -m pytest -q tests/test_audit_history_semantics_v1.py tests/test_data_features.py",
+      "result": "20PASS/1FAIL; storage-unit fixture exposed defect",
+      "NFL_samples": 0
+    },
+    {
+      "code_version": "UTCnsfix_c6f6",
+      "producer_feature_suite": "25PASS/2.67sec",
+      "main_feature_suite": "24PASS/2.38sec",
+      "reason_counts_differ": "The2branches retain different existingdata-featuretests."
+    },
+    {
+      "code_version": "mainfeature_c3dcc+no_opworkflow",
+      "command": "python -B -m pytest -q tests/test_audit_history_semantics_v1.py tests/test_data_features.py tests/test_cadence.py tests/test_audit_weekly_parent_workflow_v1.py",
+      "result": "68PASS/4.07sec",
+      "NFL_samples": 0
+    }
+  ],
+  "CPU_seconds": null,
+  "CPU_null_reason": "Directtargetedpytest invocations reportedwallonly; notclaimedzero.",
+  "new_real_NFL_fits_captures": 0
+}

@@ -1,0 +1,74 @@
+{
+  "id": "A-CLOSURE02-ROLE-SCOPE-CORRECTION-v1",
+  "basis": "FULL_BOARD_ROLE_SCOPE_CENSUS_V2.json",
+  "source_archive_sha256": "80ba907a24b4f9cc10b66f48e4408736ae9bc6d182a4be8bdf49fd9bf4113036",
+  "corrections": [
+    {
+      "source_C_row_id": "bc0c4cc465d31ead75c711ba40b5befa3044078d4a724feb3d6b01dde1a40a16",
+      "category": "rush_yd",
+      "retained_reported_scope": "RB",
+      "verified_full_offer_positions": [
+        "QB",
+        "RB",
+        "TE",
+        "WR"
+      ],
+      "position_offer_counts": [
+        {
+          "category": "rush_yd",
+          "position": "QB",
+          "unique_offers": 141
+        },
+        {
+          "category": "rush_yd",
+          "position": "RB",
+          "unique_offers": 291
+        },
+        {
+          "category": "rush_yd",
+          "position": "TE",
+          "unique_offers": 2
+        },
+        {
+          "category": "rush_yd",
+          "position": "WR",
+          "unique_offers": 21
+        }
+      ],
+      "score_changes": 0,
+      "reason": "Carry335=80QB+239RB+16WR; rushing-yard455includesQB/RB/WR/TE. Preserve existing known scope correction and verified immutable row census, not a new model defect or five new test weeks."
+    },
+    {
+      "source_C_row_id": "abeb0affa3d85535ad63317c4d51f8bc7422335de1b71e7808a913ed1f240cf6",
+      "category": "rush_att",
+      "retained_reported_scope": "RB",
+      "verified_full_offer_positions": [
+        "QB",
+        "RB",
+        "WR"
+      ],
+      "position_offer_counts": [
+        {
+          "category": "rush_att",
+          "position": "QB",
+          "unique_offers": 80
+        },
+        {
+          "category": "rush_att",
+          "position": "RB",
+          "unique_offers": 239
+        },
+        {
+          "category": "rush_att",
+          "position": "WR",
+          "unique_offers": 16
+        }
+      ],
+      "score_changes": 0,
+      "reason": "Carry335=80QB+239RB+16WR; rushing-yard455includesQB/RB/WR/TE. Preserve existing known scope correction and verified immutable row census, not a new model defect or five new test weeks."
+    }
+  ],
+  "owner_action": "C append source/role metadata correction on exact existing A output cells. No score or model overwrite.",
+  "numeric_RB_scope_changed": false,
+  "new_NFL_scores_or_test_weeks": 0
+}

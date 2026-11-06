@@ -1,0 +1,16 @@
+{
+  "id": "A-AUDIT-PRODUCER-HOSTED-REGRESSION-CLOSURE-v3",
+  "UTC": "2026-11-06T01:01:38.111646+00:00",
+  "parent_run": 42139186766,
+  "source_shard_failures": 2,
+  "first_failure": "Qualified loader fixture omitted prior availability column; adapter data.py explicitly supplies declared kickoff+7d. Correctfixture+explicitNaT wrapper regression; originaloperationalbuilderhash unchanged.",
+  "second_failure": "V5 exact allowset fixture omitted explicitly reviewed features.py path; old RootV1-V4sets unchanged; exactwrongbeforehash rejection extended.",
+  "CPU_seconds": 120,
+  "wall_seconds": 180,
+  "fits_NFL_forecasts": 0,
+  "checks": [
+    "tests/test_audit_weekly_runtime_v1.py::test_registered_original_builder_new_monday_query_features_and_owned_capture",
+    "tests/test_audit_weekly_v5_admission_metadata.py::test_v5_candidate_set_is_exact_and_v1_v4_whitelist_does_not_grow",
+    "tests/test_audit_weekly_v5_admission_metadata.py::test_each_present_v5_override_requires_exact_registered_before_hash"
+  ]
+}

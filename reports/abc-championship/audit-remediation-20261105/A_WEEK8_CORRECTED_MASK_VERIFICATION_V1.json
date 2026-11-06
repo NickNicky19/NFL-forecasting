@@ -1,0 +1,451 @@
+{
+  "id": "A-W8-CORRECTED-MASK-VERIFICATION-v1",
+  "UTC": "2026-11-06T01:26:27.539882+00:00",
+  "state": "COMMON_BOARD_OUTCOME_AND_CORRECTED_MASKS_VERIFIED",
+  "scoring": "Uses retained original grades plus presence overlay, no new threshold grader or changed sides.",
+  "panels": [
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "eligible": 484,
+      "selected_sides": 483,
+      "abstentions": 1,
+      "decided": 409,
+      "opportunity_identity_sha256": "6c6f2c03b41e3b3f9f2cc56277c155752411cbf8f10d0aa6140c70e3d296a4dc",
+      "decided_mask_sha256": "3ef76896454a10941989699841e73c44d554cd582942d84a6461ebf7e1dad487"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "eligible": 484,
+      "selected_sides": 484,
+      "abstentions": 0,
+      "decided": 410,
+      "opportunity_identity_sha256": "6c6f2c03b41e3b3f9f2cc56277c155752411cbf8f10d0aa6140c70e3d296a4dc",
+      "decided_mask_sha256": "723b9f81c995eb1f355f301bd9127f1e6c3b677a9bfe1be9bb95fc0059c20c86"
+    },
+    {
+      "procedure": "CONTROL_ALWAYS_OVER",
+      "eligible": 484,
+      "selected_sides": 484,
+      "abstentions": 0,
+      "decided": 410,
+      "opportunity_identity_sha256": "6c6f2c03b41e3b3f9f2cc56277c155752411cbf8f10d0aa6140c70e3d296a4dc",
+      "decided_mask_sha256": "723b9f81c995eb1f355f301bd9127f1e6c3b677a9bfe1be9bb95fc0059c20c86"
+    },
+    {
+      "procedure": "CONTROL_ALWAYS_UNDER",
+      "eligible": 484,
+      "selected_sides": 484,
+      "abstentions": 0,
+      "decided": 410,
+      "opportunity_identity_sha256": "6c6f2c03b41e3b3f9f2cc56277c155752411cbf8f10d0aa6140c70e3d296a4dc",
+      "decided_mask_sha256": "723b9f81c995eb1f355f301bd9127f1e6c3b677a9bfe1be9bb95fc0059c20c86"
+    }
+  ],
+  "matched_controls": [
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "ALL_NUMERIC",
+      "common_decided": 409,
+      "games": 14,
+      "wins": 207,
+      "losses": 202,
+      "control_wins": 230,
+      "control_losses": 179,
+      "win_difference": -23,
+      "hit_rate_difference": -0.05623471882640587,
+      "game_bootstrap_95_sensitivity": [
+        -0.1546702928870293,
+        0.051434504853623615
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_att",
+      "common_decided": 28,
+      "games": 14,
+      "wins": 13,
+      "losses": 15,
+      "control_wins": 12,
+      "control_losses": 16,
+      "win_difference": 1,
+      "hit_rate_difference": 0.03571428571428571,
+      "game_bootstrap_95_sensitivity": [
+        -0.32142857142857145,
+        0.35714285714285715
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_cmp",
+      "common_decided": 26,
+      "games": 14,
+      "wins": 13,
+      "losses": 13,
+      "control_wins": 13,
+      "control_losses": 13,
+      "win_difference": 0,
+      "hit_rate_difference": 0.0,
+      "game_bootstrap_95_sensitivity": [
+        -0.2693181818181818,
+        0.25
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_int",
+      "common_decided": 14,
+      "games": 11,
+      "wins": 9,
+      "losses": 5,
+      "control_wins": 14,
+      "control_losses": 0,
+      "win_difference": -5,
+      "hit_rate_difference": -0.35714285714285715,
+      "game_bootstrap_95_sensitivity": [
+        -0.6428571428571429,
+        -0.13333333333333333
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_td",
+      "common_decided": 19,
+      "games": 12,
+      "wins": 12,
+      "losses": 7,
+      "control_wins": 13,
+      "control_losses": 6,
+      "win_difference": -1,
+      "hit_rate_difference": -0.05263157894736842,
+      "game_bootstrap_95_sensitivity": [
+        -0.363755980861244,
+        0.2777777777777778
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_yd",
+      "common_decided": 26,
+      "games": 14,
+      "wins": 13,
+      "losses": 13,
+      "control_wins": 14,
+      "control_losses": 12,
+      "win_difference": -1,
+      "hit_rate_difference": -0.038461538461538464,
+      "game_bootstrap_95_sensitivity": [
+        -0.25925925925925924,
+        0.19230769230769232
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rec",
+      "common_decided": 105,
+      "games": 14,
+      "wins": 49,
+      "losses": 56,
+      "control_wins": 59,
+      "control_losses": 46,
+      "win_difference": -10,
+      "hit_rate_difference": -0.09523809523809523,
+      "game_bootstrap_95_sensitivity": [
+        -0.20689655172413793,
+        0.022727272727272728
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rec_yd",
+      "common_decided": 105,
+      "games": 14,
+      "wins": 64,
+      "losses": 41,
+      "control_wins": 62,
+      "control_losses": 43,
+      "win_difference": 2,
+      "hit_rate_difference": 0.01904761904761905,
+      "game_bootstrap_95_sensitivity": [
+        -0.1,
+        0.16327021193092614
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_att",
+      "common_decided": 28,
+      "games": 13,
+      "wins": 9,
+      "losses": 19,
+      "control_wins": 17,
+      "control_losses": 11,
+      "win_difference": -8,
+      "hit_rate_difference": -0.2857142857142857,
+      "game_bootstrap_95_sensitivity": [
+        -0.46153846153846156,
+        -0.13333333333333333
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_rec_yd",
+      "common_decided": 21,
+      "games": 12,
+      "wins": 7,
+      "losses": 14,
+      "control_wins": 8,
+      "control_losses": 13,
+      "win_difference": -1,
+      "hit_rate_difference": -0.047619047619047616,
+      "game_bootstrap_95_sensitivity": [
+        -0.30434782608695654,
+        0.2
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "FIXED_R0_CAPTURE_20261028T184637Z",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_yd",
+      "common_decided": 37,
+      "games": 13,
+      "wins": 18,
+      "losses": 19,
+      "control_wins": 18,
+      "control_losses": 19,
+      "win_difference": 0,
+      "hit_rate_difference": 0.0,
+      "game_bootstrap_95_sensitivity": [
+        -0.19444444444444445,
+        0.2
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "ALL_NUMERIC",
+      "common_decided": 410,
+      "games": 14,
+      "wins": 199,
+      "losses": 211,
+      "control_wins": 231,
+      "control_losses": 179,
+      "win_difference": -32,
+      "hit_rate_difference": -0.07804878048780488,
+      "game_bootstrap_95_sensitivity": [
+        -0.18041673454190035,
+        0.041272249190938366
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_att",
+      "common_decided": 28,
+      "games": 14,
+      "wins": 11,
+      "losses": 17,
+      "control_wins": 12,
+      "control_losses": 16,
+      "win_difference": -1,
+      "hit_rate_difference": -0.03571428571428571,
+      "game_bootstrap_95_sensitivity": [
+        -0.35714285714285715,
+        0.2857142857142857
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_cmp",
+      "common_decided": 26,
+      "games": 14,
+      "wins": 9,
+      "losses": 17,
+      "control_wins": 13,
+      "control_losses": 13,
+      "win_difference": -4,
+      "hit_rate_difference": -0.15384615384615385,
+      "game_bootstrap_95_sensitivity": [
+        -0.4074494949494949,
+        0.08
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_int",
+      "common_decided": 14,
+      "games": 11,
+      "wins": 13,
+      "losses": 1,
+      "control_wins": 14,
+      "control_losses": 0,
+      "win_difference": -1,
+      "hit_rate_difference": -0.07142857142857142,
+      "game_bootstrap_95_sensitivity": [
+        -0.23076923076923078,
+        0.0
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_td",
+      "common_decided": 20,
+      "games": 12,
+      "wins": 12,
+      "losses": 8,
+      "control_wins": 14,
+      "control_losses": 6,
+      "win_difference": -2,
+      "hit_rate_difference": -0.1,
+      "game_bootstrap_95_sensitivity": [
+        -0.3,
+        0.16666666666666666
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "pass_yd",
+      "common_decided": 26,
+      "games": 14,
+      "wins": 15,
+      "losses": 11,
+      "control_wins": 14,
+      "control_losses": 12,
+      "win_difference": 1,
+      "hit_rate_difference": 0.038461538461538464,
+      "game_bootstrap_95_sensitivity": [
+        -0.21751207729468594,
+        0.32003571428571376
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rec",
+      "common_decided": 105,
+      "games": 14,
+      "wins": 52,
+      "losses": 53,
+      "control_wins": 59,
+      "control_losses": 46,
+      "win_difference": -7,
+      "hit_rate_difference": -0.06666666666666667,
+      "game_bootstrap_95_sensitivity": [
+        -0.1875,
+        0.07072510822510795
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rec_yd",
+      "common_decided": 105,
+      "games": 14,
+      "wins": 56,
+      "losses": 49,
+      "control_wins": 62,
+      "control_losses": 43,
+      "win_difference": -6,
+      "hit_rate_difference": -0.05714285714285714,
+      "game_bootstrap_95_sensitivity": [
+        -0.22115384615384615,
+        0.11364633173843686
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_att",
+      "common_decided": 28,
+      "games": 13,
+      "wins": 7,
+      "losses": 21,
+      "control_wins": 17,
+      "control_losses": 11,
+      "win_difference": -10,
+      "hit_rate_difference": -0.35714285714285715,
+      "game_bootstrap_95_sensitivity": [
+        -0.6,
+        -0.08
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_rec_yd",
+      "common_decided": 21,
+      "games": 12,
+      "wins": 10,
+      "losses": 11,
+      "control_wins": 8,
+      "control_losses": 13,
+      "win_difference": 2,
+      "hit_rate_difference": 0.09523809523809523,
+      "game_bootstrap_95_sensitivity": [
+        -0.1875,
+        0.391304347826087
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    },
+    {
+      "procedure": "CAPTURED_SELECTED_369fec9caec0",
+      "control": "CONTROL_ALWAYS_OVER",
+      "category": "rush_yd",
+      "common_decided": 37,
+      "games": 13,
+      "wins": 14,
+      "losses": 23,
+      "control_wins": 18,
+      "control_losses": 19,
+      "win_difference": -4,
+      "hit_rate_difference": -0.10810810810810811,
+      "game_bootstrap_95_sensitivity": [
+        -0.358974358974359,
+        0.1388888888888889
+      ],
+      "evidence": "ONE_EXPOSED_WEEK_TIMING_UNVERIFIED_ACTUAL_LINES;NOT_FUTURE_POLICY_OR_PROFIT"
+    }
+  ],
+  "bootstrap": {
+    "draws": 5000,
+    "seed": 1701,
+    "clusters": "games",
+    "qualification": "Descriptive sensitivity; one week, exposed selected procedures, multiplicity unadjusted."
+  },
+  "new_NFL_forecasts_fits_grades_or_private_bytes": 0,
+  "CPU_seconds": 27.482790605,
+  "wall_seconds": 28.73333991799882
+}

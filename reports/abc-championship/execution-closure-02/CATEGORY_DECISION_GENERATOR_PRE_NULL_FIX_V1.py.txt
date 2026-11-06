@@ -1,0 +1,278 @@
+"""A's product-specific contribution to C; reuse bound scores, never regrade.
+
+No cross-session global minima on incompatible populations, new scorer,
+five-week aliasing, Top Picks replay, fit or production action.
+"""
+from pathlib import Path
+import collections
+import csv
+import datetime
+import gzip
+import hashlib
+import io
+import json
+import math
+import resource
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'reports/abc-championship/execution-closure-02'
+OLD = ROOT / 'reports/abc-championship/post-wave-5w-v1'
+CACHE = Path('/tmp') / 'abc-execution-closure02-public'
+CATEGORIES = ['pass_yd', 'pass_td', 'pass_cmp', 'pass_att', 'pass_int',
+    'rush_yd', 'rush_att', 'rec', 'rec_yd', 'rush_rec_yd', 'anytime_td', 'chart_ppr']
+A_COMMIT = 'd426c9ef69208ad1783d3a65e7f057640638c76a'
+B_COMMIT = 'b23349ca723868e8bb79ff4a581125c20919e756'
+C_COMMIT = 'df02c7656dd616224057176d057e2494d51c5b32'
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def document(path):
+    raw = path.read_bytes()
+    obj = json.loads(gzip.decompress(raw) if raw[:2] == b'\x1f\x8b' else raw)
+    if isinstance(obj, dict) and obj.get('content_reference'):
+        ref = obj['content_reference']
+        member = path.parent / ref['file']
+        body = member.read_bytes()
+        if sha(body) != ref['sha256'] or len(body) != ref['bytes']:
+            raise ValueError('public aggregate bytes changed')
+        decoded = gzip.decompress(body)
+        if sha(decoded) != ref['uncompressed_sha256'] or len(decoded) != ref['uncompressed_bytes']:
+            raise ValueError('decoded public aggregate changed')
+        return json.loads(decoded)
+    return obj
+
+
+def current(row):
+    return row['per_season_scored_weeks'] == {'2026': list(range(1, 8))}
+
+
+def summary(row):
+    return {'origin': 'A', 'procedure_id': row['key']['procedure_version'],
+        'method': row['method_alias'], 'category': row['key']['target'],
+        'output': row['key']['output'], 'role_scope': row['key']['role_scope'],
+        'policy': row['key']['selection_policy'], 'history': row['key']['history_rule'],
+        'qualification_key_sha256': row['key_sha256'],
+        'five_week_floor': row['five_week_floor'],
+        'tested_weeks': row['completed_scored_weeks'],
+        'metrics': row.get('retained_aggregate_metrics', row.get('retained_metrics')),
+        'evidence_tier': row.get('evidence_tier', 'EXPOSED_RETROSPECTIVE_SOURCE_CONTRACT'),
+        'weekly_support': row.get('weekly_support', row.get('weekly_score_support')),
+        'source_record': row.get('source'), 'source_commit': A_COMMIT}
+
+
+def local_leader(rows, metric):
+    usable = [r for r in rows if isinstance(r.get('retained_aggregate_metrics', {}).get(metric), (float, int))
+        and math.isfinite(r['retained_aggregate_metrics'][metric])]
+    if not usable:
+        return None
+    # Collapse already-imported repeated references, preserving original source.
+    unique = {}
+    for row in usable:
+        identity = (row['key']['procedure_version'], row['key']['output'],
+            row['retained_aggregate_metrics']['scored'], row['retained_aggregate_metrics'][metric])
+        unique.setdefault(identity, row)
+    ordered = sorted(unique.values(), key=lambda r: (r['retained_aggregate_metrics'][metric],
+        r['method_alias'], r['key']['output']))
+    selected = ordered[0]
+    result = summary(selected)
+    result['metric'] = metric
+    result['runner'] = None
+    if len(ordered) > 1:
+        runner = ordered[1]
+        result['runner'] = {'method': runner['method_alias'], 'procedure_id': runner['key']['procedure_version'],
+            'output': runner['key']['output'], 'loss': runner['retained_aggregate_metrics'][metric],
+            'same_native_panel_loss_difference': runner['retained_aggregate_metrics'][metric] - selected['retained_aggregate_metrics'][metric]}
+    result['comparison_scope'] = 'Previously verified exact A native current-season comparison; not an A/B/C population join.'
+    return result
+
+
+def floor_counts(rows, owner, category):
+    selected = [r for r in rows if r['owner'] == owner and r['category'] in
+        ([category, 'fpts'] if category == 'chart_ppr' else [category])]
+    return {'views': len(selected),
+        'MET': sum(r['five_week_floor'] == 'MET' for r in selected),
+        'current_2026_at_least5': sum(r['five_week_floor'] == 'MET' and
+            r['current_2026_scored_week_count'] >= 5 for r in selected),
+        'products': dict(collections.Counter(r['product'] for r in selected if r['five_week_floor'] == 'MET')),
+        'limits': 'View counts, not distinct learner count; exact role/history/panel/output retained in owning immutable table.'}
+
+
+def main():
+    start = time.monotonic()
+    cpu = time.process_time()
+    resource.setrlimit(resource.RLIMIT_AS, (2147483648, 2147483648))
+    resource.setrlimit(resource.RLIMIT_CPU, (110, 120))
+    index = document(OLD / 'A_FIVE_WEEK_QUALIFICATION_V3.json')
+    a_rows = []
+    for part in index['parts']:
+        body = (OLD / part['entry']).read_bytes()
+        if sha(body) != part['entry_sha256']:
+            raise ValueError('original qualification part index differs')
+        a_rows.extend(document(OLD / part['entry'])['records'])
+    proper = document(OLD / 'A_PROPER_SCORE_FIVE_WEEK_SUPPLEMENT_V2.json')['records']
+    amendment = document(OLD / 'A_FIVE_WEEK_QUALIFICATION_AMENDMENT_V4.json')
+    invalid_keys = {r['key_sha256'] for r in amendment['corrections']
+        if r['effective_output_support'] == 'UNSUPPORTED_OUTPUT_NO_FORECAST_OR_SCORE'}
+    a_rows = [r for r in a_rows if r['key_sha256'] not in invalid_keys]
+    cr = (CACHE / 'C_qualification.json.gz').read_bytes()
+    br = (CACHE / 'B_qualification.json.gz').read_bytes()
+    if sha(cr) != 'b993b2b3dd56c163db08d1c47d079b835bc5d0e52ac9f3cfb9df1510fa07ee17':
+        raise ValueError('C immutable contribution differs')
+    if sha(br) != '3da8e999983378dac77b6b7d6280c1c453dea231579e169be58437d04c1471c8':
+        raise ValueError('B immutable contribution differs')
+    c_rows = json.loads(gzip.decompress(cr))['rows']
+    b_rows = json.loads(gzip.decompress(br))
+    paired = document(CACHE / 'C_same_offers.json.gz')
+    decisions = []
+    for category in CATEGORIES:
+        native = [r for r in a_rows if r['key']['target'] == category and current(r)
+            and r['five_week_floor'] == 'PASS']
+        # All identical native current query/control populations. New role arms
+        # retain their source-specific comparison proofs, not just equal counts.
+        numeric = [r for r in native if r['key']['selection_policy'] == 'NUMERIC_MAE']
+        point = local_leader(numeric, 'MAE') if category != 'anytime_td' else None
+        mean_rows = [r for r in native if r['key']['output'] in ['mean', 'mean_objective_point']
+            and r['key']['selection_policy'] in ['EXPECTED_MEAN_MSE', 'NUMERIC_MAE']]
+        mean = local_leader(mean_rows, 'MSE') if category != 'anytime_td' else None
+        if mean and mean['policy'] == 'NUMERIC_MAE':
+            mean['qualification_note'] = 'Exact stored mean has separately retained weekly MSE_or_event_Brier on all7weeks; this extracts existing MSE evidence, not borrowing median/selection history.'
+        directions = [r for r in c_rows if r['owner'] == 'A' and r['category'] == category
+            and r['source_panel'] == 'A_FIXED_W1_W7_ARCHIVED_POINT_PANEL'
+            and r['policy'] == 'P1_UNROUNDED_POINT_VS_ACTUAL_LINE_ALL_ELIGIBLE'
+            and r['current_2026_scored_week_count'] == 7 and r['own_side_record']]
+        direction = None
+        if directions:
+            best = max(directions, key=lambda r: (r['own_side_record']['COMBINED']['rate'],
+                r['own_side_record']['COMBINED']['decided'], r['procedure_id']))
+            direction = {k: best[k] for k in ['row_id', 'procedure_id', 'product', 'role_scope',
+                'history', 'policy', 'source_panel', 'evidence_tier', 'tested_season_weeks',
+                'scored_cases', 'own_side_record', 'same_decided_constants', 'five_week_floor',
+                'operational_export']}
+            const = best['same_decided_constants']
+            d = best['own_side_record']['COMBINED']
+            direction['difference_from_strongest_constant_wins'] = d['wins'] - max(
+                const['AlwaysOver_wins'], const['AlwaysUnder_wins'])
+            direction['week_records'] = best['week_records']
+            direction['recommendation'] = 'Candidate for separate owner review under existing direction policy; no activation or untested side router.'
+            if direction['difference_from_strongest_constant_wins'] <= 0:
+                direction['recommendation'] = 'Retain incumbent direction; no demonstrated gain over strongest same-pool constant. Constant is a diagnostic, not an automatic live strategy.'
+        probability = []
+        for row in proper:
+            if row['key']['target'] == category and row['kind'] == 'probability_scores' and current(row):
+                result = summary(row)
+                result['score_contract'] = row['retained_metrics'].get('primary')
+                result['recommendation'] = 'Separate exact-line probability review; no numeric-to-probability inference or automatic EV/TopPicks change.'
+                probability.append(result)
+        event = None
+        if category == 'anytime_td':
+            events = [r for r in native if r['key']['selection_policy'] not in ['NUMERIC_MAE', 'EXPECTED_MEAN_MSE']]
+            # This target's primary retained field is event Brier, not count MAE.
+            scored = [r for r in events if isinstance(r.get('retained_aggregate_metrics', {}).get('Brier'), (float, int))]
+            if scored:
+                event = local_leader(scored, 'Brier')
+        bcat = [r for r in b_rows if r['category'] in ([category, 'fpts'] if category == 'chart_ppr' else [category])]
+        bmet = [r for r in bcat if r['minimum_week_floor_status'] == 'FIVE_WEEK_MINIMUM_MET']
+        five = {'A_native_views': len(native), 'A_proper_views': len(probability),
+            'B': {'views': len(bcat), 'MET': len(bmet),
+                'products': dict(collections.Counter(r['product_id'] for r in bmet)),
+                'known_source_role_code_limits': sorted(set(r['typed_contract_scope'] for r in bmet)),
+                'source_commit': B_COMMIT},
+            'C': {**floor_counts(c_rows, 'C', category), 'source_commit': C_COMMIT}}
+        status = 'CURRENT_SOURCE_MODEL_WRAPPER_AND_CONSUMER_ADMISSION_REQUIRED'
+        if category in ['pass_yd', 'pass_int', 'rush_rec_yd']:
+            status = 'NATIVE_LEAF_MEDIAN_CORE3_SEPARATE_NUMERIC_ROUTE;SOURCE_REPAIR_MERGED;FINAL_ROOT_HOSTED_CURRENT_INFERENCE_CAPTURE_AND_CONSUMER_PENDING'
+        if category == 'pass_td':
+            status = 'COUNT_A_EXPECTED_MEAN_EXACT_RESTORE_AND_REMAINING_TRACE_PASS;NEW_PASS_TD_SLOT_HOSTED_SOURCE_CURRENT_QUERY_DURABILITY_FEED_AND_CONSUMER_PENDING;HGB_DISPLAY_SEPARATE'
+        if category == 'chart_ppr':
+            status = 'EXACT_CHART_SOURCE_AND_TYPED_CURRENT_ADAPTER_REQUIRED;LEGACY_AND_PARTIAL_CHART_NOT_SUBSTITUTES;NO_ACTUAL_OFFER'
+        decisions.append({'category': category, 'requested_period': '2026 REG W1-8',
+            'actual_native_scored_weeks': list(range(1, 8)),
+            'point_recommendation': point, 'expected_mean_recommendation': mean,
+            'A_actual_line_point_policy_observed_leader': direction,
+            'probability_candidates_on_their_original_bound_A_panel': probability,
+            'anytime_event_candidate': event,
+            'cross_session_five_week_evidence': five,
+            'cross_session_winner': None,
+            'cross_session_null_reason': 'B/C numerical histories are eligible evidence but their native rows/outcomes/role masks differ. C same-offer actual-line masks have2weeks. No raw-minimum cross-session winner or inherited five-week selection claim.',
+            'operational_state': status,
+            'active_original_site': 'sleeper-matchup-classic-fg-identity-v1/reference_point; newest served baseline generated2026-11-05T23:32:08Z; MAE rows0/INCUMBENT_FALLBACK',
+            'probability_selection_recommendation': 'Preserve separately qualified incumbent probability/direction policy or honest unavailable state; review exact matched products independently.',
+            'top_picks_recommendation': 'Preserve incumbent input path. Sole original-site owner must replay actual proposed mapping and full implementation; changed complete policy has0verifiedtestweeks.',
+            'scientific_qualification': 'Unchanged separate original registrations; no grant from this record.'})
+    output = {'id': 'A-CLOSURE02-CATEGORY-PRODUCT-DECISIONS-v1',
+        'at_UTC': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'canonical_coordinator': 'C; this is A contribution, not a new consolidated evaluator.',
+        'adopted_document_sha256': '0204eed08e98388c406d0a8768bfc79241e3f8173faec18096e46d6b069fc815',
+        'protocol': 'ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1',
+        'A_source_commit': A_COMMIT, 'B_source_commit': B_COMMIT, 'C_source_commit': C_COMMIT,
+        'policy': 'Existing stat_point_mae_v2/independent expected-mean objective; exact5weekfloor and original provisional support/source/operation requirements. No new veto, router or waiting period.',
+        'records': decisions,
+        'new_fits_inference_forecasts_NFL_scores_or_completed_weeks': 0,
+        'distinct_work': 'Current cross-session published qualification bytes restored; exact-product eligibility and ready source repair/current site/readback integrated; prior scores reused, not new NFL outcomes.',
+        'scope_limits': ['A-only native recommendations are not universal cross-session superiority or website activation.',
+            'A1carry gain is small and reverses in2025; A2/A3losses remain. A exact-line probability shrinkage and poor neutral comparisons remain independently scored.',
+            'Attribution and current source/model bindings remain exact, not a generic Leaf/CDF alias.',
+            'Historical and W8panels remain separate; no W1-8completion inferred from W1-7qualification.',
+            'No new primary TopPicks, probability, EV, six-leg, anytimeTD or legacy-to-chart activation.'],
+        'CPU_seconds': time.process_time() - cpu, 'wall_seconds': time.monotonic() - start}
+    (OUT / 'CATEGORY_PRODUCT_DECISIONS_V1.json').write_text(json.dumps(output, indent=2) + '\n')
+    # Reuse C's existing actual same-mask results, explicitly under its binding.
+    matched = {'id': 'A-CLOSURE02-COMMON-MASK-DECISION-CONTRIBUTION-v1',
+        'source_repository': 'NickNicky19/NFL-forecasting-NGS-C', 'source_commit': C_COMMIT,
+        'source_path': 'reports/abc-championship/shared-intake-v3/SAME_OFFER_COMPARISONS.json.gz',
+        'source_sha256': 'c7923d190a65194305e4920a91972ea9e45f2e49aef8e25b2c42b20997ea0566',
+        'actual_weeks': [2, 3], 'five_week_floor': 'NOT_MET_FOR_EXACT_ACTUAL_LINE_POLICIES',
+        'panels': [], 'no_new_private_rows_or_scores': True}
+    for panel in paired:
+        # Verify counts independently by integer arithmetic, not re-invoking C.
+        for row in panel['rows']:
+            over, under, combined = [row[k] for k in ['OVER', 'UNDER', 'COMBINED']]
+            for key in ['wins', 'losses', 'decided']:
+                if (over[key] or 0) + (under[key] or 0) != (combined[key] or 0):
+                    raise ValueError('C retained same-mask side arithmetic differs')
+            if combined['decided'] and not math.isclose(combined['rate'], combined['wins'] / combined['decided']):
+                raise ValueError('C retained same-mask rate differs')
+        best = max(panel['rows'], key=lambda r: r['COMBINED']['rate'] if r['COMBINED']['rate'] is not None else -1)
+        same = [r for r in panel['rows'] if r['COMBINED']['rate'] == best['COMBINED']['rate']]
+        matched['panels'].append({'category': panel['category'], 'mask_id': panel['mask_id'],
+            'decided': panel['decided'], 'sessions': panel['sessions'],
+            'reported_temporal_parity': panel['temporal_parity'],
+            'raw_same_mask_leaders': [{k: r.get(k) for k in ['session', 'procedure_id', 'product',
+                'history', 'OVER', 'UNDER', 'COMBINED', 'eligible', 'unavailable', 'fallback_issued', 'uncertainty']} for r in same],
+            'status': 'REUSED_C_ADMITTED_SAME_OFFER_DIAGNOSTIC;NO_NEW_GLOBAL_OR_FIVE_WEEK_LEADER'})
+    (OUT / 'C_BOUND_COMMON_MASKS_REUSED_V1.json').write_text(json.dumps(matched, indent=2) + '\n')
+    buffer = io.StringIO()
+    fields = ['category', 'point_method', 'point_output', 'MAE', 'point_cases', 'mean_method', 'MSE',
+        'direction_method', 'Over_W', 'Over_L', 'Under_W', 'Under_L', 'combined_W', 'combined_N',
+        'constant_delta_W', 'current_native_weeks', 'operational_state', 'actual_live']
+    writer = csv.DictWriter(buffer, fieldnames=fields)
+    writer.writeheader()
+    for row in decisions:
+        point = row['point_recommendation'] or {}
+        mean = row['expected_mean_recommendation'] or {}
+        direction = row['A_actual_line_point_policy_observed_leader'] or {}
+        sides = direction.get('own_side_record', {})
+        writer.writerow({'category': row['category'], 'point_method': point.get('method'),
+            'point_output': point.get('output'), 'MAE': point.get('metrics', {}).get('MAE'),
+            'point_cases': point.get('metrics', {}).get('scored'), 'mean_method': mean.get('method'),
+            'MSE': mean.get('metrics', {}).get('MSE'), 'direction_method': direction.get('procedure_id'),
+            'Over_W': sides.get('OVER', {}).get('wins'), 'Over_L': sides.get('OVER', {}).get('losses'),
+            'Under_W': sides.get('UNDER', {}).get('wins'), 'Under_L': sides.get('UNDER', {}).get('losses'),
+            'combined_W': sides.get('COMBINED', {}).get('wins'), 'combined_N': sides.get('COMBINED', {}).get('decided'),
+            'constant_delta_W': direction.get('difference_from_strongest_constant_wins'),
+            'current_native_weeks': '2026W1-7', 'operational_state': row['operational_state'],
+            'actual_live': row['active_original_site']})
+    (OUT / 'CATEGORY_PRODUCT_DECISIONS_V1.csv').write_text(buffer.getvalue())
+    print(json.dumps({'state': 'A_PRODUCT_DECISION_CONTRIBUTION_CREATED_NOT_GLOBAL_CHAMPIONSHIP',
+        'categories': len(decisions), 'A_reused_views': len(a_rows) + len(proper),
+        'B_published_qualification_views': len(b_rows), 'C_published_qualification_views': len(c_rows),
+        'C_same_mask_panels_reused': len(paired), 'new_NFL_scores': 0,
+        'CPU_seconds': output['CPU_seconds']}))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,233 @@
+{
+  "id": "A-CLOSURE02-EXISTING-FULL-BOARD-INPUTS-v1",
+  "at_UTC": "2026-11-05T23:54:17.598623+00:00",
+  "state": "EXISTING_BYTES_AUTHENTICATED_AND_CENSUSED_NO_NEW_EXPORT_OR_REPLAY",
+  "archive": {
+    "bytes": 11137356,
+    "sha256": "80ba907a24b4f9cc10b66f48e4408736ae9bc6d182a4be8bdf49fd9bf4113036"
+  },
+  "members": [
+    {
+      "member": "PREDICTIONS_AND_ACTUALS.csv",
+      "bytes": 148016891,
+      "rows": 204431,
+      "sha256": "e97f57c5f75b510b01d20a91daac62c9d8683ed78fdae261915997aee96da0c2",
+      "actual_rows": 204431,
+      "columns": [
+        "target",
+        "season",
+        "week",
+        "game_id",
+        "player_id",
+        "team",
+        "opponent",
+        "cutoff_utc",
+        "kickoff_utc",
+        "position",
+        "horizon_id",
+        "actual",
+        "participation_state",
+        "fallback",
+        "method",
+        "product",
+        "prediction",
+        "output_procedure_version",
+        "source_forecast_sha256",
+        "source_forecast_member_sha256",
+        "source_information_policy",
+        "source_issue_time_UTC",
+        "outcome_state",
+        "label_reason",
+        "captured_participation_state",
+        "procedure",
+        "procedure_version",
+        "shortlist_group",
+        "evidence_tier",
+        "source_policy_id",
+        "outcome_version",
+        "prediction_status"
+      ],
+      "category_rows": {
+        "anytime_td": 21335,
+        "pass_att": 7180,
+        "pass_cmp": 5744,
+        "pass_int": 5744,
+        "pass_td": 5744,
+        "pass_yd": 5026,
+        "rec": 34136,
+        "rec_yd": 29869,
+        "rush_att": 11196,
+        "rush_rec_yd": 29869,
+        "rush_yd": 8708,
+        "chart_ppr": 39880
+      },
+      "season_week_rows": [
+        {
+          "season": 2026,
+          "week": 1,
+          "rows": 32403
+        },
+        {
+          "season": 2026,
+          "week": 2,
+          "rows": 29618
+        },
+        {
+          "season": 2026,
+          "week": 3,
+          "rows": 29844
+        },
+        {
+          "season": 2026,
+          "week": 4,
+          "rows": 30188
+        },
+        {
+          "season": 2026,
+          "week": 5,
+          "rows": 28474
+        },
+        {
+          "season": 2026,
+          "week": 6,
+          "rows": 27074
+        },
+        {
+          "season": 2026,
+          "week": 7,
+          "rows": 26830
+        }
+      ],
+      "unique_opportunity_keys": 28131,
+      "key": "target/season/week/game/player, plus exact saved line when present; not a deduplicated selector eligibility decision"
+    },
+    {
+      "member": "PREDICTIONS_ACTUALS_LINES_AND_DIRECTIONS.csv",
+      "bytes": 236221977,
+      "rows": 258748,
+      "sha256": "dd924fc204cbc7e52a3154f9183f6b4d3b0d6770f86776025fe5bc0965a08517",
+      "actual_rows": 258748,
+      "columns": [
+        "target",
+        "season",
+        "week",
+        "game_id",
+        "player_id",
+        "team",
+        "opponent",
+        "cutoff_utc",
+        "kickoff_utc",
+        "position",
+        "horizon_id",
+        "actual",
+        "participation_state",
+        "fallback",
+        "method",
+        "product",
+        "prediction",
+        "output_procedure_version",
+        "source_forecast_sha256",
+        "source_forecast_member_sha256",
+        "source_information_policy",
+        "source_issue_time_UTC",
+        "outcome_state",
+        "label_reason",
+        "captured_participation_state",
+        "procedure",
+        "procedure_version",
+        "shortlist_group",
+        "evidence_tier",
+        "source_policy_id",
+        "outcome_version",
+        "prediction_status",
+        "line",
+        "evidence_tier_offer",
+        "primary_offer_policy",
+        "statistical_contract",
+        "source_stream",
+        "book_id",
+        "source_sha256",
+        "source_quote_time",
+        "source_collection_naive",
+        "quote_timing_status",
+        "jurisdiction",
+        "kickoff_utc_offer",
+        "opportunity_key",
+        "selected_side",
+        "statistical_result",
+        "threshold_outcome",
+        "decision_policy",
+        "decision_evidence"
+      ],
+      "category_rows": {
+        "pass_att": 7180,
+        "pass_cmp": 5744,
+        "pass_int": 5744,
+        "pass_td": 5744,
+        "pass_yd": 5026,
+        "rec": 39880,
+        "rec_yd": 34895,
+        "rush_att": 44865,
+        "rush_rec_yd": 34895,
+        "rush_yd": 34895,
+        "chart_ppr": 39880
+      },
+      "season_week_rows": [
+        {
+          "season": 2026,
+          "week": 1,
+          "rows": 41019
+        },
+        {
+          "season": 2026,
+          "week": 2,
+          "rows": 37558
+        },
+        {
+          "season": 2026,
+          "week": 3,
+          "rows": 37834
+        },
+        {
+          "season": 2026,
+          "week": 4,
+          "rows": 38202
+        },
+        {
+          "season": 2026,
+          "week": 5,
+          "rows": 36024
+        },
+        {
+          "season": 2026,
+          "week": 6,
+          "rows": 34173
+        },
+        {
+          "season": 2026,
+          "week": 7,
+          "rows": 33938
+        }
+      ],
+      "unique_opportunity_keys": 33500,
+      "key": "target/season/week/game/player, plus exact saved line when present; not a deduplicated selector eligibility decision"
+    }
+  ],
+  "source_result_sha256": "5e30c74d98b07acc76cd54a7731570f4f9e4b5843c970a69ae30996cea00fe77",
+  "retrieval": "Existing A approved owner-controlled archive restoration; logical object matched12-readable-private-scorecard-v1-20261031/READABLE_SCORECARD.zip. Physical private locator redacted.",
+  "transfer": "PREPARED_EXISTING_OBJECT; no receiver restoration or usable cross-owner transport acknowledged.",
+  "replay_owner": "Retained original-site owner; C remains common evaluation coordinator.",
+  "new_fits_inference_scoring_selection_replay": 0,
+  "new_private_objects": 0,
+  "private_row_publication": false,
+  "limits": [
+    "2026 W1-7 reconstructions, including unknowns and full supported candidate board; not original website recommendations.",
+    "Quote-time and venue settlement remain unqualified; original as-issued timing cannot be reconstructed by this census.",
+    "Exact proposed category mapping, real site eligibility/line precedence/best-per-player/normalization/side capacities/ties/fallback/expiry and incumbent board must be supplied by the single replay owner.",
+    "Seven-week component forecasts do not qualify a changed cross-category Top Picks policy; the exact owner replay is still unexecuted here.",
+    "No assumption that another session can access this local store or a public hash can restore its private rows."
+  ],
+  "CPU_seconds": 31.716966472,
+  "wall_seconds": 31.80646524900021,
+  "RSS_bytes": 151154688
+}

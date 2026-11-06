@@ -1,0 +1,2010 @@
+{
+  "id": "A-W8-METRIC-PRESENCE-QUALIFICATION-v1",
+  "at_UTC": "2026-11-06T01:00:39.080573+00:00",
+  "state": "APPENDED_SOURCE_PRESENCE_QUALIFICATION_FIXED_ORIGINAL_DECISIONS",
+  "audit_sha256": "720b464f8077d3a483a4a73245690071866b7757fb6d20763c2ea8d931061795",
+  "source_grade_archive": {
+    "bytes": 714217,
+    "sha256": "be9c13b0f42f5e164b29d00cce69fbe1c30acce703d1b33a8103a057888ac2c1"
+  },
+  "retained_source_member": {
+    "bytes": 675031,
+    "sha256": "8ff4a09166bac7127ca292b36cebd564daa91abd0b8fb552937620406fe94c9b"
+  },
+  "retained_grade_member": {
+    "bytes": 612960,
+    "sha256": "6e51900f9efbb1181cd7b86dc801058a106f152b7d02dc16170128f7f7d34397"
+  },
+  "outcome_asof_UTC": "2026-11-03T23:31:26.609428+00:00",
+  "NFL_week": 8,
+  "season": 2026,
+  "final_games": 14,
+  "selected_rows_inspected": 373,
+  "frozen_populations": [
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "rows": 325,
+      "frozen_identity_line_side_sha256": "106de8792ead6755c51d5d3eb44785a7863859fbb3e58346c6539f2489c1a880"
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "rows": 24,
+      "frozen_identity_line_side_sha256": "0936b6b20c5d1277e05617c1bd69f1f4016e0fc8173c3836270da21fc89f35a8"
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "rows": 24,
+      "frozen_identity_line_side_sha256": "49d78ccf97994ac7a18636be490ab1988c8e0dacfe7fa9d3f4995c987417240a"
+    }
+  ],
+  "completeness_contract": "NOT_VERIFIED_FOR_ABSENT_METRICS; participation alone does not establish a missing field is zero.",
+  "source_presence_restoration": "Actual retained direct Sleeper source response, before website compaction; member hash/readback verified.",
+  "transitions": [
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "from": "LOSS",
+      "to": "LOSS",
+      "rows": 131
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "from": "LOSS",
+      "to": "MISSING_ACTUAL",
+      "rows": 27
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "from": "UNRESOLVED",
+      "to": "UNRESOLVED",
+      "rows": 9
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "from": "WIN",
+      "to": "MISSING_ACTUAL",
+      "rows": 10
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "from": "WIN",
+      "to": "WIN",
+      "rows": 148
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "LOSS",
+      "to": "LOSS",
+      "rows": 13
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "LOSS",
+      "to": "MISSING_ACTUAL",
+      "rows": 1
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "WIN",
+      "to": "WIN",
+      "rows": 10
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "LOSS",
+      "to": "LOSS",
+      "rows": 10
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "LOSS",
+      "to": "MISSING_ACTUAL",
+      "rows": 2
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "WIN",
+      "to": "MISSING_ACTUAL",
+      "rows": 1
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "from": "WIN",
+      "to": "WIN",
+      "rows": 11
+    }
+  ],
+  "tables": [
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "pass_att",
+      "games": 12,
+      "player_games": 19,
+      "sides": {
+        "over": {
+          "selected": 7,
+          "original_states": {
+            "LOSS": 5,
+            "WIN": 2
+          },
+          "wins": 2,
+          "losses": 5,
+          "decided": 7,
+          "hit_rate": 0.2857142857142857,
+          "states": {
+            "LOSS": 5,
+            "WIN": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 7
+          }
+        },
+        "under": {
+          "selected": 12,
+          "original_states": {
+            "LOSS": 6,
+            "WIN": 6
+          },
+          "wins": 6,
+          "losses": 6,
+          "decided": 12,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 6,
+            "WIN": 6
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 12
+          }
+        },
+        "combined": {
+          "selected": 19,
+          "original_states": {
+            "LOSS": 11,
+            "WIN": 8
+          },
+          "wins": 8,
+          "losses": 11,
+          "decided": 19,
+          "hit_rate": 0.42105263157894735,
+          "states": {
+            "LOSS": 11,
+            "WIN": 8
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 19
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "pass_cmp",
+      "games": 12,
+      "player_games": 17,
+      "sides": {
+        "over": {
+          "selected": 7,
+          "original_states": {
+            "LOSS": 4,
+            "WIN": 3
+          },
+          "wins": 3,
+          "losses": 3,
+          "decided": 6,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 3,
+            "WIN": 3,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 6,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 10,
+          "original_states": {
+            "WIN": 6,
+            "LOSS": 4
+          },
+          "wins": 6,
+          "losses": 4,
+          "decided": 10,
+          "hit_rate": 0.6,
+          "states": {
+            "WIN": 6,
+            "LOSS": 4
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 10
+          }
+        },
+        "combined": {
+          "selected": 17,
+          "original_states": {
+            "LOSS": 8,
+            "WIN": 9
+          },
+          "wins": 9,
+          "losses": 7,
+          "decided": 16,
+          "hit_rate": 0.5625,
+          "states": {
+            "LOSS": 7,
+            "WIN": 9,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 16,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "pass_int",
+      "games": 9,
+      "player_games": 13,
+      "sides": {
+        "over": {
+          "selected": 12,
+          "original_states": {
+            "LOSS": 5,
+            "WIN": 7
+          },
+          "wins": 7,
+          "losses": 0,
+          "decided": 7,
+          "hit_rate": 1.0,
+          "states": {
+            "MISSING_ACTUAL": 5,
+            "WIN": 7
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 5,
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 7
+          }
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 13,
+          "original_states": {
+            "LOSS": 6,
+            "WIN": 7
+          },
+          "wins": 7,
+          "losses": 1,
+          "decided": 8,
+          "hit_rate": 0.875,
+          "states": {
+            "MISSING_ACTUAL": 5,
+            "WIN": 7,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 5,
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 8
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "pass_td",
+      "games": 14,
+      "player_games": 23,
+      "sides": {
+        "over": {
+          "selected": 12,
+          "original_states": {
+            "LOSS": 6,
+            "WIN": 6
+          },
+          "wins": 6,
+          "losses": 1,
+          "decided": 7,
+          "hit_rate": 0.8571428571428571,
+          "states": {
+            "LOSS": 1,
+            "WIN": 6,
+            "MISSING_ACTUAL": 5
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 7,
+            "ABSENT_REQUIRED_COMPONENT": 5
+          }
+        },
+        "under": {
+          "selected": 11,
+          "original_states": {
+            "LOSS": 5,
+            "WIN": 6
+          },
+          "wins": 4,
+          "losses": 5,
+          "decided": 9,
+          "hit_rate": 0.4444444444444444,
+          "states": {
+            "LOSS": 5,
+            "WIN": 4,
+            "MISSING_ACTUAL": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 9,
+            "ABSENT_REQUIRED_COMPONENT": 2
+          }
+        },
+        "combined": {
+          "selected": 23,
+          "original_states": {
+            "LOSS": 11,
+            "WIN": 12
+          },
+          "wins": 10,
+          "losses": 6,
+          "decided": 16,
+          "hit_rate": 0.625,
+          "states": {
+            "LOSS": 6,
+            "WIN": 10,
+            "MISSING_ACTUAL": 7
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 16,
+            "ABSENT_REQUIRED_COMPONENT": 7
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "pass_yd",
+      "games": 13,
+      "player_games": 23,
+      "sides": {
+        "over": {
+          "selected": 12,
+          "original_states": {
+            "WIN": 5,
+            "LOSS": 7
+          },
+          "wins": 5,
+          "losses": 6,
+          "decided": 11,
+          "hit_rate": 0.45454545454545453,
+          "states": {
+            "WIN": 5,
+            "LOSS": 6,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 11,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 11,
+          "original_states": {
+            "WIN": 5,
+            "LOSS": 6
+          },
+          "wins": 5,
+          "losses": 6,
+          "decided": 11,
+          "hit_rate": 0.45454545454545453,
+          "states": {
+            "WIN": 5,
+            "LOSS": 6
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 11
+          }
+        },
+        "combined": {
+          "selected": 23,
+          "original_states": {
+            "WIN": 10,
+            "LOSS": 13
+          },
+          "wins": 10,
+          "losses": 12,
+          "decided": 22,
+          "hit_rate": 0.45454545454545453,
+          "states": {
+            "WIN": 10,
+            "LOSS": 12,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 22,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "rec",
+      "games": 14,
+      "player_games": 80,
+      "sides": {
+        "over": {
+          "selected": 30,
+          "original_states": {
+            "WIN": 16,
+            "LOSS": 13,
+            "UNRESOLVED": 1
+          },
+          "wins": 16,
+          "losses": 10,
+          "decided": 26,
+          "hit_rate": 0.6153846153846154,
+          "states": {
+            "WIN": 16,
+            "LOSS": 10,
+            "MISSING_ACTUAL": 3,
+            "UNRESOLVED": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 26,
+            "ABSENT_REQUIRED_COMPONENT": 3,
+            "MISSING_SOURCE_ROW": 1
+          }
+        },
+        "under": {
+          "selected": 50,
+          "original_states": {
+            "WIN": 26,
+            "LOSS": 22,
+            "UNRESOLVED": 2
+          },
+          "wins": 21,
+          "losses": 22,
+          "decided": 43,
+          "hit_rate": 0.4883720930232558,
+          "states": {
+            "WIN": 21,
+            "LOSS": 22,
+            "UNRESOLVED": 2,
+            "MISSING_ACTUAL": 5
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 43,
+            "MISSING_SOURCE_ROW": 1,
+            "ABSENT_REQUIRED_COMPONENT": 6
+          }
+        },
+        "combined": {
+          "selected": 80,
+          "original_states": {
+            "WIN": 42,
+            "LOSS": 35,
+            "UNRESOLVED": 3
+          },
+          "wins": 37,
+          "losses": 32,
+          "decided": 69,
+          "hit_rate": 0.5362318840579711,
+          "states": {
+            "WIN": 37,
+            "LOSS": 32,
+            "MISSING_ACTUAL": 8,
+            "UNRESOLVED": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 69,
+            "ABSENT_REQUIRED_COMPONENT": 9,
+            "MISSING_SOURCE_ROW": 2
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "rec_yd",
+      "games": 14,
+      "player_games": 70,
+      "sides": {
+        "over": {
+          "selected": 53,
+          "original_states": {
+            "WIN": 27,
+            "LOSS": 23,
+            "UNRESOLVED": 3
+          },
+          "wins": 27,
+          "losses": 15,
+          "decided": 42,
+          "hit_rate": 0.6428571428571429,
+          "states": {
+            "WIN": 27,
+            "LOSS": 15,
+            "MISSING_ACTUAL": 8,
+            "UNRESOLVED": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 42,
+            "ABSENT_REQUIRED_COMPONENT": 8,
+            "MISSING_SOURCE_ROW": 3
+          }
+        },
+        "under": {
+          "selected": 17,
+          "original_states": {
+            "WIN": 11,
+            "LOSS": 5,
+            "UNRESOLVED": 1
+          },
+          "wins": 10,
+          "losses": 5,
+          "decided": 15,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "WIN": 10,
+            "LOSS": 5,
+            "UNRESOLVED": 1,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 15,
+            "MISSING_SOURCE_ROW": 1,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "combined": {
+          "selected": 70,
+          "original_states": {
+            "WIN": 38,
+            "LOSS": 28,
+            "UNRESOLVED": 4
+          },
+          "wins": 37,
+          "losses": 20,
+          "decided": 57,
+          "hit_rate": 0.6491228070175439,
+          "states": {
+            "WIN": 37,
+            "LOSS": 20,
+            "MISSING_ACTUAL": 9,
+            "UNRESOLVED": 4
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 57,
+            "ABSENT_REQUIRED_COMPONENT": 9,
+            "MISSING_SOURCE_ROW": 4
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "rush_att",
+      "games": 12,
+      "player_games": 24,
+      "sides": {
+        "over": {
+          "selected": 11,
+          "original_states": {
+            "WIN": 4,
+            "LOSS": 6,
+            "UNRESOLVED": 1
+          },
+          "wins": 4,
+          "losses": 6,
+          "decided": 10,
+          "hit_rate": 0.4,
+          "states": {
+            "WIN": 4,
+            "LOSS": 6,
+            "UNRESOLVED": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 10,
+            "MISSING_SOURCE_ROW": 1
+          }
+        },
+        "under": {
+          "selected": 13,
+          "original_states": {
+            "LOSS": 10,
+            "WIN": 3
+          },
+          "wins": 3,
+          "losses": 10,
+          "decided": 13,
+          "hit_rate": 0.23076923076923078,
+          "states": {
+            "LOSS": 10,
+            "WIN": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 13
+          }
+        },
+        "combined": {
+          "selected": 24,
+          "original_states": {
+            "LOSS": 16,
+            "WIN": 7,
+            "UNRESOLVED": 1
+          },
+          "wins": 7,
+          "losses": 16,
+          "decided": 23,
+          "hit_rate": 0.30434782608695654,
+          "states": {
+            "LOSS": 16,
+            "WIN": 7,
+            "UNRESOLVED": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 23,
+            "MISSING_SOURCE_ROW": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "rush_rec_yd",
+      "games": 11,
+      "player_games": 18,
+      "sides": {
+        "over": {
+          "selected": 10,
+          "original_states": {
+            "LOSS": 6,
+            "WIN": 4
+          },
+          "wins": 3,
+          "losses": 6,
+          "decided": 9,
+          "hit_rate": 0.3333333333333333,
+          "states": {
+            "LOSS": 6,
+            "WIN": 3,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 9,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 8,
+          "original_states": {
+            "LOSS": 5,
+            "WIN": 3
+          },
+          "wins": 2,
+          "losses": 4,
+          "decided": 6,
+          "hit_rate": 0.3333333333333333,
+          "states": {
+            "LOSS": 4,
+            "MISSING_ACTUAL": 2,
+            "WIN": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 6,
+            "ABSENT_REQUIRED_COMPONENT": 2
+          }
+        },
+        "combined": {
+          "selected": 18,
+          "original_states": {
+            "LOSS": 11,
+            "WIN": 7
+          },
+          "wins": 5,
+          "losses": 10,
+          "decided": 15,
+          "hit_rate": 0.3333333333333333,
+          "states": {
+            "LOSS": 10,
+            "WIN": 5,
+            "MISSING_ACTUAL": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 15,
+            "ABSENT_REQUIRED_COMPONENT": 3
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "rush_yd",
+      "games": 13,
+      "player_games": 38,
+      "sides": {
+        "over": {
+          "selected": 29,
+          "original_states": {
+            "WIN": 13,
+            "LOSS": 15,
+            "UNRESOLVED": 1
+          },
+          "wins": 13,
+          "losses": 12,
+          "decided": 25,
+          "hit_rate": 0.52,
+          "states": {
+            "WIN": 13,
+            "LOSS": 12,
+            "MISSING_ACTUAL": 3,
+            "UNRESOLVED": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 25,
+            "ABSENT_REQUIRED_COMPONENT": 3,
+            "MISSING_SOURCE_ROW": 1
+          }
+        },
+        "under": {
+          "selected": 9,
+          "original_states": {
+            "LOSS": 4,
+            "WIN": 5
+          },
+          "wins": 5,
+          "losses": 4,
+          "decided": 9,
+          "hit_rate": 0.5555555555555556,
+          "states": {
+            "LOSS": 4,
+            "WIN": 5
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 9
+          }
+        },
+        "combined": {
+          "selected": 38,
+          "original_states": {
+            "LOSS": 19,
+            "WIN": 18,
+            "UNRESOLVED": 1
+          },
+          "wins": 18,
+          "losses": 16,
+          "decided": 34,
+          "hit_rate": 0.5294117647058824,
+          "states": {
+            "LOSS": 16,
+            "WIN": 18,
+            "MISSING_ACTUAL": 3,
+            "UNRESOLVED": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 34,
+            "ABSENT_REQUIRED_COMPONENT": 3,
+            "MISSING_SOURCE_ROW": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ALL_RECORDED_LEANS",
+      "category": "ALL_NUMERIC",
+      "games": 14,
+      "player_games": 151,
+      "sides": {
+        "over": {
+          "selected": 183,
+          "original_states": {
+            "WIN": 87,
+            "LOSS": 90,
+            "UNRESOLVED": 6
+          },
+          "wins": 86,
+          "losses": 64,
+          "decided": 150,
+          "hit_rate": 0.5733333333333334,
+          "states": {
+            "WIN": 86,
+            "LOSS": 64,
+            "MISSING_ACTUAL": 27,
+            "UNRESOLVED": 6
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 150,
+            "ABSENT_REQUIRED_COMPONENT": 27,
+            "MISSING_SOURCE_ROW": 6
+          }
+        },
+        "under": {
+          "selected": 142,
+          "original_states": {
+            "WIN": 71,
+            "LOSS": 68,
+            "UNRESOLVED": 3
+          },
+          "wins": 62,
+          "losses": 67,
+          "decided": 129,
+          "hit_rate": 0.4806201550387597,
+          "states": {
+            "WIN": 62,
+            "LOSS": 67,
+            "MISSING_ACTUAL": 10,
+            "UNRESOLVED": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 129,
+            "ABSENT_REQUIRED_COMPONENT": 11,
+            "MISSING_SOURCE_ROW": 2
+          }
+        },
+        "combined": {
+          "selected": 325,
+          "original_states": {
+            "WIN": 158,
+            "LOSS": 158,
+            "UNRESOLVED": 9
+          },
+          "wins": 148,
+          "losses": 131,
+          "decided": 279,
+          "hit_rate": 0.5304659498207885,
+          "states": {
+            "WIN": 148,
+            "LOSS": 131,
+            "MISSING_ACTUAL": 37,
+            "UNRESOLVED": 9
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 279,
+            "ABSENT_REQUIRED_COMPONENT": 38,
+            "MISSING_SOURCE_ROW": 8
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_att",
+      "games": 4,
+      "player_games": 5,
+      "sides": {
+        "over": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "under": {
+          "selected": 4,
+          "original_states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "wins": 3,
+          "losses": 1,
+          "decided": 4,
+          "hit_rate": 0.75,
+          "states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        },
+        "combined": {
+          "selected": 5,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 3
+          },
+          "wins": 3,
+          "losses": 2,
+          "decided": 5,
+          "hit_rate": 0.6,
+          "states": {
+            "LOSS": 2,
+            "WIN": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 5
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_cmp",
+      "games": 1,
+      "player_games": 2,
+      "sides": {
+        "over": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 0,
+          "decided": 1,
+          "hit_rate": 1.0,
+          "states": {
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_td",
+      "games": 2,
+      "player_games": 2,
+      "sides": {
+        "over": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 2
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "MISSING_ACTUAL": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1,
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_yd",
+      "games": 4,
+      "player_games": 4,
+      "sides": {
+        "over": {
+          "selected": 2,
+          "original_states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "under": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 2
+          },
+          "wins": 0,
+          "losses": 2,
+          "decided": 2,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "combined": {
+          "selected": 4,
+          "original_states": {
+            "WIN": 1,
+            "LOSS": 3
+          },
+          "wins": 1,
+          "losses": 3,
+          "decided": 4,
+          "hit_rate": 0.25,
+          "states": {
+            "WIN": 1,
+            "LOSS": 3
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rec",
+      "games": 3,
+      "player_games": 3,
+      "sides": {
+        "over": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 2
+          },
+          "wins": 0,
+          "losses": 2,
+          "decided": 2,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 0,
+          "decided": 1,
+          "hit_rate": 1.0,
+          "states": {
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 3,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 2,
+          "decided": 3,
+          "hit_rate": 0.3333333333333333,
+          "states": {
+            "LOSS": 2,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 3
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rec_yd",
+      "games": 3,
+      "player_games": 3,
+      "sides": {
+        "over": {
+          "selected": 3,
+          "original_states": {
+            "WIN": 2,
+            "LOSS": 1
+          },
+          "wins": 2,
+          "losses": 1,
+          "decided": 3,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "WIN": 2,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 3
+          }
+        },
+        "under": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "combined": {
+          "selected": 3,
+          "original_states": {
+            "WIN": 2,
+            "LOSS": 1
+          },
+          "wins": 2,
+          "losses": 1,
+          "decided": 3,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "WIN": 2,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 3
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rush_att",
+      "games": 1,
+      "player_games": 1,
+      "sides": {
+        "over": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rush_yd",
+      "games": 4,
+      "player_games": 4,
+      "sides": {
+        "over": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "under": {
+          "selected": 2,
+          "original_states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 1,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "combined": {
+          "selected": 4,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 2
+          },
+          "wins": 2,
+          "losses": 2,
+          "decided": 4,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 2,
+            "WIN": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        }
+      }
+    },
+    {
+      "group": "ORIGINAL_ARCHIVE_PRE_FIRST_KICKOFF",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "ALL_NUMERIC",
+      "games": 12,
+      "player_games": 23,
+      "sides": {
+        "over": {
+          "selected": 12,
+          "original_states": {
+            "LOSS": 8,
+            "WIN": 4
+          },
+          "wins": 4,
+          "losses": 7,
+          "decided": 11,
+          "hit_rate": 0.36363636363636365,
+          "states": {
+            "LOSS": 7,
+            "WIN": 4,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 11,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 12,
+          "original_states": {
+            "LOSS": 6,
+            "WIN": 6
+          },
+          "wins": 6,
+          "losses": 6,
+          "decided": 12,
+          "hit_rate": 0.5,
+          "states": {
+            "LOSS": 6,
+            "WIN": 6
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 12
+          }
+        },
+        "combined": {
+          "selected": 24,
+          "original_states": {
+            "LOSS": 14,
+            "WIN": 10
+          },
+          "wins": 10,
+          "losses": 13,
+          "decided": 23,
+          "hit_rate": 0.43478260869565216,
+          "states": {
+            "LOSS": 13,
+            "WIN": 10,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 23,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_att",
+      "games": 3,
+      "player_games": 3,
+      "sides": {
+        "over": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "under": {
+          "selected": 2,
+          "original_states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "combined": {
+          "selected": 3,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 2,
+          "decided": 3,
+          "hit_rate": 0.3333333333333333,
+          "states": {
+            "LOSS": 2,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 3
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_td",
+      "games": 4,
+      "player_games": 4,
+      "sides": {
+        "over": {
+          "selected": 4,
+          "original_states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "wins": 3,
+          "losses": 1,
+          "decided": 4,
+          "hit_rate": 0.75,
+          "states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        },
+        "under": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "combined": {
+          "selected": 4,
+          "original_states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "wins": 3,
+          "losses": 1,
+          "decided": 4,
+          "hit_rate": 0.75,
+          "states": {
+            "WIN": 3,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "pass_yd",
+      "games": 1,
+      "player_games": 1,
+      "sides": {
+        "over": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "under": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "combined": {
+          "selected": 1,
+          "original_states": {
+            "LOSS": 1
+          },
+          "wins": 0,
+          "losses": 1,
+          "decided": 1,
+          "hit_rate": 0.0,
+          "states": {
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rec",
+      "games": 4,
+      "player_games": 4,
+      "sides": {
+        "over": {
+          "selected": 3,
+          "original_states": {
+            "WIN": 1,
+            "LOSS": 2
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "WIN": 1,
+            "MISSING_ACTUAL": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 0,
+          "decided": 1,
+          "hit_rate": 1.0,
+          "states": {
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 1
+          }
+        },
+        "combined": {
+          "selected": 4,
+          "original_states": {
+            "WIN": 2,
+            "LOSS": 2
+          },
+          "wins": 2,
+          "losses": 1,
+          "decided": 3,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "WIN": 2,
+            "MISSING_ACTUAL": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 3,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rec_yd",
+      "games": 6,
+      "player_games": 6,
+      "sides": {
+        "over": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "under": {
+          "selected": 6,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 4
+          },
+          "wins": 4,
+          "losses": 2,
+          "decided": 6,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "LOSS": 2,
+            "WIN": 4
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 6
+          }
+        },
+        "combined": {
+          "selected": 6,
+          "original_states": {
+            "LOSS": 2,
+            "WIN": 4
+          },
+          "wins": 4,
+          "losses": 2,
+          "decided": 6,
+          "hit_rate": 0.6666666666666666,
+          "states": {
+            "LOSS": 2,
+            "WIN": 4
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 6
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rush_rec_yd",
+      "games": 1,
+      "player_games": 1,
+      "sides": {
+        "over": {
+          "selected": 0,
+          "original_states": {},
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {},
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {}
+        },
+        "under": {
+          "selected": 1,
+          "original_states": {
+            "WIN": 1
+          },
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "combined": {
+          "selected": 1,
+          "original_states": {
+            "WIN": 1
+          },
+          "wins": 0,
+          "losses": 0,
+          "decided": 0,
+          "hit_rate": null,
+          "states": {
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "rush_yd",
+      "games": 5,
+      "player_games": 5,
+      "sides": {
+        "over": {
+          "selected": 3,
+          "original_states": {
+            "LOSS": 3
+          },
+          "wins": 0,
+          "losses": 2,
+          "decided": 2,
+          "hit_rate": 0.0,
+          "states": {
+            "MISSING_ACTUAL": 1,
+            "LOSS": 2
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1,
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "under": {
+          "selected": 2,
+          "original_states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "wins": 1,
+          "losses": 1,
+          "decided": 2,
+          "hit_rate": 0.5,
+          "states": {
+            "WIN": 1,
+            "LOSS": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 2
+          }
+        },
+        "combined": {
+          "selected": 5,
+          "original_states": {
+            "LOSS": 4,
+            "WIN": 1
+          },
+          "wins": 1,
+          "losses": 3,
+          "decided": 4,
+          "hit_rate": 0.25,
+          "states": {
+            "MISSING_ACTUAL": 1,
+            "LOSS": 3,
+            "WIN": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "ABSENT_REQUIRED_COMPONENT": 1,
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 4
+          }
+        }
+      }
+    },
+    {
+      "group": "RECORDED_SELECTED_RANKING_2026-10-28T22:55:49.911448+00:00",
+      "cohort": "ORIGINAL_TOP_PICKS",
+      "category": "ALL_NUMERIC",
+      "games": 12,
+      "player_games": 24,
+      "sides": {
+        "over": {
+          "selected": 12,
+          "original_states": {
+            "WIN": 4,
+            "LOSS": 8
+          },
+          "wins": 4,
+          "losses": 6,
+          "decided": 10,
+          "hit_rate": 0.4,
+          "states": {
+            "WIN": 4,
+            "MISSING_ACTUAL": 2,
+            "LOSS": 6
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 10,
+            "ABSENT_REQUIRED_COMPONENT": 2
+          }
+        },
+        "under": {
+          "selected": 12,
+          "original_states": {
+            "WIN": 8,
+            "LOSS": 4
+          },
+          "wins": 7,
+          "losses": 4,
+          "decided": 11,
+          "hit_rate": 0.6363636363636364,
+          "states": {
+            "WIN": 7,
+            "LOSS": 4,
+            "MISSING_ACTUAL": 1
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 11,
+            "ABSENT_REQUIRED_COMPONENT": 1
+          }
+        },
+        "combined": {
+          "selected": 24,
+          "original_states": {
+            "WIN": 12,
+            "LOSS": 12
+          },
+          "wins": 11,
+          "losses": 10,
+          "decided": 21,
+          "hit_rate": 0.5238095238095238,
+          "states": {
+            "WIN": 11,
+            "MISSING_ACTUAL": 3,
+            "LOSS": 10
+          },
+          "explicit_zero_component_rows_retained": 0,
+          "source_presence": {
+            "EXPLICIT_FINITE_REQUIRED_COMPONENTS": 21,
+            "ABSENT_REQUIRED_COMPONENT": 3
+          }
+        }
+      }
+    }
+  ],
+  "new_model_fits_forecasts_threshold_choices_or_grade_overwrites": 0,
+  "limits": [
+    "This appends a stricter measurement-qualification version, not proof an absent true statistic was nonzero.",
+    "No count is called confirmed false wins; unsupported old grades are separated from supported explicit finite grades.",
+    "Original lines, sides, points, TopPicks membership and all earlier grades remain unchanged.",
+    "A single final Week8source version is not a multiweek validation; laterstatcorrections require a separate version.",
+    "Venue settlement/ROI remain unverified; no DNP/void inferred from missing actuals.",
+    "No new parallel threshold grader: explicit actuals reconciled and original grades reused; metric-evidence qualification appended."
+  ],
+  "CPU_seconds": 25.251289641,
+  "wall_seconds": 25.44025747500018
+}

@@ -1,0 +1,81 @@
+"""Lossless registration transport regression; fictional metadata, no live grant."""
+import base64
+from copy import deepcopy
+import gzip
+
+import pytest
+from nfl_lab import audit_count_retained_v1 as retained
+from nfl_lab import audit_weekly_grade_history_v1 as history
+from nfl_lab import audit_weekly_template_v1 as template, private_draft_store as store
+from test_audit_count_retained_v1 import retained_origin, effective_packet
+from test_audit_weekly_grade_history_v1 import no_network, parent_metadata, source_metadata
+from test_audit_weekly_source_history_v2 import source_v2_metadata
+
+
+@pytest.fixture
+def transport_case(source_v2_metadata, retained_origin):
+    # Reuse the real schema validators and a fictional accepted registration.
+    # No private production Root, source acquisition or real fitted model.
+    case=deepcopy(source_v2_metadata)
+    registration=deepcopy(retained_origin['registration'])
+    retained.validate_registration(registration)
+    case.original['retained_registration']=template.registration_envelope(registration)
+    case.current['retained_registration']=deepcopy(case.original['retained_registration'])
+    binding=history.validate_source_history_binding(case.current)
+    binding['predecessor']['root_go_sha256']=store.sha(store.canonical(case.original))
+    binding['predecessor']['root_static_sha256']=template.static_root_sha256(case.original)
+    case.current['prior_capture_qualified_runtime']['root_static_sha256']=binding['predecessor']['root_static_sha256']
+    case.current['source_history_binding']=history.source_history_envelope(binding)
+    case.binding=binding
+    return case
+
+
+def scope(case):
+    return history._source_history_runtime_scope(case.current,case.original,case.binding)
+
+
+def encoded(raw, *, level=9):
+    return dict(schema_version=template.REGISTRATION_ENVELOPE,body_sha256=store.sha(raw),
+        body_bytes=len(raw),gzip_base64=base64.b64encode(gzip.compress(raw,compresslevel=level,mtime=0)).decode())
+
+
+@pytest.mark.parametrize('form',['unchanged','recompressed','plain'])
+def test_identical_valid_body_may_change_only_transport(transport_case,form):
+    x=transport_case;old=store.canonical(x.original)
+    body=template.retained_registration(x.original)
+    if form=='recompressed':x.current['retained_registration']=encoded(store.canonical(body),level=0)
+    elif form=='plain':x.current['retained_registration']=body
+    assert scope(x) is not None
+    assert store.canonical(x.original)==old
+
+
+@pytest.mark.parametrize('damage',['gzip','hash','length','inflation','noncanonical','schema','valid_body'])
+def test_reencoding_cannot_change_or_smuggle_registration(transport_case,damage):
+    x=transport_case;body=template.retained_registration(x.original);raw=store.canonical(body)
+    envelope=encoded(raw,level=0)
+    if damage=='gzip':envelope['gzip_base64']=base64.b64encode(b'not gzip').decode()
+    elif damage=='hash':envelope['body_sha256']='0'*64
+    elif damage=='length':envelope['body_bytes']+=1
+    elif damage=='inflation':envelope=encoded(b'x'*(template.REGISTRATION_PLAIN_CAP+1))
+    elif damage=='noncanonical':envelope=encoded(raw+b' ')
+    elif damage=='schema':body['schema_version']='not-the-registration';envelope=encoded(store.canonical(body))
+    elif damage=='valid_body':
+        body['registered_at_utc']='2020-01-01T00:00:00Z'
+        retained.validate_registration(body)
+        envelope=encoded(store.canonical(body))
+    x.current['retained_registration']=envelope
+    with pytest.raises(history.HistoryError):scope(x)
+
+
+@pytest.mark.parametrize('damage',['source_config','cutoff','rights','original_root','original_static','runtime','census'])
+def test_transport_exception_does_not_relax_other_commitments(transport_case,damage):
+    x=transport_case;body=template.retained_registration(x.original)
+    x.current['retained_registration']=encoded(store.canonical(body),level=0)
+    if damage=='source_config':x.current['source_config']={'forbidden':'changed'}
+    elif damage=='cutoff':x.current['cutoff_lead_seconds']+=1
+    elif damage=='rights':x.current['publication_registration']['rights_authority']={'forbidden':'changed'}
+    elif damage=='original_root':x.binding['predecessor']['root_go_sha256']='0'*64
+    elif damage=='original_static':x.binding['predecessor']['root_static_sha256']='0'*64
+    elif damage=='runtime':x.current['qualified_runtime']['binding']['release_id']+=1
+    elif damage=='census':x.current['pending_census']['owner_evidence_sha256']='0'*64
+    with pytest.raises((history.HistoryError,template.TemplateError,store.StoreError)):scope(x)
