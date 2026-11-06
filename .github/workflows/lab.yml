@@ -100,8 +100,26 @@ jobs:
         run: timeout --signal=KILL --kill-after=1s 180s python -I -B tools/audit_weekly_parent_v1.py --execute > controller-parent-result.json
       - name: Keep original handover block when parent qualification fails
         id: parent_readiness_block
-        if: always() && steps.parent_route.outputs.requested == 'true' && steps.weekly_parent.outcome != 'success'
+        if: always() && steps.parent_route.outputs.requested == 'true' && (steps.parent_cadence.outcome != 'success' || steps.parent_cadence.outputs.due != 'false') && steps.weekly_parent.outcome != 'success'
         run: python3 tools/hosted_safety_guard.py --root . --receipt "$RUNNER_TEMP/nfl-lab-readiness.json"
+      - name: Record off-window no-op without claiming capture or grading
+        id: parent_noop
+        if: steps.parent_route.outputs.requested == 'true' && steps.parent_cadence.outcome == 'success' && steps.parent_cadence.outputs.due == 'false'
+        run: |
+          python - <<'PY'
+          import datetime,json
+          from pathlib import Path
+          cadence=json.loads(Path('parent-cadence-result.json').read_bytes())
+          if cadence['due'] is not False or cadence['pregame_issuance_allowed'] is not False:
+              raise ValueError('An off-window receipt cannot authorize issuance')
+          receipt={'state':'NO_OP_OUTSIDE_REGISTERED_WINDOW','cadence':cadence,
+              'observed_at_UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'capture_started':False,'grading_started':False,'new_forecasts':0,
+              'readiness':'NOT_REASSESSED_BY_NO_OP','missed_primary_capture':'NOT_RECOVERED',
+              'next_action':'Existing authorized owner may use its registered manual daily route for eligible still-future games; actual qualification and cutoffs still apply.'}
+          Path('controller-parent-result.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          print(json.dumps(receipt))
+          PY
       - name: Upload public-safe parent enqueue status
         if: always() && steps.parent_route.outputs.requested == 'true'
         uses: actions/upload-artifact@v4
@@ -204,7 +222,7 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
       - name: Upload exact public-safe readiness receipt
-        if: always() && (steps.parent_route.outputs.requested != 'true' || steps.weekly_parent.outcome != 'success')
+        if: always() && (steps.parent_route.outputs.requested != 'true' || (steps.parent_cadence.outcome != 'success' || steps.parent_cadence.outputs.due != 'false') && steps.weekly_parent.outcome != 'success')
         uses: actions/upload-artifact@v4
         with:
           name: lab-readiness-${{ github.run_id }}-${{ github.run_attempt }}
