@@ -1,8 +1,11 @@
 {
-  "version": 2,
-  "protocol": "continuation-v2/FIT_PROTOCOL_V1.json",
-  "sha256": "fc516b14d3610d83b1ddc8915577f44c32d509e0dbef599a7b95a89ee69668d9",
-  "prior": "FAILURE_run_V1.json",
-  "state": "REGISTERED_BEFORE_FITS",
-  "reason": "Retain all evidence; execute bounded same-learner direct contexts and personalization within existing allocation"
+  "version": 3,
+  "protocol": "continuation-v3/FIT_PROTOCOL_V1.json",
+  "sha256": "10e08e7a0c8b57cf0b4ba540d425b929dda32a5b97627472bd38da5b7ddee095",
+  "prior_failures": [
+    "FAILURE_run_V1.json",
+    "continuation-v2/FAILURE_run_V1.json"
+  ],
+  "state": "REGISTERED_BEFORE_RESTORED_INFERENCE_AND4REMAININGFITS",
+  "source_procedure_unchanged": true
 }
