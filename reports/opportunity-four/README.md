@@ -137,3 +137,7 @@ The exact owner package was delivered and remotely read back in [comment 6527892
 ### Finding-specific audit closure
 
 [Executed A repairs, corrected Week8measurement and delivery dependencies](../abc-championship/audit-remediation-20261105/README.md). The all-category outputs are indexed in the existing [A export index](../abc-championship/EXPORT_INDEX.json); original predictions and results remain retained.
+
+## Executed player-context wave — PLAYER-CONTEXT-MATCHUP-01
+
+[Readable A rushing-context/opponent/personalization report](../abc-championship/player-context-matchup-01/README.md): fivefits, preservedruntimefailures, sevenretrospectiveweeks, allnumeric/side/probabilitylosses and source reversals. CanonicalMETHOD/EXPERIMENT/ALL_RESULTS link144new model/control numeric/probabilityviews; source/side weekly tables and private-scorecard manifests remain discoverable from that report. Cintake/productionrelease are separatelyunverified.

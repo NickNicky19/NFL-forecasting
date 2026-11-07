@@ -258,6 +258,12 @@
       "record": "../abc-championship/post-wave-5w-v1/SOFTWARE_CHECKS_V1.json",
       "kind": "Local synthetic software checks, zero new NFL evidence or hosted CI claim.",
       "failed_recheck_preserved": "../abc-championship/post-wave-5w-v1/SOFTWARE_RECHECK_ENV_FAILURE_V1.json"
+    },
+    {
+      "command": "python -B -m nfl_lab.category_topfive_opportunity_registry --write",
+      "result": "PASS",
+      "record": "../abc-championship/player-context-matchup-01/REGISTRY_VALIDATION_V1.json",
+      "method_or_NFL_observation_count": 0
     }
   ]
 }

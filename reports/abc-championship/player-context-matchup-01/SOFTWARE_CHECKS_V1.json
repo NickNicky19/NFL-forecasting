@@ -1,0 +1,59 @@
+{
+  "record_type": "SOFTWARE_CHECKS_NOT_NFL_METHODS",
+  "request_id": "PLAYER-CONTEXT-MATCHUP-01",
+  "checks": [
+    {
+      "command": "python -B tools/abc_a_player_context_prepare_v1.py",
+      "result": "PASS_OWN_ARTIFACT_IN_MEMORY_PARITY_AND_RETAINED_SOURCE_PROJECTION",
+      "record": "COMPACT_PREPARATION_V1.json"
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_run_v1.py --mode choose-window",
+      "result": "TWO_FAILED_GATES_THEN_PASS_AFTER_SCOPED_ALIAS/FUTURE_CONTEXT_ADMISSION_REPAIR",
+      "records": [
+        "FAILURE_choose_window_V1.json",
+        "FAILURE_choose_window_V2.json",
+        "EARLIER_COMPONENT_WINDOW_V1.json"
+      ]
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_run_v1.py --mode run --protocol-sha256 f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "result": "FAILED_ZERO_FITS_STORAGE_PREFLIGHT",
+      "record": "FAILURE_run_V1.json"
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_run_v2.py --mode run --protocol-sha256 fc516b14d3610d83b1ddc8915577f44c32d509e0dbef599a7b95a89ee69668d9",
+      "result": "FIT_RETURNED_PRESERVED;XZ9_MEMORYERROR",
+      "record": "continuation-v2/FAILURE_run_V1.json"
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_run_v3.py --mode run --protocol-sha256 10e08e7a0c8b57cf0b4ba540d425b929dda32a5b97627472bd38da5b7ddee095",
+      "result": "RETURNED_MODEL_RESTORED_NO_REFIT;3RIDGE_FITS_SAVED;FINAL_FIT_RESERVATION_BLOCKED",
+      "record": "continuation-v3/FAILURE_run_V1.json"
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_finish_v4.py --protocol-sha256 ca2f8fdbf34099ae131ae06e747dbd0aabb23cd4f6f4ab6e0471fad7cc8027aa",
+      "result": "PASS_COMPLETE_SCORING_READBACK",
+      "record": "completion-v4/EXECUTION_RECEIPT_V4.json"
+    },
+    {
+      "command": "python -B tools/abc_a_player_context_summarize_v1.py",
+      "result": "PASS_SOURCE_PARTITIONS_PAIRED_ANALYSIS",
+      "record": "SUMMARY_V1.json.gz"
+    },
+    {
+      "command": "category_topfive_opportunity_registry.validate(load(registry))",
+      "result": "PASS_AFTER_PREPUBLICATION_METADATA_LINK_REPAIRS",
+      "record": "REGISTRY_VALIDATION_V1.json"
+    }
+  ],
+  "independent": "INDEPENDENT_VERIFICATION_V1.json",
+  "software_failures_no_football_claims": [
+    "Registrydraft lackedrun_version/supersedeslinks; fixedbeforefinalpublication",
+    "OneGitblobreadback failed equality; boundedretryverifiedexactbytes; originalcauseunrecorded, notinvented",
+    "PublicRUNrestoration command exceededOSargumentlimit; chunkedexactoriginalpublicbytes restored; noNFLdataorforecast changed",
+    "PriceinventorypandasFutureWarning recorded; no dtype/grade change claimed"
+  ],
+  "full_hosted_CI": "NOT_RUN_THIS_WAVE",
+  "predictive_methods_not_assertion_count": true
+}

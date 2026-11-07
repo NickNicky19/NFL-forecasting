@@ -1,0 +1,89 @@
+{
+  "manifest_id": "A-PCM01-RB-NUMERIC-SHADOW-v1",
+  "owner": "A",
+  "category": "rush_att",
+  "role": "RB",
+  "decision": "NO_PRIMARY_SWITCH_RECOMMENDED_FROM_THIS_WAVE",
+  "numeric_shadow": {
+    "procedure": "A::PCM01::E1_OWN_CONTEXT",
+    "history": "Annual2019-2025fit; earlier-only updated role/PBPcontexts",
+    "output": "lower_median",
+    "MAE": 3.546075085324232,
+    "control_MAE": 3.580204778156997,
+    "paired_cases": 586,
+    "game_CI": [
+      -0.07406085398989055,
+      0.0026119799586062763
+    ],
+    "qualification": "7scored2026seasonweeks, exposed reconstructed current-vintage partialcoverage; not originalcapture"
+  },
+  "outputs": {
+    "display": "Shadowstat_point_mae_v2.selected_projection; functional lower_median; never write into expected-mean field",
+    "expected_mean": "Retain independentlyselected existing expected-mean product; candidate lawmean separatelylabelled, not MSEchampion",
+    "probability": "No activation; E1Brier.279688loses neutral.25",
+    "selection": "No activation; law112/231loses retainedlaw113 and strongerconstant122",
+    "EV": "No priced/settlement-qualified change",
+    "TopPicks": "Original-site owner retains exactchangedmapping replay; not executed byA"
+  },
+  "model": {
+    "original_fit_protocol_commit": "d486e62027891ac6b0413d585d8c405487d77897",
+    "original_fit_start_UTC": "2026-11-07T13:32:28.308801+00:00",
+    "exact_fit_return_UTC": null,
+    "return_clock_reason": "Fit returned beforeserializationMemoryError; no separate exactreturn clock logged",
+    "container_id": "A-PCM01-v2-RETURNED-FIT-FAILURE",
+    "container_sha256": "230bf9d0b7be1f735906102d21d7936278ff83e31222bb5ed662726243e598a9",
+    "container_bytes": 495537,
+    "member": "RETURNED_PENDING_MODEL.joblib",
+    "member_bytes": 495075,
+    "member_sha256": "c90c0fbf3469d3884c1c0a105083e63aae117b5afeb80b9a4b94deb2916a6a4e",
+    "restoration": "Own trusted artifact only through existing approved authenticated restore. All learned leaf histograms reconstructed/verified against retainedsource; no refit."
+  },
+  "code_bindings": {
+    "nfl_lab/abc_dynamic_carry_v1.py": "3298b653bbf08d8f690ddf2f3ae7bd98eef211f1c2f93535a293f90362f5ef67",
+    "nfl_lab/abc_player_rushing_context_v1.py": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "tools/abc_a_dynamic_carry_wave_v1.py": "e49829108211a6d0a5b34c2339545666aca78717a10e99fe66278097c6ecc59f",
+    "tools/abc_a_player_context_finish_v4.py": "e9014f379761b4a075edd49829aec2e0ff0795c3275a0e51cb11aff867f6fe2a",
+    "tools/abc_a_player_context_prepare_v1.py": "6e98fc6e31b714384bf5111e18289f49affd7487233ade87887902fb33db2ddf",
+    "tools/abc_a_player_context_run_v1.py": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621",
+    "tools/abc_a_player_context_run_v2.py": "c3e2d98cc840658094800d01314e4fb82c5d2070f37b216c6b967cc62c5fb131",
+    "tools/abc_a_player_context_run_v3.py": "6d159f21a06f3faf26867310b9899f7050126198eaf870651ff84fcd696b4a15"
+  },
+  "environment": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "inputs": [
+    "Same corrected earlier-only base97features and Backfield inputs",
+    "Existing forward-role twelvefeatures; team totals retainotherbucket",
+    "Qualified minimalPBP rushing fields; Context.features selected4appearances with earlier-only RBprior; no targetgame context",
+    "Original cutoffs/eligiblehistorical team/player IDs; explicit unknownhistory clocks rejected; future query outcome clocks not required"
+  ],
+  "producer_source_requirement": "Repaired history-source semantics must be bound in exactregisteredproducer; reference mainf37279a/producerfa91988, not an assertion that new adapteris admitted there.",
+  "gates": [
+    "Authenticated existingprivate recovery/memberchecksum",
+    "Fresh current-query base/role/context source receipts and query completion through existingownerroute",
+    "RBeligibility/clock/field-completeness and mean/median/lawtyping parity",
+    "Existing producer/catalog/publicwire/consumer guards; fallback/expiry/rollback",
+    "Original owner actualcapture/publish/servedvalue verification"
+  ],
+  "fallback": {
+    "cold": "Existing roleprior conditional-on-appearance;117/1244queries23/586scored in test",
+    "missing_current_source": "Keep exact independentlyeligible incumbent identity visible; do not inventfresh contexts",
+    "unsupported_role": "Rejectoutside testedRBscope",
+    "rollback": "Retainedowner restores exactincumbent typedpoint/source; probability/EV/TopPicks input path staysindependentlycontrolled"
+  },
+  "current_query_generated": 0,
+  "new_pregame_captures": 0,
+  "delivery": "PUBLIC_INDEX_READY_FOR_EXISTING_OWNER_REVIEW",
+  "C_admission": "NOT_OBSERVED",
+  "owner_acknowledgement": "NOT_OBSERVED",
+  "owner_execution": "NOT_OBSERVED",
+  "website_changed": false,
+  "continuity": "Existing CountApassTD/corecategory packages and authorisedcapture continue independently; this shadowstudy adds no waitingperiod or probability veto to their eligiblepointrelease.",
+  "evidence": "README.md and PUBLIC_AGGREGATE_MANIFEST_V1.json; restricted row/model refs only, no private locator or credential published"
+}

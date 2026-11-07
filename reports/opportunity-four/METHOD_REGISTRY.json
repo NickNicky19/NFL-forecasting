@@ -1302,6 +1302,93 @@
       "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
       "aliases": [],
       "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_R1_OWN_CONTEXT_RIDGE",
+      "original_id": "R1_OWN_CONTEXT_RIDGE",
+      "family": "Fixed regularized/player-history personalization comparator",
+      "procedure_version": "ca2f8fdbf34099ae131ae06e747dbd0aabb23cd4f6f4ab6e0471fad7cc8027aa",
+      "algorithm": "Same RB training/query/preprocessing/alpha32 as P1; own context only, no opponent group.",
+      "formula": "Same RB training/query/preprocessing/alpha32 as P1; own context only, no opponent group.",
+      "outputs": [
+        {
+          "output_id": "other_point",
+          "functional": "empirical_point",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission",
+      "shortlist_group": "A_PCM01_fixed_ridge_context",
+      "shortlist_group_reason": "Controlled input stages of one fixedRidge family, not padded independent learner slots"
+    },
+    {
+      "method_id": "m:A_PCM01_R3_CONTEXT_INTERACTION_RIDGE",
+      "original_id": "R3_CONTEXT_INTERACTION_RIDGE",
+      "family": "Fixed regularized/player-history personalization comparator",
+      "procedure_version": "ca2f8fdbf34099ae131ae06e747dbd0aabb23cd4f6f4ab6e0471fad7cc8027aa",
+      "algorithm": "Same RB training/query/preprocessing/alpha32 as P1; E2 own+opponent main fields plus8registered down/location interactions.",
+      "formula": "Same RB training/query/preprocessing/alpha32 as P1; E2 own+opponent main fields plus8registered down/location interactions.",
+      "outputs": [
+        {
+          "output_id": "other_point",
+          "functional": "empirical_point",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission",
+      "shortlist_group": "A_PCM01_fixed_ridge_context",
+      "shortlist_group_reason": "Controlled input stages of one fixedRidge family, not padded independent learner slots"
+    },
+    {
+      "method_id": "m:A_PCM01_NEUTRAL_BINARY_HALF_LINE",
+      "original_id": "NEUTRAL_0_5_EVENT_REFERENCE",
+      "family": "Constant single-event probability control",
+      "procedure_version": "A-PCM01-neutral-half-line-reference-v1",
+      "algorithm": "pOver=pUnder=.5,pPush=0 on declared decisive half-integer count events only; no joint count law, direction or anytimeTD inference.",
+      "formula": "Brier=(.5-event)^2=.25; log_loss=ln2.",
+      "outputs": [
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier"
+        }
+      ],
+      "code": [
+        {
+          "record": "../abc-championship/player-context-matchup-01/README.md"
+        }
+      ],
+      "feature_policy": "No football/market features; exact eligible event population matched",
+      "training_rule": "No fitting; no dependence/selection guarantee; reference only",
+      "aliases": [],
+      "is_control": true,
+      "readiness": "REFERENCE_NOT_OPERATIONAL_MODEL"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

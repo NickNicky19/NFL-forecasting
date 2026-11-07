@@ -1,0 +1,31 @@
+{
+  "state": "PASS_INDEPENDENT_READ_ONLY_RECOMPUTATION",
+  "reviewer": "player_context_readonly_review",
+  "authority": "Separate read-only reviewer required by repository AGENTS.md",
+  "scorecard": {"bytes": 54469, "sha256": "d2c980a3bc87093ffa38246b70a4faf4c3493c31e85753f826ede05b79f56343"},
+  "calculation_path": "Independent Decimal threshold grading and arithmetic; did not invoke C scorer for independent recomputation",
+  "scope": {"decision_rows": 9082, "aggregate_cells": 304, "side_partitions": 912, "numerical_cells": 144, "query_keys": 1244, "forecast_records": 11196, "unique_offers": 239, "decided_offers": 231, "participation_unknown_offers": 8},
+  "mismatches": 0,
+  "probability_checks": {"E1_exact_laws": 239, "maximum_probability_difference": 2.220446049250313e-16, "half_integer_median_probability_consistency": "PASS_ALL", "selected_and_full_board_Brier_logloss_reliability": "PASS"},
+  "findings": {
+    "E1_median_MAE": 3.546075085324232,
+    "E0_median_MAE": 3.580204778156997,
+    "paired_numeric_outcomes": 586,
+    "E1_direction": {"wins": 112, "losses": 119, "improved": 9, "worsened": 10},
+    "E0_direction": {"wins": 113, "losses": 118},
+    "partial_pooling": {"wins": 119, "pooled_wins": 115, "improved": 14, "worsened": 10},
+    "strongest_constant": {"method": "ALWAYS_OVER", "wins": 122, "decided": 231},
+    "ridge_context_stages_wins": [114, 115, 115],
+    "E1_Brier": 0.27968790121187875,
+    "E0_Brier": 0.27998114740797686,
+    "neutral_Brier": 0.25,
+    "confidence55": {"wins": 86, "decided": 176, "selected": 182, "eligible": 239, "abstentions": 57, "selected_unknown": 6},
+    "numerical_unknown": 658,
+    "E0_E1_cold_fallback_queries": 117,
+    "P3_sparse_fallback_queries": 391
+  },
+  "clock_check": "All11196 saved source-max clocks precede saved cutoffs; these are declared reconstructed clocks, not authenticated historical availability. Zero original issue claims.",
+  "five_week": "Seven scored weeks for supported products; point-only median/law products have zero scored qualifying weeks.",
+  "limits": ["No independent model re-inference or source-label reproduction", "No bootstrap reconstruction by reviewer", "No off-host restore", "No C shared admission", "No production release or new pregame capture", "Annual W1-5 and separate site W6-7 line clocks/venue settlement remain unverified"],
+  "conclusion": "No arithmetic mismatch blocks this bounded report. Numerical improvement does not establish improved selection or calibrated confidence."
+}
