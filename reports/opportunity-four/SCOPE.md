@@ -48,3 +48,7 @@ Do not substitute bare predict, a median, legacy_point or the NaN mean column.
 ## Audit remediation amendment, November5,2026
 
 AUDIT-REMEDIATION-20261105-v1 prioritizes finding-specific correctness and affected-evidence revalidation. Preserve all12 championship targets, product-specificfiveweekfloor, C coordination, A/B ownership and retainedproductionowner. Closed diagnoses are reused; no newbroadsearch. [Executed A findings, all losses and exact owner actions](../abc-championship/audit-remediation-20261105/README.md).
+
+## PLAYER-CONTEXT-MATCHUP-01 — A rushing stage1
+
+A owns bounded rushing context fits; B QB/personalization specification; C WR/TE source/common evaluation; production remains read-only. [Exact registered protocol](../abc-championship/player-context-matchup-01/FIT_PROTOCOL_V1.json). Preserve all twelve championship categories and unfinished historical/audit/delivery tasks. No new collector or scheduler.

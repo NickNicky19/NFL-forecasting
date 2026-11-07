@@ -1098,6 +1098,210 @@
       "training_rule": "Frozen analytic policy after 2025W1-4 component diagnosis; annual earlier-only state updates. 2025W5-8 and 2026W1-7 already exposed development reconstructions.",
       "aliases": [],
       "readiness": "Historical inference scored; not production admitted; no new genuine pregame packet."
+    },
+    {
+      "method_id": "m:A_PCM01_E1_OWN_CONTEXT",
+      "original_id": "E1_OWN_CONTEXT",
+      "family": "Empirical Leaf CDF contextual controlled continuation",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "Same Leaf parameters/training/priors/control features plus own earlier location/gap/down/distance/field mixtures, distinct down denominators, team opportunity and support/age.",
+      "formula": "(player_context_count+10*earlier_RB_league_context_fraction)/(player_carries+10); observed-unknown context is own explicit bucket; complete credited total conserved.; Earlier-game observed minus earlier-offense expected; efficiency residual/(defense_attempts+40), run residual/(offensive_opportunities+100); own-offense expectation shrunk with40earlier league pseudoexposures.",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_E2_OPP_MAIN",
+      "original_id": "E2_OPP_MAIN",
+      "family": "Empirical Leaf CDF contextual controlled continuation",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "E1 plus shrunken offense-adjusted overall defense run/efficiency residuals, support and age.",
+      "formula": "(player_context_count+10*earlier_RB_league_context_fraction)/(player_carries+10); observed-unknown context is own explicit bucket; complete credited total conserved.; Earlier-game observed minus earlier-offense expected; efficiency residual/(defense_attempts+40), run residual/(offensive_opportunities+100); own-offense expectation shrunk with40earlier league pseudoexposures.",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_E3_CONTEXT_INTERACTION",
+      "original_id": "E3_CONTEXT_INTERACTION",
+      "family": "Empirical Leaf CDF contextual controlled continuation",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "E2 plus4down and4location mixture/residual products; no full Cartesian interaction; distance/field interactions deferred.",
+      "formula": "(player_context_count+10*earlier_RB_league_context_fraction)/(player_carries+10); observed-unknown context is own explicit bucket; complete credited total conserved.; Earlier-game observed minus earlier-offense expected; efficiency residual/(defense_attempts+40), run residual/(offensive_opportunities+100); own-offense expectation shrunk with40earlier league pseudoexposures.",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        },
+        {
+          "output_id": "exact_line_probability",
+          "functional": "probability",
+          "primary_score": "Brier"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_P1_POOLED_RIDGE",
+      "original_id": "P1_POOLED_RIDGE",
+      "family": "Fixed regularized/player-history personalization comparator",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "Same E2 information standardized on earlier RB training only; Ridgealpha32; nonnegative regression point, no outcome law/median/probability.",
+      "formula": "Same E2 information standardized on earlier RB training only; Ridgealpha32; nonnegative regression point, no outcome law/median/probability.",
+      "outputs": [
+        {
+          "output_id": "other_point",
+          "functional": "empirical_point",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_P2_PARTIAL_PLAYER_TEAM_RIDGE",
+      "original_id": "P2_PARTIAL_PLAYER_TEAM_RIDGE",
+      "family": "Fixed regularized/player-history personalization comparator",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "P1 plus penalized player/team/opponent intercepts, alpha32, unknown identities zero effects; no posthoc player winner routing.",
+      "formula": "P1 plus penalized player/team/opponent intercepts, alpha32, unknown identities zero effects; no posthoc player winner routing.",
+      "outputs": [
+        {
+          "output_id": "other_point",
+          "functional": "empirical_point",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
+    },
+    {
+      "method_id": "m:A_PCM01_P3_PLAYER_ONLY_8_WITH_P1_FALLBACK",
+      "original_id": "P3_PLAYER_ONLY_8_WITH_P1_FALLBACK",
+      "family": "Fixed regularized/player-history personalization comparator",
+      "procedure_version": "f1a9817b093785095ef45b484d906ca90e981780bd9a76087ed17fa37a96b95a",
+      "algorithm": "Independent previous8supported appearance mean; require8 beforegame; sparse fallback P1 remains explicit. Simpler history-only comparator; not an information-matched context architecture claim.",
+      "formula": "Independent previous8supported appearance mean; require8 beforegame; sparse fallback P1 remains explicit. Simpler history-only comparator; not an information-matched context architecture claim.",
+      "outputs": [
+        {
+          "output_id": "other_point",
+          "functional": "empirical_point",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "nfl_lab/abc_player_rushing_context_v1.py",
+          "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+        },
+        {
+          "record": "tools/abc_a_player_context_run_v1.py",
+          "sha256": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+        }
+      ],
+      "feature_policy": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+      "training_rule": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+      "aliases": [],
+      "readiness": "Registered shadow historical evaluation; no production admission"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

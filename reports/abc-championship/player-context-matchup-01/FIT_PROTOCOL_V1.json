@@ -1,0 +1,125 @@
+{
+  "C_bound_code": [
+    {
+      "path": "src/abc_championship_v2.py",
+      "sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+    },
+    {
+      "path": "src/actual_accuracy_v6.py",
+      "sha256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+    },
+    {
+      "path": "src/contracts_v2.py",
+      "sha256": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a"
+    },
+    {
+      "path": "src/offer_validator_v2.py",
+      "sha256": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51"
+    },
+    {
+      "path": "src/selection.py",
+      "sha256": "ba3cd2d5c33eb05f3c07e8f2674f6d51b51694c8fd722f8eaba5db089907997f"
+    }
+  ],
+  "C_commit": "1bdba21442d7c48b93e0779e7d52346efdf7308d",
+  "C_protocol": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+  "C_protocol_sha256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
+  "C_scorer_sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+  "actual_query_weeks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "allocation_sha256": "f123cd5ffd6f4a204a76c68bf63817cce63cecd7021543a23503d0233cc3eb26",
+  "arms": {
+    "E0_A1_UNCHANGED": "Retained forward-role empirical Leaf law; mean/median/exact-line products. Original full artifact and vectors unchanged.",
+    "E1_OWN_CONTEXT": "Same Leaf parameters/training/priors/control features plus own earlier location/gap/down/distance/field mixtures, distinct down denominators, team opportunity and support/age.",
+    "E2_OPP_MAIN": "E1 plus shrunken offense-adjusted overall defense run/efficiency residuals, support and age.",
+    "E3_CONTEXT_INTERACTION": "E2 plus4down and4location mixture/residual products; no full Cartesian interaction; distance/field interactions deferred.",
+    "P1_POOLED_RIDGE": "Same E2 information standardized on earlier RB training only; Ridgealpha32; nonnegative regression point, no outcome law/median/probability.",
+    "P2_PARTIAL_PLAYER_TEAM_RIDGE": "P1 plus penalized player/team/opponent intercepts, alpha32, unknown identities zero effects; no posthoc player winner routing.",
+    "P3_PLAYER_ONLY_8_WITH_P1_FALLBACK": "Independent previous8supported appearance mean; require8 beforegame; sparse fallback P1 remains explicit. Simpler history-only comparator; not an information-matched context architecture claim.",
+    "S_DIRECT_BACKFIELD_UNCHANGED": "Strong retained Backfield direct control, original source vectors, no refit.",
+    "S_STRUCTURED_A3_UNCHANGED": "Strongest existing structured conditional played law; original marginal/points and version retained; no resampling/refit."
+  },
+  "assignment_id": "PLAYER-CONTEXT-MATCHUP-01",
+  "category": "rush_att",
+  "chronology": "Annual forest/ridge fit2019-2025 labels explicitly available before2026-09-01; query/derived features availability strictly before historical cutoff. Seven-day policy is declared reconstruction. No future smoothing.",
+  "code_sha256": {
+    "nfl_lab/abc_dynamic_carry_v1.py": "3298b653bbf08d8f690ddf2f3ae7bd98eef211f1c2f93535a293f90362f5ef67",
+    "nfl_lab/abc_player_rushing_context_v1.py": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "tools/abc_a_dynamic_carry_wave_v1.py": "e49829108211a6d0a5b34c2339545666aca78717a10e99fe66278097c6ecc59f",
+    "tools/abc_a_player_context_prepare_v1.py": "6e98fc6e31b714384bf5111e18289f49affd7487233ade87887902fb33db2ddf",
+    "tools/abc_a_player_context_run_v1.py": "1d512b5c97164649252261bc8d3078489f09ac61bd4eb8b2398a276f127ef621"
+  },
+  "controls": "AlwaysOver/AlwaysUnder and neutral0.25 binary Brier on identical cases; existing direct and structured controls included. Earlier-only role prevalence for later continuation; no strongest-side hindsight routing.",
+  "environment": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "evidence": "EXPOSED_CURRENT_VINTAGE_CHRONOLOGICAL_RECONSTRUCTION; actual thresholds timing/venue unqualified; no authenticated original issued selection",
+  "expected_original_offers": 239,
+  "expected_queries": 1244,
+  "formulas": {
+    "interaction": "Predicted historical player down/location mixture times shrunken historical defense context residual; no target-game opportunity mix.",
+    "opponent": "Earlier-game observed minus earlier-offense expected; efficiency residual/(defense_attempts+40), run residual/(offensive_opportunities+100); own-offense expectation shrunk with40earlier league pseudoexposures.",
+    "own": "(player_context_count+10*earlier_RB_league_context_fraction)/(player_carries+10); observed-unknown context is own explicit bucket; complete credited total conserved.",
+    "point_direction": "Unrounded point>original line Over,<Under, equality abstain.",
+    "probability_direction": "Exact legitimate law at original threshold; greater decisive probability; within1e-12tie abstain; integer push retained.",
+    "secondary_gate": "Existing frozen max decisive probability>=.55; no search toward90%. B owns new selective gate."
+  },
+  "outputs": "Leaf means/medians/laws separately typed; linear/player-history point-only rows unavailable for law/median, never intentional abstention. No EV/ROI or price fabrication.",
+  "practical_change": "Existing2percentagepoint paired full-board reference, descriptive not a new veto; report strongest same-opportunity controls, uncertainty and every loss.",
+  "protocol_id": "A-PCM01-CARRY-v1",
+  "qualification": "Five distinct supported correctly scored season-weeks for exact target/role/procedure/output/policy. Retrospective exposed scope only; no automatic promotion, changed Top Picks or global policy claim.",
+  "registered_UTC": "2026-11-07T13:07:11.393329+00:00",
+  "remaining_owned": {
+    "A": "rushyd/context efficiency extension, distance/field opponent interactions, exact older origins, current adapter only if warranted",
+    "B": "QBdepth/down and common personalization/probability/gate spec",
+    "C": "WR/TE alignment/separation source, common intake/evaluation",
+    "lease178": "original-site capture/delivery/admission/changedTopPicks replay"
+  },
+  "requested_weeks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "resources": {
+    "RSS_bytes": 3221225472,
+    "bootstrap_replicates": 500,
+    "failure_reserve_bytes": 700000,
+    "hard_CPU_seconds": 1300,
+    "new_fits": 5,
+    "per_new_CDF_fit_pending_model_reserve_bytes": 750000,
+    "per_new_linear_fit_pending_model_reserve_bytes": 250000,
+    "private_peak_bytes": 3500000,
+    "source_HTTP": 0,
+    "source_spending": 0,
+    "threads": 2,
+    "training_CPU_seconds": 1200
+  },
+  "retention": "Compact inference artifacts factor audit-only bindings with exact ordered hashes and deterministic hydration route; original full control unchanged. Save all new unique learned state and vectors; no off-host restore assertion.",
+  "role": "RB",
+  "sources": "SOURCE_QUALIFICATION_V1.json; exact retained2024 and2026W1-7PBP, latter context histories only admitted through W6; no outcome clock demanded of future query",
+  "state": "REGISTERED_BEFORE_FITS",
+  "window_selection": {
+    "basis": "2024W5-8 earlier direction-mixture NLL only; 4/8/16menu; no2026 outcome choice",
+    "record": "EARLIER_COMPONENT_WINDOW_V1.json",
+    "selected": 4,
+    "sha256": "3e1a4bcb34d593432f6b923d31dc933f78c80d82f419fd124d5edd49ae80db92"
+  }
+}
