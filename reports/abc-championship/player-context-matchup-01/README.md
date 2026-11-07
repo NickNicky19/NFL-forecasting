@@ -121,3 +121,9 @@ Every weekly loss and unsupported/null cell remains in these files. Raw player-l
 [Generated local product decisions](LOCAL_PRODUCT_DECISIONS_V1.json) use every supported declared full-board output: cumulativeW1–7Always-Over122/231 leads; annualNJW1–5 retained A1mean91/164 leads; separate siteW6–7PartialP2andAlways-Under tie34/67. These are exposed different-source leaders, not an earlier-only source router.
 
 [Price readiness](PRICE_READINESS_V1.json): annual170offers retain167Overprices,168Underprices and165two-sided pairs; site69offers retain no prices. Zeroquote cutoffs and zero venue contracts are qualified here, so no price-aware/paper-return score is supported. Missingprices did not block the direction calculation.
+
+## Publication receipt
+
+Public-safe results are pushed at `e602cf220f3b63450ca05a0dc7560eef6f870746` and [remotely read back](PUBLICATION_READBACK_V1.json), including actualgziprestoration with fullcompressed/expandedhashes. [Owner-route read-only delta](OWNER_ACK_READONLY_DELTA_V1.json) reports no newerPR1comment acknowledgement since the prior checkpoint. Public index delivery is not Cintake, modeladmission, capture or deployment. No hostedCIrun was found for this resultcommit; localvalidation/independentchecks remain separately identified.
+
+[Exact resumable next cells and bounded route checks](NEXT_EXECUTABLE_QUEUE_V1.json) distinguish reconstructable2025Ridge tests from source/retentionblockedCDF/W8/oldercells. No unattended job is promised.
