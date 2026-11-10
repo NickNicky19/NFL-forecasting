@@ -98,7 +98,8 @@ def _clock(value):
     return clock.tz_convert("UTC")
 
 
-def priority_cohorts(board, *, minimum_expected_carries=5., top_k=20):
+def priority_cohorts(board, *, minimum_expected_carries=5., top_k=20,
+                     allow_basic_kickoff_reconstruction=False):
     """Annotate a full, externally admitted RB board without deleting anyone.
 
     Inputs must include actual pregame universe qualification, source cutoff,
@@ -129,8 +130,14 @@ def priority_cohorts(board, *, minimum_expected_carries=5., top_k=20):
     result["reference_eligible"] = False
     for at, row in result.iterrows():
         cut, kickoff = _clock(row.cutoff_utc), _clock(row.kickoff_utc)
-        if cut >= kickoff:
-            raise ValueError("target is not future at its declared cutoff")
+        if cut > kickoff:
+            raise ValueError("post-kickoff query cannot enter this board")
+        if cut == kickoff:
+            if (not allow_basic_kickoff_reconstruction
+                    or row.get("query_clock_contract") != "HISTORICAL_AT_KICKOFF_RECONSTRUCTION"
+                    or row.get("query_evidence_tier") != "ASOF_AT_KICKOFF_RECONSTRUCTION_NOT_ISSUED_SOURCE_ROW_CONDITIONAL"
+                    or bool(row.universe_qualified)):
+                raise ValueError("kickoff boundary needs explicit basic-only reconstructed contract")
         mean = pd.to_numeric(pd.Series([row.reference_expected_carries]), errors="coerce").iloc[0]
         if pd.notna(row.reference_available_utc):
             available = _clock(row.reference_available_utc)

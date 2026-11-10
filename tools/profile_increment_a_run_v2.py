@@ -178,10 +178,12 @@ def run(plan, public_receipt):
             raise ValueError("existing fit slots/models forbid an admission-only resume")
         old_plan_path = store.destination / "PRIVATE_EXECUTION_PLAN.json"
         store.prior.validate_reference(old_plan_path, recovery["original_private_plan_sha256"])
-        put("CONSUMED_ADMISSION_RECOVERY_V3.json", enc(dict(version=VERSION, UTC=now(), fits=4,
+        if recovery.get("attempt_id") != "HISTORICAL_BOUNDARY_DIAGNOSTIC_V4":
+            raise ValueError("exact root-reviewed boundary admission amendment required")
+        put("CONSUMED_ADMISSION_RECOVERY_V4.json", enc(dict(version=VERSION, UTC=now(), fits=4,
             state="EXPLICIT_ROOT_ADMISSION_RECOVERY_BEFORE_ANY_FIT", previous_fits_attempted=0,
             previous_fits_returned=0, original_private_plan_sha256=recovery["original_private_plan_sha256"], no_automatic_retry=True)))
-        put("PRIVATE_EXECUTION_PLAN_ADMISSION_RECOVERY_V3.json", STATE.pop("plan_raw"))
+        put("PRIVATE_EXECUTION_PLAN_ADMISSION_RECOVERY_V4.json", STATE.pop("plan_raw"))
         data = old.load_inputs(pd)
         audit = old.audited_feature_binding(data)
         put("REUSED_AUDIT_BINDING.json", enc(audit))
@@ -201,8 +203,19 @@ def run(plan, public_receipt):
             q[col] = mixed_utc(q[col], pd)
         if not q.position.eq("RB").all() or q.duplicated(KEY).any() or not q.participation_state.eq("unknown").all():
             raise ValueError("full RB query identity/outcome separation changed")
-        if (q.cutoff_utc >= q.kickoff_utc).any():
-            raise ValueError("historical query cutoff is not pregame")
+        if plan.get("historical_boundary_contract") != "HISTORICAL_AT_KICKOFF_RECONSTRUCTION":
+            raise ValueError("explicit source-matched historical boundary contract required")
+        if (q.cutoff_utc > q.kickoff_utc).any():
+            raise ValueError("post-kickoff query cannot enter eligible historical inference")
+        tied = q.cutoff_utc.eq(q.kickoff_utc)
+        if (tied & ~q.week.between(1,7)).any() or (q.week.eq(8) & q.cutoff_utc.ge(q.kickoff_utc)).any():
+            raise ValueError("captured W8 must remain strictly before kickoff")
+        if int(tied.sum()) != 1244 or int((~tied).sum()) != 120:
+            raise ValueError("bound original query-clock census changed")
+        q["query_clock_contract"] = np.where(tied, "HISTORICAL_AT_KICKOFF_RECONSTRUCTION", "CAPTURED_PRE_KICKOFF_BOARD_RECONSTRUCTION")
+        q["query_evidence_tier"] = np.where(tied,
+            "ASOF_AT_KICKOFF_RECONSTRUCTION_NOT_ISSUED_SOURCE_ROW_CONDITIONAL",
+            "ORIGINAL_BOARD_MEMBERSHIP_WITH_LATER_MODEL_RECONSTRUCTION_NOT_ORIGINAL_MODEL_ISSUANCE")
         # Drop all target labels before augmentation/inference. Upcoming queries
         # deliberately have no known outcome-availability clock.
         for label in ("rush_yd", "rush_att", "actual", "prediction", "point"):
@@ -243,12 +256,13 @@ def run(plan, public_receipt):
                 reference_clock = fixed.get("source_information_max_UTC")
             basic.append(dict(**identity(row), universe_qualified=bool(getattr(row, "pregame_roster_qualified", False))
                 and int(row.week) == 8, # W1-7 old reconstruction is stat-row-conditioned, not authenticated pregame roster.
+                query_clock_contract=row.query_clock_contract, query_evidence_tier=row.query_evidence_tier,
                 offer_qualified=key in actual_offers, reference_expected_carries=float(expected),
                 reference_available_utc=reference_clock, reference_procedure_id="UNCHANGED_A1_BACKFIELD_CDF_ROLE_INPUTS",
                 replacement_role_qualified=False, replacement_source_id=None,
                 history_available=bool(row.f_player_games_prior > 0),
                 source_information_max_utc=str(row.feature_max_source_available_utc)))
-        cohorts = increment.priority_cohorts(pd.DataFrame(basic))
+        cohorts = increment.priority_cohorts(pd.DataFrame(basic), allow_basic_kickoff_reconstruction=True)
         put("BASIC_PROFILES_AND_COHORTS_2026.json.gz", gzip.compress(enc(json.loads(cohorts.to_json(orient="records", date_format="iso"))), mtime=0))
         put("UNAVAILABLE_PROFILES_2026_W8.json.gz", gzip.compress(enc(unavailable), mtime=0))
         # Keep the source matrix and all transformed predictor bytes available
@@ -273,6 +287,7 @@ def run(plan, public_receipt):
         put("ALL32_RUSHING_DEFENSE_SNAPSHOTS_2026.json.gz", gzip.compress(enc(snapshots), mtime=0))
         del snapshots, projected
         all_rows = []
+        query_tiers = {tuple(getattr(r,k) for k in KEY): (r.query_clock_contract,r.query_evidence_tier) for r in qaug.itertuples()}
         for index, arm in enumerate(ARMS):
             category = increment.arm_category(data["category"], "R" + str(index), modeled_roles=["RB"])
             if STATE["fit_CPU_seconds"] >= 1200:
@@ -304,7 +319,9 @@ def run(plan, public_receipt):
             STATE["phase"] = "INFERENCE_" + arm
             rows = carry.cdf_forecasts(model, qaug.reset_index(drop=True), arm, np)
             for row in rows:
+                contract, tier = query_tiers[tuple(row[k] for k in KEY)]
                 row.update(target="rush_yd", point_semantics="EXACT_EMPIRICAL_LAW_MEAN_AND_LOWER_MEDIAN_SEPARATE_PRODUCTS",
+                    query_clock_contract=contract, query_evidence_tier=tier,
                     conditioning="CONDITIONAL_ON_PLAYED", original_issued_UTC=None,
                     probability_admission="UNVALIDATED_EXACT_LAW_NOT_CALIBRATED_CONFIDENCE",
                     reconstruction="CURRENT_VINTAGE_SEVEN_DAY_POLICY_EXPOSED_HISTORY")
@@ -341,7 +358,7 @@ def run(plan, public_receipt):
             except BaseException as retention_error:
                 failure["returned_model_retention_error_type"] = type(retention_error).__name__
         try:
-            put("FAILURE_PRIVATE.json", enc(dict(failure, traceback=traceback.format_exc())), failure=True)
+            put("FAILURE_PRIVATE_BOUNDARY_V4.json", enc(dict(failure, traceback=traceback.format_exc())), failure=True)
         finally:
             print(enc(failure).decode(), flush=True)
         raise

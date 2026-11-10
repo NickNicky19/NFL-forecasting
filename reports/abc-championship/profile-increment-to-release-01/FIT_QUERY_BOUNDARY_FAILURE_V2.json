@@ -1,0 +1,25 @@
+{
+  "state": "FAILED_PREFIT_RETAINED_QUERY_CONTRACT_MISMATCH",
+  "UTC": "2026-11-10T12:20:06.327923+00:00",
+  "protocol_sha256": "b4a7b7a876bc0c45500708f07c2921e7fcce5789b4985d640de65f30034ea481",
+  "fits_attempted": 0,
+  "fits_returned": 0,
+  "training_CPU_seconds": 0,
+  "process_CPU_seconds": null,
+  "error_sha256": "42deabf4dfdf07a0120fb4b5ed12b89a039edb6327ef9662a5c17a224b25e9e0",
+  "private_failure": {
+    "id": "FAILURE_PRIVATE.json",
+    "bytes": 1125,
+    "sha256": "29875a819a15c1f8f3f95eed6e25b3808407002533176b4c8d826d0ca9e79c75"
+  },
+  "native_accounting_recovery": "SUCCEEDED;originalstate/baseline/failureintact",
+  "raw_query_clock_trace_sha256": "44ef8fded128cd3e559c1b25d16f920c1a9a92508146fea36b11d3c6c12014d6",
+  "queries": {
+    "2026_W1_W7_cutoff_equals_kickoff": 1244,
+    "2026_W8_strictly_before": 120,
+    "after_kickoff": 0,
+    "missing_or_naive": 0
+  },
+  "definition": "Existingownedfeaturebuilder/oldCDFcontract setsdefaultfeatureorigin=kickoff and rejectsafter. Thisisnotoriginalissuance orsourcepublicationclock. Newrunnerstrictgatewasincompatible.",
+  "correction": "Explicitbound historicalW1\u20137basic-only reconstructedorigin tier; W8/current remainstrictlybefore. Sourceavailability remainsstrictlyearlier; seven-dayproxyunchanged; noline/label/clockrewritten."
+}

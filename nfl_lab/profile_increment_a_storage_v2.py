@@ -255,8 +255,36 @@ class ProfileIncrementStore:
                 self.prior.write_bytes(state_path, encoded(state))
             self.prior.validate_reference(state_path)
             self.state = json.loads(state_path.read_bytes())
-            if self.state["allocation_sha256"] != allocation_sha256 or self.state["version"] != VERSION:
-                raise ValueError("existing new allocation cannot be reset")
+            if self.state["version"] != VERSION:
+                raise ValueError("existing allocation version cannot be reset")
+            code_amendment = None
+            if self.state["allocation_sha256"] != allocation_sha256:
+                amendment = self.plan.get("code_binding_amendment", {})
+                previous_ref = amendment.get("previous_allocation", {})
+                previous_body = Path(previous_ref["path"]).read_bytes()
+                if (len(previous_body) != previous_ref["bytes"]
+                        or digest(previous_body) != previous_ref["sha256"]
+                        or previous_ref["sha256"] != self.state["allocation_sha256"]
+                        or amendment.get("id") != "HISTORICAL_BOUNDARY_CODE_BINDING_V4"):
+                    raise ValueError("exact immutable previous allocation amendment required")
+                previous = json.loads(previous_body)
+                unchanged = ["version", "retained_bytes", "peak_bytes", "failure_reserve_bytes",
+                    "protected_prior_plan_bytes", "unchanged_capture_reserve_bytes", "legacy_completion_reconciliation",
+                    "accounting_revision", "original_allocation_state_sha256", "amends_allocation_sha256"]
+                if any(previous.get(k) != self.plan.get(k) for k in unchanged):
+                    raise ValueError("execution amendment cannot change allocation/baseline policy")
+                before, after = previous["code_sha256"], self.plan["code_sha256"]
+                if set(before) != set(after):
+                    raise ValueError("execution amendment cannot change bound code scope")
+                changed = {p for p in before if before[p] != after[p]}
+                if not changed <= {"nfl_lab/profile_increment_a_storage_v2.py",
+                    "nfl_lab/profile_increment_a_v2.py", "tools/profile_increment_a_run_v2.py"}:
+                    raise ValueError("execution amendment exceeds reviewed clock/accounting scope")
+                code_amendment = dict(id=amendment["id"], version=VERSION,
+                    new_allocation_sha256=allocation_sha256, previous_allocation_sha256=previous_ref["sha256"],
+                    changed_code_sha256={p: dict(previous=before[p], current=after[p]) for p in sorted(changed)},
+                    accounting_state_sha256=digest(state_path.read_bytes()),
+                    policy="CODE_BINDING_ONLY_NO_BASELINE_FLOOR_CAP_OR_CONSUMPTION_RESET")
             self.baseline = self.state["baseline_prior_bytes"]
             self.old_floor = self.state["old_charged_at_registration"]
             baseline_ref = self.state["baseline_prior_inode_ref"]
@@ -270,6 +298,18 @@ class ProfileIncrementStore:
                 raise ValueError("baseline physical binding differs")
             self._admit(0)
             self._usage()
+            if code_amendment is not None:
+                amendment_path = self.destination / "ALLOCATION_CODE_BINDING_AMENDMENT_V4.json"
+                amendment_body = encoded(code_amendment)
+                self._admit(len(amendment_body))
+                if amendment_path.exists():
+                    self.prior.validate_reference(amendment_path, digest(amendment_body))
+                else:
+                    if self._usage()["charged_bytes"] + len(amendment_body) > RETAINED:
+                        raise ValueError("code amendment exceeds unchanged retained allocation")
+                    self.prior.write_bytes(amendment_path, amendment_body)
+                    self.prior.validate_reference(amendment_path, digest(amendment_body))
+                self._usage()
 
     def _admit(self, incoming):
         self.outer._refresh()

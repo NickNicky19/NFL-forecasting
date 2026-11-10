@@ -1,0 +1,36 @@
+{
+  "activity": {
+    "constructors": 0,
+    "fits": 0,
+    "model_loads": 0,
+    "new_NFL_observations": 0,
+    "private_writes": 0,
+    "source_decodes": 0
+  },
+  "boundary_fixtures": [
+    "default_off_equal_kickoff:REJECT",
+    "explicit_equal_basic_only:PASS_TIMESTAMPS_UNCHANGED",
+    "qualified_current_equal_kickoff:REJECT",
+    "wrong_clock_tier:REJECT",
+    "postkickoff_even_with_flag:REJECT",
+    "strict_future_query_without_outcome_metadata:PASS"
+  ],
+  "code_sha256": {
+    "nfl_lab/profile_increment_a_storage_v2.py": "c82012e9eb507bc1125fd973711348f3d79a49192cf23a6b26392221bff5f635",
+    "nfl_lab/profile_increment_a_v2.py": "eb5e7e07291d8954a09dc2fa73e0044fa4ee6a21dd2b5123753b1c421ae2159e",
+    "tools/profile_increment_a_run_v2.py": "77b48c0238568aab9940cfd0678b8095c7ae2ccaef12f1bec34138752397359f"
+  },
+  "id": "PROFILE-INCREMENT-A-BOUNDARY-CODE-AMENDMENT-INDEPENDENT-REVIEW-v6",
+  "limits": [
+    "No constructor, native migration/privatewrite or NFL fit executed by reviewer.",
+    "At-kickoff feature origin is not pregame issuance; quote timing and original-vintage limitations remain."
+  ],
+  "source_clock_trace_sha256": "44ef8fded128cd3e559c1b25d16f920c1a9a92508146fea36b11d3c6c12014d6",
+  "state": "PASS_EXACT_RECONSTRUCTED_BOUNDARY_AND_CODE_ONLY_ALLOCATION_AMENDMENT",
+  "static_scope": [
+    "Runner accepts1244exactsource-boundW1-7 equality rows only as reconstruction;120W8rows remainstrictbefore;postkickoff/unknown clocks reject. No timestamp/source-age change.",
+    "Explicit helper allowance defaultsOFF and cannot admit a qualified pregame universe at kickoff.",
+    "V4 code amendment validates exact prior allocation, identical caps/policies and same code path set; onlyguard/adapter/runner changes allowed. Original accounting state, content-generation baseline, old floor and original new-wave charge baseline remain unchanged.",
+    "Distinct immutableV4 consumption/plan/failure records;zero prior fits required. Conservativeglobal1200hard bound and finally failed-fit CPU accounting preserved."
+  ]
+}
