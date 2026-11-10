@@ -1,0 +1,25 @@
+{
+  "state": "PASS_INDEPENDENT_STATIC_REVIEW_NO_EXECUTION",
+  "verifier_sha256": "40ff724c550c31807df145e780a4092bf9fcdb9717d65fa00aacd1d4db0faa49",
+  "protocol_binding_matches": true,
+  "scope": "Read-only source review of original v3 recipe, verifier, CDF law implementation, base input and executing history helpers; no fits or model deserialization by reviewer.",
+  "checks": {
+    "original_annual_mask": "season<2026 and explicit availability<2026-09-01 UTC; RB, played, supported count labels",
+    "recipe": "FixedDesign+StandardScaler fitted on same eligible rows; Ridge alpha32/lsqr/tol1e-8/maxiter2000; nonnegative regression point clipping",
+    "independent_schema": "P1 names checked against retained E1 category context plus DEF; onehot None",
+    "history_contract": "base.inputs maintains future target availability NaT; history compiler rejects explicit missing/naive clocks; backfield availability admission precedes chronological last3 selection",
+    "return_retention": "fresh returned state serialized/retained before parity assertions within fixed60000B envelope; no CDF freshfit in scope",
+    "runtime_only_cdf_changes": "threadpool limit and fitted forest n_jobs change concurrency; learned trees/laws remain unchanged",
+    "boundaries": "Under F(ceil(line)-1), Over1-F(floor(line)), integer push mass and no half-integer push; same-law median direction checked off ties",
+    "grade_validation": "Decimal arithmetic uses original line, enum validated OVER/UNDER, WIN/LOSS requires actual!=line",
+    "coverage": "1244 queries/586 supported numerical labels remain distinct from239 offers/231 decided; unsupported point products stay null",
+    "synthetic_controls": "separate from NFL observations; no requirement that real context fields force splits"
+  },
+  "review_amendments": "Recommended independent P1 schema assertion, onehot None and Decimal side/equality assertions added before reviewed final hash. No predictive recipe or original forecasts changed.",
+  "limitations": [
+    "Representative raw-review clocks remain seven-day reconstruction, not authentic historical publication.",
+    "Fresh-fit and inference execution outcomes must be supplied by root; this static review is not their receipt.",
+    "Original source-availability, forecast issuance and venue settlement limitations are not repaired by numerical parity.",
+    "No B/C/original-site write, fit, source acquisition or retained private write occurred."
+  ]
+}

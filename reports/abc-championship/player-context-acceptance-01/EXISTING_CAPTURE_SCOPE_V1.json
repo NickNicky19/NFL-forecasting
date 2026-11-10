@@ -1,0 +1,177 @@
+{
+  "C_pin": "fa503c1e1a9993e655a905195ce428edf630add5",
+  "C_next": {
+    "created_UTC": "2026-11-07T14:36:02.673515+00:00",
+    "state": "GITHUB_SERVER_VERIFIED_PREGAME_SHADOW",
+    "supersedes_status_only": {
+      "path": "reports/player-context-matchup-01/NEW_FORWARD_BATCH_SERVER.json",
+      "SHA256": "98a96411a3a23d2e1c87d411d008f1f9d1f990b4516dcee36e44a99a52a0bf6b"
+    },
+    "clarification": "Prior current_state field copied original local stage; it is historical, not current. Original local and server manifests remain frozen. state and server receipts establish actual current persistence.",
+    "capture_commit": "41211b96f20747b66a595a939a6af5edfdb0e63b",
+    "server_completed_UTC": "2026-11-07T13:56:39Z",
+    "forecasts": 179,
+    "paper_picks": 0,
+    "primary_replacement": false
+  },
+  "C_last_published_grade": {
+    "created_UTC": "2026-11-07T14:40:25.908383+00:00",
+    "game": "2026_09_JAX_BAL",
+    "original_forecasts": 203,
+    "graded": 127,
+    "unknown_participation": 76,
+    "prop_selections": 0,
+    "forecast_only_not_prop_hit_rates": true,
+    "original_grade_bindings": [
+      {
+        "path": "prospective/grades/C-NATIVE-GRADE-20261107-JAXBAL-01-C-FWD-v4-20261105-W09-JAXBAL-pass_yd.json",
+        "SHA256": "9fd277477ca642013a5918e70e0f42436f71a50ab3e4546cb4fa42dec2b61f49"
+      },
+      {
+        "path": "prospective/grades/C-NATIVE-GRADE-20261107-JAXBAL-01-C-FWD-v4-20261105-W09-JAXBAL-remainder.json",
+        "SHA256": "02ee633e91c674d142b50eab17ebc5ff10d08f8e0d9b44b756e91a6410b648e2"
+      }
+    ],
+    "metrics": [
+      {
+        "category": "pass_yd",
+        "issued": 6,
+        "graded": 2,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 78,
+        "median_bias": 61,
+        "mean_CRPS": 51.08080613232262,
+        "mean_NLL": 5.69585593925653
+      },
+      {
+        "category": "pass_td",
+        "issued": 6,
+        "graded": 2,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 1,
+        "median_bias": 1,
+        "mean_CRPS": 0.39539218961311395,
+        "mean_NLL": 1.048312887946043
+      },
+      {
+        "category": "pass_cmp",
+        "issued": 6,
+        "graded": 2,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 5,
+        "median_bias": 5,
+        "mean_CRPS": 3.091000837332787,
+        "mean_NLL": 3.4192586842874313
+      },
+      {
+        "category": "pass_att",
+        "issued": 6,
+        "graded": 2,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 7,
+        "median_bias": 7,
+        "mean_CRPS": 4.441245049255452,
+        "mean_NLL": 3.680516224193399
+      },
+      {
+        "category": "pass_int",
+        "issued": 6,
+        "graded": 2,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 0.5,
+        "median_bias": -0.5,
+        "mean_CRPS": 0.5580173016969052,
+        "mean_NLL": 1.2894346288831835
+      },
+      {
+        "category": "rush_yd",
+        "issued": 13,
+        "graded": 9,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 17.77777777777778,
+        "median_bias": -6.666666666666667,
+        "mean_CRPS": 13.196146038521615,
+        "mean_NLL": 3.9862340148500857
+      },
+      {
+        "category": "rush_att",
+        "issued": 13,
+        "graded": 9,
+        "unknown": 4,
+        "pending": 0,
+        "median_MAE": 2.5555555555555554,
+        "median_bias": -1.2222222222222223,
+        "mean_CRPS": 1.7120961617878634,
+        "mean_NLL": 2.361287666638936
+      },
+      {
+        "category": "rec",
+        "issued": 27,
+        "graded": 19,
+        "unknown": 8,
+        "pending": 0,
+        "median_MAE": 0.8947368421052632,
+        "median_bias": 0.2631578947368421,
+        "mean_CRPS": 0.567738951701491,
+        "mean_NLL": 1.4034154527081366
+      },
+      {
+        "category": "rec_yd",
+        "issued": 27,
+        "graded": 19,
+        "unknown": 8,
+        "pending": 0,
+        "median_MAE": 13.578947368421053,
+        "median_bias": 0.9473684210526315,
+        "mean_CRPS": 9.719536701428975,
+        "mean_NLL": 3.605214575378316
+      },
+      {
+        "category": "rush_rec_yd",
+        "issued": 27,
+        "graded": 19,
+        "unknown": 8,
+        "pending": 0,
+        "median_MAE": 19.36842105263158,
+        "median_bias": -0.21052631578947367,
+        "mean_CRPS": 13.887255565413865,
+        "mean_NLL": 4.328577324875027
+      },
+      {
+        "category": "anytime_td",
+        "issued": 33,
+        "graded": 21,
+        "unknown": 12,
+        "pending": 0,
+        "median_MAE": null,
+        "median_bias": null,
+        "mean_CRPS": 0.11924667438631904,
+        "mean_NLL": 0.3745634083200255
+      },
+      {
+        "category": "fpts",
+        "issued": 33,
+        "graded": 21,
+        "unknown": 12,
+        "pending": 0,
+        "median_MAE": 3.7495238095238093,
+        "median_bias": 0.5685714285714285,
+        "mean_CRPS": 2.4931660496039103,
+        "mean_NLL": 5.520619189725328
+      }
+    ],
+    "restrictions": "Appearance-conditioned;CMP/ATT selection blocks;chart rare-label subset;no venue settlement or raw-unit category ranking"
+  },
+  "limits": "Read-only existing owner receipts; no new packet/capture/grading by A. No actual-line week credited from forecast-only packet. Next179packet outcomes not refreshed/regraded here; C owns existing capture/grade route. No backfill.",
+  "A_hosted_in_progress_at_check": 0,
+  "unattended_execution_claimed": false,
+  "receipt_written_UTC": "2026-11-10T00:59:25.123747+00:00",
+  "receipt_written_America_Chicago": "2026-11-09T18:59:25.123747-06:00",
+  "clock_scope": "Receipt write time; read calls immediately preceded this receipt; no source/issue/persistence time inferred from this clock"
+}

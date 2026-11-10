@@ -1389,6 +1389,74 @@
       "aliases": [],
       "is_control": true,
       "readiness": "REFERENCE_NOT_OPERATIONAL_MODEL"
+    },
+    {
+      "method_id": "m:C_PCM01_V11_P1",
+      "original_id": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1",
+      "family": "C registered contextual Poisson; pooled versus partial identity effects",
+      "procedure_version": "C-v1.1:P1",
+      "algorithm": "PoissonRegressor(alpha=.1,max_iter=120,tol=1e-7), earlier-only imputation/scaling; pooled covariates only",
+      "formula": "mu=exp(standardized_imputed_features*coefficients + intercept + registered identity effects); lower median=PoissonPPF(.5,mu)",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MSE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "../abc-championship/player-context-acceptance-01/PEER_PROTOCOL_V2.json",
+          "sha256": "c5d48f0cc456f2f07556b54ab15ee173053e9145f07a3db16a5e29c7dad72e88"
+        }
+      ],
+      "feature_policy": "C E2 features: eligible past player/context and opponent proxy; current-vintage seven-day reconstructed availability; evaluated WRTE only, original training scope unchanged",
+      "training_rule": "Original C weekly origin fits on eligible2022+ labels before first scheduled kickoff of origin; no A refit; point replay unrounded versus A original threshold",
+      "aliases": [],
+      "origin_repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "origin_commit": "fa503c1e1a9993e655a905195ce428edf630add5",
+      "is_control": false,
+      "readiness": "REPLAY_DURATION_FLOOR_ONLY;NO_OPERATIONAL_ADMISSION",
+      "learner_family_count_note": "mean/median are products of one procedure; A auditor is not model origin"
+    },
+    {
+      "method_id": "m:C_PCM01_V11_P2",
+      "original_id": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2",
+      "family": "C registered contextual Poisson; pooled versus partial identity effects",
+      "procedure_version": "C-v1.1:P2",
+      "algorithm": "PoissonRegressor(alpha=.1,max_iter=120,tol=1e-7), earlier-only imputation/scaling; regularized player/team/opponent one-hot effects",
+      "formula": "mu=exp(standardized_imputed_features*coefficients + intercept + registered identity effects); lower median=PoissonPPF(.5,mu)",
+      "outputs": [
+        {
+          "output_id": "mean",
+          "functional": "mean",
+          "primary_score": "MSE"
+        },
+        {
+          "output_id": "median",
+          "functional": "median",
+          "primary_score": "MAE"
+        }
+      ],
+      "code": [
+        {
+          "record": "../abc-championship/player-context-acceptance-01/PEER_PROTOCOL_V2.json",
+          "sha256": "c5d48f0cc456f2f07556b54ab15ee173053e9145f07a3db16a5e29c7dad72e88"
+        }
+      ],
+      "feature_policy": "C E2 features: eligible past player/context and opponent proxy; current-vintage seven-day reconstructed availability; evaluated WRTE only, original training scope unchanged",
+      "training_rule": "Original C weekly origin fits on eligible2022+ labels before first scheduled kickoff of origin; no A refit; point replay unrounded versus A original threshold",
+      "aliases": [],
+      "origin_repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "origin_commit": "fa503c1e1a9993e655a905195ce428edf630add5",
+      "is_control": false,
+      "readiness": "REPLAY_DURATION_FLOOR_ONLY;NO_OPERATIONAL_ADMISSION",
+      "learner_family_count_note": "mean/median are products of one procedure; A auditor is not model origin"
     }
   ],
   "schema_version": "opportunity-four-registry-v1"

@@ -1,0 +1,19 @@
+{
+  "state": "PASS",
+  "commands": [
+    "python -B tools/verify_opportunity_registry_storage_v1.py",
+    "python -B -m nfl_lab.category_topfive_opportunity_registry --write",
+    "python -B -m nfl_lab.category_topfive_opportunity_registry"
+  ],
+  "methods": 46,
+  "experiments": 38,
+  "results": 525,
+  "runs": 121,
+  "publications_including_pending": 31,
+  "new_external_C_procedures": 2,
+  "new_product_views": 4,
+  "new_result_cells": 96,
+  "original_429_result_rows_preserved": true,
+  "software_tests_are_not_NFL_observations": true,
+  "administrative_failure_record": "REGISTRY_SCHEMA_ATTEMPT_V1.json"
+}

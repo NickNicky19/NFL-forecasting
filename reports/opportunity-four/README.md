@@ -141,3 +141,7 @@ The exact owner package was delivered and remotely read back in [comment 6527892
 ## Executed player-context wave — PLAYER-CONTEXT-MATCHUP-01
 
 [Readable A rushing-context/opponent/personalization report](../abc-championship/player-context-matchup-01/README.md): fivefits, preservedruntimefailures, sevenretrospectiveweeks, allnumeric/side/probabilitylosses and source reversals. CanonicalMETHOD/EXPERIMENT/ALL_RESULTS link144new model/control numeric/probabilityviews; source/side weekly tables and private-scorecard manifests remain discoverable from that report. Cintake/productionrelease are separatelyunverified.
+
+## Player-context acceptance and permitted C-point replay
+
+[Executed acceptance](../abc-championship/player-context-acceptance-01/README.md): exactP1 reproduction, raw source checks, new C P1/P2 WRTE reception points on A original W1–7 offers,96source/week/product summaries and independent regrading. Stronger controls and losses retained. Seven replay weeks are durationonly; C pregame population/current adapter, probability, TopPicks and actual release remain separate. See canonical ABC EXPORT_INDEX; C intake is not assumed.

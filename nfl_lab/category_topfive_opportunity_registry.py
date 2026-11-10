@@ -267,13 +267,51 @@ def _rank(item):
     return (math.inf if item['loss_state'] == 'POSITIVE_INFINITY' else item['loss'], item['method_id'], item['output_id'])
 
 
+def run_records(root):
+    """Read the frozen journal plus bounded, hash-bound public extensions."""
+    root = Path(root)
+    base = root/'RUN_EVENTS.jsonl'
+    raw = base.read_bytes()
+    rows = [json.loads(x) for x in raw.splitlines() if x.strip()]
+    index = root/'RUN_EVENT_EXTENSIONS.json'
+    if not index.exists():
+        return rows
+    doc = json.loads(index.read_bytes())
+    if doc.get('version') != 'opportunity-public-run-extensions-v1':
+        raise ValueError('registered run extension schema required')
+    binding = doc['base']
+    if (binding['bytes'] != len(raw) or binding['sha256'] != hashlib.sha256(raw).hexdigest()
+            or binding['record_count'] != len(rows)):
+        raise ValueError('frozen journal base changed')
+    members = doc['members']
+    if not isinstance(members, list) or len(members) > 32:
+        raise ValueError('bounded run extension list required')
+    seen = {'RUN_EVENTS.jsonl'}
+    for ref in members:
+        name = ref['file']
+        if not isinstance(name, str) or Path(name).name != name or not name.endswith('.jsonl') or name in seen:
+            raise ValueError('unique same-directory run extension required')
+        seen.add(name)
+        path = root/name
+        if path.is_symlink() or not path.is_file() or not 0 < ref['bytes'] <= 2*1024**2:
+            raise ValueError('bounded regular run extension required')
+        data = path.read_bytes()
+        if len(data) != ref['bytes'] or hashlib.sha256(data).hexdigest() != ref['sha256']:
+            raise ValueError('run extension bytes/hash mismatch')
+        new = [json.loads(x) for x in data.splitlines() if x.strip()]
+        if len(new) != ref['record_count']:
+            raise ValueError('run extension count mismatch')
+        rows.extend(new)
+    return rows
+
+
 def load(root):
     root = Path(root)
     names = {'methods': 'METHOD_REGISTRY.json', 'experiments': 'EXPERIMENT_REGISTRY.json', 'results': 'ALL_RESULTS.json', 'publications': 'PUBLICATION_RECORDS.json'}
     registry = {'schema_version': VERSION}
     for key, name in names.items():
         registry[key] = read_document(root/name)['records']
-    registry['runs'] = [json.loads(x) for x in (root/'RUN_EVENTS.jsonl').read_text().splitlines() if x.strip()]
+    registry['runs'] = run_records(root)
     return registry
 
 
