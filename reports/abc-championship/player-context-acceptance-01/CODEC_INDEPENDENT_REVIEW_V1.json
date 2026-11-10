@@ -1,0 +1,33 @@
+{
+  "state": "PASS_INDEPENDENT_CODEC_ORIGINAL_BYTES_AND_BACKWARD_READ_COMPATIBILITY",
+  "checked_head": "f72e1f6ca998524c924069107921954e6d734872",
+  "original_bytes": 609082,
+  "original_sha256": "5859e242e25b531edd95b770e890bc4ceaa37226f80ee293d1e84777592bd307",
+  "compressed_bytes": 19747,
+  "compressed_sha256": "c09e6036c750b54b81cef83139edf68cbac2e35edf67cab8370a940f26d8e59c",
+  "panels": 91,
+  "existing_compressed_registry_readbacks": [
+    {
+      "file": "ABC_DYNAMIC_CARRY_SELECTION_RESULTS_V1.json",
+      "collection": "records",
+      "count": 312
+    },
+    {
+      "file": "ALL_RESULTS.json",
+      "collection": "records",
+      "count": 429
+    },
+    {
+      "file": "EXPERIMENT_REGISTRY.json",
+      "collection": "records",
+      "count": 37
+    },
+    {
+      "file": "FOUR_CATEGORY_LEADERBOARD.json",
+      "collection": "panels",
+      "count": 91
+    }
+  ],
+  "static_review": "Explicit records(default)/panels collection; same-directory regular gzip, compressed/expanded caps, byte/hash/count, no nested codec protections retained. Generated leaderboard reads via read_document and packs panels without score-semantic changes.",
+  "limitations": "Original immutable audit pin is not present in local Git object database; original-byte equality independently checked to source-bound SHA-256 in retained receipt, not a fresh git-show retrieval. No mutation or forecast/model execution."
+}

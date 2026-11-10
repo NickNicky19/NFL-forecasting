@@ -1,0 +1,147 @@
+{
+  "receipt_id": "PLAYER-CONTEXT-ACCEPTANCE-01-A-INDEPENDENT-RAW-v1",
+  "state": "PASS_INDEPENDENT_RAW_NFL_FEATURE_RECONSTRUCTION",
+  "reviewer_role": "Independent read-only child reviewer; root owns canonical edits",
+  "code_checkout_head": "f72e1f6ca998524c924069107921954e6d734872",
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -B a-acceptance-raw-independent-review.py",
+  "verifier_sha256": "7466455b3b92299191726860004eed8a9b2784dc8d273a7372fd4ccddd871008",
+  "synthetic_verifier_sha256": "8fd3c79da82ee5eeaa239301c42d3f30c84b33a3289782701ffa9094857065f1",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "23.0.1",
+    "threads": 1
+  },
+  "method": "Independent raw-play iteration/aggregation and explicit equations; imported author COLS only, did not call Context.features or author aggregation functions. Sample rule frozen before comparative feature differences, E0 control cases selected lexicographically by source/status plus cold and played-zero query.",
+  "cases": [
+    {
+      "case": "ANNUAL_NAMED_NJ:WIN",
+      "key_sha256": "7474ec229a36ce65b239a5b249b7b544f8aa6b8e2dc208dc9b997782e2c15406",
+      "fields": 58,
+      "prior_player_slots": 0,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "ANNUAL_NAMED_NJ:LOSS",
+      "key_sha256": "7af03f1951ef937bb7620bb1fee9b55bb2a392fe5363978ac22bef15ecb12c2c",
+      "fields": 58,
+      "prior_player_slots": 4,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "ANNUAL_NAMED_NJ:UNKNOWN_PARTICIPATION",
+      "key_sha256": "ad2f6b315cb4fe1d963e1954abdab5a8137a3fbf0144ac383baa4c58662c2793",
+      "fields": 58,
+      "prior_player_slots": 4,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "SITE_RECORDED_DK_JURISDICTION_UNKNOWN:WIN",
+      "key_sha256": "6fb1c281f0c96ebe495c14a7a57f25e1aae4d3cdbe5a29f205b0c90c76e51efd",
+      "fields": 58,
+      "prior_player_slots": 4,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "SITE_RECORDED_DK_JURISDICTION_UNKNOWN:LOSS",
+      "key_sha256": "b13e08ccfb1e0cf9af6b31a97ffac1db915238f3c1c61f0319919b55b6ed5ae6",
+      "fields": 58,
+      "prior_player_slots": 4,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "SITE_RECORDED_DK_JURISDICTION_UNKNOWN:UNKNOWN_PARTICIPATION",
+      "key_sha256": "00ac35e3cf90bc00c5dcc764973418636d5049391dde2a1536bc7abd893afbe0",
+      "fields": 58,
+      "prior_player_slots": 4,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "COLD_QUERY",
+      "key_sha256": "4c435f04ff14d1bf52c885493a5e76cba9fca54e8ce90ec476dfdfd34786b576",
+      "fields": 58,
+      "prior_player_slots": 0,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    },
+    {
+      "case": "KNOWN_ZERO_TARGET",
+      "key_sha256": "99139e8d778fc9e9ef785eb071e7cafced31218534f0ae7513f5fd510b5c655a",
+      "fields": 58,
+      "prior_player_slots": 0,
+      "prior_team_slots": 8,
+      "prior_defense_slots": 8,
+      "latest_prior_lt_cutoff": true,
+      "latest_source_lt_cutoff": true
+    }
+  ],
+  "feature_comparisons": 464,
+  "mismatches": [],
+  "max_absolute_difference": 0,
+  "unique_source_plays": 66012,
+  "independent_team_records": 730,
+  "withheld_source_games": 14,
+  "observed_zero_appearances_added_all_positions": 4936,
+  "unknown_history_rows_not_manufactured_aszeros_all_positions": 3640,
+  "source_hashes": [
+    "3fd2896bc0b911b615142d2f1fabae54a4bbba5ab7b73b28187b118ef8af6a3b",
+    "6a6097066474da7ca867d954d6b04b84905c5e242d13917391237b8334f362fe"
+  ],
+  "saved_feature_sha256": "d61b578e15515fbf600dacdfcf0b1c87c384917cd591857197c2e867816c97dc",
+  "scorecard_sha256": "d2c980a3bc87093ffa38246b70a4faf4c3493c31e85753f826ede05b79f56343",
+  "resources": {
+    "cpu_seconds": 23.012828238,
+    "wall_seconds": 23.167807365000044,
+    "rss_bytes": 423809024,
+    "cpu_limit_seconds": 300,
+    "address_space_limit_bytes": 3221225472
+  },
+  "verdicts": {
+    "raw_semantics_representative_fields": "PASS",
+    "reconstructed_chronology_in_checked_scope": "PASS",
+    "authenticated_historical_source_clocks": "UNKNOWN",
+    "source_conservation_for_counted_carries": "PASS",
+    "fresh_fit_and_model_inference": "UNKNOWN_NOT_CHECKED_BY_THIS_REVIEW",
+    "direction_conditioned_yards_success": "NOT_EXECUTED_IN_INSPECTED_RECIPE",
+    "team_run_rate_by_distance": "NOT_EXECUTED_IN_INSPECTED_RECIPE",
+    "coherent_joint_contextual_allocation": "NOT_EXECUTED_IN_INSPECTED_RECIPE"
+  },
+  "scope_qualifiers": [
+    "No implementation defect found in checked raw feature path; representative checks do not verify every query or qualify original NFL labels independently.",
+    "Availability is a declared kickoff-plus-seven-day reconstruction, not authenticated historical publication time.",
+    "Location interactions use distinct offense-adjusted carry-location-share residuals; down interactions use distinct run-rate residuals. They do not test direction/gap-conditioned yards or success efficiency.",
+    "Overall defense residual is offense-history-adjusted; it is not full deconvolution of prior opponents or conditional efficiency across direction/gap/distance/game-state.",
+    "Distance enters player carry mixture; team run probability is conditioned on down only.",
+    "Observed source conservation does not establish future predicted allocation conservation; direct CDF outputs are not a coherent contextual joint allocation/full-game rushing-yard model.",
+    "P3 has own-outcome coefficient fits where supported plus shared P1 fallback; its full system is not entirely own-information.",
+    "4/8/16 lookback selection optimized 2024 W5-W8 location component NLL, not full-game prop performance; 8 and 16 are observationally identical where at most seven earlier source games exist.",
+    "No model deserialization, model fitting, new inference, collection, retained private write, changed source policy, production write or release occurred."
+  ],
+  "preserved_prior_verifier_failures": [
+    "Initial raw review blocked by metadata accounting guard; no guard bypass. Lossless root codec repair followed by unchanged guard readback.",
+    "Next raw review blocked by missing original upload anchors after environment resume; root restored exact approved bytes before attach.",
+    "Synthetic fixture initially set a negative carry first_down flag inconsistently with its expected count; verifier fixture corrected, no author-code defect.",
+    "Synthetic future-record fixture initially reused duplicate play IDs after game reassignment; verifier fixture corrected to unique IDs, no author-code defect."
+  ]
+}

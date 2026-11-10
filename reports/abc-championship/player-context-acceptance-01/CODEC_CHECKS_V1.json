@@ -1,0 +1,15 @@
+{
+  "state": "PASS",
+  "checks": [
+    "old records exact roundtrip",
+    "explicit panels exact roundtrip",
+    "compressed hash",
+    "expanded hash",
+    "size",
+    "count",
+    "path confinement",
+    "unsupported collection rejected"
+  ],
+  "NFL_observations": 0,
+  "command": "/workspace/nfl-venv/bin/python -B tools/verify_opportunity_registry_storage_v1.py"
+}

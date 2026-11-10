@@ -41,6 +41,20 @@ def main():
                 raise AssertionError(label)
         p.write_text(json.dumps(index))
         assert read_document(p) == json.loads(original)
+        panel = Path(d) / 'LEADERBOARD.json'
+        panel_raw = b'{"panels":[{"loss":0.12345678901234568,"reason":null}]}\n'
+        pack_bytes(panel, panel_raw, collection_key='panels')
+        assert read_document(panel) == json.loads(panel_raw)
+        checks.append('explicit panels collection exact precision/null roundtrip')
+        bad = json.loads(panel.read_bytes())
+        bad['collection_key'] = 'unregistered_collection'
+        panel.write_text(json.dumps(bad))
+        try:
+            read_document(panel)
+        except ValueError:
+            checks.append('unsupported collection rejected')
+        else:
+            raise AssertionError('unsupported collection rejected')
     print(json.dumps({'state': 'PASS', 'software_checks': checks,
                       'new_fits_inference_forecasts_scored_NFL_rows': 0}))
 

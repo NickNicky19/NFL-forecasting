@@ -289,8 +289,9 @@ def main():
     generated = encoded(leaderboard(reg))
     target = Path(args.root)/'FOUR_CATEGORY_LEADERBOARD.json'
     if args.write:
-        target.write_bytes(generated)
-    elif target.read_bytes() != generated:
+        from nfl_lab.opportunity_registry_storage_v1 import pack_bytes
+        pack_bytes(target, generated, collection_key='panels')
+    elif read_document(target) != json.loads(generated):
         raise ValueError('leaderboard is stale; regenerate from canonical records')
     print(json.dumps(report, sort_keys=True))
 
