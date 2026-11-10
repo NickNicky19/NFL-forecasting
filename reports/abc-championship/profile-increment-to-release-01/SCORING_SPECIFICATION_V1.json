@@ -1,0 +1,425 @@
+{
+  "P1": "unrounded cachedmean/median vsretainedline; equalsABSTAIN",
+  "P2": "strict maxpOver vs pUnder fromsamecachedlaw, tiesABSTAIN;pushmass retained; conditionalplayed",
+  "TopK": "no changedselector qualification; profiletop20 is workloadcohort notpickranking",
+  "actual_recorded_source_panels": [
+    "ANNUAL_NAMED_NJ"
+  ],
+  "allocation": {
+    "path": "FILL_ACCEPTED_V3_ALLOCATION_PATH",
+    "sha256": "FILL_ACCEPTED_ALLOCATION_HASH"
+  },
+  "candidate_ids": [
+    "RB_ONLY_LEAF_BASE::MEAN_P1",
+    "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+    "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+    "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+    "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+    "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+    "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+    "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+    "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+    "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+    "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+    "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+    "D0_UNCHANGED_HGB_MAE",
+    "D1_HGB_RAW_CONDITIONAL_PROFILE",
+    "S0_UNCONDITIONAL_OWN_YPC_FIXED_N",
+    "S1_CONDITIONAL_EFFICIENCY_FIXED_N",
+    "SAVED_CATBOOST_MEDIUM__median_objective_point",
+    "SAVED_EQUAL_CDF_CAT_HGB_POINT__empirical_point_blend",
+    "SAVED_HGB_MAE_DIRECT__mae_objective_point",
+    "SAVED_LEAF_CDF__mean",
+    "SAVED_LEAF_CDF__median",
+    "SAVED_RESPONSE_CDF__mean",
+    "SAVED_RESPONSE_CDF__median",
+    "ALWAYS_OVER",
+    "ALWAYS_UNDER",
+    "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+  ],
+  "code_sha256": {
+    "nfl_lab/profile_increment_a_storage_v2.py": "1ea18c3bff0b02f2e859746a6e7df2a22626b5a13aebb3310a1656a89a377e04",
+    "tools/abc_a_dynamic_carry_wave_v1.py": "e49829108211a6d0a5b34c2339545666aca78717a10e99fe66278097c6ecc59f",
+    "tools/player_context_completion_efficiency_score_v1.py": "29e5b8f4de741988ce1f9d033b53151b280dd07ecc6a0fece2591b9fa6e2c583",
+    "tools/profile_increment_a_score_v2.py": "7a6aa81cfc3360ccdeb23efe958d3f233aad9f0cf03781d21fb254f3c2be7ad9"
+  },
+  "cohorts": [
+    "ALL_ELIGIBLE",
+    "STABLE_NEW_CORE",
+    "DETAILED_PRIORITY",
+    "WORKLOAD_TOP20",
+    "PBP_OWN_SUPPORTED"
+  ],
+  "control_references": "allretainedstrongLeaf/Responsepoints plusotheroriginalsavedproducts andold4experimentaloutputs; no model restoration orfakeprobabilities",
+  "execution_receipt": {
+    "bytes": null,
+    "path": "FILL_COMPLETE_NEW_FIT_RECEIPT_PATH",
+    "sha256": "FILL_ACTUAL_READBACK_HASH"
+  },
+  "five_week": "perexactproduct andactualofferedline tier;W8reference addsnone, currentmodelreleaseunverified",
+  "frozen_forecasts_sha256": "FILL_FROZEN_NEW_LAW_VECTOR_HASH",
+  "new_fits": 0,
+  "new_model_inference": 0,
+  "old_execution_receipt": {
+    "bytes": 8258,
+    "path": "/workspace/nfl-methods-integration/reports/abc-championship/player-context-completion-decision-01/EFFICIENCY_EXECUTION_RECEIPT_V1.json",
+    "sha256": "e75b1f8bed331e1d9c958394ce08233907c913604ffcf8ffe413003e17a14446"
+  },
+  "paired_candidate_ids": [
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "RB_ONLY_LEAF_BASE::MEAN_P1"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "RB_ONLY_LEAF_BASE::MEAN_P1"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "RB_ONLY_LEAF_BASE::MEAN_P1"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEAN_P1",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEAN_P1",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+      "SAVED_LEAF_CDF__median"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+      "SAVED_RESPONSE_CDF__median"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::MEDIAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "SAVED_LEAF_CDF__median"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "SAVED_RESPONSE_CDF__median"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::MEDIAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "SAVED_LEAF_CDF__median"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "SAVED_RESPONSE_CDF__median"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::MEDIAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "SAVED_LEAF_CDF__median"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "SAVED_RESPONSE_CDF__median"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+      "ALWAYS_OVER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "RB_ONLY_LEAF_BASE::EXACT_LINE_P2",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R1_RB_ONLY_LEAF_SUPPORT::EXACT_LINE_P2",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R2_RB_ONLY_LEAF_PLAYER_OFFENSE::EXACT_LINE_P2",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "SAVED_LEAF_CDF__mean"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "SAVED_RESPONSE_CDF__mean"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "ALWAYS_OVER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::EXACT_LINE_P2",
+      "EARLIER_RB_ROLE_EXACT_LINE_PREVALENCE_P2"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "D0_UNCHANGED_HGB_MAE"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "D1_HGB_RAW_CONDITIONAL_PROFILE"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "S0_UNCONDITIONAL_OWN_YPC_FIXED_N"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEAN_P1",
+      "S1_CONDITIONAL_EFFICIENCY_FIXED_N"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "D0_UNCHANGED_HGB_MAE"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "D1_HGB_RAW_CONDITIONAL_PROFILE"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "S0_UNCONDITIONAL_OWN_YPC_FIXED_N"
+    ],
+    [
+      "R3_RB_ONLY_LEAF_DEFENSE::MEDIAN_P1",
+      "S1_CONDITIONAL_EFFICIENCY_FIXED_N"
+    ]
+  ],
+  "prevalence": "all earlier explicit observed played RB history beforequerycutoff, samegameexcluded, exactlinecategoricalLaplace1;halflinebinary,integerthreeclass",
+  "registered_by": "/root",
+  "resources": {
+    "CPU_seconds": 400,
+    "RSS_bytes": 3221225472,
+    "private_view_max_bytes": 131072,
+    "wall_seconds": 900
+  },
+  "source_panel_limit": "siteW6-7 unverifieddiagnostic separate;W8 referenceonly noactualpropweek",
+  "source_sha256": {
+    "A_labels": "61da98ad90542b07c6c6664b674086ba4f9474e597325aba62dec44bb2fa72f5",
+    "A_offers": "f224f17930e8da7ed5683808de3339d9656cc4b71edb0deefcfb9c48dfd82ffb",
+    "A_saved": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+    "W8_feature_identity": "5450041c91f3c5dce3a4078c81b861f388e4682dd5cc57d3f1e6b250338f5b0e",
+    "W8_graded": "be9c13b0f42f5e164b29d00cce69fbe1c30acce703d1b33a8103a057888ac2c1",
+    "W8_overlay": "2f8df2a10dcbba9074a04e9d2477fb76490311e2fedcbf70fa54c17dfec1f5fa",
+    "W8_schedule": "6a7828f3aa5f0ba17cd365295489a09b861f4fa8eaa0f4c00c7c05ac652987e7",
+    "W8_sources": "6290b6a501ac5adf33ce693c2c4dc92d5f371ffdc3e6c6ba1da83ca6d1b623c5",
+    "history_0": "10fe618c25a0ba2acac56f28734a98a6590af660d83a97f631b93c935ec9cd55",
+    "history_1": "2e7cd075bf5124ce8e2cdc1bae2d1a32d0ce9989ab672331278b9f514be11061"
+  },
+  "state": "DRAFT_NOT_SCORING_GO",
+  "version": "A::PROFILE-INCREMENT-TO-RELEASE-01-v2-saved-law-scoring-v1"
+}
