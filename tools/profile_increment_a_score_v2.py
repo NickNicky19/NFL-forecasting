@@ -1,4 +1,4 @@
-"""Saved-vector scoring of the four fixed Leaf-CDF arms; no fitted inference.
+"""Saved-vector scoring of the named completed Leaf-CDF arms; no inference.
 
 Reuse C's bound status/summary and A's previously reviewed source qualification.
 Cached empirical laws are evaluated at exact retained lines. No model loading,
@@ -196,6 +196,12 @@ def run(args):
           and plan.get("registered_by") == "/root", "root post-freeze scoring GO required")
     check(plan.get("candidate_ids") == CANDIDATES and plan.get("paired_candidate_ids") == PAIRS
           and plan.get("cohorts") == COHORTS, "finite comparison roster/masks differ")
+    completed_arms = plan.get("completed_arms")
+    check(completed_arms in [ARMS[:3], ARMS], "exact named three-arm or four-arm freeze required")
+    pending_arms = ARMS[len(completed_arms):]
+    completed_products = [arm+"::"+product for arm in completed_arms for product in PRODUCTS]
+    check(plan.get("pending_arms") == pending_arms and plan.get("stable_core_candidate_ids") == completed_products,
+          "completed-product stable core and pending-arm bindings differ")
     budget = plan["resources"]
     check(budget == dict(CPU_seconds=400, wall_seconds=900, RSS_bytes=3*1024**3, private_view_max_bytes=131072), "fixed scoring budget differs")
     for name, expected in plan["code_sha256"].items():
@@ -225,15 +231,18 @@ def run(args):
     store = guard.ProfileIncrementStore(ROOT, plan["allocation"]["path"], plan["allocation"]["sha256"], root_go=guard.GO)
     receipt_raw = read_ref(plan["execution_receipt"])
     receipt = json.loads(receipt_raw)
-    check(receipt["state"] == "FROZEN_FORECASTS_COMPLETE_UNSCORED" and receipt["version"] == "PROFILE-INCREMENT-TO-RELEASE-01-A-v2", "complete new freeze required")
+    expected_state = "FROZEN_NAMED_THREE_ARMS_DEFENSE_PENDING" if pending_arms else "FROZEN_FORECASTS_COMPLETE_UNSCORED"
+    check(receipt["state"] == expected_state and receipt["version"] == "PROFILE-INCREMENT-TO-RELEASE-01-A-v2", "named completed freeze required")
+    check(receipt.get("completed_arms", ARMS) == completed_arms and receipt.get("pending_arms", []) == pending_arms,
+          "receipt completed/pending arms differ from the bound scoring protocol")
     check(receipt["forecasts"]["sha256"] == plan["frozen_forecasts_sha256"], "new frozen forecast digest differs")
     frozen = store.read(receipt["forecasts"]["id"], receipt["forecasts"]["sha256"])
     decoded = json.loads(gzip.decompress(frozen))
     if receipt.get("forecasts_format") == "IMMUTABLE_ORDERED_PART_MANIFEST_V1":
-        check(decoded.get("format") == receipt["forecasts_format"] and decoded.get("arm_order") == ARMS
-              and len(decoded.get("parts", [])) == len(ARMS), "ordered forecast-part format differs")
+        check(decoded.get("format") == receipt["forecasts_format"] and decoded.get("arm_order") == completed_arms
+              and len(decoded.get("parts", [])) == len(completed_arms), "ordered completed forecast-part format differs")
         newrows = []
-        for arm, part in zip(ARMS, decoded["parts"]):
+        for arm, part in zip(completed_arms, decoded["parts"]):
             check(part["arm"] == arm, "forecast-part arm order differs")
             part_body = store.read(part["id"], part["sha256"])
             check(len(part_body) == part["bytes"], "forecast-part exact bytes differ")
@@ -247,7 +256,7 @@ def run(args):
     check(len(newrows) == receipt["forecast_rows"], "new frozen row count differs")
     newmap = {}
     for row in newrows:
-        check(row["arm"] in ARMS and row["target"] == "rush_yd" and row["position"] == "RB", "new frozen recipe/role differs")
+        check(row["arm"] in completed_arms and row["target"] == "rush_yd" and row["position"] == "RB", "new frozen recipe/role differs")
         k = row["arm"], key(row)
         check(k not in newmap, "ambiguous new frozen player-game")
         newmap[k] = row
@@ -351,6 +360,8 @@ def run(args):
     memberships = []
     def point_and_law(candidate, query, line=None):
         k = key(query)
+        if candidate in NEW and candidate.split("::", 1)[0] in pending_arms:
+            return None, None, "RESOURCE_PENDING", "UNAVAILABLE_FORECAST"
         if query.get("identity_reason") is not None:
             return None, None, query["identity_reason"], "UNAVAILABLE_FORECAST"
         if candidate in CONSTANTS:
@@ -404,8 +415,8 @@ def run(args):
             row["status"] = common.status(row)
             board[candidate].append(row)
             memberships.append([candidate, offer["opportunity"], point, row["p_under"], row["p_push"], row["p_over"], selected, row["status"], why, fb])
-    core_board = set.intersection(*[{r["opportunity_key"] for r in board[c] if r["selected_side"] is not None} for c in NEW])
-    core_broad = set.intersection(*[{r["opportunity_key"] for r in broad[c] if old.finite(r["point"])} for c in NEW if not c.endswith("P2")])
+    core_board = set.intersection(*[{r["opportunity_key"] for r in board[c] if r["selected_side"] is not None} for c in completed_products])
+    core_broad = set.intersection(*[{r["opportunity_key"] for r in broad[c] if old.finite(r["point"])} for c in completed_products if not c.endswith("P2")])
     for rows in board.values():
         for row in rows:
             if row["opportunity_key"] in core_board:
@@ -419,14 +430,17 @@ def run(args):
     for period, weeks in periods:
         for cohort in COHORTS:
             for candidate in CANDIDATES:
+                candidate_state = "RESOURCE_PENDING" if candidate in NEW and candidate.split("::", 1)[0] in pending_arms else "FROZEN_OR_CONTROL"
                 numer = [r for r in broad[candidate] if r["week"] in weeks and cohort in r["cohorts"]]
-                summaries.append(dict(period=period, cohort=cohort, candidate_id=candidate, population="BROAD_QUERIES", numerical=numerical_product(candidate,numer,old)))
+                summaries.append(dict(period=period, cohort=cohort, candidate_id=candidate, execution_state=candidate_state,
+                    population="BROAD_QUERIES", numerical=numerical_product(candidate,numer,old)))
                 br = [r for r in board[candidate] if r["week"] in weeks and cohort in r["cohorts"]]
                 for panel in ["ALL"] + sorted({r["source_panel"] for r in br}):
                     for week in ["ALL"] + weeks:
                         rr = [r for r in br if (panel == "ALL" or r["source_panel"] == panel) and (week == "ALL" or r["week"] == week)]
                         actual_weeks = sorted({r["week"] for r in rr if r["status"] in ["WIN", "LOSS", "PUSH"] and r["evidence_tier"] == "ACTUAL_RECORDED_QUOTE_TIMING_UNVERIFIED"})
                         summaries.append(dict(period=period, cohort=cohort, candidate_id=candidate, source_panel=panel, week_view=week,
+                            execution_state=candidate_state,
                             population="RETAINED_THRESHOLD_BOARD", **common.summary(rr), numerical=numerical_product(candidate,rr,old), probability=probability_scores(rr),
                             actual_recorded_line_scored_weeks=actual_weeks, five_actual_week_duration_floor=len(actual_weeks)>=5,
                             diagnostic_scored_weeks=sorted({r["week"] for r in rr if r["status"] in ["WIN", "LOSS", "PUSH"]}),
@@ -438,8 +452,10 @@ def run(args):
                     a = [r for r in aa if panel == "ALL" or r["source_panel"] == panel]
                     b = [r for r in bb if panel == "ALL" or r["source_panel"] == panel]
                     pairs.append(dict(period=period, cohort=cohort, source_panel=panel, left=left, right=right,
+                        execution_state="RESOURCE_PENDING" if any(c in NEW and c.split("::", 1)[0] in pending_arms for c in [left,right]) else "SCORING_EXECUTED",
                         **old.paired(a,b,np), probability=paired_probability(a,b,old,np)))
     view = dict(version=VERSION, protocol_sha256=args.protocol_sha256, execution_receipt_sha256=sha(receipt_raw),
+        completed_arms=completed_arms, pending_arms=pending_arms, stable_core_candidate_ids=completed_products,
         old_execution_receipt_sha256=sha(old_raw), frozen_forecasts=receipt["forecasts"], old_frozen_forecasts=old_receipt["forecasts"],
         query_reference=query_ref, cohort_reference=cohort_ref, query_profile_input_reference=input_ref, source_refs=refs,
         candidate_ids=CANDIDATES, paired_candidate_ids=PAIRS, cohorts=COHORTS,
@@ -451,9 +467,13 @@ def run(args):
     payload = lzma.compress(enc(view), preset=6)
     check(len(payload) <= budget["private_view_max_bytes"], "private lossless score view exceeds registered128KiB")
     PHASE = "NATIVE_SCORE_VIEW_PERSISTENCE"
-    view_ref = store.put("PROFILE_INCREMENT_SCORING_VIEW_V1.json.xz", payload)
+    view_name = "PROFILE_INCREMENT_SCORING_VIEW_PARTIAL_R0_R2_V1.json.xz" if pending_arms else "PROFILE_INCREMENT_SCORING_VIEW_V1.json.xz"
+    view_ref = store.put(view_name, payload)
     check(store.read(view_ref["id"], view_ref["sha256"]) == payload, "score view readback differs")
-    result = dict(version=VERSION, state="FROZEN_POINT_AND_EXACT_LINE_LAW_SCORING_COMPLETE", protocol_sha256=args.protocol_sha256,
+    result_state = "FROZEN_NAMED_THREE_ARMS_SCORING_COMPLETE_DEFENSE_PENDING" if pending_arms else "FROZEN_POINT_AND_EXACT_LINE_LAW_SCORING_COMPLETE"
+    result = dict(version=VERSION, state=result_state, protocol_sha256=args.protocol_sha256,
+        completed_arms=completed_arms, pending_arms=pending_arms, stable_core_candidate_ids=completed_products,
+        pending_candidate_states={arm+"::"+product: "RESOURCE_PENDING" for arm in pending_arms for product in PRODUCTS},
         candidate_ids=CANDIDATES, summaries=summaries, paired=pairs, source_sha256=source_hashes,
         execution_receipt_sha256=sha(receipt_raw), old_execution_receipt_sha256=sha(old_raw), private_scorecard_view=view_ref,
         W8_source_and_qualification=w8meta, common_new_core_mask_sha256=sha(enc(sorted(core_board))),
