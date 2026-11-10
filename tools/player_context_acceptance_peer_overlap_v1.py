@@ -151,6 +151,9 @@ def run(args):
         os.environ[name] = '1'
     import numpy as np
     import pandas as pd
+    STATE['phase'] = 'PARQUET_RUNTIME_DEPENDENCY'
+    import pyarrow as pa
+    pa.set_cpu_count(1);pa.set_io_thread_count(1);pa.set_memory_pool(pa.system_memory_pool())
     import nfl_lab  # Own package before frozen storage helper loads its dependencies.
     from tools import abc_a_dynamic_carry_wave_v1 as base
     from tools import category_topfive_matched12_storage_v1 as storage
@@ -163,10 +166,10 @@ def run(args):
         if sha((cache / Path(ref['path']).name).read_bytes()) != ref.get('sha256',ref.get('SHA256')):
             raise ValueError('canonical evaluator binding changed')
     sys.path.insert(0, str(cache)); common = importlib.import_module('abc_championship_v2')
-    # The approved existing source helper verifies its retained capsule/member hashes.
+    # Source metadata identifies exactly the same approved offers/outcomes without
+    # loading unrelated carry training/query/history features or constructing models.
     STATE['phase'] = 'QUALIFIED_PRIVATE_SOURCE_READ'
-    b, c, g, fr, frozen, train, history, queries = base.inputs(pd)
-    del train, history, queries, frozen
+    b, c, g, fr = base.sources()
     with zipfile.ZipFile(io.BytesIO(base.pin(g['offers']))) as z:
         offers = pd.read_parquet(io.BytesIO(z.read(g['offers']['member'])))
     with zipfile.ZipFile(io.BytesIO(base.pin(g['qualified_labels']))) as z:
@@ -324,7 +327,7 @@ def run(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--protocol',type=Path,default=OUT/'PEER_PROTOCOL_V1.json')
+    parser.add_argument('--protocol',type=Path,default=OUT/'PEER_PROTOCOL_V2.json')
     parser.add_argument('--protocol-sha256',required=True)
     parser.add_argument('--c-rows',type=Path,default=Path('/tmp/acceptance-c-review/artifacts/player-context-matchup-01/v1.1/NUMERICAL_ROWS.json.gz'))
     parser.add_argument('--c-features',type=Path,default=Path('/tmp/acceptance-c-review/artifacts/player-context-matchup-01/v1.1/FEATURE_EXPORT.json.gz'))
