@@ -1,0 +1,37 @@
+{
+  "example_only": true,
+  "contains_real_player_or_source_rows": false,
+  "profile_version": "A::PLAYER-CONTEXT-COMPLETION-DECISION-01-efficiency-v1",
+  "season": 2090,
+  "week": 8,
+  "game_id": "FICTIONAL-EVENT",
+  "player_id": "FICTIONAL-CANONICAL-ID",
+  "historical_team": "FICTIONAL-TEAM",
+  "opponent": "FICTIONAL-OPPONENT",
+  "cutoff_utc": "2090-10-01T12:00:00Z",
+  "source_information_max_utc": null,
+  "lookback_appearances": 8,
+  "state": "NO_ELIGIBLE_SOURCE_PLAYER_HISTORY",
+  "eligible_player_games": 0,
+  "eligible_player_carries": 0,
+  "historical_teams": [],
+  "source_policy": "CURRENT_VINTAGE_RECONSTRUCTION_WITH_SEVEN_DAY_PROXY",
+  "tendencies": [
+    {
+      "actor": "own",
+      "group": "direction",
+      "value": "left",
+      "metric": "yards",
+      "numerator": 0.0,
+      "denominator": 0.0,
+      "support_carries": 0,
+      "support_games": 0,
+      "lookback_appearances": 8,
+      "raw": null,
+      "shrunk": 4.0,
+      "latest_eligible_clock": null,
+      "state": "UNSUPPORTED_SHRUNK_PRIOR"
+    }
+  ],
+  "example_scope": "One tendency shown for schema readability. Execution retains all registered tendencies, not only supported cells. A zero numerator with zero support is not an observed played-zero result."
+}

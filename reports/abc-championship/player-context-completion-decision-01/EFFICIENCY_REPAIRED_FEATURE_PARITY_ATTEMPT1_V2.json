@@ -1,0 +1,18 @@
+{
+  "state": "FEATURE_ONLY_WRAPPER_RECIPE_MISMATCH_RETAINED",
+  "phase": "PREGO_REPRESENTATIVE_FEATURE_PARITY",
+  "adapter_sha256": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+  "target_query_rows": 8,
+  "finding": "Cold-query support-count columns differ when explicit NaT query clocks remove the query's source group. Cached exact audited preparation used a query-only kickoff-plus-seven-day nonobservation placeholder; all target statistics remain null. Finite mean fields and both source clocks agreed.",
+  "source_clock_changed_rows": 0,
+  "assumed_source_clock_changed_rows": 0,
+  "correction": "Match the existing audited query-only internal placeholder recipe, require it after every target cutoff, and reset all external query outcome clocks to NaT. Do not fill an unknown historical clock or read a target outcome.",
+  "prediction_impact": "NOT_MEASURED; no models or predictions were loaded or executed",
+  "CPU_seconds": null,
+  "resource_note": "The first process did not retain a CPU counter before its feature-only assertion exit; no actual CPU value is invented.",
+  "new_fits": 0,
+  "model_loads": 0,
+  "predictive_inference": 0,
+  "scores": 0,
+  "private_writes": 0
+}

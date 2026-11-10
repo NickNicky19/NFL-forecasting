@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A conditional rushing efficiency as-of profile v1",
+  "type": "object",
+  "required": ["profile_version", "season", "week", "game_id", "player_id", "historical_team", "opponent", "cutoff_utc", "source_information_max_utc", "lookback_appearances", "state", "tendencies"],
+  "properties": {
+    "profile_version": {"const": "A::PLAYER-CONTEXT-COMPLETION-DECISION-01-efficiency-v1"},
+    "season": {"type": "integer"},
+    "week": {"type": "integer", "minimum": 1, "maximum": 18},
+    "game_id": {"type": ["string", "null"]},
+    "player_id": {"type": ["string", "null"], "description": "Canonical GSIS identity; null requires an explicit unavailable state and original source identity, never a fabricated GSIS ID"},
+    "historical_team": {"type": "string", "description": "Query's source-bound team; historical contributing teams are retained separately"},
+    "opponent": {"type": "string"},
+    "cutoff_utc": {"type": "string", "format": "date-time"},
+    "source_information_max_utc": {"type": ["string", "null"]},
+    "lookback_appearances": {"const": 8},
+    "state": {"enum": ["SUPPORTED_CARRIES", "SUPPORTED_PLAYED_ZERO_ONLY", "NO_ELIGIBLE_SOURCE_PLAYER_HISTORY", "UNAVAILABLE_CANONICAL_ID", "UNAVAILABLE_CANONICAL_EVENT"]},
+    "eligible_player_games": {"type": ["integer", "null"], "minimum": 0},
+    "eligible_player_carries": {"type": ["integer", "null"], "minimum": 0},
+    "source_identity": {"type": "object", "required": ["player_namespace", "player_id", "event_namespace", "event_id"]},
+    "historical_teams": {"type": "array", "items": {"type": "string"}},
+    "source_policy": {"const": "CURRENT_VINTAGE_RECONSTRUCTION_WITH_SEVEN_DAY_PROXY"},
+    "tendencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["actor", "group", "value", "metric", "numerator", "denominator", "support_carries", "support_games", "lookback_appearances", "raw", "shrunk", "latest_eligible_clock", "state"],
+        "properties": {
+          "actor": {"enum": ["own", "team", "opp"]},
+          "group": {"enum": ["direction", "gap", "down", "distance"]},
+          "value": {"type": "string"},
+          "metric": {"type": "string"},
+          "numerator": {"type": "number", "description": "Signed yard sums and conditional residual sums can be negative"},
+          "denominator": {"type": "number", "minimum": 0},
+          "support_carries": {"type": "integer", "minimum": 0},
+          "support_games": {"type": "integer", "minimum": 0},
+          "lookback_appearances": {"const": 8},
+          "raw": {"type": ["number", "null"]},
+          "shrunk": {"type": "number"},
+          "latest_eligible_clock": {"type": ["string", "null"]},
+          "state": {"enum": ["SUPPORTED", "UNSUPPORTED_SHRUNK_PRIOR"]}
+        }
+      }
+    }
+  },
+  "allOf": [{"if": {"properties": {"player_id": {"type": "null"}}}, "then": {"required": ["source_identity", "unavailable_reason"], "properties": {"state": {"enum": ["UNAVAILABLE_CANONICAL_ID", "UNAVAILABLE_CANONICAL_EVENT"]}}}}],
+  "$comment": "Every original query remains represented, including unseen, zero-carry-history and unavailable-canonical-identity players. Explicitly unknown historical clocks are rejected. Target-game outcomes, actual N and actual context mix are never needed. Source histories and real player profiles remain private."
+}

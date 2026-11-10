@@ -1,0 +1,20 @@
+{
+  "codec": "LOSSLESS_PROFILE_SCHEMA_CLOCK_FACTORIZATION_V1",
+  "compression": "XZ preset3",
+  "logical_schema": "EFFICIENCY_PROFILE_SCHEMA_V1.json",
+  "container": {
+    "definitions": "Ordered tendency definitions: constants hold actor/group/value/metric/lookback/prior strength; fields lists the exact remaining field names",
+    "profiles": "Each record retains the full profile identity and state, one local sorted clock table, and an ordered matrix of tendency values",
+    "clock_columns": "Every nonnull field ending _clock is replaced with an exact local clock-table index; null clocks stay null",
+    "all_other_columns": "Raw numerators, denominators, support counts, raw estimates, shrunken estimates and states are retained as exact original JSON values"
+  },
+  "decode": "tools.player_context_completion_efficiency_v1.unpack_profiles",
+  "parity": "Canonical sorted-key JSON of every decoded real profile equals its uncompressed original exactly",
+  "preparation_sizes": {
+    "2025": {"profiles": 923, "bytes": 501492},
+    "2026_weeks1_to7": {"profiles": 1244, "bytes": 1591360},
+    "total_bytes": 2092852
+  },
+  "rights": "Schema and fictional examples public; actual player profile packages stay private under the existing guarded allocation",
+  "preparation_writes_private_artifacts": false
+}
