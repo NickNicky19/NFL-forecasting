@@ -1,0 +1,35 @@
+{
+  "id": "A-NEXT02-FRESHNESS-HISTORICAL-SOURCE-CUTOFF-REPAIR-v2",
+  "UTC": "2026-11-10T19:47:52.921344+00:00",
+  "state": "PASS_SOURCE_ONLY_COUNTEREXAMPLE_AND_MINIMAL_REPAIR",
+  "classification": "VERIFIED_NEW_UNEXECUTED_ADAPTER_DEFECT; real metadata root confirmation remains separate",
+  "source_evidence": [
+    {
+      "path": "tools/player_context_completion_efficiency_v1.py",
+      "line": 369,
+      "meaning": "Old source assembly sets historical source cutoff to its kickoff"
+    },
+    {
+      "path": "nfl_lab/player_context_completion_features_v1.py",
+      "line": 137,
+      "meaning": "Source feature builder fills optional cutoff, distinct from explicitly unknown outcome clock"
+    }
+  ],
+  "repair": "Only rebuild_queries passes historical_source=True; raw historical source internal feature-origin cutoff is kickoff. Training targets and actual future query cutoffs stay strict. outcome_available_utc is unchanged including NaT.",
+  "original_source_sha256": "118ac2f8f9dc86db5da6d623f66ffd5fe090248faa30bb036a64d88fae07b882",
+  "repaired_source_sha256": "a634c881f3e1a163ad501c68013821790cd0a99c652fea28b4fdc6c27ee74843",
+  "checks": [
+    "V1 minimal counterexample reproduced; V2 default/training cutoff checks unchanged",
+    "V2 original/48h historical source assembly exactly matches old explicit kickoff-source recipe on all30 fields",
+    "Explicit unknown outcome availability is retained unknown under both policies; never filled at kickoff",
+    "Actual future-query missing or postkickoff cutoffs remain rejected"
+  ],
+  "activity": {
+    "NFL_rows_read": 0,
+    "native_access": 0,
+    "fits": 0,
+    "model_loads": 0,
+    "CPU_seconds": 0.25490885200000013
+  },
+  "scope": "No completed NFL forecasts or original scores implicated. V1 new package stopped before any fit; no automatic retry."
+}

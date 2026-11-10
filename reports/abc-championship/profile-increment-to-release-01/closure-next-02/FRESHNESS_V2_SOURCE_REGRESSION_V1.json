@@ -1,0 +1,26 @@
+{
+  "state": "PASS_EXISTING_ALL_SOURCE_FIXTURES_ON_REPAIRED_V2",
+  "UTC": "2026-11-10T19:48:20.033559+00:00",
+  "fixture_original_sha256": "8deb702b73360c8d69fd6b22b4ed259199c20427ea1eed16ccff6ed9cc99c998",
+  "import_only_substitution": "profile_freshness_a_v1 -> profile_freshness_a_v2; fixture bytes unchanged",
+  "repaired_source_sha256": "a634c881f3e1a163ad501c68013821790cd0a99c652fea28b4fdc6c27ee74843",
+  "result": {
+    "CPU_seconds": 0.6652410940000001,
+    "NFL_observations": 0,
+    "checks": [
+      "Strict7dayboundary versusregistered48h; no future query outcome required",
+      "KEY+CTX shuffled row alignment preserves exact zero/null; missing/duplicate/context conflict rejected",
+      "Same-week Thursday-to-Sunday48h history admitted after teamchange: mean13/prior1;7day remainsNaN/prior0 and actual-consumed age agrees",
+      "Multiplayer full-versus-own-source projection exact on all30 consumed fields; non-own dependency rejects optimization",
+      "Future record and target-label mutation do not change earlier base features",
+      "Unknown, nonproxy and authenticated-coincident+7 clocks preserved; double application rejected",
+      "Old7day constructor/profile exact;48h updates source membership and internal earlier-opponent priors",
+      "Future contextual rows do not change earlier profiles; unseen history is prior/undefined, not observedzero"
+    ],
+    "fits": 0,
+    "model_loads": 0,
+    "new_private_bytes": 0,
+    "state": "PASS_FICTIONAL_SOURCE_POLICY_ONLY"
+  },
+  "no_NFL_or_native_access": true
+}
