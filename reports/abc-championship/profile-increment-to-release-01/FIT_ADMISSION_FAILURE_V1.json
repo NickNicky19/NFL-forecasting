@@ -1,0 +1,28 @@
+{
+  "version": "PROFILE-INCREMENT-A-ADMISSION-FAILURE-v1",
+  "UTC": "2026-11-10T12:04:28.233763+00:00",
+  "phase": "ADMISSION",
+  "state": "FAILED_BEFORE_ANY_FIT",
+  "code_SHA256": {
+    "guard": "b8b93327752c17873942efd51f603bce1a9898b407cdf41211cf08deb5b864fc",
+    "runner": "a6d59fe678282ee0fbf47a80ebf8f03b342fe258631f909fdc998b48cca027b2"
+  },
+  "protocol_SHA256": "5e5195ef8c1cf7ca7ebaa4d7569c63d40e5f530c454d09b779384a734618147c",
+  "error_type": "ValueError",
+  "error_sha256": "1ba488f1c8f4f3213b96658df8a058347d1d5d696084caab53906321159cd10b",
+  "error": "baseline inode changed size",
+  "fits_attempted": 0,
+  "fits_returned": 0,
+  "training_seconds": 0,
+  "CPU_seconds": null,
+  "resources_missing_reason": "Failed process emitted no completed CPU/RSS receipt; not recorded as0. Native objects and stdoutfailure preserved.",
+  "consumed_marker": {
+    "id": "CONSUMED.json",
+    "bytes": 157,
+    "sha256": "182be1b53ce1ba6df78e2bfeddc72f43e3d7d885d7ac2caa60ca2d1ea20ae682"
+  },
+  "private_plan_native_digest": "5e5195ef8c1cf7ca7ebaa4d7569c63d40e5f530c454d09b779384a734618147c",
+  "readonly_trace_sha256": "f5a2dfabad628249492aaa01aa420089f61b3103d853ceaa3915f52b37cac2f4",
+  "scoped_evidence": "One baseline inodeID had3878bytes; sameIDnow4439bytes identifies exact currentpublishedplan/CASblob. NativeoriginalouterintegrityscanPASS. Baseline didnotretain previouspath/content, so priorgeneration identityUNKNOWN. Supportsinode-numberreuse; noNFLmodel/feature defect demonstrated.",
+  "recovery_rules": "Preserveoriginalallocation/baseline/marker/failure; conservativepre-recoveryoldcharge; newcontentgenerationbaselineonlyforfutureownedwrites; no oldcapreset, no prediction-semanticchange; explicitreviewedGOrequired."
+}

@@ -29,7 +29,7 @@ VERSION = "PROFILE-INCREMENT-TO-RELEASE-01-A-v2"
 KEY = ["season", "week", "game_id", "player_id"]
 CTX = ["team", "opponent", "position", "kickoff_utc", "cutoff_utc"]
 ARMS = ["RB_ONLY_LEAF_BASE", "R1_RB_ONLY_LEAF_SUPPORT", "R2_RB_ONLY_LEAF_PLAYER_OFFENSE", "R3_RB_ONLY_LEAF_DEFENSE"]
-STATE = dict(phase="NOT_STARTED", fits_attempted=0, fits_returned=0, artifacts=[], models={}, forecast_parts=[])
+STATE = dict(phase="NOT_STARTED", fits_attempted=0, fits_returned=0, fit_CPU_seconds=0., artifacts=[], models={}, forecast_parts=[])
 
 
 def enc(value):
@@ -101,7 +101,10 @@ def runtime(plan):
     for variable in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
         os.environ[variable] = "2"
     budget = plan["resources"]
-    resource.setrlimit(resource.RLIMIT_CPU, (1900, budget["CPU_seconds"]))
+    # Conservative hard enforcement of the existing1200CPU training ceiling:
+    # include all source/accounting overhead rather than allowing one fit to
+    # overrun a stop-between-fits counter. Registered outer maximum is2000.
+    resource.setrlimit(resource.RLIMIT_CPU, (1100, 1200))
     resource.setrlimit(resource.RLIMIT_AS, (budget["RSS_bytes"],) * 2)
     def exhausted(signum, _frame):
         if signum == signal.SIGXCPU:
@@ -167,9 +170,18 @@ def run(plan, public_receipt):
         STATE.pop("pending_model_object", None)
         return ref
     try:
-        put("CONSUMED.json", enc(dict(version=VERSION, UTC=now(), fits=4,
-            state="CONSUMED_BEFORE_SOURCE_DECODE", no_retry=True)))
-        put("PRIVATE_EXECUTION_PLAN.json", STATE.pop("plan_raw"))
+        recovery = plan.get("admission_recovery", {})
+        if (recovery.get("previous_fits_attempted") != 0 or recovery.get("previous_fits_returned") != 0
+                or recovery.get("remaining_new_fits") != 4):
+            raise ValueError("explicit zero-fit admission recovery acknowledgment required")
+        if any(store.destination.glob("MODEL*")) or any(store.destination.glob("FIT_*_CONSUMED.json")):
+            raise ValueError("existing fit slots/models forbid an admission-only resume")
+        old_plan_path = store.destination / "PRIVATE_EXECUTION_PLAN.json"
+        store.prior.validate_reference(old_plan_path, recovery["original_private_plan_sha256"])
+        put("CONSUMED_ADMISSION_RECOVERY_V3.json", enc(dict(version=VERSION, UTC=now(), fits=4,
+            state="EXPLICIT_ROOT_ADMISSION_RECOVERY_BEFORE_ANY_FIT", previous_fits_attempted=0,
+            previous_fits_returned=0, original_private_plan_sha256=recovery["original_private_plan_sha256"], no_automatic_retry=True)))
+        put("PRIVATE_EXECUTION_PLAN_ADMISSION_RECOVERY_V3.json", STATE.pop("plan_raw"))
         data = old.load_inputs(pd)
         audit = old.audited_feature_binding(data)
         put("REUSED_AUDIT_BINDING.json", enc(audit))
@@ -263,17 +275,24 @@ def run(plan, public_receipt):
         all_rows = []
         for index, arm in enumerate(ARMS):
             category = increment.arm_category(data["category"], "R" + str(index), modeled_roles=["RB"])
+            if STATE["fit_CPU_seconds"] >= 1200:
+                raise ValueError("unchanged existing1200CPU cumulative model-training allowance exhausted")
             store.reserve(plan["resources"]["first_model_max_bytes"])
             STATE["fits_attempted"] += 1
             STATE["phase"] = "FIT_" + arm
             put(f"FIT_{index + 1}_CONSUMED.json", enc(dict(arm=arm, UTC=now(), attempt=STATE["fits_attempted"], no_retry=True)))
             fit_cpu, fit_wall = time.process_time(), time.monotonic()
-            with threadpool_limits(limits=2):
-                model = cdf.LeafCDFModel.fit(augmented, category, "base")
+            try:
+                with threadpool_limits(limits=2):
+                    model = cdf.LeafCDFModel.fit(augmented, category, "base")
+            finally:
+                STATE["fit_CPU_seconds"] += time.process_time()-fit_cpu
             STATE["fits_returned"] += 1
             STATE["pending_model_object"] = model
             model_ref = save_model("MODEL_2026_" + arm + ".joblib", model)
             STATE["models"][arm] = model_ref
+            if STATE["fit_CPU_seconds"] > 1200:
+                raise ValueError("returned model retained; unchanged1200CPU cumulative training allowance exceeded, no additional fits")
             if index == 0:
                 pilot = dict(arm=arm, model=model_ref, CPU_seconds=time.process_time()-fit_cpu,
                     wall_seconds=time.monotonic()-fit_wall, RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
@@ -301,6 +320,8 @@ def run(plan, public_receipt):
             source_and_profile_binding=source_binding, actual_weeks=sorted(map(int, qaug.week.unique())),
             scoring_state="NOT_SCORED_REUSE_PINNED_C_EVALUATOR_IN_SEPARATE_OWNER_STAGE",
             resources=dict(CPU_seconds=time.process_time()-cpu, wall_seconds=time.monotonic()-start,
+                model_fit_CPU_seconds=STATE["fit_CPU_seconds"], model_training_CPU_cap=1200,
+                effective_global_hard_CPU_seconds=1200, registered_outer_CPU_maximum=2000,
                 RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024), storage=store.checkpoint(),
             counts=dict(source_HTTP=0, new_original_issuances=0, production_writes=0, scoring=0))
         put("EXECUTION_RECEIPT.json", enc(receipt))
@@ -311,6 +332,8 @@ def run(plan, public_receipt):
     except BaseException as error:
         failure = dict(version=VERSION, state="FAILED_RETAINED_NO_AUTOMATIC_REFIT", UTC=now(),
             phase=STATE["phase"], fits_attempted=STATE["fits_attempted"], fits_returned=STATE["fits_returned"],
+            model_fit_CPU_seconds=STATE["fit_CPU_seconds"], model_training_CPU_cap=1200,
+            effective_global_hard_CPU_seconds=1200, registered_outer_CPU_maximum=2000,
             error_type=type(error).__name__, error_sha256=sha(str(error).encode()), artifacts=STATE["artifacts"])
         if STATE.get("pending_model_object") is not None:
             try:

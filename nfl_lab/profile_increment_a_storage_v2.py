@@ -25,6 +25,7 @@ OLD_VERSION = "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-forward-v1"
 OLD_RETAINED = 8 * 1024**2
 OLD_PEAK = 12 * 1024**2
 RECONCILIATION = "EXCLUDE_EXACT_NEW_SIBLING_INODES_FROM_OLD_WHOLE_PRIOR_DELTA_V1"
+ACCOUNTING_REVISION = "CONTENT_GENERATION_BASELINE_ADMISSION_RECOVERY_V3"
 
 
 def digest(body):
@@ -88,6 +89,39 @@ def inode_inventory(roots):
                     raise ValueError("native inode changed during inventory")
                 inodes[key] = stat.st_size
     return inodes
+
+
+def generation_inventory(roots):
+    """Bind content generations; inode-number reuse is not content mutation.
+
+    Native integrity scanning must precede this metadata/body-hash inventory.
+    A hardlink changes ctime, so timestamps cannot identify a CAS generation.
+    Identical aliases share this key; same-inode new content has a new key.
+    """
+    generations, seen = {}, {}
+    for root in roots:
+        root = Path(root)
+        if root.is_symlink():
+            raise ValueError("managed root cannot be a symlink")
+        if not root.exists():
+            continue
+        for path in root.rglob("*"):
+            if path.is_symlink():
+                raise ValueError("managed file cannot be a symlink")
+            if not path.is_file():
+                continue
+            stat = path.stat()
+            inode = stat.st_dev, stat.st_ino
+            if inode not in seen:
+                content_sha = digest(path.read_bytes())
+                after = path.stat()
+                if (stat.st_size, stat.st_mtime_ns, stat.st_ino) != (after.st_size, after.st_mtime_ns, after.st_ino):
+                    raise ValueError("file changed during content-generation inventory")
+                seen[inode] = (stat.st_size, content_sha)
+                generations[f"{stat.st_dev}:{stat.st_ino}:{stat.st_size}:{content_sha}"] = stat.st_size
+            elif seen[inode][0] != stat.st_size:
+                raise ValueError("alias size changed during generation inventory")
+    return generations
 
 
 def reconcile_owned(old_namespace_bytes, old_registration_charge, old_whole_prior_delta,
@@ -158,6 +192,7 @@ class ProfileIncrementStore:
             "failure_reserve_bytes": FAILURE_RESERVE, "protected_prior_plan_bytes": PROTECTED_PRIOR,
             "unchanged_capture_reserve_bytes": CAPTURE,
             "legacy_completion_reconciliation": RECONCILIATION,
+            "accounting_revision": ACCOUNTING_REVISION,
             "state": "ROOT_AND_INDEPENDENT_REVIEWED_ALLOCATION"}
         for key, value in required.items():
             if self.plan.get(key) != value:
@@ -184,34 +219,46 @@ class ProfileIncrementStore:
                     or self.old_state["retained_bytes"] != OLD_RETAINED
                     or self.old_state["peak_bytes"] != OLD_PEAK):
                 raise ValueError("legacy completion allocation changed")
-            if not self.destination.exists():
-                baseline = self.prior._scan()["forward_physical_bytes"]
-                baseline_inodes = inode_inventory(self.prior._roots)
-                if sum(baseline_inodes.values()) != baseline:
-                    raise ValueError("baseline inode map differs from native complete physical scan")
-                old_actual = max(unique_bytes(self.old_destination), baseline - self.old_state["baseline_prior_bytes"])
-                if old_actual > OLD_RETAINED:
-                    raise ValueError("old completion cap already exceeded before new allocation")
-                self.baseline_inodes = baseline_inodes
+            original_path = self.destination / "ALLOCATION_STATE.json"
+            self.prior.validate_reference(original_path, self.plan["original_allocation_state_sha256"])
+            original = json.loads(original_path.read_bytes())
+            if original["allocation_sha256"] != self.plan["amends_allocation_sha256"]:
+                raise ValueError("explicit original allocation amendment binding required")
+            state_path = self.destination / "ALLOCATION_ACCOUNTING_V3.json"
+            if not state_path.exists():
+                physical = self.prior._scan()["forward_physical_bytes"]
+                baseline_inodes = generation_inventory(self.prior._roots)
+                if sum(baseline_inodes.values()) != physical:
+                    raise ValueError("generation baseline differs from native physical scan")
+                # Every ambiguous pre-recovery object remains in the old floor;
+                # no V1 identity is reclassified or silently rewritten.
+                old_floor = max(unique_bytes(self.old_destination), physical-self.old_state["baseline_prior_bytes"])
+                if old_floor > OLD_RETAINED:
+                    raise ValueError("conservative old allocation floor exceeds unchanged cap")
+                self.baseline_inodes, self.old_floor = baseline_inodes, old_floor
                 self._admit(PEAK)
-                self.prior.register_root(self.destination)
                 baseline_body = gzip.compress(encoded(baseline_inodes), mtime=0)
-                baseline_path = self.destination / "BASELINE_PRIOR_INODES.json.gz"
+                baseline_path = self.destination / "BASELINE_PRIOR_CONTENT_GENERATIONS_V3.json.gz"
                 self.prior.write_bytes(baseline_path, baseline_body)
-                state = dict(version=VERSION, allocation_sha256=allocation_sha256,
-                    baseline_prior_bytes=baseline, old_charged_at_registration=old_actual,
+                state = dict(version=VERSION, accounting_revision=ACCOUNTING_REVISION,
+                    allocation_sha256=allocation_sha256, original_allocation_sha256=original["allocation_sha256"],
+                    original_allocation_state_sha256=self.plan["original_allocation_state_sha256"],
+                    baseline_prior_bytes=original["baseline_prior_bytes"],
+                    generation_baseline_prior_bytes=physical,
+                    old_charged_at_registration=old_floor,
                     old_baseline_prior_bytes=self.old_state["baseline_prior_bytes"],
                     old_allocation_sha256=self.old_state["allocation_sha256"],
                     baseline_prior_inode_ref=dict(id=baseline_path.name, bytes=len(baseline_body), sha256=digest(baseline_body)),
                     retained_bytes=RETAINED, peak_bytes=PEAK,
-                    legacy_completion_reconciliation=RECONCILIATION)
-                self.prior.write_bytes(self.destination / "ALLOCATION_STATE.json", encoded(state))
-            state_path = self.destination / "ALLOCATION_STATE.json"
+                    legacy_completion_reconciliation=RECONCILIATION,
+                    disposition="V1_BASELINE_STATE_FAILURES_PRESERVED_AMBIGUOUS_BYTES_NOT_DEDUCTED")
+                self.prior.write_bytes(state_path, encoded(state))
             self.prior.validate_reference(state_path)
             self.state = json.loads(state_path.read_bytes())
             if self.state["allocation_sha256"] != allocation_sha256 or self.state["version"] != VERSION:
                 raise ValueError("existing new allocation cannot be reset")
             self.baseline = self.state["baseline_prior_bytes"]
+            self.old_floor = self.state["old_charged_at_registration"]
             baseline_ref = self.state["baseline_prior_inode_ref"]
             baseline_path = self.destination / baseline_ref["id"]
             self.prior.validate_reference(baseline_path, baseline_ref["sha256"])
@@ -219,7 +266,7 @@ class ProfileIncrementStore:
             if len(baseline_body) != baseline_ref["bytes"]:
                 raise ValueError("immutable baseline inode map changed")
             self.baseline_inodes = json.loads(gzip.decompress(baseline_body))
-            if sum(self.baseline_inodes.values()) != self.baseline:
+            if sum(self.baseline_inodes.values()) != self.state["generation_baseline_prior_bytes"]:
                 raise ValueError("baseline physical binding differs")
             self._admit(0)
             self._usage()
@@ -234,8 +281,8 @@ class ProfileIncrementStore:
         # both the registered earlier plan and old completion namespace before
         # reserving this wave's unchanged finite peak.
         physical = self.prior._scan()["forward_physical_bytes"]
-        sibling = inode_inventory([self.destination])
-        old_actual = reconcile_owned(unique_bytes(self.old_destination), 0,
+        sibling = generation_inventory([self.destination])
+        old_actual = reconcile_owned(unique_bytes(self.old_destination), self.old_floor,
             physical - self.old_state["baseline_prior_bytes"], sibling, self.baseline_inodes)["old_reconciled_charged_bytes"]
         self.prior._require(PROTECTED_PRIOR + old_actual + PEAK)
 
@@ -252,7 +299,7 @@ class ProfileIncrementStore:
         # They remain conservatively charged by the old whole-prior delta as
         # well as native global accounting until an explicit attribution exists.
         reconciled = reconcile_owned(old_namespace, self.state["old_charged_at_registration"],
-            old_legacy_delta, inode_inventory([self.destination]), self.baseline_inodes)
+            old_legacy_delta, generation_inventory([self.destination]), self.baseline_inodes)
         old_reconciled = reconciled["old_reconciled_charged_bytes"]
         if old_reconciled > OLD_RETAINED:
             raise ValueError("old completion retained cap exceeded under ownership reconciliation")
