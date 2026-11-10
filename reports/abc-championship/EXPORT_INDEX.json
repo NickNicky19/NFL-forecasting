@@ -624,16 +624,149 @@
         "bytes": 17626,
         "sha256": "6c115b037e8ab9d8df41b8702d1bd4d66ff7d19de6832ec2473d1123d60c1593"
       }
+    },
+    {
+      "id": "A-profile-increment-closure-and-next-02",
+      "assignment": "PROFILE-INCREMENT-CLOSURE-AND-NEXT-02",
+      "report": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTED_CLOSURE_CHECKPOINT_V1.md",
+      "machine_results": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTION_SUMMARY_V1.json",
+      "discovery": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/README.md",
+      "state": "EXECUTED_OWNER_LOCAL_COMPARISONS;NO_NEW_SHARED_ADMISSION_OR_RELEASE",
+      "scientific_source_commit": "c2509c39ed8dfa0a44c5d29652282ecd0b9fdc2a",
+      "execution_local_HEAD": "f72e1f6ca998524c924069107921954e6d734872",
+      "exact_code_and_config": "FRESHNESS_EXECUTION_PROTOCOL_V2.json ac865ba52273e960eafcbbc7689edd6a8f3aeeab324259be3fcbcd0f17854266; registerednewfilehashesbinddirtyworkspace; notallchangesclaimedcommitted",
+      "C_source_commit": "471066ee8fd0745def26b8c5c1ae6bbcaf8f6d3e",
+      "B_source_commit": "62cbf5af364ad8b3a5d178cd7ed6221ee43c5f26",
+      "new_fits": 2,
+      "old_refits": 0,
+      "new_model_inference_rows": 2728,
+      "new_distinct_NFL_test_weeks": 0,
+      "new_original_forecasts": 0,
+      "primary_panel": {
+        "season": 2026,
+        "requested_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "actual_retained_line_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "diagnostic_weeks": [
+          6,
+          7
+        ],
+        "reference_only_weeks": [
+          8
+        ],
+        "eligible": 183,
+        "selected": 183,
+        "decided": 177,
+        "unknown_participation": 6,
+        "unavailable": 0,
+        "games": 53,
+        "role": "RB",
+        "evidence_tier": "CURRENT_VINTAGE_RECONSTRUCTED_TIMING_SENSITIVITY_QUOTE_TIMING_UNVERIFIED"
+      },
+      "new_exact_product_five_week": "DURATION_ONLY_NOT_PRIMARY_ADMISSION",
+      "freshness_scores": {
+        "path": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/freshness-public-v1/MANIFEST_V1.json",
+        "sha256": "a62ce459a9ef28e10ed5a52d28f3eddddbe847426ebfdb9ac56a1b8ac29b331a",
+        "public_readback": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/FRESHNESS_PUBLICATION_READBACK_V3.json",
+        "immutable_commit": "96f49510b8cfe3734e9499a1f3c6ae40a71531ac",
+        "complete_score_owner_local_sha256": "3d4dcc6301a13481836e38579d8faf824cc533feb6465173399979b1bf3c4f86",
+        "summary_cells": 6370,
+        "paired_cells": 3267,
+        "fallback_cells": 216
+      },
+      "saved_joins": [
+        {
+          "category": "rec",
+          "sessions": "A/C",
+          "annual_eligible": 469,
+          "annual_decided": 412,
+          "actual_line_weeks": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "mixed_eligible": 733,
+          "mixed_decided": 667,
+          "diagnostic_only_weeks": [
+            6,
+            7
+          ],
+          "new_C_R3_median_wins": 237,
+          "strongest_compatible_C_P1_mean_wins": 239,
+          "manifest": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/c03-public-v1/MANIFEST_V1.json"
+        },
+        {
+          "category": "pass_cmp",
+          "sessions": "A/B",
+          "annual_eligible": 88,
+          "annual_decided": 88,
+          "mixed_eligible": 144,
+          "new_B_R0_median_wins": 47,
+          "new_B_R2_median_wins": 40,
+          "new_B_R3_median_wins": 44,
+          "strongest_compatible_A_CatBoost_HGB_tied_wins": 52,
+          "manifest": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/b-completion-public-v2/MANIFEST.json"
+        }
+      ],
+      "rights": {
+        "analysis": "OWNER_LOCAL_APPROVED_INPUTS",
+        "public_export": "PERMITTED_AGGREGATES_CODE_RECEIPTS_ONLY",
+        "raw_rows_models": "RESTRICTED_EXISTING_OWNER_LOCAL_NATIVE_RESTORATION",
+        "retrieval": "ImmutablepublicGitHubpathsabove; restrictedrawrowsnotgrantedbyindex",
+        "retention": "ACTUAL18MEMBER_NATIVE_READBACK_AND_UNCHANGED_CAPS_CHECKPOINT_PASS; fullprivatebytesrecoverableunderexistingApermissions"
+      },
+      "C_received": "NOT_OBSERVED_FOR_THIS_NEW_RESULT_PACKAGE",
+      "C_admitted": "NOT_OBSERVED_FOR_THIS_NEW_RESULT_PACKAGE",
+      "consumer_acknowledgment": "NOT_OBSERVED",
+      "new_original_site_writes": 0,
+      "new_A_current_packet": 0,
+      "served_readonly_receipt": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/SERVED_METADATA_READONLY_V3.json",
+      "production_scope": "Onlyoriginalsiteownerreleases; currentincumbentmetadata/disabledresearchoverlayverified20:28UTC; norenderedAmodelclaim",
+      "remaining_owner_actions": "See exactowneractionandall12categorytablesinreport; no2025/2022-24actualpropclosureorpooledcompletionclaim",
+      "final_native_readback": {
+        "path": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/FINAL_NATIVE_READBACK_V2.json",
+        "sha256": "232322781a8dd92dd78626c6611706dfa4e3e0bb318e7109dc9eb288ebef8c34"
+      }
     }
   ],
   "prior_C_admission": "See the bound C canonical ledger; prior valid admissions are preserved. No new receipt is implied.",
-  "production": "A_READONLY;LATEST_CHECKED_SITE_COMMITTED_REFERENCE_BUILD;NO_NEW_A_PACKET_OR_SERVED_RESEARCH_PRODUCT",
+  "production": "A_READONLY;SERVED_METADATA_AND_HASH_MATCHED_OVERLAY_VERIFIED_2026-11-10T20:28:13Z;INCUMBENT_W10;ZERO_ACTIVE_RESEARCH_OVERLAY_ROWS;NO_NEW_A_PACKET_OR_RENDERED_A_MODEL_VERIFIED",
   "new_forecasts_issued": 0,
-  "requested_scope_completion": "PARTIAL_CHAMPIONSHIP; registered2026four-armAprofile/defensepackageCOMPLETE, originalfive-state recovery andCLeafreceptioncontrolcomplete; actualretainedofferweeks1-5 only, W6-7diagnostic/W8reference; no currentApacket/release",
-  "publication_readback": "reports/abc-championship/profile-increment-to-release-01/PUBLICATION_READBACK_V2.json",
+  "requested_scope_completion": "PARTIAL; namedjoinsand2fit2026timingsensitivityexecuted, full2026W1-8/all12/historicalchampionshipnotcomplete",
+  "publication_readback": {
+    "state": "JOINS_AND_TIMING_AGGREGATES_ACTUALLY_PUBLISHED_READ_BACK; FINAL_REPORT_INDEX_READBACK_RECEIPT_SEPARATE",
+    "joins_commit": "0f2a311137a42a50591c7a8178eed61eddf9d958",
+    "timing_commit": "96f49510b8cfe3734e9499a1f3c6ae40a71531ac"
+  },
   "current_C_inspected_ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
   "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0",
   "current_execution": {
+    "id": "A-profile-increment-closure-and-next-02",
+    "report": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTED_CLOSURE_CHECKPOINT_V1.md",
+    "machine_results": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTION_SUMMARY_V1.json",
+    "state": "EXECUTED_OWNER_LOCAL_COMPARISONS;NO_NEW_SHARED_ADMISSION_OR_RELEASE",
+    "prior_export_index_sha256": "4cc2862fad7e01dd0210528714d803ae5be5e3c67701c2e3758fd53a04d9385a",
+    "new_live_models": 0,
+    "new_current_A_packets": 0,
+    "C_admission": "NOT_OBSERVED"
+  },
+  "previous_current_execution": {
     "owner": "A",
     "task": "PROFILE-INCREMENT-TO-RELEASE-01/v2",
     "state": "COMPLETE_NAMED_2026_FOUR_ARM_PACKAGE",
@@ -647,5 +780,10 @@
     "score_protocol": "reports/abc-championship/profile-increment-to-release-01/FULL_FOUR_SCORING_GO_V2.json",
     "score_protocol_SHA256": "d2ed823778c8981d65befc68a6ba9d1c05df82aeb150cc0c3a0aaf779e926392",
     "next": "Separatelysize/register2025four-fitnumericalstage; current-source/producer/websiteownership unchanged"
+  },
+  "previous_production_state": "A_READONLY;LATEST_CHECKED_SITE_COMMITTED_REFERENCE_BUILD;NO_NEW_A_PACKET_OR_SERVED_RESEARCH_PRODUCT",
+  "production_receipts": {
+    "served": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/SERVED_METADATA_READONLY_V3.json",
+    "owner_incumbent_capture": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/CURRENT_INCUMBENT_PACKET_READBACK_V1.json"
   }
 }
