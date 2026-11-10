@@ -4,7 +4,7 @@
   "repository": "NickNicky19/NFL-forecasting",
   "canonical_coordinator": "NickNicky19/NFL-forecasting-NGS-C",
   "canonical_C_protocol": {
-    "ref": "fa503c1e1a9993e655a905195ce428edf630add5",
+    "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
     "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
     "protocol_id": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
     "protocol_SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
@@ -95,11 +95,16 @@
       "games": 81,
       "evidence_tier": "EXPOSED_CURRENT_VINTAGE_QUOTE_TIMING_UNVERIFIED_SOURCE_ROW_CONDITIONED_REPLAY",
       "qualification": "FIVE_WEEK_POINT_REPLAY_DURATION_ONLY;NO_PRIMARY_ADMISSION",
-      "C_received": "NOT_OBSERVED",
-      "C_admitted": "NOT_OBSERVED",
+      "C_received": "RECEIVED_SCOPED_OLDER_POINT_REPLAY_AND_A_C_REVIEW",
+      "C_admitted": "LIMITED_SCOPE_OWNER_LOCAL_AGGREGATES;NOT_RAW_ROW_OR_CURRENT_QUERY_PARITY",
       "publication": "PUBLICATION_COMPLETE_EXACT_REMOTE_READBACK",
       "result_commit": "74269fa6d18341e03c1c03ec8aeb55fea5492a15",
-      "remote_readback_files": 85
+      "remote_readback_files": 85,
+      "superseding_C_receipt": {
+        "commit": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+        "path": "reports/player-context-matchup-01/completion-decision-v1/UPDATED_PEER_RECEIPTS.json",
+        "sha256": "c6fe1f8cd9363cff3663c45421ccbeb895359fa85ec4a015a6a8a561cf79f41d"
+      }
     },
     {
       "id": "A-player-context-completion-decision-01",
@@ -147,13 +152,98 @@
       "result_commit": "ffd6c79af188566c7b3fde970c0ddf397712f354",
       "remote_readback_files": 14,
       "readback": "reports/abc-championship/player-context-completion-decision-01/PUBLICATION_READBACK_V1.json"
+    },
+    {
+      "id": "A-profile-increment-to-release-01-v2-recovered",
+      "owner": "A",
+      "report": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_AND_CONTROL_CHECKPOINT_V1.md",
+      "state": "EXECUTED_RECOVERY_AND_SAVED_CONTROL_COMPARISONS",
+      "producer_commits": {
+        "recovered_scores": "a69230bdd891a7c5cd71c592dad174767bbfb52a",
+        "C_retained_control": "f19f7541533110c2f801bece7fd15d4eb3751046",
+        "new_staged_registration": "85afda006e9f60ae01dac24b720552ab2c324745"
+      },
+      "artifacts": [
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_ANNUAL_NAMED_NJ_V1.csv",
+          "sha256": "26d57ae5d2cb7b8180fdfd153bf179b8d494c0496f86ff9738ce4547df11e933",
+          "bytes": 14348
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_SITE_RECORDED_DK_JURISDICTION_UNKNOWN_V1.csv",
+          "sha256": "ba033f7e0a03157f5f3b6581ce8efb62248da78883cf3296b88f06b72aa3a7ce",
+          "bytes": 11871
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_W8_SITE_REFERENCE_THRESHOLD_DIAGNOSTIC_V1.csv",
+          "sha256": "8a1c9a9659a7ce040601faed45ee247da31e2b02c3a05629dc2eeb49bf4fac90",
+          "bytes": 3354
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_NUMERICAL_V1.csv",
+          "sha256": "f866382f16f6eb043f9448d8ee21d2322dab91efa060c58c5bfad3d0e9f2ea29",
+          "bytes": 43268
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_PUBLICATION_SCOPE_V2.json",
+          "sha256": "a0a0e8c96c1e66868d0b3883981f9e5c97769efd6d5fbc57f0293a7e468991dd",
+          "bytes": 1825
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LEAF_RECEPTION_TABLES_V1.csv",
+          "sha256": "0ac525fb94cb625d8c8db2c3a901ed752d77e178dbd9efce7bc138e66a372598",
+          "bytes": 19205
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LEAF_RECEPTION_PAIRS_V1.csv",
+          "sha256": "ffe1c6ac1f84ead5b17400e766ce9b7b04593938ee14f60ebadd175a8316e19b",
+          "bytes": 51819
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LEAF_RECEPTION_RECEIPT_V1.json",
+          "sha256": "77362709111bdd258f7ae700596e2f48d5b110dffde0849e6620670e39e0f711",
+          "bytes": 13612
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LEAF_INDEPENDENT_CHECK_V1.json",
+          "sha256": "798cff475cf7d244e467d8bdd77499e8e756080c44eba914491b3689c7e668f3",
+          "bytes": 4836
+        }
+      ],
+      "independent_checks": [
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/INDEPENDENT_RECOVERED_SCORE_CHECK_V1.json",
+          "sha256": "830ca831dae1bdddeb3d4c321a83bb9f4189e36dd13021db7d517560cda8cbe6"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LEAF_INDEPENDENT_CHECK_V1.json",
+          "sha256": "798cff475cf7d244e467d8bdd77499e8e756080c44eba914491b3689c7e668f3"
+        }
+      ],
+      "rights": "PUBLIC_AGGREGATES_AND_CODE_ONLY;restrictedrows/modelsownerlocal;noadditionalsharingpermission",
+      "retrieval": "Exact producercommit/path viaGitHub; actualreadbackverified; ownerlocal losslessscoreviews underexistingnativepolicy",
+      "C_received": "NEW_PACKAGE_NOT_OBSERVED",
+      "C_admitted": "NOT_OBSERVED",
+      "consumer_receipt": "NOT_OBSERVED",
+      "actual_current_packets": 0,
+      "production_writes": 0
     }
   ],
   "prior_C_admission": "See the bound C canonical ledger; prior valid admissions are preserved. No new receipt is implied.",
   "production": "READONLY;committedstrictpresenceclassicmodelanddisabled0-rowresearchoverlayverified;freshservednotverified",
   "new_forecasts_issued": 0,
-  "requested_scope_completion": "PARTIAL;newmatchedrec/ATTandW8diagnostics executed;newrush5statesretained,clockrecoverycompletionUNKNOWNafterruntimeunavailable",
+  "requested_scope_completion": "PARTIAL; recovered five-state rushing scoring and additional C Leaf reception comparison complete. New four-fit RB profile/defense increment RUNNING_UNSCORED under FIT_PROTOCOL_V4; no primary release.",
   "publication_readback": "reports/abc-championship/player-context-completion-decision-01/PUBLICATION_READBACK_V1.json",
   "current_C_inspected_ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
-  "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0"
+  "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0",
+  "current_execution": {
+    "owner": "A",
+    "task": "PROFILE-INCREMENT-TO-RELEASE-01/v2",
+    "registration": "reports/abc-championship/profile-increment-to-release-01/FIT_PROTOCOL_V4.json",
+    "registration_sha256": "2c51eab327abb553974e074cef6189751d521e72fa777cc2b139a5e8b58ce660",
+    "state": "RUNNING_NOT_SCORED",
+    "maximum_new_fits": 4,
+    "preserved_previous_attempts": "Two prefit failures,0 fits; previousfiveefficiencystatesreused",
+    "next": "Freezeandnativehashreadback; scoreexistingcanonicalCcontract; separatelyverifyandissuekeep/stopdecisions"
+  }
 }
