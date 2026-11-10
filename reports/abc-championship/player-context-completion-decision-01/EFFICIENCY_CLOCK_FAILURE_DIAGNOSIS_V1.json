@@ -1,0 +1,15 @@
+{
+  "id": "A-CONDITIONAL-EFFICIENCY-CLOCK-SERIALIZATION-v1",
+  "finding": "Different valid timezone-aware serializations in one pandas2.2.3 list trigger inferred-format ValueError after5returnedfits. This is not a demonstrated prediction-equation defect.",
+  "original_run": "EFFICIENCY_FAILURE_V1.json",
+  "old_parser_fixture": "REPRODUCED_VALUE_ERROR_MIXED_SERIALIZATIONS",
+  "scoped_correction": "Parse each supplied aware timestamp independently; preserve nulls and reject naive clocks; use max of actual supplied observations only. No fill/backdating or cutoff relaxation.",
+  "same_instants_equal": true,
+  "models_or_parameters_changed": false,
+  "old_prediction_rows_changed": 0,
+  "structured_output_rows_issued_before_failure": 0,
+  "historical_score_inflation_demonstrated": false,
+  "fixture_kind": "Software timestamp fixture, not NFL outcome observations",
+  "current_fix": "tools/player_context_completion_efficiency_resume_v1.py; retained originals remain immutable",
+  "no_refit": true
+}

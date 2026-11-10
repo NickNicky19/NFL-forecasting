@@ -1,0 +1,51 @@
+{
+  "allocation": {
+    "path": "reports/abc-championship/player-context-completion-decision-01/FORWARD_ALLOCATION_V1.json",
+    "sha256": "296369a981ca04e64529f22fc0c2b8870f68f7eeee4857a6e0c56510aefd0efe"
+  },
+  "assignment_id": "PLAYER-CONTEXT-COMPLETION-DECISION-01",
+  "budget_amendment": "POST_RETURN_EXECUTION_BUDGET_V1.json",
+  "code_sha256": {
+    "nfl_lab/abc_dynamic_carry_v1.py": "3298b653bbf08d8f690ddf2f3ae7bd98eef211f1c2f93535a293f90362f5ef67",
+    "nfl_lab/abc_player_rushing_context_v1.py": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23",
+    "nfl_lab/category_topfive_backfield_v1.py": "d1573acc289d0851b3b9bb55f568f373f328c497af35af910ac6e224003d3fd7",
+    "nfl_lab/cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "nfl_lab/median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "nfl_lab/player_context_completion_features_v1.py": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade",
+    "nfl_lab/player_context_completion_storage_v1.py": "0c51109a72c29867038f812c44665dd914261787ca0dc14adb65b31643c7433f",
+    "nfl_lab/player_context_rush_efficiency_v1.py": "7e34b40f39fa1e6295637ecb582483c57f4a6dfed22aea4e0dab7d7fc0469487",
+    "tools/abc_a_dynamic_carry_wave_v1.py": "e49829108211a6d0a5b34c2339545666aca78717a10e99fe66278097c6ecc59f",
+    "tools/player_context_completion_efficiency_resume_v1.py": "e403f965a44656d6a44832f356bd88a9ec068c448f9c49e4d5557adcdbd8e3e1",
+    "tools/player_context_completion_efficiency_v1.py": "70b39df9799eac74e5f8bed93c836296f361e6728c01f12c812b17aae2c6bd36"
+  },
+  "evidence": "New retrospective inference with actual current generation times; no original issuance, capture, probability, EV or production claim.",
+  "failure_receipt": {
+    "bytes": 4216,
+    "path": "reports/abc-championship/player-context-completion-decision-01/EFFICIENCY_FAILURE_V1.json",
+    "sha256": "6dccb3efe27295d759ec849ce83f01fef4efa1e501e65dfe073c49408b968bbd"
+  },
+  "new_fits": 0,
+  "new_scoring": 0,
+  "new_source_HTTP": 0,
+  "new_structured_output_rows": 4574,
+  "new_structured_player_games": 2287,
+  "old_failure_and_partial_forecasts_preserved": true,
+  "registered_by": "/root",
+  "resources": {
+    "CPU_seconds": 1100,
+    "RSS_bytes": 3221225472,
+    "failure_reserve_bytes": 1048576,
+    "wall_seconds": 1800
+  },
+  "scientific_change": "NONE. Parse separately supplied timezone-aware source clocks before maximum; reuse exact five returned fits, fixed N laws, profiles and original points. Structured point equation unchanged.",
+  "source_configuration_sha256": {
+    "config/category-topfive-backfield-v1.sealed.json": "079abfa551433b06287dfc2d50812fe8b5054c7d31603d10acc2a0189403a738",
+    "config/category-topfive-matched12-all-finalists-grade-v1.json.gz": "bfc242eef4459ca1c376c582c394ba8b07b90f71b15507156eab1045de224808",
+    "config/category-topfive-matched12-current-label-execute-v1.json.gz": "16b56ae07de0a47863f236825629e5df3dfaba3213cc37b06d44ae04b90a3b92",
+    "config/category-topfive-matched12-inference-followup-v1.json.gz": "637b994ac5df211cadebe73759169a42c142e4a4957a471ce9a39e047d549857",
+    "config/category-topfive-matched12-new-hgb-v1_1.json": "5b494bbb870be5cfcd12b0622f9a5f25262255cca3adf55d3de04eef8f0756cc",
+    "config/role-count-full-pbp2024-recovery-gate-network-v2.json": "3de03db755ae921a7457880fd57835ee0e5250598e435f1dc042cf3134132dcd"
+  },
+  "state": "ROOT_REGISTERED_INFERENCE_RECOVERY",
+  "version": "A-efficiency-inference-resume-v1"
+}
