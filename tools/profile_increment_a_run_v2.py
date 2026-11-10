@@ -170,20 +170,41 @@ def run(plan, public_receipt):
         STATE.pop("pending_model_object", None)
         return ref
     try:
-        recovery = plan.get("admission_recovery", {})
-        if (recovery.get("previous_fits_attempted") != 0 or recovery.get("previous_fits_returned") != 0
-                or recovery.get("remaining_new_fits") != 4):
-            raise ValueError("explicit zero-fit admission recovery acknowledgment required")
-        if any(store.destination.glob("MODEL*")) or any(store.destination.glob("FIT_*_CONSUMED.json")):
-            raise ValueError("existing fit slots/models forbid an admission-only resume")
-        old_plan_path = store.destination / "PRIVATE_EXECUTION_PLAN.json"
-        store.prior.validate_reference(old_plan_path, recovery["original_private_plan_sha256"])
-        if recovery.get("attempt_id") != "HISTORICAL_BOUNDARY_DIAGNOSTIC_V4":
-            raise ValueError("exact root-reviewed boundary admission amendment required")
-        put("CONSUMED_ADMISSION_RECOVERY_V4.json", enc(dict(version=VERSION, UTC=now(), fits=4,
-            state="EXPLICIT_ROOT_ADMISSION_RECOVERY_BEFORE_ANY_FIT", previous_fits_attempted=0,
-            previous_fits_returned=0, original_private_plan_sha256=recovery["original_private_plan_sha256"], no_automatic_retry=True)))
-        put("PRIVATE_EXECUTION_PLAN_ADMISSION_RECOVERY_V4.json", STATE.pop("plan_raw"))
+        recovery = plan.get("saved_pilot_resume", {})
+        if (recovery.get("previous_fits_attempted") != 1 or recovery.get("previous_fits_returned") != 1
+                or recovery.get("remaining_new_fits") != 3 or recovery.get("attempt_id") != "SAVED_PILOT_REMAINING_THREE_V5"):
+            raise ValueError("exact one-returned-pilot/three-remaining root acknowledgment required")
+        expected_model = "MODEL_2026_RB_ONLY_LEAF_BASE.joblib"
+        if ({p.name for p in store.destination.glob("MODEL*")} != {expected_model}
+                or {p.name for p in store.destination.glob("FIT_*_CONSUMED.json")} != {"FIT_1_CONSUMED.json"}):
+            raise ValueError("saved pilot resume requires exactly one consumed/returned model")
+        saved_refs = {ref["id"]: ref for ref in recovery["artifacts"]}
+        required_saved = {expected_model, "FIT_1_CONSUMED.json", "PILOT_RESOURCE_RECEIPT.json",
+            "BASIC_PROFILES_AND_COHORTS_2026.json.gz", "UNAVAILABLE_PROFILES_2026_W8.json.gz",
+            "QUERY_PROFILE_INPUTS_2026.parquet", "SOURCE_AND_PROFILE_BINDING.json",
+            "ALL32_RUSHING_DEFENSE_SNAPSHOTS_2026.json.gz", "FAILURE_PRIVATE_BOUNDARY_V4.json"}
+        if required_saved-set(saved_refs):
+            raise ValueError("complete immutable saved-source/pilot bindings required")
+        saved_bodies = {name: store.read(name,saved_refs[name]["sha256"]) for name in sorted(required_saved)}
+        if any(len(saved_bodies[name]) != saved_refs[name]["bytes"] for name in required_saved):
+            raise ValueError("saved pilot/source readback size changed")
+        if (saved_refs[expected_model]["sha256"] != "774abed507ffe585b5414ba5d153ea2c8fb9af96bad863d5d08fff68e41a85be"
+                or saved_refs[expected_model]["bytes"] != 686740):
+            raise ValueError("exact returned original pilot is required, never refit")
+        event = json.loads(saved_bodies["FIT_1_CONSUMED.json"])
+        if event["arm"] != ARMS[0] or event["attempt"] != 1:
+            raise ValueError("original first fit consumption differs")
+        prior_failure = json.loads(saved_bodies["FAILURE_PRIVATE_BOUNDARY_V4.json"])
+        if (prior_failure["fits_attempted"] != 1 or prior_failure["fits_returned"] != 1
+                or abs(prior_failure["model_fit_CPU_seconds"]-recovery["previous_fit_CPU_seconds"]) > 1e-9):
+            raise ValueError("previous consumed fit/CPU evidence differs")
+        STATE.update(fits_attempted=1, fits_returned=1, fit_CPU_seconds=recovery["previous_fit_CPU_seconds"])
+        STATE["models"][ARMS[0]] = saved_refs[expected_model]
+        STATE["artifacts"].extend(saved_refs[name] for name in sorted(required_saved))
+        put("CONSUMED_SAVED_PILOT_RESUME_V5.json", enc(dict(version=VERSION, UTC=now(),
+            state="EXPLICIT_ROOT_RESUME_SAVED_PILOT_NO_REFIT", previous_fits_attempted=1,
+            previous_fits_returned=1, remaining_new_fits=3, original_model=saved_refs[expected_model], no_automatic_retry=True)))
+        put("PRIVATE_EXECUTION_PLAN_SAVED_PILOT_RESUME_V5.json", STATE.pop("plan_raw"))
         data = old.load_inputs(pd)
         audit = old.audited_feature_binding(data)
         put("REUSED_AUDIT_BINDING.json", enc(audit))
@@ -229,93 +250,77 @@ def run(plan, public_receipt):
             raise ValueError("explicit unknown/empty historical training labels")
         STATE["phase"] = "EARLIER_PROFILE_TRANSFORM"
         augmented, _ = source_context.augment(train, rich=False)
-        qaug, _ = source_context.augment(q, rich=False)
         if not train.position.eq("RB").all():
             raise ValueError("non-RB rows entered prior or design fitting")
-        laws, _ = old.cached_laws({2026: data["queries"][2026]})
-        # No W8 workload-law inference is needed merely to rank a profile cohort.
-        # Without an earlier frozen workload it remains basic-only unless an
-        # authentic offer or replacement role independently qualifies it.
-        actual_offers = set()
-        with zipfile.ZipFile(io.BytesIO(old.pin(data["grade"]["offers"]))) as archive:
-            offers = pd.read_parquet(io.BytesIO(archive.read(data["grade"]["offers"]["member"])),
-                columns=KEY + ["target", "position", "source_stream"])
-        for row in offers.loc[offers.target.eq("rush_yd") & offers.position.eq("RB") & offers.source_stream.isin(plan["actual_recorded_source_panels"])].itertuples():
-            actual_offers.add(tuple(getattr(row, k) for k in KEY))
-        basic = []
-        for row in qaug.itertuples():
-            key = tuple(getattr(row, k) for k in KEY)
-            fixed = laws.get(key)
-            expected, reference_clock = np.nan, None
-            if fixed is not None:
-                law = fixed["law"]
-                if law.get("kind") != "leaf_cdf":
-                    raise ValueError("cohort workload reference is not the frozen genuine law")
-                prior = cdf.SupportPrior(**law["prior"])
-                expected = (1 - law["prior_weight"]) * float(np.dot(law["support"], law["weights"])) + law["prior_weight"] * prior.mean
-                reference_clock = fixed.get("source_information_max_UTC")
-            basic.append(dict(**identity(row), universe_qualified=bool(getattr(row, "pregame_roster_qualified", False))
-                and int(row.week) == 8, # W1-7 old reconstruction is stat-row-conditioned, not authenticated pregame roster.
-                query_clock_contract=row.query_clock_contract, query_evidence_tier=row.query_evidence_tier,
-                offer_qualified=key in actual_offers, reference_expected_carries=float(expected),
-                reference_available_utc=reference_clock, reference_procedure_id="UNCHANGED_A1_BACKFIELD_CDF_ROLE_INPUTS",
-                replacement_role_qualified=False, replacement_source_id=None,
-                history_available=bool(row.f_player_games_prior > 0),
-                source_information_max_utc=str(row.feature_max_source_available_utc)))
-        cohorts = increment.priority_cohorts(pd.DataFrame(basic), allow_basic_kickoff_reconstruction=True)
-        put("BASIC_PROFILES_AND_COHORTS_2026.json.gz", gzip.compress(enc(json.loads(cohorts.to_json(orient="records", date_format="iso"))), mtime=0))
-        put("UNAVAILABLE_PROFILES_2026_W8.json.gz", gzip.compress(enc(unavailable), mtime=0))
-        # Keep the source matrix and all transformed predictor bytes available
-        # for independent identity/ordering checks, without publishing rows.
-        buffer = io.BytesIO()
-        qaug[KEY + CTX + ["feature_max_source_available_utc"] + list(core.EFFICIENCY_FEATURES)].to_parquet(buffer, index=False)
-        put("QUERY_PROFILE_INPUTS_2026.parquet", buffer.getvalue())
-        source_binding = dict(pbp=[safe(r) for r in data["pbp_refs"]], existing_profiles=reused_profile_binding,
-            query_rows=len(qaug), RB_training_rows=len(augmented), source_withheld_games=len(source_context.accepted.withheld_future_source_games),
-            W8=w8_census, current_query_state="NOT_EXECUTED_NO_BOUND_CURRENT_PREGAME_QUERY_SOURCE",
-            population_control="RB_FILTER_BEFORE_DESIGN_FOREST_AND_ALL_PRIOR_ESTIMATES", audit=audit)
-        put("SOURCE_AND_PROFILE_BINDING.json", enc(source_binding))
-        del offers, basic
-        # All32 snapshots use the accepted same PBP columns, including field
-        # position. They do not change this wave's fixed 9/89/36 predictor set.
-        STATE["phase"] = "DEFENSE_SNAPSHOTS"
-        projected = increment.prepare_defense_frames(source_context, data["frames"])
-        snapshots = []
-        for cut in sorted(qaug.cutoff_utc.unique()):
-            snapshots.extend(increment.defense_components(source_context, None, cut,
-                source_bindings=source_binding["pbp"], projected=projected))
-        put("ALL32_RUSHING_DEFENSE_SNAPSHOTS_2026.json.gz", gzip.compress(enc(snapshots), mtime=0))
-        del snapshots, projected
+        # Saved PCE inputs are restored, never recomputed for these queries.
+        # Only original30 base fields are joined/reconstructed under the already
+        # audited source adapter because the earlier PCE-only file omitted them.
+        saved_query = pd.read_parquet(io.BytesIO(saved_bodies["QUERY_PROFILE_INPUTS_2026.parquet"]))
+        for col in ("kickoff_utc", "cutoff_utc", "feature_max_source_available_utc"):
+            saved_query[col] = mixed_utc(saved_query[col], pd)
+        if saved_query.duplicated(KEY).any() or len(saved_query) != len(q):
+            raise ValueError("saved query PCE identity census changed")
+        base_columns = data["category"]["panels"]["base"]
+        base_query = q[KEY+CTX+base_columns+["feature_max_source_available_utc", "query_clock_contract", "query_evidence_tier", "participation_state"]].copy()
+        base_query.rename(columns={"feature_max_source_available_utc":"base_feature_clock"},inplace=True)
+        qaug = base_query.merge(saved_query, on=KEY+CTX, how="inner", validate="one_to_one", sort=False)
+        if len(qaug) != len(q) or not set(core.EFFICIENCY_FEATURES) <= set(qaug):
+            raise ValueError("original base/saved PCE exact context join incomplete")
+        base_clock = mixed_utc(qaug.base_feature_clock,pd)
+        union_clock = mixed_utc(qaug.feature_max_source_available_utc,pd)
+        if ((base_clock.notna() & union_clock.isna()) | (base_clock > union_clock)
+                | (union_clock.notna() & (union_clock >= qaug.cutoff_utc))).any():
+            raise ValueError("saved union clock does not cover original base/saved PCE inputs")
+        source_binding = json.loads(saved_bodies["SOURCE_AND_PROFILE_BINDING.json"])
+        if (source_binding["audit"] != audit or source_binding["query_rows"] != len(qaug)
+                or source_binding["RB_training_rows"] != len(augmented)
+                or source_binding["pbp"] != [safe(r) for r in data["pbp_refs"]]):
+            raise ValueError("saved source/profile binding differs from exact current retained sources")
+        base_buffer = io.BytesIO()
+        base_query.to_parquet(base_buffer,index=False)
+        base_ref = put("QUERY_BASE_INPUTS_RECOVERED_V5.parquet",base_buffer.getvalue())
+        joined_buffer = io.BytesIO()
+        qaug[KEY+CTX+base_columns+list(core.EFFICIENCY_FEATURES)].to_parquet(joined_buffer,index=False)
+        put("QUERY_RECOVERY_BINDING_V5.json",enc(dict(original_base=base_ref,
+            saved_PCE=saved_refs["QUERY_PROFILE_INPUTS_2026.parquet"],
+            joined_predictor_matrix_sha256=sha(joined_buffer.getvalue()), rows=len(qaug),
+            original_base_columns=base_columns, PCE_columns=core.EFFICIENCY_FEATURES,
+            saved_basic=saved_refs["BASIC_PROFILES_AND_COHORTS_2026.json.gz"],
+            saved_defense=saved_refs["ALL32_RUSHING_DEFENSE_SNAPSHOTS_2026.json.gz"],
+            new_query_profiles=0, new_defense_snapshots=0, target_outcomes_to_inference=False,
+            reconstruction="exact cached W1-7 original30 plus same audited W8 original30 builder; saved142PCE joined by exact identities and clocks")))
         all_rows = []
         query_tiers = {tuple(getattr(r,k) for k in KEY): (r.query_clock_contract,r.query_evidence_tier) for r in qaug.itertuples()}
         for index, arm in enumerate(ARMS):
             category = increment.arm_category(data["category"], "R" + str(index), modeled_roles=["RB"])
             if STATE["fit_CPU_seconds"] >= 1200:
                 raise ValueError("unchanged existing1200CPU cumulative model-training allowance exhausted")
-            store.reserve(plan["resources"]["first_model_max_bytes"])
-            STATE["fits_attempted"] += 1
-            STATE["phase"] = "FIT_" + arm
-            put(f"FIT_{index + 1}_CONSUMED.json", enc(dict(arm=arm, UTC=now(), attempt=STATE["fits_attempted"], no_retry=True)))
-            fit_cpu, fit_wall = time.process_time(), time.monotonic()
-            try:
-                with threadpool_limits(limits=2):
-                    model = cdf.LeafCDFModel.fit(augmented, category, "base")
-            finally:
-                STATE["fit_CPU_seconds"] += time.process_time()-fit_cpu
-            STATE["fits_returned"] += 1
-            STATE["pending_model_object"] = model
-            model_ref = save_model("MODEL_2026_" + arm + ".joblib", model)
-            STATE["models"][arm] = model_ref
-            if STATE["fit_CPU_seconds"] > 1200:
-                raise ValueError("returned model retained; unchanged1200CPU cumulative training allowance exceeded, no additional fits")
             if index == 0:
-                pilot = dict(arm=arm, model=model_ref, CPU_seconds=time.process_time()-fit_cpu,
-                    wall_seconds=time.monotonic()-fit_wall, RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
-                    state="FIRST_RETURNED_MODEL_DURABLY_SAVED_READBACK")
-                put("PILOT_RESOURCE_RECEIPT.json", enc(pilot))
-                if model_ref["bytes"] > plan["resources"]["first_model_max_bytes"]:
-                    raise ValueError("returned pilot exceeded registered model-size envelope; retained, no further fits")
-                store.reserve(3 * plan["resources"]["first_model_max_bytes"])
+                STATE["phase"] = "RESTORE_SAVED_PILOT_NO_REFIT"
+                model = joblib.load(io.BytesIO(saved_bodies[expected_model]))
+                if (not isinstance(model,cdf.LeafCDFModel) or model.audit.get("fit_state") != "FITTED"
+                        or model.design.names != category["panels"]["base"]
+                        or model.category["modeled_roles"] != ["RB"]
+                        or model.audit["training_rows"] != len(augmented)):
+                    raise ValueError("trusted returned pilot model/feature/training contract differs")
+            else:
+                # Reserve only the next finite returned state, not3*3MiB.
+                store.reserve(plan["resources"]["first_model_max_bytes"])
+                STATE["fits_attempted"] += 1
+                STATE["phase"] = "FIT_" + arm
+                put(f"FIT_{index + 1}_CONSUMED.json", enc(dict(arm=arm, UTC=now(), attempt=STATE["fits_attempted"], no_retry=True)))
+                fit_cpu, fit_wall = time.process_time(), time.monotonic()
+                try:
+                    with threadpool_limits(limits=2):
+                        model = cdf.LeafCDFModel.fit(augmented, category, "base")
+                finally:
+                    STATE["fit_CPU_seconds"] += time.process_time()-fit_cpu
+                STATE["fits_returned"] += 1
+                STATE["pending_model_object"] = model
+                model_ref = save_model("MODEL_2026_" + arm + ".joblib", model)
+                STATE["models"][arm] = model_ref
+                if STATE["fit_CPU_seconds"] > 1200:
+                    raise ValueError("returned model retained; unchanged1200CPU cumulative training allowance exceeded, no additional fits")
             STATE["phase"] = "INFERENCE_" + arm
             rows = carry.cdf_forecasts(model, qaug.reset_index(drop=True), arm, np)
             for row in rows:
@@ -326,13 +331,19 @@ def run(plan, public_receipt):
                     probability_admission="UNVALIDATED_EXACT_LAW_NOT_CALIBRATED_CONFIDENCE",
                     reconstruction="CURRENT_VINTAGE_SEVEN_DAY_POLICY_EXPOSED_HISTORY")
             forecast_ref = put("FORECAST_2026_" + arm + ".json.gz", gzip.compress(enc(rows), mtime=0))
-            STATE["forecast_parts"].append(forecast_ref)
+            STATE["forecast_parts"].append(dict(forecast_ref, arm=arm, rows=len(rows)))
             all_rows.extend(rows)
             del rows, model
-        frozen = put("ALL_FORECASTS_BEFORE_LABELS.json.gz", gzip.compress(enc(all_rows), mtime=0))
+        part_manifest = dict(format="IMMUTABLE_ORDERED_PART_MANIFEST_V1", version=VERSION,
+            arm_order=ARMS, parts=STATE["forecast_parts"], rows=len(all_rows),
+            logical_combined_sha256=sha(enc(all_rows)),
+            logical_codec="JSON_sorted_keys_compact_allow_nan_false_newline; concatenate decoded part arrays in arm_order")
+        frozen = put("ALL_FORECAST_PART_MANIFEST_BEFORE_LABELS_V1.json.gz", gzip.compress(enc(part_manifest), mtime=0))
         receipt = dict(version=VERSION, state="FROZEN_FORECASTS_COMPLETE_UNSCORED", UTC=now(),
             fits_attempted=STATE["fits_attempted"], fits_returned=STATE["fits_returned"], models=STATE["models"],
+            new_fits_in_this_resume=3, restored_models_without_refit=1,
             forecasts=frozen, forecast_rows=len(all_rows), query_rows=len(qaug), artifacts=STATE["artifacts"],
+            forecasts_format="IMMUTABLE_ORDERED_PART_MANIFEST_V1",
             products=["mean", "lower_median", "exact_line_conditional_Under_Push_Over_from_retained_law"],
             source_and_profile_binding=source_binding, actual_weeks=sorted(map(int, qaug.week.unique())),
             scoring_state="NOT_SCORED_REUSE_PINNED_C_EVALUATOR_IN_SEPARATE_OWNER_STAGE",
@@ -358,7 +369,7 @@ def run(plan, public_receipt):
             except BaseException as retention_error:
                 failure["returned_model_retention_error_type"] = type(retention_error).__name__
         try:
-            put("FAILURE_PRIVATE_BOUNDARY_V4.json", enc(dict(failure, traceback=traceback.format_exc())), failure=True)
+            put("FAILURE_PRIVATE_PILOT_RESUME_V5.json", enc(dict(failure, traceback=traceback.format_exc())), failure=True)
         finally:
             print(enc(failure).decode(), flush=True)
         raise

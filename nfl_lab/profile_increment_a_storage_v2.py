@@ -264,10 +264,20 @@ class ProfileIncrementStore:
                 previous_body = Path(previous_ref["path"]).read_bytes()
                 if (len(previous_body) != previous_ref["bytes"]
                         or digest(previous_body) != previous_ref["sha256"]
-                        or previous_ref["sha256"] != self.state["allocation_sha256"]
-                        or amendment.get("id") != "HISTORICAL_BOUNDARY_CODE_BINDING_V4"):
+                        or amendment.get("id") not in {"HISTORICAL_BOUNDARY_CODE_BINDING_V4", "SAVED_PILOT_RESUME_CODE_BINDING_V5"}):
                     raise ValueError("exact immutable previous allocation amendment required")
                 previous = json.loads(previous_body)
+                if amendment["id"] == "HISTORICAL_BOUNDARY_CODE_BINDING_V4":
+                    if previous_ref["sha256"] != self.state["allocation_sha256"]:
+                        raise ValueError("V4 must directly amend immutable V3 allocation")
+                else:
+                    prior_amendment_path = self.destination / "ALLOCATION_CODE_BINDING_AMENDMENT_V4.json"
+                    self.prior.validate_reference(prior_amendment_path)
+                    prior_amendment = json.loads(prior_amendment_path.read_bytes())
+                    if (prior_amendment["new_allocation_sha256"] != previous_ref["sha256"]
+                            or prior_amendment["previous_allocation_sha256"] != self.state["allocation_sha256"]
+                            or previous.get("code_binding_amendment", {}).get("id") != "HISTORICAL_BOUNDARY_CODE_BINDING_V4"):
+                        raise ValueError("V5 must chain the native immutable V4-to-V3 allocation receipt")
                 unchanged = ["version", "retained_bytes", "peak_bytes", "failure_reserve_bytes",
                     "protected_prior_plan_bytes", "unchanged_capture_reserve_bytes", "legacy_completion_reconciliation",
                     "accounting_revision", "original_allocation_state_sha256", "amends_allocation_sha256"]
@@ -299,7 +309,8 @@ class ProfileIncrementStore:
             self._admit(0)
             self._usage()
             if code_amendment is not None:
-                amendment_path = self.destination / "ALLOCATION_CODE_BINDING_AMENDMENT_V4.json"
+                suffix = "V5" if code_amendment["id"] == "SAVED_PILOT_RESUME_CODE_BINDING_V5" else "V4"
+                amendment_path = self.destination / ("ALLOCATION_CODE_BINDING_AMENDMENT_"+suffix+".json")
                 amendment_body = encoded(code_amendment)
                 self._admit(len(amendment_body))
                 if amendment_path.exists():

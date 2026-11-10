@@ -175,6 +175,9 @@ def make_pairs():
             pairs.extend([[candidate, "SAVED_LEAF_CDF__"+reference_product],
                           [candidate, "SAVED_RESPONSE_CDF__"+reference_product],
                           [candidate, "ALWAYS_OVER"], [candidate, "ALWAYS_UNDER"], [candidate, PREVALENCE]])
+            if product in ["MEAN_P1", "EXACT_LINE_P2"]:
+                pairs.extend([[candidate, "SAVED_LEAF_CDF__median"],
+                              [candidate, "SAVED_RESPONSE_CDF__median"]])
     for candidate in [ARMS[-1]+"::MEAN_P1", ARMS[-1]+"::MEDIAN_P1"]:
         pairs.extend([[candidate, old] for old in OLD_NEW])
     return pairs
@@ -225,7 +228,22 @@ def run(args):
     check(receipt["state"] == "FROZEN_FORECASTS_COMPLETE_UNSCORED" and receipt["version"] == "PROFILE-INCREMENT-TO-RELEASE-01-A-v2", "complete new freeze required")
     check(receipt["forecasts"]["sha256"] == plan["frozen_forecasts_sha256"], "new frozen forecast digest differs")
     frozen = store.read(receipt["forecasts"]["id"], receipt["forecasts"]["sha256"])
-    newrows = json.loads(gzip.decompress(frozen))
+    decoded = json.loads(gzip.decompress(frozen))
+    if receipt.get("forecasts_format") == "IMMUTABLE_ORDERED_PART_MANIFEST_V1":
+        check(decoded.get("format") == receipt["forecasts_format"] and decoded.get("arm_order") == ARMS
+              and len(decoded.get("parts", [])) == len(ARMS), "ordered forecast-part format differs")
+        newrows = []
+        for arm, part in zip(ARMS, decoded["parts"]):
+            check(part["arm"] == arm, "forecast-part arm order differs")
+            part_body = store.read(part["id"], part["sha256"])
+            check(len(part_body) == part["bytes"], "forecast-part exact bytes differ")
+            part_rows = json.loads(gzip.decompress(part_body))
+            check(len(part_rows) == part["rows"] and all(r["arm"] == arm for r in part_rows), "forecast-part row binding differs")
+            newrows.extend(part_rows)
+        check(len(newrows) == decoded["rows"] and sha(enc(newrows)) == decoded["logical_combined_sha256"],
+              "decoded ordered forecast logical commitment differs")
+    else:
+        newrows = decoded
     check(len(newrows) == receipt["forecast_rows"], "new frozen row count differs")
     newmap = {}
     for row in newrows:
