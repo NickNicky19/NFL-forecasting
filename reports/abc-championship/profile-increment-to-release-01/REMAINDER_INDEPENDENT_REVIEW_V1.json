@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "NFL_observations": 0,
+    "fits": 0,
+    "model_loads": 0,
+    "native_constructors": 0,
+    "private_writes": 0,
+    "source_decodes": 0
+  },
+  "code_sha256": {
+    "nfl_lab/profile_increment_a_def_remainder_storage_v1.py": "0fd6ded236f1ce01bf63783b7255570ba884869f353a412d5a9c1deb494aff59",
+    "tools/profile_increment_a_def_remainder_v1.py": "36d179bc101ef9dfab0bba28acb898d7eba0e526b4c7e89b5da3e2ccee8c7edc"
+  },
+  "id": "PROFILE-INCREMENT-A-SUPPLEMENT-BATCH-READ-INDEPENDENT-REVIEW-v11",
+  "inherits_supplement_review_sha256": "31a002c26fb19dc9e9d2dfe0a7c13db20018c70a9c7c80265c729f1f27be4dbd",
+  "limits": [
+    "Mock only; no real constructor, private write, source read or model decode. Actual native inventory remains ordered after primary partial checks."
+  ],
+  "mock_cases": [
+    "Two scoped members use one existing transaction, full-admission before/after and native validation/hash/size per member.",
+    "Duplicate IDs, wrong size/hash, unknown namespace and relative-path escape rejected."
+  ],
+  "state": "PASS_OUTPUT_PRESERVING_BATCH_INTEGRITY_WITH_UNCHANGED_CAPS",
+  "static_review": "Only new supplemental wrapper/runner changes:16 retained refs batch-read. Each native validate_reference remains; no validator/lock/quota override. Active original primary guard/runner/freezer remain unchanged. One R3 fit remains, no old model loading."
+}

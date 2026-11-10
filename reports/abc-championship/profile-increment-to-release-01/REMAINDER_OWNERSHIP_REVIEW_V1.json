@@ -1,0 +1,86 @@
+{
+  "activity": {
+    "NFL_observations": 0,
+    "constructors": 0,
+    "fits": 0,
+    "model_loads": 0,
+    "private_writes": 0,
+    "source_decodes": 0
+  },
+  "budget_scope": "At registered priorfitCPU3.06287417 plus\u2264600globalCPU newprocess, unchanged1200fitCPU bound is conservative; all original budgets/failures retained.",
+  "code_sha256": {
+    "nfl_lab/profile_increment_a_def_remainder_storage_v1.py": "bd8c3b70496e78008d1d9372e6dee7de2ff8661ebdda0f87e534778cbf8d9d63",
+    "tools/profile_increment_a_def_remainder_v1.py": "a13853980d74daafa5b52859e488d4387a40bb4c5c126e70144e12535e13c76a"
+  },
+  "id": "PROFILE-INCREMENT-A-SUPPLEMENTAL-ONE-FIT-INDEPENDENT-REVIEW-v10",
+  "inconsistent_identical_generation_size": "REJECT",
+  "limits": [
+    "Pure/static review only; no constructor, private write, native inventory, source decode, fit or model load executed by reviewer.",
+    "Actual namespace/fourth fit/forecast/score recovery readback remain unexecuted until rootGO."
+  ],
+  "pure_generation_cases": [
+    {
+      "case": "new_child_only",
+      "deduplicated_union_owned_bytes": 7340032,
+      "old8_charged_bytes": 7340032,
+      "primary16_charged_bytes": 5242880,
+      "proven_child_owned_bytes": 2097152,
+      "proven_primary_owned_bytes": 5242880,
+      "supplement_charged_bytes": 2097152
+    },
+    {
+      "case": "unrelated_orphan_registry_growth_remains_charged",
+      "deduplicated_union_owned_bytes": 7340032,
+      "old8_charged_bytes": 9437184,
+      "primary16_charged_bytes": 7340032,
+      "proven_child_owned_bytes": 2097152,
+      "proven_primary_owned_bytes": 5242880,
+      "supplement_charged_bytes": 4194304
+    },
+    {
+      "case": "child_aliases_existing_primary_generation",
+      "deduplicated_union_owned_bytes": 5242880,
+      "old8_charged_bytes": 7340032,
+      "primary16_charged_bytes": 5242880,
+      "proven_child_owned_bytes": 0,
+      "proven_primary_owned_bytes": 5242880,
+      "supplement_charged_bytes": 5242880
+    },
+    {
+      "case": "same_new_generation_linked_in_both_namespaces",
+      "deduplicated_union_owned_bytes": 7340032,
+      "old8_charged_bytes": 9437184,
+      "primary16_charged_bytes": 7340032,
+      "proven_child_owned_bytes": 2097152,
+      "proven_primary_owned_bytes": 7340032,
+      "supplement_charged_bytes": 4194304
+    },
+    {
+      "case": "baseline_shared_alias_cannot_hide_other_owner_growth",
+      "deduplicated_union_owned_bytes": 0,
+      "old8_charged_bytes": 9437184,
+      "primary16_charged_bytes": 3145728,
+      "proven_child_owned_bytes": 0,
+      "proven_primary_owned_bytes": 0,
+      "supplement_charged_bytes": 3145728
+    },
+    {
+      "case": "same_inode_new_content_generation",
+      "deduplicated_union_owned_bytes": 100,
+      "old8_charged_bytes": 7340032,
+      "primary16_charged_bytes": 0,
+      "proven_child_owned_bytes": 100,
+      "proven_primary_owned_bytes": 0,
+      "supplement_charged_bytes": 100
+    }
+  ],
+  "state": "PASS_SEPARATE8MIB_SUPPLEMENT_WITH_OLD8_PRIMARY16_PRESERVED",
+  "static_checks": [
+    "Separate8MiBretained10MiBpeak2MiBfailure namespace; old8/12andprimary16/20unchanged andverified.",
+    "Old16subtracts only child generations absent child baseline; old8subtracts SET UNION of primary-postV3 and child-postregistration owned generations, exactlyonce. Baselinealiases/registry/orphans/unrelated growth remaincharged.",
+    "Existing destination without state failsclosed; no interrupted initialization rebaseline. Native sharedlock/343932928priorplan/80MiBcapture/primary16reserved protections retained.",
+    "One globalFIT4 and one R3fit/inference only. Prior3models/3forecastparts arehash-read; no oldmodeldeserialize/infer/refit. SavedqueryBASE+PCE used; onlyunretainedTRAINaugmentation rebuilt.",
+    "Three original parts preserved withPRIMARY namespace; newR3part/manifest inDEF_REMAINDER. Explicit namespace allowlist/pathtraversal guard and immutable reference hashes.",
+    "Root orders primarypartial freeze/scoring/independent checks before supplemental namespace creation; fresh realinventory/rootpublishedGO stillrequired."
+  ]
+}
