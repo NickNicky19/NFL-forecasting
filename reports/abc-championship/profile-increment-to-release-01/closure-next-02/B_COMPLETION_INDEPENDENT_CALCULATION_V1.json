@@ -1,0 +1,45 @@
+{
+  "id": "A-NEXT02-B-COMPLETION-INDEPENDENT-CALCULATION-v1",
+  "UTC": "2026-11-10T19:20:02.897503+00:00",
+  "state": "PASS_INDEPENDENT_ORIGINAL_SOURCE_DECIMAL_AND_LAW_ARITHMETIC",
+  "score_sha256": "1f176b310e93129a70d4dcaccf0a79d2ae9f02d8a48bd9851c83a4c41bd216cc",
+  "protocol_sha256": "2bc845bc9597b7c529f4fbbe7fcb57b613db7ac9d5851007b2b701d249c24672",
+  "source_masks": {
+    "full144": 144,
+    "strict_preserved133": 133,
+    "new_alias11": 11,
+    "annual_offers": 88,
+    "site_diagnostic_offers": 56
+  },
+  "summary_cells": 1782,
+  "side_partitions_checked": 5346,
+  "numerical_metrics_checked": 5346,
+  "probability_Brier_cells_checked": 1782,
+  "exact_P2_side_cells": 4784,
+  "old_B133_summary_cells_reconciled": 324,
+  "law_checks": {
+    "laws": 1108,
+    "exact_line_events": 1728,
+    "moment_max_error": 1.4210854715202004e-14,
+    "normalization_max_error": 0.0,
+    "tail_monotonicity_checks": 1728
+  },
+  "cached_actual_conflicts": {},
+  "discrepancies": 0,
+  "calculation": "Original immutable A bytes admitted via original source helpers; no B scorer, Bgrade/probability helper or Csummary function called. Decimal original points/thresholds/labels; ownPMF/geometric-law calculation and aggregate loops.",
+  "limits": [
+    "No fresh fit or model inference/reconstruction; prior approvedrawfeatureaudit reused",
+    "No1359bootstrapintervalsrepeated; identities/sourceclocks/masks/sidepartitions/numeric/probabilityarithmetic covered",
+    "Source/vintage/quote clocks remain retrospectivelyunverified; no originalissue/currentpacket/EV/TopPicks/release claim",
+    "WithinAseparatecalculationpath, not an externalB/Csessionreceipt"
+  ],
+  "activity": {
+    "CPU_seconds": 17.112669361,
+    "wall_seconds": 16.726124117994914,
+    "RSS_bytes": 286081024,
+    "new_fits": 0,
+    "new_inference": 0,
+    "native_writes": 0,
+    "external_HTTP": 0
+  }
+}

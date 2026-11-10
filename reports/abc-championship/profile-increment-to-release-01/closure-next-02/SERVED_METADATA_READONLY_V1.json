@@ -1,0 +1,20 @@
+{
+  "id": "A-NEXT02-READONLY-SERVED-METADATA-CHECK-v1",
+  "UTC": "2026-11-10T19:01:45.719826+00:00",
+  "trust": "Default CA-verifying HTTPS; no trust changes",
+  "requests": [
+    {
+      "path": "data/meta.json",
+      "state": "UNVERIFIED",
+      "error_type": "URLError",
+      "error_summary": "<urlopen error [Errno 1] Operation not permitted>"
+    },
+    {
+      "path": "data/weekly-adaptive-overlay.json",
+      "state": "UNVERIFIED",
+      "error_type": "URLError",
+      "error_summary": "<urlopen error [Errno 1] Operation not permitted>"
+    }
+  ],
+  "limits": "HTTP served metadata/pointer only; no browser rendering, value/side consumption, model promotion or new capture claimed."
+}
