@@ -100,11 +100,57 @@
       "publication": "PUBLICATION_COMPLETE_EXACT_REMOTE_READBACK",
       "result_commit": "74269fa6d18341e03c1c03ec8aeb55fea5492a15",
       "remote_readback_files": 85
+    },
+    {
+      "id": "A-player-context-completion-decision-01",
+      "report": "reports/abc-championship/player-context-completion-decision-01/EXECUTED_CHECKPOINT_V1.md",
+      "headline": "reports/abc-championship/player-context-completion-decision-01/SAVED_COMPARISON_HEADLINE_V1.csv",
+      "bindings": "reports/abc-championship/player-context-completion-decision-01/PUBLIC_AGGREGATE_MANIFEST_V1.json",
+      "aggregate_files": [
+        {
+          "path": "reports/abc-championship/player-context-completion-decision-01/RECEPTION_STRONG_CONTROL_RESULTS_V1.json.gz",
+          "bytes": 36400,
+          "sha256": "9b520ed50ce181df3904ecde18e21e5cd2b43bfbbf84fc9b2871c86a6437ff59",
+          "decoded_bytes": 623781,
+          "decoded_sha256": "b2554448d8d70ee56e3a95b326f92c0344531cc7333a00d4db40cc16545ae119",
+          "summary_cells": 672,
+          "paired_cells": 120,
+          "independent_calculation_discrepancies": 0,
+          "scope": "A8/C4 point products+2constants;733full/667fixed;2026W1-7;81games;means/medians not separatefamilies"
+        },
+        {
+          "path": "reports/abc-championship/player-context-completion-decision-01/B_ATT_ON_A_EARLIER_BOARD_V1.json.gz",
+          "bytes": 21616,
+          "sha256": "b16e9d47a07b1346b7c337f48f18d72d015b6d81d009445886c356e7e1070c09",
+          "decoded_bytes": 486493,
+          "decoded_sha256": "a40842d1871e2db58f273cdbe19da40447f67fb3fad4b65a7bc0310e693aa070",
+          "summary_cells": 324,
+          "paired_cells": 50,
+          "independent_calculation_discrepancies": 0,
+          "scope": "A5/B2 products+2constants;87full/81strictshared;2026W1-5;51games"
+        }
+      ],
+      "profile_utility": "reports/abc-championship/player-context-completion-decision-01/PROFILE_AUDIT_OBSERVED_RECEIPT_V1.json",
+      "runtime": "reports/abc-championship/player-context-completion-decision-01/RUNTIME_FINAL_STATUS_V1.json",
+      "coverage": "reports/abc-championship/player-context-completion-decision-01/COMPLETION_COVERAGE_AND_QUEUE_V1.json",
+      "owner_review": "reports/abc-championship/player-context-completion-decision-01/OWNER_REVIEW_MANIFEST_V1.json",
+      "peer_receipts": "reports/abc-championship/player-context-completion-decision-01/PEER_REFRESH_RECEIPT_V1.json",
+      "C_prior_receipt": "OLDER_A7WREPLAY_RECEIVED_LIMITED_ADMISSION_AT_C06da9bb;newstrongcontrols/ATTpending",
+      "new_C_leaf": "ACTUAL45935BYTES_RECEIVED_HASH_VERIFIED;PRIVATEJOINPENDING_RUNTIME",
+      "new_NFL_optimizer_fits": 5,
+      "returned_optimizer_states": 5,
+      "new_rush_accuracy_cells": 0,
+      "new_C_or_owner_receipt_for_this_package": "NOT_OBSERVED",
+      "new_primary_release": false,
+      "publication": "PENDING_EXACT_REMOTE_READBACK",
+      "registry_normalization": "Queuedafterruntime restoration;existingtaskledgerandthisindexrecordactualartifacts"
     }
   ],
   "prior_C_admission": "See the bound C canonical ledger; prior valid admissions are preserved. No new receipt is implied.",
-  "production": "READ_ONLY_TO_A; retained owner unchanged; no new release",
+  "production": "READONLY;committedstrictpresenceclassicmodelanddisabled0-rowresearchoverlayverified;freshservednotverified",
   "new_forecasts_issued": 0,
-  "requested_scope_completion": "PARTIAL; acceptance scope/history gaps remain explicit in report",
-  "publication_readback": "reports/abc-championship/player-context-acceptance-01/PUBLICATION_READBACK_V1.json"
+  "requested_scope_completion": "PARTIAL;newmatchedrec/ATTandW8diagnostics executed;newrush5statesretained,clockrecoverycompletionUNKNOWNafterruntimeunavailable",
+  "publication_readback": "reports/abc-championship/player-context-completion-decision-01/PUBLICATION_READBACK_V1.json",
+  "current_C_inspected_ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+  "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0"
 }

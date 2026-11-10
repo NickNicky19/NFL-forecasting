@@ -1,0 +1,49 @@
+{
+  "id": "A-COMPLETION-PROFILE-AUDIT-OBSERVED-v1",
+  "state": "AUDIT_COMPLETION_OBSERVED;FULL_FINAL_INDEX_READBACK_BLOCKED_BY_EXEC_SERVER",
+  "stdout": {
+    "state": "RETAINED_PROFILE_SCHEMA_CLOCK_SUPPORT_REVIEW_COMPLETE",
+    "rows": 2289,
+    "private_example_bytes": 13504,
+    "new_fits": 0,
+    "new_inference": 0,
+    "public_index": "reports/abc-championship/player-context-completion-decision-01/PROFILE_INDEX_V1.json"
+  },
+  "index_bytes_and_sha256": null,
+  "index_gap": "Finalfileexists percompletedworker terminalreceipt; notfetchedbeforeexec-serverfailed; do not inventhash or resourcecounters",
+  "code_sha256": "f57180803c6115764eb7406ae8ab034a213a177ea8633f7328d2b94525b471f8",
+  "published_protocol": {
+    "path": "reports/abc-championship/player-context-completion-decision-01/PROFILE_REVIEW_PROTOCOL_V1.json",
+    "sha256": "4af4ba0c8e7069e5cd1107957b3752f20755c7ac6e5ea952ffa4315b5ed0e58d",
+    "commit": "0bc713370875ad389b0c6227c5336eb43663b9a9"
+  },
+  "profile_input_receipt": {
+    "path": "reports/abc-championship/player-context-completion-decision-01/PROFILE_INPUT_RECEIPT_V1.json",
+    "sha256": "54449a7df4a392cd4df2b2e18d5e0501875a4d1905bae4b1633a41691a604e50"
+  },
+  "profiles": [
+    {
+      "id": "PROFILES_2025.json.xz",
+      "rows": 923,
+      "bytes": 501492,
+      "sha256": "a2f223d9636dd0450768d0b8dcdc9c2544cdd6adef956ebce8c071325ec317f8"
+    },
+    {
+      "id": "PROFILES_2026.json.xz",
+      "rows": 1364,
+      "bytes": 1775344,
+      "sha256": "1cd460c86698b9b55c83448310dd21ac8e36bf698d1e5c75a14beccfbdc1eecf"
+    },
+    {
+      "id": "PROFILES_2026_W8_UNAVAILABLE.json.gz",
+      "rows": 2,
+      "bytes": 539,
+      "sha256": "bc4cee686426973104972c20f844a571e1534a79b0138dc0523a3ad0ee318803"
+    }
+  ],
+  "callable": "nfl_lab.player_context_rush_efficiency_v1.EfficiencyContext.profile",
+  "current_week10_forecasts": 0,
+  "scope": "Historicalasof/reconstructed profileutility; notfittedmodelaccuracy orcurrentqueryqualification",
+  "disposition": "RETAIN_FOR_OWNER_REVIEW",
+  "restoration": "Existing approved private route; offhost restoration NOT_NEWLY_VERIFIED"
+}

@@ -1,11 +1,7 @@
-# Player-context completion and keep/stop decisions — Session A
+# Executed player-context continuation — Session A
 
-Additive continuation `PLAYER-CONTEXT-COMPLETION-DECISION-01/v1`.
+See [the current executed checkpoint](EXECUTED_CHECKPOINT_V1.md) for matched results, profiles, keep/stop decisions, the exact execution-service blocker and all twelve category statuses.
 
-This execution starts with the two prepared saved-output joins. It preserves the accepted raw/fit checks and all negative experiments. No new model fit or production switch is authorized by the join protocol.
+Full permitted aggregates: [reception](RECEPTION_STRONG_CONTROL_RESULTS_V1.json.gz), [passing attempts](B_ATT_ON_A_EARLIER_BOARD_V1.json.gz). [Machine headline](SAVED_COMPARISON_HEADLINE_V1.csv), [bindings](PUBLIC_AGGREGATE_MANIFEST_V1.json), [owner package](OWNER_REVIEW_MANIFEST_V1.json), [coverage/resumable queue](COMPLETION_COVERAGE_AND_QUEUE_V1.json).
 
-- Reception: strongest compatible retained A products versus C P1/P2 on the fixed667 cases and complete733-offer WR/TE board, with separate mean/median contracts and controls.
-- Passing attempts: B retained chronological mean/median outputs against original earlier A offers; overlapping Week5 sources remain separate. Completion-line availability is inventoried separately.
-- New mechanism: one bounded rushing-efficiency package and reusable as-of RB profiles, after finite source/model/storage registration. Existing carry-negative recipes stay closed.
-
-Exact keep/stop decisions and executed results append here after registered scoring. C remains coordinator; the original website is read-only to A. Delivery, C admission, capture and actual production consumption remain separate.
+C remains coordinator; original production stays read-only to A. Publication is separate from C/owner receipt, capture, admission and served verification.

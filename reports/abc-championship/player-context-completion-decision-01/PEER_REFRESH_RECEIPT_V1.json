@@ -1,0 +1,75 @@
+{
+  "id": "A-COMPLETION-PEER-REFRESH-v1",
+  "current_heads": {
+    "A": "322aa752ec5f889fe6d8a2feaf019cdd8244fcca",
+    "B": "613800b90396e98ae0898b18930e61bffa6639f0",
+    "C": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+    "production": "720903184c54e4fe73c9213da5938d06970a5f00"
+  },
+  "actual_public_byte_reads": [
+    {
+      "session": "C",
+      "path": "reports/player-context-matchup-01/completion-decision-v1/intake/ADMISSION.json",
+      "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+      "bytes": 3201,
+      "sha256": "6523da0150a3e5785dde4ff3a71efaf29c9bd8c9ba56383eaf9b3f86681c27dc",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    },
+    {
+      "session": "C",
+      "path": "reports/player-context-matchup-01/completion-decision-v1/intake/STRONG_CONTROL_OWNER_LOCAL_HANDOFF.json",
+      "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+      "bytes": 2231,
+      "sha256": "39af8bcbe6bdb36571890e7ef6bbe4497f445bf89f21498ee95c6f96b4aacb1b",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    },
+    {
+      "session": "C",
+      "path": "reports/player-context-matchup-01/completion-decision-v1/UPDATED_PEER_RECEIPTS.json",
+      "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+      "bytes": 1254,
+      "sha256": "c6fe1f8cd9363cff3663c45421ccbeb895359fa85ec4a015a6a8a561cf79f41d",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    },
+    {
+      "session": "C",
+      "path": "reports/player-context-matchup-01/completion-decision-v1/README.md",
+      "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+      "bytes": 12902,
+      "sha256": "c82f3e027444a4dc7edb0c6bc72c8349b2441f5af9e73f984abae51183919689",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    },
+    {
+      "session": "B",
+      "path": "reports/player-context-completion-decision-01/B/COMPLETION_AND_DECISIONS_REPORT.md",
+      "ref": "613800b90396e98ae0898b18930e61bffa6639f0",
+      "bytes": 35948,
+      "sha256": "8ea0f32eb66881d7466aa2e3b4e0a66dd571fa495e1ee6e939dd738a206ade36",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    },
+    {
+      "session": "B",
+      "path": "reports/player-context-completion-decision-01/B/COMPLETION_DECISIONS_V1.json",
+      "ref": "613800b90396e98ae0898b18930e61bffa6639f0",
+      "bytes": 542141,
+      "sha256": "240c3889d53c2ac028fe676591d2dc67978bfeed8438b3a0223d92106ade715d",
+      "readback": "ACTUAL_PUBLIC_UTF8_BYTES_FETCHED;NO_NEW_ROW_JOIN"
+    }
+  ],
+  "C_admission": "OlderAsevenweekCpointreplayandscopedA_Creviewreceived/limitedadmission;latestAstrongcontrolsandATTnotyetintaken",
+  "B_scoped_A_review": "Cnowreceived;previousNOT_RECEIVEDstatusesarehistorical",
+  "C_leaf": {
+    "repository": "NickNicky19/NFL-forecasting-NGS-C",
+    "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+    "path": "reports/player-context-matchup-01/completion-decision-v1/intake/C_RETAINED_LEAF_POINTS_W1_W7.json.gz",
+    "bytes": 45935,
+    "sha256": "05a6b8bbad28ce7978c59f1ae026d6fb61fed964db724f41be253e4606119ccc",
+    "state": "ACTUAL_BYTES_RETRIEVED_AND_HASH_VERIFIED_BY_A",
+    "decode_and_join": "NOT_EXECUTED;A_PRIVATE_OFFERS_AND_ROWS_REQUIRE_EXISTING_RUNTIME",
+    "row_counts": "2152/1547WRTE as declared by C; not independently decoded/recounted here",
+    "permitted_retrieval": "Immutable existing public C export; no regeneration or new sharing requested"
+  },
+  "new_shared_championship_admission": "NOT_OBSERVED_FOR_THIS_A_PACKAGE",
+  "new_B_tests": "Readasexternalpublicevidence only;notnewAcomputedNFLresults",
+  "no_other_owner_jobs_interrupted": true
+}
