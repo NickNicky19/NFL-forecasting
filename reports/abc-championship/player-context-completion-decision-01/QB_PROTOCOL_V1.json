@@ -1,0 +1,186 @@
+{
+  "assignment_id": "PLAYER-CONTEXT-COMPLETION-DECISION-01",
+  "code_sha256": {
+    "tools/player_context_completion_qb_join_v1.py": "bdf14e043531cd7fbe7d7b60356b2d6003e98cf6823dfad1285d5481b500b0ec"
+  },
+  "decision": "Execute saved-output comparison before the new efficiency fits; preserve source overlap and unavailable rows",
+  "evidence": "Timing-unverified retained chronological reconstruction on qualified named source panel; not original recommendations",
+  "owner": "Session A; B/C/production read-only",
+  "qb_join": {
+    "A_forecast_member_sha256": "7d849d60902a2aa0a4922dd1ba0d09d4e0a21290cb5121e48279c6f54349e23f",
+    "A_frozen_bundle_sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+    "C_bound_code": [
+      {
+        "path": "src/abc_championship_v2.py",
+        "sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+      },
+      {
+        "path": "src/actual_accuracy_v6.py",
+        "sha256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+      },
+      {
+        "path": "src/selection.py",
+        "sha256": "ba3cd2d5c33eb05f3c07e8f2674f6d51b51694c8fd722f8eaba5db089907997f"
+      },
+      {
+        "path": "src/contracts_v2.py",
+        "sha256": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a"
+      },
+      {
+        "path": "src/actual_offers_v4.py",
+        "sha256": "39b187dbdf750b5cdd7b26197bc2c56240ce5aab2bef67392fc77c1a8938e186"
+      },
+      {
+        "path": "src/offer_validator_v2.py",
+        "sha256": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51"
+      }
+    ],
+    "GO": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-B-ATT-JOIN-v1",
+    "bootstrap_replicates": 500,
+    "bootstrap_seed": 20261110,
+    "candidate_ids": [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "A::LEAF_CDF::mean",
+      "A::LEAF_CDF::median",
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+      "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+      "ALWAYS_OVER",
+      "ALWAYS_UNDER"
+    ],
+    "enabled": true,
+    "new_fits": 0,
+    "new_inference": 0,
+    "paired_candidate_ids": [
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+        "ALWAYS_OVER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "ALWAYS_OVER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ]
+    ],
+    "private_writes": 0,
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "scored_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "resources": {
+    "RSS_address_space_bytes": 3221225472,
+    "cpu_seconds": 250,
+    "new_fits": 0,
+    "new_inference": 0,
+    "private_writes": 0,
+    "wall_seconds": 600
+  },
+  "support_rule": "All registered weeks; five scored season-weeks is duration floor only, no release on statistical lead alone",
+  "version": "A-B-ATT-JOIN-v1"
+}

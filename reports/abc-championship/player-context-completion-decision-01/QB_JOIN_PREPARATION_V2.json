@@ -1,0 +1,240 @@
+{
+  "id": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-B-QB-PREPARATION-v2",
+  "state": "PREPARED_PENDING_ROOT_PUBLISHED_FINITE_PROTOCOL_AND_GO",
+  "supersedes_preparation_only": "QB_JOIN_PREPARATION_V1.json; initial B-versus-constants code was never executed",
+  "code": {
+    "path": "tools/player_context_completion_qb_join_v1.py",
+    "sha256": "bdf14e043531cd7fbe7d7b60356b2d6003e98cf6823dfad1285d5481b500b0ec",
+    "bytes": 30838,
+    "syntax": "AST_PARSE_PASS; full EOF through main guard",
+    "scoring_executed": false
+  },
+  "required_qb_join_protocol_fields": {
+    "enabled": true,
+    "GO": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-B-ATT-JOIN-v1",
+    "private_writes": 0,
+    "new_fits": 0,
+    "new_inference": 0,
+    "scored_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "candidate_ids": [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "A::LEAF_CDF::mean",
+      "A::LEAF_CDF::median",
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+      "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+      "ALWAYS_OVER",
+      "ALWAYS_UNDER"
+    ],
+    "paired_candidate_ids": [
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::COUNT_A_MEAN::mean_objective_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::LEAF_CDF::mean",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::LEAF_CDF::median",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "ALWAYS_OVER"
+      ],
+      [
+        "A::HGB_MAE_DIRECT::mae_objective_point",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+        "ALWAYS_OVER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "ALWAYS_OVER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "ALWAYS_UNDER"
+      ],
+      [
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "B-player-context-matchup-01-v1:COMMON_EXPOSURE::mean"
+      ]
+    ],
+    "A_frozen_bundle_sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+    "A_forecast_member_sha256": "7d849d60902a2aa0a4922dd1ba0d09d4e0a21290cb5121e48279c6f54349e23f",
+    "bootstrap_replicates": 500,
+    "bootstrap_seed": 20261110,
+    "C_bound_code": "Same six exact canonical source cache bindings as previous prepared protocol; use list of path/sha256 records"
+  },
+  "finite_scope": {
+    "A_products": [
+      [
+        "COUNT_A_LEGACY_POINT",
+        "legacy_empirical_point"
+      ],
+      [
+        "COUNT_A_MEAN",
+        "mean_objective_point"
+      ],
+      [
+        "LEAF_CDF",
+        "mean"
+      ],
+      [
+        "LEAF_CDF",
+        "median"
+      ],
+      [
+        "HGB_MAE_DIRECT",
+        "mae_objective_point"
+      ]
+    ],
+    "A_procedures": 4,
+    "B_procedures": 1,
+    "B_products": [
+      "mean",
+      "lower_median"
+    ],
+    "constant_policies": 2,
+    "total_candidate_views": 9,
+    "paired_per_view": 25,
+    "views": [
+      "FULL_A_BOARD",
+      "SHARED_B_AVAILABLE"
+    ],
+    "pairwise_total": 50,
+    "intervals": "Nominal game-block500 and week-block500 intervals, seed20261110; few exposed weeks and multiplicity unadjusted"
+  },
+  "retained_A_controls": {
+    "source_selector": "Original approved base.sources()[2]['frozen_bundle']; no model load, fit, infer or archive recovery",
+    "bytes": 1688359,
+    "sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+    "member": "FORECASTS.parquet",
+    "member_sha256": "7d849d60902a2aa0a4922dd1ba0d09d4e0a21290cb5121e48279c6f54349e23f",
+    "target": "pass_att",
+    "position": "QB",
+    "scoring_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "actual_eligibility": "First registered execution inventories exact retained method/product rows. Missing products/identities or contract mismatches remain explicitly unavailable, never fabricated. No private source read or score executed by this amended worker before GO.",
+    "join": "Canonical season/game/GSIS player/QB role; exact original A team/opponent/kickoff/cutoff when present; exact clocks required. Null/unequal clocks unavailable with reason."
+  },
+  "source_history_contracts": {
+    "A": "Retained accepted annual2019-2025 fitted relationships with2026-09-01parametercutoff; reconstructed strict7day source history and stored query horizon. COUNT_A legacy empirical mixed point and mean-objective point stay distinct; HGB MAE point has no invented PMF. Actual retained procedure/source IDs copied into public product provenance after GO.",
+    "B": "Retained COMMON_EXPOSURE gamma-Poisson mean/lower median; own last8 earlier games +4 prior pseudoappearances, global eligible season>=queryseason-1; kickoff feature horizon, weekly fit origin; retrospective official-QB-stat query population.",
+    "comparison": "Complete saved systems differ in source/history/learner/query population. Same-board comparison is not isolated context ablation or originalR0 reconstruction.",
+    "W5": "A annual and B PropLine are separate source opportunities with overlapping physical games. No concatenation, duplicated observation or automatically added fifth week."
+  },
+  "output": {
+    "own_side": "Per candidate/view/source-panel/week Over/Under/Combined, coverage/unavailable/abstained/unknown/push and numerical errors",
+    "masks": "Full original Aboard; Bavailable subset defined by bound public B output identity/context/clock validity before outcome-dependent scoring; paired common decided masks separate",
+    "private_scorecard": "Small lossless view embedded in public receipt: source/member hashes, finite candidates, selectors, deterministic membership hash, exact code/protocol. No private row vectors or private writes. Root may retain the reference under its own approved allocation.",
+    "cases": "Deterministic hashed representatives for WIN/LOSS/UNKNOWN/UNAVAILABLE/ABSTAIN/PUSH per candidate/view; no raw offer/identity publication",
+    "no_release": "No original issuance, probabilities/EV, TopPicks, champion or primary/operational admission from duration alone"
+  },
+  "budgets": {
+    "CPU_seconds": 250,
+    "wall_seconds": 600,
+    "RSS_bytes": 3221225472,
+    "threads": 1,
+    "new_private_bytes": 0,
+    "public_B_prediction_bytes": 1289151,
+    "public_cache_cap_bytes": 8388608
+  },
+  "readbacks_and_peer_ack": "Exact B/C refs, profile mapping and actual peer intake remain in QB_JOIN_PREPARATION_V1.json; no newer remote mutation or acceptance assumed",
+  "source_selection_fixed_before_scores": true,
+  "new_fits": 0,
+  "new_inference": 0,
+  "new_scores": 0,
+  "private_writes": 0,
+  "remote_mutations": 0
+}
