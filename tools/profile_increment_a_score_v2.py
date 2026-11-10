@@ -186,6 +186,169 @@ def make_pairs():
 PAIRS = make_pairs()
 
 
+def partial_parity(previous, summaries, pairs, source_hashes, core_board, core_broad, completed3_board, completed3_broad):
+    """Compare serialized old cells; no prediction, grading or mask selection."""
+    check(previous.get("state") == "FROZEN_NAMED_THREE_ARMS_SCORING_COMPLETE_DEFENSE_PENDING"
+          and previous.get("completed_arms") == ARMS[:3] and previous.get("pending_arms") == ARMS[3:],
+          "bound prior partial result is not the named three-arm panel")
+    check(previous["source_sha256"] == source_hashes, "prior partial label/source roster differs")
+    check(previous["common_new_core_mask_sha256"] == sha(enc(sorted(completed3_board))),
+          "unchanged completed-three-arm core differs from retained partial commitment")
+    same_board, same_broad = core_board == completed3_board, core_broad == completed3_broad
+    def sk(r):
+        return tuple(str(r.get(k)) for k in ["period","cohort","candidate_id","population","source_panel","week_view"])
+    def pk(r):
+        return tuple(str(r.get(k)) for k in ["period","cohort","source_panel","left","right"])
+    sm, pm = {sk(r): r for r in summaries}, {pk(r): r for r in pairs}
+    compared_s, compared_p, skipped_s, skipped_p, mismatches = 0, 0, 0, 0, []
+    for r in previous["summaries"]:
+        if r["candidate_id"].startswith(ARMS[3]+"::"):
+            continue
+        if r["cohort"] == "STABLE_NEW_CORE" and not (same_broad if r["population"] == "BROAD_QUERIES" else same_board):
+            skipped_s += 1
+            continue
+        compared_s += 1
+        if sk(r) not in sm or enc(r) != enc(sm[sk(r)]):
+            mismatches.append(["SUMMARY",list(sk(r))])
+    for r in previous["paired"]:
+        if any(r[k].startswith(ARMS[3]+"::") for k in ["left","right"]):
+            continue
+        if r["cohort"] == "STABLE_NEW_CORE" and not same_board:
+            skipped_p += 1
+            continue
+        compared_p += 1
+        if pk(r) not in pm or enc(r) != enc(pm[pk(r)]):
+            mismatches.append(["PAIR",list(pk(r))])
+    return dict(state="PASS_UNCHANGED_COMPARABLE_OLD_CELLS" if not mismatches else "DIFFERENCE_REQUIRES_OWNER_REVIEW",
+        prior_summary_cells=len(previous["summaries"]), prior_paired_cells=len(previous["paired"]),
+        unchanged_summary_cells=compared_s-sum(x[0]=="SUMMARY" for x in mismatches),
+        unchanged_paired_cells=compared_p-sum(x[0]=="PAIR" for x in mismatches),
+        compared_summary_cells=compared_s, compared_paired_cells=compared_p,
+        completed3_vs4_board_mask_same=same_board, completed3_vs4_broad_mask_same=same_broad,
+        completed3_board_mask_sha256=sha(enc(sorted(completed3_board))),
+        completed4_board_mask_sha256=sha(enc(sorted(core_board))),
+        completed3_broad_mask_sha256=sha(enc(sorted(completed3_broad))),
+        completed4_broad_mask_sha256=sha(enc(sorted(core_broad))),
+        changed_core_cells_kept_separate=dict(summary=skipped_s,paired=skipped_p),
+        mismatch_count=len(mismatches), mismatch_keys=mismatches[:20],
+        excluded_newly_available_arm=ARMS[3], original_partial_preserved=True,
+        scope="New R3 cells are not old-cell parity; changed-core scopes, if any, remain separately identified. No old prediction/grade rewritten.")
+
+
+def player_diagnostics(board, broad, helper, protocol_sha256):
+    """Descriptive aggregation of existing canonical statuses; no new grader."""
+    players = sorted({r["player_id"] for rows in broad.values() for r in rows}
+                     | {r["player_id"] for rows in board.values() for r in rows})
+    panels = [
+        ("W1_W7_MIXED_THRESHOLDS", False, lambda r: r["week"] in range(1,8)),
+        ("ANNUAL_W1_W5", False, lambda r: r["week"] in range(1,6) and r["source_panel"] == "ANNUAL_NAMED_NJ"),
+        ("W8_REFERENCE_ONLY", False, lambda r: r["week"] == 8),
+        ("BROAD_NUMERICAL_W1_W7", True, lambda r: r["week"] in range(1,8)),
+        ("BROAD_NUMERICAL_W8", True, lambda r: r["week"] == 8),
+    ]
+    side_columns = ["selected","wins","losses","decided","rate"]
+    num_columns = ["scored","MAE","MSE","bias"]
+    columns = ["panel","candidate_id","player_id","eligible","unique_games","appearance_counts",
+               "canonical_status_counts","own_sides_OVER_UNDER_COMBINED","numerical","numerical_state",
+               "fallback_counts","unavailability_reasons"]
+    protected_rows, aggregate, paired = [], [], []
+    def sides(rows):
+        result = {}
+        for side in ["OVER","UNDER","COMBINED"]:
+            rr = [r for r in rows if r.get("selected_side") in ["OVER","UNDER"]] if side == "COMBINED" else [r for r in rows if r.get("selected_side") == side]
+            w, l = sum(r["status"] == "WIN" for r in rr), sum(r["status"] == "LOSS" for r in rr)
+            result[side] = dict(selected=len(rr),wins=w if w+l else None,losses=l if w+l else None,decided=w+l,rate=w/(w+l) if w+l else None)
+        return result
+    def support_bin(n):
+        return "0" if n == 0 else "1" if n == 1 else "2" if n == 2 else "3-4" if n <= 4 else "5-7" if n <= 7 else "8+"
+    for panel, is_broad, predicate in panels:
+        grouped, totals = {}, {}
+        for candidate in CANDIDATES:
+            rows = [r for r in (broad if is_broad else board)[candidate] if predicate(r)]
+            byplayer = defaultdict(list)
+            for r in rows:
+                byplayer[r["player_id"]].append(r)
+            grouped[candidate] = byplayer
+            side_views, numeric_views, supports = [], [], Counter()
+            for player in players:
+                rr = byplayer[player]
+                ss = None if is_broad else sides(rr)
+                nn = numerical_product(candidate,rr,helper)
+                support = nn["scored"] if is_broad else ss["COMBINED"]["decided"]
+                supports[support_bin(support)] += 1
+                numeric_views.append(nn)
+                if ss is not None:
+                    side_views.append(ss)
+                protected_rows.append([panel,candidate,player,len(rr),len({r["game_id"] for r in rr}),
+                    dict(Counter(r["appearance"] for r in rr)), None if is_broad else dict(Counter(r["status"] for r in rr)),
+                    None if ss is None else [[ss[s][k] for k in side_columns] for s in ["OVER","UNDER","COMBINED"]],
+                    [nn.get(k) for k in num_columns],nn.get("state","POINT_PRODUCT"),
+                    dict(Counter(r["fallback_state"] for r in rr)),
+                    dict(Counter(r["unavailability_reason"] for r in rr if r["unavailability_reason"]))])
+            equal_side = None
+            if not is_broad:
+                equal_side = {}
+                for side in ["OVER","UNDER","COMBINED"]:
+                    rates = [s[side]["rate"] for s in side_views if s[side]["decided"]]
+                    equal_side[side] = dict(players_with_decisions=len(rates),mean_player_hit_rate=math.fsum(rates)/len(rates) if rates else None)
+            equal_numeric = {}
+            for metric in ["MAE","MSE","bias"]:
+                values = [n[metric] for n in numeric_views if n.get(metric) is not None]
+                equal_numeric[metric] = math.fsum(values)/len(values) if values else None
+            public = dict(panel=panel,candidate_id=candidate,eligible_players_in_global_declared_universe=len(players),
+                players_with_panel_rows=sum(bool(byplayer[p]) for p in players),
+                players_with_numerical_scores=sum(n["scored"] > 0 for n in numeric_views),
+                support_kind="numerical_scored" if is_broad else "own_combined_decided",support_distribution=dict(supports),
+                equal_player_sides=equal_side,opportunity_weighted_sides=None if is_broad else sides(rows),
+                equal_player_numerical=equal_numeric,opportunity_weighted_numerical=numerical_product(candidate,rows,helper))
+            aggregate.append(public);totals[candidate] = public
+        for left, right in PAIRS:
+            direction_counts = Counter();numeric_counts = Counter()
+            direction_n = direction_delta = numeric_n = 0
+            numeric_delta, equal_numeric_delta, equal_direction_delta = [], [], []
+            for player in players:
+                aa = grouped[left][player];bb = {r["opportunity_key"]: r for r in grouped[right][player]}
+                common = [(a,bb[a["opportunity_key"]]) for a in aa if a["opportunity_key"] in bb]
+                dd = [] if is_broad else [(a,b) for a,b in common if a["status"] in ["WIN","LOSS"] and b["status"] in ["WIN","LOSS"]]
+                if dd:
+                    delta = sum(int(a["status"]=="WIN")-int(b["status"]=="WIN") for a,b in dd)
+                    direction_counts["left_more_correct" if delta>0 else "right_more_correct" if delta<0 else "tied"] += 1
+                    direction_n += len(dd);direction_delta += delta;equal_direction_delta.append(delta/len(dd))
+                else:
+                    direction_counts["no_common_decisions"] += 1
+                ee = []
+                for a,b in common:
+                    if helper.finite(a.get("point")) and helper.finite(b.get("point")) and a.get("actual") is not None and b.get("actual") is not None:
+                        check(a["actual"] == b["actual"], "per-player paired numerical labels differ")
+                        ee.append(abs(a["point"]-a["actual"])-abs(b["point"]-b["actual"]))
+                if ee:
+                    difference = math.fsum(ee)/len(ee)
+                    numeric_counts["left_lower_MAE" if difference<0 else "right_lower_MAE" if difference>0 else "tied"] += 1
+                    numeric_n += len(ee);numeric_delta.extend(ee);equal_numeric_delta.append(difference)
+                else:
+                    numeric_counts["no_common_numeric_scores"] += 1
+            paired.append(dict(panel=panel,left=left,right=right,global_players=len(players),
+                direction_player_counts=dict(direction_counts),common_decided_opportunities=direction_n,
+                opportunity_weighted_accuracy_change=direction_delta/direction_n if direction_n else None,
+                equal_player_accuracy_change=math.fsum(equal_direction_delta)/len(equal_direction_delta) if equal_direction_delta else None,
+                numerical_player_counts=dict(numeric_counts),common_numerical_opportunities=numeric_n,
+                opportunity_weighted_MAE_change=math.fsum(numeric_delta)/numeric_n if numeric_n else None,
+                equal_player_MAE_change=math.fsum(equal_numeric_delta)/len(equal_numeric_delta) if equal_numeric_delta else None))
+    private = dict(schema="A_FULL_FOUR_PER_PLAYER_DESCRIPTIVE_V1",category="rush_yd",role_scope="RB",season=2026,
+        protocol_sha256=protocol_sha256,
+        columns=columns,side_columns=side_columns,numerical_columns=num_columns,rows=protected_rows,
+        player_universe="All canonical players in the already-bound broad/threshold query panels, including zero-support, unknown and unavailable records; source-row-conditioned historical universe remains disclosed.",
+        empty_pool="Zero counts with rate null; broad numerical panels have no offered-side record.",
+        no_router_or_player_algorithm_selection=True)
+    public = dict(state="COMPUTED_FROM_EXISTING_CANONICAL_ROWS",category="rush_yd",role_scope="RB",season=2026,
+        panel_definitions=[p[0] for p in panels],
+        global_player_count=len(players),protected_record_count=len(protected_rows),summary=aggregate,paired_player_counts=paired,
+        weights="Equal-player means use players with scored outcomes; all n0 players remain in support counts/private card. Opportunity-weighted side rates sum wins/decided. No side-percent averaging.",
+        inference_limits="Descriptive exposed/repeated-player panels; no new bootstrap, per-player winner/router, scientific gate, NFL observation or product qualification.",
+        public_player_ids_or_rows=False)
+    return gzip.compress(enc(private),mtime=0),public
+
+
 def run(args):
     global PHASE
     started, cpu = time.monotonic(), time.process_time()
@@ -202,8 +365,15 @@ def run(args):
     completed_products = [arm+"::"+product for arm in completed_arms for product in PRODUCTS]
     check(plan.get("pending_arms") == pending_arms and plan.get("stable_core_candidate_ids") == completed_products,
           "completed-product stable core and pending-arm bindings differ")
+    allocation_kind = plan.get("allocation_kind", "PRIMARY")
+    check(allocation_kind in ["PRIMARY", "DEF_REMAINDER"], "unknown native scoring allocation")
+    if allocation_kind == "DEF_REMAINDER":
+        check(completed_arms == ARMS and not pending_arms, "defense remainder scoring requires the named full freeze")
     budget = plan["resources"]
-    check(budget == dict(CPU_seconds=400, wall_seconds=900, RSS_bytes=3*1024**3, private_view_max_bytes=131072), "fixed scoring budget differs")
+    expected_budget = dict(CPU_seconds=400, wall_seconds=900, RSS_bytes=3*1024**3, private_view_max_bytes=131072)
+    if plan.get("per_player_diagnostics", False):
+        expected_budget["per_player_scorecard_max_bytes"] = 524288
+    check(budget == expected_budget, "fixed scoring budget differs")
     for name, expected in plan["code_sha256"].items():
         check(sha((ROOT/name).read_bytes()) == expected, "score executing code changed: "+name)
     for variable in ["OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"]:
@@ -221,7 +391,10 @@ def run(args):
     import pyarrow as pa
     pa.set_cpu_count(1); pa.set_io_thread_count(1); pa.set_memory_pool(pa.system_memory_pool())
     old = local_module("tools.player_context_completion_efficiency_score_v1", "tools/player_context_completion_efficiency_score_v1.py")
-    guard = local_module("nfl_lab.profile_increment_a_storage_v2", "nfl_lab/profile_increment_a_storage_v2.py")
+    guard_path = ("nfl_lab/profile_increment_a_def_remainder_storage_v1.py" if allocation_kind == "DEF_REMAINDER"
+                  else "nfl_lab/profile_increment_a_storage_v2.py")
+    check(guard_path in plan["code_sha256"], "selected native storage implementation must be hash bound")
+    guard = local_module("nfl_lab.profile_increment_a_active_scoring_storage", guard_path)
     base = local_module("tools.abc_a_dynamic_carry_wave_v1", "tools/abc_a_dynamic_carry_wave_v1.py")
     for name, expected in old.C_PINS.items():
         check(sha((args.c_code_cache/name).read_bytes()) == expected, "pinned canonical C source differs")
@@ -229,22 +402,45 @@ def run(args):
     common = importlib.import_module("abc_championship_v2")
     PHASE = "NATIVE_FROZEN_READ"
     store = guard.ProfileIncrementStore(ROOT, plan["allocation"]["path"], plan["allocation"]["sha256"], root_go=guard.GO)
+    legacy_version = guard.OLD if allocation_kind == "DEF_REMAINDER" else guard.OLD_VERSION
+    check(legacy_version == "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-forward-v1", "legacy native source namespace differs")
+    def native_read(ref):
+        if allocation_kind == "DEF_REMAINDER":
+            check(ref.get("namespace") in ["PRIMARY", "DEF_REMAINDER"], "exact managed artifact namespace required")
+            body = store.read(ref["id"], ref["sha256"], namespace=ref["namespace"])
+        else:
+            check(ref.get("namespace") in [None, "PRIMARY"], "single primary store cannot read a sibling artifact")
+            body = store.read(ref["id"], ref["sha256"])
+        check(len(body) == ref["bytes"], "managed member exact size differs")
+        return body
     receipt_raw = read_ref(plan["execution_receipt"])
     receipt = json.loads(receipt_raw)
     expected_state = "FROZEN_NAMED_THREE_ARMS_DEFENSE_PENDING" if pending_arms else "FROZEN_FORECASTS_COMPLETE_UNSCORED"
     check(receipt["state"] == expected_state and receipt["version"] == "PROFILE-INCREMENT-TO-RELEASE-01-A-v2", "named completed freeze required")
     check(receipt.get("completed_arms", ARMS) == completed_arms and receipt.get("pending_arms", []) == pending_arms,
           "receipt completed/pending arms differ from the bound scoring protocol")
+    if allocation_kind == "DEF_REMAINDER":
+        check(receipt.get("supplement_version") == guard.VERSION, "full receipt supplement binding differs")
     check(receipt["forecasts"]["sha256"] == plan["frozen_forecasts_sha256"], "new frozen forecast digest differs")
-    frozen = store.read(receipt["forecasts"]["id"], receipt["forecasts"]["sha256"])
+    frozen = native_read(receipt["forecasts"])
     decoded = json.loads(gzip.decompress(frozen))
+    native_bodies = {}
     if receipt.get("forecasts_format") == "IMMUTABLE_ORDERED_PART_MANIFEST_V1":
         check(decoded.get("format") == receipt["forecasts_format"] and decoded.get("arm_order") == completed_arms
               and len(decoded.get("parts", [])) == len(completed_arms), "ordered completed forecast-part format differs")
+        if allocation_kind == "DEF_REMAINDER":
+            check(decoded.get("namespace_contract") == "PRIMARY_AND_DEF_REMAINDER_NATIVE_V1"
+                  and [p.get("namespace") for p in decoded["parts"]] == ["PRIMARY"]*3+["DEF_REMAINDER"],
+                  "full ordered source namespace contract differs")
+            extra = [next(r for r in receipt["artifacts"] if r["id"] == name) for name in
+                     ["BASIC_PROFILES_AND_COHORTS_2026.json.gz", "QUERY_PROFILE_INPUTS_2026.parquet"]]
+            # One native transaction still authenticates every exact member and
+            # every namespace; it avoids repeating whole-store admission scans.
+            native_bodies = store.read_many(decoded["parts"]+extra)
         newrows = []
         for arm, part in zip(completed_arms, decoded["parts"]):
             check(part["arm"] == arm, "forecast-part arm order differs")
-            part_body = store.read(part["id"], part["sha256"])
+            part_body = native_bodies[part["id"]] if part["id"] in native_bodies else native_read(part)
             check(len(part_body) == part["bytes"], "forecast-part exact bytes differ")
             part_rows = json.loads(gzip.decompress(part_body))
             check(len(part_rows) == part["rows"] and all(r["arm"] == arm for r in part_rows), "forecast-part row binding differs")
@@ -254,6 +450,10 @@ def run(args):
     else:
         newrows = decoded
     check(len(newrows) == receipt["forecast_rows"], "new frozen row count differs")
+    preserved_three_arm_logical = sha(enc([r for r in newrows if r["arm"] in ARMS[:3]]))
+    if allocation_kind == "DEF_REMAINDER":
+        check(preserved_three_arm_logical == plan["prior_three_arm_logical_sha256"],
+              "full manifest changed an already frozen completed-three-arm forecast")
     newmap = {}
     for row in newrows:
         check(row["arm"] in completed_arms and row["target"] == "rush_yd" and row["position"] == "RB", "new frozen recipe/role differs")
@@ -263,7 +463,7 @@ def run(args):
     old_raw = read_ref(plan["old_execution_receipt"])
     old_receipt = json.loads(old_raw)
     old_artifacts = {r["id"]: r for r in old_receipt["artifacts"]}
-    old_root = store.prior.forward_root / "research" / guard.OLD_VERSION
+    old_root = store.prior.forward_root / "research" / legacy_version
     def old_read(ref):
         path = old_root/ref["id"]
         store.prior.validate_reference(path, ref["sha256"])
@@ -323,10 +523,12 @@ def run(args):
         if row["identity_reason"] is not None:
             queries[key(row)] = row
     cohort_ref = next(r for r in receipt["artifacts"] if r["id"] == "BASIC_PROFILES_AND_COHORTS_2026.json.gz")
-    cohort_rows = json.loads(gzip.decompress(store.read(cohort_ref["id"], cohort_ref["sha256"])))
+    cohort_body = native_bodies[cohort_ref["id"]] if cohort_ref["id"] in native_bodies else native_read(cohort_ref)
+    cohort_rows = json.loads(gzip.decompress(cohort_body))
     cohorts = {key(r): r for r in cohort_rows}
     input_ref = next(r for r in receipt["artifacts"] if r["id"] == "QUERY_PROFILE_INPUTS_2026.parquet")
-    qfeatures = pd.read_parquet(io.BytesIO(store.read(input_ref["id"], input_ref["sha256"])), columns=KEY+["f_pce_own_supported"])
+    input_body = native_bodies[input_ref["id"]] if input_ref["id"] in native_bodies else native_read(input_ref)
+    qfeatures = pd.read_parquet(io.BytesIO(input_body), columns=KEY+["f_pce_own_supported"])
     support = {key(r): bool(r["f_pce_own_supported"] > 0) for r in qfeatures.to_dict("records")}
     histories, seen_history = [], set()
     for i, ref in enumerate(c["history_sources"]):
@@ -417,6 +619,9 @@ def run(args):
             memberships.append([candidate, offer["opportunity"], point, row["p_under"], row["p_push"], row["p_over"], selected, row["status"], why, fb])
     core_board = set.intersection(*[{r["opportunity_key"] for r in board[c] if r["selected_side"] is not None} for c in completed_products])
     core_broad = set.intersection(*[{r["opportunity_key"] for r in broad[c] if old.finite(r["point"])} for c in completed_products if not c.endswith("P2")])
+    first3_products = [a+"::"+p for a in ARMS[:3] for p in PRODUCTS]
+    completed3_board = set.intersection(*[{r["opportunity_key"] for r in board[c] if r["selected_side"] is not None} for c in first3_products])
+    completed3_broad = set.intersection(*[{r["opportunity_key"] for r in broad[c] if old.finite(r["point"])} for c in first3_products if not c.endswith("P2")])
     for rows in board.values():
         for row in rows:
             if row["opportunity_key"] in core_board:
@@ -454,11 +659,34 @@ def run(args):
                     pairs.append(dict(period=period, cohort=cohort, source_panel=panel, left=left, right=right,
                         execution_state="RESOURCE_PENDING" if any(c in NEW and c.split("::", 1)[0] in pending_arms for c in [left,right]) else "SCORING_EXECUTED",
                         **old.paired(a,b,np), probability=paired_probability(a,b,old,np)))
+    prior_partial = None
+    if allocation_kind == "DEF_REMAINDER":
+        PHASE = "RETAINED_PARTIAL_CELL_AND_MASK_PARITY"
+        previous_raw = read_ref(plan["prior_partial_scores"])
+        previous = json.loads(gzip.decompress(previous_raw))
+        prior_partial = partial_parity(previous,summaries,pairs,source_hashes,core_board,core_broad,completed3_board,completed3_broad)
+        prior_partial.update(prior_partial_result=plan["prior_partial_scores"],preserved_three_arm_logical_sha256=preserved_three_arm_logical)
+    per_player = None
+    if plan.get("per_player_diagnostics", False):
+        PHASE = "DESCRIPTIVE_PER_PLAYER_AGGREGATION"
+        player_payload, per_player = player_diagnostics(board,broad,old,args.protocol_sha256)
+        per_player["compressed_bytes_required"] = len(player_payload)
+        per_player["registered_private_cap_bytes"] = budget["per_player_scorecard_max_bytes"]
+        if len(player_payload) <= budget["per_player_scorecard_max_bytes"]:
+            player_ref = store.put("PROFILE_INCREMENT_PER_PLAYER_FULL_FOUR_V1.json.gz",player_payload)
+            check(native_read(player_ref) == player_payload, "protected per-player scorecard readback differs")
+            per_player.update(state="RETAINED_PROTECTED_CARD_AND_PUBLIC_AGGREGATES",private_scorecard=player_ref)
+        else:
+            per_player.update(state="CORE_COMPLETE_PER_PLAYER_CARD_SIZE_REQUIRES_SCOPED_OWNER_ACTION",
+                private_scorecard=None,private_export_complete=False)
     view = dict(version=VERSION, protocol_sha256=args.protocol_sha256, execution_receipt_sha256=sha(receipt_raw),
+        allocation_kind=allocation_kind,score_scope_version="NAMED_THREE_ARMS_V1" if pending_arms else "FULL_FOUR_ARMS_V1",
         completed_arms=completed_arms, pending_arms=pending_arms, stable_core_candidate_ids=completed_products,
         old_execution_receipt_sha256=sha(old_raw), frozen_forecasts=receipt["forecasts"], old_frozen_forecasts=old_receipt["forecasts"],
         query_reference=query_ref, cohort_reference=cohort_ref, query_profile_input_reference=input_ref, source_refs=refs,
         candidate_ids=CANDIDATES, paired_candidate_ids=PAIRS, cohorts=COHORTS,
+        prior_partial_parity=prior_partial,
+        per_player_card=per_player.get("private_scorecard") if per_player else None,
         complete_decision_membership_sha256=sha(enc(sorted(memberships))), common_new_core_mask_sha256=sha(enc(sorted(core_board))),
         probability_contract="exact saved empirical/signedprior law at original line; conditionalplayed U/P/O; P2 maxOwnWinProbability, tieABSTAIN; pointviews retained separately",
         prevalence="earlier allRB explicit observed played rushyard labels; exactline categoricalLaplace1; samegameexcluded; no target-label update",
@@ -467,15 +695,17 @@ def run(args):
     payload = lzma.compress(enc(view), preset=6)
     check(len(payload) <= budget["private_view_max_bytes"], "private lossless score view exceeds registered128KiB")
     PHASE = "NATIVE_SCORE_VIEW_PERSISTENCE"
-    view_name = "PROFILE_INCREMENT_SCORING_VIEW_PARTIAL_R0_R2_V1.json.xz" if pending_arms else "PROFILE_INCREMENT_SCORING_VIEW_V1.json.xz"
+    view_name = "PROFILE_INCREMENT_SCORING_VIEW_PARTIAL_R0_R2_V1.json.xz" if pending_arms else "PROFILE_INCREMENT_SCORING_VIEW_FULL_FOUR_V1.json.xz"
     view_ref = store.put(view_name, payload)
-    check(store.read(view_ref["id"], view_ref["sha256"]) == payload, "score view readback differs")
+    check(native_read(view_ref) == payload, "score view readback differs")
     result_state = "FROZEN_NAMED_THREE_ARMS_SCORING_COMPLETE_DEFENSE_PENDING" if pending_arms else "FROZEN_POINT_AND_EXACT_LINE_LAW_SCORING_COMPLETE"
     result = dict(version=VERSION, state=result_state, protocol_sha256=args.protocol_sha256,
+        allocation_kind=allocation_kind,score_scope_version="NAMED_THREE_ARMS_V1" if pending_arms else "FULL_FOUR_ARMS_V1",
         completed_arms=completed_arms, pending_arms=pending_arms, stable_core_candidate_ids=completed_products,
         pending_candidate_states={arm+"::"+product: "RESOURCE_PENDING" for arm in pending_arms for product in PRODUCTS},
         candidate_ids=CANDIDATES, summaries=summaries, paired=pairs, source_sha256=source_hashes,
         execution_receipt_sha256=sha(receipt_raw), old_execution_receipt_sha256=sha(old_raw), private_scorecard_view=view_ref,
+        prior_partial_parity=prior_partial,per_player_diagnostics=per_player,
         W8_source_and_qualification=w8meta, common_new_core_mask_sha256=sha(enc(sorted(core_board))),
         cohort_scope="AllbasicRBrows retained; historicalstat-row-conditioned cohorts lack authenticatedpregameuniverse. Empty priority/top20 is N/A, not success.",
         uncertainty="Nominal game/week block500seed20261110; exposed history, repeatedplayers, multiplicityunadjusted. Probability/cachedlaw postprocessing is not newNFLobservations.",
