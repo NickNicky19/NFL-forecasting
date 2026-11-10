@@ -1,0 +1,103 @@
+{
+  "schema": "A_CURRENT_SHADOW_SOURCE_QUALIFICATION-v1",
+  "observed_utc": "2026-11-10T23:01:47+00:00",
+  "role": "A_SOURCE_ONLY_PREINFERENCE",
+  "decision": "CURRENT_CANDIDATE_SCOPE_AVAILABLE;EXACT_F0_F3_CURRENT_HISTORY_NOT_READY_ON_CHECKED_PACKAGE",
+  "proposed_use": "One-off A-owned research shadow using existing retained F0 RB Leaf and F3 profile median, not registered Count A producer, original-site feed, primary release, scheduler or new fit.",
+  "root_inference_authorization_received": false,
+  "model_loaded_or_inferred": false,
+  "current_scope": {
+    "event": "2026_10_WAS_NYG",
+    "kickoff_utc": "2026-11-13T01:15:00+00:00",
+    "native_status": "STATUS_SCHEDULED",
+    "candidate_rbs": 7,
+    "candidate_rule": "All ACT RB records for the two teams in observed season roster projection; not confirmed starters, healthy/active game-day players or guaranteed participants.",
+    "universe_source": {
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
+      "path": "sources/profile-closure-next-02/roster_current_season.json",
+      "source_observed_utc": "2026-11-10T18:45:38.394906+00:00",
+      "source_http_last_modified": "2026-11-10T15:34:29+00:00",
+      "transaction_effective_times": "UNKNOWN_NOT_FILLED_FROM_HTTP"
+    }
+  },
+  "qualified_available": [
+    {
+      "block": "CURRENT_CANDIDATE_IDENTITY_ROLE",
+      "state": "CURRENT_QUERY_PROFILE_CANDIDATES_AVAILABLE",
+      "scope": "959 projected season records;495 ACT; WAS/NYG ACT 5QB/7RB/10WR/8TE. Not a weekly historical census."
+    },
+    {
+      "block": "CURRENT_PLAYER_STATS",
+      "state": "PUBLIC_BYTES_AVAILABLE",
+      "scope": "9455 sparse rows through2026W9; source observed18:55:24.489370UTC. Canonical stats do not establish missing roster/participation rows."
+    },
+    {
+      "block": "CURRENT_PBP",
+      "state": "PUBLIC_BYTES_AVAILABLE_PARTIAL_A_CONTRACT",
+      "scope": "16993 retained play rows throughW9; source observed18:55:26.326632UTC. Direction/gap/down/credited yards present; EPA and success absent."
+    },
+    {
+      "block": "NATIVE_EVENT_FINALITY",
+      "state": "PARTIALLY_AVAILABLE",
+      "scope": "Current package admits1208 old games plus2026_09_CIN_ATL and2026_09_JAX_BAL;13otherW9games held, including LA_WAS and NYG_PHI. Preserve held games."
+    }
+  ],
+  "exact_contract_gaps": [
+    {
+      "id": "A_HISTORY_CENSUS",
+      "affected": "F0 andF3 rolling player history",
+      "reason": "Checked current MODEL_INPUT_MANIFEST lists five files, including a season roster projection, sparse stats, and PBP; no full2026 weekly roster-eligible census. A last3/8 roster-eligible-row features retain unknown intervening slots. Sparse stats cannot substitute by dropping zero/DNP/unknown rows.",
+      "minimum_needed": "Observation-bound role-appropriate weekly roster/history census for missingW8 and any admissibleW9, source-defined metric presence and participation states, canonical game/player/team identities and exact game versions. Retain old dense histories and all unknown rows; do not manufacture absent zeros.",
+      "owner": "C current-source qualification owner; A integrator binds only compatible admitted rows"
+    },
+    {
+      "id": "A_F3_EPA",
+      "affected": "F3 profile efficiency/success features",
+      "reason": "A TimingEfficiencyContext calls aggregate over PBP. aggregate reads rushing_yards,epa,first_down_rush to compute signed yards, EPA-positive success and first-down components. Current retained C PBP projection lacks epa (and success). Missing EPA cannot be imputed to zero or replaced with first_down_rush.",
+      "minimum_needed": "Permitted current-version PBP projection including numeric/missing EPA and necessary existing A accepted fields, with model/version provenance and the same qualified game/finality/admission mappings. No new acquisition is required if the already-observed C upstream snapshot can supply an authorized recoverable projection.",
+      "owner": "C existing PBP/source projection owner; A validates exact adapter contract"
+    },
+    {
+      "id": "A_CURRENT_CLOCKS",
+      "affected": "Historical availability admission and query consistency",
+      "reason": "Current facts contain no per-game outcome_available_utc or original observation provenance. Actual present receipt clocks are legitimate current observations, not historical original publication times. A explicit-unknown protections remain active.",
+      "minimum_needed": "Source-observation/version-bound eligible game map, qualified finality, original history semantics for already retained data; current receipt clocks for new current snapshots. Alternative stale/partial-history use requires a separately named shadow scope and cannot masquerade as exact fresh rolling F0/F3.",
+      "owner": "A source/producer integrator with C source receipts"
+    }
+  ],
+  "not_blockers_in_isolation": [
+    "Absence of offense_snaps alone: the old A lane already has explicit NaN behavior; do not invent a requirement that all such fields be present.",
+    "No actual offers in C packet: forecast-only capture remains useful if source/model contracts qualify; it does not become actual-line evidence."
+  ],
+  "prohibitions_preserved": [
+    "No target-game outcomes required for future query admission.",
+    "No admission of13heldW9games or inferred DNP/zero outcomes.",
+    "No stamping completed-game stats at kickoff or backdating present snapshot versions.",
+    "No dropping unknown census slots or changing model/training semantics silently.",
+    "No model loading/inference until root registers exact trusted models, bounded retention and one-off shadow contract."
+  ],
+  "checked_code": [
+    {
+      "path": "nfl_lab/profile_freshness_a_v2.py",
+      "bytes": 31574,
+      "sha256": "a634c881f3e1a163ad501c68013821790cd0a99c652fea28b4fdc6c27ee74843"
+    },
+    {
+      "path": "nfl_lab/player_context_rush_efficiency_v1.py",
+      "bytes": 22637,
+      "sha256": "7e34b40f39fa1e6295637ecb582483c57f4a6dfed22aea4e0dab7d7fc0469487"
+    },
+    {
+      "path": "nfl_lab/player_context_completion_features_v1.py",
+      "bytes": 15014,
+      "sha256": "c3dcc6f3dd3cf019b358ffc86434e2659351c0aeb60c00256ab23be2039a4ade"
+    },
+    {
+      "path": "nfl_lab/abc_player_rushing_context_v1.py",
+      "bytes": 15250,
+      "sha256": "4c99ad2eee3722b58caa971c2ccf426b34e57f26490f49f82af860675dea3a23"
+    }
+  ],
+  "source_search_scope": "One checked C current upstream/source manifest and its actual five retained member mappings; no assertion that every historical source elsewhere in C is absent."
+}

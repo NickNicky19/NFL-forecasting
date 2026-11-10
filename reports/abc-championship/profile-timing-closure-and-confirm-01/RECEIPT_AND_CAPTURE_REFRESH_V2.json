@@ -1,0 +1,331 @@
+{
+  "schema": "A_TIMING_CONFIRM_RECEIPT_REFRESH-v2",
+  "continuation": "PROFILE-TIMING-CLOSURE-AND-CONFIRM-01",
+  "checked_utc": "2026-11-10T23:24:31+00:00",
+  "checked_chicago": "2026-11-10T17:24:31-06:00",
+  "preserves": "RECEIPT_AND_CAPTURE_REFRESH_V1.json and .md unchanged",
+  "status": "SCOPED_SUPERSEDING_B_RECEIPT_AND_NEW_RESEARCH_CAPTURE_READBACK",
+  "activity": {
+    "new_fits_by_A": 0,
+    "model_loading_by_A": 0,
+    "new_model_inference_by_A": 0,
+    "NFL_scoring": 0,
+    "native_writes": 0,
+    "workflow_dispatches": 0,
+    "cross_owner_writes": 0,
+    "external_messages": 0,
+    "paid_calls": 0,
+    "scope": "Read public exact B receipts and original/corrected forecast-only packet bytes; compare metadata/value presence and equality only."
+  },
+  "version_receipts": {
+    "B_superseding_scientific_head": "b046aab1877e5fb0412864d215a40df1c722a2df",
+    "B_original_forward_capture_commit": "c3199e20149d018eda55eba6528ea27d0f859a5d",
+    "C_checked_main": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
+    "original_website_checked_main": "01a283a2bba828ce7634902017f38ef93fd8c75e",
+    "actual_B_scope_timestamp": "2026-11-10T23:17:18Z",
+    "B_received_A_commit": "375caf0f9b51e39e7df553421fa27ded8701d428",
+    "corrected_prior_no_acknowledgement": "B now explicitly received and independently verified public arithmetic for A375 older B R0-R3 completion and C03 reception joins. The V1 historical B662 observation remains accurate for its earlier time, but is superseded for this old-join scope.",
+    "exact_B_review": {
+      "state": "PASS_IN_PUBLIC_AGGREGATE_SCOPE",
+      "decimal_checks": 19139,
+      "largest_decimal_rounding_difference": "1E-14",
+      "file_hashes": 41,
+      "CSV_bindings": 20,
+      "B_summary_rows": 506,
+      "B_paired_rows": 453,
+      "B_reliability_cells": 63,
+      "C_published_summary_rows": 384,
+      "C_pairs": 600,
+      "exact_B_owned_forecast_packets": 8
+    },
+    "verification_limits": [
+      "Private player/game/line membership and raw grading remain UNKNOWN to B.",
+      "Historical quote/source clocks remain UNKNOWN; public arithmetic does not authenticate them.",
+      "B did not independently resample private bootstrap clusters or re-fit these historical models.",
+      "F0/F1 output-preserving aliases can reuse the matching old mean/median/P2 witnesses; no evidence transfers to changed F2/F3."
+    ],
+    "new_A_results": "New A B-timing score841d874dd4eb15d7aca10195464ba54a6200d1ee0639e89df12885bf23707cf0 and C04 score787ad98445bb56063fed86a95cfed360e939e2a041b0ef9efe5c8f6921e9e91a were not yet published in B's inspected A index/report. No B/C acknowledgement of these new results is established here.",
+    "stale_remaining_actions": "B's23:17 'new join unexecuted/no receipt' statements describe its inspected published scope. A has now executed them locally; do not commission repeat scoring. Parent publication/readback is the next handoff.",
+    "indexes": {
+      "ABC_EXPORT_INDEX": {
+        "schema": "B-ABC-EXPORT-INDEX-v14",
+        "at_utc": "2026-11-10T19:35:22.232893+00:00",
+        "scope": "The checked ABC export index is older and contains no new profile-timing-closure-confirm-01 entries."
+      },
+      "CURRENT_RESULTS_INDEX": {
+        "new_pointer": "profile_timing_closure_confirm_01",
+        "maps_to": [
+          "TIMING_CLOSURE_CHECKPOINT_V1.md",
+          "EXACT_VERSION_RECEIPTS_V2.json",
+          "forward-current-v1/FORECASTS_METADATA_V2.json",
+          "forward-current-v1/GITHUB_CAPTURE_READBACK_V2.json"
+        ],
+        "scope": "Existing results index supplies an explicit newer discovery route; do not erase old export history or claim C admission."
+      }
+    }
+  },
+  "new_B_packet": {
+    "id": "B-F0-F2-20261110-W10-FIRST-01",
+    "category": "pass_cmp",
+    "owner": "B owner-local manual research shadow; not A registered producer or original-site consumer",
+    "query_scope": {
+      "basic_QBs": 8,
+      "ACT_conditional_appearance_candidates": 5,
+      "DEV_RES_basic_unavailable_QBs": 3,
+      "forecasts": 10,
+      "basic_unavailable_method_records": 6,
+      "arms": [
+        "F0",
+        "F2"
+      ],
+      "expected_starters": "UNKNOWN_NOT_INFERRED",
+      "appearance_or_health_probability": "NOT_ESTIMATED",
+      "transaction_effective_clocks": "UNKNOWN_NOT_FILLED"
+    },
+    "original_packet": {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "c3199e20149d018eda55eba6528ea27d0f859a5d",
+      "path": "reports/profile-timing-closure-confirm-01/B/forward-current-v1/FORECASTS.json.gz",
+      "bytes": 8624,
+      "sha256": "618a260be4bec1082592a2dea7c53a4c1eabe42121e09b0412e652f52c196d2e",
+      "A_actual_compressed_readback_and_JSON_decode": "PASS_NO_MODEL_LOADING"
+    },
+    "real_clocks": {
+      "registration_and_feature_cutoff_utc": "2026-11-10T22:56:48.633273+00:00",
+      "native_status_request_started_utc": "2026-11-10T23:00:17.725062+00:00",
+      "native_status_observed_utc": "2026-11-10T23:00:18.061858+00:00",
+      "native_HTTP_Date": "2026-11-10T23:00:18+00:00",
+      "issued_utc": "2026-11-10T23:01:29.145519+00:00",
+      "local_persistence_completed_utc": "2026-11-10T23:01:29.268565+00:00",
+      "first_B_exact_GitHub_readback_utc": "2026-11-10T23:03:10.984485+00:00",
+      "B_connector_recovery_completed_utc": "2026-11-10T23:17:18Z",
+      "GitHub_existing_CI_created_utc": [
+        "2026-11-10T23:02:20Z",
+        "2026-11-10T23:04:12Z"
+      ],
+      "native_receipt_expiry_utc": "2026-11-10T23:30:18+00:00"
+    },
+    "current_temporal_scope": "At this23:24:31UTC readback the native event receipt has not expired. Its23:30:18UTC expiry limits new issuance/reuse; it does not erase or invalidate the earlier frozen forecast. After expiry, obtain a newly qualified event/source/horizon before new issue or repricing. Do not call this packet indefinitely current/fresh.",
+    "event": {
+      "game_id": "2026_10_WAS_NYG",
+      "native_event": "401873052",
+      "state_at_issue": "pre/STATUS_SCHEDULED/completed=false",
+      "kickoff_utc": "2026-11-13T01:15:00+00:00",
+      "kickoff_chicago": "2026-11-12T19:15:00-06:00",
+      "HTTP_clock_max_age_seconds": 1800,
+      "target_outcomes": "FUTURE_UNKNOWN_NOT_GRADED"
+    },
+    "inference": {
+      "B_current_origin_fits": 2,
+      "repeated_historical_fits": 0,
+      "features": 179,
+      "trees": 32,
+      "seed": 1701,
+      "rows_F0": 941,
+      "rows_F2": 945,
+      "wall_seconds": 1.512206146000608,
+      "CPU_seconds": 1.571158057,
+      "peak_RSS_bytes": 193249280,
+      "scope": "Genuine new current-origin B fits under existing registered recipes; not historical reruns or a new learner search. A did not load or reproduce fitted models."
+    },
+    "information": {
+      "older_2022_2025_rows_preserved": 2624,
+      "existing_2026_W1_W8_QB_rows_preserved": 277,
+      "added_qualified_W9_QB_rows": 4,
+      "qualified_current_QB_ATT_CMP_reconciled_rows": 315,
+      "held_recent_QB_rows": 34,
+      "held_recent_games": 13,
+      "native_final_W9_games": [
+        "2026_09_CIN_ATL",
+        "2026_09_JAX_BAL"
+      ],
+      "limitations": "Target teams' W9 LA_WAS and NYG_PHI remain held. Partial current information, not complete latest-game coverage. Current revised snapshot histories retain declared7day/48h reconstruction and do not authenticate original publication times."
+    },
+    "presence": {
+      "method_records_total": 16,
+      "mean": {
+        "PRESENT_NON_NULL": 10,
+        "ABSENT": 6,
+        "EXPLICIT_NULL": 0
+      },
+      "lower_median": {
+        "PRESENT_NON_NULL": 10,
+        "ABSENT": 6,
+        "EXPLICIT_NULL": 0
+      },
+      "law": {
+        "PRESENT_NON_NULL": 10,
+        "ABSENT": 6,
+        "EXPLICIT_NULL": 0
+      },
+      "exact_offer": {
+        "EXPLICIT_NULL": 16
+      },
+      "selected_side": {
+        "EXPLICIT_NULL": 16
+      },
+      "actual_outcome": {
+        "EXPLICIT_NULL": 16
+      },
+      "actual_offers": 0,
+      "actual_selections": 0,
+      "grades": 0,
+      "note": "Six unavailable basic records do not contain a mean/median/law; absence is not numeric zero. All future outcomes/offers/sides remain explicit null."
+    },
+    "metadata_correction": {
+      "recorded_utc": "2026-11-10T23:13:05Z",
+      "V2_path": "reports/profile-timing-closure-confirm-01/B/forward-current-v1/FORECASTS_METADATA_V2.json",
+      "V2_bytes": 58083,
+      "V2_sha256": "a77ead99bc663b442f07cc55fa8b7554cddd9cd49ed01ded7f4c80da7ceae78c",
+      "original_retained": true,
+      "six_original_forecast_flags_corrected": true,
+      "explicit_basic_unavailable_flag_added_to_all_16": true,
+      "A_original_vs_V2_presence_identity_value_law_clock_parity": "PASS; no scientific fields changed across all16 records",
+      "new_fits_or_inference_from_correction": 0,
+      "new_forecasts_or_weeks": 0
+    },
+    "publication": {
+      "B_reports_17_files": 177390,
+      "original_bytes_actual_A_readback": true,
+      "metadata_V2_actual_A_readback": true,
+      "models_actual_A_readback": false,
+      "independent_reinference_by_A": false,
+      "B_root_reported_final_prepared_mean_max_error": 3.552713678800501e-15,
+      "B_root_reported_median_mismatches": 0,
+      "scope": "B recovery/parity receipt inspected. A directly decoded original forecast gzip and V2 JSON and compared all preserved values/laws/clocks; no independent model re-inference or raw-PBP rederivation."
+    },
+    "operational_states": {
+      "prepared": true,
+      "locally_persisted": true,
+      "published_and_readback": true,
+      "original_site_delivered": false,
+      "consumer_admitted": false,
+      "activated": false,
+      "served_verified": false,
+      "scientifically_qualified_by_this_capture": false
+    },
+    "grader_next_action": {
+      "owner": "B",
+      "action": "After qualified FINAL/presence-complete outcomes, grade preserved forecast-only packet. No postevent offers or selected picks may be invented."
+    }
+  },
+  "C_expiry_clarification": {
+    "id": "C-C04-20261110-W10-FIRST-01",
+    "as_of_utc": "2026-11-10T23:24:31+00:00",
+    "expiry_utc": "2026-11-12T03:34:29+00:00",
+    "state": "NOT_YET_EXPIRED_AT_THIS_READBACK",
+    "correction": "V1 expiry_action named the future action, not a claim that it had already occurred. At/afterNov12expiry stop treating it as fresh display; retain original for qualified subsequent grading.",
+    "kickoff_utc": "2026-11-13T01:15:00+00:00",
+    "grade_due_now": false,
+    "owner": "C"
+  },
+  "unaffected_prior_findings": {
+    "A_current_shadow": "Exact A F0/F3 fresh rolling-history remains not ready on checked C source package: weekly dense census/presence/participation and F3 EPA-bearing PBP projection plus game/finality/real-observation contract. No inference performed.",
+    "CountA": "Separate registered producer SOURCE/query/feature_capture_receipt/issuedRoot/feed/consumer closure; F3 EPA is not imposed on CountA unless its own recipe consumes it.",
+    "website": "Preserve original1610 and later1614 packets. No new A/CountA activation established; served metadata review remains bounded static-byte scope, not fresh DOM/current age inference."
+  },
+  "immutable_evidence": [
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/TIMING_CLOSURE_CHECKPOINT_V1.md",
+      "bytes": 13453,
+      "sha256": "7f68edc6601fb9118149b5071d54eafa4780675b45030036f75d0ed1470e6fec"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/abc-championship/EXPORT_INDEX.json",
+      "bytes": 1035815,
+      "sha256": "4d934f70cfc44396e984297d9df74ab84cc7a68ec8dc1a7d47d544623ed3419f"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "registries/CURRENT_RESULTS_INDEX.json",
+      "bytes": 26163,
+      "sha256": "57e6f46dcbf8100814123e136813c15b98a985c70a6423ced1af217ad07c1cef"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/independent/A_JOIN_PUBLIC_ARITHMETIC_REVIEW_V1.json",
+      "bytes": 7246,
+      "sha256": "450ac08618167ea902f1fa21b996a32c9d1700b0012bd3201012b5f28fdcb773"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/A-receipts/COMPLETED_JOIN_SCOPE_V1.json",
+      "bytes": 7829,
+      "sha256": "521cffe69353a0654b95570eda0b6d7e06842ae0fe45f55907170d833264d3ff"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/EXACT_VERSION_RECEIPTS_V2.json",
+      "bytes": 2286,
+      "sha256": "c003da9493c778d990870928a2532a21b9703ad0698101e92532178b3ce95e27"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/forward-current-v1/FORECASTS_METADATA_V2.json",
+      "bytes": 58083,
+      "sha256": "a77ead99bc663b442f07cc55fa8b7554cddd9cd49ed01ded7f4c80da7ceae78c"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/forward-current-v1/PACKET_METADATA_CORRECTION_V2.json",
+      "bytes": 1244,
+      "sha256": "d9b053518ab41f86bd7277d67fe65ad80cf1ab4f164fb36ffc0c238466098e25"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/forward-current-v1/GITHUB_CAPTURE_READBACK_V2.json",
+      "bytes": 7668,
+      "sha256": "26ae9f4fcea9f890c06a9b7b55a13d7645eb260da3e53641eab79d382c8a285c"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/forward-receipts/current-inputs/CURRENT_INPUT_DERIVATION_RECEIPT_V1.json",
+      "bytes": 12096,
+      "sha256": "13ead3892c165b9e0d1e81cd074402364d82ea54526a59c044605caa2540f1e3"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/INDEPENDENT_SCOPE_AND_RUNTIME_V1.json",
+      "bytes": 2969,
+      "sha256": "2bd0ae7ae1ad8f06b20b448d86cb999b90af1cb6ea180e40d4fe5cfba51134af"
+    },
+    {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
+      "path": "reports/profile-timing-closure-confirm-01/B/NEXT_OWNER_ACTIONS_V1.json",
+      "bytes": 3603,
+      "sha256": "410578f0104c0a7b109f1b13a4d9cde2e3a6629f6ba7c8de63d74709efe751ac"
+    }
+  ],
+  "minimal_next_actions": [
+    {
+      "owner": "A integrator",
+      "action": "Publish/read back new exact B841d/C04787 results and this receipt; do not rerun completed old or new joins."
+    },
+    {
+      "owner": "B",
+      "action": "Consume new A result publication when actually available; acknowledge exact scope and grade frozen B10 when qualified."
+    },
+    {
+      "owner": "C",
+      "action": "Record B superseding receipt and new current shadow separately; retain private verification limits and C75 grading ownership."
+    },
+    {
+      "owner": "Existing A producer and original-site owner",
+      "action": "Continue independent CountA current-query and actual consumer closure; no cross-owner dispatch or substitution."
+    }
+  ]
+}

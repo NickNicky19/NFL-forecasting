@@ -4,11 +4,12 @@
   "repository": "NickNicky19/NFL-forecasting",
   "canonical_coordinator": "NickNicky19/NFL-forecasting-NGS-C",
   "canonical_C_protocol": {
-    "ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
+    "ref": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
     "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
     "protocol_id": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
     "protocol_SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
-    "scorer_SHA256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+    "scorer_SHA256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+    "pointer_SHA256": "614bd28656fbf3b53feeca847b1c5f46fe19927958261202ef4e9382294154a3"
   },
   "public_discovery_only": true,
   "discovery_change": "Public report/aggregate/code pointers replace an oversized legacy envelope. Scientific records, original versions and C admission records are unchanged. Owner-local details are withheld from public discovery.",
@@ -743,25 +744,131 @@
         "path": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/FINAL_NATIVE_READBACK_V2.json",
         "sha256": "232322781a8dd92dd78626c6611706dfa4e3e0bb318e7109dc9eb288ebef8c34"
       }
+    },
+    {
+      "id": "A-profile-timing-closure-and-confirm-01",
+      "assignment": "PROFILE-TIMING-CLOSURE-AND-CONFIRM-01",
+      "report": "reports/abc-championship/profile-timing-closure-and-confirm-01/EXECUTED_TIMING_CONFIRM_V1.md",
+      "machine_results": "reports/abc-championship/profile-timing-closure-and-confirm-01/EXECUTION_SUMMARY_V1.json",
+      "discovery": "reports/abc-championship/profile-timing-closure-and-confirm-01/README.md",
+      "state": "COMPLETED_NAMED_SAVED_OUTPUT_JOINS_AND_NATIVE_PUBLIC_READBACK_NO_NEW_PRIMARY_RELEASE",
+      "execution_local_HEAD": "f72e1f6ca998524c924069107921954e6d734872",
+      "producer_commits": {
+        "B": "b616b0073a26cb95011df9c53b86ae0693437f15",
+        "C": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
+        "B_superseding_receipt_and_forward_packet": "b046aab1877e5fb0412864d215a40df1c722a2df"
+      },
+      "exact_code_and_config": [
+        {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/B_TIMING_COMPLETION_SCORING_GO_V1.json",
+          "bytes": 48575,
+          "sha256": "69c84b8b7b31d501cc508e6d002cd5226b33eae45e37543f71b81a6e785f329e"
+        },
+        {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/C04_SCORING_GO_V1.json",
+          "bytes": 72064,
+          "sha256": "f489a42aac2f13d6810a1376710f9fb6ddd7825ab4e4fcd3b0340ce3d3d72689"
+        }
+      ],
+      "new_fits": 0,
+      "new_model_inference_rows": 0,
+      "new_original_forecasts": 0,
+      "new_primary_releases": 0,
+      "actual_coverage": {
+        "B": {
+          "all_A_offers": 144,
+          "annual_W1_W5_offers_decided": 88,
+          "annual_games": 51,
+          "separate_W6_W7_diagnostic_offers": 56,
+          "W8_in_bound_A_bundle": 0
+        },
+        "C04": {
+          "all_A_offers": 733,
+          "all_C_forecast_selected": 678,
+          "all_C_unavailable": 55,
+          "all_selected_unknown": 11,
+          "all_decided": 667,
+          "annual_W1_W5_eligible": 469,
+          "annual_selected": 421,
+          "annual_unavailable": 48,
+          "annual_selected_unknown": 9,
+          "annual_decided": 412,
+          "annual_games": 53,
+          "W8_in_bound_A_bundle": 0
+        }
+      },
+      "new_exact_product_five_week": "DURATION_ONLY_IN_DECLARED_QUOTE_TIMING_UNVERIFIED_TIER_NOT_PRIMARY_ADMISSION",
+      "public_aggregates": {
+        "commit": "60354cb8bcca731b10773072669504c1ed5502c8",
+        "files": 71,
+        "bytes": 3750353,
+        "exact_readback": {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/PUBLIC_AGGREGATE_READBACK_V1.json",
+          "bytes": 26141,
+          "sha256": "670003e69deab6cb9166ad5a4c10316d757738f52276172887f3a38e60950475"
+        },
+        "B_manifest": {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/b-timing-public-v1/MANIFEST_V1.json",
+          "bytes": 10047,
+          "sha256": "9d926e57e0903f5930594a19aa2373f68578c08189e6311fa2008cb8669ddf3b"
+        },
+        "C_manifest": {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/c04-public-v1/MANIFEST_V1.json",
+          "bytes": 4410,
+          "sha256": "c961245d2b9f0182dcf6f0aa3b8e4e675afa9526046652ce553ba26e9873965c"
+        }
+      },
+      "protected_retention": {
+        "state": "PASS_B_C04_SCORES_AND_VERIFICATION_NATIVE_READBACK",
+        "receipt": {
+          "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/NATIVE_RETENTION_RECEIPT_V1.json",
+          "bytes": 4155,
+          "sha256": "68386c2cb7569e7ffaf408392dde643b6fa00adf42b7158a8a98fa8cf7ff3cac"
+        },
+        "freshness_charge_bytes": 9478861,
+        "freshness_limit_bytes": 16777216,
+        "old_caps_reserves_failures": "UNCHANGED",
+        "raw_rows_and_models": "Existing protected owner-local routes only; no public raw source or model export."
+      },
+      "actual_receipts": {
+        "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/EXACT_RECEIPTS_ACKNOWLEDGED_V1.json",
+        "bytes": 2884,
+        "sha256": "ecbb8015210302609e74a8e804c36e55df6544a3a59ded2a7f9852619157dcba"
+      },
+      "current_capture_receipts": {
+        "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/RECEIPT_AND_CAPTURE_REFRESH_V2.json",
+        "bytes": 15858,
+        "sha256": "27a8affa395a5fb40438bac0e0abd6ed8092e44ff53a0b1a7ca52eb1d72e87d9"
+      },
+      "C_received": "NOT_OBSERVED_FOR_NEW_TIMING_RESULT_PACKAGE",
+      "C_admitted": "NOT_OBSERVED_FOR_NEW_TIMING_RESULT_PACKAGE",
+      "B_new_results_acknowledgment": "NOT_OBSERVED; supersedingBackoldA375scopeonly",
+      "consumer_admission": "NOT_OBSERVED",
+      "rights": "Public aggregate code/receipts only; published index grants no private row/model access.",
+      "remaining": "Exact joins annual W1-5 completed; W6-7 diagnostics stay separate; other W8 panels preserved but do not fill these exact annual-source cells. Missing exact offer/history/permission bindings for W6-8 and prior seasons remain queued; no new historical season or pooled championship completed."
     }
   ],
   "prior_C_admission": "See the bound C canonical ledger; prior valid admissions are preserved. No new receipt is implied.",
-  "production": "A_READONLY;SERVED_METADATA_AND_HASH_MATCHED_OVERLAY_VERIFIED_2026-11-10T20:28:13Z;INCUMBENT_W10;ZERO_ACTIVE_RESEARCH_OVERLAY_ROWS;NO_NEW_A_PACKET_OR_RENDERED_A_MODEL_VERIFIED",
+  "production": "A_READONLY;ORIGINAL_OWNER_INCUMBENT1610_PRESERVED_SEPARATE1614_REFRESH;ZERO_A_COUNT_A_ACTIVATION_VERIFIED;NO_ORIGINAL_SITE_WRITES",
   "new_forecasts_issued": 0,
-  "requested_scope_completion": "PARTIAL; namedjoinsand2fit2026timingsensitivityexecuted, full2026W1-8/all12/historicalchampionshipnotcomplete",
+  "requested_scope_completion": "PARTIAL_CHAMPIONSHIP; exact newBtimingCMPandC04RECjoinsnowcomplete onboundAboards; W1-5annual actual-line diagnostic, W6-7separate; no new historical seasons, primaryreleaseorAcurrentpacket",
   "publication_readback": {
-    "state": "JOINS_AND_TIMING_AGGREGATES_ACTUALLY_PUBLISHED_READ_BACK; FINAL_REPORT_INDEX_READBACK_RECEIPT_SEPARATE",
-    "joins_commit": "0f2a311137a42a50591c7a8178eed61eddf9d958",
-    "timing_commit": "96f49510b8cfe3734e9499a1f3c6ae40a71531ac"
+    "state": "ALL71AGGREGATE_FILES_EXACT_READBACK_PASS;FINAL_REPORT_INDEX_READBACK_SEPARATE",
+    "aggregate_commit": "60354cb8bcca731b10773072669504c1ed5502c8",
+    "receipt": {
+      "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/PUBLIC_AGGREGATE_READBACK_V1.json",
+      "bytes": 26141,
+      "sha256": "670003e69deab6cb9166ad5a4c10316d757738f52276172887f3a38e60950475"
+    }
   },
-  "current_C_inspected_ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
-  "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0",
+  "current_C_inspected_ref": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
+  "current_B_inspected_ref": "b046aab1877e5fb0412864d215a40df1c722a2df",
   "current_execution": {
-    "id": "A-profile-increment-closure-and-next-02",
-    "report": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTED_CLOSURE_CHECKPOINT_V1.md",
-    "machine_results": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTION_SUMMARY_V1.json",
-    "state": "EXECUTED_OWNER_LOCAL_COMPARISONS;NO_NEW_SHARED_ADMISSION_OR_RELEASE",
-    "prior_export_index_sha256": "4cc2862fad7e01dd0210528714d803ae5be5e3c67701c2e3758fd53a04d9385a",
+    "id": "A-profile-timing-closure-and-confirm-01",
+    "report": "reports/abc-championship/profile-timing-closure-and-confirm-01/EXECUTED_TIMING_CONFIRM_V1.md",
+    "machine_results": "reports/abc-championship/profile-timing-closure-and-confirm-01/EXECUTION_SUMMARY_V1.json",
+    "state": "COMPLETED_NAMED_SAVED_OUTPUT_JOINS_AND_NATIVE_PUBLIC_READBACK_NO_NEW_PRIMARY_RELEASE",
+    "prior_export_index_sha256": "e3d251a960f09a375fc5ffd1cefc5f6c91aa4bbbe655fa7e594deaa2370b274e",
     "new_live_models": 0,
     "new_current_A_packets": 0,
     "C_admission": "NOT_OBSERVED"
@@ -785,5 +892,27 @@
   "production_receipts": {
     "served": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/SERVED_METADATA_READONLY_V3.json",
     "owner_incumbent_capture": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/CURRENT_INCUMBENT_PACKET_READBACK_V1.json"
+  },
+  "previous_current_execution_timing_parent": {
+    "id": "A-profile-increment-closure-and-next-02",
+    "report": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTED_CLOSURE_CHECKPOINT_V1.md",
+    "machine_results": "reports/abc-championship/profile-increment-to-release-01/closure-next-02/EXECUTION_SUMMARY_V1.json",
+    "state": "EXECUTED_OWNER_LOCAL_COMPARISONS;NO_NEW_SHARED_ADMISSION_OR_RELEASE",
+    "prior_export_index_sha256": "4cc2862fad7e01dd0210528714d803ae5be5e3c67701c2e3758fd53a04d9385a",
+    "new_live_models": 0,
+    "new_current_A_packets": 0,
+    "C_admission": "NOT_OBSERVED"
+  },
+  "canonical_C_protocol_previous_timing_parent": {
+    "ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
+    "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
+    "protocol_id": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
+    "protocol_SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
+    "scorer_SHA256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+  },
+  "publication_readback_previous_timing_parent": {
+    "state": "JOINS_AND_TIMING_AGGREGATES_ACTUALLY_PUBLISHED_READ_BACK; FINAL_REPORT_INDEX_READBACK_RECEIPT_SEPARATE",
+    "joins_commit": "0f2a311137a42a50591c7a8178eed61eddf9d958",
+    "timing_commit": "96f49510b8cfe3734e9499a1f3c6ae40a71531ac"
   }
 }

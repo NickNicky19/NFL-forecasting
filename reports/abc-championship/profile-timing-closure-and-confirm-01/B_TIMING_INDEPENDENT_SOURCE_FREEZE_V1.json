@@ -1,0 +1,32 @@
+{
+  "id": "A-TIMING-CONFIRM-B-INDEPENDENT-SOURCE-FREEZE-v1",
+  "UTC": "2026-11-10T23:10:09.317320+00:00",
+  "state": "SOURCE_FROZEN_BEFORE_NFL_CHECK",
+  "code_path": "tools/timing_confirm_b_completion_independent_v1.py",
+  "code_sha256": "a6118b0769a51bc5f342a9dd14c6fe4101bf0d1ff123c5e530f9277a255905f0",
+  "code_bytes": 25996,
+  "parent_ROOT_GO": "Explicit independent verification authorization received for exact result 841d874dd4eb15d7aca10195464ba54a6200d1ee0639e89df12885bf23707cf0; only approved original A source IO, offline, read-only.",
+  "result_sha256": "841d874dd4eb15d7aca10195464ba54a6200d1ee0639e89df12885bf23707cf0",
+  "protocol_sha256": "69c84b8b7b31d501cc508e6d002cd5226b33eae45e37543f71b81a6e785f329e",
+  "scope": {
+    "new_products": 12,
+    "new_summary_cells": 972,
+    "new_primary_contrast_cells": 108,
+    "old_FULL_summary_exact_parity": 594,
+    "old_FULL_pair_exact_parity": 453,
+    "native_writes": 0,
+    "new_fits": 0,
+    "new_inference": 0,
+    "HTTP": 0
+  },
+  "budget": {
+    "CPU_seconds": 150,
+    "wall_seconds": 600,
+    "RSS_bytes": 3221225472
+  },
+  "source_only_checks": {
+    "AST_parse": "PASS",
+    "public_private_absolute_locator_scan": "PASS",
+    "NFL_source_or_result_rows_read_before_freeze": false
+  }
+}

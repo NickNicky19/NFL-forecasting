@@ -1,0 +1,63 @@
+{
+  "UTC": "2026-11-10T23:29:39.267718+00:00",
+  "id": "A-TIMING-CONFIRM-EXACT-RECEIPTS-v1",
+  "new_timing_results": {
+    "B_or_C_acknowledgment": "NOT_OBSERVED_FOR_THIS_NEW_RESULT_PACKAGE",
+    "C_shared_admission": "NOT_OBSERVED_FOR_THIS_NEW_RESULT_PACKAGE",
+    "consumer_admission": "NOT_OBSERVED",
+    "next": "Existing C coordinator reads this indexed immutable publication; B independently checks permitted new aggregates/membership. No duplicate fit or join required."
+  },
+  "old_A_joins": {
+    "B_acknowledgment_commit": "b046aab1877e5fb0412864d215a40df1c722a2df",
+    "B_received_and_public_arithmetic_checked": true,
+    "C_new_intake_not_observed": true,
+    "already_executed": [
+      "B_R0_R3_CMP",
+      "C03_REC"
+    ],
+    "immutable_A_export": "375caf0f9b51e39e7df553421fa27ded8701d428",
+    "receipt": {
+      "bytes": 15858,
+      "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/RECEIPT_AND_CAPTURE_REFRESH_V2.json",
+      "sha256": "27a8affa395a5fb40438bac0e0abd6ed8092e44ff53a0b1a7ca52eb1d72e87d9"
+    },
+    "scientific_report_precedent": "a969aeafa945edec686f5b54a9bc64f99bfa4bf0"
+  },
+  "received_and_verified": [
+    {
+      "actual_2026_packets": 8,
+      "actual_2026_rows": 1108,
+      "artifact_commit": "b616b0073a26cb95011df9c53b86ae0693437f15",
+      "join": {
+        "bytes": 19810,
+        "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/B_TIMING_INDEPENDENT_CALCULATION_V1.json",
+        "sha256": "94622cf65b2afcb8a1574c3b4ff2e323f53484bd2dad772473e4a236d35c2ee4"
+      },
+      "law_provided": true,
+      "old_F0_F1_contract_rows_verified": 554,
+      "producer_commit": "e18841ba20941fdf4cea2ee80b0d4724eeaddd3f",
+      "session": "B",
+      "source": "reports/profile-increment-closure-next-02/B/SAVED_TIMING_OUTPUT_HANDOFF_V1.json"
+    },
+    {
+      "F0_alias": "C03_R1_SUPPORT",
+      "F1_alias": "C03_R2_PLAYER_PROFILE",
+      "artifact_commit": "d3d1ef4dc60826334234cfa1a1b8e373b2ee024e",
+      "bytes": 234104,
+      "canonical_query_rows": 4811,
+      "join": {
+        "bytes": 3565,
+        "path": "reports/abc-championship/profile-timing-closure-and-confirm-01/C04_INDEPENDENT_ARITHMETIC_V1.json",
+        "sha256": "e79c59188b0819cd44ee54ec021bc6612afbca1cef82f5d6e7d7e3da440a2d15"
+      },
+      "old_F0_F1_values_verified": 19244,
+      "probabilities_provided": false,
+      "session": "C",
+      "sha256": "4fd67d7915f9da3df9bec152155e809eb34d60f89d3ea751e26da9eb0a5c8abc",
+      "source": "reports/profile-closure-next-02/timing/POINT_HANDOFF.json.xz",
+      "typed_point_values": 38488
+    }
+  ],
+  "rights": "Actual public output readback and owner-local scoring; private A rows/clocks/models and peer fitted artifacts were not independently shared or reproduced. A independent calculator is a separate path within A, not external-session agreement.",
+  "session": "A"
+}
