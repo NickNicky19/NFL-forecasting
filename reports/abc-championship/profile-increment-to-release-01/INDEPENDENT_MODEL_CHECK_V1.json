@@ -1,0 +1,237 @@
+{
+  "UTC": "2026-11-10T11:46:26.053556+00:00",
+  "budget": {
+    "AS_bytes": 1610612736,
+    "CPU_hard_seconds": 300,
+    "CPU_soft_seconds": 250,
+    "parent_amendment": "POSTEXEC_CHECK_BUDGET_V1",
+    "total_wall_ceiling_seconds": 600,
+    "wall_signal_seconds": 540
+  },
+  "conditional_model": {
+    "Logistic_iterations": [
+      123
+    ],
+    "Logistic_max_iter": 1000,
+    "Ridge_iterations": [
+      71
+    ],
+    "Ridge_max_iter": 2000,
+    "artifact_SHA256": "96a944fefa621d138a0277a8cd0f481cce5052315936a50b88c321068aa7d2b7",
+    "case_checks": [
+      {
+        "case_sha256": "55151664f7b41d5ade3fb84751315becb85013d345e3ccd68fb53cf57bf2e3a3",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2025
+      },
+      {
+        "case_sha256": "8752c46887ab496e2027964e5a92c5a06b76901938a82e9003ec509dcac8c832",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2025
+      },
+      {
+        "case_sha256": "c573dbcaccf47b81f3b598f283a92a2ba8799d2637a85932d5c7f9de2ed8eb1c",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2025
+      },
+      {
+        "case_sha256": "29b4a48c6bbfc142fdbcfd968e9c015ced7b261a89d101d20c429b1a521c00a2",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2025
+      },
+      {
+        "case_sha256": "83630dbbb93f01af1e5777a95a721e4ff5f6a30d2e4fd7009d8a7c3fa5231c65",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2026
+      },
+      {
+        "case_sha256": "e4658e540e0051716ec1d494d459f3cdc573633c96853a5cb6d4d8889bc4fe9f",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2026
+      },
+      {
+        "case_sha256": "7163c98a17f63d64a925af010d9c6070ad6b411ca5e0151767a478ded5d790a9",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2026
+      },
+      {
+        "case_sha256": "b5ab3d3bf549dd858ad60477ee626f407d2751dccb5015a91cf34791d16dc339",
+        "clock_before_cutoff": true,
+        "contexts": 4,
+        "moment_conservation": true,
+        "point_parity": true,
+        "season": 2026
+      }
+    ],
+    "credited_rb_carries": 11808,
+    "design_features": 59,
+    "iteration_limits_not_reached": true,
+    "negative_signed_2024_RB_training_carries": 1102,
+    "real_count_laws_checked": 8,
+    "training_cell_rows": 8643,
+    "training_season": 2024
+  },
+  "direct_model_checks": [
+    {
+      "artifact_sha256": "663a0b56429569b464b24799782c4bd942ba927f4895e1f6d8ead0ff261d2bc5",
+      "case_commitment_sha256": "f4aba8ba7878fd324464af7a33973ed6fb170809ef3a837c59cea3ab21beedd0",
+      "cases": 4,
+      "conditional_raw_fields_used_in_tree_splits": 1,
+      "consumed_profile_fields": 142,
+      "excluded_profile_only_fields": 26,
+      "fallback_cases": 0,
+      "fitted_iterations": 150,
+      "modeled_training_rows": 34417,
+      "numeric_design_fields": 172,
+      "ordinary_estimator_cases": 4,
+      "season": 2025,
+      "single_batch_shuffle_saved_points": "EXACT",
+      "supported_training_rows": 34417,
+      "transformed_features": 349
+    },
+    {
+      "artifact_sha256": "5872def1b9dfcc216e2fdcc93a43f8b3eb4b70bb308c09f59fdb95dee14cc26d",
+      "case_commitment_sha256": "7ff466efdc480e4be18f8803d22d68fb32fea6a05b94f648c828e04d53bf926d",
+      "cases": 4,
+      "conditional_raw_fields_used_in_tree_splits": 0,
+      "consumed_profile_fields": 142,
+      "excluded_profile_only_fields": 26,
+      "fallback_cases": 1,
+      "fitted_iterations": 150,
+      "modeled_training_rows": 40446,
+      "numeric_design_fields": 172,
+      "ordinary_estimator_cases": 3,
+      "season": 2026,
+      "single_batch_shuffle_saved_points": "EXACT",
+      "supported_training_rows": 40446,
+      "transformed_features": 349
+    }
+  ],
+  "execution_receipt_SHA256": "e75b1f8bed331e1d9c958394ce08233907c913604ffcf8ffe413003e17a14446",
+  "forecast_freeze_SHA256": "4dbfd96d41b4ebda3b6173a51f10e42a50cbef6b44d91d97c76ee8c1dafb5d32",
+  "id": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-EFFICIENCY-INDEPENDENT-RUNTIME-REVIEW-v2",
+  "limits": [
+    "Only authenticated own returned models were deserialized; no peer models.",
+    "Deterministic parity cases cover selected ordinary/sparse2025 and2026W1-7 queries; raw signed-yard numerator/shrinkage checks inherit the accepted game-admission manifest. Prior97feature/timeaudit stands. W8 feature path is not re-audited here.",
+    "Moment/signed fixtures are fictional software checks, not NFL evidence. Iteration counters belowcaps show recorded optimizertermination, not an independent mathematical optimalityproof.",
+    "No scoring, comparison gains, new forecasts issued, offhost restoration or live qualification claimed."
+  ],
+  "private_execution_plan_SHA256": "71e3122782231f69bfaf039a859acddec127055c9bf88eb239c2822449b14fcb",
+  "profiles": {
+    "independent_raw_play_worked_cases": [
+      {
+        "admitted_prior_game_membership": "Existing source-qualified manifest, independently availability-filtered and game-time ordered",
+        "direction": "right",
+        "equation": "L=(sumLeagueY+40*4)/(nLeague+40);T=(sumTeamY+40*L)/(nTeam+40);P=(sumOwnY+20*T)/(nOwn+20)",
+        "known_zero_not_inferred_from_missing": true,
+        "nested_league_team_player_shrinkage": "EXACT",
+        "profile_case_sha256": "8752c46887ab496e2027964e5a92c5a06b76901938a82e9003ec509dcac8c832",
+        "raw_play_numerator_denominator": "EXACT",
+        "season": 2025,
+        "signed_boundary_cases": {
+          "negative": {
+            "case_sha256": "3eca1fc9839f604f03baae79b5ad8f54f9ee10d109e91d3e87e448c12073204f",
+            "state": "SOURCE_PRESENT"
+          },
+          "positive": {
+            "case_sha256": "009d5027e3b184d86fc0fb8a93ae7cabf0e24d19aa9506acab5384ce080b6880",
+            "state": "SOURCE_PRESENT"
+          },
+          "zero": {
+            "case_sha256": "f4e46d59b1b7bcd4af3933657226c66ff6b2abd910e66d710cf500399c721313",
+            "state": "SOURCE_PRESENT"
+          }
+        },
+        "source_clock_before_cutoff": true
+      },
+      {
+        "admitted_prior_game_membership": "Existing source-qualified manifest, independently availability-filtered and game-time ordered",
+        "direction": "right",
+        "equation": "L=(sumLeagueY+40*4)/(nLeague+40);T=(sumTeamY+40*L)/(nTeam+40);P=(sumOwnY+20*T)/(nOwn+20)",
+        "known_zero_not_inferred_from_missing": true,
+        "nested_league_team_player_shrinkage": "EXACT",
+        "profile_case_sha256": "e4658e540e0051716ec1d494d459f3cdc573633c96853a5cb6d4d8889bc4fe9f",
+        "raw_play_numerator_denominator": "EXACT",
+        "season": 2026,
+        "signed_boundary_cases": {
+          "negative": {
+            "case_sha256": "3b729187e8d3190cc851abb579cca920017466fcad9768da456c7dfcf1b36f1f",
+            "state": "SOURCE_PRESENT"
+          },
+          "positive": {
+            "case_sha256": "72a03e06232a07c80a2cab0659ba62dbefd5891c4187f89fdc81045b22498c38",
+            "state": "SOURCE_PRESENT"
+          },
+          "zero": {
+            "case_sha256": "418873d22740dd5347d92c305439834218e1bd54a58c625654b1da0bbcdb7afc",
+            "state": "SOURCE_PRESENT"
+          }
+        },
+        "source_clock_before_cutoff": true
+      }
+    ],
+    "no_target_outcome_case_selection": true,
+    "packet_checks": [
+      {
+        "eligible_clock_values_checked": 2593,
+        "profiles": 923,
+        "season": 2025,
+        "selected_cases": 4
+      },
+      {
+        "eligible_clock_values_checked": 3826,
+        "profiles": 1364,
+        "season": 2026,
+        "selected_cases": 4
+      }
+    ],
+    "raw_scope": "Raw signed-yard numerator/denominator and three-level shrinkage independently recomputed on existing source-qualified prior-game manifest; no full admission97feature audit repeated",
+    "selected_raw_profile_exact_reconstructions": 8,
+    "signed_boundary_source_panels": {
+      "negative": 2,
+      "positive": 2,
+      "zero": 2
+    }
+  },
+  "reviewer_activity": {
+    "CPU_seconds": 56.811219824000005,
+    "RSS_bytes": 760266752,
+    "model_loads": 3,
+    "new_fits": 0,
+    "private_writes": 0,
+    "registry_writes": 0,
+    "source_acquisitions": 0,
+    "verified_own_model_inference_only": true,
+    "wall_seconds": 175.0324269030025
+  },
+  "reviewer_code_SHA256": "67b227f1c75fa973eb61cd4794062821f442f4ef3e2eabb9bb2ba0e0fd462428",
+  "state": "PASS_OWN_MODEL_PROFILE_AND_MOMENT_PARITY",
+  "synthetic_software_only": {
+    "independent_tail_formula": "q**k*(k+q/(1-q)); finitebucket differences plus empirical atoms",
+    "maximum_absolute_moment_difference": 2.2737367544323206e-13,
+    "moment_laws_checked": 12,
+    "new_football_accuracy_observations": 0,
+    "signed_negative_expected_total_preserved": true
+  }
+}
