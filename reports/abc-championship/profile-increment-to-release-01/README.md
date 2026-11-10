@@ -1,5 +1,5 @@
-# A profile increment: executed checkpoint
+# Session A — profile increment to release, v2
 
-Current executed report: [Recovered efficiency and stronger reception controls](RECOVERED_AND_CONTROL_CHECKPOINT_V1.md).
+**[Executed four-arm results and keep/stop decisions](EXECUTED_INCREMENT_CHECKPOINT_V2.md)** · [Public aggregate tables](public-full-four-v1/README.md) · [Table hashes](public-full-four-v1/PUBLIC_TABLES_INDEX_V1.csv) · [Independent checks](INDEPENDENT_CHECKS_PUBLIC_SCOPE_V2.json) · [Private retention readback](COMPLETED_RETENTION_READBACK_V1.json).
 
-The separate four-fit rushing player/defense increment is running under [V4 registration](FIT_PROTOCOL_V4.json); it has no published scores or release qualification at this checkpoint. Earlier forecasts, grades and failures remain preserved. C owns canonical admission; the original website owner controls production.
+Registered2026 package complete; full championship remains partial. No new current packet, primary switch or served use is claimed. Prior [frozen checkpoint](RECOVERED_AND_CONTROL_CHECKPOINT_V1.md) stays intact.

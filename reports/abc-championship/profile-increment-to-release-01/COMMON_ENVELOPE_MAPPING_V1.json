@@ -1,0 +1,35 @@
+{
+  "id": "A-C-COMMON-PLAYER-DEFENSE-ENVELOPE-v2-MAPPING-v1",
+  "UTC": "2026-11-10T14:37:47.659458+00:00",
+  "owner": "A",
+  "canonical_owner": "C",
+  "C_ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
+  "schema_path": "reports/profile-increment-v2/COMMON_PROFILE_SCHEMA.json",
+  "schema_sha256": "059c72420f3b9f0f040f69835c44ce27335d8b9c53f88e16e08218f929f26a8c",
+  "state": "A_READ_AND_ACKNOWLEDGES_ENVELOPE_SEMANTICS;NO_C_RECEIPT_ASSUMED",
+  "output_preserving": true,
+  "no_new_extraction_or_forecast": true,
+  "mapping": {
+    "canonical_player_or_team": "existing player_id or defense team; no name-only join",
+    "historicalteam/role": "historical_team/opponent plus RB target; other credited rush types remain in all-team profile",
+    "event/nativeversion": "existing canonical game/query identity + original source/model/manifest hashes",
+    "actualcutoffUTC": "existing cutoff_utc/information_cutoff_UTC; kickoff-origin reconstruction remains explicitly historical",
+    "profileversion": "existing profile_version and PROFILE-INCREMENT-TO-RELEASE-01-A-v2 code/schema identities",
+    "sourcebindings": "native SOURCE_AND_PROFILE_BINDING plus each defense source_bindings",
+    "measure_fields": "existing numerator/denominator/support_games/support_carries/lookback/raw/shrunk/prior/state with latest eligible clock; descriptive support is not posterior certainty"
+  },
+  "populations": "Training RB history, basic/profiling-priority universe, actual-offer eligible board retained separately. Empty qualified priority/top20 cannot narrow full board.",
+  "truth_states": {
+    "KNOWN_ZERO": "explicit observed count or zero numerator with qualified positive denominator",
+    "EXPLICIT_NULL": "unknown retained; never zero",
+    "ABSENT_FIELD": "source-presence separate",
+    "UNDEFINED_DENOMINATOR": "zero/unqualified denominator gives null raw ratio; prior labelled separately",
+    "SOURCE_BLOCKED": "no alignment/routes/injury/box roles invented"
+  },
+  "limits": [
+    "Mapping acknowledges shared semantics, not a byte-identical native record rewrite or raw-row transfer.",
+    "No current qualified RB roster/query packet established.",
+    "A profiles only supply owned rushing component; no duplicated B/C source extraction.",
+    "New C forecast/control methods remain separate from prior admitted C points until exact scoped joins exist."
+  ]
+}

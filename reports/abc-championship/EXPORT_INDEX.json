@@ -4,7 +4,7 @@
   "repository": "NickNicky19/NFL-forecasting",
   "canonical_coordinator": "NickNicky19/NFL-forecasting-NGS-C",
   "canonical_C_protocol": {
-    "ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+    "ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
     "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
     "protocol_id": "ABC-ACTUAL-PROP-CHAMPIONSHIP-v2-C-1",
     "protocol_SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
@@ -227,23 +227,419 @@
       "consumer_receipt": "NOT_OBSERVED",
       "actual_current_packets": 0,
       "production_writes": 0
+    },
+    {
+      "id": "A-profile-increment-to-release-01-v2-completed-four-arm",
+      "owner": "A",
+      "report": "reports/abc-championship/profile-increment-to-release-01/EXECUTED_INCREMENT_CHECKPOINT_V2.md",
+      "state": "FROZEN_SCORED_INDEPENDENT_SCOPED_VERIFICATION_AND_PRIVATE_READBACK_COMPLETE",
+      "producer_bindings": {
+        "executing_local_HEAD": "f72e1f6ca998524c924069107921954e6d734872",
+        "remainder_source_commit": "cd519b6e27a556c24e8974fe783fd52367b06dff",
+        "scorer_and_independent_code_commit": "4ffcb2d259d4fb3067b8da85242ea9fc17fb156f",
+        "corrected_scoring_GO_commit": "48914f467187faff630e7092e0c43a26e3c46819",
+        "exact_new_file_hashes": "FULL_FOUR_SCORING_GO_V2.json;REMAINDER_FIT_PROTOCOL_V1.json"
+      },
+      "actual_scored_weeks": {
+        "numerical_2026": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "retained_actual_thresholds_2026": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "separate_unqualified_site_diagnostic_2026": [
+          6,
+          7
+        ],
+        "reference_only_2026": [
+          8
+        ]
+      },
+      "scope": "RB rush_yd, fourLeafarms;strongretainedown/sourcecompatiblecontrols; notuniversalA/B/Cranking",
+      "private_evidence": {
+        "raw_row_transfer": false,
+        "public_private_locators": false,
+        "retention": "Existingapprovednativeallocation; exactrestoration/hashreceipt published; no newsharingroute",
+        "score_compressed_bytes": 612875,
+        "score_SHA256": "9007d0dc9b4f8252ecede568d279deb7a38bbe16fa21f6262e25627075efa522",
+        "per_player_rows": 26390,
+        "full_forecast_rows": 5456,
+        "retention_receipt": "reports/abc-championship/profile-increment-to-release-01/COMPLETED_RETENTION_READBACK_V1.json"
+      },
+      "public_artifacts": [
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/EXECUTED_INCREMENT_CHECKPOINT_V2.md",
+          "bytes": 28198,
+          "sha256": "a2e6c86ea721a87556c84fc7e80ed860657a4b6825f84bd62be693a014186de7"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/README.md",
+          "bytes": 618,
+          "sha256": "05b663f4a34dbe20a0b22d2eb45e3bed011579dce827c30c7687483341f9682b"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/FIELD_TO_USE_V2.csv",
+          "bytes": 4398,
+          "sha256": "5091f6e6c8ad6bbb0d10eea29d97993786beccc046871c15f043729236ef9c50"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/COMMON_ENVELOPE_MAPPING_V1.json",
+          "bytes": 2372,
+          "sha256": "39e095d485891c84efb901ad125a6bfb1d728b9b6014e1cac9a5aa63c33308d5"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/CURRENT_DELIVERY_READONLY_V2.json",
+          "bytes": 6977,
+          "sha256": "06aaa1dbccf1ba040e7b34b36ce01dfbe3b555f899629df78d86ac34b1dfdaf3"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/C_LATEST_CANONICAL_READBACK_V1.json",
+          "bytes": 512,
+          "sha256": "fa83273e59b158a0b6618befda41509842cc29081e0c028d765734129724b365"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/INDEPENDENT_CHECKS_PUBLIC_SCOPE_V1.json",
+          "bytes": 12561,
+          "sha256": "97f208e816a49c333208bc8e2e611c497a2f33b749be00fd8b89847766dcc387"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/INDEPENDENT_CHECKS_PUBLIC_SCOPE_V2.json",
+          "bytes": 14954,
+          "sha256": "bf7b4b3108d0ea38f093bfe28f493e0eba562713360aa50758a44418654f12f6"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/FINAL_REPORT_INDEPENDENT_REVIEW_V1.json",
+          "bytes": 4202,
+          "sha256": "4a3a6c270f7b427ba2d43895c54b3824905e684483444b33f73472bc1d0b3c61"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/COMPLETED_RETENTION_READBACK_V1.json",
+          "bytes": 1867,
+          "sha256": "65a9a0dbff0a3ac73a7fbc6ada9d2a6f7784f7c7e1d52aeb2375c34652c07ecc"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/KEEP_STOP_V2.json",
+          "bytes": 1660,
+          "sha256": "15946316370af2bbac31158e76b31a9f109cd3a2e13ca579243492af6e0f8d2f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/EXECUTION_PACKAGE_COMPLETION_V2.json",
+          "bytes": 3023,
+          "sha256": "2e7bd3fafa065219d4ef6e41f27f43bcc25299b458673c065786197c59affb16"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/TWELVE_CATEGORY_STATUS_V2.csv",
+          "bytes": 1728,
+          "sha256": "9f0b0d59e8f75ba215c134aec0c4c0e4c7eaf26a15b2c98746a90dcbe22dbc20"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/PROFILE_INCREMENT_SCORING_FAILURE_20261110T143444885202Z.json",
+          "bytes": 308,
+          "sha256": "df46390f5be713ab1069e20857fcee4869b887131c3b6dc28cdbf84da891b5d7"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/COHORT_CUMULATIVE_ALL_ELIGIBLE_001.csv",
+          "bytes": 27672,
+          "sha256": "3d558fc8d3706badc2d58f8b3b26578f399d2917e65405b4ccab6c4483025c4f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/COHORT_CUMULATIVE_DETAILED_PRIORITY_001.csv",
+          "bytes": 13595,
+          "sha256": "d07b545e60e827ac3bf06903ca4815869a5ba18b9169f5a8236549d362e2c50b"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/COHORT_CUMULATIVE_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 27949,
+          "sha256": "99ad210bb6c90bfee6ffa1607363774fd4309817f8ededb5c81046ffbb1fe65f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/COHORT_CUMULATIVE_STABLE_NEW_CORE_001.csv",
+          "bytes": 27906,
+          "sha256": "8210ca88f60c3136250dc20dc3527f6f1dfee258756289dc65c31ad7fe06fe2f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/COHORT_CUMULATIVE_WORKLOAD_TOP20_001.csv",
+          "bytes": 13361,
+          "sha256": "a042ae744719adfaa322d1b2d66f0f0721f8b7ec7e689e36958e9f9cf2dd6978"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/DIRECTION_ANNUAL_ACTUAL_W1_W5_001.csv",
+          "bytes": 44324,
+          "sha256": "6386f24e378ead587bc614384159a36eb773117a4caacad0b65e8d56bd1d57b2"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/DIRECTION_MIXED_DIAGNOSTIC_W1_W7_001.csv",
+          "bytes": 57798,
+          "sha256": "519b3a508047531afb321fd2e49314344af5a584d5b7d13ba7d567b5198fbecf"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/DIRECTION_W8_REFERENCE_ONLY_001.csv",
+          "bytes": 13876,
+          "sha256": "0e951f8e5d6070581c243c8f003c7abc902d0d356bb5c8c47114993e74c02760"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/EQUAL_PLAYER_PUBLIC_ANNUAL_W1_W5_001.csv",
+          "bytes": 9523,
+          "sha256": "7a4799320d93e7609a76f9353f73156ac60128deb3368513c6ae6999d53ff0fa"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/EQUAL_PLAYER_PUBLIC_BROAD_NUMERICAL_W1_W7_001.csv",
+          "bytes": 6326,
+          "sha256": "8552b8cc4483106d821d0d81183b716e09cc9cfbee9bf6486db85fd226a48b08"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/EQUAL_PLAYER_PUBLIC_BROAD_NUMERICAL_W8_001.csv",
+          "bytes": 5377,
+          "sha256": "a7030b5b04824f3b6ba5e3a0adaf47442e25d670a45bfde46238fea232f695a6"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/EQUAL_PLAYER_PUBLIC_W1_W7_MIXED_THRESHOLDS_001.csv",
+          "bytes": 10090,
+          "sha256": "b793079c82972185b0c62967a26fd4c8e0b02aee0ac1df94b97a8301371ff7b4"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/EQUAL_PLAYER_PUBLIC_W8_REFERENCE_ONLY_001.csv",
+          "bytes": 7705,
+          "sha256": "f1c71d7fbfab084b97e8c3c6e79cb84493662a8940d753b5c8b39fb608171e67"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/NUMERICAL_BROAD_AND_OFFERED_ALL_SCOPES_001.csv",
+          "bytes": 61197,
+          "sha256": "eb188b05752b0146a37b1b9c133d275e96dd2bd8c975011d1239ecf11365f66f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/NUMERICAL_BROAD_AND_OFFERED_ALL_SCOPES_002.csv",
+          "bytes": 27417,
+          "sha256": "2f585328ef3538738ffe37d4e9f01e2cfab9549de85d5118e08626cd2e194592"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_ANNUAL_W1_W5_ALL_ELIGIBLE_001.csv",
+          "bytes": 51846,
+          "sha256": "fb8078964f2cb114d2623e1574c46777e602cc2a06f58eb295fa32426074012a"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_ANNUAL_W1_W5_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 52368,
+          "sha256": "2de1944488d57122ea435e2c49b1a1edd2567cfdd979dfe2d6415a3811a3c128"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_ANNUAL_W1_W5_STABLE_NEW_CORE_001.csv",
+          "bytes": 52143,
+          "sha256": "4c58081c63eac5f3e15074883dfd92669f307b7184d0f2561245dc69f808384f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_MIXED_W1_W7_ALL_ELIGIBLE_001.csv",
+          "bytes": 51377,
+          "sha256": "415262e34865e22bc89a5668c47e83a58f9f49ee3d8fd9ab8ddb164658b0c710"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_MIXED_W1_W7_DETAILED_PRIORITY_001.csv",
+          "bytes": 32965,
+          "sha256": "ca1f5703f9a35cb75814bc09ed38b49a82c4bf8c59a1d7b66dbda8433ff235ec"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_MIXED_W1_W7_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 51725,
+          "sha256": "5387a52bb7474c4de5e91f476620cf9c534d8fc60f97043d0505e63e1f939dca"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_MIXED_W1_W7_STABLE_NEW_CORE_001.csv",
+          "bytes": 51674,
+          "sha256": "c64bbfdf0e657b27b53f541166fa537acfe02b6c3fe3ce6c6a7f7900219a3646"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_MIXED_W1_W7_WORKLOAD_TOP20_001.csv",
+          "bytes": 32668,
+          "sha256": "aadf0c063a3e6e25bbedb1d6eb748ef85b562eada328f2d8996f810e6b246fbd"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_SITE_W6_W7_DIAGNOSTIC_ALL_ELIGIBLE_001.csv",
+          "bytes": 53340,
+          "sha256": "101f78504333ec87c1a73d011e96f2ff96c4a1a5f80cb4c5f20d9fe26251a240"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_SITE_W6_W7_DIAGNOSTIC_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 53954,
+          "sha256": "3f3714fdfc414b3dd267269bf19109a19a5b074b69fe7950924cc69e759a6cde"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_SITE_W6_W7_DIAGNOSTIC_STABLE_NEW_CORE_001.csv",
+          "bytes": 53637,
+          "sha256": "bb873f5feac8dcccfa993a83869b08f6fba79a177959394cfaf1d2b10592f11e"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W1_W8_MIXED_PLUS_REFERENCE_DIAGNOSTIC_ALL_ELIGIBLE_001.csv",
+          "bytes": 52836,
+          "sha256": "9f17aae4e55015f33efc7e383bdde4aa26cfa7310e8ae3712bf90ce28d046c7d"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W1_W8_MIXED_PLUS_REFERENCE_DIAGNOSTIC_DETAILED_PRIORITY_001.csv",
+          "bytes": 34450,
+          "sha256": "45c44cd686597882fbee0b2ca7cf794135544a1f7fcbe30b61cbeef3c84a86ee"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W1_W8_MIXED_PLUS_REFERENCE_DIAGNOSTIC_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 53290,
+          "sha256": "62f082dfc57885454c08016e56503b530cd6e37ec3b0d80c1dcf1731c85855a2"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W1_W8_MIXED_PLUS_REFERENCE_DIAGNOSTIC_STABLE_NEW_CORE_001.csv",
+          "bytes": 53133,
+          "sha256": "c2bae70f283c06976e85b6476fe69f1e7590bdc6303927329fa6bee49e9e3c1e"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W1_W8_MIXED_PLUS_REFERENCE_DIAGNOSTIC_WORKLOAD_TOP20_001.csv",
+          "bytes": 34153,
+          "sha256": "4964d56603bb4519e964f3cd3e8ce54fc3fdd21d01efbc4d30b163b2c82d428c"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W8_REFERENCE_ONLY_ALL_ELIGIBLE_001.csv",
+          "bytes": 39953,
+          "sha256": "3555bbc290fb79a4be303e43fbe4f864f210ab0de64b2097b4f9af90f13ecef2"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W8_REFERENCE_ONLY_DETAILED_PRIORITY_001.csv",
+          "bytes": 34153,
+          "sha256": "1134c37817aac1f1e9e82a320962909e3fea2b32ef2fdc82ed3a37a7b0d9c822"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W8_REFERENCE_ONLY_PBP_OWN_SUPPORTED_001.csv",
+          "bytes": 40448,
+          "sha256": "62861ea544de09adf14657591be4fec2a24644a5e03aa50d2515d8c1639b25ec"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W8_REFERENCE_ONLY_STABLE_NEW_CORE_001.csv",
+          "bytes": 40250,
+          "sha256": "7df937d7d6e5a1e62f8b3b45ed0719039016b2a3c027794b04ea153911490f11"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PAIRED_W8_REFERENCE_ONLY_WORKLOAD_TOP20_001.csv",
+          "bytes": 33856,
+          "sha256": "fbd60131a5c48c52b7eb9424e5cda8232463e34cb990e07c1c20e5cc6aeb11ac"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PLAYER_PAIRED_COUNTS_PUBLIC_ANNUAL_W1_W5_001.csv",
+          "bytes": 16605,
+          "sha256": "37c32c2a91aa37e85cbeb63b42a749f5b2b934e0a8b3df628d8a7853a973bad5"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PLAYER_PAIRED_COUNTS_PUBLIC_BROAD_NUMERICAL_W1_W7_001.csv",
+          "bytes": 13649,
+          "sha256": "2bff5e3f640b9230c6175eddf6705a31b24ece8af760d972062169e451eeaa25"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PLAYER_PAIRED_COUNTS_PUBLIC_BROAD_NUMERICAL_W8_001.csv",
+          "bytes": 12345,
+          "sha256": "4818b82ad2b7fa341ae8c1ecd410ef7a5db4fca0d69a778b21abe59f42a57cf1"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PLAYER_PAIRED_COUNTS_PUBLIC_W1_W7_MIXED_THRESHOLDS_001.csv",
+          "bytes": 18121,
+          "sha256": "00ff8b1d66816a65c6665777e4767a79da0ad66c513b6e984fefbe5bb8949c6f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PLAYER_PAIRED_COUNTS_PUBLIC_W8_REFERENCE_ONLY_001.csv",
+          "bytes": 14526,
+          "sha256": "ee530fe5009cfdb9542c853ec802984d822ca93e3c7599200bdaf5505bd9e06e"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PROBABILITY_ANNUAL_ACTUAL_W1_W5_001.csv",
+          "bytes": 41180,
+          "sha256": "33c4b5b9519e6094f19d0d63696279108bdcbdf4ca7ee92b7a2b8f4c3c9c79b1"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PROBABILITY_MIXED_DIAGNOSTIC_W1_W7_001.csv",
+          "bytes": 52173,
+          "sha256": "6cc9a6d454ace0433d8fcdfd84ce9493a2926c90aa2b17a15446da6b7f55184f"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PROBABILITY_W8_REFERENCE_ONLY_001.csv",
+          "bytes": 13832,
+          "sha256": "952b7955aaaa14cb284486effac5aae84d1bd6e21ea4c6a9185566fa0be5c465"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PUBLIC_TABLES_INDEX_V1.csv",
+          "bytes": 5424,
+          "sha256": "7b2cf78747d8d2c8cf873741436fc2bfc3524f5914c54627ac845da79fdbc001"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/PUBLIC_TABLES_MANIFEST_V1.json",
+          "bytes": 12698,
+          "sha256": "580a174ae3004070bbff7343140d86590015e4b36cffc58acdf9b80e1f4cb7eb"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/README.md",
+          "bytes": 2882,
+          "sha256": "a6083759901c26b6b2336f1e637cd1f1b80f5707c9737cbadde9c40d193c93d7"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/UNEXPORTED_DIRECTION_SCOPE_INDEX_V1.csv",
+          "bytes": 16715,
+          "sha256": "08f0112563501efd5631c9b3050e5b5bd3c1ba82d116d688c19573ba99d9044a"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/UNEXPORTED_MATCHED_PAIRS_SCOPE_INDEX_V1.csv",
+          "bytes": 906,
+          "sha256": "1678023e8d798bade05f836052340f9a39c4d3b32d7249ae285cc5778f2a15a3"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/UNEXPORTED_NUMERICAL_SCOPE_INDEX_V1.csv",
+          "bytes": 18512,
+          "sha256": "9de268bbdce17de83b75269b04b28405128afe76da3da398b70a973bb3acd994"
+        },
+        {
+          "path": "reports/abc-championship/profile-increment-to-release-01/public-full-four-v1/UNEXPORTED_PROBABILITY_SCOPE_INDEX_V1.csv",
+          "bytes": 17598,
+          "sha256": "75a72ada96d8a668ce634367fa09b790bc867548a7dd0617b77a898eb4dc750c"
+        },
+        {
+          "path": "tools/profile_increment_a_plaintext_export_v1.py",
+          "bytes": 17164,
+          "sha256": "875ec1f4175f02e9e43d47498f025e3e2bd3e1d0ff3d8d080cbf88b5e503a08b"
+        }
+      ],
+      "rights": "PUBLIC_AGGREGATE_CSVS_CODE_AND_LOCATOR_FREE_RECEIPTS_ONLY",
+      "retrieval": "ImmutableGitHubcommit/path andexacthash; exactcommit/readbackreceiptfollows; protectedrowsstayownerlocal",
+      "publication_state": "PREPARED_AWAITING_EXACT_GITHUB_READBACK",
+      "C_received": "NOT_OBSERVED_FOR_THIS_COMPLETED_PACKAGE",
+      "C_admitted": "NOT_OBSERVED_FOR_THIS_COMPLETED_PACKAGE",
+      "consumer_receipt": "NOT_OBSERVED",
+      "actual_current_packets": 0,
+      "production_writes": 0,
+      "primary_releases": 0
     }
   ],
   "prior_C_admission": "See the bound C canonical ledger; prior valid admissions are preserved. No new receipt is implied.",
-  "production": "READONLY;committedstrictpresenceclassicmodelanddisabled0-rowresearchoverlayverified;freshservednotverified",
+  "production": "A_READONLY;LATEST_CHECKED_SITE_COMMITTED_REFERENCE_BUILD;NO_NEW_A_PACKET_OR_SERVED_RESEARCH_PRODUCT",
   "new_forecasts_issued": 0,
-  "requested_scope_completion": "PARTIAL; recovered five-state rushing scoring and additional C Leaf reception comparison complete. New four-fit RB profile/defense increment RUNNING_UNSCORED under FIT_PROTOCOL_V4; no primary release.",
+  "requested_scope_completion": "PARTIAL_CHAMPIONSHIP; registered2026four-armAprofile/defensepackageCOMPLETE, originalfive-state recovery andCLeafreceptioncontrolcomplete; actualretainedofferweeks1-5 only, W6-7diagnostic/W8reference; no currentApacket/release",
   "publication_readback": "reports/abc-championship/player-context-completion-decision-01/PUBLICATION_READBACK_V1.json",
-  "current_C_inspected_ref": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+  "current_C_inspected_ref": "a9cb8ef61a294b73f558b3c5daad483094af80b2",
   "current_B_inspected_ref": "613800b90396e98ae0898b18930e61bffa6639f0",
   "current_execution": {
     "owner": "A",
     "task": "PROFILE-INCREMENT-TO-RELEASE-01/v2",
-    "registration": "reports/abc-championship/profile-increment-to-release-01/FIT_PROTOCOL_V4.json",
-    "registration_sha256": "2c51eab327abb553974e074cef6189751d521e72fa777cc2b139a5e8b58ce660",
-    "state": "RUNNING_NOT_SCORED",
-    "maximum_new_fits": 4,
-    "preserved_previous_attempts": "Two prefit failures,0 fits; previousfiveefficiencystatesreused",
-    "next": "Freezeandnativehashreadback; scoreexistingcanonicalCcontract; separatelyverifyandissuekeep/stopdecisions"
+    "state": "COMPLETE_NAMED_2026_FOUR_ARM_PACKAGE",
+    "fits_attempted": 4,
+    "fits_returned": 4,
+    "new_law_rows": 5456,
+    "actual_queries": 1364,
+    "summary_cells": 6370,
+    "paired_cells": 3267,
+    "report": "reports/abc-championship/profile-increment-to-release-01/EXECUTED_INCREMENT_CHECKPOINT_V2.md",
+    "score_protocol": "reports/abc-championship/profile-increment-to-release-01/FULL_FOUR_SCORING_GO_V2.json",
+    "score_protocol_SHA256": "d2ed823778c8981d65befc68a6ba9d1c05df82aeb150cc0c3a0aaf779e926392",
+    "next": "Separatelysize/register2025four-fitnumericalstage; current-source/producer/websiteownership unchanged"
   }
 }

@@ -1,0 +1,298 @@
+{
+  "id": "A-INCREMENT-INDEPENDENT-CHECKS-PUBLIC-SCOPE-v1",
+  "UTC": "2026-11-10T14:40:20.677229+00:00",
+  "publication": "Whitelisted aggregate-only projection. Full original receipts remain owner-local; no independent B/C receipt implied.",
+  "checks": [
+    {
+      "id": "PROFILE-INCREMENT-TO-RELEASE-01-A-INDEPENDENT-LEAF-v1",
+      "state": "PASS_NAMED_THREE_ARM_FREEZE_DEFENSE_UNAVAILABLE_PENDING",
+      "code_sha256": "899c34b1b6f0a6025724de68fef46fe502ff5dc711f0428e9da6c16bb2c6f5a3",
+      "activity": {
+        "CPU_seconds": 129.612226563,
+        "RSS_bytes": 980525056,
+        "fits": 0,
+        "model_loads": 3,
+        "private_writes": 0,
+        "source_HTTP": 0,
+        "wall_seconds": 207.81554322400189
+      },
+      "limits": [
+        "Only authenticated own frozen models; no fresh fit or peer model loading.",
+        "Profile reconstruction and source admission reuse accepted current-vintage seven-day contracts; they do not authenticate original source vintages.",
+        "Raw source/97-feature audit and training-derived profile transforms are not repeated in full.",
+        "Cohort formulas independently checked on saved eligible fields; no current-query packet or live qualification is inferred.",
+        "Selected source lines and fictional numerical boundaries are both tested; fictional boundaries add zero NFL evidence."
+      ],
+      "receipt_sha256": "01e240769d22708f55ab7826ad61d306c5c0b66fdb1201386d0a810c08ed161c",
+      "protocol_sha256": "eab567f278d46faf408c948d6a08abc43b096c078203ceda23e6b1633864e8cf",
+      "all_retained_laws_checked": 4092,
+      "maximum_independent_mean_difference": 2.842170943040401e-14,
+      "cohort_rows": 1364,
+      "defense_snapshots": 1504,
+      "sampled_defense_descriptive_cells": 1546,
+      "model_checks": [
+        {
+          "RB_training_rows": 10527,
+          "actual_defense_split_fields": 0,
+          "actual_player_split_fields": 0,
+          "actual_support_split_fields": 0,
+          "arm": "RB_ONLY_LEAF_BASE",
+          "artifact_sha256": "774abed507ffe585b5414ba5d153ea2c8fb9af96bad863d5d08fff68e41a85be",
+          "cases": 6,
+          "fallback_cases": 3,
+          "numeric_features": 30,
+          "saved_laws_and_independent_leaf_histogram_reconstruction": "PASS",
+          "single_batch_shuffle_column_and_target_mutation": "EXACT"
+        },
+        {
+          "RB_training_rows": 10527,
+          "actual_defense_split_fields": 0,
+          "actual_player_split_fields": 0,
+          "actual_support_split_fields": 9,
+          "arm": "R1_RB_ONLY_LEAF_SUPPORT",
+          "artifact_sha256": "d26746b166ec6d64d4ece3a2cc496ee3e20e46e1dfdd0467cd9ed5045a10ce65",
+          "cases": 6,
+          "fallback_cases": 3,
+          "numeric_features": 39,
+          "saved_laws_and_independent_leaf_histogram_reconstruction": "PASS",
+          "single_batch_shuffle_column_and_target_mutation": "EXACT"
+        },
+        {
+          "RB_training_rows": 10527,
+          "actual_defense_split_fields": 0,
+          "actual_player_split_fields": 81,
+          "actual_support_split_fields": 9,
+          "arm": "R2_RB_ONLY_LEAF_PLAYER_OFFENSE",
+          "artifact_sha256": "34f3dbbef8b081a57657d4c41224b454902f19734818dce112ce67fd4ff71a78",
+          "cases": 6,
+          "fallback_cases": 3,
+          "numeric_features": 128,
+          "saved_laws_and_independent_leaf_histogram_reconstruction": "PASS",
+          "single_batch_shuffle_column_and_target_mutation": "EXACT"
+        }
+      ],
+      "profile_input_parity_cases": 6,
+      "exact_line_tail_cases": 111,
+      "original_retained_receipt": {
+        "logical_name": "independent-partial-leaf-model-check-v1.json",
+        "bytes": 4125,
+        "sha256": "ee904f4ca14c22e3d5c692acd8990e15a8b677b171b425a652b46e5c5370e04b"
+      }
+    },
+    {
+      "id": "PROFILE-INCREMENT-A-INDEPENDENT-LAW-SCORE-v1",
+      "state": "PASS_NAMED_THREE_ARM_SCORES_DEFENSE_RESOURCE_PENDING",
+      "code_sha256": "85c0409ff3c79d51da6c55e4f9ff6228875975821ef17dd3af037406d57bf366",
+      "activity": {
+        "fits": 0,
+        "inference": 0,
+        "model_loads": 0,
+        "private_writes": 0,
+        "source_HTTP": 0
+      },
+      "resources": {
+        "CPU_seconds": 32.978471079,
+        "RSS_bytes": 587325440,
+        "wall_seconds": 33.05916096099827
+      },
+      "limits": [
+        "Accepted source contracts/current-vintage availability remain inherited; actual source vintage not created by regrade.",
+        "Common whole-week summary intervals are not repeated; all paired game/week500 intervals independently recomputed.",
+        "No model inference, fit reproduction, current-query packet, selection upgrade or deployment inferred."
+      ],
+      "score_sha256": "5abad8899d1cd38de476dc2e0c2fcce7633f6d4aeb612c7ab5174862e916f29b",
+      "summary_cells": 6370,
+      "paired_cells": 3267,
+      "executed_pair_records": 2178,
+      "resource_pending_pair_records": 1089,
+      "resource_pending_summary_records": 735,
+      "discrepancies": 0,
+      "original_retained_receipt": {
+        "logical_name": "independent-partial-law-score-check-v1.json",
+        "bytes": 2635388,
+        "sha256": "6cbc994d025defdfe402f8d9e2f5c2e1b135375c383fa9affb32ffc0f5dd896a"
+      }
+    },
+    {
+      "id": "PROFILE-INCREMENT-A-EXACT-FROZEN-FALLBACK-AUDIT-v1",
+      "state": "PASS_EXACT_RECORDED_GATES_IDENTITIES_AND_FALLBACK_OUTPUTS",
+      "code_sha256": "255565d359d7318e745ecd05d166d614ef228ff58bc924a3fc129d88aff2afa7",
+      "activity": {
+        "CPU_seconds": 21.887931118999997,
+        "RSS_bytes": 214536192,
+        "fits": 0,
+        "inference": 0,
+        "model_loads": 0,
+        "private_writes": 0,
+        "source_HTTP": 0,
+        "target_labels_read": 0,
+        "wall_seconds": 22.163324592998833
+      },
+      "limits": [
+        "Only the three completed arms; R3 remains unavailable.",
+        "Identical fallback outputs do not establish learned-model predictive gain or live qualification."
+      ],
+      "receipt_sha256": "01e240769d22708f55ab7826ad61d306c5c0b66fdb1201386d0a810c08ed161c",
+      "original_retained_receipt": {
+        "logical_name": "independent-partial-exact-fallback-check-v1.json",
+        "bytes": 5371,
+        "sha256": "9e0c1c0a4a24bd1af621f267f128883c8dc5a8d89e4959df15fe7b1cee5764e9"
+      }
+    },
+    {
+      "id": "PROFILE-INCREMENT-A-BROAD-NUMERICAL-PAIRED-v1",
+      "state": "COMPLETE_THREE_PRESPECIFIED_586_CASE_NUMERICAL_COMPARISONS",
+      "code_sha256": "645912cb7d684c61a4a0634eeb6bad155ef90c0ab9330cef79d9bd2364a78150",
+      "activity": {
+        "CPU_seconds": 21.496953226000002,
+        "RSS_bytes": 306860032,
+        "fits": 0,
+        "inference": 0,
+        "model_loads": 0,
+        "new_outcome_acquisitions": 0,
+        "private_writes": 0,
+        "source_HTTP": 0,
+        "wall_seconds": 21.52333960899705
+      },
+      "limits": [
+        "No current-query, model-release or actual-offer superiority inferred from this numerical population.",
+        "Seven-day/current-vintage source timing limits inherited; no new outcome source or source acquisition.",
+        "No per-player outputs or restricted source rows exported."
+      ],
+      "score_sha256": "5abad8899d1cd38de476dc2e0c2fcce7633f6d4aeb612c7ab5174862e916f29b",
+      "uncertainty_policy": "500 game/week bootstrap draws, seed20261110, exposed research; nominal not multiplicity-adjusted. Negative MAEchange favors R2.",
+      "actual_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "requested_period": "2026W1-W7",
+      "pairs": [
+        {
+          "MAE_change": -0.18600682593856654,
+          "common_scored": 586,
+          "intended": 1244,
+          "left": "R2::median",
+          "left_MAE": 19.31569965870307,
+          "mask_sha256": "ff49eca98931f77e195775916f97d2da1f67bc69cc9feb42fc08e72a1e475fe1",
+          "right": "R0::median",
+          "right_MAE": 19.501706484641637,
+          "uncertainty": {
+            "game_clusters": 107,
+            "game_interval95": [
+              -0.3625763599754283,
+              -0.01263084140532141
+            ],
+            "week_clusters": 7,
+            "week_interval95": [
+              -0.3489388440541513,
+              -0.0026275683356487612
+            ]
+          },
+          "unknown_label": 658
+        },
+        {
+          "MAE_change": -0.14505119453924914,
+          "common_scored": 586,
+          "intended": 1244,
+          "left": "R2::median",
+          "left_MAE": 19.31569965870307,
+          "mask_sha256": "ff49eca98931f77e195775916f97d2da1f67bc69cc9feb42fc08e72a1e475fe1",
+          "right": "SAVED_RESPONSE_CDF::point",
+          "right_MAE": 19.46075085324232,
+          "uncertainty": {
+            "game_clusters": 107,
+            "game_interval95": [
+              -0.3339824518713854,
+              0.038399449707439345
+            ],
+            "week_clusters": 7,
+            "week_interval95": [
+              -0.32330946398659965,
+              0.04276658449794247
+            ]
+          },
+          "unknown_label": 658
+        },
+        {
+          "MAE_change": -0.25030123615742506,
+          "common_scored": 586,
+          "intended": 1244,
+          "left": "R2::mean",
+          "left_MAE": 20.142577963785957,
+          "mask_sha256": "ff49eca98931f77e195775916f97d2da1f67bc69cc9feb42fc08e72a1e475fe1",
+          "right": "R0::mean",
+          "right_MAE": 20.392879199943383,
+          "uncertainty": {
+            "game_clusters": 107,
+            "game_interval95": [
+              -0.43401953136417804,
+              -0.08927164358573568
+            ],
+            "week_clusters": 7,
+            "week_interval95": [
+              -0.35864446496079944,
+              -0.14976419098412608
+            ]
+          },
+          "unknown_label": 658
+        }
+      ],
+      "population": "Same broad conditional reconstructed RB query mask with qualified actuals; NOT offered-player performance.",
+      "original_retained_receipt": {
+        "logical_name": "independent-broad-numerical-pairs-v1.json",
+        "bytes": 3290,
+        "sha256": "df16bdc49c624ca295e8f4d7e6b76f8b97766a8ac70bfce60210f2330f6eafb3"
+      }
+    },
+    {
+      "id": "PROFILE-INCREMENT-A-INDEPENDENT-R3-DELTA-v1",
+      "state": "PASS_ONLY_NEW_R3_MODEL_AND_COMPLETION_WITH_PRIOR_THREE_ACCEPTANCE_REUSED",
+      "code_sha256": "06be0d0b16a375cc65f4b0a6b3772f98d0ed36ae8b59f900a874e76d83028325",
+      "activity": {
+        "CPU_seconds": 43.434752935,
+        "RSS_bytes": 337944576,
+        "fits": 0,
+        "model_loads": 1,
+        "old_model_loads": 0,
+        "private_writes": 0,
+        "raw_profile_reconstructions": 0,
+        "source_HTTP": 0,
+        "wall_seconds": 130.4991008979996
+      },
+      "limits": [
+        "Only newR3model deserialized/inferred; earlier three models/source profiles/fits not repeated.",
+        "Prior source-vintage, historical-universe and seven-day timing limits retained. No fresh-fit reproduction, current-query or deployment claim.",
+        "Numerical boundary fixtures add zeroNFL observations; actual offered-line regrade remains separate."
+      ],
+      "receipt_sha256": "5140c8769251b5b040176a28820671b16ff694b6f3c5d32b5f2ceb9831a42bd5",
+      "protocol_sha256": "95b4dd71723c5ea582fcec7b9d4f16059e74061a57361a689f033bc6a88f7cc4",
+      "maximum_independent_mean_difference": 2.842170943040401e-14,
+      "R3_laws_checked": 1364,
+      "new_R3_case_checks": 6,
+      "fallback_case_checks": 3,
+      "fallback_rows": 118,
+      "all_fallback_identities_and_outputs_equal_R0": true,
+      "recorded_input_split_fields": {
+        "defense": 32,
+        "player": 81,
+        "support": 8
+      },
+      "tail_boundary_checks": 36,
+      "old_three_model_and_part_hashes": "UNCHANGED",
+      "old_three_logical_rows_sha256": "c2f2234826d0274ec526de84f39e1df31940f8795c8292beec1b566cde0e81a7",
+      "complete_logical_rows_sha256": "1a1f9f980c8899dd51714685ba02dc8e501d04489e0d4790f7c3fd42584fcbcc",
+      "original_retained_receipt": {
+        "logical_name": "independent-r3-delta-model-check-v1.json",
+        "bytes": 2145,
+        "sha256": "ecee5f51d4b8c653c69411df49b53768e679e8e5a893ab87c48873eb13e330a2"
+      }
+    }
+  ],
+  "fit_reproduction": "No new representative fit reproduction; saved-model inference and prior raw-feature/fit audit reused. Historical vintages, current roster and full training-param mutation unverified.",
+  "pending": "Full four score regrade remains pending separate receipt; do not infer pass here."
+}
