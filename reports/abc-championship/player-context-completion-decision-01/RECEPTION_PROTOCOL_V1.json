@@ -1,0 +1,378 @@
+{
+  "version": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-reception-v1",
+  "state": "ROOT_REGISTERED_EXECUTION_GO",
+  "registered_by": "/root",
+  "candidate_ids": [
+    "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+    "A::COUNT_A_MEAN::mean_objective_point",
+    "A::HGB_MAE_DIRECT::mae_objective_point",
+    "A::CATBOOST_MEDIUM::mean_objective_point",
+    "A::LEAF_CDF::mean",
+    "A::LEAF_CDF::median",
+    "A::ORDERED_CDF::mean",
+    "A::ORDERED_CDF::median",
+    "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+    "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median",
+    "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean",
+    "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median",
+    "ALWAYS_OVER",
+    "ALWAYS_UNDER"
+  ],
+  "code_sha256": {
+    "tools/player_context_completion_reception_v1.py": "cecd262919c7a331ef90ba8be5faf3fb95d9cb6c5c2bb33eb3ef94cea1a0947b",
+    "tools/abc_a_dynamic_carry_wave_v1.py": "e49829108211a6d0a5b34c2339545666aca78717a10e99fe66278097c6ecc59f",
+    "tools/category_topfive_matched12_storage_v1.py": "35c4bcc71d22ce546278308dbb1eb8cebde4e2212398b2640966ec63004b33b7",
+    "nfl_lab/category_topfive_matched12_storage_v1.py": "cd5b25fecbfc0ddb38c9ac21a2e52369706d9b1694bffb2f4f8cdcc4af3dfdcf",
+    "reports/abc-championship/player-context-acceptance-01/PEER_PROTOCOL_V2.json": "c5d48f0cc456f2f07556b54ab15ee173053e9145f07a3db16a5e29c7dad72e88",
+    "config/category-topfive-matched12-all-finalists-freeze-v1_2.json.gz": "66efaacaa1bd53ea6b24995109fef8e081c958088fcc76ab48acd78173f3ad99",
+    "config/category-topfive-matched12-inference-followup-v1.json.gz": "637b994ac5df211cadebe73759169a42c142e4a4957a471ce9a39e047d549857",
+    "config/category-topfive-matched12-inference-v1.json": "ba36cb5bd0183ae48d1ad6e7b949b7e95c4a6fb4df48772eb5837b5014c971db",
+    "reports/abc-championship/player-context-acceptance-01/C_QUERY_POPULATION_SCOPE_V1.json": "c7d5f3f86cb0c0c107bc32a6150ad1391047536d876a5842a6ba1054f61b828b",
+    "reports/category-topfive-matched-all12-w1w7-20261030/fitting/ACTUAL_HGB_V1_1.json": "b92d9fb6742e8861f45091f735191f988a15725b4619387af3fab74a1909aeca",
+    "reports/category-topfive-matched-all12-w1w7-20261030/fitting/FIXED13_SOURCE_V1.py.gz": "42c2167de38968ae915b64e966d55869d921e9dceea59878773d6ce2a8cd4d94"
+  },
+  "resources": {
+    "CPU_seconds": 250,
+    "wall_seconds": 600,
+    "RSS_bytes": 3221225472,
+    "private_peak_bytes": 16384,
+    "view_payload_cap_bytes": 8192
+  },
+  "source_sha256": {
+    "C_relational": "6b9839b644490121ee852d230560cf59c95439c09be1ffb1ee1f06a4dd6513bc",
+    "frozen_bundle": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+    "offers": "f224f17930e8da7ed5683808de3339d9656cc4b71edb0deefcfb9c48dfd82ffb",
+    "qualified_labels": "61da98ad90542b07c6c6664b674086ba4f9474e597325aba62dec44bb2fa72f5"
+  },
+  "fixed667_mask_sha256": "b84a7cfca0df5449af90b7b747df536081f34ef5656d62920dc920c02873d3d4",
+  "outer733_mask_sha256": "d7afd565ee92d8d8980ee24ee1c83124dbff71657462bfc25640345d15b35104",
+  "bootstrap_replicates": 500,
+  "bootstrap_seed": 20261110,
+  "paired_candidate_ids": [
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "ALWAYS_OVER"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+      "ALWAYS_OVER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median",
+      "ALWAYS_OVER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean",
+      "ALWAYS_OVER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median",
+      "ALWAYS_OVER"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median",
+      "ALWAYS_UNDER"
+    ],
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::COUNT_A_LEGACY_POINT::legacy_empirical_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::HGB_MAE_DIRECT::mae_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::CATBOOST_MEDIUM::mean_objective_point",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::LEAF_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::LEAF_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::ORDERED_CDF::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::mean",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean"
+    ],
+    [
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P2::median",
+      "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::median"
+    ],
+    [
+      "A::ORDERED_CDF::median",
+      "A::LEAF_CDF::median"
+    ],
+    [
+      "A::COUNT_A_MEAN::mean_objective_point",
+      "A::ORDERED_CDF::mean"
+    ]
+  ],
+  "new_fits": 0,
+  "new_inference": 0,
+  "new_sources": 0,
+  "new_production_writes": 0,
+  "publication": "Public aggregates only; original vectors remain owner-local; small private view references original SHA-pinned artifacts; no duplicate row vectors.",
+  "assignment_id": "PLAYER-CONTEXT-COMPLETION-DECISION-01",
+  "registered_UTC": "2026-11-10T05:15:08.246659+00:00",
+  "new_predictive_fits": 0,
+  "new_NFL_inference": 0,
+  "qb_join": {
+    "enabled": false,
+    "GO": "PLAYER-CONTEXT-COMPLETION-DECISION-01-A-B-ATT-JOIN-v1",
+    "private_writes": 0,
+    "new_fits": 0,
+    "new_inference": 0,
+    "scored_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "C_bound_code": [
+      {
+        "path": "src/abc_championship_v2.py",
+        "sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce"
+      },
+      {
+        "path": "src/actual_accuracy_v6.py",
+        "sha256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+      },
+      {
+        "path": "src/selection.py",
+        "sha256": "ba3cd2d5c33eb05f3c07e8f2674f6d51b51694c8fd722f8eaba5db089907997f"
+      },
+      {
+        "path": "src/contracts_v2.py",
+        "sha256": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a"
+      },
+      {
+        "path": "src/actual_offers_v4.py",
+        "sha256": "39b187dbdf750b5cdd7b26197bc2c56240ce5aab2bef67392fc77c1a8938e186"
+      },
+      {
+        "path": "src/offer_validator_v2.py",
+        "sha256": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51"
+      }
+    ],
+    "state": "SeparatefiniteATTprotocolafterAstrongcontrolsadded; noQBexecutionfromthisregistration"
+  },
+  "budgets_separate_per_worker": {
+    "reception": {
+      "CPU_seconds": 250,
+      "wall_seconds": 600,
+      "RSS_bytes": 3221225472,
+      "private_peak_bytes": 16384,
+      "view_payload_cap_bytes": 8192
+    },
+    "QB": {
+      "CPU_seconds": 250,
+      "wall_seconds": 600,
+      "RSS_bytes": 3221225472,
+      "private_writes": 0,
+      "new_fits": 0
+    }
+  },
+  "evidence_tier": "Exposed current-vintage chronological reconstructions; exact original lines, quote-timing-unverified. Source/role/policy-specific panels; no original selections claim.",
+  "decision_rules": {
+    "primary": "Unrounded saved point >line OVER,<line UNDER, equalityABSTAIN; mean/median separateproducts",
+    "practical_change": "Retain existing2percentagepointpairedfull-board reference asdescriptive, notnewveto; report paireduncertainty,strongestretainedcontrols,source reversals andcoverage",
+    "release": "Five distinct scored season-weeks exactproduct/role/policy plus existing source/support/operational admission; no probability/EV/TopPicksevidenceborrow",
+    "stopping": "One finite saved-output join perregisteredpanel; errorsmayreceiveonlyscopedsource/runtime repair preservingoriginalfailedattempt; no refits or search"
+  },
+  "uncertainty_budget": "New500pairedgame draws perregisteredpair; Cunchangedsummary2000weekdraws if>=5weeks, Wilsonbelow; no claim500totaldraws",
+  "private_accounting": "16KiB all-in incrementalpeak/control/body; source7885Bregistrationpreflight,251Bretainedcontrol growth; payload<=8192. One inheritedlock transaction throughregistration/write/readback and96MiBcheckpoint. Existing23,793Bretainedheadroom; no oldcap raised."
+}
