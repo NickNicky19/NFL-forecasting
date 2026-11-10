@@ -1,0 +1,90 @@
+{
+  "id": "A-NEXT02-FRESHNESS-NATIVE-INDEPENDENT-REVIEW-v2",
+  "UTC": "2026-11-10T18:55:49.166453+00:00",
+  "state": "PASS_SCOPED_SOURCE_AND_PURE_ACCOUNTING_WITH_PHASE_BARRIER_ENFORCED",
+  "code_sha256": "7465a71366716cd7e60c7d55103911e2aa9e143f10d4dc6557473ecb3d8f0bd7",
+  "supersedes_scoped_fail_receipt_sha256": "f4cbba92cc1b50c577f2b0ee8e8d94fc70b3b212db38afef971fdb93d56c8709",
+  "old_counterexample": "Actual _usage method now rejects post-fresh-baseline new generation in PRIMARY/DEF_REMAINDER/OLD before either scalar or older union credits; no double credit.",
+  "cases": [
+    {
+      "case": "fresh_only",
+      "state": "PASS",
+      "checked": {
+        "old8_charged_bytes": 0,
+        "primary16_charged_bytes": 0,
+        "supplement_charged_bytes": 0,
+        "freshness_charged_bytes": 20
+      }
+    },
+    {
+      "case": "unrelated_growth_charged",
+      "state": "PASS",
+      "checked": {
+        "old8_charged_bytes": 10,
+        "primary16_charged_bytes": 10,
+        "supplement_charged_bytes": 10,
+        "freshness_charged_bytes": 30
+      }
+    },
+    {
+      "case": "baseline_alias_no_credit",
+      "state": "PASS",
+      "checked": {
+        "proven_freshness_owned_bytes": 0,
+        "freshness_charged_bytes": 100
+      }
+    },
+    {
+      "case": "preexisting_primary_owned_preserved",
+      "state": "PASS",
+      "checked": {
+        "old8_charged_bytes": 0,
+        "primary16_charged_bytes": 20,
+        "supplement_charged_bytes": 0,
+        "freshness_charged_bytes": 10
+      }
+    },
+    {
+      "case": "old_shared_overlap_counterexample",
+      "state": "PASS_REJECTED_BEFORE_CREDIT",
+      "reason": "older namespace changed after freshness phase barrier"
+    },
+    {
+      "case": "remainder_shared_overlap",
+      "state": "PASS_REJECTED_BEFORE_CREDIT",
+      "reason": "older namespace changed after freshness phase barrier"
+    },
+    {
+      "case": "resumed_old_writer_even_without_alias",
+      "state": "PASS_REJECTED_BEFORE_CREDIT",
+      "reason": "older namespace changed after freshness phase barrier"
+    },
+    {
+      "case": "baseline_generation_size_mutation",
+      "state": "PASS_REJECTED_BEFORE_CREDIT",
+      "reason": "baseline generation size changed"
+    }
+  ],
+  "scope": "Real _usage method on SimpleNamespace mocks plus source inspection; no actual FreshnessStore constructor, native inventory, file read/write, model or NFL evidence access",
+  "sequencing": "Root GO must finish C/B persistence+independentreadback before fresh constructor/baseline; no old scoped writer resumes afterward. New guard enforces this assumption rather than silently granting overlap credit.",
+  "unchanged": [
+    "Original older source hashes and all old caps/baselines remain bound",
+    "Freshness16MiB retained/20MiB peak/2MiB failure allocation",
+    "Native shared lock/individual member hash-size validation and parent protections",
+    "343932928-byte protected prior and80MiB capture reserve",
+    "Baseline aliases receive no physical ownership credit; unrelated/registry growth remains charged"
+  ],
+  "limits": [
+    "No real native admission/readback/restoration or numerical model verification performed by this source-only review",
+    "A resource-guard synthetic counterexample is not NFL accuracy evidence and implies no old forecast/grade contamination"
+  ],
+  "activity": {
+    "native_constructors": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "inference": 0,
+    "NFL_source_reads": 0
+  }
+}

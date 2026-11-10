@@ -1,0 +1,45 @@
+{
+  "id": "A-NEXT02-FRESHNESS-FRESH-NATIVE-INVENTORY-v1",
+  "state": "PASS_EXISTING_NATIVE_AND_PROPOSED16M_RETAIN20M_PEAK;NO_NEW_NAMESPACE",
+  "UTC": "2026-11-10T19:25:21.034283+00:00",
+  "older_state_hashes": {
+    "primary": "bd9fbb147dfb8ff32c214a4f981a49cc77ab9923afc108c5a02e3020a920608f",
+    "old": "9ef8cd5093ce117ecfb3381647fc6bf4109d10093bffe30ea77326bef28d0aa9",
+    "remainder": "f53c73eb866532d5a43417fc2b0ce559ab01ae321e831f4149c1e09cc3a0569b"
+  },
+  "prior_physical_bytes": 95224307,
+  "native_prior_limit": 536870912,
+  "proposed_retained_bytes": 16777216,
+  "proposed_peak_bytes": 20971520,
+  "protected_total": 398458880,
+  "headroom_after_protection": 43187725,
+  "headroom_initial_double_peak": 22216205,
+  "existing": {
+    "state": "PASS_NATIVE_AND_UNCHANGED_OLD8_PRIMARY16_PLUS_SUPPLEMENT8",
+    "old8_charged_bytes": 3926970,
+    "primary16_charged_bytes": 13831140,
+    "supplement_charged_bytes": 4041700,
+    "proven_primary_owned_bytes": 13822945,
+    "proven_child_owned_bytes": 4041551,
+    "deduplicated_union_owned_bytes": 17864496,
+    "prior_physical_bytes": 95224307,
+    "retained_cap": 8388608,
+    "peak_cap": 10485760,
+    "unchanged_primary_retained_cap": 16777216,
+    "unchanged_primary_peak_cap": 20971520,
+    "unchanged_old_completion_retained_cap": 8388608,
+    "unchanged_old_completion_peak_cap": 12582912,
+    "protected_prior_plan_bytes": 343932928,
+    "unchanged_capture_reserve_bytes": 83886080,
+    "old_wave_headroom_bytes": 19822,
+    "complete_accounted_bytes": 910514994,
+    "unchanged_complete_cap_bytes": 1501560832
+  },
+  "new_private_writes": 0,
+  "new_namespace_constructors": 0,
+  "resources": {
+    "CPU_seconds": 67.104727196,
+    "wall_seconds": 66.75485060100618,
+    "RSS_bytes": 177180672
+  }
+}

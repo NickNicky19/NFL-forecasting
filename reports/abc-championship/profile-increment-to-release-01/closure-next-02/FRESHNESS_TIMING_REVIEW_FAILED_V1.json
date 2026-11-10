@@ -1,0 +1,37 @@
+{
+  "id": "A-NEXT02-ALIGNED-TIMING-INDEPENDENT-SOURCE-REVIEW-v1",
+  "UTC": "2026-11-10T19:08:43.209626+00:00",
+  "state": "FAIL_NARROW_SYNTHETIC_ALTERNATIVE_QUERY_AND_AGE_ALIGNMENT_PENDING",
+  "reviewed_module_sha256": "9ac565198c6cd3f3c7e15fb22ccb1f0a2a6901d42c664b60f7e837c048397606",
+  "reviewed_runner_sha256": "754ee5302abca8ff369e756114d0bc3ed1585fd160d0da1e6417514845f062cd",
+  "counterexample_receipt": "next02-independent-timing-sameweek-counterexample-v1.json",
+  "counterexample_receipt_sha256": "b5af0fd217165f88e7fe86bb305f1cd4a3e810819d2f1bf7aa0885d6c24c7e4f",
+  "finding": "rebuild_queries strips all source rows from current NFL week, while full training/context/ordinary_age paths use eligible availability. At48h a same-week earlier game can be eligible; actual query useszero prior rows but ordinary_age claimsone. Fictional role/team transfer fixture, not a real NFL result.",
+  "minimum_remedy": "Align alternative query source admission with actual cutoff and current-target identity handling; preserve original7day exact parity. Make ordinary age diagnostics report the actual model-consumed source set.",
+  "positive_source_checks": [
+    "Only explicitly declared whole seven-day reconstruction lane may be retimed",
+    "Known authenticated/nonproxy row clocks retained and explicitunknown clock preserved",
+    "Complete62388rawwarmcontext builds features before selecting fixed14644REG/RB training keys",
+    "Original F0/F1 forecast bytes reused without fitting/loading/inferring old models",
+    "Original30base training/query and98profile query parity precede alternative fits",
+    "Exactly1364canonicalqueries and two original unmapped identities retained",
+    "Future targets have no returned actual statistics/known availability or played participation",
+    "New alternative uses two fixed same-family F2/F3 fits only; returned states saved before inference",
+    "No newR3defensevalues/interaction/role/gate/offset/tuning introduced",
+    "Missing14W7sourceclockgames remainwithheld; no sourceclock fabricated"
+  ],
+  "limits": [
+    "No native/source/model data were read; no actualpre-fitparity or NFLaccuracy evidence independentlyestablished here",
+    "Age projections cover selected ownstats/context memberships, not proof of every consumed feature/parameter clock",
+    "This new pre-execution synthetic counterexample doesnotinvalidate unchanged old forecasts or source audits"
+  ],
+  "activity": {
+    "real_NFL_reads": 0,
+    "private_reads": 0,
+    "native_constructors": 0,
+    "native_writes": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "inference": 0
+  }
+}

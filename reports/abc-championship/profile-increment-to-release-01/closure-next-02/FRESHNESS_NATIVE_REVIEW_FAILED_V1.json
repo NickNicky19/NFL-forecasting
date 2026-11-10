@@ -1,0 +1,64 @@
+{
+  "id": "A-NEXT02-FRESHNESS-NATIVE-INDEPENDENT-REVIEW-v1",
+  "UTC": "2026-11-10T18:54:27.864901+00:00",
+  "state": "FAIL_SYNTHETIC_POST_BASELINE_CROSS_NAMESPACE_GENERATION_OVERLAP_PENDING",
+  "code_sha256": "7465a71366716cd7e60c7d55103911e2aa9e143f10d4dc6557473ecb3d8f0bd7",
+  "scope": "Source-only and pure functions; no constructor or native storage access",
+  "positive_cases": [
+    {
+      "case": "fresh_only",
+      "state": "PASS",
+      "virtual_physical": 100,
+      "proven_freshness_owned": 20
+    },
+    {
+      "case": "baseline_alias_no_credit",
+      "state": "PASS",
+      "virtual_physical": 100,
+      "proven_freshness_owned": 0
+    },
+    {
+      "case": "unrelated_growth_remains",
+      "state": "PASS",
+      "virtual_physical": 110,
+      "proven_freshness_owned": 20
+    },
+    {
+      "case": "baseline_generation_size_mutation",
+      "state": "PASS_REJECTED"
+    },
+    {
+      "case": "owned_exceeds_physical",
+      "state": "PASS_REJECTED"
+    }
+  ],
+  "finding": {
+    "kind": "VERIFIED_SYNTHETIC_ACCOUNTING_COUNTEREXAMPLE_NOT_REAL_NFL_CONTAMINATION",
+    "physical": 130,
+    "baseline": 100,
+    "shared_new_fresh_and_primary_generation_bytes": 20,
+    "unrelated_growth": 10,
+    "observed_old8_charge": 0,
+    "expected_minimum_unrelated_old8_charge": 10,
+    "root_cause": "Scalar fresh credit then older owned-generation union can subtract one post-baseline generation twice when shared across scopes",
+    "minimum_remedy": "Enforce phase barrier and reject overlap of proven-new fresh generations with proven post-old-baseline PRIMARY or DEF_REMAINDER generation sets, or perform one deduplicated union credit",
+    "current_path_limit": "Root already confirms C/B persistence/checks finish before new freshness baseline; no old writer resumes afterward. No actual overlap or affected forecast evidence observed."
+  },
+  "other_checks": [
+    "All three old code/cap/state bindings remain required",
+    "Existing shared lock and native validation retained",
+    "Relative namespace paths and before/after per-member size/hash enforced",
+    "Unclassified/registry growth is not credited",
+    "Old protected343932928 and capture80MiB reservations preserved",
+    "No interrupted namespace may rebaseline"
+  ],
+  "activity": {
+    "native_constructors": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "inference": 0,
+    "NFL_source_reads": 0
+  }
+}
