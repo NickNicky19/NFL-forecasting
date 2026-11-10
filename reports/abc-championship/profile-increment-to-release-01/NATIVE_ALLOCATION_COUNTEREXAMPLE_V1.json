@@ -1,0 +1,20 @@
+{
+  "NFL_rows": 0,
+  "constructors": 0,
+  "counterexample": {
+    "correct_old_charge": 9437184,
+    "correct_outcome": "OLD_CAP_REJECT",
+    "incorrect_old_charge": 7340032,
+    "incorrect_pass": true,
+    "old_cap": 8388608,
+    "old_namespace_and_registered_charge": 7340032,
+    "sibling_alias_to_baseline_existing_inode": 3145728,
+    "unrelated_new_bytes": 2097152
+  },
+  "id": "PROFILE-INCREMENT-A-STORAGE-INDEPENDENT-REVIEW-v1",
+  "minimal_correction": "Subtract only sibling-owned inode identities absent from a bound full native-prior baseline; leave other owner/control/orphan growth charged.",
+  "private_writes": 0,
+  "reviewed_code_sha256": "6ba99998c655d23f85361dbb489ea26f607521fa99b3a0f22d5cd17c7ac4a1f8",
+  "state": "BLOCKED_PREFIT_DEMONSTRATED_OWNERSHIP_ACCOUNTING_COUNTEREXAMPLE",
+  "synthetic_only": true
+}

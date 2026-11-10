@@ -1,0 +1,92 @@
+{
+  "accounting_fixtures": [
+    {
+      "case": "baseline_alias_no_growth",
+      "old_8MiB_cap": "PASS",
+      "old_charge": 7340032,
+      "owned_new_physical_bytes": 0
+    },
+    {
+      "case": "baseline_alias_unrelated_growth",
+      "old_8MiB_cap": "REJECT",
+      "old_charge": 9437184,
+      "owned_new_physical_bytes": 0
+    },
+    {
+      "case": "new_inode_only",
+      "old_8MiB_cap": "PASS",
+      "old_charge": 7340032,
+      "owned_new_physical_bytes": 3145728
+    },
+    {
+      "case": "new_inode_and_unrelated_growth",
+      "old_8MiB_cap": "REJECT",
+      "old_charge": 9437184,
+      "owned_new_physical_bytes": 3145728
+    },
+    {
+      "case": "new_and_baseline_aliases",
+      "old_8MiB_cap": "PASS",
+      "old_charge": 7340032,
+      "owned_new_physical_bytes": 3145728
+    },
+    {
+      "case": "new_inode_and_orphan_growth",
+      "old_8MiB_cap": "REJECT",
+      "old_charge": 9437184,
+      "owned_new_physical_bytes": 3145728
+    },
+    {
+      "case": "new_inode_and_registry_growth",
+      "old_8MiB_cap": "PASS",
+      "old_charge": 7340160,
+      "owned_new_physical_bytes": 3145728
+    }
+  ],
+  "activity": {
+    "constructors": 0,
+    "fits": 0,
+    "model_loads": 0,
+    "new_NFL_observations": 0,
+    "private_writes": 0,
+    "source_decodes": 0
+  },
+  "baseline_inode_size_mutation": "REJECT",
+  "category_contract_arms": [
+    {
+      "arm": "R0",
+      "numeric_features": 1
+    },
+    {
+      "arm": "R1",
+      "numeric_features": 10
+    },
+    {
+      "arm": "R2",
+      "numeric_features": 99
+    },
+    {
+      "arm": "R3",
+      "numeric_features": 135
+    },
+    {
+      "arm": "R4",
+      "numeric_features": 143
+    }
+  ],
+  "code_sha256": {
+    "nfl_lab/profile_increment_a_storage_v2.py": "b8b93327752c17873942efd51f603bce1a9898b407cdf41211cf08deb5b864fc",
+    "nfl_lab/profile_increment_a_v2.py": "fb60ebfbd7cb3f33be31eb01989a417b34b22ee1e6198b336bc24d2563106632",
+    "tools/profile_increment_a_run_v2.py": "a6d59fe678282ee0fbf47a80ebf8f03b342fe258631f909fdc998b48cca027b2"
+  },
+  "cohort_fixtures": 5,
+  "id": "PROFILE-INCREMENT-A-STORAGE-AND-CONTRACT-INDEPENDENT-REVIEW-v2",
+  "limits": [
+    "Native namespace initialization and write/readback remain unexecuted by reviewer.",
+    "This review does not create predictive evidence, historical source clocks or production eligibility.",
+    "Existing CompletionStore retains conservative whole-prior delta logic; successor accounting is scoped to the new owned path."
+  ],
+  "scope": "Pure accounting plus CDF category validation, role filter, fictional pregame cohort handling; no storage constructors or NFL execution. Static native lock/cap/reserve/orphan-path review.",
+  "state": "PASS_BOUNDED_PURE_ACCOUNTING_AND_CATEGORY_COHORT_FIXTURES",
+  "target_outcome_mutation_membership": "UNCHANGED"
+}

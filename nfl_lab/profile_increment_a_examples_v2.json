@@ -1,0 +1,51 @@
+{
+  "evidence": "FICTIONAL_SOFTWARE_EXAMPLES_NOT_NFL_OBSERVATIONS",
+  "examples": [
+    {
+      "attempts": 10,
+      "case": "ordinary",
+      "context": "direction=left",
+      "earlier_offense_expected_yards_per_carry": 4.0,
+      "eligible_games": 8,
+      "mean": 4.5,
+      "player_id": "FICTIONAL_RB_A",
+      "raw_defense_residual_per_carry": 0.5,
+      "shrunk_defense_residual_per_carry": 0.05555555555555555,
+      "signed_yards": 45,
+      "state": "OBSERVED"
+    },
+    {
+      "case": "knownzero",
+      "definition": "EPApositive percreditedcarry",
+      "denominator": 10,
+      "numerator": 0,
+      "raw_estimate": 0.0,
+      "state": "KNOWN_ZERO"
+    },
+    {
+      "case": "sparseunseen",
+      "eligible_games": 0,
+      "fallback": "registeredRBprior; no inventedparticipation/rolecertainty",
+      "observed_carries": 0,
+      "player_id": "FICTIONAL_UNSEEN_RB",
+      "raw_estimate": null,
+      "state": "ABSENT_HISTORY"
+    },
+    {
+      "case": "missingsource",
+      "field": "trueblockingconcept",
+      "raw_estimate": null,
+      "reason": "run_location/run_gap do not establish called blocking concept",
+      "state": "SOURCE_FIELD_UNQUALIFIED"
+    },
+    {
+      "case": "undefinedratio",
+      "denominator": 0,
+      "metric": "conditional signedyards",
+      "numerator": 0,
+      "raw_estimate": null,
+      "state": "UNDEFINED_DENOMINATOR"
+    }
+  ],
+  "version": "A::PROFILE-INCREMENT-TO-RELEASE-01-v2-rushing-component-schema-v1"
+}

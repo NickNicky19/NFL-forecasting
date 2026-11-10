@@ -1,0 +1,94 @@
+{
+  "cohorts": {
+    "basic": "full admittedRBqueryboard, missing/sparse retained",
+    "oldW1W7": "historicalstat-row-conditioned reconstruction; pregamepriorityuniverse unverified, not authenticated",
+    "priority": "sourcequalifiedofferedplayer OR unchangedreferenceexpectedcarry>=5 OR documentedqualifiedreplacement",
+    "top20": "up to20 samekickoff+samecutoff rollingbatch, expectedcarrydescending thencanonicalplayer/gameascending; missingreference notdroppedfrombasicboard; not a fixedweeklylist orpickconfidence"
+  },
+  "common_schema_mapping": {
+    "A_component": "rushing / rushing_defense",
+    "commit": "06da9bb77c6122d870e18067c8dbdf34813fc4cb",
+    "defense_mapping": "PENDING_C_INTAKE",
+    "git_blob_sha": "faa1e8b80b4f03272e72e062f4ca542cd62765d0",
+    "path": "reports/player-context-matchup-01/completion-decision-v1/profiles/SCHEMA.json",
+    "repository": "NickNicky19/NFL-forecasting-NGS-C"
+  },
+  "current_adapter": "current_query_adapter validates role/event/source observed<=cutoff<=actualexecution<kickoff; absenceofownoutcomesvalid; existingauditedbasefeaturesrequired",
+  "field_use": [
+    {
+      "arm": "RB_ONLY_LEAF_BASE+allstages",
+      "block": "original30ownhistory",
+      "columns": 30,
+      "population": "RB-only before all priors/design/forest; oldbroadroleLeaf unchangedseparatecontrol"
+    },
+    {
+      "arm": "R1+",
+      "availability": "ALREADY_ACCEPTED_PBP_RECONSTRUCTION_STRICT_BEFORE_CUTOFF",
+      "block": "PBP own/team/opponent games/carries/supported",
+      "columns": 9
+    },
+    {
+      "arm": "R2+",
+      "block": "own/offense conditional yards/EPApositive, owncontextmix, aggregates",
+      "columns": 89,
+      "denominator": "credited non2pt rush attempts; distinct owncarrymix/teamopportunity/shareprofiledefinitions"
+    },
+    {
+      "arm": "R3",
+      "block": "opponent conditional earlieroffense residual values",
+      "columns": 36,
+      "formula": "sum(credited_y-n*eligibleearlier_offense_context_baseline)/(sum_n+80)"
+    },
+    {
+      "arm": "NOT_FITTED_THIS_PACKAGE; oldHGBbundledcontrolonly",
+      "block": "ownmix bydirection timesconditionaldefenseresidual",
+      "columns": 8
+    },
+    {
+      "arm": "DESCRIPTIVE_DEFENSE_EXPORT_ONLY; notappendedtothisfittedrecipe",
+      "block": "fieldposition, signedmedian/variance/tails, kneel/scramble/QBother"
+    },
+    {
+      "arm": "PROFILE_PROVENANCE_NOT_NEW_FORECAST_PREDICTORS",
+      "block": "age and sourceclocks"
+    }
+  ],
+  "keys": [
+    "canonical_player_id_or_explicit_unavailable",
+    "canonical_game_id",
+    "historical_team",
+    "role",
+    "opponent",
+    "cutoff_UTC",
+    "profile_version"
+  ],
+  "output_products": {
+    "P1": "eachunroundedpoint>lineOver,<lineUnder,equalABSTAIN; meanandmedian separate",
+    "P2": "exactconditionalplayed tailprobabilities; chooseOver ifpOver>pUnder,Under ifpUnder>pOver,equalABSTAIN; no lawunavailablefallback probabilities invented",
+    "mean": "exactmean ofretained signedinteger law",
+    "median": "lowerp=.5quantile",
+    "probability_limits": "model lawnot calibratedconfidence; noEVorprofitwithoutprices/contracts",
+    "push": "at integerline P(Y=line); halfinteger no statisticalpush"
+  },
+  "rate_fields": [
+    "definition",
+    "numerator",
+    "denominator",
+    "raw_estimate",
+    "shrunk_estimate",
+    "state",
+    "eligible_games",
+    "uncertainty"
+  ],
+  "rights": "Realprofiles/predictions/models stayowner-local underexistingretention; aggregate/publicschema only",
+  "states": [
+    "OBSERVED",
+    "KNOWN_ZERO",
+    "UNDEFINED_DENOMINATOR",
+    "ABSENT_HISTORY",
+    "SOURCE_FIELD_UNQUALIFIED",
+    "UNAVAILABLE_CANONICAL_IDENTITY"
+  ],
+  "status": "PREPARED_NOT_ADMITTED_NOT_A_NEW_CANONICAL_SCHEMA",
+  "version": "A::PROFILE-INCREMENT-TO-RELEASE-01-v2-rushing-component-schema-v1"
+}
