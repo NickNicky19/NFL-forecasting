@@ -1,0 +1,79 @@
+{
+  "id": "A-TIMING-CONFIRM-NATIVE-RETENTION-INDEPENDENT-REVIEW-v2",
+  "UTC": "2026-11-10T23:22:19.765974+00:00",
+  "state": "PASS_SOURCE_ONLY_READY_FOR_ROOT_GO",
+  "code_path": "tools/timing_confirm_native_retention_v1.py",
+  "code_sha256": "65cb8b07888bb8c9532fe6be8e95179d5ef22735dec4efb6b2bf6a295a40f0a5",
+  "code_bytes": 5504,
+  "predecessor_review_sha256": "308e6573578d336469ec2bbc31cac8787e2c6b5ef9bfb84f42748cd848ebb2fe",
+  "scope": "Final worker source, pinned public/local plan metadata and source dependencies only. No worker execution or ZIP/native/NFL-row/model reads. Runtime retention, payload validation and restoration remain to be demonstrated by the sole root executor.",
+  "prior_checks_reused": {
+    "fixed_two_write_ids": "PASS",
+    "incoming_hash_and_size_before_any_native_put": "PASS",
+    "same_immutable_existing_names_fail_if_hash_differs": "PASS_VIA_EXISTING_STORE_VALIDATE_REFERENCE",
+    "one_four_reference_readback": "PASS",
+    "C_score_and_view_hash_checked_by_read_many": "PASS",
+    "existing_namespace_attachment_without_initialization": "PASS",
+    "older_namespace_phase_barrier_and_caps": "PASS_SOURCE",
+    "post_write_checkpoint": "PASS_SOURCE",
+    "offline_socket_hook": "PASS",
+    "CPU_300_wall_900_RSS_1_5GiB_limits": "PASS",
+    "no_model_loading_fit_inference_or_grading": "PASS",
+    "no_public_private_absolute_locators_in_worker": "PASS",
+    "ZIP_private_only": "OWNER_CONTRACT_REQUIRED_NO_PUBLICATION_PATH_IMPLEMENTED"
+  },
+  "resolved_runtime_dependency_binding": {
+    "path": "nfl_lab/profile_freshness_a_storage_v1.py",
+    "sha256": "7465a71366716cd7e60c7d55103911e2aa9e143f10d4dc6557473ecb3d8f0bd7",
+    "old_plan_sha256": "ac865ba52273e960eafcbbc7689edd6a8f3aeeab324259be3fcbcd0f17854266",
+    "exact_dictionary_member_checked_before_dynamic_import": true,
+    "current_bytes_match": true,
+    "uses_readonly_existing_namespace_attachment": true
+  },
+  "unexecuted_draft_corrections": [
+    {
+      "sha256": "abdd6775e952e881e58a3b24a813cbf0b1e205381b96748ad21fc192289f928d",
+      "disposition": "Added runtime guard binding requested in V1; source-only."
+    },
+    {
+      "sha256": "4be25ad2810917d34f6faf335dea00ad8411d90a7864f948d843b4b9b4c836db",
+      "disposition": "Source review found SHA string compared to dictionary; corrected to exact pathname key before any execution."
+    }
+  ],
+  "fixed_native_ids": [
+    "TIMING_CONFIRM_B_CMP_SCORES_V1.json.gz",
+    "TIMING_CONFIRM_VERIFICATION_BUNDLE_V1.zip"
+  ],
+  "static_calls": {
+    "put": 2,
+    "read_many": 1,
+    "checkpoint": 1
+  },
+  "payload_contract": {
+    "new_native_bytes_planned": 416556,
+    "maximum_new_native_payload_bytes": 1048576,
+    "private_ZIP_bytes": 57936,
+    "private_ZIP_sha256": "17fdeba32890377ca872f7b381c5ce040208182efe2bde44b6629c6043b0a64b",
+    "private_ZIP_opened": false,
+    "public_publish_allowed": false
+  },
+  "budgets": {
+    "CPU_seconds": 300,
+    "wall_seconds": 900,
+    "RSS_bytes": 1610612736,
+    "existing_retained_cap_bytes": 16777216,
+    "existing_peak_cap_bytes": 20971520,
+    "all_older_caps_unchanged": true
+  },
+  "result": "No remaining material source-level issue identified in this bounded two-member retention and four-member readback path. Final GO must bind this exact source hash; executed native checkpoint/readback is a separate receipt.",
+  "activity": {
+    "native_reads": 0,
+    "native_writes": 0,
+    "NFL_row_reads": 0,
+    "ZIP_reads": 0,
+    "model_loads": 0,
+    "grading": 0,
+    "fits": 0,
+    "HTTP": 0
+  }
+}

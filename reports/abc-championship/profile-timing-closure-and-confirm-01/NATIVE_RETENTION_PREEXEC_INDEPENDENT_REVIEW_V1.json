@@ -1,0 +1,125 @@
+{
+  "id": "A-TIMING-CONFIRM-NATIVE-RETENTION-INDEPENDENT-REVIEW-v1",
+  "UTC": "2026-11-10T23:19:29.904197+00:00",
+  "state": "PASS_SOURCE_SCOPE_WITH_ONE_REQUIRED_RUNTIME_DEPENDENCY_BINDING",
+  "code_path": "tools/timing_confirm_native_retention_v1.py",
+  "code_sha256": "abdd6775e952e881e58a3b24a813cbf0b1e205381b96748ad21fc192289f928d",
+  "review_scope": "Source-only retention guard and public/local aggregate metadata review. No ZIP bytes, original rows, models, native objects or grades opened. No retention worker execution.",
+  "checks": {
+    "fixed_two_write_ids": "PASS",
+    "incoming_hash_and_size_before_any_native_put": "PASS",
+    "same_immutable_existing_names_fail_if_hash_differs": "PASS_VIA_EXISTING_STORE_VALIDATE_REFERENCE",
+    "one_four_reference_readback": "PASS",
+    "C_score_and_view_hash_checked_by_read_many": "PASS",
+    "existing_namespace_attachment_without_initialization": "PASS",
+    "older_namespace_phase_barrier_and_caps": "PASS_SOURCE",
+    "post_write_checkpoint": "PASS_SOURCE",
+    "offline_socket_hook": "PASS",
+    "CPU_300_wall_900_RSS_1_5GiB_limits": "PASS",
+    "no_model_loading_fit_inference_or_grading": "PASS",
+    "no_public_private_absolute_locators_in_worker": "PASS",
+    "ZIP_private_only": "OWNER_CONTRACT_REQUIRED_NO_PUBLICATION_PATH_IMPLEMENTED"
+  },
+  "static_calls": {
+    "store_put": 2,
+    "read_many": 1,
+    "reserve": 1,
+    "checkpoint": 1
+  },
+  "fixed_native_ids": [
+    "TIMING_CONFIRM_B_CMP_SCORES_V1.json.gz",
+    "TIMING_CONFIRM_VERIFICATION_BUNDLE_V1.zip"
+  ],
+  "bound_dependencies": {
+    "attach_helper": {
+      "path": "tools/next02_freshness_model_independent_v2.py",
+      "sha256": "025e28ae6b97c8a2c01f735b12c4745865cdc09b6437bc4c97a1fc651500d7e4"
+    },
+    "old_plan": {
+      "sha256": "ac865ba52273e960eafcbbc7689edd6a8f3aeeab324259be3fcbcd0f17854266"
+    },
+    "allocation": {
+      "sha256": "3a9997259e71863460921f2beb24b9f85d48602fe0454a50bf0d6428e49cd33e"
+    },
+    "current_guard_source": {
+      "path": "nfl_lab/profile_freshness_a_storage_v1.py",
+      "sha256": "7465a71366716cd7e60c7d55103911e2aa9e143f10d4dc6557473ecb3d8f0bd7",
+      "matches_pinned_allocation": true,
+      "runtime_check_missing_in_reviewed_worker": true
+    }
+  },
+  "required_small_correction": {
+    "owner": "root retention executor",
+    "action": "Before dynamically importing the attach helper/guard, compare current nfl_lab/profile_freshness_a_storage_v1.py bytes with the corresponding code_sha256 in the already-bound old plan (or an equivalent hash-bound GO execution wrapper). readonly_store itself checks allocation bytes/caps but does not pin this dynamically imported guard file. No broader storage change is requested.",
+    "reason": "Bind the actual executing storage guard, rather than only its importer and plan.",
+    "no_native_execution_until_resolved": true
+  },
+  "bundle_manifest_only": {
+    "bytes": 57936,
+    "sha256": "17fdeba32890377ca872f7b381c5ce040208182efe2bde44b6629c6043b0a64b",
+    "members": [
+      {
+        "name": "B_TIMING_INDEPENDENT_CALCULATION_V1.json",
+        "bytes": 19810,
+        "sha256": "94622cf65b2afcb8a1574c3b4ff2e323f53484bd2dad772473e4a236d35c2ee4"
+      },
+      {
+        "name": "C04_INDEPENDENT_ARITHMETIC_V1.json",
+        "bytes": 3565,
+        "sha256": "e79c59188b0819cd44ee54ec021bc6612afbca1cef82f5d6e7d7e3da440a2d15"
+      },
+      {
+        "name": "C04_RECEPTION_RECEIPT_V1.json",
+        "bytes": 1743,
+        "sha256": "1b6cd2206469e3bca9c7d6f2c066fc8dc3e748cf8bccc14497a830bdc86b32e8"
+      },
+      {
+        "name": "C04_PREEXEC_INDEPENDENT_REVIEW_V1.json",
+        "bytes": 6397,
+        "sha256": "1853e4540147ee56a0c8e5e619eea7e488cc613825e32fe51dfd4ada8b8f88cd"
+      },
+      {
+        "name": "RECEIPT_AND_CAPTURE_REFRESH_V1.json",
+        "bytes": 18522,
+        "sha256": "beacac7e6093f06cd469ca57fd3f35cc8889fef5492f850934f229692cc6cdf9"
+      },
+      {
+        "name": "CURRENT_SHADOW_SOURCE_QUALIFICATION_V1.json",
+        "bytes": 6615,
+        "sha256": "7c185813bd3cc23d3fc7bb2b1487173310d5ce0668cd1a3d70d8da6a1073e2fa"
+      },
+      {
+        "name": "B_TIMING_COMPLETION_SCORING_GO_V1.json",
+        "bytes": 48575,
+        "sha256": "69c84b8b7b31d501cc508e6d002cd5226b33eae45e37543f71b81a6e785f329e"
+      },
+      {
+        "name": "C04_SCORING_GO_V1.json",
+        "bytes": 72064,
+        "sha256": "f489a42aac2f13d6810a1376710f9fb6ddd7825ab4e4fcd3b0340ce3d3d72689"
+      },
+      {
+        "name": "SOURCE_CODE/timing_confirm_b_completion_independent_v1.py",
+        "bytes": 25996,
+        "sha256": "a6118b0769a51bc5f342a9dd14c6fe4101bf0d1ff123c5e530f9277a255905f0"
+      },
+      {
+        "name": "SOURCE_CODE/timing_confirm_c04_independent_v1.py",
+        "bytes": 19933,
+        "sha256": "c49a6c0ba028511ca5e875a409497fec947647dd3295d1b0a5078597bbec63d6"
+      }
+    ],
+    "ZIP_opened": false,
+    "native_payload_bytes_planned": 416556,
+    "incoming_cap_bytes": 1048576
+  },
+  "activity": {
+    "native_reads": 0,
+    "native_writes": 0,
+    "NFL_row_reads": 0,
+    "model_loads": 0,
+    "grading": 0,
+    "fits": 0,
+    "HTTP": 0
+  }
+}
