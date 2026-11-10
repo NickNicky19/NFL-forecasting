@@ -487,8 +487,15 @@ def run(args):
     decoded=json.loads(gzip.decompress(native_read(receipt["forecasts"])))
     parts=decoded["parts"];part_refs=[p["ref"]for p in parts]
     refs_byid={r["id"]:r for r in receipt["artifacts"]}
-    fit_protocol_ref=refs_byid["PRIVATE_EXECUTION_PROTOCOL.json"]
-    check(fit_protocol_ref["sha256"]==plan["fit_protocol_sha256"],"executing fit protocol identity differs")
+    check(len(refs_byid)==len(receipt["artifacts"]),"duplicate execution artifact IDs")
+    fit_protocol_ref=plan["fit_protocol_ref"]
+    check(set(fit_protocol_ref)=={"id","bytes","sha256","namespace"}
+          and fit_protocol_ref["namespace"]=="FRESHNESS"
+          and fit_protocol_ref["id"]in["PRIVATE_EXECUTION_PROTOCOL.json","PRIVATE_EXECUTION_PROTOCOL_V2.json"]
+          and type(fit_protocol_ref["bytes"])is int and fit_protocol_ref["bytes"]>0
+          and fit_protocol_ref["sha256"]==plan["fit_protocol_sha256"]
+          and refs_byid.get(fit_protocol_ref["id"])==fit_protocol_ref,
+          "exact declared executed fit protocol ref differs from unique receipt artifact")
     cohort_ref=plan["cohort_reference"];input_ref=plan["fixed_original_profile_reference"]
     native_bodies=store.read_many(part_refs+[cohort_ref,input_ref,fit_protocol_ref,plan["prior_full_scores"]])
     previous=json.loads(gzip.decompress(native_bodies[plan["prior_full_scores"]["id"]]))
