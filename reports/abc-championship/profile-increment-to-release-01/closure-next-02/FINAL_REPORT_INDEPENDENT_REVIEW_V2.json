@@ -1,0 +1,71 @@
+{
+  "id": "A-NEXT02-FINAL-REPORT-INDEPENDENT-REVIEW-v2",
+  "UTC": "2026-11-10T20:43:54.559124+00:00",
+  "state": "PASS_METADATA_ONLY_EXACT_DIFF_AND_FINAL_RECEIPT_BINDINGS",
+  "supersedes_scope": "V1 scientific/aggregate review remains valid; V2 reviews only precise metadata/text amendments, no NFL calculations repeated",
+  "previous_review": {
+    "path": "FINAL_REPORT_INDEPENDENT_REVIEW_V1.json",
+    "bytes": 3762,
+    "sha256": "b77e807a0efbe94b6400762017d57e55da5cfa50d7c3e6bfd9c87bd77b9d4869"
+  },
+  "bindings": {
+    "report": {
+      "path": "EXECUTED_CLOSURE_CHECKPOINT_V1.md",
+      "bytes": 28270,
+      "sha256": "172647dbf757c37a8364be8fe54cac7a383b0b5c715cb7b7d578f2ac58d07a24"
+    },
+    "summary": {
+      "path": "EXECUTION_SUMMARY_V1.json",
+      "bytes": 38873,
+      "sha256": "337df4cc496590fd3feec005b0d9ff0d0b0ec8f1958c5ce90d3475e2241061de"
+    },
+    "export_index": {
+      "path": "reports/abc-championship/EXPORT_INDEX.json",
+      "bytes": 39817,
+      "sha256": "e3d251a960f09a375fc5ffd1cefc5f6c91aa4bbbe655fa7e594deaa2370b274e"
+    },
+    "final_native_readback": {
+      "path": "FINAL_NATIVE_READBACK_V2.json",
+      "bytes": 6353,
+      "sha256": "232322781a8dd92dd78626c6611706dfa4e3e0bb318e7109dc9eb288ebef8c34"
+    },
+    "preserved_final_failure": {
+      "path": "FINAL_NATIVE_READBACK_V1-failure.json",
+      "sha256": "66a65b0ba9196effe13f5f2034b9462e3c32273fd8f2fc98ea5d19ea9f93f599"
+    }
+  },
+  "exact_diff": {
+    "report": "Removing only appended final-durability section and reversing exactly two raw-example wording clarifications reproduces V1-reviewed27002-byte report SHA4e73d0b9510debf66e00daada35c294859833ddd1b1bdfcacd7b7abc91030005",
+    "machine_summary": "Removing exactly three final-retention metadata keys reproduces V1-reviewed38227-byte summary SHA7d2408e59acd8f4d48cefc96f7209d518ec8038200877f41932aa5bdccd36616",
+    "scientific_tables_results_and_previous_owner_actions_unchanged": true,
+    "CatBoost_HGB_52_tie_preserved": true,
+    "raw_example_clarification": "Three raw-source examples,75fieldchecks"
+  },
+  "final_receipt_consistency": {
+    "restored_members": 18,
+    "all_reference_hashes_and_sizes_equal_restored_metadata": true,
+    "charged_bytes": 8909630,
+    "retained_cap_bytes": 16777216,
+    "previous_retention_CPU_seconds": 221.610841565,
+    "previous_budget_CPU_seconds": 220,
+    "readonly_recovery_CPU_seconds": 110.6035675,
+    "readonly_recovery_wall_seconds": 110.54477458700421,
+    "native_writes": 0
+  },
+  "limits": [
+    "Checked local immutable readback receipts and metadata, not native artifact bytes; no repeated restoration",
+    "New export-entry final hashes/claims checked; independent comparison of every older index entry not repeated in this metadata followup",
+    "No source-play, prediction-row, model or NFL score calculation performed; no added football observations",
+    "Within-A review; no externalB/Cadmission or consumer acknowledgment inferred"
+  ],
+  "activity": {
+    "native_access": 0,
+    "model_loads": 0,
+    "new_fits": 0,
+    "new_inference": 0,
+    "new_grades": 0,
+    "source_HTTP": 0,
+    "production_writes": 0,
+    "report_or_index_edits": 0
+  }
+}
