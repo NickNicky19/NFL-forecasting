@@ -1,0 +1,88 @@
+{
+  "id": "A-NEXT02-FINAL-REPORT-INDEPENDENT-REVIEW-v1",
+  "UTC": "2026-11-10T20:39:25.021441+00:00",
+  "state": "PASS_SCOPED_REPORT_AGGREGATE_AND_CLAIM_REVIEW",
+  "reviewer": "Separate within-A calculation/report reviewer; not external B/C acknowledgment",
+  "checked_bindings": {
+    "report": {
+      "path": "EXECUTED_CLOSURE_CHECKPOINT_V1.md",
+      "bytes": 27002,
+      "sha256": "4e73d0b9510debf66e00daada35c294859833ddd1b1bdfcacd7b7abc91030005"
+    },
+    "summary": {
+      "path": "EXECUTION_SUMMARY_V1.json",
+      "bytes": 38227,
+      "sha256": "7d2408e59acd8f4d48cefc96f7209d518ec8038200877f41932aa5bdccd36616"
+    },
+    "full_aggregate": {
+      "bytes": 619055,
+      "sha256": "3d4dcc6301a13481836e38579d8faf824cc533feb6465173399979b1bf3c4f86"
+    },
+    "served_metadata": {
+      "path": "SERVED_METADATA_READONLY_V3.json",
+      "sha256": "888f868d587fe71e5725303c472e24f2e738a8742c878d0a0072da4a3213bc25"
+    }
+  },
+  "checks": {
+    "exact_headline_objects_matched_to_full_score": 12,
+    "exact_primary_pair_objects_matched_to_full_score": 12,
+    "summary_side_pool_arithmetic_checked": 17940,
+    "summary_records_with_side_schema": 5980,
+    "valid_empty_NA_side_pools": 9033,
+    "annual_candidates_inspected": 26,
+    "public_relative_links_existing": 22,
+    "private_full_execution_receipt_direct_links": 0,
+    "annual_own_side_records": true,
+    "annual_strongest_direction_controls": true,
+    "mixed_diagnostic_reversal": true,
+    "broad_651_versus_offered_177_masks_separate": true,
+    "learned_fallback_transition_counts": true,
+    "game_week_CI_and_multiplicity_limits": true,
+    "retrospective_five_week_duration_not_admission": true,
+    "all_twelve_category_statuses": true,
+    "no_new_A_capture_release_C_admission_or_NFL_weeks_claimed": true
+  },
+  "review_findings": [
+    {
+      "id": "CURRENT_SERVED_RECEIPT",
+      "status": "CORRECTED_IN_CHECKED_REPORT",
+      "change": "Latest20:28:13UTC/2:28p.m.CST, served metadataV3 and scope-only claims"
+    },
+    {
+      "id": "B_STRONG_CONTROL_TIE",
+      "status": "CORRECTED_IN_CHECKED_REPORT",
+      "change": "HGB_MAE_DIRECT andCatBoost both52/88; HGB own26-14Over/26-22Under explicit"
+    },
+    {
+      "id": "RAW_EXAMPLE_TERMINOLOGY",
+      "status": "MINOR_PRECISION_SUGGESTION",
+      "change": "Three raw-source own-player examples with25fieldchecks each=75fieldchecks, not75independentplayerexamples; receipt scope already explicit"
+    }
+  ],
+  "material_metric_discrepancies": 0,
+  "harness_preparation_failures": {
+    "count": 3,
+    "scope": "Report-check drafts initially assumed empty-side counts were numeric. Existing accepted scorer correctly retains empty pools as N/A. The corrected review harness explicitly checked N/A; no producer/scorer/data/model was changed."
+  },
+  "limits": [
+    "Report-level aggregate and claim review only; no new source-play, prediction-row, native-storage or model access",
+    "Independent fit, raw-source chronology and row-level grading not repeated; relevant existing receipts retained",
+    "Public publication claims checked against local exact readback receipts; no new remote readback or consumer verification",
+    "Reviewer authored the separate prefit source-cutoff adapter fix, but did not fit/score the NFL models or author this final report; this review creates no additional NFL observations"
+  ],
+  "activity": {
+    "NFL_row_reads": 0,
+    "native_access": 0,
+    "model_loads": 0,
+    "new_fits": 0,
+    "new_grades": 0,
+    "production_writes": 0,
+    "report_or_index_edits": 0
+  },
+  "budget": {
+    "CPU_seconds": 60,
+    "wall_seconds": 180,
+    "RSS_bytes": 1073741824,
+    "whole_review_actual_resource_measurement": "NOT_CAPTURED; do not present bound as measured consumption"
+  }
+}
