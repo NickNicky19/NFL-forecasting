@@ -307,7 +307,12 @@ def main():
         no_original_issuance=True, original_C_probability_panel_separate=True, new_fits=0, new_inference=0)
     payload = lzma.compress(encoded(private_view), preset=6)
     check(len(payload) <= resources["private_view_bytes"], "lossless join view exceeds finite16KiB")
-    from nfl_lab import player_context_completion_storage_v1 as guard
+    # Retained-source restoration imports older repository packages. Bind this
+    # writer to its registered file instead of that process-global package cache.
+    guard_path = ROOT / "nfl_lab/player_context_completion_storage_v1.py"
+    guard_spec = importlib.util.spec_from_file_location("profile_increment_local_completion_guard", guard_path)
+    guard = importlib.util.module_from_spec(guard_spec)
+    guard_spec.loader.exec_module(guard)
     store = guard.CompletionStore(ROOT, Path(plan["allocation"]["path"]), plan["allocation"]["sha256"], root_go=guard.GO)
     private = store.put("PROFILE_INCREMENT_C_LEAF_REC_VIEW_V1.json.xz", payload)
     check(store.read(private["id"], private["sha256"]) == payload, "new view native hash/readback differs")
