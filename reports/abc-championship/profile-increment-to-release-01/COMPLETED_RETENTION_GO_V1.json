@@ -1,0 +1,62 @@
+{
+  "id": "A-INCREMENT-COMPLETED-SCORES-RETENTION-v1",
+  "UTC": "2026-11-10T14:43:52.199502+00:00",
+  "owner": "A/root",
+  "allocation": {
+    "path": "reports/abc-championship/profile-increment-to-release-01/REMAINDER_NATIVE_ALLOCATION_V1.json",
+    "sha256": "757f49107c919b34740283cd42fc75c449e4cba97f51592f69d5cb7e96f9f4d5"
+  },
+  "state": "ROOT_REGISTERED_RETENTION_ONLY",
+  "budget": {
+    "CPU_seconds": 200,
+    "wall_seconds": 600,
+    "RSS_bytes": 1073741824,
+    "maximum_additional_private_bytes": 1572864
+  },
+  "members": [
+    {
+      "name": "independent-partial-leaf-model-check-v1.json",
+      "bytes": 4125,
+      "sha256": "ee904f4ca14c22e3d5c692acd8990e15a8b677b171b425a652b46e5c5370e04b"
+    },
+    {
+      "name": "independent-partial-law-score-check-v1.json",
+      "bytes": 2635388,
+      "sha256": "6cbc994d025defdfe402f8d9e2f5c2e1b135375c383fa9affb32ffc0f5dd896a"
+    },
+    {
+      "name": "independent-partial-exact-fallback-check-v1.json",
+      "bytes": 5371,
+      "sha256": "9e0c1c0a4a24bd1af621f267f128883c8dc5a8d89e4959df15fe7b1cee5764e9"
+    },
+    {
+      "name": "independent-broad-numerical-pairs-v1.json",
+      "bytes": 3290,
+      "sha256": "df16bdc49c624ca295e8f4d7e6b76f8b97766a8ac70bfce60210f2330f6eafb3"
+    },
+    {
+      "name": "independent-r3-delta-model-check-v1.json",
+      "bytes": 2145,
+      "sha256": "ecee5f51d4b8c653c69411df49b53768e679e8e5a893ab87c48873eb13e330a2"
+    },
+    {
+      "name": "independent-full-four-r3-score-check-v1.json",
+      "bytes": 756674,
+      "sha256": "b5bd3e687e1cefaac77812bd127b65f818b3f9e32bfe76e4aaa64b0aae39e608"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "COMPLETE_FULL_FOUR_SCORES_V1.json.gz",
+      "bytes": 612875,
+      "sha256": "9007d0dc9b4f8252ecede568d279deb7a38bbe16fa21f6262e25627075efa522"
+    },
+    {
+      "id": "INDEPENDENT_ORIGINAL_RECEIPTS_V1.zip",
+      "bytes": 124830,
+      "sha256": "3f5e570a9c94dc68e2c10a9385b0579134db7eb3c6a57b23ce12abdb8bcd0b03"
+    }
+  ],
+  "scope": "Retain exact completed protected score bytes and full original independent receipts inside existing approved supplement. No new grading, model load/fit/inference, source read, external transfer, guard/cap/baseline change or raw public publication.",
+  "resources_policy": "Actual admission and readback remain mandatory; all old caps and failure/capture reservations unchanged."
+}
