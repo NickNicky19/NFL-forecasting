@@ -1,0 +1,12 @@
+{
+  "id": "B_ATT_ALIAS_AGGREGATE_REVIEW_FAILURE_V1",
+  "UTC": "2026-11-12T02:36:09.762732+00:00",
+  "status": "VERIFIER_SCHEMA_CHECK_FAILED_NOT_NFL_DATA_FINDING",
+  "error": "KeyError category: new summary carries constant category=pass_att while original public summary does not contain that metadata key. Original worker parity compares scientific score fields before adding category metadata.",
+  "verifier_sha256": "86ad7d396a000cd91fc2a31ae43e27e14918406dc593697e90fe4a9bc3258fea",
+  "result_sha256": "0dc195065ad35a0aabd3e0dec89514ca3ba6a857e9327c25078d04f59280eafb",
+  "next_action": "Limit old exact field parity to shared fields; explicitly require category=pass_att and permit no other newly added field. No scorer/source changes.",
+  "private_reads": 0,
+  "native_reads": 0,
+  "new_NFL_scoring": 0
+}

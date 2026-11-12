@@ -1,0 +1,57 @@
+{
+  "id": "A-PEER-REFRESH-CLOSURE-v1",
+  "UTC": "2026-11-12T01:37:01.709617+00:00",
+  "state": "PASS_SCOPED_PUBLIC_METADATA_READBACK;NO_NEW_SCIENTIFIC_CALCULATION_OR_RELEASE",
+  "final_receipts": [
+    {
+      "path": "reports/abc-championship/category-decision-release-01/PEER_RECEIPTS_V2.json",
+      "bytes": 54872,
+      "sha256": "ebc691f319b7252e6010bdcebf51044038ccab82bc0863be46f164e0bd70c834"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/PEER_C_EXISTING_DIRECTION_DECISIONS_V1.json",
+      "bytes": 37026,
+      "sha256": "3749541b7ab43443d7b9262f3d78b870516032fc2493954a618c650929137677"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/PEER_REFRESH_V2.md",
+      "bytes": 4116,
+      "sha256": "9636c3d1dbd0526a333b4c23b37aeb24077f5c295127b1a60b83c509804a0a2b"
+    }
+  ],
+  "activity_scope_clarification": "PEER_RECEIPTS_V2.activity was inherited verbatim from V1 and describes its earlier read stage. V2 actual_content_after_v2, large_public_sources and current_C_canonical_qualification carry the subsequent successful larger read stage. This closure supersedes any interpretation of V1 activity counts as full-task totals; preserve V1/V2 bytes.",
+  "current_activity": {
+    "fully_hash_verified_UTF8_metadata_files": 23,
+    "fully_hash_verified_UTF8_metadata_bytes": 465340,
+    "successful_complete_large_public_files": 3,
+    "successful_complete_large_public_source_bytes": 3753170,
+    "known_failed_truncated_body_bytes": 1048578,
+    "earlier_default_sandbox_network_failures": 1,
+    "GitHub_connector_calls": "26file fetchcalls reconstructed from task tool history, including2emptylarge-filecontent and1commonprotocol doc read not retained in the23cachedsmall files; not a claim about connector-internal HTTP operations.",
+    "successful_complete_public_raw_GETs": 3,
+    "public_raw_prefix_GETs_rejected_by_old512KiB_bound": 2,
+    "metadata_reader_RSS_peak_observed_bytes": 147038208,
+    "aggregate_cache_approved_v2_bytes": 25460331,
+    "aggregate_cache_v2_total_cap_bytes": 33554432,
+    "fits": 0,
+    "model_loads": 0,
+    "new_forecast_inference": 0,
+    "NFL_grades": 0,
+    "private_rows_or_model_reads": 0,
+    "native_writes": 0,
+    "peer_writes": 0,
+    "external_messages": 0,
+    "source_feed_collection": 0,
+    "website_activation": 0
+  },
+  "current_C_table_read_scope": {
+    "qualification_rows": 8072,
+    "unique_procedure_id_strings": 1779,
+    "independent_learner_families": "NOT_INFERRED_FROM_PROCEDURE_ID_OR_PRODUCT_COUNT",
+    "rows_arithmetic_independently_regraded": "NOT_PERFORMED_NOT_CLAIMED",
+    "source_clock_or_fit_parity": "NOT_AUTHENTICATED_BY_METADATA_READBACK",
+    "later_amendments_required": true
+  },
+  "rules_integrity": "Exact retained C v6 support/tie/uncertainty rules quoted with provisional/scientific distinction; five-week exact-product rule preserved. No new authentication-only, incumbent-comparison, significance,90percent or all-category deployment hurdle introduced.",
+  "stop": "One bounded peer refresh and authorized large-file recovery complete; do not poll unchanged refs or repeat completedAjoins."
+}

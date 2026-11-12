@@ -1,0 +1,1102 @@
+{
+  "source_repository": "NickNicky19/NFL-forecasting-NGS-C",
+  "source_ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+  "source_path": "reports/abc-championship/execution-closure-02/CATEGORY_PRODUCT_DECISIONS.json",
+  "source_sha256": "d817f69d52ab8d736df758227a0c25a701137683500cf19834c408a3f2fd7c8f",
+  "scope": "Lossless12row direction-only projection of EXISTING C historical decision document; not new A ranking. Source-week and current operational labels must be refreshed from actual later receipts.",
+  "rows": [
+    {
+      "category": "pass_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            143,
+            143,
+            79,
+            "['QB']"
+          ],
+          "metric_value": 0.5454545454545454,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-3753f3b9e9b5ce947dbca048291c80d5610d45d4f6e768d33bc92dcf97640911",
+              "procedure_id": "A::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341",
+              "alias": "HGB_MAE_DIRECT",
+              "output": "mae_objective_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 41,
+                  "losses": 29,
+                  "decided": 70,
+                  "rate": 0.5857142857142857,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 37,
+                  "losses": 36,
+                  "decided": 73,
+                  "rate": 0.5068493150684932,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 78,
+                  "losses": 65,
+                  "decided": 143,
+                  "rate": 0.5454545454545454,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "pass_td",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            142,
+            142,
+            78,
+            "['QB']"
+          ],
+          "metric_value": 0.6126760563380281,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-3a35101650a60d5183c2c707deba340ebfb80450bccf20ddc0a9a0c76cd04bb1",
+              "procedure_id": "A::9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+              "alias": "COUNT_A_LEGACY_POINT",
+              "output": "legacy_empirical_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 43,
+                  "losses": 31,
+                  "decided": 74,
+                  "rate": 0.581081081081081,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 44,
+                  "losses": 24,
+                  "decided": 68,
+                  "rate": 0.6470588235294118,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 87,
+                  "losses": 55,
+                  "decided": 142,
+                  "rate": 0.6126760563380281,
+                  "selected": null
+                }
+              }
+            },
+            {
+              "row_id": "A-CLOSURE02-3ef264e2658fddbbd53cb90604b047fa9efd3585baad9f5368af0b584f0eb7bf",
+              "procedure_id": "A::f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83",
+              "alias": "COUNT_A_MEAN",
+              "output": "mean_objective_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 43,
+                  "losses": 31,
+                  "decided": 74,
+                  "rate": 0.581081081081081,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 44,
+                  "losses": 24,
+                  "decided": 68,
+                  "rate": 0.6470588235294118,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 87,
+                  "losses": 55,
+                  "decided": 142,
+                  "rate": 0.6126760563380281,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "pass_cmp",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            144,
+            144,
+            79,
+            "['QB']"
+          ],
+          "metric_value": 0.5486111111111112,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-5058df20d14e9ca5a4d9424cd737db2646a44bcf4cddc4a9cf89886ed6c4b0da",
+              "procedure_id": "A::8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6",
+              "alias": "CATBOOST_MEDIUM",
+              "output": "mean_objective_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 35,
+                  "losses": 18,
+                  "decided": 53,
+                  "rate": 0.660377358490566,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 44,
+                  "losses": 47,
+                  "decided": 91,
+                  "rate": 0.4835164835164835,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 79,
+                  "losses": 65,
+                  "decided": 144,
+                  "rate": 0.5486111111111112,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "pass_att",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            143,
+            143,
+            79,
+            "['QB']"
+          ],
+          "metric_value": 0.48951048951048953,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-e14e43465f54b7757d17cd541e5fb43d46745504d9f0f4ee0e92b1584549a290",
+              "procedure_id": "A::6aa8cf5de83b8ecae994e9e24412a5eeef688d1b50ea7f3880aa4f369c2aad23",
+              "alias": "COUNT_A_LEGACY_POINT",
+              "output": "legacy_empirical_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 19,
+                  "losses": 16,
+                  "decided": 35,
+                  "rate": 0.5428571428571428,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 51,
+                  "losses": 57,
+                  "decided": 108,
+                  "rate": 0.4722222222222222,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 70,
+                  "losses": 73,
+                  "decided": 143,
+                  "rate": 0.48951048951048953,
+                  "selected": null
+                }
+              }
+            },
+            {
+              "row_id": "A-CLOSURE02-29f05fc5d603d6f2a68aa66034c36477f599e31cf4e65927622e04b665bfe4aa",
+              "procedure_id": "A::e76d6588e12771f9c221bdbc030d25be52dab22e644c549fa0366d2832b6b2cd",
+              "alias": "COUNT_A_MEAN",
+              "output": "mean_objective_point",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 19,
+                  "losses": 16,
+                  "decided": 35,
+                  "rate": 0.5428571428571428,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 51,
+                  "losses": 57,
+                  "decided": 108,
+                  "rate": 0.4722222222222222,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 70,
+                  "losses": 73,
+                  "decided": 143,
+                  "rate": 0.48951048951048953,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "panel_support": [
+            115,
+            143,
+            79,
+            "['QB']"
+          ],
+          "metric_value": 0.4260869565217391,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-a357c8060a1a6cf9c88ffac6e0f694fcde3f6de35ce85115eb9f8a6cfbbe1715",
+              "procedure_id": "A::9b187e17fcaf1146d4465a18b1a7a996af42826b077cbdfa208ae4cde3583326",
+              "alias": "DEPTH_CDF",
+              "output": "mean",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 12,
+                  "losses": 14,
+                  "decided": 26,
+                  "rate": 0.46153846153846156,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 37,
+                  "losses": 52,
+                  "decided": 89,
+                  "rate": 0.4157303370786517,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 49,
+                  "losses": 66,
+                  "decided": 115,
+                  "rate": 0.4260869565217391,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "pass_int",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            143,
+            143,
+            78,
+            "['QB']"
+          ],
+          "metric_value": 0.5804195804195804,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-b88124a3ccb2c11aaea750a268abb2193cf9730cb1ce99f6a0e195d391868828",
+              "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+              "alias": "LEAF_CDF",
+              "output": "mean",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": [
+                "QB"
+              ],
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 75,
+                  "losses": 58,
+                  "decided": 133,
+                  "rate": 0.5639097744360902,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 8,
+                  "losses": 2,
+                  "decided": 10,
+                  "rate": 0.8,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 83,
+                  "losses": 60,
+                  "decided": 143,
+                  "rate": 0.5804195804195804,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "rush_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            443,
+            455,
+            81,
+            "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained."
+          ],
+          "metric_value": 0.5869074492099323,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-8da62c5a582eba5dc863cac36e2024b175946a71733f9cea2497c02cbcac6b49",
+              "procedure_id": "A::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681",
+              "alias": "EQUAL_CDF_CAT_HGB_POINT",
+              "output": "empirical_point_blend",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained.",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 61,
+                  "losses": 55,
+                  "decided": 116,
+                  "rate": 0.5258620689655172,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 199,
+                  "losses": 128,
+                  "decided": 327,
+                  "rate": 0.6085626911314985,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 260,
+                  "losses": 183,
+                  "decided": 443,
+                  "rate": 0.5869074492099323,
+                  "selected": null
+                }
+              }
+            },
+            {
+              "row_id": "A-CLOSURE02-01fe8d168ff33888e4cc3bced7c7759713304dde1c570dcccc560d15afbeecaa",
+              "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+              "alias": "LEAF_CDF",
+              "output": "median",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained.",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 58,
+                  "losses": 52,
+                  "decided": 110,
+                  "rate": 0.5272727272727272,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 202,
+                  "losses": 131,
+                  "decided": 333,
+                  "rate": 0.6066066066066066,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 260,
+                  "losses": 183,
+                  "decided": 443,
+                  "rate": 0.5869074492099323,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "rush_att",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            327,
+            335,
+            81,
+            "MIXED_POSITION_QB_RB_WR;335_OFFERS;NOT_RB_ONLY"
+          ],
+          "metric_value": 0.5321100917431193,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-fc1c890a463d077c940fe54eec1fddf4faa8552b5942c0050146dae2c7cd5849",
+              "procedure_id": "A::607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a",
+              "alias": "BACKFIELD_CDF",
+              "output": "mean",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "MIXED_POSITION_QB_RB_WR;335_OFFERS;NOT_RB_ONLY",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 70,
+                  "losses": 60,
+                  "decided": 130,
+                  "rate": 0.5384615384615384,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 104,
+                  "losses": 93,
+                  "decided": 197,
+                  "rate": 0.5279187817258884,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 174,
+                  "losses": 153,
+                  "decided": 327,
+                  "rate": 0.5321100917431193,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "rec",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            917,
+            992,
+            81,
+            "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained."
+          ],
+          "metric_value": 0.5681570338058888,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-04f9f9cdb9e915be6fe97ccda5a9ea5b021ad5eb267fc183f59bf56ea1966421",
+              "procedure_id": "A::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04",
+              "alias": "LEAF_CDF",
+              "output": "median",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained.",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 157,
+                  "losses": 103,
+                  "decided": 260,
+                  "rate": 0.6038461538461538,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 364,
+                  "losses": 293,
+                  "decided": 657,
+                  "rate": 0.5540334855403348,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 521,
+                  "losses": 396,
+                  "decided": 917,
+                  "rate": 0.5681570338058888,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "rec_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            929,
+            1008,
+            81,
+            "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained."
+          ],
+          "metric_value": 0.5371367061356297,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-af4a693fad0cc2e7c2ddee35ce8585408f64786e81be49c583fe9d960eaf7c66",
+              "procedure_id": "A::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a",
+              "alias": "RESPONSE_CDF",
+              "output": "mean",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained.",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 298,
+                  "losses": 268,
+                  "decided": 566,
+                  "rate": 0.5265017667844523,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 201,
+                  "losses": 162,
+                  "decided": 363,
+                  "rate": 0.5537190082644629,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 499,
+                  "losses": 430,
+                  "decided": 929,
+                  "rate": 0.5371367061356297,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "rush_rec_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [
+        {
+          "panel_support": [
+            468,
+            493,
+            81,
+            "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained."
+          ],
+          "metric_value": 0.5277777777777778,
+          "procedures": [
+            {
+              "row_id": "A-CLOSURE02-f5b15b7013d3a20e053da2077c21b9240a7593c6b9540fc831622d713681c9d7",
+              "procedure_id": "A::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35",
+              "alias": "RESPONSE_CDF",
+              "output": "mean",
+              "policy": "FULL_PRIMARY_ROSTER_INTERSECTION_RECORDED_BOARD",
+              "role_scope": "ORIGINAL_RECORDED_OFFERED_PLAYER_POOL; QBpassing; rushing includes QB/RB/WR; receiving source-eligible roles; exact role exceptions retained.",
+              "tested_season_weeks": [
+                [
+                  2026,
+                  1
+                ],
+                [
+                  2026,
+                  2
+                ],
+                [
+                  2026,
+                  3
+                ],
+                [
+                  2026,
+                  4
+                ],
+                [
+                  2026,
+                  5
+                ],
+                [
+                  2026,
+                  6
+                ],
+                [
+                  2026,
+                  7
+                ]
+              ],
+              "own_side_record": {
+                "OVER": {
+                  "wins": 117,
+                  "losses": 113,
+                  "decided": 230,
+                  "rate": 0.508695652173913,
+                  "selected": null
+                },
+                "UNDER": {
+                  "wins": 130,
+                  "losses": 108,
+                  "decided": 238,
+                  "rate": 0.5462184873949579,
+                  "selected": null
+                },
+                "COMBINED": {
+                  "wins": 247,
+                  "losses": 221,
+                  "decided": 468,
+                  "rate": 0.5277777777777778,
+                  "selected": null
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "five_week_eligible_recommendation": "FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "anytime_td",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [],
+      "five_week_eligible_recommendation": "NOT_ESTABLISHED_ON_THIS_PANEL",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    },
+    {
+      "category": "fpts",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "highest_observed_comparable": [],
+      "five_week_eligible_recommendation": "NOT_ESTABLISHED_ON_THIS_PANEL",
+      "comparison_scope": "Named A source panels only; B/C/incumbent compatible panels retained separately below. No universal cross-panel winner.",
+      "required_next_owner": "Original-site owner: exact mapping/selector replay and independent eligible product release; A/B: source-qualified current derived outputs. C: supplied full-board historical typed outputs and independent source checks."
+    }
+  ]
+}

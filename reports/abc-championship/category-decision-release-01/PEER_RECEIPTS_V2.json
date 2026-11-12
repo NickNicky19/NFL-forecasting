@@ -1,0 +1,1244 @@
+{
+  "id": "A-PEER-REFRESH-NFL-CATEGORY-DECISION-AND-RELEASE-01-v2",
+  "UTC": "2026-11-12T01:35:14.699546+00:00",
+  "session": "A",
+  "scope": "Public exact peer metadata readback only, not C consolidated ranking, private-row parity, model restoration, new scoring or production execution.",
+  "activity": {
+    "new_fits": 0,
+    "model_loads": 0,
+    "new_inference": 0,
+    "new_grades": 0,
+    "private_native_reads": 0,
+    "private_native_writes": 0,
+    "peer_writes": 0,
+    "external_messages": 0,
+    "new_source_feed_collection": 0,
+    "GitHub_file_connector_reads": 20,
+    "bounded_public_GitHub_raw_GETs": 2,
+    "blocked_default_sandbox_network_attempts": 1,
+    "fully_hash_verified_UTF8_files": 18,
+    "fully_hash_verified_UTF8_bytes": 281959,
+    "truncated_public_raw_bytes_not_admitted": 1048578,
+    "total_known_content_bytes_including_failed_bounds": 1330537,
+    "content_budget_bytes": 2097152,
+    "CPU_and_memory": "No aggregate model-process envelope or peak was measured; all commands were metadata parsing/finite public reads, not NFL fits. Do not invent a measured total."
+  },
+  "sources": [
+    {
+      "key": "B_REPORT",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "reports/profile-timing-closure-confirm-01/B/RESUMPTION_CLOSURE_V1.md",
+      "git_blob_sha1": "257e648d3bf5037ef58d353ffcfa5fd1cf7ac141",
+      "bytes": 10670,
+      "sha256": "d2ff9d0748a334f2e50a39c6299e79eca893f36f41015cd6b1039b340621b947"
+    },
+    {
+      "key": "B_RESULTS",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "registries/CURRENT_RESULTS_INDEX.json",
+      "git_blob_sha1": "121f92e57cc3d38dd2c2a33d6350c9685af8abea",
+      "bytes": 26269,
+      "sha256": "3aac629c7a230e924a37285bdf5f85ce647831b38ed338c1498f5d64efea67fe"
+    },
+    {
+      "key": "C_README",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/README.md",
+      "git_blob_sha1": "e4908f79317fb79e4fd5cba2acf9e124159f96f4",
+      "bytes": 12458,
+      "sha256": "31281563e4794f4a9c035d6530b3293bc725ad2128658760e6da9603f86a3b16"
+    },
+    {
+      "key": "C_PROTOCOL",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
+      "git_blob_sha1": "21deca83c12510541e2a4ca75661376125ea7a48",
+      "bytes": 60160,
+      "sha256": "2539ba8b398bcacebafa8f4b19090d4a5ffcee590c98c97966a8832c7d1ba4d5"
+    },
+    {
+      "key": "C_INDEX",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/abc-championship/EXPORT_INDEX.json",
+      "git_blob_sha1": "fa8c1cb88dbe4695c096523530dc2e17cef4268b",
+      "bytes": 49358,
+      "sha256": "16732426d26b428553b407411fa2dcc859c47d9c25562c5874b61951ce417a97"
+    },
+    {
+      "key": "C_ADMISSION",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/intake/ADMISSION.json",
+      "git_blob_sha1": "294e2eb5dd9ee563f683063f5fe66fdb68d016dc",
+      "bytes": 13320,
+      "sha256": "b5685f5a40e783b9917100e0f5071510848ed9256be689848cc1bdb8b6153a77"
+    },
+    {
+      "key": "C_SUPERADMISSION",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/superseding-intake/ADMISSION.json",
+      "git_blob_sha1": "266fac0dfc6dbaadc73f091eb7609f1efb0dcb6a",
+      "bytes": 3186,
+      "sha256": "610710f102d1d2bae8fbccd5f3c3e14fe2a8ebb72911cd7732590b2dd9a9ad3b"
+    },
+    {
+      "key": "C_PRODUCTS",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/PRODUCT_QUALIFICATION.json",
+      "git_blob_sha1": "8c2243de2b2c129ccd1c9f6ded2ae0ee34b8a6b2",
+      "bytes": 7352,
+      "sha256": "e7c549f8f4cb90d90f19a528982f99beb58d2cb0460ca4c453c23beb53e074a8"
+    },
+    {
+      "key": "C_RECOVERY",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/verification/C05_FRESH_GITHUB_RESTORATION.json",
+      "git_blob_sha1": "55e2d78d432ecf919703699f76a2cdd571d2d02a",
+      "bytes": 12343,
+      "sha256": "e0ef0164b36114cf3ccf7eb136299f838ee03b2e0e23aff9f44ade3e1c7302e0"
+    },
+    {
+      "key": "C_FROZEN_INPUTS",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "prospective/runs/C-C04-20261110-W10-FIRST-01/draft/MODEL_INPUT_MANIFEST.json",
+      "git_blob_sha1": "0fe34bb2b73ad05e3aec813fc33ecaddd67341e3",
+      "bytes": 28392,
+      "sha256": "0d80bd9437295246c34e302fd1c6eb417afae4d972762b3b9fd6a356e966475d"
+    },
+    {
+      "key": "C_FINALITY",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-closure-next-02/current-source/CURRENT_FINALITY_READINESS.json",
+      "git_blob_sha1": "161c6c4a803c45b8f1a1e3f8e4168bca10cda9b3",
+      "bytes": 1456,
+      "sha256": "b581942d571810e62c3d1eedbfe10a50e5d3279e665dfb1de132d48b3e00e7da"
+    },
+    {
+      "key": "B_ACTIONS",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "reports/profile-timing-closure-confirm-01/B/NEXT_OWNER_ACTIONS_V2.json",
+      "git_blob_sha1": "7f9148e658cdf06cfea0329e4a81cecc1e1fde87",
+      "bytes": 4063,
+      "sha256": "32dbc6fb0ed50ac9248dd6bf943a00961da34a4a2747fc5dd955118f9ac8a2e6"
+    },
+    {
+      "key": "B_PRODUCT_DECISIONS",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "reports/profile-timing-closure-confirm-01/B/CATEGORY_PRODUCT_DECISIONS_V1.json",
+      "git_blob_sha1": "ef377050da826c39839ca55f014d07285d7a96f5",
+      "bytes": 10188,
+      "sha256": "50bbf96f2fa69b04d104a6f60151ca46e2f0748633006d2cbfb5becfec61c1b5"
+    },
+    {
+      "key": "B_FIVE_SUMMARY",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "reports/post-wave-5w-v1/B_CATEGORY_PRODUCT_QUALIFICATION_SUMMARY.json",
+      "git_blob_sha1": "9b11403f257dfee9e639876b1d6b9c1111b737ff",
+      "bytes": 15247,
+      "sha256": "95822870e85745d3e0fddcd94b0f2435b8b5a27ccde56fdabb8d55098e9e65bc"
+    },
+    {
+      "key": "C_FORWARD_INPUTS",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "sources/profile-timing-closure-confirm-01/forward/INPUT_MANIFEST.json",
+      "git_blob_sha1": "ce1d788e8e0a7674e34a933cbc7e74d0a7827a83",
+      "bytes": 11419,
+      "sha256": "90a453a41518771717143cae4155005fb109eeb01cc3f755524fd83a31b166d7"
+    },
+    {
+      "key": "C_FORWARD_ROSTER",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-closure-next-02/current-source/ROSTER_QUALIFICATION.json",
+      "git_blob_sha1": "e49b674e50c803c4257d7ab7da81370edb78df04",
+      "bytes": 4510,
+      "sha256": "eb37e6c9568ba9f17ddfcd5eba8464111fbdf748021d4f1000f16202d220c689"
+    },
+    {
+      "key": "C05_RUN",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "prospective/runs/C-C05-NEDET-FIRST-01/RUN.json",
+      "git_blob_sha1": "9da6538682d1a153f6a7cd3710ca4c1362985071",
+      "bytes": 7818,
+      "sha256": "edc76d1de4c2d59603a103da3e9c8e899a2f5cbf8835282360f29fb040577de4"
+    },
+    {
+      "key": "C05_SERVED",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/profile-timing-closure-confirm-01/site/served/SERVED_CONSUMER_RECEIPT.json",
+      "git_blob_sha1": "85e09fc156227e0f77642121bf935e9cc0b037b6",
+      "bytes": 3750,
+      "sha256": "9535f019855105f95a1f96e4da7ac1caf300748522f084cae2e8c4dee0c78518"
+    },
+    {
+      "key": "C_V6_POLICY_CODE",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "src/actual_accuracy_v6.py",
+      "git_blob_sha1": "482d395b721d80fd0c662301af1538d65cb02a58",
+      "bytes": 39339,
+      "sha256": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a"
+    },
+    {
+      "key": "C_CLOSURE_POLICY",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "protocol/EXECUTION_CLOSURE_02_RESEARCH.txt",
+      "git_blob_sha1": "d4ff51e01563589d7fa830ec05d4405ca2952f04",
+      "bytes": 11876,
+      "sha256": "0204eed08e98388c406d0a8768bfc79241e3f8173faec18096e46d6b069fc815"
+    },
+    {
+      "key": "C_CLOSURE_DECISIONS",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/abc-championship/execution-closure-02/CATEGORY_PRODUCT_DECISIONS.json",
+      "git_blob_sha1": "bb605d96445ce7e0ccc37d0136a150daa4dd8011",
+      "bytes": 120432,
+      "sha256": "d817f69d52ab8d736df758227a0c25a701137683500cf19834c408a3f2fd7c8f"
+    },
+    {
+      "key": "C_V6_POLICY",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "protocol/ACTUAL_ACCURACY_POLICY_V6.json",
+      "git_blob_sha1": "665af261faef542b6dc0767bc09528c457c46694",
+      "bytes": 4028,
+      "sha256": "ca4c9c7d2b9a0dc5ff4f877562c3766b38b601b8ec71e22070a4978961409d1e"
+    },
+    {
+      "key": "B_ALIGNED_PRIVATE_COMMITMENTS",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+      "path": "reports/profile-increment-closure-next-02/B/aligned-scores-v1/OWNER_LOCAL_COMMITMENTS.json",
+      "git_blob_sha1": "712d87c75358191e4678eec572ff4e40270e2745",
+      "bytes": 7706,
+      "sha256": "11178406275e318fa245662ae099c384b44161b9b0cc77bbd04f315b2990ecd3"
+    }
+  ],
+  "canonical_contract": {
+    "C_ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+    "pointer_bytes": 60160,
+    "pointer_sha256": "2539ba8b398bcacebafa8f4b19090d4a5ffcee590c98c97966a8832c7d1ba4d5",
+    "executable_protocol_sha256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
+    "scorer_sha256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+    "no_new_evaluator": true
+  },
+  "exact_receipt_reconciliation": {
+    "A_current_published_result": "d7c8bc619eb7aed93df8259822eb08488d837005",
+    "A_new_B_timing_score_sha256": "841d874dd4eb15d7aca10195464ba54a6200d1ee0639e89df12885bf23707cf0",
+    "A_new_C04_point_score_sha256": "787ad98445bb56063fed86a95cfed360e939e2a041b0ef9efe5c8f6921e9e91a",
+    "B_inspected_A_ref": "bad756e2bbeb43b69799101a8c6558f515a8b8bb",
+    "B_scope": "B9bb explicitly saw preregistration/preexecution only at older A bad756. Its no-executed-receipt wording does not describe latest A d7c8. No duplicate join justified.",
+    "C_inspected_A_ref": "a969aeafa945edec686f5b54a9bc64f99bfa4bf0",
+    "C_scope": "C latest intake admits older C03 and prior B R0-R3 public arithmetic. It did not receive new A d7c8 timing result. C stage and product-table new-join pending fields remain historically scoped to received older pins.",
+    "new_A_result_B_receipt": "NOT_OBSERVED",
+    "new_A_result_C_receipt": "NOT_OBSERVED",
+    "new_A_result_C_admission": "NOT_OBSERVED",
+    "required_next_owner": "C coordinator reads current exact A export index/report/manifests at d7c8; B independently checks permitted new arithmetic. A does not self-admit or repeat joins."
+  },
+  "W5_overlap": {
+    "state": "NO_NORMALIZED_INTERSECTION_PACKAGE_IN_ACTUAL_FULL_V15_OR_CHECKED_COMMITMENTS",
+    "checked": [
+      "B RESUMPTION_CLOSURE_V1.md",
+      "B NEXT_OWNER_ACTIONS_V2.json",
+      "B CATEGORY_PRODUCT_DECISIONS_V1.json",
+      "B CURRENT_RESULTS_INDEX.json",
+      "C latest intake and product qualification"
+    ],
+    "source_text": "B/C explicitly keep native W5-8 and A annual W1-5 unpooled; no documented matching player/event/category/book/line/source/cutoff/decision-contract package provided.",
+    "verification_limit": "Whole v15 index read and existing explicit aggregate commitments inspected; private rows remain restricted, and no claim that all private files/branches were searched.",
+    "owner": "B source executor returns permitted normalized membership/overlap evidence; A remains private-board join executor.",
+    "do_not_sum": "A88 and B112 native offers must not simply be added."
+  },
+  "shared_qualification": {
+    "existing_base": {
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+      "path": "reports/post-wave-5w-v1/QUALIFICATION_TABLE.json.gz",
+      "pointer_sha256": "b993b2b3dd56c163db08d1c47d079b835bc5d0e52ac9f3cfb9df1510fa07ee17",
+      "connector_git_blob_sha1": "bb74c007300591bb183add2e3770f57b9d65fbd5",
+      "row_inspection": "COMPLETE_AGGREGATE_METADATA_DECODE7272ROWS;NOTPRIVATE_SOURCE_OR_FIT_REPRODUCTION"
+    },
+    "latest_C_delta_path": "reports/profile-timing-closure-confirm-01/PRODUCT_QUALIFICATION.json",
+    "composition": "C calls this an append-only product/source amendment to existing qualification table, not replacement master registry.",
+    "latest_delta_actual_new_timing_coverage_is_stale_against_A_d7c8": true,
+    "B_native_summary": "B_CATEGORY_PRODUCT_QUALIFICATION_SUMMARY explicitly distinguishes numerical/event witnesses from offered-line weeks. It cannot establish seven actual-prop weeks or direction winners.",
+    "B_native_summary_categories": [
+      {
+        "category": "pass_yd",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "hgb-direct-history-controls-v1:absolute_error_point",
+            "product": "absolute_error_point",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "pass_td",
+        "actual_line_status": "NewG0/G1 <=2scoredweeks; prior exact procedure/policy/source/horizon continuity must be verified separately",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D1",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "pass_cmp",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D1",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "pass_att",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D2",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "pass_int",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-c02-explicit-lag-block-removal-leaf-cdf-v1",
+            "product": "lower_median",
+            "history": "H-CURRENT",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "rush_yd",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D1",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "rush_att",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-chronological-category-score-memory-selector-v2:EARLIER_AVAILABLE_2026_SCORE_MEMORY",
+            "product": "point_choice_policy",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "rec",
+        "actual_line_status": "NewG0/G1 <=2scoredweeks; prior exact procedure/policy/source/horizon continuity must be verified separately",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-c02-explicit-lag-block-removal-leaf-cdf-v1",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          },
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D2",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "rec_yd",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D2",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "rush_rec_yd",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "hgb-direct-history-controls-v1:absolute_error_point",
+            "product": "absolute_error_point",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          },
+          {
+            "procedure_id": "v2-chronological-category-score-memory-selector-v2:FROZEN_2025_BEST",
+            "product": "point_choice_policy",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          },
+          {
+            "procedure_id": "v2-chronological-category-score-memory-selector-v2:POOLED_2025_AND_AVAILABLE_2026_MEMORY",
+            "product": "point_choice_policy",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "anytime_td",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "hgb-direct-history-controls-v1:log_loss_probability",
+            "product": "log_loss_probability",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          },
+          {
+            "procedure_id": "v2-chronological-category-score-memory-selector-v2:FROZEN_2025_BEST",
+            "product": "event_probability_policy",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          },
+          {
+            "procedure_id": "v2-chronological-category-score-memory-selector-v2:POOLED_2025_AND_AVAILABLE_2026_MEMORY",
+            "product": "event_probability_policy",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      },
+      {
+        "category": "nick-chart-ppr-v1",
+        "actual_line_status": "Existing source-specific two/three-week panels retained; no numerical-to-selection week borrowing",
+        "native_leaders": [
+          {
+            "procedure_id": "v2-qualified-position-defense-information-wave-v1:D2",
+            "product": "lower_median",
+            "history": "H-MULTI",
+            "scope": "Retained numerical/event-score week evidence only; not actual-line/TopPick or full target/operational admission."
+          }
+        ]
+      }
+    ],
+    "current_canonical": "execution-closure-02/QUALIFICATION_TABLE.json.gz actual8072rows read; later delta composition still required"
+  },
+  "current_C_source": {
+    "C05_ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+    "current_eligibility_cutoff_UTC": "2026-11-10T22:51:53.312826+00:00",
+    "football_source_cutoff_UTC": "2026-11-10T18:55:28.982066+00:00",
+    "feature_cutoff_UTC": "2026-11-10T19:23:09.469852+00:00",
+    "new_football_body": "NONE_C05_REUSES_FROZEN_INPUTS_WITH_STRONG_ETAG_HEAD_CHECKS",
+    "full_dense_weekly_census_export": "NOT_IN_CHECKED_PACKAGE",
+    "roster_contract": "NFLVERSE_CURRENT_KNOWN_SEASON_ROSTER_SNAPSHOT-v1; candidate universe conditional on appearance, not expected starters or event-effective transactions.",
+    "full_raw_season_roster_retention": "MEMORY_ONLY_NOT_RETAINED",
+    "individual_transaction_effective_clocks": "UNKNOWN_NOT_FILLED",
+    "retained_football_projection_files": [
+      {
+        "path": "sources/profile-closure-next-02/roster_current_season.json",
+        "bytes": 106245,
+        "SHA256": "bf725f7bd40b6327e03a0ae040ff107d51fe5defa7f2b1bbea2831bf66642050"
+      },
+      {
+        "path": "sources/profile-closure-next-02/schedule.csv",
+        "bytes": 18432,
+        "SHA256": "14d32c7b5ea24be56441d3fca6ab0d6683bea52b42f4a4e541fd1403a6bf29b2"
+      },
+      {
+        "path": "sources/profile-closure-next-02/candidate_schedule.json",
+        "bytes": 3686,
+        "SHA256": "435d6e92aecdbd3463bdc6393e10f4afc3900cb1a48ff7fee2133f162b76d00d"
+      },
+      {
+        "path": "sources/profile-closure-next-02/current_facts_2026.csv.gz",
+        "bytes": 161447,
+        "SHA256": "350ecd653332dde323e67097459cdd7662ec729aba977a1ea3f92c57bf1e346a"
+      },
+      {
+        "path": "sources/profile-closure-next-02/pbp_facts_2026.csv.xz",
+        "bytes": 242672,
+        "SHA256": "ec6cf4186d2da567b28b06cdc791bbd04c8ea17ffc4cd5cd12640e51a4e1bad2"
+      }
+    ],
+    "qualified_recent_FINAL_games": [
+      "2026_09_CIN_ATL",
+      "2026_09_JAX_BAL"
+    ],
+    "held_recent_games": [
+      "2026_09_ARI_SEA",
+      "2026_09_BUF_MIN",
+      "2026_09_CLE_NO",
+      "2026_09_DAL_IND",
+      "2026_09_DEN_CAR",
+      "2026_09_DET_MIA",
+      "2026_09_GB_NE",
+      "2026_09_HOU_LAC",
+      "2026_09_LA_WAS",
+      "2026_09_LV_SF",
+      "2026_09_NYG_PHI",
+      "2026_09_NYJ_KC",
+      "2026_09_TB_CHI"
+    ],
+    "F3_EPA_projection": "No new football projection beyond same frozen C04 retained PBP; earlier A qualified schema check found EPA omitted. This review did not download/rebuild PBP rows or repeat that closed check.",
+    "minimum_next_C_source_package": "Observation-bound compatible dense weekly census/presence/participation plus completed-game/version/clock map; EPA-bearing rushing plays separately for exact A F3 profile mechanism, including whole-team/other-player scope. Do not impose F3 EPA on Count A without its own recipe requirement."
+  },
+  "C05_forward": {
+    "run_id": "C-C05-NEDET-FIRST-01",
+    "capture_commit": "5a2fec4457154b423ab631ea3c896c077ebe85b4",
+    "code_commit": "0e1768af6134a66fc71d6eaec3f92ef5a10693bb",
+    "forecasts": 69,
+    "players": 23,
+    "roles": {
+      "RB": 7,
+      "WR": 10,
+      "TE": 6
+    },
+    "real_offers": 0,
+    "real_selections": 0,
+    "actual_issue_UTC": "2026-11-10T23:15:46.092351+00:00",
+    "server_qualified_UTC": "2026-11-10T23:18:26Z",
+    "first_kickoff_UTC": "2026-11-15T14:30:00+00:00",
+    "information_policy": "FROZEN_FOOTBALL_SNAPSHOT_FIRST_PUBLICATION_SHADOW",
+    "models": [
+      {
+        "model_id": "C_V4_RETAINED_REFERENCE_OBSERVED",
+        "feature_policy": "UNCHANGED_V4_MIXED_HISTORICAL_FEATURE_KICKOFF_PLUS7D_WITH_SOURCE_COMPLETED_LABELS_AND_OBSERVED_CURRENT_QUERY",
+        "training_rows": 21869,
+        "SHA256": "a8f0dacd8d31dd6a7a1523228f29ef7f96d45510810439b761a85c9639e01d0b"
+      },
+      {
+        "model_id": "C_V11_P1_E2_POOLED_7D",
+        "feature_policy": "ALL_LABEL_FEATURE_QUERY_KICKOFF_PLUS7D_STRICT_RECONSTRUCTION;CONTEXT2025_2026_ONLY",
+        "training_rows": 21835,
+        "SHA256": "a50d14aa526448ec626b43924e58934456478c6088d08babe8fe10199e1b67eb"
+      },
+      {
+        "model_id": "C04_F3_PROFILE_1D_SHADOW",
+        "feature_policy": "ALIGNED_ALL_LABEL_FEATURE_QUERY_KICKOFF_PLUS1D_STRICT_CURRENT_VINTAGE_RECONSTRUCTION_NOT_OBSERVED_PUBLICATION",
+        "training_rows": 21869,
+        "SHA256": "5b1144957e6c14bc5b449823c10ab12baada7afcb4c7a3fd54e3ea07b601a7da"
+      }
+    ],
+    "new_fits": 0,
+    "new_inference_rows": 69,
+    "source_scope": "New pregame first publication under frozen football horizon; no claim latest-game information.",
+    "C75_preserved": true,
+    "grades_due_now": "Neither WAS-NYG nor NE-DET kickoff has occurred at this review. No new grades inferred.",
+    "C_research_served": {
+      "receipt_path": "reports/profile-timing-closure-confirm-01/site/served/SERVED_CONSUMER_RECEIPT.json",
+      "receipt_SHA256": "9535f019855105f95a1f96e4da7ac1caf300748522f084cae2e8c4dee0c78518",
+      "deployed_commit": "fdbb7556ae90152b76f00ee43cfbad46f8f8b24a",
+      "owner_executed_UTC": "2026-11-10T23:39:39.190397+00:00",
+      "owner_state": "SERVED_BROWSER_VERIFIED_C_RESEARCH_VIEW_ONLY",
+      "independently_rerun_by_this_A_reviewer": false,
+      "original_site_use_or_release": false
+    }
+  },
+  "failures_and_limits": [
+    {
+      "stage": "C base qualification connector",
+      "state": "CONTENT_EMPTY_ENCODING_BASE64",
+      "meaning": "Gitblob/locator returned; zero payload bytes, not successful restoration and not absent model/table."
+    },
+    {
+      "stage": "B v15 large export connector",
+      "state": "CONTENT_EMPTY_ENCODING_UTF8",
+      "git_blob_sha1": "f1f4d5cb0e7315e25cb1108818bcab1decf1fa40",
+      "meaning": "New index exists but whole byte contents not inspected here; verified small CURRENT_RESULTS_INDEX supplies explicit newer route."
+    },
+    {
+      "stage": "Default sandbox raw GitHub qualification GET",
+      "state": "NETWORK_PERMISSION_ERROR_BEFORE_BODY",
+      "meaning": "No evidence of source absence or permission revocation."
+    },
+    {
+      "stage": "Two public pinned raw qualification GETs",
+      "state": "BOUND_EXCEEDED_AT_524289_BYTES_EACH_BEFORE_ADMISSION",
+      "meaning": "No complete table hash/decoded rows admitted. The first assert also compared expected hash of a truncated prefix; its failure is not a demonstrated hash mismatch for the whole artifact. No repeated polling requested."
+    },
+    {
+      "stage": "V2 full public reads",
+      "state": "RESOLVED_EMPTY_CONNECTOR_AND_512KiB_LIMIT_BY_AUTHORIZED_LARGER_PUBLIC_READ",
+      "meaning": "Whole C base/current qualification and Bv15 bytes verified; old failures remain historical, not current source absence."
+    }
+  ],
+  "next_existing_routes": [
+    {
+      "executor": "C canonical coordinator",
+      "artifact": "A d7c8 reports/abc-championship/EXPORT_INDEX.json and profile-timing-closure-and-confirm-01 PUBLICATION_READBACK_V1.json",
+      "action": "Receive and append actual completed new timing joins; correct pending status and exact five-week point/product scopes, preserving quote-time and private-row limits.",
+      "completion": "Artifact-specific received/validated/admitted entry with exact immutable A hashes; no re-scoring requirement."
+    },
+    {
+      "executor": "B probability/membership reviewer",
+      "artifact": "A d7c8 new B timing public CSV indexes, exact new C04 public point CSV indexes",
+      "action": "Independently verify permitted new arithmetic and provide owner-local W5 normalized overlap/mask proof if accessible.",
+      "completion": "New-result scoped receipt and exact source overlap disposition; no assumed private parity."
+    },
+    {
+      "executor": "C source owner",
+      "artifact": "C04/C05 source manifests and A CURRENT_SHADOW_SOURCE_QUALIFICATION_V1.json",
+      "action": "Supply only exact missing dense census/clock/metric-presence and separate EPA fields through existing permitted route, or record source blocker.",
+      "completion": "A current adapter preflight can reconstruct compatible histories without dropping unknown eligible games or fabricating zeros."
+    },
+    {
+      "executor": "C original frozen-packet grader",
+      "artifact": "C75 WAS-NYG and C69 NE-DET original immutable RUN/FORECASTS",
+      "action": "Grade only after qualified finality/stat-presence; preserve no-offer status.",
+      "completion": "Versioned forecast-only grade receipt; no postevent selections invented."
+    }
+  ],
+  "supersedes_scope_only": "V1 partial large-file inspection limits are resolved by an explicitly enlarged finite read allocation. Preserve V1 failures and old cap. No scores, methods or source rights changed.",
+  "large_public_sources": {
+    "id": "PEER-PUBLIC-LARGE-AGGREGATE-READBACK-v2",
+    "state": "PASS_BOUNDED_PUBLIC_BYTES_JSON_DECODE",
+    "files": [
+      {
+        "key": "C_BASE",
+        "repository": "NickNicky19/NFL-forecasting-NGS-C",
+        "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+        "path": "reports/post-wave-5w-v1/QUALIFICATION_TABLE.json.gz",
+        "status": 200,
+        "started_UTC": "2026-11-12T01:29:44.963204+00:00",
+        "completed_UTC": "2026-11-12T01:29:45.251519+00:00",
+        "bytes": 1212361,
+        "sha256": "b993b2b3dd56c163db08d1c47d079b835bc5d0e52ac9f3cfb9df1510fa07ee17",
+        "git_blob_sha1": "bb74c007300591bb183add2e3770f57b9d65fbd5",
+        "headers": {
+          "Date": "Thu, 12 Nov 2026 01:29:45 GMT",
+          "Last-Modified": null,
+          "ETag": "\"a6e5c55ab0fac9577b3946640ecd1b5ced9f2de42e356d50d64cd597b3f22c88\"",
+          "Content-Length": "1212361",
+          "Content-Type": "application/octet-stream"
+        },
+        "expected_pointer_sha256": "b993b2b3dd56c163db08d1c47d079b835bc5d0e52ac9f3cfb9df1510fa07ee17",
+        "pointer_match": true,
+        "decoded_bytes": 21707161,
+        "decoded_sha256": "63b48a32a76be649180a3a217387484f869d6074c8248cdddbb1ca969c32877c",
+        "decoded_type": "dict",
+        "decoded_keys": [
+          "schema",
+          "generated_UTC",
+          "rule",
+          "rows",
+          "sources",
+          "limits"
+        ],
+        "decoded_rows": null
+      },
+      {
+        "key": "B_EXPORT",
+        "repository": "NickNicky19/NFL-forecasting-V2",
+        "ref": "9bb4a4de5336d83fef5f43a58a92ad3e4c9c2a4d",
+        "path": "reports/abc-championship/EXPORT_INDEX.json",
+        "status": 200,
+        "started_UTC": "2026-11-12T01:29:45.576489+00:00",
+        "completed_UTC": "2026-11-12T01:29:46.181997+00:00",
+        "bytes": 1127641,
+        "sha256": "b5146b03d52214c2633751386a34e498047bf304e8afff2371c9e6984b213e21",
+        "git_blob_sha1": "f1f4d5cb0e7315e25cb1108818bcab1decf1fa40",
+        "headers": {
+          "Date": "Thu, 12 Nov 2026 01:29:46 GMT",
+          "Last-Modified": null,
+          "ETag": "\"19943067c66a3df779ba0749fbf9c09b7fec469530dbc26234d4db92c5eefb8e\"",
+          "Content-Length": "1127641",
+          "Content-Type": "text/plain; charset=utf-8"
+        },
+        "expected_pointer_sha256": null,
+        "pointer_match": null,
+        "schema": null,
+        "keys": [
+          "schema_version",
+          "at_utc",
+          "session",
+          "repository",
+          "canonical_owner",
+          "canonical_discovery",
+          "canonical_state",
+          "adopted_document",
+          "exports",
+          "source_identity",
+          "periods",
+          "restricted_evidence",
+          "delivery",
+          "next_action",
+          "budgets",
+          "production_changes",
+          "readback_attempt_note",
+          "local_resource_clarification",
+          "pinned_C",
+          "previous_index",
+          "adoption_qualification",
+          "actual_new_scope",
+          "owner_local_contract",
+          "canonical_schema_mapping",
+          "current_metadata_qualification",
+          "latest_C_publication",
+          "new_weekly_scope",
+          "current_qualification",
+          "producer_ref_qualification",
+          "latest_B_law_product_wave",
+          "latest_B_predictive_improvement",
+          "new_probability_schema_mapping",
+          "latest_B_post_wave",
+          "existing_480_view_delivery",
+          "latest_execution_closure",
+          "current_owner_execution_witness",
+          "audit_remediation",
+          "player_context_matchup",
+          "player_context_acceptance",
+          "player_context_completion_decision",
+          "profile_increment_to_release_v2",
+          "profile_increment_closure_next_02",
+          "profile_timing_closure_confirm_01"
+        ],
+        "export_count": 1191
+      }
+    ],
+    "total_cache_bytes": 24047163,
+    "resources": {
+      "wall_seconds": 1.2597883409998758,
+      "CPU_seconds": 0.400005098,
+      "peak_RSS_bytes": 132861952
+    },
+    "no_fits_or_models_or_private_native_reads": true
+  },
+  "current_C_canonical_qualification": {
+    "id": "C-CURRENT-CANONICAL-QUALIFICATION-READBACK-v1",
+    "repository": "NickNicky19/NFL-forecasting-NGS-C",
+    "ref": "d9309bb8676fcd2102bfdc9b45adb0c504d0a498",
+    "path": "reports/abc-championship/execution-closure-02/QUALIFICATION_TABLE.json.gz",
+    "HTTP_status": 200,
+    "started_UTC": "2026-11-12T01:32:31.023630+00:00",
+    "completed_UTC": "2026-11-12T01:32:32.293391+00:00",
+    "headers": {
+      "Date": "Thu, 12 Nov 2026 01:32:31 GMT",
+      "ETag": "\"005470beede92212f0ad35b945ed2773464b7eb5a3149f313a2eaa40221fda51\"",
+      "Content-Length": "1413168",
+      "Content-Type": "application/octet-stream"
+    },
+    "compressed_bytes": 1413168,
+    "compressed_sha256": "9fc3240046d7eb188b79a57c942657ea747292786946966e923ded6f954306b8",
+    "git_blob_sha1": "b0f2ea438dc0872ec311e2f396a1c86c8cbed528",
+    "pointer_match": true,
+    "decoded_bytes": 24447213,
+    "decoded_sha256": "94ff137895e1e0ead595d5ce9e7ac984fd6e437bec895133fd7cdea3f9bc1cd7",
+    "decoded_file_written": false,
+    "rows": 8072,
+    "owners": {
+      "A": 1396,
+      "B": 3694,
+      "C": 2982
+    },
+    "rule": {
+      "minimum_distinct_completed_scored_weeks": 5,
+      "unit": "(season,week)",
+      "scored_direction_includes_resolved_pushes": true,
+      "training_folds_repeats_other_products_do_not_count": true,
+      "admission_not_automatic": true
+    },
+    "limits": "Onlyreceivedverifiedexports;ownerlocalprivateinference/sourceclocksremainunverified. No universal ranking; no new NFL observations or scores from this accounting.",
+    "sources": [
+      {
+        "path": "reports/abc-championship/continuation-v2/A_W1_W7_ARCHIVED_SCORES.json.gz",
+        "SHA256": "2787e1a0559caf73a2bc0c6749bc70c7612e9bf5b8bc6ed41f3062e5e404e4f6"
+      },
+      {
+        "path": "reports/abc-championship/shared-intake-v3/A_HISTORICAL_SCORES.json.gz",
+        "SHA256": "74e73eb2489c8b2ccfba9390272bde0a9d9e49212ccd5a6867710c94199d76c6"
+      },
+      {
+        "path": "reports/abc-championship/shared-intake-v3/A_C_SCORES.json.gz",
+        "SHA256": "ca6cf2f6c244696941781a76d8fd8329c953b64e1e31eee03fc896cf0d5fdf9d"
+      },
+      {
+        "path": "reports/abc-championship/shared-intake-v3/A_WEEK8_FINAL_SCORES.json.gz",
+        "SHA256": "bf87f77c8d4a15c449e148540c28fe88ff204329aa3e3dc8f122c6e22f516a31"
+      },
+      {
+        "path": "reports/all12-v2.1/SCORES.csv",
+        "SHA256": "b0370a7ee9e78a31652b6e9e5059cdce6c2e6c54be00d2db2456c0e61597b5e8"
+      },
+      {
+        "path": "reports/robustness-v3/SCORES.csv",
+        "SHA256": "700fd913756c630eb7edbf6a20153b1b5f1b972d955ee38517f450e39ae73b89"
+      },
+      {
+        "path": "reports/complete-v1/RESULTS_INDEX.csv",
+        "SHA256": "305d76b68bf61affd1c9359242fd5ade325326f775e4d072cfd6c1e7e3a6a5c0"
+      },
+      {
+        "path": "reporting/actual-props-v6/DATASETS.json",
+        "SHA256": "33c7296d8143f9e2b07f9f3c100aacea9d15ccb441bc4b27dd7016c50bd48385"
+      },
+      {
+        "path": "reports/predictive-C01/ACTUAL_LINE_SCORES.json.gz",
+        "SHA256": "c43750558b9b85dd5cfbd996c5579bdc2d77bf979bd5dbb071c006a3eeef4042"
+      },
+      {
+        "path": "reports/predictive-C01/SYNTHETIC_DIAGNOSTICS.json",
+        "SHA256": "0460a5b40a2fb436741a96cd5ee6aa23569ef80aff96199d00e69838b8c7648a"
+      },
+      {
+        "path": "reports/topk-reference-v9/WEEKLY_RESULTS.json.gz",
+        "SHA256": "b95d6beb0bdc56ad1fb536ee516a6aae41728bff0ad0b5f950fd2dea5beb29ed"
+      },
+      {
+        "path": "reports/predictive-C01/TOPK_RESULTS.json.gz",
+        "SHA256": "a4896e511640ab112b9164823c3a0c96a6c9e597825bf518689a6f5d27d26215"
+      },
+      {
+        "path": "reports/abc-championship/continuation-v2/C_WEEK8_FINAL_FORECAST_GRADES.json",
+        "SHA256": "ce4f3e8437180ce62331246c59df62ff88f4d60567643a7a04e7cfd0b45581cb"
+      },
+      {
+        "path": "reports/abc-championship/shared-intake-v3/B_ADMITTED_SCORES.json.gz",
+        "SHA256": "3f908221db5c8a3d3eb463754add443eba62eac2032e7d750173545478900466"
+      },
+      {
+        "path": "reports/abc-championship/continuation-v2/B_OWNER_LOCAL_SCORES.json.gz",
+        "SHA256": "98186c19eda7890ebfc81af520c8681009ac7ba69696edaebd2ca70f55e44254"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_SCORES.json.gz",
+        "SHA256": "a61d12c276c22b6ed4346c6d3fdbc695cac91b60393c4f032d89a4f38373f3c8"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_SCORES_SOURCE_CLOCK_AND_ATTRIBUTION_ANNOTATIONS_V3.json.gz",
+        "SHA256": "cce8f9d257cb20a356926b620b8ee98b016c0509a60edbdf534c9891164bd6b1"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_POLICY_COHORT_SCORES.json.gz",
+        "SHA256": "1dbe3433e35f46900e18762f56339a0639443903f34175c777a09c75c5767220"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_POLICY_COHORT_SCORES_SOURCE_CLOCK_AND_ATTRIBUTION_ANNOTATIONS_V3.json.gz",
+        "SHA256": "42069590ce315f9942e2f9536403bb0ecd2e9c89fc9711314c16b1e641b8017c"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_MATCHED_SELECTED_CONTROL_SCORES.json.gz",
+        "SHA256": "d40f4e31258b6d543167668fb6be4ac2dc743f412ef84b3b09665a7ea126bc01"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_MATCHED_SELECTED_CONTROL_SCORES_SOURCE_CLOCK_AND_ATTRIBUTION_ANNOTATIONS_V3.json.gz",
+        "SHA256": "c477aa727d15ccfabb682a8186c75d310627876b7b99d1efc4a0ee72c600214b"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_REFERENCE_PROBABILITY_SCORES.json.gz",
+        "SHA256": "630fb44c9dc5e53944ef8397a46f66390763ff64503b1f2ee497ef81d62c1481"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_REFERENCE_PROBABILITY_SCORES_SOURCE_CLOCK_AND_ATTRIBUTION_ANNOTATIONS_V3.json.gz",
+        "SHA256": "e3a39fb423c2b754f6f99ad4ff4ada511abc1b6163ec6bd3193d7589eed005bc"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_ANCILLARY_POINT_SCORES.json.gz",
+        "SHA256": "ae148bb999b286accb0c14cdb8dd22650b69ee7deefeee8ba594d0c87ae6a30b"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_ANCILLARY_POINT_SCORES_SOURCE_CLOCK_AND_ATTRIBUTION_ANNOTATIONS_V3.json.gz",
+        "SHA256": "78e0dad8ebae82b792dd404180fbd3a1c23b3024fd59382fd34e2ea49b495b7b"
+      },
+      {
+        "path": "reports/post-wave-5w-v1/B_ALL_RETAINED_LAWS_SCORES.json.gz",
+        "SHA256": "e0b0cf84beb1458b2654fa42dcef0c4222af16671b51c0adfbd278124695ba50"
+      }
+    ],
+    "group_counts": [
+      {
+        "owner": "A",
+        "product_family": "ACTUAL_LINE_DIRECTION",
+        "five_week_floor": "MET",
+        "rows": 114
+      },
+      {
+        "owner": "A",
+        "product_family": "ACTUAL_LINE_DIRECTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 256
+      },
+      {
+        "owner": "A",
+        "product_family": "FOOTBALL",
+        "five_week_floor": "MET",
+        "rows": 132
+      },
+      {
+        "owner": "A",
+        "product_family": "SAVED_FULL_LAW",
+        "five_week_floor": "MET",
+        "rows": 25
+      },
+      {
+        "owner": "A",
+        "product_family": "SHRINK_0_5",
+        "five_week_floor": "MET",
+        "rows": 132
+      },
+      {
+        "owner": "A",
+        "product_family": "TOP_PICKS_DIRECTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 226
+      },
+      {
+        "owner": "A",
+        "product_family": "empirical_point_blend",
+        "five_week_floor": "MET",
+        "rows": 20
+      },
+      {
+        "owner": "A",
+        "product_family": "exact_line_probability",
+        "five_week_floor": "MET",
+        "rows": 12
+      },
+      {
+        "owner": "A",
+        "product_family": "exact_line_probability",
+        "five_week_floor": "NOT_APPLICABLE",
+        "rows": 2
+      },
+      {
+        "owner": "A",
+        "product_family": "legacy_empirical_point",
+        "five_week_floor": "MET",
+        "rows": 30
+      },
+      {
+        "owner": "A",
+        "product_family": "mae_objective_point",
+        "five_week_floor": "MET",
+        "rows": 46
+      },
+      {
+        "owner": "A",
+        "product_family": "mean",
+        "five_week_floor": "MET",
+        "rows": 155
+      },
+      {
+        "owner": "A",
+        "product_family": "mean",
+        "five_week_floor": "NOT_MET",
+        "rows": 9
+      },
+      {
+        "owner": "A",
+        "product_family": "mean_objective_point",
+        "five_week_floor": "MET",
+        "rows": 72
+      },
+      {
+        "owner": "A",
+        "product_family": "median",
+        "five_week_floor": "MET",
+        "rows": 127
+      },
+      {
+        "owner": "A",
+        "product_family": "median",
+        "five_week_floor": "NOT_APPLICABLE",
+        "rows": 3
+      },
+      {
+        "owner": "A",
+        "product_family": "median",
+        "five_week_floor": "NOT_MET",
+        "rows": 9
+      },
+      {
+        "owner": "A",
+        "product_family": "median_objective_point",
+        "five_week_floor": "MET",
+        "rows": 21
+      },
+      {
+        "owner": "A",
+        "product_family": "probability",
+        "five_week_floor": "MET",
+        "rows": 3
+      },
+      {
+        "owner": "A",
+        "product_family": "probability_normalized",
+        "five_week_floor": "MET",
+        "rows": 1
+      },
+      {
+        "owner": "A",
+        "product_family": "probability_raw",
+        "five_week_floor": "MET",
+        "rows": 1
+      },
+      {
+        "owner": "B",
+        "product_family": "ACTUAL_LINE_DIRECTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 3589
+      },
+      {
+        "owner": "B",
+        "product_family": "EXACT_LINE_PROBABILITIES",
+        "five_week_floor": "NOT_MET",
+        "rows": 104
+      },
+      {
+        "owner": "B",
+        "product_family": "NUMERICAL_EXPECTED_MEAN",
+        "five_week_floor": "NOT_MET",
+        "rows": 1
+      },
+      {
+        "owner": "C",
+        "product_family": "ACTUAL_LINE_DIRECTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 326
+      },
+      {
+        "owner": "C",
+        "product_family": "EVENT_PROBABILITY",
+        "five_week_floor": "MET",
+        "rows": 82
+      },
+      {
+        "owner": "C",
+        "product_family": "EVENT_PROBABILITY",
+        "five_week_floor": "NOT_MET",
+        "rows": 1
+      },
+      {
+        "owner": "C",
+        "product_family": "EXACT_LINE_PROBABILITIES",
+        "five_week_floor": "NOT_MET",
+        "rows": 158
+      },
+      {
+        "owner": "C",
+        "product_family": "NUMERICAL_EXPECTED_MEAN",
+        "five_week_floor": "MET",
+        "rows": 393
+      },
+      {
+        "owner": "C",
+        "product_family": "NUMERICAL_EXPECTED_MEAN",
+        "five_week_floor": "NOT_MET",
+        "rows": 11
+      },
+      {
+        "owner": "C",
+        "product_family": "NUMERICAL_MAE_OBJECTIVE_POINT",
+        "five_week_floor": "MET",
+        "rows": 15
+      },
+      {
+        "owner": "C",
+        "product_family": "NUMERICAL_MEDIAN",
+        "five_week_floor": "MET",
+        "rows": 393
+      },
+      {
+        "owner": "C",
+        "product_family": "NUMERICAL_MEDIAN",
+        "five_week_floor": "NOT_MET",
+        "rows": 11
+      },
+      {
+        "owner": "C",
+        "product_family": "OUTCOME_DISTRIBUTION",
+        "five_week_floor": "MET",
+        "rows": 399
+      },
+      {
+        "owner": "C",
+        "product_family": "OUTCOME_DISTRIBUTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 11
+      },
+      {
+        "owner": "C",
+        "product_family": "SYNTHETIC_THRESHOLD_PROBABILITY_DIAGNOSTIC",
+        "five_week_floor": "MET",
+        "rows": 685
+      },
+      {
+        "owner": "C",
+        "product_family": "SYNTHETIC_THRESHOLD_PROBABILITY_DIAGNOSTIC",
+        "five_week_floor": "NOT_MET",
+        "rows": 20
+      },
+      {
+        "owner": "C",
+        "product_family": "TOP_PICKS_DIRECTION",
+        "five_week_floor": "NOT_MET",
+        "rows": 477
+      }
+    ],
+    "resources": {
+      "CPU_seconds": 0.6430068179999999,
+      "wall_seconds": 1.286162719999993,
+      "peak_RSS_bytes": 147038208
+    },
+    "scope": "ActualexistingCqualificationtable parsed as aggregate metadata only. Native source clocks/private inference not inspected. Latestprofile/timing source-scope amendments and A d7c8 supersede affected old-cell qualifications; no globalwinner computed."
+  },
+  "current_C_qualification_direction_scope": [
+    {
+      "owner": "A",
+      "direction_view_rows": 370,
+      "MET_in_this_snapshot": 114,
+      "MET_by_category": {
+        "pass_td": 8,
+        "pass_att": 21,
+        "pass_cmp": 8,
+        "pass_int": 8,
+        "pass_yd": 7,
+        "rec": 20,
+        "rec_yd": 7,
+        "rush_att": 21,
+        "rush_rec_yd": 7,
+        "rush_yd": 7
+      },
+      "MET_source_panels": {
+        "A_FIXED_W1_W7_ARCHIVED_POINT_PANEL": 79,
+        "A original fixed representative-book68/69/79 priority; separate from C Pinnacle primary": 35
+      }
+    },
+    {
+      "owner": "B",
+      "direction_view_rows": 3589,
+      "MET_in_this_snapshot": 0,
+      "MET_by_category": {},
+      "MET_source_panels": {}
+    },
+    {
+      "owner": "C",
+      "direction_view_rows": 326,
+      "MET_in_this_snapshot": 0,
+      "MET_by_category": {},
+      "MET_source_panels": {}
+    }
+  ],
+  "current_C_qualification_limits": "8072 rows are qualification products/policies/masks, not8072 independent learners or football observations. This archived table must be composed with later C05 point/source amendments and actually completed A d7c8 timing outputs; no inference that B/C have zero current qualifying products solely because their old rows are NOT_MET. Raw counts are inventory accounting, not a new ranking.",
+  "B_full_export_readback": {
+    "schema": "B-ABC-EXPORT-INDEX-v15",
+    "bytes": 1127641,
+    "sha256": "b5146b03d52214c2633751386a34e498047bf304e8afff2371c9e6984b213e21",
+    "git_blob_sha1": "f1f4d5cb0e7315e25cb1108818bcab1decf1fa40",
+    "exports": 1191,
+    "new_exports": 72,
+    "prior_exports_preserved": 1119,
+    "no_normalized_W5_intersection_package_located": true,
+    "exact_new_A_status": "ACKNOWLEDGED_REGISTERED_PREEXEC_CHECKED;NO_SCORING_RECEIPT_OBSERVED is stale against d7c8.",
+    "source_contract_check": "Actual OWNER_LOCAL_COMMITMENTS.json contains40 aggregate policy commitments; each states restricted_rows_exported:false. No source/player/event/book/line/time membership keys exported there. No matched row access inferred."
+  },
+  "existing_C_policy": {
+    "id": "C-ACTUAL-ACCURACY-v6",
+    "source_path": "protocol/ACTUAL_ACCURACY_POLICY_V6.json",
+    "leader_support": {
+      "minimum_decided_unique_football_opportunities": 100,
+      "minimum_distinct_games": 20,
+      "minimum_distinct_weeks": 5,
+      "applies_separately_to": [
+        "OVER",
+        "UNDER",
+        "COMBINED"
+      ],
+      "observed_ranking": "All actually decided comparable cells are visible, including ties and small samples, but small samples do not meet support eligibility",
+      "uncertainty": "95% week-block percentile bootstrap, 2000 draws, seed661107; fewer than5weeks: Wilson interval labelled independent-Bernoulli diagnostic only, not dependence-aware qualification",
+      "support_is_not_superiority": "Meeting support permits comparison, not a proven winner. Evidence-supported leader additionally needs retained prespecified matched comparison/chronological confirmation and multiplicity/research-exposure review; no automatic promotion from an interval or maximum percentage.",
+      "cross_category_strata": [
+        "period",
+        "evidence_tier",
+        "decision_horizon",
+        "venue",
+        "product",
+        "line_tier",
+        "policy_id"
+      ],
+      "missing_difficulty_evidence": "Expose population/line difficulty limitations; no universal category superiority or invented prices"
+    },
+    "future_effective_promotion": "Future-effective versioned admission only; never choose a per-week hindsight winner",
+    "observed_tie_calculation": "src/actual_accuracy_v6.py leader selection retains all rate ties at abs(rate-best)<1e-12; raw maxima remain descriptive.",
+    "scope_boundary": "These are retained common evaluator evidence-supported-leader comparison/scientific rules. Do not silently apply them as a new universal provisional-release gate; common executable protocol release explicitly separates category/product provisional and scientifically qualified states.",
+    "exact_five_week_parent_rule": "EXECUTION_CLOSURE_02_RESEARCH.txt lines20-24: five distinct scored NFL season/week blocks exact category/role/procedure/output/policy for new primary, including provisional; existing compatible chronological tests may count; source tiers distinct; five weeks is duration floor, not proof of superiority or permission to bypass source/evidence/operational rules.",
+    "no_new_gate_found": [
+      "No automatic authentication-only rule for all timing-unverified statistical direction products",
+      "No universal requirement for a matched actual incumbent score before any provisional action",
+      "No universal new p<.05 significance or90percent accuracy threshold"
+    ],
+    "provisional_owner_action": "Original website owner applies its actual existing admission/consumer policy; a source/matched-incumbent unknown is disclosed precisely, not replaced with an invented universal hurdle. Research support and operational admission remain separate.",
+    "C_named_review_decision_example": "Existing CATEGORY_PRODUCT_DECISIONS uses FIVE_WEEK_ELIGIBLE_CATEGORY_REVIEW_CANDIDATE;CURRENT_EXPORT_AND_SOURCE_ADMISSION_REQUIRED for scoped historical direction candidates. That is not a current activation receipt or universal winner."
+  },
+  "cap_interpretation_and_admission": {
+    "recorded_UTC": "2026-11-12T01:35:14.699566+00:00",
+    "old_v1_root_temporary_file_cap_bytes": 16777216,
+    "old_total_cache_cap_bytes": 33554432,
+    "old_actual_decoded_file_bytes": 21707161,
+    "old_excess_over_file_cap_bytes": 4929945,
+    "old_actual_total_cache_bytes": 24047163,
+    "state": "PRE_READ_CAP_INTERPRETATION_DEFECT;VALID_CONTENT_EXPLICITLY_ADMITTED_UNDER_PROSPECTIVE_V2_LIMIT",
+    "cause": "Worker treated32MiB total cache as its decompression limit, though root16MiB individual-file ceiling also applied to decoded files. No source corruption, forecast change, NFL score or model effect.",
+    "authorization": "Root explicitly preserved this failure and admitted already-valid pointer/hash-matching bytes; prospectively authorized24MiB individual decoded/32MiB total/512MiB RSS. No deletion/refetch or old failure reset.",
+    "v2_individual_decoded_file_cap_bytes": 25165824,
+    "v2_total_cache_cap_bytes": 33554432,
+    "v2_RSS_cap_bytes": 536870912,
+    "subsequent_current_table_decoded_bytes_memory_only": 24447213,
+    "subsequent_second_decoded_file_written": false,
+    "all_later_reads_fit_v2": true
+  },
+  "actual_content_after_v2": {
+    "full_verified_small_metadata_files": 23,
+    "full_verified_small_metadata_bytes": 465340,
+    "whole_compressed_aggregate_bytes": 3753170,
+    "aggregate_cache_bytes_compressed_and_one_base_decoded": 25460331,
+    "extra_current_table_decoded_retained_file_bytes": 0,
+    "network_boundary_failures_before_v2_preserved": true,
+    "runtime_resources_large_reads": [
+      {
+        "wall_seconds": 1.2597883409998758,
+        "CPU_seconds": 0.400005098,
+        "peak_RSS_bytes": 132861952
+      },
+      {
+        "CPU_seconds": 0.6430068179999999,
+        "wall_seconds": 1.286162719999993,
+        "peak_RSS_bytes": 147038208
+      }
+    ]
+  }
+}

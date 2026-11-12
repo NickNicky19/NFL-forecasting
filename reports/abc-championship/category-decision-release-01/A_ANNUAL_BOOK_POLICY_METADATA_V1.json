@@ -1,0 +1,97 @@
+{
+  "id": "A-CATEGORY-DECISION-ANNUAL-BOOK-POLICY-QUALIFICATION-v1",
+  "UTC": "2026-11-12T02:17:56.890497+00:00",
+  "state": "SOURCE_METADATA_RESOLVED_NO_RAW_REINSPECTION",
+  "source_panel": "ANNUAL_NAMED_NJ",
+  "book_priority": [
+    {
+      "book_id": 68,
+      "name": "DraftKings NJ",
+      "kind": "named"
+    },
+    {
+      "book_id": 69,
+      "name": "FanDuel NJ",
+      "kind": "named"
+    },
+    {
+      "book_id": 79,
+      "name": "bet365 NJ",
+      "kind": "named"
+    }
+  ],
+  "excluded_reference_types": [
+    {
+      "book_id": 15,
+      "name": "CONSENSUS",
+      "kind": "consensus"
+    },
+    {
+      "book_id": 30,
+      "name": "OPEN",
+      "kind": "synthetic_open"
+    }
+  ],
+  "field_meaning": "Booknames are the sealed archived-source normalizer mapping. They do not establish a newlivebookconnection or independently authenticate any currentproviderID.",
+  "book_policy": "For eachplayer/game/stat/horizon sourcegroup, earliest retainednaivecollectionsort within eachbook; sameclock tie usespairquality, distanceofqualifiedfairprobabilityto0.5,source_line,sourceordinal. Thenprefer68,else69,else79 among qualifying retainedbookrows. Entire selection isoutcome-blind; no observedaccuracyused.",
+  "scope": "Fixed sourcebook-priority policy;actualprimaryopportunities maycome fromdifferentbooksaccordingtoavailability. Do notlabeltheentirepaneluniformDraftKings,uniformFanDuel oruniformbet365.",
+  "row_fields_retained_in_existing_primary_member": [
+    "book_id",
+    "source_sha256",
+    "source_member",
+    "source_row_number",
+    "source_collection_naive",
+    "source_quote_time",
+    "quote_timing_status",
+    "over_offer_present",
+    "under_offer_present",
+    "over_source_row_number",
+    "under_source_row_number"
+  ],
+  "timing_and_settlement": {
+    "source_quote_time": "EXPLICIT_NONE_IN_PREPARER",
+    "quote_timing_status": "TIMING_UNVERIFIED_RETROSPECTIVE_COLLECTION_CLOCK_NOT_QUOTE_TIME",
+    "cutoff_qualified": false,
+    "venue_settlement_status": "UNQUALIFIED_SOURCE_RULES",
+    "market_probability_eligible": false
+  },
+  "exact_bound_metadata": {
+    "normalizer": {
+      "path": "nfl_lab/historical_market_archive.py",
+      "bytes": 19329,
+      "sha256": "b3c48f01336f435b190d357e793bee6459a68b30abba57821aba25d2f08b604c",
+      "field": "BOOKS",
+      "lines": "33-35"
+    },
+    "sealed_source": {
+      "path": "config/historical-market-source-normalization-v3.sealed.json",
+      "bytes": 8591,
+      "sha256": "a25e2420989e1c4cc639689cf38e056bd78ef4d4f9c2a0d4697381afc741a434",
+      "selector": "pins.source_adapter"
+    },
+    "point_offer_preparer": {
+      "path": "tools/category_topfive_matched12_offers_v1.py",
+      "bytes": 19614,
+      "sha256": "06e16f5a266b67eb49766b1a8951a408f49638009274df76b978863fbe03d895",
+      "fields": [
+        "BOOKS",
+        "prepare_annual_line_only"
+      ],
+      "ordering_lines": "180-188"
+    }
+  },
+  "unverified_in_this_subtask": [
+    "Actualbook-specificperweekrowcountsnotinspected;metadataonlypolicybinding,notnewpayloadaudit.",
+    "Whetherbothsides/pricesexistforeachspecificprimaryline remains row-contract evidence; neither is invented. Missingpricesdonotpreventstatisticalthresholdgrading.",
+    "Historicalrosterqueryavailabilityremainscurrentvintagereconstruction; boundEXPECTEDfilenameisnotauthentication."
+  ],
+  "activity": {
+    "native_reads": 0,
+    "source_payload_reads": 0,
+    "new_grades": 0,
+    "fits": 0,
+    "inference": 0,
+    "new_sources": 0,
+    "writes_to_other_repos": 0
+  }
+}

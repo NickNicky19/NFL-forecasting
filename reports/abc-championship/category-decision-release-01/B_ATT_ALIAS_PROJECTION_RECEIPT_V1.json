@@ -1,0 +1,39 @@
+{
+  "UTC": "2026-11-12T02:36:27.421471+00:00",
+  "checksum_and_CSV_counts": "PASS",
+  "command": "python tools/category_decision_att_alias_public_projection_v1.py",
+  "copied_paired_rows": 50,
+  "copied_summary_rows": 324,
+  "empty_W6_W8_cells_preserved": 108,
+  "manifest_sha256": "cbb15f0500f4026c1560e9876a036ad15b57db6592d3eb76cea9e7e5af2132fd",
+  "maximum_CSV_bytes": 61337,
+  "new_fits": 0,
+  "new_grades": 0,
+  "new_inference": 0,
+  "new_scoring": 0,
+  "private_native_reads": 0,
+  "production_writes": 0,
+  "projection_attempts": [
+    {
+      "attempt": 1,
+      "correction": "CSV columns now union all existing aggregate keys; missing keys remain null/empty.",
+      "error": "KeyError uncertainty_small_cluster_caution on empty-week summary; no NFL scoring or source mutation",
+      "state": "FORMAT_FAILURE"
+    },
+    {
+      "attempt": 2,
+      "state": "COMPLETED_PROJECTION_ONLY"
+    }
+  ],
+  "runtime": {
+    "libraries": "Python standard library only; no model or numerical environment loaded",
+    "python": "3.12.14"
+  },
+  "scope": "Byte-bound projection and format checks only; no independent raw-row verification or new admission.",
+  "source_aggregate_sha256": "0dc195065ad35a0aabd3e0dec89514ca3ba6a857e9327c25078d04f59280eafb",
+  "source_views_preserved": [
+    "ORIGINAL_STRICT_B81",
+    "FULL_A_BOARD_ALIAS_QUALIFIED87"
+  ],
+  "version": "NFL-CATEGORY-DECISION-AND-RELEASE-01-B-ATT-ALIAS-PROJECTION-RECEIPT-v1"
+}

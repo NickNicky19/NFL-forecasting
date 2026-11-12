@@ -1,0 +1,559 @@
+{
+  "version": "NFL-CATEGORY-DECISION-AND-RELEASE-01-WEBSITE-W04-FIFTH-BOARD-QUALIFICATION-v1",
+  "UTC": "2026-11-12T02:30:51.564Z",
+  "repository": "NickNicky19/nicks-expert-nfl-picks",
+  "commit": "ccfaa987f5416ca6abce2570f9fee8c4c41c1d3e",
+  "owner_boundary": "Original website owner alone owns selector replay; B verifies and C records. A inspection is read-only public evidence qualification.",
+  "activity": "One exact W04 archive, W04 weekly outcome/line file, and W05 archive comparator read once through GitHub plugin; no ranker execution, replay, model/source collection, native/private reads or raw row republication.",
+  "authorized_public_JSON_bytes": 822729,
+  "actual_public_JSON_bytes": 822729,
+  "source_bindings": [
+    {
+      "bytes": 359711,
+      "sha256": "05029ddae8aa7da3ce05a640c6fd96ee6eab7fd008ceed08487818ac70e67802",
+      "git_blob_sha1": "e71d045155c94cea448b2cc0cc58eb33eb0e3e0f",
+      "source_path": "output/data/archive/2026_w04.json"
+    },
+    {
+      "bytes": 106929,
+      "sha256": "d887bd954022e332a8c2a58360149ef8a219ede6c67d042cffa200caea7d5dfc",
+      "git_blob_sha1": "ad4b6da47cb212bd3b285f8d2f090d9c8002f847",
+      "source_path": "output/data/weeks/2026_w04.json"
+    },
+    {
+      "bytes": 356089,
+      "sha256": "6eaa1900be68bec5b274e7da96d91d6969d7113e5e3c99a50e8efb86ce76e6a7",
+      "git_blob_sha1": "6a75ac606a95a09f2b84ef114226df1ed67b21a4",
+      "source_path": "output/data/archive/2026_w05.json"
+    }
+  ],
+  "raw_JSON_saved_to_disk": false,
+  "schema_and_count_summaries": [
+    {
+      "id": "website_w04_archive",
+      "season": 2026,
+      "week": 4,
+      "root_keys": [
+        "season",
+        "week",
+        "saved_at",
+        "picks",
+        "games",
+        "players"
+      ],
+      "saved_at": "2026-10-06T03:34:03Z",
+      "games": 16,
+      "unique_game_ids": 16,
+      "player_rows": 539,
+      "unique_player_game_keys": 539,
+      "unique_players": 539,
+      "positions": {
+        "RB": 117,
+        "QB": 40,
+        "WR": 195,
+        "TE": 123,
+        "K": 32,
+        "DEF": 32
+      },
+      "player_schema_shapes": {
+        "game_id|id|late|matchup|name|opp|pos|proj_ppr|props|team": 539
+      },
+      "players_with_props": 475,
+      "props": 2435,
+      "prop_shapes": {
+        "adj|key|lean|line|line_from|mf|proj|source": 2435
+      },
+      "prop_categories": {
+        "rush_yd": 151,
+        "rush_att": 111,
+        "rec": 404,
+        "rec_yd": 404,
+        "rush_rec_yd": 286,
+        "anytime_td": 435,
+        "fpts": 444,
+        "pass_yd": 40,
+        "pass_td": 40,
+        "pass_cmp": 40,
+        "pass_att": 40,
+        "pass_int": 40
+      },
+      "prop_line_sources": {
+        "dk": 755,
+        "<null>": 435,
+        "ours": 1245
+      },
+      "prop_projection_sources": {
+        "model": 1640,
+        "fixed": 435,
+        "average": 360
+      },
+      "prop_value_presence": {
+        "line": {
+          "present": 2435,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "proj": {
+          "present": 2435,
+          "null": 461,
+          "nonfinite_number": 0
+        },
+        "adj": {
+          "present": 2435,
+          "null": 435,
+          "nonfinite_number": 0
+        },
+        "lean": {
+          "present": 2435,
+          "null": 1933,
+          "nonfinite_number": 0
+        },
+        "source": {
+          "present": 2435,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "line_from": {
+          "present": 2435,
+          "null": 435,
+          "nonfinite_number": 0
+        },
+        "mf": {
+          "present": 2435,
+          "null": 435,
+          "nonfinite_number": 0
+        }
+      },
+      "late_players": {
+        "false": 65,
+        "true": 474
+      },
+      "late_game_projections": {
+        "true": 14,
+        "false": 2
+      },
+      "pick_counts": {
+        "over": 7,
+        "under": 5
+      },
+      "pick_field_shapes": {
+        "adj|direction|game_id|key|line|line_from|n|our_line|over|player_id|proj|score": 12
+      },
+      "picks_missing_player_game": 0,
+      "time_field_occurrences": {
+        "saved_at": 1,
+        "kickoff": 16
+      },
+      "version_support_field_occurrences": {},
+      "stat_fields": [],
+      "line_fields": [],
+      "games_before_archive_save": 16,
+      "games_after_archive_save": 0,
+      "earliest_kickoff": "2026-10-02T00:15Z",
+      "latest_kickoff": "2026-10-06T00:15Z"
+    },
+    {
+      "id": "website_w04_weeks",
+      "season": 2026,
+      "week": 4,
+      "root_keys": [
+        "season",
+        "week",
+        "games",
+        "players"
+      ],
+      "saved_at": null,
+      "games": 16,
+      "unique_game_ids": 16,
+      "player_rows": 469,
+      "unique_player_game_keys": 469,
+      "unique_players": 469,
+      "positions": {
+        "K": 32,
+        "WR": 163,
+        "RB": 101,
+        "TE": 106,
+        "DEF": 32,
+        "QB": 35
+      },
+      "player_schema_shapes": {
+        "game_id|home|id|name|opp|pos|st|team": 176,
+        "game_id|home|id|lines|name|opp|pos|st|team": 170,
+        "espn_id|game_id|home|id|lines|name|opp|pos|st|team": 78,
+        "espn_id|game_id|home|id|name|opp|pos|st|team": 45
+      },
+      "players_with_props": 0,
+      "props": 0,
+      "prop_shapes": {},
+      "prop_categories": {},
+      "prop_line_sources": {},
+      "prop_projection_sources": {},
+      "prop_value_presence": {
+        "line": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "proj": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "adj": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "lean": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "source": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "line_from": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "mf": {
+          "present": 0,
+          "null": 0,
+          "nonfinite_number": 0
+        }
+      },
+      "late_players": {
+        "undefined": 469
+      },
+      "late_game_projections": {
+        "undefined": 16
+      },
+      "pick_counts": null,
+      "pick_field_shapes": {},
+      "picks_missing_player_game": 0,
+      "time_field_occurrences": {
+        "kickoff": 16
+      },
+      "version_support_field_occurrences": {},
+      "stat_fields": [
+        "blk_kick",
+        "def_st_fum_rec",
+        "def_td",
+        "fgm_20_29",
+        "fgm_30_39",
+        "fgm_40_49",
+        "fgm_50_59",
+        "fgm_50p",
+        "fgm_60p",
+        "fgmiss",
+        "fum_lost",
+        "fum_rec",
+        "int",
+        "off_snp",
+        "pass_2pt",
+        "pass_att",
+        "pass_cmp",
+        "pass_int",
+        "pass_td",
+        "pass_yd",
+        "pts_allow",
+        "rec",
+        "rec_2pt",
+        "rec_td",
+        "rec_tgt",
+        "rec_yd",
+        "rush_2pt",
+        "rush_att",
+        "rush_td",
+        "rush_yd",
+        "sack",
+        "st_ff",
+        "tm_off_snp",
+        "xpm",
+        "yds_allow"
+      ],
+      "line_fields": [
+        "pass_att",
+        "pass_cmp",
+        "pass_int",
+        "pass_td",
+        "pass_yd",
+        "rec",
+        "rec_yd",
+        "rush_att",
+        "rush_rec_yd",
+        "rush_yd"
+      ],
+      "games_before_archive_save": null,
+      "games_after_archive_save": null,
+      "earliest_kickoff": "2026-10-02T00:15Z",
+      "latest_kickoff": "2026-10-06T00:15Z"
+    },
+    {
+      "id": "website_w05_archive",
+      "season": 2026,
+      "week": 5,
+      "root_keys": [
+        "season",
+        "week",
+        "saved_at",
+        "picks",
+        "games",
+        "players"
+      ],
+      "saved_at": "2026-10-13T03:36:52Z",
+      "games": 15,
+      "unique_game_ids": 15,
+      "player_rows": 524,
+      "unique_player_game_keys": 524,
+      "unique_players": 524,
+      "positions": {
+        "RB": 116,
+        "WR": 193,
+        "QB": 39,
+        "TE": 116,
+        "K": 30,
+        "DEF": 30
+      },
+      "player_schema_shapes": {
+        "game_id|id|late|matchup|name|opp|pos|proj_ppr|props|team": 524
+      },
+      "players_with_props": 464,
+      "props": 2399,
+      "prop_shapes": {
+        "adj|key|lean|line|line_from|mf|proj|source": 2399
+      },
+      "prop_categories": {
+        "rush_yd": 150,
+        "rush_att": 111,
+        "rec": 398,
+        "rec_yd": 398,
+        "rush_rec_yd": 285,
+        "anytime_td": 425,
+        "fpts": 437,
+        "pass_yd": 39,
+        "pass_td": 39,
+        "pass_cmp": 39,
+        "pass_att": 39,
+        "pass_int": 39
+      },
+      "prop_line_sources": {
+        "dk": 668,
+        "<null>": 425,
+        "ours": 1292,
+        "sleeper": 14
+      },
+      "prop_projection_sources": {
+        "model": 1584,
+        "fixed": 425,
+        "average": 390
+      },
+      "prop_value_presence": {
+        "line": {
+          "present": 2399,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "proj": {
+          "present": 2399,
+          "null": 493,
+          "nonfinite_number": 0
+        },
+        "adj": {
+          "present": 2399,
+          "null": 425,
+          "nonfinite_number": 0
+        },
+        "lean": {
+          "present": 2399,
+          "null": 1934,
+          "nonfinite_number": 0
+        },
+        "source": {
+          "present": 2399,
+          "null": 0,
+          "nonfinite_number": 0
+        },
+        "line_from": {
+          "present": 2399,
+          "null": 425,
+          "nonfinite_number": 0
+        },
+        "mf": {
+          "present": 2399,
+          "null": 425,
+          "nonfinite_number": 0
+        }
+      },
+      "late_players": {
+        "false": 524
+      },
+      "late_game_projections": {
+        "false": 15
+      },
+      "pick_counts": {
+        "over": 12,
+        "under": 12
+      },
+      "pick_field_shapes": {
+        "adj|direction|game_id|key|line|line_from|n|our_line|over|player_id|proj|score": 24
+      },
+      "picks_missing_player_game": 0,
+      "time_field_occurrences": {
+        "saved_at": 1,
+        "kickoff": 15
+      },
+      "version_support_field_occurrences": {},
+      "stat_fields": [],
+      "line_fields": [],
+      "games_before_archive_save": 15,
+      "games_after_archive_save": 0,
+      "earliest_kickoff": "2026-10-09T00:15Z",
+      "latest_kickoff": "2026-10-13T00:15Z"
+    }
+  ],
+  "additional_checks": {
+    "website_w04_archive": {
+      "lean_values": {
+        "<null>": 1933,
+        "under": 197,
+        "over": 305
+      },
+      "saved_pick_line_sources": {
+        "dk": 12
+      },
+      "saved_pick_players_late": {
+        "false": 12
+      },
+      "selector_required_player_fields": {
+        "injury": 0,
+        "games_this_season": 0,
+        "snap_share": 0,
+        "proj_ppr": 539,
+        "pos": 539,
+        "props": 539,
+        "late": 539
+      },
+      "exact_procedure_fields_found": [],
+      "quote_clock_fields_found": [],
+      "probability_fields_found": []
+    },
+    "website_w05_archive": {
+      "lean_values": {
+        "over": 277,
+        "<null>": 1934,
+        "under": 188
+      },
+      "saved_pick_line_sources": {
+        "dk": 23,
+        "sleeper": 1
+      },
+      "saved_pick_players_late": {
+        "false": 24
+      },
+      "selector_required_player_fields": {
+        "injury": 0,
+        "games_this_season": 0,
+        "snap_share": 0,
+        "proj_ppr": 524,
+        "pos": 524,
+        "props": 524,
+        "late": 524
+      },
+      "exact_procedure_fields_found": [],
+      "quote_clock_fields_found": [],
+      "probability_fields_found": []
+    },
+    "weekly_outcome_panel": {
+      "players_with_lines": 248,
+      "line_entries": 764,
+      "players_with_stats": 467,
+      "explicit_null_stat_values": 0,
+      "explicit_zero_stat_values": 0,
+      "presence_contract": "No presence/participation/availability/source-vintage contract is encoded in this file; do not infer absent metrics as zero."
+    }
+  },
+  "comparison": {
+    "archive_root_schema_same": true,
+    "archive_player_schema_same": true,
+    "archive_prop_schema_same": true,
+    "result": "W04 retains a broad forecast/prop board shaped like the W05 baseline, not merely the 12 saved selected picks. Full exact selector-input and original decision-time compatibility remain unproved.",
+    "important_difference": "474/539 W04 players late=true and 14/16 game projections ours_late=true; W05 all late flags false. These flags are saved indicators, not authenticated source/decision clocks."
+  },
+  "contract_dispositions": [
+    {
+      "requirement": "Earlier candidate-board existence",
+      "status": "FOUND",
+      "evidence": "W04 archive 539 unique player-games, 475 with props, 2435 prop entries across all twelve legacy keys; 12 saved picks are a separate small subset."
+    },
+    {
+      "requirement": "Full pregame selector eligibility universe",
+      "status": "PARTIAL",
+      "evidence": "Player identity/game/team/position, proj_ppr, props and late are present. Board-wide injury, games_this_season and snap_share are absent; saved selected-pick n does not supply omitted candidates' eligibility."
+    },
+    {
+      "requirement": "Actual-line offer provenance",
+      "status": "PARTIAL_TIMING_UNVERIFIED",
+      "evidence": "755 W04 prop entries are labelled dk, 1245 ours and 435 null. Label dk is not a quote-time/source receipt; ours are internal reference lines and cannot fill actual-offer qualification."
+    },
+    {
+      "requirement": "Original forecast/decision chronology",
+      "status": "UNRESOLVED",
+      "evidence": "Archive saved_at Oct6 03:34:03Z follows every W04 kickoff; saved flags late=false on65 players do not authenticate when those values were issued. There are no issue/source/quote/cutoff/persistence clocks in either archive."
+    },
+    {
+      "requirement": "Exact candidate model/output/corrector mapping",
+      "status": "UNRESOLVED",
+      "evidence": "Props have generic source model/fixed/average, point proj/adj, lean/mf and line; no model/code/procedure/corrector IDs. Bind retained historical candidate outputs separately rather than infer identity from the label."
+    },
+    {
+      "requirement": "Qualified historical outcomes",
+      "status": "PARTIAL_SEPARATE_PANEL",
+      "evidence": "W04 weeks file has469 player rows and final st values, not a forecast board. Explicit presence/participation/source contract must be recovered from permitted retained evidence; sparse absences cannot automatically become zeros."
+    },
+    {
+      "requirement": "Changed Top Picks five-week qualification",
+      "status": "NOT_EXECUTED",
+      "evidence": "One metadata/source inspection is not a selector replay or additional scored NFL week. No policy, list membership or grade was computed."
+    }
+  ],
+  "next_website_owner_action": {
+    "executor": "Existing original-site owner; acknowledged sole replay execution owner",
+    "first_artifact": "output/data/archive/2026_w04.json at the bound commit",
+    "dependencies": [
+      "Recover source/issue/decision horizon and explain W04 late indicators against original freeze/capture receipts.",
+      "Recover board-wide injury/history-count/snap eligibility or a previously retained parity-bound selector input, not just saved picks.",
+      "Bind exact unchanged incumbent and proposed candidate outputs/line precedence/roles to canonical player-games across W04 and existing W05-W08 boards.",
+      "Keep qualified actual offers, unverified dk labels and ours reference thresholds separate; retain supported numerical/reference diagnostics honestly.",
+      "Use corrected qualified outcome/presence contracts; do not grade unknown components as zero."
+    ],
+    "completion_condition": "Either execute the one exact complete selector replay on a demonstrably compatible fifth board, independently checked by B and recorded by C, or name which exact retained W04 eligibility/timing/model input cannot be recovered. Do not retain a generic no-W04-board claim."
+  },
+  "decisions": {
+    "fifth_board_generic_absence_claim": "SUPERSEDED_BY_FOUND_W04_CANDIDATE_ARTIFACT",
+    "authenticated_pregame_full_board": "NOT_ESTABLISHED",
+    "historical_diagnostic_board": "AVAILABLE_FOR_OWNER_CONTRACT_REVIEW",
+    "new_primary_Top_Picks": "NOT_QUALIFIED_BY_THIS_INSPECTION",
+    "unrelated_category_release": "CONTINUES_INDEPENDENTLY"
+  },
+  "counts": {
+    "public_files_read": 3,
+    "private_native_reads": 0,
+    "source_collection": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "inference": 0,
+    "replays": 0,
+    "grades": 0,
+    "production_writes": 0
+  },
+  "limitations": [
+    "Only one immutable current tree and the three named public JSON files were inspected; no commit-history hunt.",
+    "Schema compatibility with W05 does not authenticate W04 original timing or make W05 a newly verified pregame board.",
+    "Legacy anytime_td/fpts labels are not proof of compatible offered YES/NO or exact nick-chart-ppr-v1 contracts.",
+    "Snapshot row values and names are not republished."
+  ]
+}
