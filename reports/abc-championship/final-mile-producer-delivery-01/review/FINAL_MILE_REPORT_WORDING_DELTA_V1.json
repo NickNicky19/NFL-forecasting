@@ -1,0 +1,24 @@
+{
+ "id": "A-FINAL-MILE-REPORT-WORDING-DELTA-v1",
+ "UTC": "2026-11-12T07:23:11.946794+00:00",
+ "verdict": "PASS",
+ "prior_review": "FINAL_MILE_REPORT_CLAIM_REVIEW_V1.json",
+ "prior_review_SHA256": "71df48ddbb8dc26d4d20f5b91a97b9431c2c783d1de7d7c486438ea98ff4e33c",
+ "before": {
+  "bytes": 11431,
+  "SHA256": "2099e889af948fafa0d0834c3bbd7a961031decfd835342fe81347f7ab285cf2"
+ },
+ "after": {
+  "bytes": 11559,
+  "SHA256": "853d30f462af3908680a7c8ce70bf88a7faa743fec2cf11096ba0ae0b7884d20"
+ },
+ "proof": "Reversing only the two changed wording lines reproduces the exact prior reviewed bytes/hash. All other claims, PR heads, staging and limits are identical. Prior review unchanged.",
+ "clarification": "Recipe-encoding defect belongs to count_a_native_extension_v1.py::authenticate_fit; mean-export adapter remains unchanged.",
+ "actual_adapter": {
+  "bytes": 3460,
+  "SHA256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+ },
+ "tests_or_remote_calls": 0,
+ "source_edits": 0,
+ "new_native_or_model_execution": 0
+}

@@ -1,0 +1,24 @@
+{
+  "id": "COUNTA_GENUINE_FIT_METADATA_COUNTEREXAMPLE-v1",
+  "UTC": "2026-11-12T06:30:19.722434+00:00",
+  "source_head": "af405c4604f6eac935e594f1acd3ab492eef412c",
+  "helper_before_sha256": "dec10328c7811d788c4b605a4098d01e8f95ab99dca3455b547cc699e7686008",
+  "proof": {
+    "bytes": 26032,
+    "sha256": "9071f4fd5f81fb7e0514e9f1ac47a93d207fc5b27cda3d8aa7f7ea16d320b45e"
+  },
+  "FIT_START": {
+    "bytes": 5968,
+    "sha256": "9119320dc53a64c0bca2caebae6b1b416335ae0db38160ffbc23a1e635d2e967"
+  },
+  "audit": {
+    "bytes": 8898,
+    "sha256": "a7679510ccae33d4f915f6bd70988090d279818bbf2934dc6f25654248cd0dc1",
+    "recipe_sha256": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f"
+  },
+  "canonical_no_newline_sha256": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+  "canonical_with_newline_sha256": "35b97d56ff4ddfd3460cd6c2d2223499f7390bab885c265550bc13d646a2810a",
+  "actual_before_result": "COUNT_A_ORIGINAL_RECIPE",
+  "scope": "Original immutable metadata only; hashes verified before JSON/ZIP-audit parsing. MODEL.joblib not read or deserialized, no fits/inference/native writes, no source paths/recipe/protected rows exported.",
+  "historical_contamination": "No actual native/NFL use of this optional source established; defect rejects genuine metadata before model load."
+}

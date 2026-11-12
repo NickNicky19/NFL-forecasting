@@ -1,0 +1,333 @@
+{
+  "id": "A-FINALMILE-INPUT-AND-AUTHORITY-RECONCILIATION-v1",
+  "UTC": "2026-11-12 06:41:05 UTC",
+  "owner": "A source executor /root/finalmile_native_inputs",
+  "scope": "Source/immutable metadata and public GitHub discovery only. No credential values, models deserialized, NFL features/labels decoded, inference, native namespace reads/writes, workflow dispatch or public-registry mutation.",
+  "actual_heads": {
+    "main": "f37279a093fcdddece1e369d42ce54349cb1913c",
+    "registered_producer": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+    "lab_state": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "PR88": {
+      "head": "af405c4604f6eac935e594f1acd3ab492eef412c",
+      "state": "open",
+      "merged": false,
+      "draft": true
+    }
+  },
+  "guarded_native_route": {
+    "repository": "NickNicky19/NFL-forecasting",
+    "workflow": ".github/workflows/lab.yml",
+    "branch": "research/weekly-storage-probe-v1",
+    "mode": "audit-weekly-producer-v1",
+    "jobs": [
+      "audit-weekly-produce-v1",
+      "audit-weekly-restore-v1",
+      "audit-weekly-export-v1"
+    ],
+    "single_writer": "nfl-lab-single-writer",
+    "actual_owner_actor": {
+      "login": "NickNicky19",
+      "id": "208912933"
+    },
+    "actual_recurring_child_actor": {
+      "login": "github-actions[bot]",
+      "id": "41898282"
+    },
+    "owner_initial_registration_operation": "CONTROLLER_REGISTRATION",
+    "owner_initial_registration_bootstrap": "operations_authority.current permits this existing original-owner-only operation without requiring current recurring bootstrap. Runner still enforces canonical current fullRoot<=61440, current committed source/pins, actual owner Actions job/token, qualified runtime and API proofs. This is not a local execution or approval bypass.",
+    "owner_registration_phases": "controller-template-write/read/seal in the three existing jobs; final native SAFE_SEAL upload and completed run/jobs are required before a create-only public registration",
+    "recurring_parent": {
+      "branch": "main",
+      "job": "lab",
+      "mode": "daily",
+      "GHA_manual_scope": "Existing actual owner workflow_dispatch/daily route is supported separately from scheduled Chicago window; do not dispatch while its source-bound bootstrap is missing/incompatible.",
+      "auto_root": "_recover authenticates exact sealed private template and qualified package; _build_root copies it and may modify only approved/issued_at_utc/expires_at_utc/operation/effective_epoch. It cannot add CountA/static refs/helper hashes/source SHA dynamically."
+    }
+  },
+  "available_original_A_owner_local_artifacts": {
+    "discovery": "config/category-topfive-matched12-all-finalists-freeze-v1_2.json.gz extra_entries[target=pass_td,method=COUNT_A_MEAN]; protected paths deliberately omitted",
+    "capsule": {
+      "exists": true,
+      "bytes": 399037,
+      "sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36",
+      "verified": "whole container hash; only bounded MODEL_AUDIT.json member decompressed; MODEL.joblib member not decoded/deserialized"
+    },
+    "producer_proof": {
+      "exists": true,
+      "bytes": 26032,
+      "sha256": "9071f4fd5f81fb7e0514e9f1ac47a93d207fc5b27cda3d8aa7f7ea16d320b45e"
+    },
+    "FIT_START": {
+      "exists": true,
+      "bytes": 5968,
+      "sha256": "9119320dc53a64c0bca2caebae6b1b416335ae0db38160ffbc23a1e635d2e967"
+    },
+    "MODEL_AUDIT": {
+      "bytes": 8898,
+      "sha256": "a7679510ccae33d4f915f6bd70988090d279818bbf2934dc6f25654248cd0dc1",
+      "recipe_sha256": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f"
+    },
+    "native_presence": "Owner-local presence does not establish paths/census in restored native qualified package; no new private transfer was performed."
+  },
+  "specific_reproduced_defect": {
+    "path": "nfl_lab/count_a_native_extension_v1.py:authenticate_fit",
+    "old_head": "af405c4604f6eac935e594f1acd3ab492eef412c",
+    "symptom": "COUNT_A_ORIGINAL_RECIPE on authentic original FIT_START/proof/audit before model load",
+    "cause": "Unregistered trailing newline in original recipe digest",
+    "repair": "One-line canonical(recipe) without newline; exact parent recipe/corrector/model unchanged",
+    "source_fix_manifest": "COUNTA_FIT_ENCODER_FIX_SOURCE_MANIFEST_V1.json",
+    "local_fix_commit": "6cd36119757680483814a696e33e313fe863d9ec",
+    "football_impact": "No executed native/NFL use demonstrated; not a historical score reset."
+  },
+  "current_recurring_bootstrap": {
+    "fixed_path": "state/controller-v1/bootstrap-v2-20261103-mae-prior-v5-archive.json",
+    "current_main_literal_verified": true,
+    "current_lab_state_result": "ABSENT_EXACT_PATH: GitHub404 plus complete nontruncated776-entry tree",
+    "complete_registry_inventory": [
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261026-discovery.json",
+        "git_blob_sha": "10a014fcf3b023d26597ee025a1da9f3ea260850",
+        "bytes": 39236
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261026-registered-builder.json",
+        "git_blob_sha": "143a828d84a47d3021279cde6a6ac26ed245c950",
+        "bytes": 39232
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261026-retained-epoch.json",
+        "git_blob_sha": "90af67974809b2dab5584dae1f887b7284d35108",
+        "bytes": 39228
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261027-archive-recovery.json",
+        "git_blob_sha": "f1c2222f428b68fadd541dce8f94c6dc4aa684ee",
+        "bytes": 39244
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261027-first-primary.json",
+        "git_blob_sha": "224c046b238b81ffd2185e96314922d81e53e650",
+        "bytes": 39232
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261027-fresh-first-primary.json",
+        "git_blob_sha": "d9b6b40675bda265fd0e023a740cdf8345858261",
+        "bytes": 39240
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261027-metadata-phases.json",
+        "git_blob_sha": "ea09eb4f0b99d51b0c450fb048f20f8a401f2057",
+        "bytes": 39236
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261027-pending-posts.json",
+        "git_blob_sha": "9957170c174c787550a684f12fd7481b38431f45",
+        "bytes": 39232
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261028-history-runtime.json",
+        "git_blob_sha": "35b15b6731f760c73e11b0e7c7b8eaa198f9a2b1",
+        "bytes": 39232
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261028-prior-pending-read.json",
+        "git_blob_sha": "367a95c8f28f361294d738caef16e8379a247096",
+        "bytes": 39232
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261031-mae-display-read.json",
+        "git_blob_sha": "d552dce55caf96bcc710e86bc39572652935618f",
+        "bytes": 41824
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261101-mae-capacity-phase.json",
+        "git_blob_sha": "d2e39f88042c90e28976de2b6d40af0a86199fa7",
+        "bytes": 41824
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261101-mae-history-read.json",
+        "git_blob_sha": "b101372eb5a91d3a9ee5216fbe526cc9cd56768d",
+        "bytes": 41824
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261101-mae-pinned-history.json",
+        "git_blob_sha": "130a0f3ecbb16d134c7c84d3a788937315266112",
+        "bytes": 41824
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261101-mae-retained-binding.json",
+        "git_blob_sha": "564630a231561da41c2ac40865d69b3525d20dd5",
+        "bytes": 41828
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261102-mae-canonical-period.json",
+        "git_blob_sha": "280ec292d1b6db563db51fdfbfc0b166042cc1e8",
+        "bytes": 41827
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261102-mae-fresh-capture.json",
+        "git_blob_sha": "092e24a731f7a4ee17e0039be842403bd69da2ff",
+        "bytes": 41817
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json",
+        "git_blob_sha": "220c6d3861c41784ffb784e3d11bfd9040f8a619",
+        "bytes": 42415
+      },
+      {
+        "path": "state/controller-v1/bootstrap-v2.json",
+        "git_blob_sha": "f2c3ba48bc901c6e1e0fb986881ae40bbecd35a4",
+        "bytes": 39232
+      }
+    ],
+    "nearest_prior_locator": {
+      "path": "state/controller-v1/bootstrap-v2-20261102-mae-infer-local-scope.json",
+      "bytes": 42415,
+      "git_blob_sha": "220c6d3861c41784ffb784e3d11bfd9040f8a619",
+      "decoded_registration": {
+        "schema_version": "audit-weekly-controller-v1-registration-v5-current-owner",
+        "registered_at": "2026-11-03T00:13:19.861296+00:00",
+        "producer": {
+          "source_sha": "dd88e1235fdd7c265c02963031da214b04632404",
+          "branch": "research/weekly-storage-probe-v1",
+          "job_id": null,
+          "workflow_sha256": "2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384"
+        },
+        "parent": {
+          "source_sha": "231f7b6b8afaf3c0650413a6fcaedd79fa64fef5",
+          "branch": "main",
+          "job_id": "lab"
+        },
+        "readiness": {
+          "branch": "research/weekly-storage-probe-v1",
+          "jobs": {
+            "consume": {
+              "api_job_id": 125588652331,
+              "job_id": "audit-weekly-export-v1"
+            },
+            "produce": {
+              "api_job_id": 125580407240,
+              "job_id": "audit-weekly-produce-v1"
+            },
+            "restore": {
+              "api_job_id": 125587398403,
+              "job_id": "audit-weekly-restore-v1"
+            }
+          },
+          "receipt_bindings": {
+            "archive_files_sha256": "df9f3dbeb695120d58fb92bfc1898fae2e8d630b16df471945d3804c5adc5bb7",
+            "archive_index_sha256": "bb6a9585dc0d62c0b3704062f20e0c84d2b0ccd07d33b9d8fffa754861cde103",
+            "choice_sha256": "4fb40b38a66cd118078ecfc3598b28c9e952c87267b2b687cde276211763348a",
+            "epoch_sha256": "e756c03f1ed1d8e6d5d095d8429f8b499780853c50baf5c2c6228fcc94f465ee",
+            "feed_sha256": "cc9fa4b5364384845d3423ed0896323c54256f6c2b27404d8f8c6f3804444eb7",
+            "origin_choice_sha256": "a6ebda8372e0d2527a6c857863ae93d98051e63082e34214a31f93b2df174061",
+            "policy_sha256": "34f76676acb2590a388446b9498896c12900255c1be3451687ab34bb1810651b",
+            "r0_identity_sha256": "a21ccd21ad395da3487c5e084ab2865c54a357a191419cc4da9ce31c19f83660",
+            "reader_witness_sha256": "3b15c8ad29106c9d8bf36972aa038e9f1cb0130e277a3b3336d4146289d96ef4",
+            "recipe_registration_sha256": "f5b74b181934e26cb33a717897fdbfe10ddef5212f0dde80d0dac30759f06592",
+            "rights_authority_sha256": "e88955f3bfb4496180851c803a17bd8b5a25f39df3bdcbf34458659bdcc49069",
+            "root_go_sha256": "ebba074c9d377aef0fff549ead043eb174c6b51bba89d8d122c53e903a1c7c82"
+          },
+          "receipt_body_sha256": "a9132b2d7c088b7459a959ffd6cec70b8ba400e6da7a47adeafa1bc9d152414b",
+          "receipt_sha256": "7179b3f517455c41e94847032107f52e34f381424028d137862d54de55d0fc0e",
+          "run_id": "41533789085",
+          "source_sha": "dad58d459951bdb77ef852b8ca88860ffb0bce60",
+          "workflow_sha256": "2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384"
+        }
+      },
+      "locator_schema_keys": [
+        "owner_root_go_sha256",
+        "owner_root_issued_at_utc",
+        "qualified_runtime_package",
+        "registered_at_utc",
+        "repository",
+        "schema_version",
+        "template_seal"
+      ],
+      "template_seal_present": true,
+      "actual_private_template_body": "Not obtained in this metadata-only review; actual approved ParentGETClient/native owner access required",
+      "substitution": "INCOMPATIBLE: older producerdd88/main231f source inventories cannot silently stand in for fa919/f372/newCountA. No old bytes rewritten or reissued."
+    },
+    "already_approved_current_registration_or_fullRoot": "No matching current fixed record found in complete lab-state inventory or bounded named-record search of existing ownA config/reports and prior recovery workspaces. This does not prove no owner-local/private copy exists; owner must supply exact native seal/run/registry receipt if retained."
+  },
+  "parent_source_alignment": {
+    "main_files": [
+      {
+        "path": "nfl_lab/audit_weekly_template_v1.py",
+        "main_git_blob": "25cd727640bef3331ec4238b83dae573271d7bcb",
+        "main_content_chars": 49549
+      },
+      {
+        "path": "nfl_lab/audit_weekly_controller_v1.py",
+        "main_git_blob": "6576078525fc963f0a1fad3b53e7c736a8f4a816",
+        "main_content_chars": 46282
+      },
+      {
+        "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+        "main_git_blob": "e1f7a27508e83b2a685e19e734d8b113fe12bd10",
+        "main_content_chars": 129251
+      },
+      {
+        "path": "config/weekly-mae-display-core3-v1.json",
+        "main_git_blob": "916d99c13edda644670d892e08adc19b3d74cd0d",
+        "main_content_chars": 15488
+      }
+    ],
+    "requirements": "bootstrap.source_inventories requires all SHARED_EXECUTABLE_PINS equal between literal producer and main inventories; registration._source_specs additionally matches V5 parent config/profile hashes to Root.mae_helper_pins. PR88 changes shared template/controller/history/config, so producer merge alone does not bind a current main parent.",
+    "minimum_source_owner_action": "Synchronize required shared executable/metadata/helper bytes on main through the existing review process and bind the actual resulting main/producer commits before owner registration. Do not assume source branch address equals a lease or source acceptance."
+  },
+  "prepared_not_issued_binding": {
+    "path": "COUNTA_CORRECTED_HELPER_ROOT_BINDING_V1.json",
+    "complete_Root": "NOT_CREATED_OR_AVAILABLE_IN_THIS_REVIEW",
+    "complete_wire_bytes": "UNKNOWN; do not reuse historical61759 or synthetic wire size",
+    "limits": {
+      "complete_Root_bytes": 61440,
+      "source_history_file_bytes": 131072
+    },
+    "current_query": "Existing producer/source owner must qualify actual event-effective QB universe/history/source clocks under the retained recipe. Target-game outcomes not required; EPA/defensive workbook not CountA dependencies."
+  },
+  "minimum_permissible_execution_sequence": [
+    {
+      "executor": "A source owner/root integrator",
+      "action": "Review/publish corrected source, canonical checks and normal merge; include required main source/helper metadata synchronization",
+      "completion": "Actual producing/main source commits and immutable helper/profile hashes accepted"
+    },
+    {
+      "executor": "Existing NickNicky19 native owner on own registered workflow",
+      "action": "Bind original capsule/proof/FIT_START into native owned-qualified refs, source contract/current source, complete current Root with CountA field/public derived-only grant; measure actual full serialized issued wire",
+      "completion": "All existing Root/source/qualification/cap guards pass; no fake GHA env or arbitrary old seal"
+    },
+    {
+      "executor": "Same existing native owner registration jobs",
+      "action": "When source-bound static bootstrap is absent, run existing CONTROLLER_REGISTRATION writer/fresh reader/sealer against approved complete Root; retain SAFE_SEAL native artifact and verify actual completed jobs/run before create-only fixed registration",
+      "completion": "Current native template descriptor/source registration/public record accepted; original registries retained"
+    },
+    {
+      "executor": "Existing main parent and registered producer",
+      "action": "Run current eligible capture via existing manual/scheduled route, complete inference/corrector once, durable restore and allowed derived publication",
+      "completion": "Real run/source cutoff/issue/persistence hashes and readable feed, no stale backfill"
+    },
+    {
+      "executor": "Original website owner; B independent verifier; C records",
+      "action": "Retrieve and verify exact delivered mean/fallback/feed, apply existing product admission and isolate ranking; release eligible product or shadow",
+      "completion": "Actual consumer receipt and served method/values/labels; no primary admission inferred from CI"
+    }
+  ],
+  "counts": {
+    "models_loaded": 0,
+    "fits": 0,
+    "NFL_inference": 0,
+    "NFL_grades": 0,
+    "native_namespace_calls": 0,
+    "dispatches": 0,
+    "registry_writes": 0,
+    "source_files_changed": 2,
+    "protected_rows_or_locators_exported": 0
+  },
+  "commands": [
+    "Read AGENTS and current owned reports; inspect exact lab/parent/controller registration source only",
+    "GitHub current main/registered/lab-state refs and PR88; complete lab-state Git tree plus current fixed registry exact lookup; inspect one actual older registered public locator",
+    "Hash original capsule/proof/FIT_START and bounded audit JSON only; reproduce original recipe guard before/after without model deserialization",
+    "Focused pytest tests/test_count_a_native_extension_v1.py:22passed+12subtests; full actual128/22/315e/after/config metadata parity; two-file AST/diff/explicit phase-only local commit"
+  ]
+}

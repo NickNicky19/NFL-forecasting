@@ -1,0 +1,600 @@
+{
+  "id": "A-FINAL-MILE-LATEST-OWNER-RECEIPTS-v1",
+  "recorded_UTC": "2026-11-12T06:33:42.545591+00:00",
+  "executor": "Session A child /root/finalmile_peer_receipts",
+  "task": "Read-only peer/consumer status and SHADOW-vs-KEEP explanation; no scoring, fitting, replay implementation or peer write.",
+  "fresh_heads": {
+    "B": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+    "C": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+    "website": "869d9a8839ae83dfccdb3bbb6610a0e0df867667"
+  },
+  "head_comparison": {
+    "B": "UNCHANGED_FROM_PREVIOUS_VERIFIED_PEER_RECEIPT",
+    "C": "UNCHANGED_FROM_PREVIOUS_VERIFIED_PEER_RECEIPT",
+    "website": "UNCHANGED_FROM_PREVIOUS_VERIFIED_PEER_RECEIPT"
+  },
+  "public_owner_comment_query": {
+    "since": "2026-11-12T04:44:33Z",
+    "new_or_updated_returned": 0,
+    "old_owner_comment": {
+      "id": 6814781492,
+      "created_at": "2026-11-12T04:44:32Z",
+      "updated_at": "2026-11-12T04:44:32Z",
+      "bytes": 65459,
+      "unchanged_since_prior_receipt": true,
+      "SHA256_from_prior_exact_unchanged_receipt": "258a558239dc8db78f3863cede57630b7d3fcd230087058b297d9c27b523a3a9",
+      "evidence_scope": "Fresh public API shows same created/updated timestamps; full prose inspected; embedded XZ/base64 payload not decoded or executed by this task."
+    }
+  },
+  "C_sources": [
+    {
+      "key": "C_protocol",
+      "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
+      "Git_blob_SHA1_returned": "33e99b78e0b6a55e260763d615c2bb760c919599",
+      "bytes": 72302
+    },
+    {
+      "key": "C_readme",
+      "path": "reports/category-decision-release-01/README.md",
+      "Git_blob_SHA1_returned": "b3c3193ef6b4ff98e5aac76322896dd0dfe01d1b",
+      "bytes": 12808
+    },
+    {
+      "key": "C_queue",
+      "path": "reports/category-decision-release-01/follow-through-v1/FINITE_QUEUE.json",
+      "Git_blob_SHA1_returned": "89bfcd5679b477d1735df44198cd86e148b67bfa",
+      "bytes": 8695
+    },
+    {
+      "key": "C_follow_report",
+      "path": "reports/category-decision-release-01/follow-through-v1/README.md",
+      "Git_blob_SHA1_returned": "f3a6febcd686d6fc619474bd58f6eb10a424b0bf",
+      "bytes": 1307
+    },
+    {
+      "key": "C_live",
+      "path": "reports/category-decision-release-01/follow-through-v1/website/LIVE_PRODUCT_BINDINGS.json",
+      "Git_blob_SHA1_returned": "e7d0fb537b3f16945645b9f2ed62061366464c69",
+      "bytes": 29629
+    },
+    {
+      "key": "C_W4",
+      "path": "reports/category-decision-release-01/follow-through-v1/website/W4_DISPOSITION.json",
+      "Git_blob_SHA1_returned": "27916c505ad38be478fba8a9ca0e98bf1d08c631",
+      "bytes": 1275
+    }
+  ],
+  "canonical_C_decisions": {
+    "ref": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+    "path": "reports/category-decision-release-01/CATEGORY_PRODUCT_DECISIONS.json",
+    "bytes": 1057555,
+    "SHA256": "0d95bdb269761fe6a87d7646ea7345fc8b32363d7ad65b472708132fc34c3601",
+    "source_retrieval": "GitHub connector returned empty content for oversized file even with line request. Exact immutable raw public URL obtained through inherited proxy and CA; TLS verification retained.",
+    "status_counts": {
+      "SHADOW": 7,
+      "BLOCKED": 1,
+      "KEEP_INCUMBENT": 2,
+      "ABSTAIN": 2
+    },
+    "all_twelve_category_decisions": [
+      {
+        "category": "pass_yd",
+        "decision": "SHADOW",
+        "exact_procedure": "A::pass_yd::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "pass_td",
+        "decision": "BLOCKED",
+        "exact_procedure": "A::pass_td::f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83::COUNT_A_MEAN::mean_objective_point",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "pass_cmp",
+        "decision": "SHADOW",
+        "exact_procedure": "A::pass_cmp::8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6::CATBOOST_MEDIUM::mean_objective_point",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "pass_att",
+        "decision": "KEEP_INCUMBENT",
+        "exact_procedure": "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "pass_int",
+        "decision": "SHADOW",
+        "exact_procedure": "A::pass_int::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "rush_yd",
+        "decision": "KEEP_INCUMBENT",
+        "exact_procedure": "A::rush_yd::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "rush_att",
+        "decision": "SHADOW",
+        "exact_procedure": "A::rush_att::607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a::BACKFIELD_CDF::mean",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "rec",
+        "decision": "SHADOW",
+        "exact_procedure": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+        "five_week_status": "MET_FIVE_OWNER_LOCAL_ACTUAL_LINE_WEEKS_AT_RETAINED_TIER"
+      },
+      {
+        "category": "rec_yd",
+        "decision": "SHADOW",
+        "exact_procedure": "A::rec_yd::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "rush_rec_yd",
+        "decision": "SHADOW",
+        "exact_procedure": "A::rush_rec_yd::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::RESPONSE_CDF::mean",
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION"
+      },
+      {
+        "category": "anytime_td",
+        "decision": "ABSTAIN",
+        "exact_procedure": null,
+        "five_week_status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT"
+      },
+      {
+        "category": "nick-chart-ppr-v1",
+        "decision": "ABSTAIN",
+        "exact_procedure": null,
+        "five_week_status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT"
+      }
+    ],
+    "requested_three_explanations": [
+      {
+        "category": "pass_yd",
+        "C_research_decision": "SHADOW",
+        "exact_procedure": "A::pass_yd::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+        "output": "mae_objective_point",
+        "own_decision_policy": "P1_UNROUNDED_POINT_VS_EXACT_ACTUAL_LINE:point>lineOVER;point<lineUNDER;point==lineABSTAIN; preserved participation/push/settlementcontract",
+        "actual_weeks": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "own_combined": {
+          "decided": 89,
+          "losses": 37,
+          "rate": 0.5842696629213483,
+          "selected": 89,
+          "wins": 52
+        },
+        "C_preferred_candidate_status": {
+          "candidate_set": [
+            "A::pass_yd::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point"
+          ],
+          "status": "CONDITIONAL_REVIEW_AT_ADMITTED_RETROSPECTIVE_TIER",
+          "duration_is_not_admission": true,
+          "operational_admitted_replacement": false
+        },
+        "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+        "duration": {
+          "status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+          "actual_season_weeks": [
+            [
+              2026,
+              1
+            ],
+            [
+              2026,
+              2
+            ],
+            [
+              2026,
+              3
+            ],
+            [
+              2026,
+              4
+            ],
+            [
+              2026,
+              5
+            ]
+          ],
+          "admission": "Duration at the admitted retrospective tier does not establish source authentication, superiority or operational readiness."
+        },
+        "C_current_query": {
+          "status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND",
+          "producer_owner": "A",
+          "consumer_owner": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z; retained lease178 as owner-reported, no C lease assumption",
+          "required_action": "Codex A source-bound HGB owner supplies the exact current recipe/MAE-point adapter and qualified feed; original owner admits the exact direction separately from selected margin/ranking. Named source-week classification is received, not awaiting duplicate scoring.",
+          "no_family_alias_equivalence": "A model name/current family alone does not bind saved historical recipe, correction, output andlivefeaturesemantics."
+        },
+        "remaining_owner_action": "Codex A source-bound HGB owner supplies the exact current recipe/MAE-point adapter and qualified feed; original owner admits the exact direction separately from selected margin/ranking. Named source-week classification is received, not awaiting duplicate scoring.",
+        "research_replacement_ready": null,
+        "operational_state": "NO_CURRENT_ADMITTED_REPLACEMENT_FEED_IN_RECEIVED_PACKAGE",
+        "website_operational_decision": "KEEP_INCUMBENT per6814781492",
+        "actual_live_method": "sleeper-matchup-classic-presence-strict-v2",
+        "meaning_of_difference": "C SHADOW is conditional research review of a named exact procedure; website KEEP_INCUMBENT is present operational retention. They do not say the research procedure is active, or establish incumbent accuracy superiority.",
+        "per_category_readiness_gap": "Exact HGB MAE-point model/history/current adapter and qualified feed; website admits strict crossing independently of selected/ranking margin."
+      },
+      {
+        "category": "rec_yd",
+        "C_research_decision": "SHADOW",
+        "exact_procedure": "A::rec_yd::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+        "output": "mean",
+        "own_decision_policy": "P1_UNROUNDED_POINT_VS_EXACT_ACTUAL_LINE:point>lineOVER;point<lineUNDER;point==lineABSTAIN; preserved participation/push/settlementcontract",
+        "actual_weeks": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "own_combined": {
+          "decided": 593,
+          "losses": 271,
+          "rate": 0.5430016863406408,
+          "selected": 659,
+          "wins": 322
+        },
+        "C_preferred_candidate_status": {
+          "candidate_set": [
+            "A::rec_yd::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean"
+          ],
+          "status": "CONDITIONAL_REVIEW_AT_ADMITTED_RETROSPECTIVE_TIER",
+          "duration_is_not_admission": true,
+          "operational_admitted_replacement": false
+        },
+        "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+        "duration": {
+          "status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+          "actual_season_weeks": [
+            [
+              2026,
+              1
+            ],
+            [
+              2026,
+              2
+            ],
+            [
+              2026,
+              3
+            ],
+            [
+              2026,
+              4
+            ],
+            [
+              2026,
+              5
+            ]
+          ],
+          "admission": "Duration at the admitted retrospective tier does not establish source authentication, superiority or operational readiness."
+        },
+        "C_current_query": {
+          "status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND",
+          "producer_owner": "A",
+          "consumer_owner": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z; retained lease178 as owner-reported, no C lease assumption",
+          "required_action": "Codex A supplies source-bound Leaf-mean current recipe, exact input/history/role/fallback and feed. Original owner reviews its own direction product separately from numerical/confidence/ranking; older Response-CDF seven-week mixed diagnostic is retained separately.",
+          "no_family_alias_equivalence": "A model name/current family alone does not bind saved historical recipe, correction, output andlivefeaturesemantics."
+        },
+        "remaining_owner_action": "Codex A supplies source-bound Leaf-mean current recipe, exact input/history/role/fallback and feed. Original owner reviews its own direction product separately from numerical/confidence/ranking; older Response-CDF seven-week mixed diagnostic is retained separately.",
+        "research_replacement_ready": null,
+        "operational_state": "NO_CURRENT_ADMITTED_REPLACEMENT_FEED_IN_RECEIVED_PACKAGE",
+        "website_operational_decision": "KEEP_INCUMBENT per6814781492",
+        "actual_live_method": "sleeper-matchup-classic-presence-strict-v2",
+        "meaning_of_difference": "C SHADOW is conditional research review of a named exact procedure; website KEEP_INCUMBENT is present operational retention. They do not say the research procedure is active, or establish incumbent accuracy superiority.",
+        "per_category_readiness_gap": "Bind current Leaf-CDF mean on W1\u20135 separately from older Response-CDF mean on mixed W1\u20137 diagnostic; exact current adapter/input/history/role/fallback/feed missing."
+      },
+      {
+        "category": "rush_rec_yd",
+        "C_research_decision": "SHADOW",
+        "exact_procedure": "A::rush_rec_yd::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::RESPONSE_CDF::mean",
+        "output": "mean",
+        "own_decision_policy": "P1_UNROUNDED_POINT_VS_EXACT_ACTUAL_LINE:point>lineOVER;point<lineUNDER;point==lineABSTAIN; preserved participation/push/settlementcontract",
+        "actual_weeks": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "own_combined": {
+          "decided": 386,
+          "losses": 178,
+          "rate": 0.538860103626943,
+          "selected": 408,
+          "wins": 208
+        },
+        "C_preferred_candidate_status": {
+          "candidate_set": [
+            "A::rush_rec_yd::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::RESPONSE_CDF::mean"
+          ],
+          "status": "CONDITIONAL_REVIEW_AT_ADMITTED_RETROSPECTIVE_TIER",
+          "duration_is_not_admission": true,
+          "operational_admitted_replacement": false
+        },
+        "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+        "duration": {
+          "status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+          "actual_season_weeks": [
+            [
+              2026,
+              1
+            ],
+            [
+              2026,
+              2
+            ],
+            [
+              2026,
+              3
+            ],
+            [
+              2026,
+              4
+            ],
+            [
+              2026,
+              5
+            ]
+          ],
+          "admission": "Duration at the admitted retrospective tier does not establish source authentication, superiority or operational readiness."
+        },
+        "C_current_query": {
+          "status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND",
+          "producer_owner": "A",
+          "consumer_owner": "NFL-WEB-PRODUCTION-REPORT-INTEGRATION-20261025-122500Z; retained lease178 as owner-reported, no C lease assumption",
+          "required_action": "Codex A supplies exact Response-mean current adapter/feed; original owner verifies full combined-outcome presence and typed point direction, avoiding median sums or missing-component zeros. Current source admission remains required.",
+          "no_family_alias_equivalence": "A model name/current family alone does not bind saved historical recipe, correction, output andlivefeaturesemantics."
+        },
+        "remaining_owner_action": "Codex A supplies exact Response-mean current adapter/feed; original owner verifies full combined-outcome presence and typed point direction, avoiding median sums or missing-component zeros. Current source admission remains required.",
+        "research_replacement_ready": null,
+        "operational_state": "NO_CURRENT_ADMITTED_REPLACEMENT_FEED_IN_RECEIVED_PACKAGE",
+        "website_operational_decision": "KEEP_INCUMBENT per6814781492",
+        "actual_live_method": "sleeper-matchup-classic-presence-strict-v2",
+        "meaning_of_difference": "C SHADOW is conditional research review of a named exact procedure; website KEEP_INCUMBENT is present operational retention. They do not say the research procedure is active, or establish incumbent accuracy superiority.",
+        "per_category_readiness_gap": "Exact Response-CDF mean/current adapter/feed with complete outcome components; no missing-as-zero or sum-of-medians substitution."
+      }
+    ],
+    "not_new_recommendations": "These are direct projections from C existing frozen release record; A did not create another master ranking or change C/site decisions."
+  },
+  "stale_status_reconciliation": [
+    {
+      "source": "Caaeb README/native queue and owner6814781492",
+      "stale_claim": "Count A native source integration unimplemented",
+      "disposition": "Superseded for source implementation by A PR88 af405c46 and exact-head source CI; that does not establish merged/bound runtime source, issued Root/current query or feed. Root owns current PR/native action; this child did not review source again."
+    },
+    {
+      "source": "C RELEASE_AND_CAPTURE_STAGES.json",
+      "stale_claim": "5KEEP/4SHADOW",
+      "disposition": "Canonical table is7SHADOW/2KEEP/1BLOCKED/2ABSTAIN; old stage count is not current decision count."
+    },
+    {
+      "source": "C README/contribution table",
+      "stale_claim": "Per-week candidate-generated selected counts unexported exceptW8",
+      "disposition": "Newer B/website explicit source partitions were already verified:2/4/2/0 candidate-selected (5W3L total),22/20/22/24 fallback,8added+8removed membership; no new replay."
+    },
+    {
+      "source": "Website6814781492 CountA mean weekly R placeholders",
+      "stale_claim": "Direct corrected-mean weekly count binding still required",
+      "disposition": "Cmean-own weekly reuse is already received atcfbfb36... and A/B receipts bind49W37L/86 overW1\u20135; no duplicate inference/scoring requested."
+    }
+  ],
+  "exact_selector": {
+    "frozen_policy": "NFL-WEB-EXACT-SELECTOR-REC-P1-MEAN-WRTE-20261112-v1",
+    "current_completed_blocks": [
+      [
+        2026,
+        5
+      ],
+      [
+        2026,
+        6
+      ],
+      [
+        2026,
+        7
+      ],
+      [
+        2026,
+        8
+      ]
+    ],
+    "current_fifth_qualified_block": null,
+    "record_scope": "Four conditional retrospective full-system weeks, including registered W8fallback-only policy week; no new5-learned-week rule.",
+    "W4_owner_latest_disposition": "ASSESSED_AND_REJECTED_AS_FIFTH_FROM_INSPECTED_ARCHIVE;32copiesreduce2bodies, not every private archive claimed accessible",
+    "W4_forecast_archive": {
+      "path": "output/data/archive/2026_w04.json",
+      "bytes": 359711,
+      "SHA256": "05029ddae8aa7da3ce05a640c6fd96ee6eab7fd008ceed08487818ac70e67802",
+      "players": 539,
+      "props": 2435,
+      "games": 16,
+      "PPR_present": 539,
+      "saved_UTC": "2026-10-06T03:34:03Z",
+      "latest_kickoff_UTC": "2026-10-06T00:15:00Z",
+      "missing": [
+        "player games/snaps/injury/ESPN/model fields",
+        "per-prop n/over",
+        "game state",
+        "original full-board decision/generation clocks",
+        "qualified as-of candidate timing closure"
+      ]
+    },
+    "next_executor": "Original website owner, existing frozen-policy route; B independently verifies and C records",
+    "minimum_action": "Qualify a genuinely new original pregame complete historical board if one appears; otherwise capture SAME exact policy on a complete fresh board with matching qualified P1 feed before future cutoff. No W4 rescore from postgame rows, 12highlightedpicks, imputed gates or new mapping."
+  },
+  "fresh_original_site_bytes": {
+    "retrievals": {
+      "meta": {
+        "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+        "bytes": 1249,
+        "SHA256": "f2978954d61508d17f9934502acd73b37ce1a0dcd1d6cae1528421fdeec1af9f",
+        "HTTP": 200,
+        "Date": "Thu, 12 Nov 2026 06:31:03 GMT",
+        "Age": "47",
+        "ETag": "\"6af54118-4e1\"",
+        "Last-Modified": "Thu, 12 Nov 2026 04:31:20 GMT",
+        "observed_UTC": "2026-11-12T06:31:03.690684+00:00"
+      },
+      "overlay_pointer": {
+        "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+        "bytes": 333,
+        "SHA256": "da0d7b32d063ae5dc9441ac1c48bc150c6db3deac3e0066d9dd84d162976f24e",
+        "HTTP": 200,
+        "Date": "Thu, 12 Nov 2026 06:31:03 GMT",
+        "Age": "47",
+        "ETag": "\"6af54118-14d\"",
+        "Last-Modified": "Thu, 12 Nov 2026 04:31:20 GMT",
+        "observed_UTC": "2026-11-12T06:31:03.756268+00:00"
+      },
+      "overlay_leaf": {
+        "URL": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive/115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b.json",
+        "bytes": 763,
+        "SHA256": "115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b",
+        "HTTP": 200,
+        "Date": "Thu, 12 Nov 2026 06:31:19 GMT",
+        "Age": "0",
+        "observed_UTC": "2026-11-12T06:31:19.845783+00:00"
+      }
+    },
+    "values": {
+      "meta": {
+        "execution_model": {
+          "capture_schema": "baseline-capture-classic-presence-v2",
+          "engine_sha256": {
+            "pull/books.py": "0b89744960136a4f2e594b61e6df754d357706d8c66a8ae359d8eb02bbfa53f8",
+            "pull/build.py": "b83126080149f2f0705682d1c0be0a8ee87610ebb0a88cd57b94b8a82b63ad73",
+            "pull/gamemodel.py": "2a2519a12ad4993da02ae6bdcdb6c86f2b5a6554ce93a702b550ecde17fb7d1f",
+            "pull/grade.py": "afd1310d708def4f400e6bf84e981e2edc7635dc946a63571022203c1d3ae735",
+            "pull/matchup.py": "eaf627730041060ad16dd9930accfe54a54cf5fb49bb42d18680b5c572ddd7a5",
+            "pull/news.py": "17ce1b3b6b72694e6b543bd767e287c26a9d1f6dd5dba2de6c873543036842e9",
+            "pull/scoring.py": "90a9d201581b20c4e757912ce7dbf4941a6a90784d721c80367341511c652a2d",
+            "pull/sources.py": "36555cdbc55d73ba632d5adae1130288f4f532073857c642ac3ebc7e626b0061"
+          },
+          "grading_version": "statistical-presence-strict-v5-20261106",
+          "model": "sleeper-matchup-classic-presence-strict-v2",
+          "normalized_stats_cache": "stat-keys-presence-strict-v3",
+          "original_shadow_model": "original_sleeper_matchup_baseline",
+          "original_shadow_procedure": "original-builder-default-refresh-v1",
+          "original_shadow_source": "89512ed952308dacc1f6a930915ddbcdccd460d9",
+          "schema_version": "weekly-classic-presence-execution-v2"
+        },
+        "generated_at": "2026-11-12T04:31:02Z",
+        "season": 2026,
+        "week": 10
+      },
+      "overlay_pointer": {
+        "bytes": 763,
+        "display_board_sha256": "0098cc3669639c70a2e382be86709514d9d25a0322cca1df51cb6dc6fac0e754",
+        "path": "data/weekly-adaptive/115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b.json",
+        "schema_version": "weekly-adaptive-overlay-pointer-v1",
+        "sha256": "115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b"
+      },
+      "overlay_leaf": {
+        "board_contract_sha256": "48ea2842f9be48f9d366347705b7b76ea951f36ac3b848addec7ed1aafcc1bfd",
+        "canonical_board_sha256": "0098cc3669639c70a2e382be86709514d9d25a0322cca1df51cb6dc6fac0e754",
+        "display_board_sha256": "0098cc3669639c70a2e382be86709514d9d25a0322cca1df51cb6dc6fac0e754",
+        "fallback_counts": {
+          "publication_not_approved_R0": 2028
+        },
+        "frozen_rows": [],
+        "packaged_at": "2026-11-12T04:31:12.416516+00:00",
+        "prepared_at": "2026-11-12T04:31:12.416516+00:00",
+        "publication_review_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "registration_id": "weekly-adaptive-release-v1",
+        "rows": [],
+        "schema_version": "weekly-adaptive-public-overlay-v1",
+        "season": 2026,
+        "state": "DISABLED_USE_R0",
+        "website_source_sha": "ccfaa987f5416ca6abce2570f9fee8c4c41c1d3e",
+        "week": 10
+      }
+    },
+    "scope": "CA-verified HTTP bytes; no browser/rendered/saved-pick check; no new producer inference or capture"
+  },
+  "fresh_site_conclusion": {
+    "method": "sleeper-matchup-classic-presence-strict-v2",
+    "forecast_generated_UTC": "2026-11-12T04:31:02Z",
+    "consumer_get_observed_UTC": "2026-11-12T06:31:03.690684+00:00",
+    "overlay_state": "DISABLED_USE_R0",
+    "research_rows": 0,
+    "frozen_rows": 0,
+    "new_research_primary_activation": false,
+    "no_new_Count_A_consumer_feed_receipt_observed": true,
+    "read_scope": "Actual public metadata/pointer/leaf bytes only; no direct browser, rendered value, ranking membership, saved-pick or private native-model inspection by this child. Retrieval time is not forecast/source issuance time.",
+    "data_commit": "869d9a8839ae83dfccdb3bbb6610a0e0df867667",
+    "producing_code_field": "ccfaa987f5416ca6abce2570f9fee8c4c41c1d3e",
+    "source_vs_data_note": "Unchanged application code fieldccfaa and newer data commit869d are separate stage identities; no mismatch defect inferred."
+  },
+  "Count_A_peer_delivery_state": {
+    "new_native_output_or_feed_receipt": "NOT_OBSERVED_ON_INSPECTED_PEER_ROUTES",
+    "first_genuinely_delivered_CountA_B_verification": "NOT_OBSERVED; BHEAD unchanged, no new output assumed",
+    "owner_native_queue": "Root reconciles exact current native executor/lease/capsule/proof/Root/source; repository/bot/sitelease not authority alone",
+    "consumer_minimum_action": "Original website owner retrieves actual fresh typed corrected-mean feed, verifies complete procedure/fallback and performs product-specific admission/served checks; source PR/CI is not that receipt."
+  },
+  "prospective_capture": {
+    "latest_owner_report_capture_run": 43155203267,
+    "incumbent_forecasts": 1614,
+    "reference_shadow_rows": 2486,
+    "generated_UTC": "2026-11-12T04:31:02Z",
+    "durable_capture_UTC": "2026-11-12T04:31:04Z",
+    "push_UTC": "2026-11-12T04:31:15Z",
+    "deploy_UTC": "2026-11-12T04:31:24Z",
+    "provider_tagged_lines": 519,
+    "DK": 496,
+    "Sleeper": 23,
+    "internal_thresholds": 1095,
+    "individual_quote_clocks": "UNKNOWN",
+    "meaning": "Preserved incumbent/reference forecast capture, not CountA inference or a fifth exact changed-selector board; manual success not scheduler reliability."
+  },
+  "defensive_source": {
+    "workbook": "UNAVAILABLE_SOURCE_UNQUALIFIED",
+    "new_source_fields": 0,
+    "new_experiments": 0,
+    "use_of_Nov9_10_snapshot_for_W1_8": false,
+    "release_dependency": false
+  },
+  "bounded_read_attempts": [
+    {
+      "step": "GitHub all-pages site PR1comment tool",
+      "result": "Transportclosed; bounded since-query succeeded instead; not no-access/model-absence finding"
+    },
+    {
+      "step": "Ccanonical GitHubfile/line view",
+      "result": "Returned empty due size; exact CA-verified public raw immutable file obtained"
+    },
+    {
+      "step": "Sandbox curl public rawfile",
+      "result": "Proxyloopbackunreachable; identicalpublicread outside sandbox succeeded under approved escalation"
+    },
+    {
+      "step": "First served-read script",
+      "result": "System requests package absent; no install, stdlibused"
+    },
+    {
+      "step": "Initial leaf parser",
+      "result": "Required wrongprefix; dependentfetch notperformed; corrected toactual data/weekly-adaptive prefix and SHAchecked"
+    },
+    {
+      "step": "GitHub repository data/weekly-adaptive-overlay.json",
+      "result": "404 at wrong repo path; not evidence model/feed absent; actual served URL succeeded"
+    }
+  ],
+  "new_NFL_fits_inference_grades_games_weeks": 0,
+  "new_source_collection_scheduler_native_write_or_peer_mutation": 0,
+  "private_row_fit_clock_parity_claimed": false,
+  "receipt_complete": true
+}

@@ -1,0 +1,200 @@
+{
+  "id": "COUNTA_ENCODING_INDEPENDENT_REVIEW-v1",
+  "UTC": "2026-11-12T06:36:30.968340+00:00",
+  "reviewer": "Session A independent read-only reviewer /root/finalmile_encoding_review",
+  "agent_settings": "Inherited parent context/model; no model override; provider model identifier not exposed by tool.",
+  "verdict": "PASS_FOR_FROZEN_METADATA_AUTH_CORRECTION_AND_LOCAL_SOURCE_SOFTWARE_SCOPE",
+  "not_acceptance_of": "New PR-head CI, merge/owner acceptance, issued native Root, current source/query, actual native inference/durable feed or website activation.",
+  "finding": {
+    "affected_source_head": "af405c4604f6eac935e594f1acd3ab492eef412c",
+    "affected_path": "nfl_lab/count_a_native_extension_v1.py::authenticate_fit",
+    "verified_defect": "An unregistered trailing newline was included in the recipe digest, rejecting the genuine original FIT_START before inference.",
+    "minimal_correction": "Remove only the extra newline from that digest. Keep the original protected proof/FIT_START/audit/recipe/training-clock/corrector guards.",
+    "demonstrated_historical_NFL_contamination": "NOT_DEMONSTRATED; source was not bound to the native producer in inspected parent scope. No forecast/grade change measured.",
+    "five_week_effect": "No prediction procedure or original model/output changed; this authenticates existing recipe encoding. Product/history/admission rules remain separate."
+  },
+  "independent_metadata_reproduction": {
+    "original_route_config_sha256": "66efaacaa1bd53ea6b24995109fef8e081c958088fcc76ab48acd78173f3ad99",
+    "original_metadata": {
+      "producer_proof": {
+        "bytes": 26032,
+        "sha256": "9071f4fd5f81fb7e0514e9f1ac47a93d207fc5b27cda3d8aa7f7ea16d320b45e"
+      },
+      "FIT_START": {
+        "bytes": 5968,
+        "sha256": "9119320dc53a64c0bca2caebae6b1b416335ae0db38160ffbc23a1e635d2e967"
+      },
+      "capsule": {
+        "bytes": 399037,
+        "sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36"
+      },
+      "MODEL_AUDIT": {
+        "bytes": 8898,
+        "sha256": "a7679510ccae33d4f915f6bd70988090d279818bbf2934dc6f25654248cd0dc1",
+        "recipe_sha256": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f"
+      }
+    },
+    "recipe_encoding": {
+      "canonical_without_newline_bytes": 5722,
+      "without_newline_sha256": "9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f",
+      "with_newline_bytes": 5723,
+      "with_newline_sha256": "35b97d56ff4ddfd3460cd6c2d2223499f7390bab885c265550bc13d646a2810a"
+    },
+    "source_before": {
+      "bytes": 18733,
+      "sha256": "dec10328c7811d788c4b605a4098d01e8f95ab99dca3455b547cc699e7686008"
+    },
+    "source_after": {
+      "bytes": 18727,
+      "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351"
+    },
+    "behavior": {
+      "old_genuine_metadata": {
+        "accepted": false,
+        "error": "COUNT_A_ORIGINAL_RECIPE"
+      },
+      "new_genuine_metadata": {
+        "accepted": true,
+        "returned_recipe_equal": true
+      },
+      "new_tampered_proof": {
+        "accepted": false,
+        "error": "COUNT_A_ORIGINAL_PRODUCER_PROOF"
+      },
+      "new_tampered_fit": {
+        "accepted": false,
+        "error": "COUNT_A_ORIGINAL_FIT_START"
+      },
+      "new_mismatched_audit": {
+        "accepted": false,
+        "error": "COUNT_A_ORIGINAL_RECIPE"
+      }
+    },
+    "changed_function_ASTs": [
+      "authenticate_fit"
+    ],
+    "scope": "Executed only AST-extracted stdlib metadata authentication functions; no source module imports/native context/model deserialization/NFL inference. Capsule hash authenticated; only MODEL_AUDIT.json ZIP member read. No private paths/recipe/proof/model serialized into receipt.",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "CPU_seconds": 0.03476177899999999,
+    "max_RSS_platform_units": 15404
+  },
+  "independent_source_binding_and_legacy_profile": {
+    "manifest_SHA256": "ff582316aaf57159d8ecb3f3a3509a0a507b9d558d9e2f5cc1d292b8033a3610",
+    "manifest_bytes": 3176,
+    "files": [
+      {
+        "path": "nfl_lab/count_a_native_extension_v1.py",
+        "bytes": 18727,
+        "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351",
+        "verified": true
+      },
+      {
+        "path": "tests/test_count_a_native_extension_v1.py",
+        "bytes": 15921,
+        "sha256": "24d6c88490ba99b6b3342d5474400c9d2d883a5d300310fe1ba7b9b478ce1b7e",
+        "verified": true
+      }
+    ],
+    "legacy_profile": {
+      "pin_count": 128,
+      "changed_path_count": 22,
+      "before_inventory_sha256": "315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212",
+      "after_inventory_sha256": "3e306777a03d90da1d4bc06e50a55cf82e5269d3898875fa13b18f73b820d1f2",
+      "config_file_sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+      "six_model_pins_checked": 6,
+      "new_changed_paths_outside128": true
+    },
+    "helper_binding": {
+      "bytes": 814,
+      "sha256": "79f7d0e4a8390cf2f0984d51c5e74c3f4e1f6d579977334fb27fc0ac67affcbc",
+      "three_actual_helper_hashes_match": true,
+      "canonical_source_config_sha256": "f823f1ee442f773d692971680684190ed9308bb2a41ce09e607d1564537d0122",
+      "full_Root_issued": false
+    },
+    "unchanged_verified": [
+      {
+        "path": "nfl_lab/audit_weekly_public_v1.py",
+        "sha256": "6b2fbb371f7c1881beb473484a8d1e568409b4ccda93a0d049c5753e6d4a90cd"
+      },
+      {
+        "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+        "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5"
+      },
+      {
+        "path": "nfl_lab/audit_weekly_template_v1.py",
+        "sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7"
+      },
+      {
+        "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+        "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+      },
+      {
+        "path": "tools/modern_count_a_mean_v3.py",
+        "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+      },
+      {
+        "path": "config/weekly-mae-display-core3-v1.json",
+        "sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b"
+      }
+    ],
+    "CPU_seconds": 0.23392095200000002,
+    "max_RSS_platform_units": 25848,
+    "scope": "Imported trusted source modules only to enumerate/hash128publicsourcepins. No native API/proof verification/inference/model deserialization/source acquisition."
+  },
+  "independent_tests": {
+    "command": [
+      "/workspace/nfl-venv/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_count_a_native_extension_v1.py"
+    ],
+    "cwd": "isolated own-A source review tree",
+    "returncode": 0,
+    "stdout": "......................                                       [100%]\n22 passed, 12 subtests passed in 0.10s\n",
+    "stderr": "",
+    "CPU_seconds": 0.47382,
+    "wall_seconds": 0.4776124259988137,
+    "max_RSS_platform_units": 40900,
+    "limits": {
+      "CPU_seconds": 30,
+      "wall_seconds": 120,
+      "address_space_bytes": 536870912
+    }
+  },
+  "preimport_and_guard_review": {
+    "trusted_template_sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7",
+    "source_read_scope": "count_a_helper_pins plus static-root validation call site",
+    "closed_three_helper_names": true,
+    "corrector_and_adapter_fixed_hashes_preserved": true,
+    "helper0_hash_from_bound_Root_checked_before_import": true,
+    "reason_no_gratuitous_rebind": "Both changed files are outside the legacy128pin inventory; config/template and22path before/after commitments remain exact. Prepared3-helperRootfragment must carry changed helper0hash, but is not an issued Root.",
+    "source_history_file_cap_bytes": 131072,
+    "complete_issued_Root_cap_bytes": 61440,
+    "current_full_issued_Root_bytes": "UNKNOWN_NOT_MEASURED_BY_REVIEWER"
+  },
+  "retained_review_attempts": [
+    {
+      "result": "REVIEW_SCRIPT_TYPEERROR",
+      "cause": "Initial metadata accessor treated registered forecast.container dict as a path; corrected to its existing path field. No artifact or source changed."
+    },
+    {
+      "result": "REVIEW_FIXTURE_ASSERTION",
+      "cause": "A malformed JSON-byte tamper was rejected by strict parser before the named FIT_START hash guard. Replaced the fixture with valid-JSON whitespace tamper to test that exact hash/length guard; passed. No implementation defect inferred from the initial expectation."
+    }
+  ],
+  "scope_counters": {
+    "model_deserializations": 0,
+    "model_fits": 0,
+    "NFL_prediction_rows": 0,
+    "NFL_grades": 0,
+    "native_API_calls": 0,
+    "native_private_writes": 0,
+    "source_or_implementation_edits": 0,
+    "peer_repository_writes": 0
+  },
+  "remaining_owner_action": "Root may publish reviewed correction to the same PR; canonical exact-new-head CI and authorized source/Root integration must then be completed. No current-feed or consumer receipt is established by this review."
+}

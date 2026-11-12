@@ -1,0 +1,245 @@
+{
+  "id": "A-FINAL-MILE-SOURCE-PUBLICATION-AND-CI-v1",
+  "observed_UTC": "2026-11-12 07:10:40 UTC",
+  "producer": {
+    "PR": 88,
+    "head": "3156058b91c7d9f0bb0f2cdebc4831994214e5bd",
+    "new_file_readback": [
+      {
+        "path": "nfl_lab/count_a_native_extension_v1.py",
+        "bytes": 18727,
+        "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351",
+        "git_blob": "4342ccf542bc6539d95343707c55dcf5c1f08940",
+        "pass": true
+      },
+      {
+        "path": "tests/test_count_a_native_extension_v1.py",
+        "bytes": 15921,
+        "sha256": "24d6c88490ba99b6b3342d5474400c9d2d883a5d300310fe1ba7b9b478ce1b7e",
+        "git_blob": "41d52c1274918c99a99da9900238b76c9a6bf46f",
+        "pass": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/producer/COUNTA_FIT_ENCODER_FIX_SOURCE_MANIFEST_V1.json",
+        "bytes": 3176,
+        "sha256": "ff582316aaf57159d8ecb3f3a3509a0a507b9d558d9e2f5cc1d292b8033a3610",
+        "git_blob": "22d08e00ae4aed52d0777b9d08106e4950e53522",
+        "pass": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/producer/COUNTA_CORRECTED_HELPER_ROOT_BINDING_V1.json",
+        "bytes": 814,
+        "sha256": "79f7d0e4a8390cf2f0984d51c5e74c3f4e1f6d579977334fb27fc0ac67affcbc",
+        "git_blob": "fe49a1fb7900c0ad0b1921ff7d117766060ce6d2",
+        "pass": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/review/COUNTA_ENCODING_INDEPENDENT_REVIEW_V1.json",
+        "bytes": 9113,
+        "sha256": "36b1201922058d50379d3f370e4536087ea1da9496339ea89381c3f3176d235b",
+        "git_blob": "334f8884674e625bb17b429ebc1cba94a4b09bab",
+        "pass": true
+      }
+    ],
+    "CI_run": 43169607018,
+    "jobs": [
+      {
+        "id": 131019466242,
+        "name": "source-shard-1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 131019466467,
+        "name": "source-shard-0",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 131019466480,
+        "name": "source-shard-3",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 131019466609,
+        "name": "source-shard-2",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 131019466668,
+        "name": "collect",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 131023977566,
+        "name": "offline",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "main": {
+    "PR": 89,
+    "head": "11298749041824d30eddbcd1afda5a74f1f9d870",
+    "new_file_readback": [
+      {
+        "path": "config/weekly-mae-display-core3-v1.json",
+        "bytes": 15712,
+        "sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+        "git_blob": "f59e8d82af969d80b69a1104f49c1d4c2d56ebe4",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_controller_v1.py",
+        "bytes": 46503,
+        "sha256": "2b2ddb1e035f18003a3b159e232d8bccbf52ed3800093c719808e56015307350",
+        "git_blob": "e2b069c2452a13fbb6e695e644ed060dbdd3a9f0",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+        "bytes": 130608,
+        "sha256": "40f5e92f132b574206b8260c4fc7eea7e38e3358e40649d192210c2a5bffd48d",
+        "git_blob": "1132a3f0b415b0f4f5b17cbb95175d522a6c8c8a",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_weekly_template_v1.py",
+        "bytes": 50966,
+        "sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7",
+        "git_blob": "0d5940542b9ab5cf0a78cc619f1b4c9748f11a45",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+        "bytes": 3460,
+        "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527",
+        "git_blob": "8ddba67130cc8085cb9c018c1a955f6fefd84329",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/count_a_native_extension_v1.py",
+        "bytes": 18727,
+        "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351",
+        "git_blob": "4342ccf542bc6539d95343707c55dcf5c1f08940",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+        "bytes": 20909,
+        "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5",
+        "git_blob": "23d18f096a0efc4c4bf9547a5ab90b9a40d255a0",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "tools/modern_count_a_mean_v3.py",
+        "bytes": 31195,
+        "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6",
+        "git_blob": "eeeb2af4c87ad4ffe72cc1df3b9ee35e75e247ae",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_count_retained_v1.py",
+        "bytes": 32318,
+        "sha256": "5c4d234e8d9817c6302bf1a4a64e97f64643dc652bb54a6534c9ad5923903966",
+        "git_blob": "99e4c012003bbe588d7ad08a3d1fcd91d0045a84",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/gha_private_checkpoint.py",
+        "bytes": 26945,
+        "sha256": "0a860949760959f9057bc08ad2c6b824bdec02ab31aadc000db65421d1bdcf78",
+        "git_blob": "60bee0e7617fad847a02d0b7784667941b62c02f",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_count_requalify_v1.py",
+        "bytes": 42168,
+        "sha256": "44ab42b05b00cfd54056204c490eac481aeb5a17a87d0de00afce150d330be11",
+        "git_blob": "66c9a616d9a1b954fec8c17c515c06a978ab9dd5",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/audit_count_checkpoint_v1.py",
+        "bytes": 34699,
+        "sha256": "62131cd48810daf27cb929bb8ed964f5b71285c94da82a4f78c45015f95e6dd4",
+        "git_blob": "0073758a996a3e40280e8d0629bc982349f64a35",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "nfl_lab/operational_failure_v1.py",
+        "bytes": 22065,
+        "sha256": "91cb45345340a0db9a9b701756734eec0b8ea74e8adcfe8d20d5575d12796ad2",
+        "git_blob": "74639baacc61afb36e58d389e7233ff55b23761a",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "tests/test_count_a_parent_metadata_v1.py",
+        "bytes": 2430,
+        "sha256": "18fc6810cba1d2e50dc5ba10e5fd777625bd16df9e3ce00094f958cd55d3f1a5",
+        "git_blob": "5ffd6b09c10d1da28eaf5e108637f676847ad1de",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/producer/COUNTA_MAIN_PARENT_SYNC_SOURCE_MANIFEST_V1.json",
+        "bytes": 13191,
+        "sha256": "702f697d6addac17589534c4291cae05297c247fd86b0bcbdac5bb2a2266ed5e",
+        "git_blob": "d8aef8a09b03d1f844325ee1979550dca7279d8e",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/producer/COUNTA_MAIN_PARENT_PIN_FRAGMENT_V1.json",
+        "bytes": 5166,
+        "sha256": "7a6e3b483abd9e069dca7bea4598c55385dec5dd9f292507fe041a5a6af01a34",
+        "git_blob": "b015a0fc656d0052dc19f63cb216631babb07d49",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/producer/COUNTA_MAIN_PARENT_COMMIT_PHASE_RECEIPT_V1.json",
+        "bytes": 1883,
+        "sha256": "bd6a68face029256b6c423e8b7d7d18db448450ed2cf2bd33f60ba5e91b786cb",
+        "git_blob": "53d304df66fbe8cdd019a21a1b423378419a27fe",
+        "pass": true,
+        "content_addressed_identity": true
+      },
+      {
+        "path": "reports/abc-championship/final-mile-producer-delivery-01/review/COUNTA_MAIN_SHARED_SOURCE_SYNC_INDEPENDENT_REVIEW_V1.json",
+        "bytes": 15715,
+        "sha256": "4e6100893929f65449ac44919ad401ecde293502f54fec82b0f0d026cfda212c",
+        "git_blob": "447e396994ac9929795e77b610d067d7ae023721",
+        "pass": true,
+        "content_addressed_identity": true
+      }
+    ],
+    "CI_run": 43172178372,
+    "jobs": [
+      {
+        "id": 131027833339,
+        "name": "offline",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "landing": "CanonicalREADYboth;read-onlyplansrequireperPRexactheadconfirmation;no merge-state mutation",
+  "native": "No model load/inference/issuedRoot/currentSOURCE/forecastcapture/derivedfeed/consumeradmission/websiteactivation"
+}

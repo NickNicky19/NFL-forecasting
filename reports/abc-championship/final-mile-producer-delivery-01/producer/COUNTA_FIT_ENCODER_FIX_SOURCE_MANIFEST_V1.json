@@ -1,0 +1,61 @@
+{
+  "id": "COUNTA_FIT_ENCODER_CORRECTION_SOURCE_MANIFEST-v1",
+  "UTC": "2026-11-12T06:33:32.169931+00:00",
+  "base_review_head": "af405c4604f6eac935e594f1acd3ab492eef412c",
+  "local_base_commit": "bf3b14b1c8c080e77e7f494bf3cd8c9c1a00d2dd",
+  "state": "FROZEN_FOR_INDEPENDENT_REVIEW;NOT_MERGED_OR_NATIVE_ACCEPTED",
+  "files": [
+    {
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "local": "/tmp/follow-counta-native-review/nfl_lab/count_a_native_extension_v1.py",
+      "bytes": 18727,
+      "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351",
+      "git_blob_sha": "4342ccf542bc6539d95343707c55dcf5c1f08940",
+      "before_bytes": 18733,
+      "before_sha256": "dec10328c7811d788c4b605a4098d01e8f95ab99dca3455b547cc699e7686008"
+    },
+    {
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "local": "/tmp/follow-counta-native-review/tests/test_count_a_native_extension_v1.py",
+      "bytes": 15921,
+      "sha256": "24d6c88490ba99b6b3342d5474400c9d2d883a5d300310fe1ba7b9b478ce1b7e",
+      "git_blob_sha": "41d52c1274918c99a99da9900238b76c9a6bf46f",
+      "before_bytes": 14677,
+      "before_sha256": "5bf6ce70469b0eca687f61de627dac3103486c2a970e40c62006071ca3ce1462"
+    }
+  ],
+  "change": "Removeunregisterednewlinefromoriginalrecipehashonly;addsyntheticencoderregressionandowner-localgenuinemetadataPASSreceipt.No predictionrecipe/outputchange.",
+  "source_profile": {
+    "original128pins_unchanged": true,
+    "original22changedpathset_unchanged": true,
+    "original_before_sha256": "315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212",
+    "actual_after_sha256": "3e306777a03d90da1d4bc06e50a55cf82e5269d3898875fa13b18f73b820d1f2",
+    "config_file_sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+    "six_model_source_pins_unchanged": true,
+    "why_no_config_or_template_edit": "Bothchangedpathsareoutside128legacypins.TheexistingtrustedtemplatevalidatesthreeRoothelperhashesbeforeimport;thereisnooldhelper0literaltochange.UpdatedpreparedRoothelperbindingisprovided,notfakeissuedRoot."
+  },
+  "root_helper_binding": {
+    "path": "COUNTA_CORRECTED_HELPER_ROOT_BINDING_V1.json",
+    "bytes": 814,
+    "sha256": "79f7d0e4a8390cf2f0984d51c5e74c3f4e1f6d579977334fb27fc0ac67affcbc"
+  },
+  "patch": {
+    "path": "COUNTA_FIT_ENCODER_FIX_V1.patch",
+    "bytes": 2577,
+    "sha256": "e3f209e0c2057b0ec4cf320f47b89acb5312d9a2800d261a2803099d4378b7b5"
+  },
+  "software": {
+    "focused_tests": "22passed+12subtests;previous21retainedplusnewencoderregression",
+    "pytest_wall_seconds": 0.12,
+    "executor_command_wall_seconds": 0.487932923,
+    "genuine_original_metadata": "PASSaftercorrection;COUNT_A_ORIGINAL_RECIPEbefore;no modeldeserialization",
+    "AST": "PASSbothchangedfiles",
+    "legacy128profile": "PASSunchangedactualfullsourceinventory;oldsourceCIaf405all6retained,canonicalnewheadCIstillrequired",
+    "new_NFL_fits": 0,
+    "new_model_loads": 0,
+    "NFL_inference": 0,
+    "native_private_reads_writes": 0,
+    "source_protected_metadata_owner_local_only": true
+  },
+  "actual_delivery": "No currentRoot/sourcequery/capture/publication/consumeruseclaimed"
+}
