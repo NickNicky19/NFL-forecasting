@@ -76,7 +76,7 @@ ROOT_V4 = "audit-weekly-hosted-v4-root-GO"
 ROOT_V5 = "audit-weekly-hosted-v5-root-GO"
 # V5-only candidates. The original128 intersection is mandatory; persist_state
 # is separately helper-pinned and cannot be invented as an old legacy pin.
-_MAE_RUNTIME_OVERRIDE_PATHS = frozenset({"nfl_lab/audit_weekly_retained_v1.py","nfl_lab/audit_weekly_controller_v1.py",
+_MAE_RUNTIME_OVERRIDE_PATHS = frozenset({"nfl_lab/features.py","nfl_lab/audit_weekly_retained_v1.py","nfl_lab/audit_weekly_controller_v1.py",
     "nfl_lab/audit_weekly_provider_v1.py",
     "nfl_lab/audit_weekly_runtime_v1.py","tools/audit_weekly_runtime_v1.py",
     "tools/audit_weekly_archive_v1.py","nfl_lab/audit_weekly_delivery_v1.py","tools/persist_state.py"})
@@ -250,6 +250,8 @@ def validate_source_history_binding(root):
         require("source_history_binding" not in root,"SOURCE_HISTORY_BINDING_REQUIRES_ROOT_V4")
         return None
     extra={"mae_registration","mae_helper_pins"} if root["schema_version"]==ROOT_V5 else set()
+    if "count_a_mean_shadow" in root:
+        require(root["schema_version"]==ROOT_V5,"COUNT_A_CURRENT_ROOT_V5_REQUIRED");extra|={"count_a_mean_shadow"}
     require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding"}|extra,"CLOSED_SOURCE_HISTORY_ROOT_V4")
     value=_source_history_unwrap(root["source_history_binding"])
     require(root.get("source_sha")==value["target_source_sha"]
@@ -271,7 +273,7 @@ def _prior_source_history_metadata(root):
     from . import private_draft_store as store
     if root.get("schema_version")!=ROOT_V5:return validate_source_history_binding(root)
     from . import weekly_mae_display_profile_v1 as profile
-    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding","mae_registration","mae_helper_pins"},
+    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding","mae_registration","mae_helper_pins"}|({"count_a_mean_shadow"}if"count_a_mean_shadow"in root else set()),
         "CLOSED_ORIGINAL_ROOT_V5_METADATA")
     profile.prior_extension_metadata(root)
     value=_source_history_unwrap(root["source_history_binding"])
@@ -352,6 +354,9 @@ def _source_history_runtime_scope(current_root, original_root, binding):
     second=binding["schema_version"]==SOURCE_HISTORY_BINDING_V2
     expected_schema=binding["predecessor_root_schema"] if second else template.ROOT_V3
     expected_keys=_SOURCE_ROOT_V3_KEYS|({"source_history_binding"} if second else set())|({"mae_registration","mae_helper_pins"} if expected_schema==ROOT_V5 else set())
+    if "count_a_mean_shadow" in original_root:
+        require(expected_schema==ROOT_V5,"COUNT_A_EXTRA_ONLY_ON_BOUND_V5_PREIMAGE")
+        expected_keys|={"count_a_mean_shadow"}
     require(type(original_root) is dict and set(original_root)==expected_keys
         and original_root["schema_version"]==expected_schema and original_root["source_sha"]==old["source_sha"]
         and original_root["code_pins"]==_source_history_pins(current_root,binding)
@@ -375,7 +380,21 @@ def _source_history_runtime_scope(current_root, original_root, binding):
         "schema_version","source_sha","code_pins","publication_registration","source_history_binding","mae_registration","mae_helper_pins"}
     if binding["runtime_transition"]=="DUAL_RUNTIME_ROTATE":
         changed|={"qualified_runtime","pending_census","prior_capture_qualified_runtime"}
-    require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in set(original_root)-changed),
+    frozen=set(original_root)-changed
+    if store.canonical(original_root["retained_registration"])!=store.canonical(current_root["retained_registration"]):
+        # Authenticate the old Root above; only a lossless transport may differ.
+        from . import audit_count_retained_v1 as retained
+        try:
+            original_registration=template.retained_registration(original_root)
+            current_registration=template.retained_registration(current_root)
+            retained.validate_registration(original_registration)
+            retained.validate_registration(current_registration)
+        except (template.TemplateError,store.StoreError):
+            raise HistoryError("SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED") from None
+        require(store.canonical(original_registration)==store.canonical(current_registration),
+            "SOURCE_HISTORY_RETAINED_REGISTRATION_BODY_UNCHANGED")
+        frozen-={"retained_registration"}
+    require(all(store.canonical(original_root[k])==store.canonical(current_root[k]) for k in frozen),
         "SOURCE_HISTORY_STATIC_FIELDS_AND_RUNTIMES_UNCHANGED")
     original_policy=original_root["publication_registration"];current_policy=current_root["publication_registration"]
     policy_keys={"policy_gzip_base64","policy_sha256","rights_authority","r0"}
