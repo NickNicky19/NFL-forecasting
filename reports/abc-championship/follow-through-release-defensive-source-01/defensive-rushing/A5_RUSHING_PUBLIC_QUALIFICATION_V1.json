@@ -1,0 +1,431 @@
+{
+  "id": "A-FOLLOW-THROUGH-RUSHING-DEFENSE-A5-v1",
+  "UTC": "2026-11-12T04:16:39.155397+00:00",
+  "assignment": "FOLLOW-THROUGH-RELEASE-AND-DEFENSIVE-SOURCE-01",
+  "owner": "A; C coordinates one source qualification/experiment",
+  "activity": "BOUNDED_PUBLIC_METADATA_AND_USER_REFERENCE_ARITHMETIC_ONLY",
+  "user_reference": {
+    "path": "A5_RUSHING_REFERENCE.csv",
+    "bytes": 964,
+    "sha256": "e342f92bc7438a49daf30976d2ae5094e0a2514808e5226c4cf0747b5601b72f",
+    "freeze": "Exact32-row CSV/header as forwarded from visible user AppendixA5 by parent; UTF-8 LF with terminal newline; no values rederived or workbook recreated",
+    "source_status": "USER_SUPPLIED_REFERENCE_NOT_EXTERNALLY_VERIFIED",
+    "workbook_named": "nfl_defensive_rankings_2026.xlsx",
+    "workbook_available": false,
+    "workbook_sha256": null,
+    "original_provider_URL": null,
+    "raw_source_snapshot_sha256": null,
+    "source_citation_reported": "Pro Football Reference RB position group",
+    "reported_as_of": "Through completed November9,2026, described Week9; season/cutoff clocks unauthenticated",
+    "source_observed_UTC": null,
+    "historical_original_availability_UTC": null,
+    "source_revision_policy": null,
+    "team_identity_effective_times": null,
+    "fullback_classification": null,
+    "total_RB_yards_not_supplied": true
+  },
+  "workbook_search": {
+    "kind": "filename-only rg, explicit permitted attachment roots plus current A checkout; no source file contents or protected/native scan",
+    "roots": [
+      "/tmp/codex-remote-attachments",
+      "/workspace/attachments",
+      "/workspace/library-files",
+      "/workspace/lab-input",
+      "/workspace/nfl-methods-integration"
+    ],
+    "patterns": [
+      "*.xlsx",
+      "*nfl_defensive_rankings_2026*"
+    ],
+    "match_count": 0,
+    "rg_no_match_exit": 1,
+    "limit": "Bounded absence in these roots, not proof file never existed elsewhere. No unnamed-URL search or workbook recreation."
+  },
+  "arithmetic": {
+    "teams": 32,
+    "distinct_display_team_labels": 32,
+    "all_games_positive": true,
+    "provided_games_values": [
+      8,
+      9
+    ],
+    "carry_per_game_rule": "Decimal(carries)/Decimal(Games),quantize0.01 ROUND_HALF_UP",
+    "carry_per_game_matches": 32,
+    "rank_rule": "1+number with strictly greater total RB carries; prefixT for duplicated total",
+    "rank_matches": 32,
+    "ranking_interpretation": "Ranks cumulative volume faced, not per-game volume or defensive quality",
+    "yards_per_carry_verification": "NOT_EXECUTABLE_WITHOUT_NUMERATOR_AND_EXACT_ROLE_CONTRACT",
+    "reverse_inferred_yard_totals": 0
+  },
+  "contract_mapping": [
+    {
+      "field": "Defense",
+      "meaning": "Provider-display team label",
+      "unit": "label",
+      "numerator": null,
+      "denominator": null,
+      "existing_A": "All32 TEAMS and canonical team/alias contract; source-specific identifier/effective-team bridge still required",
+      "mechanism_class": "ALREADY_PRESENT",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "Display label alone is not a verified provider team/event/version identity"
+    },
+    {
+      "field": "Rank",
+      "meaning": "Descending cumulative RB carries faced, competition ties",
+      "unit": "ordinal",
+      "numerator": "RB carries faced",
+      "denominator": null,
+      "existing_A": "No rank value is required by R0\u2013R3; deterministic transform of already listed volume",
+      "mechanism_class": "INCOMPATIBLE",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "This ranks volume, not defensive quality or adjusted talent; do not append an untrained ranking to saved model"
+    },
+    {
+      "field": "Games",
+      "meaning": "Reported team-defense game count in unspecified source window",
+      "unit": "games",
+      "numerator": "eligible game count",
+      "denominator": null,
+      "existing_A": "f_pce_opp_games support/R1; defense export eligible_games by qualified earlier window",
+      "mechanism_class": "ALREADY_PRESENT",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "Season window, eligible-game census and finality not authenticated; does not supply plays/carries or offense-opportunity denominator"
+    },
+    {
+      "field": "RB carries faced",
+      "meaning": "Reported credited carries by provider RB position group; fullback classification unknown",
+      "unit": "attempts",
+      "numerator": "RB carries faced",
+      "denominator": null,
+      "existing_A": "Raw defense export has rush_kind=RB attempts; f_pce_opp_carries/R1 counts all credited carries, not the same role denominator",
+      "mechanism_class": "ALREADY_PRESENT",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "Concept exists; provider RB role definition/history/scope differs from fitted R1 all-carry support and is not interchangeable"
+    },
+    {
+      "field": "RB carries per game",
+      "meaning": "Raw RB workload volume divided by reported Games",
+      "unit": "attempts/game",
+      "numerator": "RB carries faced",
+      "denominator": "Games",
+      "existing_A": "Raw profile count/game support permits this descriptive ratio; not team run probability per offensive opportunity",
+      "mechanism_class": "ALREADY_PRESENT",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "All32 displayed values match half-up rounding; volume reflects opponents/game script as well as defense; authentic source window missing"
+    },
+    {
+      "field": "RB yards per carry",
+      "meaning": "Reported raw RB signed rushing yards divided by credited RB carries",
+      "unit": "yards/attempt",
+      "numerator": "RB rushing yards faced NOT_SUPPLIED",
+      "denominator": "reported RB carries faced, exact metric compatibility unverified",
+      "existing_A": "Raw defense RB-cell mean_signed_yards already exists; R3 instead uses shrunken offense-adjusted conditional residuals",
+      "mechanism_class": "ALREADY_PRESENT",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "Rounded mean cannot recover exact yards or conditional distributions; raw RB season YPC is incompatible with fitted all-carry conditional residual fields"
+    },
+    {
+      "field": "Adjusted defensive efficiency",
+      "meaning": "Earlier-offense-adjusted context-specific signed-yard residual",
+      "unit": "yards/attempt residual",
+      "numerator": "sum(y_j - n_j * earlier offense expectation_j)",
+      "denominator": "sum(n_j)+80 shrinkage carry strength",
+      "existing_A": "R3 36 fields f_pce_opp_*, previous D1/S1 input block",
+      "mechanism_class": "EQUIVALENT_TEST_COMPLETE",
+      "A5_input_status": "INCOMPATIBLE",
+      "why": "A5 supplies no adjustment, opponent schedule/context baseline, shrinkage or historical-origin sequence; cannot derive this from raw YPC"
+    },
+    {
+      "field": "Direction/gap/down/distance efficiency",
+      "meaning": "Context-conditional signed yards and EPA-positive outcomes",
+      "unit": "conditional yards/carry or success rate",
+      "numerator": "eligible context yards / declared positive-EPA count",
+      "denominator": "credited non-2pt carries in same context",
+      "existing_A": "Efficiency schema/D1/S1 plus R3 conditional opponent values; all32 raw descriptive components",
+      "mechanism_class": "EQUIVALENT_TEST_COMPLETE",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "A5 has no contextual play cells, EPA or first-down numerator; no evidence this new reference completes that mechanism"
+    },
+    {
+      "field": "New source/timing/provider-role increment",
+      "meaning": "Different qualified as-of RB-only source block against own unchanged baseline",
+      "unit": "source experiment",
+      "numerator": null,
+      "denominator": null,
+      "existing_A": "No new fit or source task allocated here; C coordinates one qualification route",
+      "mechanism_class": "SOURCE_BLOCKED",
+      "A5_input_status": "SOURCE_BLOCKED",
+      "why": "Could be different information only after actual workbook/source/version/earlier snapshots qualify; no GENUINELY_NEW_QUALIFIED block currently established"
+    }
+  ],
+  "existing_bindings": [
+    {
+      "path": "nfl_lab/profile_increment_a_schema_v2.json",
+      "bytes": 3804,
+      "sha256": "3279b25863280abec0119c79823b951a3cdbb6dfa056bc8aa36758c2ecc6e378"
+    },
+    {
+      "path": "nfl_lab/profile_increment_a_v2.py",
+      "bytes": 19446,
+      "sha256": "eb5e7e07291d8954a09dc2fa73e0044fa4ee6a21dd2b5123753b1c421ae2159e"
+    },
+    {
+      "path": "nfl_lab/player_context_rush_efficiency_v1.py",
+      "bytes": 22637,
+      "sha256": "7e34b40f39fa1e6295637ecb582483c57f4a6dfed22aea4e0dab7d7fc0469487"
+    },
+    {
+      "path": "reports/abc-championship/player-context-completion-decision-01/EFFICIENCY_PROFILE_SCHEMA_V1.json",
+      "bytes": 3409,
+      "sha256": "49b2777e67818ade552c38044dbb813d217a8228015f763e93fdcb49c934af4c"
+    },
+    {
+      "path": "reports/abc-championship/player-context-completion-decision-01/EFFICIENCY_METHOD_V1.md",
+      "bytes": 5104,
+      "sha256": "c7754b781962d883443c32dcf71f0cdf29449c1d99c91006a10467030df464fd"
+    },
+    {
+      "path": "reports/abc-championship/player-context-completion-decision-01/EFFICIENCY_PROTOCOL_V1.json",
+      "bytes": 8933,
+      "sha256": "71a19cac005afce33e6a28517bf06abbf8e4433eabd4e567b5a3372cd1dd98dd"
+    },
+    {
+      "path": "reports/abc-championship/profile-increment-to-release-01/EXECUTED_INCREMENT_CHECKPOINT_V2.md",
+      "bytes": 28198,
+      "sha256": "a2e6c86ea721a87556c84fc7e80ed860657a4b6825f84bd62be693a014186de7"
+    },
+    {
+      "path": "reports/abc-championship/profile-increment-to-release-01/KEEP_STOP_V2.json",
+      "bytes": 1660,
+      "sha256": "15946316370af2bbac31158e76b31a9f109cd3a2e13ca579243492af6e0f8d2f"
+    },
+    {
+      "path": "reports/abc-championship/profile-increment-to-release-01/RECOVERED_EFFICIENCY_SCORES_V1.json",
+      "bytes": 3547837,
+      "sha256": "ac56ba8cbd74340bdb164fd9b13bd924b194e0fb0481e845e3ce732395cee528"
+    }
+  ],
+  "completed_results_reused": {
+    "R0_R3": {
+      "procedure_prefix": "PROFILE-INCREMENT-TO-RELEASE-01-A-v2",
+      "R0": "RB_ONLY_LEAF_BASE",
+      "R1": "R1_RB_ONLY_LEAF_SUPPORT",
+      "R2": "R2_RB_ONLY_LEAF_PLAYER_OFFENSE",
+      "R3": "R3_RB_ONLY_LEAF_DEFENSE",
+      "actual_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "eligible": 183,
+      "decided": 177,
+      "unknown_participation": 6,
+      "games": 53,
+      "R2_median": {
+        "wins": 94,
+        "losses": 83
+      },
+      "R3_median": {
+        "wins": 91,
+        "losses": 86
+      },
+      "always_under": {
+        "wins": 94,
+        "losses": 83
+      },
+      "R3_minus_R2_decisions": -3,
+      "R3_minus_R2_game_sensitivity95_pp": [
+        -5.08,
+        1.75
+      ],
+      "feature_use": "R3split32of36defense fields; no new unused-column/cache allegation",
+      "decision": "CLOSE_RECIPE_NO_GAIN; no repetition"
+    },
+    "efficiency_fixed_workload": [
+      {
+        "candidate": "D0_UNCHANGED_HGB_MAE",
+        "actual_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "eligible": 183,
+        "decided": 177,
+        "OVER": {
+          "decided": 59,
+          "losses": 31,
+          "rate": 0.4745762711864407,
+          "selected": 62,
+          "wins": 28
+        },
+        "UNDER": {
+          "decided": 118,
+          "losses": 55,
+          "rate": 0.5338983050847458,
+          "selected": 121,
+          "wins": 63
+        },
+        "COMBINED": {
+          "decided": 177,
+          "losses": 86,
+          "rate": 0.5141242937853108,
+          "selected": 183,
+          "wins": 91
+        },
+        "MAE": 23.04735293877173,
+        "bias": -8.941832158920457
+      },
+      {
+        "candidate": "D1_HGB_RAW_CONDITIONAL_PROFILE",
+        "actual_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "eligible": 183,
+        "decided": 177,
+        "OVER": {
+          "decided": 59,
+          "losses": 31,
+          "rate": 0.4745762711864407,
+          "selected": 62,
+          "wins": 28
+        },
+        "UNDER": {
+          "decided": 118,
+          "losses": 55,
+          "rate": 0.5338983050847458,
+          "selected": 121,
+          "wins": 63
+        },
+        "COMBINED": {
+          "decided": 177,
+          "losses": 86,
+          "rate": 0.5141242937853108,
+          "selected": 183,
+          "wins": 91
+        },
+        "MAE": 23.04735293877173,
+        "bias": -8.941832158920457
+      },
+      {
+        "candidate": "S0_UNCONDITIONAL_OWN_YPC_FIXED_N",
+        "actual_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "eligible": 183,
+        "decided": 177,
+        "OVER": {
+          "decided": 101,
+          "losses": 53,
+          "rate": 0.4752475247524752,
+          "selected": 106,
+          "wins": 48
+        },
+        "UNDER": {
+          "decided": 76,
+          "losses": 35,
+          "rate": 0.5394736842105263,
+          "selected": 77,
+          "wins": 41
+        },
+        "COMBINED": {
+          "decided": 177,
+          "losses": 88,
+          "rate": 0.5028248587570622,
+          "selected": 183,
+          "wins": 89
+        },
+        "MAE": 22.684818044239545,
+        "bias": -1.254348309775434
+      },
+      {
+        "candidate": "S1_CONDITIONAL_EFFICIENCY_FIXED_N",
+        "actual_weeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "eligible": 183,
+        "decided": 177,
+        "OVER": {
+          "decided": 100,
+          "losses": 50,
+          "rate": 0.5,
+          "selected": 105,
+          "wins": 50
+        },
+        "UNDER": {
+          "decided": 77,
+          "losses": 33,
+          "rate": 0.5714285714285714,
+          "selected": 78,
+          "wins": 44
+        },
+        "COMBINED": {
+          "decided": 177,
+          "losses": 83,
+          "rate": 0.5310734463276836,
+          "selected": 183,
+          "wins": 94
+        },
+        "MAE": 22.684326333014454,
+        "bias": -2.5800621491920634
+      }
+    ],
+    "strong_control_limit": "S1five-week94/177 ties AlwaysUnder94/177 despite improving over S089/177. D0/D1both91/177; no new predictive replacement. Broader mixed W6\u20137 diagnostic and W8 references remain separate.",
+    "timing": "A48h median97/177 already completed and replacement-inconclusive; no additional lag or profile sweep authorized by this task"
+  },
+  "decisions": {
+    "reference": "PRESERVE_AS_USER_SUPPLIED_SOURCE_LEAD",
+    "arithmetic": "PASS32ROUNDING_AND_RANK_CHECKS_ONLY",
+    "raw_provider_admission": "SOURCE_BLOCKED",
+    "new_qualified_input_block": "NONE_ESTABLISHED",
+    "unchanged_rushing_defense_recipe": "CLOSE_RECIPE_NO_GAIN_REUSE_PRIOR_RESULTS",
+    "new_fit_or_collector": "NOT_LAUNCHED",
+    "current_release": "UNCHANGED; SOURCE_REVIEW_DOES_NOT_BLOCK_OLDER_INDEPENDENT_DELIVERY"
+  },
+  "one_dependency": {
+    "executor": "Existing Codex C source-qualification owner/coordinator; A supplies rushing semantics only",
+    "missing": "Original workbook bytes or exact existing artifact reference; original linked data/source, RB/FB and official-stat definitions, exact numerator/denominator/event census, snapshot/revision/availability clocks",
+    "next_permissible_action": "Locate/receive the original named artifact through existing owner route; qualify source bindings once. Do not recreate workbook, buy access, collect duplicate feeds or search unnamed URLs.",
+    "completion": "C records authenticated source/workbook hash and field contracts or precise unavailable status; any predictive increment then requires own unchanged-baseline comparison under its real history policy, not an automatic fit/release here."
+  },
+  "resource_scope": {
+    "finite_metadata_only_budget": "30CPU seconds/120wall/128MiB workingRSS/128KiB newlocalmetadata; no native allocation",
+    "format_and_arithmetic_CPU_seconds": 0.09756916299999999,
+    "RSS_bytes": 27471872,
+    "scope": "Generation/arithmetic only; search/read tool walltime not misreported as process cost"
+  },
+  "activities": {
+    "new_fits": 0,
+    "model_loads": 0,
+    "forecast_inference": 0,
+    "NFL_prediction_or_label_row_reads": 0,
+    "NFL_grades": 0,
+    "source_HTTP": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "ledger_or_index_edits": 0,
+    "production_writes": 0
+  },
+  "publication_scope": {
+    "source_rows": "The unchanged user-supplied32rowCSV is retained locally as a reference derivation/hash; not included as publicrawsourcecontent before provider/source rights are qualified. Allrecipients alreadyreceivedAppendixA.",
+    "input_reference_sha256": "e342f92bc7438a49daf30976d2ae5094e0a2514808e5226c4cf0747b5601b72f",
+    "workbook_available": false,
+    "not_claimed": "No workbook/publicexternal source bytes, URLs, historical clocks or target/yard numerator were obtained.",
+    "scope": "Publish field definitions, hashed bindings, arithmetic-count receipts and already-permitted older research aggregates only. C owns single qualification/extraction."
+  }
+}

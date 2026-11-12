@@ -1,0 +1,1178 @@
+{
+  "id": "A-CURRENT-C-RELEASE-DECISIONS-ACK-PUBLIC-v1",
+  "UTC": "2026-11-12T04:25:27.036065+00:00",
+  "scope": "Read-only acknowledgement of Cexistingrelease-versiondecisions plus previouslypublishedA source-panel evidence; NOT another master ranking or newreleaseversion. Mixed source periods/panels remain separate.",
+  "C_source": {
+    "ref": "2e604d8801d74788a61b3fa9e5206e7c4a452e81",
+    "path": "reports/category-decision-release-01/CATEGORY_PRODUCT_DECISIONS.json",
+    "sha256": "f6286af137ca5ef14a4fd183cf93836ec0771893c3ed445e58b432a48f5a844b"
+  },
+  "protocol": {
+    "SHA256": "fa19581487519a854948269bc1ce328cbbcdc734afee2464f1ff778d1ff241a1",
+    "path": "reports/abc-championship/PROTOCOL-v2-C-1.json"
+  },
+  "scorer": {
+    "SHA256": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+    "path": "src/abc_championship_v2.py"
+  },
+  "C_status_counts": {
+    "ABSTAIN": 2,
+    "BLOCKED": 1,
+    "KEEP_INCUMBENT": 5,
+    "SHADOW": 4
+  },
+  "canonical_consumer_bindings": {
+    "repository": "NickNicky19/NFL-forecasting-NGS-C",
+    "ref": "2e604d8801d74788a61b3fa9e5206e7c4a452e81",
+    "path": "reports/category-decision-release-01/website/LIVE_PRODUCT_BINDINGS.json",
+    "SHA256": "83514b8f91e3b854c0bc1a4bc83e7e992d46b15b3dc828e7ff4d584782e754d3"
+  },
+  "rows": [
+    {
+      "category": "pass_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "KEEP_INCUMBENT",
+      "C_preferred_review_procedure": "A::pass_yd::HGB_MAE_DIRECT::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::mae_objective_point",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::pass_yd::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 45,
+          "losses": 17,
+          "rate": 0.6222222222222222,
+          "selected": 45,
+          "wins": 28
+        },
+        "UNDER": {
+          "decided": 44,
+          "losses": 20,
+          "rate": 0.5454545454545454,
+          "selected": 44,
+          "wins": 24
+        },
+        "COMBINED": {
+          "decided": 89,
+          "losses": 37,
+          "rate": 0.5842696629213483,
+          "selected": 89,
+          "wins": 52
+        }
+      },
+      "coverage": {
+        "eligible": 89,
+        "available": 89,
+        "selected": 89,
+        "unknown": 0,
+        "unavailable": 0,
+        "games": 51,
+        "fallback_states": {
+          "": 89
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 37,
+          "WIN": 52
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "pass_td",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "BLOCKED",
+      "C_preferred_review_procedure": "A::pass_td::COUNT_A_MEAN::f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83::mean_objective_point",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::pass_td::f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83::COUNT_A_MEAN::mean_objective_point",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 45,
+          "losses": 20,
+          "rate": 0.5555555555555556,
+          "selected": 45,
+          "wins": 25
+        },
+        "UNDER": {
+          "decided": 41,
+          "losses": 17,
+          "rate": 0.5853658536585366,
+          "selected": 41,
+          "wins": 24
+        },
+        "COMBINED": {
+          "decided": 86,
+          "losses": 37,
+          "rate": 0.5697674418604651,
+          "selected": 86,
+          "wins": 49
+        }
+      },
+      "coverage": {
+        "eligible": 86,
+        "available": 86,
+        "selected": 86,
+        "unknown": 0,
+        "unavailable": 0,
+        "games": 50,
+        "fallback_states": {
+          "": 86
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 37,
+          "WIN": 49
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "No new admitted Afeed; CountAnativeintegrationisreview-stage untilactualsource/capsule/profile/root/lease acceptance.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "pass_cmp",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "SHADOW",
+      "C_preferred_review_procedure": "A::pass_cmp::CATBOOST_MEDIUM::8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6::mean_objective_point",
+      "C_duration_scope": {
+        "actual_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ]
+        ],
+        "scientific_combined_support": "88decided<100 V6scientific-leader support; five-week floor met. This does not invent a new operational provisional veto.",
+        "status": "MET_FIVE_OWNER_LOCAL_ACTUAL_LINE_WEEKS_AT_RETAINED_TIER"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::pass_cmp::8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6::CATBOOST_MEDIUM::mean_objective_point",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 38,
+          "losses": 13,
+          "rate": 0.6578947368421053,
+          "selected": 38,
+          "wins": 25
+        },
+        "UNDER": {
+          "decided": 50,
+          "losses": 23,
+          "rate": 0.54,
+          "selected": 50,
+          "wins": 27
+        },
+        "COMBINED": {
+          "decided": 88,
+          "losses": 36,
+          "rate": 0.5909090909090909,
+          "selected": 88,
+          "wins": 52
+        }
+      },
+      "coverage": {
+        "eligible": 88,
+        "available": 88,
+        "selected": 88,
+        "unknown": 0,
+        "unavailable": 0,
+        "games": 51,
+        "fallback_states": {
+          "": 88
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 36,
+          "WIN": 52
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "pass_att",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "KEEP_INCUMBENT",
+      "C_preferred_review_procedure": null,
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+      "origin_session": "B",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 5,
+          "losses": 1,
+          "rate": 0.8,
+          "selected": 5,
+          "wins": 4
+        },
+        "UNDER": {
+          "decided": 82,
+          "losses": 42,
+          "rate": 0.4878048780487805,
+          "selected": 82,
+          "wins": 40
+        },
+        "COMBINED": {
+          "decided": 87,
+          "losses": 43,
+          "rate": 0.5057471264367817,
+          "selected": 87,
+          "wins": 44
+        }
+      },
+      "coverage": {
+        "eligible": 87,
+        "unavailable": 0,
+        "abstentions": 0,
+        "games": 51,
+        "player_games": 87,
+        "fallback_outputs": 0,
+        "coverage": 1.0,
+        "states": {
+          "LOSS": 43,
+          "WIN": 44
+        },
+        "eligible_mask_sha256": "fe7e276a93990051a1e57ba85c5121dcf0d0848ba92e366cbcb839e1acf8a2f5",
+        "decided_mask_sha256": "fe7e276a93990051a1e57ba85c5121dcf0d0848ba92e366cbcb839e1acf8a2f5"
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "pass_int",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "SHADOW",
+      "C_preferred_review_procedure": "A::pass_int::LEAF_CDF::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::mean",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::pass_int::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 81,
+          "losses": 35,
+          "rate": 0.5679012345679012,
+          "selected": 81,
+          "wins": 46
+        },
+        "UNDER": {
+          "decided": 6,
+          "losses": 2,
+          "rate": 0.6666666666666666,
+          "selected": 6,
+          "wins": 4
+        },
+        "COMBINED": {
+          "decided": 87,
+          "losses": 37,
+          "rate": 0.5747126436781609,
+          "selected": 87,
+          "wins": 50
+        }
+      },
+      "coverage": {
+        "eligible": 87,
+        "available": 87,
+        "selected": 87,
+        "unknown": 0,
+        "unavailable": 0,
+        "games": 50,
+        "fallback_states": {
+          "": 87
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 37,
+          "WIN": 50
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "rush_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "KEEP_INCUMBENT",
+      "C_preferred_review_procedure": "A::rush_yd::EQUAL_CDF_CAT_HGB_POINT::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::empirical_point_blend",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::rush_yd::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 78,
+          "losses": 40,
+          "rate": 0.48717948717948717,
+          "selected": 81,
+          "wins": 38
+        },
+        "UNDER": {
+          "decided": 209,
+          "losses": 82,
+          "rate": 0.6076555023923444,
+          "selected": 212,
+          "wins": 127
+        },
+        "COMBINED": {
+          "decided": 287,
+          "losses": 122,
+          "rate": 0.5749128919860628,
+          "selected": 293,
+          "wins": 165
+        }
+      },
+      "coverage": {
+        "eligible": 293,
+        "available": 293,
+        "selected": 293,
+        "unknown": 6,
+        "unavailable": 0,
+        "games": 53,
+        "fallback_states": {
+          "": 293
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 122,
+          "UNKNOWN_PARTICIPATION": 6,
+          "WIN": 165
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "rush_att",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "SHADOW",
+      "C_preferred_review_procedure": "A::rush_att::BACKFIELD_CDF::607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a::mean",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::rush_att::607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a::BACKFIELD_CDF::mean",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 114,
+          "losses": 49,
+          "rate": 0.5701754385964912,
+          "selected": 119,
+          "wins": 65
+        },
+        "UNDER": {
+          "decided": 146,
+          "losses": 65,
+          "rate": 0.5547945205479452,
+          "selected": 147,
+          "wins": 81
+        },
+        "COMBINED": {
+          "decided": 260,
+          "losses": 114,
+          "rate": 0.5615384615384615,
+          "selected": 266,
+          "wins": 146
+        }
+      },
+      "coverage": {
+        "eligible": 266,
+        "available": 266,
+        "selected": 266,
+        "unknown": 6,
+        "unavailable": 0,
+        "games": 53,
+        "fallback_states": {
+          "": 266
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 114,
+          "UNKNOWN_PARTICIPATION": 6,
+          "WIN": 146
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "rec",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "SHADOW",
+      "C_preferred_review_procedure": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+      "C_duration_scope": {
+        "actual_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ]
+        ],
+        "scientific_combined_support": "412decided/53games/5weeks meets count support; superiority still requires existing paired/exposure review. OVER128 andUNDER284 each also meet count threshold, not automatic superiority.",
+        "status": "MET_FIVE_OWNER_LOCAL_ACTUAL_LINE_WEEKS_AT_RETAINED_TIER"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+      "origin_session": "C",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 128,
+          "losses": 50,
+          "rate": 0.609375,
+          "selected": 133,
+          "wins": 78
+        },
+        "UNDER": {
+          "decided": 284,
+          "losses": 123,
+          "rate": 0.5669014084507042,
+          "selected": 288,
+          "wins": 161
+        },
+        "COMBINED": {
+          "decided": 412,
+          "losses": 173,
+          "rate": 0.5800970873786407,
+          "selected": 421,
+          "wins": 239
+        }
+      },
+      "coverage": {
+        "eligible": 469,
+        "selected": 421,
+        "unavailable": 48,
+        "selected_unknown": 9,
+        "fallback": "UNKNOWN_NOT_EXPORTED",
+        "games": 53,
+        "source_recorded_fallback_count": 0,
+        "fallback_verification_limit": "Old aggregate reports0; no independently bound oldP1 row-level flag census inspected, so not certified learned-only."
+      },
+      "source_tier": "RETAINED_ACTUAL_LINE_QUOTE_TIMING_UNVERIFIED_EXPOSED_DEVELOPMENT",
+      "current_query_status": "C06pointfeedactuallypublished/servedonCseparateresearchsite,25forecasts18WRTE+7RB,nooffers/picks;expired02:51:07Z;originalconsumerreceiptunobserved.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "rec_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "KEEP_INCUMBENT",
+      "C_preferred_review_procedure": "A::rec_yd::RESPONSE_CDF::91ded3f65eff6db0c3335ff438be87e2509db888f11905c2683059001a6b650a::mean",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::rec_yd::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 357,
+          "losses": 164,
+          "rate": 0.5406162464985994,
+          "selected": 413,
+          "wins": 193
+        },
+        "UNDER": {
+          "decided": 236,
+          "losses": 107,
+          "rate": 0.5466101694915254,
+          "selected": 246,
+          "wins": 129
+        },
+        "COMBINED": {
+          "decided": 593,
+          "losses": 271,
+          "rate": 0.5430016863406408,
+          "selected": 659,
+          "wins": 322
+        }
+      },
+      "coverage": {
+        "eligible": 659,
+        "available": 659,
+        "selected": 659,
+        "unknown": 66,
+        "unavailable": 0,
+        "games": 53,
+        "fallback_states": {
+          "": 659
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 271,
+          "UNKNOWN_PARTICIPATION": 66,
+          "WIN": 322
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "rush_rec_yd",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "KEEP_INCUMBENT",
+      "C_preferred_review_procedure": "A::rush_rec_yd::RESPONSE_CDF::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::mean",
+      "C_duration_scope": {
+        "not_global_source_revocation": "Named C03annual correction does not invalidate every other archived/source-specificW6-W8record. First-five subpanel is separately shown, not silently substituted.",
+        "reported_season_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ],
+          [
+            2026,
+            6
+          ],
+          [
+            2026,
+            7
+          ]
+        ],
+        "status": "MET_AS_REPORTED_7_SCORED_ARCHIVED_WEEKS;SOURCE_SCOPE_PENDING_CURRENT_BINDING"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": "A::rush_rec_yd::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::RESPONSE_CDF::mean",
+      "origin_session": "A",
+      "actually_scored_season_weeks": [
+        [
+          2026,
+          1
+        ],
+        [
+          2026,
+          2
+        ],
+        [
+          2026,
+          3
+        ],
+        [
+          2026,
+          4
+        ],
+        [
+          2026,
+          5
+        ]
+      ],
+      "own_record": {
+        "OVER": {
+          "decided": 201,
+          "losses": 96,
+          "rate": 0.5223880597014925,
+          "selected": 217,
+          "wins": 105
+        },
+        "UNDER": {
+          "decided": 185,
+          "losses": 82,
+          "rate": 0.5567567567567567,
+          "selected": 191,
+          "wins": 103
+        },
+        "COMBINED": {
+          "decided": 386,
+          "losses": 178,
+          "rate": 0.538860103626943,
+          "selected": 408,
+          "wins": 208
+        }
+      },
+      "coverage": {
+        "eligible": 408,
+        "available": 408,
+        "selected": 408,
+        "unknown": 22,
+        "unavailable": 0,
+        "games": 53,
+        "fallback_states": {
+          "": 408
+        },
+        "fallback_count": "UNSPECIFIED",
+        "states": {
+          "LOSS": 178,
+          "UNKNOWN_PARTICIPATION": 22,
+          "WIN": 208
+        },
+        "selected_coverage": 1.0
+      },
+      "source_tier": "RETAINED_OBSERVED_ACTUAL_LINES_QUOTE_DECISION_TIME_UNVERIFIED;HISTORICAL_ORIGIN_CURRENT_VINTAGE_RECONSTRUCTION;EXPOSED_DEVELOPMENT",
+      "current_query_status": "ExistingC/siteowneroperationalbindingrequired; no newAcurrentpacket.",
+      "source_dependency": null,
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "anytime_td",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "ABSTAIN",
+      "C_preferred_review_procedure": null,
+      "C_duration_scope": {
+        "event_or_numerical_weeks_do_not_transfer": true,
+        "status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": null,
+      "origin_session": null,
+      "actually_scored_season_weeks": [],
+      "own_record": null,
+      "coverage": {
+        "eligible": null,
+        "selected": null,
+        "unavailable": null,
+        "selected_unknown": null,
+        "fallback": null,
+        "games": null
+      },
+      "source_tier": "MISSING_COMPATIBLE_EXACT_DIRECTION_EVIDENCE",
+      "current_query_status": null,
+      "source_dependency": "C/source owners qualify exact inherited rushing-or-receiving event offer and participation; no invented NO/Under. B forecast-only event probability is a separate product.",
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    },
+    {
+      "category": "nick-chart-ppr-v1",
+      "product": "ACTUAL_LINE_DIRECTION",
+      "C_recorded_research_decision": "ABSTAIN",
+      "C_preferred_review_procedure": null,
+      "C_duration_scope": {
+        "event_or_numerical_weeks_do_not_transfer": true,
+        "status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT"
+      },
+      "C_actual_original_site_activation": false,
+      "named_comparable_panel_candidate": null,
+      "origin_session": null,
+      "actually_scored_season_weeks": [],
+      "own_record": null,
+      "coverage": {
+        "eligible": null,
+        "selected": null,
+        "unavailable": null,
+        "selected_unknown": null,
+        "fallback": null,
+        "games": null
+      },
+      "source_tier": "MISSING_COMPATIBLE_EXACT_DIRECTION_EVIDENCE",
+      "current_query_status": null,
+      "source_dependency": "C/source owners qualify exact nick-chart-ppr-v1 chart offer and complete primitive outcome presence; no legacy scoring substitution.",
+      "actual_original_site": "Existing incumbent; A served metadata/apphash checks match unchangedcode. Exact per-product/scoring/rule binding is in Cbound LIVE_PRODUCT_BINDINGS, category lookup; not authenticated historical incumbent performance.",
+      "old_scores_controls_uncertainty": "A14a/3a3existingreport and indexed full own/paired pointCSV; C239/412WRTEpanel separatefromA328/579mixedroles. No new directionreplay."
+    }
+  ],
+  "actual_C_receipt": "peer/PEER_STATUS_READBACK_V1.json;d7timingjoinsadmittedbut14a/3a3new79/ATTnotyetobservedadmitted.",
+  "source_week_delta": "A_ARCHIVED_SOURCE_WEEK_DISPOSITIONS_PUBLIC_V1.json",
+  "product_separation": {
+    "numerical": "No numericalactivationfromdirectionrecord. Existing numericalproduct evidenceandoperationalbindings separate.",
+    "probability": "Point-onlyrowsarenotprobability/confidence/EV.",
+    "Top_Picks": "Onewebsite-owned4weekreplay preserved;contributioncountersindependentlyreconciled; fifthcompatibleboardstillunqualified."
+  },
+  "new_fits": 0,
+  "new_NFL_scoring": 0,
+  "new_primary_switches": 0,
+  "original_site_writes": 0
+}

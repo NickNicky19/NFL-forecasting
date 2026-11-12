@@ -1,0 +1,1204 @@
+{
+  "id": "A-FOLLOW-THROUGH-PEER-FINAL-REFRESH-v1",
+  "recorded_UTC": "2026-11-12T05:48:32.455136+00:00",
+  "owner": "Session A read-only peer verifier /root/decision_peer_receipts",
+  "purpose": "One bounded final head/receipt refresh. Append superseding facts; retain prior immutable reviews and W5 source-non-union decision. No competing category ranking/replay or new football scoring.",
+  "head_read_UTC": "2026-11-12T05:41:40Z",
+  "heads": {
+    "B": {
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "branch": "research/independent-audit-20261029",
+      "previous": "96136a8e2eb32cf2521dd24d922f84674af3d4d3",
+      "current": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+      "commit_UTC": "2026-11-12T04:46:54Z",
+      "change": "Four substantive commits; follow-through receipts, A point/ATT aggregate acknowledgment, frozen selector source contribution, W5 source restoration, current manual site capture addendum."
+    },
+    "C": {
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "branch": "main",
+      "previous": "2e604d8801d74788a61b3fa9e5206e7c4a452e81",
+      "current": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+      "commit_UTC": "2026-11-12T04:58:43Z",
+      "change": "PR47 follow-through release/source intake and separately verified C research-site publication."
+    },
+    "website": {
+      "repository": "NickNicky19/nicks-expert-nfl-picks",
+      "branch": "main",
+      "previous": "ccfaa987f5416ca6abce2570f9fee8c4c41c1d3e",
+      "current": "869d9a8839ae83dfccdb3bbb6610a0e0df867667",
+      "commit_UTC": "2026-11-12T04:31:13Z",
+      "change": "Existing native manual data capture/deployment; no research model switch."
+    },
+    "A_registered_producer": {
+      "repository": "NickNicky19/NFL-forecasting",
+      "branch": "research/weekly-storage-probe-v1",
+      "previous": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+      "current": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+      "change": "UNCHANGED. Prepared/reviewed PR88 candidate is not this bound producer head; no dispatch/native inference/current feed is established by a source review."
+    }
+  },
+  "C_canonical": {
+    "CURRENT_PROTOCOL": {
+      "id": "C_CURRENT_PROTOCOL",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+      "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
+      "bytes": 72302,
+      "SHA256": "183a4e768ad15ef520bd8761f24fb9a967c8c0b281f9b2d28c7fbdbe46c7e5f8",
+      "Git_blob_SHA1": "33e99b78e0b6a55e260763d615c2bb760c919599",
+      "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+    },
+    "decision_table": {
+      "url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting-NGS-C/aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71/reports/category-decision-release-01/CATEGORY_PRODUCT_DECISIONS.json",
+      "bytes": 1057555,
+      "sha256": "0d95bdb269761fe6a87d7646ea7345fc8b32363d7ad65b472708132fc34c3601",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 12 Nov 2026 05:45:52 GMT",
+        "Age": null,
+        "ETag": "\"4147f0f3b41f9944731cab349a172745869e2feda0cdbccd116851cf014e0da9\"",
+        "Last-Modified": null
+      },
+      "observed_UTC": "2026-11-12T05:45:52Z"
+    },
+    "decision_counts": {
+      "SHADOW": 7,
+      "BLOCKED": 1,
+      "KEEP_INCUMBENT": 2,
+      "ABSTAIN": 2
+    },
+    "rows": [
+      {
+        "category": "pass_yd",
+        "origin": "A",
+        "exact_procedure": "A::pass_yd::a628c415c7f27ddaab9a9a4296cb189cc56c885c67aa6ded87928e08ac291341::HGB_MAE_DIRECT::mae_objective_point",
+        "output": "mae_objective_point",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 45,
+          "losses": 17,
+          "rate": 0.6222222222222222,
+          "selected": 45,
+          "wins": 28
+        },
+        "UNDER": {
+          "decided": 44,
+          "losses": 20,
+          "rate": 0.5454545454545454,
+          "selected": 44,
+          "wins": 24
+        },
+        "COMBINED": {
+          "decided": 89,
+          "losses": 37,
+          "rate": 0.5842696629213483,
+          "selected": 89,
+          "wins": 52
+        },
+        "coverage": {
+          "eligible": 89,
+          "available": 89,
+          "selected": 89,
+          "unknown": 0,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 51,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "pass_td",
+        "origin": "A",
+        "exact_procedure": "A::pass_td::f8607aa99a94c7c1c9ab5c89599e07eba9b15527749b092b225f368032881e83::COUNT_A_MEAN::mean_objective_point",
+        "output": "mean_objective_point",
+        "decision": "BLOCKED",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 45,
+          "losses": 20,
+          "rate": 0.5555555555555556,
+          "selected": 45,
+          "wins": 25
+        },
+        "UNDER": {
+          "decided": 41,
+          "losses": 17,
+          "rate": 0.5853658536585366,
+          "selected": 41,
+          "wins": 24
+        },
+        "COMBINED": {
+          "decided": 86,
+          "losses": 37,
+          "rate": 0.5697674418604651,
+          "selected": 86,
+          "wins": 49
+        },
+        "coverage": {
+          "eligible": 86,
+          "available": 86,
+          "selected": 86,
+          "unknown": 0,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 50,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "pass_cmp",
+        "origin": "A",
+        "exact_procedure": "A::pass_cmp::8aeaa5083a4dc10d5e19f13cef30bc6607f6f5e1e40582059876583526927da6::CATBOOST_MEDIUM::mean_objective_point",
+        "output": "mean_objective_point",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 38,
+          "losses": 13,
+          "rate": 0.6578947368421053,
+          "selected": 38,
+          "wins": 25
+        },
+        "UNDER": {
+          "decided": 50,
+          "losses": 23,
+          "rate": 0.54,
+          "selected": 50,
+          "wins": 27
+        },
+        "COMBINED": {
+          "decided": 88,
+          "losses": 36,
+          "rate": 0.5909090909090909,
+          "selected": 88,
+          "wins": 52
+        },
+        "coverage": {
+          "eligible": 88,
+          "available": 88,
+          "selected": 88,
+          "unknown": 0,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 51,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "pass_att",
+        "origin": "B",
+        "exact_procedure": "B-player-context-matchup-01-v1:COMMON_EXPOSURE::lower_median",
+        "output": "lower_median",
+        "decision": "KEEP_INCUMBENT",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 5,
+          "losses": 1,
+          "rate": 0.8,
+          "selected": 5,
+          "wins": 4
+        },
+        "UNDER": {
+          "decided": 82,
+          "losses": 42,
+          "rate": 0.4878048780487805,
+          "selected": 82,
+          "wins": 40
+        },
+        "COMBINED": {
+          "decided": 87,
+          "losses": 43,
+          "rate": 0.5057471264367817,
+          "selected": 87,
+          "wins": 44
+        },
+        "coverage": {
+          "eligible": 87,
+          "available": 87,
+          "selected": 87,
+          "unknown": 0,
+          "unavailable": 0,
+          "fallback": 0,
+          "games": 51,
+          "player_games": 87,
+          "fallback_provenance": "EXPLICIT_EXPORTED_COUNT"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "pass_int",
+        "origin": "A",
+        "exact_procedure": "A::pass_int::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+        "output": "mean",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 81,
+          "losses": 35,
+          "rate": 0.5679012345679012,
+          "selected": 81,
+          "wins": 46
+        },
+        "UNDER": {
+          "decided": 6,
+          "losses": 2,
+          "rate": 0.6666666666666666,
+          "selected": 6,
+          "wins": 4
+        },
+        "COMBINED": {
+          "decided": 87,
+          "losses": 37,
+          "rate": 0.5747126436781609,
+          "selected": 87,
+          "wins": 50
+        },
+        "coverage": {
+          "eligible": 87,
+          "available": 87,
+          "selected": 87,
+          "unknown": 0,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 50,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "rush_yd",
+        "origin": "A",
+        "exact_procedure": "A::rush_yd::d253d5e193e297b952ca49b6905186329598289ce0bebac8698c3c30ecea3681::EQUAL_CDF_CAT_HGB_POINT::empirical_point_blend",
+        "output": "empirical_point_blend",
+        "decision": "KEEP_INCUMBENT",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 78,
+          "losses": 40,
+          "rate": 0.48717948717948717,
+          "selected": 81,
+          "wins": 38
+        },
+        "UNDER": {
+          "decided": 209,
+          "losses": 82,
+          "rate": 0.6076555023923444,
+          "selected": 212,
+          "wins": 127
+        },
+        "COMBINED": {
+          "decided": 287,
+          "losses": 122,
+          "rate": 0.5749128919860628,
+          "selected": 293,
+          "wins": 165
+        },
+        "coverage": {
+          "eligible": 293,
+          "available": 293,
+          "selected": 293,
+          "unknown": 6,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 53,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "rush_att",
+        "origin": "A",
+        "exact_procedure": "A::rush_att::607c0a1288fd183d4e6de40c1e03851e9c5ed340d226fb2095f472ec7865834a::BACKFIELD_CDF::mean",
+        "output": "mean",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 114,
+          "losses": 49,
+          "rate": 0.5701754385964912,
+          "selected": 119,
+          "wins": 65
+        },
+        "UNDER": {
+          "decided": 146,
+          "losses": 65,
+          "rate": 0.5547945205479452,
+          "selected": 147,
+          "wins": 81
+        },
+        "COMBINED": {
+          "decided": 260,
+          "losses": 114,
+          "rate": 0.5615384615384615,
+          "selected": 266,
+          "wins": 146
+        },
+        "coverage": {
+          "eligible": 266,
+          "available": 266,
+          "selected": 266,
+          "unknown": 6,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 53,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "rec",
+        "origin": "C",
+        "exact_procedure": "C::PLAYER-CONTEXT-MATCHUP-01::v1.1::P1::mean",
+        "output": "mean",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "wins": 78,
+          "losses": 50,
+          "decided": 128,
+          "rate": 0.609375,
+          "selected": 133
+        },
+        "UNDER": {
+          "wins": 161,
+          "losses": 123,
+          "decided": 284,
+          "rate": 0.5669014084507042,
+          "selected": 288
+        },
+        "COMBINED": {
+          "wins": 239,
+          "losses": 173,
+          "decided": 412,
+          "rate": 0.5800970873786407,
+          "selected": 421
+        },
+        "coverage": {
+          "eligible": 469,
+          "available": 421,
+          "selected": 421,
+          "decided": 412,
+          "unknown": 9,
+          "unavailable": 48,
+          "fallback": null,
+          "abstained": null,
+          "games": 53,
+          "player_games": null,
+          "scope": "Named panel only; no unknown counts converted tozero. Older primary intersection is not the entire unfiltered website board."
+        },
+        "five_week_status": "MET_FIVE_OWNER_LOCAL_ACTUAL_LINE_WEEKS_AT_RETAINED_TIER",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "C_SOURCE_CURRENT_SHADOW_CAPTURE_VERIFIED_THEN_EXPIRED;NO_ORIGINAL_SITE_ADMISSION"
+      },
+      {
+        "category": "rec_yd",
+        "origin": "A",
+        "exact_procedure": "A::rec_yd::82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04::LEAF_CDF::mean",
+        "output": "mean",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 357,
+          "losses": 164,
+          "rate": 0.5406162464985994,
+          "selected": 413,
+          "wins": 193
+        },
+        "UNDER": {
+          "decided": 236,
+          "losses": 107,
+          "rate": 0.5466101694915254,
+          "selected": 246,
+          "wins": 129
+        },
+        "COMBINED": {
+          "decided": 593,
+          "losses": 271,
+          "rate": 0.5430016863406408,
+          "selected": 659,
+          "wins": 322
+        },
+        "coverage": {
+          "eligible": 659,
+          "available": 659,
+          "selected": 659,
+          "unknown": 66,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 53,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "rush_rec_yd",
+        "origin": "A",
+        "exact_procedure": "A::rush_rec_yd::39328fd10db4c3c4f7d563fcb80520a95d5faf6f1f6967b507d9b7e74eda9f35::RESPONSE_CDF::mean",
+        "output": "mean",
+        "decision": "SHADOW",
+        "actual_weeks_by_season": {
+          "2026": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "OVER": {
+          "decided": 201,
+          "losses": 96,
+          "rate": 0.5223880597014925,
+          "selected": 217,
+          "wins": 105
+        },
+        "UNDER": {
+          "decided": 185,
+          "losses": 82,
+          "rate": 0.5567567567567567,
+          "selected": 191,
+          "wins": 103
+        },
+        "COMBINED": {
+          "decided": 386,
+          "losses": 178,
+          "rate": 0.538860103626943,
+          "selected": 408,
+          "wins": 208
+        },
+        "coverage": {
+          "eligible": 408,
+          "available": 408,
+          "selected": 408,
+          "unknown": 22,
+          "unavailable": 0,
+          "fallback": null,
+          "games": 53,
+          "player_games": null,
+          "fallback_provenance": "UNSPECIFIED"
+        },
+        "five_week_status": "FIVE_SCORED_ACTUAL_LINE_W1_W5_BLOCKS_IN_DECLARED_UNVERIFIED_QUOTE_TIER;NOT_PRIMARY_ADMISSION",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "Active baseline/no-selected-row branch renders serialized prop.lean; current research overlay has0rows. This receipt does not substitute selectedPropGap for that active baseline field.",
+          "display": "prop.adj adjusted baseline reference point; raw projection separate; independent MAE feed absent.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "anytime_td",
+        "origin": null,
+        "exact_procedure": null,
+        "output": null,
+        "decision": "ABSTAIN",
+        "actual_weeks_by_season": {
+          "2026": []
+        },
+        "OVER": null,
+        "UNDER": null,
+        "COMBINED": null,
+        "coverage": {
+          "eligible": null,
+          "available": null,
+          "selected": null,
+          "decided": 0,
+          "unknown": null,
+          "unavailable": null,
+          "fallback": null,
+          "games": null,
+          "player_games": null
+        },
+        "five_week_status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT",
+        "actual_live_method": {
+          "actual_method": "sleeper-matchup-classic-presence-strict-v2",
+          "direction": "No qualified NO/Under offer product.",
+          "display": "baselineTdProbability requires finite nonnegative proj and valid td_chance.",
+          "probability": "Uncalibrated baseline event estimate.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      },
+      {
+        "category": "nick-chart-ppr-v1",
+        "origin": null,
+        "exact_procedure": null,
+        "output": null,
+        "decision": "ABSTAIN",
+        "actual_weeks_by_season": {
+          "2026": []
+        },
+        "OVER": null,
+        "UNDER": null,
+        "COMBINED": null,
+        "coverage": {
+          "eligible": null,
+          "available": null,
+          "selected": null,
+          "decided": 0,
+          "unknown": null,
+          "unavailable": null,
+          "fallback": null,
+          "games": null,
+          "player_games": null
+        },
+        "five_week_status": "NOT_MET_NO_COMPATIBLE_ACTUAL_OFFER_DIRECTION_PRODUCT",
+        "actual_live_method": {
+          "actual_method": null,
+          "direction": "Unavailable exact chart product.",
+          "display": "Exact chart product unavailable. Legacy league-scoring display remains separate.",
+          "probability": "Unavailable; a point gap is not probability.",
+          "selected_research_rows": 0
+        },
+        "current_query_status": "NO_CURRENT_NATIVE_ADMITTED_REPLACEMENT_FEED;EXACT_OWNER_ACTION_BOUND"
+      }
+    ],
+    "new_A_receipt": {
+      "receipt": {
+        "id": "C_intake",
+        "repository": "NickNicky19/NFL-forecasting-NGS-C",
+        "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+        "path": "reports/category-decision-release-01/follow-through-v1/peer-intake/ADMISSION.json",
+        "bytes": 19511,
+        "SHA256": "f04edfc4b60b62bf7ec7cdec6363adb878c87b1e4fa539dedcca0984820b6349",
+        "Git_blob_SHA1": "5beb2065609b24b5cf07f43dea1a00239c6e6b61",
+        "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+      },
+      "state": "RECEIVED_VALIDATED_PUBLIC_OWNER_CONTRIBUTION;NOT_RAW_ROW_OR_FIT_PARITY",
+      "actual_refs": {
+        "A_decision": "14a47eec7a1962601538cdb482771f8c43f2488a",
+        "A_final_publication_receipt": "3a3d48791d5c7e6cf789af480bfb99c062005a97",
+        "B_index_and_report": "96136a8e2eb32cf2521dd24d922f84674af3d4d3",
+        "B_exact_join_review": "636424ee206c7d679d58a6165129bfe6549d5d9d",
+        "B_selector_review": "995f85f15d70f23cef512cc8118b4383ac542553"
+      },
+      "annual_panel": "ANNUAL_NAMED_NJ",
+      "five_scored_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "quote_timing": "UNKNOWN_NOT_RETAINED; cutoff_qualified=false",
+      "private_raw_or_fit_parity": false,
+      "Count_A_mean_own_weekly": {
+        "status": "DIRECT_MEAN_OWN_ROW_REUSE_VERIFIED;NOT_LEGACY_TIE_SUBSTITUTION",
+        "receipt": {
+          "path": "COUNT_A_MEAN_OWN_WEEKLY_REUSE.json",
+          "bytes": 8205,
+          "SHA256": "cfbfb36b54c59394f25dd9bea4df96e6b552f1374de79dc8266c46407bf1249a"
+        },
+        "actual_own_weeks": [
+          [
+            2026,
+            1
+          ],
+          [
+            2026,
+            2
+          ],
+          [
+            2026,
+            3
+          ],
+          [
+            2026,
+            4
+          ],
+          [
+            2026,
+            5
+          ]
+        ],
+        "own_combined": "49W37L/86",
+        "own_Over": "25W20L/45",
+        "own_Under": "24W17L/41",
+        "new_output_or_score_views": 0,
+        "per_week_games_or_historical_clocks": "UNKNOWN_NOT_FILLED_FROM_LEGACY"
+      }
+    },
+    "source_tier": "SUPPORTED owner/source-week/public aggregate; CONDITIONAL retrospective review; unknown original quote/vintage/private histories remain unknown. Five-week duration does not authenticate issuance or imply activation.",
+    "superseded_counters_and_statements": [
+      {
+        "source": {
+          "id": "C_stages",
+          "repository": "NickNicky19/NFL-forecasting-NGS-C",
+          "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+          "path": "reports/category-decision-release-01/RELEASE_AND_CAPTURE_STAGES.json",
+          "bytes": 1510,
+          "SHA256": "76fcc4fae9078990f33f98dccdfb0c8ff649ce5f98fbda059e7f1e305761ba92",
+          "Git_blob_SHA1": "6dc807643935c5b374ee91b0052a3162934a0547",
+          "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+        },
+        "issue": "This older stage receipt still prints 5KEEP/4SHADOW; current canonical table has 2KEEP/7SHADOW. Use actual aaeb table for current category recommendation counts; no scoring defect inferred."
+      },
+      {
+        "source": {
+          "id": "C_readme",
+          "repository": "NickNicky19/NFL-forecasting-NGS-C",
+          "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+          "path": "reports/category-decision-release-01/README.md",
+          "bytes": 12808,
+          "SHA256": "c608f90cc6093232e6c58c1de72d85975ec9145d1aba096b3014c1007658208f",
+          "Git_blob_SHA1": "b3c3193ef6b4ff98e5aac76322896dd0dfe01d1b",
+          "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+        },
+        "issue": "README still says candidate-selected counts unexported except W8; newer actual B and website receipts explicitly publish all per-week source partitions. Reuse those exact receipts; no replay needed."
+      },
+      {
+        "source": {
+          "id": "C_intake",
+          "repository": "NickNicky19/NFL-forecasting-NGS-C",
+          "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+          "path": "reports/category-decision-release-01/follow-through-v1/peer-intake/ADMISSION.json",
+          "bytes": 19511,
+          "SHA256": "f04edfc4b60b62bf7ec7cdec6363adb878c87b1e4fa539dedcca0984820b6349",
+          "Git_blob_SHA1": "5beb2065609b24b5cf07f43dea1a00239c6e6b61",
+          "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+        },
+        "issue": "Older d7 B review does not establish B acknowledgment of A14a point/ATT; newer B6b77 separate acknowledgment does. Preserve historical scope and append new receipt."
+      }
+    ],
+    "research_site_served": {
+      "receipt": {
+        "id": "C_served",
+        "repository": "NickNicky19/NFL-forecasting-NGS-C",
+        "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+        "path": "reports/category-decision-release-01/follow-through-v1/SERVED_VERIFICATION.json",
+        "bytes": 2540,
+        "SHA256": "ca378f5cee739a3883a0082edbefb592b4d0bcf92609a6c0c5813d496f9f3fa2",
+        "Git_blob_SHA1": "6af84f599fc700618eec764c154462262874fd39",
+        "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+      },
+      "asset_commit": "7b26e21a888b92c2514f25a424ec64e1db9c693e",
+      "served_checked_UTC": "2026-11-12T04:51:20.240865+00:00",
+      "categories": 12,
+      "product_records": 48,
+      "retained_forecasts": 25,
+      "WR_TE": 18,
+      "RB_shadow": 7,
+      "offers": 0,
+      "selections": 0,
+      "current_use": "EXPIRED; retained for later grading",
+      "direct_browser_receipt_pointer": "reports/category-decision-release-01/follow-through-v1/site/served/SERVED_CONSUMER_RECEIPT.json",
+      "original_site_changed": false,
+      "scope": "C published served-byte and separate browser receipt; this child did not repeat C site/browser checks."
+    },
+    "frozen_capture_status": {
+      "receipt": {
+        "id": "C_frozen",
+        "repository": "NickNicky19/NFL-forecasting-NGS-C",
+        "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+        "path": "reports/category-decision-release-01/follow-through-v1/FROZEN_CAPTURE_STATUS.json",
+        "bytes": 2930,
+        "SHA256": "fa1dd196a6fa46c07a5688eea0258a2790410ab3b672da778f91bdafc888b641",
+        "Git_blob_SHA1": "2cc7f42068987601a04c6209be583112e3d97cba",
+        "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+      },
+      "C75_C69_C25": "Preserved, expired for current recommendation; recorded future kickoffs remain pending final qualified outcomes; no new grades or backdated lines."
+    },
+    "rows_note": "Compact direct field projection of the exact canonical table, not a new ranking/regrade. Full owner actions/current-query structures at immutable C source; original-site current clocks/bytes below supersede dated nested C readbacks.",
+    "shared_current_consumer_semantics": "No-overlay active baseline renders serialized prop.lean; selected-only overrides and explicit custom-line edits use selectedPropGap margin rules. Unchanged app hash8aa97d75... and C source lines1286/1287/1323/1324 bind branches. Historical strict-crossing candidates cannot silently inherit margins."
+  },
+  "B_new_acknowledgment": {
+    "report": {
+      "id": "B_executed",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "commit": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+      "path": "reports/follow-through-release-defensive-source-01/B/B_EXECUTED_FOLLOW_THROUGH_V1.md",
+      "bytes": 17898,
+      "SHA256": "6b5f802efe5a85904280ca2ce9bd38a92938975cf17ca027e0729c2d35cac6c6",
+      "Git_blob_SHA1": "eb1dce953337986eb89499686b1fce3ef23c1e0c",
+      "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+    },
+    "A_receipt": {
+      "id": "B_Aack",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "commit": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+      "path": "reports/follow-through-release-defensive-source-01/B/peer-receipts/A_NEW_PACKAGE_AND_SOURCE_SCOPE_V1.json",
+      "bytes": 29135,
+      "SHA256": "776a6e2dc57ad901997a10ec6cc87aa9e0d1d6330c8c46701768a94d7065408e",
+      "Git_blob_SHA1": "5569a67d345843ae9da1e61edc7c9c8a11a8fada",
+      "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+    },
+    "operational_addendum": {
+      "id": "B_operational",
+      "repository": "NickNicky19/NFL-forecasting-V2",
+      "commit": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+      "path": "reports/follow-through-release-defensive-source-01/B/CURRENT_OPERATIONAL_ADDENDUM_V1.json",
+      "bytes": 4354,
+      "SHA256": "afad9a4cfa6c66c1e3599a2ca94fd2179d668d73e736f2f7c1f9178a936cf228",
+      "Git_blob_SHA1": "19393da62127ffe072ac5e9f3a3bd07215faf56c",
+      "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+    },
+    "scope": "B acknowledges original79 point results and ATT six-alias correction already executed; independently checks 2746 public integer/Decimal identities, 324 ATT summaries/50pairs and representative CountA weekly/cumulative records. Three reviewer-wrapper failures retained; no A data repair, private row parity, fitted-model or bootstrap replay.",
+    "ATT": "Expanded exact lower-median44/87 vs A mean43/87 vs AlwaysOver46/87, five annual weeks; no preferred replacement. Six restored aliases add procedure coverage, not NFL games or skill.",
+    "d7_timing_joins": "Already executed and acknowledged separately; no repeat scoring requested.",
+    "W5_source_side": "B restored exact 56CMP/ATT keys and metadata against old source/bridge hashes; protected21902-byte normalized score object is not publicly transferred. Union/intersection remains uncomputed under source contracts."
+  },
+  "exact_selector_contribution": {
+    "protocol": "NFL-WEB-EXACT-SELECTOR-REC-P1-MEAN-WRTE-20261112-v1",
+    "protocol_SHA256": "a69a34eb9f38592c27d01b596428cbba49c581baebc487d9e2f86f0993afd31d",
+    "selected_rows_SHA256": "c88fc8d3ccf3cab3f1b9919e7da5dafb02fa1cc78de651ee230cee223c9453c2",
+    "ranker_SHA256": "7889c35cefa0df1ba0be53ee749182f243eba35a4f4c63b2c01db023e701e14f",
+    "new_replay_by_this_reviewer": false,
+    "full_system_weeks": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "by_week": [
+      {
+        "week": 5,
+        "C_selected": 2,
+        "C_W_L_U": [
+          2,
+          0,
+          0
+        ],
+        "fallback_selected": 22,
+        "fallback_W_L_U": [
+          11,
+          11,
+          0
+        ],
+        "added": 2,
+        "removed": 2,
+        "board_override_assignments": 41,
+        "common_selected_value_score_side_changes": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "week": 6,
+        "C_selected": 4,
+        "C_W_L_U": [
+          2,
+          2,
+          0
+        ],
+        "fallback_selected": 20,
+        "fallback_W_L_U": [
+          10,
+          9,
+          1
+        ],
+        "added": 4,
+        "removed": 4,
+        "board_override_assignments": 35,
+        "common_selected_value_score_side_changes": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "week": 7,
+        "C_selected": 2,
+        "C_W_L_U": [
+          1,
+          1,
+          0
+        ],
+        "fallback_selected": 22,
+        "fallback_W_L_U": [
+          14,
+          8,
+          0
+        ],
+        "added": 2,
+        "removed": 2,
+        "board_override_assignments": 7,
+        "common_selected_value_score_side_changes": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "week": 8,
+        "C_selected": 0,
+        "C_W_L_U": [
+          0,
+          0,
+          0
+        ],
+        "fallback_selected": 24,
+        "fallback_W_L_U": [
+          10,
+          12,
+          2
+        ],
+        "added": 0,
+        "removed": 0,
+        "board_override_assignments": 0,
+        "common_selected_value_score_side_changes": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "provenance": "New owner comment and B independently source-accounted frozen records. Eight C-sourced selected rows equal eight additions by explicit identity/source checks, not equal totals. B reports all88 common point/score/side/grade records unchanged; this child accepts receipt scope and does not reproduce protected/full-row calculation.",
+    "override_limit": "83 override assignments; do not infer 83 actually different numerical values without complete comparison. 75 override rows unselected. Input-margin/side changes differ from selected-policy membership.",
+    "whole_policy": {
+      "candidate_W_L_U": [
+        50,
+        43,
+        3
+      ],
+      "control_W_L_U": [
+        48,
+        45,
+        3
+      ],
+      "selected_each": 96,
+      "decided_each": 93,
+      "full_system_gain": 2,
+      "C_selected_W_L_U": [
+        5,
+        3,
+        0
+      ],
+      "fallback_W_L_U": [
+        45,
+        40,
+        3
+      ]
+    },
+    "W4_disposition": "Owner assessed32 targeted copies, two unique bodies. Forecast archive539players/2435props/16games includesPPR, but lacks all eligibility/support/generation/decision clocks and saved after all kickoffs; separate469-row final lacks full prop board. UNQUALIFIED for fifth exact week. Not absent/PPR-missing; no fifth grade fabricated.",
+    "next_action": "Preserve four exposed conditional retrospective system weeks. Existing website owner captures same exact policy in shadow only after qualified fresh P1 recipe/feed and compatible full board; B verifies any real extension, C records. No new universal learned-week rule."
+  },
+  "original_website": {
+    "owner_comment": {
+      "url": "https://github.com/NickNicky19/nicks-expert-nfl-picks/pull/1#issuecomment-6814781492",
+      "created_UTC": "2026-11-12T04:44:32Z",
+      "updated_UTC": "2026-11-12T04:44:32Z",
+      "bytes": 65459,
+      "SHA256": "258a558239dc8db78f3863cede57630b7d3fcd230087058b297d9c27b523a3a9",
+      "embedded_XZ_receipt": "Owner declares 170682 decoded bytes/ac795580150c504fa1ab24331d101fa6aef0e0d5b4a7a71c3b1b86ff7e1ddb70; this final refresh did NOT decode it or execute its scripts."
+    },
+    "capture": {
+      "run": 43155203267,
+      "job": 130973439128,
+      "event": "workflow_dispatch",
+      "source_code_commit": "ccfaa987f5416ca6abce2570f9fee8c4c41c1d3e",
+      "published_data_commit": "869d9a8839ae83dfccdb3bbb6610a0e0df867667",
+      "generation_UTC": "2026-11-12T04:31:02Z",
+      "local_capture_UTC": "2026-11-12T04:31:04Z",
+      "push_completed_UTC": "2026-11-12T04:31:15Z",
+      "deployment_UTC": "2026-11-12T04:31:24Z",
+      "terminal_success_UTC": "2026-11-12T04:31:27Z",
+      "deployment": 7728466381,
+      "artifact": 13916030900,
+      "incumbent_forecasts": 1614,
+      "original_reference_shadow_rows": 2486,
+      "paired_rows": 1614,
+      "original_only_rows": 872,
+      "all_future_at_capture": true,
+      "games": 14,
+      "player_games": 424,
+      "provider_tagged_lines": 519,
+      "provider_tag_breakdown": {
+        "dk": 496,
+        "sleeper": 23
+      },
+      "internal_reference_lines": 1095,
+      "per_quote_observation_clock": "UNKNOWN",
+      "independent_separate_forecast_issue_clock": "UNKNOWN; generation and capture clocks are distinct",
+      "new_research_models_activated": 0
+    },
+    "owner_served_proof": {
+      "served_bodies_matching_commit": 9,
+      "selected_scalar_checks": 24,
+      "check_errors": 0,
+      "browser": "CA-verified served-byte browser replay: 112 checks at 390/1280px, America/Chicago; saved MyPicks custom-line/reload, source/order/side/rendered values and no overflow. This is owner-reported evidence, not a new browser run by this reviewer.",
+      "direct_live_Chromium_TLS": "UNVERIFIED after prior certificate-validation failure; no bypass",
+      "advisory_legacy_verifier": "NOT_EVALUATED / numerical_parity_passed=false kept separately",
+      "job_log_artifact": "403; no bypass/retry",
+      "cadence": "Manual success verifies its own path only. Existing daily08:06 America/Chicago schedule and prior unattended run43101028574 remain separate; no hourly freshness or next schedule success inferred."
+    },
+    "B_independent_current_readback": {
+      "receipt": {
+        "id": "B_siteverified",
+        "repository": "NickNicky19/NFL-forecasting-V2",
+        "commit": "6b77aa5c32de3c926b15ec66557f39a75129129e",
+        "path": "reports/follow-through-release-defensive-source-01/B/peer-receipts/NEW_WEBSITE_PACKET_AND_SERVED_READBACK_V1.JSON",
+        "bytes": 23661,
+        "SHA256": "67aeffe29ef0198876c91da41a8c897c20676d346a19d63c250a0b9a6bdb4ce7",
+        "Git_blob_SHA1": "45d5d2d7c9724d84e0524186d9bbf95348f8d09f",
+        "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+      },
+      "matched_Git_served_pairs": 6,
+      "native_payload_hash_verified": true,
+      "scope": "B public capture/served metadata and representative saved values; no new browser/mobile DOM check, fit or grade. Reused owner facts are not reclassified as this reviewer runtime."
+    },
+    "our_direct_served_check": {
+      "Website_meta": {
+        "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/meta.json",
+        "bytes": 1249,
+        "sha256": "f2978954d61508d17f9934502acd73b37ce1a0dcd1d6cae1528421fdeec1af9f",
+        "http_status": 200,
+        "headers": {
+          "Date": "Thu, 12 Nov 2026 05:45:52 GMT",
+          "Age": "0",
+          "ETag": "\"6af54118-4e1\"",
+          "Last-Modified": "Thu, 12 Nov 2026 04:31:20 GMT"
+        },
+        "observed_UTC": "2026-11-12T05:45:52Z"
+      },
+      "Website_pointer": {
+        "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive-overlay.json",
+        "bytes": 333,
+        "sha256": "da0d7b32d063ae5dc9441ac1c48bc150c6db3deac3e0066d9dd84d162976f24e",
+        "http_status": 200,
+        "headers": {
+          "Date": "Thu, 12 Nov 2026 05:45:53 GMT",
+          "Age": "0",
+          "ETag": "\"6af54118-14d\"",
+          "Last-Modified": "Thu, 12 Nov 2026 04:31:20 GMT"
+        },
+        "observed_UTC": "2026-11-12T05:45:53Z"
+      },
+      "Website_app": {
+        "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/app.js",
+        "bytes": 367950,
+        "sha256": "8aa97d75b8a444e4711e972535211208f8ee72414ad48b8840a17075c8a5b52f",
+        "http_status": 200,
+        "headers": {
+          "Date": "Thu, 12 Nov 2026 05:45:53 GMT",
+          "Age": "0",
+          "ETag": "\"6af54118-59d4e\"",
+          "Last-Modified": "Thu, 12 Nov 2026 04:31:20 GMT"
+        },
+        "observed_UTC": "2026-11-12T05:45:53Z"
+      },
+      "Website_leaf": {
+        "url": "https://nicknicky19.github.io/nicks-expert-nfl-picks/data/weekly-adaptive/115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b.json",
+        "bytes": 763,
+        "sha256": "115e63f6e259af0e9982518bf30b9e40a1527f43522a9f3555986ca96ed9c13b",
+        "http_status": 200,
+        "observed_UTC": "2026-11-12T05:46:49Z"
+      }
+    },
+    "our_observed_current_values": {
+      "generated_at": "2026-11-12T04:31:02Z",
+      "model": "sleeper-matchup-classic-presence-strict-v2",
+      "overlay_state": "DISABLED_USE_R0",
+      "research_rows": 0,
+      "frozen_rows": 0,
+      "current_board_SHA256": "0098cc3669639c70a2e382be86709514d9d25a0322cca1df51cb6dc6fac0e754",
+      "frontend_unchanged": true
+    },
+    "our_limits": "Only served meta, pointer, leaf and frontend hash refreshed. No current full NFL board, native GZ, model, provider source rows, DOM, screenshots or grading read/executed."
+  },
+  "Count_A": {
+    "actual_registered_head": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+    "one_owner_request": "https://github.com/NickNicky19/NFL-forecasting/pull/1#issuecomment-6814450427",
+    "request_created_UTC": "2026-11-12T04:22:38Z",
+    "request_body_SHA256": "81d3f66b0b9eea74beb1f05242f5bfff9f081087f4fa1988fe1ae3e876c98ab8",
+    "native_operator_acknowledgment": "Not established by inspected website receipt; root source PR88 publication/review is separate. Do not infer native execution from prepared code or bot identity.",
+    "existing_corrector_and_adapter": "Already published and restored; source review did not execute model. Corrected FORECASTS.point, not legacy_point/all-NaNmean/median.",
+    "current_feed_or_website_activation": false,
+    "remaining_owner": "Existing A registered parent/child single-writer executor; full actual issuedRoot<=61440, source/query admission, complete inference/corrector, durable capture, derived feed; then original website owner receipt/admission/served use."
+  },
+  "defensive_source": {
+    "C_owner_receipt": {
+      "id": "C_defense",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "commit": "aaeb3c98a25a4e0a762abb5e5db0c3e6b38cbc71",
+      "path": "reports/category-decision-release-01/follow-through-v1/defensive-source/README.md",
+      "bytes": 6807,
+      "SHA256": "c49688aa5ce4610d16798187f877d6e35d57022505494f37cbfc2bdb34763df2",
+      "Git_blob_SHA1": "014e4b16d615b541732e7a590d4b85780656457b",
+      "review": "Exact returned public UTF-8 bytes inspected; no private-row/model/source-clock reproduction."
+    },
+    "state": "SOURCE_BLOCKED",
+    "workbook": "Not found in bounded accessible paths; no original bytes/provider response, season/version/rights verified. Not proof it does not exist elsewhere.",
+    "new_source_requests": 0,
+    "new_qualified_fields": 0,
+    "new_experiments_registered": 0,
+    "new_fits": 0,
+    "supplied_reference_only": "C reports436 internal arithmetic checks pass; B separately reports192 passing checks. These are supplied reference arithmetic, not source validation/new NFL evidence.",
+    "owners": "C source coordinator; A rushing and B passing component reviewers. New source artifact required before one bounded further pass; no duplicate acquisition/fit. No release gate for unrelated products."
+  },
+  "preserved_W5_decision": {
+    "path": "reports/abc-championship/follow-through-release-defensive-source-01/peer/B_W5_SOURCE_NON_UNION_DECISION_V1.json",
+    "SHA256": "af3feb5a4729892782a54f60e308285d48f069cb33db805b02b1a0042881f011",
+    "decision": "NON_UNION_SOURCE_STRATIFIED_CURRENT_RELEASE",
+    "intersection": "NOT_COMPUTED, not zero",
+    "basis": "A named NJ68/69/79 and Bdk/sleeper server-source strata, line/book/horizon/identity/clock bridges not identical merely by labels. Keep existing exact source panels; optional union does not gate CountA or already-met five-week products.",
+    "future_optional_action": "B source owner resolves exact retained assignment clock/book/jurisdiction/bridge contract with A permitted owner-local route; no forced protected normalized row transfer."
+  },
+  "reproduction": {
+    "head_and_comments": "One GitHub API branch read per four named branches and one PR1 comments-since query; no repeated head polling. Exact discovery commits above.",
+    "file_readback": "GitHub fetch_file at pinned heads; content-hash computed over exact returned UTF8. Oversize C table connector returned empty content with Git blob; fetched same public raw commit once using CA verification and4MiB cap; exact canonical hash matches pointer.",
+    "served_readback": "Python urllib SSL default trust/CA verification; five HTTPS bodies total bytes as metadata list. No certificate bypass.",
+    "resource_scope": "Public metadata/documents only, source package caps retained; final stored metadata caches remain below8MiB. No source collection, model/native/private reads, NFL scoring, fitting, inference, bootstrap, workflow dispatch, peer write or external message.",
+    "prior_receipts_preserved": true,
+    "prepublication_compaction": {
+      "unabridged_local_projection_bytes": 150032,
+      "unabridged_projection_SHA256": "a69bb649733ac17679ab5f061594f2dc272a1029421c33e64545da4613b5f083",
+      "change": "Presentation only: omit repeated dated current-consumer structures; preserve exact source bindings and current live readbacks. No source/score changed."
+    }
+  },
+  "completion": "DONE_BOUND_ONE_PASS; current release decisions remain with C canonical record and original-site owner; no new scientific qualification or deployment asserted by this read-only receipt."
+}

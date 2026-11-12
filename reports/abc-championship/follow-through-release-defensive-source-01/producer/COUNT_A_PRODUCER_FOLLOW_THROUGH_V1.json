@@ -1,0 +1,87 @@
+{
+  "A_PR1": {
+    "acknowledgment_in_complete_PR1_comments": "NOT_OBSERVED",
+    "comments": 21,
+    "delivery_comment": 6647536985,
+    "role_comment": 6534651808,
+    "superseding_comment": 6675135183,
+    "superseding_updated_UTC": "2026-11-06T02:21:57Z"
+  },
+  "UTC": "2026-11-12T04:44:12.869394+00:00",
+  "actual_refs": {
+    "lab_state": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "main": "f37279a093fcdddece1e369d42ce54349cb1913c",
+    "producer": "fa91988e65939d2b3516371a90a6380aeee3acb3"
+  },
+  "counts": {
+    "NFL_fits": 0,
+    "NFL_grades": 0,
+    "NFL_inference": 0,
+    "NFL_models": 0,
+    "comments_posted": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "original_site_writes": 0,
+    "workflow_dispatches": 0
+  },
+  "current_first_dependency": {
+    "capture": false,
+    "grade": false,
+    "job": 130767014012,
+    "readiness": "NOT_REASSESSED_BY_NO_OP",
+    "reason": "MISSED_SCHEDULE_WINDOW_NOT_BACKFILLED",
+    "run": 43090797096
+  },
+  "environment": {
+    "existing_registered_versions_match": true,
+    "new_environment_needed": false,
+    "policy": "Existing Haswell/generic numerical configuration retained; actual native admission not executed."
+  },
+  "id": "A-COUNT-A-PRODUCER-FOLLOWTHROUGH-v1",
+  "latest_registered_branch_run": {
+    "export": "SKIPPED",
+    "produce": "SKIPPED",
+    "restore": "SKIPPED",
+    "run": 41564933010,
+    "scope": "PRIVATE_ROTATION_CANARY_ONLY",
+    "source": "a2ab7d4eeb01b1af7f76af4b8090404b4f096f50"
+  },
+  "no_hardcoded_week_bug_claim": "Fixed preliminary W8 config check was inspected, left unchanged, and not reproduced as an active defect. Current observed no-op stopped earlier at cadence.",
+  "registration": {
+    "PR85": "MERGED",
+    "PR87": "MERGED",
+    "actual_cap": 61440,
+    "actual_current_issued_Root_bytes": "UNKNOWN_NOT_ISSUED_HERE",
+    "historical_named_size": 61759
+  },
+  "report": {
+    "bytes": 7153,
+    "path": "COUNT_A_PRODUCER_FOLLOW_THROUGH_V1.md",
+    "sha256": "f3a71aba159dd04a0fe26177780499204253f5d8b80e8679d819d4e4ddd004c9"
+  },
+  "source_manifest": "COUNT_A_NATIVE_REVIEW_SOURCE_MANIFEST_V1.json",
+  "stages": {
+    "code_prepared": true,
+    "consumer_receipt": false,
+    "current_inference": false,
+    "current_source_qualified": false,
+    "derived_feed": false,
+    "durable_packet": false,
+    "independent_final_review": "PENDING_FROZEN_SOURCE",
+    "locally_AST_checked": true,
+    "native_Root_bound": false,
+    "producer_acknowledged": false,
+    "published": false,
+    "synthetic_software_checked": true,
+    "website_activation": false
+  },
+  "trusted_model": {
+    "capsule_sha256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36",
+    "model_sha256": "4d277e3e3986d712a86d9a55019e35f2e5b5c58d6f4f411af0a0abc65da1b62d",
+    "support": "count",
+    "target": "pass_td",
+    "training_cutoff_utc": "2026-09-01T00:00:00Z",
+    "type": "nfl_lab.role_boosting.RoleCountBoostingModel",
+    "variant": "A"
+  }
+}

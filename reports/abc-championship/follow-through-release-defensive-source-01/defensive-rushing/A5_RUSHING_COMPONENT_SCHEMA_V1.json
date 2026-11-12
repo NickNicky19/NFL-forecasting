@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A candidate rushing-defense component boundary v1; not new common schema",
+  "component": "rushing_defense",
+  "owner": "A; C coordinates canonical schema/intake",
+  "source_state": "USER_SUPPLIED_REFERENCE_ONLY_NOT_EXECUTABLE_MODEL_INPUT",
+  "keys": [
+    "defense_source_label",
+    "canonical_team_id_or_null",
+    "season_reported",
+    "window_definition",
+    "cutoff_UTC_or_null",
+    "source_snapshot_sha256_or_null",
+    "source_version_or_null",
+    "role_contract"
+  ],
+  "role_contract": {
+    "reported": "PFR RB position group; general QB/WR rushing excluded",
+    "fullback_policy": null,
+    "historical_position_assignment_policy": null,
+    "official_carry_inclusion_corrections": null,
+    "admission": "Source classification and effective-time role bridge must be qualified"
+  },
+  "raw_volume": {
+    "games": {
+      "type": "integer_or_null",
+      "source": "reported Games; final eligible-game census not authenticated"
+    },
+    "carries_faced": {
+      "type": "integer_or_null",
+      "unit": "credited RB attempts; definition qualification pending"
+    },
+    "carries_per_game": {
+      "type": "decimal_or_null",
+      "numerator": "carries_faced",
+      "denominator": "games>0",
+      "undefined": "NULL_IF_DENOMINATOR_UNQUALIFIED_OR_ZERO"
+    },
+    "rank": {
+      "type": "string",
+      "use": "Reference display only, not calibrated defense strength"
+    }
+  },
+  "raw_efficiency": {
+    "signed_yards_faced": {
+      "type": "integer_or_null",
+      "A5_state": "NOT_SUPPLIED; NEVER_INFER_FROM_ROUNDED_YPC"
+    },
+    "yards_per_carry": {
+      "type": "decimal_or_null",
+      "numerator": "signed_yards_faced",
+      "denominator": "qualified compatible credited RB attempts>0",
+      "A5_state": "REPORTED_2DP_ONLY_NOT_NUMERATOR_VERIFIED"
+    },
+    "signed_distribution_or_success": {
+      "A5_state": "NOT_SUPPLIED; negative/zero/tails/success cannot be reconstructed"
+    }
+  },
+  "adjusted_volume": {
+    "state": "NOT_SUPPLIED_NOT_SAME_AS_RAW_CARRIES_PER_GAME",
+    "requires": [
+      "eligible offensive-opportunity denominator",
+      "earlier-only offense/game-context baseline",
+      "declared shrinkage and source clock"
+    ]
+  },
+  "adjusted_efficiency": {
+    "state": "NOT_SUPPLIED; EXISTING_A_R3_TEST_COMPLETE",
+    "equation": "sum_j(y_j-n_j*earlier_offense_context_mean_j)/(sum_j n_j+80)",
+    "requirements": [
+      "identical carry/role/context definition",
+      "eligible earlier offense baseline",
+      "historical-origin and source-vintage binding",
+      "trained augmented model before use"
+    ]
+  },
+  "null_states": [
+    "OBSERVED_ZERO_UNDER_QUALIFIED_CONTRACT",
+    "EXPLICIT_NULL",
+    "ABSENT_FIELD",
+    "UNDEFINED_DENOMINATOR",
+    "SOURCE_BLOCKED",
+    "UNAUTHENTICATED_AVAILABILITY"
+  ],
+  "training_inference_rule": "Source/role/window semantics must match fitted inputs; do not append new fields to saved model, backdate this snapshot, or use future target outcomes.",
+  "operational": "No current adapter/feed/admission/release created; older qualified delivery and existing capture continue independently."
+}

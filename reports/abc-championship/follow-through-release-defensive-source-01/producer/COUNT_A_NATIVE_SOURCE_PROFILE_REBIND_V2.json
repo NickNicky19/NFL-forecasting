@@ -1,0 +1,52 @@
+{
+  "algorithm": "Use actual existing hosted.pins() 128; replace only existing 22 entries after_sha256; reconstruct original before map using immutable before_sha256; require original315e digest; preserve six model source pins, keys and caps; rehash actual after map.",
+  "base_source": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+  "before_inventory_sha256": "315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212",
+  "candidate_after_inventory_sha256": "3e306777a03d90da1d4bc06e50a55cf82e5269d3898875fa13b18f73b820d1f2",
+  "candidate_config_bytes": 15712,
+  "candidate_config_sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+  "changed_after_bindings": {
+    "nfl_lab/audit_weekly_archive_v1.py": {
+      "candidate_after_sha256": "17c4fc86b14844339e7601d251fefb228df2ef9b28fb0cd4d050d8cd2d35d97a",
+      "original_after_sha256": "8f9aa1732de1fe126c4fa369bbf8da490d8aea994dcb0a1b27d0f96bb18a8d7e"
+    },
+    "nfl_lab/audit_weekly_controller_v1.py": {
+      "candidate_after_sha256": "2b2ddb1e035f18003a3b159e232d8bccbf52ed3800093c719808e56015307350",
+      "original_after_sha256": "de76ca9c60b2f86e879e108c1e4e287c9e572703f021629caafb505c265dc56b"
+    },
+    "nfl_lab/audit_weekly_delivery_v1.py": {
+      "candidate_after_sha256": "e4147a025673ad02af27d31cd2a97d3d3bcb3d246c4d342b882989229ef415d4",
+      "original_after_sha256": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc"
+    },
+    "nfl_lab/audit_weekly_grade_history_v1.py": {
+      "candidate_after_sha256": "40f5e92f132b574206b8260c4fc7eea7e38e3358e40649d192210c2a5bffd48d",
+      "original_after_sha256": "80f913723658a28130dc61d03f77689171df1fa5357bda4ad482c3eecabf1c7b"
+    },
+    "nfl_lab/audit_weekly_hosted_v1.py": {
+      "candidate_after_sha256": "60a2352a2be574fe45a2e238547cc4c0f07494676740c3d4d91837f0e0a2d479",
+      "original_after_sha256": "d8f8f58f62e87898872aad0f8313c4316023b33273af07bc6c0f9960c85464f7"
+    },
+    "nfl_lab/audit_weekly_runtime_v1.py": {
+      "candidate_after_sha256": "4e7564234c5cf851a74abb7d5a4c505f4e6d74c322d32f2258480544edde2096",
+      "original_after_sha256": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5"
+    },
+    "nfl_lab/audit_weekly_template_v1.py": {
+      "candidate_after_sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7",
+      "original_after_sha256": "e63e53b4ff0dbed062314191a86c20d7c233abd5f25d3908745118dcae03ab68"
+    }
+  },
+  "changed_path_set_preserved": true,
+  "legacy_pin_count": 128,
+  "original_after_inventory_sha256": "0b467d9d51dada7b6bf59a2a45d2af0438874c3158c5968285fcab7cc2b54ab4",
+  "original_config_sha256": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483",
+  "schema_version": "count-a-v2-closed-source-profile-rebind-v1",
+  "six_original_model_pins": {
+    "baseline_correction.py": "077ff69ea3e9ab3183b588accd4972baaeb1fd47f0af4c56411ef4875db68ba2",
+    "cdf_engine.py": "6a963111f4173a88affe90ca1ce17532cd5eb690a1f28b284e9fa4145eecb214",
+    "direct_boosters.py": "475e6aaca01790c896a81e51d911f5f48e4116b95383536501799c4242701e3f",
+    "median_boosting.py": "c5bf8ef481c05027a2a1d4e1d19764920c0820f0614f60736826c17526e7799d",
+    "role_boosting.py": "294e7e588215e7b7e98d6f1fb251eed31420921dff9a59e88434913133dbdf93",
+    "weekly_future_inference.py": "d84a4de76737252a910ed01b626e17403290277feb894621e625ae0791ccef42"
+  },
+  "status": "PREPARED_REVIEW_CANDIDATE_NOT_ROOT_ACCEPTED"
+}

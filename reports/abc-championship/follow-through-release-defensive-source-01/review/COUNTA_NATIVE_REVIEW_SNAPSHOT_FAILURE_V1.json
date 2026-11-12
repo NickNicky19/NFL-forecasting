@@ -1,0 +1,25 @@
+{
+  "UTC": "2026-11-12T04:41:06.304753+00:00",
+  "V1_findings_current_source_status": "Earlyparser/publicdeliverycaller gaps were corrected in earlier inspected V2 source. New publication row/archive-binding gap and source-size issue sent immediately to owner; owner edits appear in progress. No V2 PASS claimed.",
+  "earlier_test_scope": "18syntheticCountAunitchecks passed before this fullsourceAST binding attempt. They do not establish full producer syntax or native readiness.",
+  "id": "COUNTA_NATIVE_REVIEW_SNAPSHOT_FAILURE_V1",
+  "implementation_edits_by_reviewer": 0,
+  "models_loaded": 0,
+  "native_reads": 0,
+  "new_NFL_fits": 0,
+  "new_inference": 0,
+  "next_action": "Owner supplies finished stable correctedsource hashes. Review exactdelta once; preserve this invalidsource/failure receipt.",
+  "private_source_reads": 0,
+  "source_bytes": 130886,
+  "source_path": "nfl_lab/audit_weekly_hosted_v1.py",
+  "source_sha256": "5d9265b08ea27da7a73f85e79ef32df0335b228c6d915f5779aaaff2d762062c",
+  "state": "SOURCE_SNAPSHOT_CHANGED_DURING_INDEPENDENT_REVIEW;STABLE_OWNER_HANDOFF_REQUIRED",
+  "syntax_errors": [
+    {
+      "line": 1340,
+      "message": "unexpected indent",
+      "source_line": "self.archive_call(\"consume\",self.archive_request(\"consume\",reader_handoff=reader))"
+    }
+  ],
+  "workflow_dispatches": 0
+}

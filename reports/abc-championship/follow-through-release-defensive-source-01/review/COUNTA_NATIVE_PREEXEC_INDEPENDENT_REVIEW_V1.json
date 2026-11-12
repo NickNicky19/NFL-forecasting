@@ -1,0 +1,174 @@
+{
+  "UTC": "2026-11-12T04:35:56.283825+00:00",
+  "activity": {
+    "capsule_or_model_reads": 0,
+    "implementation_edits": 0,
+    "joblib_loads": 0,
+    "native_reads": 0,
+    "new_NFL_fits": 0,
+    "new_grading": 0,
+    "new_inference": 0,
+    "peer_writes": 0,
+    "private_source_reads": 0,
+    "shared_index_or_ledger_edits": 0,
+    "workflow_dispatches": 0
+  },
+  "critical_findings": [
+    {
+      "affected_flow": "hosted.validate_root -> validate_source_history_binding -> _source_history_unwrap -> _source_history_body. Body parser runs before the new root-aware public-pin allowlist logic.",
+      "counterexample": {
+        "binding_schema": "audit-weekly-source-history-binding-v2",
+        "early_required_subset_predicate_result": false,
+        "existing_early_MAE_runtime_allowlist_contains_public_module": false,
+        "existing_early_source_orchestration_allowlist_contains_public_module": false,
+        "expected_guard": "ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES",
+        "pin_overrides": {
+          "nfl_lab/audit_weekly_public_v1.py": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "predecessor_root_schema": "audit-weekly-hosted-v5-root-GO"
+      },
+      "id": "COUNTA-NATIVE-01",
+      "line": 191,
+      "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "root_cause": "The patch adds the new public-module pin override in later root/profile checks but not in the earlier closed source-history binding body parser. This changed module is part of the128-pin source preimage, so its required override cannot reach those later checks.",
+      "severity": "BLOCKING_REAL_ROOT_PATH",
+      "smallest_correction": "Permit this exact new override through the relevant versioned source-history metadata path while retaining the later CountA-enabled V5 restriction, exact authenticated predecessor preimage,128-pin closure and original default path. Do not broadly relax all source pin overrides. Add a synthetic test that crosses the full early body parser and root-aware later validator, with a negative no-extension case.",
+      "status": "REPRODUCED_SOURCE_PREDICATE_BLOCKS_VALID_NEW_OVERRIDE"
+    },
+    {
+      "affected_flow": "count_a_shadow_projection is defined, but neither existing public.export nor audit_weekly_delivery deliver/_deliver nor any reviewed tool calls it. Runtime and private archive capture hooks are real; the claimed typed consumer handshake is not wired in the reviewed changes.",
+      "counterexample": {
+        "call_sites_in_all19_supplied_Python_files": [],
+        "definitions": [
+          {
+            "line": 390,
+            "path": "nfl_lab/audit_weekly_public_v1.py"
+          }
+        ],
+        "existing_delivery_calls_CountA_projection": false,
+        "existing_public_selected_export_calls_CountA_projection": false
+      },
+      "id": "COUNTA-NATIVE-02",
+      "line": 390,
+      "path": "nfl_lab/audit_weekly_public_v1.py",
+      "root_cause": "Adding a public projection API/helper alone does not make an actual producer/delivery stage invoke, persist or return its typed result.",
+      "severity": "BLOCKING_CLAIM_OF_EXECUTABLE_DERIVED_HANDOFF",
+      "smallest_correction": "Connect the separately typed shadow handoff to the existing authorized delivery/native acceptance path, preserving all current LiveAcceptance/archive/source/rights checks and public_export_authorized=false. Keep ordinary selected export and ranking unchanged. Exercise that real hook with a synthetic accepted-context seam rather than only checking for a source substring. No second publisher/scheduler or production switch is implied.",
+      "status": "REPRODUCED_NO_CALLER_IN_SUPPLIED_SOURCE"
+    }
+  ],
+  "id": "COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V1",
+  "independent_fixture_execution": {
+    "CPU_seconds": 0.049592389,
+    "RSS_bytes": 20332544,
+    "command": "python -B; unittest.defaultTestLoader.discover(tests,pattern=test_count_a_native_extension_v1.py); TextTestRunner(verbosity=2)",
+    "environment": "Python stdlib;1GiBRLIMIT_AS,CPUsoft280/hard300;PYTHONDONTWRITEBYTECODE. Tests write only synthetic TemporaryDirectory archive fixtures.",
+    "errors": 0,
+    "failures": 0,
+    "not_proved": [
+      "Full authentic Root/profile/source-history transition: supplied fixture fakes128legacy names and checks the CountA metadata/root-key helper only.",
+      "Actual source profile registration final serialized61440-byte Root including real issuance fields.",
+      "Native private capsule restoration, actual feature compatibility/current model inference, archive durability, public handoff caller execution or website receipt."
+    ],
+    "preserved_reviewer_wrapper_failure": "First inline test-run command had SyntaxError before test discovery because a conditional-expression token lacked whitespace. Corrected wrapper then ran the unchanged14tests; no project/NFL source changes or failures hidden.",
+    "result": "PASS_ALL14_SYNTHETIC_UNIT_TESTS",
+    "run": 14,
+    "wall_seconds": 0.052481885002634954
+  },
+  "next_action": "Implementation owner corrects the two scoped path gaps and adds targeted synthetic integration coverage; reviewer checks the delta. Root remains sole owner of code publication/GO/native execution under existing authority.",
+  "positive_checked_properties": [
+    "Runtime.__init__ creates BoundShadow only when an actual NativeContext is supplied and the closed V5 extension exists; runtime.infer calls capture after the original18 completion path.",
+    "New extension is separate from the original18 catalog; original18 model-count assertion, original128 legacy pin count, single writer, native/API Root authorization and old numerical guards are retained.",
+    "Closed optional extension binds exact product/procedure, original capsule/proof references, fit-start commitment, source-config hash, source-contract hash, helper census, source-publication/rankingfalse,1000QBqueryrows and bounded shadow bytes.",
+    "Original capsule SHA/size and exact member census/SHA are checked before trusted joblib restoration; environment and original training recipe/cutoff/bindings are checked before inference. No unsafe model was loaded by reviewer.",
+    "Existing adapter pin a3b44..., corrector pin aa7c... and original corrected-mean model/procedure are retained. Adapter applies corrector once, keeps mean distinct from legacy point, and adds no probability/EV.",
+    "Private runtime archive names are closed and optional Root field required; archive validation binds exact Root/body/model/capsule hashes. Derived projection remains SHADOW, public_export_authorizedfalse, no primary/ranking policy change.",
+    "Absence of the extension preserves existing default Root keys and original MAE changed-path set in the synthetic checks."
+  ],
+  "reviewed_source_bindings": [
+    {
+      "bytes": 62886,
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "sha256": "e748ddcdd44218010c5b90d21e89d45c0e1d2ef1d1cc23cce4a660fe6924bcbc"
+    },
+    {
+      "bytes": 130784,
+      "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "sha256": "0ac05a29b998ad62eb3878eb63fccef1285f0ae17b0b44b20746b3b453eee25e"
+    },
+    {
+      "bytes": 131181,
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "sha256": "45102458f073c5e3df4b932d1dc76f1e2fad8f5bdb95f161bf80682dd80be7e0"
+    },
+    {
+      "bytes": 32516,
+      "path": "nfl_lab/audit_weekly_public_v1.py",
+      "sha256": "16f51244793d8009323140dcb6a4e39b3186caf4bbc9c1b4d02ec6144e0cdccc"
+    },
+    {
+      "bytes": 42703,
+      "path": "nfl_lab/audit_weekly_runtime_v1.py",
+      "sha256": "ce0281bf11932cd014099eab6d1aa554b96858e85effd68222dd9266abecefb3"
+    },
+    {
+      "bytes": 49939,
+      "path": "nfl_lab/audit_weekly_template_v1.py",
+      "sha256": "cad08dfd5eef1a3eca165fd46c2a57187aeacb6759dbda88afb10022b13a75b7"
+    },
+    {
+      "bytes": 3460,
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+    },
+    {
+      "bytes": 13287,
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "0f39f455f8f86b38f5a85d017c9aff16e4036fe12cb857f2524b2110f78aeff2"
+    },
+    {
+      "bytes": 21010,
+      "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+      "sha256": "2561c34570332912d063bbe73b77e5b079e6923ca6e34e2acc0a3a1b0de58e43"
+    },
+    {
+      "bytes": 6901,
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "sha256": "0bd1e915cea697dbc504ea0cb933480056ac9c80ef49f08be8c07d571e748094"
+    },
+    {
+      "bytes": 31195,
+      "path": "tools/modern_count_a_mean_v3.py",
+      "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+    },
+    {
+      "bytes": 13287,
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "0f39f455f8f86b38f5a85d017c9aff16e4036fe12cb857f2524b2110f78aeff2"
+    },
+    {
+      "bytes": 3460,
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+    },
+    {
+      "bytes": 31195,
+      "path": "tools/modern_count_a_mean_v3.py",
+      "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+    },
+    {
+      "bytes": 6901,
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "sha256": "0bd1e915cea697dbc504ea0cb933480056ac9c80ef49f08be8c07d571e748094"
+    }
+  ],
+  "reviewer": "/root/decision_peer_receipts",
+  "scope": "Source-only review of19-file supplied checkout, seven existing-module hooks, new CountA extension and existing adapter/corrector; independent execution of14 synthetic software tests. No native context/API proof, private archive, source rows, capsule/model loading, dispatch, current inference or publication.",
+  "seven_module_diff_sha256": "007f5b396864bc2480c67c485d5130cbc804c891a66328673167f3573c6e914a",
+  "unexecuted_limits": [
+    "Supplied checkout is a19-file source-review subset without config/registration bodies or genuine Root/API evidence. No full native path execution or dispatch was attempted.",
+    "The new CountA metadata/profile/runtime/archive path cannot be called producer-bound or delivered until source blockers are corrected, reviewed/published, and the actual authorized native producer completes its own current run.",
+    "A passing synthetic suite is software evidence only; it adds no NFL forecasts, test weeks, model qualification, consumer acknowledgment or deployment."
+  ],
+  "verdict": "FAIL_TWO_SOURCE_REACHABILITY_BLOCKERS;14_SYNTHETIC_UNIT_TESTS_PASS"
+}

@@ -1,0 +1,246 @@
+{
+  "UTC": "2026-11-12T04:46:13.678365+00:00",
+  "activity": {
+    "capsule_model_reads": 0,
+    "dispatches": 0,
+    "implementation_edits_by_reviewer": 0,
+    "index_ledger_edits": 0,
+    "joblib_loads": 0,
+    "native_reads": 0,
+    "new_NFL_fits": 0,
+    "new_grades": 0,
+    "new_inference": 0,
+    "private_source_reads": 0,
+    "remote_writes": 0
+  },
+  "finding_dispositions": [
+    {
+      "evidence": "V2 metadata parser now permits only named new public module path in the versioned second-binding allowlist. Later root-aware _source_history_pins and MAE profile permit it only for the CountA Root extension, with128-pin predecessor hash reconstruction. Non-CountA default late guard remains closed.",
+      "id": "COUNTA-NATIVE-01",
+      "prior_finding": "Early closed source-history parser excluded required public-module override.",
+      "status": "CORRECTED_IN_EXACT_FROZEN_SOURCE",
+      "verification": "Source/AST condition inspection; unit source assertion. Full operator Root/profile/predecessor authentication remains unexecuted."
+    },
+    {
+      "evidence": "Actual _deliver calls public.count_a_shadow_projection -> count_a.public_pair -> existing storage writes -> existing persist(...count_a_shadow_context=(live,root)). Persist invokes validate_public_files. Companion publication is separate from original selected/MAE pairs, retains original source checks before/after, and requires closed Root shadow grant.",
+      "id": "COUNTA-NATIVE-02",
+      "prior_finding": "Projection helper had no delivery/publication caller.",
+      "status": "CORRECTED_IN_EXACT_FROZEN_SOURCE",
+      "verification": "Existing production callgraph source review, deterministic formatting tests and synthetic actual projection entrypoint body."
+    },
+    {
+      "evidence": "validate_public_files now calls count_a_shadow_projection on real in-memory LiveAcceptance/durable aliases and regenerates expected pair from that result. It compares exact paths, hashes and bytes against the submitted pair.",
+      "id": "COUNTA-NATIVE-03",
+      "prior_finding": "Publisher validated self-consistent public rows rather than exact durable CountA rows.",
+      "status": "CORRECTED_AND_NEGATIVE_SYNTHETIC_FIXTURE_PASS",
+      "verification": "New19th fixture executes actual count_a_shadow_projection function body with explicitly synthetic Live/owned-file seams. Valid pair passes; changed mean99 with newly recomputed file hashes is rejected because the retained synthetic native row remains1.5. No actual LiveAcceptance/native namespace is forged or claimed."
+    },
+    {
+      "evidence": {
+        "all_selected_Python_AST": "PASS",
+        "history_bytes": 130824,
+        "hosted_bytes": 130870,
+        "hosted_definition_AST_changes": [
+          "validate_root"
+        ],
+        "interpretation": "Only intended CountA Root validation changes hosted function AST; size trim changes no other function/class AST. Earlier invalid snapshot remains retained.",
+        "other_unchanged_hosted_definition_AST_count": 66,
+        "unchanged_cap_bytes": 131072
+      },
+      "id": "COUNTA-NATIVE-04",
+      "prior_finding": "Hosted source131181 exceeded unchanged131072 source-history ceiling; interim trim introduced indentation defect.",
+      "status": "CORRECTED_SOURCE_SIZE_AND_SYNTAX"
+    }
+  ],
+  "frozen_manifest": {
+    "all13before_after_size_SHA256_AST_checks": "PASS",
+    "base_scope": "Isolated selected-file public-source copy; full fa919 Git object absent locally. Baseline Git commits are local review provenance, not substitute remote source revisions.",
+    "base_source_commit": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+    "bytes": 7585,
+    "files": 13,
+    "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_REVIEW_SOURCE_MANIFEST_V1.json",
+    "sha256": "19257c15ce673207e4398dc6ee0f605244256f406340e4a23af492cf5044b654",
+    "source_bytes": 588698
+  },
+  "id": "COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V3",
+  "independent_software_execution": {
+    "CPU_seconds": 0.14378428299999998,
+    "Python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "RSS_bytes": 29016064,
+    "budget": {
+      "CPU_hard_seconds": 300,
+      "CPU_soft_seconds": 280,
+      "address_space_bytes": 1073741824
+    },
+    "command": "python -B; unittest.defaultTestLoader.discover(tests,pattern=test_count_a_native_extension_v1.py); TextTestRunner(verbosity=2); manifest+allsourcehash/ASTbeforeandafter",
+    "errors": 0,
+    "failures": 0,
+    "library": "Python stdlib; only explicitly synthetic temporary archive/public files and synthetic Live/owned-read seams. No numerical model libraries loaded.",
+    "synthetic_scope_limits": [
+      "The Root wire test contains full allowed Root keys and128placeholderlegacy entries, not a genuinely authorized native Root or actual source registration.",
+      "Early-parser/reachability tests partly assert source structure; source review separately traces the actual calls and conditional late guards.",
+      "The tamper fixture tests real function bodies with synthetic authority/read seams. It does not authenticate real private archives or GHA identity."
+    ],
+    "tests": 19,
+    "wall_seconds": 0.14477058500051498
+  },
+  "main_questions": {
+    "old18_and128_unchanged": "Original18 generic model/catalog/slot assertion and128legacy source inventory preserved; CountA is separate optional shadow, not a nineteenth generic slot. Original six model-code pins, source/epoch/predecessor proof, private quotas and numeric limits remain applicable.",
+    "public_authority": "Default is no public release. Actual companion publication needs Root publication=true plus exact closed derived-QB-mean-only grant, fixed source policy/prefix, review commitment and in-memory LiveAcceptance. No primary/ranking/raw/model publication authority is added.",
+    "typed_handoff_is_real_hook": "YES_IN_FROZEN_CODE: existing native delivery and state-publisher companion path invoke it; not a standalone helper. Actual native durability/publication/consumer receipt remain pending.",
+    "valid_Root_reaches_actual_runtime": "SOURCE_PATH_CONNECTED_CONDITIONAL_ON_EXISTING_REAL_ROOT_API_PROFILE_AUTHENTICATION;NOT_EXECUTED. V5 optional extension -> actual NativeContext -> BoundShadow init -> Runtime.infer after original18 completion -> trusted CountA current mean capture -> existing archive semantic verification. No guard bypass was added."
+  },
+  "next_action": "Root/producer implementation owner may proceed with the reviewed source patch/PR and real source-bound registration/native work under existing authority; preserve all prior failures. Any changed frozen source bytes require delta review. No new arbitrary scientific or permission gate is introduced.",
+  "not_verified_remaining_owner_work": [
+    "Apply reviewed patch to the actual retained producer branch through normal owner review; source code local review is not merged or producer-bound.",
+    "Construct/rebind genuine current Root, complete128source/profile/registration/predecessor commitments, extrahelperhashes, original fit-start/capsule refs and exact source contract. Validate final issued serialized Root<=61440 including real issuance fields.",
+    "Execute genuine authorized current source/QB/event/role admission and complete mean inference in actual producer environment; no output-preserving packaging claim alone proves feature/model parity.",
+    "Perform native capture/append/readback/fresh restore, exact permitted derived shadow publication and byte receipt. Current operational inputs must match admitted history/source semantics.",
+    "Original website owner separately admits the typed product and verifies source/output/fallback/expiry/rendered values/saved-selector isolation; no primary release follows merely from this code review.",
+    "Full repository suite/normal protected CI not run: supplied selected-file review tree is not the full source checkout."
+  ],
+  "other_checked_properties": [
+    "Original capsule exact size/SHA and seven-member census/member hashes precede trusted joblib load; exact environment, original recipe/corrector and earlier training-label cutoff remain checked. No capsule/model was read by reviewer.",
+    "Adapter/corrector bytes unchanged a3b44ee.../aa7c002...; corrector applied exactly once to typed expected mean, with learned/prior/incumbent fallback distinct and no inferred probability/EV.",
+    "Source contract and same Root source configuration checked; fresh helper hash recheck before capture imports. Future queries need no target-game final outcomes.",
+    "Actual local row persistence byte-readback precedes its recorded persistence clock; persistence before every query cutoff is required. Archive binds Root/model/procedure/capsule/row hashes.",
+    "Canonical JSON uses the original ASCII protocol; Unicode parity fixture passes. Issue<expiry<=cutoff<=kickoff enforced. Public shadow is never current recommendation; expired/partly-expired state remains explicit.",
+    "Existing public selected and MAE paths are separate; no Top Picks mapping, ranker threshold, category output or primary activation change is authorized by this patch."
+  ],
+  "patch": {
+    "bytes": 89444,
+    "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_SHADOW_REVIEW_V1.patch",
+    "sha256": "49643ed1af44480556db42bb2f874afcbcccbc12c398bb04d12fc945e789cd43"
+  },
+  "preserved_earlier_evidence": [
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/review/COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V1.json",
+      "sha256": "46ed72bff8a3f7d420085ea9589d724dd1b76d3822465b5a73e508ae25639882",
+      "status": "V1_FAIL_RETAINED;14TESTSPASSDIDNOTCOVERALLPATHS"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/review/COUNTA_NATIVE_REVIEW_SNAPSHOT_FAILURE_V1.json",
+      "sha256": "7905777afdd9ad2ee9deefd9c164502050c954b4da9fb0498a0327c0759d0ff5",
+      "status": "V2MUTABLESNAPSHOT_ASTFAILURE_RETAINED;NO_V2PASS_OR_FROZEN_BINDING_CLAIM"
+    }
+  ],
+  "reviewer": "/root/decision_peer_receipts",
+  "source_bindings": [
+    {
+      "base": {
+        "bytes": 62344,
+        "git_blob_sha1": "026a65eb224e428cebe92e702c023566e917f361",
+        "sha256": "8f9aa1732de1fe126c4fa369bbf8da490d8aea994dcb0a1b27d0f96bb18a8d7e"
+      },
+      "bytes": 62928,
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "sha256": "ef4fd1afda194eb60e7fecba00ca78bd5e9afd305c8e4956d158885c42388482"
+    },
+    {
+      "base": {
+        "bytes": 29274,
+        "git_blob_sha1": "222c2b7fd4e9b1f688f9676422723fc95eac4e62",
+        "sha256": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc"
+      },
+      "bytes": 30493,
+      "path": "nfl_lab/audit_weekly_delivery_v1.py",
+      "sha256": "43be7bf1a8dc5dda4987d079bbee3fc096883bd23fdbcef1f2c3a0d805ffd32f"
+    },
+    {
+      "base": {
+        "bytes": 130210,
+        "git_blob_sha1": "0e2f1ff494f5f24dd86e14814ef21afed5ba6666",
+        "sha256": "80f913723658a28130dc61d03f77689171df1fa5357bda4ad482c3eecabf1c7b"
+      },
+      "bytes": 130824,
+      "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "sha256": "279a2ab46a95329c186bdb367f10f9ed10c052dff552ce8f1e9601bc2fd14797"
+    },
+    {
+      "base": {
+        "bytes": 131012,
+        "git_blob_sha1": "379c2c43139e7cc424e731b448a8112342e10785",
+        "sha256": "d8f8f58f62e87898872aad0f8313c4316023b33273af07bc6c0f9960c85464f7"
+      },
+      "bytes": 130870,
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "sha256": "52ef2bf3a186e692cdf07fae5ac846780d0aa97540ae90ef0d6d9794cd5e7245"
+    },
+    {
+      "base": {
+        "bytes": 31429,
+        "git_blob_sha1": "1195d9df279356583c712c0549357ef3a69e3220",
+        "sha256": "6b2fbb371f7c1881beb473484a8d1e568409b4ccda93a0d049c5753e6d4a90cd"
+      },
+      "bytes": 32516,
+      "path": "nfl_lab/audit_weekly_public_v1.py",
+      "sha256": "16f51244793d8009323140dcb6a4e39b3186caf4bbc9c1b4d02ec6144e0cdccc"
+    },
+    {
+      "base": {
+        "bytes": 42323,
+        "git_blob_sha1": "3c5a71a027d5399202de5aa37fd4b7f46c11ad31",
+        "sha256": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5"
+      },
+      "bytes": 42703,
+      "path": "nfl_lab/audit_weekly_runtime_v1.py",
+      "sha256": "ce0281bf11932cd014099eab6d1aa554b96858e85effd68222dd9266abecefb3"
+    },
+    {
+      "base": {
+        "bytes": 49549,
+        "git_blob_sha1": "25cd727640bef3331ec4238b83dae573271d7bcb",
+        "sha256": "e63e53b4ff0dbed062314191a86c20d7c233abd5f25d3908745118dcae03ab68"
+      },
+      "bytes": 49939,
+      "path": "nfl_lab/audit_weekly_template_v1.py",
+      "sha256": "cad08dfd5eef1a3eca165fd46c2a57187aeacb6759dbda88afb10022b13a75b7"
+    },
+    {
+      "base": null,
+      "bytes": 3460,
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+    },
+    {
+      "base": null,
+      "bytes": 17586,
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "defc4ba560834027a958460fce4727eedb325f82bfe8dbc68a84c4b4d14f6a09"
+    },
+    {
+      "base": {
+        "bytes": 20909,
+        "git_blob_sha1": "23d18f096a0efc4c4bf9547a5ab90b9a40d255a0",
+        "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5"
+      },
+      "bytes": 21010,
+      "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+      "sha256": "2561c34570332912d063bbe73b77e5b079e6923ca6e34e2acc0a3a1b0de58e43"
+    },
+    {
+      "base": null,
+      "bytes": 13034,
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "sha256": "602986847630aaa380d580b67d1c341339fa221d616fd3254418ba1441c1d447"
+    },
+    {
+      "base": null,
+      "bytes": 31195,
+      "path": "tools/modern_count_a_mean_v3.py",
+      "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+    },
+    {
+      "base": {
+        "bytes": 21545,
+        "git_blob_sha1": "d7fb9e699c6f69868a7410d5df00d956882c3944",
+        "sha256": "185d864fd91945fd7d30c7feee3929cf302266b4d5f6f196e758ce4ba439b104"
+      },
+      "bytes": 22140,
+      "path": "tools/persist_state.py",
+      "sha256": "cbb3041c221a5b09b8fc707dbad9a042208710cee40c029bbe332d8e9dc95b70"
+    }
+  ],
+  "stage": "LOCAL_CODE_REVIEW_ONLY;NOT_PUBLISHED_NOT_PRODUCER_BOUND_NOT_CURRENT_INFERENCE",
+  "verdict": "PASS_FROZEN_SOURCE_REACHABILITY_DURABLE_PUBLIC_BINDING_AND19_SYNTHETIC_FIXTURES"
+}
