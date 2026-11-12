@@ -1,0 +1,373 @@
+{
+ "id": "COUNTA_MAIN_SHARED_SOURCE_SYNC_INDEPENDENT_REVIEW-v1",
+ "UTC": "2026-11-12T06:56:53.141261+00:00",
+ "reviewer": "Session A independent read-only /root/finalmile_encoding_review",
+ "verdict": "PASS_FOR_FROZEN_MAIN_SOURCE_SYNC_AND_METADATA_INTERPRETATION_SCOPE",
+ "scope": "Main own-A required shared executable/config/profile sync plus exact preexisting validator import closure and optional Count A helpers. No model/data experiment, production switch or native execution.",
+ "checks": {
+  "manifest_SHA256": "702f697d6addac17589534c4291cae05297c247fd86b0bcbdac5bb2a2266ed5e",
+  "manifest_bytes": 13191,
+  "base_main": "f37279a093fcdddece1e369d42ce54349cb1913c",
+  "local_phase_commit": "7e17db3653b5868ece9076cf1c14deb76fc325da",
+  "immutable_producer_commit": "3156058b91c7d9f0bb0f2cdebc4831994214e5bd",
+  "immutable_producer_tree": "11e101bea1f5c7ddf3bbf6ba873044f2d1d10dc1",
+  "public_producer_tree_truncated": false,
+  "files": [
+   {
+    "path": "config/weekly-mae-display-core3-v1.json",
+    "bytes": 15712,
+    "sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+    "Git_blob_SHA1": "f59e8d82af969d80b69a1104f49c1d4c2d56ebe4",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": true
+   },
+   {
+    "path": "nfl_lab/audit_weekly_controller_v1.py",
+    "bytes": 46503,
+    "sha256": "2b2ddb1e035f18003a3b159e232d8bccbf52ed3800093c719808e56015307350",
+    "Git_blob_SHA1": "e2b069c2452a13fbb6e695e644ed060dbdd3a9f0",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": true
+   },
+   {
+    "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+    "bytes": 130608,
+    "sha256": "40f5e92f132b574206b8260c4fc7eea7e38e3358e40649d192210c2a5bffd48d",
+    "Git_blob_SHA1": "1132a3f0b415b0f4f5b17cbb95175d522a6c8c8a",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": true
+   },
+   {
+    "path": "nfl_lab/audit_weekly_template_v1.py",
+    "bytes": 50966,
+    "sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7",
+    "Git_blob_SHA1": "0d5940542b9ab5cf0a78cc619f1b4c9748f11a45",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": true
+   },
+   {
+    "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+    "bytes": 3460,
+    "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527",
+    "Git_blob_SHA1": "8ddba67130cc8085cb9c018c1a955f6fefd84329",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/count_a_native_extension_v1.py",
+    "bytes": 18727,
+    "sha256": "6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351",
+    "Git_blob_SHA1": "4342ccf542bc6539d95343707c55dcf5c1f08940",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+    "bytes": 20909,
+    "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5",
+    "Git_blob_SHA1": "23d18f096a0efc4c4bf9547a5ab90b9a40d255a0",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": true
+   },
+   {
+    "path": "tools/modern_count_a_mean_v3.py",
+    "bytes": 31195,
+    "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6",
+    "Git_blob_SHA1": "eeeb2af4c87ad4ffe72cc1df3b9ee35e75e247ae",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/audit_count_retained_v1.py",
+    "bytes": 32318,
+    "sha256": "5c4d234e8d9817c6302bf1a4a64e97f64643dc652bb54a6534c9ad5923903966",
+    "Git_blob_SHA1": "99e4c012003bbe588d7ad08a3d1fcd91d0045a84",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/gha_private_checkpoint.py",
+    "bytes": 26945,
+    "sha256": "0a860949760959f9057bc08ad2c6b824bdec02ab31aadc000db65421d1bdcf78",
+    "Git_blob_SHA1": "60bee0e7617fad847a02d0b7784667941b62c02f",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/audit_count_requalify_v1.py",
+    "bytes": 42168,
+    "sha256": "44ab42b05b00cfd54056204c490eac481aeb5a17a87d0de00afce150d330be11",
+    "Git_blob_SHA1": "66c9a616d9a1b954fec8c17c515c06a978ab9dd5",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/audit_count_checkpoint_v1.py",
+    "bytes": 34699,
+    "sha256": "62131cd48810daf27cb929bb8ed964f5b71285c94da82a4f78c45015f95e6dd4",
+    "Git_blob_SHA1": "0073758a996a3e40280e8d0629bc982349f64a35",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "nfl_lab/operational_failure_v1.py",
+    "bytes": 22065,
+    "sha256": "91cb45345340a0db9a9b701756734eec0b8ea74e8adcfe8d20d5575d12796ad2",
+    "Git_blob_SHA1": "74639baacc61afb36e58d389e7233ff55b23761a",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": true,
+    "base_present": false
+   },
+   {
+    "path": "tests/test_count_a_parent_metadata_v1.py",
+    "bytes": 2430,
+    "sha256": "18fc6810cba1d2e50dc5ba10e5fd777625bd16df9e3ce00094f958cd55d3f1a5",
+    "Git_blob_SHA1": "5ffd6b09c10d1da28eaf5e108637f676847ad1de",
+    "frozen_manifest_match": true,
+    "immutable_producer_match": false,
+    "base_present": false
+   }
+  ],
+  "changed_scope_exact": true,
+  "unchanged_main_parent_controls": [
+   {
+    "path": ".github/workflows/lab.yml",
+    "sha256": "5ae30ecac01011545ddb1c3d1d55c62f227644d6d5ad1b97d8bdf8a2a2cf1f67",
+    "base_byte_identity": true
+   },
+   {
+    "path": "nfl_lab/audit_weekly_parent_v1.py",
+    "sha256": "6dec0b6588d745e01be9770b6d3e470478d59570e9de5db9919ec1f4087eb173",
+    "base_byte_identity": true
+   },
+   {
+    "path": "tools/audit_weekly_parent_v1.py",
+    "sha256": "7483767c80ffc5b86a535280adf437bb86f4ec5ed867be63b96c765ac6ba3ad1",
+    "base_byte_identity": true
+   },
+   {
+    "path": "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+    "sha256": "2a90e2bf42812541fe6c3fcdf9dab4bf11f50c27509d217cf47a87ea1aed781f",
+    "base_byte_identity": true
+   },
+   {
+    "path": "nfl_lab/cadence.py",
+    "sha256": "e56755c43cce5a60ddbbc9b50b5c13c588c3b90dc80e7b183dcf618830bc8c85",
+    "base_byte_identity": true
+   },
+   {
+    "path": "nfl_lab/state.py",
+    "sha256": "43d10b5424597711595216931831b71f6182c5060098fbbf9e499712dbfb2f2d",
+    "base_byte_identity": true
+   },
+   {
+    "path": "config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    "base_byte_identity": true
+   }
+  ],
+  "shared_executable_count": 20,
+  "shared_executable_paths": [
+   {
+    "path": "config/operational-source-policy-v2.json",
+    "sha256": "e7f54213218031c978c766af7a1a3b22a57c2a424b51f62056742162154fe441",
+    "producer_Git_blob_SHA1": "8ce0129a801dd90113e444cde32848be6ebd35ed"
+   },
+   {
+    "path": "config/private-draft-storage-v2.json",
+    "sha256": "b7a802c1f299d61cdbfb260081e71701f56279c76f2025f3468c6a83bc73959b",
+    "producer_Git_blob_SHA1": "d2fd1360911238a7b011164423a92f545b3bffad"
+   },
+   {
+    "path": "nfl_lab/audit_weekly_controller_bootstrap_v1.py",
+    "sha256": "2a90e2bf42812541fe6c3fcdf9dab4bf11f50c27509d217cf47a87ea1aed781f",
+    "producer_Git_blob_SHA1": "d0ec412545e0db561230d58fbef64d19a5896de2"
+   },
+   {
+    "path": "nfl_lab/audit_weekly_controller_v1.py",
+    "sha256": "2b2ddb1e035f18003a3b159e232d8bccbf52ed3800093c719808e56015307350",
+    "producer_Git_blob_SHA1": "e2b069c2452a13fbb6e695e644ed060dbdd3a9f0"
+   },
+   {
+    "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+    "sha256": "40f5e92f132b574206b8260c4fc7eea7e38e3358e40649d192210c2a5bffd48d",
+    "producer_Git_blob_SHA1": "1132a3f0b415b0f4f5b17cbb95175d522a6c8c8a"
+   },
+   {
+    "path": "nfl_lab/audit_weekly_template_v1.py",
+    "sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7",
+    "producer_Git_blob_SHA1": "0d5940542b9ab5cf0a78cc619f1b4c9748f11a45"
+   },
+   {
+    "path": "nfl_lab/cadence.py",
+    "sha256": "e56755c43cce5a60ddbbc9b50b5c13c588c3b90dc80e7b183dcf618830bc8c85",
+    "producer_Git_blob_SHA1": "45f852349c01b09796418a27ced01f0c97023114"
+   },
+   {
+    "path": "nfl_lab/operational_storage.py",
+    "sha256": "fdec24fc89391506f3d99d1fedd04042442ec56f5495ef10ff7be9479381b3d8",
+    "producer_Git_blob_SHA1": "abe115bfe16e37b40f460ebb4decee9ab8341c23"
+   },
+   {
+    "path": "nfl_lab/owned_reference_batch.py",
+    "sha256": "6fe7c608bc0222265ef2439cff3acad9fecc551eb61ce81174c38b4f94d69ecb",
+    "producer_Git_blob_SHA1": "654d467c641614b631bfc9a1954989b97879b102"
+   },
+   {
+    "path": "nfl_lab/owner_bootstrap_bundle.py",
+    "sha256": "31d7daaa72ad5d2924c4e73cae43d5622f3a6035e864a316548fb0fb92ec58b8",
+    "producer_Git_blob_SHA1": "56a7f3d12b1fdbb66dc6c20d96c9d1710ee54a79"
+   },
+   {
+    "path": "nfl_lab/owner_private_bootstrap.py",
+    "sha256": "9d4022dabb6bbe0b03d5a730a5a44978dbfa78cbf9be98275faace65b99d49fe",
+    "producer_Git_blob_SHA1": "81b188ecd7918a596587ebf1caaffa07698fc8fb"
+   },
+   {
+    "path": "nfl_lab/private_draft_probe_helpers.py",
+    "sha256": "28a5fdf8ff3c89963b8a655c9376a839d148bf9342b80f8852f0348ea5df0fe0",
+    "producer_Git_blob_SHA1": "c5927de274bd3c1812b7fec785c2f4c5d33c0f05"
+   },
+   {
+    "path": "nfl_lab/private_draft_store.py",
+    "sha256": "b159c47b1c77321f8a46935db33a7c2289d5a625c493223958fd00fb3f92950f",
+    "producer_Git_blob_SHA1": "ada7425039a275cad9d0ac721657ba8721fa9a77"
+   },
+   {
+    "path": "nfl_lab/weekly_durable_acceptance.py",
+    "sha256": "83578b13e72ac7459de7a78bd9008cba875eb5e32f8c389df66d67b3cac23089",
+    "producer_Git_blob_SHA1": "f1f57508cc595bac3f51a62d8a645fd11bcdcd82"
+   },
+   {
+    "path": "requirements-audit-weekly-metadata-v1.lock",
+    "sha256": "0969da99a0bc2a1b71ed50584560f4588a37567ac63af3ddbaf3c4617ca5621a",
+    "producer_Git_blob_SHA1": "f62ce0c56db2b5d134cff98f7fb1625023cd2874"
+   },
+   {
+    "path": "tests/test_audit_weekly_controller_bootstrap_v1.py",
+    "sha256": "20e04764040866f6b9c738c4b535dc91030fa2fd412523ff31131e139002c6c6",
+    "producer_Git_blob_SHA1": "58b33074b9eb4179a751c2ff68d3cd4c1b9b97c2"
+   },
+   {
+    "path": "tools/audit_process_guard_v1.py",
+    "sha256": "d53a90db7ec66a0ecee437161ce53d030a48966daa72c76ab18a311db702620e",
+    "producer_Git_blob_SHA1": "877016ef44fefc6ec44127bc034d07aad906280a"
+   },
+   {
+    "path": "tools/audit_weekly_controller_bootstrap_v1.py",
+    "sha256": "13c56dccb97439b8b5151de409a30ad32a14878c7af8c3aa854a7e407e5c9b2b",
+    "producer_Git_blob_SHA1": "44e652db0c8520152061b06a3f07bcf5410238c5"
+   },
+   {
+    "path": "tools/audit_weekly_controller_v1.py",
+    "sha256": "a838491979c11892f45628660dbc32e2a53ef1aa30da192a1e0446f950f3f265",
+    "producer_Git_blob_SHA1": "e1765c116e23e44513ad6b6fa0c9597f3f935bec"
+   },
+   {
+    "path": "tools/private_draft_store_v2.py",
+    "sha256": "abb6330e881bdf872a3da89a135c76d3256952ee184f652b22d4b58457009487",
+    "producer_Git_blob_SHA1": "666b535651e292b62a3af02ff8dcec1f26505175"
+   }
+  ],
+  "parent_pin_fragment": {
+   "bytes": 5166,
+   "sha256": "7a6e3b483abd9e069dca7bea4598c55385dec5dd9f292507fe041a5a6af01a34",
+   "required_original_parent_pins": 29,
+   "total_prepared_pins": 37,
+   "additional_paths": [
+    "nfl_lab/audit_count_checkpoint_v1.py",
+    "nfl_lab/audit_count_requalify_v1.py",
+    "nfl_lab/audit_count_retained_v1.py",
+    "nfl_lab/count_a_mean_export_adapter_v1.py",
+    "nfl_lab/count_a_native_extension_v1.py",
+    "nfl_lab/gha_private_checkpoint.py",
+    "nfl_lab/operational_failure_v1.py",
+    "tools/modern_count_a_mean_v3.py"
+   ],
+   "all37_actual_hashes_match": true,
+   "is_issued_Root": false
+  },
+  "metadata_environment": {
+   "python_no_site_flag": true,
+   "site_packages_on_sys_path": false,
+   "new_scientific_imports": [],
+   "guard_validator_available": true
+  },
+  "independent_behavior_checks": {
+   "genuine_three_helper_hashes": true,
+   "tampered_helper_rejected": true,
+   "no_optional_field_requires_no_helpers": true,
+   "extra_field_V5_only": true
+  },
+  "unchanged_bootstrap_limits": {
+   "HTTP_calls": 32,
+   "wall_seconds": 180,
+   "CPU_seconds": 120,
+   "RSS_bytes": 536870912,
+   "response_bytes": 1048576,
+   "record_bytes": 262144,
+   "ZIP_bytes": 98304,
+   "safe_seal_bytes": 65536,
+   "root_bytes": 61440,
+   "request_timeout_seconds": 10,
+   "retries": 0,
+   "POSTs": 0,
+   "fits": 0,
+   "private_reads": 0
+  },
+  "CPU_seconds": 0.209260912,
+  "max_RSS_platform_units": 24760,
+  "no_native_API_private_IO_or_model_deserialization": true
+ },
+ "necessity_and_minimality": {
+  "three_changed_shared_modules": "controller/template/grade_history must match producer on bootstrap20shared inventory.",
+  "two_V5_metadata_files": "Profile/config must interpret exact producer source registration.",
+  "three_optional_CountA_helpers": "Template must authenticate Root-bound helper bytes before optional import; adapter/corrector unchanged.",
+  "five_existing_validator_modules": "Copied byte-exact from immutable producer3156058 because the copied lossless history guard retains its original validate_registration call. Existing module import closure was missing on Main. All five are bound in proposed parent inventory; no guard removed or duplicate validator implemented.",
+  "new_focused_test": "Tests metadata helper pins, optional old Root path, explicit V5 scope and dependency import without numerical stacks.",
+  "Main_workflow_parent_bootstrap_cadence_state_policy": "Verified byte-identical to exact actualf372 base; no scheduler, actor, lease, routing or cap edit."
+ },
+ "retained_author_failure": {
+  "initial_suites": "356passed;1ImportError because exact preexisting validator was not present on Main",
+  "correction": "Add only exact existing metadata import closure rather than bypass the retained guard",
+  "author_after_repair": "Failed case plus4new metadata cases:5PASS; reused, not rerun broadly by reviewer"
+ },
+ "independent_behavior": "Fresh python -S excluded all installed site packages. Actual Main template/bootstrap/retained modules imported and20shared/37parent source hashes checked; genuine helper map accepted, changed helper hash rejected, absent optional field requires no extra files, Count A extra field rejected on V4. No numerical library imported.",
+ "review_attempts": [
+  {
+   "result": "LOCAL_HEAD_EXPECTATION_UPDATED",
+   "cause": "Source owner completed legitimate phase-only commit7e17 while review began. Initial expected workingHEAD=f372 assertion stopped before source import. Rebound to actual7e17 parent=f372 and unchanged frozen source hashes. No implementation defect or reset inferred."
+  }
+ ],
+ "previous_scope_preserved": {
+  "encoding_review": "COUNTA_ENCODING_INDEPENDENT_REVIEW_V1.json",
+  "SHA256": "36b1201922058d50379d3f370e4536087ea1da9496339ea89381c3f3176d235b",
+  "no_reopened_model_or_historical_checks": true
+ },
+ "operational_limits": {
+  "issued_Root_bytes_cap": 61440,
+  "source_history_file_bytes_cap": 131072,
+  "actual_complete_Root_wire_bytes": "UNKNOWN_NOT_MEASURED",
+  "native_model_loads": 0,
+  "NFL_fits": 0,
+  "NFL_inference_rows": 0,
+  "private_source_acquisition": 0,
+  "native_API_calls": 0,
+  "native_private_writes": 0,
+  "cross_owner_writes": 0,
+  "source_edits_by_reviewer": 0
+ },
+ "not_established": "New Main PR canonical CI, merge/admission, approved controller registration/static template/seal, native current-query inference or durable feed, consumer retrieval and website use. Root/owners retain these steps."
+}

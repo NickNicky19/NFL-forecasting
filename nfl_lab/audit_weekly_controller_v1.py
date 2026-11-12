@@ -246,6 +246,8 @@ V5_CURRENT_OWNER_AUTHORITY = {'branch': 'research/weekly-storage-probe-v1',
  'source_sha': 'dad58d459951bdb77ef852b8ca88860ffb0bce60',
  'workflow_sha256': '2e29390bb8bfc4ca9919618d9a1facd094e70496c58c09103f626bd38a850384'}
 V5_CURRENT_OWNER_RUNTIME_PINS = {
+    "nfl_lab/audit_weekly_delivery_v1.py": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc",
+    "nfl_lab/audit_weekly_runtime_v1.py": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5",
     "nfl_lab/audit_weekly_controller_v1.py": "4799c5923134594aaf2ebc8e8a560fdf014aaa8607119e747a6fb8a0da8dde80",
     "nfl_lab/audit_weekly_retained_v1.py": "719e80ed5e52eba9b7e23f1e55c22d819c9119a69174d537483bcf0334aa9f0e",
 }
