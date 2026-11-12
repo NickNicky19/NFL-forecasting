@@ -36,20 +36,32 @@ remain retained; there was no automatic retry or safety-guard relaxation.
 
 ## Exact user/credential-owner action
 
-Use this Codex environment's **environment settings / secret bindings** to
-make the **existing GitHub owner credential** available as `GH_TOKEN` for both
-`api.github.com` and `uploads.github.com`, including the repository release-asset
-POST route above. Its repository permission must include **Contents: read and
-write** for `NickNicky19/NFL-forecasting`. Enter or select that existing
-credential in the secret settings, never in chat. Do not create a new account,
-token or public artifact store for this task.
+The inherited `GH_TOKEN` already authenticates the API controls. The owner of
+that **existing Codex/GitHub credential connection** must correct or confirm
+its authentication for the exact **GitHub release-asset POST on
+`uploads.github.com`** above. Required capability is repository release-asset
+write access, corresponding to **Contents: read and write** for
+`NickNicky19/NFL-forecasting`. The 401 does not establish that this permission,
+rather than managed credential forwarding, is the missing part.
 
-If the credential is supplied by a managed GitHub connection rather than an
-environment secret, its credential owner must enable that same authenticated
-upload-host route through the existing connection. General network access is
+The concrete credential-owner request is: "API requests authenticate as
+NickNicky19 / 208912933, but the approved private release-asset POST to
+uploads.github.com returns 401. Please verify/correct this existing connection's
+upload-host authentication and release-asset write capability, then confirm
+that the route is supported." Attach the safe HTTP-status receipt and exact
+endpoint above, not private model bytes or credentials. No request has been sent
+to an external administrator by this session.
+
+Managed environment documentation supports owner-configured secret bindings
+with explicit credential destinations. If an existing approved owner credential
+is available that way, its `GH_TOKEN` binding must cover both `api.github.com`
+and `uploads.github.com`. The current environment reports no configured secret
+or vault binding that this session can select or modify. I have not established
+that this inherited managed GitHub connection exposes a self-service upload-host
+setting, or that re-entering a credential would fix the failure. Do not create a
+new token/account or paste a credential in chat. General network access is
 already unrestricted and enforced; no network allowlist change is established
-as necessary. The current environment reports no configured secret/vault
-binding that this session can modify or select.
+as necessary.
 
 This action targets a demonstrated upload-host authentication failure. It is
 not a request for the model files or another historical experiment. A source
