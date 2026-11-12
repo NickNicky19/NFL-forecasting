@@ -1,0 +1,65 @@
+{
+  "id": "A-CATEGORY-DECISION-PUBLIC-AGGREGATE-PROJECTION-RECEIPT-v1",
+  "UTC": "2026-11-12T02:13:10.056818+00:00",
+  "state": "PASS_ALL2550AGGREGATES_EXACT_LOCAL_CSV_READBACK_NO_SCORING",
+  "input_score_bytes": 219037,
+  "input_score_sha256": "913bf6cc8a8e32c9985501e7cf59fbd5e334eede89a04a7904cae7a80bcc94e5",
+  "exporter": {
+    "path": "tools/category_decision_public_aggregate_export_v1.py",
+    "bytes": 12546,
+    "sha256": "92a7fa52a8b33c244ea4ef60f7f23990b53641cd6736f071fdaa87f907a870fa"
+  },
+  "data_CSV_files": 38,
+  "summary_rows": 1782,
+  "paired_rows": 768,
+  "max_CSV_bytes": 61426,
+  "manifest": {
+    "path": "reports/abc-championship/category-decision-release-01/point-pairs-public-v1/MANIFEST_V1.json",
+    "bytes": 115332,
+    "sha256": "304dcf86c07f8c84aaf8e334f3d3aa38adca7bd30bb4ce009633ec6810bf3fc0"
+  },
+  "public_directory_files": 41,
+  "public_directory_bytes": 2367979,
+  "full_headline_cache_bytes": 378971,
+  "compact_headline": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_HEADLINES_COMPACT_V1.json",
+    "bytes": 57703,
+    "sha256": "3d15a1b5f60ea5e767e100af8ab2c757c866f8502861af69d72c853012e75d2e"
+  },
+  "bounded_publication_measurement": {
+    "initial_reserve_for_other_code_reports_metadata_bytes": 2000000,
+    "initial_publication_limit_bytes": 5242880,
+    "exporter_measured_total_including_full_headline_cache_bytes": 4746950,
+    "actual_directory_plus_compact_headline_bytes": 2425682,
+    "scope": "Fullheadlinecache is localaggregatecache; rootmaypublishcompactinstead. Actualapprovedrootfinalpublicwhitelist accountingremainsrootowned."
+  },
+  "cost_measurement": {
+    "stage": "AFTER_FORMATTING_BEFORE_OUTPUT_WRITES_AND_FINAL_CSV_READBACK",
+    "CPU_seconds": 3.423221718,
+    "wall_seconds": 3.427328633999423,
+    "RSS_bytes": 35041280,
+    "whole_process_CPU": "NOT_SEPARATELY_MEASURED;hard60CPU/512MiBresourceenvelopeused; do notmislabelprewritecostaswholeexecutioncost"
+  },
+  "compact_format_probe": {
+    "unwritten_full_headline_projection_bytes": 75976,
+    "limit_bytes": 61440,
+    "outcome": "Sizeassertionbeforeanycompactfilewrite; reducedredundantnumericdataandnullcomparisonfields incompactonly. All2550fullCSVrecords unchanged; no score/filter/selectionchange."
+  },
+  "scope_clarification": {
+    "old_path": "reports/abc-championship/category-decision-release-01/A_EVIDENCE_READABLE_V1.md",
+    "old_sha256": "27ce455a7bd7fb129777b7ec6e3d77ff1a237e8cb9afe8c6ed4fd3ea2e19bfd4",
+    "corrected_path": "reports/abc-championship/category-decision-release-01/A_EVIDENCE_READABLE_V2.md",
+    "corrected_sha256": "7607319a13492104b69def9cd4a5915b6dd32371852a866811319bab8cc4af7f",
+    "change": "SameownW/Ltotalsare notproofidenticalnumericpoints/decisions/methods. No score changed."
+  },
+  "activity": {
+    "new_fits": 0,
+    "new_inference": 0,
+    "new_grades": 0,
+    "source_native_reads": 0,
+    "native_writes": 0,
+    "model_loads": 0,
+    "HTTP": 0
+  },
+  "unpublished_state": "Rootpublication/readback andC/sharedadmission remainseparate; no remote writes byexporttask."
+}
