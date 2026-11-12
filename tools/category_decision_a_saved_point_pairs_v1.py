@@ -24,14 +24,14 @@ def finite(x):return type(x)in[int,float]and math.isfinite(x)
 def identity(r):return tuple(str(r[k])if k not in ['season','week']else int(r[k])for k in KEY)
 def main(a):
  global PHASE
- start=time.monotonic();cpu=time.process_time();sys.dont_write_bytecode=True;PHASE='ROOT_REGISTRATION'
+ start=time.monotonic();cpu=time.process_time();sys.dont_write_bytecode=True;sys.path.insert(0,str(ROOT));PHASE='ROOT_REGISTRATION'
  check(not a.output.exists(),'immutable output already exists');raw=pin(a.protocol,a.protocol_sha256);p=json.loads(raw)
  check(p['version']==VERSION and p['state']=='ROOT_REGISTERED_SCORING_GO','draft is not execution authority')
  check(p['counts']==dict(new_fits=0,new_model_inference=0,new_source_collection=0,native_writes=0,production_writes=0),'scope differs')
- check(p['resources']==dict(CPU_seconds=200,wall_seconds=900,RSS_bytes=2147483648,maximum_private_result_bytes=1048576),'finite envelope differs')
+ check(p['resources']==dict(CPU_seconds=199,wall_seconds=900,RSS_bytes=2147483648,maximum_private_result_bytes=1048576),'finite envelope differs')
  for f,h in p['code_sha256'].items():pin(ROOT/f,h)
  check(p['code_sha256']['tools/category_decision_a_saved_point_pairs_v1.py']==sha(Path(__file__).read_bytes()),'executing code not bound')
- resource.setrlimit(resource.RLIMIT_CPU,(185,200));resource.setrlimit(resource.RLIMIT_AS,(2147483648,)*2)
+ resource.setrlimit(resource.RLIMIT_CPU,(185,199));resource.setrlimit(resource.RLIMIT_AS,(2147483648,)*2)
  def exhausted(sig,_):
   if sig==signal.SIGXCPU:signal.signal(signal.SIGXCPU,signal.SIG_IGN)
   raise TimeoutError('finite saved-point package exhausted')

@@ -1,0 +1,108 @@
+{
+  "id": "A-SAVED-POINT-PAIR-INDEPENDENT-PREEXEC-REVIEW-v3",
+  "UTC": "2026-11-12T01:47:25.370293+00:00",
+  "state": "PASS_SOURCE_ONLY_PACKAGING_AND_BUDGET_DELTA_READY_FOR_ROOT_PUBLICATION_AND_ONE_RETRY",
+  "worker": {
+    "path": "tools/category_decision_a_saved_point_pairs_v1.py",
+    "bytes": 15617,
+    "sha256": "c90d6e2bd8a1832a70ed6749f3e1f7594d2abf23e800f056f79f81c4a3083c56"
+  },
+  "new_GO": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_ROOT_GO_V2.json",
+    "bytes": 181690,
+    "sha256": "1ddd648e0b74f02f8c8ae63d8b744c61a1c4ae82aa7cfea35f54823d375f112c"
+  },
+  "predecessor_review": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_PREEXEC_INDEPENDENT_REVIEW_V2.json",
+    "sha256": "f062a7e836d3d02e8fa7aa68804bf284318b538b87c06da58bdec2937d4bd77f",
+    "source_math_null_identity_masks_oracles_controls_verdict": "REUSED_UNCHANGED"
+  },
+  "actual_root_failure_preserved": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+    "bytes": 373,
+    "sha256": "4af39669ddf68ebfd614a68bfceb013e61285f83b90f068d358b1364379dd9d8",
+    "phase": "EXISTING_READONLY_NAMESPACE_ATTACH",
+    "error_type": "ModuleNotFoundError",
+    "CPU_seconds": 0.459634799,
+    "no_payload_reads": "Owner execution report and source ordering place failure before native attachment/private configuration and ZIP reads; reviewer did not open payloads.",
+    "new_fits": 0,
+    "new_model_inference": 0,
+    "native_writes": 0
+  },
+  "correction": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_PACKAGING_CORRECTION_V1.json",
+    "bytes": 2185,
+    "sha256": "b2926c06735bb2d13a26c749ea4e3939619f4b400784c6c419ae32755ea4a5ef"
+  },
+  "delta_verified": {
+    "exact_source_changes": [
+      "Insert sys.path.insert(0,str(ROOT)) inside earlymain, before dynamic tools/guard import. Ccache subsequentlyprepended retains intended common evaluator import precedence.",
+      "Resource assertion CPU200->199.",
+      "RLIMIT_CPU hard200->199;soft185unchanged."
+    ],
+    "exact_old_source_reconstruction": "Reversing only those3literal changes produces exact SHA db38d5fb3a800e6581296471c39d0c92ec335627acaf0919433d4c0bea0cb651. No scientific AST/formula/source/policy change hidden in delta.",
+    "GO_changed_paths_only": [
+      "registered_UTC",
+      "code_sha256.tools/category_decision_a_saved_point_pairs_v1.py",
+      "resources.CPU_seconds",
+      "packaging_correction",
+      "cumulative_CPU_envelope"
+    ],
+    "scientific_contracts_unchanged": [
+      "source_objects",
+      "member_sha256",
+      "source_configuration",
+      "common_code",
+      "common_executable_protocol_sha256",
+      "runtime",
+      "comparison_masks",
+      "point_products",
+      "paired_candidate_ids",
+      "registered_references",
+      "point_rule",
+      "expected_cells",
+      "uncertainty",
+      "limitations",
+      "source_rights",
+      "counts"
+    ],
+    "preserved_checks": "79pointproducts,1782summaries,768targetedpairs,474annual+weeklyoracles; strict typed-point direction/missingness/role/clock and existingcommonmath unchanged."
+  },
+  "budget": {
+    "original_CPU_seconds": 200,
+    "consumed_failed_CPU_seconds": 0.459634799,
+    "one_retry_hard_CPU_seconds": 199,
+    "one_retry_soft_CPU_seconds": 185,
+    "combined_upper_bound_CPU_seconds": 199.459634799,
+    "original_ceiling_not_reset": true,
+    "RSS_bytes": 2147483648,
+    "wall_seconds": 900,
+    "actual_alarm_seconds": 880,
+    "result_maximum_bytes": 1048576,
+    "native_payload_writes": 0,
+    "native_retention": "Separate root registration/readback remainsrequired; nochange"
+  },
+  "reviewer_failed_source_check_preserved": {
+    "stage": "Attemptto copy pre-packaging publicworker baseline after ownerlegitimatelyappliedfix",
+    "failure": "SHAguard raisedAssertionError beforefilewrite becausecurrentcodewasalreadynewversion; no scientific/runtime/data effect.",
+    "resolution": "Verified exactoldpublishedsource byreverse-only3edit reconstruction/hash; no refetch or unsafe import."
+  },
+  "scope_limits": [
+    "Source/GO/failure metadata only; no worker import/execution, native/ZIP/model/NFL row access or grading.",
+    "PASS is not successful retry, original aggregate parity, current model inference, capture, release or scientific gain.",
+    "Root must publish exactnewworker/GO/correction/review and verify readback beforeoneboundedmanualretry. Anynewfailurepreserved; noautomaticloop.",
+    "Originalworker/GO1/failure and oldreviewremainrecoverable; packaging-onlyfixdoesnotresetforecasttestweeks or alterfixedpredictions."
+  ],
+  "activity": {
+    "worker_execution": 0,
+    "private_payload_reads": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "models": 0,
+    "new_fits": 0,
+    "inference": 0,
+    "NFL_grades": 0,
+    "peer_writes": 0,
+    "external_messages": 0
+  }
+}

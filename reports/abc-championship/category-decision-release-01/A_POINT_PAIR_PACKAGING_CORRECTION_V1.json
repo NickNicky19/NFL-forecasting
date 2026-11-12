@@ -1,0 +1,51 @@
+{
+  "id": "A-POINT-PAIR-PACKAGING-CORRECTION-v1",
+  "UTC": "2026-11-12T01:45:27.551201+00:00",
+  "state": "SOURCE_REPAIR_ONLY_REQUIRES_NEW_ROOT_GO_REVIEW_AND_PUBLICATION",
+  "old_registration_preserved": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_ROOT_GO_V1.json",
+    "bytes": 181295,
+    "sha256": "ca4a90bf45e7122923671598070edc14ee45e953ca2e16385fd5b682daf97f85",
+    "worker_sha256": "db38d5fb3a800e6581296471c39d0c92ec335627acaf0919433d4c0bea0cb651"
+  },
+  "failure_preserved": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+    "bytes": 373,
+    "sha256": "4af39669ddf68ebfd614a68bfceb013e61285f83b90f068d358b1364379dd9d8",
+    "phase": "EXISTING_READONLY_NAMESPACE_ATTACH",
+    "error_type": "ModuleNotFoundError",
+    "CPU_seconds": 0.459634799,
+    "scientific_payloads_read": 0,
+    "namespace_attached": false,
+    "native_writes": 0,
+    "fits": 0,
+    "inference": 0
+  },
+  "new_worker": {
+    "path": "tools/category_decision_a_saved_point_pairs_v1.py",
+    "bytes": 15617,
+    "sha256": "c90d6e2bd8a1832a70ed6749f3e1f7594d2abf23e800f056f79f81c4a3083c56"
+  },
+  "scoped_change": "Insert repositoryROOT onto sys.path inside main before imported dependency/guard functions. This restores tools namespace imports when invoked as a script. No data, forecast, formula, candidate, point rule, oracle, reference or outcome change.",
+  "resource_debit": {
+    "original_total_CPU_seconds": 200,
+    "failure_CPU_seconds": 0.459634799,
+    "retry_hard_CPU_seconds": 199,
+    "retry_soft_CPU_seconds": 185,
+    "maximum_combined_CPU_seconds": 199.459634799,
+    "remaining_unallocated_CPU_seconds": 0.540365200999986,
+    "wall_seconds": 900,
+    "RSS_bytes": 2147483648,
+    "maximum_private_result_bytes": 1048576,
+    "other_contracts_unchanged": true
+  },
+  "activity_after_repair": {
+    "execution_attempts": 0,
+    "private_reads": 0,
+    "native_writes": 0,
+    "fits": 0,
+    "inference": 0,
+    "grading": 0
+  },
+  "next": "RootnewGO2mustbindnewworkerand199CPU,reuseunchanged474oraclesandallothercontracts,publishbeforeoneboundedretry; no automaticloops."
+}
