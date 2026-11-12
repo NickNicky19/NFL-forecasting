@@ -293,7 +293,7 @@ serialized acceptance or substitute process identity is accepted.
     require(feed.utc(at)<=feed.utc(verified_at),"LIVE_VERIFICATION_COMPLETION_CLOCK")
     record=dict(schema_version=VERSION+"-live-acceptance",authority_kind="ROOT_APPROVED_PROCEDURE_VERIFIED",accepted_at=verified_at,
         policy_sha256=feed.digest(policy),archive_index_sha256=consumed["index_sha256"],archive_files_sha256=consumed["files_sha256"],
-        producer=consumed["archive"]["producer"],restorer=consumed["restorer_witness"]["restorer"],exporter=actual,
+        root_go_sha256=consumed["archive"]["root_go_sha256"],producer=consumed["archive"]["producer"],restorer=consumed["restorer_witness"]["restorer"],exporter=actual,
         producer_proof_sha256=feed.digest(consumed["producer_proof"]),restorer_proof_sha256=feed.digest(consumed["restorer_witness"]),
         exporter_proofs_sha256=feed.digest(consumed["exporter_proofs"]),qualification_sha256=feed.digest(package["qualification"]),
         workflow_sha256=feed.sha(raw),selected_body_sha256=selected["sha256"],selected_bytes=selected["bytes"],
@@ -385,3 +385,20 @@ def export(live,*,at):
         publication=publication,publication_sha256=feed.digest(publication))
     require(set(document)==feed.META_FIELDS|{"publication","publication_sha256"} and len(feed.canonical(document))<=feed.MAX_BYTES,"CLOSED_V2_PUBLIC_FEED_SIZE_AND_FIELDS")
     return document
+
+
+def count_a_shadow_projection(live, root, *, at):
+    """Derived handoff only; existing selected export and policy stay unchanged."""
+    require(type(live) is LiveAcceptance,"IN_MEMORY_LIVE_ACCEPTANCE_REQUIRED")
+    live.verify()
+    from .count_a_native_extension_v1 import FIELD, validate_archive, projection, strict
+    require(FIELD in root and feed.digest(root)==live.record["root_go_sha256"],"COUNT_A_SAME_DURABLE_OWNER_ROOT")
+    aliases=live.inputs["aliases"]
+    def path(name):
+        ref=aliases[name];archive.read_owned(live.inputs["storage"],ref,2<<20,raw=True);return ref["path"]
+    snapshot=dict(files=[dict(logical_path=n)for n in aliases])
+    validate_archive(snapshot,path,root,complete=True)
+    body=archive.read_owned(live.inputs["storage"],aliases["runtime/count-a-mean-shadow/ROWS.jsonl"],2<<20,raw=True)
+    result=projection([strict(line)for line in body.splitlines()])
+    result.update(native_acceptance_sha256=feed.digest(live.record),verified_at=at,public_export_authorized=False)
+    return result

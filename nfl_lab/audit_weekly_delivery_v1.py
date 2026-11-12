@@ -292,6 +292,14 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         from . import weekly_mae_display_archive_v1 as display
         point_export,point_files,point_unavailable_ref=_prepare_display_pair(storage,state,output,live,client,consumed,
             display_profile,files,clock=clock)
+    count_a_pair=None
+    if display_profile is not None and "count_a_mean_shadow" in display_profile.root:
+        from . import count_a_native_extension_v1 as count_a
+        registration=display_profile.root[count_a.FIELD]
+        if registration["public_release"]:
+            shadow=public.count_a_shadow_projection(live,display_profile.root,at=clock().isoformat())
+            count_a_pair=count_a.public_pair(shadow,live.record,display_profile.root,clock().isoformat())
+            for name,body in count_a_pair.items():storage.write_bytes(Path(state)/name,body)
     publication_files=dict(files,**point_files)
     if point_files:
         require(persist_state.v5_public_export_names(publication_files)[0]==(feed_path,receipt_path),"EXACT_ATOMIC_V5_LEGACY_AND_POINT_PUBLIC_PAIRS")
@@ -353,6 +361,13 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
         archive.write(storage,output/"DELIVERY_FAILED.json",dict(safe,state="SOURCE_RACE_AFTER_PUBLICATION_BYTES_RETAINED",observed_source_sha=observed,failed_at=clock().isoformat()))
         point_failure("SOURCE_RACE_AFTER_PUBLICATION_BYTES_RETAINED","PERSIST_CALL_COMPLETED_SOURCE_CHANGED",observed_source_sha=observed)
         raise store.StoreError("PRODUCER_SOURCE_CHANGED_AFTER_PUBLICATION")
+    if count_a_pair is not None:
+        count_a_files={n:store.sha(b) for n,b in count_a_pair.items()}
+        require(check(client,policy["source_branch"])==expected_source_sha,"COUNT_A_SOURCE_CHANGED_BEFORE_SHADOW_PUBLICATION")
+        with quiet_publisher(repository_root),operational_io(storage,run_root=Path(repository_root)/"runs"):
+            publish(Path(repository_root),Path(state),storage=storage,policy_path=policy_path,files=count_a_files,
+                count_a_shadow_context=(live,display_profile.root))
+        require(check(client,policy["source_branch"])==expected_source_sha,"COUNT_A_SOURCE_CHANGED_AFTER_SHADOW_PUBLICATION")
     receipt=dict(safe,state="PUBLIC_DERIVED_DELIVERY_COMPLETE",published_at=clock().isoformat(),source_head_verified_before_after=True)
     if grading is not None:receipt["grading_checkpoint"]=grading
     ref=archive.write(storage,output/"DELIVERY_RECEIPT.json",receipt)

@@ -92,6 +92,9 @@ def decode_json(body): return controller.decode(body)
 def root_keys(root):
     require(type(root) is dict and root.get('schema_version') in {'audit-weekly-hosted-v2-root-GO', ROOT_V3, ROOT_V4, ROOT_V5},
         'EXPLICIT_STATIC_ROOT_VERSION')
+    if 'count_a_mean_shadow' in root:
+        require(root['schema_version'] == ROOT_V5, 'COUNT_A_SHADOW_REQUIRES_CURRENT_V5_ROOT')
+        return ROOT_V5_KEYS | {'count_a_mean_shadow'}
     return ROOT_V5_KEYS if root['schema_version'] == ROOT_V5 else ROOT_V4_KEYS if root['schema_version'] == ROOT_V4 else ROOT_V3_KEYS if root['schema_version'] == ROOT_V3 else ROOT_KEYS
 
 
@@ -481,6 +484,9 @@ def _document(value):
     if value['schema_version'] == STATIC_V5:
         from .weekly_mae_display_profile_v1 import validate_metadata
         validate_metadata(root,Path(__file__).resolve().parents[1])
+        if "count_a_mean_shadow" in root:
+            from .count_a_native_extension_v1 import validate_metadata as count_a_metadata
+            count_a_metadata(root,Path(__file__).resolve().parents[1])
     require(root['repository'] == store.REPO and root['mode'] == 'audit-weekly-producer-v1'
         and root['source_sha'] == value['source_sha'] and root['code_pins'] == value['code_pins']
         and root['single_writer_group'] == 'nfl-lab-single-writer'

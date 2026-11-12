@@ -210,6 +210,9 @@ def validate_root(go, *, now):
     if go['schema_version']==template.ROOT_V5:
         from .weekly_mae_display_profile_v1 import validate_root_extension
         validate_root_extension(go,ROOT)
+        if "count_a_mean_shadow" in go:
+            from .count_a_native_extension_v1 import validate_metadata as count_a_metadata
+            count_a_metadata(go,ROOT)
     template.pending_recovery(go)
     template.first_primary_root(go)
     template.failed_first_recovery_root(go)
@@ -1334,10 +1337,6 @@ class Runner:
             require(0<len(raw_handoff)<=16 << 10
                 and store.sha(raw_handoff)==self.env.get("AUDIT_WEEKLY_GRADE_HANDOFF_SHA256"),
                 "EXACT_NATIVE_GRADING_WRITER_HANDOFF_REQUIRED")
-            # This first complete archive read belongs to grading. The later
-            # public-delivery process performs its own complete live read and
-            # acceptance. Neither a saved JSON flag nor this phase substitutes
-            # for that acceptance; failed grading never reaches publication.
             self.archive_call("consume",self.archive_request("consume",reader_handoff=reader))
             grading_result=self.grading_phase("operations-grade-read",cp.binding(self.root/"archive-consume"/"transport"/"RESTORED.json"),
                 handoff=cp.strict_json(raw_handoff))
