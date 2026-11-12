@@ -1,0 +1,125 @@
+{
+  "id": "A-CATEGORY-DECISION-ANCHOR-RECOVERY-AND-GO3-INDEPENDENT-REVIEW-v1",
+  "UTC": "2026-11-12T01:56:16.237298+00:00",
+  "scope": "Source/config/metadata review only. No native, CAS, external-original, protectedforecast/model payload reads, copy, guard attach, NFL decode or scoring.",
+  "recovery_verdict": {
+    "state": "PASS_SOURCE_ONLY_READY_FOR_ROOT_PUBLICATION_AND_ONE_EXACT_RECOVERY",
+    "worker": {
+      "path": "tools/category_decision_restore_anchors_v1.py",
+      "bytes": 3662,
+      "sha256": "cb647b2dcd6b7fc194a1bbad02681a21cf504a2727800574a47e6d73ff3ef423"
+    },
+    "GO": {
+      "path": "reports/abc-championship/category-decision-release-01/ANCHOR_RECOVERY_GO_V1.json",
+      "bytes": 1499,
+      "sha256": "85fe668879c0c7834b8dc9d72d6f443050d5064111351ab7a8aeeafc4b9a9edd"
+    },
+    "checks": {
+      "code_and_plan_hashes": "PASS_EXACT_PINS",
+      "approved_source_mapping": "Byte-bound originalcapacityplan -> hash/sizeboundoriginalmarketpolicy -> unchangedouterdescriptor policy equality; exactly4original refs matching4registeredGOhash/bytepairs",
+      "copy_scope": "<=17,649,073B ofexistingapprovedoriginalarchives; retained managedCASobject byoriginalSHA; no newsource/feed/re-collection/decoding",
+      "source_integrity": "Beforecopy exactfile/fullSHA/size,nonsymlinkancestry; stabledev/ino/size/mtime/ctime/nlink acrosssourcehash; atimeappropriatelyexcludedbecauselegitimatereadmayupdateit. Existingauthorized2managedlinksnotrejected.",
+      "destination_integrity": "Exact frozenpolicy externalanchor, nonsymlinkancestry, existingdestinationverifiedwithoutoverwrite; absentdestinationexclusivexb copy; finalfullSHA/size/nlink1; fsyncfileanddirectory",
+      "unchanged_guards_accounting": "No guard/cap/policy edits orsourcehardlinks; originalmanagedcopy andexternalanchor reservation remainsaccounted",
+      "finite_resources": "20CPUhard19soft,55salarm within60wall,512MiB;newone-timeexplicitrecoverybudgetnotoldattemptreset",
+      "immutable_receipt": "Newexclusiveoutputpath; oldfixedreceipt/toolnotrerunoroverwritten"
+    },
+    "failure_semantics": "This successor usesdirectexclusive finaldestinationwrite, notatomictemporaryinstallation. Ifinterrupted, anypartialfile is retained and the original fullhash/sizeguard correctly rejects it; no automaticretry/overwrite/deletion is permitted. Root mustretain actualfailure/costmetadata ifthisworkerthrowsbeforeits successreceipt. This reporting requirement is not an extra data/permission gate.",
+    "runtime_remaining": "Actualprivate-sourceexistence/hash,copyreadbackandunchangedcompleteguardcheckpoint remainrootexecutionfacts, notthissourcePASS."
+  },
+  "GO3_verdict": {
+    "state": "PASS_SOURCE_ONLY_RESOURCE_DEBIT_DELTA_READY_AFTER_ACTUAL_ANCHOR_RESTORE",
+    "worker": {
+      "path": "tools/category_decision_a_saved_point_pairs_v1.py",
+      "bytes": 15617,
+      "sha256": "d6d19b6418fcc00e723ec36ee1563af18bdad2b5590049e30104b0edd0ac3eaf"
+    },
+    "GO3": {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_ROOT_GO_V3.json",
+      "bytes": 182113,
+      "sha256": "e28304830b7021ffc34a20ab07a44ee9e8116ffd3773b47573cc0954c8772a4e"
+    },
+    "budget_receipt": {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_RECOVERY_RETRY_BUDGET_V1.json",
+      "bytes": 2246,
+      "sha256": "7d47dad4597a3fd77f29efeabb9fd8928ced95d60065f0e084c815f0e8791f9b"
+    },
+    "exact_delta": "OnlyresourceassertCPU199->193andRLIMITsoft/hard185/199->180/193. ReversingthosechangesreconstructsexactpreviousworkerSHA c90d6e2bd8a1832a70ed6749f3e1f7594d2abf23e800f056f79f81c4a3083c56. ROOTsys.pathfix remains.",
+    "unchanged_scientific_contracts": [
+      "source_objects",
+      "member_sha256",
+      "source_configuration",
+      "common_code",
+      "common_executable_protocol_sha256",
+      "runtime",
+      "comparison_masks",
+      "point_products",
+      "paired_candidate_ids",
+      "registered_references",
+      "point_rule",
+      "expected_cells",
+      "uncertainty",
+      "limitations",
+      "source_rights",
+      "counts"
+    ],
+    "preserved_scope": "79savedtypedpointproducts;474annual+weeklyoracles;1782summaries/768targetedpairs only ifallactualruntimecheckscomplete. No newfit/inference orchangedprocedureclaim.",
+    "CPU_seconds": {
+      "original_scoring_total": 200,
+      "prior_two_failures": 6.551664589,
+      "this_hard_limit": 193,
+      "this_soft_limit": 180,
+      "combined_upper_bound": 199.551664589,
+      "no_reset": true
+    },
+    "other_limits": "2GiB,900wall/880alarm,1MiBcompressedresult,0nativepayloadwrites;rootretentionseparate",
+    "ordering": "Actualapprovedanchorrestore/readback, rootpublication/readbackofexactcode/GO/review, thenoneboundedmanualscoringcontinuation only. Originalguardmustpassunchanged; noautomaticloop."
+  },
+  "preservation": {
+    "previous_failed_attempts": [
+      {
+        "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+        "bytes": 373,
+        "sha256": "4af39669ddf68ebfd614a68bfceb013e61285f83b90f068d358b1364379dd9d8"
+      },
+      {
+        "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014831762550Z.json",
+        "bytes": 370,
+        "sha256": "cf8c3ded47092e5e9298b6c0e9282670aaa08c08f6598a3fe63934e6ab143fbd"
+      }
+    ],
+    "previous_reviews": [
+      {
+        "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_PREEXEC_INDEPENDENT_REVIEW_V2.json",
+        "bytes": 5796,
+        "sha256": "f062a7e836d3d02e8fa7aa68804bf284318b538b87c06da58bdec2937d4bd77f"
+      },
+      {
+        "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_PREEXEC_INDEPENDENT_REVIEW_V3.json",
+        "bytes": 4941,
+        "sha256": "a70568262ffda0cd3fb3bcc7e9ba76bec5b0c9833166234b7f9bbaa662901cb7"
+      }
+    ],
+    "external_dependency_review": {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_EXTERNAL_ANCHOR_REVIEW_V1.json",
+      "bytes": 10149,
+      "sha256": "33964b5540a3e34f3ab47edff7f156bc4067c54d59d9cb7c60a9c910eefcca9b"
+    },
+    "old_caps_sources_grades_forecasts": "UNCHANGED"
+  },
+  "activity": {
+    "worker_execution": 0,
+    "archive_stat_or_hash": 0,
+    "CAS_reads": 0,
+    "native_reads": 0,
+    "private_payload_reads": 0,
+    "copy_writes": 0,
+    "models": 0,
+    "fits": 0,
+    "inference": 0,
+    "NFL_grade_or_score": 0,
+    "peer_writes": 0,
+    "external_messages": 0
+  },
+  "no_promotion_or_completion_claim": "Source review and byte restoration are not new NFL observations, completedcomparison, modeldelivery, primaryqualification orwebsiteactivation."
+}
