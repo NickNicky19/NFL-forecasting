@@ -1,0 +1,61 @@
+{
+  "id": "A-CATEGORY-DECISION-NATIVE-RETENTION-INDEPENDENT-PREEXEC-REVIEW-v1",
+  "UTC": "2026-11-12T02:13:41.091603+00:00",
+  "state": "PASS_SOURCE_ONLY_READY_FOR_ROOT_PUBLICATION_AND_SOLE_WRITER_RETENTION",
+  "worker": {
+    "path": "tools/category_decision_native_retention_v1.py",
+    "bytes": 4454,
+    "sha256": "5765fc3999ac16b3adc76fb6ce3f555c5da7d5cfe92761cb0e0bdef8250741de"
+  },
+  "GO": {
+    "path": "reports/abc-championship/category-decision-release-01/NATIVE_RETENTION_GO_V1.json",
+    "bytes": 3516,
+    "sha256": "919981cfaccdd268137f76a37b24d6c9fd6ffa43cfc7d4dd686c1d88555392b1"
+  },
+  "scope": "Source/code/GO and existing source-plan metadata only. No private score, ZIP, native member, model or NFL source rows opened. Actual result counters/hash/resource values are root execution bindings, not independent new grading by this reviewer.",
+  "checks": {
+    "fixed_writes": "Exactly CATEGORY_DECISION_POINT_SCORES_V1.json.gz and CATEGORY_DECISION_VERIFICATION_V1.zip in existing Freshnessnamespace; no otherput, oldnamespacewriter or constructor.",
+    "payload_validation_before_put": "GO/workerhash/resourcecontract; both sourcefiles exactsize/SHA; completedresult state1782summaries768pairs474alltrueoracles; allfit/inference/scoringnativewrites/productioncountszero; exact11ZIPmemberlist/bytes/SHA.",
+    "namespace_and_guard": "Sourcehelper/guard and oldplan hashchecks before attach; actualguard hashmatchesboundoldplan; ROOTsys.path explicitly inserted before dynamic helper import; readonly_store existingnamespace/__new__ path reused without initialization/rebaseline.",
+    "budget_and_reserve": "1MiB guardedreserve; old16MiB retained/20MiB peak/2MiB failure allowance, all older caps/reserves unchanged. Expectednewscore219037+bundle36374=255411B. No newsharedarchive.",
+    "readback_and_checkpoint": "Exactlyone read_many overtwo returned immutable references, both byte-equal toinput, then existingcompletecheckpoint required beforePASSreceipt.",
+    "offline_scope": "Socket/DNS audit hook; no networkcollection, model loading, fit, inference, regrading or productionwrite implemented.",
+    "immutability_and_failure": "Newexclusiveoutput; nativeputreferenceownership/guard preserved; ifpartialputfails referenceskeptinfailedreceipt; noautomaticretry or deletion.",
+    "finite_resources": "300CPUhard280soft,1.5GiBRSS,880salarm within900wall; separate retention cost from115.147455472CPU already consumed in scoring."
+  },
+  "numeric_metadata_clarification": "GO budget prose says276kish, but exact authoritative numeric fields total255411B. Report the exact255411B; maximum remains1048576B. No additional bytes or cap change is implied.",
+  "timeout_reporting": "Worker hasno custom SIGXCPU/SIGALRM handler; defaulttimelimit termination maynot reach its Pythonexceptfailurewriter. Root mustretain any external process failure/costreceipt ifthatoccurs, without claiming nativePASS. This is a reporting duty, not a new permission gate.",
+  "runtime_remaining": [
+    "Rootpublishes exactcode/GO/review andverifiesreadback beforeexecution",
+    "Actual fullscore/bundle/member checks, reserve,2putrefs,2memberreadback andallcapscheckpoint mustPASS; sourcereview is not durability proof",
+    "ATT6orother source/namespace work mustremainserialized untilretentionrun finishes; no competing writer/reader",
+    "Publicoutputs remain plaintext permitted aggregates/code/receipts. Privatefullscore/ZIP mustnotbeuploaded as shared/publicarchive."
+  ],
+  "bundled_evidence_names": [
+    "ADOPTION_V1.json",
+    "A_POINT_PAIR_OWNER_GO4_PREEXEC_REVIEW_V1.json",
+    "A_POINT_PAIR_EXACT_OWNER_CORRECTION_V1.json",
+    "A_POINT_PAIR_PACKAGING_CORRECTION_V1.json",
+    "ANCHOR_RECOVERY_RECEIPT_V1.json",
+    "PRODUCER_OPERATIONAL_REFRESH_V1.json",
+    "COUNTA_CODE_DELIVERY_RECEIPT_V1.json",
+    "PEER_RECEIPTS_V2.json",
+    "A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+    "A_POINT_PAIR_FAILURE_20261112T014831762550Z.json",
+    "A_POINT_PAIR_FAILURE_20261112T015840696902Z.json"
+  ],
+  "activity": {
+    "private_score_open": 0,
+    "ZIP_open": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "models": 0,
+    "fits": 0,
+    "inference": 0,
+    "NFL_grading": 0,
+    "worker_execution": 0,
+    "peer_writes": 0,
+    "external_messages": 0
+  },
+  "limits": "Source-onlyPASS doesnotestablish actualretention, independentNFLarithmetic, newpredictiongain, sourcevintageauthentication, primaryeligibility, consumeradmission orwebsiteuse."
+}
