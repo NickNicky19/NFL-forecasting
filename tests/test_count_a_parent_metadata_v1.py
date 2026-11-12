@@ -12,7 +12,7 @@ from nfl_lab import audit_weekly_template_v1 as template
 
 ROOT = Path(__file__).resolve().parents[1]
 HELPERS = {
-    'nfl_lab/count_a_native_extension_v1.py': '6bf0a6d432d7a0f77bab1d8d8a95c687cf91e350dde48e11a7e827184b469351',
+    'nfl_lab/count_a_native_extension_v1.py': '839a72a7afe1d5de9c374432635e7fab484bfc56de7feccc639d00d273aec1ad',
     'nfl_lab/count_a_mean_export_adapter_v1.py': 'a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527',
     'tools/modern_count_a_mean_v3.py': 'aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6',
 }
