@@ -1,0 +1,39 @@
+{
+  "id": "A-FOLLOW-THROUGH-PUBLIC-CLOSURE-RESOURCE-RECEIPT-v1",
+  "UTC": "2026-11-12T06:07:44.987282+00:00",
+  "accounting": "Distinct immutable UTF8 blob contents by SHA256, plus owned PR/comment prose versions. Reused identical content charged once; prior original allocations/costs preserved.",
+  "preserved_failed_phase": {
+    "cap": 1310720,
+    "retained_blobs": 1310772,
+    "owned_prose_versions": 9122,
+    "total": 1319894,
+    "overrun": 9174,
+    "status": "FAIL_NOT_RESET"
+  },
+  "prospective_successor": {
+    "total_cap": 2097152,
+    "already_retained": 1319894,
+    "closure_increment_cap": 524288,
+    "new_metadata_before_this_receipt": 509194,
+    "new_owned_prose": 5982,
+    "subtotal": 515176,
+    "final_readback_receipt_reserved_max": 4000,
+    "this_receipt_bytes": 1701,
+    "closure_with_receipt_plus_final_reserve_max": 520877,
+    "aggregate_max": 1840771
+  },
+  "source_versions": "bb28failed;093V2+af405identicaltree retained; no additional code after successor",
+  "proofs": [
+    "producer/COUNT_A_NATIVE_REVIEW_PUBLICATION_V2.json",
+    "PUBLIC_METADATA_READBACK_V1.json",
+    "producer/COUNT_A_COORDINATION_RECEIPT_V2.json",
+    "producer/RESOURCE_CLOSURE_REVIEW_V1.json"
+  ],
+  "unchanged_native_caps": {
+    "full_issued_Root": 61440,
+    "source_history_file": 131072
+  },
+  "engineering_CPU_seconds": "180.935245 full local runs plus bounded independent fixture/source review;below300;remote existing CI clocks reported separately",
+  "new_NFL_fit_model_load_inference_native_write_primary_switches": 0,
+  "excluded_from_publication": "LocalA5table/fullperteamreview/duplicatepatches remain retained locally; no protected NFL rows/models/capsule exported."
+}
