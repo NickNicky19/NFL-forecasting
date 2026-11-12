@@ -209,8 +209,7 @@ def validate_files(files):
 
 
 def allowed_runtime_name(name):
-    from .count_a_native_extension_v1 import allowed_runtime_name as count_a_name
-    return count_a_name(name) or name in CONTROL_FILES|CANDIDATE_NAMES|STATUS_NAMES or re.fullmatch(r"views/[0-9]{1,2}/projections/[a-f0-9]{64}\.json",name) is not None
+    return name in {"count-a-mean-shadow/CAPTURE.json","count-a-mean-shadow/ROWS.jsonl"} or name in CONTROL_FILES|CANDIDATE_NAMES|STATUS_NAMES or re.fullmatch(r"views/[0-9]{1,2}/projections/[a-f0-9]{64}\.json",name) is not None
 
 
 def collect(runtime_root, context, *, storage, output, r0=None, display_profile=None):
@@ -239,8 +238,7 @@ No old completion is invented. Missing files force a failure archive.
         require(type(ref["bytes"]) is int and 0 <= ref["bytes"] <= store.ASSET_CAP,"COMPLETE_FILE_ASSET_BOUND_NO_TRUNCATION")
         physical_origins[name]=dict(ref)
         entries[name]=cp.file_item(ref,name,kind)
-    from .count_a_native_extension_v1 import FIELD as COUNT_A_FIELD
-    count_a_enabled = display_profile is not None and COUNT_A_FIELD in display_profile.root
+    count_a_enabled = display_profile is not None and "count_a_mean_shadow" in display_profile.root
     observed=set()
     for directory,dirs,names in os.walk(root,followlinks=False):
         require(len(observed)+len(dirs)+len(names)<=MAX_FILES+128,"BOUNDED_RUNTIME_DIRECTORY_CENSUS")
@@ -336,7 +334,9 @@ No old completion is invented. Missing files force a failure archive.
 
 def validate_capture(snapshot,path,*,complete,display_profile=None):
     names={f["logical_path"] for f in snapshot["files"]}
-    extra=any(n.startswith(("runtime/mae-display/","prepared/mae-display/")) for n in names)
+    extra=any(n.startswith(("runtime/mae-display/","prepared/mae-display/","runtime/count-a-mean-shadow/")) for n in names)
+    count_a_extra=any(n.startswith("runtime/count-a-mean-shadow/")for n in names)
+    require(not count_a_extra or(display_profile is not None and "count_a_mean_shadow"in display_profile.root),"NO_UNREGISTERED_COUNT_A_EXTRA")
     if display_profile is None:
         require(not extra and "mae_display_profile" not in snapshot["census"],"V1_ARCHIVE_HAS_NO_DISPLAY_PROFILE_OR_ALIASES")
         return _validate_legacy_capture(snapshot,path,complete=complete)
@@ -347,8 +347,11 @@ def validate_capture(snapshot,path,*,complete,display_profile=None):
         registration_sha256=display_profile.root["mae_registration"]["sha256"]),"EXACT_ROOT_V5_CAPTURE_PROFILE_BINDING")
     result=_validate_legacy_capture(snapshot,path,complete=complete)
     result["mae_display"]=display.validate_capture(snapshot,path,display_profile)
-    from .count_a_native_extension_v1 import validate_archive
-    result["count_a_shadow"]=validate_archive(snapshot,path,display_profile.root,complete=complete)
+    if "count_a_mean_shadow"in display_profile.root:
+        from .audit_weekly_template_v1 import count_a_helper_pins
+        count_a_helper_pins(display_profile.root,Path(__file__).resolve().parents[1])
+        from .count_a_native_extension_v1 import validate_archive
+        result["count_a_shadow"]=validate_archive(snapshot,path,display_profile.root,complete=complete)
     return result
 
 

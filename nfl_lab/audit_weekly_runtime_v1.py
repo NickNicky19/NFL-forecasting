@@ -190,6 +190,8 @@ class Runtime:
             from .weekly_mae_display_runtime_v1 import BoundDisplay
             self._mae = BoundDisplay(self, mae_owner)
             if "count_a_mean_shadow" in mae_owner.root:
+                from .audit_weekly_template_v1 import count_a_helper_pins
+                count_a_helper_pins(mae_owner.root,Path(__file__).resolve().parents[1])
                 from .count_a_native_extension_v1 import BoundShadow
                 self._count_a_shadow = BoundShadow(self, mae_owner)
 

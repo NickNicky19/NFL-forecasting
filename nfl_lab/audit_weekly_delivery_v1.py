@@ -294,10 +294,12 @@ def _deliver(*,storage,factory,qualified_runtime,root_go_sha256,reader_handoff,p
             display_profile,files,clock=clock)
     count_a_pair=None
     if display_profile is not None and "count_a_mean_shadow" in display_profile.root:
+        from .audit_weekly_template_v1 import count_a_helper_pins
+        count_a_helper_pins(display_profile.root,Path(__file__).resolve().parents[1])
         from . import count_a_native_extension_v1 as count_a
         registration=display_profile.root[count_a.FIELD]
         if registration["public_release"]:
-            shadow=public.count_a_shadow_projection(live,display_profile.root,at=clock().isoformat())
+            shadow=count_a.count_a_shadow_projection(live,display_profile.root,at=clock().isoformat())
             count_a_pair=count_a.public_pair(shadow,live.record,display_profile.root,clock().isoformat())
             for name,body in count_a_pair.items():storage.write_bytes(Path(state)/name,body)
     publication_files=dict(files,**point_files)

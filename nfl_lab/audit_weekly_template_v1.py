@@ -98,6 +98,21 @@ def root_keys(root):
     return ROOT_V5_KEYS if root['schema_version'] == ROOT_V5 else ROOT_V4_KEYS if root['schema_version'] == ROOT_V4 else ROOT_V3_KEYS if root['schema_version'] == ROOT_V3 else ROOT_KEYS
 
 
+def count_a_helper_pins(root, source_root):
+    """Check the optional closed source extension before importing its code."""
+    if 'count_a_mean_shadow' not in root:return False
+    names=('nfl_lab/count_a_native_extension_v1.py','nfl_lab/count_a_mean_export_adapter_v1.py','tools/modern_count_a_mean_v3.py')
+    pins=root['count_a_mean_shadow'].get('helper_pins');base=Path(source_root).resolve()
+    require(type(pins) is dict and set(pins)==set(names),'COUNT_A_CLOSED_PREIMPORT_HELPERS')
+    require(pins[names[1]]=='a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527'
+        and pins[names[2]]=='aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6','COUNT_A_UNCHANGED_PREIMPORT_ADAPTER_CORRECTOR')
+    for name in names:
+        p=base/name
+        require(p.is_file() and not p.is_symlink() and p.resolve().is_relative_to(base)
+            and p.stat().st_size<=65536 and store.sha(p.read_bytes())==pins[name],'COUNT_A_PREIMPORT_SOURCE_BYTES')
+    return True
+
+
 def static_root_sha256(root):
     """Original Root interpretation commitment, never execution authority."""
     require(set(root) == root_keys(root), 'EXACT_ORIGINAL_STATIC_ROOT_KEYS')
@@ -484,7 +499,7 @@ def _document(value):
     if value['schema_version'] == STATIC_V5:
         from .weekly_mae_display_profile_v1 import validate_metadata
         validate_metadata(root,Path(__file__).resolve().parents[1])
-        if "count_a_mean_shadow" in root:
+        if count_a_helper_pins(root,Path(__file__).resolve().parents[1]):
             from .count_a_native_extension_v1 import validate_metadata as count_a_metadata
             count_a_metadata(root,Path(__file__).resolve().parents[1])
     require(root['repository'] == store.REPO and root['mode'] == 'audit-weekly-producer-v1'

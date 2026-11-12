@@ -33,6 +33,7 @@ ROW_FIELDS=('season','week','game_id','player_id','team','opponent','position','
 
 def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
 def sha(b):return hashlib.sha256(b).hexdigest()
+def acceptance_sha(record):return sha(json.dumps(record,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode())
 def require(ok,why):
  if not ok:raise ValueError(why)
 def instant(x):
@@ -150,21 +151,40 @@ def validate_archive(snapshot,path,root,*,complete):
  return dict(state="PRIVATE_TYPED_SHADOW_VERIFIED",rows=len(rows),public_export_authorized=False,primary_activation=False)
 
 
+def count_a_shadow_projection(live,root,*,at):
+ """Derive shadow rows only from the genuine accepted owned archive aliases."""
+ from .audit_weekly_public_v1 import LiveAcceptance
+ from . import audit_weekly_archive_v1 as archive
+ require(type(live)is LiveAcceptance,"COUNT_A_IN_MEMORY_LIVE_ACCEPTANCE");live.verify()
+ require(FIELD in root,"COUNT_A_REGISTERED_DURABLE_OWNER_ROOT")
+ aliases=live.inputs["aliases"];storage=live.inputs["storage"]
+ def path(name):
+  require(name in aliases,"COUNT_A_SEALED_ALIAS_REQUIRED")
+  ref=aliases[name];archive.read_owned(storage,ref,2<<20,raw=True);return ref["path"]
+ snapshot=dict(files=[dict(logical_path=n)for n in aliases])
+ # LiveAcceptance seals the owned alias inventory; CAPTURE binds this exact Root.
+ validate_archive(snapshot,path,root,complete=True)
+ body=archive.read_owned(storage,aliases["runtime/count-a-mean-shadow/ROWS.jsonl"],2<<20,raw=True)
+ result=projection([strict(line)for line in body.splitlines()])
+ result.update(native_acceptance_sha256=acceptance_sha(live.record),durable_root_go_sha256=sha(canonical(root)),verified_at=at,public_export_authorized=False)
+ return result
+
+
 def public_pair(document,live_record,root,created):
  """Pure formatting after in-memory native acceptance; no local/public write."""
  import gzip
  grant=publication(root[FIELD],root);require(grant is not None,'COUNT_A_PUBLICATION_NOT_REGISTERED')
  checked=projection(document['rows']);rows=checked['rows'];require(rows and len(rows)<=1000,'COUNT_A_NONEMPTY_PUBLIC_ROWS')
- require(sha(canonical(root))==live_record['root_go_sha256'],'COUNT_A_ACCEPTED_ROOT_BINDING')
+ root_sha=sha(canonical(root))
  seasons={x['season']for x in rows};weeks={x['week']for x in rows};require(len(seasons)==len(weeks)==1,'COUNT_A_ONE_PERIOD')
  require(instant(created)>=max(instant(x['issued_at_UTC'])for x in rows)and instant(created)>=instant(live_record['accepted_at']),'COUNT_A_EXPORT_AFTER_ORIGINAL_ISSUE_AND_NATIVE_ACCEPTANCE')
- doc=dict(checked,participation_conditioning='CONDITIONAL_ON_QUALIFIED_PLAYED_HISTORY; source role/participation uncertainty and prior/incumbent fallback remain explicit; no unconditional participation probability',created_at=created,current_use_status='EXPIRED_OR_PARTIALLY_EXPIRED'if any(instant(x['expiry_UTC'])<=instant(created)for x in rows)else'CURRENT_SHADOW_FORECAST_ONLY',is_current_recommendation=False,source_policy_sha256=grant['source_policy_sha256'],root_go_sha256=live_record['root_go_sha256'],model_sha256=MODEL,procedure_version=PROCEDURE,native_acceptance_sha256=sha(canonical(live_record)))
+ doc=dict(checked,participation_conditioning='CONDITIONAL_ON_QUALIFIED_PLAYED_HISTORY; source role/participation uncertainty and prior/incumbent fallback remain explicit; no unconditional participation probability',created_at=created,current_use_status='EXPIRED_OR_PARTIALLY_EXPIRED'if any(instant(x['expiry_UTC'])<=instant(created)for x in rows)else'CURRENT_SHADOW_FORECAST_ONLY',is_current_recommendation=False,source_policy_sha256=grant['source_policy_sha256'],root_go_sha256=root_sha,model_sha256=MODEL,procedure_version=PROCEDURE,native_acceptance_sha256=acceptance_sha(live_record))
  body=canonical(doc);h=sha(body);stamp=instant(created).strftime('%Y%m%dT%H%M%S.%fZ');prefix=grant['public_prefix']+f"{next(iter(seasons))}-W{next(iter(weeks)):02d}/"
- receipt=dict(schema_version=VERSION+'-publication-receipt',feed_sha256=h,feed_bytes=len(body),rows=len(rows),root_go_sha256=live_record['root_go_sha256'],native_acceptance_sha256=doc['native_acceptance_sha256'],publication_grant_sha256=sha(canonical(grant)),created_at=created,model_sha256=MODEL,procedure_version=PROCEDURE,primary_activation=False,ranking_change=False,raw_or_weights_public=False)
+ receipt=dict(schema_version=VERSION+'-publication-receipt',feed_sha256=h,feed_bytes=len(body),rows=len(rows),root_go_sha256=root_sha,native_acceptance_sha256=doc['native_acceptance_sha256'],publication_grant_sha256=sha(canonical(grant)),created_at=created,model_sha256=MODEL,procedure_version=PROCEDURE,primary_activation=False,ranking_change=False,raw_or_weights_public=False)
  return {prefix+stamp+'--'+h+'.json':body,prefix+h+'.json.gz':gzip.compress(canonical(receipt),mtime=0)}
 def validate_public_files(state,files,live,root,source_policy_sha256):
  """Called by existing state publisher; serialized flags cannot replace live."""
- from .audit_weekly_public_v1 import LiveAcceptance,count_a_shadow_projection
+ from .audit_weekly_public_v1 import LiveAcceptance
  require(type(live)is LiveAcceptance,'COUNT_A_IN_MEMORY_LIVE_ACCEPTANCE');live.verify();grant=publication(root[FIELD],root)
  require(grant is not None and grant['source_policy_sha256']==source_policy_sha256 and len(files)==2,'COUNT_A_EXACT_PUBLIC_PAIR')
  refs=[n for n in files if n.endswith('.json')];require(len(refs)==1,'COUNT_A_ONE_PUBLIC_FEED');body=Path(state,refs[0]).read_bytes();require(len(body)<=2<<20 and sha(body)==files[refs[0]],'COUNT_A_PUBLIC_FEED_BYTES');doc=strict(body)

@@ -281,6 +281,8 @@ def main(argv=None):
 def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_policy=False,v5_metadata_policy=False,count_a_shadow_context=None):
     if count_a_shadow_context is not None:
         if metadata_policy or v5_metadata_policy or storage is None or policy_path is None:raise ValueError("Count A shadow requires separate owned frozen metadata mode")
+        from nfl_lab.audit_weekly_template_v1 import count_a_helper_pins
+        count_a_helper_pins(count_a_shadow_context[1],Path(__file__).resolve().parents[1])
         from nfl_lab.count_a_native_extension_v1 import validate_public_files
         from nfl_lab.frozen_source_policy import load_frozen_source_policy
         validate_public_files(state,files,*count_a_shadow_context,load_frozen_source_policy(policy_path)["_policy_sha256"])

@@ -210,7 +210,7 @@ def validate_root(go, *, now):
     if go['schema_version']==template.ROOT_V5:
         from .weekly_mae_display_profile_v1 import validate_root_extension
         validate_root_extension(go,ROOT)
-        if "count_a_mean_shadow" in go:
+        if template.count_a_helper_pins(go,ROOT):
             from .count_a_native_extension_v1 import validate_metadata as count_a_metadata
             count_a_metadata(go,ROOT)
     template.pending_recovery(go)

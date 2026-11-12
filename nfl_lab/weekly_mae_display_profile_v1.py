@@ -110,7 +110,7 @@ def validate_metadata(root, source_root):
         and profile["scope"] == "ROOT_V5_DISPLAY_ONLY_NOT_V1_HISTORY_OVERRIDE"
         and profile["legacy_pin_count"] == len(root["code_pins"]) == 128
         and profile["model_pins"] == REVIEWED_MODEL_PINS
-        and set(profile["changed_paths"]) == (CHANGED_LEGACY_PATHS | {"nfl_lab/audit_weekly_public_v1.py"} if "count_a_mean_shadow" in root else CHANGED_LEGACY_PATHS)
+        and set(profile["changed_paths"]) == CHANGED_LEGACY_PATHS
         and sha(canonical(root["code_pins"])) == profile["reviewed_after_inventory_sha256"]
         and profile["extra_traversal_debit"] == dict(per_model_query_rows=2,targets=list(TARGETS),
             total_prediction_row_cap=18000,fits=0), "CLOSED_MAE_ONLY_RUNTIME_PIN_PROFILE")

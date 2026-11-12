@@ -131,7 +131,6 @@ def _source_history_pins(root, binding):
     if binding is not None:
         overrides = binding["pin_overrides"]
         allowed=SOURCE_HISTORY_PIN_OVERRIDES
-        if "count_a_mean_shadow" in root:allowed=allowed|{"nfl_lab/audit_weekly_public_v1.py"}
         if root.get("schema_version")==ROOT_V5:
             from . import weekly_mae_display_profile_v1 as profile
             cfg=profile.validate_metadata(root,Path(__file__).resolve().parents[1])
@@ -188,7 +187,7 @@ def _source_history_body(value):
     locator_reference(dict(schema_version=LOCATOR_REF, **ref))
     require(ref["path"].split("--")[1] == old["run_id"], "EXACT_SOURCE_HISTORY_LOCATOR_RUN")
     overrides=value["pin_overrides"]
-    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|((_MAE_RUNTIME_OVERRIDE_PATHS|{"nfl_lab/audit_weekly_public_v1.py"}) if second else frozenset()))
+    require(type(overrides) is dict and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|(_MAE_RUNTIME_OVERRIDE_PATHS if second else frozenset()))
         and all(type(h) is str and store.HASH.fullmatch(h) for h in overrides.values()),
         "ONLY_SOURCE_HISTORY_ORCHESTRATION_PIN_OVERRIDES")
     return value
@@ -281,7 +280,7 @@ def _prior_source_history_metadata(root):
     require(value["schema_version"]==SOURCE_HISTORY_BINDING_V2 and value["target_source_sha"]==root["source_sha"]
         and value["target_policy_sha256"]==root["publication_registration"]["policy_sha256"],"ORIGINAL_MAE_SOURCE_HISTORY_TARGET")
     pins=root["code_pins"];overrides=value["pin_overrides"]
-    require(type(pins) is dict and len(pins)==128 and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|_MAE_RUNTIME_OVERRIDE_PATHS|({"nfl_lab/audit_weekly_public_v1.py"}if"count_a_mean_shadow"in root else set()))&set(pins)
+    require(type(pins) is dict and len(pins)==128 and set(overrides)<=(SOURCE_HISTORY_PIN_OVERRIDES|_MAE_RUNTIME_OVERRIDE_PATHS)&set(pins)
         and all(type(h) is str and store.HASH.fullmatch(h) for h in pins.values()),"CLOSED_ORIGINAL_MAE_SOURCE_HISTORY_PINS")
     old=dict(pins);old.update(overrides)
     require(store.sha(store.canonical(old))==value["predecessor"]["code_pins_sha256"]
