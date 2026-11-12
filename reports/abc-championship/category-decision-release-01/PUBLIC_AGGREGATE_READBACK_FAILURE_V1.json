@@ -1,0 +1,11 @@
+{
+  "id": "A-PUBLIC-AGGREGATE-READBACK-FAILURE-v1",
+  "UTC": "2026-11-12T02:19:57.522Z",
+  "publication_commit": "161f5996708107c4e00098db026153b32923f1e2",
+  "state": "FAILED_EXACT_BYTES_FOR_CRLF_SOURCE_CSV;NO_SCIENTIFIC_DATA_OR_SCORE_CHANGE",
+  "verified_before_failure": 40,
+  "failed_path": "reports/abc-championship/category-decision-release-01/A_EVIDENCE_EXISTING_FULL_POLICY_ANNUAL_001.csv",
+  "cause": "Publisher read_text() normalized CRLF in preexisting source CSVs. Local original hashes remain; exact-byte readback correctly rejected normalized remote content. Re-publish original UTF8-decoded bytes, preserving failed receipt and both remote commit versions.",
+  "scope": "Existing annual CSV projections only; new score records/private913bf6 result and newly projected2550 CSV cells unchanged. No fit, reforecast, regrade or odds acquisition.",
+  "next": "Detect every CRLF source in the exact50-file whitelist, restore original byte content under new immutable commit and verify all50 at that commit."
+}
