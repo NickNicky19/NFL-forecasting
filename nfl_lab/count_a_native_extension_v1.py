@@ -29,6 +29,10 @@ MEMBERS={
 HELPERS=('nfl_lab/count_a_native_extension_v1.py','nfl_lab/count_a_mean_export_adapter_v1.py','tools/modern_count_a_mean_v3.py')
 KEYS={'schema_version','product','procedure_version','capsule','producer_proof','fit_start','helper_pins','source_contract_sha256','source_config_sha256','maximum_query_rows','maximum_new_bytes','public_release','ranking_policy_change','publication'}
 FILES={'count-a-mean-shadow/CAPTURE.json','count-a-mean-shadow/ROWS.jsonl'}
+OWNER_HELPERS=('nfl_lab/owner_private_bootstrap.py','nfl_lab/owner_bootstrap_bundle.py')
+ORIGINALS={'capsule':'count-a-original/CAPSULE.zip','producer_proof':'count-a-original/PRODUCER_EXECUTION_PROOF.json','fit_start':'count-a-original/FIT_START.json'}
+MATERIALIZATION=VERSION+'-owner-materialization'
+
 ROW_FIELDS=('season','week','game_id','player_id','team','opponent','position','kickoff_utc','cutoff_utc','expected_mean','selection_point','fallback_reason','value_origin','prediction_functional','procedure_version','model_sha256','issued_at_UTC','expiry_UTC','probability','EV')
 
 def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
@@ -48,7 +52,7 @@ def reference(r,n,h):return type(r)is dict and set(r)=={'path','bytes','sha256'}
 def validate_metadata(root,source_root):
  """An optional closed Root field, covered by the original complete Root hash."""
  if FIELD not in root:return None
- r=root[FIELD];require(type(r)is dict and set(r)==KEYS,'COUNT_A_CLOSED_EXTENSION')
+ r=root[FIELD];require(type(r)is dict and set(r) in (KEYS,KEYS|{'owner_restore'}),'COUNT_A_CLOSED_EXTENSION')
  require(r['schema_version']==VERSION and r['product']==PRODUCT and r['procedure_version']==PROCEDURE,'COUNT_A_EXACT_PRODUCT')
  require(reference(r['capsule'],399037,CAPSULE)and reference(r['producer_proof'],26032,PROOF),'COUNT_A_EXACT_ORIGINAL_OWNED_ARTIFACT_REFS')
  f=r['fit_start'];require(type(f)is dict and set(f)=={'path','bytes','sha256'}and type(f['bytes'])is int and 0<f['bytes']<=65536 and re.fullmatch('[a-f0-9]{64}',str(f['sha256'])),'COUNT_A_BOUND_FIT_START_REQUIRED')
@@ -59,6 +63,13 @@ def validate_metadata(root,source_root):
  for f in HELPERS:
   p=Path(source_root)/f;require(p.is_file()and not p.is_symlink()and p.resolve().is_relative_to(Path(source_root).resolve())and p.stat().st_size<=65536 and sha(p.read_bytes())==r['helper_pins'][f],'COUNT_A_EXACT_HELPER_BYTES')
  require(r['helper_pins'][HELPERS[1]]==ADAPTER and r['helper_pins'][HELPERS[2]]==CORRECTOR,'COUNT_A_UNCHANGED_ADAPTER_CORRECTOR')
+ if 'owner_restore' in r:
+  o=r['owner_restore'];require(type(o)is dict and set(o)=={'schema_version','descriptor','root_manifest_sha256','owner_authorization_comment_id','helper_pins','maximum_materialization_bytes'}and o['schema_version']==VERSION+'-owner-restore','COUNT_A_CLOSED_OWNER_RESTORE')
+  require(re.fullmatch('[a-f0-9]{64}',str(o['root_manifest_sha256']))and type(o['owner_authorization_comment_id'])is int and o['owner_authorization_comment_id']>0 and type(o['descriptor'])is dict and len(canonical(o['descriptor']))<=16384,'COUNT_A_BOUNDED_OWNER_LOCATOR')
+  require(type(o['maximum_materialization_bytes'])is int and 0<o['maximum_materialization_bytes']<=1<<20,'COUNT_A_BOUNDED_MATERIALIZATION')
+  require(type(o['helper_pins'])is dict and set(o['helper_pins'])==set(OWNER_HELPERS),'COUNT_A_CLOSED_OWNER_HELPERS')
+  for f in OWNER_HELPERS:
+   p=Path(source_root)/f;require(p.is_file()and not p.is_symlink()and p.resolve().is_relative_to(Path(source_root).resolve())and p.stat().st_size<=65536 and sha(p.read_bytes())==o['helper_pins'][f],'COUNT_A_OWNER_SOURCE_BYTES')
  publication(r,root)
  return r
 def publication(r,root):
@@ -96,11 +107,65 @@ def projection(rows):
   out.append({k:r[k]for k in ROW_FIELDS})
  return dict(schema_version=VERSION+'-derived',state='SHADOW_NOT_PRIMARY_NOT_PICKS',product=PRODUCT,rows=out,probability=None,EV=None,public_export_authorized=False)
 
+def materialize_owner_originals(root,source_root,client,storage,destination):
+ """Parent metadata phase only: genuine private GET, opaque exact originals.
+
+ No model decode, Root rewrite, expiry relaxation, additional generic slot,
+ upload or publication. The original-to-native path map is a NEW receipt.
+ """
+ r=validate_metadata(root,source_root);require(r is not None and 'owner_restore'in r,'COUNT_A_OWNER_RESTORE_REGISTERED')
+ from . import private_draft_store as private,owner_private_bootstrap as owner,owner_bootstrap_bundle as bundle
+ require(type(client)is private.Client and client.source_sha==root['source_sha']and client.job['execution_lane']=='github_actions'
+  and client.job['job_id']==root['jobs']['produce']and client.job['workflow_ref']==root['workflow_ref'],'COUNT_A_GENUINE_PARENT_RESTORE_CLIENT')
+ require(root['approved']is True and instant(root['issued_at_utc'])<=datetime.now(timezone.utc)<instant(root['expires_at_utc']),'COUNT_A_CURRENT_OWNER_RESTORE_ROOT')
+ destination=private.parents_safe(destination);require(not destination.exists(),'COUNT_A_FRESH_OWNER_RESTORE_NO_RETRY')
+ o=r['owner_restore'];maximum=o['maximum_materialization_bytes']
+ # GET-only core operations create no POST reservations. Include any retained
+ # journal bytes in the distinct materialization budget rather than ROWS cap.
+ journal=list(client.journal.iterdir());require(not journal and not client.posts,'COUNT_A_FRESH_GET_ONLY_JOURNAL')
+ require(sum(r[k]['bytes']for k in ORIGINALS)+65536<=maximum,'COUNT_A_MATERIALIZATION_RESERVATION_TOO_SMALL')
+ with storage.transaction():storage._require(maximum)
+ body,record,proof=owner.restore_owner_bundle(client,o['descriptor'],expected_root_sha256=o['root_manifest_sha256'],expected_comment_id=o['owner_authorization_comment_id'])
+ require(len(body)<=2<<20 and type(record.get('files'))is list and len(record['files'])==3,'COUNT_A_THREE_ORIGINALS_ONLY')
+ expected={(ORIGINALS[k],r[k]['bytes'],r[k]['sha256'])for k in ORIGINALS}
+ require({(f['logical_path'],f['bytes'],f['sha256'])for f in record['files']}==expected,'COUNT_A_EXACT_OWNER_FILE_CENSUS')
+ require(proof['restore_run_id']==client.run_id and proof['execution_lane']=='github_actions'and proof['exact_remote_readback']is proof['separate_process']is True and proof['model_decodes']==0,'COUNT_A_ACTUAL_OWNER_RESTORE_PROOF')
+ storage.register_root(destination);extracted=bundle.extract_owned(body,record,storage,destination/'files')
+ require(extracted['files']==3 and extracted['bytes']==sum(r[k]['bytes']for k in ORIGINALS)and extracted['model_decodes']==0,'COUNT_A_EXACT_EXTRACTION')
+ from . import audit_weekly_runtime_v1 as runtime
+ from .weekly_future_inference import binding
+ mapped={k:binding(destination/'files'/n)for k,n in ORIGINALS.items()}
+ for k,ref in mapped.items():
+  require((ref['bytes'],ref['sha256'])==(r[k]['bytes'],r[k]['sha256']),'COUNT_A_NATIVE_BYTES_UNCHANGED')
+  runtime.read_owned(storage,ref,65536 if k=='fit_start'else r[k]['bytes'],raw=True)
+ require(not list(client.journal.iterdir())and not client.posts,'COUNT_A_NO_POST_OR_UNBOUNDED_JOURNAL')
+ receipt=dict(schema_version=MATERIALIZATION,maximum_materialization_bytes=maximum,materialized_original_bytes=extracted['bytes'],GET_journal_bytes=0,root_go_sha256=sha(canonical(root)),source_sha=client.source_sha,run_id=client.run_id,job_id=client.job['job_id'],api_job_id=client.job['api_job_id'],workflow_ref=client.job['workflow_ref'],original_refs={k:r[k]for k in ORIGINALS},native_refs=mapped,proof=proof,extraction=extracted,model_decodes=0,primary_activation=False)
+ encoded=canonical(receipt);require(extracted['bytes']+len(encoded)+receipt['GET_journal_bytes']<=maximum,'COUNT_A_ACTUAL_MATERIALIZATION_CAP')
+ storage.write_bytes(destination/'MATERIALIZATION.json',encoded);return binding(destination/'MATERIALIZATION.json')
+
+def resolved_originals(storage,receipt_ref,native):
+ """Read the exact parent-issued current-job map without changing saved Root."""
+ from . import audit_weekly_runtime_v1 as runtime
+ r=validate_metadata(native.root,native.source_root)
+ if 'owner_restore'not in r:
+  require(receipt_ref is None,'COUNT_A_NO_UNREGISTERED_MATERIALIZATION');return {k:r[k]for k in ORIGINALS}
+ require(receipt_ref is not None,'COUNT_A_OWNER_MATERIALIZATION_REQUIRED');native.verify();d=runtime.read_owned(storage,receipt_ref,65536)
+ keys={'schema_version','root_go_sha256','source_sha','run_id','job_id','api_job_id','workflow_ref','original_refs','native_refs','proof','extraction','model_decodes','primary_activation','maximum_materialization_bytes','materialized_original_bytes','GET_journal_bytes'}
+ require(set(d)==keys and d['schema_version']==MATERIALIZATION and d['root_go_sha256']==native.root_sha256 and d['source_sha']==native.authority['source_sha']and d['original_refs']=={k:r[k]for k in ORIGINALS}and set(d['native_refs'])==set(ORIGINALS)and d['model_decodes']==0 and d['primary_activation']is False,'COUNT_A_BOUND_MATERIALIZATION')
+ require(all(d[k]==native.authority[k]for k in ('run_id','job_id','api_job_id','workflow_ref')),'COUNT_A_CURRENT_JOB_MATERIALIZATION')
+ p=d['proof'];o=r['owner_restore']
+ require(d['maximum_materialization_bytes']==o['maximum_materialization_bytes']and d['materialized_original_bytes']==sum(r[k]['bytes']for k in ORIGINALS)and d['GET_journal_bytes']==0 and d['materialized_original_bytes']+len(canonical(d))+d['GET_journal_bytes']<=d['maximum_materialization_bytes'],'COUNT_A_BOUND_MATERIALIZATION_BUDGET')
+ require(p['root_manifest_sha256']==o['root_manifest_sha256']and p['owner_authorization_comment_id']==o['owner_authorization_comment_id']and p['restore_run_id']==d['run_id']and p['execution_lane']=='github_actions'and p['origin_execution_lane']=='OWNER_BOOTSTRAP'and p['origin_writer_run_id']is None and p['exact_remote_readback']is p['separate_process']is True and p['model_decodes']==0,'COUNT_A_BOUND_NATIVE_RESTORE_PROOF')
+ for k,ref in d['native_refs'].items():
+  require(reference(ref,r[k]['bytes'],r[k]['sha256']),'COUNT_A_NATIVE_REFERENCE_HASH');runtime.read_owned(storage,ref,65536 if k=='fit_start'else r[k]['bytes'],raw=True)
+ return d['native_refs']
+
 class BoundShadow:
- def __init__(self,backend,native):
+ def __init__(self,backend,native,*,materialization=None):
   from .weekly_mae_display_runtime_v1 import NativeContext
   require(type(native)is NativeContext,'COUNT_A_REAL_NATIVE_CONTEXT_REQUIRED');native.verify()
   self.backend,self.native=backend,native;self.registration=validate_metadata(native.root,native.source_root)
+  self.artifact_refs=resolved_originals(backend.storage,materialization,native)
   require(self.registration is not None and backend.config==native.root['source_config']and sha(canonical(backend.contract))==self.registration['source_contract_sha256'],'COUNT_A_CURRENT_ROOT_SOURCE_REQUIRED')
  def capture(self,features,capture,capture_ref,source,sink,output):
   """Called only after original18 capture and its existing source/API guards."""
@@ -111,8 +176,8 @@ class BoundShadow:
   from tools.modern_count_a_mean_v3 import correct_fallbacks
   require(capture['source_contract']==self.backend.contract and instant(capture['feature_persist_completed_at'])<=self.backend.clock(),'COUNT_A_FEATURE_CAPTURE_REQUIRED')
   require(source['state']=='FRESH_E7_SOURCE_PREPARED'and source['manifest']['request']['allowed_periods']==self.backend.config['allowed_periods'],'COUNT_A_QUALIFIED_CURRENT_SOURCE_REQUIRED')
-  members=authenticate_capsule(runtime.read_owned(self.backend.storage,r['capsule'],399037,raw=True));audit=strict(members['MODEL_AUDIT.json'])
-  recipe=authenticate_fit(runtime.read_owned(self.backend.storage,r['producer_proof'],26032,raw=True),runtime.read_owned(self.backend.storage,r['fit_start'],65536,raw=True),r,audit)
+  members=authenticate_capsule(runtime.read_owned(self.backend.storage,self.artifact_refs['capsule'],399037,raw=True));audit=strict(members['MODEL_AUDIT.json'])
+  recipe=authenticate_fit(runtime.read_owned(self.backend.storage,self.artifact_refs['producer_proof'],26032,raw=True),runtime.read_owned(self.backend.storage,self.artifact_refs['fit_start'],65536,raw=True),r,audit)
   import joblib,numpy as np,pandas as pd,pyarrow,scipy,sklearn
   from .role_boosting import RoleCountBoostingModel
   versions=dict(joblib=joblib.__version__,numpy=np.__version__,pandas=pd.__version__,pyarrow=pyarrow.__version__,scipy=scipy.__version__,sklearn=sklearn.__version__)
