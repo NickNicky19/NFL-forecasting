@@ -1,0 +1,465 @@
+{
+  "UTC": "2026-11-12T05:33:18.098936+00:00",
+  "activity": {
+    "capsule_model_reads": 0,
+    "implementation_edits": 0,
+    "index_ledger_edits": 0,
+    "native_reads": 0,
+    "new_NFL_fits": 0,
+    "new_grades": 0,
+    "new_inference": 0,
+    "private_source_reads": 0,
+    "remote_writes": 0,
+    "workflow_dispatches": 0
+  },
+  "frozen_files": [
+    {
+      "bytes": 15712,
+      "delta_preimage": {
+        "bytes": 15712,
+        "kind": "EXACT_FA919_BASE_FOR_PATH_NOT_IN_SELECTED_V1_COPY",
+        "sha256": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 15712,
+        "git_blob_sha1": "9e49170901ad69deb525c0924e309b152e795748",
+        "sha256": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483"
+      },
+      "git_blob_sha1": "f59e8d82af969d80b69a1104f49c1d4c2d56ebe4",
+      "path": "config/weekly-mae-display-core3-v1.json",
+      "sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b"
+    },
+    {
+      "bytes": 63315,
+      "delta_preimage": {
+        "bytes": 62928,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "ef4fd1afda194eb60e7fecba00ca78bd5e9afd305c8e4956d158885c42388482"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 62344,
+        "git_blob_sha1": "026a65eb224e428cebe92e702c023566e917f361",
+        "sha256": "8f9aa1732de1fe126c4fa369bbf8da490d8aea994dcb0a1b27d0f96bb18a8d7e"
+      },
+      "git_blob_sha1": "5d4d65261d63378ae88281e310c65b315c841801",
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "sha256": "17c4fc86b14844339e7601d251fefb228df2ef9b28fb0cd4d050d8cd2d35d97a"
+    },
+    {
+      "bytes": 46503,
+      "delta_preimage": {
+        "bytes": 46282,
+        "kind": "EXACT_FA919_BASE_FOR_PATH_NOT_IN_SELECTED_V1_COPY",
+        "sha256": "de76ca9c60b2f86e879e108c1e4e287c9e572703f021629caafb505c265dc56b"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 46282,
+        "git_blob_sha1": "6576078525fc963f0a1fad3b53e7c736a8f4a816",
+        "sha256": "de76ca9c60b2f86e879e108c1e4e287c9e572703f021629caafb505c265dc56b"
+      },
+      "git_blob_sha1": "e2b069c2452a13fbb6e695e644ed060dbdd3a9f0",
+      "path": "nfl_lab/audit_weekly_controller_v1.py",
+      "sha256": "2b2ddb1e035f18003a3b159e232d8bccbf52ed3800093c719808e56015307350"
+    },
+    {
+      "bytes": 30646,
+      "delta_preimage": {
+        "bytes": 30493,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "43be7bf1a8dc5dda4987d079bbee3fc096883bd23fdbcef1f2c3a0d805ffd32f"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 29274,
+        "git_blob_sha1": "222c2b7fd4e9b1f688f9676422723fc95eac4e62",
+        "sha256": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc"
+      },
+      "git_blob_sha1": "a5416ebda558e6deb3fb332d34f42c6352ea6bbc",
+      "path": "nfl_lab/audit_weekly_delivery_v1.py",
+      "sha256": "e4147a025673ad02af27d31cd2a97d3d3bcb3d246c4d342b882989229ef415d4"
+    },
+    {
+      "bytes": 130608,
+      "delta_preimage": {
+        "bytes": 130824,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "279a2ab46a95329c186bdb367f10f9ed10c052dff552ce8f1e9601bc2fd14797"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 130210,
+        "git_blob_sha1": "0e2f1ff494f5f24dd86e14814ef21afed5ba6666",
+        "sha256": "80f913723658a28130dc61d03f77689171df1fa5357bda4ad482c3eecabf1c7b"
+      },
+      "git_blob_sha1": "1132a3f0b415b0f4f5b17cbb95175d522a6c8c8a",
+      "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "sha256": "40f5e92f132b574206b8260c4fc7eea7e38e3358e40649d192210c2a5bffd48d"
+    },
+    {
+      "bytes": 130880,
+      "delta_preimage": {
+        "bytes": 130870,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "52ef2bf3a186e692cdf07fae5ac846780d0aa97540ae90ef0d6d9794cd5e7245"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 131012,
+        "git_blob_sha1": "379c2c43139e7cc424e731b448a8112342e10785",
+        "sha256": "d8f8f58f62e87898872aad0f8313c4316023b33273af07bc6c0f9960c85464f7"
+      },
+      "git_blob_sha1": "33cc5432a7005f3048491c0e098bb7e24f99c8eb",
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "sha256": "60a2352a2be574fe45a2e238547cc4c0f07494676740c3d4d91837f0e0a2d479"
+    },
+    {
+      "bytes": 31429,
+      "delta_preimage": {
+        "bytes": 32516,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "16f51244793d8009323140dcb6a4e39b3186caf4bbc9c1b4d02ec6144e0cdccc"
+      },
+      "equals_fa919_base": true,
+      "fa919_base": {
+        "bytes": 31429,
+        "git_blob_sha1": "1195d9df279356583c712c0549357ef3a69e3220",
+        "sha256": "6b2fbb371f7c1881beb473484a8d1e568409b4ccda93a0d049c5753e6d4a90cd"
+      },
+      "git_blob_sha1": "1195d9df279356583c712c0549357ef3a69e3220",
+      "path": "nfl_lab/audit_weekly_public_v1.py",
+      "sha256": "6b2fbb371f7c1881beb473484a8d1e568409b4ccda93a0d049c5753e6d4a90cd"
+    },
+    {
+      "bytes": 42865,
+      "delta_preimage": {
+        "bytes": 42703,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "ce0281bf11932cd014099eab6d1aa554b96858e85effd68222dd9266abecefb3"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 42323,
+        "git_blob_sha1": "3c5a71a027d5399202de5aa37fd4b7f46c11ad31",
+        "sha256": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5"
+      },
+      "git_blob_sha1": "ad5172530e4de4b558a7b6e9b80767ce72627677",
+      "path": "nfl_lab/audit_weekly_runtime_v1.py",
+      "sha256": "4e7564234c5cf851a74abb7d5a4c505f4e6d74c322d32f2258480544edde2096"
+    },
+    {
+      "bytes": 50966,
+      "delta_preimage": {
+        "bytes": 49939,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "cad08dfd5eef1a3eca165fd46c2a57187aeacb6759dbda88afb10022b13a75b7"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 49549,
+        "git_blob_sha1": "25cd727640bef3331ec4238b83dae573271d7bcb",
+        "sha256": "e63e53b4ff0dbed062314191a86c20d7c233abd5f25d3908745118dcae03ab68"
+      },
+      "git_blob_sha1": "0d5940542b9ab5cf0a78cc619f1b4c9748f11a45",
+      "path": "nfl_lab/audit_weekly_template_v1.py",
+      "sha256": "0db6b797447598e8297c9adeb33487e9e08f844438f61b698b33b0a8fe3f56e7"
+    },
+    {
+      "bytes": 3460,
+      "delta_preimage": {
+        "bytes": 3460,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+      },
+      "git_blob_sha1": "8ddba67130cc8085cb9c018c1a955f6fefd84329",
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+    },
+    {
+      "bytes": 18733,
+      "delta_preimage": {
+        "bytes": 17586,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "defc4ba560834027a958460fce4727eedb325f82bfe8dbc68a84c4b4d14f6a09"
+      },
+      "git_blob_sha1": "69a3d44a656e00c739ffe08a3cfd680c688d2450",
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "dec10328c7811d788c4b605a4098d01e8f95ab99dca3455b547cc699e7686008"
+    },
+    {
+      "bytes": 20909,
+      "delta_preimage": {
+        "bytes": 21010,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "2561c34570332912d063bbe73b77e5b079e6923ca6e34e2acc0a3a1b0de58e43"
+      },
+      "equals_fa919_base": true,
+      "fa919_base": {
+        "bytes": 20909,
+        "git_blob_sha1": "23d18f096a0efc4c4bf9547a5ab90b9a40d255a0",
+        "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5"
+      },
+      "git_blob_sha1": "23d18f096a0efc4c4bf9547a5ab90b9a40d255a0",
+      "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+      "sha256": "cb41ded137de8faa9397c5c5a4385c62fed82e0c90767c4e2dea714613abeae5"
+    },
+    {
+      "bytes": 14677,
+      "delta_preimage": {
+        "bytes": 13034,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "602986847630aaa380d580b67d1c341339fa221d616fd3254418ba1441c1d447"
+      },
+      "git_blob_sha1": "0ff90b9b720b99175d51cebbd510f73f09c8ae08",
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "sha256": "5bf6ce70469b0eca687f61de627dac3103486c2a970e40c62006071ca3ce1462"
+    },
+    {
+      "bytes": 31195,
+      "delta_preimage": {
+        "bytes": 31195,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+      },
+      "git_blob_sha1": "eeeb2af4c87ad4ffe72cc1df3b9ee35e75e247ae",
+      "path": "tools/modern_count_a_mean_v3.py",
+      "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+    },
+    {
+      "bytes": 22304,
+      "delta_preimage": {
+        "bytes": 22140,
+        "kind": "V1_SOURCE_FDF6429",
+        "sha256": "cbb3041c221a5b09b8fc707dbad9a042208710cee40c029bbe332d8e9dc95b70"
+      },
+      "equals_fa919_base": false,
+      "fa919_base": {
+        "bytes": 21545,
+        "git_blob_sha1": "d7fb9e699c6f69868a7410d5df00d956882c3944",
+        "sha256": "185d864fd91945fd7d30c7feee3929cf302266b4d5f6f196e758ce4ba439b104"
+      },
+      "git_blob_sha1": "a32286f97a3eb6893d7a97b89cabf5147b509b7e",
+      "path": "tools/persist_state.py",
+      "sha256": "bb6c688d60931bffe189794afd3601019b45e49e6d96c24dfd8029d629475058"
+    }
+  ],
+  "frozen_manifest": {
+    "SHA256": "35015b318c2cc31bf71f068cf21758acf3f62148ef5cb350583d6696378d21f6",
+    "before_after_SHA_AST_JSON": "PASS",
+    "bytes": 12256,
+    "files": 15,
+    "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_REVIEW_SOURCE_MANIFEST_V2.json",
+    "state": "SOURCE_FROZEN_FOR_INDEPENDENT_REVIEW_NOT_NATIVE_ACCEPTED",
+    "total_source_bytes": 654202
+  },
+  "id": "COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V4",
+  "independent_quick_execution": {
+    "CPU_cap_seconds": 100,
+    "CPU_seconds": 0.17179318100000002,
+    "Python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "RSS_bytes": 29814784,
+    "actual_module_or_model_loading": "Only stdlib synthetic component/source-seam fixtures; no NFLmodel/nativecapsule deserialization",
+    "address_space_bytes": 1073741824,
+    "errors": 0,
+    "failures": 0,
+    "tests": 21,
+    "wall_seconds": 0.17303825700219022
+  },
+  "next_action": "Root may propagate this exact reviewed V2 candidate to existing A PR88 and continue its normal protected source/Root/producer work; no new scientific/authorization gate is introduced. Any further source change needs a scoped delta review. Keep current-research shadow and original-site activation stages distinct.",
+  "preserved_probe_limit": "An optional localGIT_DIR baseline probe could notresolve fa919 config path. No sourceabsence inference or lazy fetch occurred. Four exact public connector reads independently verified fa919 config/controller and DAD delivery/runtime source hashes; that actual public evidence is recorded above.",
+  "previous_reviews_and_failure_evidence": [
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/review/COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V1.json",
+      "preserved": true,
+      "sha256": "46ed72bff8a3f7d420085ea9589d724dd1b76d3822465b5a73e508ae25639882"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/review/COUNTA_NATIVE_PREEXEC_INDEPENDENT_REVIEW_V3.json",
+      "preserved": true,
+      "sha256": "c9adcd5608d8b2d4053c6f3725880b8555177f32a33cf84a12ae735527153cdb"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/review/COUNTA_NATIVE_REVIEW_SNAPSHOT_FAILURE_V1.json",
+      "preserved": true,
+      "sha256": "7905777afdd9ad2ee9deefd9c164502050c954b4da9fb0498a0327c0759d0ff5"
+    }
+  ],
+  "prior_scope_clarification": "V3 was a19-case selected-copy source/synthetic PASS with fullrepositoryCI explicitly unverified. Subsequent PR88bb28 source-shard failure exposed true legacy default-profile integration incompatibility; it remains a failed candidate, not invalid NFL forecasts or erased evidence. V4 supersedes source compatibility claims only for its exact frozenV2 bytes.",
+  "public_immutable_source_verification": [
+    {
+      "bytes": 15712,
+      "git_blob_sha1": "9e49170901ad69deb525c0924e309b152e795748",
+      "path": "config/weekly-mae-display-core3-v1.json",
+      "sha256": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483",
+      "source_commit": "fa91988e65939d2b3516371a90a6380aeee3acb3"
+    },
+    {
+      "bytes": 46282,
+      "git_blob_sha1": "6576078525fc963f0a1fad3b53e7c736a8f4a816",
+      "path": "nfl_lab/audit_weekly_controller_v1.py",
+      "sha256": "de76ca9c60b2f86e879e108c1e4e287c9e572703f021629caafb505c265dc56b",
+      "source_commit": "fa91988e65939d2b3516371a90a6380aeee3acb3"
+    },
+    {
+      "bytes": 29274,
+      "git_blob_sha1": "222c2b7fd4e9b1f688f9676422723fc95eac4e62",
+      "path": "nfl_lab/audit_weekly_delivery_v1.py",
+      "sha256": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc",
+      "source_commit": "dad58d459951bdb77ef852b8ca88860ffb0bce60"
+    },
+    {
+      "bytes": 42323,
+      "git_blob_sha1": "3c5a71a027d5399202de5aa37fd4b7f46c11ad31",
+      "path": "nfl_lab/audit_weekly_runtime_v1.py",
+      "sha256": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5",
+      "source_commit": "dad58d459951bdb77ef852b8ca88860ffb0bce60"
+    }
+  ],
+  "remaining_unverified": [
+    "Normal protected PR88 CI on the propagated successor head and operator review/merge status; current receipt is local frozen source review, not an updated PR or merged producer.",
+    "Genuine current Root/source-profile/predecessor/ops bindings and final issued Root<=61440 including real clocks. Config rebind is a candidate, not authenticated Root acceptance.",
+    "Actual trusted private capsule/model/query restoration, current source/role/event eligibility, corrected-mean inference and durable capture/fresh restore.",
+    "Actual derived companion feed publication/readback, original website consumer admission/rendered value/side/fallback/expiry and selector isolation.",
+    "Five-week and affected-evidence checks remain product-specific; software tests add no NFL observations or accuracy, and no automaticprimary switch follows."
+  ],
+  "resource_accounting": {
+    "earlier14_18_19_child_fixture_costs_preserved_in_prior_receipts": true,
+    "known_sum_of_those_recorded_runs": 181.107038181,
+    "no_full_suite_budget_reset": true,
+    "original_wave_CPU_cap": 300,
+    "owner_recorded_all_three_full_run_CPU_seconds": 180.935245,
+    "this_independent_quick_CPU_seconds": 0.17179318100000002
+  },
+  "reused_full_verification": {
+    "actual_final_result": "149 passed;12subtests passed",
+    "fresh_full_source_or_native_test_rerun_by_this_child": false,
+    "full_source_authentication_scope_owner_reported": {
+      "Git_fixture_mode": "GIT_DIR=/workspace/NFL-forecasting/.git; existing source objects; git --no-lazy-fetch show only",
+      "immutable_commit": "fa91988e65939d2b3516371a90a6380aeee3acb3",
+      "isolated_source_tree": "/workspace/follow-counta-legacy-ci-check",
+      "matched_files": 538,
+      "matched_logical_bytes": 8540803,
+      "network_used_for_tests": false,
+      "recursive_tree_entries": 593,
+      "remote_tree_characters": 154602,
+      "truncated": false,
+      "unchanged_public_inputs_hardlinked_not_copied": true
+    },
+    "log_byte_readbacks": [
+      {
+        "bytes": 66207,
+        "filename": "follow-counta-v2-legacy-test-output.log",
+        "last_summary_line": "12 failed, 136 passed, 12 subtests passed in 58.41s",
+        "sha256": "b46f4778dfe04bc207a6e4a6bcd9c1349d8a9ae290ed13b65273485f28db25fd"
+      },
+      {
+        "bytes": 20905,
+        "filename": "follow-counta-v2-legacy-test-output-with-git.log",
+        "last_summary_line": "12 failed, 136 passed, 12 subtests passed in 60.13s (0:01:00)",
+        "sha256": "c04a02685020fd694b9769bf899de3395465c070a3f56fc5e60821b919112d42"
+      },
+      {
+        "bytes": 261,
+        "filename": "follow-counta-v2-legacy-test-output-final.log",
+        "last_summary_line": "149 passed, 12 subtests passed in 57.64s",
+        "sha256": "0dc6dc652e4307b77388b8a85bf8afd33af9980c65b466383574db69559cad68"
+      }
+    ],
+    "runs_and_failures_preserved": [
+      "PR88 V1 bb28 source-shards0/3 CLOSED_MAE_ONLY_RUNTIME_PIN_PROFILE, run43158149638 job130982806659",
+      "V2 first isolated run: 12 Git-history fixtures lacked a Git database; 136 passed",
+      "V2 Git-enabled run: 12 exact predecessor runtime pin rejections exposed missing two fixed DAD pins; 136 passed"
+    ],
+    "scope": "three unchanged authenticated fa919 legacy suites plus new synthetic component suite",
+    "software_receipt": {
+      "bytes": 4956,
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_REVIEW_SOFTWARE_V2.json",
+      "sha256": "ded03451daee4b7e96cd5b6fd73984d2fa8a02d22bb7fd4b5d028e5756a0c698"
+    },
+    "three_run_CPU_seconds": 180.935245
+  },
+  "reviewer": "/root/decision_peer_receipts",
+  "scope": "Independent source/path/pin/authority review of manifestV2 and public immutable base source;21synthetic checks rerun. Reused actual hash-bound149/12 legacy verification logs; no149-test rerun, native/model/source-row access or dispatch.",
+  "source_delta_decisions": [
+    {
+      "area": "Legacy ABI compatibility",
+      "evidence": "audit_weekly_public_v1.py and weekly_mae_display_profile_v1.py now byte-identical to exact registered fa919 base (6b2fbb.../cb41de...). The prior added public acceptance Root field is removed from the legacy ABI. CountA projection lives only in optional helper; native acceptance commitment uses unchanged legacy feed canonical semantics.",
+      "verdict": "PASS"
+    },
+    {
+      "area": "Closed source/profile rebinding",
+      "evidence": "Original22changed path names,128legacy inventory count, allbeforepins and six model source pins preserved. Seven candidate after hashes independently match the frozen actual files. Candidate configbe990... binds after-map3e306... while retaining before315e...; complete128after-map authentication is covered by reused owner rebind/tests, not independently recomputed from every source file by this reviewer.",
+      "independent_public_base_checks": {
+        "all_before_pins_unchanged": true,
+        "before_inventory_hash_unchanged": true,
+        "candidate_after_inventory_digest_scope": "Owner bound rebind receipt and149legacytest verification reused; reviewer independently verified7changedafterfilehashes/22set/before/model invariants, not the entire128actualmap.",
+        "changed_path_count": 22,
+        "legacy_pin_count": 128,
+        "new_config_sha256": "be9900996afa96c23924cfea012e605a2e86c780c0fb2d7264b3840f65685f9b",
+        "old_config_sha256": "8c5839831f2560db06916630431bd5f83621ee80e3fb6b469689702c73c42483",
+        "six_model_pins_unchanged": true,
+        "updated_after_paths_match_actual_frozen_files": [
+          "nfl_lab/audit_weekly_archive_v1.py",
+          "nfl_lab/audit_weekly_controller_v1.py",
+          "nfl_lab/audit_weekly_delivery_v1.py",
+          "nfl_lab/audit_weekly_grade_history_v1.py",
+          "nfl_lab/audit_weekly_hosted_v1.py",
+          "nfl_lab/audit_weekly_runtime_v1.py",
+          "nfl_lab/audit_weekly_template_v1.py"
+        ]
+      },
+      "rebind_receipt": {
+        "SHA256": "eb0d8386ecbb21954ead4fb0ebb3e5e83b3612386e303ba5228cdd2e11882330",
+        "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_SOURCE_PROFILE_REBIND_V2.json"
+      },
+      "verdict": "PASS_CHECKED_SCOPE"
+    },
+    {
+      "area": "Historical owner pin authority",
+      "evidence": "Independently fetched exact immutable dad58 source bytes. Only delivery8c38d3... and runtimeb6a344... are added to fixed V5_CURRENT_OWNER_RUNTIME_PINS; all prior entries and entire V5_CURRENT_OWNER_AUTHORITY object remain unchanged. No arbitrary hash/actor/source override or generic ownership fallback.",
+      "independent_binding": {
+        "all_prior_map_entries_preserved": true,
+        "two_exact_existing_DAD_pin_additions": {
+          "nfl_lab/audit_weekly_delivery_v1.py": "8c38d3c8dd4fbc4c39d56860f73d5cbd2767ba3701145d3c86d403404bb0aefc",
+          "nfl_lab/audit_weekly_runtime_v1.py": "b6a34491cc053b201d41201b55b0006c8121ed18c02f3eab085d578e971049a5"
+        },
+        "unchanged_owner_authority": true
+      },
+      "verdict": "PASS_TWO_EXACT_ADDITIONS_ONLY"
+    },
+    {
+      "area": "Pre-import trusted helper closure",
+      "evidence": "Original128-pinned template verifies all three closed helper names/bytes before any optional extension import in hosted/static/runtime/archive/delivery/persist paths. Fixed adaptera3b44... and correctoraa7c... remain unchanged. Unknown/tampered helper rejected. No model loading occurs from metadata alone.",
+      "verdict": "PASS_SOURCE_AND_SYNTHETIC_NEGATIVE"
+    },
+    {
+      "area": "Default legacy path",
+      "evidence": "Without CountA Root field, old archive does not import or require optional helper. Unregistered CountA runtime files fail closed. Original18 model/catalog assertion, existing22MAE paths and128pins remain. Unchanged public/profile byte pins no longer create the observed broadCI mismatch.",
+      "verdict": "PASS_SOURCE_AND_REUSED_LEGACY_SUITE"
+    },
+    {
+      "area": "Actual derived companion reachability",
+      "evidence": "Existing Runtime capture -> owned archive validation -> existing _deliver -> helper.count_a_shadow_projection -> public_pair -> existing persist with in-memory context. No alternate publisher/scheduler. Root-specific CAPTURE hash within sealed LiveAcceptance aliases authenticates exact Root without extending legacy LiveAcceptance record. Closed source/rights grant and original noactivation/noTopPicks limits preserved.",
+      "verdict": "PASS_SOURCE_NOT_RUNTIME_ISSUANCE"
+    },
+    {
+      "area": "Durable row and Root integrity",
+      "evidence": "Publisher regenerates expected public bytes from sealed native alias projection. Rehashed mean99 is rejected against retained synthetic1.5 row. Different Root fails CAPTURE_ROOT_AND_BODY; source acceptance contains no newly invented root_go field. Fake serialized context is not production authority. No real native object was constructed by reviewer.",
+      "verdict": "PASS_SYNTHETIC_ACTUAL_ENTRYPOINT_BODY"
+    },
+    {
+      "area": "Source size and syntax",
+      "evidence": {
+        "all14Python_AST_and1JSON": "PASS",
+        "full_actual_issued_Root61440bytecheck": "PENDING_OPERATOR_ROOT;notprovedbyplaceholderfixture",
+        "history_bytes": 130608,
+        "hosted_bytes": 130880,
+        "unchanged_limit_bytes": 131072
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "verdict": "PASS_FROZEN_V2_COMPATIBILITY_SOURCE_PIN_AUTHORITY_DURABLE_HANDOFF_DELTA_AND21_SYNTHETIC_TESTS"
+}

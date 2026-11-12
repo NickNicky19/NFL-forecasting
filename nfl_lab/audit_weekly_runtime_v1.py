@@ -184,10 +184,16 @@ class Runtime:
             product_kind=choice.document["mode"], export_boundary=HANDOFF,
             numerical_runtime=dict(configuration_id="effective18-haswell-numpy-generic-v1",
                 configuration_file_sha256=private.sha(private.read_local(Path(__file__).resolve().parents[1]/"config/audit-weekly-numerical-runtime-v1.json",32 << 10))))
+        self._count_a_shadow = None
         self._mae = None
         if mae_owner is not None:
             from .weekly_mae_display_runtime_v1 import BoundDisplay
             self._mae = BoundDisplay(self, mae_owner)
+            if "count_a_mean_shadow" in mae_owner.root:
+                from .audit_weekly_template_v1 import count_a_helper_pins
+                count_a_helper_pins(mae_owner.root,Path(__file__).resolve().parents[1])
+                from .count_a_native_extension_v1 import BoundShadow
+                self._count_a_shadow = BoundShadow(self, mae_owner)
 
     def check(self):
         self.progress()
@@ -422,6 +428,8 @@ class Runtime:
         if self._mae is not None and fatal is None:
             self._mae.capture(features, capture, cref, source, source_ref, prepared_ref,
                 bridge, bref, sink, output, receipt, statuses)
+        if self._count_a_shadow is not None and fatal is None:
+            self._count_a_shadow.capture(features, capture, cref, source, sink, output)
         return ref
 
     def _candidates(self, session, features, capture, capture_ref, bridge, sink, output):

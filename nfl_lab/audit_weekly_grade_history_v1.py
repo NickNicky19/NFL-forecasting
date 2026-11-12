@@ -250,6 +250,8 @@ def validate_source_history_binding(root):
         require("source_history_binding" not in root,"SOURCE_HISTORY_BINDING_REQUIRES_ROOT_V4")
         return None
     extra={"mae_registration","mae_helper_pins"} if root["schema_version"]==ROOT_V5 else set()
+    if "count_a_mean_shadow" in root:
+        require(root["schema_version"]==ROOT_V5,"COUNT_A_CURRENT_ROOT_V5_REQUIRED");extra|={"count_a_mean_shadow"}
     require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding"}|extra,"CLOSED_SOURCE_HISTORY_ROOT_V4")
     value=_source_history_unwrap(root["source_history_binding"])
     require(root.get("source_sha")==value["target_source_sha"]
@@ -271,7 +273,7 @@ def _prior_source_history_metadata(root):
     from . import private_draft_store as store
     if root.get("schema_version")!=ROOT_V5:return validate_source_history_binding(root)
     from . import weekly_mae_display_profile_v1 as profile
-    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding","mae_registration","mae_helper_pins"},
+    require(set(root)==_SOURCE_ROOT_V3_KEYS|{"source_history_binding","mae_registration","mae_helper_pins"}|({"count_a_mean_shadow"}if"count_a_mean_shadow"in root else set()),
         "CLOSED_ORIGINAL_ROOT_V5_METADATA")
     profile.prior_extension_metadata(root)
     value=_source_history_unwrap(root["source_history_binding"])
@@ -352,6 +354,9 @@ def _source_history_runtime_scope(current_root, original_root, binding):
     second=binding["schema_version"]==SOURCE_HISTORY_BINDING_V2
     expected_schema=binding["predecessor_root_schema"] if second else template.ROOT_V3
     expected_keys=_SOURCE_ROOT_V3_KEYS|({"source_history_binding"} if second else set())|({"mae_registration","mae_helper_pins"} if expected_schema==ROOT_V5 else set())
+    if "count_a_mean_shadow" in original_root:
+        require(expected_schema==ROOT_V5,"COUNT_A_EXTRA_ONLY_ON_BOUND_V5_PREIMAGE")
+        expected_keys|={"count_a_mean_shadow"}
     require(type(original_root) is dict and set(original_root)==expected_keys
         and original_root["schema_version"]==expected_schema and original_root["source_sha"]==old["source_sha"]
         and original_root["code_pins"]==_source_history_pins(current_root,binding)

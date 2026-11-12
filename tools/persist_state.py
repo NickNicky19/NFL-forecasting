@@ -278,7 +278,14 @@ def main(argv=None):
         return persist(root,state,storage=storage,policy_path=policy_path,files=files)
 
 
-def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_policy=False,v5_metadata_policy=False):
+def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_policy=False,v5_metadata_policy=False,count_a_shadow_context=None):
+    if count_a_shadow_context is not None:
+        if metadata_policy or v5_metadata_policy or storage is None or policy_path is None:raise ValueError("Count A shadow requires separate owned frozen metadata mode")
+        from nfl_lab.audit_weekly_template_v1 import count_a_helper_pins
+        count_a_helper_pins(count_a_shadow_context[1],Path(__file__).resolve().parents[1])
+        from nfl_lab.count_a_native_extension_v1 import validate_public_files
+        from nfl_lab.frozen_source_policy import load_frozen_source_policy
+        validate_public_files(state,files,*count_a_shadow_context,load_frozen_source_policy(policy_path)["_policy_sha256"])
     if v5_metadata_policy:
         if metadata_policy or storage is None or policy_path is None:
             raise ValueError("explicit V5 metadata mode requires one quota owner and frozen source policy")
@@ -327,7 +334,7 @@ def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_polic
             observed=git("ls-remote","origin",f"refs/heads/{branch}",capture=True).split()[0]
             if observed!=commit:raise RuntimeError("remote state readback mismatch")
             from nfl_lab.publication_scope import scope_document
-            if metadata_policy or v5_metadata_policy:
+            if metadata_policy or v5_metadata_policy or count_a_shadow_context is not None:
                 from nfl_lab.frozen_source_policy import load_frozen_source_policy as load_source_policy
             else:
                 from nfl_lab.operational_sources import load_source_policy
@@ -336,7 +343,7 @@ def persist(root,state,*,storage=None,policy_path=None,files=None,metadata_polic
             publication=[sys.executable,"-m","nfl_lab.cli","publication","--root",str(root),"--state",str(state),"--publication-commit",commit,"--publication-scope-stdin"]
             if storage is not None:
                 publication += ["--cache",str(storage.cache),"--source-policy",str(policy_path),"--output","runs/operational-v2/publication-result.json"]
-                if metadata_policy or v5_metadata_policy:publication += ["--frozen-public-policy"]
+                if metadata_policy or v5_metadata_policy or count_a_shadow_context is not None:publication += ["--frozen-public-policy"]
             subprocess.run(publication,check=True,input=json.dumps(scope),text=True)
             if storage is not None:
                 print("Reviewed state published; new local publication-timing receipts await the next exact content review")

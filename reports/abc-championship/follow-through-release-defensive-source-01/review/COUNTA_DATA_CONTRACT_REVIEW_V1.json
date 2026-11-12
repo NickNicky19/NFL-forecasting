@@ -1,0 +1,236 @@
+{
+  "id": "A-COUNT-A-NATIVE-EXTENSION-DATA-CONTRACT-REVIEW-v1",
+  "UTC": "2026-11-12T04:52:34.478662+00:00",
+  "reviewer": "/root/decision_a_evidence",
+  "independence": "Independent of producerpatch author; read-only exact frozen publicsource/metadata. Sameagent previously reviewed aggregate/category andA5 components; no independent private-model/row/source-clock access.",
+  "verdict": "PASS_IN_DECLARED_FROZEN_SOURCE_AND_METADATA_SCOPE;NATIVE_CURRENT_EXECUTION_UNKNOWN",
+  "frozen_manifest": {
+    "path": "reports/abc-championship/follow-through-release-defensive-source-01/producer/COUNT_A_NATIVE_REVIEW_SOURCE_MANIFEST_V1.json",
+    "bytes": 7585,
+    "sha256": "19257c15ce673207e4398dc6ee0f605244256f406340e4a23af492cf5044b654"
+  },
+  "source_bytes_verified": [
+    {
+      "path": "nfl_lab/audit_weekly_archive_v1.py",
+      "bytes": 62928,
+      "sha256": "ef4fd1afda194eb60e7fecba00ca78bd5e9afd305c8e4956d158885c42388482"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_delivery_v1.py",
+      "bytes": 30493,
+      "sha256": "43be7bf1a8dc5dda4987d079bbee3fc096883bd23fdbcef1f2c3a0d805ffd32f"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_grade_history_v1.py",
+      "bytes": 130824,
+      "sha256": "279a2ab46a95329c186bdb367f10f9ed10c052dff552ce8f1e9601bc2fd14797"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "bytes": 130870,
+      "sha256": "52ef2bf3a186e692cdf07fae5ac846780d0aa97540ae90ef0d6d9794cd5e7245"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_public_v1.py",
+      "bytes": 32516,
+      "sha256": "16f51244793d8009323140dcb6a4e39b3186caf4bbc9c1b4d02ec6144e0cdccc"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_runtime_v1.py",
+      "bytes": 42703,
+      "sha256": "ce0281bf11932cd014099eab6d1aa554b96858e85effd68222dd9266abecefb3"
+    },
+    {
+      "path": "nfl_lab/audit_weekly_template_v1.py",
+      "bytes": 49939,
+      "sha256": "cad08dfd5eef1a3eca165fd46c2a57187aeacb6759dbda88afb10022b13a75b7"
+    },
+    {
+      "path": "nfl_lab/count_a_mean_export_adapter_v1.py",
+      "bytes": 3460,
+      "sha256": "a3b44ee5c7937e830d0c2693d3fa55b0fed52c9cba51ae5058c04b2e7075b527"
+    },
+    {
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "bytes": 17586,
+      "sha256": "defc4ba560834027a958460fce4727eedb325f82bfe8dbc68a84c4b4d14f6a09"
+    },
+    {
+      "path": "nfl_lab/weekly_mae_display_profile_v1.py",
+      "bytes": 21010,
+      "sha256": "2561c34570332912d063bbe73b77e5b079e6923ca6e34e2acc0a3a1b0de58e43"
+    },
+    {
+      "path": "tests/test_count_a_native_extension_v1.py",
+      "bytes": 13034,
+      "sha256": "602986847630aaa380d580b67d1c341339fa221d616fd3254418ba1441c1d447"
+    },
+    {
+      "path": "tools/modern_count_a_mean_v3.py",
+      "bytes": 31195,
+      "sha256": "aa7c002506b57d7c1ca643f4236e5fb8b5132bebb00ad86720ee11221b6d9fb6"
+    },
+    {
+      "path": "tools/persist_state.py",
+      "bytes": 22140,
+      "sha256": "cbb3041c221a5b09b8fc707dbad9a042208710cee40c029bbe332d8e9dc95b70"
+    }
+  ],
+  "total_source_bytes": 588698,
+  "source_AST": "PASS13AST_parse_only_no_module_import_or_model_loading",
+  "critical_contracts": [
+    {
+      "scope": "Trusted restoration before deserialization",
+      "verdict": "PASS_SOURCE",
+      "path": "nfl_lab/count_a_native_extension_v1.py:authenticate_capsule/authenticate_fit/BoundShadow.capture",
+      "evidence": "Owned capsule399037B/SHA5f5536... and producer-proof26032B/SHA9071f4... fixed; closed7-memberZIP, duplicate/encrypted/symlink/size controls; six exactmember size/hash pins including MODEL298952B/SHA4d277e... checked before joblib.load. No source blob/model opened by reviewer.",
+      "limit": "Actual privatecapsule/member/ownedRoot restoration remains UNKNOWN."
+    },
+    {
+      "scope": "FIT_START/recipe/training chronology",
+      "verdict": "PASS_SOURCE",
+      "path": "authenticate_fit and BoundShadow.capture",
+      "evidence": "FIT_START ref must match exact entry in independently hash-pinned originalproducer proof; recipe canonical hash+LF must equal legacy parent9c48... and MODEL_AUDIT.recipe_sha256. Exact2026-09-01T00:00:00Z trainingcutoff/corrector pin required. Both model/prior trainingbindings require all known labelavailability strictly earlier than cutoff; no unknown-clock fill.",
+      "limit": "Actual modeltrainingbinding/recipecontents remain UNKNOWN without permittednativeexecution; prior retainedparity is reused, not repeated."
+    },
+    {
+      "scope": "Restoration environment/type/features",
+      "verdict": "PASS_SOURCE",
+      "path": "BoundShadow.capture; existing weekly_mae_display_profile_v1.REVIEWED_MODEL_PINS",
+      "evidence": "Exact joblib/numpy/pandas/pyarrow/scipy/sklearn versions from authenticatedaudit; exact RoleCountBoostingModel type,variantA,pass_td,countsupport,category match. Originalsix model-code pins and original18 catalog remain in surroundingRoot guards; extension is separate shadow, not nineteenthgeneric slot.",
+      "limit": "Actual native dependency compatibility and complete issuedRoot/source-profile/codepin rebind stay UNKNOWN; selectedcopy is not fullrepository/GHA validation."
+    },
+    {
+      "scope": "Mean corrector exactly once",
+      "verdict": "PASS_SOURCE",
+      "path": "count_a_mean_export_adapter_v1.predict_verified_mean; tools.modern_count_a_mean_v3.correct_fallbacks",
+      "evidence": "Unchanged adapterSHAa3b44... and correctorSHAaa7c... independently bytechecked. Single model.predict returnslegacy/reasons; single correct_fallbacks replaces only explicitfallback entries with actuallytrainedrole/global priormean; countprior/support/q/n/mean validated; warmfloat64bits checked unchanged. No new fit, median substitution, biasoffset or doubledcorrector path.",
+      "limit": "No fresh actualmodel numericalparity run; exact prior restoredcase/parity receipt reused."
+    },
+    {
+      "scope": "Future query/feature clocks",
+      "verdict": "PASS_SOURCE",
+      "path": "adapter.predict_verified_mean and BoundShadow.capture",
+      "evidence": "QB-only frame from alreadyqualifiedfeaturecapture; query_projection usesidentity/features, not targetoutcome. Aware querycutoff<=kickoff and >trainingcutoff; known featuremax strictly<querycutoff; unknown featureclock rejected forwarm histories. Cold/sparse history can use explicitstoredpriormean ratherthan needing futureoutcome metadata. Issuance/localpersist strictlybefore cutoff; expiry no later than cutoff.",
+      "limit": "Real currentQB/event/role universe, historicalavailability/version and actual consumedfeatureages remain UNKNOWN until owner source-admission/capture."
+    },
+    {
+      "scope": "Typed point/null/provenance/conditioning",
+      "verdict": "PASS_SOURCE",
+      "path": "adapter output,projection,BoundShadow.capture,public_pair",
+      "evidence": "Expectedmean and selectionpoint identical typed MEAN_OBJECTIVE_POINT from corrected adapter; legacy retained for arithmetic audit only and omitted from derivedrows. Nonfinite unsupported mean serializesNone/null, never zero; zero remains validfinitezero. Fallbackreason/valueorigin distinguish learned/trainedprior/incumbentrequired. Probability/EV null; publicstate SHADOW_NOT_PRIMARY_NOT_PICKS,is_current_recommendationFalse,explicitplayed-history conditioning and no unconditionalparticipationprobability. No exactline/side/ranker silentlycreated.",
+      "limit": "The point is not a participation guarantee, calibratedprobability,EV,primarywebsitebinding or TopPicks qualification."
+    },
+    {
+      "scope": "Durable archive and public derivation",
+      "verdict": "PASS_SOURCE_REUSING_PEER_RUNTIME_SCOPE",
+      "path": "validate_archive;audit_weekly_public_v1.count_a_shadow_projection;public_pair;validate_public_files;delivery/persist hooks",
+      "evidence": "Archive Root/body/model/procedure/capsule hashes and completeclosedtwo-fileCountA census checked; failedpartial capture cannot satisfycomplete public path. LiveAcceptance exacttype plusverify required. Publicvalidation regenerates from durable-owned aliases/CountAcapture, rather than trusting self-rehashed JSON. ClosedRootgrant binds fixedsourcepolicy,reviewhash,fieldcensus,prefix and no rawweights/primary/ranking. Expired rows retain originalissue/expiry and label current_use_status; no backdating.",
+      "limit": "Actual private/native readback, source-policy rightsreceipt, publication and originalconsumer/serveduse remain UNKNOWN; no public/native/peerworkflow write by reviewer."
+    }
+  ],
+  "synthetic_verification": {
+    "owner_and_peer_result_reused": "19softwarefixtures reportedPASS at frozenmanifest; earlier14/18 counts and peer prepublication failures preserved in manifest/receipts",
+    "tests_executed_by_this_reviewer": 0,
+    "new_NFL_observations": 0,
+    "scope": "Sourceinspection is independent; no claim to actualmodel/native execution or complete existingrepositorysuite."
+  },
+  "source_week_review": {
+    "verdict": "PASS_REFERENCE_PRESERVING_METADATA",
+    "source": {
+      "path": "reports/abc-championship/category-decision-release-01/A_EVIDENCE_WEEKLY_LEADER_SOURCE_MATRIX_V1.csv",
+      "bytes": 50115,
+      "sha256": "09a8053dfb1be3872ef38ab00b77383816d3781ec3badeac476dbaa80cf114bb"
+    },
+    "rows": 128,
+    "original_string_fields_checked": 1920,
+    "public_original_row_commitment_checks": 128,
+    "tier_counts": {
+      "OBSERVED_ACTUAL_LINES_QUOTE_TIMING_UNVERIFIED": 80,
+      "RECORDED_SITE_THRESHOLDS_SEMANTICS_AND_CLOCKS_UNQUALIFIED": 32,
+      "NO_SAME_RECIPE_W8_RECORD_IN_THIS_AGGREGATE": 16
+    },
+    "status_counts": {
+      "SUPPORTED_WITHIN_OBSERVED_ACTUAL_LINE_TIMING_UNVERIFIED_TIER": 80,
+      "CONDITIONAL_AS_SITE_THRESHOLD_DIAGNOSTIC;UNRESOLVED_AS_ACTUAL_OFFER": 32,
+      "UNRESOLVED_FOR_THIS_EXACT_RECIPE_PANEL": 16
+    },
+    "interpretation": "W1\u20135 observedquotes timingunverified; namedW6\u20137site records conditionaldiagnostic/unresolvedactualoffers; W8missing onlyforexactrecipepanel. No blanketsource revocation, newgrader or rescoring. Fallback0 oldprojection retainedwith explicitunspecifiedprovenancelimit.",
+    "NFL_scoring": 0
+  },
+  "C_acknowledgement_review": {
+    "verdict": "PASS_EXISTING_C_DECISION_ACK_ONLY",
+    "C_ref": {
+      "ref": "2e604d8801d74788a61b3fa9e5206e7c4a452e81",
+      "path": "reports/category-decision-release-01/CATEGORY_PRODUCT_DECISIONS.json",
+      "sha256": "f6286af137ca5ef14a4fd183cf93836ec0771893c3ed445e58b432a48f5a844b"
+    },
+    "decisions_checked": 12,
+    "decision_counts": {
+      "ABSTAIN": 2,
+      "BLOCKED": 1,
+      "KEEP_INCUMBENT": 5,
+      "SHADOW": 4
+    },
+    "C_consumer_binding": {
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "2e604d8801d74788a61b3fa9e5206e7c4a452e81",
+      "path": "reports/category-decision-release-01/website/LIVE_PRODUCT_BINDINGS.json",
+      "SHA256": "83514b8f91e3b854c0bc1a4bc83e7e992d46b15b3dc828e7ff4d584782e754d3"
+    },
+    "interpretation": "Actual2e604Cdecision statuses preserved as research/current-use dispositions; no A mastertable or originalsiteactivation. A prior5weekpoint masks stay separate from olderas-reported7weekmetadata. C239/412WRTE notcompared to A328/579mixedroles; publicaggregateadmission notprivatefitparity. d7timingjoins actualCack kept distinct from later14a/3a3point/ATT admission unobserved.",
+    "resolved_narrowfinding": "Crecfallback originalsource-recorded0 retained but verification value UNKNOWN_NOT_EXPORTED in both newACKs; no W/L/source change."
+  },
+  "metadata_bindings": [
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/A_ARCHIVED_SOURCE_WEEK_DISPOSITIONS_V1.json",
+      "bytes": 150547,
+      "sha256": "4be47eec571d0b2fe9164f3f73929f11fcccfac343b86146c9a33a46f7d414ea"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/A_ARCHIVED_SOURCE_WEEK_DISPOSITIONS_PUBLIC_V1.json",
+      "bytes": 35343,
+      "sha256": "e0ca78b00a0edac8c8601e16bd2ad21b19d44b2e05fe6a7a83c19766d2a1b16a"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/EXISTING_C_RELEASE_DECISION_ACK_V1.json",
+      "bytes": 77256,
+      "sha256": "7159843d88e5c62c83a31d4a36e9c0622ed8939e9c5d70632588b3982216979a"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/EXISTING_C_RELEASE_DECISION_ACK_PUBLIC_V1.json",
+      "bytes": 36802,
+      "sha256": "916473584fc5361fa46db3fd5c1050c1513d9f35f146fd4895279d2d2c7742f3"
+    },
+    {
+      "path": "reports/abc-championship/follow-through-release-defensive-source-01/peer/PEER_STATUS_READBACK_V1.json",
+      "bytes": 63372,
+      "sha256": "4535c5a301d4a701f657fe54770aad7b25fe34e74acc8429cb2014e5fd236a28"
+    }
+  ],
+  "findings_requiring_further_patch": [],
+  "unknown_not_a_code_failure": [
+    "Exact real full issuedRoot<=61440B and helper/source/history-profile rebind",
+    "Native approvedowner/capsule/model/currentquery restoration and dependencyenvironment",
+    "CurrentQB/event/role/sourcepresence/clockadmission",
+    "Actual featurecapture/inference/corrector/persistence/nativefreshrestore/publishedfeed",
+    "Originalconsumeradmission/servedvalues/mobile/browser and any primaryrelease"
+  ],
+  "prior_engineering_findings": "Peer parser/companionpublication/durable-rehash/source-cap/trim-indentation findings and earlyfixtures remain preserved; thisPASS refers only finalmanifest19257c15. No demonstration they contaminated actualNFLforecasts.",
+  "activities": {
+    "source_and_public_metadata_reads": true,
+    "new_fits": 0,
+    "model_loads": 0,
+    "new_inference": 0,
+    "NFL_row_reads": 0,
+    "NFL_grades": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "tests_repeated": 0,
+    "implementation_edits": 0,
+    "source_HTTP": 0,
+    "production_or_peer_writes": 0
+  },
+  "release_scope": "Engineering review supports normal ownerreview/PR only. Doesnot prove currentcapture, delivery,consumerreceipt or fiveweekprimaryadmission. Existing originalsiteowner and sourcepermissions unchanged.",
+  "rebind_rule": "Any producer sourcebytechange after manifest19257c15 requires a scoped delta review; new private/runtime evidence needs its own exactreceipt, not an inferredPASS."
+}
