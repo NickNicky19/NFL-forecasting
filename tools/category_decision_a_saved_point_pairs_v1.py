@@ -28,10 +28,10 @@ def main(a):
  check(not a.output.exists(),'immutable output already exists');raw=pin(a.protocol,a.protocol_sha256);p=json.loads(raw)
  check(p['version']==VERSION and p['state']=='ROOT_REGISTERED_SCORING_GO','draft is not execution authority')
  check(p['counts']==dict(new_fits=0,new_model_inference=0,new_source_collection=0,native_writes=0,production_writes=0),'scope differs')
- check(p['resources']==dict(CPU_seconds=193,wall_seconds=900,RSS_bytes=2147483648,maximum_private_result_bytes=1048576),'finite envelope differs')
+ check(p['resources']==dict(CPU_seconds=149,wall_seconds=900,RSS_bytes=2147483648,maximum_private_result_bytes=1048576),'finite envelope differs')
  for f,h in p['code_sha256'].items():pin(ROOT/f,h)
  check(p['code_sha256']['tools/category_decision_a_saved_point_pairs_v1.py']==sha(Path(__file__).read_bytes()),'executing code not bound')
- resource.setrlimit(resource.RLIMIT_CPU,(180,193));resource.setrlimit(resource.RLIMIT_AS,(2147483648,)*2)
+ resource.setrlimit(resource.RLIMIT_CPU,(135,149));resource.setrlimit(resource.RLIMIT_AS,(2147483648,)*2)
  def exhausted(sig,_):
   if sig==signal.SIGXCPU:signal.signal(signal.SIGXCPU,signal.SIG_IGN)
   raise TimeoutError('finite saved-point package exhausted')
@@ -54,10 +54,15 @@ def main(a):
  # The path stays protected inside the original owner configuration; never export
  # it. Existing-owner transaction and registered hashes admit exactly three ZIPs.
  source_bytes={}
+ check(p['source_owner_types']=={name:'outer'for name in p['source_objects']},'exact source-owner contract differs')
+ original_owners=[('outer',store.outer),('complete_peer',store.outer.complete_peer),('prior_forward',store.outer.complete_peer.prior_forward),('legacy',store.outer.complete_peer.legacy)]
  with store.outer.transaction():
   for name,ref in p['source_objects'].items():
    original=config[name];check({k:v for k,v in original.items()if k!='path'}==ref,'source binding differs')
-   path=Path(original['path']);check(path.is_relative_to(store.prior.forward_root)and path.resolve()==path and not path.is_symlink(),'source outside approved owner root')
+   path=Path(original['path']);check(path.resolve()==path and not path.is_symlink(),'source path is not canonical')
+   owners=[(kind,owner)for kind,owner in original_owners if any(path.is_relative_to(root)for root in owner._roots)]
+   check(len(owners)==1 and owners[0][0]==p['source_owner_types'][name],'source does not have its exact unique registered owner')
+   owned=owners[0][1].validate_reference(path,ref['sha256']);check(owned['bytes']==ref['bytes'],'owned source size differs')
    source_bytes[name]=pin(path,ref['sha256'],ref['bytes'])
  PHASE='IMMUTABLE_SAVED_POINTS_OFFERS_AND_QUALIFIED_OUTCOMES'
  with zipfile.ZipFile(io.BytesIO(source_bytes['frozen_bundle']))as z:

@@ -1,0 +1,99 @@
+{
+  "id": "A-POINT-PAIR-EXACT-OWNER-VALIDATION-CORRECTION-v1",
+  "UTC": "2026-11-12T02:02:56.233608+00:00",
+  "state": "SOURCE_ONLY_ROOT_GO4_AND_PEER_REVIEW_REQUIRED",
+  "previous_worker_sha256": "d6d19b6418fcc00e723ec36ee1563af18bdad2b5590049e30104b0edd0ac3eaf",
+  "new_worker": {
+    "path": "tools/category_decision_a_saved_point_pairs_v1.py",
+    "bytes": 16237,
+    "sha256": "7e25c642ce3713186f01485e88997a288df1e30ce1e67b0bf266fda98bcf012e"
+  },
+  "reused_existing_owner_pattern": {
+    "path": "tools/abc_closure02_count_a_trace_v1.py",
+    "sha256": "1b99f18eb258c7e9f8a12094342e8b9784e5e5de80044ede8157391476045177",
+    "scope": "Uniqueownerselection from outer/complete_peer/prior_forward/legacy by registeredowner._roots; owner.validate_reference verifiesreadonlypublishedCASalias,bytes/hash,nosymlink ancestry underexistinglock. No constructors, scopeexpansion orguardbypass."
+  },
+  "actual_source_owners": {
+    "frozen_bundle": {
+      "owner_selector": "outer",
+      "namespace": "matched-all12-forward-v1-20261030",
+      "config_path": "config/category-topfive-matched12-all-finalists-grade-v1.json.gz",
+      "config_selector": "frozen_bundle",
+      "source_sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33",
+      "source_bytes": 1688359
+    },
+    "offers": {
+      "owner_selector": "outer",
+      "namespace": "matched-all12-forward-v1-20261030",
+      "config_path": "config/category-topfive-matched12-all-finalists-grade-v1.json.gz",
+      "config_selector": "offers",
+      "source_sha256": "f224f17930e8da7ed5683808de3339d9656cc4b71edb0deefcfb9c48dfd82ffb",
+      "source_bytes": 2220533
+    },
+    "qualified_labels": {
+      "owner_selector": "outer",
+      "namespace": "matched-all12-forward-v1-20261030",
+      "config_path": "config/category-topfive-matched12-all-finalists-grade-v1.json.gz",
+      "config_selector": "qualified_labels",
+      "source_sha256": "61da98ad90542b07c6c6664b674086ba4f9474e597325aba62dec44bb2fa72f5",
+      "source_bytes": 171455
+    }
+  },
+  "required_GO4_source_owner_types": {
+    "frozen_bundle": "outer",
+    "offers": "outer",
+    "qualified_labels": "outer"
+  },
+  "root_cause": "Prior source-prefix check assumed sourceunderprior_forward; all3exact sources actuallybelongouter matched-all12 namespace, alreadyadmittedbyoriginalallocation. Correctowner-specificauthentication replaces assumption; no blindpathallowance.",
+  "preserved_failures": [
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+      "sha256": "4af39669ddf68ebfd614a68bfceb013e61285f83b90f068d358b1364379dd9d8",
+      "CPU_seconds": 0.459634799,
+      "phase": "EXISTING_READONLY_NAMESPACE_ATTACH",
+      "error_type": "ModuleNotFoundError"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014831762550Z.json",
+      "sha256": "cf8c3ded47092e5e9298b6c0e9282670aaa08c08f6598a3fe63934e6ab143fbd",
+      "CPU_seconds": 6.09202979,
+      "phase": "EXISTING_READONLY_NAMESPACE_ATTACH",
+      "error_type": "FileNotFoundError"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T015840696902Z.json",
+      "sha256": "ae8c01ea26f5575c8c6aefc7b925752ccd7e195464c86446ee16d4598bb70762",
+      "CPU_seconds": 43.323431851,
+      "phase": "EXISTING_READONLY_NAMESPACE_ATTACH",
+      "error_type": "ValueError"
+    }
+  ],
+  "cumulative_CPU": {
+    "original_limit_seconds": 200,
+    "prior_failures_seconds": 49.87509644,
+    "next_hard_seconds": 149,
+    "next_soft_seconds": 135,
+    "maximum_combined_seconds": 198.87509644,
+    "unallocated_seconds": 1.124903560000007
+  },
+  "unchanged_contracts": [
+    "3sourceZIPandmemberhashes",
+    "79products",
+    "474weekly/annualoracles",
+    "sourcepointandlabelsemantics",
+    "commonCscorer",
+    "pairedbootstrap",
+    "querymasks",
+    "1MiBresult/2GiBRSS/900wall",
+    "0fits/inference/nativewrites/productionwrites"
+  ],
+  "after_patch_activity": {
+    "execution_attempts": 0,
+    "protected_source_reads": 0,
+    "native_writes": 0,
+    "fits": 0,
+    "inference": 0,
+    "grades": 0
+  },
+  "next": "Rootbindnewworker149CPUandsource_owner_types inGO4; independentreviewandpublishbeforeoneboundedcorrectnessattempt; no retries ornewallocations bythissource-task."
+}

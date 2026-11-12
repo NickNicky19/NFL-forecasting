@@ -1,0 +1,125 @@
+{
+  "id": "A-POINT-PAIR-EXACT-OWNER-GO4-INDEPENDENT-REVIEW-v1",
+  "UTC": "2026-11-12T02:05:23.685789+00:00",
+  "state": "PASS_SOURCE_AND_BOUND_CONFIGURATION_METADATA_READY_FOR_ROOT_PUBLICATION_AND_ONE_BOUNDED_ATTEMPT",
+  "worker": {
+    "path": "tools/category_decision_a_saved_point_pairs_v1.py",
+    "bytes": 16237,
+    "sha256": "7e25c642ce3713186f01485e88997a288df1e30ce1e67b0bf266fda98bcf012e"
+  },
+  "GO4": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_ROOT_GO_V4.json",
+    "bytes": 182435,
+    "sha256": "973f96755c2014d8ffb51a385f3691d7ab630043ff63b0115351e5775bc671a1"
+  },
+  "correction": {
+    "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_EXACT_OWNER_CORRECTION_V1.json",
+    "bytes": 4377,
+    "sha256": "d14103af7723ad60a9a87692046b089f48a34061d3158f317bfa98843fcd1dd6"
+  },
+  "source_configuration_metadata": {
+    "path": "config/category-topfive-matched12-all-finalists-grade-v1.json.gz",
+    "sha256": "bfc242eef4459ca1c376c582c394ba8b07b90f71b15507156eab1045de224808",
+    "checked": "Decoded metadata only; all3 exact source refs/hash/sizes match and private paths name original matched-all12-forward-v1-20261030 namespace, bound owner selector outer. No sourcefile stat/hash or archivepayload read; no private absolute locator exported."
+  },
+  "gate_review": {
+    "old_wrapper_assumption": "Incorrectly required all retained sources to live under FreshnessStore.prior.forward_root; exact already-owned original ZIPs are declared in older outer matched-all12 namespace. Failure is local reader-scope assumption, not evidence source rows or original model were invalid.",
+    "existing_pattern_reference": {
+      "path": "tools/abc_closure02_count_a_trace_v1.py",
+      "bytes": 16963,
+      "sha256": "1b99f18eb258c7e9f8a12094342e8b9784e5e5de80044ede8157391476045177"
+    },
+    "existing_pattern": "Unique owner by registered._roots among originalouter,complete_peer,complete_peer.prior_forward,complete_peer.legacy; no new arbitrary source path admitted.",
+    "new_hierarchy": "Freshness store.outer is original matched12 outer; store.prior is outer.complete_peer.prior_forward. Exact source_owner_types explicitly require all3 outer, not whichever owner happens to accept.",
+    "gate_preserved": "Canonicalnonsymlinkpath, uniquely matching exactregisteredowner type, owner.validate_reference(expectedSHA), expectedbytes, thenindependent exacthash/sizepin beforeZIPdecode.",
+    "validator_reference": {
+      "path": "nfl_lab/operational_storage.py",
+      "bytes": 32004,
+      "sha256": "ac27a0a09938991e6220d947292fc6a284b2d01dff2a0217fe5656c2643a59ad"
+    },
+    "validator_semantics": "Existing validate_reference holds lock, refreshes/checks managedboundary/scans, requires readonlyregularfile, fullhash, verifiedCASblob andsamephysicalalias identity. This strengthens authentication compared with wrongsingle-prefix assumption; no policy/guard/cap bypass.",
+    "actual_ownership": "MuststillPASS atrootruntime; reviewer verifiedmetadata/methodsemantics only, not native object registry or payload."
+  },
+  "delta_checks": {
+    "exact_reverse_hash": "Replacingonlynewowner-selectionblockwitholdprefixblockandreversingCPU193->149/soft180->135 modifications reconstructs priorworkerSHA d6d19b6418fcc00e723ec36ee1563af18bdad2b5590049e30104b0edd0ac3eaf.",
+    "scientific_keys_exactly_unchanged_from_GO3": [
+      "source_objects",
+      "member_sha256",
+      "source_configuration",
+      "common_code",
+      "common_executable_protocol_sha256",
+      "runtime",
+      "comparison_masks",
+      "point_products",
+      "paired_candidate_ids",
+      "registered_references",
+      "point_rule",
+      "expected_cells",
+      "uncertainty",
+      "limitations",
+      "source_rights",
+      "counts"
+    ],
+    "no_scientific_change": "Same79products/474originalannual+weeklyoracles/1782summaries/768targetedpairs; no newforecast,feature,outputrule,label,fit orselectionchange."
+  },
+  "budget": {
+    "original_scoring_CPU_seconds": 200,
+    "prior_three_failures_CPU_seconds": 49.87509644,
+    "next_hard_CPU_seconds": 149,
+    "next_soft_CPU_seconds": 135,
+    "combined_maximum_CPU_seconds": 198.87509644,
+    "original_ceiling_and_failed_costs_preserved": true,
+    "RSS_bytes": 2147483648,
+    "wall_seconds": 900,
+    "private_result_maximum_bytes": 1048576,
+    "native_payload_writes": 0
+  },
+  "existing_recovery_receipt": {
+    "reference": {
+      "path": "reports/abc-championship/category-decision-release-01/ANCHOR_RECOVERY_RECEIPT_V1.json",
+      "bytes": 1527,
+      "sha256": "cfc1b150162ad7dc5a1eec938deb871e11db7a16c500995572591a98ae993a7d"
+    },
+    "owner_state": "EXACT_APPROVED_ANCHORS_RESTORED_AND_READ_BACK",
+    "observed_four_file_hash_nlink_receipt": "PASS_OWNER_EXECUTION_RECORD;NOT_INDEPENDENT_RAW_RESTORATION",
+    "no_need_to_repeat_recovery": true,
+    "sourceguard": "GO3executingoriginalguardpassedafterrestore, thenwrapperownershipprefixfailedbeforeforecastofferoutcomeZIPread; no blanketstorageblock."
+  },
+  "failure_preservation": [
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014403655206Z.json",
+      "bytes": 373,
+      "sha256": "4af39669ddf68ebfd614a68bfceb013e61285f83b90f068d358b1364379dd9d8"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T014831762550Z.json",
+      "bytes": 370,
+      "sha256": "cf8c3ded47092e5e9298b6c0e9282670aaa08c08f6598a3fe63934e6ab143fbd"
+    },
+    {
+      "path": "reports/abc-championship/category-decision-release-01/A_POINT_PAIR_FAILURE_20261112T015840696902Z.json",
+      "bytes": 365,
+      "sha256": "ae8c01ea26f5575c8c6aefc7b925752ccd7e195464c86446ee16d4598bb70762"
+    }
+  ],
+  "runtime_conditions": [
+    "Root publishes andreadsback exactGO4/worker/correction/review beforeoneboundedattempt",
+    "Existing originalguards, exactsourceowner validation, source/member hashes and474paritychecks mustallpass; unexpectedowner/mismatchstopswithpreservedfailure",
+    "Do not claimnew1782summaries/768pairs completeduntilactualresultandretentionreadback exist; noautomaticretry",
+    "Packaging/reader-scope repair is notpredictive-modelimprovement and doesnotrestartunchanged forecasttestweeks"
+  ],
+  "reviewer_activity": {
+    "bound_source_configuration_metadata_read": 1,
+    "source_payload_or_CAS_stat_hash_read": 0,
+    "native_store_attach": 0,
+    "archiveZIP_open": 0,
+    "model_reads": 0,
+    "worker_execution": 0,
+    "NFL_scoring": 0,
+    "new_fits": 0,
+    "inference": 0,
+    "native_writes": 0,
+    "peer_writes": 0,
+    "external_messages": 0
+  }
+}
