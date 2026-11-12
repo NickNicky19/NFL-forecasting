@@ -1,0 +1,210 @@
+{
+  "id": "A-APPROVED-MERGE-PRIVATE-HANDOFF-REFRESH-v1",
+  "observed_UTC": "2026-11-12 17:30:49 UTC",
+  "executor": "/root/approved_private_handoff; Session A read-only verifier",
+  "task_scope": "One bounded handoff/native-status refresh while integrator owns the explicitly approved PR88/89 merges. No competing merger or producer implementation.",
+  "source_receipts": [
+    {
+      "id": "A_EXPORT_INDEX",
+      "repository": "NickNicky19/NFL-forecasting",
+      "ref": "research/accuracy-wave-20261026",
+      "path": "reports/abc-championship/EXPORT_INDEX.json",
+      "Git_blob_SHA1": "e8ed0ecc0595ea99820566ef8a1ea703dfc4a370",
+      "UTF8_characters": 54835,
+      "scope": "Exact public metadata/source bytes inspected; no actual protected payload or new native output received."
+    },
+    {
+      "id": "C_CURRENT_PROTOCOL",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "aa099aa1ff78c85440173483275e01a9d354e2c8",
+      "path": "reports/abc-championship/CURRENT_PROTOCOL.json",
+      "Git_blob_SHA1": "3e18e5a752462699e3a0d8fdae2c2bf05faabbf4",
+      "UTF8_characters": 77498,
+      "scope": "Exact public metadata/source bytes inspected; no actual protected payload or new native output received."
+    },
+    {
+      "id": "C_PRODUCER_ADMISSION",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "aa099aa1ff78c85440173483275e01a9d354e2c8",
+      "path": "reports/category-decision-release-01/final-mile-v1/producer/ADMISSION.json",
+      "Git_blob_SHA1": "703a683ba67a79785848152b4d1b82775e67ace4",
+      "UTF8_characters": 12726,
+      "scope": "Exact public metadata/source bytes inspected; no actual protected payload or new native output received."
+    },
+    {
+      "id": "C_LATEST_PRODUCER_STAGE",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "aa099aa1ff78c85440173483275e01a9d354e2c8",
+      "path": "reports/category-decision-release-01/final-mile-v1/producer/LATEST_STAGE_MANIFEST.json",
+      "Git_blob_SHA1": "2cdd1bf91383b21fbc83358bf55ceac424e2a660",
+      "UTF8_characters": 1696,
+      "scope": "Exact public metadata/source bytes inspected; no actual protected payload or new native output received."
+    },
+    {
+      "id": "C_FINITE_QUEUE",
+      "repository": "NickNicky19/NFL-forecasting-NGS-C",
+      "ref": "aa099aa1ff78c85440173483275e01a9d354e2c8",
+      "path": "reports/category-decision-release-01/final-mile-v1/FINITE_QUEUE.json",
+      "Git_blob_SHA1": "484276c58618b6bd39d9c33c2d81a7be182cf8d8",
+      "UTF8_characters": 4813,
+      "scope": "Exact public metadata/source bytes inspected; no actual protected payload or new native output received."
+    }
+  ],
+  "A_existing_handoff_discussion": {
+    "repository": "NickNicky19/NFL-forecasting",
+    "PR": 1,
+    "comment_count": 23,
+    "last_comment_ids": [
+      6675135183,
+      6814450427,
+      6815151344
+    ],
+    "existing_consumer_request": 6814450427,
+    "last_A_response": 6815151344,
+    "result": "No newer source-owner descriptor/materialization or consumer-feed retrieval acknowledgment was found in the current 23-comment route. Last A response correctly reports local files and pending handoff. Latest user approval supplies merge permission only, no new private descriptor."
+  },
+  "new_C_receipt": {
+    "main_ref": "aa099aa1ff78c85440173483275e01a9d354e2c8",
+    "stage": "FINAL_MILE_C_DIRECT_SERVED_VERIFIED;PR88_LATEST_READY_UNMERGED;NO_NATIVE_COUNTA_FEED_OR_RESEARCH_PRIMARY_VERIFIED",
+    "latest_producer_manifest_UTC": "2026-11-12T07:00:54.917138+00:00",
+    "result": "Legitimate final-mile publication supersedes prior Caaeb discovery pin, but does not supply original protected files/private locator/native acceptance. Its ready/unmerged PR snapshots predate the integrator's current merge actions and are not current merge assertions.",
+    "native_feed": "NO_NEW_RECEIPT"
+  },
+  "surviving_original_local_artifacts": {
+    "verification_UTC": "2026-11-12T17:27:53.420005+00:00",
+    "source_config": {
+      "path": "config/category-topfive-matched12-all-finalists-freeze-v1_2.json.gz",
+      "bytes": 6663,
+      "SHA256": "66efaacaa1bd53ea6b24995109fef8e081c958088fcc76ab48acd78173f3ad99",
+      "entry": "extra_entries[target=pass_td,method=COUNT_A_MEAN]"
+    },
+    "ref_fields": {
+      "capsule": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "producer_proof": [
+        "bytes",
+        "path",
+        "sha256"
+      ]
+    },
+    "remote_locator_or_descriptor_present_in_entry": false,
+    "artifacts": [
+      {
+        "kind": "capsule",
+        "exists": true,
+        "bytes": 399037,
+        "SHA256": "5f55367c9f3389dbbe713b1aa95e691e77602cde99bf8e5ff657554a2d5a6a36",
+        "exact_original_hash": true
+      },
+      {
+        "kind": "producer_proof",
+        "exists": true,
+        "bytes": 26032,
+        "SHA256": "9071f4fd5f81fb7e0514e9f1ac47a93d207fc5b27cda3d8aa7f7ea16d320b45e",
+        "exact_original_hash": true
+      },
+      {
+        "kind": "FIT_START",
+        "exists": true,
+        "bytes": 5968,
+        "SHA256": "9119320dc53a64c0bca2caebae6b1b416335ae0db38160ffbc23a1e635d2e967",
+        "exact_original_hash": true
+      }
+    ],
+    "method": "Read each original persistent-workspace file only for bounded byte-length/SHA256 verification. No /tmp replacement, ZIP-member/model deserialization, model fitting, football inference, or protected-byte copy/export. Protected absolute paths omitted."
+  },
+  "separate_old18_bootstrap_status": {
+    "actual_lab_state_ref": "275aa84b27c4239d3b2dfea07755734d9db0ac7c",
+    "current_literal": "state/controller-v1/bootstrap-v2-20261103-mae-prior-v5-archive.json",
+    "exact_current_literal_read": "404 NOT_FOUND at immutable275aa84; same source-bound registration gap, not model-missing evidence.",
+    "latest_registered_branch_lab_run": {
+      "id": 41564933010,
+      "event": "workflow_dispatch",
+      "head_sha": "a2ab7d4eeb01b1af7f76af4b8090404b4f096f50",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-03T02:15:08Z",
+      "updated_at": "2026-11-03T02:15:59Z"
+    },
+    "latest_lab_jobs": [
+      {
+        "id": 125684070368,
+        "name": "audit-private-rotation-write-v1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125684071730,
+        "name": "audit-weekly-export-v1",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125684071836,
+        "name": "audit-weekly-restore-v1",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125684072656,
+        "name": "audit-weekly-produce-v1",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125684224645,
+        "name": "audit-private-rotation-read-v1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125684306253,
+        "name": "audit-private-rotation-qualify-v1",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "interpretation": "The latest branch lab run is an older harmless private-runtime canary/rotation. Produce/restore/export were skipped. It is neither current Count A inference nor a new18-model forecast capture. Source merge verification is owned separately by the integrator.",
+    "permitted_existing_initializer": "After exact source/Root/private-runtime admission, the retained owner-only CONTROLLER_REGISTRATION -> genuine restore/seal/export -> completed-run/SAFE_SEAL -> create-only registration flow can initialize the missing bootstrap. CountA optional data is not an invented prerequisite for unrelated approved old18 work."
+  },
+  "current_handoff_disposition": "NO_APPROVED_HOSTED_PRIVATE_COUNT_A_DESCRIPTOR_FOUND_IN_CHECKED_BINDINGS_AND_OWNER_RECEIPTS;LOCAL_ORIGINALS_PRESENT",
+  "precise_requirement": {
+    "responsible_executor": "Session A original artifact/source owner together with retained NickNicky19(208912933) owner Actions operator / github-actions[bot](41898282) qualified native writer; lab.yml audit-weekly-producer-v1, existing single-writer group.",
+    "missing_artifact": "Permitted hosted private GET/restore descriptor, qualified storage binding/census, or completed genuine native owned materialization for the exact three original files above.",
+    "one_minimum_permissible_next_action": "Supply the existing approved private handoff descriptor to the retained native writer and restore/hash-verify those exact originals into registered owned roots before completing the source-bound Root and issuing inference. If no permitted hosted locator exists, record that actual source-ingress dependency; do not substitute local paths as hosted presence.",
+    "completion_condition": "Genuine native job can read all3 original files under registered owned roots; full original proof/FIT/source/helper/corrector checks pass; then actual current SOURCE/query/issued Root permits capture/restore/derived publication. Readable feed plus consumer retrieval remains a later actual receipt.",
+    "guard_limits": "No replacement private artifacts, public Actions/raw-model repository upload, unguarded direct private-store append, fake GHA environment/proof, older incompatible registration substitution, or synthetic proof."
+  },
+  "native_output_fields": {
+    "producing_commit": null,
+    "producing_run": null,
+    "current_source_cutoff": null,
+    "forecast_issue": null,
+    "forecast_persisted": null,
+    "derived_forecast_hash": null,
+    "readable_current_CountA_feed": null,
+    "consumer_retrieval": "NOT_OBSERVED"
+  },
+  "bounded_failures": [
+    {
+      "attempt": "GitHub connector workflow-specific runs URL",
+      "result": "400 whitelist route rejection; no remote/native operation",
+      "recovery": "Supported repo-wide actions/runs?branch=...&per_page=10 returned actual branch runs; latestlab jobs fetched once."
+    }
+  ],
+  "mutations_and_evidence_counts": {
+    "peer_writes": 0,
+    "workflow_dispatch": 0,
+    "native_private_reads_writes": 0,
+    "model_loads": 0,
+    "fits": 0,
+    "NFL_inference": 0,
+    "new_football_weeks": 0,
+    "replacement_private_artifacts": 0,
+    "protected_payload_publications": 0,
+    "only_write": "This ownA metadata receipt"
+  }
+}

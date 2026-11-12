@@ -1,0 +1,31 @@
+{
+  "id": "A-POST-MERGE-AUTOMATIC-PUSH-STATUS-v1",
+  "observed_UTC": "2026-11-12 17:36:43 UTC",
+  "source_commit": "9c90b5d4043bb881cdbd73b76bd85aaed3a0abbf",
+  "run": 43270458610,
+  "event": "push",
+  "job": 131365296262,
+  "job_name": "lab",
+  "conclusion": "failure",
+  "first_failed_step": "Enforce source and publication handover safety",
+  "guard_record": {
+    "observed_at": "2026-11-12T17:32:15.265587+00:00",
+    "exit_code": 78,
+    "state": "BLOCKED_PENDING_QUALIFIED_HANDOVER",
+    "reasons": [
+      "QUALIFIED_HOSTED_HANDOVER_NOT_ACCEPTED",
+      "PRIVATE_DURABILITY_NOT_VERIFIED",
+      "EXACT_PUBLICATION_REVIEW_ABSENT"
+    ],
+    "acquisition_started": false,
+    "capture_started": false,
+    "new_fits_predictions": 0,
+    "state_publication_started": false
+  },
+  "capture_and_grade": "SKIPPED",
+  "classification": "Existingpush-pathstaticreadinessguard;notnewgenuineprivate-durabilityassessment;notCountAproduce/restore/exportexecution",
+  "merge_check_scope": "PremergeprotectedrequiredCIremainedsatisfied;postpushguardfailurepreservedseparately",
+  "registered_producer_merge": "fc3add1eb431e2b75334571350dbbcc8cff399f1",
+  "producer_merge_triggered_run_count": 0,
+  "no_guard_bypass": true
+}
