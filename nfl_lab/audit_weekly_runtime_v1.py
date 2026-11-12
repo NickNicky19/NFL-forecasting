@@ -130,7 +130,7 @@ def relocated_catalog(restored, aliases):
 
 class Runtime:
     """One typed epoch/choice. External proof authentication belongs to parent."""
-    def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None, mae_owner=None):
+    def __init__(self, storage, registered, choice, retained_restore, config, *, clock=now_utc, progress=lambda: None, mae_owner=None, count_a_materialization=None):
         from . import operational_sources as sources
         numerical.loaded(Path(__file__).resolve().parents[1],os.environ)
         require(isinstance(storage, OperationalStorage) and type(registered) is epoch.RegisteredEpoch
@@ -193,7 +193,7 @@ class Runtime:
                 from .audit_weekly_template_v1 import count_a_helper_pins
                 count_a_helper_pins(mae_owner.root,Path(__file__).resolve().parents[1])
                 from .count_a_native_extension_v1 import BoundShadow
-                self._count_a_shadow = BoundShadow(self, mae_owner)
+                self._count_a_shadow = BoundShadow(self, mae_owner, materialization=count_a_materialization)
 
     def check(self):
         self.progress()
