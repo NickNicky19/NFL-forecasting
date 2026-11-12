@@ -1,0 +1,10 @@
+{
+  "id": "NATIVE_RETENTION_RECEIPT_REVIEW_FAILURE_V1",
+  "UTC": "2026-11-12T02:50:10.773942+00:00",
+  "status": "VERIFIER_EXPECTED_STATE_LABEL_TOO_GENERIC_NOT_A_RETENTION_FAILURE",
+  "failed_assumption": "Reviewer expected checkpoint state string PASS; actual versioned guard state is PASS_FRESHNESS16_AND_OLDER8_PRIMARY16_REMAINDER8_UNCHANGED. Runtime two payload readback hashes and resource comparisons already matched.",
+  "actual_state": "PASS_FRESHNESS16_AND_OLDER8_PRIMARY16_REMAINDER8_UNCHANGED",
+  "correction": "Require exact existing guard state and unchanged cap values; no native worker/code/source changes or runtime retry.",
+  "native_reads": 0,
+  "native_writes": 0
+}

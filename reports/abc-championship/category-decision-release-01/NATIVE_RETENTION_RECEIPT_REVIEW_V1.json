@@ -1,0 +1,44 @@
+{
+  "UTC": "2026-11-12T02:50:44.464117+00:00",
+  "activity": {
+    "ZIP_reads": 0,
+    "fits": 0,
+    "inference": 0,
+    "native_reads": 0,
+    "native_writes": 0,
+    "new_NFL_scoring": 0
+  },
+  "bound_root_GO_sha256": "4ebd88857bf6e6b466da23e5cb889d113c9c0fa3cbe2d7bd43cbc68a4201b734",
+  "id": "NATIVE_RETENTION_RECEIPT_REVIEW_V1",
+  "limits": [
+    "This closes runtime receipt consistency in the existing retention allocation; it does not establish consumer receipt, C admission, current-query forecasting, scientific promotion or website use.",
+    "Scoring and retention resource budgets remain separate. All failures, old caps and receipts preserved."
+  ],
+  "preserved_reviewer_failure": "NATIVE_RETENTION_RECEIPT_REVIEW_FAILURE_V1.json records incorrect initial expectation of generic PASS state instead of exact valid versioned guard state; no runtime retry or code/data change.",
+  "receipt": {
+    "bytes": 4987,
+    "path": "reports/abc-championship/category-decision-release-01/NATIVE_RETENTION_RECEIPT_V1.json",
+    "sha256": "c34767a82fb3afe8fa8a9df380446b580afe9f71a70d3098e3c83084a7505973"
+  },
+  "reviewer": "/root/decision_peer_receipts",
+  "scope": "Independent inspection of public-safe runtime receipt and GO2 only; no native namespace, retained payload, private ZIP, model or NFL source row read. Readback is verified as a consistent root runtime attestation, not independently performed restoration.",
+  "verdict": "PASS_REPORTED_RUNTIME_RECEIPT_STRUCTURE_BINDINGS_AND_BUDGETS",
+  "verified_reported_facts": {
+    "bundle_manifest_matches_GO": true,
+    "complete_accounted_bytes": 920276841,
+    "complete_checkpoint_state": "PASS_FRESHNESS16_AND_OLDER8_PRIMARY16_REMAINDER8_UNCHANGED",
+    "complete_limit_bytes": 1501560832,
+    "freshness_charged_bytes": 9761847,
+    "no_new_fits_inference_grades_old_namespace_or_production_writes": true,
+    "readback_exact_size_and_hash_matches_each_input": true,
+    "resources": {
+      "CPU_seconds": 159.720385594,
+      "RSS_bytes": 124141568,
+      "wall_seconds": 159.62084163300096
+    },
+    "retained_cap": 16777216,
+    "total_payload_bytes": 282986,
+    "two_fixed_payloads": true,
+    "unchanged_capture_reserve_bytes": 83886080
+  }
+}
