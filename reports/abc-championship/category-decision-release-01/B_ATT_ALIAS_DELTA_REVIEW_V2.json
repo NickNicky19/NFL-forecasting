@@ -1,0 +1,91 @@
+{
+  "UTC": "2026-11-12T02:24:30.119237+00:00",
+  "additional_coverage": {
+    "classification": "Identity coverage correction; do not attribute full-system changes to learned-model skill.",
+    "new_B_point_outputs": 12,
+    "new_observed_NFL_games_or_weeks": 0,
+    "new_physical_cases": 6,
+    "unchanged_B_products": 2
+  },
+  "draft_registration": {
+    "bytes": 5740,
+    "path": "reports/abc-championship/category-decision-release-01/B_ATT_ALIAS_SCORING_DRAFT_V2.json",
+    "sha256": "758587758620de417994ee2b9c9abf1b2046ab5c44f0efbc5e843250e7c0877f"
+  },
+  "implementation_delta": {
+    "only_identity_delta": "For season2026 compare team/opponent tokens through LA->LAR; LAC and every other token unchanged.",
+    "original_worker": "tools/player_context_completion_qb_join_v1.py",
+    "original_worker_sha256": "bdf14e043531cd7fbe7d7b60356b2d6003e98cf6823dfad1285d5481b500b0ec",
+    "reused_unchanged_functions": [
+      "point_side",
+      "independent_status",
+      "mask",
+      "paired"
+    ],
+    "source_adapter": "Existing current Freshness readonly attachment; exact original three outer-owned references; no storage constructor or writer",
+    "unchanged_contracts": [
+      "Player/game/role IDs",
+      "Exact offered lines",
+      "All cutoff/kickoff and fit/feature chronology gates",
+      "B common-exposure mean and lower-median values",
+      "Corrected presence/participation-qualified outcomes",
+      "Strict point versus line and push/abstain semantics",
+      "Existing C common evaluator and original ATT paired bootstrap",
+      "All original public forecast/source hashes"
+    ]
+  },
+  "parent_cumulative_CPU": {
+    "already_consumed": 115.147455472,
+    "failurecosts_preserved": true,
+    "original_cap": 200,
+    "possible_total": 195.147455472,
+    "this_maximum": 80
+  },
+  "public_packet_receipt": {
+    "bytes": 3028,
+    "path": "reports/abc-championship/category-decision-release-01/PUBLIC_B_ATT_PACKET_READBACK_V1.json",
+    "sha256": "b410d26be04e27261378cfd50b34dfcf4a463ccb165f51ce6b4de624bee1a4b5"
+  },
+  "required_execution_parity": {
+    "full87_mask_sha256": "fe7e276a93990051a1e57ba85c5121dcf0d0848ba92e366cbcb839e1acf8a2f5",
+    "full_offers": 87,
+    "new_alias_cases": 6,
+    "original_shared81_mask_sha256": "f253242beb7268eea85f22548d7ef709d6bdea813379605a5d475aeb2d96c066",
+    "original_shared81_paired_cells": 25,
+    "original_shared81_summary_cells": 162,
+    "strict_old_available": 81,
+    "unchanged_full87_A_control_summary_cells": 126
+  },
+  "required_next_action": "Root publishes reviewed exact code, final GO registration and packet receipt; confirms native single-writer idle; executes once under registered remaining envelope using approved existing environment and actual public cache. Preserve any failure, no automatic retry.",
+  "resource_envelope": {
+    "CPU_seconds": 80,
+    "RSS_bytes": 2147483648,
+    "maximum_private_result_bytes": 524288,
+    "wall_seconds": 600
+  },
+  "reviewer": "A producer-delivery task agent; root separately reviewed source-match logic",
+  "scientific_limits": [
+    "W1-5 retained actual-line evidence remains quote-timing-unverified and exposed development.",
+    "No probability scores inferred from typed points.",
+    "No W6-8 completion or Top Picks qualification inherited.",
+    "No primary replacement or website activation ordered by this source preparation."
+  ],
+  "scope": "Source-only preparation and actual public forecast receipt; no execution, private/native reads, model access or scientific-result claim.",
+  "source_only_checks": {
+    "AST": "PASS",
+    "C_admission": "NOT_REQUESTED_OR_ASSUMED",
+    "alias6_grading": "NOT_YET_EXECUTED",
+    "independent_B_arithmetic_receipt": "NOT_RECEIVED",
+    "private_store_gate_execution": "NOT_PERFORMED",
+    "production": "NO_CHANGE",
+    "published_B_packets": "5 exact SHA/byte/gzip JSON envelopes PASS",
+    "retained81_metric_parity": "NOT_YET_EXECUTED"
+  },
+  "status": "PREPARED_NOT_EXECUTED_ROOT_REVIEW_AND_GO_REQUIRED",
+  "version": "NFL-CATEGORY-DECISION-AND-RELEASE-01-B-ATT-ALIAS-DELTA-REVIEW-v2",
+  "worker": {
+    "bytes": 18060,
+    "path": "tools/category_decision_b_att_alias_v2.py",
+    "sha256": "f2d8684c86907e0c6d716e806d1348215e1642f51a8f34e6d22c3aee7ac18e5e"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "bindings": {
+    "B_public_readback_receipt": {
+      "path": "reports/abc-championship/category-decision-release-01/PUBLIC_B_ATT_PACKET_READBACK_V1.json",
+      "sha256": "b410d26be04e27261378cfd50b34dfcf4a463ccb165f51ce6b4de624bee1a4b5"
+    },
+    "B_public_refs": [
+      {
+        "bytes": 169479,
+        "sha256": "de568cc6242b1469056737311fd86fea4888893e864b977c97935a41234eef96",
+        "week": 1
+      },
+      {
+        "bytes": 179736,
+        "sha256": "4216ed10c2817dc6c1d47ebcfbfd086b522c556da1df53cd07281a4e9f1b2bce",
+        "week": 2
+      },
+      {
+        "bytes": 168616,
+        "sha256": "6482e01fc170205af25a0d0b599016636ef29858afd637a57c317ec1368ad073",
+        "week": 3
+      },
+      {
+        "bytes": 156735,
+        "sha256": "40dc188593ecce049eb51b48cd7fdb1ce9ed972f93e697d3085ef3f4f22176f1",
+        "week": 4
+      },
+      {
+        "bytes": 166434,
+        "sha256": "4c916ef15c8ea47d998087c76ab44cb10b94508c1024f61219ea720b7769b7fc",
+        "week": 5
+      }
+    ],
+    "common_code": {
+      "abc_championship_v2.py": "2ba450f91bb5fac869ce3adde031099390ec70408a91204653869032b49b2bce",
+      "actual_accuracy_v6.py": "92260304be31b0fbee42faa3ab78616f77c3791bd2613edb9d322f9bbf29aa2a",
+      "contracts_v2.py": "9321d35ba5c7d7af59684784cbf92322849e968097ab7c01a2990493d061a77a",
+      "offer_validator_v2.py": "a24a51491c061d7825a31a98fdfdf57358a666dd9b850e0f1b117cc776b0ac51",
+      "selection.py": "ba3cd2d5c33eb05f3c07e8f2674f6d51b51694c8fd722f8eaba5db089907997f"
+    },
+    "full87_mask": "fe7e276a93990051a1e57ba85c5121dcf0d0848ba92e366cbcb839e1acf8a2f5",
+    "original_ATT_worker": "bdf14e043531cd7fbe7d7b60356b2d6003e98cf6823dfad1285d5481b500b0ec",
+    "original_public_result": {
+      "bytes": 486493,
+      "path": "reports/abc-championship/player-context-completion-decision-01/B_ATT_ON_A_EARLIER_BOARD_V1.json",
+      "sha256": "a40842d1871e2db58f273cdbe19da40447f67fb3fad4b65a7bc0310e693aa070"
+    },
+    "source_configuration_sha256": "bfc242eef4459ca1c376c582c394ba8b07b90f71b15507156eab1045de224808",
+    "source_objects": {
+      "frozen_bundle": {
+        "bytes": 1688359,
+        "sha256": "753970f359a5089286dde4c7ace6eeeb02c82b59eed07a50fd8ecc797eec8c33"
+      },
+      "offers": {
+        "bytes": 2220533,
+        "member": "PRIMARY_FULL.parquet",
+        "member_sha256": "0df8e7ac11524a0d1a0d9f1b41142bf7ef97cdd37c9e63a5de4f756a1b9d8ca9",
+        "sha256": "f224f17930e8da7ed5683808de3339d9656cc4b71edb0deefcfb9c48dfd82ffb"
+      },
+      "qualified_labels": {
+        "bytes": 171455,
+        "member": "QUALIFIED_LABELS.parquet",
+        "member_bytes": 77313,
+        "member_sha256": "65cb09b5b4644ec263884b974b3fbbd83b235012408bdd46b432944ce7582883",
+        "sha256": "61da98ad90542b07c6c6664b674086ba4f9474e597325aba62dec44bb2fa72f5"
+      }
+    },
+    "source_owner_types": {
+      "frozen_bundle": "outer",
+      "offers": "outer",
+      "qualified_labels": "outer"
+    },
+    "strict81_mask": "f253242beb7268eea85f22548d7ef709d6bdea813379605a5d475aeb2d96c066"
+  },
+  "checks": [
+    "Bound exact original ATT functions point_side/independent_status/mask/paired and unchanged C common/dependency hashes; nine frozen candidate IDs, 25 original pairs, no new learner/fit/point inference.",
+    "2026 annual W1-5 QB board only, exact source stream and unique canonical player/game/offer keys; original A retained products unchanged.",
+    "Identity delta is LA->LAR in team/opponent comparison only after both rows are already season-2026; LAC unchanged; position, event/player ID and exact original clocks remain required.",
+    "Exactly 81 original cases and exactly six new alias-qualified cases required; any other mismatch stops. Strict81 and full87 masks are hash-bound.",
+    "Actual source is played + explicit reported zero/value + finite nonnegative integer + participation witness; pending/DNP/unknown/missing outcomes stay distinct. Negative/missing points cannot become fabricated known outcomes.",
+    "Original mean/lower-median point fields and law identity checked; decimal strict point-vs-line policy retained, ties abstain, no probability/EV/Top Picks derived.",
+    "All 162 original strict81 summary cells and 25 pair cells required to match before expanded scoring; all 126 unchanged full87 A/control summary cells separately require exact parity. Original receipt is immutable.",
+    "Existing read-only FRESHNESS attachment and original unique outer owner gate retained for same three exact source ZIPs; canonical regular path/owner validation/SHA/bytes/ZIP member hashes checked. No direct model loading, old-writer constructor, new native write or network source collection.",
+    "Root GO must bind executing code and runtime; offline audit hook, single-thread numerical execution, CPU soft70/hard80, wall alarm580 within600, RSS2GiB, compressed result<=512KiB, exclusive output and preserved failure receipt.",
+    "Parent cumulative budget remains 115.147455472 spent plus max80 =195.147455472<=200; no reset and root must serialize against native retention.",
+    "Five existing public B packet bytes were independently read and hash-checked without decoding or grading; total841000B, all match original B commit2fa855 and unchanged five source references.",
+    "Public old result hash/bytes and candidate identities verified; source guards, original worker and attach-code SHA pins independently match actual local source. Python AST parsing only passed."
+  ],
+  "created_at_utc": "2026-11-12T02:26:40.900958+00:00",
+  "draft": {
+    "bytes": 5740,
+    "path": "reports/abc-championship/category-decision-release-01/B_ATT_ALIAS_SCORING_DRAFT_V2.json",
+    "sha256": "758587758620de417994ee2b9c9abf1b2046ab5c44f0efbc5e843250e7c0877f",
+    "state": "DRAFT_REQUIRES_ROOT_REVIEW_AND_IMMUTABLE_PUBLICATION_BEFORE_PRIVATE_ACCESS"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "review_library": "stdlib only"
+  },
+  "expected_outputs_if_runtime_passes": {
+    "named_pair_cells": 50,
+    "new_B_point_outputs": 12,
+    "new_alias_qualified_physical_cases": 6,
+    "new_observed_games_or_weeks": 0,
+    "original_strict81_pair_parity_cells": 25,
+    "original_strict81_summary_parity_cells": 162,
+    "summary_cells": 324,
+    "unchanged_full87_A_control_summary_parity_cells": 126
+  },
+  "id": "B_ATT_ALIAS_PREEXEC_INDEPENDENT_REVIEW_V1",
+  "independence": "Read-only source review, stdlib AST syntax parsing and public aggregate/hash readback; did not import or execute worker, scorer, attach helper or scientific functions.",
+  "limits": [
+    "Runtime remains pending: this is not proof the source attach, parity checks, scoring or publication passed.",
+    "No private row/native/archive reads or fitted-model/source-clock parity by this reviewer. Root remains sole private-board executor.",
+    "Coverage repair adds the same B typed point predictions to six previously unjoined offers; full-system coverage changes are not learned-skill gain.",
+    "W1-5 timing-unverified actual-line reconstruction remains exposed development; no new quote clocks, probability history, C admission, primary qualification or website use established.",
+    "Original source-matching compares both kickoff and cutoff against B feature_cutoff exactly as prior worker; this reviewed supplement does not authenticate source vintage or change that horizon.",
+    "No five-week or cross-session best-product verdict is supplied by this source review; existing evaluation/admission and support policy still apply."
+  ],
+  "native_reads": 0,
+  "native_writes": 0,
+  "new_fits": 0,
+  "new_grading": 0,
+  "new_inference": 0,
+  "reviewer": "/root/decision_peer_receipts",
+  "runtime_status": "NOT_EXECUTED_BY_REVIEWER",
+  "verdict": "PASS_SOURCE_ONLY_CONDITIONAL_ON_ROOT_GO_AND_RUNTIME_PARITY",
+  "worker": {
+    "bytes": 18060,
+    "path": "tools/category_decision_b_att_alias_v2.py",
+    "sha256": "f2d8684c86907e0c6d716e806d1348215e1642f51a8f34e6d22c3aee7ac18e5e"
+  }
+}
