@@ -1,0 +1,146 @@
+{
+  "schema_version": "count-a-owner-native-bridge-independent-source-review-v3",
+  "checked_at_UTC": "2026-11-12T19:01:50.277991+00:00",
+  "source_root": "/workspace/count-a-owner-native-restore-v1",
+  "source_pins": {
+    "nfl_lab/audit_weekly_controller_v1.py": {
+      "bytes": 46611,
+      "sha256": "3961b36181754f3906dd8edf7fb22240379d642eaf57686214e38ce8b7676c62"
+    },
+    "nfl_lab/audit_weekly_hosted_v1.py": {
+      "bytes": 131070,
+      "sha256": "2d92f95397f3d2427afcc459f0574ef0fc3c498d319f790b5442c9dbb79e0a9d"
+    },
+    "nfl_lab/count_a_native_extension_v1.py": {
+      "bytes": 26942,
+      "sha256": "abd34b0827ac551230f03a863466b8b9f381df5a175d3f8c3a81e8073b6f47fe"
+    },
+    "nfl_lab/audit_weekly_runtime_v1.py": {
+      "bytes": 42936,
+      "sha256": "5b0743bc34c2fa6875c08f23a8b0c6f47946c87a3c15eda271dcb9227071ad70"
+    },
+    "tools/audit_weekly_runtime_v1.py": {
+      "bytes": 13187,
+      "sha256": "e448994331aeba0d39aefb1727543f3c6baf3b7346e8e8a3e29f709b569e26d7"
+    },
+    "config/weekly-mae-display-core3-v1.json": {
+      "bytes": 15712,
+      "sha256": "0b47b206e21203bc62b6f261513fee67b6dba3111bdc1b7ce6524e8ee3fe09c3"
+    },
+    "tests/test_count_a_owner_materialization_v1.py": {
+      "bytes": 7750,
+      "sha256": "c6731a2dc890defd9f839c4f6d1bc74bb5210fb1990f248e3e8ff37f8b1eb4f8"
+    },
+    "tests/test_audit_weekly_source_history_v2.py": {
+      "bytes": 18386,
+      "sha256": "a5ab20f7ed899f227c6b82f7553592f5e29ebc5f4bff6e3bc6c8437e2875a630"
+    }
+  },
+  "scope": "Read-only independent final source/CI-fix review. No duplicate test runs, HTTP, model load, fit, NFL inference, private upload or workflow. Main execution CI result is outside this source review.",
+  "verdict": "NO_DEFECT_FOUND_IN_CHECKED_FINAL_SOURCE_SCOPE",
+  "findings": [
+    {
+      "check": "active_parent_child_path",
+      "result": "PASS_SOURCE",
+      "evidence": "Runner.capture restores exact originals in parent before prepare/acquire/infer; count_a_materialization ref is included in canonical parent request/hash and passed to Runtime/BoundShadow."
+    },
+    {
+      "check": "root_identity",
+      "result": "PASS_SOURCE",
+      "evidence": "Bridge does not alter root; materialization receipt binds canonical original root hash. resolved_originals checks real NativeContext root_sha256/source and actual source/run/job/api_job_id/workflow authority; original registration refs retained as original_refs."
+    },
+    {
+      "check": "current_job_authentication",
+      "result": "PASS_SOURCE",
+      "evidence": "Only real private_draft_store.Client with matching root source/job/workflow is accepted. owner.restore_owner_bundle authenticates actual Actions run/job and exact owner comment/root/archived qualification/canary; receipt is checked on read."
+    },
+    {
+      "check": "exact_file_scope",
+      "result": "PASS_SOURCE",
+      "evidence": "Exactly three logical originals and exact registered bytes/hashes before extraction; generic opaque verified extraction into counted native owned storage; originals authenticated again before model load. No replacement artifact or nineteenth generic slot."
+    },
+    {
+      "check": "genuine_NativeContext_integration",
+      "result": "UNKNOWN_RUNTIME_NOT_RUN",
+      "evidence": "New fixture uses SimpleNamespace native and mocked restore. This review traces actual NativeContext source/identity path, but does not claim a genuine private read, restored model, native run or complete inference executed."
+    },
+    {
+      "check": "distinct_materialization_budget",
+      "result": "PASS_SOURCE",
+      "evidence": "owner_restore requires exact integer maximum_materialization_bytes <=1MiB. Before GET, original sizes+64KiB receipt room must fit and unchanged storage.transaction/_require(maximum) verifies existing global512MiB capacity. Fresh empty GET journal and no POSTs before/after. Receipt binds materialized_original_bytes and actual encoded receipt size, zero GET-journal bytes and exact bound; child rechecks those. ROWS2MiB cap remains unchanged and separate. Existing opaque extractor/write primitives account actual CAS/aliases/receipt in global store."
+    },
+    {
+      "check": "small_budget_fixture",
+      "result": "REVIEWED_NOT_RERUN",
+      "evidence": "New fixture requires too-small materialization cap to fail before owner restore call or extraction. Author reports28 focused tests passed; this independent review did not rerun them or claim authentic NativeContext/private GET execution."
+    },
+    {
+      "check": "parent_small_helper_delegate",
+      "result": "PASS_SOURCE",
+      "evidence": "Runner.capture calls existing Count A restore helper before child prepare/acquire/infer. Helper constructs same current-source/run/job real core.Client and delegates unchanged materialize_owner_originals. Original root passed directly without rewrite; closed owner descriptor, exact3 files, private GET authentication,1MiB materialization budget and native receipt checks remain. Infer audit hook stays offline."
+    },
+    {
+      "check": "unchanged_history_source_cap",
+      "result": "PASS_SOURCE",
+      "evidence": "Hosted source131070 bytes <= unchanged131072 source cap. CI diagnostics originally131609 bytes are addressed by helper delegation; no cap/test gate broadened.",
+      "actual": {
+        "bytes": 131070,
+        "sha256": "2d92f95397f3d2427afcc459f0574ef0fc3c498d319f790b5442c9dbb79e0a9d"
+      },
+      "cap": 131072
+    },
+    {
+      "check": "exact_DAD_predecessor_pin",
+      "result": "PASS_SOURCE",
+      "evidence": "One literal tools/audit_weekly_runtime_v1.py predecessor hash added to existing DAD-only map. Actual local immutable DAD object independently matches literal. Exact DAD source/run/root/receipt/static/inventory/preimage dispatch remains unchanged. Negative original315e runtime-cli case added; original315e-controller/retained and existing damage cases retained.",
+      "source_sha": "dad58d459951bdb77ef852b8ca88860ffb0bce60",
+      "actual_cli_sha256": "c41a2f676e471b841d3a686d6352a70c14e2fb1d29fb1be9d4c8c081a701fcbc",
+      "old315e_before": "0d3e7f4921ef9e9d9d8f912ed00d47fdcc9ba86e9876a953b05d4d081ddcce8c"
+    },
+    {
+      "check": "current_source_hash_closure",
+      "result": "PASS_SOURCE",
+      "evidence": "All configured changed-path after hashes and six model pins match actual bytes; syntax parsed; new current after-inventory36478\u2026 recorded, original before315e remains. Old3e306 identity remains its historical configuration version and is not redefined as new source.",
+      "after_mismatches": [],
+      "model_mismatches": [],
+      "reviewed_before_inventory_sha256": "315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212",
+      "reviewed_after_inventory_sha256": "36478ea080627361ea6f3bc2ee2bcd2c5a217945c51e15c79a7f4b2e717f87b0"
+    },
+    {
+      "check": "Main_scoped_metadata_sync",
+      "result": "PASS_SOURCE",
+      "evidence": "Shared controller/helper/config bytes are identical between native and Main worktrees. Main diff additionally updates only its exact Count A helper test commitment; runtime hosted source remains native-only by existing repository layout.",
+      "shared_files": {
+        "nfl_lab/audit_weekly_controller_v1.py": {
+          "identical": true,
+          "sha256": "3961b36181754f3906dd8edf7fb22240379d642eaf57686214e38ce8b7676c62"
+        },
+        "nfl_lab/count_a_native_extension_v1.py": {
+          "identical": true,
+          "sha256": "abd34b0827ac551230f03a863466b8b9f381df5a175d3f8c3a81e8073b6f47fe"
+        },
+        "config/weekly-mae-display-core3-v1.json": {
+          "identical": true,
+          "sha256": "0b47b206e21203bc62b6f261513fee67b6dba3111bdc1b7ce6524e8ee3fe09c3"
+        }
+      },
+      "Main_fixture": "tests/test_count_a_parent_metadata_v1.py"
+    }
+  ],
+  "reported_risks": [
+    "Final source must remain byte-identical to the bound snapshot.",
+    "Actual GHA private restoration, current-input admission and full inference remain unexecuted in this review; no delivery claim."
+  ],
+  "operations": {
+    "model_loads": 0,
+    "fits": 0,
+    "NFL_inference": 0,
+    "POST": 0,
+    "workflow_dispatch": 0,
+    "guard_changes": 0
+  },
+  "supersedes_for_changed_scope": {
+    "path": "INDEPENDENT_NATIVE_BRIDGE_REVIEW_V2.json",
+    "sha256": "68db6e48852fb67f010c6a38a02d309f9e421851459aac29a9f910928fbc2ea3"
+  }
+}

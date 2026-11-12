@@ -1,0 +1,97 @@
+{
+  "schema_version": "count-a-owner-native-bridge-independent-source-review-v2",
+  "checked_at_UTC": "2026-11-12T18:27:39.730285+00:00",
+  "source_root": "/workspace/count-a-owner-native-restore-v1",
+  "source_pins": {
+    "nfl_lab/count_a_native_extension_v1.py": {
+      "bytes": 26408,
+      "sha256": "839a72a7afe1d5de9c374432635e7fab484bfc56de7feccc639d00d273aec1ad"
+    },
+    "nfl_lab/audit_weekly_hosted_v1.py": {
+      "bytes": 131609,
+      "sha256": "8983126bead6987c6b7795de542c03e3b9b12c7afc8cb5d650c59a533533c38c"
+    },
+    "nfl_lab/audit_weekly_runtime_v1.py": {
+      "bytes": 42936,
+      "sha256": "5b0743bc34c2fa6875c08f23a8b0c6f47946c87a3c15eda271dcb9227071ad70"
+    },
+    "tools/audit_weekly_runtime_v1.py": {
+      "bytes": 13187,
+      "sha256": "e448994331aeba0d39aefb1727543f3c6baf3b7346e8e8a3e29f709b569e26d7"
+    },
+    "config/weekly-mae-display-core3-v1.json": {
+      "bytes": 15712,
+      "sha256": "76fecfc50f6c7930036b230e3de96ba979ca55f3acfc2a9706c92ebdff105cf4"
+    },
+    "tests/test_count_a_owner_materialization_v1.py": {
+      "bytes": 7309,
+      "sha256": "5b5c2982a199dd904f2fe868f4e01b8ee70c8fd8b35bf377e3895563abe2858f"
+    }
+  },
+  "scope": "Independent code/control-flow and hash-closure review; no real private GET/model load/NFL inference/upload/workflow. Existing author fixture reviewed without rerunning its calculations.",
+  "verdict": "NO_DEFECT_FOUND_IN_CHECKED_FINAL_SOURCE_SCOPE",
+  "findings": [
+    {
+      "check": "active_parent_child_path",
+      "result": "PASS_SOURCE",
+      "evidence": "Runner.capture restores exact originals in parent before prepare/acquire/infer; count_a_materialization ref is included in canonical parent request/hash and passed to Runtime/BoundShadow."
+    },
+    {
+      "check": "root_identity",
+      "result": "PASS_SOURCE",
+      "evidence": "Bridge does not alter root; materialization receipt binds canonical original root hash. resolved_originals checks real NativeContext root_sha256/source and actual source/run/job/api_job_id/workflow authority; original registration refs retained as original_refs."
+    },
+    {
+      "check": "current_job_authentication",
+      "result": "PASS_SOURCE",
+      "evidence": "Only real private_draft_store.Client with matching root source/job/workflow is accepted. owner.restore_owner_bundle authenticates actual Actions run/job and exact owner comment/root/archived qualification/canary; receipt is checked on read."
+    },
+    {
+      "check": "exact_file_scope",
+      "result": "PASS_SOURCE",
+      "evidence": "Exactly three logical originals and exact registered bytes/hashes before extraction; generic opaque verified extraction into counted native owned storage; originals authenticated again before model load. No replacement artifact or nineteenth generic slot."
+    },
+    {
+      "check": "offline_inference",
+      "result": "PASS_SOURCE",
+      "evidence": "Private GET occurs in parent before numerical children. Existing infer audit hook still rejects socket/subprocess/fork/exec. Resolution in numerical child performs owned-file/hash reads only."
+    },
+    {
+      "check": "genuine_NativeContext_integration",
+      "result": "UNKNOWN_RUNTIME_NOT_RUN",
+      "evidence": "New fixture uses SimpleNamespace native and mocked restore. This review traces actual NativeContext source/identity path, but does not claim a genuine private read, restored model, native run or complete inference executed."
+    },
+    {
+      "check": "source_closure",
+      "result": "PASS_SOURCE",
+      "evidence": "Actual current hashes match all MAE changed-path after bindings; syntax parsed. Optional Count A/owner helpers stay bound through closed registrations and actual bytes.",
+      "mismatches": []
+    },
+    {
+      "check": "distinct_materialization_budget",
+      "result": "PASS_SOURCE",
+      "evidence": "owner_restore requires exact integer maximum_materialization_bytes <=1MiB. Before GET, original sizes+64KiB receipt room must fit and unchanged storage.transaction/_require(maximum) verifies existing global512MiB capacity. Fresh empty GET journal and no POSTs before/after. Receipt binds materialized_original_bytes and actual encoded receipt size, zero GET-journal bytes and exact bound; child rechecks those. ROWS2MiB cap remains unchanged and separate. Existing opaque extractor/write primitives account actual CAS/aliases/receipt in global store."
+    },
+    {
+      "check": "small_budget_fixture",
+      "result": "REVIEWED_NOT_RERUN",
+      "evidence": "New fixture requires too-small materialization cap to fail before owner restore call or extraction. Author reports28 focused tests passed; this independent review did not rerun them or claim authentic NativeContext/private GET execution."
+    }
+  ],
+  "reported_risks": [
+    "Final source must remain byte-identical to the bound snapshot.",
+    "Actual GHA private restoration, current-input admission and full inference remain unexecuted in this review; no delivery claim."
+  ],
+  "operations": {
+    "model_loads": 0,
+    "fits": 0,
+    "NFL_inference": 0,
+    "POST": 0,
+    "workflow_dispatch": 0,
+    "guard_changes": 0
+  },
+  "supersedes_for_changed_scope": {
+    "path": "INDEPENDENT_NATIVE_BRIDGE_REVIEW_V1.json",
+    "sha256": "0fc6bf548f55f91085e6e49132bf4ae726a39379e16ca125a99329b51d14760a"
+  }
+}

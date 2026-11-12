@@ -213,7 +213,7 @@ def test_original128_pinned_source_files_fit_unchanged_history_source_cap():
     assert not invalid, invalid
 
 
-@pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
+@pytest.mark.parametrize('damage',[None,'original315e-controller','original315e-retained','original315e-runtime-cli','wrong-DAD-inventory','wrong-DAD-root','wrong-preimage'])
 def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(damage):
     from nfl_lab import private_draft_store as store,audit_weekly_controller_v1 as c
     from test_audit_weekly_v5_historical_readiness import current_owner_root
@@ -227,7 +227,7 @@ def test_exact_immediate_dad_before_pins_do_not_repurpose_original315e_profile(d
         for n,h in c.V5_CURRENT_OWNER_RUNTIME_PINS.items():assert pins[n]==h
         return
     if damage.startswith('original315e-'):
-        n='nfl_lab/audit_weekly_'+('controller' if damage.endswith('controller') else 'retained')+'_v1.py'
+        n='tools/audit_weekly_runtime_v1.py' if damage.endswith('runtime-cli') else 'nfl_lab/audit_weekly_'+('controller' if damage.endswith('controller') else 'retained')+'_v1.py'
         body['pin_overrides'][n]=cfg['mae_runtime_pin_profile']['changed_paths'][n]['before_sha256']
     elif damage=='wrong-DAD-inventory':body['predecessor']['code_pins_sha256']='0'*64
     elif damage=='wrong-DAD-root':body['predecessor']['root_go_sha256']='0'*64

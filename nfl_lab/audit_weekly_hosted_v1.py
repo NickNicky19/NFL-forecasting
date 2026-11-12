@@ -857,6 +857,9 @@ class Runner:
             history_binding=old["history_binding"],config=self.go["source_config"],historical_sources=old["historical_sources"])
         if self.go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
             request.update(schema_version="audit-weekly-runtime-v2-display-request",mae_registration=self.go["mae_registration"])
+        if 'owner_restore'in self.go.get('count_a_mean_shadow',{}):
+            from .count_a_native_extension_v1 import restore
+            request['count_a_materialization']=restore(self)
         outputs={"prepare":self.root/"prepared","acquire":self.root/"source","infer":self.root/"runtime"}
         for phase in ("prepare","acquire","infer"):
             request["output"]=str(outputs[phase])

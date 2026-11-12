@@ -1,0 +1,77 @@
+{
+  "at_utc": "2026-11-12T19:01:10.267159+00:00",
+  "checks": {
+    "actual_native_execution": "UNKNOWN; no real private GET, native inference, capture or publication from these checks.",
+    "affected_history_suites": "83passed across test_audit_weekly_source_history_v2, test_audit_weekly_v5_owner_ops_bridge, test_audit_weekly_v5_pinned_history.",
+    "git_diff_check": "PASS in both worktrees",
+    "main_complete": "846passed,33subtests in40.56s using four exact2thread environment variables and existing nfl-venv pytest.",
+    "new_negative_and_CountA": "63passed,12subtests on current source; includesnew315e-runtime-cli rejection."
+  },
+  "current_after_inventory_sha256": "36478ea080627361ea6f3bc2ee2bcd2c5a217945c51e15c79a7f4b2e717f87b0",
+  "main_base_head": "a8bc4c69f5cebeabe618fd8d4c0b192134868019",
+  "main_changes": [
+    {
+      "bytes": 26942,
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "abd34b0827ac551230f03a863466b8b9f381df5a175d3f8c3a81e8073b6f47fe"
+    },
+    {
+      "bytes": 46611,
+      "path": "nfl_lab/audit_weekly_controller_v1.py",
+      "sha256": "3961b36181754f3906dd8edf7fb22240379d642eaf57686214e38ce8b7676c62"
+    },
+    {
+      "bytes": 15712,
+      "path": "config/weekly-mae-display-core3-v1.json",
+      "sha256": "0b47b206e21203bc62b6f261513fee67b6dba3111bdc1b7ce6524e8ee3fe09c3"
+    },
+    {
+      "bytes": 2430,
+      "path": "tests/test_count_a_parent_metadata_v1.py",
+      "sha256": "4027d5a0952566cc4094eeacc3784337b49724bf5a26b46683972b541e264eaa"
+    }
+  ],
+  "native_base_head": "535361e43ce2f92be674475be7faf7f5d0f669b5",
+  "native_changes": [
+    {
+      "bytes": 131070,
+      "path": "nfl_lab/audit_weekly_hosted_v1.py",
+      "sha256": "2d92f95397f3d2427afcc459f0574ef0fc3c498d319f790b5442c9dbb79e0a9d"
+    },
+    {
+      "bytes": 26942,
+      "path": "nfl_lab/count_a_native_extension_v1.py",
+      "sha256": "abd34b0827ac551230f03a863466b8b9f381df5a175d3f8c3a81e8073b6f47fe"
+    },
+    {
+      "bytes": 46611,
+      "path": "nfl_lab/audit_weekly_controller_v1.py",
+      "sha256": "3961b36181754f3906dd8edf7fb22240379d642eaf57686214e38ce8b7676c62"
+    },
+    {
+      "bytes": 15712,
+      "path": "config/weekly-mae-display-core3-v1.json",
+      "sha256": "0b47b206e21203bc62b6f261513fee67b6dba3111bdc1b7ce6524e8ee3fe09c3"
+    },
+    {
+      "bytes": 7750,
+      "path": "tests/test_count_a_owner_materialization_v1.py",
+      "sha256": "c6731a2dc890defd9f839c4f6d1bc74bb5210fb1990f248e3e8ff37f8b1eb4f8"
+    },
+    {
+      "bytes": 18386,
+      "path": "tests/test_audit_weekly_source_history_v2.py",
+      "sha256": "a5ab20f7ed899f227c6b82f7553592f5e29ebc5f4bff6e3bc6c8437e2875a630"
+    }
+  ],
+  "repairs": {
+    "historical_DAD_contract": "Added tools/audit_weekly_runtime_v1.py exact authenticated DAD58 source hashc41a2f676e471b841d3a686d6352a70c14e2fb1d29fb1be9d4c8c081a701fcbc to the DAD-only existing runtime map. Exact DAD source/run/Root/receipt/preimage guard remains required; no allowed-path expansion.",
+    "main_sync": "Identical new Count A helper,controllerDADliteral andMAEconfig; current helper expected hash updated in existing preimportfixture. No producer runtime copied to Main.",
+    "new_negative_fixture": "Reject original315e runtime CLI hash as substitute for exact immediate DAD CLI. Existing controller/retained/inventory/preimage negatives retained.",
+    "source_file_cap": "Moved journal/client setup into optional Count A helper. Parent retains190-byte three-line hook; current parent131070B fits unchanged131072B source-history cap.",
+    "source_profile": "128 source pins,22declared legacy changed paths, original315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212 baseline, DADa358c9ff659c902655d15f92aafe0486cbac986dd286c802acd09526b4b01cf1 inventory, workflow/model pins unchanged."
+  },
+  "schema_version": "count-a-native-source-cap-and-dad-pin-ci-repair-v1",
+  "scope_limits": "No NFL fits, historical reforecast/regrade, acquisition, upload retry, guard bypass, merge, ownership change or public private bytes.",
+  "state": "REVIEW_READY_NOT_COMMITTED_OR_PUSHED_BY_CHILD; SOURCE_EDITS_FROZEN"
+}

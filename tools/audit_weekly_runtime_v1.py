@@ -93,6 +93,8 @@ def execute(args,env):
     runtime.require(private.sha(body) == args.request_sha256,"EXACT_RUNTIME_REQUEST_HASH")
     p=cp.strict_json(body)
     expected_keys=REQUEST_KEYS if mae_owner is None else REQUEST_KEYS|{"mae_registration"}
+    count_a=mae_owner.root.get("count_a_mean_shadow",{}) if mae_owner is not None else {}
+    if "owner_restore" in count_a:expected_keys=expected_keys|{"count_a_materialization"}
     expected_schema=runtime.VERSION+"-request" if mae_owner is None else "audit-weekly-runtime-v2-display-request"
     runtime.require(mae_owner is None or p.get("mae_registration")==mae_owner.registration_ref,
         "SAME_NATIVE_ROOT_MAE_REGISTRATION_REQUIRED")
@@ -115,6 +117,7 @@ def execute(args,env):
     choice_doc=read("choice");choice=epoch.EpochChoice(choice_doc,runtime.digest(choice_doc))
     def progress():runtime.require(runtime.now_utc() < private.utc(authority["expires_at_utc"]),"PARENT_NATIVE_AUTHORITY_EXPIRED")
     options={} if mae_owner is None else {"mae_owner":mae_owner}
+    if "owner_restore" in count_a:options["count_a_materialization"]=p["count_a_materialization"]
     backend=runtime.Runtime(storage,registered,choice,p["inputs"]["retained_restore"],p["config"],progress=progress,**options)
     actual=backend.restored["current"]
     runtime.require(all(actual[key] == authority[key] for key in ("source_sha","run_id","job_id","workflow_ref","api_job_id")), "SAME_ACTUAL_RETAINED_RUNTIME_JOB_REQUIRED")

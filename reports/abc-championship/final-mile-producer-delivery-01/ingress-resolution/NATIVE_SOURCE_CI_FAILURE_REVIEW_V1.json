@@ -1,0 +1,44 @@
+{
+  "schema_version": "count-a-native-source-ci-finding-review-v1",
+  "checked_at_UTC": "2026-11-12T18:58:36.644852+00:00",
+  "scope": "Read-only source/diagnostic review; implementation owned by workflow agent; no tests rerun, HTTP, private bytes upload or model work.",
+  "input_diagnostics": {
+    "path": "/workspace/counta-owner-pr-runtime/native-ci-diagnostics.json",
+    "sha256": "c65679ea9fdc88f70ee7c310e1207bfcd4c222c17cf21b81232a7e61ed65513d",
+    "head": "535361e43ce2f92be674475be7faf7f5d0f669b5"
+  },
+  "findings": [
+    {
+      "status": "VERIFIED_SOURCE_CAP_FAILURE",
+      "reason": "Initial Count A parent insertion grew nfl_lab/audit_weekly_hosted_v1.py to131609B, beyond unchanged131072B history source cap. Source JSONs are rejected at audit_weekly_grade_history_v1.py CLOSED_ORIGINAL_HISTORY_SOURCE_FILE before anchor/control tests can reach intended checks.",
+      "minimal_correction": "Move parent orchestration body to existing Count A helper; keep small parent call and preserve cap/test. Current observed refactor fits but is not a completed CI claim.",
+      "observed_parent": {
+        "bytes": 131070,
+        "sha256": "2d92f95397f3d2427afcc459f0574ef0fc3c498d319f790b5442c9dbb79e0a9d"
+      },
+      "cap": 131072
+    },
+    {
+      "status": "VERIFIED_EXACT_PREDECESSOR_PIN_DISPATCH_GAP",
+      "reason": "New Count A child request adapter changes tools/audit_weekly_runtime_v1.py, now creating a DAD predecessor override. _source_history_pins selects V5_CURRENT_OWNER_RUNTIME_PINS under exact DAD root, but CLI path is absent, so it falls back to older315e before hash. Actual DAD CLI differs.",
+      "actual_predecessor": {
+        "source_sha": "dad58d459951bdb77ef852b8ca88860ffb0bce60",
+        "path": "tools/audit_weekly_runtime_v1.py",
+        "bytes": 12909,
+        "sha256": "c41a2f676e471b841d3a686d6352a70c14e2fb1d29fb1be9d4c8c081a701fcbc",
+        "provenance": "git --no-lazy-fetch show of existing local object; no network"
+      },
+      "older_profile_before": "0d3e7f4921ef9e9d9d8f912ed00d47fdcc9ba86e9876a953b05d4d081ddcce8c",
+      "minimal_correction": "Add exact literal DAD CLI path/hash to existing DAD-only V5_CURRENT_OWNER_RUNTIME_PINS; gate still requires exact predecessor source/run/root/receipt/static/preimage/inventory. Add targeted wrong315eCLI damage case if extending coverage. Recompute current source profile after hashes.",
+      "must_preserve": [
+        "315e207563dfc4bd5281633fc3470efe6c2e2e27b069e5f9c8df677d8b3f2212 original older inventory",
+        "3e306777a03d90da1d4bc06e50a55cf82e5269d3898875fa13b18f73b820d1f2 original frozen MAE after inventory at its historical source version",
+        "a358c9ff659c902655d15f92aafe0486cbac986dd286c802acd09526b4b01cf1 DAD inventory",
+        "existing DAD/oldBOT actual receipt/root/run/source identities",
+        "source cap131072 and unchanged badpreimage/actor/anchor tests",
+        "workflow/model pins and generic history override allowlist"
+      ]
+    }
+  ],
+  "conclusion": "Two engineering source-contract causes, not evidence of model corruption. Scoped helper extraction and exact DAD CLI pin recognition address them without promoting or altering historical predictions. Final metadata/CI and current-source review remain implementation-owner work."
+}
