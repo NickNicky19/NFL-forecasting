@@ -857,14 +857,9 @@ class Runner:
             history_binding=old["history_binding"],config=self.go["source_config"],historical_sources=old["historical_sources"])
         if self.go.get("schema_version")=="audit-weekly-hosted-v5-root-GO":
             request.update(schema_version="audit-weekly-runtime-v2-display-request",mae_registration=self.go["mae_registration"])
-        count_a=self.go.get("count_a_mean_shadow",{})
-        if "owner_restore" in count_a:
-            # Restore only original Count A bytes in the authenticated parent,
-            # before numerical children install their no-network audit hook.
-            from .count_a_native_extension_v1 import materialize_owner_originals
-            journal=self.root/"count-a-owner-GET-journal";journal.mkdir(mode=0o700)
-            client=store.Client(self.env.get("GITHUB_TOKEN"),self.env["GITHUB_RUN_ID"],source_sha=self.go["source_sha"],journal=journal,job=self.job,operation="restore")
-            request["count_a_materialization"]=materialize_owner_originals(self.go,ROOT,client,self.storage,self.root/"count-a-owner-originals")
+        if 'owner_restore'in self.go.get('count_a_mean_shadow',{}):
+            from .count_a_native_extension_v1 import restore
+            request['count_a_materialization']=restore(self)
         outputs={"prepare":self.root/"prepared","acquire":self.root/"source","infer":self.root/"runtime"}
         for phase in ("prepare","acquire","infer"):
             request["output"]=str(outputs[phase])

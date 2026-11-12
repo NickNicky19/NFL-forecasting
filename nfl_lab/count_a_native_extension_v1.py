@@ -107,6 +107,13 @@ def projection(rows):
   out.append({k:r[k]for k in ROW_FIELDS})
  return dict(schema_version=VERSION+'-derived',state='SHADOW_NOT_PRIMARY_NOT_PICKS',product=PRODUCT,rows=out,probability=None,EV=None,public_export_authorized=False)
 
+def restore(parent):
+ """Small source-bound hook; private GET setup stays outside capped parent."""
+ from . import private_draft_store as private
+ journal=parent.root/'count-a-owner-GET-journal';journal.mkdir(mode=0o700)
+ client=private.Client(parent.env.get('GITHUB_TOKEN'),parent.env['GITHUB_RUN_ID'],source_sha=parent.go['source_sha'],journal=journal,job=parent.job,operation='restore')
+ return materialize_owner_originals(parent.go,Path(__file__).resolve().parents[1],client,parent.storage,parent.root/'count-a-owner-originals')
+
 def materialize_owner_originals(root,source_root,client,storage,destination):
  """Parent metadata phase only: genuine private GET, opaque exact originals.
 

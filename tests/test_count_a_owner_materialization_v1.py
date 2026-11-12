@@ -60,7 +60,7 @@ class Materialization(unittest.TestCase):
   self.assertEqual(m.resolved_originals(None,None,native),{k:root[m.FIELD][k]for k in m.ORIGINALS})
   with self.assertRaisesRegex(ValueError,'COUNT_A_NO_UNREGISTERED_MATERIALIZATION'):m.resolved_originals(None,{'unregistered':'receipt'},native)
  def test_offline_inference_remains_offline_and_catalog_remains18(self):
-  runtime=(ROOT/'tools/audit_weekly_runtime_v1.py').read_text();self.assertIn('OFFLINE_INFERENCE_NO_HTTP_OR_CHILDREN',runtime);hosted=(ROOT/'nfl_lab/audit_weekly_hosted_v1.py').read_text();self.assertLess(hosted.index('request["count_a_materialization"]=materialize_owner_originals'),hosted.index('for phase in ("prepare","acquire","infer")'))
+  runtime=(ROOT/'tools/audit_weekly_runtime_v1.py').read_text();self.assertIn('OFFLINE_INFERENCE_NO_HTTP_OR_CHILDREN',runtime);hosted=(ROOT/'nfl_lab/audit_weekly_hosted_v1.py').read_text();self.assertLess(hosted.index("request['count_a_materialization']=restore"),hosted.index('for phase in ("prepare","acquire","infer")'))
   self.assertIn('== len(aliases["models"]) == 18',(ROOT/'nfl_lab/audit_weekly_runtime_v1.py').read_text())
 
 if __name__=='__main__':unittest.main()
