@@ -82,7 +82,7 @@ def authenticate_fit(proof_body,fit_body,registration,audit):
  require(len(proof_body)==26032 and sha(proof_body)==PROOF,'COUNT_A_ORIGINAL_PRODUCER_PROOF')
  proof=strict(proof_body);fit=strict(fit_body);ref=registration['fit_start'];record=proof['artifacts']['pass_td__COUNT_A_MEAN/FIT_START.json']
  require(len(fit_body)==ref['bytes']==record['bytes']and sha(fit_body)==ref['sha256']==record['sha256'],'COUNT_A_ORIGINAL_FIT_START')
- recipe=fit['recipe'];require(sha(canonical(recipe)+b'\n')==PARENT==audit['recipe_sha256'],'COUNT_A_ORIGINAL_RECIPE')
+ recipe=fit['recipe'];require(sha(canonical(recipe))==PARENT==audit['recipe_sha256'],'COUNT_A_ORIGINAL_RECIPE')
  require(recipe['training_cutoff_utc']=='2026-09-01T00:00:00Z'and recipe['source_pins']['mean_corrector']['sha256']==CORRECTOR,'COUNT_A_ORIGINAL_TRAINING_CLOCK_CORRECTOR')
  return recipe
 def allowed_runtime_name(name):return name in FILES

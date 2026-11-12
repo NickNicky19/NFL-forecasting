@@ -12,6 +12,17 @@ def typed(value=1.5):
  return r
 
 class Component(unittest.TestCase):
+ def test_original_fit_recipe_uses_no_trailing_newline(self):
+  from unittest.mock import patch
+  self.assertEqual(m.PARENT,'9c48aab650f35a60631fd5d6af2cef4b8c513416fe0f9b2c61591d7f8af4b85f')
+  recipe=dict(training_cutoff_utc='2026-09-01T00:00:00Z',source_pins={'mean_corrector':{'sha256':m.CORRECTOR}},fixture='SYNTHETIC_ENCODER_CONTRACT_NOT_NFL')
+  encoded=m.canonical(recipe);parent=m.sha(encoded);fit=m.canonical({'recipe':recipe});ref={'path':'/synthetic-owned/fit','bytes':len(fit),'sha256':m.sha(fit)}
+  proof={'artifacts':{'pass_td__COUNT_A_MEAN/FIT_START.json':ref},'padding':''};padding=26032-len(m.canonical(proof));self.assertGreater(padding,0);proof['padding']='x'*padding;body=m.canonical(proof);self.assertEqual(len(body),26032)
+  with patch.object(m,'PROOF',m.sha(body)),patch.object(m,'PARENT',parent):
+   self.assertEqual(m.authenticate_fit(body,fit,{'fit_start':ref},{'recipe_sha256':parent}),recipe)
+  # The original format's digest is not interchangeable with a newline format.
+  with patch.object(m,'PROOF',m.sha(body)),patch.object(m,'PARENT',m.sha(encoded+b'\n')):
+   with self.assertRaisesRegex(ValueError,'COUNT_A_ORIGINAL_RECIPE'):m.authenticate_fit(body,fit,{'fit_start':ref},{'recipe_sha256':m.sha(encoded+b'\n')})
  def test_complete_metadata_and_real_issuance_fields_fit_wire(self):
   r=fixture();t=ast.parse((ROOT/'nfl_lab/audit_weekly_template_v1.py').read_text());env={'require':m.require}
   for n in t.body:
