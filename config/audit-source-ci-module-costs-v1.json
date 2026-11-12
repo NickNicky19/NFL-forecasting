@@ -1,0 +1,693 @@
+{
+  "baseline_collection": {
+    "modules": 132,
+    "nodes": 3087,
+    "nodes_sha256": "bf555454e7630987db70f636af3c8f3835d3f9368bb352ea5eaa4020c16dafdd",
+    "tier": "LOCAL_FULL_SOURCE_COLLECTION;exacthashlabelsagreewithallcompletedC2shards;sourceC2collectionartifactblobGETdenied"
+  },
+  "cost_scaling": "ceil(frozen_module_milliseconds*current_nodes/frozen_nodes)",
+  "fallback_milliseconds_per_node": 600,
+  "log_sha256": {
+    "0": "4b805f97c478d73c2e944ea6dc353e6ab759a995a6be61d1426c9a3ef8a12230",
+    "1": "5d9bf2b5537d567284f16c33e2d2b8494dc68bbee65f78745ee37a4bb626408f",
+    "2": "7ebc0d60f0509dc4b0147db91996e9362f256ddd696a7c7adb2cdc016a952a41",
+    "3": "5a60943889cae8b54e82e1744a98c86772df30f3dfb8d4ae2e2e4c47dbbed18b"
+  },
+  "schema_version": "audit-source-ci-module-cost-profile-v1",
+  "source_head": "c2a0f6a43a50ca64256cdc831e777a381c487da3",
+  "source_run_id": "43286080981",
+  "unchanged_budgets": {
+    "job_minutes": 20,
+    "partition_seconds": 960,
+    "shards": 4,
+    "supervisor_stops_after_job_seconds": 1080
+  },
+  "weights": {
+    "tests/test_archive_source_coverage.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 479,
+      "nodes": 11
+    },
+    "tests/test_archive_study.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 1137,
+      "nodes": 9
+    },
+    "tests/test_audit_count_checkpoint_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 60843,
+      "nodes": 13
+    },
+    "tests/test_audit_count_failure_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 2736,
+      "nodes": 20
+    },
+    "tests/test_audit_count_hosted_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 70,
+      "nodes": 14
+    },
+    "tests/test_audit_count_requalify_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 7744,
+      "nodes": 23
+    },
+    "tests/test_audit_count_retained_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 61613,
+      "nodes": 19
+    },
+    "tests/test_audit_count_verification_receipt_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 1850,
+      "nodes": 29
+    },
+    "tests/test_audit_history_semantics_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 893,
+      "nodes": 13
+    },
+    "tests/test_audit_numerical_runtime_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 1806,
+      "nodes": 33
+    },
+    "tests/test_audit_private_rotation_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 533,
+      "nodes": 19
+    },
+    "tests/test_audit_reference_capture_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 48013,
+      "nodes": 17
+    },
+    "tests/test_audit_source_ci_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 36838,
+      "nodes": 24
+    },
+    "tests/test_audit_weekly_archive_packing_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 8327,
+      "nodes": 14
+    },
+    "tests/test_audit_weekly_archive_scale_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 385179,
+      "nodes": 4
+    },
+    "tests/test_audit_weekly_archive_singleton_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 7841,
+      "nodes": 9
+    },
+    "tests/test_audit_weekly_archive_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 42350,
+      "nodes": 20
+    },
+    "tests/test_audit_weekly_child_status_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 21486,
+      "nodes": 14
+    },
+    "tests/test_audit_weekly_controller_bootstrap_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 7533,
+      "nodes": 173
+    },
+    "tests/test_audit_weekly_controller_registration_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 42511,
+      "nodes": 65
+    },
+    "tests/test_audit_weekly_controller_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 493,
+      "nodes": 50
+    },
+    "tests/test_audit_weekly_delivery_grading_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 72599,
+      "nodes": 8
+    },
+    "tests/test_audit_weekly_delivery_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 73430,
+      "nodes": 15
+    },
+    "tests/test_audit_weekly_discovery_actor_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 2751,
+      "nodes": 13
+    },
+    "tests/test_audit_weekly_discovery_recurring_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720682,
+      "milliseconds": 65287,
+      "nodes": 5
+    },
+    "tests/test_audit_weekly_discovery_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 138264,
+      "nodes": 43
+    },
+    "tests/test_audit_weekly_epoch_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 793,
+      "nodes": 26
+    },
+    "tests/test_audit_weekly_failed_scope_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 1531,
+      "nodes": 2
+    },
+    "tests/test_audit_weekly_failure_wire_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 461,
+      "nodes": 4
+    },
+    "tests/test_audit_weekly_grade_checkpoint_v1.py": {
+      "basis": "CONSERVATIVE_CENSORED_ESTIMATE;47of66started;194840msobservedstartspan;notmeasuredfullmodule",
+      "job_id": 131419720682,
+      "milliseconds": 400000,
+      "nodes": 66
+    },
+    "tests/test_audit_weekly_grade_history_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 125200,
+      "nodes": 251
+    },
+    "tests/test_audit_weekly_grade_native_memory_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 289549,
+      "nodes": 91
+    },
+    "tests/test_audit_weekly_grade_recurring_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 25229,
+      "nodes": 6
+    },
+    "tests/test_audit_weekly_grade_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 59113,
+      "nodes": 35
+    },
+    "tests/test_audit_weekly_hosted_grading_delivery_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 28178,
+      "nodes": 8
+    },
+    "tests/test_audit_weekly_hosted_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 3360,
+      "nodes": 90
+    },
+    "tests/test_audit_weekly_metadata_import_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 415,
+      "nodes": 1
+    },
+    "tests/test_audit_weekly_operations_authority_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 497,
+      "nodes": 12
+    },
+    "tests/test_audit_weekly_operations_restore_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 70671,
+      "nodes": 24
+    },
+    "tests/test_audit_weekly_operations_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 10728,
+      "nodes": 29
+    },
+    "tests/test_audit_weekly_operations_worker_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 64486,
+      "nodes": 48
+    },
+    "tests/test_audit_weekly_parent_inventory_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 1454,
+      "nodes": 31
+    },
+    "tests/test_audit_weekly_parent_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 27344,
+      "nodes": 109
+    },
+    "tests/test_audit_weekly_provider_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 12338,
+      "nodes": 101
+    },
+    "tests/test_audit_weekly_public_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 47701,
+      "nodes": 15
+    },
+    "tests/test_audit_weekly_receipt_bundle_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 129506,
+      "nodes": 3
+    },
+    "tests/test_audit_weekly_resume_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 38523,
+      "nodes": 24
+    },
+    "tests/test_audit_weekly_retained_recurring_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 12272,
+      "nodes": 11
+    },
+    "tests/test_audit_weekly_retained_transport_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 10737,
+      "nodes": 17
+    },
+    "tests/test_audit_weekly_retained_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 32739,
+      "nodes": 39
+    },
+    "tests/test_audit_weekly_runtime_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 40406,
+      "nodes": 22
+    },
+    "tests/test_audit_weekly_schedule_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 208,
+      "nodes": 37
+    },
+    "tests/test_audit_weekly_source_history_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 2498,
+      "nodes": 34
+    },
+    "tests/test_audit_weekly_v5_admission_metadata.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 1669,
+      "nodes": 44
+    },
+    "tests/test_audit_weekly_v5_historical_readiness.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 6102,
+      "nodes": 66
+    },
+    "tests/test_cadence.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 36,
+      "nodes": 15
+    },
+    "tests/test_campaign_preservation.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 11,
+      "nodes": 1
+    },
+    "tests/test_coherence_audit.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 189,
+      "nodes": 5
+    },
+    "tests/test_context.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 268,
+      "nodes": 9
+    },
+    "tests/test_count_a_native_extension_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 129,
+      "nodes": 22
+    },
+    "tests/test_count_a_owner_materialization_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 178,
+      "nodes": 7
+    },
+    "tests/test_data_features.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 1764,
+      "nodes": 12
+    },
+    "tests/test_evaluation.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 53,
+      "nodes": 5
+    },
+    "tests/test_frozen_source_policy.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 53,
+      "nodes": 6
+    },
+    "tests/test_genuine_hosted_fixed_build_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 453,
+      "nodes": 12
+    },
+    "tests/test_gha_private_checkpoint.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 26341,
+      "nodes": 20
+    },
+    "tests/test_grading_only.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 10,
+      "nodes": 2
+    },
+    "tests/test_grading_sources.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 123,
+      "nodes": 16
+    },
+    "tests/test_hosted_build_safe_diagnostics.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 28,
+      "nodes": 6
+    },
+    "tests/test_hosted_deadline_compatibility.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 7,
+      "nodes": 3
+    },
+    "tests/test_hosted_initial_plan_builder_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 244,
+      "nodes": 11
+    },
+    "tests/test_hosted_safety_guard.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 26,
+      "nodes": 8
+    },
+    "tests/test_lab_state.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 44,
+      "nodes": 9
+    },
+    "tests/test_live_grading.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 38,
+      "nodes": 6
+    },
+    "tests/test_model_artifacts.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 8292,
+      "nodes": 39
+    },
+    "tests/test_operational_failure_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 2874,
+      "nodes": 27
+    },
+    "tests/test_operational_storage_metadata_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 205,
+      "nodes": 1
+    },
+    "tests/test_outcome_deduplication.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 91,
+      "nodes": 11
+    },
+    "tests/test_owned_feature_output_bridge.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 119,
+      "nodes": 1
+    },
+    "tests/test_owner_private_bootstrap.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 278,
+      "nodes": 15
+    },
+    "tests/test_prepared_source_request_digest.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 55,
+      "nodes": 3
+    },
+    "tests/test_private_dispatch_masking_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 217,
+      "nodes": 8
+    },
+    "tests/test_private_draft_store_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 775,
+      "nodes": 37
+    },
+    "tests/test_private_storage_probe.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 154,
+      "nodes": 28
+    },
+    "tests/test_prospective.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 30,
+      "nodes": 2
+    },
+    "tests/test_public_release_plan_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 557,
+      "nodes": 5
+    },
+    "tests/test_receiving_adapter.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 35,
+      "nodes": 14
+    },
+    "tests/test_retained_receiving_core.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 104,
+      "nodes": 41
+    },
+    "tests/test_scheme_context.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 868,
+      "nodes": 8
+    },
+    "tests/test_scheme_study.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 31,
+      "nodes": 3
+    },
+    "tests/test_selected_private_snapshot.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 9235,
+      "nodes": 9
+    },
+    "tests/test_skill_scoring.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 292,
+      "nodes": 33
+    },
+    "tests/test_source_refresh.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 25,
+      "nodes": 5
+    },
+    "tests/test_stat_point_mae_public_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 4705,
+      "nodes": 19
+    },
+    "tests/test_state_handover.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 3924,
+      "nodes": 1
+    },
+    "tests/test_storage_path_guards.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 19,
+      "nodes": 5
+    },
+    "tests/test_validation_eligibility.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 2999,
+      "nodes": 18
+    },
+    "tests/test_weekly_count_mean_fallback_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 36,
+      "nodes": 9
+    },
+    "tests/test_weekly_generic_partial_slots_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 73,
+      "nodes": 9
+    },
+    "tests/test_weekly_generic_producer.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 298,
+      "nodes": 12
+    },
+    "tests/test_weekly_grading.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 1292,
+      "nodes": 13
+    },
+    "tests/test_weekly_initial_continuation_v3.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 4930,
+      "nodes": 11
+    },
+    "tests/test_weekly_initial_remaining_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 30,
+      "nodes": 7
+    },
+    "tests/test_weekly_mae_display_archive_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 103742,
+      "nodes": 66
+    },
+    "tests/test_weekly_mae_display_runtime_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 89781,
+      "nodes": 64
+    },
+    "tests/test_weekly_mae_exact_no_write_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 1188,
+      "nodes": 54
+    },
+    "tests/test_weekly_mae_failure_preservation_v1.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 361,
+      "nodes": 8
+    },
+    "tests/test_weekly_mae_point_inference_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 2519,
+      "nodes": 20
+    },
+    "tests/test_weekly_mae_runtime_isolation_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720717,
+      "milliseconds": 36064,
+      "nodes": 4
+    },
+    "tests/test_weekly_public_feed_persistence.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419720823,
+      "milliseconds": 601,
+      "nodes": 9
+    },
+    "tests/test_weekly_publication_authority_v2.py": {
+      "basis": "COMPLETED_MODULE_FIRST_START_TO_NEXT_MODULE_OR_SUMMARY",
+      "job_id": 131419721003,
+      "milliseconds": 183,
+      "nodes": 14
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "count-a-software-ci-balancing-independent-review-v2",
+  "checked_at_UTC": "2026-11-12T19:37:41.576975+00:00",
+  "verdict": "NO_DEFECT_FOUND_IN_CHECKED_SOFTWARE_CI_SOURCE_SCOPE",
+  "scope": "Independent read-only source/hash/retained-metadata review plus separate deterministic partition arithmetic. No pytest/model/NFL/HTTP/upload/workflow executed. Current3091 union is a reconstruction from verified retained C2 collection plus four AST additions, not a claimed fresh collection/execution.",
+  "source_root": "/workspace/count-a-owner-native-restore-v1",
+  "source_pins": {
+    "tools/audit_source_ci_v1.py": {
+      "bytes": 22200,
+      "sha256": "df06d1988152fabf697379824bdd36fc4fec3e6d3107e0766e057998ec47e086"
+    },
+    "tests/test_audit_source_ci_v1.py": {
+      "bytes": 14271,
+      "sha256": "617ef6af4c22faf0e304ee65d6e5ea062bb144ebb11d38b07277f74a9a468cff"
+    },
+    "config/audit-source-ci-module-costs-v1.json": {
+      "bytes": 23772,
+      "sha256": "d9c5727a91d8583f00be61519d27569ef1792d18a980de59142effb52c57af7f"
+    }
+  },
+  "baseline": {
+    "path": "/workspace/counta-owner-pr-runtime/C2-collection.zip",
+    "bytes": 226390,
+    "sha256": "9cc8881e86035a3f8a049eeef9dd243a5eaab1ff79e22e1f46f3e8a0d21b1ac4",
+    "run_identity": {
+      "GITHUB_REPOSITORY": "NickNicky19/NFL-forecasting",
+      "GITHUB_RUN_ATTEMPT": "1",
+      "GITHUB_RUN_ID": "43286080981",
+      "GITHUB_SHA": "6c6863850e45c50305796268290ff83ecba56b1f"
+    },
+    "nodes": 3087,
+    "nodes_sha256": "bf555454e7630987db70f636af3c8f3835d3f9368bb352ea5eaa4020c16dafdd",
+    "hash_reconciles": true
+  },
+  "cost_evidence": {
+    "profile_sha256": "d9c5727a91d8583f00be61519d27569ef1792d18a980de59142effb52c57af7f",
+    "source_head": "c2a0f6a43a50ca64256cdc831e777a381c487da3",
+    "source_run_id": "43286080981",
+    "completed_module_costs": 110,
+    "completed_metadata_mismatches": [],
+    "censored_estimate_modules": 1,
+    "censored_checkpoint_ms": 400000,
+    "unknown_modules": 21,
+    "unknown_ms_per_node": 600,
+    "provenance_note": "Frozen profile retains its earlier LOCAL_FULL_SOURCE_COLLECTION/GET-denied provenance string. Later obtained official C2 ZIP is separately verified here; no original profile or past receipt was rewritten/relabelled."
+  },
+  "independent_partition_checks": {
+    "expected_current_nodes": 3091,
+    "unique": true,
+    "node_union_sha256": "3b174739524d6c4673e2019fd8aef510bc66f226ba2d1488755f81535f1e40d0",
+    "removed_definitions": [],
+    "added_tests": [
+      "test_all_phases_and_final_coverage_bind_the_same_cost_profile",
+      "test_changed_cost_profile_cannot_silently_change_partition",
+      "test_measured_module_costs_separate_few_expensive_cases_from_many_cheap_cases",
+      "test_unmeasured_module_prior_and_frozen_counts_scale_without_dropping_new_nodes"
+    ],
+    "partition_nodes": [
+      552,
+      700,
+      830,
+      1009
+    ],
+    "estimated_partition_milliseconds": [
+      765764,
+      765759,
+      765751,
+      765757
+    ],
+    "complete_disjoint_union": true,
+    "module_atomic": true,
+    "module_sort_key": "(-cost_milliseconds,-len(module_nodes),module_name)",
+    "bin_choice_key": "(current_bin_load,bin_index)",
+    "within_shard_order": "sorted complete original node-id strings",
+    "per_shard_node_hash_encoding": "SHA256 sorted compact JSON UTF8 array; no trailing newline",
+    "per_shard_nodes_sha256": [
+      "0ab65ae0eb07e22c496144532979d82296f618a23847f5be333e6a3c7c62c27b",
+      "d298579650ca78de608ee1e7199c333696a3d12f5a80a54f45c2e0a1fa38904e",
+      "56551e20a14c31068d49d4f5a1cc3ae506d9bf4adc5845f1dc5ff83e2ba71664",
+      "4a59e9d1b35a9b676a5eb0c20732135f91458c7c2f8a32c9f174653b86d38474"
+    ]
+  },
+  "source_findings": [
+    {
+      "check": "full_coverage_verification",
+      "status": "PASS_SOURCE",
+      "evidence": "All workers independently collect exact same full node list; current hash and same-source/run/attempt identities remain mandatory. Final verifier checks assigned exactpartition and Counters for attempted/completed/fullunion, and every setup/call-or-explicitsetupskip/teardown outcome; omissions/duplicates/jobfail remain rejected."
+    },
+    {
+      "check": "profile_binding_and_tamper",
+      "status": "PASS_SOURCE",
+      "evidence": "Exact frozen profile byte hash validated when computing plans. run+collection+coverage bind profile SHA; verifier recomputes estimated costs/assignments. Changed bytes or wrong profile receipts fail. Legacy receipts remain original run evidence and cannot masquerade as newprofile success."
+    },
+    {
+      "check": "time_and_scope",
+      "status": "PASS_SOURCE",
+      "evidence": "Same4wholemoduleLPTshards, <=960sec partition supervisor and1080sec elapsedstop within20min jobs; workflow unchanged. No testdeleted, disabled, markedskip or filtered by this diff; unknownmodules still getpositivefallbackcost, not exclusion."
+    },
+    {
+      "check": "predictive_runtime_unchanged",
+      "status": "PASS_HASH",
+      "changed_vs_previous_native_review": [],
+      "evidence": "All previous native bridge review source/config/test hashes unchanged. Production128source closure,22MAEafterpaths, model/source rules and registrations unchanged by softwareCI-only diff."
+    }
+  ],
+  "limitations": [
+    "Cost estimates do not guarantee future CI walltime; a slower/censored module may still timeout and must retain failure.",
+    "No statement that current3091 tests have executed or passed; official current CI remains required.",
+    "SoftwareCI changes do not establish native CountA inference/delivery or predictive gain."
+  ],
+  "prior_review": {
+    "path": "INDEPENDENT_SOFTWARE_CI_BALANCE_REVIEW_V1.json",
+    "sha256": "0da93f30e41dfee669e31bd6174d5ac0f33ce6fbd58de52be86fcc703cdd5523"
+  }
+}

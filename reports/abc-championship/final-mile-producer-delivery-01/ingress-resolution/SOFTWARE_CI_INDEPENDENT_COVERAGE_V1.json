@@ -1,0 +1,32 @@
+{
+  "scope": "Independent software CI scheduling arithmetic only; no NFL fits or private model loading",
+  "original_artifact_sha256": "9cc8881e86035a3f8a049eeef9dd243a5eaab1ff79e22e1f46f3e8a0d21b1ac4",
+  "old_nodes": 3087,
+  "old_nodeids_sha256": "bf555454e7630987db70f636af3c8f3835d3f9368bb352ea5eaa4020c16dafdd",
+  "new_nodes": 3091,
+  "current_nodeids_sha256": "3b174739524d6c4673e2019fd8aef510bc66f226ba2d1488755f81535f1e40d0",
+  "original_nodes_all_retained": true,
+  "exact_new_software_cases": [
+    "test_measured_module_costs_separate_few_expensive_cases_from_many_cheap_cases",
+    "test_unmeasured_module_prior_and_frozen_counts_scale_without_dropping_new_nodes",
+    "test_changed_cost_profile_cannot_silently_change_partition",
+    "test_all_phases_and_final_coverage_bind_the_same_cost_profile"
+  ],
+  "disjoint_complete_coverage": true,
+  "module_atomicity": true,
+  "permutation_invariance": true,
+  "profile_sha256": "d9c5727a91d8583f00be61519d27569ef1792d18a980de59142effb52c57af7f",
+  "estimated_milliseconds": [
+    765764,
+    765759,
+    765751,
+    765757
+  ],
+  "budgets_unchanged": {
+    "shards": 4,
+    "seconds_per_partition": 960
+  },
+  "actual_CI_pass": false,
+  "CountA_inference": false,
+  "readable_CountA_feed": false
+}

@@ -208,3 +208,63 @@ def test_parameter(n): assert n in (1,2)
     assert max(map(len,nodes))>300000
     for i in (1,2,3):
         assert ci.read(root/f"audit-source-ci-shard-{i}-{ATTEMPT}"/"worker.json")["exit_code"]==5
+
+
+def test_measured_module_costs_separate_few_expensive_cases_from_many_cheap_cases():
+    expensive = [f"tests/test_audit_weekly_archive_scale_v1.py::test_case[{i}]" for i in range(4)]
+    cheap = [f"tests/test_audit_weekly_controller_bootstrap_v1.py::test_case[{i}]" for i in range(173)]
+    other = [f"tests/test_unmeasured_{i}.py::test_case[{j}]" for i in range(2) for j in range(10)]
+    nodes = expensive + cheap + other
+    plans, costs = ci.partition_plan(nodes)
+    assert costs[0] == 385179 and set(plans[0]) == set(expensive)
+    assert set(expensive).isdisjoint(node for plan in plans[1:] for node in plan)
+    assert sorted(node for plan in plans for node in plan) == sorted(nodes)
+    assert len({node for plan in plans for node in plan}) == len(nodes)
+    assert ci.partition_plan(list(reversed(nodes))) == (plans, costs)
+    for module in {node.split("::", 1)[0] for node in nodes}:
+        owners = {i for i, plan in enumerate(plans) if any(node.startswith(module + "::") for node in plan)}
+        assert len(owners) == 1  # Module/autouse fixtures stay in one process.
+
+
+def test_unmeasured_module_prior_and_frozen_counts_scale_without_dropping_new_nodes():
+    unknown = [f"tests/test_future_unmeasured.py::test_case[{i}]" for i in range(3)]
+    plans, costs = ci.partition_plan(unknown)
+    assert plans == [sorted(unknown), [], [], []] and costs == [1800, 0, 0, 0]
+    known = [f"tests/test_audit_weekly_archive_scale_v1.py::test_case[{i}]" for i in range(5)]
+    plans, costs = ci.partition_plan(known)
+    assert plans[0] == sorted(known) and costs[0] == (385179 * 5 + 3) // 4
+    profile = ci.cost_profile()
+    checkpoint = profile["weights"]["tests/test_audit_weekly_grade_checkpoint_v1.py"]
+    assert checkpoint["milliseconds"] == 400000 and "CENSORED_ESTIMATE" in checkpoint["basis"]
+    assert profile["unchanged_budgets"] == dict(shards=4, partition_seconds=960,
+        job_minutes=20, supervisor_stops_after_job_seconds=1080)
+
+
+def test_changed_cost_profile_cannot_silently_change_partition(tmp_path, monkeypatch):
+    altered = tmp_path / "cost-profile.json"
+    altered.write_bytes(ci.COST_PROFILE.read_bytes() + b"\n")
+    monkeypatch.setattr(ci, "COST_PROFILE", altered)
+    with pytest.raises(ValueError, match="EXACT_FROZEN_CI_COST_PROFILE"):
+        ci.partition(["test_simple.py::test_case"], 0)
+
+
+def test_all_phases_and_final_coverage_bind_the_same_cost_profile(successful_attempt):
+    _, root = successful_attempt
+    for name in root.iterdir():
+        collection = ci.read(name / "collection.json")
+        assert ci.read(name / "run.json")["partition_profile_sha256"] == ci.COST_PROFILE_SHA256
+        assert collection["partition_profile_sha256"] == ci.COST_PROFILE_SHA256
+        assert collection["estimated_partition_milliseconds"] == ci.partition_plan(collection["nodes"])[1]
+    result = ci.verify(root, NEEDS, ATTEMPT)
+    assert result["partition_profile_sha256"] == ci.COST_PROFILE_SHA256
+    shard = root / f"audit-source-ci-shard-0-{ATTEMPT}"
+    collection = ci.read(shard / "collection.json")
+    collection["partition_profile_sha256"] = "0" * 64
+    ci.save(shard / "collection.json", collection)
+    ci.materialize(shard)
+    try:
+        with pytest.raises(ValueError, match="EXACT_CI_COST_PROFILE_RECEIPT"):
+            ci.verify(root, NEEDS, ATTEMPT)
+    finally:
+        collection["partition_profile_sha256"] = ci.COST_PROFILE_SHA256
+        ci.save(shard / "collection.json", collection);ci.materialize(shard)

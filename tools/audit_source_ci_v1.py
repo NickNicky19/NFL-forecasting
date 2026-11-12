@@ -23,6 +23,8 @@ MAX_NODES = 20000
 FILE_CAP = 32 << 20
 DIAGNOSTIC_CAP = 8192
 SUCCESS = {"passed", "skipped", "xfailed", "xpassed"}
+COST_PROFILE = Path(__file__).resolve().parents[1]/"config/audit-source-ci-module-costs-v1.json"
+COST_PROFILE_SHA256 = "d9c5727a91d8583f00be61519d27569ef1792d18a980de59142effb52c57af7f"
 
 
 def require(ok, reason):
@@ -75,16 +77,54 @@ def read(path):
     return json.loads(path.read_bytes(), object_pairs_hook=pairs)
 
 
-def partition(nodes, shard):
-    require(type(shard) is int and 0 <= shard < SHARDS, "FOUR_CI_SHARDS_ONLY")
+def cost_profile():
+    require(COST_PROFILE.is_file() and not COST_PROFILE.is_symlink()
+        and COST_PROFILE.stat().st_size <= 64 << 10, "BOUNDED_CI_COST_PROFILE")
+    raw = COST_PROFILE.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == COST_PROFILE_SHA256, "EXACT_FROZEN_CI_COST_PROFILE")
+    value = json.loads(raw)
+    require(set(value) == {"schema_version", "source_head", "source_run_id", "baseline_collection",
+        "fallback_milliseconds_per_node", "cost_scaling", "weights", "unchanged_budgets", "log_sha256"}
+        and value["schema_version"] == "audit-source-ci-module-cost-profile-v1"
+        and value["fallback_milliseconds_per_node"] == 600
+        and value["cost_scaling"] == "ceil(frozen_module_milliseconds*current_nodes/frozen_nodes)"
+        and value["unchanged_budgets"] == dict(shards=4, partition_seconds=960, job_minutes=20,
+            supervisor_stops_after_job_seconds=1080), "CLOSED_SOFTWARE_CI_COST_PROFILE")
+    weights = value["weights"]
+    require(type(weights) is dict and 0 < len(weights) <= MAX_NODES, "BOUNDED_CI_MODULE_WEIGHTS")
+    for name, row in weights.items():
+        require(type(name) is str and name.startswith("tests/") and name.endswith(".py")
+            and str(Path(name)) == name and ".." not in Path(name).parts
+            and set(row) == {"nodes", "milliseconds", "basis", "job_id"}
+            and type(row["nodes"]) is int and 0 < row["nodes"] <= MAX_NODES
+            and type(row["milliseconds"]) is int and 0 < row["milliseconds"] <= 960000
+            and type(row["job_id"]) is int and row["job_id"] > 0
+            and type(row["basis"]) is str and 0 < len(row["basis"]) <= 256,
+            "CLOSED_POSITIVE_CI_MODULE_COST")
+    return value
+
+
+def partition_plan(nodes):
+    profile = cost_profile()
     modules = {}
     for node in sorted(nodes):modules.setdefault(node.split("::", 1)[0], []).append(node)
+    costs = {}
+    for name, items in modules.items():
+        row = profile["weights"].get(name)
+        costs[name] = ((row["milliseconds"]*len(items)+row["nodes"]-1)//row["nodes"] if row
+            else profile["fallback_milliseconds_per_node"]*len(items))
     plans, loads = [[] for _ in range(SHARDS)], [0] * SHARDS
-    # Keep module autouse fixtures local; balance whole modules by node count.
-    for module, items in sorted(modules.items(), key=lambda pair:(-len(pair[1]), pair[0])):
+    # Frozen measured SOFTWARE costs; keep module/autouse fixtures local.
+    # Unknown modules use the declared node-count prior, never an online search.
+    for module, items in sorted(modules.items(), key=lambda pair:(-costs[pair[0]], -len(pair[1]), pair[0])):
         chosen = min(range(SHARDS), key=lambda i:(loads[i], i))
-        plans[chosen] += items;loads[chosen] += len(items)
-    return sorted(plans[shard])
+        plans[chosen] += items;loads[chosen] += costs[module]
+    return [sorted(plan) for plan in plans], loads
+
+
+def partition(nodes, shard):
+    require(type(shard) is int and 0 <= shard < SHARDS, "FOUR_CI_SHARDS_ONLY")
+    return partition_plan(nodes)[0][shard]
 
 
 def journal(directory, event):
@@ -109,7 +149,7 @@ def start(directory, mode, shard=None):
     directory.mkdir(parents=True)
     (directory / "events.jsonl").touch()
     save(directory / "run.json", dict(schema_version=VERSION, identity=identity(), mode=mode,
-        shard=shard, shards=SHARDS, started_at=stamp()))
+        shard=shard, shards=SHARDS, started_at=stamp(), partition_profile_sha256=COST_PROFILE_SHA256))
     return directory
 
 
@@ -142,9 +182,11 @@ class Recorder:
             no_deselect=not config.option.deselect, no_last_failed=not getattr(config.option, "lf", False),
             no_failed_first=not getattr(config.option, "failedfirst", False))
         valid = all(checks.values())
-        assigned = nodes if self.mode == "collect" else partition(nodes, self.shard)
+        plans, estimated = partition_plan(nodes)
+        assigned = nodes if self.mode == "collect" else plans[self.shard]
         save(self.directory / "collection.json", dict(schema_version=VERSION, nodes=nodes,
-            nodes_sha256=digest(nodes), assigned=assigned, unfiltered=valid))
+            nodes_sha256=digest(nodes), assigned=assigned, unfiltered=valid,
+            partition_profile_sha256=COST_PROFILE_SHA256, estimated_partition_milliseconds=estimated))
         if not valid:
             reason = "UNFILTERED_FULL_COLLECTION_REQUIRED:" + ",".join(k for k,v in checks.items() if not v)
             journal(self.directory, dict(type="collection_error", reason=reason))
@@ -284,7 +326,8 @@ def verified_receipt(directory, *, mode, shard, expected_identity):
     require({k:v for k,v in saved.items() if k != "observed_at"}
         == {k:v for k,v in observed.items() if k != "observed_at"}, "CI_RECEIPT_JOURNAL_MISMATCH")
     require(observed["schema_version"] == VERSION and observed["identity"] == expected_identity
-        and observed["mode"] == mode and observed["shard"] == shard and observed["shards"] == SHARDS,
+        and observed["mode"] == mode and observed["shard"] == shard and observed["shards"] == SHARDS
+        and observed.get("partition_profile_sha256") == COST_PROFILE_SHA256,
         "EXACT_CI_ATTEMPT_SOURCE_AND_SHARD")
     pytest_ok = observed["worker"] is not None and (observed["worker"]["exit_code"] == 0
         or mode == "run" and observed["worker"]["exit_code"] == 5
@@ -296,6 +339,9 @@ def verified_receipt(directory, *, mode, shard, expected_identity):
     require(type(c) is dict and c["schema_version"] == VERSION and c["unfiltered"] is True
         and 0 < len(c["nodes"]) <= MAX_NODES and c["nodes"] == sorted(set(c["nodes"]))
         and c["nodes_sha256"] == digest(c["nodes"]), "FULL_UNFILTERED_CI_COLLECTION_REQUIRED")
+    plans, estimated = partition_plan(c["nodes"])
+    require(c.get("partition_profile_sha256") == COST_PROFILE_SHA256
+        and c.get("estimated_partition_milliseconds") == estimated, "EXACT_CI_COST_PROFILE_RECEIPT")
     return observed
 
 
@@ -335,7 +381,8 @@ def verify(root, needs, attempt):
     require(Counter(all_attempted) == Counter(nodes) == Counter(all_completed), "NO_MISSING_OR_DUPLICATE_CI_NODE_EXECUTIONS")
     return dict(schema_version=VERSION + "-coverage", state="ALL_COLLECTED_TESTS_COVERED_AND_JOBS_SUCCESSFUL",
         identity=ident, collected=len(nodes), attempted=len(all_attempted), completed=len(all_completed),
-        nodes_sha256=digest(nodes), outcome_counts=dict(Counter(outcomes.values())), explicit_skips=skips)
+        nodes_sha256=digest(nodes), partition_profile_sha256=COST_PROFILE_SHA256,
+        estimated_partition_milliseconds=partition_plan(nodes)[1], outcome_counts=dict(Counter(outcomes.values())), explicit_skips=skips)
 
 
 def main(argv=None):
