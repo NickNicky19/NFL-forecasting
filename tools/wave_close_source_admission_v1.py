@@ -63,6 +63,7 @@ def main():
     ap.add_argument('--go', type=Path)
     ap.add_argument('--go-sha256')
     ap.add_argument('--publication-commit')
+    ap.add_argument('--attempt', type=int, choices=[1, 2], default=1)
     args = ap.parse_args()
     start = time.monotonic()
     full, third, prepared = stores()
@@ -102,6 +103,14 @@ def main():
             plan = json.loads(raw)
             assert plan['id'] == ID and plan['state'] == 'ROOT_REGISTERED_SCORING_GO'
             assert args.publication_commit and len(args.publication_commit) == 40
+            if args.attempt == 2:
+                continuation = plan['environment_restoration_continuation']
+                assert args.mode == 'execute' and continuation['authorized_by'] == '/root'
+                assert continuation['prior_failure_sha256'] == '144db75ac1895e0efaf0b2b7efca1f72b977abe7d26a8c8c85b9f6d941095c00'
+                assert sys.executable == continuation['pinned_existing_python'] == '/workspace/nfl-venv/bin/python'
+                previous = json.loads((REPORT/'NATIVE_PRIVATE_RETENTION_V1.json').read_bytes())
+                assert previous['state'] == 'FAILED_RETAINED_NO_AUTOMATIC_RETRY'
+                assert previous['refs']['FAILED_20261114T151440463677Z.json']['sha256'] == continuation['prior_failure_sha256']
             receipt = namespace / 'SOURCE_ACCESS_RECEIPT.json'
             third.validate_reference(receipt, plan['source_access_receipt_sha256'])
             if args.mode == 'cache':
@@ -123,7 +132,7 @@ def main():
                               public_derivative_GETs=4, raw_feed_collection=0)
             else:
                 c_cache = ROOT / 'reports/abc-championship/interception-historical-delivery-01/completion/C_code'
-                stage = namespace / 'staging'
+                stage = namespace / ('staging' if args.attempt == 1 else 'staging-attempt2')
                 stage.mkdir(mode=0o700, parents=True, exist_ok=False)
                 command = [sys.executable, '-B', str(ROOT/'tools/wave_close_b_ftn_completion_join_v1.py'),
                     '--protocol', str(args.go), '--protocol-sha256', args.go_sha256,
@@ -137,16 +146,17 @@ def main():
                     child = subprocess.run(command, cwd=ROOT, capture_output=True, timeout=600)
                 except subprocess.TimeoutExpired as error:
                     child = subprocess.CompletedProcess(command, 124, error.stdout or b'', error.stderr or b'')
-                    third.write_bytes(namespace/'WORKER_TIMEOUT.json', encode(dict(
+                    third.write_bytes(namespace/('WORKER_TIMEOUT_ATTEMPT'+str(args.attempt)+'.json'), encode(dict(
                         state='FAILED_WALL_TIMEOUT_NO_AUTOMATIC_RETRY', UTC=utc(), timeout_seconds=600)))
                 # Keep every failure/log as well as successful complete vectors.
-                third.write_bytes(namespace/'WORKER_STDOUT.txt', child.stdout)
-                third.write_bytes(namespace/'WORKER_STDERR.txt', child.stderr)
+                suffix = '' if args.attempt == 1 else '_ATTEMPT2'
+                third.write_bytes(namespace/('WORKER_STDOUT'+suffix+'.txt'), child.stdout)
+                third.write_bytes(namespace/('WORKER_STDERR'+suffix+'.txt'), child.stderr)
                 proofs = {}
                 for source in sorted(stage.iterdir()):
                     assert source.is_file() and not source.is_symlink()
                     body = source.read_bytes()
-                    target = namespace/'retained'/source.name
+                    target = namespace/('retained' if args.attempt == 1 else 'retained-attempt2')/source.name
                     third.write_bytes(target, body)
                     proof = third.validate_reference(target, digest(body))
                     proofs[source.name] = {k:proof[k] for k in ['bytes','sha256']}
@@ -168,7 +178,7 @@ def main():
         public.update(task_retained_actual_bytes=actual, task_retained_limit_bytes=TASK_LIMIT,
                       task_retention_includes='Unique new private bytes, CAS/control growth, inputs, outputs, logs and failures')
         name = {'admit':'SOURCE_ADMISSION_PUBLIC_V1.json','cache':'B_EXPORT_CACHE_READBACK_V1.json',
-                'execute':'NATIVE_PRIVATE_RETENTION_V1.json'}[args.mode]
+                'execute':'NATIVE_PRIVATE_RETENTION_V'+str(args.attempt)+'.json'}[args.mode]
         report_path = REPORT/name
         with report_path.open('xb') as handle:
             handle.write(encode(public));handle.flush();os.fsync(handle.fileno())
