@@ -1,0 +1,45 @@
+{
+  "B_commit": "acd32c8e7e11257a925e1be1242727265d1ad563",
+  "UTC": "2026-11-14T19:03:09.609922+00:00",
+  "W9_builder": {
+    "bytes": 12611,
+    "lines": "82-109: QB REG W9,explicit integer official_attempts/completions,physical PBP or positive credited opportunity,positionQB,label_status,team/opponent,kickoffUTCepoch; writes38rows",
+    "path": "reports/information-first-20261112-01/B/source-qualification/prepare_ball_quality_sources_v1.py",
+    "sha256": "bacc79e37315ecfecbeddee7965e3bcad33158321f6480e1f1e150a1bb6d6b4c"
+  },
+  "concatenator": {
+    "lines": "source_rows36-42,prepare50-56: old V3 2901 rows +W9 38 rows copied unchanged,2939unique canonical player-games",
+    "path": "tools/run_ftn_completion_information.py",
+    "producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+    "sha256": "8848eb416555069bc2e90c59669ef2e1dcf28c49b9f2312fa0a30a461d66ae1a"
+  },
+  "fields": {
+    "game_id/player_id": "canonical NFL game and GSIS text",
+    "kickoff": "timezone-derived epoch UTC seconds; never historical stat availability",
+    "label_status": "SUPPORTED_PLAYED or UNKNOWN_PARTICIPATION; no implicitDNP",
+    "official_completions": "explicit weekly-stat nonnegativeinteger ornull in old V3; W9 rejects unknown/noninteger official count",
+    "physical_participation": "explicit boolean derived positive credited opportunities/physical PBP; not every-roster-player guarantee",
+    "season/week": "integer2026 andweek",
+    "target_parity": "PBP-vs-official count/team reconciliation, separate from explicit official credit",
+    "team/opponent": "historical NFL team labels; qualified2026 LA/LAR alias separately"
+  },
+  "id": "B_QB_CONTEXT_SCHEMA_CODE_PROOF_v1",
+  "input": {
+    "bytes": 249715,
+    "path": "reports/information-first-20261112-01/B/completion-wave-v1/QB_CONTEXT_W1_W9_INPUTS_V1.json.gz",
+    "sha256": "45aaab99d41f2e2643066c001355b26430f55dca06e7c7e366eace252f2e021b"
+  },
+  "limits": "Actual cached JSON schema remains rootSOURCE_GO check; no raw PBP,CSV,roster orQBinput rows decoded by this task. No original publication clock or pregame roster authentication. Explicit absent/null/nonfinite official metric remains unknown,neverzero.",
+  "old_V3_builder": {
+    "binding": "PILOT_SOURCE_RETENTION_MANIFEST_V1.json binds this exact builder and V3 input",
+    "bytes": 16458,
+    "lines": "169-221; explicitlycreates official_completions,physical_participation,label_status,positionQB plus game_id/player_id/team/opponent/kickoff",
+    "old_input": "source-fields-v3/DERIVED_QB_GAME_INPUTS.json.gz",
+    "old_input_bytes": 246610,
+    "old_input_sha256": "f23bb72f05f398c7108700e10fa7bf63e233aca57bc67eb6820a38c9f212af90",
+    "path": "tools/qualify_player_context_sources.py",
+    "sha256": "e746fc7d2f8fee1fcd1c5a969484a5d8dc7767f15c4fcfbe502eae566fed2cf0"
+  },
+  "state": "PASS_PUBLIC_BOUND_BUILDER_CODE_SCOPE_NO_DATA_DECODE",
+  "supersession": "Older EXECUTED_SOURCE_FILTER_V2.py lacks physical_participation and is NOT the current V3 builder. Do not substitute that older schema or invent a physical flag."
+}

@@ -1,0 +1,49 @@
+{
+  "CLI": "/workspace/nfl-venv/bin/python -B tools/w1w9_retained_offer_panel_v1.py --plan ROOT_GO --plan-sha256 SHA --output PRIVATE_CANONICAL_CMP_PANEL.json.gz --receipt PUBLIC_SOURCE_RECEIPT.json",
+  "adapter_path": "tools/w1w9_retained_offer_panel_v1.py",
+  "adapter_sha256": "e750ee8257746d2403a865cd9b5d9674a08aca352910a7f46064e9bbcd0e8bcf",
+  "executor": "/root",
+  "helper_sha256": {
+    "nfl_lab/query_identity.py": "76fef5d2e0b1ddfe9023d2328cdd1b05f54931271432e6442e58c85c6826c942",
+    "nfl_lab/weekly_current_query.py": "9a41a6c1ce606b4b3c1c1114867fd2d961eef47ffc2e360a663017365e105dff"
+  },
+  "id": "A-W1W9-B-NATIVE-CMP-SOURCE-PANEL-v1",
+  "input_contract": {
+    "adapter_sha256": "exact current adapter",
+    "football": "root-bound B QB_CONTEXT_W1_W9_INPUTS249715B45aa... json.gz ref; official explicit CMP/physical/team/kickoff, not roster or quote proof",
+    "helper_sha256": "accepted hashes including root cache reader",
+    "id": "A-W1W9-B-NATIVE-CMP-SOURCE-PANEL-v1",
+    "identity": "A owner-validated EXPECTED_QUERIES.parquet source ref, formatparquet,kindFROZEN_QUERY_IDS; stable one-to-one IDs only",
+    "registered_by": "/root",
+    "snapshots": "list each {week,snapshot_id,commit,...flat root original(ref) cache fields}",
+    "source_manifest": "flat bound file ref",
+    "state": "ROOT_SOURCE_GO"
+  },
+  "output": "gzipJSON {state,rows CMP only,source_CMP_ATT_identities identityonly,coverage,source_receipts,identity_registry_receipts,exclusions,source_manifest_sha256,identity_source_sha256,football_source_sha256,counts}; no new selected side/grade",
+  "owner": "A",
+  "parity": "Reconstruct exact B source/line/player/game identities, compare W5-W8 full56CMP+ATT/native identity commitments and W9full60 commitment before claiming canonical native142CMP equivalence. Never compare private normalized byte hashes to different encoding.",
+  "partial_policy": "Outputs PARTIAL_SOURCE_OR_IDENTITY_DEPENDENCY_BLOCKED if count/membership mismatch; root admits only verified scope and executes other independent cells. No automatic new snapshot/source replacement.",
+  "preexec_hardening": "Strict FROZEN_QUERY_IDS guard is scoped to exact94c874... source, whose original builder quarantines invalid IDs. W5-W8 assigned canonical games independently crosschecked for week/kickoff/opposing teams against bound football metadata. Missing independent mapping stays PARTIAL; conflicts fail. No source chosen using outcomes.",
+  "prepared_UTC": "2026-11-14T18:52:22.732171+00:00",
+  "resources": {
+    "CPU_seconds": 120,
+    "RSS_bytes": 2147483648,
+    "compressed_private_output_limit_bytes": 2097152,
+    "new_fits": 0,
+    "new_scores": 0,
+    "public_receipt_limit_bytes": 65536,
+    "root_private_peak_bytes": 12582912,
+    "root_private_wave_retention_bytes": 12582912,
+    "source_GETs_in_worker": 0,
+    "wall_seconds": 180
+  },
+  "root_cache_reader": "tools/w1w9_source_cache_v1.py::original(ref); root pins this helper before sourceGO",
+  "source_manifest": {
+    "bytes": 37530,
+    "path": "reports/abc-championship/w1w9-comparison-closure-01/B_PUBLIC_SOURCE_MANIFEST_V1.json",
+    "sha256": "3612e59c26ae6eed762a826dae7a59e14d55c7ca1b3141799ed058e504f938a1"
+  },
+  "state": "PREEXEC_SOURCE_REVIEW_REQUIRED_NO_NFL_DECODE",
+  "synthetic_verification": "PASS knownzero/null/bool/negative/fraction/nonfinite/unknownparticipation/DNP/absentstat/missinglabel/exactduplicateIDs/ambiguousIDs/Bidentityhash. No NFL rows or new score.",
+  "unknowns": "Unmapped identity/game/invalidline/unknownparticipation/absent-null-invalidstat retain explicit rows/states. Participation cannot fill an unknown statistic. Compound targets not added."
+}
