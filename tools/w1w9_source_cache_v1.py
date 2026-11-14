@@ -119,7 +119,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['admit','cache','law-admit','execute'])
     ap.add_argument('--plan',type=Path);ap.add_argument('--plan-sha256')
     ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','identity','comparison','laws'])
-    ap.add_argument('--attempt',type=int,choices=[1,2,3],default=1)
+    ap.add_argument('--attempt',type=int,choices=[1,2,3,4],default=1)
     args=ap.parse_args();start=time.monotonic()
     report_root=LAW_REPORT if args.mode=='law-admit' or args.stage=='laws' else REPORT
     resource.setrlimit(resource.RLIMIT_CPU,(880,900))
