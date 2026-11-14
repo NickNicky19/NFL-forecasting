@@ -1,0 +1,1804 @@
+{
+  "extra_single_query_fixture_rows": 4,
+  "id": "A-W1W9-RETAINED-COMPLETION-LAWS-v1",
+  "model_restoration_proofs": [
+    {
+      "corrector": "NONE_NATIVE_LAW;NORMALIZED_STABLE_MIXTURE_ONCE",
+      "family": "LEAF_CDF",
+      "median_tolerance": 0,
+      "model_sha256": "0dc368d6f8890ed37049af28381b338af32734aa3a271d8ac657db2f0f351ce3",
+      "point_parity_checks": 169,
+      "point_tolerance": 1e-10,
+      "prior_weight": "ORIGINAL_MODEL_VALUE_UNCHANGED",
+      "query_law_rows": 169,
+      "saved_point_arithmetic": "ORIGINAL_RAW_LEAF_MIXTURE"
+    },
+    {
+      "corrector": "NONE_NATIVE_LAW;NORMALIZED_STABLE_MIXTURE_ONCE",
+      "family": "RESPONSE_CDF",
+      "median_tolerance": 0,
+      "model_sha256": "324f97f7c48bb72c6f5503e4e76f148d58f3a1d2f1530dbf4a571359a66fc252",
+      "point_parity_checks": 169,
+      "point_tolerance": 1e-10,
+      "prior_weight": "ORIGINAL_MODEL_VALUE_UNCHANGED",
+      "query_law_rows": 169,
+      "saved_point_arithmetic": "ORIGINAL_NORMALIZED_RESPONSE_MIXTURE"
+    }
+  ],
+  "network_calls": 0,
+  "new_NFL_games": 0,
+  "new_fits": 0,
+  "new_model_restorations": 2,
+  "new_original_issued_picks": 0,
+  "original_future_restore_fixture_upper_bound": 4,
+  "policy": "EXACT_REGISTERED_0_55_AND_COMBINED_SIDE_WEEKLY_TOP6_10_20;NO_BATCH_CLOCK_CLAIM",
+  "records": [
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "origin_product_binding": {
+        "key_sha256": "0e86eafd0badaf0da99b0aec178627b54889364a518f015e80264fc11121f508",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2627570155663544,
+        "log_loss": 0.7236464087401506,
+        "n": 97
+      },
+      "origin_product_binding": {
+        "key_sha256": "b6b5b5b5da269041d450876c49828f72c92ea888ba32c5ad6de1af0f55da7a52",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.28016324198213255,
+        "log_loss": 0.7649396596446768,
+        "n": 42
+      },
+      "origin_product_binding": {
+        "key_sha256": "b108d79347bfa7523011e19feb573a42a1895def43188123e597077b3944b9cc",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2693894699833701,
+        "log_loss": 0.7388174185660628,
+        "n": 70
+      },
+      "origin_product_binding": {
+        "key_sha256": "76eb12b666de9e9b68b83729c6486ecf5381ea83e9f2324bdebce64359778ab2",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.2569053984526268,
+        "log_loss": 0.7098321575819224,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25910216510524514,
+        "log_loss": 0.7150672375340053,
+        "n": 130
+      },
+      "origin_product_binding": {
+        "key_sha256": "642ce85d093c779abe9026552fa9a33cea843f5f9f1b149720670b02a7074dd7",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "origin_product_binding": {
+        "key_sha256": "529b43c4494611d082570ec714adba5837232e4d7f5a0c77df0188487d44d0a5",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2537232922862634,
+        "log_loss": 0.7012221665782237,
+        "n": 37
+      },
+      "origin_product_binding": {
+        "key_sha256": "5eaea2ea72bd964179a3246b4177c907ca7692cc00fdf32e7d1f73ebdc097d11",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25731366805664085,
+        "log_loss": 0.7083589116774152,
+        "n": 42
+      },
+      "origin_product_binding": {
+        "key_sha256": "26197ca8daf5eb55e158b500c53206cbde34b17a4fec905f31fa2dfbca83423b",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25435453178092327,
+        "log_loss": 0.7022026658661925,
+        "n": 70
+      },
+      "origin_product_binding": {
+        "key_sha256": "6e747c5bcd979ac682b268622514d6e01703d401564b29829ff98fcd96392520",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25094894270924994,
+        "log_loss": 0.6951887018750574,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2513449493487848,
+        "log_loss": 0.6960228970483936,
+        "n": 130
+      },
+      "origin_product_binding": {
+        "key_sha256": "e2e17a25bb7966ce090ff8c7de55bc3e6dd89fbda32ce64e32ddc47e060e7b69",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.6962623215308685,
+          "MSE": 35.57025952945126,
+          "absolute_error_p90": 10.092983732479405,
+          "bias": -1.6918568700619427,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.914042691412984,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.773809523809524,
+          "MSE": 37.30952380952381,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5119047619047619,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "origin_product_binding": {
+        "key_sha256": "e2c86c84ceca55b9d0971f39f28696a16d28e28441427283349300ef84782f9b",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.266878221111109,
+        "log_loss": 0.7318969930224691,
+        "n": 103
+      },
+      "origin_product_binding": {
+        "key_sha256": "d4695abb15a0c21ee05e22c0fa9d83d37c184fc18024543a8c8ed3c80a571632",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.28187664044022887,
+        "log_loss": 0.7689398454838305,
+        "n": 42
+      },
+      "origin_product_binding": {
+        "key_sha256": "bdbf24f88e42ccf7f6c5fcf2f85e2085b5e10952c74c66ef07acbde994dfd4d6",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.27171723577655066,
+        "log_loss": 0.743856751499277,
+        "n": 70
+      },
+      "origin_product_binding": {
+        "key_sha256": "1340af93a5df039f4873da0bd8b84aee9d36dff4312cc845f717e1b6f8792822",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25945505877405717,
+        "log_loss": 0.7151162245995267,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2628655346449345,
+        "log_loss": 0.7228323773582375,
+        "n": 130
+      },
+      "origin_product_binding": {
+        "key_sha256": "f628e78ef6073b57c17546613f07a932d9a60280d01d2120dbc9e9ed89acf8e2",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "origin_product_binding": {
+        "key_sha256": "ec8f860a84187a47ad43b811757e6c3626589c266e1302c0e72dbbb4414409e3",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2515740342790489,
+        "log_loss": 0.6968875100725984,
+        "n": 41
+      },
+      "origin_product_binding": {
+        "key_sha256": "a402a89090d5e7d2a3b527e60d7b45a3604581be62c56f40b67e10b0248521d1",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25782539549968125,
+        "log_loss": 0.7094206023414372,
+        "n": 42
+      },
+      "origin_product_binding": {
+        "key_sha256": "987464c08df23d3fa7e0a9a16278a085fe853c051c0daf8be6ea39698b5159af",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2552373839950279,
+        "log_loss": 0.7039950476388147,
+        "n": 70
+      },
+      "origin_product_binding": {
+        "key_sha256": "cf7e63fdd3c6d59ed22153e93c331222471ba0d137e9ec7ee6f29836873c09b9",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.25208196296305574,
+        "log_loss": 0.6974687889422381,
+        "n": 168
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.25304468069981484,
+        "log_loss": 0.6994404689555402,
+        "n": 130
+      },
+      "origin_product_binding": {
+        "key_sha256": "789132b699ebcd5fc27ac1453fa965f9c443390c22622167c9e2400333453803",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "CMP_A_W1_W4_PLUS_B_NATIVE_W5_W9",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.7104910620469,
+          "MSE": 35.741818192624756,
+          "absolute_error_p90": 10.43184187694729,
+          "bias": -1.673694633144287,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 16.822765615563725,
+          "scored": 168
+        },
+        "median": {
+          "MAE": 4.767857142857143,
+          "MSE": 37.160714285714285,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4702380952380953,
+          "learned_or_fallback_states": {
+            "": 168
+          },
+          "max_absolute_error": 21.0,
+          "scored": 168
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "origin_product_binding": {
+        "key_sha256": "0e86eafd0badaf0da99b0aec178627b54889364a518f015e80264fc11121f508",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24259241764000924,
+        "log_loss": 0.6787184256277263,
+        "n": 54
+      },
+      "origin_product_binding": {
+        "key_sha256": "b6b5b5b5da269041d450876c49828f72c92ea888ba32c5ad6de1af0f55da7a52",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.22660278851963148,
+        "log_loss": 0.6467238669752705,
+        "n": 28
+      },
+      "origin_product_binding": {
+        "key_sha256": "b108d79347bfa7523011e19feb573a42a1895def43188123e597077b3944b9cc",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2452572316074577,
+        "log_loss": 0.684174562197712,
+        "n": 44
+      },
+      "origin_product_binding": {
+        "key_sha256": "76eb12b666de9e9b68b83729c6486ecf5381ea83e9f2324bdebce64359778ab2",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::FOOTBALL::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24487696246724003,
+        "log_loss": 0.6831289235565849,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24390444768264727,
+        "log_loss": 0.6812285369444535,
+        "n": 74
+      },
+      "origin_product_binding": {
+        "key_sha256": "642ce85d093c779abe9026552fa9a33cea843f5f9f1b149720670b02a7074dd7",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "origin_product_binding": {
+        "key_sha256": "529b43c4494611d082570ec714adba5837232e4d7f5a0c77df0188487d44d0a5",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.22995203202532782,
+        "log_loss": 0.6525218100012009,
+        "n": 20
+      },
+      "origin_product_binding": {
+        "key_sha256": "5eaea2ea72bd964179a3246b4177c907ca7692cc00fdf32e7d1f73ebdc097d11",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.23199496767578776,
+        "log_loss": 0.6567284010675535,
+        "n": 28
+      },
+      "origin_product_binding": {
+        "key_sha256": "26197ca8daf5eb55e158b500c53206cbde34b17a4fec905f31fa2dfbca83423b",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24312760002380876,
+        "log_loss": 0.6791727942319977,
+        "n": 44
+      },
+      "origin_product_binding": {
+        "key_sha256": "6e747c5bcd979ac682b268622514d6e01703d401564b29829ff98fcd96392520",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::LEAF_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24496155167410405,
+        "log_loss": 0.682951214803544,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2440279906668647,
+        "log_loss": 0.6810617756815096,
+        "n": 74
+      },
+      "origin_product_binding": {
+        "key_sha256": "e2e17a25bb7966ce090ff8c7de55bc3e6dd89fbda32ce64e32ddc47e060e7b69",
+        "procedure_version": "82c7d2a748188a6f546639e15e34e35cf396143b9190d6b423734f3565258c04;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.459080404268627,
+          "MSE": 31.647962043727297,
+          "absolute_error_p90": 9.807312283580654,
+          "bias": -1.7067554463878807,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.95301284413171,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.47727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.5227272727272727,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "origin_product_binding": {
+        "key_sha256": "e2c86c84ceca55b9d0971f39f28696a16d28e28441427283349300ef84782f9b",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24400342193276617,
+        "log_loss": 0.6816620700071511,
+        "n": 57
+      },
+      "origin_product_binding": {
+        "key_sha256": "d4695abb15a0c21ee05e22c0fa9d83d37c184fc18024543a8c8ed3c80a571632",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.23490533809340344,
+        "log_loss": 0.6638585632713763,
+        "n": 28
+      },
+      "origin_product_binding": {
+        "key_sha256": "bdbf24f88e42ccf7f6c5fcf2f85e2085b5e10952c74c66ef07acbde994dfd4d6",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24695421427215303,
+        "log_loss": 0.6877652918505641,
+        "n": 44
+      },
+      "origin_product_binding": {
+        "key_sha256": "1340af93a5df039f4873da0bd8b84aee9d36dff4312cc845f717e1b6f8792822",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::FOOTBALL::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24686859248189963,
+        "log_loss": 0.6872179294020906,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24682862713426018,
+        "log_loss": 0.6872012321427198,
+        "n": 74
+      },
+      "origin_product_binding": {
+        "key_sha256": "f628e78ef6073b57c17546613f07a932d9a60280d01d2120dbc9e9ed89acf8e2",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;FOOTBALL",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::FULL_BOARD",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "origin_product_binding": {
+        "key_sha256": "ec8f860a84187a47ad43b811757e6c3626589c266e1302c0e72dbbb4414409e3",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::FULL_BOARD"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.22111936773545446,
+        "log_loss": 0.6347735899417235,
+        "n": 18
+      },
+      "origin_product_binding": {
+        "key_sha256": "a402a89090d5e7d2a3b527e60d7b45a3604581be62c56f40b67e10b0248521d1",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::ABSTAIN_CONFIDENCE_0_55"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.2359309236673172,
+        "log_loss": 0.6646433517792064,
+        "n": 28
+      },
+      "origin_product_binding": {
+        "key_sha256": "987464c08df23d3fa7e0a9a16278a085fe853c051c0daf8be6ea39698b5159af",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_6_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24380638079196226,
+        "log_loss": 0.680540495313559,
+        "n": 44
+      },
+      "origin_product_binding": {
+        "key_sha256": "cf7e63fdd3c6d59ed22153e93c331222471ba0d137e9ec7ee6f29836873c09b9",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_10_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    },
+    {
+      "admission": "PARTIAL_W1_W7_QUERIES;NO_W8_W9_INHERITANCE;RETROSPECTIVE_WEEKLY_TOPK_NOT_PREGAME_LIST",
+      "candidate_id": "A::RESPONSE_CDF::SHRINK_0_5::P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK",
+      "native_proper_scores_all_available": {
+        "half_three_outcome_Brier": 0.24581825057169418,
+        "log_loss": 0.6846702544566317,
+        "n": 88
+      },
+      "native_proper_scores_selected": {
+        "half_three_outcome_Brier": 0.24532279285069686,
+        "log_loss": 0.6836579088647299,
+        "n": 74
+      },
+      "origin_product_binding": {
+        "key_sha256": "789132b699ebcd5fc27ac1453fa965f9c443390c22622167c9e2400333453803",
+        "procedure_version": "8d56cbf02765c8e2c5e483eca6caad749db88cbadf11e84f0680f7e5a880e1e8;matched12-frozen-law-outer-v1.1;SHRINK_0_5",
+        "selection_policy": "P2_EXACT_LINE::TOP_20_PER_CATEGORY_WEEK"
+      },
+      "panel_id": "A_ANNUAL_W1_W5_pass_cmp",
+      "unchanged_saved_points_offered_numerical": {
+        "mean": {
+          "MAE": 4.460121482205986,
+          "MSE": 31.86957113984621,
+          "absolute_error_p90": 9.904222678170203,
+          "bias": -1.6851758565292412,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 15.997179042370828,
+          "scored": 88
+        },
+        "median": {
+          "MAE": 4.545454545454546,
+          "MSE": 32.22727272727273,
+          "absolute_error_p90": 10.0,
+          "bias": -1.4772727272727273,
+          "learned_or_fallback_states": {
+            "": 88
+          },
+          "max_absolute_error": 16.0,
+          "scored": 88
+        }
+      }
+    }
+  ],
+  "resources": {
+    "CPU_seconds": 4.133760015,
+    "RSS_bytes": 288407552,
+    "wall_seconds": 3.987757917999261
+  },
+  "source_aggregate_sha256": "541636d7b127581e82957a9d2df1d31fec504a70a04213d7b7a317f67cd8fab0",
+  "state": "COMPLETED_RETAINED_A_LAWS_PARTIAL_QUERY_COVERAGE"
+}

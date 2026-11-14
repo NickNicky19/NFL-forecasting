@@ -11,9 +11,10 @@ import resource, signal, stat, subprocess, sys, time, urllib.request, zipfile
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT/'reports/abc-championship/w1w9-comparison-closure-01'
 LAW_REPORT = ROOT/'reports/abc-championship/w1w9-law-inference-closure-01'
+C_REPORT = ROOT/'reports/abc-championship/w1w9-c-receipt-closure-01'
 ID = 'ABC-W1W9-COMPARISON-CLOSURE-01-A'
-FUTURE, PEAK, BASE_META, LAW_META, LIMIT = 83886080, 12582912, 1048576, 65536, 12582912
-META = BASE_META + LAW_META
+FUTURE, PEAK, BASE_META, LAW_META, C_META, LIMIT = 83886080, 12582912, 1048576, 65536, 65536, 12582912
+META = BASE_META + LAW_META + C_META
 OLD_LAW_PLAN_SHA = 'f8d3f348c23ab002e9b5355426ae334de0cd624874842096babe3a29a0e9b1b5'
 
 
@@ -118,10 +119,11 @@ def law_owner_snapshot(full,refs):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['admit','cache','law-admit','execute'])
     ap.add_argument('--plan',type=Path);ap.add_argument('--plan-sha256')
-    ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','identity','comparison','laws'])
+    ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','identity','comparison','laws','c_receipt'])
     ap.add_argument('--attempt',type=int,choices=[1,2,3,4],default=1)
     args=ap.parse_args();start=time.monotonic()
-    report_root=LAW_REPORT if args.mode=='law-admit' or args.stage=='laws' else REPORT
+    report_root=(C_REPORT if args.stage=='c_receipt' else
+                 LAW_REPORT if args.mode=='law-admit' or args.stage=='laws' else REPORT)
     resource.setrlimit(resource.RLIMIT_CPU,(880,900))
     resource.setrlimit(resource.RLIMIT_AS,(3*1024**3,)*2)
     signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(TimeoutError('Finite root source/retention operation')))
@@ -243,7 +245,8 @@ def main():
                     if recovery['authorized_by']!='/root' or sha(previous.read_bytes())!=recovery['prior_execution_receipt_sha256'] or json.loads(previous.read_bytes())['state']!='FAILED_RETAINED_NO_AUTOMATIC_RETRY':raise ValueError('Exact prior failure and root continuation required')
                 task=plan['executions'][args.stage]
                 scripts={'panel':'tools/w1w9_retained_offer_panel_v1.py','identity':'tools/w1w9_known_event_identity_admission_v1.py',
-                    'comparison':'tools/w1w9_saved_comparison_v1.py','laws':'tools/w1w9_a_completion_laws_v1.py'}
+                    'comparison':'tools/w1w9_saved_comparison_v1.py','laws':'tools/w1w9_a_completion_laws_v1.py',
+                    'c_receipt':'tools/w1w9_c_receipt_join_v1.py'}
                 if task['script']!=scripts[args.stage]:raise ValueError('Unexpected execution owner/stage')
                 if args.stage=='laws':
                     descriptor=plan['law_owner_admission'];refs,protocol=law_owner_refs(descriptor)
@@ -290,7 +293,8 @@ def main():
         if not 0<=actual<=LIMIT:raise ValueError('Complete new retained task cap exceeded')
         public.update(after=capacity(full,third),task_private_actual_bytes=actual,task_private_limit_bytes=LIMIT,
                       old_future_reserve_bytes=FUTURE,all_four_metadata_reserves_bytes=BASE_META,
-                      additional_registered_law_metadata_bytes=LAW_META,total_metadata_reserved_bytes=META,peak_reserved_bytes=PEAK,
+                      additional_registered_law_metadata_bytes=LAW_META,additional_registered_C_metadata_bytes=C_META,
+                      total_metadata_reserved_bytes=META,peak_reserved_bytes=PEAK,
                       wall_seconds=time.monotonic()-start,all_old_caps_unchanged=True)
         name={'admit':'SOURCE_ADMISSION_PUBLIC_V1.json','cache':'SOURCE_CACHE_READBACK_V1.json',
             'law-admit':'LAW_OWNER_ADMISSION_PUBLIC_V1.json','execute':'EXECUTION_'+str(args.stage)+'_V'+str(args.attempt)+'.json'}[args.mode]
