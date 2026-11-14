@@ -119,7 +119,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['admit','cache','law-admit','execute'])
     ap.add_argument('--plan',type=Path);ap.add_argument('--plan-sha256')
     ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','identity','comparison','laws'])
-    ap.add_argument('--attempt',type=int,choices=[1,2],default=1)
+    ap.add_argument('--attempt',type=int,choices=[1,2,3],default=1)
     args=ap.parse_args();start=time.monotonic()
     report_root=LAW_REPORT if args.mode=='law-admit' or args.stage=='laws' else REPORT
     resource.setrlimit(resource.RLIMIT_CPU,(880,900))
@@ -237,9 +237,9 @@ def main():
                     raise
             else:
                 if plan['state']!='ROOT_REGISTERED_COMPARISON_GO':raise ValueError('Comparison GO required')
-                if args.attempt==2:
+                if args.attempt>1:
                     recovery=plan['recovery'][args.stage]
-                    previous=report_root/('EXECUTION_'+args.stage+'_V1.json')
+                    previous=report_root/('EXECUTION_'+args.stage+'_V'+str(args.attempt-1)+'.json')
                     if recovery['authorized_by']!='/root' or sha(previous.read_bytes())!=recovery['prior_execution_receipt_sha256'] or json.loads(previous.read_bytes())['state']!='FAILED_RETAINED_NO_AUTOMATIC_RETRY':raise ValueError('Exact prior failure and root continuation required')
                 task=plan['executions'][args.stage]
                 scripts={'panel':'tools/w1w9_retained_offer_panel_v1.py','identity':'tools/w1w9_known_event_identity_admission_v1.py',
@@ -263,7 +263,7 @@ def main():
                         raise ValueError('Child law plan does not bind the original owner receipt')
                 reserve=task['maximum_staged_output_bytes']+task['maximum_log_bytes']+65536
                 if used()+2*reserve>LIMIT:raise ValueError('Declared child staging/CAS/control reservation exceeds task cap')
-                suffix='' if args.attempt==1 else '-attempt2'
+                suffix='' if args.attempt==1 else '-attempt'+str(args.attempt)
                 stage=ns/('stage-'+args.stage+suffix);stage.mkdir(mode=0o700,parents=True,exist_ok=False)
                 values={'namespace':str(ns),'stage':str(stage),'root':str(ROOT)}
                 command=[sys.executable,'-B',str(ROOT/task['script'])]+[v.format(**values) for v in task['args']]

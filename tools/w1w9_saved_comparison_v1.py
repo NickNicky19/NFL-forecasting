@@ -773,12 +773,11 @@ def run(args):
         prior_original_vector_sha256=plan['prior_84_vectors'].get('original_sha256',plan['prior_84_vectors'].get('sha256')),
         restrictions='PRIVATE_OWNER_LOCAL_ONLY;SOURCE_CACHED_ACTUALS_NOT_USED;NO_RAW_GITHUB_EXPORT')
     private_buffer = io.BytesIO()
-    with zipfile.ZipFile(private_buffer,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
+    with zipfile.ZipFile(private_buffer,'w',compression=zipfile.ZIP_LZMA) as archive:
         info = zipfile.ZipInfo('COMPLETE_COMPARISON_VECTORS.json',date_time=(1980,1,1,0,0,0))
-        info.compress_type = zipfile.ZIP_DEFLATED
+        info.compress_type = zipfile.ZIP_LZMA
         archive.writestr(info,encoded(private))
     private_body = private_buffer.getvalue()
-    require(len(private_body)<=budget['private_vectors_max_bytes'],'Private complete-vector cap exceeded')
     result = dict(id=VERSION,state='COMPLETED_FROZEN_SAVED_OUTPUT_COMPARISON',
         completed_UTC=datetime.datetime.now(datetime.timezone.utc).isoformat(),plan_sha256=sha(raw),
         panels=panels,B_saved_contract_proof=b_proof,C_saved_contract_proof=c_proof,
@@ -802,8 +801,11 @@ def run(args):
         counts=dict(new_fits=0,new_model_inference=0,model_loading=0,new_source_collection=0,network_calls=0,
                     new_NFL_games=0,original_issued_picks=0,production_writes=0))
     public_body = gzip.compress(encoded(result),mtime=0)
-    require(len(public_body)<=budget['public_aggregate_max_bytes'],'Public aggregate envelope exceeded')
-    require(len(public_body)+len(private_body)<=budget['worker_output_limit_bytes'],'Combined worker outputs exceed reservation')
+    sizes = ('; private_zip_bytes='+str(len(private_body))+'; public_gzip_bytes='+str(len(public_body))
+             +'; combined_bytes='+str(len(private_body)+len(public_body)))
+    require(len(private_body)<=budget['private_vectors_max_bytes'],'Private complete-vector cap exceeded'+sizes)
+    require(len(public_body)<=budget['public_aggregate_max_bytes'],'Public aggregate envelope exceeded'+sizes)
+    require(len(public_body)+len(private_body)<=budget['worker_output_limit_bytes'],'Combined worker outputs exceed reservation'+sizes)
     immutable(args.private_zip,private_body)
     immutable(args.output,public_body)
     signal.alarm(0)
