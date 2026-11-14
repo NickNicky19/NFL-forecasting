@@ -78,7 +78,7 @@ def main():
     cov.update(actual_native_CMP_ATT_identity_sha256=actual,native_identity_parity=True,
         canonical_games=len({x['game_id']for x in rr}),appearance_states=dict(collections.Counter(x['appearance']for x in rr)),
         outcome_states=dict(collections.Counter(x['label_reason']for x in rr)),
-        independent_game_identity_states=dict(collections.Counter(x['independent_game_identity_state']for x in rr)),
+        independent_game_identity_states=dict(collections.Counter(x.get('independent_game_identity_state',x.get('source_game_identity_state','UNKNOWN'))for x in rr)),
         explicit_dual_clock_offers=2)
     assert all(x['native_identity_parity'] and x['source_CMP_rows']==x['expected_CMP'] and not x['missing_lines']for x in result['coverage'])
     result.update(state='PASS_EXACT_NATIVE_SOURCE_MEMBERSHIP_RECONSTRUCTION',
