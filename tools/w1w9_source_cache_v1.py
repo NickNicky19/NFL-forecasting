@@ -79,6 +79,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['admit','cache','execute'])
     ap.add_argument('--plan',type=Path);ap.add_argument('--plan-sha256')
     ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','comparison'])
+    ap.add_argument('--attempt',type=int,choices=[1,2],default=1)
     args=ap.parse_args();start=time.monotonic()
     resource.setrlimit(resource.RLIMIT_CPU,(880,900))
     resource.setrlimit(resource.RLIMIT_AS,(3*1024**3,)*2)
@@ -185,20 +186,25 @@ def main():
                     raise
             else:
                 if plan['state']!='ROOT_REGISTERED_COMPARISON_GO':raise ValueError('Comparison GO required')
+                if args.attempt==2:
+                    recovery=plan['recovery'][args.stage]
+                    previous=REPORT/('EXECUTION_'+args.stage+'_V1.json')
+                    if recovery['authorized_by']!='/root' or sha(previous.read_bytes())!=recovery['prior_execution_receipt_sha256'] or json.loads(previous.read_bytes())['state']!='FAILED_RETAINED_NO_AUTOMATIC_RETRY':raise ValueError('Exact prior failure and root continuation required')
                 task=plan['executions'][args.stage]
                 if task['script'] not in ['tools/w1w9_retained_offer_panel_v1.py','tools/w1w9_saved_comparison_v1.py']:raise ValueError('Unexpected execution owner')
                 reserve=task['maximum_staged_output_bytes']+task['maximum_log_bytes']+65536
                 if used()+2*reserve>LIMIT:raise ValueError('Declared child staging/CAS/control reservation exceeds task cap')
-                stage=ns/('stage-'+args.stage);stage.mkdir(mode=0o700,parents=True,exist_ok=False)
+                suffix='' if args.attempt==1 else '-attempt2'
+                stage=ns/('stage-'+args.stage+suffix);stage.mkdir(mode=0o700,parents=True,exist_ok=False)
                 values={'namespace':str(ns),'stage':str(stage),'root':str(ROOT)}
                 command=[sys.executable,'-B',str(ROOT/task['script'])]+[v.format(**values) for v in task['args']]
                 try:child=subprocess.run(command,cwd=ROOT,capture_output=True,timeout=task['wall_seconds'])
                 except subprocess.TimeoutExpired as error:child=subprocess.CompletedProcess(command,124,error.stdout or b'',error.stderr or b'')
-                put(ns/(args.stage+'-stdout.txt'),child.stdout);put(ns/(args.stage+'-stderr.txt'),child.stderr)
+                put(ns/(args.stage+suffix+'-stdout.txt'),child.stdout);put(ns/(args.stage+suffix+'-stderr.txt'),child.stderr)
                 retained={}
                 for source in sorted(stage.iterdir()):
                     if not source.is_file() or source.is_symlink():raise ValueError('Unexpected stage file')
-                    body=source.read_bytes();target=ns/('retained-'+args.stage)/source.name;ref=put(target,body)
+                    body=source.read_bytes();target=ns/('retained-'+args.stage+suffix)/source.name;ref=put(target,body)
                     retained[source.name]={k:ref[k] for k in ['bytes','sha256']}
                     if source.read_bytes()!=target.read_bytes():raise ValueError('Staging duplicate differs')
                     source.unlink()
@@ -212,7 +218,7 @@ def main():
         public.update(after=capacity(full,third),task_private_actual_bytes=actual,task_private_limit_bytes=LIMIT,
                       old_future_reserve_bytes=FUTURE,all_four_metadata_reserves_bytes=META,peak_reserved_bytes=PEAK,
                       wall_seconds=time.monotonic()-start,all_old_caps_unchanged=True)
-        name={'admit':'SOURCE_ADMISSION_PUBLIC_V1.json','cache':'SOURCE_CACHE_READBACK_V1.json','execute':'EXECUTION_'+str(args.stage)+'_V1.json'}[args.mode]
+        name={'admit':'SOURCE_ADMISSION_PUBLIC_V1.json','cache':'SOURCE_CACHE_READBACK_V1.json','execute':'EXECUTION_'+str(args.stage)+'_V'+str(args.attempt)+'.json'}[args.mode]
         with (REPORT/name).open('xb') as h:h.write(enc(public));h.flush();os.fsync(h.fileno())
         signal.alarm(0)
         print(json.dumps({'state':public['state'],'report':name,'private_bytes':actual,'wall_seconds':public['wall_seconds']}))
