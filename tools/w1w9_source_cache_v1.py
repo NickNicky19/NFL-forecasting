@@ -78,7 +78,7 @@ def capacity(full, third):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['admit','cache','execute'])
     ap.add_argument('--plan',type=Path);ap.add_argument('--plan-sha256')
-    ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','comparison'])
+    ap.add_argument('--publication-commit');ap.add_argument('--stage',choices=['panel','identity','comparison'])
     ap.add_argument('--attempt',type=int,choices=[1,2],default=1)
     args=ap.parse_args();start=time.monotonic()
     resource.setrlimit(resource.RLIMIT_CPU,(880,900))
@@ -191,7 +191,7 @@ def main():
                     previous=REPORT/('EXECUTION_'+args.stage+'_V1.json')
                     if recovery['authorized_by']!='/root' or sha(previous.read_bytes())!=recovery['prior_execution_receipt_sha256'] or json.loads(previous.read_bytes())['state']!='FAILED_RETAINED_NO_AUTOMATIC_RETRY':raise ValueError('Exact prior failure and root continuation required')
                 task=plan['executions'][args.stage]
-                if task['script'] not in ['tools/w1w9_retained_offer_panel_v1.py','tools/w1w9_saved_comparison_v1.py']:raise ValueError('Unexpected execution owner')
+                if task['script'] not in ['tools/w1w9_retained_offer_panel_v1.py','tools/w1w9_known_event_identity_admission_v1.py','tools/w1w9_saved_comparison_v1.py']:raise ValueError('Unexpected execution owner')
                 reserve=task['maximum_staged_output_bytes']+task['maximum_log_bytes']+65536
                 if used()+2*reserve>LIMIT:raise ValueError('Declared child staging/CAS/control reservation exceeds task cap')
                 suffix='' if args.attempt==1 else '-attempt2'
