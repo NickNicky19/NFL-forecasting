@@ -1,0 +1,141 @@
+{
+  "id": "A-B-FTN-COMPLETION-W1-W4-PUBLIC-BINDINGS-v1",
+  "state": "PREEXEC_METADATA_ONLY",
+  "exact_B_HEAD": "16edb9b2837f6ac3a027a8cf11f49c14cbc5781e",
+  "B_metadata_publication_commit": "58c1fd81e9085333ee2d15006b43a76e6a3e9789",
+  "B_producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+  "B_repository": "NickNicky19/NFL-forecasting-V2",
+  "B_branch": "research/independent-audit-20261029",
+  "manifest": {
+    "path": "reports/information-first-20261112-01/B/PUBLICATION_MEMBERS_V1.json",
+    "bytes": 85055,
+    "sha256": "f8da6d1eda2160cffb715ec470b170a2a59ec4c609763fd0f307040a799dd112"
+  },
+  "metadata_readback": {
+    "path": "reports/information-first-20261112-01/B/METADATA_READBACK_V1.json",
+    "HEAD": "16edb9b2837f6ac3a027a8cf11f49c14cbc5781e",
+    "readback_UTC": "2026-11-13T00:24:02.095227+00:00"
+  },
+  "prior_result_not_repeated": "B completed FTN native W5-9 mean-direction negative; old R0-R3/F0-F3 joins do not evaluate new B2.",
+  "protocol": {
+    "path": "reports/information-first-20261112-01/B/completion-wave-v1/FROZEN_PROTOCOL.json",
+    "sha256": "88b041ec296b85777d45a22a8a8ed469e589a75d793c342b237f444aaffab744"
+  },
+  "forecast_files": [
+    {
+      "path": "reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W01.json.gz",
+      "bytes": 156402,
+      "sha256": "17c4869b24af86195010322811630aee0210fcfea26788a5bdad1ba7d73c9b5c",
+      "producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+      "retrieval_url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting-V2/d79acddf5f094c85001c9b17a525ac7d9e25f9ec/reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W01.json.gz",
+      "readback_verified": true,
+      "readback_UTC": "2026-11-13T00:21:28.153408+00:00"
+    },
+    {
+      "path": "reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W02.json.gz",
+      "bytes": 166065,
+      "sha256": "0c1a42fe10e2b49a61aa71fe1ffdcb26b8dbc66031443d996088b9cbdf88543a",
+      "producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+      "retrieval_url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting-V2/d79acddf5f094c85001c9b17a525ac7d9e25f9ec/reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W02.json.gz",
+      "readback_verified": true,
+      "readback_UTC": "2026-11-13T00:21:28.336659+00:00"
+    },
+    {
+      "path": "reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W03.json.gz",
+      "bytes": 155318,
+      "sha256": "90cbb16d1f8450eeb60ed34d32f9cc1a9e199d35731a9df4b5baa074d578eca8",
+      "producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+      "retrieval_url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting-V2/d79acddf5f094c85001c9b17a525ac7d9e25f9ec/reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W03.json.gz",
+      "readback_verified": true,
+      "readback_UTC": "2026-11-13T00:21:28.305148+00:00"
+    },
+    {
+      "path": "reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W04.json.gz",
+      "bytes": 146855,
+      "sha256": "14c982416dfb7b21fcfbe9e2085a6ca95d61f598ff1308edf1c5d960e0896d60",
+      "producer_commit": "d79acddf5f094c85001c9b17a525ac7d9e25f9ec",
+      "retrieval_url": "https://raw.githubusercontent.com/NickNicky19/NFL-forecasting-V2/d79acddf5f094c85001c9b17a525ac7d9e25f9ec/reports/information-first-20261112-01/B/completion-wave-v1/predictions/2026-W04.json.gz",
+      "readback_verified": true,
+      "readback_UTC": "2026-11-13T00:21:28.434293+00:00"
+    }
+  ],
+  "schemas": {
+    "envelope": [
+      "season",
+      "week",
+      "fit_cutoff",
+      "rows",
+      "actual_persisted_UTC",
+      "original_issuance"
+    ],
+    "row": [
+      "procedure_id",
+      "method",
+      "game_id",
+      "player_id",
+      "team",
+      "opponent",
+      "position",
+      "season",
+      "week",
+      "target",
+      "fit_cutoff",
+      "feature_cutoff",
+      "latest_source_available",
+      "history_regime",
+      "feature_memory",
+      "mean",
+      "lower_median",
+      "law",
+      "fallback",
+      "own_prior_games",
+      "FTN_information",
+      "source_vintage"
+    ],
+    "law": {
+      "kind": "leaf_mixture",
+      "fields": [
+        "support",
+        "weights",
+        "prior",
+        "mixture"
+      ],
+      "prior": "zero or geometric"
+    }
+  },
+  "roles_and_outputs": {
+    "role": "QB",
+    "target": "pass_cmp",
+    "mean": "Standalone completion-law expected count; strict unrounded point-versus-line.",
+    "lower_median": "Lower count quantile(0.5); separate strict point rule.",
+    "P2": "Strict max of exact law P(Over),P(Under); ties abstain, integer push retained.",
+    "joint": "Marginal completion law; not coherent joint attempt/completion claim."
+  },
+  "arms": {
+    "B0": "Unchanged retained R3 saved outputs, not generic R0/F0.",
+    "B1": "Output-preserving B0 alias; prove exact key field equality before reporting no support-only gain.",
+    "B2": "Same R3 learner plus lagged Beta-shrunk own8 throwaway and interception-worthy rates; incomplete required charting copies exact B0."
+  },
+  "history": "Original reconstructed seven-day admission, strict available<cutoff, then game-time order; H-RECENT plus expanding2022 memory; same training/query policy; exposed stat-row-conditioned universe.",
+  "identity": "Canonical game/player/QB role/team/opponent and exact A kickoff/cutoff; qualified 2026 LA->LAR alias. No target-game appearance admission change.",
+  "A_expected_eligibility": {
+    "W1": 10,
+    "W2": 25,
+    "W3": 26,
+    "W4": 23,
+    "total": 84,
+    "games": 48,
+    "source": "Prior public A aggregate; new FTN matched/decided counts not assumed."
+  },
+  "rights": {
+    "FTN": "CC-BY-SA-4.0; FTN Data via nflverse",
+    "PBP": "CC-BY-4.0; nflverse/nflfastR attribution",
+    "raw": "No raw feed or protected A offer redistribution; no private models loaded.",
+    "derived": "Published safe typed prediction law data only; attribution and share-alike apply to FTN-dependent derivatives."
+  },
+  "verification_scope": "Public protocol/code/index/manifest/metadata readback inspected; no NFL row decoded or fit/model/private-row parity asserted at preparation.",
+  "new_NFL_games": 0,
+  "new_fits": 0,
+  "new_inference": 0,
+  "source_vintage": "CURRENT_VINTAGE_FTN_SEVEN_DAY_CHRONOLOGICAL_DIAGNOSTIC_NOT_ORIGINAL_ISSUANCE"
+}
