@@ -72,6 +72,10 @@ def bound_file(path, digest):
 def instant(value):
     if finite(value):
         return datetime.datetime.fromtimestamp(value, datetime.timezone.utc)
+    if isinstance(value, datetime.datetime):
+        require(value.tzinfo is not None and value.utcoffset() is not None,
+                'Naive/unknown clock is not an admitted event clock')
+        return value.astimezone(datetime.timezone.utc)
     require(isinstance(value, str), 'Explicit aware clock required')
     stamp = datetime.datetime.fromisoformat(value.replace('Z', '+00:00'))
     require(stamp.tzinfo is not None, 'Naive/unknown clock is not an admitted event clock')
