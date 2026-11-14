@@ -63,7 +63,7 @@ def main():
     ap.add_argument('--go', type=Path)
     ap.add_argument('--go-sha256')
     ap.add_argument('--publication-commit')
-    ap.add_argument('--attempt', type=int, choices=[1, 2], default=1)
+    ap.add_argument('--attempt', type=int, choices=[1, 2, 3], default=1)
     args = ap.parse_args()
     start = time.monotonic()
     full, third, prepared = stores()
@@ -103,7 +103,7 @@ def main():
             plan = json.loads(raw)
             assert plan['id'] == ID and plan['state'] == 'ROOT_REGISTERED_SCORING_GO'
             assert args.publication_commit and len(args.publication_commit) == 40
-            if args.attempt == 2:
+            if args.attempt >= 2:
                 continuation = plan['environment_restoration_continuation']
                 assert args.mode == 'execute' and continuation['authorized_by'] == '/root'
                 assert continuation['prior_failure_sha256'] == '144db75ac1895e0efaf0b2b7efca1f72b977abe7d26a8c8c85b9f6d941095c00'
@@ -111,6 +111,12 @@ def main():
                 previous = json.loads((REPORT/'NATIVE_PRIVATE_RETENTION_V1.json').read_bytes())
                 assert previous['state'] == 'FAILED_RETAINED_NO_AUTOMATIC_RETRY'
                 assert previous['refs']['FAILED_20261114T151440463677Z.json']['sha256'] == continuation['prior_failure_sha256']
+            if args.attempt == 3:
+                recovery = plan['complete_frozen_C_code_restoration']
+                assert recovery['authorized_by'] == '/root' and recovery['prior_NFL_rows_decoded'] == 0
+                previous = json.loads((REPORT/'NATIVE_PRIVATE_RETENTION_V2.json').read_bytes())
+                assert previous['state'] == 'FAILED_RETAINED_NO_AUTOMATIC_RETRY'
+                assert previous['refs']['FAILED_20261114T151823982279Z.json']['sha256'] == recovery['prior_failure_sha256']
             receipt = namespace / 'SOURCE_ACCESS_RECEIPT.json'
             third.validate_reference(receipt, plan['source_access_receipt_sha256'])
             if args.mode == 'cache':
@@ -132,7 +138,22 @@ def main():
                               public_derivative_GETs=4, raw_feed_collection=0)
             else:
                 c_cache = ROOT / 'reports/abc-championship/interception-historical-delivery-01/completion/C_code'
-                stage = namespace / ('staging' if args.attempt == 1 else 'staging-attempt2')
+                if args.attempt == 3:
+                    original = c_cache
+                    c_cache = namespace/'C_cache'
+                    # Verify EVERY dependency before starting the worker. All
+                    # bytes are original hash-bound source code, not NFL data.
+                    bodies = {}
+                    for name, expected in plan['C_bound_code'].items():
+                        source = (REPORT/'C_CODE_RECOVERY_actual_offers_v4.py'
+                                  if name == 'actual_offers_v4.py' else original/name)
+                        bodies[name] = source.read_bytes()
+                        assert digest(bodies[name]) == expected
+                    assert retained(third, baseline)+sum(map(len,bodies.values()))+2*524288+65536+16384 <= TASK_LIMIT
+                    for name, body in bodies.items():
+                        third.write_bytes(c_cache/name, body)
+                        third.validate_reference(c_cache/name, digest(body))
+                stage = namespace / ('staging' if args.attempt == 1 else 'staging-attempt'+str(args.attempt))
                 stage.mkdir(mode=0o700, parents=True, exist_ok=False)
                 command = [sys.executable, '-B', str(ROOT/'tools/wave_close_b_ftn_completion_join_v1.py'),
                     '--protocol', str(args.go), '--protocol-sha256', args.go_sha256,
@@ -149,14 +170,14 @@ def main():
                     third.write_bytes(namespace/('WORKER_TIMEOUT_ATTEMPT'+str(args.attempt)+'.json'), encode(dict(
                         state='FAILED_WALL_TIMEOUT_NO_AUTOMATIC_RETRY', UTC=utc(), timeout_seconds=600)))
                 # Keep every failure/log as well as successful complete vectors.
-                suffix = '' if args.attempt == 1 else '_ATTEMPT2'
+                suffix = '' if args.attempt == 1 else '_ATTEMPT'+str(args.attempt)
                 third.write_bytes(namespace/('WORKER_STDOUT'+suffix+'.txt'), child.stdout)
                 third.write_bytes(namespace/('WORKER_STDERR'+suffix+'.txt'), child.stderr)
                 proofs = {}
                 for source in sorted(stage.iterdir()):
                     assert source.is_file() and not source.is_symlink()
                     body = source.read_bytes()
-                    target = namespace/('retained' if args.attempt == 1 else 'retained-attempt2')/source.name
+                    target = namespace/('retained' if args.attempt == 1 else 'retained-attempt'+str(args.attempt))/source.name
                     third.write_bytes(target, body)
                     proof = third.validate_reference(target, digest(body))
                     proofs[source.name] = {k:proof[k] for k in ['bytes','sha256']}
