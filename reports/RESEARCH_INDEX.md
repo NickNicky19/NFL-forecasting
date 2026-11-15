@@ -443,3 +443,9 @@ Eighteen procedures saved 7,672 candidate rows for 610 distinct player-games in 
 ## Opportunity forecasts
 
 [Four-category methods, all attempts, results and generated leaders](opportunity-four/README.md).
+
+## Frozen targeted checkpoint and information priority — November 15
+
+[Executed M1 completion, new 84-offer M2 join, C resource checkpoint and INFORMATION-SKILL-01](abc-championship/targeted-checkpoint-closure-01/A/EXECUTED_CHECKPOINT_CLOSURE_AND_INFORMATION_PRIORITY_V1.md). [M2 own-side weekly scorecard](abc-championship/targeted-checkpoint-closure-01/A/EXECUTED_B_M2_EARLY_JOIN_V1.md). [M1 frozen results](abc-championship/targeted-accuracy-w1w9-01/A/EXECUTED_M1_CHECKPOINT_V2.md).
+
+No new primary activation or C offered-line coverage is implied. Original reports remain unchanged.
