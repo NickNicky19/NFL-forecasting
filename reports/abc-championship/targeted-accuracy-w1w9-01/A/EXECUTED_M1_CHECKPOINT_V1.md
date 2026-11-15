@@ -54,3 +54,8 @@ A is the sole M1 executor. The next executable package needs a bounded completio
 C coordinates intake; B M2/M4 and C M3 are not duplicated by A. No peer admission, prospective selection, new NFL week, readable Count A feed, website activation or served-value verification resulted from this package. Count A's upload authorization remains with the existing connection/producer owner; no failed upload was repeated. Current capture and independently eligible deliveries remain separate. The defensive workbook is unused and remains source-unqualified. No new primary-product eligibility or automatic production change follows.
 
 Private model, source and execution-control bindings remain owner-local. Public scientific publication is separate from independent private-row/fit reproduction, consumer admission and deployment.
+
+
+## Superseding executed continuation
+
+The approved completion has executed. See [M1 completion and frozen scores](EXECUTED_M1_CHECKPOINT_V2.md). The original failure record above remains preserved.
