@@ -317,7 +317,7 @@ class StorageProbeChecks(unittest.TestCase):
         reviewed_main = subprocess.check_output(['git','show','4d5beccae7c1a00307205ea390abfeade7bc6a3c:.github/workflows/lab.yml'],
                                                 cwd=REPOSITORY,text=True)
         lab = workflow_job(workflow,'lab')
-        for mode in ('audit-count-requalify-v1','audit-count-retained-v1','audit-private-rotation-v1','audit-weekly-producer-v1'):
+        for mode in ('audit-count-requalify-v1','audit-count-retained-v1','audit-private-rotation-v1','audit-weekly-producer-v1','audit-weekly-failed-admission-read-v1'):
             exclusion = " && inputs.mode != '" + mode + "'"
             self.assertEqual(lab.count(exclusion),1)
             lab = lab.replace(exclusion,'')

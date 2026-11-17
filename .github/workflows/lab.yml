@@ -8,7 +8,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1, audit-count-retained-v1, audit-private-rotation-v1, audit-weekly-producer-v1]
+        options: [daily, train, grade, replay, storage-probe, storage-probe-existing, storage-probe-diagnostic-v1, private-draft-canary-v2, owner-bootstrap-restore-v1, genuine-hosted-fixed-build-v1, genuine-hosted-inference-continuation-v3, audit-count-requalify-v1, audit-count-retained-v1, audit-private-rotation-v1, audit-weekly-producer-v1, audit-weekly-failed-admission-read-v1]
         default: daily
       bootstrap_locators_json:
         description: 'Canonical safe bootstrap locator envelope; IDs/hashes only'
@@ -67,7 +67,7 @@ env:
 
 jobs:
   lab:
-    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1' && inputs.mode != 'audit-private-rotation-v1' && inputs.mode != 'audit-weekly-producer-v1')
+    if: github.event_name != 'workflow_dispatch' || (inputs.mode != 'storage-probe' && inputs.mode != 'storage-probe-existing' && inputs.mode != 'storage-probe-diagnostic-v1' && inputs.mode != 'private-draft-canary-v2' && inputs.mode != 'owner-bootstrap-restore-v1' && inputs.mode != 'genuine-hosted-fixed-build-v1' && inputs.mode != 'genuine-hosted-inference-continuation-v3' && inputs.mode != 'audit-count-requalify-v1' && inputs.mode != 'audit-count-retained-v1' && inputs.mode != 'audit-private-rotation-v1' && inputs.mode != 'audit-weekly-producer-v1' && inputs.mode != 'audit-weekly-failed-admission-read-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     permissions:
@@ -1289,3 +1289,46 @@ jobs:
           AUDIT_WEEKLY_FAILURE_HANDOFF_JSON: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_json || needs.audit-weekly-restore-v1.outputs.failure_handoff_json }}
           AUDIT_WEEKLY_FAILURE_HANDOFF_SHA256: ${{ needs.audit-weekly-export-v1.outputs.failure_handoff_sha256 || needs.audit-weekly-restore-v1.outputs.failure_handoff_sha256 }}
         run: timeout --signal=KILL 400s python -I -B tools/audit_weekly_hosted_v1.py evidence --execute
+
+  audit-weekly-failed-admission-read-v1:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'audit-weekly-failed-admission-read-v1' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      # Existing native canary proved contents:read cannot read private drafts.
+      # The helper rejects all mutations and all but two pinned body downloads.
+      contents: write
+      actions: read
+    steps:
+      - name: Mask the exact diagnostic GO before environment logging
+        run: |
+          python3 - <<'PYMASK'
+          import json, os, re, secrets
+          with open(os.environ['GITHUB_EVENT_PATH'], encoding='utf-8') as source:
+              inputs = json.load(source)['inputs']
+          raw, digest = inputs['inference_builder_go_json'], inputs['inference_builder_go_sha256']
+          if not isinstance(raw, str) or not isinstance(digest, str) or not re.fullmatch('[a-f0-9]{64}', digest):
+              raise RuntimeError('DIAGNOSTIC_CONTROL_INPUT_TYPES')
+          print('::add-mask::' + raw.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'), flush=True)
+          marker = 'MASKED_FAILED_ADMISSION_' + secrets.token_hex(16)
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as target:
+              target.write('AUDIT_FAILED_ADMISSION_GO_JSON<<' + marker + '\n' + raw + '\n' + marker + '\n')
+              target.write('AUDIT_FAILED_ADMISSION_GO_SHA256=' + digest + '\n')
+          PYMASK
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only the existing locked YAML metadata parser
+        run: |
+          python -m pip --disable-pip-version-check install --only-binary=:all: --no-deps -r requirements-audit-weekly-metadata-v1.lock
+      - name: Read only the two pinned original failure assets
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          STORE_PERMISSION: write
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: timeout --signal=KILL 190s python -I -B tools/audit_weekly_failed_admission_read_v1.py read --execute
